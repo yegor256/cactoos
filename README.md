@@ -41,6 +41,9 @@ The library has no dependencies. All you need to do is this:
 To read a file:
 
 ```java
+import java.io.File;
+import org.cactoos.io.InputAsString;
+import org.cactoos.io.InputFile;
 CharSequence text = new InputAsString(
   new InputFile(
     new File("/code/a.txt")
@@ -51,6 +54,10 @@ CharSequence text = new InputAsString(
 To write a file:
 
 ```java
+import java.io.File;
+import org.cactoos.io.InputString;
+import org.cactoos.io.OutputFile;
+import org.cactoos.io.Pipe;
 new Pipe(
   new OutputFile(
     new File("/code/a.txt")
