@@ -66,10 +66,53 @@ new Pipe(
 ).push();
 ```
 
+To read a binary file from classpath:
+
+```java
+byte[] data = new InputAsBytes(
+  new InputURL(
+    this.getClass().getResource("/foo/img.jpg")
+  )
+).take();
+```
+
 ## Strings
 
-TBD...
+To format a text:
 
-## Collections
+```java
+import org.cactoos.strings.Sprintf;
+CharSequence text = new Sprintf(
+  "How are you, %s?", name
+);
+```
 
-TBD...
+## Iterables/Collections/Lists/Sets
+
+To filter a collection:
+
+```java
+import java.util.Arrays;
+import java.util.Collection;
+import org.cactoos.lists.ArrayAsIterable;
+import org.cactoos.lists.Filtered;
+import org.cactoos.lists.IterableAsCollection;
+Collection<String> filtered = new IterableAsCollection(
+  new Filtered<>(
+    new ArrayAsIterable("hello", "world", "dude"),
+    i -> i.length() > 4
+  )
+);
+```
+
+To iterate a collection:
+
+```java
+import org.cactoos.lists.ArrayAsIterable;
+import org.cactoos.lists.ForEach;
+new ForEach(
+  new ArrayAsIterable("how", "are", "you"),
+  i -> System.out.printf("Item: %s\n", i)
+).run();
+```
+
