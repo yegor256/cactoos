@@ -116,6 +116,22 @@ new ForEach(
 ).run();
 ```
 
+To sort a list of words in the file:
+
+```java
+List<String> sorted = new IterableAsList(
+  new Sorted<>(
+    new TextAsLines(
+      new InputAsString(
+        new FileInput(
+          new File("/tmp/names.txt")
+        )
+      )
+    )
+  )
+);
+```
+
 ## How to contribute?
 
 Just fork the repo and send us a pull request.
