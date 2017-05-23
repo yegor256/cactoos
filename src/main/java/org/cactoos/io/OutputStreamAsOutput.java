@@ -21,12 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.io;
+
+import java.io.OutputStream;
 
 /**
- * Input/Output, tests.
+ * OutputStream as output.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-package org.cactoos.io;
+public final class OutputStreamAsOutput implements Output {
+
+    /**
+     * The output stream.
+     */
+    private final OutputStream output;
+
+    /**
+     * Ctor.
+     * @param stream The stream
+     */
+    public OutputStreamAsOutput(final OutputStream stream) {
+        this.output = stream;
+    }
+
+    @Override
+    public OutputStream open() {
+        return this.output;
+    }
+
+}

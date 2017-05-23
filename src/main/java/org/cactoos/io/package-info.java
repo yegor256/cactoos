@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2014-2017 Yegor Bugayenko
+ * Copyright (c) 2017 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,23 +23,10 @@
  */
 
 /**
- * Take, Java web development framework.
- *
- * <p>Take is a pure object-oriented and immutable web development framework
- * for Java 6+ projects. The design of Take is based on four fundamental
- * principles: 1) no NULLs, 2) no mutable classes, 3) no public static
- * method, and 4) no type casting. Due to these principles, the design
- * is loosely coupled, highly cohesive and easy to test. To start
- * working with the framework, check out our introduction page in Github:
- * <a href="https://github.com/yegor256/take">README</a>.
+ * Input/Output.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
- * @see <a href="http://www.takes.org">project site www.takes.org</a>
- * @see <a href="https://github.com/yegor256/take">Github project</a>
- * @checkstyle LineLengthCheck (2 lines)
- * @see <a href="http://www.yegor256.com/2015/03/22/takes-java-web-framework.html">Java Web App Architecture In Takes Framework</a>
- * @see <a href="https://en.wikipedia.org/wiki/Takes_(framework)">wikipedia about Takes framework</a>
  */
-package org.takes;
+package org.cactoos.io;

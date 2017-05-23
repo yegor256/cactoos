@@ -21,12 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.io;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import org.cactoos.Text;
 
 /**
- * Input/Output, tests.
+ * Input as text.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-package org.cactoos.io;
+public final class InputAsText implements Text {
+
+    /**
+     * The input.
+     */
+    private final Input source;
+
+    /**
+     * Ctor.
+     * @param input The input
+     */
+    public InputAsText(final Input input) {
+        this.source = input;
+    }
+
+    @Override
+    public String asString() {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            new Pipe(
+                this.source,
+                new OutputStreamAsOutput(baos)
+            ).push();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+        return new String(baos.toByteArray());
+    }
+}

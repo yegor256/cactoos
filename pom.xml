@@ -34,7 +34,7 @@
     <groupId>org.cactoos</groupId>
     <artifactId>cactoos</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>cactoos</name>
     <description>Object-oriented Java Primitives</description>
     <url>https://github.com/yegor256/cactoos</url>

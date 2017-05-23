@@ -42,10 +42,10 @@ To read a file:
 
 ```java
 import java.io.File;
-import org.cactoos.io.InputAsString;
-import org.cactoos.io.InputFile;
-CharSequence text = new InputAsString(
-  new InputFile(
+import org.cactoos.io.FileAsInput;
+import org.cactoos.io.InputAsText;
+CharSequence text = new InputAsText(
+  new FileAsInput(
     new File("/code/a.txt")
   )
 );
@@ -55,14 +55,14 @@ To write a file:
 
 ```java
 import java.io.File;
-import org.cactoos.io.InputString;
-import org.cactoos.io.OutputFile;
+import org.cactoos.io.FileAsOutput;
 import org.cactoos.io.Pipe;
+import org.cactoos.io.TextAsInput;
 new Pipe(
-  new OutputFile(
+  new FileAsOutput(
     new File("/code/a.txt")
   ),
-  new InputString("Hello, world!")
+  new TextAsInput("Hello, world!")
 ).push();
 ```
 
@@ -70,7 +70,7 @@ To read a binary file from classpath:
 
 ```java
 byte[] data = new InputAsBytes(
-  new InputURL(
+  new UrlAsInput(
     this.getClass().getResource("/foo/img.jpg")
   )
 ).take();
@@ -95,10 +95,10 @@ To filter a collection:
 import java.util.Arrays;
 import java.util.Collection;
 import org.cactoos.lists.ArrayAsIterable;
-import org.cactoos.lists.Filtered;
+import org.cactoos.lists.FilteredIterable;
 import org.cactoos.lists.IterableAsCollection;
 Collection<String> filtered = new IterableAsCollection(
-  new Filtered<>(
+  new FilteredIterable<>(
     new ArrayAsIterable("hello", "world", "dude"),
     i -> i.length() > 4
   )
@@ -119,11 +119,11 @@ new ForEach(
 To sort a list of words in the file:
 
 ```java
-List<String> sorted = new IterableAsList(
-  new Sorted<>(
+List<String> sorted = new SortedList<>(
+  new IterableAsList(
     new TextAsLines(
       new InputAsString(
-        new FileInput(
+        new FileAsInput(
           new File("/tmp/names.txt")
         )
       )

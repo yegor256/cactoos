@@ -21,12 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.io;
+
+import java.io.File;
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Input/Output, tests.
- *
+ * Test case for {@link FileAsInput}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-package org.cactoos.io;
+public final class FileAsInputTest {
+
+    /**
+     * FileAsInput can read file content.
+     * @throws IOException If some problem inside
+     */
+    @Test
+    public void readsFileContent() throws IOException {
+        final File temp = File.createTempFile("cactoos", "txt");
+        temp.deleteOnExit();
+        new Pipe(
+            new TextAsInput("Hello, друг!"),
+            new FileAsOutput(temp)
+        ).push();
+        MatcherAssert.assertThat(
+            new InputAsText(
+                new FileAsInput(temp)
+            ).asString(),
+            Matchers.allOf(
+                Matchers.startsWith("Hello, "),
+                Matchers.endsWith("друг!")
+            )
+        );
+    }
+
+}

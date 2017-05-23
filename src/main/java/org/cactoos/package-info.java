@@ -23,10 +23,11 @@
  */
 
 /**
- * Input/Output, tests.
+ * Cactoos.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @see <a href="http://www.takes.org">project site www.cactoos.org</a>
  */
-package org.cactoos.io;
+package org.cactoos;

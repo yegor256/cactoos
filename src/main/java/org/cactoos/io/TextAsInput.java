@@ -21,12 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.io;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 /**
- * Input/Output, tests.
+ * Text as an input.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-package org.cactoos.io;
+public final class TextAsInput implements Input {
+
+    /**
+     * The source.
+     */
+    private final String source;
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public TextAsInput(final String text) {
+        this.source = text;
+    }
+
+    @Override
+    public InputStream open() {
+        return new ByteArrayInputStream(this.source.getBytes());
+    }
+
+}

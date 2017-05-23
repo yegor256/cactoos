@@ -21,12 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.io;
+
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
- * Input/Output, tests.
+ * Output.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-package org.cactoos.io;
+public interface Output {
+
+    /**
+     * Get write access to it.
+     * @return InputStream to read from
+     * @throws IOException If something goes wrong
+     */
+    OutputStream open() throws IOException;
+
+}

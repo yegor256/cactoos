@@ -25,9 +25,10 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
- * Input.
+ * Copying pipe.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -35,13 +36,61 @@ import java.io.InputStream;
  * @version $Id$
  * @since 0.1
  */
-public interface Input {
+public final class Pipe {
 
     /**
-     * Get read access to it.
-     * @return InputStream to read from
-     * @throws IOException If something goes wrong
+     * The source.
      */
-    InputStream open() throws IOException;
+    private final Input source;
+
+    /**
+     * The destination.
+     */
+    private final Output target;
+
+    /**
+     * Buffer size.
+     */
+    private final int size;
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The target
+     */
+    public Pipe(final Input input, final Output output) {
+        // @checkstyle MagicNumber (1 line)
+        this(input, output, 1024);
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The target
+     * @param buf Buffer length
+     */
+    public Pipe(final Input input, final Output output, final int buf) {
+        this.source = input;
+        this.target = output;
+        this.size = buf;
+    }
+
+    /**
+     * Copy.
+     * @throws IOException If fails
+     */
+    public void push() throws IOException {
+        final byte[] buffer = new byte[this.size];
+        try (final InputStream input = this.source.open();
+            final OutputStream output = this.target.open()) {
+            while (true) {
+                final int max = input.read(buffer);
+                output.write(buffer, 0, max);
+                if (max < buffer.length) {
+                    break;
+                }
+            }
+        }
+    }
 
 }

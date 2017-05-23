@@ -21,12 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.io;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
- * Input/Output, tests.
+ * Input from a file.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-package org.cactoos.io;
+public final class FileAsInput implements Input {
+
+    /**
+     * The file.
+     */
+    private final File file;
+
+    /**
+     * Ctor.
+     * @param src The file
+     */
+    public FileAsInput(final File src) {
+        this.file = src;
+    }
+
+    @Override
+    public InputStream open() throws FileNotFoundException {
+        return new FileInputStream(this.file);
+    }
+
+}
