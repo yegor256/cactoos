@@ -73,7 +73,7 @@ byte[] data = new InputAsBytes(
   new UrlAsInput(
     this.getClass().getResource("/foo/img.jpg")
   )
-).take();
+).asBytes();
 ```
 
 ## Strings
