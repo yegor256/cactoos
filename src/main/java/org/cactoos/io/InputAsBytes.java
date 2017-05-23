@@ -23,8 +23,8 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import org.cactoos.Text;
 
 /**
  * Input as text.
@@ -35,7 +35,7 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.1
  */
-public final class InputAsText implements Text {
+public final class InputAsBytes {
 
     /**
      * The input.
@@ -46,16 +46,21 @@ public final class InputAsText implements Text {
      * Ctor.
      * @param input The input
      */
-    public InputAsText(final Input input) {
+    public InputAsBytes(final Input input) {
         this.source = input;
     }
 
-    @Override
-    public String asString() {
-        try {
-            return new String(new InputAsBytes(this.source).asBytes());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    /**
+     * Convert it to byte array.
+     * @return The byte array
+     * @throws IOException If fails
+     */
+    public byte[] asBytes() throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        new Pipe(
+            this.source,
+            new OutputStreamAsOutput(baos)
+        ).push();
+        return baos.toByteArray();
     }
 }

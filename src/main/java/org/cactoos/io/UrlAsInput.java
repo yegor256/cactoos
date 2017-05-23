@@ -24,10 +24,11 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import org.cactoos.Text;
+import java.io.InputStream;
+import java.net.URL;
 
 /**
- * Input as text.
+ * URL as Input.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -35,27 +36,24 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.1
  */
-public final class InputAsText implements Text {
+public final class UrlAsInput implements Input {
 
     /**
-     * The input.
+     * The URL.
      */
-    private final Input source;
+    private final URL source;
 
     /**
      * Ctor.
-     * @param input The input
+     * @param url The URL
      */
-    public InputAsText(final Input input) {
-        this.source = input;
+    public UrlAsInput(final URL url) {
+        this.source = url;
     }
 
     @Override
-    public String asString() {
-        try {
-            return new String(new InputAsBytes(this.source).asBytes());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public InputStream open() throws IOException {
+        return this.source.openStream();
     }
+
 }

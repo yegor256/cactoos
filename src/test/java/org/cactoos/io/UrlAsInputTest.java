@@ -24,38 +24,34 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import org.cactoos.Text;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Input as text.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link UrlAsInput}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class InputAsText implements Text {
+public final class UrlAsInputTest {
 
     /**
-     * The input.
+     * FileAsInput can read file content.
+     * @throws IOException If some problem inside
      */
-    private final Input source;
-
-    /**
-     * Ctor.
-     * @param input The input
-     */
-    public InputAsText(final Input input) {
-        this.source = input;
+    @Test
+    public void readsFileContent() throws IOException {
+        MatcherAssert.assertThat(
+            new InputAsBytes(
+                new UrlAsInput(
+                    this.getClass().getResource(
+                        "/org/cactoos/io/UrlAsInput.class"
+                    )
+                )
+            ).asBytes().length,
+            Matchers.greaterThan(0)
+        );
     }
 
-    @Override
-    public String asString() {
-        try {
-            return new String(new InputAsBytes(this.source).asBytes());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
 }
