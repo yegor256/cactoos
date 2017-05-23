@@ -116,6 +116,16 @@ new ForEach(
 ).run();
 ```
 
+## How to contribute?
+
+Just fork the repo and send us a pull request.
+
+Make sure your branch builds without any warnings/issues:
+
+```
+mvn clean install -Pqulice
+```
+
 ## License (MIT)
 
 Copyright (c) 2017 Yegor Bugayenko
