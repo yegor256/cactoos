@@ -13,7 +13,7 @@ We are not happy with
 [JDK](https://en.wikipedia.org/wiki/Java_Development_Kit),
 [Guava](https://github.com/google/guava), and
 [Apache Commons](https://commons.apache.org/) because
-they are procedural, not object-oriented. They do their job,
+they are procedural and not object-oriented. They do their job,
 but mostly through static methods. Cactoos is suggesting
 to do almost exactly the same, but through objects.
 
@@ -26,7 +26,7 @@ There are a few design principles behind Cactoos:
   * No public methods without `@Override`
 
 **How to use**.
-The library has no dependencies. All you need to do is this:
+The library has no dependencies. All you need is this:
 
 ```xml
 <dependency>
