@@ -29,21 +29,21 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link BlankText}.
+ * Test case for {@link IsBlankText}.
  * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class BlankTextTest {
+public final class IsBlankTextTest {
 
     /**
-     * BlankText can detect empty string.
+     * IsBlankText can detect empty string.
      * @throws IOException If some problem inside
      */
     @Test
     public void determinesEmptyText() throws IOException {
         MatcherAssert.assertThat(
-            new BlankText(
+            new IsBlankText(
                 new StringAsText("")
             ).asValue(),
             Matchers.is(Boolean.TRUE)
@@ -51,28 +51,28 @@ public final class BlankTextTest {
     }
 
     /**
-     * BlankText can detect blank string.
+     * IsBlankText can detect blank string.
      * @throws IOException If some problem inside
      */
     @Test
     public void determinesBlankText() throws IOException {
         MatcherAssert.assertThat(
-            new BlankText(
-                new StringAsText("   ")
+            new IsBlankText(
+                new StringAsText("  ")
             ).asValue(),
             Matchers.is(Boolean.TRUE)
         );
     }
 
     /**
-     * BlankText can detect non blank string.
+     * IsBlankText can detect non blank string.
      * @throws IOException If some problem inside
      */
     @Test
     public void determinesNotBlankText() throws IOException {
         MatcherAssert.assertThat(
-            new BlankText(
-                new StringAsText("full")
+            new IsBlankText(
+                new StringAsText("not empty")
             ).asValue(),
             Matchers.is(Boolean.FALSE)
         );

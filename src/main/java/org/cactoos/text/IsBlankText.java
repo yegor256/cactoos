@@ -36,7 +36,7 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.1
  */
-public final class BlankText implements Scalar<Boolean> {
+public final class IsBlankText implements Scalar<Boolean> {
 
     /**
      * The text.
@@ -47,7 +47,7 @@ public final class BlankText implements Scalar<Boolean> {
      * Ctor.
      * @param text The text
      */
-    public BlankText(final Text text) {
+    public IsBlankText(final Text text) {
         this.origin = text;
     }
 
