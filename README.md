@@ -41,6 +41,8 @@ The library has no dependencies. All you need is this
 </dependency>
 ```
 
+Java version required: 1.8+.
+
 ## Input/Output
 
 To read a file:
