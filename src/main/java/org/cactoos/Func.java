@@ -23,8 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
-
 /**
  * Function.
  *
@@ -42,8 +40,8 @@ public interface Func<X, Y> {
      * Apply it.
      * @param input The argument
      * @return The result
-     * @throws IOException If fails
+     * @throws Exception If fails
      */
-    Y apply(X input) throws IOException;
+    Y apply(X input) throws Exception;
 
 }

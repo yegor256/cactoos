@@ -23,7 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -78,7 +77,7 @@ public final class FilteredIterator<X> implements Iterator<X> {
                         this.buffer.add(object);
                         break;
                     }
-                } catch (final IOException ex) {
+                } catch (final Exception ex) {
                     throw new IllegalStateException(ex);
                 }
             }
