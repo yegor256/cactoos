@@ -125,7 +125,7 @@ To sort a list of words in the file:
 List<String> sorted = new SortedList<>(
   new IterableAsList(
     new TextAsLines(
-      new InputAsString(
+      new InputAsText(
         new FileAsInput(
           new File("/tmp/names.txt")
         )
