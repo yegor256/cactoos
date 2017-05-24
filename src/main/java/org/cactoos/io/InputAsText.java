@@ -23,6 +23,8 @@
  */
 package org.cactoos.io;
 
+import java.io.IOException;
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -50,7 +52,7 @@ public final class InputAsText implements Text {
     }
 
     @Override
-    public String asString() {
+    public String asString() throws IOException {
         return new String(new InputAsBytes(this.source).asBytes());
     }
 }

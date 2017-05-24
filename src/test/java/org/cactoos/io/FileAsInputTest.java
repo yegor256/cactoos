@@ -46,15 +46,17 @@ public final class FileAsInputTest {
     public void readsFileContent() throws IOException {
         final File temp = File.createTempFile("cactoos", "txt");
         temp.deleteOnExit();
-        new Pipe(
-            new TextAsInput(new StringAsText("Hello, друг!")),
-            new FileAsOutput(temp)
-        ).push();
         MatcherAssert.assertThat(
             new InputAsText(
-                new FileAsInput(temp)
+                new TeeInput(
+                    new TextAsInput(new StringAsText("Hello, друг!")),
+                    new FileAsOutput(temp)
+                )
             ).asString(),
             Matchers.allOf(
+                Matchers.equalTo(
+                    new InputAsText(new FileAsInput(temp)).asString()
+                ),
                 Matchers.startsWith("Hello, "),
                 Matchers.endsWith("друг!")
             )

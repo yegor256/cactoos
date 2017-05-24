@@ -21,14 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import org.cactoos.io.FileAsInput;
 
 /**
- * Input to Output copying pipe.
+ * Input.
+ *
+ * <p>Here is for example how {@link Input} can be used
+ * in order to read the content of a text file:</p>
+ *
+ * <pre> String content = new InputAsText(
+ *   new FileAsInput(new File("/tmp/names.txt"))
+ * ).asString();</pre>
+ *
+ * <p>Here {@link FileAsInput} implements {@link Input} and behaves like
+ * one, providing read-only access to the encapsulated {@link java.io.File}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -36,61 +46,13 @@ import java.io.OutputStream;
  * @version $Id$
  * @since 0.1
  */
-public final class Pipe {
+public interface Input {
 
     /**
-     * The source.
+     * Get read access to it.
+     * @return InputStream to read from
+     * @throws IOException If something goes wrong
      */
-    private final Input source;
-
-    /**
-     * The destination.
-     */
-    private final Output target;
-
-    /**
-     * Buffer size.
-     */
-    private final int size;
-
-    /**
-     * Ctor.
-     * @param input The source
-     * @param output The target
-     */
-    public Pipe(final Input input, final Output output) {
-        // @checkstyle MagicNumber (1 line)
-        this(input, output, 16 << 10);
-    }
-
-    /**
-     * Ctor.
-     * @param input The source
-     * @param output The target
-     * @param buf Buffer length
-     */
-    public Pipe(final Input input, final Output output, final int buf) {
-        this.source = input;
-        this.target = output;
-        this.size = buf;
-    }
-
-    /**
-     * Copy.
-     * @throws IOException If fails
-     */
-    public void push() throws IOException {
-        final byte[] buffer = new byte[this.size];
-        try (final InputStream input = this.source.open();
-            final OutputStream output = this.target.open()) {
-            while (true) {
-                final int max = input.read(buffer);
-                output.write(buffer, 0, max);
-                if (max < buffer.length) {
-                    break;
-                }
-            }
-        }
-    }
+    InputStream open() throws IOException;
 
 }

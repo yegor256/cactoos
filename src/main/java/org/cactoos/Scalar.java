@@ -21,41 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import org.cactoos.Output;
+import java.io.IOException;
 
 /**
- * File as Output.
+ * Scalar.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @param <T> Type of result
  * @since 0.1
  */
-public final class FileAsOutput implements Output {
+public interface Scalar<T> {
 
     /**
-     * The file.
+     * Convert it to the value.
+     * @return The value
+     * @throws IOException If fails
      */
-    private final File file;
-
-    /**
-     * Ctor.
-     * @param src The file
-     */
-    public FileAsOutput(final File src) {
-        this.file = src;
-    }
-
-    @Override
-    public OutputStream open() throws FileNotFoundException {
-        return new FileOutputStream(this.file);
-    }
+    T asValue() throws IOException;
 
 }

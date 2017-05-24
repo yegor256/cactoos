@@ -24,7 +24,9 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -52,7 +54,7 @@ public final class TextAsInput implements Input {
     }
 
     @Override
-    public InputStream open() {
+    public InputStream open() throws IOException {
         return new ByteArrayInputStream(this.source.asString().getBytes());
     }
 

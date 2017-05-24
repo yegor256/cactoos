@@ -23,39 +23,47 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import org.cactoos.Output;
+import java.io.IOException;
+import org.cactoos.text.StringAsText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * File as Output.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link LengthOfInput}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class FileAsOutput implements Output {
+public final class LengthOfInputTest {
 
     /**
-     * The file.
+     * LengthOfInput can calculate length.
+     * @throws IOException If some problem inside
      */
-    private final File file;
-
-    /**
-     * Ctor.
-     * @param src The file
-     */
-    public FileAsOutput(final File src) {
-        this.file = src;
+    @Test
+    public void calculatesLength() throws IOException {
+        final String text = "What's up, друг?";
+        MatcherAssert.assertThat(
+            new LengthOfInput(
+                new TextAsInput(
+                    new StringAsText(text)
+                )
+            ).asValue(),
+            Matchers.equalTo((long) text.getBytes().length)
+        );
     }
 
-    @Override
-    public OutputStream open() throws FileNotFoundException {
-        return new FileOutputStream(this.file);
+    /**
+     * LengthOfInput can calculate zero length.
+     * @throws IOException If some problem inside
+     */
+    @Test
+    public void calculatesZeroLength() throws IOException {
+        MatcherAssert.assertThat(
+            new LengthOfInput(new DeadInput()).asValue(),
+            Matchers.equalTo(0L)
+        );
     }
 
 }

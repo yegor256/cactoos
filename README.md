@@ -24,6 +24,7 @@ There are a few design principles behind Cactoos:
   * No code in constructors ([why?](http://www.yegor256.com/2015/05/07/ctors-must-be-code-free.html))
   * No `static` methods, not even `private` ones ([why?](http://www.yegor256.com/2017/02/07/private-method-is-new-class.html))
   * No public methods without `@Override`
+  * No statements in test methods except `assertThat` ([why?](http://www.yegor256.com/2017/05/17/single-statement-unit-tests.html))
 
 **How to use**.
 The library has no dependencies. All you need is this
@@ -52,21 +53,19 @@ String text = new InputAsText(
 ).asString();
 ```
 
-To write a file:
+To write a text into a file:
 
 ```java
-import java.io.File;
-import org.cactoos.io.FileAsOutput;
-import org.cactoos.io.Pipe;
-import org.cactoos.io.TextAsInput;
-new Pipe(
-  new FileAsOutput(
-    new File("/code/a.txt")
-  ),
-  new TextAsInput(
-    new StringAsText("Hello, world!")
+new LengthOfInput(
+  new TeeInput(
+    new TextAsInput(
+      new StringAsText("Hello, world!")
+    ),
+    new FileAsOutput(
+      new File("/code/a.txt")
+    )
   )
-).push();
+).measure();
 ```
 
 To read a binary file from classpath:
@@ -84,7 +83,6 @@ byte[] data = new InputAsBytes(
 To format a text:
 
 ```java
-import org.cactoos.texts.Sprintf;
 String text = new Sprintf(
   "How are you, %s?", name
 ).asString();
@@ -95,11 +93,6 @@ String text = new Sprintf(
 To filter a collection:
 
 ```java
-import java.util.Arrays;
-import java.util.Collection;
-import org.cactoos.lists.ArrayAsIterable;
-import org.cactoos.lists.FilteredIterable;
-import org.cactoos.lists.IterableAsCollection;
 Collection<String> filtered = new IterableAsCollection(
   new FilteredIterable<>(
     new ArrayAsIterable("hello", "world", "dude"),
@@ -126,9 +119,6 @@ new IterableAsCollection(
 To iterate a collection:
 
 ```java
-import org.cactoos.lists.ArrayAsIterable;
-import org.cactoos.lists.TransformedIterable;
-import org.cactoos.lists.Loop;
 new Loop(
   new TransformedIterable(
     new ArrayAsIterable("how", "are", "you"),

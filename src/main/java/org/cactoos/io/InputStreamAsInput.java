@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.InputStream;
+import org.cactoos.Input;
 
 /**
  * InputStream as Input.

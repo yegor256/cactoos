@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import org.cactoos.Input;
 
 /**
  * URL as Input.

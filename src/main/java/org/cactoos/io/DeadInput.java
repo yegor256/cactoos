@@ -23,14 +23,13 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import org.cactoos.Output;
+import java.io.IOException;
+import java.io.InputStream;
+import org.cactoos.Input;
+import org.cactoos.text.StringAsText;
 
 /**
- * File as Output.
+ * Input with no data.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -38,24 +37,11 @@ import org.cactoos.Output;
  * @version $Id$
  * @since 0.1
  */
-public final class FileAsOutput implements Output {
-
-    /**
-     * The file.
-     */
-    private final File file;
-
-    /**
-     * Ctor.
-     * @param src The file
-     */
-    public FileAsOutput(final File src) {
-        this.file = src;
-    }
+public final class DeadInput implements Input {
 
     @Override
-    public OutputStream open() throws FileNotFoundException {
-        return new FileOutputStream(this.file);
+    public InputStream open() throws IOException {
+        return new TextAsInput(new StringAsText("")).open();
     }
 
 }

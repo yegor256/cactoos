@@ -25,7 +25,9 @@ package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import org.cactoos.Bytes;
+import org.cactoos.Input;
 
 /**
  * Input as Byte Array.
@@ -44,23 +46,43 @@ public final class InputAsBytes implements Bytes {
     private final Input source;
 
     /**
+     * The buffer size.
+     */
+    private final int size;
+
+    /**
      * Ctor.
      * @param input The input
      */
     public InputAsBytes(final Input input) {
+        // @checkstyle MagicNumber (1 line)
+        this(input, 16 << 10);
+    }
+
+    /**
+     * Ctor.
+     * @param input The input
+     * @param max Max length of the buffer for reading
+     */
+    public InputAsBytes(final Input input, final int max) {
         this.source = input;
+        this.size = max;
     }
 
     @Override
-    public byte[] asBytes() {
+    public byte[] asBytes() throws IOException {
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            new Pipe(
+            final InputStream stream = new TeeInput(
                 this.source,
                 new OutputStreamAsOutput(baos)
-            ).push();
+            ).open();
+            final byte[] buf = new byte[this.size];
+            while (true) {
+                if (stream.read(buf) != buf.length) {
+                    break;
+                }
+            }
             return baos.toByteArray();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
         }
     }
 }

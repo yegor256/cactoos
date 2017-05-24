@@ -23,6 +23,8 @@
  */
 package org.cactoos;
 
+import java.io.IOException;
+
 /**
  * Text.
  *
@@ -37,7 +39,8 @@ public interface Text {
     /**
      * Convert it to the string.
      * @return The string
+     * @throws IOException If fails
      */
-    String asString();
+    String asString() throws IOException;
 
 }

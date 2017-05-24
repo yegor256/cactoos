@@ -21,30 +21,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
 import java.io.IOException;
+import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link UpperText}.
+ * Test case for {@link InputAsBytes}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class UpperTextTest {
+public final class InputAsBytesTest {
 
     /**
-     * UpperText can process text.
+     * InputAsBytes can read input.
      * @throws IOException If some problem inside
      */
     @Test
-    public void convertsText() throws IOException {
+    public void readsInputIntoBytes() throws IOException {
         MatcherAssert.assertThat(
-            new UpperText(new StringAsText("Hello!")).asString(),
-            Matchers.equalTo("HELLO!")
+            new String(
+                new InputAsBytes(
+                    new TextAsInput(
+                        new StringAsText("Hello, друг!")
+                    )
+                ).asBytes()
+            ),
+            Matchers.allOf(
+                Matchers.startsWith("Hello, "),
+                Matchers.endsWith("друг!")
+            )
+        );
+    }
+
+    /**
+     * InputAsBytes can read input with small buffer.
+     * @throws IOException If some problem inside
+     */
+    @Test
+    public void readsInputIntoBytesWithSmallBuffer() throws IOException {
+        MatcherAssert.assertThat(
+            new String(
+                new InputAsBytes(
+                    new TextAsInput(
+                        new StringAsText("Hello, товарищ!")
+                    ),
+                    2
+                ).asBytes()
+            ),
+            Matchers.allOf(
+                Matchers.startsWith("Hello,"),
+                Matchers.endsWith("товарищ!")
+            )
         );
     }
 

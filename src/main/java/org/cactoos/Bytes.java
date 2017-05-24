@@ -23,6 +23,8 @@
  */
 package org.cactoos;
 
+import java.io.IOException;
+
 /**
  * Bytes.
  *
@@ -37,7 +39,8 @@ public interface Bytes {
     /**
      * Convert it to the byte array.
      * @return The byte array
+     * @throws IOException If fails
      */
-    byte[] asBytes();
+    byte[] asBytes() throws IOException;
 
 }

@@ -23,14 +23,13 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import org.cactoos.Output;
+import java.io.IOException;
+import java.io.InputStream;
+import org.cactoos.Input;
+import org.cactoos.Scalar;
 
 /**
- * File as Output.
+ * Length of Input.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -38,24 +37,52 @@ import org.cactoos.Output;
  * @version $Id$
  * @since 0.1
  */
-public final class FileAsOutput implements Output {
+public final class LengthOfInput implements Scalar<Long> {
 
     /**
-     * The file.
+     * The input.
      */
-    private final File file;
+    private final Input source;
+
+    /**
+     * The buffer size.
+     */
+    private final int size;
 
     /**
      * Ctor.
-     * @param src The file
+     * @param input The input
      */
-    public FileAsOutput(final File src) {
-        this.file = src;
+    public LengthOfInput(final Input input) {
+        // @checkstyle MagicNumber (1 line)
+        this(input, 16 << 10);
+    }
+
+    /**
+     * Ctor.
+     * @param input The input
+     * @param max Buffer size
+     */
+    public LengthOfInput(final Input input, final int max) {
+        this.source = input;
+        this.size = max;
     }
 
     @Override
-    public OutputStream open() throws FileNotFoundException {
-        return new FileOutputStream(this.file);
+    public Long asValue() throws IOException {
+        final InputStream stream = this.source.open();
+        final byte[] buf = new byte[this.size];
+        long length = 0L;
+        while (true) {
+            final int len = stream.read(buf);
+            if (len > 0) {
+                length += (long) len;
+            }
+            if (len != buf.length) {
+                break;
+            }
+        }
+        return length;
     }
 
 }

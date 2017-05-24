@@ -24,34 +24,36 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import java.io.InputStream;
+import org.cactoos.text.StringAsText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Input.
- *
- * <p>Here is for example how {@link Input} can be used
- * in order to read the content of a text file:</p>
- *
- * <pre> String content = new InputAsText(
- *   new FileAsInput(new File("/tmp/names.txt"))
- * ).asString();</pre>
- *
- * <p>Here {@link FileAsInput} implements {@link Input} and behaves like
- * one, providing read-only access to the encapsulated {@link java.io.File}.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link InputAsText}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public interface Input {
+public final class InputAsTextTest {
 
     /**
-     * Get read access to it.
-     * @return InputStream to read from
-     * @throws IOException If something goes wrong
+     * InputAsText can read input.
+     * @throws IOException If some problem inside
      */
-    InputStream open() throws IOException;
+    @Test
+    public void readsInputIntoText() throws IOException {
+        MatcherAssert.assertThat(
+            new InputAsText(
+                new TextAsInput(
+                    new StringAsText("Hello, друг!")
+                )
+            ).asString(),
+            Matchers.allOf(
+                Matchers.startsWith("Hello, "),
+                Matchers.endsWith("друг!")
+            )
+        );
+    }
 
 }

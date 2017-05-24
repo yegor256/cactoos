@@ -23,36 +23,28 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.io.OutputStream;
+import org.cactoos.Output;
 
 /**
- * Test case for {@link Pipe}.
+ * Output that accepts anything.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class PipeTest {
+public final class DeadOutput implements Output {
 
-    /**
-     * Pipe can load URL content.
-     * @throws IOException If some problem inside
-     */
-    @Test
-    public void loadsUrlContent() throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new Pipe(
-            new UrlAsInput(new URL("http://www.cactoos.org/index.html")),
-            new OutputStreamAsOutput(baos)
-        ).push();
-        MatcherAssert.assertThat(
-            new String(baos.toByteArray()),
-            Matchers.containsString("<html")
-        );
+    @Override
+    public OutputStream open() {
+        return new OutputStream() {
+            @Override
+            @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
+            public void write(final int data) {
+            }
+        };
     }
 
 }

@@ -21,10 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import org.cactoos.io.FileAsOutput;
+import org.cactoos.io.TeeInput;
 
 /**
  * Output.
@@ -40,8 +42,8 @@ import java.io.OutputStream;
  *
  * <p>Here {@link FileAsOutput} implements {@link Output} and behaves like
  * one, providing write-only access to the encapsulated
- * {@link java.io.File}. The {@link Pipe} copies the content of the
- * input to the output, when its method {@link Pipe#push()} is called.</p>
+ * {@link java.io.File}. The {@link TeeInput} copies the content of the
+ * input to the output, when its method {@link TeeInput#push()} is called.</p>
  *
  * <p>There is no thread-safety guarantee.
  *

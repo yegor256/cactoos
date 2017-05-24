@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
 import java.util.Locale;
 import org.cactoos.Text;
 
@@ -66,7 +67,7 @@ public final class UpperText implements Text {
     }
 
     @Override
-    public String asString() {
+    public String asString() throws IOException {
         return this.origin.asString().toUpperCase(this.locale);
     }
 

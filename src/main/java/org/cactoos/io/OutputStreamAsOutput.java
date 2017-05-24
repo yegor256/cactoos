@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.OutputStream;
+import org.cactoos.Output;
 
 /**
  * OutputStream as Output.

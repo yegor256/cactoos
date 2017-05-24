@@ -23,39 +23,42 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import org.cactoos.Output;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * File as Output.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link TeeInput}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class FileAsOutput implements Output {
+public final class TeeInputTest {
 
     /**
-     * The file.
+     * Pipe can load URL content.
+     * @throws IOException If some problem inside
      */
-    private final File file;
-
-    /**
-     * Ctor.
-     * @param src The file
-     */
-    public FileAsOutput(final File src) {
-        this.file = src;
-    }
-
-    @Override
-    public OutputStream open() throws FileNotFoundException {
-        return new FileOutputStream(this.file);
+    @Test
+    public void loadsUrlContent() throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        MatcherAssert.assertThat(
+            new InputAsText(
+                new TeeInput(
+                    new UrlAsInput(
+                        new URL("http://www.cactoos.org/index.html")
+                    ),
+                    new OutputStreamAsOutput(baos)
+                )
+            ).asString(),
+            Matchers.allOf(
+                Matchers.equalTo(new String(baos.toByteArray())),
+                Matchers.containsString("<html")
+            )
+        );
     }
 
 }
