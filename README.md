@@ -26,13 +26,14 @@ There are a few design principles behind Cactoos:
   * No public methods without `@Override`
 
 **How to use**.
-The library has no dependencies. All you need is this:
+The library has no dependencies. All you need is this
+(get the latest version [here](https://github.com/yegor256/cactoos/releases)):
 
 ```xml
 <dependency>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
-  <version>0.1</version>
+  <version>...</version>
 </dependency>
 ```
 
