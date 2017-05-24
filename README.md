@@ -85,9 +85,9 @@ To format a text:
 
 ```java
 import org.cactoos.strings.Sprintf;
-CharSequence text = new Sprintf(
+String text = new Sprintf(
   "How are you, %s?", name
-);
+).asString();
 ```
 
 ## Iterables/Collections/Lists/Sets
