@@ -68,6 +68,7 @@ public final class FilteredIterator<X> implements Iterator<X> {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public boolean hasNext() {
         if (this.buffer.isEmpty()) {
             while (this.iterator.hasNext()) {
