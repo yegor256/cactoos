@@ -23,10 +23,9 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-
-import java.io.IOException;
 
 /**
  * Determines if text is blank (consists of spaces) or no.
@@ -34,23 +33,33 @@ import java.io.IOException;
  * <p>There is no thread-safety guarantee.
  *
  * @author Andriy Kryvtsun (kontiky@gmail.com)
+ * @version $Id$
  * @since 0.1
  */
 public final class BlankText implements Scalar<Boolean> {
 
+    /**
+     * The text.
+     */
     private final Text origin;
 
-    public BlankText(Text text) {
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public BlankText(final Text text) {
         this.origin = text;
     }
 
     public Boolean asValue() throws IOException {
-        final String str = origin.asString();
+        boolean result = true;
+        final String str = this.origin.asString();
         for (int i = 0; i < str.length(); i++) {
             if (!Character.isWhitespace(str.charAt(i))) {
-                return false;
+                result = false;
+                break;
             }
         }
-        return true;
+        return result;
     }
 }
