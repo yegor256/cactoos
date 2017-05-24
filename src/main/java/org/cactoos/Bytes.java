@@ -21,12 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
-
-import org.cactoos.Text;
+package org.cactoos;
 
 /**
- * Input as Text.
+ * Bytes.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -34,23 +32,12 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.1
  */
-public final class InputAsText implements Text {
+public interface Bytes {
 
     /**
-     * The input.
+     * Convert it to the byte array.
+     * @return The byte array
      */
-    private final Input source;
+    byte[] asBytes();
 
-    /**
-     * Ctor.
-     * @param input The input
-     */
-    public InputAsText(final Input input) {
-        this.source = input;
-    }
-
-    @Override
-    public String asString() {
-        return new String(new InputAsBytes(this.source).asBytes());
-    }
 }

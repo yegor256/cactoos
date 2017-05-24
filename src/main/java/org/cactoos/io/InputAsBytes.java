@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import org.cactoos.Bytes;
 
 /**
  * Input as Byte Array.
@@ -35,7 +36,7 @@ import java.io.IOException;
  * @version $Id$
  * @since 0.1
  */
-public final class InputAsBytes {
+public final class InputAsBytes implements Bytes {
 
     /**
      * The input.
@@ -50,17 +51,16 @@ public final class InputAsBytes {
         this.source = input;
     }
 
-    /**
-     * Convert it to byte array.
-     * @return The byte array
-     * @throws IOException If fails
-     */
-    public byte[] asBytes() throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new Pipe(
-            this.source,
-            new OutputStreamAsOutput(baos)
-        ).push();
-        return baos.toByteArray();
+    @Override
+    public byte[] asBytes() {
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            new Pipe(
+                this.source,
+                new OutputStreamAsOutput(baos)
+            ).push();
+            return baos.toByteArray();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 }
