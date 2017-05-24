@@ -88,6 +88,15 @@ String text = new Sprintf(
 ).asString();
 ```
 
+To manipulate with a text:
+
+```java
+// To lower case
+new LowerText("Hello");
+// To upper case
+new UpperText("Hello");
+```
+
 ## Iterables/Collections/Lists/Sets
 
 To filter a collection:
