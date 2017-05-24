@@ -156,6 +156,14 @@ List<String> sorted = new SortedList<>(
 );
 ```
 
+To count elements in an iterable:
+
+```java
+int total = new LengthOfIterable(
+  new ArrayAsIterable<>("how", "are", "you")
+).asValue();
+```
+
 ## How to contribute?
 
 Just fork the repo and send us a pull request.
