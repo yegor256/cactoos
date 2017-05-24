@@ -25,9 +25,10 @@ package org.cactoos.io;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import org.cactoos.Text;
 
 /**
- * Text as an input.
+ * Text as Input.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -40,19 +41,19 @@ public final class TextAsInput implements Input {
     /**
      * The source.
      */
-    private final String source;
+    private final Text source;
 
     /**
      * Ctor.
      * @param text The text
      */
-    public TextAsInput(final String text) {
+    public TextAsInput(final Text text) {
         this.source = text;
     }
 
     @Override
     public InputStream open() {
-        return new ByteArrayInputStream(this.source.getBytes());
+        return new ByteArrayInputStream(this.source.asString().getBytes());
     }
 
 }

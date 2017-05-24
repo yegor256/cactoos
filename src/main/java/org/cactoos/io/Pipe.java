@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Copying pipe.
+ * Input to Output copying pipe.
  *
  * <p>There is no thread-safety guarantee.
  *

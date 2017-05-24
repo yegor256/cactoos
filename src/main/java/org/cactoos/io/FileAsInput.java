@@ -29,7 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 /**
- * Input from a file.
+ * File as Input.
  *
  * <p>There is no thread-safety guarantee.
  *

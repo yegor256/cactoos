@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * Input as text.
+ * Input as Text.
  *
  * <p>There is no thread-safety guarantee.
  *

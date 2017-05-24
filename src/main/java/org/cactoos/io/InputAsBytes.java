@@ -27,7 +27,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * Input as text.
+ * Input as Byte Array.
  *
  * <p>There is no thread-safety guarantee.
  *

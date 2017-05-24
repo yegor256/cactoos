@@ -29,7 +29,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 /**
- * Output to a file.
+ * File as Output.
  *
  * <p>There is no thread-safety guarantee.
  *

@@ -26,7 +26,7 @@ package org.cactoos.io;
 import java.io.OutputStream;
 
 /**
- * OutputStream as output.
+ * OutputStream as Output.
  *
  * <p>There is no thread-safety guarantee.
  *
