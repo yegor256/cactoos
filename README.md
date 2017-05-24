@@ -105,10 +105,10 @@ new UpperText("Hello");
 To filter a collection:
 
 ```java
-Collection<String> filtered = new IterableAsCollection(
+Collection<String> filtered = new IterableAsCollection<>(
   new FilteredIterable<>(
-    new ArrayAsIterable("hello", "world", "dude"),
-    new Function<String, Boolean>() {
+    new ArrayAsIterable<>("hello", "world", "dude"),
+    new Func<String, Boolean>() {
       @Override
       public boolean apply(String i) {
         return i.length() > 4;
@@ -121,9 +121,9 @@ Collection<String> filtered = new IterableAsCollection(
 With Lambda:
 
 ```java
-new IterableAsCollection(
+new IterableAsCollection<>(
   new FilteredIterable<>(
-    new ArrayAsIterable("hello", "world", "dude"),
+    new ArrayAsIterable<>("hello", "world", "dude"),
     i -> i.length() > 4
   )
 );
@@ -133,8 +133,8 @@ To iterate a collection:
 
 ```java
 new Loop(
-  new TransformedIterable(
-    new ArrayAsIterable("how", "are", "you"),
+  new TransformedIterable<>(
+    new ArrayAsIterable<>("how", "are", "you"),
     i -> System.out.printf("Item: %s\n", i)
   )
 ).run();
@@ -144,7 +144,7 @@ To sort a list of words in the file:
 
 ```java
 List<String> sorted = new SortedList<>(
-  new IterableAsList(
+  new IterableAsList<>(
     new TextAsLines(
       new InputAsText(
         new FileAsInput(
