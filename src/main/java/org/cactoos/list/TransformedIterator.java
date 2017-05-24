@@ -65,6 +65,7 @@ public final class TransformedIterator<X, Y> implements Iterator<Y> {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Y next() {
         try {
             return this.func.apply(this.iterator.next());

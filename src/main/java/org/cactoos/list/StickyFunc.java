@@ -61,6 +61,7 @@ public final class StickyFunc<X, Y> implements Func<X, Y> {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Y apply(final X input) throws Exception {
         if (!this.cache.containsKey(input)) {
             this.cache.put(input, this.func.apply(input));
