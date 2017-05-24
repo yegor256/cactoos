@@ -79,12 +79,12 @@ byte[] data = new InputAsBytes(
 ).asBytes();
 ```
 
-## Strings
+## Text/Strings
 
 To format a text:
 
 ```java
-import org.cactoos.strings.Sprintf;
+import org.cactoos.texts.Sprintf;
 String text = new Sprintf(
   "How are you, %s?", name
 ).asString();
