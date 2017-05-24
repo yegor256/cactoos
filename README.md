@@ -63,7 +63,9 @@ new Pipe(
   new FileAsOutput(
     new File("/code/a.txt")
   ),
-  new TextAsInput("Hello, world!")
+  new TextAsInput(
+    new StringAsText("Hello, world!")
+  )
 ).push();
 ```
 
