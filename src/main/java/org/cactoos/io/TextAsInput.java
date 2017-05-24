@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import org.cactoos.Input;
 import org.cactoos.Text;
 
@@ -46,16 +47,35 @@ public final class TextAsInput implements Input {
     private final Text source;
 
     /**
-     * Ctor.
+     * Text charset.
+     */
+    private final Charset charset;
+
+    /**
+     * New {@link TextAsInput} with default charset.
+     *
      * @param text The text
      */
     public TextAsInput(final Text text) {
+        this(text, Charset.defaultCharset());
+    }
+
+    /**
+     * New {@link TextAsInput} with specified charset.
+     *
+     * @param text The text
+     * @param charset Text charset
+     */
+    public TextAsInput(final Text text, final Charset charset) {
         this.source = text;
+        this.charset = charset;
     }
 
     @Override
     public InputStream open() throws IOException {
-        return new ByteArrayInputStream(this.source.asString().getBytes());
+        return new ByteArrayInputStream(
+            this.source.asString().getBytes(this.charset)
+        );
     }
 
 }
