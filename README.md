@@ -65,7 +65,7 @@ new LengthOfInput(
       new File("/code/a.txt")
     )
   )
-).measure();
+).asValue();
 ```
 
 To read a binary file from classpath:
