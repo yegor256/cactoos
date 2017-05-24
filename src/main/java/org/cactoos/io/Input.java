@@ -29,6 +29,16 @@ import java.io.InputStream;
 /**
  * Input.
  *
+ * <p>Here is for example how {@link Input} can be used
+ * in order to read the content of a text file:</p>
+ *
+ * <pre> String content = new InputAsText(
+ *   new FileAsInput(new File("/tmp/names.txt"))
+ * ).asString();</pre>
+ *
+ * <p>Here {@link FileAsInput} implements {@link Input} and behaves like
+ * one, providing read-only access to the encapsulated {@link java.io.File}.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)

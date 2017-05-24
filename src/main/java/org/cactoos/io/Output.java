@@ -29,6 +29,20 @@ import java.io.OutputStream;
 /**
  * Output.
  *
+ * <p>Here is for example how {@link Output} can be used
+ * together with {@link Output} in order to modify the content
+ * of a text file:</p>
+ *
+ * <pre> new Pipe(
+ *   new TextAsInput(new StringAsText("Hello, world!")),
+ *   new FileAsOutput(new File("/tmp/names.txt"))
+ * ).push();</pre>
+ *
+ * <p>Here {@link FileAsOutput} implements {@link Output} and behaves like
+ * one, providing write-only access to the encapsulated
+ * {@link java.io.File}. The {@link Pipe} copies the content of the
+ * input to the output, when its method {@link Pipe#push()} is called.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
