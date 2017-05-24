@@ -45,11 +45,11 @@ To read a file:
 import java.io.File;
 import org.cactoos.io.FileAsInput;
 import org.cactoos.io.InputAsText;
-CharSequence text = new InputAsText(
+String text = new InputAsText(
   new FileAsInput(
     new File("/code/a.txt")
   )
-);
+).asString();
 ```
 
 To write a file:
