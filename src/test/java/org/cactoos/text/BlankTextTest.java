@@ -44,7 +44,7 @@ public final class BlankTextTest {
     public void determinesEmptyText() throws IOException {
         MatcherAssert.assertThat(
             new BlankText(
-                    new StringAsText("")
+                new StringAsText("")
             ).asValue(),
             Matchers.is(Boolean.TRUE)
         );
@@ -58,7 +58,7 @@ public final class BlankTextTest {
     public void determinesBlankText() throws IOException {
         MatcherAssert.assertThat(
             new BlankText(
-                    new StringAsText("   ")
+                new StringAsText("   ")
             ).asValue(),
             Matchers.is(Boolean.TRUE)
         );
@@ -72,7 +72,7 @@ public final class BlankTextTest {
     public void determinesNotBlankText() throws IOException {
         MatcherAssert.assertThat(
             new BlankText(
-                    new StringAsText("full")
+                new StringAsText("full")
             ).asValue(),
             Matchers.is(Boolean.FALSE)
         );

@@ -60,7 +60,7 @@ public final class BlankText implements Scalar<Boolean> {
                 result = false;
                 break;
             }
-            pos++;
+            pos = pos + 1;
         }
         return result;
     }
