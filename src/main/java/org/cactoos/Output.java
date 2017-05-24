@@ -32,18 +32,21 @@ import org.cactoos.io.TeeInput;
  * Output.
  *
  * <p>Here is for example how {@link Output} can be used
- * together with {@link Output} in order to modify the content
+ * together with {@link Input} in order to modify the content
  * of a text file:</p>
  *
- * <pre> new Pipe(
- *   new TextAsInput(new StringAsText("Hello, world!")),
- *   new FileAsOutput(new File("/tmp/names.txt"))
- * ).push();</pre>
+ * <pre> new LengthOfInput(
+ *   new TeeInput(
+ *     new TextAsInput(new StringAsText("Hello, world!")),
+ *     new FileAsOutput(new File("/tmp/names.txt"))
+ *   )
+ * ).asValue();</pre>
  *
  * <p>Here {@link FileAsOutput} implements {@link Output} and behaves like
  * one, providing write-only access to the encapsulated
  * {@link java.io.File}. The {@link TeeInput} copies the content of the
- * input to the output, when its method {@link TeeInput#push()} is called.</p>
+ * input to the output. The {@link org.cactoos.io.LengthOfInput}
+ * calculates the size of the copied data.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
