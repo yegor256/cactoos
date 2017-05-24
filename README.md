@@ -20,9 +20,9 @@ to do almost exactly the same, but through objects.
 **Principles**.
 There are a few design principles behind Cactoos:
 
-  * No `null`
-  * No code in constructors
-  * No `static` methods (even `private` ones)
+  * No `null` ([why?](http://www.yegor256.com/2014/05/13/why-null-is-bad.html))
+  * No code in constructors ([why?](http://www.yegor256.com/2015/05/07/ctors-must-be-code-free.html))
+  * No `static` methods, not even `private` ones ([why?](http://www.yegor256.com/2017/02/07/private-method-is-new-class.html))
   * No public methods without `@Override`
 
 **How to use**.
