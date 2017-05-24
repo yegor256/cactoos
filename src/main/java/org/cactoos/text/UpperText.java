@@ -21,14 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.text;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.Locale;
+import org.cactoos.Text;
 
 /**
- * Input to Output copying pipe.
+ * Text in upper case.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -36,61 +35,39 @@ import java.io.OutputStream;
  * @version $Id$
  * @since 0.1
  */
-public final class Pipe {
+public final class UpperText implements Text {
 
     /**
-     * The source.
+     * The text.
      */
-    private final Input source;
+    private final Text origin;
 
     /**
-     * The destination.
+     * The locale.
      */
-    private final Output target;
-
-    /**
-     * Buffer size.
-     */
-    private final int size;
+    private final Locale locale;
 
     /**
      * Ctor.
-     * @param input The source
-     * @param output The target
+     * @param text The text
      */
-    public Pipe(final Input input, final Output output) {
-        // @checkstyle MagicNumber (1 line)
-        this(input, output, 16 << 10);
+    public UpperText(final Text text) {
+        this(text, Locale.ENGLISH);
     }
 
     /**
      * Ctor.
-     * @param input The source
-     * @param output The target
-     * @param buf Buffer length
+     * @param text The text
+     * @param lang Locale
      */
-    public Pipe(final Input input, final Output output, final int buf) {
-        this.source = input;
-        this.target = output;
-        this.size = buf;
+    public UpperText(final Text text, final Locale lang) {
+        this.origin = text;
+        this.locale = lang;
     }
 
-    /**
-     * Copy.
-     * @throws IOException If fails
-     */
-    public void push() throws IOException {
-        final byte[] buffer = new byte[this.size];
-        try (final InputStream input = this.source.open();
-            final OutputStream output = this.target.open()) {
-            while (true) {
-                final int max = input.read(buffer);
-                output.write(buffer, 0, max);
-                if (max < buffer.length) {
-                    break;
-                }
-            }
-        }
+    @Override
+    public String asString() {
+        return this.origin.asString().toUpperCase(this.locale);
     }
 
 }

@@ -21,43 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.text;
 
-import java.io.File;
-import java.io.IOException;
-import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FileAsInput}.
+ * Test case for {@link UpperText}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class FileAsInputTest {
+public final class UpperTextTest {
 
     /**
-     * FileAsInput can read file content.
-     * @throws IOException If some problem inside
+     * UpperText can process text.
      */
     @Test
-    public void readsFileContent() throws IOException {
-        final File temp = File.createTempFile("cactoos", "txt");
-        temp.deleteOnExit();
-        new Pipe(
-            new TextAsInput(new StringAsText("Hello, друг!")),
-            new FileAsOutput(temp)
-        ).push();
+    public void convertsText() {
         MatcherAssert.assertThat(
-            new InputAsText(
-                new FileAsInput(temp)
-            ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith("Hello, "),
-                Matchers.endsWith("друг!")
-            )
+            new UpperText(new StringAsText("Hello!")).asString(),
+            Matchers.equalTo("HELLO!")
         );
     }
 

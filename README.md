@@ -103,6 +103,21 @@ import org.cactoos.lists.IterableAsCollection;
 Collection<String> filtered = new IterableAsCollection(
   new FilteredIterable<>(
     new ArrayAsIterable("hello", "world", "dude"),
+    new Predicate() {
+      @Override
+
+    }
+    i -> i.length() > 4
+  )
+);
+```
+
+With Lambda:
+
+```java
+new IterableAsCollection(
+  new FilteredIterable<>(
+    new ArrayAsIterable("hello", "world", "dude"),
     i -> i.length() > 4
   )
 );
@@ -112,10 +127,13 @@ To iterate a collection:
 
 ```java
 import org.cactoos.lists.ArrayAsIterable;
-import org.cactoos.lists.ForEach;
-new ForEach(
-  new ArrayAsIterable("how", "are", "you"),
-  i -> System.out.printf("Item: %s\n", i)
+import org.cactoos.lists.TransformedIterable;
+import org.cactoos.lists.Loop;
+new Loop(
+  new TransformedIterable(
+    new ArrayAsIterable("how", "are", "you"),
+    i -> System.out.printf("Item: %s\n", i)
+  )
 ).run();
 ```
 
