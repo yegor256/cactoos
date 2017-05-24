@@ -53,15 +53,9 @@ public final class BlankText implements Scalar<Boolean> {
 
     @Override
     public Boolean asValue() throws IOException {
-        boolean result = true;
-        final String str = this.origin.asString();
-        for (int pos = 0; pos < str.length();) {
-            if (!Character.isWhitespace(str.charAt(pos))) {
-                result = false;
-                break;
-            }
-            pos = pos + 1;
-        }
-        return result;
+        return !this.origin.asString().chars()
+                .filter(c -> !Character.isWhitespace(c))
+                .findFirst()
+                .isPresent();
     }
 }
