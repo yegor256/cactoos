@@ -35,7 +35,7 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.1
  */
-public final class TrimText implements Text {
+public final class TrimmedText implements Text {
 
     /**
      * The text.
@@ -46,7 +46,7 @@ public final class TrimText implements Text {
      * Ctor.
      * @param text The text
      */
-    public TrimText(final Text text) {
+    public TrimmedText(final Text text) {
         this.origin = text;
     }
 

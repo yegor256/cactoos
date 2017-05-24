@@ -29,20 +29,20 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TrimText}.
+ * Test case for {@link TrimmedText}.
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TrimTextTest {
+public final class TrimmedTextTest {
     /**
-     * TrimText can process text.
+     * TrimmedText can process text.
      * @throws IOException If some problem inside
      */
     @Test
     public void convertsText() throws IOException {
         MatcherAssert.assertThat(
-            new TrimText(new StringAsText("  Hello!    ")).asString(),
+            new TrimmedText(new StringAsText("  Hello!    ")).asString(),
             Matchers.equalTo("Hello!")
         );
     }
