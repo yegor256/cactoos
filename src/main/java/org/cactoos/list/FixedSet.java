@@ -21,70 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.list;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import org.cactoos.Input;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Text as Input.
+ * Fixed unmodifiable set of elements.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
+ * @param <T> Set type
  * @since 0.1
  */
-public final class TextAsInput implements Input {
+public final class FixedSet<T> extends SetWrap<T> {
 
     /**
-     * The source.
-     */
-    private final Text source;
-
-    /**
-     * Text charset.
-     */
-    private final Charset charset;
-
-    /**
-     * New {@link TextAsInput} with default charset.
+     * Ctor.
      *
-     * @param text The text
+     * @param elements Set elements
      */
-    public TextAsInput(final String text) {
-        this(new StringAsText(text));
+    @SafeVarargs
+    @SuppressWarnings("varargs")
+    public FixedSet(final T... elements) {
+        this(
+            Arrays.asList(elements)
+        );
     }
 
     /**
      * Ctor.
-     * @param text The text
-     */
-    public TextAsInput(final Text text) {
-        this(text, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link TextAsInput} with specified charset.
      *
-     * @param text The text
-     * @param charset Text charset
+     * @param elements Set elements
      */
-    public TextAsInput(final Text text, final Charset charset) {
-        this.source = text;
-        this.charset = charset;
-    }
-
-    @Override
-    public InputStream open() throws IOException {
-        return new ByteArrayInputStream(
-            this.source.asString().getBytes(this.charset)
+    public FixedSet(final Collection<T> elements) {
+        this(
+            new HashSet<>(elements)
         );
     }
 
+    /**
+     * Ctor.
+     *
+     * @param elements Set elements
+     */
+    public FixedSet(final Set<T> elements) {
+        super(
+            Collections.unmodifiableSet(elements)
+        );
+    }
 }

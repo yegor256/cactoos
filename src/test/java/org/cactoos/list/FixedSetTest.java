@@ -21,59 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.list;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import org.cactoos.Input;
-import org.cactoos.Text;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Input as Text.
+ * Test case for {@link FixedSet}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class InputAsText implements Text {
+public final class FixedSetTest {
 
     /**
-     * The input.
-     */
-    private final Input source;
-
-    /**
-     * Text encoding.
-     */
-    private final Charset charset;
-
-    /**
-     * New {@link InputAsText} with default charset.
+     * Test set contains elements.
      *
-     * @param input The input
+     * @throws Exception if failed
      */
-    public InputAsText(final Input input) {
-        this(input, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link InputAsText} with specified charset.
-     *
-     * @param input The input
-     * @param encoding Text charset
-     */
-    public InputAsText(final Input input, final Charset encoding) {
-        this.source = input;
-        this.charset = encoding;
-    }
-
-    @Override
-    public String asString() throws IOException {
-        return new String(
-            new InputAsBytes(this.source).asBytes(),
-            this.charset
+    @Test
+    public void containsElementsTest() throws Exception {
+        final int target = 42;
+        MatcherAssert.assertThat(
+            new FixedSet<>(target),
+            Matchers.contains(
+                Matchers.equalTo(target)
+            )
         );
     }
 }

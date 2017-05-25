@@ -23,68 +23,35 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
-import org.cactoos.Input;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Text as Input.
+ * Test case for {@link ResourceInput}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TextAsInput implements Input {
+public final class ResourceInputTest {
 
     /**
-     * The source.
-     */
-    private final Text source;
-
-    /**
-     * Text charset.
-     */
-    private final Charset charset;
-
-    /**
-     * New {@link TextAsInput} with default charset.
+     * Test built-in resource.
      *
-     * @param text The text
+     * @throws Exception if failed
      */
-    public TextAsInput(final String text) {
-        this(new StringAsText(text));
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public TextAsInput(final Text text) {
-        this(text, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link TextAsInput} with specified charset.
-     *
-     * @param text The text
-     * @param charset Text charset
-     */
-    public TextAsInput(final Text text, final Charset charset) {
-        this.source = text;
-        this.charset = charset;
-    }
-
-    @Override
-    public InputStream open() throws IOException {
-        return new ByteArrayInputStream(
-            this.source.asString().getBytes(this.charset)
+    @Test
+    public void readResourceTest() throws Exception {
+        MatcherAssert.assertThat(
+            new InputAsText(
+                new ResourceInput(
+                    "org/cactoos/io/resource-input-stream-target.txt"
+                ),
+                Charset.forName("UTF-8")
+            ).asString(),
+            Matchers.equalTo("Resource.\n")
         );
     }
-
 }

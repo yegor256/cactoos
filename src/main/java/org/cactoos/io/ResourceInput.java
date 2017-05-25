@@ -23,68 +23,65 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import org.cactoos.Input;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
+import org.cactoos.text.Sprintf;
 
 /**
- * Text as Input.
+ * Jar class resource.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
+ * @see ClassLoader#getResource(String)
  * @since 0.1
  */
-public final class TextAsInput implements Input {
+public final class ResourceInput implements Input {
 
     /**
-     * The source.
+     * Resource name.
      */
-    private final Text source;
+    private final String res;
 
     /**
-     * Text charset.
+     * Resource class loader.
      */
-    private final Charset charset;
+    private final ClassLoader loader;
 
     /**
-     * New {@link TextAsInput} with default charset.
+     * New resource input with current context {@link ClassLoader}.
      *
-     * @param text The text
+     * @param res Resource name
      */
-    public TextAsInput(final String text) {
-        this(new StringAsText(text));
+    public ResourceInput(final String res) {
+        this(
+            res,
+            Thread.currentThread().getContextClassLoader()
+        );
     }
 
     /**
-     * Ctor.
-     * @param text The text
-     */
-    public TextAsInput(final Text text) {
-        this(text, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link TextAsInput} with specified charset.
+     * New resource input with specified {@link ClassLoader}.
      *
-     * @param text The text
-     * @param charset Text charset
+     * @param res Resource name
+     * @param loader Resource class loader
      */
-    public TextAsInput(final Text text, final Charset charset) {
-        this.source = text;
-        this.charset = charset;
+    public ResourceInput(final String res, final ClassLoader loader) {
+        this.res = res;
+        this.loader = loader;
     }
 
     @Override
     public InputStream open() throws IOException {
-        return new ByteArrayInputStream(
-            this.source.asString().getBytes(this.charset)
-        );
+        final InputStream input = this.loader.getResourceAsStream(this.res);
+        if (input == null) {
+            throw new IOException(
+                new Sprintf(
+                    "Resource '%s' was not found",
+                    this.res
+                ).toString()
+            );
+        }
+        return input;
     }
-
 }

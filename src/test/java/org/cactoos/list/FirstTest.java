@@ -21,70 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.list;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import org.cactoos.Input;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
+import java.util.Arrays;
+import java.util.Collections;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Text as Input.
+ * Test case for {@link First}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TextAsInput implements Input {
+public final class FirstTest {
 
     /**
-     * The source.
-     */
-    private final Text source;
-
-    /**
-     * Text charset.
-     */
-    private final Charset charset;
-
-    /**
-     * New {@link TextAsInput} with default charset.
+     * Get first element in collection.
      *
-     * @param text The text
+     * @throws Exception if failed.
      */
-    public TextAsInput(final String text) {
-        this(new StringAsText(text));
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public TextAsInput(final Text text) {
-        this(text, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link TextAsInput} with specified charset.
-     *
-     * @param text The text
-     * @param charset Text charset
-     */
-    public TextAsInput(final Text text, final Charset charset) {
-        this.source = text;
-        this.charset = charset;
-    }
-
-    @Override
-    public InputStream open() throws IOException {
-        return new ByteArrayInputStream(
-            this.source.asString().getBytes(this.charset)
+    @Test
+    public void firstElementTest() throws Exception {
+        MatcherAssert.assertThat(
+            new First<>(
+                // @checkstyle MagicNumber (1 line)
+                Arrays.asList(1, 2, 3)
+            ).asValue(),
+            Matchers.equalTo(1)
         );
     }
 
+    /**
+     * Throws exception if collection is empty.
+     *
+     * @throws Exception expected exception
+     */
+    @Test(expected = IOException.class)
+    public void failForEmptyCollectionTest() throws Exception {
+        new First<>(Collections.emptyList()).asValue();
+    }
 }

@@ -21,70 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.list;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import org.cactoos.Input;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
+import java.util.Iterator;
+import org.cactoos.Scalar;
 
 /**
- * Text as Input.
+ * First element in {@link Iterable}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
+ * @param <T> Scalar type
  * @since 0.1
  */
-public final class TextAsInput implements Input {
+public final class First<T> implements Scalar<T> {
 
     /**
-     * The source.
+     * Source iterable.
      */
-    private final Text source;
-
-    /**
-     * Text charset.
-     */
-    private final Charset charset;
-
-    /**
-     * New {@link TextAsInput} with default charset.
-     *
-     * @param text The text
-     */
-    public TextAsInput(final String text) {
-        this(new StringAsText(text));
-    }
+    private final Iterable<T> source;
 
     /**
      * Ctor.
-     * @param text The text
-     */
-    public TextAsInput(final Text text) {
-        this(text, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link TextAsInput} with specified charset.
      *
-     * @param text The text
-     * @param charset Text charset
+     * @param source Iterable
      */
-    public TextAsInput(final Text text, final Charset charset) {
-        this.source = text;
-        this.charset = charset;
+    public First(final Iterable<T> source) {
+        this.source = source;
     }
 
     @Override
-    public InputStream open() throws IOException {
-        return new ByteArrayInputStream(
-            this.source.asString().getBytes(this.charset)
-        );
+    public T asValue() throws IOException {
+        final Iterator<T> iterator = this.source.iterator();
+        if (iterator.hasNext()) {
+            return iterator.next();
+        } else {
+            throw new IOException("Iterable is empty");
+        }
     }
-
 }
