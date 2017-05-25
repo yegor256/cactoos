@@ -26,19 +26,7 @@ package org.cactoos.list;
 import org.cactoos.Scalar;
 
 /**
- * Is {@code true} when all items in the collection are {@code true}.
- *
- * <p>You can use this class in order to iterate all items
- * in the collection. This is very similar to the {@code forEach()}
- * in steams, but more object oriented. For example, if you want
- * to print all items from the array:</p>
- *
- * <pre> new AllOf(
- *   new TransformedIterable&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
- *     new ProcAsFunc(i -> System.out.println(i))
- *   )
- * ).asValue();</pre>
+ * Is {@code true} when any item in the collection is {@code true}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -46,7 +34,7 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @since 0.1
  */
-public final class AllOf implements Scalar<Boolean> {
+public final class AnyOf implements Scalar<Boolean> {
 
     /**
      * Iterable.
@@ -57,16 +45,16 @@ public final class AllOf implements Scalar<Boolean> {
      * Ctor.
      * @param src Source iterable
      */
-    public AllOf(final Iterable<Boolean> src) {
+    public AnyOf(final Iterable<Boolean> src) {
         this.iterable = src;
     }
 
     @Override
     public Boolean asValue() {
-        boolean success = true;
+        boolean success = false;
         for (final Boolean item : this.iterable) {
-            if (!item) {
-                success = false;
+            if (item) {
+                success = true;
                 break;
             }
         }

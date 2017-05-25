@@ -23,54 +23,32 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Is {@code true} when all items in the collection are {@code true}.
- *
- * <p>You can use this class in order to iterate all items
- * in the collection. This is very similar to the {@code forEach()}
- * in steams, but more object oriented. For example, if you want
- * to print all items from the array:</p>
- *
- * <pre> new AllOf(
- *   new TransformedIterable&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
- *     new ProcAsFunc(i -> System.out.println(i))
- *   )
- * ).asValue();</pre>
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link AnyOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class AllOf implements Scalar<Boolean> {
+public final class AnyOfTest {
 
     /**
-     * Iterable.
+     * AnyOf can test any item in the list.
      */
-    private final Iterable<Boolean> iterable;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     */
-    public AllOf(final Iterable<Boolean> src) {
-        this.iterable = src;
-    }
-
-    @Override
-    public Boolean asValue() {
-        boolean success = true;
-        for (final Boolean item : this.iterable) {
-            if (!item) {
-                success = false;
-                break;
-            }
-        }
-        return success;
+    @Test
+    public void iteratesList() {
+        MatcherAssert.assertThat(
+            new AnyOf(
+                new TransformedIterable<>(
+                    new ArrayAsIterable<>("a", "file", "is", "corrupt"),
+                    txt -> txt.length() > 2
+                )
+            ).asValue(),
+            Matchers.equalTo(true)
+        );
     }
 
 }
