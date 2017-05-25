@@ -21,55 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
-
-import java.util.Arrays;
-import java.util.Iterator;
-import org.cactoos.func.StickyFunc;
 
 /**
- * A few Iterables joined together.
+ * Func, tests.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Type of item
  * @since 0.1
  */
-public final class ConcatenatedIterable<T> implements Iterable<T> {
 
-    /**
-     * Iterables.
-     */
-    private final Iterable<Iterable<T>> list;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ConcatenatedIterable(final Iterable<T>... items) {
-        this(Arrays.asList(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public ConcatenatedIterable(final Iterable<Iterable<T>> items) {
-        this.list = items;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new ConcatenatedIterator<>(
-            new TransformedIterable<>(
-                this.list,
-                new StickyFunc<>(Iterable::iterator)
-            )
-        );
-    }
-
-}
+package org.cactoos.func;

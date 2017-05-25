@@ -21,55 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import org.cactoos.func.StickyFunc;
+import java.io.IOException;
+import org.cactoos.Func;
 
 /**
- * A few Iterables joined together.
+ * Function is application of one function to the result of another.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Type of item
+ * @param <X> Type of input before func
+ * @param <Y> Type of output before func and input after func
+ * @param <Z> Type of output after func
  * @since 0.1
  */
-public final class ConcatenatedIterable<T> implements Iterable<T> {
+public final class ComposedFunc<X, Y, Z> implements Func<X, Z> {
 
     /**
-     * Iterables.
+     * Before func.
      */
-    private final Iterable<Iterable<T>> list;
+    private final Func<X, Y> before;
 
     /**
-     * Ctor.
-     * @param items Items to concatenate
+     * After func.
      */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ConcatenatedIterable(final Iterable<T>... items) {
-        this(Arrays.asList(items));
-    }
+    private final Func<Y, Z> after;
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     *
+     * @param before Func
+     * @param after Func
      */
-    public ConcatenatedIterable(final Iterable<Iterable<T>> items) {
-        this.list = items;
+    public ComposedFunc(final Func<X, Y> before, final Func<Y, Z> after) {
+        this.before = before;
+        this.after = after;
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new ConcatenatedIterator<>(
-            new TransformedIterable<>(
-                this.list,
-                new StickyFunc<>(Iterable::iterator)
-            )
-        );
+    public Z apply(final X input) throws IOException {
+        return this.after.apply(this.before.apply(input));
     }
-
 }
