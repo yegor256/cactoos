@@ -1,3 +1,5 @@
+docker:
+  image: yegor256/java8
 assets:
   settings.xml: zerocracy/home#assets/cactoos/settings.xml
   pubring.gpg: zerocracy/home#assets/pubring.gpg
