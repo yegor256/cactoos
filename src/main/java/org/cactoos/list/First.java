@@ -54,10 +54,9 @@ public final class First<T> implements Scalar<T> {
     @Override
     public T asValue() throws IOException {
         final Iterator<T> iterator = this.source.iterator();
-        if (iterator.hasNext()) {
-            return iterator.next();
-        } else {
+        if (!iterator.hasNext()) {
             throw new IOException("Iterable is empty");
         }
+        return iterator.next();
     }
 }
