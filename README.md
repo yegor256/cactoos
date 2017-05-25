@@ -134,12 +134,12 @@ new IterableAsCollection<>(
 To iterate a collection:
 
 ```java
-new Loop(
+new AllOf(
   new TransformedIterable<>(
     new ArrayAsIterable<>("how", "are", "you"),
     i -> System.out.printf("Item: %s\n", i)
   )
-).run();
+).asValue();
 ```
 
 To sort a list of words in the file:
