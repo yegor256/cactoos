@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.Text;
+import org.cactoos.text.StringAsText;
 
 /**
  * Text as Input.
@@ -44,6 +45,14 @@ public final class TextAsInput implements Input {
      * The source.
      */
     private final Text source;
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public TextAsInput(final String text) {
+        this(new StringAsText(text));
+    }
 
     /**
      * Ctor.

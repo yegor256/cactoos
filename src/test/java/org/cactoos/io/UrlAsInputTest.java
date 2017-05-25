@@ -27,6 +27,8 @@ import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.takes.http.FtRemote;
+import org.takes.tk.TkHtml;
 
 /**
  * Test case for {@link UrlAsInput}.
@@ -37,7 +39,7 @@ import org.junit.Test;
 public final class UrlAsInputTest {
 
     /**
-     * FileAsInput can read file content.
+     * UrlAsInput can read file content.
      * @throws IOException If some problem inside
      */
     @Test
@@ -51,6 +53,27 @@ public final class UrlAsInputTest {
                 )
             ).asBytes().length,
             Matchers.greaterThan(0)
+        );
+    }
+
+    /**
+     * UrlAsInput can read real URL.
+     * @throws IOException If some problem inside
+     */
+    @Test
+    public void readsRealUrl() throws IOException {
+        new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
+            home -> MatcherAssert.assertThat(
+                new InputAsText(
+                    new UrlAsInput(
+                        home.toURL()
+                    )
+                ).asString(),
+                Matchers.allOf(
+                    Matchers.startsWith("<html"),
+                    Matchers.endsWith("html>")
+                )
+            )
         );
     }
 

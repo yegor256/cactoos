@@ -24,6 +24,7 @@
 package org.cactoos.list;
 
 import java.io.IOException;
+import java.util.Collections;
 import org.cactoos.Text;
 import org.cactoos.text.StringAsText;
 import org.cactoos.text.UpperText;
@@ -53,6 +54,21 @@ public final class TransformedIterableTest {
                 input -> new UpperText(new StringAsText(input))
             ).iterator().next().asString(),
             Matchers.equalTo("HELLO")
+        );
+    }
+
+    /**
+     * TransformedIterable can transform an empty list.
+     * @throws IOException If fails
+     */
+    @Test
+    public void transformsEmptyList() throws IOException {
+        MatcherAssert.assertThat(
+            new TransformedIterable<String, Text>(
+                Collections.emptyList(),
+                input -> new UpperText(new StringAsText(input))
+            ),
+            Matchers.emptyIterable()
         );
     }
 
