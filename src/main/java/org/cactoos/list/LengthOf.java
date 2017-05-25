@@ -23,35 +23,49 @@
  */
 package org.cactoos.list;
 
+import java.util.Iterator;
 import org.cactoos.Scalar;
 
 /**
- * Length of iterable.
+ * Length of iterator and iterable.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class LengthOfIterable implements Scalar<Integer> {
+public final class LengthOf implements Scalar<Integer> {
 
     /**
-     * The iterable.
+     * The iterator.
      */
-    private final Iterable<?> iterable;
+    private final Iterator<?> iterator;
 
     /**
      * Ctor.
      * @param items The array
      */
-    public LengthOfIterable(final Iterable<?> items) {
-        this.iterable = items;
+    public LengthOf(final Iterable<?> items) {
+        this(items.iterator());
+    }
+
+    /**
+     * Ctor.
+     * @param items The iterator
+     */
+    public LengthOf(final Iterator<?> items) {
+        this.iterator = items;
     }
 
     @Override
     public Integer asValue() {
-        return new LengthOfIterator(this.iterable.iterator()).asValue();
+        int size = 0;
+        while (this.iterator.hasNext()) {
+            this.iterator.next();
+            ++size;
+        }
+        return size;
     }
-
 }
