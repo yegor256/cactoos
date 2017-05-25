@@ -31,6 +31,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link InputAsBytes}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
@@ -39,6 +40,7 @@ public final class InputAsBytesTest {
 
     /**
      * InputAsBytes can read input.
+     *
      * @throws IOException If some problem inside
      */
     @Test
@@ -60,6 +62,7 @@ public final class InputAsBytesTest {
 
     /**
      * InputAsBytes can read input with small buffer.
+     *
      * @throws IOException If some problem inside
      */
     @Test

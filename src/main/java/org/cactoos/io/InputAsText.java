@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import org.cactoos.Input;
 import org.cactoos.Text;
 
@@ -44,15 +45,35 @@ public final class InputAsText implements Text {
     private final Input source;
 
     /**
-     * Ctor.
+     * Text encoding.
+     */
+    private final Charset charset;
+
+    /**
+     * New {@link InputAsText} with default charset.
+     *
      * @param input The input
      */
     public InputAsText(final Input input) {
+        this(input, Charset.defaultCharset());
+    }
+
+    /**
+     * New {@link InputAsText} with specified charset.
+     *
+     * @param input The input
+     * @param encoding Text charset
+     */
+    public InputAsText(final Input input, final Charset encoding) {
         this.source = input;
+        this.charset = encoding;
     }
 
     @Override
     public String asString() throws IOException {
-        return new String(new InputAsBytes(this.source).asBytes());
+        return new String(
+            new InputAsBytes(this.source).asBytes(),
+            this.charset
+        );
     }
 }
