@@ -21,65 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.list;
 
-import java.io.IOException;
-import org.cactoos.Func;
+import java.util.Iterator;
 import org.cactoos.Proc;
+import org.cactoos.func.ProcAsFunc;
 
 /**
- * Proc that is a {@link Func} that returns {@code boolean}.
- *
- * <p>You may need this class when you iterate a collection, for example:</p>
- *
- * <pre> new AllOf(
- *   new TransformedIterable&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
- *     new ProcAsFunc(i -> System.out.println(i))
- *   )
- * ).asValue();</pre>
+ * Iterable into booleans.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of items
+ * @param <X> Type of source item
  * @since 0.1
  */
-public final class ProcAsFunc<T> implements Func<T, Boolean> {
+public final class IterableAsBooleans<X> implements Iterable<Boolean> {
+
+    /**
+     * Iterable.
+     */
+    private final Iterable<X> iterable;
 
     /**
      * Proc.
      */
-    private final Proc<T> proc;
-
-    /**
-     * The result to return.
-     */
-    private final Boolean result;
+    private final Proc<X> proc;
 
     /**
      * Ctor.
-     * @param cns Consumer
+     * @param src Source iterable
+     * @param prc Func
      */
-    public ProcAsFunc(final Proc<T> cns) {
-        this(cns, true);
-    }
-
-    /**
-     * Ctor.
-     * @param cns Consumer
-     * @param rslt Result to return
-     */
-    public ProcAsFunc(final Proc<T> cns, final Boolean rslt) {
-        this.proc = cns;
-        this.result = rslt;
+    public IterableAsBooleans(final Iterable<X> src, final Proc<X> prc) {
+        this.iterable = src;
+        this.proc = prc;
     }
 
     @Override
-    public Boolean apply(final T input) throws IOException {
-        this.proc.apply(input);
-        return this.result;
+    public Iterator<Boolean> iterator() {
+        return new TransformedIterator<>(
+            this.iterable.iterator(),
+            new ProcAsFunc<X>(this.proc)
+        );
     }
 
 }

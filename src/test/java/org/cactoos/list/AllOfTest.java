@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.func.ProcAsFunc;
@@ -54,6 +55,26 @@ public final class AllOfTest {
             Matchers.allOf(
                 Matchers.equalTo(true),
                 Matchers.equalTo(list.size() == 2)
+            )
+        );
+    }
+
+    /**
+     * AllOf can test all items in the list.
+     */
+    @Test
+    public void iteratesEmptyList() {
+        final List<String> list = new LinkedList<>();
+        MatcherAssert.assertThat(
+            new AllOf(
+                new IterableAsBooleans<String>(
+                    Collections.emptyList(),
+                    list::add
+                )
+            ).asValue(),
+            Matchers.allOf(
+                Matchers.equalTo(true),
+                Matchers.equalTo(list.isEmpty())
             )
         );
     }

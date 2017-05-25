@@ -23,62 +23,36 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
 import org.cactoos.Func;
-import org.cactoos.Proc;
 
 /**
- * Proc that is a {@link Func} that returns {@code boolean}.
- *
- * <p>You may need this class when you iterate a collection, for example:</p>
- *
- * <pre> new AllOf(
- *   new TransformedIterable&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
- *     new ProcAsFunc(i -> System.out.println(i))
- *   )
- * ).asValue();</pre>
+ * Func that always returns the same result
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of items
+ * @param <X> Type of input
+ * @param <Y> Type of output
  * @since 0.1
  */
-public final class ProcAsFunc<T> implements Func<T, Boolean> {
-
-    /**
-     * Proc.
-     */
-    private final Proc<T> proc;
+public final class ConstFunc<X, Y> implements Func<X, Y> {
 
     /**
      * The result to return.
      */
-    private final Boolean result;
+    private final Y result;
 
     /**
      * Ctor.
-     * @param cns Consumer
+     * @param rslt What to return
      */
-    public ProcAsFunc(final Proc<T> cns) {
-        this(cns, true);
-    }
-
-    /**
-     * Ctor.
-     * @param cns Consumer
-     * @param rslt Result to return
-     */
-    public ProcAsFunc(final Proc<T> cns, final Boolean rslt) {
-        this.proc = cns;
+    public ConstFunc(final Y rslt) {
         this.result = rslt;
     }
 
     @Override
-    public Boolean apply(final T input) throws IOException {
-        this.proc.apply(input);
+    public Y apply(final X input) {
         return this.result;
     }
 

@@ -40,6 +40,15 @@ import org.cactoos.Scalar;
  *   )
  * ).asValue();</pre>
  *
+ * <p>Or even more compact, through {@link IterableAsBooleans}:</p>
+ *
+ * <pre> new AllOf(
+ *   new IterableAsBooleans&lt;String&gt;(
+ *     Arrays.asList("hello", "world"),
+ *     i -> System.out.println(i)
+ *   )
+ * ).asValue();</pre>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)

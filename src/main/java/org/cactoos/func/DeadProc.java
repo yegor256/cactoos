@@ -23,21 +23,10 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
-import org.cactoos.Func;
 import org.cactoos.Proc;
 
 /**
- * Proc that is a {@link Func} that returns {@code boolean}.
- *
- * <p>You may need this class when you iterate a collection, for example:</p>
- *
- * <pre> new AllOf(
- *   new TransformedIterable&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
- *     new ProcAsFunc(i -> System.out.println(i))
- *   )
- * ).asValue();</pre>
+ * Proc that does nothing.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -46,40 +35,11 @@ import org.cactoos.Proc;
  * @param <T> Type of items
  * @since 0.1
  */
-public final class ProcAsFunc<T> implements Func<T, Boolean> {
-
-    /**
-     * Proc.
-     */
-    private final Proc<T> proc;
-
-    /**
-     * The result to return.
-     */
-    private final Boolean result;
-
-    /**
-     * Ctor.
-     * @param cns Consumer
-     */
-    public ProcAsFunc(final Proc<T> cns) {
-        this(cns, true);
-    }
-
-    /**
-     * Ctor.
-     * @param cns Consumer
-     * @param rslt Result to return
-     */
-    public ProcAsFunc(final Proc<T> cns, final Boolean rslt) {
-        this.proc = cns;
-        this.result = rslt;
-    }
+public final class DeadProc<T> implements Proc<T> {
 
     @Override
-    public Boolean apply(final T input) throws IOException {
-        this.proc.apply(input);
-        return this.result;
+    public void apply(final T input) {
+        // nothing to do
     }
 
 }
