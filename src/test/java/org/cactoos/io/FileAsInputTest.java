@@ -62,7 +62,10 @@ public final class FileAsInputTest {
             ).asString(),
             Matchers.allOf(
                 Matchers.equalTo(
-                    new InputAsText(new FileAsInput(temp)).asString()
+                    new InputAsText(
+                        new FileAsInput(temp),
+                        StandardCharsets.UTF_8
+                    ).asString()
                 ),
                 Matchers.startsWith("Hello, "),
                 Matchers.endsWith("друг!")
