@@ -71,9 +71,11 @@ public final class Sprintf implements CharSequence {
     @Override
     public String toString() {
         final StringBuilder out = new StringBuilder(0);
-        new Formatter(out).format(
-            this.pattern, this.args.toArray(new Object[this.args.size()])
-        );
+        try (final Formatter fmt = new Formatter(out)) {
+            fmt.format(
+                this.pattern, this.args.toArray(new Object[this.args.size()])
+            );
+        }
         return out.toString();
     }
 
