@@ -24,38 +24,57 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Determines if text is blank (consists of spaces) or no.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link IsBlank}.
  * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class IsBlankText implements Scalar<Boolean> {
+public final class IsBlankTest {
 
     /**
-     * The text.
+     * IsBlank can detect empty string.
+     * @throws IOException If some problem inside
      */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public IsBlankText(final Text text) {
-        this.origin = text;
+    @Test
+    public void determinesEmptyText() throws IOException {
+        MatcherAssert.assertThat(
+            new IsBlank(
+                new StringAsText("")
+            ).asValue(),
+            Matchers.is(Boolean.TRUE)
+        );
     }
 
-    @Override
-    public Boolean asValue() throws IOException {
-        return !this.origin.asString().chars()
-            .filter(c -> !Character.isWhitespace(c))
-            .findFirst()
-            .isPresent();
+    /**
+     * IsBlank can detect blank string.
+     * @throws IOException If some problem inside
+     */
+    @Test
+    public void determinesBlankText() throws IOException {
+        MatcherAssert.assertThat(
+            new IsBlank(
+                new StringAsText("  ")
+            ).asValue(),
+            Matchers.is(Boolean.TRUE)
+        );
+    }
+
+    /**
+     * IsBlank can detect non blank string.
+     * @throws IOException If some problem inside
+     */
+    @Test
+    public void determinesNotBlankText() throws IOException {
+        MatcherAssert.assertThat(
+            new IsBlank(
+                new StringAsText("not empty")
+            ).asValue(),
+            Matchers.is(Boolean.FALSE)
+        );
     }
 }

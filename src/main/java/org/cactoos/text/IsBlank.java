@@ -24,57 +24,38 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
 
 /**
- * Test case for {@link IsBlankText}.
+ * Determines if text is blank (consists of spaces) or no.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class IsBlankTextTest {
+public final class IsBlank implements Scalar<Boolean> {
 
     /**
-     * IsBlankText can detect empty string.
-     * @throws IOException If some problem inside
+     * The text.
      */
-    @Test
-    public void determinesEmptyText() throws IOException {
-        MatcherAssert.assertThat(
-            new IsBlankText(
-                new StringAsText("")
-            ).asValue(),
-            Matchers.is(Boolean.TRUE)
-        );
+    private final Text origin;
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public IsBlank(final Text text) {
+        this.origin = text;
     }
 
-    /**
-     * IsBlankText can detect blank string.
-     * @throws IOException If some problem inside
-     */
-    @Test
-    public void determinesBlankText() throws IOException {
-        MatcherAssert.assertThat(
-            new IsBlankText(
-                new StringAsText("  ")
-            ).asValue(),
-            Matchers.is(Boolean.TRUE)
-        );
-    }
-
-    /**
-     * IsBlankText can detect non blank string.
-     * @throws IOException If some problem inside
-     */
-    @Test
-    public void determinesNotBlankText() throws IOException {
-        MatcherAssert.assertThat(
-            new IsBlankText(
-                new StringAsText("not empty")
-            ).asValue(),
-            Matchers.is(Boolean.FALSE)
-        );
+    @Override
+    public Boolean asValue() throws IOException {
+        return !this.origin.asString().chars()
+            .filter(c -> !Character.isWhitespace(c))
+            .findFirst()
+            .isPresent();
     }
 }
