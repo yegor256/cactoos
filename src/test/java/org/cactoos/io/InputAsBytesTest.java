@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -31,6 +32,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link InputAsBytes}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
@@ -39,6 +41,7 @@ public final class InputAsBytesTest {
 
     /**
      * InputAsBytes can read input.
+     *
      * @throws IOException If some problem inside
      */
     @Test
@@ -47,9 +50,11 @@ public final class InputAsBytesTest {
             new String(
                 new InputAsBytes(
                     new TextAsInput(
-                        new StringAsText("Hello, друг!")
+                        new StringAsText("Hello, друг!"),
+                        StandardCharsets.UTF_8
                     )
-                ).asBytes()
+                ).asBytes(),
+                StandardCharsets.UTF_8
             ),
             Matchers.allOf(
                 Matchers.startsWith("Hello, "),
@@ -60,6 +65,7 @@ public final class InputAsBytesTest {
 
     /**
      * InputAsBytes can read input with small buffer.
+     *
      * @throws IOException If some problem inside
      */
     @Test
@@ -68,10 +74,12 @@ public final class InputAsBytesTest {
             new String(
                 new InputAsBytes(
                     new TextAsInput(
-                        new StringAsText("Hello, товарищ!")
+                        new StringAsText("Hello, товарищ!"),
+                        StandardCharsets.UTF_8
                     ),
                     2
-                ).asBytes()
+                ).asBytes(),
+                StandardCharsets.UTF_8
             ),
             Matchers.allOf(
                 Matchers.startsWith("Hello,"),
