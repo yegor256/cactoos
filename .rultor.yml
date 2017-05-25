@@ -6,7 +6,7 @@ env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
   JAVA_OPTS: -XX:MaxPermSize=256m -Xmx1g
 install: |
-  gem install --no-rdoc --no-ri pdd
+  sudo gem install --no-rdoc --no-ri pdd
 architect:
 - yegor256
 merge:
