@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -40,27 +40,21 @@ import org.junit.Test;
 public final class InputAsBytesTest {
 
     /**
-     * UTF-8 encoding.
-     */
-    private static final String UTF8 = "UTF-8";
-
-    /**
      * InputAsBytes can read input.
      *
      * @throws IOException If some problem inside
      */
     @Test
     public void readsInputIntoBytes() throws IOException {
-        final Charset utf = Charset.forName(InputAsBytesTest.UTF8);
         MatcherAssert.assertThat(
             new String(
                 new InputAsBytes(
                     new TextAsInput(
                         new StringAsText("Hello, друг!"),
-                        utf
+                        StandardCharsets.UTF_8
                     )
                 ).asBytes(),
-                utf
+                StandardCharsets.UTF_8
             ),
             Matchers.allOf(
                 Matchers.startsWith("Hello, "),
@@ -76,17 +70,16 @@ public final class InputAsBytesTest {
      */
     @Test
     public void readsInputIntoBytesWithSmallBuffer() throws IOException {
-        final Charset utf = Charset.forName(InputAsBytesTest.UTF8);
         MatcherAssert.assertThat(
             new String(
                 new InputAsBytes(
                     new TextAsInput(
                         new StringAsText("Hello, товарищ!"),
-                        utf
+                        StandardCharsets.UTF_8
                     ),
                     2
                 ).asBytes(),
-                utf
+                StandardCharsets.UTF_8
             ),
             Matchers.allOf(
                 Matchers.startsWith("Hello,"),
