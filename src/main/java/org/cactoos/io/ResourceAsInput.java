@@ -36,7 +36,7 @@ import org.cactoos.text.Sprintf;
  * @see ClassLoader#getResource(String)
  * @since 0.1
  */
-public final class ResourceInput implements Input {
+public final class ResourceAsInput implements Input {
 
     /**
      * Resource name.
@@ -53,7 +53,7 @@ public final class ResourceInput implements Input {
      *
      * @param res Resource name
      */
-    public ResourceInput(final String res) {
+    public ResourceAsInput(final String res) {
         this(
             res,
             Thread.currentThread().getContextClassLoader()
@@ -66,7 +66,7 @@ public final class ResourceInput implements Input {
      * @param res Resource name
      * @param loader Resource class loader
      */
-    public ResourceInput(final String res, final ClassLoader loader) {
+    public ResourceAsInput(final String res, final ClassLoader loader) {
         this.res = res;
         this.loader = loader;
     }

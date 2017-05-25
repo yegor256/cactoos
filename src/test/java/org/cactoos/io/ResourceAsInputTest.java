@@ -28,13 +28,13 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ResourceInput}.
+ * Test case for {@link ResourceAsInput}.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class ResourceInputTest {
+public final class ResourceAsInputTest {
 
     /**
      * Test built-in resource.
@@ -45,7 +45,7 @@ public final class ResourceInputTest {
     public void readResourceTest() throws Exception {
         MatcherAssert.assertThat(
             new InputAsText(
-                new ResourceInput(
+                new ResourceAsInput(
                     "org/cactoos/io/resource-input-stream-target.txt"
                 )
             ).asString(),
