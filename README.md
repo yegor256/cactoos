@@ -137,8 +137,19 @@ To iterate a collection:
 new AllOf(
   new TransformedIterable<>(
     new ArrayAsIterable<>("how", "are", "you"),
-    i -> System.out.printf("Item: %s\n", i)
+    new ProcAsFunc<>(
+      i -> System.out.printf("Item: %s\n", i)
+    )
   )
+).asValue();
+```
+
+Or even more compact:
+
+```java
+new IterableAsBoolean(
+  new ArrayAsIterable<>("how", "are", "you"),
+  i -> System.out.printf("Item: %s\n", i)
 ).asValue();
 ```
 

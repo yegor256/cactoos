@@ -23,24 +23,19 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
 import org.cactoos.Proc;
-import org.cactoos.func.ProcAsFunc;
+import org.cactoos.Scalar;
 
 /**
- * Iterable into booleans.
+ * Iterable into boolean.
  *
  * <p>You can use this class, for example, in order to iterate through
- * a collection of items, in combination with {@link AllOf}:</p>
+ * a collection of items:</p>
  *
- * <pre> new AllOf(
- *   new IterableAsBooleans&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
- *     i -> System.out.println(i)
- *   )
+ * <pre> new IterableAsBoolean&lt;&gt;(
+ *   Arrays.asList("hello", "world"),
+ *   i -> System.out.println(i)
  * ).asValue();</pre>
- *
- * <p>Also, consider a much shorter version with {@link IterableAsBoolean}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -49,7 +44,7 @@ import org.cactoos.func.ProcAsFunc;
  * @param <X> Type of source item
  * @since 0.1
  */
-public final class IterableAsBooleans<X> implements Iterable<Boolean> {
+public final class IterableAsBoolean<X> implements Scalar<Boolean> {
 
     /**
      * Iterable.
@@ -66,17 +61,18 @@ public final class IterableAsBooleans<X> implements Iterable<Boolean> {
      * @param src Source iterable
      * @param prc Func
      */
-    public IterableAsBooleans(final Iterable<X> src, final Proc<X> prc) {
+    public IterableAsBoolean(final Iterable<X> src, final Proc<X> prc) {
         this.iterable = src;
         this.proc = prc;
     }
 
     @Override
-    public Iterator<Boolean> iterator() {
-        return new TransformedIterator<>(
-            this.iterable.iterator(),
-            new ProcAsFunc<X>(this.proc)
-        );
+    public Boolean asValue() {
+        return new AllOf(
+            new IterableAsBooleans<>(
+                this.iterable,
+                this.proc
+            )
+        ).asValue();
     }
-
 }
