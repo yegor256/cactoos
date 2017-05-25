@@ -21,55 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import org.cactoos.func.StickyFunc;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import org.cactoos.Func;
 
 /**
- * A few Iterables joined together.
+ * Func that caches previously calculated values and doesn't
+ * recalculate again.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of item
+ * @param <X> Type of input
+ * @param <Y> Type of output
  * @since 0.1
  */
-public final class ConcatenatedIterable<T> implements Iterable<T> {
+public final class StickyFunc<X, Y> implements Func<X, Y> {
 
     /**
-     * Iterables.
+     * Original func.
      */
-    private final Iterable<Iterable<T>> list;
+    private final Func<X, Y> func;
 
     /**
-     * Ctor.
-     * @param items Items to concatenate
+     * Cache.
      */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ConcatenatedIterable(final Iterable<T>... items) {
-        this(Arrays.asList(items));
-    }
+    private final Map<X, Y> cache;
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     * @param fnc Func original
      */
-    public ConcatenatedIterable(final Iterable<Iterable<T>> items) {
-        this.list = items;
+    public StickyFunc(final Func<X, Y> fnc) {
+        this.func = fnc;
+        this.cache = new HashMap<>(0);
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new ConcatenatedIterator<>(
-            new TransformedIterable<>(
-                this.list,
-                new StickyFunc<>(Iterable::iterator)
-            )
-        );
+    public Y apply(final X input) throws IOException {
+        if (!this.cache.containsKey(input)) {
+            this.cache.put(input, this.func.apply(input));
+        }
+        return this.cache.get(input);
     }
 
 }

@@ -21,54 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import org.cactoos.func.StickyFunc;
+import java.io.IOException;
+import org.cactoos.list.ArrayAsIterable;
+import org.cactoos.list.FilteredIterable;
+import org.cactoos.list.LengthOfIterable;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * A few Iterables joined together.
+ * Test case for {@link ComposedFuncTest}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Type of item
  * @since 0.1
  */
-public final class ConcatenatedIterable<T> implements Iterable<T> {
+public final class ComposedFuncTest {
 
     /**
-     * Iterables.
+     * ComposedFunc can composite two func.
+     *
+     * @throws IOException If some problem inside
      */
-    private final Iterable<Iterable<T>> list;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ConcatenatedIterable(final Iterable<T>... items) {
-        this(Arrays.asList(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public ConcatenatedIterable(final Iterable<Iterable<T>> items) {
-        this.list = items;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new ConcatenatedIterator<>(
-            new TransformedIterable<>(
-                this.list,
-                new StickyFunc<>(Iterable::iterator)
-            )
+    @Test
+    public void apply() throws IOException {
+        MatcherAssert.assertThat(
+            new LengthOfIterable(
+                new FilteredIterable<>(
+                    new ArrayAsIterable<>("the", "quick", "brown", "fox"),
+                    new ComposedFunc<>(
+                        input -> input.concat("_test"),
+                        // @checkstyle MagicNumber (1 line)
+                        input -> input.length() <= 8
+                    )
+                )
+            ).asValue(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(2)
         );
     }
 

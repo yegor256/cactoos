@@ -21,52 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import org.cactoos.Func;
 
 /**
- * Func that caches previously calculated values and doesn't
- * recalculate again.
+ * Func.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
  * @since 0.1
  */
-public final class StickyFunc<X, Y> implements Func<X, Y> {
-
-    /**
-     * Original func.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Cache.
-     */
-    private final Map<X, Y> cache;
-
-    /**
-     * Ctor.
-     * @param fnc Func original
-     */
-    public StickyFunc(final Func<X, Y> fnc) {
-        this.func = fnc;
-        this.cache = new HashMap<>(0);
-    }
-
-    @Override
-    public Y apply(final X input) throws IOException {
-        if (!this.cache.containsKey(input)) {
-            this.cache.put(input, this.func.apply(input));
-        }
-        return this.cache.get(input);
-    }
-
-}
+package org.cactoos.func;
