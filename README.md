@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/yegor256/cactoos.svg?branch=master)](https://travis-ci.org/yegor256/cactoos)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/cactoos)](http://www.0pdd.com/p?name=yegor256/cactoos)
+[![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg?style=flat-square)](https://codecov.io/github/yegor256/cactoos?branch=master)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/takes/blob/master/LICENSE.txt)
 
 Cactoos is a collection of object-oriented Java primitives.
