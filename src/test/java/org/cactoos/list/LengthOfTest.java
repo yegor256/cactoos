@@ -56,10 +56,9 @@ public final class LengthOfTest {
     public void calcsLengthOfNonEmptyIterable() {
         MatcherAssert.assertThat(
             new LengthOf(
-                    new ArrayAsIterable<>(1, 2, 3)
+                new ArrayAsIterable<>(1, 2)
             ).asValue(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(3)
+            Matchers.equalTo(2)
         );
     }
 }
