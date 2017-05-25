@@ -23,6 +23,7 @@
  */
 package org.cactoos.io;
 
+import java.util.Arrays;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,12 +45,22 @@ public final class ResourceAsInputTest {
     @Test
     public void readResourceTest() throws Exception {
         MatcherAssert.assertThat(
-            new InputAsText(
-                new ResourceAsInput(
-                    "org/cactoos/io/resource-input-stream-target.txt"
-                )
-            ).asString(),
-            Matchers.equalTo("Resource.\n")
+            Arrays.copyOfRange(
+                new InputAsBytes(
+                    new ResourceAsInput(
+                        "org/cactoos/io/ResourceAsInputTest.class"
+                    )
+                ).asBytes(),
+                // @checkstyle MagicNumber (2 lines)
+                0,
+                4
+            ),
+            Matchers.equalTo(
+                new byte[]{
+                    // @checkstyle MagicNumber (1 line)
+                    (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
+                }
+            )
         );
     }
 }
