@@ -21,13 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.bytes;
+package org.cactoos.text;
 
 import java.io.IOException;
 import org.cactoos.Text;
 import org.cactoos.io.InputAsBytes;
 import org.cactoos.io.TextAsInput;
-import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
