@@ -23,7 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
 import java.util.Iterator;
 import org.cactoos.Func;
 
@@ -66,10 +65,11 @@ public final class TransformedIterator<X, Y> implements Iterator<Y> {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Y next() {
         try {
             return this.func.apply(this.iterator.next());
-        } catch (final IOException ex) {
+        } catch (final Exception ex) {
             throw new IllegalStateException(ex);
         }
     }
