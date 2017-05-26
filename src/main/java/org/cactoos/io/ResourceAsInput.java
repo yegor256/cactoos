@@ -41,7 +41,7 @@ public final class ResourceAsInput implements Input {
     /**
      * Resource name.
      */
-    private final String res;
+    private final String path;
 
     /**
      * Resource class loader.
@@ -64,22 +64,22 @@ public final class ResourceAsInput implements Input {
      * New resource input with specified {@link ClassLoader}.
      *
      * @param res Resource name
-     * @param loader Resource class loader
+     * @param ldr Resource class loader
      */
-    public ResourceAsInput(final String res, final ClassLoader loader) {
-        this.res = res;
-        this.loader = loader;
+    public ResourceAsInput(final String res, final ClassLoader ldr) {
+        this.path = res;
+        this.loader = ldr;
     }
 
     @Override
     public InputStream open() throws IOException {
-        final InputStream input = this.loader.getResourceAsStream(this.res);
+        final InputStream input = this.loader.getResourceAsStream(this.path);
         if (input == null) {
             throw new IOException(
                 new Sprintf(
                     "Resource '%s' was not found",
-                    this.res
-                ).toString()
+                    this.path
+                ).asString()
             );
         }
         return input;
