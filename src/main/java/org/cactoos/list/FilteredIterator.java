@@ -23,7 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -69,6 +68,7 @@ public final class FilteredIterator<X> implements Iterator<X> {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public boolean hasNext() {
         if (this.buffer.isEmpty()) {
             while (this.iterator.hasNext()) {
@@ -78,7 +78,8 @@ public final class FilteredIterator<X> implements Iterator<X> {
                         this.buffer.add(object);
                         break;
                     }
-                } catch (final IOException ex) {
+                    // @checkstyle IllegalCatchCheck (1 line)
+                } catch (final Exception ex) {
                     throw new IllegalStateException(ex);
                 }
             }

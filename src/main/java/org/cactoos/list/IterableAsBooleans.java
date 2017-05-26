@@ -23,52 +23,59 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.Iterator;
+import org.cactoos.Func;
 
 /**
- * Test case for {@link TransformedIterable}.
+ * Iterable into booleans.
+ *
+ * <p>You can use this class, for example, in order to iterate through
+ * a collection of items, in combination with {@link AllOf}:</p>
+ *
+ * <pre> new AllOf(
+ *   new IterableAsBooleans&lt;String&gt;(
+ *     Arrays.asList("hello", "world"),
+ *     i -&gt; System.out.println(i)
+ *   )
+ * ).asValue();</pre>
+ *
+ * <p>Also, consider a much shorter version with {@link IterableAsBoolean}.</p>
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @param <X> Type of source item
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class IterableAsBooleans<X> implements Iterable<Boolean> {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * Iterable.
      */
-    @Test
-    public void transformsList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
+    private final Iterable<X> iterable;
+
+    /**
+     * Func.
+     */
+    private final Func<X, Boolean> func;
+
+    /**
+     * Ctor.
+     * @param src Source iterable
+     * @param fnc Func
+     */
+    public IterableAsBooleans(final Iterable<X> src,
+        final Func<X, Boolean> fnc) {
+        this.iterable = src;
+        this.func = fnc;
     }
 
-    /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
-     */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
+    @Override
+    public Iterator<Boolean> iterator() {
+        return new TransformedIterator<>(
+            this.iterable.iterator(),
+            this.func
         );
     }
 

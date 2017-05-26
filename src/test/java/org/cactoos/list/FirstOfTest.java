@@ -24,52 +24,44 @@
 package org.cactoos.list;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link FirstOf}.
+ *
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class FirstOfTest {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * Get first element in collection.
+     *
+     * @throws Exception if failed.
      */
     @Test
-    public void transformsList() throws IOException {
+    public void firstElementTest() throws Exception {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
+            new FirstOf<>(
+                // @checkstyle MagicNumber (1 line)
+                Arrays.asList(1, 2, 3)
+            ).asValue(),
+            Matchers.equalTo(1)
         );
     }
 
     /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
+     * Throws exception if collection is empty.
+     *
+     * @throws Exception expected exception
      */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
-        );
+    @Test(expected = IOException.class)
+    public void failForEmptyCollectionTest() throws Exception {
+        new FirstOf<>(Collections.emptyList()).asValue();
     }
-
 }

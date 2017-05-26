@@ -23,52 +23,31 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
+ * Test case for {@link AnyOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class AnyOfTest {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * AnyOf can test any item in the list.
      */
     @Test
-    public void transformsList() throws IOException {
+    public void iteratesList() {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
-    }
-
-    /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
-     */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
+            new AnyOf(
+                new TransformedIterable<>(
+                    new ArrayAsIterable<>("a", "file", "is", "corrupt"),
+                    txt -> txt.length() > 2
+                )
+            ).asValue(),
+            Matchers.equalTo(true)
         );
     }
 

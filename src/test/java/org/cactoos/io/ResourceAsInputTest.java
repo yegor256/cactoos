@@ -21,55 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.io;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
+import java.util.Arrays;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link ResourceAsInput}.
+ *
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class ResourceAsInputTest {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * Test built-in resource.
+     *
+     * @throws Exception if failed
      */
     @Test
-    public void transformsList() throws IOException {
+    public void readResourceTest() throws Exception {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
-    }
-
-    /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
-     */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
+            Arrays.copyOfRange(
+                new InputAsBytes(
+                    new ResourceAsInput(
+                        "org/cactoos/io/ResourceAsInputTest.class"
+                    )
+                ).asBytes(),
+                // @checkstyle MagicNumber (2 lines)
+                0,
+                4
             ),
-            Matchers.emptyIterable()
+            Matchers.equalTo(
+                new byte[]{
+                    // @checkstyle MagicNumber (1 line)
+                    (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
+                }
+            )
         );
     }
-
 }

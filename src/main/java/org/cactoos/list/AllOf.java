@@ -23,61 +23,70 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import org.cactoos.Scalar;
 
 /**
- * Transformed iterator.
+ * Is {@code true} when all items in the collection are {@code true}.
+ *
+ * <p>You can use this class in order to iterate all items
+ * in the collection. This is very similar to the {@code forEach()}
+ * in steams, but more object oriented. For example, if you want
+ * to print all items from the array:</p>
+ *
+ * <pre> new AllOf(
+ *   new TransformedIterable&lt;String&gt;(
+ *     Arrays.asList("hello", "world"),
+ *     new ProcAsFunc&lt;&gt;(i -&gt; System.out.println(i))
+ *   )
+ * ).asValue();</pre>
+ *
+ * <p>Or even more compact, through {@link IterableAsBooleans}:</p>
+ *
+ * <pre> new AllOf(
+ *   new IterableAsBooleans&lt;String&gt;(
+ *     Arrays.asList("hello", "world"),
+ *     i -&gt; System.out.println(i)
+ *   )
+ * ).asValue();</pre>
+ *
+ * <p>Or you can even use {@link IterableAsBoolean}:</p>
+ *
+ * <pre> new IterableAsBoolean&lt;String&gt;(
+ *   Arrays.asList("hello", "world"),
+ *   i -&gt; System.out.println(i)
+ * ).asValue();</pre>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
  * @since 0.1
  */
-public final class TransformedIterator<X, Y> implements Iterator<Y> {
+public final class AllOf implements Scalar<Boolean> {
 
     /**
-     * Iterator.
+     * Iterable.
      */
-    private final Iterator<X> iterator;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
+    private final Iterable<Boolean> iterable;
 
     /**
      * Ctor.
      * @param src Source iterable
-     * @param fnc Func
      */
-    public TransformedIterator(final Iterator<X> src, final Func<X, Y> fnc) {
-        this.iterator = src;
-        this.func = fnc;
+    public AllOf(final Iterable<Boolean> src) {
+        this.iterable = src;
     }
 
     @Override
-    public boolean hasNext() {
-        return this.iterator.hasNext();
-    }
-
-    @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public Y next() {
-        try {
-            return this.func.apply(this.iterator.next());
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IllegalStateException(ex);
+    public Boolean asValue() {
+        boolean success = true;
+        for (final Boolean item : this.iterable) {
+            if (!item) {
+                success = false;
+                break;
+            }
         }
-    }
-
-    @Override
-    public void remove() {
-        this.iterator.remove();
+        return success;
     }
 
 }

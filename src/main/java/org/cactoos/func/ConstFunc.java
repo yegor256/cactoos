@@ -21,55 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.Func;
 
 /**
- * Test case for {@link TransformedIterable}.
+ * Func that always returns the same result
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @param <X> Type of input
+ * @param <Y> Type of output
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class ConstFunc<X, Y> implements Func<X, Y> {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * The result to return.
      */
-    @Test
-    public void transformsList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
+    private final Y result;
+
+    /**
+     * Ctor.
+     * @param rslt What to return
+     */
+    public ConstFunc(final Y rslt) {
+        this.result = rslt;
     }
 
-    /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
-     */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
-        );
+    @Override
+    public Y apply(final X input) {
+        return this.result;
     }
 
 }

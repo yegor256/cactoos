@@ -21,55 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
 import java.io.IOException;
-import java.util.Collections;
 import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Text without control characters (char &lt;= 32) from both ends.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class TrimmedText implements Text {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * The text.
      */
-    @Test
-    public void transformsList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
-    }
+    private final Text origin;
 
     /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
+     * Ctor.
+     * @param text The text
      */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
-        );
+    public TrimmedText(final Text text) {
+        this.origin = text;
     }
 
+    @Override
+    public String asString() throws IOException {
+        return this.origin.asString().trim();
+    }
 }

@@ -23,50 +23,60 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import org.cactoos.Func;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Func that caches previously calculated values and doesn't
- * recalculate again.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link AllOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
  * @since 0.1
  */
-public final class StickyFunc<X, Y> implements Func<X, Y> {
+public final class AllOfTest {
 
     /**
-     * Original func.
+     * AllOf can test all items in the list.
      */
-    private final Func<X, Y> func;
-
-    /**
-     * Cache.
-     */
-    private final Map<X, Y> cache;
-
-    /**
-     * Ctor.
-     * @param fnc Func original
-     */
-    public StickyFunc(final Func<X, Y> fnc) {
-        this.func = fnc;
-        this.cache = new HashMap<>(0);
+    @Test
+    public void iteratesList() {
+        final List<String> list = new LinkedList<>();
+        MatcherAssert.assertThat(
+            new AllOf(
+                new TransformedIterable<>(
+                    new ArrayAsIterable<>("hello", "world"),
+                    (Func.Quiet<String>) list::add
+                )
+            ).asValue(),
+            Matchers.allOf(
+                Matchers.equalTo(true),
+                Matchers.equalTo(list.size() == 2)
+            )
+        );
     }
 
-    @Override
-    public Y apply(final X input) throws IOException {
-        if (!this.cache.containsKey(input)) {
-            this.cache.put(input, this.func.apply(input));
-        }
-        return this.cache.get(input);
+    /**
+     * AllOf can test all items in the list.
+     */
+    @Test
+    public void iteratesEmptyList() {
+        final List<String> list = new LinkedList<>();
+        MatcherAssert.assertThat(
+            new AllOf(
+                new IterableAsBooleans<>(
+                    Collections.emptyList(),
+                    (Func.Quiet<String>) list::add
+                )
+            ).asValue(),
+            Matchers.allOf(
+                Matchers.equalTo(true),
+                Matchers.equalTo(list.isEmpty())
+            )
+        );
     }
 
 }

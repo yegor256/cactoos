@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -31,6 +32,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link InputAsText}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
@@ -38,16 +40,20 @@ import org.junit.Test;
 public final class InputAsTextTest {
 
     /**
-     * InputAsText can read input.
+     * InputAsText can read with specified encoding.
+     *
      * @throws IOException If some problem inside
      */
     @Test
-    public void readsInputIntoText() throws IOException {
+    public void readsInputWithCharsetIntoText() throws IOException {
+        final Charset charset = Charset.forName("KOI8-R");
         MatcherAssert.assertThat(
             new InputAsText(
                 new TextAsInput(
-                    new StringAsText("Hello, друг!")
-                )
+                    new StringAsText("Hello, друг!"),
+                    charset
+                ),
+                charset
             ).asString(),
             Matchers.allOf(
                 Matchers.startsWith("Hello, "),
@@ -55,5 +61,4 @@ public final class InputAsTextTest {
             )
         );
     }
-
 }

@@ -25,7 +25,6 @@ package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -39,24 +38,22 @@ import org.junit.Test;
 public final class TeeInputTest {
 
     /**
-     * Pipe can load URL content.
+     * TeeInput can copy content.
      * @throws IOException If some problem inside
      */
     @Test
-    public void loadsUrlContent() throws IOException {
+    public void copiesContent() throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         MatcherAssert.assertThat(
             new InputAsText(
                 new TeeInput(
-                    new UrlAsInput(
-                        new URL("http://www.cactoos.org/index.html")
-                    ),
+                    new TextAsInput("Hello, world!"),
                     new OutputStreamAsOutput(baos)
                 )
             ).asString(),
             Matchers.allOf(
                 Matchers.equalTo(new String(baos.toByteArray())),
-                Matchers.containsString("<html")
+                Matchers.containsString("world")
             )
         );
     }

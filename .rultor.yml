@@ -1,3 +1,5 @@
+docker:
+  image: yegor256/java8
 assets:
   settings.xml: zerocracy/home#assets/cactoos/settings.xml
   pubring.gpg: zerocracy/home#assets/pubring.gpg
@@ -6,12 +8,13 @@ env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
   JAVA_OPTS: -XX:MaxPermSize=256m -Xmx1g
 install: |
-  gem install --no-rdoc --no-ri pdd
+  sudo gem install --no-rdoc --no-ri pdd
 architect:
 - yegor256
 merge:
   script: |
     mvn clean install -Pqulice --errors --settings ../settings.xml
+    mvn clean site -Psite --errors --settings ../settings.xml
     mvn clean
     pdd --source=$(pwd) --verbose --file=/dev/null
 deploy:
@@ -21,4 +24,4 @@ release:
   script: |-
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
-    mvn clean deploy -Psonatype --errors --settings ../settings.xml
+    mvn clean deploy -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml

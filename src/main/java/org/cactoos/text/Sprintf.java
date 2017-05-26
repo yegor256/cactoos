@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
+import org.cactoos.Text;
 
 /**
  * Text in Sprinf.
@@ -37,7 +38,7 @@ import java.util.Formatter;
  * @version $Id$
  * @since 0.1
  */
-public final class Sprintf implements CharSequence {
+public final class Sprintf implements Text {
 
     /**
      * Pattern.
@@ -69,26 +70,14 @@ public final class Sprintf implements CharSequence {
     }
 
     @Override
-    public String toString() {
+    public String asString() {
         final StringBuilder out = new StringBuilder(0);
-        new Formatter(out).format(
-            this.pattern, this.args.toArray(new Object[this.args.size()])
-        );
+        try (final Formatter fmt = new Formatter(out)) {
+            fmt.format(
+                this.pattern, this.args.toArray(new Object[this.args.size()])
+            );
+        }
         return out.toString();
     }
 
-    @Override
-    public int length() {
-        return this.toString().length();
-    }
-
-    @Override
-    public char charAt(final int index) {
-        return this.toString().charAt(index);
-    }
-
-    @Override
-    public CharSequence subSequence(final int start, final int end) {
-        return this.toString().subSequence(start, end);
-    }
 }
