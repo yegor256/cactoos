@@ -26,6 +26,7 @@ package org.cactoos.list;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.Proc;
 import org.cactoos.func.ProcAsFunc;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -67,9 +68,9 @@ public final class AllOfTest {
         final List<String> list = new LinkedList<>();
         MatcherAssert.assertThat(
             new AllOf(
-                new IterableAsBooleans<String>(
+                new IterableAsBooleans<>(
                     Collections.emptyList(),
-                    list::add
+                    (Proc<String>) list::add
                 )
             ).asValue(),
             Matchers.allOf(
