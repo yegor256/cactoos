@@ -109,4 +109,11 @@ public interface Func<X, Y> {
         void exec() throws Exception;
     }
 
+    /**
+     * Func that represents a predicate of one argument.
+     * @param <X> Input type
+     */
+    interface Pred<X> extends Func<X, Boolean> {
+    }
+
 }
