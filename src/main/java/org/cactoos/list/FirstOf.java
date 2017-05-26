@@ -35,7 +35,7 @@ import org.cactoos.Scalar;
  * @param <T> Scalar type
  * @since 0.1
  */
-public final class First<T> implements Scalar<T> {
+public final class FirstOf<T> implements Scalar<T> {
 
     /**
      * Source iterable.
@@ -47,7 +47,7 @@ public final class First<T> implements Scalar<T> {
      *
      * @param source Iterable
      */
-    public First(final Iterable<T> source) {
+    public FirstOf(final Iterable<T> source) {
         this.source = source;
     }
 

@@ -31,13 +31,13 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link First}.
+ * Test case for {@link FirstOf}.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class FirstTest {
+public final class FirstOfTest {
 
     /**
      * Get first element in collection.
@@ -47,7 +47,7 @@ public final class FirstTest {
     @Test
     public void firstElementTest() throws Exception {
         MatcherAssert.assertThat(
-            new First<>(
+            new FirstOf<>(
                 // @checkstyle MagicNumber (1 line)
                 Arrays.asList(1, 2, 3)
             ).asValue(),
@@ -62,6 +62,6 @@ public final class FirstTest {
      */
     @Test(expected = IOException.class)
     public void failForEmptyCollectionTest() throws Exception {
-        new First<>(Collections.emptyList()).asValue();
+        new FirstOf<>(Collections.emptyList()).asValue();
     }
 }
