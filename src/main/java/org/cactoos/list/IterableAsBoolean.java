@@ -24,9 +24,7 @@
 package org.cactoos.list;
 
 import org.cactoos.Func;
-import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.func.ProcAsFunc;
 
 /**
  * Iterable into boolean.
@@ -57,15 +55,6 @@ public final class IterableAsBoolean<X> implements Scalar<Boolean> {
      * Proc.
      */
     private final Func<X, Boolean> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param prc Func
-     */
-    public IterableAsBoolean(final Iterable<X> src, final Proc<X> prc) {
-        this(src, new ProcAsFunc<>(prc));
-    }
 
     /**
      * Ctor.

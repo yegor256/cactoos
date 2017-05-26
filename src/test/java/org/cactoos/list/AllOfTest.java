@@ -26,8 +26,7 @@ package org.cactoos.list;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.Proc;
-import org.cactoos.func.ProcAsFunc;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -50,7 +49,7 @@ public final class AllOfTest {
             new AllOf(
                 new TransformedIterable<>(
                     new ArrayAsIterable<>("hello", "world"),
-                    new ProcAsFunc<>(list::add)
+                    list::add
                 )
             ).asValue(),
             Matchers.allOf(
@@ -70,7 +69,7 @@ public final class AllOfTest {
             new AllOf(
                 new IterableAsBooleans<>(
                     Collections.emptyList(),
-                    (Proc<String>) list::add
+                    (Func.Quiet<String>) list::add
                 )
             ).asValue(),
             Matchers.allOf(

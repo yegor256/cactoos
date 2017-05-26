@@ -46,4 +46,22 @@ public interface Func<X, Y> {
      */
     Y apply(X input) throws IOException;
 
+    /**
+     * Quiet func that returns nothing, but is still a function.
+     * @param <X> Input type
+     */
+    interface Quiet<X> extends Func<X, Boolean> {
+        @Override
+        default Boolean apply(X input) throws IOException {
+            this.exec(input);
+            return true;
+        }
+        /**
+         * Execute it.
+         * @param input The argument
+         * @throws IOException If fails
+         */
+        void exec(X input) throws IOException;
+    }
+
 }

@@ -25,8 +25,6 @@ package org.cactoos.list;
 
 import java.util.Iterator;
 import org.cactoos.Func;
-import org.cactoos.Proc;
-import org.cactoos.func.ProcAsFunc;
 
 /**
  * Iterable into booleans.
@@ -61,15 +59,6 @@ public final class IterableAsBooleans<X> implements Iterable<Boolean> {
      * Func.
      */
     private final Func<X, Boolean> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param prc Func
-     */
-    public IterableAsBooleans(final Iterable<X> src, final Proc<X> prc) {
-        this(src, new ProcAsFunc<>(prc));
-    }
 
     /**
      * Ctor.
