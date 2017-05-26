@@ -143,9 +143,12 @@ To iterate a collection:
 new AllOf(
   new TransformedIterable<>(
     new ArrayAsIterable<>("how", "are", "you"),
-    new ProcAsFunc<>(
-      i -> System.out.printf("Item: %s\n", i)
-    )
+    new Func.Quiet<String>() {
+      @Override
+      public void exec(final String input) throws Exception {
+        System.out.printf("Item: %s\n", input);
+      }
+    }
   )
 ).asValue();
 ```
@@ -155,7 +158,7 @@ Or even more compact:
 ```java
 new IterableAsBoolean(
   new ArrayAsIterable<>("how", "are", "you"),
-  i -> System.out.printf("Item: %s\n", i)
+  (Func.Quiet<String>) i -> System.out.printf("Item: %s\n", i)
 ).asValue();
 ```
 

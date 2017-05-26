@@ -49,7 +49,7 @@ public final class AllOfTest {
             new AllOf(
                 new TransformedIterable<>(
                     new ArrayAsIterable<>("hello", "world"),
-                    list::add
+                    (Func.Quiet<String>) list::add
                 )
             ).asValue(),
             Matchers.allOf(
