@@ -30,7 +30,7 @@ import java.util.Formatter;
 import org.cactoos.Text;
 
 /**
- * Text in Sprinf.
+ * Text in Sprinf format.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -38,7 +38,7 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.1
  */
-public final class Sprintf implements Text {
+public final class FormattedText implements Text {
 
     /**
      * Pattern.
@@ -55,7 +55,7 @@ public final class Sprintf implements Text {
      * @param ptn Pattern
      * @param arguments Arguments
      */
-    public Sprintf(final String ptn, final Object... arguments) {
+    public FormattedText(final String ptn, final Object... arguments) {
         this(ptn, Arrays.asList(arguments));
     }
 
@@ -64,7 +64,7 @@ public final class Sprintf implements Text {
      * @param ptn Pattern
      * @param arguments Arguments
      */
-    public Sprintf(final String ptn, final Collection<Object> arguments) {
+    public FormattedText(final String ptn, final Collection<Object> arguments) {
         this.pattern = ptn;
         this.args = Collections.unmodifiableCollection(arguments);
     }
@@ -79,5 +79,4 @@ public final class Sprintf implements Text {
         }
         return out.toString();
     }
-
 }

@@ -26,7 +26,7 @@ package org.cactoos.io;
 import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
-import org.cactoos.text.Sprintf;
+import org.cactoos.text.FormattedText;
 
 /**
  * Jar class resource.
@@ -76,7 +76,7 @@ public final class ResourceAsInput implements Input {
         final InputStream input = this.loader.getResourceAsStream(this.path);
         if (input == null) {
             throw new IOException(
-                new Sprintf(
+                new FormattedText(
                     "Resource '%s' was not found",
                     this.path
                 ).asString()
