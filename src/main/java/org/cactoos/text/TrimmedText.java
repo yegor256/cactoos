@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * Text without control characters (char <= 32) from both ends.
+ * Text without control characters (char &lt;= 32) from both ends.
  *
  * <p>There is no thread-safety guarantee.
  *

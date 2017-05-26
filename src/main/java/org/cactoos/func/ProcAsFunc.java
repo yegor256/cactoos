@@ -35,7 +35,7 @@ import org.cactoos.Proc;
  * <pre> new AllOf(
  *   new TransformedIterable&lt;String&gt;(
  *     Arrays.asList("hello", "world"),
- *     new ProcAsFunc(i -> System.out.println(i))
+ *     new ProcAsFunc(i -&gt; System.out.println(i))
  *   )
  * ).asValue();</pre>
  *
