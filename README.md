@@ -7,6 +7,10 @@
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg?style=flat-square)](https://codecov.io/github/yegor256/cactoos?branch=master)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/takes/blob/master/LICENSE.txt)
 
+**ATTENTION**: We're still in a very early alpha version, the API
+may and will change frequently. Please, use it at your own risk,
+until we release version 1.0 (July 2017).
+
 Cactoos is a collection of object-oriented Java primitives.
 
 **Motivation**.
@@ -188,8 +192,8 @@ Make sure your branch builds without any warnings/issues:
 mvn clean install -Pqulice
 ```
 
-Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static code analyze tool with 
-[checks list](http://checkstyle.sourceforge.net/checks.html) in GitHub precommits. 
+Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static code analyze tool with
+[checks list](http://checkstyle.sourceforge.net/checks.html) in GitHub precommits.
 
 ## License (MIT)
 

@@ -24,4 +24,4 @@ release:
   script: |-
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
-    mvn clean deploy -Pqulice -Psonatype --errors --settings ../settings.xml
+    mvn clean deploy -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml
