@@ -10,7 +10,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/takes/blob/master/LICENSE.txt)
 
 **ATTENTION**: We're still in a very early alpha version, the API
-may and will change frequently. Please, use it at your own risk,
+may and _will_ change frequently. Please, use it at your own risk,
 until we release version 1.0 (July 2017).
 
 Cactoos is a collection of object-oriented Java primitives.
