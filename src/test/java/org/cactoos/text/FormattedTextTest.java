@@ -40,7 +40,7 @@ public final class FormattedTextTest {
      * FormattedText produces correct text.
      */
     @Test
-    public void formatsText() throws Exception {
+    public void formatsText() {
         MatcherAssert.assertThat(
             new FormattedText(
                 "%d. Formatted %s", 1, "text"
