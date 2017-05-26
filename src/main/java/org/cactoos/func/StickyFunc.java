@@ -21,9 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.Func;
@@ -62,7 +61,7 @@ public final class StickyFunc<X, Y> implements Func<X, Y> {
     }
 
     @Override
-    public Y apply(final X input) throws IOException {
+    public Y apply(final X input) throws Exception {
         if (!this.cache.containsKey(input)) {
             this.cache.put(input, this.func.apply(input));
         }

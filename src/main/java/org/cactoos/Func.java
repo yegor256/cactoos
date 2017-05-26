@@ -23,7 +23,7 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
+import java.util.concurrent.Callable;
 
 /**
  * Function.
@@ -42,9 +42,9 @@ public interface Func<X, Y> {
      * Apply it.
      * @param input The argument
      * @return The result
-     * @throws IOException If fails
+     * @throws Exception If fails
      */
-    Y apply(X input) throws IOException;
+    Y apply(X input) throws Exception;
 
     /**
      * Quiet func that returns nothing, but is still a function.
@@ -52,16 +52,61 @@ public interface Func<X, Y> {
      */
     interface Quiet<X> extends Func<X, Boolean> {
         @Override
-        default Boolean apply(X input) throws IOException {
+        default Boolean apply(X input) throws Exception {
             this.exec(input);
             return true;
         }
         /**
          * Execute it.
          * @param input The argument
-         * @throws IOException If fails
+         * @throws Exception If fails
          */
-        void exec(X input) throws IOException;
+        void exec(X input) throws Exception;
+    }
+
+    /**
+     * Func that returns something but doesn't expect any input.
+     * @param <Y> Output type
+     */
+    interface Value<Y> extends Func<Void, Y>, Scalar<Y>, Callable<Y> {
+        @Override
+        default Y apply(Void input) throws Exception {
+            return this.asValue();
+        }
+        @Override
+        default Y call() throws Exception {
+            return this.asValue();
+        }
+    }
+
+    /**
+     * Func that really is a procedure that does something and returns nothing.
+     */
+    interface Proc extends Func<Void, Void>, Runnable, Callable<Void> {
+        @Override
+        default Void apply(Void input) throws Exception {
+            return this.call();
+        }
+        @Override
+        default Void call() throws Exception {
+            this.run();
+            return null;
+        }
+        @Override
+        @SuppressWarnings("PMD.AvoidCatchingGenericException")
+        default void run() {
+            try {
+                this.exec();
+                // @checkstyle IllegalCatchCheck (1 line)
+            } catch (final Exception ex) {
+                throw new IllegalStateException(ex);
+            }
+        }
+        /**
+         * Execute it.
+         * @throws Exception If fails
+         */
+        void exec() throws Exception;
     }
 
 }

@@ -25,6 +25,7 @@ package org.cactoos.list;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import org.cactoos.func.StickyFunc;
 
 /**
  * A few Iterables joined together.
