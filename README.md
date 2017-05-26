@@ -44,7 +44,6 @@ The library has no dependencies. All you need is this
 <dependency>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
-  <version>...</version>
 </dependency>
 ```
 
