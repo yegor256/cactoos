@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/yegor256/cactoos.svg?branch=master)](https://travis-ci.org/yegor256/cactoos)
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/org.cactoos/cactoos/badge.svg?color=blue&prefix=v)](http://www.javadoc.io/doc/org.cactoos/cactoos)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/cactoos)](http://www.0pdd.com/p?name=yegor256/cactoos)
-[![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg?style=flat-square)](https://codecov.io/github/yegor256/cactoos?branch=master)
+[![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg)](https://codecov.io/github/yegor256/cactoos?branch=master)
 [![Maven Central](https://img.shields.io/maven-central/v/org.cactoos/cactoos.svg)](https://maven-badges.herokuapp.com/maven-central/org.cactoos/cactoos)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/cactoos/blob/master/LICENSE.txt)
 
