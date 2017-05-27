@@ -97,6 +97,9 @@ public interface Func<X, Y> {
         default void run() {
             try {
                 this.exec();
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
                 // @checkstyle IllegalCatchCheck (1 line)
             } catch (final Exception ex) {
                 throw new IllegalStateException(ex);

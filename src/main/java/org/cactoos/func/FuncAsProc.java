@@ -34,7 +34,7 @@ import org.cactoos.Func;
  * @version $Id$
  * @since 0.1
  */
-public final class FuncAsRunnable implements Runnable {
+public final class FuncAsProc implements Func.Proc {
 
     /**
      * The func.
@@ -45,22 +45,13 @@ public final class FuncAsRunnable implements Runnable {
      * Ctor.
      * @param fnc The func
      */
-    public FuncAsRunnable(final Func<?, ?> fnc) {
+    public FuncAsProc(final Func<?, ?> fnc) {
         this.func = fnc;
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public void run() {
-        try {
-            this.func.apply(null);
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IllegalStateException(ex);
-        }
+    public void exec() throws Exception {
+        this.func.apply(null);
     }
 
 }
