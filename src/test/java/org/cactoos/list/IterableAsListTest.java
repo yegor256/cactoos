@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -64,7 +65,7 @@ public final class IterableAsListTest {
         // @checkstyle MagicNumber (5 lines)
         MatcherAssert.assertThat(
             new IterableAsList<>(
-                new Repeat<>(1, 42)
+                Collections.nCopies(42, 0)
             ),
             Matchers.hasSize(42)
         );
