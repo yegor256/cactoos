@@ -70,4 +70,41 @@ public final class IterableAsListTest {
             Matchers.hasSize(42)
         );
     }
+
+    /**
+     * Test empty IterableAsList.
+     *
+     * @throws Exception if failed
+     */
+    @Test
+    public void emptyTest() throws Exception {
+        MatcherAssert.assertThat(
+            new IterableAsList<>(
+                Collections.emptyList()
+            ).size(),
+            Matchers.equalTo(0)
+        );
+    }
+
+    /**
+     * Test low bound of list.
+     *
+     * @throws Exception if failed
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void lowBoundTest() throws Exception {
+        // @checkstyle MagicNumber (1 line)
+        new IterableAsList<>(Collections.nCopies(10, 0)).get(-1);
+    }
+
+    /**
+     * Test high bound of list.
+     *
+     * @throws Exception if failed
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void highBoundTest() throws Exception {
+        // @checkstyle MagicNumber (1 line)
+        new IterableAsList<>(Collections.nCopies(10, 0)).get(11);
+    }
 }

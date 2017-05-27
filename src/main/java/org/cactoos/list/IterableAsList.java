@@ -24,13 +24,14 @@
 package org.cactoos.list;
 
 import java.util.AbstractList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
+import org.cactoos.text.Sprintf;
 
 /**
  * Iterable as {@link List}.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
@@ -40,9 +41,22 @@ import java.util.List;
 public final class IterableAsList<T> extends AbstractList<T> {
 
     /**
-     * Origin list.
+     * Iterable source.
      */
-    private final List<T> origin;
+    private final Iterable<T> source;
+
+    /**
+     * Cache for source.
+     */
+    private final List<T> cache;
+
+    /**
+     * Iterable length.
+     * @todo #39:30m Needs cached `LengthOfIterable` version
+     *  to improve `IterableAsList` performance. Now each call
+     *  to `size()` goes through all iterable to calculate the size.
+     */
+    private final LengthOfIterable length;
 
     /**
      * Ctor.
@@ -51,53 +65,43 @@ public final class IterableAsList<T> extends AbstractList<T> {
      */
     public IterableAsList(final Iterable<T> iterable) {
         super();
-        this.origin = Collections.list(
-            new IteratorAsEnumeration<>(
-                iterable.iterator()
-            )
-        );
+        this.source = iterable;
+        this.cache = new ArrayList<>(0);
+        this.length = new LengthOfIterable(iterable);
     }
 
     @Override
     public T get(final int index) {
-        return this.origin.get(index);
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(
+                new Sprintf(
+                    "index=%d, bounds=[%d; %d]",
+                    index,
+                    0,
+                    this.size()
+                ).asString()
+            );
+        }
+        return this.cachedItem(index);
     }
 
     @Override
     public int size() {
-        return this.origin.size();
+        return this.length.asValue();
     }
 
     /**
-     * Enumeration adapter.
+     * Find item in cache by index.
      *
-     * @param <T> Enumeration type.
+     * @param index Item index
+     * @return Cached item
      */
-    private static final class IteratorAsEnumeration<T> implements
-        Enumeration<T> {
-
-        /**
-         * Source.
-         */
-        private final Iterator<T> iterator;
-
-        /**
-         * Ctor.
-         *
-         * @param iterator An iterator
-         */
-        IteratorAsEnumeration(final Iterator<T> iterator) {
-            this.iterator = iterator;
+    private T cachedItem(final int index) {
+        if (this.cache.size() != this.size()) {
+            for (final T item : this.source) {
+                this.cache.add(item);
+            }
         }
-
-        @Override
-        public boolean hasMoreElements() {
-            return this.iterator.hasNext();
-        }
-
-        @Override
-        public T nextElement() {
-            return this.iterator.next();
-        }
+        return this.cache.get(index);
     }
 }
