@@ -23,47 +23,49 @@
  */
 package org.cactoos.text;
 
+import java.util.Collection;
+import java.util.Formatter;
 import java.util.Locale;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
 
 /**
- * Test case for {@link FormattedText}.
+ * Localized string format.
  *
- * @author Andriy Kryvtsun (kontiky@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class FormattedTextTest {
+public final class LocalizedFormat implements StringFormat {
 
     /**
-     * FormattedText produces correct text.
+     * Format locale.
      */
-    @Test
-    public void formatsText() {
-        MatcherAssert.assertThat(
-            new FormattedText(
-                "%d. Formatted %s", 1, "text"
-            ).asString(),
-            Matchers.equalTo("1. Formatted text")
-        );
+    private final Locale locale;
+
+    /**
+     * Format pattern.
+     */
+    private final String pattern;
+
+    /**
+     * New string format with specified locale.
+     *
+     * @param locale A locale
+     * @param pattern Format pattern
+     */
+    public LocalizedFormat(final Locale locale, final String pattern) {
+        this.locale = locale;
+        this.pattern = pattern;
     }
 
-    /**
-     * Format with locale.
-     */
-    @Test
-    public void formatsWithLocale() {
-        MatcherAssert.assertThat(
-            new FormattedText(
-                new LocalizedFormat(Locale.GERMAN, "%,d"),
-                // @checkstyle MagicNumber (1 line)
-                1234567890
-            ).asString(),
-            Matchers.equalTo(
-                "1.234.567.890"
-            )
-        );
+    @Override
+    public String apply(final Collection<?> arguments) {
+        final StringBuilder out = new StringBuilder(0);
+        try (final Formatter fmt = new Formatter(out, this.locale)) {
+            fmt.format(
+                this.pattern,
+                arguments.toArray(new Object[arguments.size()])
+            );
+        }
+        return out.toString();
     }
 }

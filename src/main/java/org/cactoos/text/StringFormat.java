@@ -23,47 +23,48 @@
  */
 package org.cactoos.text;
 
-import java.util.Locale;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.Collection;
 
 /**
- * Test case for {@link FormattedText}.
+ * String format.
  *
- * @author Andriy Kryvtsun (kontiky@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
+ * @see FormattedText
  * @since 0.1
  */
-public final class FormattedTextTest {
+public interface StringFormat {
 
     /**
-     * FormattedText produces correct text.
+     * Apply format with arguments.
+     *
+     * @param arguments Arguments
+     * @return Formatted string
      */
-    @Test
-    public void formatsText() {
-        MatcherAssert.assertThat(
-            new FormattedText(
-                "%d. Formatted %s", 1, "text"
-            ).asString(),
-            Matchers.equalTo("1. Formatted text")
-        );
-    }
+    String apply(final Collection<?> arguments);
 
     /**
-     * Format with locale.
+     * Default decorator.
      */
-    @Test
-    public void formatsWithLocale() {
-        MatcherAssert.assertThat(
-            new FormattedText(
-                new LocalizedFormat(Locale.GERMAN, "%,d"),
-                // @checkstyle MagicNumber (1 line)
-                1234567890
-            ).asString(),
-            Matchers.equalTo(
-                "1.234.567.890"
-            )
-        );
+    abstract class AbstractFormat implements StringFormat {
+
+        /**
+         * Origin.
+         */
+        private final StringFormat origin;
+
+        /**
+         * Ctor.
+         *
+         * @param origin Origin
+         */
+        protected AbstractFormat(final StringFormat origin) {
+            this.origin = origin;
+        }
+
+        @Override
+        public final String apply(final Collection<?> arguments) {
+            return this.origin.apply(arguments);
+        }
     }
 }

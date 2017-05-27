@@ -24,45 +24,26 @@
 package org.cactoos.text;
 
 import java.util.Locale;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
 
 /**
- * Test case for {@link FormattedText}.
+ * Simple string format.
  *
- * @author Andriy Kryvtsun (kontiky@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class FormattedTextTest {
+public final class SimpleFormat extends StringFormat.AbstractFormat {
 
     /**
-     * FormattedText produces correct text.
+     * New string format with default locale.
+     *
+     * @param template Format template
      */
-    @Test
-    public void formatsText() {
-        MatcherAssert.assertThat(
-            new FormattedText(
-                "%d. Formatted %s", 1, "text"
-            ).asString(),
-            Matchers.equalTo("1. Formatted text")
-        );
-    }
-
-    /**
-     * Format with locale.
-     */
-    @Test
-    public void formatsWithLocale() {
-        MatcherAssert.assertThat(
-            new FormattedText(
-                new LocalizedFormat(Locale.GERMAN, "%,d"),
-                // @checkstyle MagicNumber (1 line)
-                1234567890
-            ).asString(),
-            Matchers.equalTo(
-                "1.234.567.890"
+    public SimpleFormat(final String template) {
+        super(
+            new LocalizedFormat(
+                Locale.getDefault(Locale.Category.FORMAT),
+                template
             )
         );
     }
