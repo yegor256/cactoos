@@ -21,67 +21,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.text;
 
-import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.text.FormattedText;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Formatter;
+import org.cactoos.Text;
 
 /**
- * Jar class resource.
+ * Text in Sprinf format.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @see ClassLoader#getResource(String)
  * @since 0.1
  */
-public final class ResourceAsInput implements Input {
+public final class FormattedText implements Text {
 
     /**
-     * Resource name.
+     * Pattern.
      */
-    private final String path;
+    private final String pattern;
 
     /**
-     * Resource class loader.
+     * Arguments.
      */
-    private final ClassLoader loader;
+    private final Collection<Object> args;
 
     /**
-     * New resource input with current context {@link ClassLoader}.
-     *
-     * @param res Resource name
+     * Ctor.
+     * @param ptn Pattern
+     * @param arguments Arguments
      */
-    public ResourceAsInput(final String res) {
-        this(
-            res,
-            Thread.currentThread().getContextClassLoader()
-        );
+    public FormattedText(final String ptn, final Object... arguments) {
+        this(ptn, Arrays.asList(arguments));
     }
 
     /**
-     * New resource input with specified {@link ClassLoader}.
-     *
-     * @param res Resource name
-     * @param ldr Resource class loader
+     * Ctor.
+     * @param ptn Pattern
+     * @param arguments Arguments
      */
-    public ResourceAsInput(final String res, final ClassLoader ldr) {
-        this.path = res;
-        this.loader = ldr;
+    public FormattedText(final String ptn, final Collection<Object> arguments) {
+        this.pattern = ptn;
+        this.args = Collections.unmodifiableCollection(arguments);
     }
 
     @Override
-    public InputStream open() throws IOException {
-        final InputStream input = this.loader.getResourceAsStream(this.path);
-        if (input == null) {
-            throw new IOException(
-                new FormattedText(
-                    "Resource '%s' was not found",
-                    this.path
-                ).asString()
+    public String asString() {
+        final StringBuilder out = new StringBuilder(0);
+        try (final Formatter fmt = new Formatter(out)) {
+            fmt.format(
+                this.pattern, this.args.toArray(new Object[this.args.size()])
             );
         }
-        return input;
+        return out.toString();
     }
 }

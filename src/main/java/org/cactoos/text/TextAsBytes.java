@@ -23,61 +23,52 @@
  */
 package org.cactoos.text;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Formatter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import org.cactoos.Bytes;
 import org.cactoos.Text;
 
 /**
- * Text in Sprinf.
+ * Text as Bytes.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class Sprintf implements Text {
+public final class TextAsBytes implements Bytes {
 
     /**
-     * Pattern.
+     * The source.
      */
-    private final String pattern;
+    private final Text source;
 
     /**
-     * Arguments.
+     * The charset.
      */
-    private final Collection<Object> args;
+    private final Charset charset;
 
     /**
      * Ctor.
-     * @param ptn Pattern
-     * @param arguments Arguments
+     * @param text The source
      */
-    public Sprintf(final String ptn, final Object... arguments) {
-        this(ptn, Arrays.asList(arguments));
+    public TextAsBytes(final Text text) {
+        this(text, Charset.defaultCharset());
     }
 
     /**
      * Ctor.
-     * @param ptn Pattern
-     * @param arguments Arguments
+     * @param text The source
+     * @param charset The charset
      */
-    public Sprintf(final String ptn, final Collection<Object> arguments) {
-        this.pattern = ptn;
-        this.args = Collections.unmodifiableCollection(arguments);
+    public TextAsBytes(final Text text, final Charset charset) {
+        this.source = text;
+        this.charset = charset;
     }
 
     @Override
-    public String asString() {
-        final StringBuilder out = new StringBuilder(0);
-        try (final Formatter fmt = new Formatter(out)) {
-            fmt.format(
-                this.pattern, this.args.toArray(new Object[this.args.size()])
-            );
-        }
-        return out.toString();
+    public byte[] asBytes() throws IOException {
+        return this.source.asString().getBytes(this.charset);
     }
-
 }
