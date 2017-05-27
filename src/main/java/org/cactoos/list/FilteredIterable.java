@@ -46,22 +46,23 @@ public final class FilteredIterable<X> implements Iterable<X> {
     /**
      * Function.
      */
-    private final Func<X, Boolean> func;
+    private final Func.Pred<X> pred;
 
     /**
      * Ctor.
      * @param src Source iterable
-     * @param fnc Func
+     * @param pred Predicate
      */
-    public FilteredIterable(final Iterable<X> src, final Func<X, Boolean> fnc) {
+    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
         this.iterable = src;
-        this.func = fnc;
+        this.pred = pred;
     }
 
     @Override
     public Iterator<X> iterator() {
         return new FilteredIterator<>(
-            this.iterable.iterator(), this.func
+            this.iterable.iterator(),
+            this.pred
         );
     }
 

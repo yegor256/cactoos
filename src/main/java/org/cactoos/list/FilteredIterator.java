@@ -47,9 +47,9 @@ public final class FilteredIterator<X> implements Iterator<X> {
     private final Iterator<X> iterator;
 
     /**
-     * Function.
+     * Predicate.
      */
-    private final Func<X, Boolean> func;
+    private final Func.Pred<X> pred;
 
     /**
      * The buffer storing the objects of the iterator.
@@ -59,11 +59,11 @@ public final class FilteredIterator<X> implements Iterator<X> {
     /**
      * Ctor.
      * @param src Source iterable
-     * @param fnc Func
+     * @param pred Predicate
      */
-    public FilteredIterator(final Iterator<X> src, final Func<X, Boolean> fnc) {
+    public FilteredIterator(final Iterator<X> src, final Func.Pred<X> pred) {
         this.iterator = src;
-        this.func = fnc;
+        this.pred = pred;
         this.buffer = new LinkedList<>();
     }
 
@@ -74,7 +74,7 @@ public final class FilteredIterator<X> implements Iterator<X> {
             while (this.iterator.hasNext()) {
                 final X object = this.iterator.next();
                 try {
-                    if (this.func.apply(object)) {
+                    if (this.pred.apply(object)) {
                         this.buffer.add(object);
                         break;
                     }
