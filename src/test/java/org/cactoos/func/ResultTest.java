@@ -21,25 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import org.cactoos.Func;
+import org.cactoos.Text;
+import org.cactoos.text.StringAsText;
+import org.cactoos.text.TrimmedText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Scalar.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link Result}.
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Type of result
  * @since 0.1
  */
-public interface Scalar<T> {
+public final class ResultTest {
 
     /**
-     * Convert it to the value.
-     * @return The value
-     * @throws Exception If fails
+     * Result of the function.
+     * @throws Exception If some problem inside
      */
-    T asValue() throws Exception;
+    @Test
+    public void asValue() throws Exception {
+        MatcherAssert.assertThat(
+            new Result<>(
+                (Func<Text, Text>) TrimmedText::new,
+                new StringAsText("  Hello!   ")
+            ).asValue().asString(),
+            Matchers.equalTo("Hello!")
+        );
+    }
 
 }
