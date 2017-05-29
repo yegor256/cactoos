@@ -57,9 +57,8 @@ public final class FormattedTextTest {
     public void formatsWithLocale() {
         MatcherAssert.assertThat(
             new FormattedText(
-                new LocalizedFormat(Locale.GERMAN, "%,d"),
                 // @checkstyle MagicNumber (1 line)
-                1234567890
+                "%,d", Locale.GERMAN, 1234567890
             ).asString(),
             Matchers.equalTo(
                 "1.234.567.890"
