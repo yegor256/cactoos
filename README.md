@@ -55,12 +55,11 @@ Java version required: 1.8+.
 To read a file:
 
 ```java
-import java.io.File;
-import org.cactoos.io.FileAsInput;
-import org.cactoos.io.InputAsText;
-String text = new InputAsText(
-  new FileAsInput(
-    new File("/code/a.txt")
+String text = new BytesAsText(
+  new InputAsBytes(
+    new FileAsInput(
+      new File("/code/a.txt")
+    )
   )
 ).asString();
 ```

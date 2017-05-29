@@ -21,59 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.text;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import org.cactoos.Input;
-import org.cactoos.Text;
+import org.cactoos.Bytes;
 
 /**
- * Input as Text.
+ * Array as Bytes.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class InputAsText implements Text {
+public final class ArrayAsBytes implements Bytes {
 
     /**
-     * The input.
+     * The bytes.
      */
-    private final Input source;
+    private final byte[] bytes;
 
     /**
-     * Text encoding.
+     * Ctor.
+     * @param bts Bytes to encapsulate
      */
-    private final Charset charset;
-
-    /**
-     * New {@link InputAsText} with default charset.
-     *
-     * @param input The input
-     */
-    public InputAsText(final Input input) {
-        this(input, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link InputAsText} with specified charset.
-     *
-     * @param input The input
-     * @param encoding Text charset
-     */
-    public InputAsText(final Input input, final Charset encoding) {
-        this.source = input;
-        this.charset = encoding;
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
+    public ArrayAsBytes(final byte[] bts) {
+        this.bytes = bts;
     }
 
     @Override
-    public String asString() throws IOException {
-        return new String(
-            new InputAsBytes(this.source).asBytes(),
-            this.charset
-        );
+    @SuppressWarnings("PMD.MethodReturnsInternalArray")
+    public byte[] asBytes() {
+        return this.bytes;
     }
+
 }

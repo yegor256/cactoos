@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -50,21 +51,23 @@ public final class FileAsInputTest {
         final File temp = File.createTempFile("cactoos", "txt");
         temp.deleteOnExit();
         MatcherAssert.assertThat(
-            new InputAsText(
-                new TeeInput(
-                    new TextAsInput(
-                        new StringAsText("Hello, друг!"),
-                        StandardCharsets.UTF_8
-                    ),
-                    new FileAsOutput(temp)
-                ),
-                StandardCharsets.UTF_8
+            new BytesAsText(
+                new InputAsBytes(
+                    new TeeInput(
+                        new TextAsInput(
+                            new StringAsText("Hello, друг!"),
+                            StandardCharsets.UTF_8
+                        ),
+                        new FileAsOutput(temp)
+                    )
+                )
             ).asString(),
             Matchers.allOf(
                 Matchers.equalTo(
-                    new InputAsText(
-                        new FileAsInput(temp),
-                        StandardCharsets.UTF_8
+                    new BytesAsText(
+                        new InputAsBytes(
+                            new FileAsInput(temp)
+                        )
                     ).asString()
                 ),
                 Matchers.startsWith("Hello, "),

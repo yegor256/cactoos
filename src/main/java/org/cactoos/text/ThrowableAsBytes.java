@@ -21,44 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import org.cactoos.text.StringAsText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.io.PrintStream;
+import org.cactoos.Bytes;
 
 /**
- * Test case for {@link InputAsText}.
+ * Throwable as Text.
+ *
+ * <p>This class is doing something similar to what
+ * ExceptionUtils are doing from Apache Commons.</p>
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class InputAsTextTest {
+public final class ThrowableAsBytes implements Bytes {
 
     /**
-     * InputAsText can read with specified encoding.
-     *
-     * @throws IOException If some problem inside
+     * The throwable.
      */
-    @Test
-    public void readsInputWithCharsetIntoText() throws IOException {
-        final Charset charset = Charset.forName("KOI8-R");
-        MatcherAssert.assertThat(
-            new InputAsText(
-                new TextAsInput(
-                    new StringAsText("Hello, друг!"),
-                    charset
-                ),
-                charset
-            ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith("Hello, "),
-                Matchers.endsWith("друг!")
-            )
-        );
+    private final Throwable throwable;
+
+    /**
+     * Ctor.
+     * @param error The exception to serialize
+     */
+    public ThrowableAsBytes(final Throwable error) {
+        this.throwable = error;
     }
+
+    @Override
+    public byte[] asBytes() throws IOException {
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            this.throwable.printStackTrace(new PrintStream(baos));
+            return baos.toByteArray();
+        }
+    }
+
 }

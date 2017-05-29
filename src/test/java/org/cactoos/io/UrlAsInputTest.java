@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -64,9 +65,11 @@ public final class UrlAsInputTest {
     public void readsRealUrl() throws IOException {
         new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
             home -> MatcherAssert.assertThat(
-                new InputAsText(
-                    new UrlAsInput(
-                        home.toURL()
+                new BytesAsText(
+                    new InputAsBytes(
+                        new UrlAsInput(
+                            home.toURL()
+                        )
                     )
                 ).asString(),
                 Matchers.allOf(

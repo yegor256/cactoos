@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -45,10 +46,12 @@ public final class TeeInputTest {
     public void copiesContent() throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         MatcherAssert.assertThat(
-            new InputAsText(
-                new TeeInput(
-                    new TextAsInput("Hello, world!"),
-                    new OutputStreamAsOutput(baos)
+            new BytesAsText(
+                new InputAsBytes(
+                    new TeeInput(
+                        new TextAsInput("Hello, world!"),
+                        new OutputStreamAsOutput(baos)
+                    )
                 )
             ).asString(),
             Matchers.allOf(

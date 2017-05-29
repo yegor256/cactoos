@@ -21,40 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.text;
 
 import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.io.FileAsInput;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Input.
- *
- * <p>Here is for example how {@link Input} can be used
- * in order to read the content of a text file:</p>
- *
- * <pre> String content = new BytesAsText(
- *   new InputAsBytes(
- *     new FileAsInput(new File("/tmp/names.txt"))
- *   )
- * ).asString();</pre>
- *
- * <p>Here {@link FileAsInput} implements {@link Input} and behaves like
- * one, providing read-only access to the encapsulated {@link java.io.File}.</p>
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link ThrowableAsBytes}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public interface Input {
+public final class ThrowableAsBytesTest {
 
     /**
-     * Get read access to it.
-     * @return InputStream to read from
-     * @throws IOException If something goes wrong
+     * ThrowableAsBytes prints stacktrace.
+     * @throws IOException If fails
      */
-    InputStream open() throws IOException;
-
+    @Test
+    public void printsStackTrace() throws IOException {
+        MatcherAssert.assertThat(
+            new BytesAsText(
+                new ThrowableAsBytes(
+                    new IOException(
+                        "It doesn't work at all"
+                    )
+                )
+            ).asString(),
+            Matchers.allOf(
+                Matchers.containsString("java.io.IOException"),
+                Matchers.containsString("doesn't work at all"),
+                Matchers.containsString(
+                    "\tat org.cactoos.text.ThrowableAsBytesTest"
+                )
+            )
+        );
+    }
 }
