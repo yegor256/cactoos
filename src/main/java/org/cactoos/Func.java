@@ -82,15 +82,15 @@ public interface Func<X, Y> {
     /**
      * Func that really is a procedure that does something and returns nothing.
      */
-    interface Proc extends Func<Void, Void>, Runnable, Callable<Void> {
+    interface Proc extends Func<Boolean, Boolean>, Runnable, Callable<Boolean> {
         @Override
-        default Void apply(Void input) throws Exception {
+        default Boolean apply(Boolean input) throws Exception {
             return this.call();
         }
         @Override
-        default Void call() throws Exception {
+        default Boolean call() throws Exception {
             this.run();
-            return null;
+            return true;
         }
         @Override
         @SuppressWarnings("PMD.AvoidCatchingGenericException")
