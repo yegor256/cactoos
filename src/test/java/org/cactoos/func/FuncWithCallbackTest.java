@@ -39,6 +39,21 @@ import org.junit.Test;
 public final class FuncWithCallbackTest {
 
     /**
+     * FuncWithCallback can use main func.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void usesMainFunc() throws Exception {
+        MatcherAssert.assertThat(
+            new FuncWithCallback<>(
+                (Func<Integer, String>) input -> "It's success",
+                ex -> "In case of failure..."
+            ).apply(1),
+            Matchers.containsString("success")
+        );
+    }
+
+    /**
      * FuncWithCallback can use a callback.
      * @throws Exception If some problem inside
      */
@@ -54,4 +69,5 @@ public final class FuncWithCallbackTest {
             Matchers.containsString("Never")
         );
     }
+
 }
