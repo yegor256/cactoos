@@ -94,8 +94,9 @@ byte[] data = new InputAsBytes(
 To format a text:
 
 ```java
-String text = new Sprintf(
-  "How are you, %s?", name
+String text = new FormattedText(
+  "How are you, %s?",
+  name
 ).asString();
 ```
 
