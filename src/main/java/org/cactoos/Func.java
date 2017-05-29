@@ -53,16 +53,23 @@ public interface Func<X, Y> {
      * @param <Y> Output type
      */
     interface Safe<X, Y> extends Func<X, Y> {
-        @Override
-        default Y apply(X input) throws Exception {
-            return this.safeApply(input);
-        }
         /**
          * Apply it safely.
          * @param input The argument
          * @return The result
          */
-        Y safeApply(X input);
+        @SuppressWarnings("PMD.AvoidCatchingGenericException")
+        default Y safeApply(X input) {
+            try {
+                return this.apply(input);
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
+                // @checkstyle IllegalCatchCheck (1 line)
+            } catch (final Exception ex) {
+                throw new IllegalStateException(ex);
+            }
+        }
     }
 
     /**
