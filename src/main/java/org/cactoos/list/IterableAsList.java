@@ -26,6 +26,7 @@ package org.cactoos.list;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+import org.cactoos.text.FormattedText;
 
 /**
  * Iterable as {@link List}.
@@ -74,12 +75,12 @@ public final class IterableAsList<T> extends AbstractList<T> {
     public T get(final int index) {
         if (index < 0 || index >= this.size()) {
             throw new IndexOutOfBoundsException(
-                String.format(
+                new FormattedText(
                     "index=%d, bounds=[%d; %d]",
                     index,
                     0,
                     this.size()
-                )
+                ).asString()
             );
         }
         return this.cachedItem(index);
