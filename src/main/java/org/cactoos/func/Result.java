@@ -21,25 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.cactoos.Func;
+import org.cactoos.Scalar;
 
 /**
- * Scalar.
+ * Result of function.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Type of result
+ * @param <X> Type of argument
+ * @param <Y> Type of result
  * @since 0.1
  */
-public interface Scalar<T> {
+public final class Result<X, Y> implements Scalar<Y> {
+    /**
+     * The function.
+     */
+    private final Func<X, Y> func;
+    /**
+     * The argument.
+     */
+    private final X arg;
+    /**
+     * The result.
+     */
+    private final List<Y> value;
 
     /**
-     * Convert it to the value.
-     * @return The value
-     * @throws Exception If fails
+     * Ctor.
+     * @param func The function
+     * @param arg The argument
      */
-    T asValue() throws Exception;
+    public Result(final Func<X, Y> func, final X arg) {
+        this.func = func;
+        this.arg = arg;
+        this.value = new ArrayList<>(1);
+    }
 
+    @Override
+    public Y asValue() throws Exception {
+        if (this.value.isEmpty()) {
+            this.value.add(
+                this.func.apply(this.arg)
+            );
+        }
+        return this.value.get(0);
+    }
 }

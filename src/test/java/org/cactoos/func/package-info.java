@@ -21,25 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
 
 /**
- * Scalar.
+ * Functions and procedures, tests.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Type of result
  * @since 0.1
  */
-public interface Scalar<T> {
-
-    /**
-     * Convert it to the value.
-     * @return The value
-     * @throws Exception If fails
-     */
-    T asValue() throws Exception;
-
-}
+package org.cactoos.func;
