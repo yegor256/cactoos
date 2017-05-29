@@ -43,18 +43,19 @@ public final class RepeatTest {
      */
     @Test
     public void allSameTest() throws Exception {
-        // @checkstyle MagicNumber (11 lines)
+        final int size = 42;
+        final int element = 11;
         MatcherAssert.assertThat(
             new LengthOfIterable(
                 new FilteredIterable<>(
                     new Repeat<>(
-                        11,
-                        42
+                        element,
+                        size
                     ),
-                    input -> input == 11
+                    input -> input == element
                 )
             ).asValue(),
-            Matchers.equalTo(42)
+            Matchers.equalTo(size)
         );
     }
 
@@ -65,7 +66,6 @@ public final class RepeatTest {
      */
     @Test
     public void emptyTest() throws Exception {
-        // @checkstyle MagicNumber (5 lines)
         MatcherAssert.assertThat(
             new LengthOfIterable(
                 new Repeat<>(0, 0)
