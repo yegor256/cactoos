@@ -44,14 +44,16 @@ public final class IterableAsListTest {
      */
     @Test
     public void elementAtIndexTest() throws Exception {
-        // @checkstyle MagicNumber (7 lines)
+        final int expected = 4;
+        final int position = 3;
+        final Integer[] array = Collections.nCopies(position + 1, 0)
+            .toArray(new Integer[0]);
+        array[position] = expected;
         MatcherAssert.assertThat(
             new IterableAsList<>(
-                new ArrayAsIterable<>(
-                    1, 2, 3, 4
-                )
-            ).get(3),
-            Matchers.equalTo(4)
+                new ArrayAsIterable<>(array)
+            ).get(position),
+            Matchers.equalTo(expected)
         );
     }
 
@@ -62,12 +64,12 @@ public final class IterableAsListTest {
      */
     @Test
     public void sizeTest() throws Exception {
-        // @checkstyle MagicNumber (5 lines)
+        final int size = 42;
         MatcherAssert.assertThat(
             new IterableAsList<>(
-                Collections.nCopies(42, 0)
+                Collections.nCopies(size, 0)
             ),
-            Matchers.hasSize(42)
+            Matchers.hasSize(size)
         );
     }
 
