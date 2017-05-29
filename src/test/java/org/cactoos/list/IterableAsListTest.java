@@ -44,16 +44,13 @@ public final class IterableAsListTest {
      */
     @Test
     public void elementAtIndexTest() throws Exception {
-        final int expected = 4;
-        final int position = 3;
-        final Integer[] array = Collections.nCopies(position + 1, 0)
-            .toArray(new Integer[0]);
-        array[position] = expected;
+        final int num = 345;
         MatcherAssert.assertThat(
             new IterableAsList<>(
-                new ArrayAsIterable<>(array)
-            ).get(position),
-            Matchers.equalTo(expected)
+                // @checkstyle MagicNumber (2 lines)
+                new ArrayAsIterable<>(0, 1, 2, num, 3, 4)
+            ).get(3),
+            Matchers.equalTo(num)
         );
     }
 
