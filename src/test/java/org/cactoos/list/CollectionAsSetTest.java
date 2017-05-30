@@ -61,8 +61,7 @@ public final class CollectionAsSetTest {
         MatcherAssert.assertThat(
             new CollectionAsSet<>(
                 new IterableAsList<>(
-                    // @checkstyle MagicNumber (1 line)
-                    new ArrayAsIterable<>(1, 2, element, 4)
+                    new ArrayAsIterable<>(1, 2, element)
                 )
             ),
             Matchers.hasItem(element)
