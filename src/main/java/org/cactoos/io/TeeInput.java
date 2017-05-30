@@ -25,7 +25,6 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import org.cactoos.Input;
 import org.cactoos.Output;
 
@@ -62,76 +61,9 @@ public final class TeeInput implements Input {
 
     @Override
     public InputStream open() throws IOException {
-        return new TeeInput.Stream(
+        return new TeeInputStream(
             this.source.open(), this.target.open()
         );
     }
 
-    /**
-     * Stream that copies input to output.
-     */
-    private static final class Stream extends InputStream {
-        /**
-         * Input.
-         */
-        private final InputStream input;
-        /**
-         * Output.
-         */
-        private final OutputStream output;
-        /**
-         * Ctor.
-         * @param src Source of data
-         * @param tgt Destination of data
-         */
-        private Stream(final InputStream src, final OutputStream tgt) {
-            super();
-            this.input = src;
-            this.output = tgt;
-        }
-        @Override
-        public int read() throws IOException {
-            final int data = this.input.read();
-            this.output.write(data);
-            return data;
-        }
-        @Override
-        public int read(final byte[] buf) throws IOException {
-            return this.read(buf, 0, buf.length);
-        }
-        @Override
-        public int read(final byte[] buf, final int offset,
-            final int len) throws IOException {
-            final int max = this.input.read(buf, offset, len);
-            if (max > 0) {
-                this.output.write(buf, offset, max);
-            }
-            return max;
-        }
-        @Override
-        public long skip(final long num) throws IOException {
-            return this.input.skip(num);
-        }
-        @Override
-        public int available() throws IOException {
-            return this.input.available();
-        }
-        @Override
-        public void close() throws IOException {
-            this.input.close();
-            this.output.close();
-        }
-        @Override
-        public void mark(final int limit) {
-            this.input.mark(limit);
-        }
-        @Override
-        public void reset() throws IOException {
-            this.input.reset();
-        }
-        @Override
-        public boolean markSupported() {
-            return this.input.markSupported();
-        }
-    }
 }
