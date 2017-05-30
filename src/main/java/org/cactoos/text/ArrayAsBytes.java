@@ -21,70 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.text;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import org.cactoos.Input;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
+import org.cactoos.Bytes;
 
 /**
- * Text as Input.
+ * Array as Bytes.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class TextAsInput implements Input {
+public final class ArrayAsBytes implements Bytes {
 
     /**
-     * The source.
+     * The bytes.
      */
-    private final Text source;
-
-    /**
-     * Text charset.
-     */
-    private final Charset charset;
-
-    /**
-     * New {@link TextAsInput} with default charset.
-     *
-     * @param text The text
-     */
-    public TextAsInput(final String text) {
-        this(new StringAsText(text));
-    }
+    private final byte[] bytes;
 
     /**
      * Ctor.
-     * @param text The text
+     * @param bts Bytes to encapsulate
      */
-    public TextAsInput(final Text text) {
-        this(text, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link TextAsInput} with specified charset.
-     *
-     * @param text The text
-     * @param charset Text charset
-     */
-    public TextAsInput(final Text text, final Charset charset) {
-        this.source = text;
-        this.charset = charset;
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
+    public ArrayAsBytes(final byte[] bts) {
+        this.bytes = bts;
     }
 
     @Override
-    public InputStream open() throws IOException {
-        return new ByteArrayInputStream(
-            this.source.asString().getBytes(this.charset)
-        );
+    @SuppressWarnings("PMD.MethodReturnsInternalArray")
+    public byte[] asBytes() {
+        return this.bytes;
     }
 
 }

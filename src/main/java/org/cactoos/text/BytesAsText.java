@@ -21,70 +21,76 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.text;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
-import org.cactoos.Input;
+import java.nio.charset.StandardCharsets;
+import org.cactoos.Bytes;
 import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
 
 /**
- * Text as Input.
+ * Bytes as Text.
+ *
+ * <p>This class is doing something similar to what
+ * ExceptionUtils are doing from Apache Commons.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class TextAsInput implements Input {
+public final class BytesAsText implements Text {
 
     /**
-     * The source.
+     * The bytes.
      */
-    private final Text source;
+    private final Bytes bytes;
 
     /**
-     * Text charset.
+     * The charset.
      */
     private final Charset charset;
 
     /**
-     * New {@link TextAsInput} with default charset.
-     *
-     * @param text The text
+     * Ctor.
+     * @param bts Bytes to encapsulate
      */
-    public TextAsInput(final String text) {
-        this(new StringAsText(text));
+    public BytesAsText(final byte[] bts) {
+        this(bts, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
-     * @param text The text
+     * @param bts Bytes to encapsulate
      */
-    public TextAsInput(final Text text) {
-        this(text, Charset.defaultCharset());
+    public BytesAsText(final Bytes bts) {
+        this(bts, StandardCharsets.UTF_8);
     }
 
     /**
-     * New {@link TextAsInput} with specified charset.
-     *
-     * @param text The text
-     * @param charset Text charset
+     * Ctor.
+     * @param bts Bytes to encapsulate
+     * @param cset Charset
      */
-    public TextAsInput(final Text text, final Charset charset) {
-        this.source = text;
-        this.charset = charset;
+    public BytesAsText(final byte[] bts, final Charset cset) {
+        this(new ArrayAsBytes(bts), cset);
+    }
+
+    /**
+     * Ctor.
+     * @param bts Bytes to encapsulate
+     * @param cset Charset
+     */
+    public BytesAsText(final Bytes bts, final Charset cset) {
+        this.bytes = bts;
+        this.charset = cset;
     }
 
     @Override
-    public InputStream open() throws IOException {
-        return new ByteArrayInputStream(
-            this.source.asString().getBytes(this.charset)
-        );
+    public String asString() throws IOException {
+        return new String(this.bytes.asBytes(), this.charset);
     }
 
 }

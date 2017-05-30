@@ -21,55 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.HashMap;
+import java.util.Map;
+import org.cactoos.Func;
 
 /**
- * Test case for {@link TransformedIterable}.
+ * Func that caches previously calculated values and doesn't
+ * recalculate again.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @param <X> Type of input
+ * @param <Y> Type of output
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class StickyFunc<X, Y> implements Func<X, Y> {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * Original func.
      */
-    @Test
-    public void transformsList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
+    private final Func<X, Y> func;
+
+    /**
+     * Cache.
+     */
+    private final Map<X, Y> cache;
+
+    /**
+     * Ctor.
+     * @param fnc Func original
+     */
+    public StickyFunc(final Func<X, Y> fnc) {
+        this.func = fnc;
+        this.cache = new HashMap<>(0);
     }
 
-    /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
-     */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
-        );
+    @Override
+    public Y apply(final X input) throws Exception {
+        if (!this.cache.containsKey(input)) {
+            this.cache.put(input, this.func.apply(input));
+        }
+        return this.cache.get(input);
     }
 
 }

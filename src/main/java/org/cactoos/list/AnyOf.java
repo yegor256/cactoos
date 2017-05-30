@@ -23,53 +23,42 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.Scalar;
 
 /**
- * Test case for {@link TransformedIterable}.
+ * Is {@code true} when any item in the collection is {@code true}.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class AnyOf implements Scalar<Boolean> {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * Iterable.
      */
-    @Test
-    public void transformsList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
+    private final Iterable<Boolean> iterable;
+
+    /**
+     * Ctor.
+     * @param src Source iterable
+     */
+    public AnyOf(final Iterable<Boolean> src) {
+        this.iterable = src;
     }
 
-    /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
-     */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
-        );
+    @Override
+    public Boolean asValue() {
+        boolean success = false;
+        for (final Boolean item : this.iterable) {
+            if (item) {
+                success = true;
+                break;
+            }
+        }
+        return success;
     }
 
 }

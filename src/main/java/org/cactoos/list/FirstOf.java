@@ -24,52 +24,39 @@
 package org.cactoos.list;
 
 import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.Iterator;
+import org.cactoos.Scalar;
 
 /**
- * Test case for {@link TransformedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * First element in {@link Iterable}.
+ *
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
+ * @param <T> Scalar type
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class FirstOf<T> implements Scalar<T> {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * Source iterable.
      */
-    @Test
-    public void transformsList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
-    }
+    private final Iterable<T> source;
 
     /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
+     * Ctor.
+     *
+     * @param source Iterable
      */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
-        );
+    public FirstOf(final Iterable<T> source) {
+        this.source = source;
     }
 
+    @Override
+    public T asValue() throws IOException {
+        final Iterator<T> iterator = this.source.iterator();
+        if (!iterator.hasNext()) {
+            throw new IOException("Iterable is empty");
+        }
+        return iterator.next();
+    }
 }

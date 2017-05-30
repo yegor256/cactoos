@@ -21,55 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
 import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link IsBlank}.
+ * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class IsBlankTest {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * IsBlank can detect empty string.
+     * @throws IOException If some problem inside
      */
     @Test
-    public void transformsList() throws IOException {
+    public void determinesEmptyText() throws IOException {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
+            new IsBlank(
+                new StringAsText("")
+            ).asValue(),
+            Matchers.is(Boolean.TRUE)
         );
     }
 
     /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
+     * IsBlank can detect blank string.
+     * @throws IOException If some problem inside
      */
     @Test
-    public void transformsEmptyList() throws IOException {
+    public void determinesBlankText() throws IOException {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
+            new IsBlank(
+                new StringAsText("  ")
+            ).asValue(),
+            Matchers.is(Boolean.TRUE)
         );
     }
 
+    /**
+     * IsBlank can detect non blank string.
+     * @throws IOException If some problem inside
+     */
+    @Test
+    public void determinesNotBlankText() throws IOException {
+        MatcherAssert.assertThat(
+            new IsBlank(
+                new StringAsText("not empty")
+            ).asValue(),
+            Matchers.is(Boolean.FALSE)
+        );
+    }
 }

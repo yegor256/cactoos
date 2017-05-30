@@ -21,70 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import org.cactoos.Input;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
+import org.cactoos.Func;
 
 /**
- * Text as Input.
+ * Func with Callback.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @since 0.2
  */
-public final class TextAsInput implements Input {
+public final class FuncWithCallback<X, Y> implements Func<X, Y> {
 
     /**
-     * The source.
+     * The func.
      */
-    private final Text source;
+    private final Func<X, Y> func;
 
     /**
-     * Text charset.
+     * The callback.
      */
-    private final Charset charset;
-
-    /**
-     * New {@link TextAsInput} with default charset.
-     *
-     * @param text The text
-     */
-    public TextAsInput(final String text) {
-        this(new StringAsText(text));
-    }
+    private final Func<Throwable, Y> callback;
 
     /**
      * Ctor.
-     * @param text The text
+     * @param fnc The func
+     * @param cbk The callback
      */
-    public TextAsInput(final Text text) {
-        this(text, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link TextAsInput} with specified charset.
-     *
-     * @param text The text
-     * @param charset Text charset
-     */
-    public TextAsInput(final Text text, final Charset charset) {
-        this.source = text;
-        this.charset = charset;
+    public FuncWithCallback(final Func<X, Y> fnc,
+        final Func<Throwable, Y> cbk) {
+        this.func = fnc;
+        this.callback = cbk;
     }
 
     @Override
-    public InputStream open() throws IOException {
-        return new ByteArrayInputStream(
-            this.source.asString().getBytes(this.charset)
-        );
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    public Y apply(final X input) throws Exception {
+        Y result;
+        try {
+            result =  this.func.apply(input);
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            result = this.callback.apply(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Throwable ex) {
+            result = this.callback.apply(ex);
+        }
+        return result;
     }
 
 }

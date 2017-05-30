@@ -23,7 +23,7 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
+import java.util.concurrent.Callable;
 
 /**
  * Function.
@@ -36,14 +36,113 @@ import java.io.IOException;
  * @param <Y> Type of output
  * @since 0.1
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public interface Func<X, Y> {
 
     /**
      * Apply it.
      * @param input The argument
      * @return The result
-     * @throws IOException If fails
+     * @throws Exception If fails
      */
-    Y apply(X input) throws IOException;
+    Y apply(X input) throws Exception;
+
+    /**
+     * Func that doesn't throw.
+     * @param <X> Input type
+     * @param <Y> Output type
+     */
+    interface Safe<X, Y> extends Func<X, Y> {
+        /**
+         * Apply it safely.
+         * @param input The argument
+         * @return The result
+         */
+        @SuppressWarnings("PMD.AvoidCatchingGenericException")
+        default Y safeApply(X input) {
+            try {
+                return this.apply(input);
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
+                // @checkstyle IllegalCatchCheck (1 line)
+            } catch (final Exception ex) {
+                throw new IllegalStateException(ex);
+            }
+        }
+    }
+
+    /**
+     * Quiet func that returns nothing, but is still a function.
+     * @param <X> Input type
+     */
+    interface Quiet<X> extends Func<X, Boolean> {
+        @Override
+        default Boolean apply(X input) throws Exception {
+            this.exec(input);
+            return true;
+        }
+        /**
+         * Execute it.
+         * @param input The argument
+         * @throws Exception If fails
+         */
+        void exec(X input) throws Exception;
+    }
+
+    /**
+     * Func that returns something but doesn't expect any input.
+     * @param <Y> Output type
+     */
+    interface Value<Y> extends Func<Void, Y>, Scalar<Y>, Callable<Y> {
+        @Override
+        default Y apply(Void input) throws Exception {
+            return this.asValue();
+        }
+        @Override
+        default Y call() throws Exception {
+            return this.asValue();
+        }
+    }
+
+    /**
+     * Func that really is a procedure that does something and returns nothing.
+     */
+    interface Proc extends Func<Boolean, Boolean>, Runnable, Callable<Boolean> {
+        @Override
+        default Boolean apply(Boolean input) throws Exception {
+            return this.call();
+        }
+        @Override
+        default Boolean call() throws Exception {
+            this.run();
+            return true;
+        }
+        @Override
+        @SuppressWarnings("PMD.AvoidCatchingGenericException")
+        default void run() {
+            try {
+                this.exec();
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
+                // @checkstyle IllegalCatchCheck (1 line)
+            } catch (final Exception ex) {
+                throw new IllegalStateException(ex);
+            }
+        }
+        /**
+         * Execute it.
+         * @throws Exception If fails
+         */
+        void exec() throws Exception;
+    }
+
+    /**
+     * Func that represents a predicate of one argument.
+     * @param <X> Input type
+     */
+    interface Pred<X> extends Func<X, Boolean> {
+    }
 
 }

@@ -23,47 +23,70 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import org.cactoos.Scalar;
 
 /**
- * Filtered iterable.
+ * Is {@code true} when all items in the collection are {@code true}.
+ *
+ * <p>You can use this class in order to iterate all items
+ * in the collection. This is very similar to the {@code forEach()}
+ * in steams, but more object oriented. For example, if you want
+ * to print all items from the array:</p>
+ *
+ * <pre> new AllOf(
+ *   new TransformedIterable&lt;String&gt;(
+ *     Arrays.asList("hello", "world"),
+ *     new ProcAsFunc&lt;&gt;(i -&gt; System.out.println(i))
+ *   )
+ * ).asValue();</pre>
+ *
+ * <p>Or even more compact, through {@link IterableAsBooleans}:</p>
+ *
+ * <pre> new AllOf(
+ *   new IterableAsBooleans&lt;String&gt;(
+ *     Arrays.asList("hello", "world"),
+ *     i -&gt; System.out.println(i)
+ *   )
+ * ).asValue();</pre>
+ *
+ * <p>Or you can even use {@link IterableAsBoolean}:</p>
+ *
+ * <pre> new IterableAsBoolean&lt;String&gt;(
+ *   Arrays.asList("hello", "world"),
+ *   i -&gt; System.out.println(i)
+ * ).asValue();</pre>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
  * @since 0.1
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class AllOf implements Scalar<Boolean> {
 
     /**
      * Iterable.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func.Pred<X> pred;
+    private final Iterable<Boolean> iterable;
 
     /**
      * Ctor.
      * @param src Source iterable
-     * @param pred Predicate
      */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
+    public AllOf(final Iterable<Boolean> src) {
         this.iterable = src;
-        this.pred = pred;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
-        );
+    public Boolean asValue() {
+        boolean success = true;
+        for (final Boolean item : this.iterable) {
+            if (!item) {
+                success = false;
+                break;
+            }
+        }
+        return success;
     }
 
 }

@@ -21,55 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.io.PrintStream;
+import org.cactoos.Bytes;
 
 /**
- * Test case for {@link TransformedIterable}.
+ * Throwable as Text.
+ *
+ * <p>This class is doing something similar to what
+ * ExceptionUtils are doing from Apache Commons.</p>
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class TransformedIterableTest {
+public final class ThrowableAsBytes implements Bytes {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * The throwable.
      */
-    @Test
-    public void transformsList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
+    private final Throwable throwable;
+
+    /**
+     * Ctor.
+     * @param error The exception to serialize
+     */
+    public ThrowableAsBytes(final Throwable error) {
+        this.throwable = error;
     }
 
-    /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
-     */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
-        );
+    @Override
+    public byte[] asBytes() throws IOException {
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            this.throwable.printStackTrace(new PrintStream(baos));
+            return baos.toByteArray();
+        }
     }
 
 }

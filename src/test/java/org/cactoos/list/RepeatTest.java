@@ -23,53 +23,54 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link Repeat}.
+ *
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class RepeatTest {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * Test all elements are same.
+     *
+     * @throws Exception if failed
      */
     @Test
-    public void transformsList() throws IOException {
+    public void allSameTest() throws Exception {
+        final int size = 42;
+        final int element = 11;
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
+            new LengthOfIterable(
+                new FilteredIterable<>(
+                    new Repeat<>(
+                        element,
+                        size
+                    ),
+                    input -> input == element
+                )
+            ).asValue(),
+            Matchers.equalTo(size)
         );
     }
 
     /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
+     * Test empty 'repeat' size.
+     *
+     * @throws Exception if failed
      */
     @Test
-    public void transformsEmptyList() throws IOException {
+    public void emptyTest() throws Exception {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
+            new LengthOfIterable(
+                new Repeat<>(0, 0)
+            ).asValue(),
+            Matchers.equalTo(0)
         );
     }
-
 }

@@ -25,6 +25,8 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -32,6 +34,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link FileAsInput}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
@@ -40,6 +43,7 @@ public final class FileAsInputTest {
 
     /**
      * FileAsInput can read file content.
+     *
      * @throws IOException If some problem inside
      */
     @Test
@@ -47,20 +51,28 @@ public final class FileAsInputTest {
         final File temp = File.createTempFile("cactoos", "txt");
         temp.deleteOnExit();
         MatcherAssert.assertThat(
-            new InputAsText(
-                new TeeInput(
-                    new TextAsInput(new StringAsText("Hello, друг!")),
-                    new FileAsOutput(temp)
+            new BytesAsText(
+                new InputAsBytes(
+                    new TeeInput(
+                        new TextAsInput(
+                            new StringAsText("Hello, друг!"),
+                            StandardCharsets.UTF_8
+                        ),
+                        new FileAsOutput(temp)
+                    )
                 )
             ).asString(),
             Matchers.allOf(
                 Matchers.equalTo(
-                    new InputAsText(new FileAsInput(temp)).asString()
+                    new BytesAsText(
+                        new InputAsBytes(
+                            new FileAsInput(temp)
+                        )
+                    ).asString()
                 ),
                 Matchers.startsWith("Hello, "),
                 Matchers.endsWith("друг!")
             )
         );
     }
-
 }

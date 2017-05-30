@@ -21,39 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.io.IOException;
-import org.cactoos.text.StringAsText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.Func;
 
 /**
- * Test case for {@link InputAsText}.
+ * Runnable as a Func.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class InputAsTextTest {
+public final class RunnableAsProc implements Func.Proc {
 
     /**
-     * InputAsText can read input.
-     * @throws IOException If some problem inside
+     * The runnable.
      */
-    @Test
-    public void readsInputIntoText() throws IOException {
-        MatcherAssert.assertThat(
-            new InputAsText(
-                new TextAsInput(
-                    new StringAsText("Hello, друг!")
-                )
-            ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith("Hello, "),
-                Matchers.endsWith("друг!")
-            )
-        );
+    private final Runnable runnable;
+
+    /**
+     * Ctor.
+     * @param rnbl The runnable
+     */
+    public RunnableAsProc(final Runnable rnbl) {
+        this.runnable = rnbl;
+    }
+
+    @Override
+    public void exec() {
+        this.runnable.run();
     }
 
 }

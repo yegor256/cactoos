@@ -21,55 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
 import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
+ * Test case for {@link ThrowableAsBytes}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class TransformedIterableTest {
+public final class ThrowableAsBytesTest {
 
     /**
-     * TransformedIterable can transform a list.
+     * ThrowableAsBytes prints stacktrace.
      * @throws IOException If fails
      */
     @Test
-    public void transformsList() throws IOException {
+    public void printsStackTrace() throws IOException {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
+            new BytesAsText(
+                new ThrowableAsBytes(
+                    new IOException(
+                        "It doesn't work at all"
+                    )
+                )
+            ).asString(),
+            Matchers.allOf(
+                Matchers.containsString("java.io.IOException"),
+                Matchers.containsString("doesn't work at all"),
+                Matchers.containsString(
+                    "\tat org.cactoos.text.ThrowableAsBytesTest"
+                )
+            )
         );
     }
-
-    /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
-     */
-    @Test
-    public void transformsEmptyList() throws IOException {
-        MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
-        );
-    }
-
 }

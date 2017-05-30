@@ -21,70 +21,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.list;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import org.cactoos.Input;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
+import java.util.Iterator;
 
 /**
- * Text as Input.
+ * Repeat an element.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
+ * @param <T> Element type
  * @since 0.1
  */
-public final class TextAsInput implements Input {
+public final class Repeat<T> implements Iterable<T> {
 
     /**
-     * The source.
+     * Element to repeat.
      */
-    private final Text source;
+    private final T element;
 
     /**
-     * Text charset.
+     * Repeat count.
      */
-    private final Charset charset;
-
-    /**
-     * New {@link TextAsInput} with default charset.
-     *
-     * @param text The text
-     */
-    public TextAsInput(final String text) {
-        this(new StringAsText(text));
-    }
+    private final int count;
 
     /**
      * Ctor.
-     * @param text The text
-     */
-    public TextAsInput(final Text text) {
-        this(text, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link TextAsInput} with specified charset.
      *
-     * @param text The text
-     * @param charset Text charset
+     * @param element To repeat
+     * @param count Count
      */
-    public TextAsInput(final Text text, final Charset charset) {
-        this.source = text;
-        this.charset = charset;
+    public Repeat(final T element, final int count) {
+        this.element = element;
+        this.count = count;
     }
 
     @Override
-    public InputStream open() throws IOException {
-        return new ByteArrayInputStream(
-            this.source.asString().getBytes(this.charset)
-        );
+    public Iterator<T> iterator() {
+        return new RepeatIterator();
     }
 
+    /**
+     * An iterator.
+     */
+    private final class RepeatIterator implements Iterator<T> {
+
+        /**
+         * Current position.
+         */
+        private int cursor;
+
+        @Override
+        public boolean hasNext() {
+            return this.cursor < Repeat.this.count;
+        }
+
+        @Override
+        public T next() {
+            ++this.cursor;
+            return Repeat.this.element;
+        }
+    }
 }

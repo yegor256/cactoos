@@ -21,38 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
-
-import java.io.IOException;
-import org.cactoos.Input;
-import org.cactoos.Text;
 
 /**
- * Input as Text.
- *
- * <p>There is no thread-safety guarantee.
+ * Functions and procedures, tests.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class InputAsText implements Text {
-
-    /**
-     * The input.
-     */
-    private final Input source;
-
-    /**
-     * Ctor.
-     * @param input The input
-     */
-    public InputAsText(final Input input) {
-        this.source = input;
-    }
-
-    @Override
-    public String asString() throws IOException {
-        return new String(new InputAsBytes(this.source).asBytes());
-    }
-}
+package org.cactoos.func;

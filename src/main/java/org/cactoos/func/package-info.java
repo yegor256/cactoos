@@ -21,49 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
-
-import java.util.Iterator;
-import org.cactoos.Func;
 
 /**
- * Filtered iterable.
- *
- * <p>There is no thread-safety guarantee.
+ * Functions and procedures.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
  * @since 0.1
  */
-public final class FilteredIterable<X> implements Iterable<X> {
-
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func.Pred<X> pred;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
-     */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
-        );
-    }
-
-}
+package org.cactoos.func;

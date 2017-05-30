@@ -21,54 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
 import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
+ * Test case for {@link FuncWithCallback}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class TransformedIterableTest {
+public final class FuncWithCallbackTest {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * FuncWithCallback can use main func.
+     * @throws Exception If some problem inside
      */
     @Test
-    public void transformsList() throws IOException {
+    public void usesMainFunc() throws Exception {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
+            new FuncWithCallback<>(
+                (Func<Integer, String>) input -> "It's success",
+                ex -> "In case of failure..."
+            ).apply(1),
+            Matchers.containsString("success")
         );
     }
 
     /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
+     * FuncWithCallback can use a callback.
+     * @throws Exception If some problem inside
      */
     @Test
-    public void transformsEmptyList() throws IOException {
+    public void usesCallback() throws Exception {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
+            new FuncWithCallback<>(
+                (Func<Integer, String>) input -> {
+                    throw new IOException("Failure");
+                },
+                ex -> "Never mind"
+            ).apply(1),
+            Matchers.containsString("Never")
         );
     }
 

@@ -21,55 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
+import java.util.Locale;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link FormattedText}.
+ *
+ * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class TransformedIterableTest {
+public final class FormattedTextTest {
 
     /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
+     * FormattedText produces correct text.
      */
     @Test
-    public void transformsList() throws IOException {
+    public void formatsText() {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
+            new FormattedText(
+                "%d. Formatted %s", 1, "text"
+            ).asString(),
+            Matchers.equalTo("1. Formatted text")
         );
     }
 
     /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
+     * Format with locale.
      */
     @Test
-    public void transformsEmptyList() throws IOException {
+    public void formatsWithLocale() {
         MatcherAssert.assertThat(
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
+            new FormattedText(
+                // @checkstyle MagicNumber (1 line)
+                "%,d", Locale.GERMAN, 1234567890
+            ).asString(),
+            Matchers.equalTo(
+                "1.234.567.890"
+            )
         );
     }
-
 }
