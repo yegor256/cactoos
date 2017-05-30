@@ -54,7 +54,7 @@ public final class FileAsOutput implements Output {
     }
 
     @Override
-    public OutputStream open() throws FileNotFoundException {
+    public OutputStream stream() throws FileNotFoundException {
         return new FileOutputStream(this.file);
     }
 

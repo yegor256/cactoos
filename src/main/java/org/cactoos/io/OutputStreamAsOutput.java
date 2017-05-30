@@ -51,7 +51,7 @@ public final class OutputStreamAsOutput implements Output {
     }
 
     @Override
-    public OutputStream open() {
+    public OutputStream stream() {
         return this.output;
     }
 

@@ -75,7 +75,7 @@ public final class InputAsBytes implements Bytes {
             final InputStream stream = new TeeInput(
                 this.source,
                 new OutputStreamAsOutput(baos)
-            ).open();
+            ).stream();
             final byte[] buf = new byte[this.size];
             while (true) {
                 if (stream.read(buf) != buf.length) {

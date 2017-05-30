@@ -51,7 +51,7 @@ public final class InputStreamAsInput implements Input {
     }
 
     @Override
-    public InputStream open() {
+    public InputStream stream() {
         return this.input;
     }
 

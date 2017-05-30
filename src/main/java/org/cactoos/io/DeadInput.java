@@ -40,8 +40,8 @@ import org.cactoos.text.EmptyBytes;
 public final class DeadInput implements Input {
 
     @Override
-    public InputStream open() throws IOException {
-        return new BytesAsInput(new EmptyBytes()).open();
+    public InputStream stream() throws IOException {
+        return new BytesAsInput(new EmptyBytes()).stream();
     }
 
 }

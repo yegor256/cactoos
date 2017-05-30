@@ -53,7 +53,7 @@ public final class UrlAsInput implements Input {
     }
 
     @Override
-    public InputStream open() throws IOException {
+    public InputStream stream() throws IOException {
         return this.source.openStream();
     }
 

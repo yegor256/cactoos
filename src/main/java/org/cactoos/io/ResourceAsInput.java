@@ -72,7 +72,7 @@ public final class ResourceAsInput implements Input {
     }
 
     @Override
-    public InputStream open() throws IOException {
+    public InputStream stream() throws IOException {
         final InputStream input = this.loader.getResourceAsStream(this.path);
         if (input == null) {
             throw new IOException(

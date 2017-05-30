@@ -60,9 +60,9 @@ public final class TeeInput implements Input {
     }
 
     @Override
-    public InputStream open() throws IOException {
+    public InputStream stream() throws IOException {
         return new TeeInputStream(
-            this.source.open(), this.target.open()
+            this.source.stream(), this.target.stream()
         );
     }
 

@@ -54,7 +54,7 @@ public final class BytesAsInput implements Input {
     }
 
     @Override
-    public InputStream open() throws IOException {
+    public InputStream stream() throws IOException {
         return new ByteArrayInputStream(
             this.source.asBytes()
         );

@@ -61,6 +61,6 @@ public interface Output {
      * @return InputStream to read from
      * @throws IOException If something goes wrong
      */
-    OutputStream open() throws IOException;
+    OutputStream stream() throws IOException;
 
 }

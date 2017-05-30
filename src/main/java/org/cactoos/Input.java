@@ -55,6 +55,6 @@ public interface Input {
      * @return InputStream to read from
      * @throws IOException If something goes wrong
      */
-    InputStream open() throws IOException;
+    InputStream stream() throws IOException;
 
 }

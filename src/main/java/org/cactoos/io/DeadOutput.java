@@ -38,7 +38,7 @@ import org.cactoos.Output;
 public final class DeadOutput implements Output {
 
     @Override
-    public OutputStream open() {
+    public OutputStream stream() {
         return new OutputStream() {
             @Override
             @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
