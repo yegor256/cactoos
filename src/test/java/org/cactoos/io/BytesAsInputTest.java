@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import org.cactoos.Text;
+import org.cactoos.Bytes;
 import org.cactoos.text.StringAsText;
 import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
@@ -47,14 +47,12 @@ public final class BytesAsInputTest {
      */
     @Test
     public void open() throws IOException {
-        final Text text = new StringAsText("Hello!");
+        final Bytes bytes = new TextAsBytes(new StringAsText("Hello!"));
         MatcherAssert.assertThat(
-            new InputAsText(
-                new BytesAsInput(
-                    new TextAsBytes(text)
-                )
-            ).asString(),
-            Matchers.equalTo(text.asString())
+            new InputAsBytes(
+                new BytesAsInput(bytes)
+            ).asBytes(),
+            Matchers.equalTo(bytes.asBytes())
         );
     }
 
