@@ -23,8 +23,8 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -46,8 +46,8 @@ public final class AnyOfTest {
                     new ArrayAsIterable<>("a", "file", "is", "corrupt"),
                     txt -> txt.length() > 2
                 )
-            ).asValue(),
-            Matchers.equalTo(true)
+            ),
+            new Scalar.HasValue<>(true)
         );
     }
 

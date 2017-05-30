@@ -23,8 +23,8 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -54,8 +54,8 @@ public final class RepeatTest {
                     ),
                     input -> input == element
                 )
-            ).asValue(),
-            Matchers.equalTo(size)
+            ),
+            new Scalar.HasValue<>(size)
         );
     }
 
@@ -69,8 +69,8 @@ public final class RepeatTest {
         MatcherAssert.assertThat(
             new LengthOfIterable(
                 new Repeat<>(0, 0)
-            ).asValue(),
-            Matchers.equalTo(0)
+            ),
+            new Scalar.HasValue<>(0)
         );
     }
 }

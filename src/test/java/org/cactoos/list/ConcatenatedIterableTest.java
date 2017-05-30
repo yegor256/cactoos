@@ -23,8 +23,8 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -48,9 +48,9 @@ public final class ConcatenatedIterableTest {
                     new ArrayAsIterable<>("how", "are", "you"),
                     new ArrayAsIterable<>("what's", "up")
                 )
-            ).asValue(),
+            ),
             // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(8)
+            new Scalar.HasValue<>(8)
         );
     }
 

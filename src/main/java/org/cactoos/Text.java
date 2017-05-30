@@ -80,7 +80,7 @@ public interface Text {
         }
         @Override
         public void describeTo(final Description description) {
-            description.appendText("Text with string that ");
+            description.appendText("Text with ");
             description.appendDescriptionOf(this.matcher);
         }
     }

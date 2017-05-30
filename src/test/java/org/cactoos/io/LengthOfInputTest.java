@@ -23,10 +23,9 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
+import org.cactoos.Scalar;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -39,30 +38,28 @@ public final class LengthOfInputTest {
 
     /**
      * LengthOfInput can calculate length.
-     * @throws IOException If some problem inside
      */
     @Test
-    public void calculatesLength() throws IOException {
+    public void calculatesLength() {
         final String text = "What's up, друг?";
         MatcherAssert.assertThat(
             new LengthOfInput(
                 new TextAsInput(
                     new StringAsText(text)
                 )
-            ).asValue(),
-            Matchers.equalTo((long) text.getBytes().length)
+            ),
+            new Scalar.HasValue<>((long) text.getBytes().length)
         );
     }
 
     /**
      * LengthOfInput can calculate zero length.
-     * @throws IOException If some problem inside
      */
     @Test
-    public void calculatesZeroLength() throws IOException {
+    public void calculatesZeroLength() {
         MatcherAssert.assertThat(
-            new LengthOfInput(new DeadInput()).asValue(),
-            Matchers.equalTo(0L)
+            new LengthOfInput(new DeadInput()),
+            new Scalar.HasValue<>(0L)
         );
     }
 
