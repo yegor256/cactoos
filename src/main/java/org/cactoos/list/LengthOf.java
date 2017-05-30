@@ -27,15 +27,16 @@ import java.util.Iterator;
 import org.cactoos.Scalar;
 
 /**
- * Length of iterator.
+ * Length of iterator and iterable.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class LengthOfIterator implements Scalar<Integer> {
+public final class LengthOf implements Scalar<Integer> {
 
     /**
      * The iterator.
@@ -44,9 +45,17 @@ public final class LengthOfIterator implements Scalar<Integer> {
 
     /**
      * Ctor.
+     * @param items The array
+     */
+    public LengthOf(final Iterable<?> items) {
+        this(items.iterator());
+    }
+
+    /**
+     * Ctor.
      * @param items The iterator
      */
-    public LengthOfIterator(final Iterator<?> items) {
+    public LengthOf(final Iterator<?> items) {
         this.iterator = items;
     }
 
@@ -59,5 +68,4 @@ public final class LengthOfIterator implements Scalar<Integer> {
         }
         return size;
     }
-
 }

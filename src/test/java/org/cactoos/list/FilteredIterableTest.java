@@ -41,7 +41,7 @@ public final class FilteredIterableTest {
     @Test
     public void filtersList() {
         MatcherAssert.assertThat(
-            new LengthOfIterable(
+            new LengthOf(
                 new FilteredIterable<>(
                     new ArrayAsIterable<>(
                         "hello", "world", "друг"
@@ -60,7 +60,7 @@ public final class FilteredIterableTest {
     @Test
     public void filtersEmptyList() {
         MatcherAssert.assertThat(
-            new LengthOfIterable(
+            new LengthOf(
                 new FilteredIterable<>(
                     new ArrayAsIterable<String>(),
                     input -> input.length() > 1

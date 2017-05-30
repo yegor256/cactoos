@@ -42,7 +42,7 @@ public final class ConcatenatedIterableTest {
     @SuppressWarnings("unchecked")
     public void transformsList() {
         MatcherAssert.assertThat(
-            new LengthOfIterable(
+            new LengthOf(
                 new ConcatenatedIterable<>(
                     new ArrayAsIterable<>("hello", "world", "друг"),
                     new ArrayAsIterable<>("how", "are", "you"),

@@ -23,35 +23,42 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Length of iterable.
+ * Test case for {@link LengthOf}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class LengthOfIterable implements Scalar<Integer> {
+public final class LengthOfTest {
 
     /**
-     * The iterable.
+     * Empty iterable length calculation.
      */
-    private final Iterable<?> iterable;
+    @Test
+    public void calcsLengthOfEmptyIterable() {
+        MatcherAssert.assertThat(
+            new LengthOf(
+                new ArrayAsIterable<>()
+            ).asValue(),
+            Matchers.equalTo(0)
+        );
+    }
 
     /**
-     * Ctor.
-     * @param items The array
+     * Non empty iterable length calculation.
      */
-    public LengthOfIterable(final Iterable<?> items) {
-        this.iterable = items;
+    @Test
+    public void calcsLengthOfNonEmptyIterable() {
+        MatcherAssert.assertThat(
+            new LengthOf(
+                new ArrayAsIterable<>(1, 2)
+            ).asValue(),
+            Matchers.equalTo(2)
+        );
     }
-
-    @Override
-    public Integer asValue() {
-        return new LengthOfIterator(this.iterable.iterator()).asValue();
-    }
-
 }
