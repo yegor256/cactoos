@@ -200,6 +200,10 @@ mvn clean install -Pqulice
 Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static code analyze tool with
 [checks list](http://checkstyle.sourceforge.net/checks.html) in GitHub precommits.
 
+## Contributors
+
+ * [Kirill Che. g4s8.public@gmail.com](https://github.com/g4s8)
+
 ## License (MIT)
 
 Copyright (c) 2017 Yegor Bugayenko
