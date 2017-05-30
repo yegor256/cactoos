@@ -23,7 +23,7 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.Scalar;
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -50,7 +50,7 @@ public final class ConcatenatedIterableTest {
                 )
             ),
             // @checkstyle MagicNumber (1 line)
-            new Scalar.HasValue<>(8)
+            new ScalarHasValue<>(8)
         );
     }
 

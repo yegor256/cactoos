@@ -26,7 +26,7 @@ package org.cactoos.list;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
-import org.cactoos.Scalar;
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public final class FirstOfTest {
                 // @checkstyle MagicNumber (1 line)
                 Arrays.asList(1, 2, 3)
             ),
-            new Scalar.HasValue<>(1)
+            new ScalarHasValue<>(1)
         );
     }
 

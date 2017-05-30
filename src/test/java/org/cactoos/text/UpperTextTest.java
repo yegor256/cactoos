@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Text;
+import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -42,7 +42,7 @@ public final class UpperTextTest {
     public void convertsText() {
         MatcherAssert.assertThat(
             new UpperText(new StringAsText("Hello!")),
-            new Text.HasString("HELLO!")
+            new TextHasString("HELLO!")
         );
     }
 

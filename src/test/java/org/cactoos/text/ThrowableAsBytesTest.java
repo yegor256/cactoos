@@ -24,7 +24,7 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.Text;
+import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public final class ThrowableAsBytesTest {
                     )
                 )
             ),
-            new Text.HasString(
+            new TextHasString(
                 Matchers.allOf(
                     Matchers.containsString("java.io.IOException"),
                     Matchers.containsString("doesn't work at all"),

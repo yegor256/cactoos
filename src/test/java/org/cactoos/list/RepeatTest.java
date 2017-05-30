@@ -23,7 +23,7 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.Scalar;
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -55,7 +55,7 @@ public final class RepeatTest {
                     input -> input == element
                 )
             ),
-            new Scalar.HasValue<>(size)
+            new ScalarHasValue<>(size)
         );
     }
 
@@ -70,7 +70,7 @@ public final class RepeatTest {
             new LengthOfIterable(
                 new Repeat<>(0, 0)
             ),
-            new Scalar.HasValue<>(0)
+            new ScalarHasValue<>(0)
         );
     }
 }

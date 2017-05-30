@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
-import org.cactoos.Text;
+import org.cactoos.TextHasString;
 import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -53,7 +53,7 @@ public final class TeeInputTest {
                     )
                 )
             ),
-            new Text.HasString(Matchers.containsString("world"))
+            new TextHasString(Matchers.containsString("world"))
         );
     }
 

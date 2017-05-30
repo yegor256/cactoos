@@ -23,7 +23,7 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.Scalar;
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -50,7 +50,7 @@ public final class FilteredIterableTest {
                     input -> input.length() > 4
                 )
             ),
-            new Scalar.HasValue<>(2)
+            new ScalarHasValue<>(2)
         );
     }
 
@@ -66,7 +66,7 @@ public final class FilteredIterableTest {
                     input -> input.length() > 1
                 )
             ),
-            new Scalar.HasValue<>(0)
+            new ScalarHasValue<>(0)
         );
     }
 

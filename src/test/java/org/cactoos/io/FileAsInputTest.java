@@ -26,7 +26,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.Text;
+import org.cactoos.TextHasString;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
@@ -63,7 +63,7 @@ public final class FileAsInputTest {
                     )
                 )
             ),
-            new Text.HasString(content)
+            new TextHasString(content)
         );
     }
 
@@ -87,7 +87,7 @@ public final class FileAsInputTest {
                     )
                 )
             ),
-            new Text.HasString(
+            new TextHasString(
                 Matchers.allOf(
                     Matchers.startsWith("Hello, "),
                     Matchers.endsWith("друг!")

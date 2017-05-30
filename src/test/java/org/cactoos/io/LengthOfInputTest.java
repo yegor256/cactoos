@@ -23,7 +23,7 @@
  */
 package org.cactoos.io;
 
-import org.cactoos.Scalar;
+import org.cactoos.ScalarHasValue;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public final class LengthOfInputTest {
                     new StringAsText(text)
                 )
             ),
-            new Scalar.HasValue<>((long) text.getBytes().length)
+            new ScalarHasValue<>((long) text.getBytes().length)
         );
     }
 
@@ -59,7 +59,7 @@ public final class LengthOfInputTest {
     public void calculatesZeroLength() {
         MatcherAssert.assertThat(
             new LengthOfInput(new DeadInput()),
-            new Scalar.HasValue<>(0L)
+            new ScalarHasValue<>(0L)
         );
     }
 

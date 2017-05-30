@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -44,7 +44,7 @@ public final class IsBlankTest {
             new IsBlank(
                 new StringAsText("")
             ),
-            new Scalar.HasValue<>(Boolean.TRUE)
+            new ScalarHasValue<>(Boolean.TRUE)
         );
     }
 
@@ -57,7 +57,7 @@ public final class IsBlankTest {
             new IsBlank(
                 new StringAsText("  ")
             ),
-            new Scalar.HasValue<>(Boolean.TRUE)
+            new ScalarHasValue<>(Boolean.TRUE)
         );
     }
 
@@ -70,7 +70,7 @@ public final class IsBlankTest {
             new IsBlank(
                 new StringAsText("not empty")
             ),
-            new Scalar.HasValue<>(Boolean.FALSE)
+            new ScalarHasValue<>(Boolean.FALSE)
         );
     }
 }

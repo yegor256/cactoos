@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Text;
+import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -41,7 +41,7 @@ public final class TrimmedTextTest {
     public void convertsText() {
         MatcherAssert.assertThat(
             new TrimmedText(new StringAsText("  Hello!    ")),
-            new Text.HasString("Hello!")
+            new TextHasString("Hello!")
         );
     }
 

@@ -24,10 +24,6 @@
 package org.cactoos;
 
 import java.io.IOException;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsEqual;
 
 /**
  * Text.
@@ -46,43 +42,5 @@ public interface Text {
      * @throws IOException If fails
      */
     String asString() throws IOException;
-
-    /**
-     * Matcher for the content.
-     */
-    final class HasString extends TypeSafeMatcher<Text> {
-        /**
-         * Matcher of the text.
-         */
-        private final Matcher<String> matcher;
-        /**
-         * Ctor.
-         * @param text The text to match against
-         */
-        public HasString(final String text) {
-            this(new IsEqual<>(text));
-        }
-        /**
-         * Ctor.
-         * @param mtr Matcher of the text
-         */
-        public HasString(final Matcher<String> mtr) {
-            super();
-            this.matcher = mtr;
-        }
-        @Override
-        public boolean matchesSafely(final Text item) {
-            try {
-                return this.matcher.matches(item.asString());
-            } catch (final IOException ex) {
-                throw new IllegalStateException(ex);
-            }
-        }
-        @Override
-        public void describeTo(final Description description) {
-            description.appendText("Text with ");
-            description.appendDescriptionOf(this.matcher);
-        }
-    }
 
 }

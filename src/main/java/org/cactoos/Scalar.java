@@ -24,10 +24,6 @@
 package org.cactoos;
 
 import java.io.IOException;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsEqual;
 
 /**
  * Scalar.
@@ -47,44 +43,5 @@ public interface Scalar<T> {
      * @throws IOException If fails
      */
     T asValue() throws IOException;
-
-    /**
-     * Matcher for the value.
-     * @param <T> Type of value
-     */
-    final class HasValue<T> extends TypeSafeMatcher<Scalar<T>> {
-        /**
-         * Matcher of the value.
-         */
-        private final Matcher<T> matcher;
-        /**
-         * Ctor.
-         * @param text The text to match against
-         */
-        public HasValue(final T text) {
-            this(new IsEqual<T>(text));
-        }
-        /**
-         * Ctor.
-         * @param mtr Matcher of the text
-         */
-        public HasValue(final Matcher<T> mtr) {
-            super();
-            this.matcher = mtr;
-        }
-        @Override
-        public boolean matchesSafely(final Scalar<T> item) {
-            try {
-                return this.matcher.matches(item.asValue());
-            } catch (final IOException ex) {
-                throw new IllegalStateException(ex);
-            }
-        }
-        @Override
-        public void describeTo(final Description description) {
-            description.appendText("Scalar with ");
-            description.appendDescriptionOf(this.matcher);
-        }
-    }
 
 }

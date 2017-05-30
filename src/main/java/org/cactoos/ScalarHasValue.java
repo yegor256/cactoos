@@ -21,33 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos;
 
-import org.cactoos.TextHasString;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import java.io.IOException;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsEqual;
 
 /**
- * Test case for {@link BytesAsText}.
+ * Matcher for the value.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @param <T> Type of result
  * @since 0.2
  */
-public final class BytesAsTextTest {
+public final class ScalarHasValue<T> extends TypeSafeMatcher<Scalar<T>> {
 
     /**
-     * BytesAsText converts bytes to String.
+     * Matcher of the value.
      */
-    @Test
-    public void convertsBytesToText() {
-        MatcherAssert.assertThat(
-            new BytesAsText(
-                new ArrayAsBytes(
-                    new byte[]{'H', 'e', 'l', 'l', 'o'}
-                )
-            ),
-            new TextHasString("Hello")
-        );
+    private final Matcher<T> matcher;
+
+    /**
+     * Ctor.
+     * @param text The text to match against
+     */
+    public ScalarHasValue(final T text) {
+        this(new IsEqual<T>(text));
+    }
+
+    /**
+     * Ctor.
+     * @param mtr Matcher of the text
+     */
+    public ScalarHasValue(final Matcher<T> mtr) {
+        super();
+        this.matcher = mtr;
+    }
+
+    @Override
+    public boolean matchesSafely(final Scalar<T> item) {
+        try {
+            return this.matcher.matches(item.asValue());
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    @Override
+    public void describeTo(final Description description) {
+        description.appendText("Scalar with ");
+        description.appendDescriptionOf(this.matcher);
     }
 }

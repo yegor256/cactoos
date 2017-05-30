@@ -24,7 +24,7 @@
 package org.cactoos.text;
 
 import java.util.Locale;
-import org.cactoos.Text;
+import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -46,7 +46,7 @@ public final class FormattedTextTest {
             new FormattedText(
                 "%d. Formatted %s", 1, "text"
             ),
-            new Text.HasString("1. Formatted text")
+            new TextHasString("1. Formatted text")
         );
     }
 
@@ -60,7 +60,7 @@ public final class FormattedTextTest {
                 // @checkstyle MagicNumber (1 line)
                 "%,d", Locale.GERMAN, 1234567890
             ),
-            new Text.HasString("1.234.567.890")
+            new TextHasString("1.234.567.890")
         );
     }
 }
