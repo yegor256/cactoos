@@ -21,12 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.func;
+
+import org.cactoos.Func;
 
 /**
- * Predicates, tests.
+ * Negation.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
+ * @param <X> Type of input
  * @since 0.1
  */
-package org.cactoos.func.pred;
+public final class Neg<X> implements Func.Pred<X> {
+
+    /**
+     * The predicate.
+     */
+    private final Func.Pred<X> origin;
+
+    /**
+     * Ctor.
+     * @param pred The predicate
+     */
+    public Neg(final Pred<X> pred) {
+        this.origin = pred;
+    }
+
+    @Override
+    public Boolean apply(final X input) throws Exception {
+        return !this.origin.apply(input);
+    }
+}
