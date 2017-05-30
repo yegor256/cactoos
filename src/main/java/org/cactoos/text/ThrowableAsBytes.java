@@ -21,12 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.text;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import org.cactoos.Bytes;
 
 /**
- * Functions and procedures, tests.
+ * Throwable as Text.
+ *
+ * <p>This class is doing something similar to what
+ * ExceptionUtils are doing from Apache Commons.</p>
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
  */
-package org.cactoos.func;
+public final class ThrowableAsBytes implements Bytes {
+
+    /**
+     * The throwable.
+     */
+    private final Throwable throwable;
+
+    /**
+     * Ctor.
+     * @param error The exception to serialize
+     */
+    public ThrowableAsBytes(final Throwable error) {
+        this.throwable = error;
+    }
+
+    @Override
+    public byte[] asBytes() throws IOException {
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            this.throwable.printStackTrace(new PrintStream(baos));
+            return baos.toByteArray();
+        }
+    }
+
+}

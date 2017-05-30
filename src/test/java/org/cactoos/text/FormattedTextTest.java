@@ -23,8 +23,9 @@
  */
 package org.cactoos.text;
 
+import java.util.Locale;
+import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -44,8 +45,22 @@ public final class FormattedTextTest {
         MatcherAssert.assertThat(
             new FormattedText(
                 "%d. Formatted %s", 1, "text"
-            ).asString(),
-            Matchers.equalTo("1. Formatted text")
+            ),
+            new TextHasString("1. Formatted text")
+        );
+    }
+
+    /**
+     * Format with locale.
+     */
+    @Test
+    public void formatsWithLocale() {
+        MatcherAssert.assertThat(
+            new FormattedText(
+                // @checkstyle MagicNumber (1 line)
+                "%,d", Locale.GERMAN, 1234567890
+            ),
+            new TextHasString("1.234.567.890")
         );
     }
 }

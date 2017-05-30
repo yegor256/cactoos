@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.Func;
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -51,11 +52,8 @@ public final class AllOfTest {
                     new ArrayAsIterable<>("hello", "world"),
                     (Func.Quiet<String>) list::add
                 )
-            ).asValue(),
-            Matchers.allOf(
-                Matchers.equalTo(true),
-                Matchers.equalTo(list.size() == 2)
-            )
+            ),
+            new ScalarHasValue<>(true)
         );
     }
 
@@ -71,10 +69,12 @@ public final class AllOfTest {
                     Collections.emptyList(),
                     (Func.Quiet<String>) list::add
                 )
-            ).asValue(),
-            Matchers.allOf(
-                Matchers.equalTo(true),
-                Matchers.equalTo(list.isEmpty())
+            ),
+            new ScalarHasValue<>(
+                Matchers.allOf(
+                    Matchers.equalTo(true),
+                    Matchers.equalTo(list.isEmpty())
+                )
             )
         );
     }

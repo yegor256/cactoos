@@ -21,12 +21,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.list;
+
+import java.util.Iterator;
 
 /**
- * Functions and procedures, tests.
+ * Repeat an element.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @param <T> Element type
+ * @since 0.1
  */
-package org.cactoos.func;
+public final class Repeat<T> implements Iterable<T> {
+
+    /**
+     * Element to repeat.
+     */
+    private final T element;
+
+    /**
+     * Repeat count.
+     */
+    private final int count;
+
+    /**
+     * Ctor.
+     *
+     * @param element To repeat
+     * @param count Count
+     */
+    public Repeat(final T element, final int count) {
+        this.element = element;
+        this.count = count;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new RepeatIterator();
+    }
+
+    /**
+     * An iterator.
+     */
+    private final class RepeatIterator implements Iterator<T> {
+
+        /**
+         * Current position.
+         */
+        private int cursor;
+
+        @Override
+        public boolean hasNext() {
+            return this.cursor < Repeat.this.count;
+        }
+
+        @Override
+        public T next() {
+            ++this.cursor;
+            return Repeat.this.element;
+        }
+    }
+}

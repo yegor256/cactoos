@@ -21,12 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.text;
+
+import org.cactoos.Bytes;
 
 /**
- * Functions and procedures, tests.
+ * Array as Bytes.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
  */
-package org.cactoos.func;
+public final class ArrayAsBytes implements Bytes {
+
+    /**
+     * The bytes.
+     */
+    private final byte[] bytes;
+
+    /**
+     * Ctor.
+     * @param bts Bytes to encapsulate
+     */
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
+    public ArrayAsBytes(final byte[] bts) {
+        this.bytes = bts;
+    }
+
+    @Override
+    @SuppressWarnings("PMD.MethodReturnsInternalArray")
+    public byte[] asBytes() {
+        return this.bytes;
+    }
+
+}

@@ -21,12 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.list;
+
+import org.cactoos.ScalarHasValue;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Functions and procedures, tests.
+ * Test case for {@link Repeat}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.1
  */
-package org.cactoos.func;
+public final class RepeatTest {
+
+    /**
+     * Test all elements are same.
+     *
+     * @throws Exception if failed
+     */
+    @Test
+    public void allSameTest() throws Exception {
+        final int size = 42;
+        final int element = 11;
+        MatcherAssert.assertThat(
+            new LengthOfIterable(
+                new FilteredIterable<>(
+                    new Repeat<>(
+                        element,
+                        size
+                    ),
+                    input -> input == element
+                )
+            ),
+            new ScalarHasValue<>(size)
+        );
+    }
+
+    /**
+     * Test empty 'repeat' size.
+     *
+     * @throws Exception if failed
+     */
+    @Test
+    public void emptyTest() throws Exception {
+        MatcherAssert.assertThat(
+            new LengthOfIterable(
+                new Repeat<>(0, 0)
+            ),
+            new ScalarHasValue<>(0)
+        );
+    }
+}

@@ -21,49 +21,76 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.text;
 
 import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.Output;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import org.cactoos.Bytes;
+import org.cactoos.Text;
 
 /**
- * Input to Output copying pipe.
+ * Bytes as Text.
+ *
+ * <p>This class is doing something similar to what
+ * ExceptionUtils are doing from Apache Commons.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class TeeInput implements Input {
+public final class BytesAsText implements Text {
 
     /**
-     * The source.
+     * The bytes.
      */
-    private final Input source;
+    private final Bytes bytes;
 
     /**
-     * The destination.
+     * The charset.
      */
-    private final Output target;
+    private final Charset charset;
 
     /**
      * Ctor.
-     * @param input The source
-     * @param output The target
+     * @param bts Bytes to encapsulate
      */
-    public TeeInput(final Input input, final Output output) {
-        this.source = input;
-        this.target = output;
+    public BytesAsText(final byte[] bts) {
+        this(bts, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param bts Bytes to encapsulate
+     */
+    public BytesAsText(final Bytes bts) {
+        this(bts, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param bts Bytes to encapsulate
+     * @param cset Charset
+     */
+    public BytesAsText(final byte[] bts, final Charset cset) {
+        this(new ArrayAsBytes(bts), cset);
+    }
+
+    /**
+     * Ctor.
+     * @param bts Bytes to encapsulate
+     * @param cset Charset
+     */
+    public BytesAsText(final Bytes bts, final Charset cset) {
+        this.bytes = bts;
+        this.charset = cset;
     }
 
     @Override
-    public InputStream open() throws IOException {
-        return new TeeInputStream(
-            this.source.open(), this.target.open()
-        );
+    public String asString() throws IOException {
+        return new String(this.bytes.asBytes(), this.charset);
     }
 
 }

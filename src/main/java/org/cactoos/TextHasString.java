@@ -21,12 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos;
+
+import java.io.IOException;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsEqual;
 
 /**
- * Functions and procedures, tests.
+ * Matcher for the content.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
  */
-package org.cactoos.func;
+public final class TextHasString extends TypeSafeMatcher<Text> {
+
+    /**
+     * Matcher of the text.
+     */
+    private final Matcher<String> matcher;
+
+    /**
+     * Ctor.
+     * @param text The text to match against
+     */
+    public TextHasString(final String text) {
+        this(new IsEqual<>(text));
+    }
+
+    /**
+     * Ctor.
+     * @param mtr Matcher of the text
+     */
+    public TextHasString(final Matcher<String> mtr) {
+        super();
+        this.matcher = mtr;
+    }
+
+    @Override
+    public boolean matchesSafely(final Text item) {
+        try {
+            return this.matcher.matches(item.asString());
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    @Override
+    public void describeTo(final Description description) {
+        description.appendText("Text with ");
+        description.appendDescriptionOf(this.matcher);
+    }
+
+}

@@ -26,6 +26,8 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.TextHasString;
+import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -42,7 +44,31 @@ public final class FileAsInputTest {
 
     /**
      * FileAsInput can read file content.
-     *
+     * @throws IOException If some problem inside
+     */
+    @Test
+    public void readsSimpleFileContent() throws IOException {
+        final File temp = File.createTempFile("cactoos-1", "txt-1");
+        temp.deleteOnExit();
+        final String content = "Hello, товарищ!";
+        MatcherAssert.assertThat(
+            new BytesAsText(
+                new InputAsBytes(
+                    new TeeInput(
+                        new TextAsInput(
+                            new StringAsText(content),
+                            StandardCharsets.UTF_8
+                        ),
+                        new FileAsOutput(temp)
+                    )
+                )
+            ),
+            new TextHasString(content)
+        );
+    }
+
+    /**
+     * FileAsInput can read file content.
      * @throws IOException If some problem inside
      */
     @Test
@@ -50,25 +76,22 @@ public final class FileAsInputTest {
         final File temp = File.createTempFile("cactoos", "txt");
         temp.deleteOnExit();
         MatcherAssert.assertThat(
-            new InputAsText(
-                new TeeInput(
-                    new TextAsInput(
-                        new StringAsText("Hello, друг!"),
-                        StandardCharsets.UTF_8
-                    ),
-                    new FileAsOutput(temp)
-                ),
-                StandardCharsets.UTF_8
-            ).asString(),
-            Matchers.allOf(
-                Matchers.equalTo(
-                    new InputAsText(
-                        new FileAsInput(temp),
-                        StandardCharsets.UTF_8
-                    ).asString()
-                ),
-                Matchers.startsWith("Hello, "),
-                Matchers.endsWith("друг!")
+            new BytesAsText(
+                new InputAsBytes(
+                    new TeeInput(
+                        new TextAsInput(
+                            new StringAsText("Hello, друг!"),
+                            StandardCharsets.UTF_8
+                        ),
+                        new FileAsOutput(temp)
+                    )
+                )
+            ),
+            new TextHasString(
+                Matchers.allOf(
+                    Matchers.startsWith("Hello, "),
+                    Matchers.endsWith("друг!")
+                )
             )
         );
     }

@@ -23,8 +23,8 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -49,8 +49,8 @@ public final class FilteredIterableTest {
                     // @checkstyle MagicNumber (1 line)
                     input -> input.length() > 4
                 )
-            ).asValue(),
-            Matchers.equalTo(2)
+            ),
+            new ScalarHasValue<>(2)
         );
     }
 
@@ -65,8 +65,8 @@ public final class FilteredIterableTest {
                     new ArrayAsIterable<String>(),
                     input -> input.length() > 1
                 )
-            ).asValue(),
-            Matchers.equalTo(0)
+            ),
+            new ScalarHasValue<>(0)
         );
     }
 

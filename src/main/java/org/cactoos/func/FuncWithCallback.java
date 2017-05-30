@@ -21,12 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.func;
+
+import org.cactoos.Func;
 
 /**
- * Functions and procedures, tests.
+ * Func with Callback.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @param <X> Type of input
+ * @param <Y> Type of output
  * @since 0.2
  */
-package org.cactoos.func;
+public final class FuncWithCallback<X, Y> implements Func<X, Y> {
+
+    /**
+     * The func.
+     */
+    private final Func<X, Y> func;
+
+    /**
+     * The callback.
+     */
+    private final Func<Throwable, Y> callback;
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param cbk The callback
+     */
+    public FuncWithCallback(final Func<X, Y> fnc,
+        final Func<Throwable, Y> cbk) {
+        this.func = fnc;
+        this.callback = cbk;
+    }
+
+    @Override
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    public Y apply(final X input) throws Exception {
+        Y result;
+        try {
+            result =  this.func.apply(input);
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            result = this.callback.apply(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Throwable ex) {
+            result = this.callback.apply(ex);
+        }
+        return result;
+    }
+
+}
