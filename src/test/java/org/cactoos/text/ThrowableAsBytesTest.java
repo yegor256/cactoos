@@ -24,6 +24,7 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import org.cactoos.Text;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -39,10 +40,9 @@ public final class ThrowableAsBytesTest {
 
     /**
      * ThrowableAsBytes prints stacktrace.
-     * @throws IOException If fails
      */
     @Test
-    public void printsStackTrace() throws IOException {
+    public void printsStackTrace() {
         MatcherAssert.assertThat(
             new BytesAsText(
                 new ThrowableAsBytes(
@@ -50,12 +50,14 @@ public final class ThrowableAsBytesTest {
                         "It doesn't work at all"
                     )
                 )
-            ).asString(),
-            Matchers.allOf(
-                Matchers.containsString("java.io.IOException"),
-                Matchers.containsString("doesn't work at all"),
-                Matchers.containsString(
-                    "\tat org.cactoos.text.ThrowableAsBytesTest"
+            ),
+            new Text.HasString(
+                Matchers.allOf(
+                    Matchers.containsString("java.io.IOException"),
+                    Matchers.containsString("doesn't work at all"),
+                    Matchers.containsString(
+                        "\tat org.cactoos.text.ThrowableAsBytesTest"
+                    )
                 )
             )
         );

@@ -23,9 +23,8 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
+import org.cactoos.Text;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -38,13 +37,12 @@ public final class UpperTextTest {
 
     /**
      * UpperText can process text.
-     * @throws IOException If some problem inside
      */
     @Test
-    public void convertsText() throws IOException {
+    public void convertsText() {
         MatcherAssert.assertThat(
-            new UpperText(new StringAsText("Hello!")).asString(),
-            Matchers.equalTo("HELLO!")
+            new UpperText(new StringAsText("Hello!")),
+            new Text.HasString("HELLO!")
         );
     }
 

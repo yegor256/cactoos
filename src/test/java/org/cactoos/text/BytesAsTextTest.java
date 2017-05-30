@@ -23,9 +23,8 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
+import org.cactoos.Text;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -39,17 +38,16 @@ public final class BytesAsTextTest {
 
     /**
      * BytesAsText converts bytes to String.
-     * @throws IOException If fails
      */
     @Test
-    public void convertsBytesToText() throws IOException {
+    public void convertsBytesToText() {
         MatcherAssert.assertThat(
             new BytesAsText(
                 new ArrayAsBytes(
                     new byte[]{'H', 'e', 'l', 'l', 'o'}
                 )
-            ).asString(),
-            Matchers.equalTo("Hello")
+            ),
+            new Text.HasString("Hello")
         );
     }
 }

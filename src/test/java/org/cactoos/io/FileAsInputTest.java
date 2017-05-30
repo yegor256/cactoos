@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.Text;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
@@ -43,7 +44,31 @@ public final class FileAsInputTest {
 
     /**
      * FileAsInput can read file content.
-     *
+     * @throws IOException If some problem inside
+     */
+    @Test
+    public void readsSimpleFileContent() throws IOException {
+        final File temp = File.createTempFile("cactoos-1", "txt-1");
+        temp.deleteOnExit();
+        final String content = "Hello, товарищ!";
+        MatcherAssert.assertThat(
+            new BytesAsText(
+                new InputAsBytes(
+                    new TeeInput(
+                        new TextAsInput(
+                            new StringAsText(content),
+                            StandardCharsets.UTF_8
+                        ),
+                        new FileAsOutput(temp)
+                    )
+                )
+            ),
+            new Text.HasString(content)
+        );
+    }
+
+    /**
+     * FileAsInput can read file content.
      * @throws IOException If some problem inside
      */
     @Test
@@ -61,17 +86,12 @@ public final class FileAsInputTest {
                         new FileAsOutput(temp)
                     )
                 )
-            ).asString(),
-            Matchers.allOf(
-                Matchers.equalTo(
-                    new BytesAsText(
-                        new InputAsBytes(
-                            new FileAsInput(temp)
-                        )
-                    ).asString()
-                ),
-                Matchers.startsWith("Hello, "),
-                Matchers.endsWith("друг!")
+            ),
+            new Text.HasString(
+                Matchers.allOf(
+                    Matchers.startsWith("Hello, "),
+                    Matchers.endsWith("друг!")
+                )
             )
         );
     }

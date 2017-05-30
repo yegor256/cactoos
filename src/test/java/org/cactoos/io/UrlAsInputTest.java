@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import org.cactoos.Text;
 import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -71,10 +72,12 @@ public final class UrlAsInputTest {
                             home.toURL()
                         )
                     )
-                ).asString(),
-                Matchers.allOf(
-                    Matchers.startsWith("<html"),
-                    Matchers.endsWith("html>")
+                ),
+                new Text.HasString(
+                    Matchers.allOf(
+                        Matchers.startsWith("<html"),
+                        Matchers.endsWith("html>")
+                    )
                 )
             )
         );
