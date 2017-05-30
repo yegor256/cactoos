@@ -21,49 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import org.cactoos.Bytes;
 
 /**
- * Filtered iterable.
+ * Array as Bytes.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.2
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class ArrayAsBytes implements Bytes {
 
     /**
-     * Iterable.
+     * The bytes.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func.Pred<X> pred;
+    private final byte[] bytes;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
+     * @param bts Bytes to encapsulate
      */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
+    public ArrayAsBytes(final byte[] bts) {
+        this.bytes = bts;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
-        );
+    @SuppressWarnings("PMD.MethodReturnsInternalArray")
+    public byte[] asBytes() {
+        return this.bytes;
     }
 
 }

@@ -21,49 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.io.IOException;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsEqual;
 
 /**
- * Filtered iterable.
- *
- * <p>There is no thread-safety guarantee.
+ * Matcher for the content.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.2
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class TextHasString extends TypeSafeMatcher<Text> {
 
     /**
-     * Iterable.
+     * Matcher of the text.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func.Pred<X> pred;
+    private final Matcher<String> matcher;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
+     * @param text The text to match against
      */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
+    public TextHasString(final String text) {
+        this(new IsEqual<>(text));
+    }
+
+    /**
+     * Ctor.
+     * @param mtr Matcher of the text
+     */
+    public TextHasString(final Matcher<String> mtr) {
+        super();
+        this.matcher = mtr;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
-        );
+    public boolean matchesSafely(final Text item) {
+        try {
+            return this.matcher.matches(item.asString());
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    @Override
+    public void describeTo(final Description description) {
+        description.appendText("Text with ");
+        description.appendDescriptionOf(this.matcher);
     }
 
 }

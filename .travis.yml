@@ -6,7 +6,6 @@ cache:
 script:
   - set -e
   - mvn clean install -Pqulice --errors --batch-mode
-  - mvn clean
 env:
   global:
     - MAVEN_OPTS="-Xmx256m"
@@ -14,4 +13,4 @@ env:
 jdk:
   - oraclejdk8
 after_success:
-    - "bash <(curl -s https://codecov.io/bash)"
+  - "bash <(curl -s https://codecov.io/bash)"

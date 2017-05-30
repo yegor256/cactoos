@@ -21,49 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.util.Locale;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Filtered iterable.
+ * Test case for {@link FormattedText}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
- * @param <X> Type of item
  * @since 0.1
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class FormattedTextTest {
 
     /**
-     * Iterable.
+     * FormattedText produces correct text.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func.Pred<X> pred;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
-     */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
+    @Test
+    public void formatsText() {
+        MatcherAssert.assertThat(
+            new FormattedText(
+                "%d. Formatted %s", 1, "text"
+            ),
+            new TextHasString("1. Formatted text")
         );
     }
 
+    /**
+     * Format with locale.
+     */
+    @Test
+    public void formatsWithLocale() {
+        MatcherAssert.assertThat(
+            new FormattedText(
+                // @checkstyle MagicNumber (1 line)
+                "%,d", Locale.GERMAN, 1234567890
+            ),
+            new TextHasString("1.234.567.890")
+        );
+    }
 }

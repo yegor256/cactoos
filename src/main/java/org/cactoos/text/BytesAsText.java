@@ -21,49 +21,76 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import org.cactoos.Bytes;
+import org.cactoos.Text;
 
 /**
- * Filtered iterable.
+ * Bytes as Text.
+ *
+ * <p>This class is doing something similar to what
+ * ExceptionUtils are doing from Apache Commons.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.2
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class BytesAsText implements Text {
 
     /**
-     * Iterable.
+     * The bytes.
      */
-    private final Iterable<X> iterable;
+    private final Bytes bytes;
 
     /**
-     * Function.
+     * The charset.
      */
-    private final Func.Pred<X> pred;
+    private final Charset charset;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
+     * @param bts Bytes to encapsulate
      */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
+    public BytesAsText(final byte[] bts) {
+        this(bts, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param bts Bytes to encapsulate
+     */
+    public BytesAsText(final Bytes bts) {
+        this(bts, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param bts Bytes to encapsulate
+     * @param cset Charset
+     */
+    public BytesAsText(final byte[] bts, final Charset cset) {
+        this(new ArrayAsBytes(bts), cset);
+    }
+
+    /**
+     * Ctor.
+     * @param bts Bytes to encapsulate
+     * @param cset Charset
+     */
+    public BytesAsText(final Bytes bts, final Charset cset) {
+        this.bytes = bts;
+        this.charset = cset;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
-        );
+    public String asString() throws IOException {
+        return new String(this.bytes.asBytes(), this.charset);
     }
 
 }

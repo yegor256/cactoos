@@ -21,49 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import org.cactoos.Bytes;
 
 /**
- * Filtered iterable.
+ * Throwable as Text.
+ *
+ * <p>This class is doing something similar to what
+ * ExceptionUtils are doing from Apache Commons.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.2
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class ThrowableAsBytes implements Bytes {
 
     /**
-     * Iterable.
+     * The throwable.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func.Pred<X> pred;
+    private final Throwable throwable;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
+     * @param error The exception to serialize
      */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
+    public ThrowableAsBytes(final Throwable error) {
+        this.throwable = error;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
-        );
+    public byte[] asBytes() throws IOException {
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            this.throwable.printStackTrace(new PrintStream(baos));
+            return baos.toByteArray();
+        }
     }
 
 }

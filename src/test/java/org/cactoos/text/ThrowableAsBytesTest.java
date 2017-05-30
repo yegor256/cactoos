@@ -21,49 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.io.IOException;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Filtered iterable.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link ThrowableAsBytes}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.2
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class ThrowableAsBytesTest {
 
     /**
-     * Iterable.
+     * ThrowableAsBytes prints stacktrace.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func.Pred<X> pred;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
-     */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
+    @Test
+    public void printsStackTrace() {
+        MatcherAssert.assertThat(
+            new BytesAsText(
+                new ThrowableAsBytes(
+                    new IOException(
+                        "It doesn't work at all"
+                    )
+                )
+            ),
+            new TextHasString(
+                Matchers.allOf(
+                    Matchers.containsString("java.io.IOException"),
+                    Matchers.containsString("doesn't work at all"),
+                    Matchers.containsString(
+                        "\tat org.cactoos.text.ThrowableAsBytesTest"
+                    )
+                )
+            )
         );
     }
-
 }

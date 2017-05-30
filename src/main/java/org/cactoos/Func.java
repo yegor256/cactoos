@@ -36,6 +36,7 @@ import java.util.concurrent.Callable;
  * @param <Y> Type of output
  * @since 0.1
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public interface Func<X, Y> {
 
     /**
@@ -45,6 +46,31 @@ public interface Func<X, Y> {
      * @throws Exception If fails
      */
     Y apply(X input) throws Exception;
+
+    /**
+     * Func that doesn't throw.
+     * @param <X> Input type
+     * @param <Y> Output type
+     */
+    interface Safe<X, Y> extends Func<X, Y> {
+        /**
+         * Apply it safely.
+         * @param input The argument
+         * @return The result
+         */
+        @SuppressWarnings("PMD.AvoidCatchingGenericException")
+        default Y safeApply(X input) {
+            try {
+                return this.apply(input);
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
+                // @checkstyle IllegalCatchCheck (1 line)
+            } catch (final Exception ex) {
+                throw new IllegalStateException(ex);
+            }
+        }
+    }
 
     /**
      * Quiet func that returns nothing, but is still a function.
@@ -82,21 +108,24 @@ public interface Func<X, Y> {
     /**
      * Func that really is a procedure that does something and returns nothing.
      */
-    interface Proc extends Func<Void, Void>, Runnable, Callable<Void> {
+    interface Proc extends Func<Boolean, Boolean>, Runnable, Callable<Boolean> {
         @Override
-        default Void apply(Void input) throws Exception {
+        default Boolean apply(Boolean input) throws Exception {
             return this.call();
         }
         @Override
-        default Void call() throws Exception {
+        default Boolean call() throws Exception {
             this.run();
-            return null;
+            return true;
         }
         @Override
         @SuppressWarnings("PMD.AvoidCatchingGenericException")
         default void run() {
             try {
                 this.exec();
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
                 // @checkstyle IllegalCatchCheck (1 line)
             } catch (final Exception ex) {
                 throw new IllegalStateException(ex);
@@ -107,6 +136,13 @@ public interface Func<X, Y> {
          * @throws Exception If fails
          */
         void exec() throws Exception;
+    }
+
+    /**
+     * Func that represents a predicate of one argument.
+     * @param <X> Input type
+     */
+    interface Pred<X> extends Func<X, Boolean> {
     }
 
 }

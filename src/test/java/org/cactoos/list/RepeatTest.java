@@ -23,47 +23,54 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import org.cactoos.ScalarHasValue;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Filtered iterable.
+ * Test case for {@link Repeat}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @param <X> Type of item
  * @since 0.1
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class RepeatTest {
 
     /**
-     * Iterable.
+     * Test all elements are same.
+     *
+     * @throws Exception if failed
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func.Pred<X> pred;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
-     */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
+    @Test
+    public void allSameTest() throws Exception {
+        final int size = 42;
+        final int element = 11;
+        MatcherAssert.assertThat(
+            new LengthOfIterable(
+                new FilteredIterable<>(
+                    new Repeat<>(
+                        element,
+                        size
+                    ),
+                    input -> input == element
+                )
+            ),
+            new ScalarHasValue<>(size)
         );
     }
 
+    /**
+     * Test empty 'repeat' size.
+     *
+     * @throws Exception if failed
+     */
+    @Test
+    public void emptyTest() throws Exception {
+        MatcherAssert.assertThat(
+            new LengthOfIterable(
+                new Repeat<>(0, 0)
+            ),
+            new ScalarHasValue<>(0)
+        );
+    }
 }

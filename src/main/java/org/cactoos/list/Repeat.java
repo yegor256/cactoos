@@ -24,46 +24,62 @@
 package org.cactoos.list;
 
 import java.util.Iterator;
-import org.cactoos.Func;
 
 /**
- * Filtered iterable.
+ * Repeat an element.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @param <X> Type of item
+ * @param <T> Element type
  * @since 0.1
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class Repeat<T> implements Iterable<T> {
 
     /**
-     * Iterable.
+     * Element to repeat.
      */
-    private final Iterable<X> iterable;
+    private final T element;
 
     /**
-     * Function.
+     * Repeat count.
      */
-    private final Func.Pred<X> pred;
+    private final int count;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
+     *
+     * @param element To repeat
+     * @param count Count
      */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
+    public Repeat(final T element, final int count) {
+        this.element = element;
+        this.count = count;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
-        );
+    public Iterator<T> iterator() {
+        return new RepeatIterator();
     }
 
+    /**
+     * An iterator.
+     */
+    private final class RepeatIterator implements Iterator<T> {
+
+        /**
+         * Current position.
+         */
+        private int cursor;
+
+        @Override
+        public boolean hasNext() {
+            return this.cursor < Repeat.this.count;
+        }
+
+        @Override
+        public T next() {
+            ++this.cursor;
+            return Repeat.this.element;
+        }
+    }
 }

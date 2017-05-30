@@ -21,46 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
-
-import org.cactoos.Func;
 
 /**
- * Func as Runnable.
- *
- * <p>There is no thread-safety guarantee.
+ * Functions and procedures, tests.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class FuncAsRunnable implements Runnable {
-
-    /**
-     * The func.
-     */
-    private final Func<?, ?> func;
-
-    /**
-     * Ctor.
-     * @param fnc The func
-     */
-    public FuncAsRunnable(final Func<?, ?> fnc) {
-        this.func = fnc;
-    }
-
-    @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public void run() {
-        try {
-            this.func.apply(null);
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-}
+package org.cactoos.func;

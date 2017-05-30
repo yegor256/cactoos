@@ -21,49 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Iterator;
 import org.cactoos.Func;
 
 /**
- * Filtered iterable.
+ * Func as Runnable.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
  * @since 0.1
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class FuncAsProc implements Func.Proc {
 
     /**
-     * Iterable.
+     * The func.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func.Pred<X> pred;
+    private final Func<?, ?> func;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
+     * @param fnc The func
      */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
+    public FuncAsProc(final Func<?, ?> fnc) {
+        this.func = fnc;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
-        );
+    public void exec() throws Exception {
+        this.func.apply(null);
     }
 
 }

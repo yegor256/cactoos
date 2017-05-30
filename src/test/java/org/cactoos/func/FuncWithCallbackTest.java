@@ -21,48 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Iterator;
+import java.io.IOException;
 import org.cactoos.Func;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Filtered iterable.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link FuncWithCallback}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.2
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class FuncWithCallbackTest {
 
     /**
-     * Iterable.
+     * FuncWithCallback can use main func.
+     * @throws Exception If some problem inside
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func.Pred<X> pred;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param pred Predicate
-     */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
-        this.iterable = src;
-        this.pred = pred;
+    @Test
+    public void usesMainFunc() throws Exception {
+        MatcherAssert.assertThat(
+            new FuncWithCallback<>(
+                (Func<Integer, String>) input -> "It's success",
+                ex -> "In case of failure..."
+            ).apply(1),
+            Matchers.containsString("success")
+        );
     }
 
-    @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.pred
+    /**
+     * FuncWithCallback can use a callback.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void usesCallback() throws Exception {
+        MatcherAssert.assertThat(
+            new FuncWithCallback<>(
+                (Func<Integer, String>) input -> {
+                    throw new IOException("Failure");
+                },
+                ex -> "Never mind"
+            ).apply(1),
+            Matchers.containsString("Never")
         );
     }
 

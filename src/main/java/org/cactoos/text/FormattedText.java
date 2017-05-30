@@ -27,10 +27,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
+import java.util.Locale;
 import org.cactoos.Text;
 
 /**
- * Text in Sprinf.
+ * Text in Sprinf format.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -38,7 +39,7 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.1
  */
-public final class Sprintf implements Text {
+public final class FormattedText implements Text {
 
     /**
      * Pattern.
@@ -51,33 +52,70 @@ public final class Sprintf implements Text {
     private final Collection<Object> args;
 
     /**
-     * Ctor.
+     * Format locale.
+     */
+    private final Locale locale;
+
+    /**
+     * New formatted string with default locale.
+     *
      * @param ptn Pattern
      * @param arguments Arguments
      */
-    public Sprintf(final String ptn, final Object... arguments) {
+    public FormattedText(final String ptn, final Object... arguments) {
         this(ptn, Arrays.asList(arguments));
     }
 
     /**
-     * Ctor.
+     * New formatted string with specified locale.
+     *
+     * @param ptn Pattern
+     * @param locale Format locale
+     * @param arguments Arguments
+     */
+    public FormattedText(
+        final String ptn,
+        final Locale locale,
+        final Object... arguments
+    ) {
+        this(ptn, locale, Arrays.asList(arguments));
+    }
+
+    /**
+     * New formatted string with default locale.
+     *
      * @param ptn Pattern
      * @param arguments Arguments
      */
-    public Sprintf(final String ptn, final Collection<Object> arguments) {
+    public FormattedText(final String ptn, final Collection<Object> arguments) {
+        this(ptn, Locale.getDefault(Locale.Category.FORMAT), arguments);
+    }
+
+    /**
+     * New formatted string with specified locale.
+     *
+     * @param ptn Pattern
+     * @param locale Format locale
+     * @param arguments Arguments
+     */
+    public FormattedText(
+        final String ptn,
+        final Locale locale,
+        final Collection<Object> arguments
+    ) {
         this.pattern = ptn;
+        this.locale = locale;
         this.args = Collections.unmodifiableCollection(arguments);
     }
 
     @Override
     public String asString() {
         final StringBuilder out = new StringBuilder(0);
-        try (final Formatter fmt = new Formatter(out)) {
+        try (final Formatter fmt = new Formatter(out, this.locale)) {
             fmt.format(
                 this.pattern, this.args.toArray(new Object[this.args.size()])
             );
         }
         return out.toString();
     }
-
 }

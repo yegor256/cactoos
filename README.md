@@ -5,9 +5,9 @@
 [![Build Status](https://travis-ci.org/yegor256/cactoos.svg?branch=master)](https://travis-ci.org/yegor256/cactoos)
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/org.cactoos/cactoos/badge.svg?color=blue&prefix=v)](http://www.javadoc.io/doc/org.cactoos/cactoos)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/cactoos)](http://www.0pdd.com/p?name=yegor256/cactoos)
-[![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg?style=flat-square)](https://codecov.io/github/yegor256/cactoos?branch=master)
+[![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg)](https://codecov.io/github/yegor256/cactoos?branch=master)
 [![Maven Central](https://img.shields.io/maven-central/v/org.cactoos/cactoos.svg)](https://maven-badges.herokuapp.com/maven-central/org.cactoos/cactoos)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/takes/blob/master/LICENSE.txt)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/cactoos/blob/master/LICENSE.txt)
 
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
@@ -33,6 +33,7 @@ There are a few design principles behind Cactoos:
   * No mutable objects ([why?](http://www.yegor256.com/2014/06/09/objects-should-be-immutable.html))
   * No `static` methods, not even `private` ones ([why?](http://www.yegor256.com/2017/02/07/private-method-is-new-class.html))
   * No `instanceof`, type casting, or reflection ([why?](http://www.yegor256.com/2015/04/02/class-casting-is-anti-pattern.html))
+  * No implementation inheritance ([why?](http://www.yegor256.com/2016/09/13/inheritance-is-procedural.html))
   * No public methods without `@Override`
   * No statements in test methods except `assertThat` ([why?](http://www.yegor256.com/2017/05/17/single-statement-unit-tests.html))
 
@@ -54,12 +55,11 @@ Java version required: 1.8+.
 To read a file:
 
 ```java
-import java.io.File;
-import org.cactoos.io.FileAsInput;
-import org.cactoos.io.InputAsText;
-String text = new InputAsText(
-  new FileAsInput(
-    new File("/code/a.txt")
+String text = new BytesAsText(
+  new InputAsBytes(
+    new FileAsInput(
+      new File("/code/a.txt")
+    )
   )
 ).asString();
 ```
@@ -94,8 +94,9 @@ byte[] data = new InputAsBytes(
 To format a text:
 
 ```java
-String text = new Sprintf(
-  "How are you, %s?", name
+String text = new FormattedText(
+  "How are you, %s?",
+  name
 ).asString();
 ```
 
