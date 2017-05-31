@@ -37,16 +37,15 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class AllOfTest {
 
-    /**
-     * AllOf can test all items in the list.
-     */
     @Test
     public void iteratesList() {
         final List<String> list = new LinkedList<>();
         MatcherAssert.assertThat(
+            "Can't iterate a list with a procedure",
             new AllOf(
                 new TransformedIterable<>(
                     new ArrayAsIterable<>("hello", "world"),
@@ -57,13 +56,11 @@ public final class AllOfTest {
         );
     }
 
-    /**
-     * AllOf can test all items in the list.
-     */
     @Test
     public void iteratesEmptyList() {
         final List<String> list = new LinkedList<>();
         MatcherAssert.assertThat(
+            "Can't iterate a list",
             new AllOf(
                 new IterableAsBooleans<>(
                     Collections.emptyList(),

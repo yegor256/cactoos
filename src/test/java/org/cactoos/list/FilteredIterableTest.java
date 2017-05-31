@@ -32,15 +32,14 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FilteredIterableTest {
 
-    /**
-     * FilteredIterable can filter a list.
-     */
     @Test
     public void filtersList() {
         MatcherAssert.assertThat(
+            "Can't calculate the length of an iterable",
             new LengthOfIterable(
                 new FilteredIterable<>(
                     new ArrayAsIterable<>(
@@ -54,12 +53,10 @@ public final class FilteredIterableTest {
         );
     }
 
-    /**
-     * FilteredIterable can filter an empty list.
-     */
     @Test
     public void filtersEmptyList() {
         MatcherAssert.assertThat(
+            "Can't calculate the length of an empty iterable",
             new LengthOfIterable(
                 new FilteredIterable<>(
                     new ArrayAsIterable<String>(),

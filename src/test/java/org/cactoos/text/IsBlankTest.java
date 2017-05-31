@@ -32,15 +32,14 @@ import org.junit.Test;
  * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class IsBlankTest {
 
-    /**
-     * IsBlank can detect empty string.
-     */
     @Test
     public void determinesEmptyText() {
         MatcherAssert.assertThat(
+            "Can't determine an empty text",
             new IsBlank(
                 new StringAsText("")
             ),
@@ -48,12 +47,10 @@ public final class IsBlankTest {
         );
     }
 
-    /**
-     * IsBlank can detect blank string.
-     */
     @Test
     public void determinesBlankText() {
         MatcherAssert.assertThat(
+            "Can't determine an empty text with spaces",
             new IsBlank(
                 new StringAsText("  ")
             ),
@@ -61,12 +58,10 @@ public final class IsBlankTest {
         );
     }
 
-    /**
-     * IsBlank can detect non blank string.
-     */
     @Test
     public void determinesNotBlankText() {
         MatcherAssert.assertThat(
+            "Can't detect a nonempty text",
             new IsBlank(
                 new StringAsText("not empty")
             ),

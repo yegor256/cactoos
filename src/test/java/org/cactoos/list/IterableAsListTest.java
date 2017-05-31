@@ -34,18 +34,15 @@ import org.junit.Test;
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class IterableAsListTest {
 
-    /**
-     * Test element by index.
-     *
-     * @throws Exception if failed
-     */
     @Test
     public void elementAtIndexTest() throws Exception {
         final int num = 345;
         MatcherAssert.assertThat(
+            "Can't convert an iterable to a list",
             new IterableAsList<>(
                 // @checkstyle MagicNumber (2 lines)
                 new ArrayAsIterable<>(0, 1, 2, num, 3, 4)
@@ -54,15 +51,11 @@ public final class IterableAsListTest {
         );
     }
 
-    /**
-     * Test size of list.
-     *
-     * @throws Exception if failed
-     */
     @Test
     public void sizeTest() throws Exception {
         final int size = 42;
         MatcherAssert.assertThat(
+            "Can't build a list with a certain size",
             new IterableAsList<>(
                 Collections.nCopies(size, 0)
             ),
@@ -70,14 +63,10 @@ public final class IterableAsListTest {
         );
     }
 
-    /**
-     * Test empty IterableAsList.
-     *
-     * @throws Exception if failed
-     */
     @Test
     public void emptyTest() throws Exception {
         MatcherAssert.assertThat(
+            "Can't convert an empty iterable to an empty list",
             new IterableAsList<>(
                 Collections.emptyList()
             ).size(),
@@ -85,22 +74,12 @@ public final class IterableAsListTest {
         );
     }
 
-    /**
-     * Test low bound of list.
-     *
-     * @throws Exception if failed
-     */
     @Test(expected = IndexOutOfBoundsException.class)
     public void lowBoundTest() throws Exception {
         // @checkstyle MagicNumber (1 line)
         new IterableAsList<>(Collections.nCopies(10, 0)).get(-1);
     }
 
-    /**
-     * Test high bound of list.
-     *
-     * @throws Exception if failed
-     */
     @Test(expected = IndexOutOfBoundsException.class)
     public void highBoundTest() throws Exception {
         // @checkstyle MagicNumber (1 line)

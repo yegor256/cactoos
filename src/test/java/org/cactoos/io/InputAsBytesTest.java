@@ -36,17 +36,14 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class InputAsBytesTest {
 
-    /**
-     * InputAsBytes can read input.
-     *
-     * @throws IOException If some problem inside
-     */
     @Test
     public void readsInputIntoBytes() throws IOException {
         MatcherAssert.assertThat(
+            "Can't read bytes from Input",
             new String(
                 new InputAsBytes(
                     new TextAsInput(
@@ -63,14 +60,10 @@ public final class InputAsBytesTest {
         );
     }
 
-    /**
-     * InputAsBytes can read input with small buffer.
-     *
-     * @throws IOException If some problem inside
-     */
     @Test
     public void readsInputIntoBytesWithSmallBuffer() throws IOException {
         MatcherAssert.assertThat(
+            "Can't read bytes from Input with a small reading buffer",
             new String(
                 new InputAsBytes(
                     new TextAsInput(

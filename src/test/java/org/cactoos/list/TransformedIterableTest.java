@@ -37,16 +37,14 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class TransformedIterableTest {
 
-    /**
-     * TransformedIterable can transform a list.
-     * @throws IOException If fails
-     */
     @Test
     public void transformsList() throws IOException {
         MatcherAssert.assertThat(
+            "Can't transform an iterable",
             new TransformedIterable<String, Text>(
                 new ArrayAsIterable<>(
                     "hello", "world", "друг"
@@ -57,13 +55,10 @@ public final class TransformedIterableTest {
         );
     }
 
-    /**
-     * TransformedIterable can transform an empty list.
-     * @throws IOException If fails
-     */
     @Test
-    public void transformsEmptyList() throws IOException {
+    public void transformsEmptyList() {
         MatcherAssert.assertThat(
+            "Can't transform an empty iterable",
             new TransformedIterable<String, Text>(
                 Collections.emptyList(),
                 input -> new UpperText(new StringAsText(input))

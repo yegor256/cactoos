@@ -60,11 +60,11 @@ public final class TextAsBytes implements Bytes {
     /**
      * Ctor.
      * @param text The source
-     * @param charset The charset
+     * @param cset The charset
      */
-    public TextAsBytes(final Text text, final Charset charset) {
+    public TextAsBytes(final Text text, final Charset cset) {
         this.source = text;
-        this.charset = charset;
+        this.charset = cset;
     }
 
     @Override

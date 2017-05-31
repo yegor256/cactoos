@@ -36,17 +36,14 @@ import org.junit.Test;
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FirstOfTest {
 
-    /**
-     * Get first element in collection.
-     *
-     * @throws Exception if failed.
-     */
     @Test
     public void firstElementTest() throws Exception {
         MatcherAssert.assertThat(
+            "Can't take the first item from the iterable",
             new FirstOf<>(
                 // @checkstyle MagicNumber (1 line)
                 Arrays.asList(1, 2, 3)
@@ -55,11 +52,6 @@ public final class FirstOfTest {
         );
     }
 
-    /**
-     * Throws exception if collection is empty.
-     *
-     * @throws Exception expected exception
-     */
     @Test(expected = IOException.class)
     public void failForEmptyCollectionTest() throws Exception {
         new FirstOf<>(Collections.emptyList()).asValue();

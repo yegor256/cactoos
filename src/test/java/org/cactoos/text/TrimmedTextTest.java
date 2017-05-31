@@ -32,15 +32,15 @@ import org.junit.Test;
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class TrimmedTextTest {
-    /**
-     * TrimmedText can process text.
-     */
+
     @Test
     public void convertsText() {
         MatcherAssert.assertThat(
-            new TrimmedText(new StringAsText("  Hello!    ")),
+            "Can't trim a text",
+            new TrimmedText(new StringAsText("  Hello!   \t ")),
             new TextHasString("Hello!")
         );
     }

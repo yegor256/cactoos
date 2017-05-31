@@ -35,16 +35,14 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FuncWithCallbackTest {
 
-    /**
-     * FuncWithCallback can use main func.
-     * @throws Exception If some problem inside
-     */
     @Test
     public void usesMainFunc() throws Exception {
         MatcherAssert.assertThat(
+            "Can't use the main function if no exception",
             new FuncWithCallback<>(
                 (Func<Integer, String>) input -> "It's success",
                 ex -> "In case of failure..."
@@ -53,13 +51,10 @@ public final class FuncWithCallbackTest {
         );
     }
 
-    /**
-     * FuncWithCallback can use a callback.
-     * @throws Exception If some problem inside
-     */
     @Test
     public void usesCallback() throws Exception {
         MatcherAssert.assertThat(
+            "Can't use the callback in case of exception",
             new FuncWithCallback<>(
                 (Func<Integer, String>) input -> {
                     throw new IOException("Failure");

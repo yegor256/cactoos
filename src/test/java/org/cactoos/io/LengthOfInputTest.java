@@ -33,16 +33,15 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class LengthOfInputTest {
 
-    /**
-     * LengthOfInput can calculate length.
-     */
     @Test
     public void calculatesLength() {
         final String text = "What's up, друг?";
         MatcherAssert.assertThat(
+            "Can't calculate the length of Input",
             new LengthOfInput(
                 new TextAsInput(
                     new StringAsText(text)
@@ -52,12 +51,10 @@ public final class LengthOfInputTest {
         );
     }
 
-    /**
-     * LengthOfInput can calculate zero length.
-     */
     @Test
     public void calculatesZeroLength() {
         MatcherAssert.assertThat(
+            "Can't calculate the length of an empty input",
             new LengthOfInput(new DeadInput()),
             new ScalarHasValue<>(0L)
         );

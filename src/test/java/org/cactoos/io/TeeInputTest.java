@@ -24,8 +24,12 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.TextHasString;
 import org.cactoos.text.BytesAsText;
+import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -35,26 +39,52 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class TeeInputTest {
 
-    /**
-     * TeeInput can copy content.
-     */
     @Test
     public void copiesContent() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final String content = "Hello, товарищ!";
         MatcherAssert.assertThat(
+            "Can't copy Input to Output and return Input",
             new BytesAsText(
                 new InputAsBytes(
                     new TeeInput(
-                        new TextAsInput("Hello, world!"),
+                        new TextAsInput(content),
                         new OutputStreamAsOutput(baos)
                     )
                 )
             ),
-            new TextHasString(Matchers.containsString("world"))
+            new TextHasString(Matchers.containsString("товарищ"))
         );
     }
 
+    @Test
+    public void copiesToFile() throws IOException {
+        final File temp = File.createTempFile("cactoos", "txt");
+        temp.deleteOnExit();
+        MatcherAssert.assertThat(
+            "Can't copy Input to File and return content",
+            new BytesAsText(
+                new InputAsBytes(
+                    new TeeInput(
+                        new TextAsInput(
+                            new StringAsText("Hello, друг!"),
+                            StandardCharsets.UTF_8
+                        ),
+                        new FileAsOutput(temp)
+                    )
+                )
+            ),
+            new TextHasString(
+                Matchers.allOf(
+                    Matchers.startsWith("Hello, "),
+                    Matchers.endsWith("друг!")
+                )
+            )
+        );
+    }
 }

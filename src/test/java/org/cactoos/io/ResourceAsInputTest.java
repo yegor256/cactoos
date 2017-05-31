@@ -34,17 +34,14 @@ import org.junit.Test;
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ResourceAsInputTest {
 
-    /**
-     * Test built-in resource.
-     *
-     * @throws Exception if failed
-     */
     @Test
     public void readResourceTest() throws Exception {
         MatcherAssert.assertThat(
+            "Can't read bytes from a classpath resource",
             Arrays.copyOfRange(
                 new InputAsBytes(
                     new ResourceAsInput(

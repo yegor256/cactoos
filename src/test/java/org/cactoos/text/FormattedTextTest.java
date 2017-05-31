@@ -34,15 +34,14 @@ import org.junit.Test;
  * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FormattedTextTest {
 
-    /**
-     * FormattedText produces correct text.
-     */
     @Test
     public void formatsText() {
         MatcherAssert.assertThat(
+            "Can't format a text",
             new FormattedText(
                 "%d. Formatted %s", 1, "text"
             ),
@@ -50,12 +49,10 @@ public final class FormattedTextTest {
         );
     }
 
-    /**
-     * Format with locale.
-     */
     @Test
     public void formatsWithLocale() {
         MatcherAssert.assertThat(
+            "Can't format a text with Locale",
             new FormattedText(
                 // @checkstyle MagicNumber (1 line)
                 "%,d", Locale.GERMAN, 1234567890

@@ -37,18 +37,15 @@ import org.junit.Test;
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class TextAsBytesTest {
 
-    /**
-     * TextAsBytes can convert with default encoding.
-     *
-     * @throws IOException If some problem inside
-     */
     @Test
     public void asBytes() throws IOException {
         final Text text = new StringAsText("Hello!");
         MatcherAssert.assertThat(
+            "Can't convert text into bytes",
             new InputAsBytes(
                 new TextAsInput(text)
             ).asBytes(),

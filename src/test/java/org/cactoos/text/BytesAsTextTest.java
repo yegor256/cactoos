@@ -33,15 +33,14 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class BytesAsTextTest {
 
-    /**
-     * BytesAsText converts bytes to String.
-     */
     @Test
     public void convertsBytesToText() {
         MatcherAssert.assertThat(
+            "Can't convert bytes to text",
             new BytesAsText(
                 new ArrayAsBytes(
                     new byte[]{'H', 'e', 'l', 'l', 'o'}

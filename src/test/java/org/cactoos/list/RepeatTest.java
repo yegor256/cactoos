@@ -33,19 +33,16 @@ import org.junit.Test;
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class RepeatTest {
 
-    /**
-     * Test all elements are same.
-     *
-     * @throws Exception if failed
-     */
     @Test
     public void allSameTest() throws Exception {
         final int size = 42;
         final int element = 11;
         MatcherAssert.assertThat(
+            "Can't generate an iterable with fixed size",
             new LengthOfIterable(
                 new FilteredIterable<>(
                     new Repeat<>(
@@ -59,14 +56,10 @@ public final class RepeatTest {
         );
     }
 
-    /**
-     * Test empty 'repeat' size.
-     *
-     * @throws Exception if failed
-     */
     @Test
     public void emptyTest() throws Exception {
         MatcherAssert.assertThat(
+            "Can't generate an empty iterable",
             new LengthOfIterable(
                 new Repeat<>(0, 0)
             ),

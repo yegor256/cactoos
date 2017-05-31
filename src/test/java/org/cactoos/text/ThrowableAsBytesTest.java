@@ -35,15 +35,14 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ThrowableAsBytesTest {
 
-    /**
-     * ThrowableAsBytes prints stacktrace.
-     */
     @Test
     public void printsStackTrace() {
         MatcherAssert.assertThat(
+            "Can't print exception stacktrace",
             new BytesAsText(
                 new ThrowableAsBytes(
                     new IOException(

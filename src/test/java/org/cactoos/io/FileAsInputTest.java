@@ -23,14 +23,13 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.cactoos.TextHasString;
 import org.cactoos.text.BytesAsText;
-import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -39,60 +38,24 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FileAsInputTest {
 
-    /**
-     * FileAsInput can read file content.
-     * @throws IOException If some problem inside
-     */
     @Test
     public void readsSimpleFileContent() throws IOException {
-        final File temp = File.createTempFile("cactoos-1", "txt-1");
-        temp.deleteOnExit();
+        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
         final String content = "Hello, товарищ!";
+        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
+            "Can't read file content",
             new BytesAsText(
                 new InputAsBytes(
-                    new TeeInput(
-                        new TextAsInput(
-                            new StringAsText(content),
-                            StandardCharsets.UTF_8
-                        ),
-                        new FileAsOutput(temp)
-                    )
+                    new FileAsInput(temp.toFile())
                 )
             ),
             new TextHasString(content)
         );
     }
 
-    /**
-     * FileAsInput can read file content.
-     * @throws IOException If some problem inside
-     */
-    @Test
-    public void readsFileContent() throws IOException {
-        final File temp = File.createTempFile("cactoos", "txt");
-        temp.deleteOnExit();
-        MatcherAssert.assertThat(
-            new BytesAsText(
-                new InputAsBytes(
-                    new TeeInput(
-                        new TextAsInput(
-                            new StringAsText("Hello, друг!"),
-                            StandardCharsets.UTF_8
-                        ),
-                        new FileAsOutput(temp)
-                    )
-                )
-            ),
-            new TextHasString(
-                Matchers.allOf(
-                    Matchers.startsWith("Hello, "),
-                    Matchers.endsWith("друг!")
-                )
-            )
-        );
-    }
 }

@@ -32,15 +32,14 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class UpperTextTest {
 
-    /**
-     * UpperText can process text.
-     */
     @Test
     public void convertsText() {
         MatcherAssert.assertThat(
+            "Can't upper case a text",
             new UpperText(new StringAsText("Hello!")),
             new TextHasString("HELLO!")
         );
