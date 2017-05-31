@@ -23,13 +23,12 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Text;
-import org.cactoos.list.ArrayAsList;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
 import java.util.Locale;
+import org.cactoos.Text;
+import org.cactoos.list.ArrayAsList;
 
 /**
  * Text in Sprinf format.

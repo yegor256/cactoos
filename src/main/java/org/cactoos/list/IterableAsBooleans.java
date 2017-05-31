@@ -23,9 +23,8 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.Func;
-
 import java.util.Iterator;
+import org.cactoos.Func;
 
 /**
  * Iterable into booleans.

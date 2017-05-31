@@ -23,12 +23,11 @@
  */
 package org.cactoos.list;
 
+import java.io.IOException;
+import java.util.Collections;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.Collections;
 
 /**
  * Test case for {@link FirstOf}.

@@ -23,9 +23,8 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.func.StickyFunc;
-
 import java.util.Iterator;
+import org.cactoos.func.StickyFunc;
 
 /**
  * A few Iterables joined together.
