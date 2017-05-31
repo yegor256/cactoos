@@ -49,6 +49,7 @@ public final class ArrayAsList<E> extends AbstractList<E> {
     @SafeVarargs
     @SuppressWarnings("varargs")
     public ArrayAsList(final E... items) {
+        super();
         this.items = items;
     }
 
