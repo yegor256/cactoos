@@ -23,9 +23,9 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
-import java.util.Iterator;
 import org.cactoos.func.StickyFunc;
+
+import java.util.Iterator;
 
 /**
  * A few Iterables joined together.
@@ -51,7 +51,7 @@ public final class ConcatenatedIterable<T> implements Iterable<T> {
     @SafeVarargs
     @SuppressWarnings("varargs")
     public ConcatenatedIterable(final Iterable<T>... items) {
-        this(Arrays.asList(items));
+        this(new ArrayAsList(items));
     }
 
     /**

@@ -23,7 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -55,7 +54,7 @@ public final class ArrayAsIterable<X> implements Iterable<X> {
 
     @Override
     public Iterator<X> iterator() {
-        return Arrays.asList(this.array).iterator();
+        return new ArrayAsList<>(this.array).iterator();
     }
 
 }

@@ -23,8 +23,9 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
 import org.cactoos.Func;
+
+import java.util.Iterator;
 
 /**
  * Iterable into booleans.
@@ -34,7 +35,7 @@ import org.cactoos.Func;
  *
  * <pre> new AllOf(
  *   new IterableAsBooleans&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
+ *     new ArrayAsList<>("hello", "world"),
  *     i -&gt; System.out.println(i)
  *   )
  * ).asValue();</pre>

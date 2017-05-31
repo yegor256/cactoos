@@ -23,12 +23,13 @@
  */
 package org.cactoos.text;
 
-import java.util.Arrays;
+import org.cactoos.Text;
+import org.cactoos.list.ArrayAsList;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
 import java.util.Locale;
-import org.cactoos.Text;
 
 /**
  * Text in Sprinf format.
@@ -63,7 +64,7 @@ public final class FormattedText implements Text {
      * @param arguments Arguments
      */
     public FormattedText(final String ptn, final Object... arguments) {
-        this(ptn, Arrays.asList(arguments));
+        this(ptn, new ArrayAsList<>(arguments));
     }
 
     /**
@@ -78,7 +79,7 @@ public final class FormattedText implements Text {
         final Locale locale,
         final Object... arguments
     ) {
-        this(ptn, locale, Arrays.asList(arguments));
+        this(ptn, locale, new ArrayAsList<>(arguments));
     }
 
     /**

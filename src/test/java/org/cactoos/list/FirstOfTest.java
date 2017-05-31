@@ -23,12 +23,12 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Collections;
 
 /**
  * Test case for {@link FirstOf}.
@@ -48,10 +48,9 @@ public final class FirstOfTest {
     public void firstElementTest() throws Exception {
         MatcherAssert.assertThat(
             new FirstOf<>(
-                // @checkstyle MagicNumber (1 line)
-                Arrays.asList(1, 2, 3)
+                new ArrayAsList<>(-1, 0, 1)
             ),
-            new ScalarHasValue<>(1)
+            new ScalarHasValue<>(-1)
         );
     }
 

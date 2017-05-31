@@ -33,7 +33,7 @@ import org.cactoos.Scalar;
  * a collection of items:</p>
  *
  * <pre> new IterableAsBoolean&lt;&gt;(
- *   Arrays.asList("hello", "world"),
+ *   new ArrayAsList<>("hello", "world"),
  *   i -&gt; System.out.println(i)
  * ).asValue();</pre>
  *
