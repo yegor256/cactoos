@@ -41,8 +41,8 @@ public final class ArrayAsListTest {
     @Test
     public void createsListFromArray() {
         MatcherAssert.assertThat(
-                new ArrayAsList<>("one", "two"),
-                Matchers.hasSize(2)
+            new ArrayAsList<>("one", "two"),
+            Matchers.hasSize(2)
         );
     }
 }

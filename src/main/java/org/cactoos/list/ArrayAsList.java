@@ -38,7 +38,7 @@ import java.util.AbstractList;
 public final class ArrayAsList<E> extends AbstractList<E> {
 
     /**
-     * Array items
+     * Array items.
      */
     private final E[] items;
 
@@ -48,17 +48,17 @@ public final class ArrayAsList<E> extends AbstractList<E> {
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public ArrayAsList(E... items) {
+    public ArrayAsList(final E... items) {
         this.items = items;
     }
 
     @Override
-    public E get(int index) {
-        return items[index];
+    public E get(final int index) {
+        return this.items[index];
     }
 
     @Override
     public int size() {
-        return items.length;
+        return this.items.length;
     }
 }
