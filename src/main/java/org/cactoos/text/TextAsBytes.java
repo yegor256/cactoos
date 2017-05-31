@@ -25,6 +25,7 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
 import org.cactoos.Text;
 
@@ -53,8 +54,16 @@ public final class TextAsBytes implements Bytes {
      * Ctor.
      * @param text The source
      */
+    public TextAsBytes(final String text) {
+        this(new StringAsText(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text The source
+     */
     public TextAsBytes(final Text text) {
-        this(text, Charset.defaultCharset());
+        this(text, StandardCharsets.UTF_8);
     }
 
     /**

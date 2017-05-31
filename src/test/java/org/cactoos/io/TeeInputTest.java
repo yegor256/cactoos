@@ -25,13 +25,13 @@ package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.TextHasString;
 import org.cactoos.func.FuncAsMatcher;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
+import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -54,7 +54,9 @@ public final class TeeInputTest {
             new BytesAsText(
                 new InputAsBytes(
                     new TeeInput(
-                        new TextAsInput(content),
+                        new BytesAsInput(
+                            new TextAsBytes(content)
+                        ),
                         new OutputStreamAsOutput(baos)
                     )
                 )
@@ -75,9 +77,10 @@ public final class TeeInputTest {
             new BytesAsText(
                 new InputAsBytes(
                     new TeeInput(
-                        new TextAsInput(
-                            new StringAsText("Hello, друг!"),
-                            StandardCharsets.UTF_8
+                        new BytesAsInput(
+                            new TextAsBytes(
+                                new StringAsText("Hello, друг!")
+                            )
                         ),
                         new FileAsOutput(temp.toFile())
                     )

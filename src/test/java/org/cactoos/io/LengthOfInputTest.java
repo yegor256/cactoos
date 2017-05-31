@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import org.cactoos.ScalarHasValue;
 import org.cactoos.text.StringAsText;
+import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -43,8 +44,10 @@ public final class LengthOfInputTest {
         MatcherAssert.assertThat(
             "Can't calculate the length of Input",
             new LengthOfInput(
-                new TextAsInput(
-                    new StringAsText(text)
+                new BytesAsInput(
+                    new TextAsBytes(
+                        new StringAsText(text)
+                    )
                 )
             ),
             new ScalarHasValue<>((long) text.getBytes().length)

@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.text.StringAsText;
+import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -46,9 +47,10 @@ public final class InputAsBytesTest {
             "Can't read bytes from Input",
             new String(
                 new InputAsBytes(
-                    new TextAsInput(
-                        new StringAsText("Hello, друг!"),
-                        StandardCharsets.UTF_8
+                    new BytesAsInput(
+                        new TextAsBytes(
+                            new StringAsText("Hello, друг!")
+                        )
                     )
                 ).asBytes(),
                 StandardCharsets.UTF_8
@@ -66,9 +68,10 @@ public final class InputAsBytesTest {
             "Can't read bytes from Input with a small reading buffer",
             new String(
                 new InputAsBytes(
-                    new TextAsInput(
-                        new StringAsText("Hello, товарищ!"),
-                        StandardCharsets.UTF_8
+                    new BytesAsInput(
+                        new TextAsBytes(
+                            new StringAsText("Hello, товарищ!")
+                        )
                     ),
                     2
                 ).asBytes(),

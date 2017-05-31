@@ -26,13 +26,11 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
+import org.cactoos.Bytes;
 import org.cactoos.Input;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
 
 /**
- * Text as Input.
+ * Bytes as Input.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -40,50 +38,25 @@ import org.cactoos.text.StringAsText;
  * @version $Id$
  * @since 0.1
  */
-public final class TextAsInput implements Input {
+public final class BytesAsInput implements Input {
 
     /**
      * The source.
      */
-    private final Text source;
-
-    /**
-     * Text charset.
-     */
-    private final Charset charset;
-
-    /**
-     * New {@link TextAsInput} with default charset.
-     *
-     * @param text The text
-     */
-    public TextAsInput(final String text) {
-        this(new StringAsText(text));
-    }
+    private final Bytes source;
 
     /**
      * Ctor.
-     * @param text The text
+     * @param bytes The bytes
      */
-    public TextAsInput(final Text text) {
-        this(text, Charset.defaultCharset());
-    }
-
-    /**
-     * New {@link TextAsInput} with specified charset.
-     *
-     * @param text The text
-     * @param charset Text charset
-     */
-    public TextAsInput(final Text text, final Charset charset) {
-        this.source = text;
-        this.charset = charset;
+    public BytesAsInput(final Bytes bytes) {
+        this.source = bytes;
     }
 
     @Override
     public InputStream open() throws IOException {
         return new ByteArrayInputStream(
-            this.source.asString().getBytes(this.charset)
+            this.source.asBytes()
         );
     }
 

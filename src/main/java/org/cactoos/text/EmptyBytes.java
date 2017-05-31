@@ -21,27 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.text;
 
-import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.text.EmptyBytes;
+import org.cactoos.Bytes;
 
 /**
- * Input with no data.
+ * Bytes with no data.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
-public final class DeadInput implements Input {
+public final class EmptyBytes implements Bytes {
 
     @Override
-    public InputStream open() throws IOException {
-        return new BytesAsInput(new EmptyBytes()).open();
+    public byte[] asBytes() {
+        return new byte[] {};
     }
 
 }
