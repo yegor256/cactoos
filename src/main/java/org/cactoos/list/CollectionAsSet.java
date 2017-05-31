@@ -23,9 +23,11 @@
  */
 package org.cactoos.list;
 
-import java.util.AbstractSet;
+import java.util.AbstractCollection;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Collection as set.
@@ -33,14 +35,15 @@ import java.util.Iterator;
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @param <T> Elements type
- * @since 0.1
+ * @since 0.2
  */
-public final class CollectionAsSet<T> extends AbstractSet<T> {
+public final class CollectionAsSet<T> extends
+    AbstractCollection<T> implements Set<T> {
 
     /**
-     * Source collection.
+     * Origin set.
      */
-    private final Collection<T> collection;
+    private final Set<T> origin;
 
     /**
      * Ctor.
@@ -49,16 +52,26 @@ public final class CollectionAsSet<T> extends AbstractSet<T> {
      */
     public CollectionAsSet(final Collection<T> collection) {
         super();
-        this.collection = collection;
+        this.origin = new HashSet<>(collection);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return this.collection.iterator();
+        return this.origin.iterator();
     }
 
     @Override
     public int size() {
-        return this.collection.size();
+        return this.origin.size();
+    }
+
+    @Override
+    public boolean contains(final Object item) {
+        return this.origin.contains(item);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.origin.isEmpty();
     }
 }

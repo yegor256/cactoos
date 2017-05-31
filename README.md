@@ -202,7 +202,7 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
 
 ## Contributors
 
- * [Kirill Che. g4s8.public@gmail.com](https://github.com/g4s8)
+ * [Kirill Che.](https://github.com/g4s8) g4s8.public@gmail.com
 
 ## License (MIT)
 

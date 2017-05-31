@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -32,15 +33,15 @@ import org.junit.Test;
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
 public final class CollectionAsSetTest {
 
     /**
-     * Test set has proper size.
+     * Set items are unique.
      */
     @Test
-    public void sizeTest() {
+    public void skipSameElementsTest() {
         final int size = 412;
         MatcherAssert.assertThat(
             new CollectionAsSet<>(
@@ -48,7 +49,7 @@ public final class CollectionAsSetTest {
                     new Repeat<>(0, size)
                 )
             ),
-            Matchers.hasSize(size)
+            Matchers.hasSize(1)
         );
     }
 
@@ -65,6 +66,33 @@ public final class CollectionAsSetTest {
                 )
             ),
             Matchers.hasItem(element)
+        );
+    }
+
+    /**
+     * Test set size.
+     */
+    @Test
+    public void sizeTest() {
+        MatcherAssert.assertThat(
+            new CollectionAsSet<>(
+                new IterableAsList<>(
+                    new ArrayAsIterable<>(0, 1, 2)
+                )
+            ),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.hasSize(3)
+        );
+    }
+
+    /**
+     * Test empty set.
+     */
+    @Test
+    public void emptyTest() {
+        MatcherAssert.assertThat(
+            new CollectionAsSet<>(Collections.emptyList()),
+            Matchers.empty()
         );
     }
 }
