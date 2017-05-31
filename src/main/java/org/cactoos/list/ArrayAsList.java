@@ -46,6 +46,7 @@ public final class ArrayAsList<E> extends AbstractList<E> {
      * Ctor.
      * @param items Items of an array
      */
+    @SafeVarargs
     public ArrayAsList(E... items) {
         this.items = items;
     }

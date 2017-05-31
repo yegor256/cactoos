@@ -51,7 +51,7 @@ public final class ConcatenatedIterable<T> implements Iterable<T> {
     @SafeVarargs
     @SuppressWarnings("varargs")
     public ConcatenatedIterable(final Iterable<T>... items) {
-        this(new ArrayAsList(items));
+        this(new ArrayAsList<Iterable<T>>(items));
     }
 
     /**
