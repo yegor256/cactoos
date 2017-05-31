@@ -24,14 +24,15 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.cactoos.TextHasString;
+import org.cactoos.func.FuncAsMatcher;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -58,14 +59,17 @@ public final class TeeInputTest {
                     )
                 )
             ),
-            new TextHasString(Matchers.containsString("товарищ"))
+            new TextHasString(
+                new FuncAsMatcher<>(
+                    str -> new String(baos.toByteArray()).equals(str)
+                )
+            )
         );
     }
 
     @Test
     public void copiesToFile() throws IOException {
-        final File temp = File.createTempFile("cactoos", "txt");
-        temp.deleteOnExit();
+        final Path temp = Files.createTempFile("cactoos", "txt");
         MatcherAssert.assertThat(
             "Can't copy Input to File and return content",
             new BytesAsText(
@@ -75,14 +79,13 @@ public final class TeeInputTest {
                             new StringAsText("Hello, друг!"),
                             StandardCharsets.UTF_8
                         ),
-                        new FileAsOutput(temp)
+                        new FileAsOutput(temp.toFile())
                     )
                 )
             ),
             new TextHasString(
-                Matchers.allOf(
-                    Matchers.startsWith("Hello, "),
-                    Matchers.endsWith("друг!")
+                new FuncAsMatcher<>(
+                    str -> str.equals(new String(Files.readAllBytes(temp)))
                 )
             )
         );
