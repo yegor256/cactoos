@@ -23,6 +23,7 @@
  */
 package org.cactoos.io;
 
+import java.nio.charset.StandardCharsets;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.text.StringAsText;
 import org.cactoos.text.TextAsBytes;
@@ -50,7 +51,9 @@ public final class LengthOfInputTest {
                     )
                 )
             ),
-            new ScalarHasValue<>((long) text.getBytes().length)
+            new ScalarHasValue<>(
+                (long) text.getBytes(StandardCharsets.UTF_8).length
+            )
         );
     }
 

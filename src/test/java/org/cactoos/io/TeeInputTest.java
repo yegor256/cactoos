@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.TextHasString;
@@ -63,7 +64,9 @@ public final class TeeInputTest {
             ),
             new TextHasString(
                 new FuncAsMatcher<>(
-                    str -> new String(baos.toByteArray()).equals(str)
+                    str -> new String(
+                        baos.toByteArray(), StandardCharsets.UTF_8
+                    ).equals(str)
                 )
             )
         );
@@ -88,7 +91,12 @@ public final class TeeInputTest {
             ),
             new TextHasString(
                 new FuncAsMatcher<>(
-                    str -> str.equals(new String(Files.readAllBytes(temp)))
+                    str -> str.equals(
+                        new String(
+                            Files.readAllBytes(temp),
+                            StandardCharsets.UTF_8
+                        )
+                    )
                 )
             )
         );
