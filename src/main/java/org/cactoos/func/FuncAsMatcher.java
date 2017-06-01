@@ -66,6 +66,6 @@ public final class FuncAsMatcher<T> extends TypeSafeMatcher<T> {
 
     @Override
     public void describeTo(final Description description) {
-        description.appendText("broken");
+        description.appendText(this.func.toString());
     }
 }
