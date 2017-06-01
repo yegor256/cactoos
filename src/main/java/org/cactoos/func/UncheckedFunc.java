@@ -26,7 +26,7 @@ package org.cactoos.func;
 import org.cactoos.Func;
 
 /**
- * Func that always returns the same result.
+ * Func that doesn't throw checked {@link Exception}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -34,26 +34,43 @@ import org.cactoos.Func;
  * @version $Id$
  * @param <X> Type of input
  * @param <Y> Type of output
- * @since 0.1
+ * @since 0.2
  */
-public final class ConstFunc<X, Y> implements Func<X, Y> {
+public final class UncheckedFunc<X, Y> implements Func<X, Y> {
 
     /**
-     * The result to return.
+     * Original func.
      */
-    private final Y result;
+    private final Func<X, Y> func;
 
     /**
      * Ctor.
-     * @param rslt What to return
+     * @param fnc Encapsulated func
      */
-    public ConstFunc(final Y rslt) {
-        this.result = rslt;
+    public UncheckedFunc(final Func<X, Y> fnc) {
+        this.func = fnc;
     }
 
     @Override
-    public Y apply(final X input) {
-        return this.result;
+    public Y apply(final X input) throws Exception {
+        return this.func.apply(input);
     }
 
+    /**
+     * Apply it safely.
+     * @param input The argument
+     * @return The result
+     */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public Y uncheckedApply(final X input) {
+        try {
+            return this.apply(input);
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
 }

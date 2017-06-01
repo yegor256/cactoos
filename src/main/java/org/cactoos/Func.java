@@ -48,31 +48,6 @@ public interface Func<X, Y> {
     Y apply(X input) throws Exception;
 
     /**
-     * Func that doesn't throw.
-     * @param <X> Input type
-     * @param <Y> Output type
-     */
-    interface Safe<X, Y> extends Func<X, Y> {
-        /**
-         * Apply it safely.
-         * @param input The argument
-         * @return The result
-         */
-        @SuppressWarnings("PMD.AvoidCatchingGenericException")
-        default Y safeApply(X input) {
-            try {
-                return this.apply(input);
-            } catch (final InterruptedException ex) {
-                Thread.currentThread().interrupt();
-                throw new IllegalStateException(ex);
-                // @checkstyle IllegalCatchCheck (1 line)
-            } catch (final Exception ex) {
-                throw new IllegalStateException(ex);
-            }
-        }
-    }
-
-    /**
      * Quiet func that returns nothing, but is still a function.
      * @param <X> Input type
      */

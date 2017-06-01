@@ -21,44 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.util.Arrays;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import java.io.IOException;
+import org.cactoos.Func;
 import org.junit.Test;
 
 /**
- * Test case for {@link ResourceAsInput}.
+ * Test case for {@link UncheckedFunc}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ResourceAsInputTest {
+public final class UncheckedFuncTest {
 
-    @Test
-    public void readResourceTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from a classpath resource",
-            Arrays.copyOfRange(
-                new InputAsBytes(
-                    new ResourceAsInput(
-                        "org/cactoos/io/ResourceAsInputTest.class"
-                    )
-                ).asBytes(),
-                // @checkstyle MagicNumber (2 lines)
-                0,
-                4
-            ),
-            Matchers.equalTo(
-                new byte[]{
-                    // @checkstyle MagicNumber (1 line)
-                    (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
-                }
-            )
-        );
+    @Test(expected = RuntimeException.class)
+    public void rethrowsCheckedToUncheckedException() throws Exception {
+        new UncheckedFunc<>(
+            (Func<Integer, String>) i -> {
+                throw new IOException("intended");
+            }
+        ).uncheckedApply(1);
     }
 
 }
