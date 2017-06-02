@@ -17,7 +17,7 @@ public final class ReplacedTextTest {
     public void replaceText() {
         MatcherAssert.assertThat(
                 "Can't replace a text",
-                new ReplacedText(new StringAsText("Hello!"),"ello","i"),
+                new ReplacedText(new StringAsText("Hello!"), "ello", "i"),
                 new TextHasString("Hi!")
         );
     }
