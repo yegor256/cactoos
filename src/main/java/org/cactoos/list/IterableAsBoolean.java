@@ -42,6 +42,7 @@ import org.cactoos.Scalar;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of source item
+ * @see IterableAsBooleans
  * @since 0.1
  */
 public final class IterableAsBoolean<X> implements Scalar<Boolean> {

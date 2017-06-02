@@ -32,11 +32,24 @@ import org.cactoos.Func;
 /**
  * Filtered iterator.
  *
+ * <p>You can use it in order to create a declarative/lazy
+ * version of a filtered collection/iterable. For example,
+ * this code will create a list of two strings "hello" and "world":</p>
+ *
+ * <pre> Iterator&lt;String&gt; list = new FilteredIterator&lt;&gt;(
+ *   new ArrayAsIterable&lt;&gt;(
+ *     "hey", "hello", "world"
+ *   ).iterator(),
+ *   input -> input.length() > 4
+ * );
+ * </pre>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
+ * @see FilteredIterable
  * @since 0.1
  */
 public final class FilteredIterator<X> implements Iterator<X> {
@@ -49,7 +62,7 @@ public final class FilteredIterator<X> implements Iterator<X> {
     /**
      * Predicate.
      */
-    private final Func.Pred<X> pred;
+    private final Func<X, Boolean> func;
 
     /**
      * The buffer storing the objects of the iterator.
@@ -59,11 +72,11 @@ public final class FilteredIterator<X> implements Iterator<X> {
     /**
      * Ctor.
      * @param src Source iterable
-     * @param pred Predicate
+     * @param fnc Predicate
      */
-    public FilteredIterator(final Iterator<X> src, final Func.Pred<X> pred) {
+    public FilteredIterator(final Iterator<X> src, final Func<X, Boolean> fnc) {
         this.iterator = src;
-        this.pred = pred;
+        this.func = fnc;
         this.buffer = new LinkedList<>();
     }
 
@@ -74,7 +87,7 @@ public final class FilteredIterator<X> implements Iterator<X> {
             while (this.iterator.hasNext()) {
                 final X object = this.iterator.next();
                 try {
-                    if (this.pred.apply(object)) {
+                    if (this.func.apply(object)) {
                         this.buffer.add(object);
                         break;
                     }

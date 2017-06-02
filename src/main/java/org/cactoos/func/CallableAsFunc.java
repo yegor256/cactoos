@@ -21,62 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Iterator;
+import java.util.concurrent.Callable;
 import org.cactoos.Func;
 
 /**
- * Filtered iterable.
- *
- * <p>You can use it in order to create a declarative/lazy
- * version of a filtered collection/iterable. For example,
- * this code will create a list of two strings "hello" and "world":</p>
- *
- * <pre> Iterable&lt;String&gt; list = new FilteredIterable&lt;&gt;(
- *   new ArrayAsIterable&lt;&gt;(
- *     "hey", "hello", "world"
- *   ),
- *   input -> input.length() > 4
- * );
- * </pre>
+ * Callable as Func.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @see FilteredIterator
- * @since 0.1
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @see FuncAsCallable
+ * @see FuncAsRunnable
+ * @see RunnableAsFunc
+ * @since 0.2
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class CallableAsFunc<X, Y> implements Func<X, Y> {
 
     /**
-     * Iterable.
+     * The callable.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Boolean> func;
+    private final Callable<Y> callable;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param fnc Predicate
+     * @param clbl The callable
      */
-    public FilteredIterable(final Iterable<X> src, final Func<X, Boolean> fnc) {
-        this.iterable = src;
-        this.func = fnc;
+    public CallableAsFunc(final Callable<Y> clbl) {
+        this.callable = clbl;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.func
-        );
+    public Y apply(final X input) throws Exception {
+        return this.callable.call();
     }
-
 }

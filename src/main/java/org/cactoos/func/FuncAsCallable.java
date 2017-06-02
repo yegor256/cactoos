@@ -23,35 +23,44 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.Callable;
 import org.cactoos.Func;
 
 /**
- * Func as Runnable.
+ * Func as {@link Callable}.
+ *
+ * <p>You may want to use this decorator where
+ * {@link Callable} is required, but you just have a function:</p>
+ *
+ * <pre> Callable&lt;String&gt; callable = new FuncAsCallable&lt;&gt;(
+ *   i -> "Hello, world!"
+ * );
+ * </pre>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @param <T> Type of input
+ * @since 0.2
  */
-public final class FuncAsProc implements Func.Proc {
+public final class FuncAsCallable<T> implements Callable<T> {
 
     /**
-     * The func.
+     * Original func.
      */
-    private final Func<?, ?> func;
+    private final Func<?, T> func;
 
     /**
      * Ctor.
-     * @param fnc The func
+     * @param fnc Encapsulated func
      */
-    public FuncAsProc(final Func<?, ?> fnc) {
+    public FuncAsCallable(final Func<?, T> fnc) {
         this.func = fnc;
     }
 
     @Override
-    public void exec() throws Exception {
-        this.func.apply(null);
+    public T call() throws Exception {
+        return this.func.apply(null);
     }
-
 }
