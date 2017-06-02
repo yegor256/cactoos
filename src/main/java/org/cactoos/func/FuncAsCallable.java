@@ -33,7 +33,7 @@ import org.cactoos.Func;
  * {@link Callable} is required, but you just have a function:</p>
  *
  * <pre> Callable&lt;String&gt; callable = new FuncAsCallable&lt;&gt;(
- *   i -> "Hello, world!"
+ *   i -&gt; "Hello, world!"
  * );
  * </pre>
  *

@@ -37,7 +37,7 @@ import org.cactoos.Func;
  *   new ArrayAsIterable&lt;&gt;(
  *     "hey", "hello", "world"
  *   ),
- *   input -> input.length() > 4
+ *   input -&gt; input.length() &gt; 4
  * );
  * </pre>
  *

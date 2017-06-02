@@ -35,7 +35,7 @@ import org.cactoos.Func;
  * new AllOf(
  *   new IterableAsBooleans&lt;String&gt;(
  *     Collections.emptyList(),
- *     new AlwaysTrueFunc<>(list::add)
+ *     new AlwaysTrueFunc&lt;&gt;(list::add)
  *   )
  * ).asValue();
  * </pre>
