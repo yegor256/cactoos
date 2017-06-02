@@ -23,39 +23,39 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.nio.file.Path;
-import org.cactoos.TextHasString;
-import org.cactoos.text.BytesAsText;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.cactoos.Input;
 
 /**
- * Test case for {@link FileAsInput}.
+ * Path as Input.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.2
  */
-public final class FileAsInputTest {
+public final class PathAsInput implements Input {
 
-    @Test
-    public void readsSimpleFileContent() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
-        final String content = "Hello, товарищ!";
-        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
-        MatcherAssert.assertThat(
-            "Can't read file content",
-            new BytesAsText(
-                new InputAsBytes(
-                    new PathAsInput(temp)
-                )
-            ),
-            new TextHasString(content)
-        );
+    /**
+     * The path.
+     */
+    private final Path path;
+
+    /**
+     * Ctor.
+     * @param src The path
+     */
+    public PathAsInput(final Path src) {
+        this.path = src;
+    }
+
+    @Override
+    public InputStream stream() throws FileNotFoundException {
+        return new FileInputStream(this.path.toFile());
     }
 
 }
