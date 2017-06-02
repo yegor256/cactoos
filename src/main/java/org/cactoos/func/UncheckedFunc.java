@@ -52,19 +52,10 @@ public final class UncheckedFunc<X, Y> implements Func<X, Y> {
     }
 
     @Override
-    public Y apply(final X input) throws Exception {
-        return this.func.apply(input);
-    }
-
-    /**
-     * Apply it safely.
-     * @param input The argument
-     * @return The result
-     */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public Y uncheckedApply(final X input) {
+    public Y apply(final X input) {
         try {
-            return this.apply(input);
+            return this.func.apply(input);
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException(ex);
@@ -73,4 +64,5 @@ public final class UncheckedFunc<X, Y> implements Func<X, Y> {
             throw new IllegalStateException(ex);
         }
     }
+
 }

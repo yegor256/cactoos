@@ -51,6 +51,6 @@ public final class FuncAsRunnable implements Runnable {
 
     @Override
     public void run() {
-        new UncheckedFunc<>(this.func).uncheckedApply(null);
+        new UncheckedFunc<>(this.func).apply(null);
     }
 }

@@ -38,12 +38,12 @@ import org.junit.Test;
 public final class UncheckedFuncTest {
 
     @Test(expected = RuntimeException.class)
-    public void rethrowsCheckedToUncheckedException() throws Exception {
+    public void rethrowsCheckedToUncheckedException() {
         new UncheckedFunc<>(
             (Func<Integer, String>) i -> {
                 throw new IOException("intended");
             }
-        ).uncheckedApply(1);
+        ).apply(1);
     }
 
 }
