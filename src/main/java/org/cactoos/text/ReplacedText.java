@@ -31,7 +31,7 @@ import org.cactoos.Text;
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
 public final class ReplacedText implements Text {
 
