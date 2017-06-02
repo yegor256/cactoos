@@ -26,6 +26,7 @@ package org.cactoos.list;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.Proc;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.func.AlwaysTrueFunc;
 import org.cactoos.func.FuncAsMatcher;
@@ -70,9 +71,11 @@ public final class AllOfTest {
         MatcherAssert.assertThat(
             "Can't iterate a list",
             new AllOf(
-                new IterableAsBooleans<String>(
+                new IterableAsBooleans<>(
                     Collections.emptyList(),
-                    new AlwaysTrueFunc<>(list::add)
+                    new AlwaysTrueFunc<>(
+                        (Proc<String>) list::add
+                    )
                 )
             ),
             new ScalarHasValue<>(

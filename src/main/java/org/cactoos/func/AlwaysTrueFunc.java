@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
  * Func as that is always true.
@@ -53,6 +54,14 @@ public final class AlwaysTrueFunc<X> implements Func<X, Boolean> {
      * Original func.
      */
     private final Func<X, ?> func;
+
+    /**
+     * Ctor.
+     * @param proc Encapsulated proc
+     */
+    public AlwaysTrueFunc(final Proc<X> proc) {
+        this(new ProcAsFunc<>(proc));
+    }
 
     /**
      * Ctor.
