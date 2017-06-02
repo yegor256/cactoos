@@ -21,27 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import java.io.IOException;
+import org.junit.Test;
 
 /**
- * Function.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link UncheckedProc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.1
+ * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public interface Func<X, Y> {
+public final class UncheckedProcTest {
 
-    /**
-     * Apply it.
-     * @param input The argument
-     * @return The result
-     * @throws Exception If fails
-     */
-    Y apply(X input) throws Exception;
+    @Test(expected = RuntimeException.class)
+    public void rethrowsCheckedToUncheckedException() {
+        new UncheckedProc<>(
+            input -> {
+                throw new IOException("intended");
+            }
+        ).exec(1);
+    }
 
 }

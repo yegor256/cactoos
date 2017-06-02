@@ -24,24 +24,22 @@
 package org.cactoos;
 
 /**
- * Function.
+ * Procedure.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input
- * @param <Y> Type of output
  * @since 0.1
  */
-public interface Func<X, Y> {
+public interface Proc<X> {
 
     /**
-     * Apply it.
+     * Execute it.
      * @param input The argument
-     * @return The result
      * @throws Exception If fails
      */
-    Y apply(X input) throws Exception;
+    void exec(X input) throws Exception;
 
 }
