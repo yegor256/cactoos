@@ -43,29 +43,29 @@ public final class ReplacedText implements Text {
     /**
      * The old char.
      */
-    private final String oldchar;
+    private final String needle;
 
     /**
      * The new char.
      */
-    private final String newchar;
+    private final String replacement;
 
     /**
      * Ctor.
      * @param text The text
-     * @param oldchar The old char
-     * @param newchar The new char
+     * @param find The find one
+     * @param replace The replace one
      */
-    public ReplacedText(final Text text, final String oldchar, final String
-        newchar) {
+    public ReplacedText(final Text text, final String find, final String
+        replace) {
         this.origin = text;
-        this.oldchar = oldchar;
-        this.newchar = newchar;
+        this.needle = find;
+        this.replacement = replace;
     }
 
     @Override
     public String asString() throws IOException {
-        return this.origin.asString().replace(this.oldchar, this.newchar);
+        return this.origin.asString().replace(this.needle, this.replacement);
     }
 }
 
