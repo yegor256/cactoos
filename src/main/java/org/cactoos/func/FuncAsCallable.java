@@ -21,44 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.util.Arrays;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.concurrent.Callable;
+import org.cactoos.Func;
 
 /**
- * Test case for {@link ResourceAsInput}.
+ * Func as {@link Callable}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * <p>You may want to use this decorator where
+ * {@link Callable} is required, but you just have a function:</p>
+ *
+ * <pre> Callable&lt;String&gt; callable = new FuncAsCallable&lt;&gt;(
+ *   i -&gt; "Hello, world!"
+ * );
+ * </pre>
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Type of input
+ * @since 0.2
  */
-public final class ResourceAsInputTest {
+public final class FuncAsCallable<T> implements Callable<T> {
 
-    @Test
-    public void readResourceTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from a classpath resource",
-            Arrays.copyOfRange(
-                new InputAsBytes(
-                    new ResourceAsInput(
-                        "org/cactoos/io/ResourceAsInputTest.class"
-                    )
-                ).asBytes(),
-                // @checkstyle MagicNumber (2 lines)
-                0,
-                4
-            ),
-            Matchers.equalTo(
-                new byte[]{
-                    // @checkstyle MagicNumber (1 line)
-                    (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
-                }
-            )
-        );
+    /**
+     * Original func.
+     */
+    private final Func<?, T> func;
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     */
+    public FuncAsCallable(final Func<?, T> fnc) {
+        this.func = fnc;
     }
 
+    @Override
+    public T call() throws Exception {
+        return this.func.apply(null);
+    }
 }

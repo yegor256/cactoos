@@ -21,44 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.util.Arrays;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.Func;
 
 /**
- * Test case for {@link ResourceAsInput}.
+ * Func that doesn't throw checked {@link Exception}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @since 0.2
  */
-public final class ResourceAsInputTest {
+public final class UncheckedFunc<X, Y> implements Func<X, Y> {
 
-    @Test
-    public void readResourceTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from a classpath resource",
-            Arrays.copyOfRange(
-                new InputAsBytes(
-                    new ResourceAsInput(
-                        "org/cactoos/io/ResourceAsInputTest.class"
-                    )
-                ).asBytes(),
-                // @checkstyle MagicNumber (2 lines)
-                0,
-                4
-            ),
-            Matchers.equalTo(
-                new byte[]{
-                    // @checkstyle MagicNumber (1 line)
-                    (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
-                }
-            )
-        );
+    /**
+     * Original func.
+     */
+    private final Func<X, Y> func;
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     */
+    public UncheckedFunc(final Func<X, Y> fnc) {
+        this.func = fnc;
+    }
+
+    @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public Y apply(final X input) {
+        try {
+            return this.func.apply(input);
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
 }

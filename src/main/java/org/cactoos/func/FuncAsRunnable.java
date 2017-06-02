@@ -21,44 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.util.Arrays;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.Func;
 
 /**
- * Test case for {@link ResourceAsInput}.
+ * Func as Runnable.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.2
  */
-public final class ResourceAsInputTest {
+public final class FuncAsRunnable implements Runnable {
 
-    @Test
-    public void readResourceTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from a classpath resource",
-            Arrays.copyOfRange(
-                new InputAsBytes(
-                    new ResourceAsInput(
-                        "org/cactoos/io/ResourceAsInputTest.class"
-                    )
-                ).asBytes(),
-                // @checkstyle MagicNumber (2 lines)
-                0,
-                4
-            ),
-            Matchers.equalTo(
-                new byte[]{
-                    // @checkstyle MagicNumber (1 line)
-                    (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
-                }
-            )
-        );
+    /**
+     * Original func.
+     */
+    private final Func<?, ?> func;
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     */
+    public FuncAsRunnable(final Func<?, ?> fnc) {
+        this.func = fnc;
     }
 
+    @Override
+    public void run() {
+        new UncheckedFunc<>(this.func).apply(null);
+    }
 }

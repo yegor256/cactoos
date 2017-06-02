@@ -23,35 +23,28 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.Func;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Func as Runnable.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link FuncAsCallable}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncAsProc implements Func.Proc {
+public final class FuncAsCallableTest {
 
-    /**
-     * The func.
-     */
-    private final Func<?, ?> func;
-
-    /**
-     * Ctor.
-     * @param fnc The func
-     */
-    public FuncAsProc(final Func<?, ?> fnc) {
-        this.func = fnc;
-    }
-
-    @Override
-    public void exec() throws Exception {
-        this.func.apply(null);
+    @Test
+    public void convertsFuncIntoCallable() throws Exception {
+        MatcherAssert.assertThat(
+            new FuncAsCallable<>(
+                input -> 1
+            ).call(),
+            Matchers.equalTo(1)
+        );
     }
 
 }

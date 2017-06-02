@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.cactoos.Func;
+import org.cactoos.FuncApplies;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,10 +44,10 @@ public final class FuncWithCallbackTest {
         MatcherAssert.assertThat(
             "Can't use the main function if no exception",
             new FuncWithCallback<>(
-                (Func<Integer, String>) input -> "It's success",
+                input -> "It's success",
                 ex -> "In case of failure..."
-            ).apply(1),
-            Matchers.containsString("success")
+            ),
+            new FuncApplies<>(1, Matchers.containsString("success"))
         );
     }
 
@@ -56,12 +56,12 @@ public final class FuncWithCallbackTest {
         MatcherAssert.assertThat(
             "Can't use the callback in case of exception",
             new FuncWithCallback<>(
-                (Func<Integer, String>) input -> {
+                input -> {
                     throw new IOException("Failure");
                 },
                 ex -> "Never mind"
-            ).apply(1),
-            Matchers.containsString("Never")
+            ),
+            new FuncApplies<>(1, Matchers.containsString("Never"))
         );
     }
 

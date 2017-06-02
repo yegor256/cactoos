@@ -29,11 +29,24 @@ import org.cactoos.Func;
 /**
  * Filtered iterable.
  *
+ * <p>You can use it in order to create a declarative/lazy
+ * version of a filtered collection/iterable. For example,
+ * this code will create a list of two strings "hello" and "world":</p>
+ *
+ * <pre> Iterable&lt;String&gt; list = new FilteredIterable&lt;&gt;(
+ *   new ArrayAsIterable&lt;&gt;(
+ *     "hey", "hello", "world"
+ *   ),
+ *   input -&gt; input.length() &gt; 4
+ * );
+ * </pre>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
+ * @see FilteredIterator
  * @since 0.1
  */
 public final class FilteredIterable<X> implements Iterable<X> {
@@ -46,23 +59,23 @@ public final class FilteredIterable<X> implements Iterable<X> {
     /**
      * Function.
      */
-    private final Func.Pred<X> pred;
+    private final Func<X, Boolean> func;
 
     /**
      * Ctor.
      * @param src Source iterable
-     * @param pred Predicate
+     * @param fnc Predicate
      */
-    public FilteredIterable(final Iterable<X> src, final Func.Pred<X> pred) {
+    public FilteredIterable(final Iterable<X> src, final Func<X, Boolean> fnc) {
         this.iterable = src;
-        this.pred = pred;
+        this.func = fnc;
     }
 
     @Override
     public Iterator<X> iterator() {
         return new FilteredIterator<>(
             this.iterable.iterator(),
-            this.pred
+            this.func
         );
     }
 

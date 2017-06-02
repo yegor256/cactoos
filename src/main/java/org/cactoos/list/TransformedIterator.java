@@ -25,6 +25,7 @@ package org.cactoos.list;
 
 import java.util.Iterator;
 import org.cactoos.Func;
+import org.cactoos.func.UncheckedFunc;
 
 /**
  * Transformed iterator.
@@ -67,12 +68,7 @@ public final class TransformedIterator<X, Y> implements Iterator<Y> {
     @Override
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Y next() {
-        try {
-            return this.func.apply(this.iterator.next());
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IllegalStateException(ex);
-        }
+        return new UncheckedFunc<>(this.func).apply(this.iterator.next());
     }
 
     @Override

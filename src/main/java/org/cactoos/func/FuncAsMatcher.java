@@ -54,14 +54,8 @@ public final class FuncAsMatcher<T> extends TypeSafeMatcher<T> {
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public boolean matchesSafely(final T item) {
-        try {
-            return this.func.apply(item);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new AssertionError(ex);
-        }
+        return new UncheckedFunc<>(this.func).apply(item);
     }
 
     @Override

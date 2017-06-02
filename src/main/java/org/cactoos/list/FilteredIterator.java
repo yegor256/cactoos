@@ -28,15 +28,29 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 import org.cactoos.Func;
+import org.cactoos.func.UncheckedFunc;
 
 /**
  * Filtered iterator.
+ *
+ * <p>You can use it in order to create a declarative/lazy
+ * version of a filtered collection/iterable. For example,
+ * this code will create a list of two strings "hello" and "world":</p>
+ *
+ * <pre> Iterator&lt;String&gt; list = new FilteredIterator&lt;&gt;(
+ *   new ArrayAsIterable&lt;&gt;(
+ *     "hey", "hello", "world"
+ *   ).iterator(),
+ *   input -&gt; input.length() &gt; 4
+ * );
+ * </pre>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
+ * @see FilteredIterable
  * @since 0.1
  */
 public final class FilteredIterator<X> implements Iterator<X> {
@@ -49,7 +63,7 @@ public final class FilteredIterator<X> implements Iterator<X> {
     /**
      * Predicate.
      */
-    private final Func.Pred<X> pred;
+    private final Func<X, Boolean> func;
 
     /**
      * The buffer storing the objects of the iterator.
@@ -59,28 +73,23 @@ public final class FilteredIterator<X> implements Iterator<X> {
     /**
      * Ctor.
      * @param src Source iterable
-     * @param pred Predicate
+     * @param fnc Predicate
      */
-    public FilteredIterator(final Iterator<X> src, final Func.Pred<X> pred) {
+    public FilteredIterator(final Iterator<X> src, final Func<X, Boolean> fnc) {
         this.iterator = src;
-        this.pred = pred;
+        this.func = fnc;
         this.buffer = new LinkedList<>();
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public boolean hasNext() {
+        final UncheckedFunc<X, Boolean> fnc = new UncheckedFunc<>(this.func);
         if (this.buffer.isEmpty()) {
             while (this.iterator.hasNext()) {
                 final X object = this.iterator.next();
-                try {
-                    if (this.pred.apply(object)) {
-                        this.buffer.add(object);
-                        break;
-                    }
-                    // @checkstyle IllegalCatchCheck (1 line)
-                } catch (final Exception ex) {
-                    throw new IllegalStateException(ex);
+                if (fnc.apply(object)) {
+                    this.buffer.add(object);
+                    break;
                 }
             }
         }

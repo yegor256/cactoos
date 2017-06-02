@@ -23,35 +23,27 @@
  */
 package org.cactoos.func;
 
+import java.io.IOException;
 import org.cactoos.Func;
+import org.junit.Test;
 
 /**
- * Runnable as a Func.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link UncheckedFunc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class RunnableAsProc implements Func.Proc {
+public final class UncheckedFuncTest {
 
-    /**
-     * The runnable.
-     */
-    private final Runnable runnable;
-
-    /**
-     * Ctor.
-     * @param rnbl The runnable
-     */
-    public RunnableAsProc(final Runnable rnbl) {
-        this.runnable = rnbl;
-    }
-
-    @Override
-    public void exec() {
-        this.runnable.run();
+    @Test(expected = RuntimeException.class)
+    public void rethrowsCheckedToUncheckedException() {
+        new UncheckedFunc<>(
+            (Func<Integer, String>) i -> {
+                throw new IOException("intended");
+            }
+        ).apply(1);
     }
 
 }

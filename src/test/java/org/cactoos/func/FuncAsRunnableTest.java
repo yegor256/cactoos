@@ -21,41 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ResourceAsInput}.
+ * Test case for {@link FuncAsRunnable}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ResourceAsInputTest {
+public final class FuncAsRunnableTest {
 
     @Test
-    public void readResourceTest() throws Exception {
+    public void convertsFuncIntoRunnable() throws Exception {
+        final AtomicBoolean done = new AtomicBoolean();
         MatcherAssert.assertThat(
-            "Can't read bytes from a classpath resource",
-            Arrays.copyOfRange(
-                new InputAsBytes(
-                    new ResourceAsInput(
-                        "org/cactoos/io/ResourceAsInputTest.class"
-                    )
-                ).asBytes(),
-                // @checkstyle MagicNumber (2 lines)
-                0,
-                4
+            "Can't execute Runnable",
+            new FuncAsRunnable(
+                input -> {
+                    done.set(true);
+                    return 1;
+                }
             ),
-            Matchers.equalTo(
-                new byte[]{
-                    // @checkstyle MagicNumber (1 line)
-                    (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
+            new FuncAsMatcher<Runnable>(
+                input -> {
+                    input.run();
+                    return done.get();
                 }
             )
         );

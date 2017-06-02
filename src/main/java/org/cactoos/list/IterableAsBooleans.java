@@ -46,6 +46,7 @@ import org.cactoos.Func;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of source item
+ * @see IterableAsBoolean
  * @since 0.1
  */
 public final class IterableAsBooleans<X> implements Iterable<Boolean> {
