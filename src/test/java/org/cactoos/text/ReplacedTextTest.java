@@ -51,13 +51,14 @@ public final class ReplacedTextTest {
 
     @Test
     public void notReplaceTextWhenSubstringNotFound() {
+        final String text = "HelloAgain!";
         MatcherAssert.assertThat(
-            "Can't replace a text",
+            "Replace a text abnormally",
             new ReplacedText(
-                new StringAsText("Hello!"),
+                new StringAsText(text),
                 "xyz", "i"
             ),
-            new TextHasString("Hello!")
+            new TextHasString(text)
         );
     }
 }
