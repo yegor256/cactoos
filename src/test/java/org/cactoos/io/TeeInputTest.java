@@ -85,7 +85,7 @@ public final class TeeInputTest {
                                 new StringAsText("Hello, друг!")
                             )
                         ),
-                        new FileAsOutput(temp.toFile())
+                        new PathAsOutput(temp)
                     )
                 )
             ),
