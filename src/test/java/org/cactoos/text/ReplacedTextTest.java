@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ReplacedTextTest {
