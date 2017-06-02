@@ -28,6 +28,7 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 import org.cactoos.Func;
+import org.cactoos.func.UncheckedFunc;
 
 /**
  * Filtered iterator.
@@ -81,19 +82,14 @@ public final class FilteredIterator<X> implements Iterator<X> {
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public boolean hasNext() {
+        final UncheckedFunc<X, Boolean> fnc = new UncheckedFunc<>(this.func);
         if (this.buffer.isEmpty()) {
             while (this.iterator.hasNext()) {
                 final X object = this.iterator.next();
-                try {
-                    if (this.func.apply(object)) {
-                        this.buffer.add(object);
-                        break;
-                    }
-                    // @checkstyle IllegalCatchCheck (1 line)
-                } catch (final Exception ex) {
-                    throw new IllegalStateException(ex);
+                if (fnc.apply(object)) {
+                    this.buffer.add(object);
+                    break;
                 }
             }
         }

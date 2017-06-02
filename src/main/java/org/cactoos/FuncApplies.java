@@ -21,45 +21,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos;
 
-import org.cactoos.Func;
+import org.cactoos.func.UncheckedFunc;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsEqual;
 
 /**
- * Func as Matcher.
- *
- * <p>There is no thread-safety guarantee.
+ * Matcher for the value.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of object to match
+ * @param <X> Type of input
+ * @param <Y> Type of output
  * @since 0.2
  */
-public final class FuncAsMatcher<T> extends TypeSafeMatcher<T> {
+public final class FuncApplies<X, Y> extends TypeSafeMatcher<Func<X, Y>> {
 
     /**
-     * The func.
+     * Input of the function.
      */
-    private final Func<T, Boolean> func;
+    private final X input;
+
+    /**
+     * Matcher of the result.
+     */
+    private final Matcher<Y> matcher;
 
     /**
      * Ctor.
-     * @param fnc The func
+     * @param result The result expected
+     * @param inpt Input for the function
      */
-    public FuncAsMatcher(final Func<T, Boolean> fnc) {
+    public FuncApplies(final X inpt, final Y result) {
+        this(inpt, new IsEqual<>(result));
+    }
+
+    /**
+     * Ctor.
+     * @param inpt Input for the function
+     * @param mtr Matcher of the text
+     */
+    public FuncApplies(final X inpt, final Matcher<Y> mtr) {
         super();
-        this.func = fnc;
+        this.input = inpt;
+        this.matcher = mtr;
     }
 
     @Override
-    public boolean matchesSafely(final T item) {
-        return new UncheckedFunc<>(this.func).apply(item);
+    public boolean matchesSafely(final Func<X, Y> func) {
+        return this.matcher.matches(
+            new UncheckedFunc<>(func).apply(this.input)
+        );
     }
 
     @Override
     public void describeTo(final Description description) {
-        description.appendText(this.func.toString());
+        description.appendText("Scalar with ");
+        description.appendDescriptionOf(this.matcher);
     }
 }

@@ -41,6 +41,7 @@ public final class FuncAsRunnableTest {
     public void convertsFuncIntoRunnable() throws Exception {
         final AtomicBoolean done = new AtomicBoolean();
         MatcherAssert.assertThat(
+            "Can't execute Runnable",
             new FuncAsRunnable(
                 input -> {
                     done.set(true);

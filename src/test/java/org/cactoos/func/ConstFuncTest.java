@@ -23,45 +23,26 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
 import org.cactoos.FuncApplies;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FuncWithCallback}.
+ * Test case for {@link ConstFunc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncWithCallbackTest {
+public final class ConstFuncTest {
 
     @Test
-    public void usesMainFunc() throws Exception {
+    public void returnsConstant() {
         MatcherAssert.assertThat(
-            "Can't use the main function if no exception",
-            new FuncWithCallback<>(
-                input -> "It's success",
-                ex -> "In case of failure..."
-            ),
-            new FuncApplies<>(1, Matchers.containsString("success"))
-        );
-    }
-
-    @Test
-    public void usesCallback() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't use the callback in case of exception",
-            new FuncWithCallback<>(
-                input -> {
-                    throw new IOException("Failure");
-                },
-                ex -> "Never mind"
-            ),
-            new FuncApplies<>(1, Matchers.containsString("Never"))
+            "Can't return a constant",
+            new ConstFunc<>(1),
+            new FuncApplies<>(-1, 1)
         );
     }
 
