@@ -48,4 +48,16 @@ public final class ReplacedTextTest {
             new TextHasString("Hi!")
         );
     }
+
+    @Test
+    public void notReplaceTextWhenSubstringNotFound() {
+        MatcherAssert.assertThat(
+            "Can't replace a text",
+            new ReplacedText(
+                new StringAsText("Hello!"),
+                "xyz", "i"
+            ),
+            new TextHasString("Hello!")
+        );
+    }
 }
