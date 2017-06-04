@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import org.cactoos.Bytes;
 
 /**
@@ -55,7 +56,7 @@ public final class UncheckedBytes implements Bytes {
         try {
             return this.bytes.asBytes();
         } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
+            throw new UncheckedIOException(ex);
         }
     }
 

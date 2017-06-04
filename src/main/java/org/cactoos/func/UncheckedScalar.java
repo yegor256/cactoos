@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import org.cactoos.Scalar;
 
 /**
@@ -56,7 +57,7 @@ public final class UncheckedScalar<T> implements Scalar<T> {
         try {
             return this.scalar.asValue();
         } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
+            throw new UncheckedIOException(ex);
         }
     }
 

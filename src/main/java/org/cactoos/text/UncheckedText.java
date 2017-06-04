@@ -24,6 +24,7 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import org.cactoos.Text;
 
 /**
@@ -55,7 +56,7 @@ public final class UncheckedText implements Text {
         try {
             return this.text.asString();
         } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
+            throw new UncheckedIOException(ex);
         }
     }
 
