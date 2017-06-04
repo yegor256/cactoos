@@ -21,28 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.text;
 
 import java.io.IOException;
-import org.junit.Test;
+import org.cactoos.Text;
 
 /**
- * Test case for {@link UncheckedText}.
+ * Text that doesn't throw checked {@link Exception}.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.3
  */
-public final class UncheckedTextTest {
+public final class UncheckedText implements Text {
 
-    @Test(expected = RuntimeException.class)
-    public void rethrowsCheckedToUncheckedException() {
-        new UncheckedText(
-            () -> {
-                throw new IOException("intended");
-            }
-        ).asString();
+    /**
+     * Original text.
+     */
+    private final Text text;
+
+    /**
+     * Ctor.
+     * @param text Encapsulated text
+     */
+    public UncheckedText(final Text text) {
+        this.text = text;
+    }
+
+    @Override
+    public String asString() {
+        try {
+            return this.text.asString();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
 }

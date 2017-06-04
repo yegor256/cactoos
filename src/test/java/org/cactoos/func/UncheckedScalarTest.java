@@ -31,7 +31,7 @@ import org.junit.Test;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class UncheckedScalarTest {

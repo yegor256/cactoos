@@ -34,7 +34,7 @@ import org.cactoos.Scalar;
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @param <T> Type of result
- * @since 0.2
+ * @since 0.3
  */
 public final class UncheckedScalar<T> implements Scalar<T> {
 

@@ -21,42 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.Bytes;
+import org.junit.Test;
 
 /**
- * Bytes that doesn't throw checked {@link Exception}.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link UncheckedText}.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.3
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class UncheckedBytes implements Bytes {
+public final class UncheckedTextTest {
 
-    /**
-     * Original bytes.
-     */
-    private final Bytes bytes;
-
-    /**
-     * Ctor.
-     * @param bytes Encapsulated bytes
-     */
-    public UncheckedBytes(final Bytes bytes) {
-        this.bytes = bytes;
-    }
-
-    @Override
-    public byte[] asBytes() {
-        try {
-            return this.bytes.asBytes();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    @Test(expected = RuntimeException.class)
+    public void rethrowsCheckedToUncheckedException() {
+        new UncheckedText(
+            () -> {
+                throw new IOException("intended");
+            }
+        ).asString();
     }
 
 }
