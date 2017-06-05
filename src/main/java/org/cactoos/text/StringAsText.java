@@ -53,12 +53,5 @@ public final class StringAsText implements Text {
     public String asString() {
         return this.source;
     }
-    
-    @Override
-    public boolean equals(final Object text) {
-        return text != null
-            && text instanceof StringAsText
-            && StringAsText.class.cast(text).asString().equals(this.source);
-    }
 
 }

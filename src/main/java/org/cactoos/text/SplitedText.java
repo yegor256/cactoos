@@ -39,7 +39,7 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.3
  */
-public final class SplitedText implements Text, Iterable<Text> {
+public final class SplitedText implements Iterable<String> {
 
     /**
      * The text.
@@ -86,23 +86,13 @@ public final class SplitedText implements Text, Iterable<Text> {
     }
 
     @Override
-    public String asString() throws IOException {
-        return this.origin.asString();
-    }
-
-    /**
-     * Split the Text.
-     * @return The pieces of Text
-     */
-    @Override
-    public Iterator<Text> iterator() {
+    public Iterator<String> iterator() {
         try {
             return Arrays.stream(
                 this.origin.asString()
                 .split(this.pattern, this.limit)
             )
-            .map(s -> new StringAsText(s))
-            .collect(Collectors.<Text>toList())
+            .collect(Collectors.toList())
             .iterator();
         } catch (final IOException ex) {
             throw new UncheckedIOException(ex);
