@@ -32,30 +32,36 @@ import org.junit.Test;
  * Test case for {@link SplitedText}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class SplitedTextTest {
 
     @Test
-    public void abbreviatesText() throws IOException {
+    public void splitsText() throws IOException {
         MatcherAssert.assertThat(
             "Can't split a text",
             new SplitedText(
                 new StringAsText("one two three four five")
-            ).pieces(),
-            Matchers.contains("one", "two", "three", "four", "five")
+            ),
+            Matchers.containsInAnyOrder(
+                new StringAsText("one"),
+                new StringAsText("two"),
+                new StringAsText("three"),
+                new StringAsText("four"),
+                new StringAsText("five")
+            )
         );
     }
 
     @Test
-    public void abbreviatesEmptyText() throws IOException {
+    public void splitsEmptyText() throws IOException {
         MatcherAssert.assertThat(
             "Can't split an empty text",
             new SplitedText(
                 new StringAsText("")
-            ).pieces(),
-            Matchers.contains("")
+            ),
+            Matchers.contains(new StringAsText(""))
         );
     }
 
