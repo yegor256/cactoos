@@ -39,7 +39,7 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.3
  */
-public final class SplitedText implements Iterable<String> {
+public final class SplitText implements Iterable<String> {
 
     /**
      * The text.
@@ -60,7 +60,7 @@ public final class SplitedText implements Iterable<String> {
      * Ctor.
      * @param text The text
      */
-    public SplitedText(final Text text) {
+    public SplitText(final Text text) {
         this(text, " ");
     }
 
@@ -69,7 +69,7 @@ public final class SplitedText implements Iterable<String> {
      * @param text The text
      * @param pattern The pattern used to split
      */
-    public SplitedText(final Text text, final String pattern) {
+    public SplitText(final Text text, final String pattern) {
         this(text, pattern, Integer.MAX_VALUE);
     }
 
@@ -79,7 +79,7 @@ public final class SplitedText implements Iterable<String> {
      * @param pattern The pattern used to split
      * @param limit The max limit of pieces
      */
-    public SplitedText(final Text text, final String pattern, final int limit) {
+    public SplitText(final Text text, final String pattern, final int limit) {
         this.origin = text;
         this.pattern = pattern;
         this.limit = limit;

@@ -29,19 +29,19 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link SplitedText}.
+ * Test case for {@link SplitText}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SplitedTextTest {
+public final class SplitTextTest {
 
     @Test
     public void splitsText() throws IOException {
         MatcherAssert.assertThat(
             "Can't split a text",
-            new SplitedText(
+            new SplitText(
                 new StringAsText("one two three four five")
             ),
             Matchers.contains("one", "two", "three", "four", "five")
@@ -52,7 +52,7 @@ public final class SplitedTextTest {
     public void splitsEmptyText() throws IOException {
         MatcherAssert.assertThat(
             "Can't split an empty text",
-            new SplitedText(
+            new SplitText(
                 new StringAsText("")
             ),
             Matchers.contains("")
