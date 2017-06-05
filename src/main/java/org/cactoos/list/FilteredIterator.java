@@ -108,7 +108,9 @@ public final class FilteredIterator<X> implements Iterator<X> {
 
     @Override
     public void remove() {
-        this.iterator.remove();
+        throw new UnsupportedOperationException(
+            "FilteredIterator does not support remove Operation"
+        );
     }
 
 }
