@@ -35,7 +35,7 @@ import org.cactoos.list.ArrayAsIterable;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.3
  */
 public final class JoinedText implements Text {
 
