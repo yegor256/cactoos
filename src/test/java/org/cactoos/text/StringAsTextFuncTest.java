@@ -37,9 +37,10 @@ import org.junit.Test;
 public final class StringAsTextFuncTest {
 
     @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void convertsStringToText() throws Exception {
         MatcherAssert.assertThat(
-            "Can't capitalize a word",
+            "Can't convert a string to a Text",
             new StringAsTextFunc().apply("Hello"),
             new TextHasString("Hello")
         );
