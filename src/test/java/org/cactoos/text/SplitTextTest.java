@@ -44,7 +44,13 @@ public final class SplitTextTest {
             new SplitText(
                 new StringAsText("one two three four five")
             ),
-            Matchers.contains("one", "two", "three", "four", "five")
+            Matchers.contains(
+                new StringAsText("one"),
+                new StringAsText("two"),
+                new StringAsText("three"),
+                new StringAsText("four"),
+                new StringAsText("five")
+             )
         );
     }
 
@@ -55,7 +61,7 @@ public final class SplitTextTest {
             new SplitText(
                 new StringAsText("")
             ),
-            Matchers.contains("")
+            Matchers.contains(new StringAsText(""))
         );
     }
 

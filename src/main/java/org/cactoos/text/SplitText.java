@@ -26,8 +26,10 @@ package org.cactoos.text;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Iterator;
+import org.cactoos.Func;
 import org.cactoos.Text;
 import org.cactoos.list.ArrayAsIterable;
+import org.cactoos.list.TransformedIterable;
 
 /**
  * Split a Text.
@@ -38,7 +40,7 @@ import org.cactoos.list.ArrayAsIterable;
  * @version $Id$
  * @since 0.3
  */
-public final class SplitText implements Iterable<String> {
+public final class SplitText implements Iterable<Text> {
 
     /**
      * The text.
@@ -85,11 +87,19 @@ public final class SplitText implements Iterable<String> {
     }
 
     @Override
-    public Iterator<String> iterator() {
+    public Iterator<Text> iterator() {
         try {
-            return new ArrayAsIterable<>(
-                this.origin.asString()
-                .split(this.pattern, this.limit)
+            return new TransformedIterable<>(
+                new ArrayAsIterable<>(
+                    this.origin.asString()
+                    .split(this.pattern, this.limit)
+                ),
+                new Func<String, Text>() {
+                    @Override
+                    public Text apply(final String input) throws Exception {
+                        return new StringAsText(input);
+                    }
+                }
             ).iterator();
         } catch (final IOException ex) {
             throw new UncheckedIOException(ex);

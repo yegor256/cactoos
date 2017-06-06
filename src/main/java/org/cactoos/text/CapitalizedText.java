@@ -53,15 +53,15 @@ public final class CapitalizedText implements Text {
     @Override
     public String asString() throws IOException {
         return new JoinedText(
-            new TransformedIterable<String, Text>(
+            new TransformedIterable<Text, Text>(
                 new SplitText(this.origin),
-                new Func<String, Text>() {
+                new Func<Text, Text>() {
                     @Override
-                    public Text apply(final String input) throws Exception {
+                    public Text apply(final Text input) throws Exception {
                         return new FormattedText(
                             "%s%s",
-                            input.substring(0, 1).toUpperCase(),
-                            input.substring(1)
+                            input.asString().substring(0, 1).toUpperCase(),
+                            input.asString().substring(1)
                         );
                     }
                 }
