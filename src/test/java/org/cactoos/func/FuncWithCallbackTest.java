@@ -65,4 +65,17 @@ public final class FuncWithCallbackTest {
         );
     }
 
+    @Test
+    public void usesFollowUp() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't use the follow-up func",
+            new FuncWithCallback<>(
+                input -> "works fine",
+                ex -> "won't happen",
+                input -> "follow up"
+            ),
+            new FuncApplies<>(1, Matchers.containsString("follow"))
+        );
+    }
+
 }

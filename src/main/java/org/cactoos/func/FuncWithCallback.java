@@ -49,14 +49,31 @@ public final class FuncWithCallback<X, Y> implements Func<X, Y> {
     private final Func<Throwable, Y> callback;
 
     /**
+     * The follow up.
+     */
+    private final Func<Y, Y> follow;
+
+    /**
      * Ctor.
      * @param fnc The func
      * @param cbk The callback
      */
     public FuncWithCallback(final Func<X, Y> fnc,
         final Func<Throwable, Y> cbk) {
+        this(fnc, cbk, input -> input);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param cbk The callback
+     * @param flw The follow up func
+     */
+    public FuncWithCallback(final Func<X, Y> fnc,
+        final Func<Throwable, Y> cbk, final Func<Y, Y> flw) {
         this.func = fnc;
         this.callback = cbk;
+        this.follow = flw;
     }
 
     @Override
@@ -64,7 +81,7 @@ public final class FuncWithCallback<X, Y> implements Func<X, Y> {
     public Y apply(final X input) throws Exception {
         Y result;
         try {
-            result =  this.func.apply(input);
+            result = this.func.apply(input);
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
             result = this.callback.apply(ex);
@@ -72,7 +89,7 @@ public final class FuncWithCallback<X, Y> implements Func<X, Y> {
         } catch (final Throwable ex) {
             result = this.callback.apply(ex);
         }
-        return result;
+        return this.follow.apply(result);
     }
 
 }
