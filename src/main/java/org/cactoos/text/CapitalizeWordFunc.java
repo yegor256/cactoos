@@ -23,40 +23,26 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
+import org.cactoos.Func;
 import org.cactoos.Text;
-import org.cactoos.list.TransformedIterable;
 
 /**
- * Capitalize the Text.
+ * Func that capitalize a word.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @since 0.3
  */
-public final class CapitalizedText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     * @param text A Text
-     */
-    public CapitalizedText(final Text text) {
-        this.origin = text;
-    }
-
+public final class CapitalizeWordFunc implements Func<Text, Text> {
     @Override
-    public String asString() throws IOException {
-        return new JoinedText(
-            new TransformedIterable<Text, Text>(
-                new SplitText(this.origin),
-                new CapitalizeWordFunc()
-            )
-        ).asString();
+    public Text apply(final Text input) throws Exception {
+        return new FormattedText(
+            "%s%s",
+            input.asString().substring(0, 1).toUpperCase(),
+            input.asString().substring(1)
+        );
     }
-}
 
+}
