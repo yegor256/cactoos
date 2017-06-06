@@ -54,4 +54,17 @@ public final class StringAsText implements Text {
         return this.source;
     }
 
+    @Override
+    public boolean equals(final Object text) {
+        return text != null
+            && text instanceof StringAsText
+            && StringAsText.class.cast(text).source.equals(this.source);
+    }
+
+    @Override
+    public int hashCode() {
+        // @checkstyle MagicNumber (1 line)
+        return 31 * this.source.hashCode();
+    }
+
 }
