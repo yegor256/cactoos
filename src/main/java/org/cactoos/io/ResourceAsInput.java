@@ -29,7 +29,12 @@ import org.cactoos.Input;
 import org.cactoos.text.FormattedText;
 
 /**
- * Jar class resource.
+ * Classpath resource.
+ *
+ * <p>Pay attention that the name of resource must always be
+ * global, <strong>not</strong> starting with a leading slash. Thus,
+ * if you want to load a text file from {@code /com/example/Test.txt},
+ * you must provide this name: {@code "com/example/Test.txt"}.</p>
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
