@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * Abbreviates a Text using ellipses.
+ * Truncate a Text to a max width.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -35,20 +35,30 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.3
  */
-public final class AbbreviatedText implements Text {
+public final class TruncatedText implements Text {
 
     /**
-     * The truncated text.
+     * The text.
      */
     private final Text origin;
+
+    /**
+     * The initial position in the text.
+     */
+    private final int offset;
+
+    /**
+     * The max width of the text.
+     */
+    private final int width;
 
     /**
      * Ctor.
      * @param text The Text
      */
-    public AbbreviatedText(final Text text) {
+    public TruncatedText(final Text text) {
         // @checkstyle MagicNumber (1 line)
-        this(text, 0, 77);
+        this(text, 80);
     }
 
     /**
@@ -56,7 +66,7 @@ public final class AbbreviatedText implements Text {
      * @param text The Text
      * @param width Width of the result string
      */
-    public AbbreviatedText(final Text text, final int width) {
+    public TruncatedText(final Text text, final int width) {
         // @checkstyle MagicNumber (1 line)
         this(text, 0, width);
     }
@@ -67,23 +77,14 @@ public final class AbbreviatedText implements Text {
      * @param offset Text position where to start
      * @param width Width of the result string
      */
-    public AbbreviatedText(final Text text, final int offset, final int width) {
-        this(new TruncatedText(text, offset, width));
-    }
-
-    /**
-     * Ctor.
-     * @param text The truncated Text
-     */
-    public AbbreviatedText(final TruncatedText text) {
+    public TruncatedText(final Text text, final int offset, final int width) {
         this.origin = text;
+        this.offset = offset;
+        this.width = width;
     }
 
     @Override
     public String asString() throws IOException {
-        return new FormattedText(
-            "%s...",
-            this.origin.asString()
-        ).asString();
+        return this.origin.asString().substring(this.offset, this.width);
     }
 }
