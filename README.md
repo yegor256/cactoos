@@ -70,8 +70,10 @@ To write a text into a file:
 ```java
 new LengthOfInput(
   new TeeInput(
-    new TextAsInput(
-      new StringAsText("Hello, world!")
+    new BytesAsInput(
+      new TextAsBytes(
+        new StringAsText("Hello, world!")
+      )
     ),
     new FileAsOutput(
       new File("/code/a.txt")
@@ -84,9 +86,7 @@ To read a binary file from classpath:
 
 ```java
 byte[] data = new InputAsBytes(
-  new UrlAsInput(
-    this.getClass().getResource("/foo/img.jpg")
-  )
+  new ResourceAsInput("/foo/img.jpg")
 ).asBytes();
 ```
 
