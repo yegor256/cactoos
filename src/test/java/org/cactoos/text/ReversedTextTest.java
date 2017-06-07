@@ -28,7 +28,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link ReplacedText}.
+ * Test case for {@link ReversedText}.
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
