@@ -40,7 +40,7 @@ import org.junit.Test;
 public final class CollectionAsTextTest {
 
     @Test
-    public void reverseText() {
+    public void collectionAsText() {
         MatcherAssert.assertThat(
             "Can't contruct a text from collection",
             new CollectionAsText(
