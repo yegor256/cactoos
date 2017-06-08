@@ -21,25 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.cactoos.Scalar;
 
 /**
- * Scalar.
+ * Cached version of a Scalar.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
  * @param <T> Type of result
- * @since 0.1
+ * @since 0.3
  */
-public interface Scalar<T> {
+public final class StickyScalar<T> implements Scalar<T> {
 
     /**
-     * Convert it to the value.
-     * @return The value
-     * @throws Exception If fails
+     * The scalar to cache.
      */
-    T asValue() throws Exception;
+    private final Scalar<T> source;
 
+    /**
+     * The list used as a optional value.
+     */
+    private final List<T> cache;
+
+    /**
+     * Ctor.
+     * @param src The Scalar to cache
+     */
+    public StickyScalar(final Scalar<T> src) {
+        this.source = src;
+        this.cache = new ArrayList<>(1);
+    }
+
+    @Override
+    public T asValue() throws Exception {
+        if (this.cache.isEmpty()) {
+            this.cache.add(this.source.asValue());
+        }
+        return this.cache.get(0);
+    }
 }

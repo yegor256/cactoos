@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.util.Arrays;
+import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -58,6 +59,22 @@ public final class ResourceAsInputTest {
                     (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
                 }
             )
+        );
+    }
+
+    @Test
+    public void readAbsentResourceTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't replace an absent resource with a text",
+            new BytesAsText(
+                new InputAsBytes(
+                    new ResourceAsInput(
+                        "foo/this-resource-is-definitely-absent.txt",
+                        "the replacement"
+                    )
+                )
+            ).asString(),
+            Matchers.endsWith("replacement")
         );
     }
 

@@ -46,16 +46,16 @@ public final class UncheckedScalar<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param scalar Encapsulated scalar
+     * @param scr Encapsulated scalar
      */
-    public UncheckedScalar(final Scalar<T> scalar) {
-        this.scalar = scalar;
+    public UncheckedScalar(final Scalar<T> scr) {
+        this.scalar = scr;
     }
 
     @Override
     public T asValue() {
         try {
-            return this.scalar.asValue();
+            return new IoCheckedScalar<>(this.scalar).asValue();
         } catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }

@@ -24,46 +24,39 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.cactoos.Scalar;
 
 /**
- * Cached version of a Scalar.
+ * Scalar that doesn't throw checked {@link Exception}, but throws
+ * {@link IOException} instead.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Tim Hinkes (timmeey@timmeey.de)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <T> Type of result
- * @since 0.3
+ * @since 0.4
  */
-public final class CachedScalar<T> implements Scalar<T> {
+public final class IoCheckedScalar<T> implements Scalar<T> {
 
     /**
-     * The scalar to cache.
+     * Original scalar.
      */
-    private final Scalar<T> source;
-
-    /**
-     * The list used as a optional value.
-     */
-    private final List<T> cache;
+    private final Scalar<T> scalar;
 
     /**
      * Ctor.
-     * @param source The Scalar to cache
+     * @param scalar Encapsulated scalar
      */
-    public CachedScalar(final Scalar<T> source) {
-        this.source = source;
-        this.cache = new ArrayList<>(1);
+    public IoCheckedScalar(final Scalar<T> scalar) {
+        this.scalar = scalar;
     }
 
     @Override
     public T asValue() throws IOException {
-        if (this.cache.isEmpty()) {
-            this.cache.add(this.source.asValue());
-        }
-        return this.cache.get(0);
+        return new IoCheckedFunc<Scalar<T>, T>(
+            Scalar::asValue
+        ).apply(this.scalar);
     }
+
 }
