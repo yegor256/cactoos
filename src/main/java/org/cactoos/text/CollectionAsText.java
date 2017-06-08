@@ -39,7 +39,7 @@ public final class CollectionAsText implements Text {
     /**
      * The source.
      */
-    private final Collection<? extends String> source;
+    private final Collection<String> source;
 
     /**
      * The delimeter.
@@ -51,7 +51,7 @@ public final class CollectionAsText implements Text {
      * @param collection The Collection
      * @param seperator The seperator
      */
-    public CollectionAsText(final Collection<? extends String> collection, final
+    public CollectionAsText(final Collection<String> collection, final
         CharSequence seperator) {
         this.source = collection;
         this.delimeter = seperator;
