@@ -205,6 +205,10 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
 
   - [Yegor Bugayenko](https://github.com/yegor256)
   - [Kirill Che.](https://github.com/g4s8) g4s8.public@gmail.com
+  - [Fabrício Cabral](https://github.com/fabriciofx)
+  - [Andriy Kryvtsun](https://github.com/englishman)
+  - [Vseslav Sekorin](https://github.com/VsSekorin)
+  - [Andrey Valyaev](https://github.com/DronMDF)
 
 ## License (MIT)
 
