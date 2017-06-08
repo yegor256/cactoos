@@ -21,25 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import java.io.IOException;
+import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
- * Scalar.
+ * Proc that doesn't throw checked {@link Exception}, but
+ * throws {@link java.io.IOException} instead.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of result
- * @since 0.1
+ * @param <X> Type of input
+ * @since 0.4
  */
-public interface Scalar<T> {
+public final class IoCheckedProc<X> implements Proc<X> {
 
     /**
-     * Convert it to the value.
-     * @return The value
-     * @throws Exception If fails
+     * Original proc.
      */
-    T asValue() throws Exception;
+    private final Proc<X> proc;
+
+    /**
+     * Ctor.
+     * @param prc Encapsulated func
+     */
+    public IoCheckedProc(final Proc<X> prc) {
+        this.proc = prc;
+    }
+
+    @Override
+    public void exec(final X input) throws IOException {
+        new IoCheckedFunc<>(
+            (Func<X, Boolean>) arg -> {
+                this.proc.exec(arg);
+                return true;
+            }
+        ).apply(input);
+    }
 
 }

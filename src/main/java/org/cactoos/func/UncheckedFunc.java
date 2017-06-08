@@ -23,6 +23,7 @@
  */
 package org.cactoos.func;
 
+import java.io.IOException;
 import org.cactoos.Func;
 
 /**
@@ -52,15 +53,10 @@ public final class UncheckedFunc<X, Y> implements Func<X, Y> {
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Y apply(final X input) {
         try {
-            return this.func.apply(input);
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
+            return new IoCheckedFunc<>(this.func).apply(input);
+        } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
     }

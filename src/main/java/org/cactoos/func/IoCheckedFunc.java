@@ -21,25 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import java.io.IOException;
+import org.cactoos.Func;
 
 /**
- * Scalar.
+ * Func that doesn't throw checked {@link Exception}, but throws
+ * {@link java.io.IOException} instead.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of result
- * @since 0.1
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @since 0.4
  */
-public interface Scalar<T> {
+public final class IoCheckedFunc<X, Y> implements Func<X, Y> {
 
     /**
-     * Convert it to the value.
-     * @return The value
-     * @throws Exception If fails
+     * Original func.
      */
-    T asValue() throws Exception;
+    private final Func<X, Y> func;
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     */
+    public IoCheckedFunc(final Func<X, Y> fnc) {
+        this.func = fnc;
+    }
+
+    @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public Y apply(final X input) throws IOException {
+        try {
+            return this.func.apply(input);
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IOException(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IOException(ex);
+        }
+    }
 
 }

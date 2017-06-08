@@ -26,7 +26,7 @@ package org.cactoos.list;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
-import org.cactoos.func.CachedScalar;
+import org.cactoos.func.StickyScalar;
 import org.cactoos.func.UncheckedScalar;
 import org.cactoos.text.FormattedText;
 
@@ -67,7 +67,7 @@ public final class IterableAsList<T> extends AbstractList<T> {
         this.source = iterable;
         this.cache = new ArrayList<>(0);
         this.length = new UncheckedScalar<>(
-            new CachedScalar<>(
+            new StickyScalar<>(
                 new LengthOfIterable(iterable)
             )
         );

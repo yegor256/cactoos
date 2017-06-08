@@ -25,8 +25,11 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import org.cactoos.Func;
 import org.cactoos.Input;
+import org.cactoos.func.IoCheckedFunc;
 import org.cactoos.text.FormattedText;
+import org.cactoos.text.TextAsBytes;
 
 /**
  * Classpath resource.
@@ -49,43 +52,90 @@ public final class ResourceAsInput implements Input {
     private final String path;
 
     /**
+     * Fallback.
+     */
+    private final Func<String, Input> fallback;
+
+    /**
      * Resource class loader.
      */
     private final ClassLoader loader;
 
     /**
      * New resource input with current context {@link ClassLoader}.
-     *
      * @param res Resource name
      */
     public ResourceAsInput(final String res) {
+        this(res, Thread.currentThread().getContextClassLoader());
+    }
+
+    /**
+     * New resource input with current context {@link ClassLoader}.
+     * @param res Resource name
+     * @param fbk Fallback
+     */
+    public ResourceAsInput(final String res, final String fbk) {
+        this(res, input -> new BytesAsInput(new TextAsBytes(fbk)));
+    }
+
+    /**
+     * New resource input with current context {@link ClassLoader}.
+     * @param res Resource name
+     * @param fbk Fallback
+     */
+    public ResourceAsInput(final String res, final Input fbk) {
+        this(res, input -> fbk);
+    }
+
+    /**
+     * New resource input with current context {@link ClassLoader}.
+     * @param res Resource name
+     * @param fbk Fallback
+     */
+    public ResourceAsInput(final String res, final Func<String, Input> fbk) {
+        this(res, fbk, Thread.currentThread().getContextClassLoader());
+    }
+
+    /**
+     * New resource input with specified {@link ClassLoader}.
+     * @param res Resource name
+     * @param ldr Resource class loader
+     */
+    public ResourceAsInput(final String res, final ClassLoader ldr) {
         this(
             res,
-            Thread.currentThread().getContextClassLoader()
+            input -> {
+                throw new IOException(
+                    new FormattedText(
+                        "Resource '%s' was not found",
+                        input
+                    ).asString()
+                );
+            },
+            ldr
         );
     }
 
     /**
      * New resource input with specified {@link ClassLoader}.
-     *
      * @param res Resource name
      * @param ldr Resource class loader
+     * @param fbk Fallback
      */
-    public ResourceAsInput(final String res, final ClassLoader ldr) {
+    public ResourceAsInput(final String res, final Func<String, Input> fbk,
+        final ClassLoader ldr) {
         this.path = res;
         this.loader = ldr;
+        this.fallback = fbk;
     }
 
     @Override
     public InputStream stream() throws IOException {
-        final InputStream input = this.loader.getResourceAsStream(this.path);
+        InputStream input = this.loader.getResourceAsStream(this.path);
         if (input == null) {
-            throw new IOException(
-                new FormattedText(
-                    "Resource '%s' was not found",
-                    this.path
-                ).asString()
-            );
+            input = new IoCheckedFunc<>(this.fallback)
+                .apply(this.path)
+                .stream();
         }
         return input;
     }
