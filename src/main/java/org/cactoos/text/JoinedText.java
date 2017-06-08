@@ -47,7 +47,7 @@ public final class JoinedText implements Text {
     /**
      * The delimiter.
      */
-    private final String delimiter;
+    private final Text delimiter;
 
     /**
      * Ctor.
@@ -71,13 +71,22 @@ public final class JoinedText implements Text {
      * @param texts Texts to be joined
      */
     public JoinedText(final String delimiter, final Iterable<Text> texts) {
+        this(new StringAsText(delimiter), texts);
+    }
+
+    /**
+     * Ctor.
+     * @param delimiter Delimit among texts
+     * @param texts Texts to be joined
+     */
+    public JoinedText(final Text delimiter, final Iterable<Text> texts) {
         this.delimiter = delimiter;
         this.texts = texts;
     }
 
     @Override
     public String asString() throws IOException {
-        final StringJoiner joint = new StringJoiner(this.delimiter);
+        final StringJoiner joint = new StringJoiner(this.delimiter.asString());
         for (final Text text : this.texts) {
             joint.add(text.asString());
         }
