@@ -24,54 +24,34 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.cactoos.Func;
+import org.cactoos.Proc;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Func that doesn't throw checked {@link Exception}, but throws
- * {@link java.io.IOException} instead.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link IoCheckedProc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
  * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IoCheckedFunc<X, Y> implements Func<X, Y> {
+public final class IoCheckedProcTest {
 
-    /**
-     * Original func.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param fnc Encapsulated func
-     */
-    public IoCheckedFunc(final Func<X, Y> fnc) {
-        this.func = fnc;
-    }
-
-    @Override
-    @SuppressWarnings
-        (
-            {
-                "PMD.AvoidCatchingGenericException",
-                "PMD.AvoidRethrowingException"
-            }
-        )
-    public Y apply(final X input) throws IOException {
+    @Test
+    public void rethrowsCheckedToUncheckedException() {
+        final IOException exception = new IOException("intended");
         try {
-            return this.func.apply(input);
+            new IoCheckedProc<>(
+                (Proc<Integer>) i -> {
+                    throw exception;
+                }
+            ).exec(1);
         } catch (final IOException ex) {
-            throw ex;
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IOException(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IOException(ex);
+            MatcherAssert.assertThat(
+                ex, Matchers.is(exception)
+            );
         }
     }
 
