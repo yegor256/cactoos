@@ -34,7 +34,7 @@ import org.cactoos.Func;
  *
  * <pre> new AllOf(
  *   new IterableAsBooleans&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
+ *     new ArrayAsList<>("hello", "world"),
  *     i -&gt; System.out.println(i)
  *   )
  * ).asValue();</pre>

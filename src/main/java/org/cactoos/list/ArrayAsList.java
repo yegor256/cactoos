@@ -23,52 +23,43 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.func.StickyFunc;
+import java.util.AbstractList;
 
 /**
- * A few Iterables joined together.
+ * Array as list wrapper.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Andriy Kryvtsun (kontiky@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @param <E> Type of items
+ * @since 0.2
  */
-public final class ConcatenatedIterable<T> implements Iterable<T> {
+public final class ArrayAsList<E> extends AbstractList<E> {
 
     /**
-     * Iterables.
+     * Array items.
      */
-    private final Iterable<Iterable<T>> list;
+    private final E[] items;
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     * @param items Items of an array
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public ConcatenatedIterable(final Iterable<T>... items) {
-        this(new ArrayAsList<Iterable<T>>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public ConcatenatedIterable(final Iterable<Iterable<T>> items) {
-        this.list = items;
+    public ArrayAsList(final E... items) {
+        super();
+        this.items = items;
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new ConcatenatedIterator<>(
-            new TransformedIterable<>(
-                this.list,
-                new StickyFunc<>(Iterable::iterator)
-            )
-        );
+    public E get(final int index) {
+        return this.items[index];
     }
 
+    @Override
+    public int size() {
+        return this.items.length;
+    }
 }

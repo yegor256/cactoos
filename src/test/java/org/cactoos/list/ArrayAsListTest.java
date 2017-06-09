@@ -23,52 +23,26 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.func.StickyFunc;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * A few Iterables joined together.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link ArrayAsList}.
+ * @author Andriy Kryvtsun (kontikyt@gmail.com)
  * @version $Id$
- * @param <T> Type of item
  * @since 0.1
  */
-public final class ConcatenatedIterable<T> implements Iterable<T> {
+public final class ArrayAsListTest {
 
     /**
-     * Iterables.
+     * ArrayAsList can consume elements.
      */
-    private final Iterable<Iterable<T>> list;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ConcatenatedIterable(final Iterable<T>... items) {
-        this(new ArrayAsList<Iterable<T>>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public ConcatenatedIterable(final Iterable<Iterable<T>> items) {
-        this.list = items;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new ConcatenatedIterator<>(
-            new TransformedIterable<>(
-                this.list,
-                new StickyFunc<>(Iterable::iterator)
-            )
+    @Test
+    public void createsListFromArray() {
+        MatcherAssert.assertThat(
+            new ArrayAsList<>("one", "two"),
+            Matchers.hasSize(2)
         );
     }
-
 }
