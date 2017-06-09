@@ -54,10 +54,18 @@ public final class IoCheckedFunc<X, Y> implements Func<X, Y> {
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    @SuppressWarnings
+        (
+            {
+                "PMD.AvoidCatchingGenericException",
+                "PMD.AvoidRethrowingException"
+            }
+        )
     public Y apply(final X input) throws IOException {
         try {
             return this.func.apply(input);
+        } catch (final IOException ex) {
+            throw ex;
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
             throw new IOException(ex);
