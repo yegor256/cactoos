@@ -23,63 +23,43 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
+import org.cactoos.ScalarHasValue;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Repeat an element.
+ * Test case for {@link RepeatIterator}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.1
+ * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Repeat<T> implements Iterable<T> {
+public final class RepeatIteratorTest {
 
-    /**
-     * Element to repeat.
-     */
-    private final T element;
-
-    /**
-     * Repeat count.
-     */
-    private final int count;
-
-    /**
-     * Ctor.
-     *
-     * @param element To repeat
-     * @param count Count
-     */
-    public Repeat(final T element, final int count) {
-        this.element = element;
-        this.count = count;
+    @Test
+    public void allSameTest() throws Exception {
+        final int size = 42;
+        final int element = 11;
+        MatcherAssert.assertThat(
+            "Can't generate an iterable with fixed size",
+            new LengthOfIterator(
+                new RepeatIterator<>(
+                    element,
+                    size
+                )
+            ),
+            new ScalarHasValue<>(size)
+        );
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return new RepeatIterator();
-    }
-
-    /**
-     * An iterator.
-     */
-    private final class RepeatIterator implements Iterator<T> {
-
-        /**
-         * Current position.
-         */
-        private int cursor;
-
-        @Override
-        public boolean hasNext() {
-            return this.cursor < Repeat.this.count;
-        }
-
-        @Override
-        public T next() {
-            ++this.cursor;
-            return Repeat.this.element;
-        }
+    @Test
+    public void emptyTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't generate an empty iterator",
+            (Iterable<Integer>) () -> new RepeatIterator<>(0, 0),
+            Matchers.iterableWithSize(0)
+        );
     }
 }

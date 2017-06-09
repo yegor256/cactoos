@@ -23,47 +23,49 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.ScalarHasValue;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import java.util.Iterator;
 
 /**
- * Test case for {@link Repeat}.
+ * Repeat an element.
+ *
+ * <p>If you need to repeat endlessly, use {@link EndlessIterable}.</p>
  *
  * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Element type
+ * @since 0.4
  */
-public final class RepeatTest {
+public final class RepeatIterator<T> implements Iterator<T> {
 
-    @Test
-    public void allSameTest() throws Exception {
-        final int size = 42;
-        final int element = 11;
-        MatcherAssert.assertThat(
-            "Can't generate an iterable with fixed size",
-            new LengthOfIterable(
-                new FilteredIterable<>(
-                    new Repeat<>(
-                        element,
-                        size
-                    ),
-                    input -> input == element
-                )
-            ),
-            new ScalarHasValue<>(size)
-        );
+    /**
+     * The element to repeat.
+     */
+    private final T element;
+
+    /**
+     * How many more repeats will happen.
+     */
+    private int left;
+
+    /**
+     * Ctor.
+     * @param elm Element to repeat
+     * @param max How many times to repeat
+     */
+    public RepeatIterator(final T elm, final int max) {
+        this.element = elm;
+        this.left = max;
     }
 
-    @Test
-    public void emptyTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't generate an empty iterable",
-            new LengthOfIterable(
-                new Repeat<>(0, 0)
-            ),
-            new ScalarHasValue<>(0)
-        );
+    @Override
+    public boolean hasNext() {
+        return this.left > 0;
+    }
+
+    @Override
+    public T next() {
+        --this.left;
+        return this.element;
     }
 }
