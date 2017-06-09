@@ -74,7 +74,7 @@ public final class UrlAsString implements Scalar<String> {
     public UrlAsString(final String url, final Charset encoding) {
         this(new StringAsText(url), encoding);
     }
-    
+
     /**
      * Ctor.
      * @param url The URL as Text
