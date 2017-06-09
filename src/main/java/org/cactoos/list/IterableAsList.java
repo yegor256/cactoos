@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import java.io.IOException;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,14 +77,18 @@ public final class IterableAsList<T> extends AbstractList<T> {
     @Override
     public T get(final int index) {
         if (index < 0 || index >= this.size()) {
-            throw new IndexOutOfBoundsException(
-                new FormattedText(
-                    "index=%d, bounds=[%d; %d]",
-                    index,
-                    0,
-                    this.size()
-                ).asString()
-            );
+            try {
+                throw new IndexOutOfBoundsException(
+                    new FormattedText(
+                        "index=%d, bounds=[%d; %d]",
+                        index,
+                        0,
+                        this.size()
+                    ).asString()
+                );
+            } catch (final IOException exception) {
+                throw new IllegalStateException(exception);
+            }
         }
         return this.cachedItem(index);
     }
