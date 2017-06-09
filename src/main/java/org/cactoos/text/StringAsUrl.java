@@ -23,6 +23,8 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -86,8 +88,15 @@ public final class StringAsUrl implements Scalar<String> {
     }
 
     @Override
-    public String asValue() throws Exception {
-        return URLEncoder.encode(this.source.asString(), this.encoding.name());
+    public String asValue() {
+        try {
+            return URLEncoder.encode(
+                this.source.asString(),
+                this.encoding.name()
+            );
+        } catch (final IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
     }
 
 }
