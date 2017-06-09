@@ -188,6 +188,49 @@ int total = new LengthOfIterable(
 ).asValue();
 ```
 
+## Funcs and Procs
+
+This is a traditional `foreach` loop:
+
+```java
+for (String name : names) {
+  System.out.printf("Hello, %s!\n", name);
+}
+```
+
+This is its object-oriented alternative (no streams!):
+
+```java
+new IterableAsBoolean<>(
+  names,
+  new ProcAsFunc<>(
+    n -> {
+      System.out.printf("Hello, %s!\n", n);
+    }
+  )
+).asValue();
+```
+
+This is an endless `while/do` loop:
+
+```java
+while (!ready) {
+  System.out.prinln("Still waiting...");
+}
+```
+
+Here is its object-oriented alternative:
+
+```java
+new IterableAsBoolean<>(
+  new EndlessIterable<>(ready),
+  r -> {
+    System.out.prinln("Still waiting...");
+    return !ready;
+  }
+).asValue();
+```
+
 ## How to contribute?
 
 Just fork the repo and send us a pull request.
