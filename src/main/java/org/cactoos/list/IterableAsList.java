@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.List;
 import org.cactoos.func.StickyScalar;
 import org.cactoos.func.UncheckedScalar;
@@ -49,11 +48,6 @@ public final class IterableAsList<T> extends AbstractList<T> {
     private final Iterable<T> source;
 
     /**
-     * Cache for source.
-     */
-    private final List<T> cache;
-
-    /**
      * Iterable length.
      */
     private final UncheckedScalar<Integer> length;
@@ -66,7 +60,6 @@ public final class IterableAsList<T> extends AbstractList<T> {
     public IterableAsList(final Iterable<T> iterable) {
         super();
         this.source = iterable;
-        this.cache = new ArrayList<>(0);
         this.length = new UncheckedScalar<>(
             new StickyScalar<>(
                 new LengthOfIterable(iterable)
@@ -76,19 +69,23 @@ public final class IterableAsList<T> extends AbstractList<T> {
 
     @Override
     public T get(final int index) {
-        if (index < 0 || index >= this.size()) {
-            throw new IndexOutOfBoundsException(
-                new UncheckedText(
-                    new FormattedText(
-                        "index=%d, bounds=[%d; %d]",
-                        index,
-                        0,
-                        this.size()
-                    )
-                ).asString()
-            );
+        int position = 0;
+        for (final T elem : this.source) {
+            if (position == index) {
+                return elem;
+            }
+            position += 1;
         }
-        return this.cachedItem(index);
+        throw new IndexOutOfBoundsException(
+            new UncheckedText(
+                new FormattedText(
+                    "index=%d, bounds=[%d; %d]",
+                    index,
+                    0,
+                    this.size()
+                )
+            ).asString()
+        );
     }
 
     @Override
@@ -96,18 +93,4 @@ public final class IterableAsList<T> extends AbstractList<T> {
         return this.length.asValue();
     }
 
-    /**
-     * Find item in cache by index.
-     *
-     * @param index Item index
-     * @return Cached item
-     */
-    private T cachedItem(final int index) {
-        if (this.cache.size() != this.size()) {
-            for (final T item : this.source) {
-                this.cache.add(item);
-            }
-        }
-        return this.cache.get(index);
-    }
 }

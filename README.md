@@ -252,6 +252,7 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [Andriy Kryvtsun](https://github.com/englishman)
   - [Vseslav Sekorin](https://github.com/VsSekorin)
   - [Andrey Valyaev](https://github.com/DronMDF)
+  - [Tim Hinkes](https://github.com/timmeey) [Blog](https://blog.timmeey.de)
 
 ## License (MIT)
 
