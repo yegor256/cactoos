@@ -47,7 +47,7 @@ public final class TextAsFloatTest {
             Matchers.equalTo(1656.894F)
         );
     }
-    
+
     @Test(expected = NumberFormatException.class)
     public void failsIfTextDoesNotRepresentAFloat() throws IOException {
         new TextAsFloat("abc").asValue();

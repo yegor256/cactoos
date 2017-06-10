@@ -47,7 +47,7 @@ public final class TextAsDoubleTest {
             Matchers.equalTo(185.65156465123)
         );
     }
-    
+
     @Test(expected = NumberFormatException.class)
     public void failsIfTextDoesNotRepresentADouble() throws IOException {
         new TextAsDouble("abc").asValue();

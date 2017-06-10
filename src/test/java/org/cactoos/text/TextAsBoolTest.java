@@ -55,7 +55,7 @@ public final class TextAsBoolTest {
             Matchers.equalTo(false)
         );
     }
-    
+
     @Test
     public void isFalseIfTextDoesNotRepresentABoolean() throws IOException {
         MatcherAssert.assertThat(

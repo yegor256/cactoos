@@ -61,7 +61,7 @@ public final class ReplacedTextTest {
             new TextHasString(text)
         );
     }
-    
+
     @Test
     public void replacesAllOccurrences() {
         MatcherAssert.assertThat(
