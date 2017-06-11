@@ -21,35 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.func;
 
 import java.io.IOException;
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TextAsLong}.
+ * Test case for {@link IoCheckedScalar}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TextAsLongTest {
+public final class IoCheckedScalarTest {
 
     @Test
-    public void numberTest() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse long number",
-            new TextAsLong("186789235425346").asValue(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(186789235425346L)
-        );
+    public void rethrowsCheckedToUncheckedException() {
+        final IOException exception = new IOException("intended");
+        try {
+            new IoCheckedScalar<>(
+                (Scalar<Integer>) () -> {
+                    throw exception;
+                }
+            ).asValue();
+        } catch (final IOException ex) {
+            MatcherAssert.assertThat(
+                ex, Matchers.is(exception)
+            );
+        }
     }
 
-    @Test(expected = NumberFormatException.class)
-    public void failsIfTextDoesNotRepresentALong() throws IOException {
-        new TextAsLong("abc").asValue();
-    }
 }

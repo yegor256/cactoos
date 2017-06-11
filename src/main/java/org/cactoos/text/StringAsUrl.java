@@ -21,57 +21,81 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.Func;
+import java.io.UncheckedIOException;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
 
 /**
- * Func that doesn't throw checked {@link Exception}, but throws
- * {@link java.io.IOException} instead.
+ * String as URL.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
  * @since 0.4
  */
-public final class IoCheckedFunc<X, Y> implements Func<X, Y> {
+public final class StringAsUrl implements Scalar<String> {
 
     /**
-     * Original func.
+     * The source.
      */
-    private final Func<X, Y> func;
+    private final Text source;
+
+    /**
+     * The encoding.
+     */
+    private final Charset encoding;
 
     /**
      * Ctor.
-     * @param fnc Encapsulated func
+     * @param url The URL as String
      */
-    public IoCheckedFunc(final Func<X, Y> fnc) {
-        this.func = fnc;
+    public StringAsUrl(final String url) {
+        this(url, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param url The URL as Text
+     */
+    public StringAsUrl(final Text url) {
+        this(url, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param url The URL as String
+     * @param encoding The encoding
+     */
+    public StringAsUrl(final String url, final Charset encoding) {
+        this(new StringAsText(url), encoding);
+    }
+
+    /**
+     * Ctor.
+     * @param url The URL as Text
+     * @param encoding The encoding
+     */
+    public StringAsUrl(final Text url, final Charset encoding) {
+        this.source = url;
+        this.encoding = encoding;
     }
 
     @Override
-    @SuppressWarnings
-        (
-            {
-                "PMD.AvoidCatchingGenericException",
-                "PMD.AvoidRethrowingException"
-            }
-        )
-    public Y apply(final X input) throws IOException {
+    public String asValue() {
         try {
-            return this.func.apply(input);
+            return URLEncoder.encode(
+                this.source.asString(),
+                this.encoding.name()
+            );
         } catch (final IOException ex) {
-            throw ex;
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IOException(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IOException(ex);
+            throw new UncheckedIOException(ex);
         }
     }
 

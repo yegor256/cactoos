@@ -23,33 +23,26 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TextAsLong}.
- *
- * @author Kirill (g4s8.public@gmail.com)
+ * Test case for {@link StringAsUrl}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TextAsLongTest {
+public final class StringAsUrlTest {
 
     @Test
-    public void numberTest() throws IOException {
+    public void encodeStringToUrl() throws Exception {
         MatcherAssert.assertThat(
-            "Can't parse long number",
-            new TextAsLong("186789235425346").asValue(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(186789235425346L)
+            "Can't encode a string as URL",
+            new StringAsUrl("друг").asValue(),
+            Matchers.equalTo("%D0%B4%D1%80%D1%83%D0%B3")
         );
     }
 
-    @Test(expected = NumberFormatException.class)
-    public void failsIfTextDoesNotRepresentALong() throws IOException {
-        new TextAsLong("abc").asValue();
-    }
 }
