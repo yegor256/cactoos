@@ -28,7 +28,9 @@ import java.util.Iterator;
 import org.cactoos.Scalar;
 
 /**
- * First element in {@link Iterable}.
+ * First element in {@link Iterable} or fallback value if iterable is empty.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
@@ -40,23 +42,57 @@ public final class FirstOf<T> implements Scalar<T> {
     /**
      * Source iterable.
      */
-    private final Iterable<T> source;
+    private final Iterable<T> src;
+
+    /**
+     * Fallback value.
+     */
+    private final Scalar<T> fbk;
 
     /**
      * Ctor.
      *
-     * @param source Iterable
+     * @param src Iterable
      */
-    public FirstOf(final Iterable<T> source) {
-        this.source = source;
+    public FirstOf(final Iterable<T> src) {
+        this(
+            src,
+            () -> {
+                throw new IOException("Iterable is empty");
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param src Iterable
+     * @param fbk Fallback value
+     */
+    public FirstOf(final Iterable<T> src, final T fbk) {
+        this(src, () -> fbk);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param src Iterable
+     * @param fbk Fallback value
+     */
+    public FirstOf(final Iterable<T> src, final Scalar<T> fbk) {
+        this.src = src;
+        this.fbk = fbk;
     }
 
     @Override
-    public T asValue() throws IOException {
-        final Iterator<T> iterator = this.source.iterator();
-        if (!iterator.hasNext()) {
-            throw new IOException("Iterable is empty");
+    public T asValue() throws Exception {
+        final Iterator<T> itr = this.src.iterator();
+        final T ret;
+        if (itr.hasNext()) {
+            ret = itr.next();
+        } else {
+            ret = this.fbk.asValue();
         }
-        return iterator.next();
+        return ret;
     }
 }
