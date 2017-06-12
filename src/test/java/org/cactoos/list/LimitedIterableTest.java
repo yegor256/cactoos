@@ -12,6 +12,11 @@ import org.junit.Test;
  */
 public class LimitedIterableTest {
 
+    @Test(expected = IllegalArgumentException.class)
+    public void failsIfGivenLimitIsLessThanZero() {
+       new LimitedIterable<>(new ArrayAsIterable<>(), -1);
+    }
+
     @Test
     public void iteratesOverPrefixOfGivenLength() {
         MatcherAssert.assertThat(
