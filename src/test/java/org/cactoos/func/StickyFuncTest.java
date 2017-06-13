@@ -23,39 +23,31 @@
  */
 package org.cactoos.func;
 
+import java.security.SecureRandom;
 import org.cactoos.Func;
-import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Cached version of a Scalar.
+ * Test case for {@link StickyFunc}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Tim Hinkes (timmeey@timmeey.de)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of result
- * @since 0.3
+ * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyScalar<T> implements Scalar<T> {
+public final class StickyFuncTest {
 
-    /**
-     * Func.
-     */
-    private final Func<Boolean, T> func;
-
-    /**
-     * Ctor.
-     * @param src The Scalar to cache
-     */
-    public StickyScalar(final Scalar<T> src) {
-        this.func = new StickyFunc<>(
-            input -> src.asValue()
+    @Test
+    public void cachesFuncResults() throws Exception {
+        final Func<Boolean, Integer> func = new StickyFunc<>(
+            input -> new SecureRandom().nextInt()
+        );
+        MatcherAssert.assertThat(
+            func.apply(true) + func.apply(true),
+            Matchers.equalTo(func.apply(true) + func.apply(true))
         );
     }
 
-    @Override
-    public T asValue() throws Exception {
-        return this.func.apply(true);
-    }
 }
