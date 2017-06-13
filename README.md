@@ -246,14 +246,14 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
 
 ## Contributors
 
-  - [Yegor Bugayenko](https://github.com/yegor256)
-  - [Kirill Che.](https://github.com/g4s8) g4s8.public@gmail.com
-  - [Fabrício Cabral](https://github.com/fabriciofx)
-  - [Andriy Kryvtsun](https://github.com/englishman)
-  - [Vseslav Sekorin](https://github.com/VsSekorin)
-  - [Andrey Valyaev](https://github.com/DronMDF)
-  - [Dušan Rychnovský](https://github.com/dusan-rychnovsky) [Blog](http://blog.dusanrychnovsky.cz/)
-  - [Tim Hinkes](https://github.com/timmeey) [Blog](https://blog.timmeey.de)
+  - [@yegor256](https://github.com/yegor256) as Yegor Bugayenko (yegor256@gmail.com)
+  - [@g4s8](https://github.com/g4s8) as Kirill Che. (g4s8.public@gmail.com)
+  - [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
+  - [@englishman](https://github.com/englishman) as Andriy Kryvtsun
+  - [@VsSekorin](https://github.com/VsSekorin) as Vseslav Sekorin
+  - [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
+  - [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
+  - [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
 
 
 ## License (MIT)
