@@ -37,14 +37,17 @@ import java.io.OutputStream;
  * @since 0.1
  */
 public final class TeeInputStream extends InputStream {
+
     /**
      * Input.
      */
     private final InputStream input;
+
     /**
      * Output.
      */
     private final OutputStream output;
+
     /**
      * Ctor.
      * @param src Source of data
