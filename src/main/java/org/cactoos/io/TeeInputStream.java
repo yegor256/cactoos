@@ -59,7 +59,9 @@ public final class TeeInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         final int data = this.input.read();
-        this.output.write(data);
+        if (data >= 0) {
+            this.output.write(data);
+        }
         return data;
     }
 
