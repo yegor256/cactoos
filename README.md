@@ -246,7 +246,7 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
 
 ## Contributors
 
-  - [@yegor256](https://github.com/yegor256) as Yegor Bugayenko (yegor256@gmail.com)
+  - [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](http://www.yegor256.com))
   - [@g4s8](https://github.com/g4s8) as Kirill Che. (g4s8.public@gmail.com)
   - [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
   - [@englishman](https://github.com/englishman) as Andriy Kryvtsun
