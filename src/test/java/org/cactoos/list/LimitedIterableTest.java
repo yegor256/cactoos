@@ -10,12 +10,7 @@ import org.junit.Test;
  * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @since 0.4
  */
-public class LimitedIterableTest {
-
-    @Test(expected = IllegalArgumentException.class)
-    public void failsIfGivenLimitIsLessThanZero() {
-       new LimitedIterable<>(new ArrayAsIterable<>(), -1);
-    }
+public final class LimitedIterableTest {
 
     @Test
     public void iteratesOverPrefixOfGivenLength() {
@@ -48,6 +43,18 @@ public class LimitedIterableTest {
             new LimitedIterable<>(
                 new ArrayAsIterable<>(0, 1, 2, 3, 4),
                 0
+            ),
+            Matchers.iterableWithSize(0)
+        );
+    }
+
+    @Test
+    public void negativeLimitProducesEmptyIterable() {
+        MatcherAssert.assertThat(
+            "Can't limit an iterable to negative number of items",
+            new LimitedIterable<>(
+                new ArrayAsIterable<>(0, 1, 2, 3, 4),
+                -1
             ),
             Matchers.iterableWithSize(0)
         );

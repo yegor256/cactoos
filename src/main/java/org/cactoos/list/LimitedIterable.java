@@ -8,33 +8,30 @@ import java.util.Iterator;
  * <p>This is a view of an existing iterable containing the given number of its
  * first elements.</p>
  *
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @param <T> Element type
  * @since 0.4
  */
-public class LimitedIterable<T> implements Iterable<T> {
+public final class LimitedIterable<T> implements Iterable<T> {
   
     private final Iterable<T> iterable;
-    private final int limitSize;
+    private final int limit;
 
     /**
      * Ctor.
      *
      * @param iterable the underlying iterable
-     * @param limitSize the requested number of elements
+     * @param limit the requested number of elements
      */
-    public LimitedIterable(Iterable<T> iterable, int limitSize) {
-        if (limitSize < 0) {
-            throw new IllegalArgumentException(
-                "Expected limitSize >= 0, got [" + limitSize + "]."
-            );
-        }
+    public LimitedIterable(Iterable<T> iterable, int limit) {
         this.iterable = iterable;
-        this.limitSize = limitSize;
+        this.limit = limit;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new LimitedIterator<>(iterable.iterator(), limitSize);
+        return new LimitedIterator<>(iterable.iterator(), limit);
     }
 }
