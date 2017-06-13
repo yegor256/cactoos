@@ -52,8 +52,8 @@ public final class LimitedIterable<T> implements Iterable<T> {
     /**
      * Ctor.
      *
-     * @param iterable the underlying iterable
-     * @param limit the requested number of elements
+     * @param iterable The underlying iterable
+     * @param limit The requested number of elements
      */
     public LimitedIterable(final Iterable<T> iterable, final int limit) {
         this.iterable = iterable;

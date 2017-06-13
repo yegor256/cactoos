@@ -40,17 +40,17 @@ import java.util.NoSuchElementException;
  * @since 0.4
  */
 public final class LimitedIterator<T> implements Iterator<T> {
-  
+
     /**
      * Decorated iterator.
      */
     private final Iterator<T> iterator;
-  
+
     /**
      * Number of elements to return.
-      */
+     */
     private final int limit;
-  
+
     /**
      * Number of elements returned so far.
      */
@@ -59,10 +59,10 @@ public final class LimitedIterator<T> implements Iterator<T> {
     /**
      * Ctor.
      *
-     * @param iterator the underlying iterator
-     * @param limit the requested number of elements
+     * @param iterator The underlying iterator
+     * @param limit The requested number of elements
      */
-    public LimitedIterator(Iterator<T> iterator, int limit) {
+    public LimitedIterator(final Iterator<T> iterator, final int limit) {
         this.iterator = iterator;
         this.limit = limit;
         this.consumed = 0;
@@ -75,7 +75,7 @@ public final class LimitedIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        if (!hasNext()) {
+        if (!this.hasNext()) {
             throw new NoSuchElementException("No more elements.");
         }
         ++this.consumed;
