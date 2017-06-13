@@ -53,7 +53,7 @@ Java version required: 1.8+.
 
 ## Input/Output
 
-To read a file:
+To read a text file in UTF-8:
 
 ```java
 String text = new BytesAsText(
@@ -86,7 +86,7 @@ To read a binary file from classpath:
 
 ```java
 byte[] data = new InputAsBytes(
-  new ResourceAsInput("/foo/img.jpg")
+  new ResourceAsInput("foo/img.jpg")
 ).asBytes();
 ```
 
