@@ -21,12 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.list;
+
+import java.util.AbstractMap;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Maps, tests.
+ * Test case for {@link IterableAsMap}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-package org.cactoos.map;
+public final class IterableAsMapTest {
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void convertsIterableToMap() {
+        MatcherAssert.assertThat(
+            "Can't convert iterable to map",
+            new IterableAsMap<>(
+                new AbstractMap.SimpleEntry<>(0, "hello, "),
+                new AbstractMap.SimpleEntry<>(1, "world!")
+            ),
+            Matchers.hasEntry(
+                Matchers.equalTo(0),
+                Matchers.startsWith("hello")
+            )
+        );
+    }
+}

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.map;
+package org.cactoos.list;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.Set;
 import org.cactoos.func.StickyScalar;
 import org.cactoos.func.UncheckedScalar;
-import org.cactoos.list.ArrayAsIterable;
 
 /**
  * Iterable as {@link Map}.
