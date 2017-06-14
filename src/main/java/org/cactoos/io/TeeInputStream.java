@@ -37,14 +37,17 @@ import java.io.OutputStream;
  * @since 0.1
  */
 public final class TeeInputStream extends InputStream {
+
     /**
      * Input.
      */
     private final InputStream input;
+
     /**
      * Output.
      */
     private final OutputStream output;
+
     /**
      * Ctor.
      * @param src Source of data
@@ -59,7 +62,9 @@ public final class TeeInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         final int data = this.input.read();
-        this.output.write(data);
+        if (data >= 0) {
+            this.output.write(data);
+        }
         return data;
     }
 

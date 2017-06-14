@@ -71,11 +71,11 @@ public final class InputAsBytes implements Bytes {
 
     @Override
     public byte[] asBytes() throws IOException {
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final InputStream stream = new TeeInput(
                 this.source,
                 new OutputStreamAsOutput(baos)
-            ).stream();
+            ).stream()) {
             final byte[] buf = new byte[this.size];
             while (true) {
                 if (stream.read(buf) != buf.length) {

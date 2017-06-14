@@ -21,41 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.list;
 
-import org.cactoos.Func;
-import org.cactoos.Scalar;
+import java.util.AbstractMap;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Cached version of a Scalar.
+ * Test case for {@link IterableAsMap}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Tim Hinkes (timmeey@timmeey.de)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of result
- * @since 0.3
+ * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyScalar<T> implements Scalar<T> {
+public final class IterableAsMapTest {
 
-    /**
-     * Func.
-     */
-    private final Func<Boolean, T> func;
-
-    /**
-     * Ctor.
-     * @param src The Scalar to cache
-     */
-    public StickyScalar(final Scalar<T> src) {
-        this.func = new StickyFunc<>(
-            input -> src.asValue()
+    @Test
+    @SuppressWarnings("unchecked")
+    public void convertsIterableToMap() {
+        MatcherAssert.assertThat(
+            "Can't convert iterable to map",
+            new IterableAsMap<>(
+                new AbstractMap.SimpleEntry<>(0, "hello, "),
+                new AbstractMap.SimpleEntry<>(1, "world!")
+            ),
+            Matchers.hasEntry(
+                Matchers.equalTo(0),
+                Matchers.startsWith("hello")
+            )
         );
-    }
-
-    @Override
-    public T asValue() throws Exception {
-        return this.func.apply(true);
     }
 }
