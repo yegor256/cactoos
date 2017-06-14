@@ -31,6 +31,7 @@ import org.junit.Test;
  * Test case for {@link LimitedIterable}.
  *
  * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
+ * @version $Id$
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
