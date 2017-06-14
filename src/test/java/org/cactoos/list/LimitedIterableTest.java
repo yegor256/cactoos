@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class LimitedIterableTest {

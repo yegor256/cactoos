@@ -36,7 +36,7 @@ import java.util.Iterator;
  * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @param <T> Element type
  * @version $Id$
- * @since 0.4
+ * @since 0.6
  */
 public final class LimitedIterable<T> implements Iterable<T> {
 

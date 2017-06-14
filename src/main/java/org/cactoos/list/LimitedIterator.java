@@ -38,7 +38,7 @@ import java.util.NoSuchElementException;
  * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @param <T> Element type
  * @version $Id$
- * @since 0.4
+ * @since 0.6
  */
 public final class LimitedIterator<T> implements Iterator<T> {
 
