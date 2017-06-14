@@ -23,7 +23,6 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.Func;
 import org.cactoos.Proc;
 
 /**
@@ -53,12 +52,7 @@ public final class UncheckedProc<X> implements Proc<X> {
 
     @Override
     public void exec(final X input) {
-        new UncheckedFunc<>(
-            (Func<X, Boolean>) arg -> {
-                this.proc.exec(arg);
-                return true;
-            }
-        ).apply(input);
+        new UncheckedFunc<>(new ProcAsFunc<>(this.proc)).apply(input);
     }
 
 }

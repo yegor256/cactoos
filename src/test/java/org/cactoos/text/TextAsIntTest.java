@@ -47,4 +47,9 @@ public final class TextAsIntTest {
             Matchers.equalTo(1867892354)
         );
     }
+
+    @Test(expected = NumberFormatException.class)
+    public void failsIfTextDoesNotRepresentAnInt() throws IOException {
+        new TextAsDouble("abc").asValue();
+    }
 }

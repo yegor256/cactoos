@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import org.cactoos.Func;
 
 /**
@@ -57,7 +58,7 @@ public final class UncheckedFunc<X, Y> implements Func<X, Y> {
         try {
             return new IoCheckedFunc<>(this.func).apply(input);
         } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
+            throw new UncheckedIOException(ex);
         }
     }
 

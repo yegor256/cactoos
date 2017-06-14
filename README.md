@@ -53,7 +53,7 @@ Java version required: 1.8+.
 
 ## Input/Output
 
-To read a file:
+To read a text file in UTF-8:
 
 ```java
 String text = new BytesAsText(
@@ -86,7 +86,7 @@ To read a binary file from classpath:
 
 ```java
 byte[] data = new InputAsBytes(
-  new ResourceAsInput("/foo/img.jpg")
+  new ResourceAsInput("foo/img.jpg")
 ).asBytes();
 ```
 
@@ -145,12 +145,11 @@ To iterate a collection:
 new AllOf(
   new TransformedIterable<>(
     new ArrayAsIterable<>("how", "are", "you"),
-    new Func.Quiet<String>() {
-      @Override
-      public void exec(final String input) throws Exception {
+    new ProcAsFunc<>(
+      input -> {
         System.out.printf("Item: %s\n", input);
       }
-    }
+    )
   )
 ).asValue();
 ```
@@ -160,7 +159,9 @@ Or even more compact:
 ```java
 new IterableAsBoolean(
   new ArrayAsIterable<>("how", "are", "you"),
-  (Func.Quiet<String>) i -> System.out.printf("Item: %s\n", i)
+  new ProcAsFunc<>(
+    input -> System.out.printf("Item: %s\n", i)
+  )
 ).asValue();
 ```
 
@@ -246,12 +247,15 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
 
 ## Contributors
 
-  - [Yegor Bugayenko](https://github.com/yegor256)
-  - [Kirill Che.](https://github.com/g4s8) g4s8.public@gmail.com
-  - [Fabrício Cabral](https://github.com/fabriciofx)
-  - [Andriy Kryvtsun](https://github.com/englishman)
-  - [Vseslav Sekorin](https://github.com/VsSekorin)
-  - [Andrey Valyaev](https://github.com/DronMDF)
+  - [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](http://www.yegor256.com))
+  - [@g4s8](https://github.com/g4s8) as Kirill Che. (g4s8.public@gmail.com)
+  - [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
+  - [@englishman](https://github.com/englishman) as Andriy Kryvtsun
+  - [@VsSekorin](https://github.com/VsSekorin) as Vseslav Sekorin
+  - [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
+  - [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
+  - [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
+
 
 ## License (MIT)
 

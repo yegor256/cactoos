@@ -21,69 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
-import org.cactoos.func.IoCheckedScalar;
+import java.security.SecureRandom;
+import org.cactoos.Func;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * URL as Input.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link StickyFunc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class UrlAsInput implements Input {
+public final class StickyFuncTest {
 
-    /**
-     * The URL.
-     */
-    private final Scalar<URL> source;
-
-    /**
-     * Ctor.
-     * @param url The URL
-     * @since 0.6
-     */
-    public UrlAsInput(final String url) {
-        this(() -> new URL(url));
-    }
-
-    /**
-     * Ctor.
-     * @param url The URL
-     * @since 0.6
-     */
-    public UrlAsInput(final URI url) {
-        this(url::toURL);
-    }
-
-    /**
-     * Ctor.
-     * @param url The URL
-     */
-    public UrlAsInput(final URL url) {
-        this(() -> url);
-    }
-
-    /**
-     * Ctor.
-     * @param src Source
-     */
-    public UrlAsInput(final Scalar<URL> src) {
-        this.source = src;
-    }
-
-    @Override
-    public InputStream stream() throws IOException {
-        return new IoCheckedScalar<>(this.source).asValue().openStream();
+    @Test
+    public void cachesFuncResults() throws Exception {
+        final Func<Boolean, Integer> func = new StickyFunc<>(
+            input -> new SecureRandom().nextInt()
+        );
+        MatcherAssert.assertThat(
+            func.apply(true) + func.apply(true),
+            Matchers.equalTo(func.apply(true) + func.apply(true))
+        );
     }
 
 }

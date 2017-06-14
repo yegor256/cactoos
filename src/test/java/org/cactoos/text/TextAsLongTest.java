@@ -47,4 +47,9 @@ public final class TextAsLongTest {
             Matchers.equalTo(186789235425346L)
         );
     }
+
+    @Test(expected = NumberFormatException.class)
+    public void failsIfTextDoesNotRepresentALong() throws IOException {
+        new TextAsLong("abc").asValue();
+    }
 }

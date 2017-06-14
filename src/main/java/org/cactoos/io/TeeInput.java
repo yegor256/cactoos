@@ -23,8 +23,10 @@
  */
 package org.cactoos.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import org.cactoos.Input;
 import org.cactoos.Output;
 
@@ -48,6 +50,86 @@ public final class TeeInput implements Input {
      * The destination.
      */
     private final Output target;
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The output file
+     * @since 0.5
+     */
+    public TeeInput(final Path input, final Path output) {
+        this(new PathAsInput(input), new PathAsOutput(output));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The output file
+     * @since 0.5
+     */
+    public TeeInput(final Path input, final File output) {
+        this(new PathAsInput(input), new FileAsOutput(output));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The output file
+     * @since 0.5
+     */
+    public TeeInput(final File input, final File output) {
+        this(new FileAsInput(input), new FileAsOutput(output));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The output file
+     * @since 0.5
+     */
+    public TeeInput(final File input, final Path output) {
+        this(new FileAsInput(input), new PathAsOutput(output));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @since 0.5
+     */
+    public TeeInput(final String input, final File file) {
+        this(new BytesAsInput(input), new FileAsOutput(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @since 0.5
+     */
+    public TeeInput(final String input, final Path file) {
+        this(new BytesAsInput(input), new PathAsOutput(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @since 0.5
+     */
+    public TeeInput(final byte[] input, final Path file) {
+        this(new BytesAsInput(input), new PathAsOutput(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The target
+     * @since 0.5
+     */
+    public TeeInput(final String input, final Output output) {
+        this(new BytesAsInput(input), output);
+    }
 
     /**
      * Ctor.

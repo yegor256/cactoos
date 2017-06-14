@@ -23,57 +23,59 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import org.cactoos.TextHasString;
-import org.cactoos.text.BytesAsText;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.takes.http.FtRemote;
-import org.takes.tk.TkHtml;
 
 /**
- * Test case for {@link UrlAsInput}.
+ * Test case for {@link TeeInputStream}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class UrlAsInputTest {
+public final class TeeInputStreamTest {
 
     @Test
-    public void readsFileContent() throws IOException {
+    public void copiesContentByteByByte() throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final String content = "Hello, товарищ!";
         MatcherAssert.assertThat(
-            "Can't read bytes from a file-system URL",
-            new InputAsBytes(
-                new UrlAsInput(
-                    this.getClass().getResource(
-                        "/org/cactoos/io/UrlAsInput.class"
-                    )
+            "Can't copy InputStream to OutputStream byte by byte",
+            TeeInputStreamTest.asString(
+                new TeeInputStream(
+                    new ByteArrayInputStream(
+                        content.getBytes(StandardCharsets.UTF_8)
+                    ),
+                    baos
                 )
-            ).asBytes().length,
-            Matchers.greaterThan(0)
-        );
-    }
-
-    @Test
-    public void readsRealUrl() throws IOException {
-        new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
-            home -> MatcherAssert.assertThat(
-                "Can't fetch bytes from the URL",
-                new BytesAsText(
-                    new InputAsBytes(
-                        new UrlAsInput(home)
-                    )
-                ),
-                new TextHasString(
-                    Matchers.allOf(
-                        Matchers.startsWith("<html"),
-                        Matchers.endsWith("html>")
-                    )
+            ),
+            Matchers.allOf(
+                Matchers.equalTo(content),
+                Matchers.equalTo(
+                    new String(baos.toByteArray(), StandardCharsets.UTF_8)
                 )
             )
         );
+    }
+
+    private static String asString(final InputStream input) throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        while (true) {
+            final int data = input.read();
+            if (data < 0) {
+                break;
+            }
+            baos.write(data);
+        }
+        input.close();
+        return new String(baos.toByteArray(), StandardCharsets.UTF_8);
     }
 
 }

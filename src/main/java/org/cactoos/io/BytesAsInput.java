@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
+import org.cactoos.text.ArrayAsBytes;
 import org.cactoos.text.TextAsBytes;
 
 /**
@@ -53,6 +54,14 @@ public final class BytesAsInput implements Input {
      */
     public BytesAsInput(final String text) {
         this(new TextAsBytes(text));
+    }
+
+    /**
+     * Ctor.
+     * @param bytes The bytes
+     */
+    public BytesAsInput(final byte[] bytes) {
+        this(new ArrayAsBytes(bytes));
     }
 
     /**

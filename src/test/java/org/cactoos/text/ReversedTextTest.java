@@ -48,4 +48,14 @@ public final class ReversedTextTest {
         );
     }
 
+    @Test
+    public void reversedEmptyTextIsEmptyText() {
+        MatcherAssert.assertThat(
+            "Can't reverse empty text",
+            new ReversedText(
+                new StringAsText("")
+            ),
+            new TextHasString("")
+        );
+    }
 }
