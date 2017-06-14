@@ -71,7 +71,7 @@ public final class LimitedIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return (this.consumed < this.limit) && this.iterator.hasNext();
+        return this.consumed < this.limit && this.iterator.hasNext();
     }
 
     @Override
