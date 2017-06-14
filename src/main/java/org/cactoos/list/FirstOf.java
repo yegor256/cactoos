@@ -25,7 +25,9 @@ package org.cactoos.list;
 
 import java.io.IOException;
 import java.util.Iterator;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.text.FormattedText;
 
 /**
  * First element in {@link Iterable} or fallback value if iterable is empty.
@@ -47,7 +49,7 @@ public final class FirstOf<T> implements Scalar<T> {
     /**
      * Fallback value.
      */
-    private final Scalar<T> fbk;
+    private final Func<Iterable<T>, T> fbk;
 
     /**
      * Ctor.
@@ -57,8 +59,11 @@ public final class FirstOf<T> implements Scalar<T> {
     public FirstOf(final Iterable<T> src) {
         this(
             src,
-            () -> {
-                throw new IOException("Iterable is empty");
+            itr -> {
+                throw new IOException(
+                    new FormattedText("Iterable %s is empty", itr)
+                        .asString()
+                );
             }
         );
     }
@@ -70,7 +75,7 @@ public final class FirstOf<T> implements Scalar<T> {
      * @param fbk Fallback value
      */
     public FirstOf(final Iterable<T> src, final T fbk) {
-        this(src, () -> fbk);
+        this(src, itr -> fbk);
     }
 
     /**
@@ -79,7 +84,7 @@ public final class FirstOf<T> implements Scalar<T> {
      * @param src Iterable
      * @param fbk Fallback value
      */
-    public FirstOf(final Iterable<T> src, final Scalar<T> fbk) {
+    public FirstOf(final Iterable<T> src, final Func<Iterable<T>, T> fbk) {
         this.src = src;
         this.fbk = fbk;
     }
@@ -91,7 +96,7 @@ public final class FirstOf<T> implements Scalar<T> {
         if (itr.hasNext()) {
             ret = itr.next();
         } else {
-            ret = this.fbk.asValue();
+            ret = this.fbk.apply(this.src);
         }
         return ret;
     }
