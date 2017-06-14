@@ -63,9 +63,7 @@ public final class UrlAsInputTest {
                 "Can't fetch bytes from the URL",
                 new BytesAsText(
                     new InputAsBytes(
-                        new UrlAsInput(
-                            home.toURL()
-                        )
+                        new UrlAsInput(home)
                     )
                 ),
                 new TextHasString(
