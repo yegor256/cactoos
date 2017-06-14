@@ -107,7 +107,7 @@ public final class ResourceAsInput implements Input {
             input -> {
                 throw new IOException(
                     new FormattedText(
-                        "Resource '%s' was not found",
+                        "Resource \"%s\" was not found",
                         input
                     ).asString()
                 );

@@ -46,7 +46,7 @@ public final class ResourceAsInputTest {
             Arrays.copyOfRange(
                 new InputAsBytes(
                     new ResourceAsInput(
-                        "/org/cactoos/io/ResourceAsInputTest.class"
+                        "org/cactoos/io/ResourceAsInputTest.class"
                     )
                 ).asBytes(),
                 // @checkstyle MagicNumber (2 lines)
