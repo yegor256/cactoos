@@ -32,7 +32,7 @@ import org.cactoos.text.StringAsText;
  * Iterable as {@link Text}.
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.6
  */
 public final class IterableAsText implements Text {
 

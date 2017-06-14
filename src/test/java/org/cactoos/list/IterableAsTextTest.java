@@ -33,7 +33,7 @@ import org.junit.Test;
  * Test Case for {@link IteratorAsText}.
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.6
  */
 public final class IterableAsTextTest {
 

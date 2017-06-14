@@ -33,7 +33,7 @@ import org.cactoos.text.StringAsText;
  * Iterator as {@link Text}.
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.5
+ * @since 0.6
  */
 public final class IteratorAsText implements Text {
 
