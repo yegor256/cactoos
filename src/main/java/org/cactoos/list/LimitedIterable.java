@@ -34,8 +34,8 @@ import java.util.Iterator;
  * <p>There is no thread-safety guarantee.</p>
  *
  * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
- * @param <T> Element type
  * @version $Id$
+ * @param <T> Element type
  * @since 0.6
  */
 public final class LimitedIterable<T> implements Iterable<T> {
