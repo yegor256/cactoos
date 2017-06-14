@@ -40,13 +40,13 @@ import org.junit.Test;
 public final class ResourceAsInputTest {
 
     @Test
-    public void readResourceTest() throws Exception {
+    public void readsBinaryResource() throws Exception {
         MatcherAssert.assertThat(
             "Can't read bytes from a classpath resource",
             Arrays.copyOfRange(
                 new InputAsBytes(
                     new ResourceAsInput(
-                        "org/cactoos/io/ResourceAsInputTest.class"
+                        "/org/cactoos/io/ResourceAsInputTest.class"
                     )
                 ).asBytes(),
                 // @checkstyle MagicNumber (2 lines)
@@ -59,6 +59,21 @@ public final class ResourceAsInputTest {
                     (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
                 }
             )
+        );
+    }
+
+    @Test
+    public void readsTextResource() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't read a text resource from classpath",
+            new BytesAsText(
+                new InputAsBytes(
+                    new ResourceAsInput(
+                        "org/cactoos/large-text.txt"
+                    )
+                )
+            ).asString(),
+            Matchers.endsWith("est laborum.\n")
         );
     }
 
