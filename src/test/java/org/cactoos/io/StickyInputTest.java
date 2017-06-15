@@ -50,9 +50,9 @@ public final class StickyInputTest {
                 new RepeatedFunc<>(
                     input -> new InputAsBytes(
                         new TeeInput(input, new DeadOutput())
-                    // @checkstyle MagicNumber (1 line)
+                    // @checkstyle MagicNumber (2 lines)
                     ).asBytes().length == 73471,
-                    2
+                    10
                 )
             )
         );

@@ -57,10 +57,7 @@ public final class StickyInput implements Input {
             () -> {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new LengthOfInput(
-                    new TeeInput(
-                        input,
-                        new OutputStreamAsOutput(baos)
-                    )
+                    new TeeInput(input, new OutputStreamAsOutput(baos))
                 ).asValue();
                 return baos.toByteArray();
             }
