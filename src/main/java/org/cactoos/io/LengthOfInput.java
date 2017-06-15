@@ -70,19 +70,20 @@ public final class LengthOfInput implements Scalar<Long> {
 
     @Override
     public Long asValue() throws IOException {
-        final InputStream stream = this.source.stream();
-        final byte[] buf = new byte[this.size];
-        long length = 0L;
-        while (true) {
-            final int len = stream.read(buf);
-            if (len > 0) {
-                length += (long) len;
+        try (final InputStream stream = this.source.stream()) {
+            final byte[] buf = new byte[this.size];
+            long length = 0L;
+            while (true) {
+                final int len = stream.read(buf);
+                if (len > 0) {
+                    length += (long) len;
+                }
+                if (len < 0) {
+                    break;
+                }
             }
-            if (len != buf.length) {
-                break;
-            }
+            return length;
         }
-        return length;
     }
 
 }

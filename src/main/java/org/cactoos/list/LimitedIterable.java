@@ -21,69 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.list;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
-import org.cactoos.func.IoCheckedScalar;
+import java.util.Iterator;
 
 /**
- * URL as Input.
+ * Limited iterable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>This is a view of an existing iterable containing the given number of its
+ * first elements.</p>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @param <T> Element type
+ * @since 0.6
  */
-public final class UrlAsInput implements Input {
+public final class LimitedIterable<T> implements Iterable<T> {
 
     /**
-     * The URL.
+     * Decorated iterable.
      */
-    private final Scalar<URL> source;
+    private final Iterable<T> iterable;
 
     /**
-     * Ctor.
-     * @param url The URL
-     * @since 0.6
+     * Number of elements to return.
      */
-    public UrlAsInput(final String url) {
-        this(() -> new URL(url));
-    }
+    private final int limit;
 
     /**
      * Ctor.
-     * @param url The URL
-     * @since 0.6
+     *
+     * @param iterable The underlying iterable
+     * @param limit The requested number of elements
      */
-    public UrlAsInput(final URI url) {
-        this(url::toURL);
-    }
-
-    /**
-     * Ctor.
-     * @param url The URL
-     */
-    public UrlAsInput(final URL url) {
-        this(() -> url);
-    }
-
-    /**
-     * Ctor.
-     * @param src Source
-     */
-    public UrlAsInput(final Scalar<URL> src) {
-        this.source = src;
+    public LimitedIterable(final Iterable<T> iterable, final int limit) {
+        this.iterable = iterable;
+        this.limit = limit;
     }
 
     @Override
-    public InputStream stream() throws IOException {
-        return new IoCheckedScalar<>(this.source).asValue().openStream();
+    public Iterator<T> iterator() {
+        return new LimitedIterator<>(this.iterable.iterator(), this.limit);
     }
-
 }

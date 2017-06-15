@@ -30,51 +30,46 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FuncWithCallback}.
+ * Test case for {@link RunnableWithFallback}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncWithCallbackTest {
+public final class RunnableWithFallbackTest {
 
     @Test
     public void usesMainFunc() throws Exception {
         MatcherAssert.assertThat(
             "Can't use the main function if no exception",
-            new FuncWithCallback<>(
-                input -> "It's success",
-                ex -> "In case of failure..."
+            new RunnableAsFunc<>(
+                new RunnableWithFallback(
+                    () -> {
+                    },
+                    input -> {
+                        throw new IOException(input);
+                    }
+                )
             ),
-            new FuncApplies<>(1, Matchers.containsString("success"))
+            new FuncApplies<>(true, Matchers.nullValue())
         );
     }
 
     @Test
-    public void usesCallback() throws Exception {
+    public void usesFallback() throws Exception {
         MatcherAssert.assertThat(
-            "Can't use the callback in case of exception",
-            new FuncWithCallback<>(
-                input -> {
-                    throw new IOException("Failure");
-                },
-                ex -> "Never mind"
+            "Can't use the fallback function if there is exception",
+            new RunnableAsFunc<>(
+                new RunnableWithFallback(
+                    () -> {
+                        throw new IllegalStateException("intended");
+                    },
+                    input -> {
+                    }
+                )
             ),
-            new FuncApplies<>(1, Matchers.containsString("Never"))
-        );
-    }
-
-    @Test
-    public void usesFollowUp() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't use the follow-up func",
-            new FuncWithCallback<>(
-                input -> "works fine",
-                ex -> "won't happen",
-                input -> "follow up"
-            ),
-            new FuncApplies<>(1, Matchers.containsString("follow"))
+            new FuncApplies<>(true, Matchers.nullValue())
         );
     }
 

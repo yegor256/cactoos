@@ -21,69 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
-import org.cactoos.func.IoCheckedScalar;
+import org.cactoos.Func;
 
 /**
- * URL as Input.
- *
- * <p>There is no thread-safety guarantee.
+ * Func that repeats its calculation a few times before
+ * returning the last result.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @since 0.6
  */
-public final class UrlAsInput implements Input {
+public final class RepeatedFunc<X, Y> implements Func<X, Y> {
 
     /**
-     * The URL.
+     * Original func.
      */
-    private final Scalar<URL> source;
+    private final Func<X, Y> func;
 
     /**
-     * Ctor.
-     * @param url The URL
-     * @since 0.6
+     * How many times to run.
      */
-    public UrlAsInput(final String url) {
-        this(() -> new URL(url));
-    }
+    private final int times;
 
     /**
      * Ctor.
-     * @param url The URL
-     * @since 0.6
+     *
+     * <p>If {@code max} is equal or less than zero {@link #apply(Object)}
+     * will return {@code null}.</p>
+     *
+     * @param fnc Func original
+     * @param max How many times
      */
-    public UrlAsInput(final URI url) {
-        this(url::toURL);
-    }
-
-    /**
-     * Ctor.
-     * @param url The URL
-     */
-    public UrlAsInput(final URL url) {
-        this(() -> url);
-    }
-
-    /**
-     * Ctor.
-     * @param src Source
-     */
-    public UrlAsInput(final Scalar<URL> src) {
-        this.source = src;
+    public RepeatedFunc(final Func<X, Y> fnc, final int max) {
+        this.func = fnc;
+        this.times = max;
     }
 
     @Override
-    public InputStream stream() throws IOException {
-        return new IoCheckedScalar<>(this.source).asValue().openStream();
+    public Y apply(final X input) throws Exception {
+        Y result = null;
+        for (int idx = 0; idx < this.times; ++idx) {
+            result = this.func.apply(input);
+        }
+        return result;
     }
 
 }

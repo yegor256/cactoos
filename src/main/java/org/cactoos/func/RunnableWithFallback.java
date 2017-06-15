@@ -21,69 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
-import org.cactoos.func.IoCheckedScalar;
+import org.cactoos.Proc;
 
 /**
- * URL as Input.
+ * Runnable with a fallback plan.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.6
  */
-public final class UrlAsInput implements Input {
+public final class RunnableWithFallback implements Runnable {
 
     /**
-     * The URL.
+     * The runnable.
      */
-    private final Scalar<URL> source;
+    private final Runnable runnable;
 
     /**
-     * Ctor.
-     * @param url The URL
-     * @since 0.6
+     * The fallback.
      */
-    public UrlAsInput(final String url) {
-        this(() -> new URL(url));
-    }
+    private final Proc<Throwable> fallback;
 
     /**
      * Ctor.
-     * @param url The URL
-     * @since 0.6
+     * @param rnb Runnable
+     * @param fbk The fallback
      */
-    public UrlAsInput(final URI url) {
-        this(url::toURL);
-    }
-
-    /**
-     * Ctor.
-     * @param url The URL
-     */
-    public UrlAsInput(final URL url) {
-        this(() -> url);
-    }
-
-    /**
-     * Ctor.
-     * @param src Source
-     */
-    public UrlAsInput(final Scalar<URL> src) {
-        this.source = src;
+    public RunnableWithFallback(final Runnable rnb,
+        final Proc<Throwable> fbk) {
+        this.runnable = rnb;
+        this.fallback = fbk;
     }
 
     @Override
-    public InputStream stream() throws IOException {
-        return new IoCheckedScalar<>(this.source).asValue().openStream();
+    public void run() {
+        new UncheckedFunc<>(
+            new FuncWithFallback<Boolean, Boolean>(
+                new RunnableAsFunc<>(this.runnable),
+                new ProcAsFunc<>(this.fallback)
+            )
+        ).apply(true);
     }
 
 }

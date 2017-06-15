@@ -23,67 +23,52 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.func.IoCheckedScalar;
+import org.cactoos.func.StickyScalar;
 
 /**
- * URL as Input.
+ * Input that reads only once.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.6
  */
-public final class UrlAsInput implements Input {
+public final class StickyInput implements Input {
 
     /**
-     * The URL.
+     * The cache.
      */
-    private final Scalar<URL> source;
-
-    /**
-     * Ctor.
-     * @param url The URL
-     * @since 0.6
-     */
-    public UrlAsInput(final String url) {
-        this(() -> new URL(url));
-    }
+    private final Scalar<byte[]> cache;
 
     /**
      * Ctor.
-     * @param url The URL
-     * @since 0.6
+     * @param input The input
      */
-    public UrlAsInput(final URI url) {
-        this(url::toURL);
-    }
-
-    /**
-     * Ctor.
-     * @param url The URL
-     */
-    public UrlAsInput(final URL url) {
-        this(() -> url);
-    }
-
-    /**
-     * Ctor.
-     * @param src Source
-     */
-    public UrlAsInput(final Scalar<URL> src) {
-        this.source = src;
+    public StickyInput(final Input input) {
+        this.cache = new StickyScalar<>(
+            () -> {
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                new LengthOfInput(
+                    new TeeInput(input, new OutputStreamAsOutput(baos))
+                ).asValue();
+                return baos.toByteArray();
+            }
+        );
     }
 
     @Override
     public InputStream stream() throws IOException {
-        return new IoCheckedScalar<>(this.source).asValue().openStream();
+        return new ByteArrayInputStream(
+            new IoCheckedScalar<>(this.cache).asValue()
+        );
     }
 
 }

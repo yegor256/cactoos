@@ -21,69 +21,75 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
-import org.cactoos.func.IoCheckedScalar;
+import org.cactoos.Func;
 
 /**
- * URL as Input.
+ * Func with a fallback plan.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @since 0.2
  */
-public final class UrlAsInput implements Input {
+public final class FuncWithFallback<X, Y> implements Func<X, Y> {
 
     /**
-     * The URL.
+     * The func.
      */
-    private final Scalar<URL> source;
+    private final Func<X, Y> func;
+
+    /**
+     * The fallback.
+     */
+    private final Func<Throwable, Y> fallback;
+
+    /**
+     * The follow up.
+     */
+    private final Func<Y, Y> follow;
 
     /**
      * Ctor.
-     * @param url The URL
-     * @since 0.6
+     * @param fnc The func
+     * @param fbk The fallback
      */
-    public UrlAsInput(final String url) {
-        this(() -> new URL(url));
+    public FuncWithFallback(final Func<X, Y> fnc,
+        final Func<Throwable, Y> fbk) {
+        this(fnc, fbk, input -> input);
     }
 
     /**
      * Ctor.
-     * @param url The URL
-     * @since 0.6
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
      */
-    public UrlAsInput(final URI url) {
-        this(url::toURL);
-    }
-
-    /**
-     * Ctor.
-     * @param url The URL
-     */
-    public UrlAsInput(final URL url) {
-        this(() -> url);
-    }
-
-    /**
-     * Ctor.
-     * @param src Source
-     */
-    public UrlAsInput(final Scalar<URL> src) {
-        this.source = src;
+    public FuncWithFallback(final Func<X, Y> fnc,
+        final Func<Throwable, Y> fbk, final Func<Y, Y> flw) {
+        this.func = fnc;
+        this.fallback = fbk;
+        this.follow = flw;
     }
 
     @Override
-    public InputStream stream() throws IOException {
-        return new IoCheckedScalar<>(this.source).asValue().openStream();
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    public Y apply(final X input) throws Exception {
+        Y result;
+        try {
+            result = this.func.apply(input);
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            result = this.fallback.apply(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Throwable ex) {
+            result = this.fallback.apply(ex);
+        }
+        return this.follow.apply(result);
     }
 
 }

@@ -29,12 +29,16 @@ import org.cactoos.Scalar;
 /**
  * Cached version of a Scalar.
  *
+ * <p>This {@link Scalar} decorator technically is an in-memory
+ * cache.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Tim Hinkes (timmeey@timmeey.de)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <T> Type of result
+ * @see StickyFunc
  * @since 0.3
  */
 public final class StickyScalar<T> implements Scalar<T> {

@@ -56,4 +56,16 @@ public final class FirstOfTest {
     public void failForEmptyCollectionTest() throws Exception {
         new FirstOf<>(Collections.emptyList()).asValue();
     }
+
+    @Test
+    public void fallbackTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't fallback to default value",
+            new FirstOf<>(
+                Collections.emptyList(),
+                1
+            ),
+            new ScalarHasValue<>(1)
+        );
+    }
 }
