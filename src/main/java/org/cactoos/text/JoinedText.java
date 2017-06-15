@@ -21,84 +21,81 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+
+package org.cactoos.text;
 
 import java.io.IOException;
-import java.util.Iterator;
 import org.cactoos.Text;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.JoinedText;
-import org.cactoos.text.StringAsText;
+import org.cactoos.list.ArrayAsIterable;
+import org.cactoos.list.TransformedIterable;
 
 /**
- * Iterator as {@link Text}.
+ * Transform few texts to one.
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @since 0.6
  */
-public final class IteratorAsText implements Text {
+public final class JoinedText implements Text {
 
     /**
-     * Iterator.
+     * Texts delimiter.
      */
-    private final Iterator<Text> iterator;
+    private final CharSequence delimiter;
 
     /**
-     * Pattern.
+     * Texts for join.
      */
-    private final Text pattern;
+    private final Iterable<Text> texts;
 
     /**
-     * Separator.
+     * Ctor with default delimiter.
+     * @param texts Texts array
      */
-    private final Text separator;
-
-    /**
-     * Ctor with default pattern and separator.
-     * @param iterator Iterator
-     */
-    public IteratorAsText(final Iterator<Text> iterator) {
-        this(iterator, "[%s]", ", ");
+    public JoinedText(final Text... texts) {
+        this(new ArrayAsIterable<>(texts));
     }
 
     /**
      * Ctor.
-     * @param iterator Iterator
-     * @param ptn Pattern
-     * @param separator Separator
+     * @param delimiter Texts delimiter
+     * @param texts Texts array
      */
-    public IteratorAsText(
-        final Iterator<Text> iterator,
-        final String ptn,
-        final String separator
+    public JoinedText(
+        final CharSequence delimiter,
+        final Text... texts
     ) {
-        this(iterator, new StringAsText(ptn), new StringAsText(separator));
+        this(delimiter, new ArrayAsIterable<>(texts));
+    }
+
+    /**
+     * Ctor with default delimiter.
+     * @param texts Texts
+     */
+    public JoinedText(final Iterable<Text> texts) {
+        this("", texts);
     }
 
     /**
      * Ctor.
-     * @param iterator Iterator
-     * @param ptn Pattern
-     * @param separator Separator
+     * @param delimiter Texts delimiter
+     * @param texts Texts
      */
-    public IteratorAsText(
-        final Iterator<Text> iterator,
-        final Text ptn,
-        final Text separator
+    public JoinedText(
+        final CharSequence delimiter,
+        final Iterable<Text> texts
     ) {
-        this.iterator = iterator;
-        this.pattern = ptn;
-        this.separator = separator;
+        this.texts = texts;
+        this.delimiter = delimiter;
     }
 
     @Override
     public String asString() throws IOException {
-        return new FormattedText(
-            this.pattern,
-            new JoinedText(
-                this.separator.asString(),
-                () -> this.iterator
-            ).asString()
-        ).asString();
+        return String.join(
+            this.delimiter,
+            new TransformedIterable<>(
+                this.texts,
+                input -> new UncheckedText(input).asString()
+            )
+        );
     }
 }
