@@ -29,6 +29,8 @@ import org.cactoos.Text;
 /**
  * Text padded at start to reach the given length.
  *
+ * <p>There is thread safe.
+ *
  * @author Vivek Poddar (vivekimsit@gmail.com)
  * @version $Id$
  * @since 0.1
@@ -43,34 +45,34 @@ public final class PaddedTextStart implements Text {
     /**
      * The minimum length of the resulting string.
      */
-    private final int minLength;
+    private final int length;
 
     /**
      * The character to be padded at the begining.
      */
-    private final char padChar;
+    private final char symbol;
 
     /**
      * Ctor.
      * @param text The text
-     * @param minLength The minimum length of the resulting string
+     * @param length The minimum length of the resulting string
      */
-    public PaddedTextStart(final NotNullText text, final int minLength, final char padChar) {
+    public PaddedTextStart(final NotNullText text, final int length, final char symbol) {
         this.origin = text;
-        this.padChar = padChar;
-        this.minLength = minLength;
+        this.symbol = symbol;
+        this.length = length;
     }
 
     @Override
     public String asString() throws IOException {
         final String originString = this.origin.asString();
-        if (originString.length() >= this.minLength) {
+        if (originString.length() >= this.length) {
           return originString;
         }
 
-        final StringBuilder sb = new StringBuilder(this.minLength);
-        for (int i = originString.length(); i < this.minLength; i++) {
-          sb.append(this.padChar);
+        final StringBuilder sb = new StringBuilder(this.length);
+        for (int i = originString.length(); i < this.length; i++) {
+          sb.append(this.symbol);
         }
         sb.append(originString);
         return sb.toString();

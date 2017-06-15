@@ -40,7 +40,7 @@ import org.junit.Test;
 public final class PaddedTextStartTest {
 
     @Test
-    public void noPadding() {
+    public void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
         MatcherAssert.assertThat(
             "Shouldn't pad the text",
             new PaddedTextStart(
@@ -52,7 +52,7 @@ public final class PaddedTextStartTest {
     }
 
     @Test
-    public void somePadding() {
+    public void somePaddingIfOrigTextIsShorterThanRequestedLength() {
         MatcherAssert.assertThat(
             "Should pad chars at start",
             new PaddedTextStart(
@@ -64,7 +64,7 @@ public final class PaddedTextStartTest {
     }
 
     @Test
-    public void negativeMinLength()  {
+    public void noPaddingIfRequestedLengthIsNegative()  {
         MatcherAssert.assertThat(
             "Shouldn't consider negative min length",
             new PaddedTextStart(
@@ -73,11 +73,6 @@ public final class PaddedTextStartTest {
               ), -1, '-'),
             new TextHasString("x")
         );
-    }
-
-    @Test(expected = IOException.class)
-    public void failForNullText() throws IOException {
-        new PaddedTextStart(new NotNullText(null), 1, '-').asString();
     }
 }
 
