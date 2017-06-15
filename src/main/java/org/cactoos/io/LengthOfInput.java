@@ -77,8 +77,7 @@ public final class LengthOfInput implements Scalar<Long> {
                 final int len = stream.read(buf);
                 if (len > 0) {
                     length += (long) len;
-                }
-                if (len < 0) {
+                } else if (len < 0) {
                     break;
                 }
             }
