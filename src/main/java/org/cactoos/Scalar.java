@@ -26,11 +26,23 @@ package org.cactoos;
 /**
  * Scalar.
  *
+ * <p>If you don't want to have any checked exceptions being thrown
+ * out of your {@link Scalar}, you can use
+ * {@link org.cactoos.func.UncheckedScalar} decorator. Also
+ * you may try {@link org.cactoos.func.IoCheckedScalar}.</p>
+ *
+ * <p>If you want to cache the result of the {@link Scalar} and
+ * make sure it doesn't calculate anything twice, you can use
+ * {@link org.cactoos.func.StickyScalar} decorator.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <T> Type of result
+ * @see org.cactoos.func.StickyScalar
+ * @see org.cactoos.func.UncheckedScalar
+ * @see org.cactoos.func.IoCheckedScalar
  * @since 0.1
  */
 public interface Scalar<T> {
