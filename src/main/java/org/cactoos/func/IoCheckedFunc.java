@@ -28,7 +28,7 @@ import org.cactoos.Func;
 
 /**
  * Func that doesn't throw checked {@link Exception}, but throws
- * {@link java.io.IOException} instead.
+ * {@link IOException} instead.
  *
  * <p>There is no thread-safety guarantee.
  *

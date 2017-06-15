@@ -25,7 +25,9 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import org.cactoos.Func;
 import org.cactoos.Text;
+import org.cactoos.func.UncheckedFunc;
 
 /**
  * Text that doesn't throw checked {@link Exception}.
@@ -44,20 +46,43 @@ public final class UncheckedText implements Text {
     private final Text text;
 
     /**
-     * Ctor.
-     * @param text Encapsulated text
+     * Fallback.
      */
-    public UncheckedText(final Text text) {
-        this.text = text;
+    private final Func<IOException, String> fallback;
+
+    /**
+     * Ctor.
+     * @param txt Encapsulated text
+     */
+    public UncheckedText(final Text txt) {
+        this(
+            txt,
+            error -> {
+                throw new UncheckedIOException(error);
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param txt Encapsulated text
+     * @param fbk Fallback func if {@link IOException} happens
+     * @since 0.5
+     */
+    public UncheckedText(final Text txt, final Func<IOException, String> fbk) {
+        this.text = txt;
+        this.fallback = fbk;
     }
 
     @Override
     public String asString() {
+        String txt;
         try {
-            return this.text.asString();
+            txt = this.text.asString();
         } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
+            txt = new UncheckedFunc<>(this.fallback).apply(ex);
         }
+        return txt;
     }
 
 }

@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import org.junit.Test;
 
 /**
@@ -36,7 +37,7 @@ import org.junit.Test;
  */
 public final class UncheckedProcTest {
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = UncheckedIOException.class)
     public void rethrowsCheckedToUncheckedException() {
         new UncheckedProc<>(
             input -> {

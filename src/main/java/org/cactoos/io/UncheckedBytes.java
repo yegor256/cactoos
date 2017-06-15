@@ -26,6 +26,8 @@ package org.cactoos.io;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import org.cactoos.Bytes;
+import org.cactoos.Func;
+import org.cactoos.func.UncheckedFunc;
 
 /**
  * Bytes that doesn't throw checked {@link Exception}.
@@ -44,20 +46,44 @@ public final class UncheckedBytes implements Bytes {
     private final Bytes bytes;
 
     /**
-     * Ctor.
-     * @param bytes Encapsulated bytes
+     * Fallback.
      */
-    public UncheckedBytes(final Bytes bytes) {
-        this.bytes = bytes;
+    private final Func<IOException, byte[]> fallback;
+
+    /**
+     * Ctor.
+     * @param bts Encapsulated bytes
+     */
+    public UncheckedBytes(final Bytes bts) {
+        this(
+            bts,
+            error -> {
+                throw new UncheckedIOException(error);
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param bts Encapsulated bytes
+     * @param fbk Fallback
+     * @since 0.5
+     */
+    public UncheckedBytes(final Bytes bts,
+        final Func<IOException, byte[]> fbk) {
+        this.bytes = bts;
+        this.fallback = fbk;
     }
 
     @Override
     public byte[] asBytes() {
+        byte[] data;
         try {
-            return this.bytes.asBytes();
+            data = this.bytes.asBytes();
         } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
+            data = new UncheckedFunc<>(this.fallback).apply(ex);
         }
+        return data;
     }
 
 }
