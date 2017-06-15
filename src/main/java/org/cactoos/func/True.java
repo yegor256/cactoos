@@ -21,26 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import org.cactoos.Logical;
 
 /**
- * Predicate.
+ * Logical truth.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <X> Type of input
  * @since 0.5
  */
-public interface Pred<X> {
+public final class True implements Logical {
 
-    /**
-     * Evaluates predicate on the given argument.
-     *
-     * @param input The argument
-     * @return The result
-     * @throws Exception If fails
-     */
-    Boolean test(X input) throws Exception;
+    @Override
+    public Boolean asValue() throws Exception {
+        return true;
+    }
 }
