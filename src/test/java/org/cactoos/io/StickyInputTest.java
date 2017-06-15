@@ -23,9 +23,12 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.TextHasString;
 import org.cactoos.func.FuncAsMatcher;
 import org.cactoos.func.RepeatedFunc;
+import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -34,6 +37,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class StickyInputTest {
 
@@ -54,6 +58,26 @@ public final class StickyInputTest {
                     ).asBytes().length == 73471,
                     10
                 )
+            )
+        );
+    }
+
+    @Test
+    public void readsRealUrl() {
+        MatcherAssert.assertThat(
+            "Can't fetch text page from the URL",
+            new BytesAsText(
+                new InputAsBytes(
+                    new StickyInput(
+                        new UrlAsInput(
+                            // @checkstyle LineLength (1 line)
+                            "https://raw.githubusercontent.com/yegor256/cactoos/0.5/pom.xml"
+                        )
+                    )
+                )
+            ),
+            new TextHasString(
+                Matchers.endsWith("</project>\n")
             )
         );
     }

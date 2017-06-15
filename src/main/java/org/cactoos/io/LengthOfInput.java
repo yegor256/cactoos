@@ -78,7 +78,7 @@ public final class LengthOfInput implements Scalar<Long> {
                 if (len > 0) {
                     length += (long) len;
                 }
-                if (len != buf.length) {
+                if (len < 0) {
                     break;
                 }
             }
