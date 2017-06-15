@@ -30,20 +30,20 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FuncWithCallback}.
+ * Test case for {@link FuncWithFallback}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncWithCallbackTest {
+public final class FuncWithFallbackTest {
 
     @Test
     public void usesMainFunc() throws Exception {
         MatcherAssert.assertThat(
             "Can't use the main function if no exception",
-            new FuncWithCallback<>(
+            new FuncWithFallback<>(
                 input -> "It's success",
                 ex -> "In case of failure..."
             ),
@@ -55,7 +55,7 @@ public final class FuncWithCallbackTest {
     public void usesCallback() throws Exception {
         MatcherAssert.assertThat(
             "Can't use the callback in case of exception",
-            new FuncWithCallback<>(
+            new FuncWithFallback<>(
                 input -> {
                     throw new IOException("Failure");
                 },
@@ -69,7 +69,7 @@ public final class FuncWithCallbackTest {
     public void usesFollowUp() throws Exception {
         MatcherAssert.assertThat(
             "Can't use the follow-up func",
-            new FuncWithCallback<>(
+            new FuncWithFallback<>(
                 input -> "works fine",
                 ex -> "won't happen",
                 input -> "follow up"

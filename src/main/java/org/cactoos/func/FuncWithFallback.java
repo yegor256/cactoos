@@ -26,7 +26,7 @@ package org.cactoos.func;
 import org.cactoos.Func;
 
 /**
- * Func with Callback.
+ * Func with a fallback plan.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -36,7 +36,7 @@ import org.cactoos.Func;
  * @param <Y> Type of output
  * @since 0.2
  */
-public final class FuncWithCallback<X, Y> implements Func<X, Y> {
+public final class FuncWithFallback<X, Y> implements Func<X, Y> {
 
     /**
      * The func.
@@ -44,9 +44,9 @@ public final class FuncWithCallback<X, Y> implements Func<X, Y> {
     private final Func<X, Y> func;
 
     /**
-     * The callback.
+     * The fallback.
      */
-    private final Func<Throwable, Y> callback;
+    private final Func<Throwable, Y> fallback;
 
     /**
      * The follow up.
@@ -56,23 +56,23 @@ public final class FuncWithCallback<X, Y> implements Func<X, Y> {
     /**
      * Ctor.
      * @param fnc The func
-     * @param cbk The callback
+     * @param fbk The fallback
      */
-    public FuncWithCallback(final Func<X, Y> fnc,
-        final Func<Throwable, Y> cbk) {
-        this(fnc, cbk, input -> input);
+    public FuncWithFallback(final Func<X, Y> fnc,
+        final Func<Throwable, Y> fbk) {
+        this(fnc, fbk, input -> input);
     }
 
     /**
      * Ctor.
      * @param fnc The func
-     * @param cbk The callback
+     * @param fbk The fallback
      * @param flw The follow up func
      */
-    public FuncWithCallback(final Func<X, Y> fnc,
-        final Func<Throwable, Y> cbk, final Func<Y, Y> flw) {
+    public FuncWithFallback(final Func<X, Y> fnc,
+        final Func<Throwable, Y> fbk, final Func<Y, Y> flw) {
         this.func = fnc;
-        this.callback = cbk;
+        this.fallback = fbk;
         this.follow = flw;
     }
 
@@ -84,10 +84,10 @@ public final class FuncWithCallback<X, Y> implements Func<X, Y> {
             result = this.func.apply(input);
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
-            result = this.callback.apply(ex);
+            result = this.fallback.apply(ex);
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Throwable ex) {
-            result = this.callback.apply(ex);
+            result = this.fallback.apply(ex);
         }
         return this.follow.apply(result);
     }
