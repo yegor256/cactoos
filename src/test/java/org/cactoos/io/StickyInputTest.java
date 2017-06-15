@@ -23,7 +23,8 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
+import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.ProcAsFunc;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -38,19 +39,34 @@ import org.junit.Test;
 public final class StickyInputTest {
 
     @Test
-    public void readsFileContent() throws IOException {
+    public void readsFileContent() {
         MatcherAssert.assertThat(
             "Can't read bytes from a file",
-            new InputAsBytes(
-                new StickyInput(
-                    new UrlAsInput(
-                        this.getClass().getResource(
-                            "/org/cactoos/io/UrlAsInput.class"
-                        )
+            new StickyInput(
+                new UrlAsInput(
+                    this.getClass().getResource(
+                        "/org/cactoos/io/UrlAsInput.class"
                     )
                 )
-            ).asBytes().length,
-            Matchers.greaterThan(0)
+            ),
+            new FuncAsMatcher<>(
+                new ProcAsFunc<>(
+                    input -> {
+                        MatcherAssert.assertThat(
+                            new InputAsBytes(
+                                new TeeInput(input, new DeadOutput())
+                            ).asBytes().length,
+                            Matchers.greaterThan(0)
+                        );
+                        MatcherAssert.assertThat(
+                            new InputAsBytes(
+                                new TeeInput(input, new DeadOutput())
+                            ).asBytes().length,
+                            Matchers.greaterThan(0)
+                        );
+                    }
+                )
+            )
         );
     }
 
