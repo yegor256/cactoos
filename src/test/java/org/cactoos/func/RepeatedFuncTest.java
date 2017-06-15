@@ -21,40 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import org.cactoos.func.FuncAsMatcher;
-import org.cactoos.func.RepeatedFunc;
+import java.security.SecureRandom;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyInput}.
+ * Test case for {@link RepeatedFunc}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyInputTest {
+public final class RepeatedFuncTest {
 
     @Test
-    public void readsFileContent() {
+    public void runsFuncMultipleTimes() throws Exception {
+        final Func<Boolean, Integer> func = new RepeatedFunc<>(
+            input -> new SecureRandom().nextInt(),
+            2
+        );
         MatcherAssert.assertThat(
-            "Can't read bytes from a file",
-            new StickyInput(
-                new ResourceAsInput(
-                    "org/cactoos/large-text.txt"
-                )
-            ),
-            new FuncAsMatcher<>(
-                new RepeatedFunc<>(
-                    input -> new InputAsBytes(
-                        new TeeInput(input, new DeadOutput())
-                    // @checkstyle MagicNumber (1 line)
-                    ).asBytes().length == 73471,
-                    2
-                )
-            )
+            func.apply(true),
+            Matchers.not(Matchers.equalTo(func.apply(true)))
         );
     }
 

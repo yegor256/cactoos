@@ -46,7 +46,7 @@ public final class StickyInput implements Input {
     /**
      * The cache.
      */
-    private final Scalar<InputStream> cache;
+    private final Scalar<byte[]> cache;
 
     /**
      * Ctor.
@@ -62,14 +62,16 @@ public final class StickyInput implements Input {
                         new OutputStreamAsOutput(baos)
                     )
                 ).asValue();
-                return new ByteArrayInputStream(baos.toByteArray());
+                return baos.toByteArray();
             }
         );
     }
 
     @Override
     public InputStream stream() throws IOException {
-        return new IoCheckedScalar<>(this.cache).asValue();
+        return new ByteArrayInputStream(
+            new IoCheckedScalar<>(this.cache).asValue()
+        );
     }
 
 }

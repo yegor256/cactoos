@@ -21,41 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import org.cactoos.func.FuncAsMatcher;
-import org.cactoos.func.RepeatedFunc;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.cactoos.Func;
 
 /**
- * Test case for {@link StickyInput}.
+ * Func that repeats its calculation a few times before
+ * returning the last result.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @param <X> Type of input
+ * @param <Y> Type of output
  * @since 0.6
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyInputTest {
+public final class RepeatedFunc<X, Y> implements Func<X, Y> {
 
-    @Test
-    public void readsFileContent() {
-        MatcherAssert.assertThat(
-            "Can't read bytes from a file",
-            new StickyInput(
-                new ResourceAsInput(
-                    "org/cactoos/large-text.txt"
-                )
-            ),
-            new FuncAsMatcher<>(
-                new RepeatedFunc<>(
-                    input -> new InputAsBytes(
-                        new TeeInput(input, new DeadOutput())
-                    // @checkstyle MagicNumber (1 line)
-                    ).asBytes().length == 73471,
-                    2
-                )
-            )
-        );
+    /**
+     * Original func.
+     */
+    private final Func<X, Y> func;
+
+    /**
+     * How many times to run.
+     */
+    private final int times;
+
+    /**
+     * Ctor.
+     *
+     * <p>If {@code max} is equal or less than zero {@link #apply(Object)}
+     * will return {@code null}.</p>
+     *
+     * @param fnc Func original
+     * @param max How many times
+     */
+    public RepeatedFunc(final Func<X, Y> fnc, final int max) {
+        this.func = fnc;
+        this.times = max;
+    }
+
+    @Override
+    public Y apply(final X input) throws Exception {
+        Y result = null;
+        for (int idx = 0; idx < this.times; ++idx) {
+            result = this.func.apply(input);
+        }
+        return result;
     }
 
 }

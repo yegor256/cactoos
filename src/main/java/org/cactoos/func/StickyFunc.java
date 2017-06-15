@@ -31,12 +31,16 @@ import org.cactoos.Func;
  * Func that caches previously calculated values and doesn't
  * recalculate again.
  *
+ * <p>This {@link Func} decorator technically is an in-memory
+ * cache.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input
  * @param <Y> Type of output
+ * @see StickyScalar
  * @since 0.1
  */
 public final class StickyFunc<X, Y> implements Func<X, Y> {
