@@ -24,22 +24,22 @@
 package org.cactoos.list;
 
 import java.io.IOException;
-import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.text.FormattedText;
 
 /**
- * First element in {@link Iterable} or fallback value if iterable is empty.
+ * Element from position in {@link Iterable}
+ * or fallback value if iterable hasn't this position.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @param <T> Scalar type
- * @since 0.1
+ * @since 0.7
  */
-public final class FirstOf<T> implements Scalar<T> {
+public final class ItemOfIterable<T> implements Scalar<T> {
 
     /**
      * Source iterable.
@@ -52,11 +52,16 @@ public final class FirstOf<T> implements Scalar<T> {
     private final Func<Iterable<T>, T> fbk;
 
     /**
+     * Position.
+     */
+    private final int pos;
+
+    /**
      * Ctor.
      *
      * @param src Iterable
      */
-    public FirstOf(final Iterable<T> src) {
+    public ItemOfIterable(final Iterable<T> src) {
         this(
             src,
             itr -> {
@@ -74,7 +79,7 @@ public final class FirstOf<T> implements Scalar<T> {
      * @param src Iterable
      * @param fbk Fallback value
      */
-    public FirstOf(final Iterable<T> src, final T fbk) {
+    public ItemOfIterable(final Iterable<T> src, final T fbk) {
         this(src, itr -> fbk);
     }
 
@@ -84,20 +89,58 @@ public final class FirstOf<T> implements Scalar<T> {
      * @param src Iterable
      * @param fbk Fallback value
      */
-    public FirstOf(final Iterable<T> src, final Func<Iterable<T>, T> fbk) {
+    public ItemOfIterable(
+        final Iterable<T> src,
+        final Func<Iterable<T>, T> fbk
+    ) {
+        this(src, 0, fbk);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param src Iterable
+     * @param pos Position
+     */
+    public ItemOfIterable(final Iterable<T> src, final int pos) {
+        this(
+            src,
+            pos,
+            itr -> {
+                throw new IOException(
+                    new FormattedText(
+                        "Iterable %s hasn't element from position %d",
+                        itr,
+                        pos
+                    ).asString()
+                );
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param src Iterable
+     * @param pos Position
+     * @param fbk Fallback value
+     */
+    public ItemOfIterable(
+        final Iterable<T> src,
+        final int pos,
+        final Func<Iterable<T>, T> fbk
+    ) {
+        this.pos = pos;
         this.src = src;
         this.fbk = fbk;
     }
 
     @Override
     public T asValue() throws Exception {
-        final Iterator<T> itr = this.src.iterator();
-        final T ret;
-        if (itr.hasNext()) {
-            ret = itr.next();
-        } else {
-            ret = this.fbk.apply(this.src);
-        }
-        return ret;
+        return new ItemOfIterator<>(
+            this.src.iterator(),
+            this.pos,
+            this.fbk
+        ).asValue();
     }
 }
