@@ -75,11 +75,11 @@ public final class LengthOfInputTest {
             new LengthOfInput(
                 new UrlAsInput(
                     // @checkstyle LineLength (1 line)
-                    "https://raw.githubusercontent.com/yegor256/cactoos/0.5/pom.xml"
+                    "file:src/test/resources/org/cactoos/large-text.txt"
                 )
             ).asValue(),
             // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(5960L)
+            Matchers.equalTo(73471L)
         );
     }
 
