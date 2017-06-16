@@ -86,10 +86,16 @@ public final class SubText implements Text {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public String asString() throws IOException {
-        return this.origin.asString().substring(
-            this.start.asValue(),
-            this.end.asValue()
-        );
+        try {
+            return this.origin.asString().substring(
+                this.start.asValue(),
+                this.end.asValue()
+            );
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IOException(ex);
+        }
     }
 }
