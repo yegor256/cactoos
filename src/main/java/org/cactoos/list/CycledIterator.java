@@ -30,10 +30,12 @@ import java.util.NoSuchElementException;
 /**
  * Cycled Iterator.
  *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @param <T> Type of item
- * @since 0.6
+ * @since 0.7
  */
 public final class CycledIterator<T> implements Iterator<T> {
 
@@ -53,16 +55,18 @@ public final class CycledIterator<T> implements Iterator<T> {
      */
     public CycledIterator(final Iterable<T> iterable) {
         this.iterable = iterable;
-        this.iterator = this.iterable.iterator();
     }
 
     @Override
     public boolean hasNext() {
-        return this.iterator.hasNext() || this.iterable.iterator().hasNext();
+        return this.iterable.iterator().hasNext();
     }
 
     @Override
     public T next() {
+        if (this.iterator == null) {
+            this.iterator = this.iterable.iterator();
+        }
         if (!this.iterator.hasNext()) {
             this.iterator = this.iterable.iterator();
             if (!this.iterator.hasNext()) {

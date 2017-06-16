@@ -29,10 +29,12 @@ import java.util.Iterator;
 /**
  * Cycled Iterable.
  *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @param <T> Type of item
- * @since 0.6
+ * @since 0.7
  */
 public final class CycledIterable<T> implements Iterable<T> {
 
