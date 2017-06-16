@@ -35,7 +35,7 @@ import org.cactoos.Scalar;
  *
  * <pre> new AllOf(
  *   new TransformedIterable&lt;String&gt;(
- *     new IdentityArrayList<>("hello", "world"),
+ *     new IterableAsList<>("hello", "world"),
  *     new ProcAsFunc&lt;&gt;(i -&gt; System.out.println(i))
  *   )
  * ).asValue();</pre>
