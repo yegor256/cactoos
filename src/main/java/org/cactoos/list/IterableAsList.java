@@ -58,7 +58,7 @@ public final class IterableAsList<T> extends AbstractList<T> {
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public IterableAsList(T... array) {
+    public IterableAsList(final T... array) {
         this(new ArrayAsIterable<>(array));
     }
 

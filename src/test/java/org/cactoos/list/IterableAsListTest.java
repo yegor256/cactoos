@@ -43,9 +43,7 @@ public final class IterableAsListTest {
         final int num = 345;
         MatcherAssert.assertThat(
             "Can't convert an iterable to a list",
-            new IterableAsList<>(
-                    -1, 0, 1, num, 1
-            ).get(3),
+            new IterableAsList<>(-1, num, 0, 1).get(1),
             Matchers.equalTo(num)
         );
     }
