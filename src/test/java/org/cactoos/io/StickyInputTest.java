@@ -23,6 +23,7 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.Input;
 import org.cactoos.TextHasString;
 import org.cactoos.func.FuncAsMatcher;
 import org.cactoos.func.RepeatedFunc;
@@ -51,7 +52,7 @@ public final class StickyInputTest {
                 )
             ),
             new FuncAsMatcher<>(
-                new RepeatedFunc<>(
+                new RepeatedFunc<Input, Boolean>(
                     input -> new InputAsBytes(
                         new TeeInput(input, new DeadOutput())
                     // @checkstyle MagicNumber (2 lines)
