@@ -21,69 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.list;
 
-import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
+import java.util.Iterator;
 
 /**
- * Length of Input.
+ * Limited iterable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>This is a view of an existing iterable containing the given number of its
+ * first elements.</p>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @param <T> Element type
+ * @since 0.6
  */
-public final class LengthOfInput implements Scalar<Long> {
+public final class LimitedIterable<T> implements Iterable<T> {
 
     /**
-     * The input.
+     * Decorated iterable.
      */
-    private final Input source;
+    private final Iterable<T> iterable;
 
     /**
-     * The buffer size.
+     * Number of elements to return.
      */
-    private final int size;
-
-    /**
-     * Ctor.
-     * @param input The input
-     */
-    public LengthOfInput(final Input input) {
-        // @checkstyle MagicNumber (1 line)
-        this(input, 16 << 10);
-    }
+    private final int limit;
 
     /**
      * Ctor.
-     * @param input The input
-     * @param max Buffer size
+     *
+     * @param iterable The underlying iterable
+     * @param limit The requested number of elements
      */
-    public LengthOfInput(final Input input, final int max) {
-        this.source = input;
-        this.size = max;
+    public LimitedIterable(final Iterable<T> iterable, final int limit) {
+        this.iterable = iterable;
+        this.limit = limit;
     }
 
     @Override
-    public Long asValue() throws IOException {
-        try (final InputStream stream = this.source.stream()) {
-            final byte[] buf = new byte[this.size];
-            long length = 0L;
-            while (true) {
-                final int len = stream.read(buf);
-                if (len > 0) {
-                    length += (long) len;
-                }
-                if (len < 0) {
-                    break;
-                }
-            }
-            return length;
-        }
+    public Iterator<T> iterator() {
+        return new LimitedIterator<>(this.iterable.iterator(), this.limit);
     }
-
 }

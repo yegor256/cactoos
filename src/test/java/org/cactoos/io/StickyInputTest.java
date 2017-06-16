@@ -23,63 +23,63 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import org.cactoos.ScalarHasValue;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
+import org.cactoos.Input;
+import org.cactoos.TextHasString;
+import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.RepeatedFunc;
+import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link LengthOfInput}.
+ * Test case for {@link StickyInput}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class LengthOfInputTest {
+public final class StickyInputTest {
 
     @Test
-    public void calculatesLength() {
-        final String text = "What's up, друг?";
+    public void readsFileContent() {
         MatcherAssert.assertThat(
-            "Can't calculate the length of Input",
-            new LengthOfInput(
-                new BytesAsInput(
-                    new TextAsBytes(
-                        new StringAsText(text)
-                    )
+            "Can't read bytes from a file",
+            new StickyInput(
+                new ResourceAsInput(
+                    "org/cactoos/large-text.txt"
                 )
             ),
-            new ScalarHasValue<>(
-                (long) text.getBytes(StandardCharsets.UTF_8).length
+            new FuncAsMatcher<>(
+                new RepeatedFunc<Input, Boolean>(
+                    input -> new InputAsBytes(
+                        new TeeInput(input, new DeadOutput())
+                    // @checkstyle MagicNumber (2 lines)
+                    ).asBytes().length == 73471,
+                    10
+                )
             )
         );
     }
 
     @Test
-    public void calculatesZeroLength() {
+    public void readsRealUrl() {
         MatcherAssert.assertThat(
-            "Can't calculate the length of an empty input",
-            new LengthOfInput(new DeadInput()),
-            new ScalarHasValue<>(0L)
-        );
-    }
-
-    @Test
-    public void readsRealUrl() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't calculate length of a real page at the URL",
-            new LengthOfInput(
-                new UrlAsInput(
-                    // @checkstyle LineLength (1 line)
-                    "https://raw.githubusercontent.com/yegor256/cactoos/0.5/pom.xml"
+            "Can't fetch text page from the URL",
+            new BytesAsText(
+                new InputAsBytes(
+                    new StickyInput(
+                        new UrlAsInput(
+                            // @checkstyle LineLength (1 line)
+                            "https://raw.githubusercontent.com/yegor256/cactoos/0.5/pom.xml"
+                        )
+                    )
                 )
-            ).asValue(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(5960L)
+            ),
+            new TextHasString(
+                Matchers.endsWith("</project>\n")
+            )
         );
     }
 

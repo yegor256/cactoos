@@ -21,66 +21,64 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.list;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import org.cactoos.ScalarHasValue;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link LengthOfInput}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link ItemOfIterable}.
+ *
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LengthOfInputTest {
+public final class ItemOfIterableTest {
 
     @Test
-    public void calculatesLength() {
-        final String text = "What's up, друг?";
+    public void firstElementTest() throws Exception {
         MatcherAssert.assertThat(
-            "Can't calculate the length of Input",
-            new LengthOfInput(
-                new BytesAsInput(
-                    new TextAsBytes(
-                        new StringAsText(text)
-                    )
-                )
+            "Can't take the first item from the iterable",
+            new ItemOfIterable<>(
+                // @checkstyle MagicNumber (1 line)
+                new ArrayAsIterable<>(1, 2, 3)
             ),
-            new ScalarHasValue<>(
-                (long) text.getBytes(StandardCharsets.UTF_8).length
-            )
+            new ScalarHasValue<>(1)
         );
     }
 
     @Test
-    public void calculatesZeroLength() {
+    public void elementByPosTest() throws Exception {
         MatcherAssert.assertThat(
-            "Can't calculate the length of an empty input",
-            new LengthOfInput(new DeadInput()),
-            new ScalarHasValue<>(0L)
+            "Can't take the item by position from the iterable",
+            new ItemOfIterable<>(
+                // @checkstyle MagicNumber (1 line)
+                new ArrayAsIterable<>(1, 2, 3),
+                1
+            ),
+            new ScalarHasValue<>(2)
         );
+    }
+
+    @Test(expected = IOException.class)
+    public void failForEmptyCollectionTest() throws Exception {
+        new ItemOfIterable<>(Collections.emptyList()).asValue();
     }
 
     @Test
-    public void readsRealUrl() throws IOException {
+    public void fallbackTest() throws Exception {
+        final String fallback = "fallback";
         MatcherAssert.assertThat(
-            "Can't calculate length of a real page at the URL",
-            new LengthOfInput(
-                new UrlAsInput(
-                    // @checkstyle LineLength (1 line)
-                    "https://raw.githubusercontent.com/yegor256/cactoos/0.5/pom.xml"
-                )
-            ).asValue(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(5960L)
+            "Can't fallback to default value",
+            new ItemOfIterable<>(
+                Collections.emptyList(),
+                fallback
+            ),
+            new ScalarHasValue<>(fallback)
         );
     }
-
 }

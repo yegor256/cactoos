@@ -21,42 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.io;
 
-import java.io.IOException;
-import java.util.Iterator;
-import org.cactoos.Scalar;
+import java.io.InputStream;
+import org.cactoos.Input;
 
 /**
- * First element in {@link Iterable}.
+ * Input that reads from {@code stdin}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
- * @since 0.1
+ * @since 0.6
  */
-public final class FirstOf<T> implements Scalar<T> {
-
-    /**
-     * Source iterable.
-     */
-    private final Iterable<T> source;
-
-    /**
-     * Ctor.
-     *
-     * @param source Iterable
-     */
-    public FirstOf(final Iterable<T> source) {
-        this.source = source;
-    }
+public final class StdinInput implements Input {
 
     @Override
-    public T asValue() throws IOException {
-        final Iterator<T> iterator = this.source.iterator();
-        if (!iterator.hasNext()) {
-            throw new IOException("Iterable is empty");
-        }
-        return iterator.next();
+    public InputStream stream() {
+        return System.in;
     }
+
 }

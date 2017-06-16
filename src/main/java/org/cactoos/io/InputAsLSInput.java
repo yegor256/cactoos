@@ -32,6 +32,7 @@ import org.cactoos.Input;
 import org.cactoos.text.BytesAsText;
 import org.w3c.dom.ls.LSInput;
 
+// @checkstyle AbbreviationAsWordInNameCheck (10 lines)
 /**
  * Input as LSInput.
  *
@@ -40,7 +41,6 @@ import org.w3c.dom.ls.LSInput;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.6
- * @checkstyle AbbreviationAsWordInNameCheck (10 lines)
  */
 public final class InputAsLSInput implements LSInput {
 
@@ -50,11 +50,42 @@ public final class InputAsLSInput implements LSInput {
     private final Input input;
 
     /**
+     * PublicID.
+     */
+    private final String pid;
+
+    /**
+     * SystemID.
+     */
+    private final String sid;
+
+    /**
+     * Base.
+     */
+    private final String base;
+
+    /**
      * Ctor.
      * @param inpt Input
      */
     public InputAsLSInput(final Input inpt) {
+        this(inpt, "#public", "#system", "#base");
+    }
+
+    // @checkstyle ParameterNumberCheck (10 lines)
+    /**
+     * Ctor.
+     * @param inpt Input
+     * @param pubid PublicID
+     * @param sysid SystemID
+     * @param bse Base
+     */
+    public InputAsLSInput(final Input inpt, final String pubid,
+        final String sysid, final String bse) {
         this.input = inpt;
+        this.pid = pubid;
+        this.sid = sysid;
+        this.base = bse;
     }
 
     @Override
@@ -64,7 +95,9 @@ public final class InputAsLSInput implements LSInput {
 
     @Override
     public void setCharacterStream(final Reader stream) {
-        // nothing to do
+        throw new UnsupportedOperationException(
+            "#setCharacterStream() is not supported"
+        );
     }
 
     @Override
@@ -78,7 +111,9 @@ public final class InputAsLSInput implements LSInput {
 
     @Override
     public void setByteStream(final InputStream stream) {
-        // nothing to do
+        throw new UnsupportedOperationException(
+            "#setByteStream() is not supported"
+        );
     }
 
     @Override
@@ -92,37 +127,45 @@ public final class InputAsLSInput implements LSInput {
 
     @Override
     public void setStringData(final String data) {
-        // nothing to do
+        throw new UnsupportedOperationException(
+            "#setStringData() is not supported"
+        );
     }
 
     @Override
     public String getSystemId() {
-        return "#system";
+        return this.sid;
     }
 
     @Override
-    public void setSystemId(final String sid) {
-        // nothing to do
+    public void setSystemId(final String sysid) {
+        throw new UnsupportedOperationException(
+            "#setSystemId() is not supported"
+        );
     }
 
     @Override
     public String getPublicId() {
-        return "#public";
+        return this.pid;
     }
 
     @Override
-    public void setPublicId(final String pid) {
-        // nothing to do
+    public void setPublicId(final String pubid) {
+        throw new UnsupportedOperationException(
+            "#setPublicId() is not supported"
+        );
     }
 
     @Override
     public String getBaseURI() {
-        return "#base";
+        return this.base;
     }
 
     @Override
     public void setBaseURI(final String uri) {
-        // nothing to do
+        throw new UnsupportedOperationException(
+            "#setBaseURI() is not supported"
+        );
     }
 
     @Override
@@ -132,7 +175,9 @@ public final class InputAsLSInput implements LSInput {
 
     @Override
     public void setEncoding(final String encoding) {
-        // nothing to do
+        throw new UnsupportedOperationException(
+            "#setEncoding() is not supported"
+        );
     }
 
     @Override
@@ -143,6 +188,8 @@ public final class InputAsLSInput implements LSInput {
 
     @Override
     public void setCertifiedText(final boolean text) {
-        // nothing to do
+        throw new UnsupportedOperationException(
+            "#setCertifiedText() is not supported"
+        );
     }
 }

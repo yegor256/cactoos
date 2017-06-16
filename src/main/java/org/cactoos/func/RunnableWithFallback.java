@@ -21,69 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
+import org.cactoos.Proc;
 
 /**
- * Length of Input.
+ * Runnable with a fallback plan.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.6
  */
-public final class LengthOfInput implements Scalar<Long> {
+public final class RunnableWithFallback implements Runnable {
 
     /**
-     * The input.
+     * The runnable.
      */
-    private final Input source;
+    private final Runnable runnable;
 
     /**
-     * The buffer size.
+     * The fallback.
      */
-    private final int size;
-
-    /**
-     * Ctor.
-     * @param input The input
-     */
-    public LengthOfInput(final Input input) {
-        // @checkstyle MagicNumber (1 line)
-        this(input, 16 << 10);
-    }
+    private final Proc<Throwable> fallback;
 
     /**
      * Ctor.
-     * @param input The input
-     * @param max Buffer size
+     * @param rnb Runnable
+     * @param fbk The fallback
      */
-    public LengthOfInput(final Input input, final int max) {
-        this.source = input;
-        this.size = max;
+    public RunnableWithFallback(final Runnable rnb,
+        final Proc<Throwable> fbk) {
+        this.runnable = rnb;
+        this.fallback = fbk;
     }
 
     @Override
-    public Long asValue() throws IOException {
-        try (final InputStream stream = this.source.stream()) {
-            final byte[] buf = new byte[this.size];
-            long length = 0L;
-            while (true) {
-                final int len = stream.read(buf);
-                if (len > 0) {
-                    length += (long) len;
-                }
-                if (len < 0) {
-                    break;
-                }
-            }
-            return length;
-        }
+    public void run() {
+        new UncheckedFunc<>(
+            new FuncWithFallback<Boolean, Boolean>(
+                new RunnableAsFunc<>(this.runnable),
+                new ProcAsFunc<>(this.fallback)
+            )
+        ).apply(true);
     }
 
 }

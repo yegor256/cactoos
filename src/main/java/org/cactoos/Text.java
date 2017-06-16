@@ -32,6 +32,7 @@ import java.io.IOException;
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @see org.cactoos.text.StringAsText
  * @since 0.1
  */
 public interface Text {

@@ -23,67 +23,52 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
+import org.cactoos.func.IoCheckedScalar;
+import org.cactoos.func.StickyScalar;
 
 /**
- * Length of Input.
+ * Input that reads only once.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.6
  */
-public final class LengthOfInput implements Scalar<Long> {
+public final class StickyInput implements Input {
 
     /**
-     * The input.
+     * The cache.
      */
-    private final Input source;
-
-    /**
-     * The buffer size.
-     */
-    private final int size;
+    private final Scalar<byte[]> cache;
 
     /**
      * Ctor.
      * @param input The input
      */
-    public LengthOfInput(final Input input) {
-        // @checkstyle MagicNumber (1 line)
-        this(input, 16 << 10);
-    }
-
-    /**
-     * Ctor.
-     * @param input The input
-     * @param max Buffer size
-     */
-    public LengthOfInput(final Input input, final int max) {
-        this.source = input;
-        this.size = max;
+    public StickyInput(final Input input) {
+        this.cache = new StickyScalar<>(
+            () -> {
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                new LengthOfInput(
+                    new TeeInput(input, new OutputStreamAsOutput(baos))
+                ).asValue();
+                return baos.toByteArray();
+            }
+        );
     }
 
     @Override
-    public Long asValue() throws IOException {
-        try (final InputStream stream = this.source.stream()) {
-            final byte[] buf = new byte[this.size];
-            long length = 0L;
-            while (true) {
-                final int len = stream.read(buf);
-                if (len > 0) {
-                    length += (long) len;
-                }
-                if (len < 0) {
-                    break;
-                }
-            }
-            return length;
-        }
+    public InputStream stream() throws IOException {
+        return new ByteArrayInputStream(
+            new IoCheckedScalar<>(this.cache).asValue()
+        );
     }
 
 }

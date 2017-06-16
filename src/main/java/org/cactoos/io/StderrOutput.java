@@ -23,67 +23,23 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
+import java.io.OutputStream;
+import org.cactoos.Output;
 
 /**
- * Length of Input.
+ * Output that writes to {@code stderr}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.6
  */
-public final class LengthOfInput implements Scalar<Long> {
-
-    /**
-     * The input.
-     */
-    private final Input source;
-
-    /**
-     * The buffer size.
-     */
-    private final int size;
-
-    /**
-     * Ctor.
-     * @param input The input
-     */
-    public LengthOfInput(final Input input) {
-        // @checkstyle MagicNumber (1 line)
-        this(input, 16 << 10);
-    }
-
-    /**
-     * Ctor.
-     * @param input The input
-     * @param max Buffer size
-     */
-    public LengthOfInput(final Input input, final int max) {
-        this.source = input;
-        this.size = max;
-    }
+public final class StderrOutput implements Output {
 
     @Override
-    public Long asValue() throws IOException {
-        try (final InputStream stream = this.source.stream()) {
-            final byte[] buf = new byte[this.size];
-            long length = 0L;
-            while (true) {
-                final int len = stream.read(buf);
-                if (len > 0) {
-                    length += (long) len;
-                }
-                if (len < 0) {
-                    break;
-                }
-            }
-            return length;
-        }
+    public OutputStream stream() {
+        return System.err;
     }
 
 }

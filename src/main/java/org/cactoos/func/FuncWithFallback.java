@@ -21,69 +21,75 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
+import org.cactoos.Func;
 
 /**
- * Length of Input.
+ * Func with a fallback plan.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @since 0.2
  */
-public final class LengthOfInput implements Scalar<Long> {
+public final class FuncWithFallback<X, Y> implements Func<X, Y> {
 
     /**
-     * The input.
+     * The func.
      */
-    private final Input source;
+    private final Func<X, Y> func;
 
     /**
-     * The buffer size.
+     * The fallback.
      */
-    private final int size;
+    private final Func<Throwable, Y> fallback;
+
+    /**
+     * The follow up.
+     */
+    private final Func<Y, Y> follow;
 
     /**
      * Ctor.
-     * @param input The input
+     * @param fnc The func
+     * @param fbk The fallback
      */
-    public LengthOfInput(final Input input) {
-        // @checkstyle MagicNumber (1 line)
-        this(input, 16 << 10);
+    public FuncWithFallback(final Func<X, Y> fnc,
+        final Func<Throwable, Y> fbk) {
+        this(fnc, fbk, input -> input);
     }
 
     /**
      * Ctor.
-     * @param input The input
-     * @param max Buffer size
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
      */
-    public LengthOfInput(final Input input, final int max) {
-        this.source = input;
-        this.size = max;
+    public FuncWithFallback(final Func<X, Y> fnc,
+        final Func<Throwable, Y> fbk, final Func<Y, Y> flw) {
+        this.func = fnc;
+        this.fallback = fbk;
+        this.follow = flw;
     }
 
     @Override
-    public Long asValue() throws IOException {
-        try (final InputStream stream = this.source.stream()) {
-            final byte[] buf = new byte[this.size];
-            long length = 0L;
-            while (true) {
-                final int len = stream.read(buf);
-                if (len > 0) {
-                    length += (long) len;
-                }
-                if (len < 0) {
-                    break;
-                }
-            }
-            return length;
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    public Y apply(final X input) throws Exception {
+        Y result;
+        try {
+            result = this.func.apply(input);
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            result = this.fallback.apply(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Throwable ex) {
+            result = this.fallback.apply(ex);
         }
+        return this.follow.apply(result);
     }
 
 }

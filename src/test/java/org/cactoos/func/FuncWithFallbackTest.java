@@ -21,65 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import org.cactoos.ScalarHasValue;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
+import org.cactoos.FuncApplies;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link LengthOfInput}.
+ * Test case for {@link FuncWithFallback}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LengthOfInputTest {
+public final class FuncWithFallbackTest {
 
     @Test
-    public void calculatesLength() {
-        final String text = "What's up, друг?";
+    public void usesMainFunc() throws Exception {
         MatcherAssert.assertThat(
-            "Can't calculate the length of Input",
-            new LengthOfInput(
-                new BytesAsInput(
-                    new TextAsBytes(
-                        new StringAsText(text)
-                    )
-                )
+            "Can't use the main function if no exception",
+            new FuncWithFallback<>(
+                input -> "It's success",
+                ex -> "In case of failure..."
             ),
-            new ScalarHasValue<>(
-                (long) text.getBytes(StandardCharsets.UTF_8).length
-            )
+            new FuncApplies<>(1, Matchers.containsString("success"))
         );
     }
 
     @Test
-    public void calculatesZeroLength() {
+    public void usesCallback() throws Exception {
         MatcherAssert.assertThat(
-            "Can't calculate the length of an empty input",
-            new LengthOfInput(new DeadInput()),
-            new ScalarHasValue<>(0L)
+            "Can't use the callback in case of exception",
+            new FuncWithFallback<>(
+                input -> {
+                    throw new IOException("Failure");
+                },
+                ex -> "Never mind"
+            ),
+            new FuncApplies<>(1, Matchers.containsString("Never"))
         );
     }
 
     @Test
-    public void readsRealUrl() throws IOException {
+    public void usesFollowUp() throws Exception {
         MatcherAssert.assertThat(
-            "Can't calculate length of a real page at the URL",
-            new LengthOfInput(
-                new UrlAsInput(
-                    // @checkstyle LineLength (1 line)
-                    "https://raw.githubusercontent.com/yegor256/cactoos/0.5/pom.xml"
-                )
-            ).asValue(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(5960L)
+            "Can't use the follow-up func",
+            new FuncWithFallback<>(
+                input -> "works fine",
+                ex -> "won't happen",
+                input -> "follow up"
+            ),
+            new FuncApplies<>(1, Matchers.containsString("follow"))
         );
     }
 

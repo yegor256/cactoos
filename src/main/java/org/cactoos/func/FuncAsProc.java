@@ -24,72 +24,35 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
- * Func with Callback.
+ * Func as Proc.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.2
+ * @since 0.6
  */
-public final class FuncWithCallback<X, Y> implements Func<X, Y> {
+public final class FuncAsProc<X> implements Proc<X> {
 
     /**
      * The func.
      */
-    private final Func<X, Y> func;
-
-    /**
-     * The callback.
-     */
-    private final Func<Throwable, Y> callback;
-
-    /**
-     * The follow up.
-     */
-    private final Func<Y, Y> follow;
+    private final Func<X, ?> func;
 
     /**
      * Ctor.
-     * @param fnc The func
-     * @param cbk The callback
+     * @param fnc The proc
      */
-    public FuncWithCallback(final Func<X, Y> fnc,
-        final Func<Throwable, Y> cbk) {
-        this(fnc, cbk, input -> input);
-    }
-
-    /**
-     * Ctor.
-     * @param fnc The func
-     * @param cbk The callback
-     * @param flw The follow up func
-     */
-    public FuncWithCallback(final Func<X, Y> fnc,
-        final Func<Throwable, Y> cbk, final Func<Y, Y> flw) {
+    public FuncAsProc(final Func<X, ?> fnc) {
         this.func = fnc;
-        this.callback = cbk;
-        this.follow = flw;
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    public Y apply(final X input) throws Exception {
-        Y result;
-        try {
-            result = this.func.apply(input);
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            result = this.callback.apply(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Throwable ex) {
-            result = this.callback.apply(ex);
-        }
-        return this.follow.apply(result);
+    public void exec(final X input) throws Exception {
+        this.func.apply(input);
     }
-
 }

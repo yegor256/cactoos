@@ -23,58 +23,31 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
-import org.cactoos.FuncApplies;
+import java.security.SecureRandom;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FuncWithCallback}.
+ * Test case for {@link RepeatedFunc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncWithCallbackTest {
+public final class RepeatedFuncTest {
 
     @Test
-    public void usesMainFunc() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't use the main function if no exception",
-            new FuncWithCallback<>(
-                input -> "It's success",
-                ex -> "In case of failure..."
-            ),
-            new FuncApplies<>(1, Matchers.containsString("success"))
+    public void runsFuncMultipleTimes() throws Exception {
+        final Func<Boolean, Integer> func = new RepeatedFunc<>(
+            input -> new SecureRandom().nextInt(),
+            2
         );
-    }
-
-    @Test
-    public void usesCallback() throws Exception {
         MatcherAssert.assertThat(
-            "Can't use the callback in case of exception",
-            new FuncWithCallback<>(
-                input -> {
-                    throw new IOException("Failure");
-                },
-                ex -> "Never mind"
-            ),
-            new FuncApplies<>(1, Matchers.containsString("Never"))
-        );
-    }
-
-    @Test
-    public void usesFollowUp() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't use the follow-up func",
-            new FuncWithCallback<>(
-                input -> "works fine",
-                ex -> "won't happen",
-                input -> "follow up"
-            ),
-            new FuncApplies<>(1, Matchers.containsString("follow"))
+            func.apply(true),
+            Matchers.not(Matchers.equalTo(func.apply(true)))
         );
     }
 

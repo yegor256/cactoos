@@ -21,69 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
+import org.cactoos.Func;
 
 /**
- * Length of Input.
- *
- * <p>There is no thread-safety guarantee.
+ * Func that repeats its calculation a few times before
+ * returning the last result.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @since 0.6
  */
-public final class LengthOfInput implements Scalar<Long> {
+public final class RepeatedFunc<X, Y> implements Func<X, Y> {
 
     /**
-     * The input.
+     * Original func.
      */
-    private final Input source;
+    private final Func<X, Y> func;
 
     /**
-     * The buffer size.
+     * How many times to run.
      */
-    private final int size;
-
-    /**
-     * Ctor.
-     * @param input The input
-     */
-    public LengthOfInput(final Input input) {
-        // @checkstyle MagicNumber (1 line)
-        this(input, 16 << 10);
-    }
+    private final int times;
 
     /**
      * Ctor.
-     * @param input The input
-     * @param max Buffer size
+     *
+     * <p>If {@code max} is equal or less than zero {@link #apply(Object)}
+     * will return {@code null}.</p>
+     *
+     * @param fnc Func original
+     * @param max How many times
      */
-    public LengthOfInput(final Input input, final int max) {
-        this.source = input;
-        this.size = max;
+    public RepeatedFunc(final Func<X, Y> fnc, final int max) {
+        this.func = fnc;
+        this.times = max;
     }
 
     @Override
-    public Long asValue() throws IOException {
-        try (final InputStream stream = this.source.stream()) {
-            final byte[] buf = new byte[this.size];
-            long length = 0L;
-            while (true) {
-                final int len = stream.read(buf);
-                if (len > 0) {
-                    length += (long) len;
-                }
-                if (len < 0) {
-                    break;
-                }
-            }
-            return length;
+    public Y apply(final X input) throws Exception {
+        Y result = null;
+        for (int idx = 0; idx < this.times; ++idx) {
+            result = this.func.apply(input);
         }
+        return result;
     }
 
 }

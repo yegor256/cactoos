@@ -21,39 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import org.cactoos.ScalarHasValue;
+import org.cactoos.FuncApplies;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FirstOf}.
+ * Test case for {@link RunnableWithFallback}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FirstOfTest {
+public final class RunnableWithFallbackTest {
 
     @Test
-    public void firstElementTest() throws Exception {
+    public void usesMainFunc() throws Exception {
         MatcherAssert.assertThat(
-            "Can't take the first item from the iterable",
-            new FirstOf<>(
-                // @checkstyle MagicNumber (1 line)
-                Arrays.asList(1, 2, 3)
+            "Can't use the main function if no exception",
+            new RunnableAsFunc<>(
+                new RunnableWithFallback(
+                    () -> {
+                    },
+                    input -> {
+                        throw new IOException(input);
+                    }
+                )
             ),
-            new ScalarHasValue<>(1)
+            new FuncApplies<>(true, Matchers.nullValue())
         );
     }
 
-    @Test(expected = IOException.class)
-    public void failForEmptyCollectionTest() throws Exception {
-        new FirstOf<>(Collections.emptyList()).asValue();
+    @Test
+    public void usesFallback() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't use the fallback function if there is exception",
+            new RunnableAsFunc<>(
+                new RunnableWithFallback(
+                    () -> {
+                        throw new IllegalStateException("intended");
+                    },
+                    input -> {
+                    }
+                )
+            ),
+            new FuncApplies<>(true, Matchers.nullValue())
+        );
     }
+
 }

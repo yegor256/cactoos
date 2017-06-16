@@ -52,6 +52,8 @@ import org.cactoos.io.TeeInput;
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @see FileAsOutput
+ * @see org.cactoos.io.PathAsOutput
  * @since 0.1
  */
 public interface Output {
