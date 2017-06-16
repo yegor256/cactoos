@@ -24,48 +24,78 @@
 package org.cactoos.list;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link FirstOf}.
- *
- * @author Kirill (g4s8.public@gmail.com)
+ * Test Case for {@link ItemOfIterator}.
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FirstOfTest {
+public final class ItemOfIteratorTest {
 
     @Test
     public void firstElementTest() throws Exception {
         MatcherAssert.assertThat(
-            "Can't take the first item from the iterable",
-            new FirstOf<>(
+            "Can't take the first item from the iterator",
+            new ItemOfIterator<>(
                 // @checkstyle MagicNumber (1 line)
-                Arrays.asList(1, 2, 3)
+                new ArrayAsIterable<>(1, 2, 3).iterator()
             ),
             new ScalarHasValue<>(1)
+        );
+    }
+
+    @Test
+    public void elementByPosTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't take the item by position from the iterator",
+            new ItemOfIterator<>(
+                // @checkstyle MagicNumber (1 line)
+                new ArrayAsIterable<>(1, 2, 3).iterator(),
+                1
+            ),
+            new ScalarHasValue<>(2)
         );
     }
 
     @Test(expected = IOException.class)
     public void failForEmptyCollectionTest() throws Exception {
-        new FirstOf<>(Collections.emptyList()).asValue();
+        new ItemOfIterator<>(Collections.emptyIterator()).asValue();
+    }
+
+    @Test(expected = IOException.class)
+    public void failForNegativePositionTest() throws Exception {
+        new ItemOfIterator<>(
+            // @checkstyle MagicNumber (1 line)
+            new ArrayAsIterable<>(1, 2, 3).iterator(),
+            -1
+        ).asValue();
     }
 
     @Test
     public void fallbackTest() throws Exception {
+        final String fallback = "fallback";
         MatcherAssert.assertThat(
             "Can't fallback to default value",
-            new FirstOf<>(
-                Collections.emptyList(),
-                1
+            new ItemOfIterator<>(
+                Collections.emptyIterator(),
+                fallback
             ),
-            new ScalarHasValue<>(1)
+            new ScalarHasValue<>(fallback)
         );
+    }
+
+    @Test(expected = IOException.class)
+    public void failForPosMoreLengthTest() throws Exception {
+        new ItemOfIterator<>(
+            // @checkstyle MagicNumberCheck (2 lines)
+            new ArrayAsIterable<>(1, 2, 3).iterator(),
+            3
+        ).asValue();
     }
 }
