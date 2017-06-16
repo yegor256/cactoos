@@ -52,7 +52,7 @@ public final class NaturalNumbersTest {
     public void notStartsWithNegativeNumbers() {
         MatcherAssert.assertThat(
             "Contains negative Numbers",
-            new FirstOf<Long>(new NaturalNumbers()),
+            new ItemOfIterable<Long>(new NaturalNumbers(), 0),
             new ScalarHasValue<>(0L)
         );
     }
