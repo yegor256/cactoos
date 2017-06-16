@@ -33,7 +33,7 @@ import org.junit.Test;
  *
  * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
- * @since 0.4
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class NaturalNumbersTest {

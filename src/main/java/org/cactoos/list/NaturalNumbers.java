@@ -31,7 +31,7 @@ import java.util.stream.LongStream;
  *
  * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
- * @since 0.4
+ * @since 0.7
  */
 public final class NaturalNumbers implements Iterable<Long> {
 
