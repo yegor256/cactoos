@@ -23,49 +23,60 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
-import org.cactoos.ScalarHasValue;
+import java.util.Comparator;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FirstOf}.
+ * Test case for {@link SortedIterable}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class FirstOfTest {
+public final class SortedIterableTest {
 
     @Test
-    public void firstElementTest() throws Exception {
+    public void sortsAnArray() throws Exception {
         MatcherAssert.assertThat(
-            "Can't take the first item from the iterable",
-            new FirstOf<>(
-                // @checkstyle MagicNumber (1 line)
-                Arrays.asList(1, 2, 3)
+            "Can't sort an iterable",
+            new SortedIterable<>(
+                new ArrayAsIterable<>(
+                    3, 2, 10, 44, -6, 0
+                )
             ),
-            new ScalarHasValue<>(1)
+            Matchers.hasItems(-6, 0, 2, 3, 10, 44)
         );
     }
 
-    @Test(expected = IOException.class)
-    public void failForEmptyCollectionTest() throws Exception {
-        new FirstOf<>(Collections.emptyList()).asValue();
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void sortsAnArrayWithComparator() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't sort an iterable with a comparator",
+            new SortedIterable<>(
+                Comparator.reverseOrder(),
+                new ArrayAsIterable<>(
+                    "a", "c", "hello", "dude", "Friend"
+                )
+            ),
+            Matchers.hasItems("hello", "dude", "c", "a", "Friend")
+        );
     }
 
     @Test
-    public void fallbackTest() throws Exception {
+    public void sortsAnEmptyArray() throws Exception {
         MatcherAssert.assertThat(
-            "Can't fallback to default value",
-            new FirstOf<>(
-                Collections.emptyList(),
-                1
+            "Can't sort an empty iterable",
+            new SortedIterable<Integer>(
+                Collections.emptyList()
             ),
-            new ScalarHasValue<>(1)
+            Matchers.iterableWithSize(0)
         );
     }
+
 }

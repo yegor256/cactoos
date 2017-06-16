@@ -39,11 +39,10 @@ import org.junit.Test;
 public final class IterableAsMapTest {
 
     @Test
-    @SuppressWarnings("unchecked")
     public void convertsIterableToMap() {
         MatcherAssert.assertThat(
             "Can't convert iterable to map",
-            new IterableAsMap<>(
+            new IterableAsMap<Integer, String>(
                 new AbstractMap.SimpleEntry<>(0, "hello, "),
                 new AbstractMap.SimpleEntry<>(1, "world!")
             ),
