@@ -32,7 +32,7 @@ package org.cactoos;
  * @version $Id$
  * @since 0.5
  */
-public interface Logical {
+public interface LogTerm {
 
     /**
      * Convert to boolean value.

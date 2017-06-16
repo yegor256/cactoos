@@ -23,7 +23,7 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.Logical;
+import org.cactoos.LogTerm;
 
 /**
  * Logical false.
@@ -34,7 +34,7 @@ import org.cactoos.Logical;
  * @version $Id$
  * @since 0.5
  */
-public final class False implements Logical {
+public final class False implements LogTerm {
 
     @Override
     public Boolean asValue() throws Exception {
