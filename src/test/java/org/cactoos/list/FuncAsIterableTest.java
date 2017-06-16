@@ -23,42 +23,31 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
 import org.cactoos.func.UncheckedFunc;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Iterable over the output of a function.
+ * Test case for {@link FuncAsIterable}.
  *
  * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
- * @param <X> The input type for the Function
- * @param <Y> The output Type of the Function
  * @since 0.7
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncAsIterable<X, Y> implements Iterable<Y> {
+public final class FuncAsIterableTest {
 
-    /**
-     * The Function.
-     */
-    private final UncheckedFunc<X, Y> func;
-    /**
-     * The Iterable providing the Input for the Function.
-     */
-    private final Iterable<X> input;
-
-    /**
-     * Ctor.
-     * @param func The Function.
-     * @param input THe Input for the Function.
-     */
-    public FuncAsIterable(final UncheckedFunc<X, Y> func,
-        final Iterable<X> input) {
-        this.func = func;
-        this.input = input;
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new FuncAsIterator<>(this.input.iterator(), this.func);
+    @Test
+    public void containsSequentialFunctionOutput() {
+        MatcherAssert.assertThat(
+            "Can't get sequential Function output",
+            new FuncAsIterable<>(
+                new UncheckedFunc<>(i -> i - 1),
+                new NaturalNumbers()
+            ),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.hasItems(-1L, 0L, 5L, 10L)
+        );
     }
 }

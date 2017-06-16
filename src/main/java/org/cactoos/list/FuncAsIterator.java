@@ -23,34 +23,48 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.func.UncheckedFunc;
-
 import java.util.Iterator;
+import org.cactoos.func.UncheckedFunc;
 
 /**
  * Iterator over the output of a function.
  *
  * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
- * @since 0.4
+ * @param <X> The input type for the Function
+ * @param <Y> The output Type of the Function
+ * @since 0.7
  */
-public class FuncAsIterator<X,Y> implements Iterator<Y> {
+public final class FuncAsIterator<X, Y> implements Iterator<Y> {
 
+    /**
+     * The input providing iterator.
+     */
     private final Iterator<X> input;
+
+    /**
+     * The function.
+     */
     private final UncheckedFunc<X, Y> func;
 
-    public FuncAsIterator(final Iterator<X> input, final UncheckedFunc<X, Y> func) {
+    /**
+     * Ctor.
+     * @param input The input for the Function.
+     * @param func The function.
+     */
+    public FuncAsIterator(final Iterator<X> input,
+        final UncheckedFunc<X, Y> func) {
         this.input = input;
         this.func = func;
     }
 
     @Override
     public boolean hasNext() {
-        return input.hasNext();
+        return this.input.hasNext();
     }
 
     @Override
     public Y next() {
-        return func.apply(input.next());
+        return this.func.apply(this.input.next());
     }
 }

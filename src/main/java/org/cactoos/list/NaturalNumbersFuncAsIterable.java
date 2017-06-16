@@ -27,38 +27,32 @@ import java.util.Iterator;
 import org.cactoos.func.UncheckedFunc;
 
 /**
- * Iterable over the output of a function.
+ * Iterable over the output of a function over natural Numbers.
+ *
+ * The supplied func will get a sequence of natural numbers (0,1,2,3....)
  *
  * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
- * @param <X> The input type for the Function
- * @param <Y> The output Type of the Function
+ * @param <Y> The Type of the Iterable
  * @since 0.7
  */
-public final class FuncAsIterable<X, Y> implements Iterable<Y> {
+public final class NaturalNumbersFuncAsIterable<Y> implements Iterable<Y> {
 
     /**
-     * The Function.
+     * The underlying iterable.
      */
-    private final UncheckedFunc<X, Y> func;
-    /**
-     * The Iterable providing the Input for the Function.
-     */
-    private final Iterable<X> input;
+    private final FuncAsIterable<Long, Y> iterable;
 
     /**
      * Ctor.
-     * @param func The Function.
-     * @param input THe Input for the Function.
+     * @param func The Function that takes Longs and provides the output
      */
-    public FuncAsIterable(final UncheckedFunc<X, Y> func,
-        final Iterable<X> input) {
-        this.func = func;
-        this.input = input;
+    public NaturalNumbersFuncAsIterable(final UncheckedFunc<Long, Y> func) {
+        this.iterable = new FuncAsIterable<Long, Y>(func, new NaturalNumbers());
     }
 
     @Override
     public Iterator<Y> iterator() {
-        return new FuncAsIterator<>(this.input.iterator(), this.func);
+        return this.iterable.iterator();
     }
 }
