@@ -24,12 +24,12 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
 import java.util.Locale;
 import org.cactoos.Text;
+import org.cactoos.list.IterableAsList;
 
 /**
  * Text in Sprinf format.
@@ -64,7 +64,7 @@ public final class FormattedText implements Text {
      * @param arguments Arguments
      */
     public FormattedText(final String ptn, final Object... arguments) {
-        this(ptn, Arrays.asList(arguments));
+        this(ptn, new IterableAsList<>(arguments));
     }
 
     /**
@@ -74,7 +74,7 @@ public final class FormattedText implements Text {
      * @param arguments Arguments
      */
     public FormattedText(final Text ptn, final Object... arguments) {
-        this(ptn, Arrays.asList(arguments));
+        this(ptn, new IterableAsList<>(arguments));
     }
 
     /**
@@ -89,7 +89,7 @@ public final class FormattedText implements Text {
         final Locale locale,
         final Object... arguments
     ) {
-        this(ptn, locale, Arrays.asList(arguments));
+        this(ptn, locale, new IterableAsList<>(arguments));
     }
 
     /**
@@ -104,7 +104,7 @@ public final class FormattedText implements Text {
         final Locale locale,
         final Object... arguments
     ) {
-        this(ptn, locale, Arrays.asList(arguments));
+        this(ptn, locale, new IterableAsList<>(arguments));
     }
 
     /**
