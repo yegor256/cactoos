@@ -54,6 +54,17 @@ public final class IterableAsList<T> extends AbstractList<T> {
     /**
      * Ctor.
      *
+     * @param array An array of some elements
+     */
+    @SafeVarargs
+    @SuppressWarnings("varargs")
+    public IterableAsList(final T... array) {
+        this(new ArrayAsIterable<>(array));
+    }
+
+    /**
+     * Ctor.
+     *
      * @param iterable An {@link Iterable}
      */
     public IterableAsList(final Iterable<T> iterable) {
