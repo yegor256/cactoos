@@ -23,7 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -50,7 +49,7 @@ public final class ConcatenatedIterator<T> implements Iterator<T> {
     @SafeVarargs
     @SuppressWarnings("varargs")
     public ConcatenatedIterator(final Iterator<T>... items) {
-        this(Arrays.asList(items));
+        this(new IterableAsList<>(items));
     }
 
     /**

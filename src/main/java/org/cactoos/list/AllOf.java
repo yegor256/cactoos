@@ -35,7 +35,7 @@ import org.cactoos.Scalar;
  *
  * <pre> new AllOf(
  *   new TransformedIterable&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
+ *     new IterableAsList&lt;String&gt;("hello", "world"),
  *     new ProcAsFunc&lt;&gt;(i -&gt; System.out.println(i))
  *   )
  * ).asValue();</pre>
@@ -44,7 +44,7 @@ import org.cactoos.Scalar;
  *
  * <pre> new AllOf(
  *   new IterableAsBooleans&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
+ *     new IterableAsList&lt;String&gt;("hello", "world"),
  *     i -&gt; System.out.println(i)
  *   )
  * ).asValue();</pre>
@@ -52,7 +52,7 @@ import org.cactoos.Scalar;
  * <p>Or you can even use {@link IterableAsBoolean}:</p>
  *
  * <pre> new IterableAsBoolean&lt;String&gt;(
- *   Arrays.asList("hello", "world"),
+ *   new IterableAsList&lt;String&gt;("hello", "world"),
  *   i -&gt; System.out.println(i)
  * ).asValue();</pre>
  *
