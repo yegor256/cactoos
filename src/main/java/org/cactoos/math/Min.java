@@ -34,7 +34,8 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @since 0.7
  */
-public final class Min implements Scalar<Number> {
+@SuppressWarnings("serial")
+public final class Min extends Number implements Scalar<Number> {
 
     /**
      * Numbers.
@@ -46,6 +47,7 @@ public final class Min implements Scalar<Number> {
      * @param numbers The numbers
      */
     public Min(final Number... numbers) {
+        super();
         this.numbers = numbers;
     }
 
@@ -59,4 +61,49 @@ public final class Min implements Scalar<Number> {
         }
         return min;
     }
+
+    @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public int intValue() {
+        try {
+            return this.asValue().intValue();
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public long longValue() {
+        try {
+            return this.asValue().longValue();
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public float floatValue() {
+        try {
+            return this.asValue().floatValue();
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public double doubleValue() {
+        try {
+            return this.asValue().doubleValue();
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
 }
