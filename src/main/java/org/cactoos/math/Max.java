@@ -32,7 +32,7 @@ import org.cactoos.Scalar;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.6
+ * @since 0.7
  */
 public final class Max implements Scalar<Number> {
 

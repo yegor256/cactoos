@@ -32,16 +32,15 @@ import org.junit.Test;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.6
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class MaxTest {
 
     @Test
     public void maxAmongOneTest() throws Exception {
         MatcherAssert.assertThat(
-            "Can't find the greater number",
+            "Can't find the greater among one number",
             // @checkstyle MagicNumber (2 lines)
             new Max(10).asValue(),
             Matchers.equalTo(10)
@@ -51,7 +50,7 @@ public final class MaxTest {
     @Test
     public void maxAmongManyTest() throws Exception {
         MatcherAssert.assertThat(
-            "Can't find the greater number",
+            "Can't find the greater among many numbers",
             // @checkstyle MagicNumber (2 lines)
             new Max(10, 5, 7, 2, 100).asValue(),
             Matchers.equalTo(100)
