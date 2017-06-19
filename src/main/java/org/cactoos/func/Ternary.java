@@ -33,7 +33,7 @@ import org.cactoos.Scalar;
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @param <T> Type of item.
- * @since 0.7
+ * @since 0.8
  */
 public final class Ternary<T> implements Scalar<T> {
 
