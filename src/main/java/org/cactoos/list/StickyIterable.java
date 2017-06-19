@@ -23,11 +23,11 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
 import java.util.Iterator;
+import org.cactoos.func.UncheckedScalar;
 
 /**
- * Array as iterable.
+ * Iterable that returns an iterator only once.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -36,26 +36,24 @@ import java.util.Iterator;
  * @param <X> Type of item
  * @since 0.1
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
+public final class StickyIterable<X> implements Iterable<X> {
 
     /**
-     * The array.
+     * The cache.
      */
-    private final X[] array;
+    private final UncheckedScalar<Iterator<X>> cache;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param iterable The iterable
      */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ArrayAsIterable(final X... items) {
-        this.array = items;
+    public StickyIterable(final Iterable<X> iterable) {
+        this.cache = new UncheckedScalar<>(iterable::iterator);
     }
 
     @Override
     public Iterator<X> iterator() {
-        return Arrays.asList(this.array).iterator();
+        return this.cache.asValue();
     }
 
 }
