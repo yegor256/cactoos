@@ -60,11 +60,9 @@ public final class SkippedIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        if (this.skip > 0) {
-            while (this.skip > 0 && this.iterator.hasNext()) {
-                this.iterator.next();
-                --this.skip;
-            }
+        while (this.skip > 0 && this.iterator.hasNext()) {
+            this.iterator.next();
+            --this.skip;
         }
         return this.iterator.hasNext();
     }
