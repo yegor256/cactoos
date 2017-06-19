@@ -23,40 +23,28 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import org.cactoos.func.UncheckedScalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Array as iterable.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link ArrayAsIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.7
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
+public final class ArrayAsIterableTest {
 
-    /**
-     * The array.
-     */
-    private final UncheckedScalar<Iterable<X>> result;
-
-    /**
-     * Ctor.
-     * @param items The array
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ArrayAsIterable(final X... items) {
-        this.result = new UncheckedScalar<>(() -> Arrays.asList(items));
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return this.result.asValue().iterator();
+    @Test
+    public void convertsArrayToIterable() {
+        MatcherAssert.assertThat(
+            "Can't convert array to iterable",
+            new ArrayAsIterable<>(
+                "hello", "world"
+            ),
+            Matchers.iterableWithSize(2)
+        );
     }
 
 }
