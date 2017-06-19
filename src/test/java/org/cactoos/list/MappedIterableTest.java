@@ -23,54 +23,48 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
+import java.io.IOException;
+import java.util.Collections;
+import org.cactoos.Text;
+import org.cactoos.text.StringAsText;
+import org.cactoos.text.UpperText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * A few Iterables joined together.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link MappedIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of item
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ConcatenatedIterator<T> implements Iterator<T> {
+public final class MappedIterableTest {
 
-    /**
-     * Iterables.
-     */
-    private final Iterable<Iterator<T>> list;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ConcatenatedIterator(final Iterator<T>... items) {
-        this(new IterableAsList<>(items));
+    @Test
+    public void transformsList() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't transform an iterable",
+            new MappedIterable<String, Text>(
+                new ArrayAsIterable<>(
+                    "hello", "world", "друг"
+                ),
+                input -> new UpperText(new StringAsText(input))
+            ).iterator().next().asString(),
+            Matchers.equalTo("HELLO")
+        );
     }
 
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public ConcatenatedIterator(final Iterable<Iterator<T>> items) {
-        this.list = items;
+    @Test
+    public void transformsEmptyList() {
+        MatcherAssert.assertThat(
+            "Can't transform an empty iterable",
+            new MappedIterable<String, Text>(
+                Collections.emptyList(),
+                input -> new UpperText(new StringAsText(input))
+            ),
+            Matchers.emptyIterable()
+        );
     }
 
-    @Override
-    public boolean hasNext() {
-        return new FilteredIterable<>(
-            this.list, Iterator::hasNext
-        ).iterator().hasNext();
-    }
-
-    @Override
-    public T next() {
-        return new FilteredIterable<>(
-            this.list, Iterator::hasNext
-        ).iterator().next().next();
-    }
 }

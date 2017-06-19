@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import java.util.Iterator;
-import org.cactoos.func.StickyFunc;
 
 /**
  * A few Iterables joined together.
@@ -36,12 +35,12 @@ import org.cactoos.func.StickyFunc;
  * @param <T> Type of item
  * @since 0.1
  */
-public final class ConcatenatedIterable<T> implements Iterable<T> {
+public final class ConcatIterator<T> implements Iterator<T> {
 
     /**
      * Iterables.
      */
-    private final Iterable<Iterable<T>> list;
+    private final Iterable<Iterator<T>> list;
 
     /**
      * Ctor.
@@ -49,7 +48,7 @@ public final class ConcatenatedIterable<T> implements Iterable<T> {
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public ConcatenatedIterable(final Iterable<T>... items) {
+    public ConcatIterator(final Iterator<T>... items) {
         this(new IterableAsList<>(items));
     }
 
@@ -57,18 +56,21 @@ public final class ConcatenatedIterable<T> implements Iterable<T> {
      * Ctor.
      * @param items Items to concatenate
      */
-    public ConcatenatedIterable(final Iterable<Iterable<T>> items) {
+    public ConcatIterator(final Iterable<Iterator<T>> items) {
         this.list = items;
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new ConcatenatedIterator<>(
-            new TransformedIterable<>(
-                this.list,
-                new StickyFunc<>(Iterable::iterator)
-            )
-        );
+    public boolean hasNext() {
+        return new FilteredIterable<>(
+            this.list, Iterator::hasNext
+        ).iterator().hasNext();
     }
 
+    @Override
+    public T next() {
+        return new FilteredIterable<>(
+            this.list, Iterator::hasNext
+        ).iterator().next().next();
+    }
 }

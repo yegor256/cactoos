@@ -23,47 +23,46 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.Iterator;
+import org.cactoos.Func;
 
 /**
- * Test case for {@link TransformedIterable}.
+ * Mapped iterable.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @param <X> Type of source item
+ * @param <Y> Type of target item
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TransformedIterableTest {
+public final class MappedIterable<X, Y> implements Iterable<Y> {
 
-    @Test
-    public void transformsList() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't transform an iterable",
-            new TransformedIterable<String, Text>(
-                new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
+    /**
+     * Iterable.
+     */
+    private final Iterable<X> iterable;
+
+    /**
+     * Function.
+     */
+    private final Func<X, Y> func;
+
+    /**
+     * Ctor.
+     * @param src Source iterable
+     * @param fnc Func
+     */
+    public MappedIterable(final Iterable<X> src, final Func<X, Y> fnc) {
+        this.iterable = src;
+        this.func = fnc;
     }
 
-    @Test
-    public void transformsEmptyList() {
-        MatcherAssert.assertThat(
-            "Can't transform an empty iterable",
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
-            ),
-            Matchers.emptyIterable()
+    @Override
+    public Iterator<Y> iterator() {
+        return new MappedIterator<>(
+            this.iterable.iterator(), this.func
         );
     }
 

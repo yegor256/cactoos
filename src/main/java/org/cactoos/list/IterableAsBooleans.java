@@ -74,7 +74,7 @@ public final class IterableAsBooleans<X> implements Iterable<Boolean> {
 
     @Override
     public Iterator<Boolean> iterator() {
-        return new TransformedIterator<>(
+        return new MappedIterator<>(
             this.iterable.iterator(),
             this.func
         );

@@ -23,57 +23,34 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.Func;
-import org.cactoos.func.UncheckedFunc;
+import org.cactoos.ScalarHasValue;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Transformed iterator.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link ConcatIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TransformedIterator<X, Y> implements Iterator<Y> {
+public final class ConcatIterableTest {
 
-    /**
-     * Iterator.
-     */
-    private final Iterator<X> iterator;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public TransformedIterator(final Iterator<X> src, final Func<X, Y> fnc) {
-        this.iterator = src;
-        this.func = fnc;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return this.iterator.hasNext();
-    }
-
-    @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public Y next() {
-        return new UncheckedFunc<>(this.func).apply(this.iterator.next());
-    }
-
-    @Override
-    public void remove() {
-        this.iterator.remove();
+    @Test
+    @SuppressWarnings("unchecked")
+    public void transformsList() {
+        MatcherAssert.assertThat(
+            "Can't concatenate iterables together",
+            new LengthOfIterable(
+                new ConcatIterable<>(
+                    new ArrayAsIterable<>("hello", "world", "друг"),
+                    new ArrayAsIterable<>("how", "are", "you"),
+                    new ArrayAsIterable<>("what's", "up")
+                )
+            ),
+            // @checkstyle MagicNumber (1 line)
+            new ScalarHasValue<>(8)
+        );
     }
 
 }

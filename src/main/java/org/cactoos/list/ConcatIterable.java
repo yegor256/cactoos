@@ -24,45 +24,50 @@
 package org.cactoos.list;
 
 import java.util.Iterator;
-import org.cactoos.Func;
+import org.cactoos.func.StickyFunc;
 
 /**
- * Transformed iterable.
+ * A few Iterables joined together.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
+ * @param <T> Type of item
  * @since 0.1
  */
-public final class TransformedIterable<X, Y> implements Iterable<Y> {
+public final class ConcatIterable<T> implements Iterable<T> {
 
     /**
-     * Iterable.
+     * Iterables.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
+    private final Iterable<Iterable<T>> list;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
+     * @param items Items to concatenate
      */
-    public TransformedIterable(final Iterable<X> src, final Func<X, Y> fnc) {
-        this.iterable = src;
-        this.func = fnc;
+    @SafeVarargs
+    @SuppressWarnings("varargs")
+    public ConcatIterable(final Iterable<T>... items) {
+        this(new IterableAsList<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param items Items to concatenate
+     */
+    public ConcatIterable(final Iterable<Iterable<T>> items) {
+        this.list = items;
     }
 
     @Override
-    public Iterator<Y> iterator() {
-        return new TransformedIterator<>(
-            this.iterable.iterator(), this.func
+    public Iterator<T> iterator() {
+        return new ConcatIterator<>(
+            new MappedIterable<>(
+                this.list,
+                new StickyFunc<>(Iterable::iterator)
+            )
         );
     }
 
