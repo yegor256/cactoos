@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import java.util.Collections;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -47,12 +48,25 @@ public final class CycledIterableTest {
                         "one", expected, "three"
                     )
                 ),
-                // @checkstyle MagicNumberCheck (1 line)
+                // @checkstyle MagicNumberCheck (1 line)<
                 7
             ),
             new ScalarHasValue<>(
                 expected
             )
+        );
+    }
+
+    @Test()
+    public void notCycledEmptyTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't generate an empty iterable",
+            new LengthOfIterable(
+                new CycledIterable<>(
+                    Collections::emptyIterator
+                )
+            ),
+            new ScalarHasValue<>(0)
         );
     }
 }

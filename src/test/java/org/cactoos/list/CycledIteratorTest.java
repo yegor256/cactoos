@@ -23,6 +23,8 @@
  */
 package org.cactoos.list;
 
+import java.util.Collections;
+import java.util.NoSuchElementException;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -54,5 +56,12 @@ public final class CycledIteratorTest {
                 expected
             )
         );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void notCycledEmptyTest() throws Exception {
+        new CycledIterator<>(
+            Collections::emptyIterator
+        ).next();
     }
 }
