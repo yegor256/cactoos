@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
+import org.cactoos.text.FormattedText;
 
 /**
  * Func that repeats its calculation a few times before
@@ -66,6 +67,14 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
         Y result = null;
         for (int idx = 0; idx < this.times; ++idx) {
             result = this.func.apply(input);
+        }
+        if (result == null) {
+            throw new IllegalArgumentException(
+                new FormattedText(
+                    "Repeat counter is equal or less than zero: %d",
+                    this.times
+                ).asString()
+            );
         }
         return result;
     }

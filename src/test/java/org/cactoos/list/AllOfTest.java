@@ -49,7 +49,7 @@ public final class AllOfTest {
         MatcherAssert.assertThat(
             "Can't iterate a list with a procedure",
             new AllOf(
-                new TransformedIterable<>(
+                new MappedIterable<>(
                     new ArrayAsIterable<>("hello", "world"),
                     list::add
                 )

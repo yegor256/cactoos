@@ -23,55 +23,57 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
 import java.util.Iterator;
+import org.cactoos.Func;
+import org.cactoos.func.UncheckedFunc;
 
 /**
- * A few Iterables joined together.
+ * Mapped iterator.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of item
+ * @param <X> Type of source item
+ * @param <Y> Type of target item
  * @since 0.1
  */
-public final class ConcatenatedIterator<T> implements Iterator<T> {
+public final class MappedIterator<X, Y> implements Iterator<Y> {
 
     /**
-     * Iterables.
+     * Iterator.
      */
-    private final Iterable<Iterator<T>> list;
+    private final Iterator<X> iterator;
 
     /**
-     * Ctor.
-     * @param items Items to concatenate
+     * Function.
      */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ConcatenatedIterator(final Iterator<T>... items) {
-        this(Arrays.asList(items));
-    }
+    private final Func<X, Y> func;
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     * @param src Source iterable
+     * @param fnc Func
      */
-    public ConcatenatedIterator(final Iterable<Iterator<T>> items) {
-        this.list = items;
+    public MappedIterator(final Iterator<X> src, final Func<X, Y> fnc) {
+        this.iterator = src;
+        this.func = fnc;
     }
 
     @Override
     public boolean hasNext() {
-        return new FilteredIterable<>(
-            this.list, Iterator::hasNext
-        ).iterator().hasNext();
+        return this.iterator.hasNext();
     }
 
     @Override
-    public T next() {
-        return new FilteredIterable<>(
-            this.list, Iterator::hasNext
-        ).iterator().next().next();
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public Y next() {
+        return new UncheckedFunc<>(this.func).apply(this.iterator.next());
     }
+
+    @Override
+    public void remove() {
+        this.iterator.remove();
+    }
+
 }

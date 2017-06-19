@@ -41,7 +41,7 @@ public final class AnyOfTest {
         MatcherAssert.assertThat(
             "Can't iterate a list",
             new AnyOf(
-                new TransformedIterable<>(
+                new MappedIterable<>(
                     new ArrayAsIterable<>("a", "file", "is", "corrupt"),
                     txt -> txt.length() > 2
                 )

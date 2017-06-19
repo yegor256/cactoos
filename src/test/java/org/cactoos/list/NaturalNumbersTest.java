@@ -23,57 +23,37 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.Func;
-import org.cactoos.func.UncheckedFunc;
+import org.cactoos.ScalarHasValue;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Transformed iterator.
+ * Test case for {@link NaturalNumbers}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @since 0.7
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TransformedIterator<X, Y> implements Iterator<Y> {
+public final class NaturalNumbersTest {
 
-    /**
-     * Iterator.
-     */
-    private final Iterator<X> iterator;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public TransformedIterator(final Iterator<X> src, final Func<X, Y> fnc) {
-        this.iterator = src;
-        this.func = fnc;
+    @Test
+    public void containsSequentialNaturalNumbers() {
+        MatcherAssert.assertThat(
+            "Can't get sequential natural numbers",
+            new NaturalNumbers(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.hasItems(0L, 1L, 5L, 10L)
+        );
     }
 
-    @Override
-    public boolean hasNext() {
-        return this.iterator.hasNext();
+    @Test
+    public void notStartsWithNegativeNumbers() {
+        MatcherAssert.assertThat(
+            "Contains negative Numbers",
+            new ItemOfIterable<Long>(new NaturalNumbers(), 0),
+            new ScalarHasValue<>(0L)
+        );
     }
-
-    @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public Y next() {
-        return new UncheckedFunc<>(this.func).apply(this.iterator.next());
-    }
-
-    @Override
-    public void remove() {
-        this.iterator.remove();
-    }
-
 }

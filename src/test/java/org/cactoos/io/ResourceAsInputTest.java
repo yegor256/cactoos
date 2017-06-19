@@ -23,6 +23,7 @@
  */
 package org.cactoos.io;
 
+import java.io.IOException;
 import java.util.Arrays;
 import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
@@ -91,6 +92,17 @@ public final class ResourceAsInputTest {
             ).asString(),
             Matchers.endsWith("replacement")
         );
+    }
+
+    @Test(expected = IOException.class)
+    public void throwsWhenResourceIsAbsent() throws Exception {
+        new BytesAsText(
+            new InputAsBytes(
+                new ResourceAsInput(
+                    "bar/this-resource-is-definitely-absent.txt"
+                )
+            )
+        ).asString();
     }
 
 }

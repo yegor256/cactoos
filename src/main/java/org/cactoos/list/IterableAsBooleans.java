@@ -34,7 +34,7 @@ import org.cactoos.Func;
  *
  * <pre> new AllOf(
  *   new IterableAsBooleans&lt;String&gt;(
- *     Arrays.asList("hello", "world"),
+ *     new IterableAsList&lt;String&gt;("hello", "world"),
  *     i -&gt; System.out.println(i)
  *   )
  * ).asValue();</pre>
@@ -74,7 +74,7 @@ public final class IterableAsBooleans<X> implements Iterable<Boolean> {
 
     @Override
     public Iterator<Boolean> iterator() {
-        return new TransformedIterator<>(
+        return new MappedIterator<>(
             this.iterable.iterator(),
             this.func
         );

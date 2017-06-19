@@ -33,19 +33,19 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
+ * Test case for {@link MappedIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TransformedIterableTest {
+public final class MappedIterableTest {
 
     @Test
     public void transformsList() throws IOException {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
-            new TransformedIterable<String, Text>(
+            new MappedIterable<String, Text>(
                 new ArrayAsIterable<>(
                     "hello", "world", "друг"
                 ),
@@ -59,7 +59,7 @@ public final class TransformedIterableTest {
     public void transformsEmptyList() {
         MatcherAssert.assertThat(
             "Can't transform an empty iterable",
-            new TransformedIterable<String, Text>(
+            new MappedIterable<String, Text>(
                 Collections.emptyList(),
                 input -> new UpperText(new StringAsText(input))
             ),

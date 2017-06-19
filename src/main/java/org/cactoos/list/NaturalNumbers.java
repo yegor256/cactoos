@@ -23,40 +23,20 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import org.cactoos.func.UncheckedScalar;
+import java.util.stream.LongStream;
 
 /**
- * Array as iterable.
+ * Iterable providing Natural Numbers.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.7
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
-
-    /**
-     * The array.
-     */
-    private final UncheckedScalar<Iterable<X>> result;
-
-    /**
-     * Ctor.
-     * @param items The array
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ArrayAsIterable(final X... items) {
-        this.result = new UncheckedScalar<>(() -> Arrays.asList(items));
-    }
+public final class NaturalNumbers implements Iterable<Long> {
 
     @Override
-    public Iterator<X> iterator() {
-        return this.result.asValue().iterator();
+    public Iterator<Long> iterator() {
+        return LongStream.range(0, Long.MAX_VALUE).iterator();
     }
-
 }

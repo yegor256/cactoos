@@ -23,40 +23,54 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import org.cactoos.func.UncheckedScalar;
 
 /**
- * Array as iterable.
+ * A few Iterables joined together.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
+ * @param <T> Type of item
  * @since 0.1
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
+public final class ConcatIterator<T> implements Iterator<T> {
 
     /**
-     * The array.
+     * Iterables.
      */
-    private final UncheckedScalar<Iterable<X>> result;
+    private final Iterable<Iterator<T>> list;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param items Items to concatenate
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public ArrayAsIterable(final X... items) {
-        this.result = new UncheckedScalar<>(() -> Arrays.asList(items));
+    public ConcatIterator(final Iterator<T>... items) {
+        this(new IterableAsList<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param items Items to concatenate
+     */
+    public ConcatIterator(final Iterable<Iterator<T>> items) {
+        this.list = items;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.result.asValue().iterator();
+    public boolean hasNext() {
+        return new FilteredIterable<>(
+            this.list, Iterator::hasNext
+        ).iterator().hasNext();
     }
 
+    @Override
+    public T next() {
+        return new FilteredIterable<>(
+            this.list, Iterator::hasNext
+        ).iterator().next().next();
+    }
 }

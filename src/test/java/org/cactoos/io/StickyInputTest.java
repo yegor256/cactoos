@@ -72,13 +72,13 @@ public final class StickyInputTest {
                     new StickyInput(
                         new UrlAsInput(
                             // @checkstyle LineLength (1 line)
-                            "https://raw.githubusercontent.com/yegor256/cactoos/0.5/pom.xml"
+                            "file:src/test/resources/org/cactoos/large-text.txt"
                         )
                     )
                 )
             ),
             new TextHasString(
-                Matchers.endsWith("</project>\n")
+                Matchers.endsWith("est laborum.\n")
             )
         );
     }

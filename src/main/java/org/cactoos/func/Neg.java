@@ -21,42 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.Scalar;
 
 /**
- * Array as iterable.
+ * Negative.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.7
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
+public final class Neg implements Scalar<Boolean> {
 
     /**
-     * The array.
+     * The origin scalar.
      */
-    private final UncheckedScalar<Iterable<X>> result;
+    private final Scalar<Boolean> origin;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param origin The scalar
      */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ArrayAsIterable(final X... items) {
-        this.result = new UncheckedScalar<>(() -> Arrays.asList(items));
+    public Neg(final Scalar<Boolean> origin) {
+        this.origin = origin;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.result.asValue().iterator();
+    public Boolean asValue() throws Exception {
+        return !this.origin.asValue();
     }
-
 }

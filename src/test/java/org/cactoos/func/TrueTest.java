@@ -21,42 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import org.cactoos.func.UncheckedScalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Array as iterable.
+ * Test case for {@link True}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.7
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
+public final class TrueTest {
 
-    /**
-     * The array.
-     */
-    private final UncheckedScalar<Iterable<X>> result;
-
-    /**
-     * Ctor.
-     * @param items The array
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ArrayAsIterable(final X... items) {
-        this.result = new UncheckedScalar<>(() -> Arrays.asList(items));
+    @Test
+    public void asValue() throws Exception {
+        MatcherAssert.assertThat(
+            new True().asValue(),
+            Matchers.equalTo(true)
+        );
     }
-
-    @Override
-    public Iterator<X> iterator() {
-        return this.result.asValue().iterator();
-    }
-
 }

@@ -23,34 +23,38 @@
  */
 package org.cactoos.list;
 
+import java.util.AbstractMap;
+import java.util.Properties;
 import org.cactoos.ScalarHasValue;
+import org.cactoos.func.FuncAsMatcher;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link ConcatenatedIterable}.
+ * Test case for {@link MapAsProperties}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ConcatenatedIterableTest {
+public final class MapAsPropertiesTest {
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void transformsList() {
+    public void convertsMapToProperties() {
         MatcherAssert.assertThat(
-            "Can't concatenate iterables together",
-            new LengthOfIterable(
-                new ConcatenatedIterable<>(
-                    new ArrayAsIterable<>("hello", "world", "друг"),
-                    new ArrayAsIterable<>("how", "are", "you"),
-                    new ArrayAsIterable<>("what's", "up")
+            "Can't convert map to properties",
+            new MapAsProperties(
+                new IterableAsMap<Integer, String>(
+                    new AbstractMap.SimpleEntry<>(0, "hello, world"),
+                    new AbstractMap.SimpleEntry<>(1, "how are you?")
                 )
             ),
-            // @checkstyle MagicNumber (1 line)
-            new ScalarHasValue<>(8)
+            new ScalarHasValue<>(
+                new FuncAsMatcher<Properties>(
+                    props -> props.getProperty("0").endsWith(", world")
+                )
+            )
         );
     }
-
 }

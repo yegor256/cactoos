@@ -21,49 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Transformed iterable.
+ * Test case for {@link Neg}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @since 0.7
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TransformedIterable<X, Y> implements Iterable<Y> {
+public final class NegTest {
 
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public TransformedIterable(final Iterable<X> src, final Func<X, Y> fnc) {
-        this.iterable = src;
-        this.func = fnc;
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new TransformedIterator<>(
-            this.iterable.iterator(), this.func
+    @Test
+    public void trueToFalse() throws Exception {
+        MatcherAssert.assertThat(
+            new Neg(new True()).asValue(),
+            Matchers.equalTo(new False().asValue())
         );
     }
 
+    @Test
+    public void falseToTrue() throws Exception {
+        MatcherAssert.assertThat(
+            new Neg(new False()).asValue(),
+            Matchers.equalTo(new True().asValue())
+        );
+    }
 }

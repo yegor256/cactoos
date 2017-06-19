@@ -23,40 +23,47 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.Func;
 
 /**
- * Array as iterable.
+ * Mapped iterable.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
+ * @param <X> Type of source item
+ * @param <Y> Type of target item
  * @since 0.1
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
+public final class MappedIterable<X, Y> implements Iterable<Y> {
 
     /**
-     * The array.
+     * Iterable.
      */
-    private final UncheckedScalar<Iterable<X>> result;
+    private final Iterable<X> iterable;
+
+    /**
+     * Function.
+     */
+    private final Func<X, Y> func;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param src Source iterable
+     * @param fnc Func
      */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ArrayAsIterable(final X... items) {
-        this.result = new UncheckedScalar<>(() -> Arrays.asList(items));
+    public MappedIterable(final Iterable<X> src, final Func<X, Y> fnc) {
+        this.iterable = src;
+        this.func = fnc;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.result.asValue().iterator();
+    public Iterator<Y> iterator() {
+        return new MappedIterator<>(
+            this.iterable.iterator(), this.func
+        );
     }
 
 }

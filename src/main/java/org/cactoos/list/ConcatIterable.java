@@ -23,40 +23,52 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.func.StickyFunc;
 
 /**
- * Array as iterable.
+ * A few Iterables joined together.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
+ * @param <T> Type of item
  * @since 0.1
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
+public final class ConcatIterable<T> implements Iterable<T> {
 
     /**
-     * The array.
+     * Iterables.
      */
-    private final UncheckedScalar<Iterable<X>> result;
+    private final Iterable<Iterable<T>> list;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param items Items to concatenate
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public ArrayAsIterable(final X... items) {
-        this.result = new UncheckedScalar<>(() -> Arrays.asList(items));
+    public ConcatIterable(final Iterable<T>... items) {
+        this(new IterableAsList<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param items Items to concatenate
+     */
+    public ConcatIterable(final Iterable<Iterable<T>> items) {
+        this.list = items;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.result.asValue().iterator();
+    public Iterator<T> iterator() {
+        return new ConcatIterator<>(
+            new MappedIterable<>(
+                this.list,
+                new StickyFunc<>(Iterable::iterator)
+            )
+        );
     }
 
 }

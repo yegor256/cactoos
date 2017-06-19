@@ -23,40 +23,34 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.ScalarHasValue;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Array as iterable.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link ConcatIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
+public final class ConcatIterableTest {
 
-    /**
-     * The array.
-     */
-    private final UncheckedScalar<Iterable<X>> result;
-
-    /**
-     * Ctor.
-     * @param items The array
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ArrayAsIterable(final X... items) {
-        this.result = new UncheckedScalar<>(() -> Arrays.asList(items));
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return this.result.asValue().iterator();
+    @Test
+    @SuppressWarnings("unchecked")
+    public void transformsList() {
+        MatcherAssert.assertThat(
+            "Can't concatenate iterables together",
+            new LengthOfIterable(
+                new ConcatIterable<>(
+                    new ArrayAsIterable<>("hello", "world", "друг"),
+                    new ArrayAsIterable<>("how", "are", "you"),
+                    new ArrayAsIterable<>("what's", "up")
+                )
+            ),
+            // @checkstyle MagicNumber (1 line)
+            new ScalarHasValue<>(8)
+        );
     }
 
 }
