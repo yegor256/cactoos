@@ -35,7 +35,7 @@ import java.util.NoSuchElementException;
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @param <T> Type of item
- * @since 0.7
+ * @since 0.8
  */
 public final class CycledIterator<T> implements Iterator<T> {
 
@@ -59,19 +59,16 @@ public final class CycledIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return this.iterable.iterator().hasNext();
+        if (this.iterator == null || !this.iterator.hasNext()) {
+            this.iterator = this.iterable.iterator();
+        }
+        return this.iterator.hasNext();
     }
 
     @Override
     public T next() {
-        if (this.iterator == null) {
-            this.iterator = this.iterable.iterator();
-        }
-        if (!this.iterator.hasNext()) {
-            this.iterator = this.iterable.iterator();
-            if (!this.iterator.hasNext()) {
-                throw new NoSuchElementException();
-            }
+        if (!this.hasNext()) {
+            throw new NoSuchElementException();
         }
         return this.iterator.next();
     }

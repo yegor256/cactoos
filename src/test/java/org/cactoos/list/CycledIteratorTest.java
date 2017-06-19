@@ -31,7 +31,7 @@ import org.junit.Test;
  * Test Case for {@link CycledIterator}.
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class CycledIteratorTest {
