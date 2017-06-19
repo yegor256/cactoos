@@ -23,7 +23,7 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.LogTerm;
+import org.cactoos.Scalar;
 
 /**
  * Logical truth.
@@ -32,9 +32,9 @@ import org.cactoos.LogTerm;
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.5
+ * @since 0.7
  */
-public final class True implements LogTerm {
+public final class True implements Scalar<Boolean> {
 
     @Override
     public Boolean asValue() throws Exception {

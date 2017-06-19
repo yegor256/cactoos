@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.5
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class TrueTest {
