@@ -32,12 +32,18 @@ import java.util.ListIterator;
 /**
  * Iterable as {@link List}.
  *
+ * <p>If you don't need this List to re-fresh its content on every call,
+ * by doing round-trips to the encapsulated iterable, use
+ * {@link StickyList}.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Alexey Semenyuk (semenyukalexey88@gmail.com)
  * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <T> List type
+ * @see StickyList
  * @since 0.1
  */
 @SuppressWarnings("PMD.TooManyMethods")

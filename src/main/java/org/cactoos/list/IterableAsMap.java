@@ -31,12 +31,17 @@ import java.util.Set;
 /**
  * Iterable as {@link Map}.
  *
+ * <p>If you don't need this Map to re-fresh its content on every call,
+ * by doing round-trips to the encapsulated iterable, use
+ * {@link StickyMap}.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of key
  * @param <Y> Type of value
+ * @see StickyMap
  * @since 0.4
  */
 @SuppressWarnings("PMD.TooManyMethods")
