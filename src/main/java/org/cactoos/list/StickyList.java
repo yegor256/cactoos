@@ -25,90 +25,75 @@ package org.cactoos.list;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import org.cactoos.func.UncheckedScalar;
 
 /**
- * Iterable as {@link List}.
+ * List decorator that goes through list only once.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Alexey Semenyuk (semenyukalexey88@gmail.com)
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> List type
- * @since 0.1
- * @todo #180:30min This class is not implemented fully. Most methods
- *  are not yet supported. Let's implement them, each time with a use
- *  case specific method. And let's make sure they all are tested.
+ * @param <X> Type of item
+ * @since 0.8
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class IterableAsList<T> implements List<T> {
+public final class StickyList<X> implements List<X> {
 
     /**
-     * The source.
+     * The cache.
      */
-    private final Iterable<T> iterable;
-
-    /**
-     * Ctor.
-     *
-     * @param array An array of some elements
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public IterableAsList(final T... array) {
-        this(new ArrayAsIterable<>(array));
-    }
+    private final UncheckedScalar<List<X>> cache;
 
     /**
      * Ctor.
-     *
-     * @param src An {@link Iterable}
+     * @param list The iterable
      */
-    public IterableAsList(final Iterable<T> src) {
-        this.iterable = src;
+    public StickyList(final List<X> list) {
+        this.cache = new UncheckedScalar<>(
+            () -> {
+                final List<X> temp = new LinkedList<>();
+                temp.addAll(list);
+                return temp;
+            }
+        );
     }
 
     @Override
     public int size() {
-        return new LengthOfIterable(this.iterable).asValue();
+        return this.cache.asValue().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return !this.iterable.iterator().hasNext();
+        return this.cache.asValue().isEmpty();
     }
 
     @Override
     public boolean contains(final Object object) {
-        throw new UnsupportedOperationException(
-            "#contains() not implemented yet"
-        );
+        return this.cache.asValue().contains(object);
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return this.iterable.iterator();
+    public Iterator<X> iterator() {
+        return this.cache.asValue().iterator();
     }
 
     @Override
     public Object[] toArray() {
-        throw new UnsupportedOperationException(
-            "#toArray() not implemented yet"
-        );
+        return this.cache.asValue().toArray();
     }
 
     @Override
     @SuppressWarnings("PMD.UseVarargs")
     public <Y> Y[] toArray(final Y[] array) {
-        throw new UnsupportedOperationException(
-            "#toArray(array) not implemented yet"
-        );
+        return this.cache.asValue().toArray(array);
     }
 
     @Override
-    public boolean add(final T element) {
+    public boolean add(final X element) {
         throw new UnsupportedOperationException(
             "#add(final T element) is not supported"
         );
@@ -123,13 +108,11 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public boolean containsAll(final Collection<?> collection) {
-        throw new UnsupportedOperationException(
-            "#containsAll() not implemented yet"
-        );
+        return this.cache.asValue().containsAll(collection);
     }
 
     @Override
-    public boolean addAll(final Collection<? extends T> collection) {
+    public boolean addAll(final Collection<? extends X> collection) {
         throw new UnsupportedOperationException(
             "#addAll(final Collection<? extends T> collection) is not supported"
         );
@@ -137,7 +120,7 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public boolean addAll(final int index,
-        final Collection<? extends T> collection) {
+        final Collection<? extends X> collection) {
         throw new UnsupportedOperationException(
             "#addAll() is not supported"
         );
@@ -165,28 +148,26 @@ public final class IterableAsList<T> implements List<T> {
     }
 
     @Override
-    public T get(final int index) {
-        throw new UnsupportedOperationException(
-            "#get() not implemented yet"
-        );
+    public X get(final int index) {
+        return this.cache.asValue().get(index);
     }
 
     @Override
-    public T set(final int index, final T element) {
+    public X set(final int index, final X element) {
         throw new UnsupportedOperationException(
             "#set() is not supported"
         );
     }
 
     @Override
-    public void add(final int index, final T element) {
+    public void add(final int index, final X element) {
         throw new UnsupportedOperationException(
             "#add(final int index, final T element) is not supported"
         );
     }
 
     @Override
-    public T remove(final int index) {
+    public X remove(final int index) {
         throw new UnsupportedOperationException(
             "#remove(final int index) is not supported"
         );
@@ -194,36 +175,26 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public int indexOf(final Object object) {
-        throw new UnsupportedOperationException(
-            "#indexOf() not implemented yet"
-        );
+        return this.cache.asValue().indexOf(object);
     }
 
     @Override
     public int lastIndexOf(final Object object) {
-        throw new UnsupportedOperationException(
-            "#lastIndexOf() not implemented yet"
-        );
+        return this.cache.asValue().lastIndexOf(object);
     }
 
     @Override
-    public ListIterator<T> listIterator() {
-        throw new UnsupportedOperationException(
-            "#listIterator() not implemented yet"
-        );
+    public ListIterator<X> listIterator() {
+        return this.cache.asValue().listIterator();
     }
 
     @Override
-    public ListIterator<T> listIterator(final int index) {
-        throw new UnsupportedOperationException(
-            "#listIterator(index) not implemented yet"
-        );
+    public ListIterator<X> listIterator(final int index) {
+        return this.cache.asValue().listIterator(index);
     }
 
     @Override
-    public List<T> subList(final int fromindex, final int toindex) {
-        throw new UnsupportedOperationException(
-            "#subList() not implemented yet"
-        );
+    public List<X> subList(final int fromindex, final int toindex) {
+        return this.cache.asValue().subList(fromindex, toindex);
     }
 }

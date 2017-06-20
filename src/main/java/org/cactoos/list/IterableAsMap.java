@@ -24,11 +24,9 @@
 package org.cactoos.list;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import org.cactoos.func.StickyScalar;
-import org.cactoos.func.UncheckedScalar;
 
 /**
  * Iterable as {@link Map}.
@@ -40,65 +38,65 @@ import org.cactoos.func.UncheckedScalar;
  * @param <X> Type of key
  * @param <Y> Type of value
  * @since 0.4
+ * @todo #180:30min This class is not implemented fully. Most methods
+ *  are not yet supported. Let's implement them, each time with a use
+ *  case specific method. And let's make sure they all are tested. This
+ *  is very similar to what we have in IterableAsList.
  */
 public final class IterableAsMap<X, Y> implements Map<X, Y> {
 
     /**
-     * The map.
+     * The iterable.
      */
-    private final UncheckedScalar<Map<X, Y>> map;
+    private final Iterable<Map.Entry<X, Y>> entries;
 
     /**
      * Ctor.
-     * @param entries Entries for the map
+     * @param list List of entries
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public IterableAsMap(final Map.Entry<X, Y>... entries) {
-        this(new ArrayAsIterable<>(entries));
+    public IterableAsMap(final Map.Entry<X, Y>... list) {
+        this(new ArrayAsIterable<>(list));
     }
 
     /**
      * Ctor.
-     * @param entries Entries for the map
+     * @param list Entries for the entries
      */
-    public IterableAsMap(final Iterable<Map.Entry<X, Y>> entries) {
-        this.map = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Map<X, Y> temp = new HashMap<>(0);
-                    for (final Map.Entry<X, Y> entry : entries) {
-                        temp.put(entry.getKey(), entry.getValue());
-                    }
-                    return temp;
-                }
-            )
-        );
+    public IterableAsMap(final Iterable<Map.Entry<X, Y>> list) {
+        this.entries = list;
     }
 
     @Override
     public int size() {
-        return this.map.asValue().size();
+        return new LengthOfIterable(this.entries).asValue();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.map.asValue().isEmpty();
+        return !this.entries.iterator().hasNext();
     }
 
     @Override
     public boolean containsKey(final Object key) {
-        return this.map.asValue().containsKey(key);
+        throw new UnsupportedOperationException(
+            "#containsKey() not implemented yet"
+        );
     }
 
     @Override
     public boolean containsValue(final Object value) {
-        return this.map.asValue().containsValue(value);
+        throw new UnsupportedOperationException(
+            "#containsValue() not implemented yet"
+        );
     }
 
     @Override
     public Y get(final Object key) {
-        return this.map.asValue().get(key);
+        throw new UnsupportedOperationException(
+            "#get() not implemented yet"
+        );
     }
 
     @Override
@@ -116,7 +114,7 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
     }
 
     @Override
-    public void putAll(final Map<? extends X, ? extends Y> entries) {
+    public void putAll(final Map<? extends X, ? extends Y> list) {
         throw new UnsupportedOperationException(
             "#putAll() is not supported"
         );
@@ -131,17 +129,23 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
 
     @Override
     public Set<X> keySet() {
-        return this.map.asValue().keySet();
+        throw new UnsupportedOperationException(
+            "#keySet() not implemented yet"
+        );
     }
 
     @Override
     public Collection<Y> values() {
-        return this.map.asValue().values();
+        throw new UnsupportedOperationException(
+            "#values() not implemented yet"
+        );
     }
 
     @Override
     public Set<Map.Entry<X, Y>> entrySet() {
-        return this.map.asValue().entrySet();
+        return new HashSet<>(
+            new IterableAsList<>(this.entries)
+        );
     }
 
 }
