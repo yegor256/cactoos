@@ -23,6 +23,7 @@
  */
 package org.cactoos.io;
 
+import java.util.Properties;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.func.FuncAsMatcher;
 import org.cactoos.text.TextAsBytes;
@@ -50,7 +51,7 @@ public final class InputAsPropertiesTest {
                 )
             ),
             new ScalarHasValue<>(
-                new FuncAsMatcher<>(
+                new FuncAsMatcher<Properties>(
                     props -> "Hello, world!".equals(props.getProperty("foo"))
                 )
             )
