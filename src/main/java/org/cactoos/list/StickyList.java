@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import org.cactoos.func.StickyScalar;
 import org.cactoos.func.UncheckedScalar;
 
 /**
@@ -52,13 +53,15 @@ public final class StickyList<X> implements List<X> {
      * Ctor.
      * @param list The iterable
      */
-    public StickyList(final List<X> list) {
+    public StickyList(final Collection<X> list) {
         this.gate = new UncheckedScalar<>(
-            () -> {
-                final List<X> temp = new LinkedList<>();
-                temp.addAll(list);
-                return temp;
-            }
+            new StickyScalar<>(
+                () -> {
+                    final List<X> temp = new LinkedList<>();
+                    temp.addAll(list);
+                    return temp;
+                }
+            )
         );
     }
 

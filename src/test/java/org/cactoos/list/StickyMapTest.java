@@ -25,49 +25,26 @@ package org.cactoos.list;
 
 import java.security.SecureRandom;
 import java.util.AbstractMap;
-import java.util.Properties;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.ScalarHasValue;
-import org.cactoos.func.FuncAsMatcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link MapAsProperties}.
+ * Test case for {@link StickyMap}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class MapAsPropertiesTest {
+public final class StickyMapTest {
 
     @Test
-    public void convertsMapToProperties() {
-        MatcherAssert.assertThat(
-            "Can't convert map to properties",
-            new MapAsProperties(
-                new StickyMap<>(
-                    new IterableAsMap<Integer, String>(
-                        new AbstractMap.SimpleEntry<>(0, "hello, world"),
-                        new AbstractMap.SimpleEntry<>(1, "how are you?")
-                    )
-                )
-            ),
-            new ScalarHasValue<>(
-                new FuncAsMatcher<Properties>(
-                    props -> props.getProperty("0").endsWith(", world")
-                )
-            )
-        );
-    }
-
-    @Test
-    public void sensesChangesInMap() throws Exception {
+    public void ignoresChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
-        final MapAsProperties props = new MapAsProperties(
+        final Map<Integer, Integer> map = new StickyMap<>(
             new IterableAsMap<>(
                 () -> new RepeatIterator<>(
                     () -> new AbstractMap.SimpleEntry<>(
@@ -79,9 +56,9 @@ public final class MapAsPropertiesTest {
             )
         );
         MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying map",
-            props.asValue().size(),
-            Matchers.not(Matchers.equalTo(props.asValue().size()))
+            "Can't ignore the changes in the underlying map",
+            map.size(),
+            Matchers.equalTo(map.size())
         );
     }
 

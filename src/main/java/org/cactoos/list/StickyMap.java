@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.cactoos.func.StickyScalar;
 import org.cactoos.func.UncheckedScalar;
 
 /**
@@ -53,11 +54,13 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     public StickyMap(final Map<X, Y> map) {
         this.gate = new UncheckedScalar<>(
-            () -> {
-                final Map<X, Y> temp = new HashMap<>();
-                temp.putAll(map);
-                return temp;
-            }
+            new StickyScalar<>(
+                () -> {
+                    final Map<X, Y> temp = new HashMap<>(0);
+                    temp.putAll(map);
+                    return temp;
+                }
+            )
         );
     }
 
