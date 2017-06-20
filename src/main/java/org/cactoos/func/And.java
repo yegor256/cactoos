@@ -29,11 +29,13 @@ import org.cactoos.Scalar;
 /**
  * Logical conjunction.
  *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.8
  */
-public final class LogConj implements Scalar<Boolean> {
+public final class And implements Scalar<Boolean> {
 
     /**
      * The iterator.
@@ -44,7 +46,7 @@ public final class LogConj implements Scalar<Boolean> {
      * Ctor.
      * @param iterable The iterable
      */
-    public LogConj(final Iterable<Scalar<Boolean>> iterable) {
+    public And(final Iterable<Scalar<Boolean>> iterable) {
         this.iterable = iterable;
     }
 

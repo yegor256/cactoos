@@ -30,19 +30,19 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link LogConj}.
+ * Test case for {@link And}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LogConjTest {
+public final class AndTest {
 
     @Test
     public void allTrue() throws Exception {
         MatcherAssert.assertThat(
-            new LogConj(
+            new And(
                 new ArrayAsIterable<Scalar<Boolean>>(
                     new True(),
                     new True(),
@@ -56,7 +56,7 @@ public final class LogConjTest {
     @Test
     public void oneFalse() throws Exception {
         MatcherAssert.assertThat(
-            new LogConj(
+            new And(
                 new ArrayAsIterable<Scalar<Boolean>>(
                     new True(),
                     new False(),
@@ -70,7 +70,7 @@ public final class LogConjTest {
     @Test
     public void allFalse() throws Exception {
         MatcherAssert.assertThat(
-            new LogConj(
+            new And(
                 new ArrayAsIterable<Scalar<Boolean>>(
                     new False(),
                     new False(),
@@ -84,7 +84,7 @@ public final class LogConjTest {
     @Test
     public void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
-            new LogConj(
+            new And(
                 new ArrayAsIterable<Scalar<Boolean>>()
             ).asValue(),
             Matchers.equalTo(true)
