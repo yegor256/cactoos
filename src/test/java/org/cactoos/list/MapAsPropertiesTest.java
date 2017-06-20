@@ -23,11 +23,14 @@
  */
 package org.cactoos.list;
 
+import java.security.SecureRandom;
 import java.util.AbstractMap;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.func.FuncAsMatcher;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -37,6 +40,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class MapAsPropertiesTest {
 
@@ -45,9 +49,11 @@ public final class MapAsPropertiesTest {
         MatcherAssert.assertThat(
             "Can't convert map to properties",
             new MapAsProperties(
-                new IterableAsMap<Integer, String>(
-                    new AbstractMap.SimpleEntry<>(0, "hello, world"),
-                    new AbstractMap.SimpleEntry<>(1, "how are you?")
+                new StickyMap<>(
+                    new IterableAsMap<Integer, String>(
+                        new AbstractMap.SimpleEntry<>(0, "hello, world"),
+                        new AbstractMap.SimpleEntry<>(1, "how are you?")
+                    )
                 )
             ),
             new ScalarHasValue<>(
@@ -57,4 +63,26 @@ public final class MapAsPropertiesTest {
             )
         );
     }
+
+    @Test
+    public void sensesChangesInMap() throws Exception {
+        final AtomicInteger size = new AtomicInteger(2);
+        final MapAsProperties props = new MapAsProperties(
+            new IterableAsMap<>(
+                () -> new RepeatIterator<>(
+                    () -> new AbstractMap.SimpleEntry<>(
+                        new SecureRandom().nextInt(),
+                        1
+                    ),
+                    size.incrementAndGet()
+                )
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't sense the changes in the underlying map",
+            props.asValue().size(),
+            Matchers.not(Matchers.equalTo(props.asValue().size()))
+        );
+    }
+
 }

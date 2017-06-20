@@ -25,7 +25,6 @@ package org.cactoos.list;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import org.cactoos.func.UncheckedScalar;
 
 /**
  * Array as iterable.
@@ -42,7 +41,7 @@ public final class ArrayAsIterable<X> implements Iterable<X> {
     /**
      * The array.
      */
-    private final UncheckedScalar<Iterable<X>> result;
+    private final X[] array;
 
     /**
      * Ctor.
@@ -51,12 +50,12 @@ public final class ArrayAsIterable<X> implements Iterable<X> {
     @SafeVarargs
     @SuppressWarnings("varargs")
     public ArrayAsIterable(final X... items) {
-        this.result = new UncheckedScalar<>(() -> Arrays.asList(items));
+        this.array = items;
     }
 
     @Override
     public Iterator<X> iterator() {
-        return this.result.asValue().iterator();
+        return Arrays.asList(this.array).iterator();
     }
 
 }

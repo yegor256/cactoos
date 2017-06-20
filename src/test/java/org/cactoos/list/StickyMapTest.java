@@ -32,46 +32,33 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableAsMap}.
+ * Test case for {@link StickyMap}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableAsMapTest {
+public final class StickyMapTest {
 
     @Test
-    public void convertsIterableToMap() {
-        MatcherAssert.assertThat(
-            "Can't convert iterable to map",
-            new IterableAsMap<Integer, String>(
-                new AbstractMap.SimpleEntry<>(0, "hello, "),
-                new AbstractMap.SimpleEntry<>(1, "world!")
-            ),
-            Matchers.hasEntry(
-                Matchers.equalTo(0),
-                Matchers.startsWith("hello")
-            )
-        );
-    }
-
-    @Test
-    public void sensesChangesInMap() throws Exception {
+    public void ignoresChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new IterableAsMap<>(
-            () -> new RepeatIterator<>(
-                () -> new AbstractMap.SimpleEntry<>(
-                    new SecureRandom().nextInt(),
-                    1
-                ),
-                size.incrementAndGet()
+        final Map<Integer, Integer> map = new StickyMap<>(
+            new IterableAsMap<>(
+                () -> new RepeatIterator<>(
+                    () -> new AbstractMap.SimpleEntry<>(
+                        new SecureRandom().nextInt(),
+                        1
+                    ),
+                    size.incrementAndGet()
+                )
             )
         );
         MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying map",
+            "Can't ignore the changes in the underlying map",
             map.size(),
-            Matchers.not(Matchers.equalTo(map.size()))
+            Matchers.equalTo(map.size())
         );
     }
 
