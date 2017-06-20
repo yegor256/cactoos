@@ -31,7 +31,11 @@ import java.util.Set;
 /**
  * Iterable as {@link Map}.
  *
- * <p>If you don't need this Map to re-fresh its content on every call,
+ * <p>This class should be used very carefully. You must understand that
+ * it will fetch the entire content of the encapsulated {@link Map} on each
+ * method call. It doesn't cache the data anyhow.</p>
+ *
+ * <p>If you don't need this {@link Map} to re-fresh its content on every call,
  * by doing round-trips to the encapsulated iterable, use
  * {@link StickyMap}.</p>
  *
