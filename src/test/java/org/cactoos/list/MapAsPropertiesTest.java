@@ -23,11 +23,14 @@
  */
 package org.cactoos.list;
 
+import java.security.SecureRandom;
 import java.util.AbstractMap;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.func.FuncAsMatcher;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -57,4 +60,26 @@ public final class MapAsPropertiesTest {
             )
         );
     }
+
+    @Test
+    public void sensesChangesInMap() throws Exception {
+        final AtomicInteger size = new AtomicInteger(2);
+        final MapAsProperties props = new MapAsProperties(
+            new IterableAsMap<>(
+                () -> new RepeatIterator<>(
+                    () -> new AbstractMap.SimpleEntry<>(
+                        new SecureRandom().nextInt(),
+                        1
+                    ),
+                    size.incrementAndGet()
+                )
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't sense the changes in the underlying map",
+            props.asValue().size(),
+            Matchers.not(Matchers.equalTo(props.asValue().size()))
+        );
+    }
+
 }
