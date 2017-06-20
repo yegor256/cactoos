@@ -27,8 +27,6 @@ import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Properties;
 import org.cactoos.Scalar;
-import org.cactoos.func.StickyScalar;
-import org.cactoos.func.UncheckedScalar;
 
 /**
  * Map as {@link java.util.Properties}.
@@ -42,9 +40,9 @@ import org.cactoos.func.UncheckedScalar;
 public final class MapAsProperties implements Scalar<Properties> {
 
     /**
-     * The result.
+     * The map.
      */
-    private final UncheckedScalar<Properties> result;
+    private final Map<?, ?> map;
 
     /**
      * Ctor.
@@ -65,27 +63,21 @@ public final class MapAsProperties implements Scalar<Properties> {
 
     /**
      * Ctor.
-     * @param map The map with properties
+     * @param src The map with properties
      */
-    public MapAsProperties(final Map<?, ?> map) {
-        this.result = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Properties props = new Properties();
-                    for (final Map.Entry<?, ?> entry : map.entrySet()) {
-                        props.setProperty(
-                            entry.getKey().toString(),
-                            entry.getValue().toString()
-                        );
-                    }
-                    return props;
-                }
-            )
-        );
+    public MapAsProperties(final Map<?, ?> src) {
+        this.map = src;
     }
 
     @Override
     public Properties asValue() {
-        return this.result.asValue();
+        final Properties props = new Properties();
+        for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
+            props.setProperty(
+                entry.getKey().toString(),
+                entry.getValue().toString()
+            );
+        }
+        return props;
     }
 }

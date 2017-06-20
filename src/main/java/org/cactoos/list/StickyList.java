@@ -31,7 +31,7 @@ import java.util.ListIterator;
 import org.cactoos.func.UncheckedScalar;
 
 /**
- * List decorator that goes through list only once.
+ * List decorator that goes through the list only once.
  *
  * <p>There is no thread-safety guarantee.
  *
