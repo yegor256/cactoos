@@ -24,6 +24,8 @@
 package org.cactoos.list;
 
 import java.util.Iterator;
+import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * Repeat an element.
@@ -41,7 +43,7 @@ public final class RepeatIterator<T> implements Iterator<T> {
     /**
      * The element to repeat.
      */
-    private final T element;
+    private final UncheckedScalar<T> element;
 
     /**
      * How many more repeats will happen.
@@ -54,6 +56,24 @@ public final class RepeatIterator<T> implements Iterator<T> {
      * @param max How many times to repeat
      */
     public RepeatIterator(final T elm, final int max) {
+        this(() -> elm, max);
+    }
+
+    /**
+     * Ctor.
+     * @param elm Element to repeat
+     * @param max How many times to repeat
+     */
+    public RepeatIterator(final Scalar<T> elm, final int max) {
+        this(new UncheckedScalar<T>(elm), max);
+    }
+
+    /**
+     * Ctor.
+     * @param elm Element to repeat
+     * @param max How many times to repeat
+     */
+    public RepeatIterator(final UncheckedScalar<T> elm, final int max) {
         this.element = elm;
         this.left = max;
     }
@@ -66,6 +86,6 @@ public final class RepeatIterator<T> implements Iterator<T> {
     @Override
     public T next() {
         --this.left;
-        return this.element;
+        return this.element.asValue();
     }
 }

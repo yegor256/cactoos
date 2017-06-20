@@ -24,6 +24,8 @@
 package org.cactoos.list;
 
 import java.util.Iterator;
+import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * Repeat an element.
@@ -41,7 +43,7 @@ public final class RepeatIterable<T> implements Iterable<T> {
     /**
      * Element to repeat.
      */
-    private final T element;
+    private final UncheckedScalar<T> element;
 
     /**
      * Repeat count.
@@ -50,11 +52,28 @@ public final class RepeatIterable<T> implements Iterable<T> {
 
     /**
      * Ctor.
-     *
      * @param elm To repeat
      * @param cnt Count
      */
     public RepeatIterable(final T elm, final int cnt) {
+        this(() -> elm, cnt);
+    }
+
+    /**
+     * Ctor.
+     * @param elm To repeat
+     * @param cnt Count
+     */
+    public RepeatIterable(final Scalar<T> elm, final int cnt) {
+        this(new UncheckedScalar<T>(elm), cnt);
+    }
+
+    /**
+     * Ctor.
+     * @param elm To repeat
+     * @param cnt Count
+     */
+    public RepeatIterable(final UncheckedScalar<T> elm, final int cnt) {
         this.element = elm;
         this.count = cnt;
     }
