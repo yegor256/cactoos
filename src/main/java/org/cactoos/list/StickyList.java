@@ -51,6 +51,24 @@ public final class StickyList<X> implements List<X> {
 
     /**
      * Ctor.
+     * @param items The array
+     */
+    @SafeVarargs
+    @SuppressWarnings("varargs")
+    public StickyList(final X... items) {
+        this(new ArrayAsIterable<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param items The array
+     */
+    public StickyList(final Iterable<X> items) {
+        this(new IterableAsList<>(items));
+    }
+
+    /**
+     * Ctor.
      * @param list The iterable
      */
     public StickyList(final Collection<X> list) {

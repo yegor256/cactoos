@@ -50,6 +50,24 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
+     * @param list List of entries
+     */
+    @SafeVarargs
+    @SuppressWarnings("varargs")
+    public StickyMap(final Map.Entry<X, Y>... list) {
+        this(new ArrayAsIterable<>(list));
+    }
+
+    /**
+     * Ctor.
+     * @param list Entries for the entries
+     */
+    public StickyMap(final Iterable<Map.Entry<X, Y>> list) {
+        this(new IterableAsMap<>(list));
+    }
+
+    /**
+     * Ctor.
      * @param map The map
      */
     public StickyMap(final Map<X, Y> map) {
