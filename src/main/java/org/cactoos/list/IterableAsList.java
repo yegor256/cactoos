@@ -25,6 +25,7 @@ package org.cactoos.list;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -38,9 +39,6 @@ import java.util.ListIterator;
  * @version $Id$
  * @param <T> List type
  * @since 0.1
- * @todo #180:30min This class is not implemented fully. Most methods
- *  are not yet supported. Let's implement them, each time with a use
- *  case specific method. And let's make sure they all are tested.
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class IterableAsList<T> implements List<T> {
@@ -82,9 +80,7 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public boolean contains(final Object object) {
-        throw new UnsupportedOperationException(
-            "#contains() not implemented yet"
-        );
+        return this.list().contains(object);
     }
 
     @Override
@@ -94,17 +90,13 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public Object[] toArray() {
-        throw new UnsupportedOperationException(
-            "#toArray() not implemented yet"
-        );
+        return this.list().toArray();
     }
 
     @Override
     @SuppressWarnings("PMD.UseVarargs")
     public <Y> Y[] toArray(final Y[] array) {
-        throw new UnsupportedOperationException(
-            "#toArray(array) not implemented yet"
-        );
+        return this.list().toArray(array);
     }
 
     @Override
@@ -123,9 +115,7 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public boolean containsAll(final Collection<?> collection) {
-        throw new UnsupportedOperationException(
-            "#containsAll() not implemented yet"
-        );
+        return this.list().containsAll(collection);
     }
 
     @Override
@@ -166,9 +156,7 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public T get(final int index) {
-        throw new UnsupportedOperationException(
-            "#get() not implemented yet"
-        );
+        return this.list().get(index);
     }
 
     @Override
@@ -194,36 +182,38 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public int indexOf(final Object object) {
-        throw new UnsupportedOperationException(
-            "#indexOf() not implemented yet"
-        );
+        return this.list().indexOf(object);
     }
 
     @Override
     public int lastIndexOf(final Object object) {
-        throw new UnsupportedOperationException(
-            "#lastIndexOf() not implemented yet"
-        );
+        return this.list().lastIndexOf(object);
     }
 
     @Override
     public ListIterator<T> listIterator() {
-        throw new UnsupportedOperationException(
-            "#listIterator() not implemented yet"
-        );
+        return this.list().listIterator();
     }
 
     @Override
     public ListIterator<T> listIterator(final int index) {
-        throw new UnsupportedOperationException(
-            "#listIterator(index) not implemented yet"
-        );
+        return this.list().listIterator(index);
     }
 
     @Override
     public List<T> subList(final int fromindex, final int toindex) {
-        throw new UnsupportedOperationException(
-            "#subList() not implemented yet"
-        );
+        return this.list().subList(fromindex, toindex);
+    }
+
+    /**
+     * Build a list.
+     * @return List
+     */
+    private List<T> list() {
+        final List<T> list = new LinkedList<>();
+        for (final T item : this.iterable) {
+            list.add(item);
+        }
+        return list;
     }
 }

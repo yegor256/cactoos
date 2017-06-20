@@ -40,19 +40,20 @@ import org.cactoos.func.UncheckedScalar;
  * @param <X> Type of item
  * @since 0.8
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class StickyList<X> implements List<X> {
 
     /**
-     * The cache.
+     * The gate.
      */
-    private final UncheckedScalar<List<X>> cache;
+    private final UncheckedScalar<List<X>> gate;
 
     /**
      * Ctor.
      * @param list The iterable
      */
     public StickyList(final List<X> list) {
-        this.cache = new UncheckedScalar<>(
+        this.gate = new UncheckedScalar<>(
             () -> {
                 final List<X> temp = new LinkedList<>();
                 temp.addAll(list);
@@ -63,33 +64,33 @@ public final class StickyList<X> implements List<X> {
 
     @Override
     public int size() {
-        return this.cache.asValue().size();
+        return this.gate.asValue().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.cache.asValue().isEmpty();
+        return this.gate.asValue().isEmpty();
     }
 
     @Override
     public boolean contains(final Object object) {
-        return this.cache.asValue().contains(object);
+        return this.gate.asValue().contains(object);
     }
 
     @Override
     public Iterator<X> iterator() {
-        return this.cache.asValue().iterator();
+        return this.gate.asValue().iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return this.cache.asValue().toArray();
+        return this.gate.asValue().toArray();
     }
 
     @Override
     @SuppressWarnings("PMD.UseVarargs")
     public <Y> Y[] toArray(final Y[] array) {
-        return this.cache.asValue().toArray(array);
+        return this.gate.asValue().toArray(array);
     }
 
     @Override
@@ -108,7 +109,7 @@ public final class StickyList<X> implements List<X> {
 
     @Override
     public boolean containsAll(final Collection<?> collection) {
-        return this.cache.asValue().containsAll(collection);
+        return this.gate.asValue().containsAll(collection);
     }
 
     @Override
@@ -149,7 +150,7 @@ public final class StickyList<X> implements List<X> {
 
     @Override
     public X get(final int index) {
-        return this.cache.asValue().get(index);
+        return this.gate.asValue().get(index);
     }
 
     @Override
@@ -175,26 +176,26 @@ public final class StickyList<X> implements List<X> {
 
     @Override
     public int indexOf(final Object object) {
-        return this.cache.asValue().indexOf(object);
+        return this.gate.asValue().indexOf(object);
     }
 
     @Override
     public int lastIndexOf(final Object object) {
-        return this.cache.asValue().lastIndexOf(object);
+        return this.gate.asValue().lastIndexOf(object);
     }
 
     @Override
     public ListIterator<X> listIterator() {
-        return this.cache.asValue().listIterator();
+        return this.gate.asValue().listIterator();
     }
 
     @Override
     public ListIterator<X> listIterator(final int index) {
-        return this.cache.asValue().listIterator(index);
+        return this.gate.asValue().listIterator(index);
     }
 
     @Override
     public List<X> subList(final int fromindex, final int toindex) {
-        return this.cache.asValue().subList(fromindex, toindex);
+        return this.gate.asValue().subList(fromindex, toindex);
     }
 }

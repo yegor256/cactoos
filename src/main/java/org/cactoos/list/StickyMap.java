@@ -43,16 +43,16 @@ import org.cactoos.func.UncheckedScalar;
 public final class StickyMap<X, Y> implements Map<X, Y> {
 
     /**
-     * The cache.
+     * The gate.
      */
-    private final UncheckedScalar<Map<X, Y>> cache;
+    private final UncheckedScalar<Map<X, Y>> gate;
 
     /**
      * Ctor.
      * @param map The map
      */
     public StickyMap(final Map<X, Y> map) {
-        this.cache = new UncheckedScalar<>(
+        this.gate = new UncheckedScalar<>(
             () -> {
                 final Map<X, Y> temp = new HashMap<>();
                 temp.putAll(map);
@@ -63,27 +63,27 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
 
     @Override
     public int size() {
-        return this.cache.asValue().size();
+        return this.gate.asValue().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.cache.asValue().isEmpty();
+        return this.gate.asValue().isEmpty();
     }
 
     @Override
     public boolean containsKey(final Object key) {
-        return this.cache.asValue().containsKey(key);
+        return this.gate.asValue().containsKey(key);
     }
 
     @Override
     public boolean containsValue(final Object value) {
-        return this.cache.asValue().containsValue(value);
+        return this.gate.asValue().containsValue(value);
     }
 
     @Override
     public Y get(final Object key) {
-        return this.cache.asValue().get(key);
+        return this.gate.asValue().get(key);
     }
 
     @Override
@@ -116,17 +116,17 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
 
     @Override
     public Set<X> keySet() {
-        return this.cache.asValue().keySet();
+        return this.gate.asValue().keySet();
     }
 
     @Override
     public Collection<Y> values() {
-        return this.cache.asValue().values();
+        return this.gate.asValue().values();
     }
 
     @Override
     public Set<Map.Entry<X, Y>> entrySet() {
-        return this.cache.asValue().entrySet();
+        return this.gate.asValue().entrySet();
     }
 
 }

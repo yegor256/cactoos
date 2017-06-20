@@ -24,7 +24,7 @@
 package org.cactoos.list;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,11 +38,8 @@ import java.util.Set;
  * @param <X> Type of key
  * @param <Y> Type of value
  * @since 0.4
- * @todo #180:30min This class is not implemented fully. Most methods
- *  are not yet supported. Let's implement them, each time with a use
- *  case specific method. And let's make sure they all are tested. This
- *  is very similar to what we have in IterableAsList.
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class IterableAsMap<X, Y> implements Map<X, Y> {
 
     /**
@@ -80,23 +77,17 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
 
     @Override
     public boolean containsKey(final Object key) {
-        throw new UnsupportedOperationException(
-            "#containsKey() not implemented yet"
-        );
+        return this.map().containsKey(key);
     }
 
     @Override
     public boolean containsValue(final Object value) {
-        throw new UnsupportedOperationException(
-            "#containsValue() not implemented yet"
-        );
+        return this.map().containsValue(value);
     }
 
     @Override
     public Y get(final Object key) {
-        throw new UnsupportedOperationException(
-            "#get() not implemented yet"
-        );
+        return this.map().get(key);
     }
 
     @Override
@@ -129,23 +120,29 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
 
     @Override
     public Set<X> keySet() {
-        throw new UnsupportedOperationException(
-            "#keySet() not implemented yet"
-        );
+        return this.map().keySet();
     }
 
     @Override
     public Collection<Y> values() {
-        throw new UnsupportedOperationException(
-            "#values() not implemented yet"
-        );
+        return this.map().values();
     }
 
     @Override
     public Set<Map.Entry<X, Y>> entrySet() {
-        return new HashSet<>(
-            new IterableAsList<>(this.entries)
-        );
+        return this.map().entrySet();
+    }
+
+    /**
+     * Make a map.
+     * @return Map
+     */
+    private Map<X, Y> map() {
+        final Map<X, Y> temp = new HashMap<>(0);
+        for (final Map.Entry<X, Y> entry : this.entries) {
+            temp.put(entry.getKey(), entry.getValue());
+        }
+        return temp;
     }
 
 }
