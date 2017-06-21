@@ -23,7 +23,7 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.Scalar;
+import java.util.Collections;
 import org.cactoos.list.ArrayAsIterable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -43,13 +43,11 @@ public final class OrTest {
     public void allFalse() throws Exception {
         MatcherAssert.assertThat(
             new Or(
-                new ArrayAsIterable<Scalar<Boolean>>(
-                    new False(),
-                    new False(),
-                    new False(),
-                    new False(),
-                    new False()
-                )
+                new False(),
+                new False(),
+                new False(),
+                new False(),
+                new False()
             ).asValue(),
             Matchers.equalTo(false)
         );
@@ -59,13 +57,11 @@ public final class OrTest {
     public void oneTrue() throws Exception {
         MatcherAssert.assertThat(
             new Or(
-                new ArrayAsIterable<Scalar<Boolean>>(
-                    new False(),
-                    new True(),
-                    new False(),
-                    new False(),
-                    new False()
-                )
+                new False(),
+                new True(),
+                new False(),
+                new False(),
+                new False()
             ).asValue(),
             Matchers.equalTo(true)
         );
@@ -75,7 +71,7 @@ public final class OrTest {
     public void allTrue() throws Exception {
         MatcherAssert.assertThat(
             new Or(
-                new ArrayAsIterable<Scalar<Boolean>>(
+                new ArrayAsIterable<>(
                     new True(),
                     new True(),
                     new True(),
@@ -90,9 +86,7 @@ public final class OrTest {
     @Test
     public void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
-            new Or(
-                new ArrayAsIterable<Scalar<Boolean>>()
-            ).asValue(),
+            new Or(Collections.emptyList()).asValue(),
             Matchers.equalTo(false)
         );
     }

@@ -25,6 +25,7 @@ package org.cactoos.func;
 
 import java.util.Iterator;
 import org.cactoos.Scalar;
+import org.cactoos.list.ArrayAsIterable;
 
 /**
  * Logical conjunction.
@@ -44,16 +45,24 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param iterable The iterable
+     * @param src The iterable
      */
-    public And(final Iterable<Scalar<Boolean>> iterable) {
-        this.iterable = iterable;
+    @SafeVarargs
+    public And(final Scalar<Boolean>... src) {
+        this(new ArrayAsIterable<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     */
+    public And(final Iterable<Scalar<Boolean>> src) {
+        this.iterable = src;
     }
 
     @Override
     public Boolean asValue() throws Exception {
-        final Iterator<Scalar<Boolean>> iterator = this.iterable.iterator();
-        return this.conjunction(iterator, true);
+        return this.conjunction(this.iterable.iterator(), true);
     }
 
     /**

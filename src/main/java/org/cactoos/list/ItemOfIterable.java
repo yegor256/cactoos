@@ -109,7 +109,7 @@ public final class ItemOfIterable<T> implements Scalar<T> {
             itr -> {
                 throw new IOException(
                     new FormattedText(
-                        "Iterable %s hasn't element from position %d",
+                        "Iterable %s doesn't have element at position #%d",
                         itr,
                         pos
                     ).asString()
