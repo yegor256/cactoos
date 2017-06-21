@@ -66,7 +66,6 @@ public final class MappedIterator<X, Y> implements Iterator<Y> {
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Y next() {
         return new UncheckedFunc<>(this.func).apply(this.iterator.next());
     }

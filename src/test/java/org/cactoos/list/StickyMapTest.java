@@ -66,7 +66,7 @@ public final class StickyMapTest {
     public void decoratesEntries() throws Exception {
         MatcherAssert.assertThat(
             "Can't decorate a list of entries",
-            new StickyMap<>(
+            new StickyMap<String, String>(
                 new AbstractMap.SimpleEntry<>("first", "Jeffrey"),
                 new AbstractMap.SimpleEntry<>("last", "Lebowski")
             ),

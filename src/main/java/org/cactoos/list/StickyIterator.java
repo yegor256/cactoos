@@ -48,6 +48,15 @@ public final class StickyIterator<X> implements Iterator<X> {
 
     /**
      * Ctor.
+     * @param items Items to iterate
+     */
+    @SafeVarargs
+    public StickyIterator(final X... items) {
+        this(new ArrayAsIterable<>(items).iterator());
+    }
+
+    /**
+     * Ctor.
      * @param src The iterable
      */
     public StickyIterator(final Iterator<X> src) {

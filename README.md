@@ -202,12 +202,15 @@ for (String name : names) {
 This is its object-oriented alternative (no streams!):
 
 ```java
-new IterableAsBoolean<>(
-  names,
-  new ProcAsFunc<>(
-    n -> {
-      System.out.printf("Hello, %s!\n", n);
-    }
+new And<>(
+  new MappedIterable<>(
+    names,
+    new ProcAsFunc<>(
+      n -> {
+        System.out.printf("Hello, %s!\n", n);
+      },
+      () -> true
+    )
   )
 ).asValue();
 ```
@@ -223,12 +226,14 @@ while (!ready) {
 Here is its object-oriented alternative:
 
 ```java
-new IterableAsBoolean<>(
-  new EndlessIterable<>(ready),
-  r -> {
-    System.out.prinln("Still waiting...");
-    return !ready;
-  }
+new And<>(
+  new MappedIterable<>(
+    new EndlessIterable<>(ready),
+    r -> {
+      System.out.prinln("Still waiting...");
+      return !ready;
+    }
+  )
 ).asValue();
 ```
 

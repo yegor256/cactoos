@@ -37,12 +37,11 @@ import org.junit.Test;
 public final class ConcatIterableTest {
 
     @Test
-    @SuppressWarnings("unchecked")
     public void transformsList() {
         MatcherAssert.assertThat(
             "Can't concatenate iterables together",
             new LengthOfIterable(
-                new ConcatIterable<>(
+                new ConcatIterable<String>(
                     new ArrayAsIterable<>("hello", "world", "друг"),
                     new ArrayAsIterable<>("how", "are", "you"),
                     new ArrayAsIterable<>("what's", "up")
