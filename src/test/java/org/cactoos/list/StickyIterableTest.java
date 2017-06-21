@@ -23,50 +23,35 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import org.cactoos.func.StickyScalar;
-import org.cactoos.func.UncheckedScalar;
+import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.ScalarHasValue;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Iterable that returns an iterator only once.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link StickyIterable}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.8
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyIterable<X> implements Iterable<X> {
+public final class StickyIterableTest {
 
-    /**
-     * The gate.
-     */
-    private final UncheckedScalar<Iterable<X>> gate;
-
-    /**
-     * Ctor.
-     * @param iterable The iterable
-     */
-    public StickyIterable(final Iterable<X> iterable) {
-        this.gate = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    for (final X item : iterable) {
-                        temp.add(item);
-                    }
-                    return temp;
-                }
+    @Test
+    public void ignoresChangesInIterable() throws Exception {
+        final AtomicInteger size = new AtomicInteger(2);
+        final Iterable<Integer> list = new StickyIterable<>(
+            new IterableAsList<>(
+                () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
         );
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return this.gate.asValue().iterator();
+        MatcherAssert.assertThat(
+            "Can't ignore the changes in the underlying iterable",
+            new LengthOfIterable(list),
+            new ScalarHasValue<>(new LengthOfIterable(list).asValue())
+        );
     }
 
 }
