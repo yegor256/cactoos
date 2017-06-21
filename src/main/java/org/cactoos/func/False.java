@@ -21,66 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
 
 /**
- * Repeat an element.
+ * Logical false.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessIterable}.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.1
+ * @since 0.7
  */
-public final class RepeatIterable<T> implements Iterable<T> {
-
-    /**
-     * Element to repeat.
-     */
-    private final UncheckedScalar<T> element;
-
-    /**
-     * Repeat count.
-     */
-    private final int count;
-
-    /**
-     * Ctor.
-     * @param elm To repeat
-     * @param cnt Count
-     */
-    public RepeatIterable(final T elm, final int cnt) {
-        this(() -> elm, cnt);
-    }
-
-    /**
-     * Ctor.
-     * @param elm To repeat
-     * @param cnt Count
-     */
-    public RepeatIterable(final Scalar<T> elm, final int cnt) {
-        this(new UncheckedScalar<T>(elm), cnt);
-    }
-
-    /**
-     * Ctor.
-     * @param elm To repeat
-     * @param cnt Count
-     */
-    public RepeatIterable(final UncheckedScalar<T> elm, final int cnt) {
-        this.element = elm;
-        this.count = cnt;
-    }
+public final class False implements Scalar<Boolean> {
 
     @Override
-    public Iterator<T> iterator() {
-        return new RepeatIterator<>(this.element, this.count);
+    public Boolean asValue() throws Exception {
+        return false;
     }
-
 }

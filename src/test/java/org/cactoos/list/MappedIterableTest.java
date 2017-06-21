@@ -23,55 +23,47 @@
  */
 package org.cactoos.list;
 
-import java.security.SecureRandom;
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.IOException;
+import java.util.Collections;
+import org.cactoos.Text;
+import org.cactoos.text.StringAsText;
+import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableAsMap}.
- *
+ * Test case for {@link MappedIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableAsMapTest {
+public final class MappedIterableTest {
 
     @Test
-    public void convertsIterableToMap() {
+    public void transformsList() throws IOException {
         MatcherAssert.assertThat(
-            "Can't convert iterable to map",
-            new IterableAsMap<Integer, String>(
-                new AbstractMap.SimpleEntry<>(0, "hello, "),
-                new AbstractMap.SimpleEntry<>(1, "world!")
-            ),
-            Matchers.hasEntry(
-                Matchers.equalTo(0),
-                Matchers.startsWith("hello")
-            )
+            "Can't transform an iterable",
+            new MappedIterable<String, Text>(
+                new ArrayAsIterable<>(
+                    "hello", "world", "друг"
+                ),
+                input -> new UpperText(new StringAsText(input))
+            ).iterator().next().asString(),
+            Matchers.equalTo("HELLO")
         );
     }
 
     @Test
-    public void sensesChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new IterableAsMap<>(
-            () -> new RepeatIterator<>(
-                () -> new AbstractMap.SimpleEntry<>(
-                    new SecureRandom().nextInt(),
-                    1
-                ),
-                size.incrementAndGet()
-            )
-        );
+    public void transformsEmptyList() {
         MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying map",
-            map.size(),
-            Matchers.not(Matchers.equalTo(map.size()))
+            "Can't transform an empty iterable",
+            new MappedIterable<String, Text>(
+                Collections.emptyList(),
+                input -> new UpperText(new StringAsText(input))
+            ),
+            Matchers.emptyIterable()
         );
     }
 

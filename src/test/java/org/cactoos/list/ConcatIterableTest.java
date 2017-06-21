@@ -23,55 +23,33 @@
  */
 package org.cactoos.list;
 
-import java.security.SecureRandom;
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableAsMap}.
- *
+ * Test case for {@link ConcatIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableAsMapTest {
+public final class ConcatIterableTest {
 
     @Test
-    public void convertsIterableToMap() {
+    @SuppressWarnings("unchecked")
+    public void transformsList() {
         MatcherAssert.assertThat(
-            "Can't convert iterable to map",
-            new IterableAsMap<Integer, String>(
-                new AbstractMap.SimpleEntry<>(0, "hello, "),
-                new AbstractMap.SimpleEntry<>(1, "world!")
+            "Can't concatenate iterables together",
+            new LengthOfIterable(
+                new ConcatIterable<>(
+                    new ArrayAsIterable<>("hello", "world", "друг"),
+                    new ArrayAsIterable<>("how", "are", "you"),
+                    new ArrayAsIterable<>("what's", "up")
+                )
             ),
-            Matchers.hasEntry(
-                Matchers.equalTo(0),
-                Matchers.startsWith("hello")
-            )
-        );
-    }
-
-    @Test
-    public void sensesChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new IterableAsMap<>(
-            () -> new RepeatIterator<>(
-                () -> new AbstractMap.SimpleEntry<>(
-                    new SecureRandom().nextInt(),
-                    1
-                ),
-                size.incrementAndGet()
-            )
-        );
-        MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying map",
-            map.size(),
-            Matchers.not(Matchers.equalTo(map.size()))
+            // @checkstyle MagicNumber (1 line)
+            new ScalarHasValue<>(8)
         );
     }
 

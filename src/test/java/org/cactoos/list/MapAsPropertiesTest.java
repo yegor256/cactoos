@@ -25,33 +25,41 @@ package org.cactoos.list;
 
 import java.security.SecureRandom;
 import java.util.AbstractMap;
-import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.ScalarHasValue;
+import org.cactoos.func.FuncAsMatcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableAsMap}.
+ * Test case for {@link MapAsProperties}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class IterableAsMapTest {
+public final class MapAsPropertiesTest {
 
     @Test
-    public void convertsIterableToMap() {
+    public void convertsMapToProperties() {
         MatcherAssert.assertThat(
-            "Can't convert iterable to map",
-            new IterableAsMap<Integer, String>(
-                new AbstractMap.SimpleEntry<>(0, "hello, "),
-                new AbstractMap.SimpleEntry<>(1, "world!")
+            "Can't convert map to properties",
+            new MapAsProperties(
+                new StickyMap<>(
+                    new IterableAsMap<Integer, String>(
+                        new AbstractMap.SimpleEntry<>(0, "hello, world"),
+                        new AbstractMap.SimpleEntry<>(1, "how are you?")
+                    )
+                )
             ),
-            Matchers.hasEntry(
-                Matchers.equalTo(0),
-                Matchers.startsWith("hello")
+            new ScalarHasValue<>(
+                new FuncAsMatcher<Properties>(
+                    props -> props.getProperty("0").endsWith(", world")
+                )
             )
         );
     }
@@ -59,19 +67,21 @@ public final class IterableAsMapTest {
     @Test
     public void sensesChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new IterableAsMap<>(
-            () -> new RepeatIterator<>(
-                () -> new AbstractMap.SimpleEntry<>(
-                    new SecureRandom().nextInt(),
-                    1
-                ),
-                size.incrementAndGet()
+        final MapAsProperties props = new MapAsProperties(
+            new IterableAsMap<>(
+                () -> new RepeatIterator<>(
+                    () -> new AbstractMap.SimpleEntry<>(
+                        new SecureRandom().nextInt(),
+                        1
+                    ),
+                    size.incrementAndGet()
+                )
             )
         );
         MatcherAssert.assertThat(
             "Can't sense the changes in the underlying map",
-            map.size(),
-            Matchers.not(Matchers.equalTo(map.size()))
+            props.asValue().size(),
+            Matchers.not(Matchers.equalTo(props.asValue().size()))
         );
     }
 

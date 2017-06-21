@@ -21,71 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
 import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
 
 /**
- * Repeat an element.
+ * Logical conjunction.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessIterable}.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.4
+ * @since 0.8
  */
-public final class RepeatIterator<T> implements Iterator<T> {
+public final class And implements Scalar<Boolean> {
 
     /**
-     * The element to repeat.
+     * The iterator.
      */
-    private final UncheckedScalar<T> element;
-
-    /**
-     * How many more repeats will happen.
-     */
-    private int left;
+    private final Iterable<Scalar<Boolean>> iterable;
 
     /**
      * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
+     * @param iterable The iterable
      */
-    public RepeatIterator(final T elm, final int max) {
-        this(() -> elm, max);
-    }
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final Scalar<T> elm, final int max) {
-        this(new UncheckedScalar<T>(elm), max);
-    }
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final UncheckedScalar<T> elm, final int max) {
-        this.element = elm;
-        this.left = max;
+    public And(final Iterable<Scalar<Boolean>> iterable) {
+        this.iterable = iterable;
     }
 
     @Override
-    public boolean hasNext() {
-        return this.left > 0;
+    public Boolean asValue() throws Exception {
+        final Iterator<Scalar<Boolean>> iterator = this.iterable.iterator();
+        return this.conjunction(iterator, true);
     }
 
-    @Override
-    public T next() {
-        --this.left;
-        return this.element.asValue();
+    /**
+     * Conjunction.
+     *
+     * @param iterator The iterator
+     * @param value Previous value
+     * @return The result
+     * @throws Exception If fails
+     */
+    private Boolean conjunction(
+        final Iterator<Scalar<Boolean>> iterator,
+        final boolean value
+    ) throws Exception {
+        final Boolean result;
+        if (iterator.hasNext() && value) {
+            result = this.conjunction(iterator, iterator.next().asValue());
+        } else {
+            result = value;
+        }
+        return result;
     }
 }

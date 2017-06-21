@@ -23,55 +23,34 @@
  */
 package org.cactoos.list;
 
-import java.security.SecureRandom;
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableAsMap}.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test Case for {@link SkippedIterable}.
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableAsMapTest {
+public final class SkippedIterableTest {
 
     @Test
-    public void convertsIterableToMap() {
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void skipIterable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't convert iterable to map",
-            new IterableAsMap<Integer, String>(
-                new AbstractMap.SimpleEntry<>(0, "hello, "),
-                new AbstractMap.SimpleEntry<>(1, "world!")
-            ),
-            Matchers.hasEntry(
-                Matchers.equalTo(0),
-                Matchers.startsWith("hello")
-            )
-        );
-    }
-
-    @Test
-    public void sensesChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new IterableAsMap<>(
-            () -> new RepeatIterator<>(
-                () -> new AbstractMap.SimpleEntry<>(
-                    new SecureRandom().nextInt(),
-                    1
+            "Can't skip elements in iterable",
+            new SkippedIterable<>(
+                new ArrayAsIterable<>(
+                    "one", "two", "three", "four"
                 ),
-                size.incrementAndGet()
+                2
+            ),
+            Matchers.contains(
+                "three",
+                "four"
             )
-        );
-        MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying map",
-            map.size(),
-            Matchers.not(Matchers.equalTo(map.size()))
         );
     }
 

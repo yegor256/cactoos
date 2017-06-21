@@ -24,68 +24,41 @@
 package org.cactoos.list;
 
 import java.util.Iterator;
-import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
 
 /**
- * Repeat an element.
+ * Skipped iterable.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessIterable}.</p>
+ * <p>There is no thread-safety guarantee.</p>
  *
- * @author Kirill (g4s8.public@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @param <T> Element type
- * @since 0.4
+ * @since 0.8
  */
-public final class RepeatIterator<T> implements Iterator<T> {
+public final class SkippedIterable<T> implements Iterable<T> {
 
     /**
-     * The element to repeat.
+     * Decorated iterable.
      */
-    private final UncheckedScalar<T> element;
+    private final Iterable<T> iterable;
 
     /**
-     * How many more repeats will happen.
+     * Count skip elements.
      */
-    private int left;
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final T elm, final int max) {
-        this(() -> elm, max);
-    }
+    private final int skip;
 
     /**
      * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
+     * @param iterable Decorated iterable
+     * @param skip Count skip elements
      */
-    public RepeatIterator(final Scalar<T> elm, final int max) {
-        this(new UncheckedScalar<T>(elm), max);
-    }
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final UncheckedScalar<T> elm, final int max) {
-        this.element = elm;
-        this.left = max;
+    public SkippedIterable(final Iterable<T> iterable, final int skip) {
+        this.iterable = iterable;
+        this.skip = skip;
     }
 
     @Override
-    public boolean hasNext() {
-        return this.left > 0;
-    }
-
-    @Override
-    public T next() {
-        --this.left;
-        return this.element.asValue();
+    public Iterator<T> iterator() {
+        return new SkippedIterator<>(this.iterable.iterator(), this.skip);
     }
 }

@@ -21,71 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package org.cactoos.list;
 
 import java.util.Iterator;
-import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
+import java.util.NoSuchElementException;
 
 /**
- * Repeat an element.
+ * Cycled Iterator.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessIterable}.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.4
+ * @param <T> Type of item
+ * @since 0.8
  */
-public final class RepeatIterator<T> implements Iterator<T> {
+public final class CycledIterator<T> implements Iterator<T> {
 
     /**
-     * The element to repeat.
+     * Iterable.
      */
-    private final UncheckedScalar<T> element;
+    private final Iterable<T> iterable;
 
     /**
-     * How many more repeats will happen.
+     * Iterator.
      */
-    private int left;
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final T elm, final int max) {
-        this(() -> elm, max);
-    }
+    private Iterator<T> iterator;
 
     /**
      * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
+     * @param iterable Iterable.
      */
-    public RepeatIterator(final Scalar<T> elm, final int max) {
-        this(new UncheckedScalar<T>(elm), max);
-    }
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final UncheckedScalar<T> elm, final int max) {
-        this.element = elm;
-        this.left = max;
+    public CycledIterator(final Iterable<T> iterable) {
+        this.iterable = iterable;
     }
 
     @Override
     public boolean hasNext() {
-        return this.left > 0;
+        if (this.iterator == null || !this.iterator.hasNext()) {
+            this.iterator = this.iterable.iterator();
+        }
+        return this.iterator.hasNext();
     }
 
     @Override
     public T next() {
-        --this.left;
-        return this.element.asValue();
+        if (!this.hasNext()) {
+            throw new NoSuchElementException();
+        }
+        return this.iterator.next();
     }
 }

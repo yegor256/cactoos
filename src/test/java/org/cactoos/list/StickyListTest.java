@@ -23,55 +23,35 @@
  */
 package org.cactoos.list;
 
-import java.security.SecureRandom;
-import java.util.AbstractMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableAsMap}.
+ * Test case for {@link StickyList}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableAsMapTest {
+public final class StickyListTest {
 
     @Test
-    public void convertsIterableToMap() {
-        MatcherAssert.assertThat(
-            "Can't convert iterable to map",
-            new IterableAsMap<Integer, String>(
-                new AbstractMap.SimpleEntry<>(0, "hello, "),
-                new AbstractMap.SimpleEntry<>(1, "world!")
-            ),
-            Matchers.hasEntry(
-                Matchers.equalTo(0),
-                Matchers.startsWith("hello")
-            )
-        );
-    }
-
-    @Test
-    public void sensesChangesInMap() throws Exception {
+    public void ignoresChangesInIterable() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new IterableAsMap<>(
-            () -> new RepeatIterator<>(
-                () -> new AbstractMap.SimpleEntry<>(
-                    new SecureRandom().nextInt(),
-                    1
-                ),
-                size.incrementAndGet()
+        final List<Integer> list = new StickyList<>(
+            new IterableAsList<>(
+                () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
         );
         MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying map",
-            map.size(),
-            Matchers.not(Matchers.equalTo(map.size()))
+            "Can't ignore the changes in the underlying iterable",
+            list.size(),
+            Matchers.equalTo(list.size())
         );
     }
 

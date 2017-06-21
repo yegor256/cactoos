@@ -23,69 +23,50 @@
  */
 package org.cactoos.list;
 
+import java.util.Collection;
 import java.util.Iterator;
-import org.cactoos.Scalar;
+import java.util.LinkedList;
+import org.cactoos.func.StickyScalar;
 import org.cactoos.func.UncheckedScalar;
 
 /**
- * Repeat an element.
+ * Iterable that returns the same set of elements, always.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessIterable}.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.4
+ * @param <X> Type of item
+ * @since 0.1
  */
-public final class RepeatIterator<T> implements Iterator<T> {
+public final class StickyIterable<X> implements Iterable<X> {
 
     /**
-     * The element to repeat.
+     * The gate.
      */
-    private final UncheckedScalar<T> element;
-
-    /**
-     * How many more repeats will happen.
-     */
-    private int left;
+    private final UncheckedScalar<Iterable<X>> gate;
 
     /**
      * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
+     * @param iterable The iterable
      */
-    public RepeatIterator(final T elm, final int max) {
-        this(() -> elm, max);
-    }
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final Scalar<T> elm, final int max) {
-        this(new UncheckedScalar<T>(elm), max);
-    }
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final UncheckedScalar<T> elm, final int max) {
-        this.element = elm;
-        this.left = max;
+    public StickyIterable(final Iterable<X> iterable) {
+        this.gate = new UncheckedScalar<>(
+            new StickyScalar<>(
+                () -> {
+                    final Collection<X> temp = new LinkedList<>();
+                    for (final X item : iterable) {
+                        temp.add(item);
+                    }
+                    return temp;
+                }
+            )
+        );
     }
 
     @Override
-    public boolean hasNext() {
-        return this.left > 0;
+    public Iterator<X> iterator() {
+        return this.gate.asValue().iterator();
     }
 
-    @Override
-    public T next() {
-        --this.left;
-        return this.element.asValue();
-    }
 }

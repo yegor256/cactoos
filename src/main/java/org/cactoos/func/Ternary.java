@@ -21,71 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
 
 /**
- * Repeat an element.
+ * Ternary operation.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessIterable}.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.4
+ * @param <T> Type of item.
+ * @since 0.8
  */
-public final class RepeatIterator<T> implements Iterator<T> {
+public final class Ternary<T> implements Scalar<T> {
 
     /**
-     * The element to repeat.
+     * The condition.
      */
-    private final UncheckedScalar<T> element;
+    private final Scalar<Boolean> condition;
 
     /**
-     * How many more repeats will happen.
+     * The consequent.
      */
-    private int left;
+    private final T cons;
 
     /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
+     * The alternative.
      */
-    public RepeatIterator(final T elm, final int max) {
-        this(() -> elm, max);
-    }
+    private final T alter;
 
     /**
      * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
+     * @param condition The condition
+     * @param cons The consequent
+     * @param alter The alternative
      */
-    public RepeatIterator(final Scalar<T> elm, final int max) {
-        this(new UncheckedScalar<T>(elm), max);
-    }
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final UncheckedScalar<T> elm, final int max) {
-        this.element = elm;
-        this.left = max;
+    public Ternary(
+        final Scalar<Boolean> condition,
+        final T cons,
+        final T alter
+    ) {
+        this.condition = condition;
+        this.cons = cons;
+        this.alter = alter;
     }
 
     @Override
-    public boolean hasNext() {
-        return this.left > 0;
-    }
-
-    @Override
-    public T next() {
-        --this.left;
-        return this.element.asValue();
+    public T asValue() throws Exception {
+        final T result;
+        if (this.condition.asValue()) {
+            result = this.cons;
+        } else {
+            result = this.alter;
+        }
+        return result;
     }
 }

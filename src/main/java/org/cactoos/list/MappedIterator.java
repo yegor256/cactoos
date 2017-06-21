@@ -25,9 +25,10 @@ package org.cactoos.list;
 
 import java.util.Iterator;
 import org.cactoos.Func;
+import org.cactoos.func.UncheckedFunc;
 
 /**
- * Transformed iterable.
+ * Mapped iterator.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -37,12 +38,12 @@ import org.cactoos.Func;
  * @param <Y> Type of target item
  * @since 0.1
  */
-public final class TransformedIterable<X, Y> implements Iterable<Y> {
+public final class MappedIterator<X, Y> implements Iterator<Y> {
 
     /**
-     * Iterable.
+     * Iterator.
      */
-    private final Iterable<X> iterable;
+    private final Iterator<X> iterator;
 
     /**
      * Function.
@@ -54,16 +55,25 @@ public final class TransformedIterable<X, Y> implements Iterable<Y> {
      * @param src Source iterable
      * @param fnc Func
      */
-    public TransformedIterable(final Iterable<X> src, final Func<X, Y> fnc) {
-        this.iterable = src;
+    public MappedIterator(final Iterator<X> src, final Func<X, Y> fnc) {
+        this.iterator = src;
         this.func = fnc;
     }
 
     @Override
-    public Iterator<Y> iterator() {
-        return new TransformedIterator<>(
-            this.iterable.iterator(), this.func
-        );
+    public boolean hasNext() {
+        return this.iterator.hasNext();
+    }
+
+    @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public Y next() {
+        return new UncheckedFunc<>(this.func).apply(this.iterator.next());
+    }
+
+    @Override
+    public void remove() {
+        this.iterator.remove();
     }
 
 }

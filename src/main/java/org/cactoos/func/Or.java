@@ -21,56 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
 import java.util.Iterator;
+import org.cactoos.Scalar;
 
 /**
- * A few Iterables joined together.
+ * Logical disjunction.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @since 0.8
  */
-public final class ConcatenatedIterator<T> implements Iterator<T> {
+public final class Or implements Scalar<Boolean> {
 
     /**
-     * Iterables.
+     * The iterator.
      */
-    private final Iterable<Iterator<T>> list;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ConcatenatedIterator(final Iterator<T>... items) {
-        this(new IterableAsList<>(items));
-    }
+    private final Iterable<Scalar<Boolean>> iterable;
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     * @param iterable The iterable
      */
-    public ConcatenatedIterator(final Iterable<Iterator<T>> items) {
-        this.list = items;
+    public Or(final Iterable<Scalar<Boolean>> iterable) {
+        this.iterable = iterable;
     }
 
     @Override
-    public boolean hasNext() {
-        return new FilteredIterable<>(
-            this.list, Iterator::hasNext
-        ).iterator().hasNext();
+    public Boolean asValue() throws Exception {
+        final Iterator<Scalar<Boolean>> iterator = this.iterable.iterator();
+        return this.disjunction(iterator, false);
     }
 
-    @Override
-    public T next() {
-        return new FilteredIterable<>(
-            this.list, Iterator::hasNext
-        ).iterator().next().next();
+    /**
+     * Disjunction.
+     *
+     * @param iterator The iterator
+     * @param value Previous value
+     * @return The result
+     * @throws Exception If fails
+     */
+    private Boolean disjunction(
+        final Iterator<Scalar<Boolean>> iterator,
+        final boolean value
+    ) throws Exception {
+        final Boolean result;
+        if (iterator.hasNext() && !value) {
+            result = this.disjunction(iterator, iterator.next().asValue());
+        } else {
+            result = value;
+        }
+        return result;
     }
 }

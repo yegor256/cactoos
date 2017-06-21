@@ -23,55 +23,45 @@
  */
 package org.cactoos.list;
 
-import java.security.SecureRandom;
-import java.util.AbstractMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Text;
+import org.cactoos.TextHasString;
+import org.cactoos.text.FormattedText;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableAsMap}.
+ * Test case for {@link StickyIterator}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableAsMapTest {
+public final class StickyIteratorTest {
 
     @Test
-    public void convertsIterableToMap() {
-        MatcherAssert.assertThat(
-            "Can't convert iterable to map",
-            new IterableAsMap<Integer, String>(
-                new AbstractMap.SimpleEntry<>(0, "hello, "),
-                new AbstractMap.SimpleEntry<>(1, "world!")
-            ),
-            Matchers.hasEntry(
-                Matchers.equalTo(0),
-                Matchers.startsWith("hello")
-            )
-        );
-    }
-
-    @Test
-    public void sensesChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new IterableAsMap<>(
-            () -> new RepeatIterator<>(
-                () -> new AbstractMap.SimpleEntry<>(
-                    new SecureRandom().nextInt(),
-                    1
-                ),
-                size.incrementAndGet()
+    public void ignoresChangesInIterable() throws Exception {
+        final AtomicInteger count = new AtomicInteger(2);
+        final Text text = new FormattedText(
+            "%s",
+            String.join(
+                ", ",
+                () -> new MappedIterator<>(
+                    new StickyIterator<>(
+                        new LimitedIterator<>(
+                            new EndlessIterator<>(count::incrementAndGet),
+                            2
+                        )
+                    ),
+                    Object::toString
+                )
             )
         );
         MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying map",
-            map.size(),
-            Matchers.not(Matchers.equalTo(map.size()))
+            "Can't ignore the changes in the underlying iterator",
+            text,
+            new TextHasString(text.asString())
         );
     }
 

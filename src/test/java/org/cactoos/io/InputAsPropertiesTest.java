@@ -21,52 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.io;
 
-import java.util.Iterator;
-import org.cactoos.func.StickyFunc;
+import java.util.Properties;
+import org.cactoos.ScalarHasValue;
+import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.text.TextAsBytes;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * A few Iterables joined together.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link InputAsProperties}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @since 0.8
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ConcatenatedIterable<T> implements Iterable<T> {
+public final class InputAsPropertiesTest {
 
-    /**
-     * Iterables.
-     */
-    private final Iterable<Iterable<T>> list;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public ConcatenatedIterable(final Iterable<T>... items) {
-        this(new IterableAsList<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public ConcatenatedIterable(final Iterable<Iterable<T>> items) {
-        this.list = items;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new ConcatenatedIterator<>(
-            new TransformedIterable<>(
-                this.list,
-                new StickyFunc<>(Iterable::iterator)
+    @Test
+    public void readsInputContent() {
+        MatcherAssert.assertThat(
+            "Can't read properties from an input",
+            new InputAsProperties(
+                new BytesAsInput(
+                    new TextAsBytes(
+                        "foo=Hello, world!\nbar=works fine?\n"
+                    )
+                )
+            ),
+            new ScalarHasValue<>(
+                new FuncAsMatcher<Properties>(
+                    props -> "Hello, world!".equals(props.getProperty("foo"))
+                )
             )
         );
     }

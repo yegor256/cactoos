@@ -24,68 +24,51 @@
 package org.cactoos.list;
 
 import java.util.Iterator;
-import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.func.StickyFunc;
 
 /**
- * Repeat an element.
+ * A few Iterables joined together.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessIterable}.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.4
+ * @param <T> Type of item
+ * @since 0.1
  */
-public final class RepeatIterator<T> implements Iterator<T> {
+public final class ConcatIterable<T> implements Iterable<T> {
 
     /**
-     * The element to repeat.
+     * Iterables.
      */
-    private final UncheckedScalar<T> element;
-
-    /**
-     * How many more repeats will happen.
-     */
-    private int left;
+    private final Iterable<Iterable<T>> list;
 
     /**
      * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
+     * @param items Items to concatenate
      */
-    public RepeatIterator(final T elm, final int max) {
-        this(() -> elm, max);
+    @SafeVarargs
+    @SuppressWarnings("varargs")
+    public ConcatIterable(final Iterable<T>... items) {
+        this(new IterableAsList<>(items));
     }
 
     /**
      * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
+     * @param items Items to concatenate
      */
-    public RepeatIterator(final Scalar<T> elm, final int max) {
-        this(new UncheckedScalar<T>(elm), max);
-    }
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final UncheckedScalar<T> elm, final int max) {
-        this.element = elm;
-        this.left = max;
+    public ConcatIterable(final Iterable<Iterable<T>> items) {
+        this.list = items;
     }
 
     @Override
-    public boolean hasNext() {
-        return this.left > 0;
+    public Iterator<T> iterator() {
+        return new ConcatIterator<>(
+            new MappedIterable<>(
+                this.list,
+                new StickyFunc<>(Iterable::iterator)
+            )
+        );
     }
 
-    @Override
-    public T next() {
-        --this.left;
-        return this.element.asValue();
-    }
 }

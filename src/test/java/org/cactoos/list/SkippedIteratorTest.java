@@ -23,48 +23,45 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.UpperText;
+import java.util.NoSuchElementException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TransformedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test Case for {@link SkippedIterator}.
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TransformedIterableTest {
+public final class SkippedIteratorTest {
 
     @Test
-    public void transformsList() throws IOException {
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void skipIterator() throws Exception {
         MatcherAssert.assertThat(
-            "Can't transform an iterable",
-            new TransformedIterable<String, Text>(
+            "Can't skip elements in iterator",
+            () -> new SkippedIterator<>(
                 new ArrayAsIterable<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new StringAsText(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
-    }
-
-    @Test
-    public void transformsEmptyList() {
-        MatcherAssert.assertThat(
-            "Can't transform an empty iterable",
-            new TransformedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
+                    "one", "two", "three", "four"
+                ).iterator(),
+                2
             ),
-            Matchers.emptyIterable()
+            Matchers.contains(
+                "three",
+                "four"
+            )
         );
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void errorSkippedMoreThanExists() throws Exception {
+        new SkippedIterator<>(
+            new ArrayAsIterable<>(
+                "one", "two"
+            ).iterator(),
+            2
+        ).next();
+    }
 }

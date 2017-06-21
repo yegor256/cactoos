@@ -28,89 +28,94 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import org.cactoos.func.StickyScalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
- * Iterable as {@link List}.
- *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link List} on each
- * method call. It doesn't cache the data anyhow.</p>
- *
- * <p>If you don't need this {@link List} to re-fresh its content on every call,
- * by doing round-trips to the encapsulated iterable, use
- * {@link StickyList}.</p>
+ * List decorator that goes through the list only once.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Alexey Semenyuk (semenyukalexey88@gmail.com)
- * @author Kirill (g4s8.public@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> List type
- * @see StickyList
- * @since 0.1
+ * @param <X> Type of item
+ * @since 0.8
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class IterableAsList<T> implements List<T> {
+public final class StickyList<X> implements List<X> {
 
     /**
-     * The source.
+     * The gate.
      */
-    private final Iterable<T> iterable;
+    private final UncheckedScalar<List<X>> gate;
 
     /**
      * Ctor.
-     *
-     * @param array An array of some elements
+     * @param items The array
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    public IterableAsList(final T... array) {
-        this(new ArrayAsIterable<>(array));
+    public StickyList(final X... items) {
+        this(new ArrayAsIterable<>(items));
     }
 
     /**
      * Ctor.
-     *
-     * @param src An {@link Iterable}
+     * @param items The array
      */
-    public IterableAsList(final Iterable<T> src) {
-        this.iterable = src;
+    public StickyList(final Iterable<X> items) {
+        this(new IterableAsList<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param list The iterable
+     */
+    public StickyList(final Collection<X> list) {
+        this.gate = new UncheckedScalar<>(
+            new StickyScalar<>(
+                () -> {
+                    final List<X> temp = new LinkedList<>();
+                    temp.addAll(list);
+                    return temp;
+                }
+            )
+        );
     }
 
     @Override
     public int size() {
-        return new LengthOfIterable(this.iterable).asValue();
+        return this.gate.asValue().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return !this.iterable.iterator().hasNext();
+        return this.gate.asValue().isEmpty();
     }
 
     @Override
     public boolean contains(final Object object) {
-        return this.list().contains(object);
+        return this.gate.asValue().contains(object);
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return this.iterable.iterator();
+    public Iterator<X> iterator() {
+        return this.gate.asValue().iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return this.list().toArray();
+        return this.gate.asValue().toArray();
     }
 
     @Override
     @SuppressWarnings("PMD.UseVarargs")
     public <Y> Y[] toArray(final Y[] array) {
-        return this.list().toArray(array);
+        return this.gate.asValue().toArray(array);
     }
 
     @Override
-    public boolean add(final T element) {
+    public boolean add(final X element) {
         throw new UnsupportedOperationException(
             "#add(final T element) is not supported"
         );
@@ -125,11 +130,11 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public boolean containsAll(final Collection<?> collection) {
-        return this.list().containsAll(collection);
+        return this.gate.asValue().containsAll(collection);
     }
 
     @Override
-    public boolean addAll(final Collection<? extends T> collection) {
+    public boolean addAll(final Collection<? extends X> collection) {
         throw new UnsupportedOperationException(
             "#addAll(final Collection<? extends T> collection) is not supported"
         );
@@ -137,7 +142,7 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public boolean addAll(final int index,
-        final Collection<? extends T> collection) {
+        final Collection<? extends X> collection) {
         throw new UnsupportedOperationException(
             "#addAll() is not supported"
         );
@@ -165,26 +170,26 @@ public final class IterableAsList<T> implements List<T> {
     }
 
     @Override
-    public T get(final int index) {
-        return this.list().get(index);
+    public X get(final int index) {
+        return this.gate.asValue().get(index);
     }
 
     @Override
-    public T set(final int index, final T element) {
+    public X set(final int index, final X element) {
         throw new UnsupportedOperationException(
             "#set() is not supported"
         );
     }
 
     @Override
-    public void add(final int index, final T element) {
+    public void add(final int index, final X element) {
         throw new UnsupportedOperationException(
             "#add(final int index, final T element) is not supported"
         );
     }
 
     @Override
-    public T remove(final int index) {
+    public X remove(final int index) {
         throw new UnsupportedOperationException(
             "#remove(final int index) is not supported"
         );
@@ -192,38 +197,26 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public int indexOf(final Object object) {
-        return this.list().indexOf(object);
+        return this.gate.asValue().indexOf(object);
     }
 
     @Override
     public int lastIndexOf(final Object object) {
-        return this.list().lastIndexOf(object);
+        return this.gate.asValue().lastIndexOf(object);
     }
 
     @Override
-    public ListIterator<T> listIterator() {
-        return this.list().listIterator();
+    public ListIterator<X> listIterator() {
+        return this.gate.asValue().listIterator();
     }
 
     @Override
-    public ListIterator<T> listIterator(final int index) {
-        return this.list().listIterator(index);
+    public ListIterator<X> listIterator(final int index) {
+        return this.gate.asValue().listIterator(index);
     }
 
     @Override
-    public List<T> subList(final int fromindex, final int toindex) {
-        return this.list().subList(fromindex, toindex);
-    }
-
-    /**
-     * Build a list.
-     * @return List
-     */
-    private List<T> list() {
-        final List<T> list = new LinkedList<>();
-        for (final T item : this.iterable) {
-            list.add(item);
-        }
-        return list;
+    public List<X> subList(final int fromindex, final int toindex) {
+        return this.gate.asValue().subList(fromindex, toindex);
     }
 }

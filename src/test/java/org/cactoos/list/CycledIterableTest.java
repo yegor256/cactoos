@@ -23,56 +23,50 @@
  */
 package org.cactoos.list;
 
-import java.security.SecureRandom;
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Collections;
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableAsMap}.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test Case for {@link CycledIterable}.
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableAsMapTest {
+public final class CycledIterableTest {
 
     @Test
-    public void convertsIterableToMap() {
+    public void repeatIterableTest() throws Exception {
+        final String expected = "two";
         MatcherAssert.assertThat(
-            "Can't convert iterable to map",
-            new IterableAsMap<Integer, String>(
-                new AbstractMap.SimpleEntry<>(0, "hello, "),
-                new AbstractMap.SimpleEntry<>(1, "world!")
-            ),
-            Matchers.hasEntry(
-                Matchers.equalTo(0),
-                Matchers.startsWith("hello")
-            )
-        );
-    }
-
-    @Test
-    public void sensesChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new IterableAsMap<>(
-            () -> new RepeatIterator<>(
-                () -> new AbstractMap.SimpleEntry<>(
-                    new SecureRandom().nextInt(),
-                    1
+            "Can't repeat iterable",
+            new ItemOfIterable<>(
+                new CycledIterable<>(
+                    new ArrayAsIterable<>(
+                        "one", expected, "three"
+                    )
                 ),
-                size.incrementAndGet()
+                // @checkstyle MagicNumberCheck (1 line)<
+                7
+            ),
+            new ScalarHasValue<>(
+                expected
             )
-        );
-        MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying map",
-            map.size(),
-            Matchers.not(Matchers.equalTo(map.size()))
         );
     }
 
+    @Test()
+    public void notCycledEmptyTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't generate an empty iterable",
+            new LengthOfIterable(
+                new CycledIterable<>(
+                    Collections::emptyIterator
+                )
+            ),
+            new ScalarHasValue<>(0)
+        );
+    }
 }

@@ -21,71 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.io;
 
-import java.util.Iterator;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import org.cactoos.Input;
 import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
 
 /**
- * Repeat an element.
+ * Input as {@link Properties}.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessIterable}.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.4
+ * @since 0.8
  */
-public final class RepeatIterator<T> implements Iterator<T> {
+public final class InputAsProperties implements Scalar<Properties> {
 
     /**
-     * The element to repeat.
+     * The input.
      */
-    private final UncheckedScalar<T> element;
-
-    /**
-     * How many more repeats will happen.
-     */
-    private int left;
+    private final Input source;
 
     /**
      * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
+     * @param input The input
      */
-    public RepeatIterator(final T elm, final int max) {
-        this(() -> elm, max);
-    }
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final Scalar<T> elm, final int max) {
-        this(new UncheckedScalar<T>(elm), max);
-    }
-
-    /**
-     * Ctor.
-     * @param elm Element to repeat
-     * @param max How many times to repeat
-     */
-    public RepeatIterator(final UncheckedScalar<T> elm, final int max) {
-        this.element = elm;
-        this.left = max;
+    public InputAsProperties(final Input input) {
+        this.source = input;
     }
 
     @Override
-    public boolean hasNext() {
-        return this.left > 0;
-    }
-
-    @Override
-    public T next() {
-        --this.left;
-        return this.element.asValue();
+    public Properties asValue() throws IOException {
+        final Properties props = new Properties();
+        try (final InputStream input = this.source.stream()) {
+            props.load(input);
+        }
+        return props;
     }
 }

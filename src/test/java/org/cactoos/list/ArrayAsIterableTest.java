@@ -23,57 +23,28 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.Func;
-import org.cactoos.func.UncheckedFunc;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Transformed iterator.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link ArrayAsIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @since 0.7
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TransformedIterator<X, Y> implements Iterator<Y> {
+public final class ArrayAsIterableTest {
 
-    /**
-     * Iterator.
-     */
-    private final Iterator<X> iterator;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public TransformedIterator(final Iterator<X> src, final Func<X, Y> fnc) {
-        this.iterator = src;
-        this.func = fnc;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return this.iterator.hasNext();
-    }
-
-    @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public Y next() {
-        return new UncheckedFunc<>(this.func).apply(this.iterator.next());
-    }
-
-    @Override
-    public void remove() {
-        this.iterator.remove();
+    @Test
+    public void convertsArrayToIterable() {
+        MatcherAssert.assertThat(
+            "Can't convert array to iterable",
+            new ArrayAsIterable<>(
+                "hello", "world"
+            ),
+            Matchers.iterableWithSize(2)
+        );
     }
 
 }

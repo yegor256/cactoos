@@ -21,36 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ConcatenatedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link Neg}.
+ *
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ConcatenatedIterableTest {
+public final class NegTest {
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void transformsList() {
+    public void trueToFalse() throws Exception {
         MatcherAssert.assertThat(
-            "Can't concatenate iterables together",
-            new LengthOfIterable(
-                new ConcatenatedIterable<>(
-                    new ArrayAsIterable<>("hello", "world", "друг"),
-                    new ArrayAsIterable<>("how", "are", "you"),
-                    new ArrayAsIterable<>("what's", "up")
-                )
-            ),
-            // @checkstyle MagicNumber (1 line)
-            new ScalarHasValue<>(8)
+            new Neg(new True()).asValue(),
+            Matchers.equalTo(new False().asValue())
         );
     }
 
+    @Test
+    public void falseToTrue() throws Exception {
+        MatcherAssert.assertThat(
+            new Neg(new False()).asValue(),
+            Matchers.equalTo(new True().asValue())
+        );
+    }
 }

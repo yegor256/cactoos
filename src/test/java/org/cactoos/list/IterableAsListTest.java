@@ -24,6 +24,8 @@
 package org.cactoos.list;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -82,4 +84,18 @@ public final class IterableAsListTest {
         // @checkstyle MagicNumber (1 line)
         new IterableAsList<>(Collections.nCopies(10, 0)).get(11);
     }
+
+    @Test
+    public void sensesChangesInIterable() throws Exception {
+        final AtomicInteger size = new AtomicInteger(2);
+        final List<Integer> list = new IterableAsList<>(
+            () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
+        );
+        MatcherAssert.assertThat(
+            "Can't sense the changes in the underlying iterable",
+            list.size(),
+            Matchers.not(Matchers.equalTo(list.size()))
+        );
+    }
+
 }

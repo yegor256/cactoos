@@ -27,16 +27,17 @@ import org.cactoos.Func;
 import org.cactoos.text.FormattedText;
 
 /**
- * Func that repeats its calculation a few times before
- * returning the last result.
+ * Func that will try a few times before throwing an exception.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input
  * @param <Y> Type of output
- * @since 0.6
+ * @since 0.8
  */
-public final class RepeatedFunc<X, Y> implements Func<X, Y> {
+public final class RetryFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Original func.
@@ -44,39 +45,53 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
     private final Func<X, Y> func;
 
     /**
-     * How many times to run.
+     * Maximum number of attempts to make.
      */
-    private final int times;
+    private final int max;
 
     /**
      * Ctor.
-     *
-     * <p>If {@code max} is equal or less than zero {@link #apply(Object)}
-     * will return {@code null}.</p>
-     *
      * @param fnc Func original
-     * @param max How many times
      */
-    public RepeatedFunc(final Func<X, Y> fnc, final int max) {
+    public RetryFunc(final Func<X, Y> fnc) {
+        // @checkstyle MagicNumberCheck (1 line)
+        this(fnc, 3);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func original
+     * @param attempts Maximum number of attempts
+     */
+    public RetryFunc(final Func<X, Y> fnc, final int attempts) {
         this.func = fnc;
-        this.times = max;
+        this.max = attempts;
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Y apply(final X input) throws Exception {
-        Y result = null;
-        for (int idx = 0; idx < this.times; ++idx) {
-            result = this.func.apply(input);
+        int attempt = 0;
+        Exception error = new IllegalArgumentException(
+            new FormattedText(
+                "Maximum number of attempts is too small: %d",
+                this.max
+            ).asString()
+        );
+        while (attempt < this.max) {
+            try {
+                return this.func.apply(input);
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                error = ex;
+                break;
+                // @checkstyle IllegalCatchCheck (1 line)
+            } catch (final Exception ex) {
+                error = ex;
+            }
+            ++attempt;
         }
-        if (result == null) {
-            throw new IllegalArgumentException(
-                new FormattedText(
-                    "Repeat counter is equal or less than zero: %d",
-                    this.times
-                ).asString()
-            );
-        }
-        return result;
+        throw error;
     }
 
 }
