@@ -72,7 +72,7 @@ public final class AndTest {
     public void allFalse() throws Exception {
         MatcherAssert.assertThat(
             new And(
-                new ArrayAsIterable<>(
+                new ArrayAsIterable<Scalar<Boolean>>(
                     new False(),
                     new False(),
                     new False()
