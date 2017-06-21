@@ -24,10 +24,15 @@
 package org.cactoos.func;
 
 import java.util.Iterator;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.list.MappedIterable;
 
 /**
  * Logical disjunction.
+ *
+ * Is {@code true} if and only if one or more of items
+ * in the collection is {@code true}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -48,6 +53,16 @@ public final class Or implements Scalar<Boolean> {
      */
     public Or(final Iterable<Scalar<Boolean>> iterable) {
         this.iterable = iterable;
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     * @param fnc The Func
+     * @param <T> Type of source item
+     */
+    public <T> Or(final Iterable<T> src, final Func<T, Scalar<Boolean>> fnc) {
+        this(new MappedIterable<>(src, fnc));
     }
 
     @Override

@@ -36,6 +36,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class OrTest {
 
@@ -94,6 +95,17 @@ public final class OrTest {
                 new ArrayAsIterable<Scalar<Boolean>>()
             ).asValue(),
             Matchers.equalTo(false)
+        );
+    }
+
+    @Test
+    public void iterableAsBoolean() throws Exception {
+        MatcherAssert.assertThat(
+            new Or(
+                new ArrayAsIterable<>("public", "final", "class"),
+                input -> () -> input.length() > 5
+            ).asValue(),
+            Matchers.equalTo(true)
         );
     }
 }
