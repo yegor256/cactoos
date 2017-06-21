@@ -50,12 +50,12 @@ public final class ComposedFuncTest {
             new FilteredIterable<>(
                 new TransformedIterable<>(
                     new ArrayAsIterable<>("public", "final", "class"),
-                    new ComposedFunc<Object, Object>(
-                        input -> ((String) input).concat("1"),
-                        input -> ((String) input).concat("2")
+                    new ComposedFunc<>(
+                        input -> input.concat("1"),
+                        input -> input.concat("2")
                     )
                 ),
-                input -> ((String) input).endsWith("12")
+                input -> input.endsWith("12")
             )
         ).asValue();
         MatcherAssert.assertThat(
@@ -69,24 +69,22 @@ public final class ComposedFuncTest {
         final Integer count = new LengthOfIterable(
             new FilteredIterable<>(
                 new TransformedIterable<>(
-                    new ArrayAsIterable<>("public", "final", "class"),
+                    new ArrayAsIterable<>("private", "static", "String"),
                     new ComposedFunc<>(
                         input -> input.concat("1"),
-                        new ArrayAsIterable<Func<Object, Object>>(
-                            input -> ((String) input).concat("2"),
-                            input -> ((String) input).concat("3"),
-                            input -> ((String) input).concat("4"),
-                            input -> ((String) input).concat("5")
+                        new ArrayAsIterable<Func<String, String>>(
+                            input -> input.concat("2"),
+                            input -> input.replaceAll("a", "b")
                         ),
-                        input -> ((String) input).concat("6")
+                        String::trim
                     )
                 ),
-                str -> str.endsWith("123456")
+                input -> !input.startsWith("st")
             )
         ).asValue();
         MatcherAssert.assertThat(
             count,
-            Matchers.equalTo(3)
+            Matchers.equalTo(2)
         );
     }
 }

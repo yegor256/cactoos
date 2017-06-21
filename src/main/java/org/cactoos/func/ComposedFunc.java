@@ -33,25 +33,26 @@ import org.cactoos.Func;
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @param <X> Type of input.
- * @param <Y> Type of output.
+ * @param <Y> Intermediate type.
+ * @param <Z> Type of output.
  * @since 0.7
  */
-public final class ComposedFunc<X, Y> implements Func<X, Y> {
+public final class ComposedFunc<X, Y, Z> implements Func<X, Z> {
 
     /**
      * Before function.
      */
-    private final Func<X, Object> before;
+    private final Func<X, Y> before;
 
     /**
      * Functions.
      */
-    private final Iterable<Func<Object, Object>> funcs;
+    private final Iterable<Func<Y, Y>> funcs;
 
     /**
      * After function.
      */
-    private final Func<Object, Y> after;
+    private final Func<Y, Z> after;
 
     /**
      * Ctor.
@@ -60,9 +61,9 @@ public final class ComposedFunc<X, Y> implements Func<X, Y> {
      * @param after After function
      */
     public ComposedFunc(
-        final Func<X, Object> before,
-        final Iterable<Func<Object, Object>> funcs,
-        final Func<Object, Y> after
+        final Func<X, Y> before,
+        final Iterable<Func<Y, Y>> funcs,
+        final Func<Y, Z> after
     ) {
         this.before = before;
         this.funcs = funcs;
@@ -74,16 +75,13 @@ public final class ComposedFunc<X, Y> implements Func<X, Y> {
      * @param before Before function
      * @param after After function
      */
-    public ComposedFunc(
-        final Func<X, Object> before,
-        final Func<Object, Y> after
-    ) {
+    public ComposedFunc(final Func<X, Y> before, final Func<Y, Z> after) {
         this(before, Collections.emptyList(), after);
     }
 
     @Override
-    public Y apply(final X input) throws Exception {
-        final Iterator<Func<Object, Object>> iterator = this.funcs.iterator();
+    public Z apply(final X input) throws Exception {
+        final Iterator<Func<Y, Y>> iterator = this.funcs.iterator();
         return this.after.apply(
             this.funcsApply(iterator, this.before.apply(input))
         );
@@ -97,13 +95,16 @@ public final class ComposedFunc<X, Y> implements Func<X, Y> {
      * @return Functions apply
      * @throws Exception If fails
      */
-    private Object funcsApply(
-        final Iterator<Func<Object, Object>> iterator,
-        final Object input
+    private Y funcsApply(
+        final Iterator<Func<Y, Y>> iterator,
+        final Y input
     ) throws Exception {
-        // @checkstyle AvoidInlineConditionalsCheck (3 lines)
-        return iterator.hasNext()
-            ? this.funcsApply(iterator, iterator.next().apply(input))
-            : input;
+        final Y result;
+        if (iterator.hasNext()) {
+            result = this.funcsApply(iterator, iterator.next().apply(input));
+        } else {
+            result = input;
+        }
+        return result;
     }
 }
