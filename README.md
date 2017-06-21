@@ -142,8 +142,8 @@ new IterableAsCollection<>(
 To iterate a collection:
 
 ```java
-new AllOf(
-  new TransformedIterable<>(
+new And(
+  new MappedIterable<>(
     new ArrayAsIterable<>("how", "are", "you"),
     new ProcAsFunc<>(
       input -> {
@@ -202,7 +202,7 @@ for (String name : names) {
 This is its object-oriented alternative (no streams!):
 
 ```java
-new IterableAsBoolean<>(
+new And(
   names,
   new ProcAsFunc<>(
     n -> {
@@ -223,7 +223,7 @@ while (!ready) {
 Here is its object-oriented alternative:
 
 ```java
-new IterableAsBoolean<>(
+new And(
   new EndlessIterable<>(ready),
   r -> {
     System.out.prinln("Still waiting...");
