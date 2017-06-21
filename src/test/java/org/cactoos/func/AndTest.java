@@ -36,6 +36,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class AndTest {
 
@@ -88,6 +89,17 @@ public final class AndTest {
                 new ArrayAsIterable<Scalar<Boolean>>()
             ).asValue(),
             Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void iterableAsBoolean() throws Exception {
+        MatcherAssert.assertThat(
+            new And(
+                new ArrayAsIterable<>("public", "final", "class"),
+                input -> () -> input.length() > 5
+            ).asValue(),
+            Matchers.equalTo(false)
         );
     }
 }

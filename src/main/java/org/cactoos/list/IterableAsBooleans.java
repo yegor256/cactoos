@@ -30,23 +30,24 @@ import org.cactoos.Func;
  * Iterable into booleans.
  *
  * <p>You can use this class, for example, in order to iterate through
- * a collection of items, in combination with {@link AllOf}:</p>
+ * a collection of items, in combination with {@link org.cactoos.func.And}:</p>
  *
- * <pre> new AllOf(
+ * <pre> new And(
  *   new IterableAsBooleans&lt;String&gt;(
  *     new IterableAsList&lt;String&gt;("hello", "world"),
  *     i -&gt; System.out.println(i)
  *   )
  * ).asValue();</pre>
  *
- * <p>Also, consider a much shorter version with {@link IterableAsBoolean}.</p>
+ * <p>Also, consider a much shorter version
+ * with {@link org.cactoos.func.And}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of source item
- * @see IterableAsBoolean
+ * @see org.cactoos.func.And
  * @since 0.1
  */
 public final class IterableAsBooleans<X> implements Iterable<Boolean> {

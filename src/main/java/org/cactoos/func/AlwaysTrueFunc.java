@@ -33,7 +33,7 @@ import org.cactoos.Proc;
  * a procedure that returns boolean instead of a function:</p>
  *
  * <pre> List&lt;String&gt; list = new LinkedList&lt;&gt;();
- * new AllOf(
+ * new And(
  *   new IterableAsBooleans&lt;String&gt;(
  *     Collections.emptyList(),
  *     new AlwaysTrueFunc&lt;&gt;(list::add)
