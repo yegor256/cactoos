@@ -64,7 +64,6 @@ public final class IterableAsList<T> implements List<T> {
      * @param array An array of some elements
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public IterableAsList(final T... array) {
         this(new ArrayAsIterable<>(array));
     }

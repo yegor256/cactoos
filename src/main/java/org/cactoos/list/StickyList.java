@@ -54,7 +54,6 @@ public final class StickyList<X> implements List<X> {
      * @param items The array
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public StickyList(final X... items) {
         this(new ArrayAsIterable<>(items));
     }

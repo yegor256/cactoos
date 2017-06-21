@@ -55,7 +55,6 @@ public final class
      * @param src The underlying iterable
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public SortedIterable(final T... src) {
         this(new ArrayAsIterable<>(src));
     }
@@ -74,7 +73,6 @@ public final class
      * @param cmp The comparator
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public SortedIterable(final Comparator<T> cmp, final T... src) {
         this(cmp, new ArrayAsIterable<>(src));
     }
