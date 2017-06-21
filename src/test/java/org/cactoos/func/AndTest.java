@@ -26,6 +26,7 @@ package org.cactoos.func;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.Scalar;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.list.ArrayAsIterable;
 import org.cactoos.list.MappedIterable;
@@ -117,7 +118,7 @@ public final class AndTest {
         MatcherAssert.assertThat(
             "Can't iterate a list",
             new And(
-                new MappedIterable<>(
+                new MappedIterable<String, Scalar<Boolean>>(
                     Collections.emptyList(),
                     new ProcAsFunc<>(list::add, () -> true)
                 )
