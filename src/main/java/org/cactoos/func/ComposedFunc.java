@@ -81,9 +81,8 @@ public final class ComposedFunc<X, Y, Z> implements Func<X, Z> {
 
     @Override
     public Z apply(final X input) throws Exception {
-        final Iterator<Func<Y, Y>> iterator = this.funcs.iterator();
         return this.after.apply(
-            this.funcsApply(iterator, this.before.apply(input))
+            this.funcsApply(this.funcs.iterator(), this.before.apply(input))
         );
     }
 
