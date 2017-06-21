@@ -27,7 +27,7 @@ import org.cactoos.Func;
 import org.cactoos.list.ArrayAsIterable;
 import org.cactoos.list.FilteredIterable;
 import org.cactoos.list.LengthOfIterable;
-import org.cactoos.list.TransformedIterable;
+import org.cactoos.list.MappedIterable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public final class ComposedFuncTest {
     public void withoutIterable() throws Exception {
         final Integer count = new LengthOfIterable(
             new FilteredIterable<>(
-                new TransformedIterable<>(
+                new MappedIterable<>(
                     new ArrayAsIterable<>("public", "final", "class"),
                     new ComposedFunc<>(
                         input -> input.concat("1"),
@@ -68,7 +68,7 @@ public final class ComposedFuncTest {
     public void withIterable() throws Exception {
         final Integer count = new LengthOfIterable(
             new FilteredIterable<>(
-                new TransformedIterable<>(
+                new MappedIterable<>(
                     new ArrayAsIterable<>("private", "static", "String"),
                     new ComposedFunc<>(
                         input -> input.concat("1"),
