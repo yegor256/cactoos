@@ -23,50 +23,46 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import org.cactoos.func.StickyScalar;
-import org.cactoos.func.UncheckedScalar;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Text;
+import org.cactoos.TextHasString;
+import org.cactoos.text.FormattedText;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Iterable that returns the same set of elements, always.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link StickyIterator}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.8
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyIterable<X> implements Iterable<X> {
+public final class StickyIteratorTest {
 
-    /**
-     * The gate.
-     */
-    private final UncheckedScalar<Iterable<X>> gate;
-
-    /**
-     * Ctor.
-     * @param iterable The iterable
-     */
-    public StickyIterable(final Iterable<X> iterable) {
-        this.gate = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    for (final X item : iterable) {
-                        temp.add(item);
-                    }
-                    return temp;
-                }
+    @Test
+    public void ignoresChangesInIterable() throws Exception {
+        final AtomicInteger count = new AtomicInteger(2);
+        final Text text = new FormattedText(
+            "%s",
+            String.join(
+                ", ",
+                () -> new MappedIterator<>(
+                    new StickyIterator<>(
+                        new LimitedIterator<>(
+                            new EndlessIterator<>(count::incrementAndGet),
+                            2
+                        )
+                    ),
+                    Object::toString
+                )
             )
         );
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return this.gate.asValue().iterator();
+        MatcherAssert.assertThat(
+            "Can't ignore the changes in the underlying iterator",
+            text,
+            new TextHasString(text.asString())
+        );
     }
 
 }

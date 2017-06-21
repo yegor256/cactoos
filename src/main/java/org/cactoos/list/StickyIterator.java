@@ -30,43 +30,47 @@ import org.cactoos.func.StickyScalar;
 import org.cactoos.func.UncheckedScalar;
 
 /**
- * Iterable that returns the same set of elements, always.
+ * Iterator that returns the same set of elements always.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
- * @since 0.1
+ * @since 0.8
  */
-public final class StickyIterable<X> implements Iterable<X> {
+public final class StickyIterator<X> implements Iterator<X> {
 
     /**
      * The gate.
      */
-    private final UncheckedScalar<Iterable<X>> gate;
+    private final UncheckedScalar<Iterator<X>> gate;
 
     /**
      * Ctor.
-     * @param iterable The iterable
+     * @param src The iterable
      */
-    public StickyIterable(final Iterable<X> iterable) {
+    public StickyIterator(final Iterator<X> src) {
         this.gate = new UncheckedScalar<>(
             new StickyScalar<>(
                 () -> {
                     final Collection<X> temp = new LinkedList<>();
-                    for (final X item : iterable) {
-                        temp.add(item);
+                    while (src.hasNext()) {
+                        temp.add(src.next());
                     }
-                    return temp;
+                    return temp.iterator();
                 }
             )
         );
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.gate.asValue().iterator();
+    public boolean hasNext() {
+        return this.gate.asValue().hasNext();
     }
 
+    @Override
+    public X next() {
+        return this.gate.asValue().next();
+    }
 }

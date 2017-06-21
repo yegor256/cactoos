@@ -24,6 +24,8 @@
 package org.cactoos.list;
 
 import java.util.Iterator;
+import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * Iterator that never ends.
@@ -41,13 +43,29 @@ public final class EndlessIterator<T> implements Iterator<T> {
     /**
      * The element to repeat.
      */
-    private final T element;
+    private final UncheckedScalar<T> element;
 
     /**
      * Ctor.
      * @param elm Element to repeat
      */
     public EndlessIterator(final T elm) {
+        this(() -> elm);
+    }
+
+    /**
+     * Ctor.
+     * @param elm Element to repeat
+     */
+    public EndlessIterator(final Scalar<T> elm) {
+        this(new UncheckedScalar<>(elm));
+    }
+
+    /**
+     * Ctor.
+     * @param elm Element to repeat
+     */
+    public EndlessIterator(final UncheckedScalar<T> elm) {
         this.element = elm;
     }
 
@@ -58,6 +76,6 @@ public final class EndlessIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        return this.element;
+        return this.element.asValue();
     }
 }
