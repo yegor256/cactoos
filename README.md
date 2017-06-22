@@ -53,6 +53,9 @@ Java version required: 1.8+.
 
 ## Input/Output
 
+More about it here:
+[Object-Oriented Declarative Input/Output in Cactoos](http://www.yegor256.com/2017/06/22/object-oriented-input-output-in-cactoos.html).
+
 To read a text file in UTF-8:
 
 ```java
