@@ -142,8 +142,8 @@ new IterableAsCollection<>(
 To iterate a collection:
 
 ```java
-new AllOf(
-  new TransformedIterable<>(
+new And(
+  new MappedIterable<>(
     new ArrayAsIterable<>("how", "are", "you"),
     new ProcAsFunc<>(
       input -> {
@@ -157,11 +157,9 @@ new AllOf(
 Or even more compact:
 
 ```java
-new IterableAsBoolean(
-  new ArrayAsIterable<>("how", "are", "you"),
-  new ProcAsFunc<>(
-    input -> System.out.printf("Item: %s\n", i)
-  )
+new And(
+  input -> System.out.printf("Item: %s\n", i),
+  "how", "are", "you"
 ).asValue();
 ```
 
@@ -171,9 +169,11 @@ To sort a list of words in the file:
 List<String> sorted = new SortedList<>(
   new IterableAsList<>(
     new TextAsLines(
-      new InputAsText(
-        new FileAsInput(
-          new File("/tmp/names.txt")
+      new BytesAsText(
+        new InputAsBytes(
+          new FileAsInput(
+            new File("/tmp/names.txt")
+          )
         )
       )
     )
@@ -185,7 +185,7 @@ To count elements in an iterable:
 
 ```java
 int total = new LengthOfIterable(
-  new ArrayAsIterable<>("how", "are", "you")
+  "how", "are", "you"
 ).asValue();
 ```
 
@@ -203,15 +203,10 @@ This is its object-oriented alternative (no streams!):
 
 ```java
 new And<>(
-  new MappedIterable<>(
-    names,
-    new ProcAsFunc<>(
-      n -> {
-        System.out.printf("Hello, %s!\n", n);
-      },
-      () -> true
-    )
-  )
+  names,
+  n -> {
+    System.out.printf("Hello, %s!\n", n);
+  }
 ).asValue();
 ```
 
@@ -227,13 +222,11 @@ Here is its object-oriented alternative:
 
 ```java
 new And<>(
-  new MappedIterable<>(
-    new EndlessIterable<>(ready),
-    r -> {
-      System.out.prinln("Still waiting...");
-      return !ready;
-    }
-  )
+  new EndlessIterable<>(ready),
+  r -> {
+    System.out.prinln("Still waiting...");
+    return !ready;
+  }
 ).asValue();
 ```
 

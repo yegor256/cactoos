@@ -24,8 +24,11 @@
 package org.cactoos.func;
 
 import java.util.Iterator;
+import org.cactoos.Func;
+import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.list.ArrayAsIterable;
+import org.cactoos.list.MappedIterable;
 
 /**
  * Logical conjunction.
@@ -42,6 +45,53 @@ public final class And implements Scalar<Boolean> {
      * The iterator.
      */
     private final Iterable<Scalar<Boolean>> iterable;
+
+    /**
+     * Ctor.
+     * @param proc Proc to map
+     * @param src The iterable
+     * @param <X> Type of items in the iterable
+     */
+    @SafeVarargs
+    public <X> And(final Proc<X> proc, final X... src) {
+        this(new ProcAsFunc<>(proc, true), src);
+    }
+
+    /**
+     * Ctor.
+     * @param func Func to map
+     * @param src The iterable
+     * @param <X> Type of items in the iterable
+     */
+    @SafeVarargs
+    public <X> And(final Func<X, Boolean> func, final X... src) {
+        this(new ArrayAsIterable<>(src), func);
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     * @param proc Proc to use
+     * @param <X> Type of items in the iterable
+     */
+    public <X> And(final Iterable<X> src, final Proc<X> proc) {
+        this(src, new ProcAsFunc<>(proc, true));
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     * @param func Func to map
+     * @param <X> Type of items in the iterable
+     */
+    public <X> And(final Iterable<X> src, final Func<X, Boolean> func) {
+        this(
+            new MappedIterable<>(
+                src,
+                item -> (Scalar<Boolean>) () -> func.apply(item)
+            )
+        );
+    }
 
     /**
      * Ctor.
