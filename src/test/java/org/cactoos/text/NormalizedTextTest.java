@@ -32,7 +32,7 @@ import org.junit.Test;
  * Test case for {@link NormalizedText}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class NormalizedTextTest {
