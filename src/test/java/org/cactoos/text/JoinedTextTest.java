@@ -38,7 +38,6 @@ import org.junit.Test;
 public final class JoinedTextTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void joinsStrings() throws IOException {
         MatcherAssert.assertThat(
             "Can't join strings",
@@ -48,16 +47,15 @@ public final class JoinedTextTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void joinsTexts() throws IOException {
         MatcherAssert.assertThat(
             "Can't join texts",
             new JoinedText(
                 " ",
-                new StringAsText("hello"),
-                new StringAsText("world")
+                new StringAsText("foo"),
+                new StringAsText("bar")
             ),
-            new TextHasString("hello world")
+            new TextHasString("foo bar")
         );
     }
 
