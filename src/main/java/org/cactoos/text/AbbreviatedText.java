@@ -23,48 +23,67 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * String as Text.
+ * Abbreviates a Text using ellipses.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
  */
-public final class StringAsText implements Text {
+public final class AbbreviatedText implements Text {
 
     /**
-     * The source.
+     * The truncated text.
      */
-    private final String source;
+    private final Text origin;
 
     /**
      * Ctor.
-     * @param text The text
+     * @param text The Text
      */
-    public StringAsText(final String text) {
-        this.source = text;
-    }
-
-    @Override
-    public String asString() {
-        return this.source;
-    }
-
-    @Override
-    public boolean equals(final Object text) {
-        return text != null
-            && text instanceof StringAsText
-            && StringAsText.class.cast(text).source.equals(this.source);
-    }
-
-    @Override
-    public int hashCode() {
+    public AbbreviatedText(final Text text) {
         // @checkstyle MagicNumber (1 line)
-        return 31 * this.source.hashCode();
+        this(text, 0, 77);
     }
 
+    /**
+     * Ctor.
+     * @param text The Text
+     * @param width Width of the result string
+     */
+    public AbbreviatedText(final Text text, final int width) {
+        // @checkstyle MagicNumber (1 line)
+        this(text, 0, width);
+    }
+
+    /**
+     * Ctor.
+     * @param text The Text
+     * @param offset Text position where to start
+     * @param width Width of the result string
+     */
+    public AbbreviatedText(final Text text, final int offset, final int width) {
+        this(new TruncatedText(text, offset, width));
+    }
+
+    /**
+     * Ctor.
+     * @param text The truncated Text
+     */
+    public AbbreviatedText(final TruncatedText text) {
+        this.origin = text;
+    }
+
+    @Override
+    public String asString() throws IOException {
+        return new FormattedText(
+            "%s...",
+            this.origin.asString()
+        ).asString();
+    }
 }

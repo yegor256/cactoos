@@ -23,48 +23,68 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * String as Text.
+ * Truncate a Text to a max width.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
  */
-public final class StringAsText implements Text {
+public final class TruncatedText implements Text {
 
     /**
-     * The source.
+     * The text.
      */
-    private final String source;
+    private final Text origin;
+
+    /**
+     * The initial position in the text.
+     */
+    private final int offset;
+
+    /**
+     * The max width of the text.
+     */
+    private final int width;
 
     /**
      * Ctor.
-     * @param text The text
+     * @param text The Text
      */
-    public StringAsText(final String text) {
-        this.source = text;
-    }
-
-    @Override
-    public String asString() {
-        return this.source;
-    }
-
-    @Override
-    public boolean equals(final Object text) {
-        return text != null
-            && text instanceof StringAsText
-            && StringAsText.class.cast(text).source.equals(this.source);
-    }
-
-    @Override
-    public int hashCode() {
+    public TruncatedText(final Text text) {
         // @checkstyle MagicNumber (1 line)
-        return 31 * this.source.hashCode();
+        this(text, 80);
     }
 
+    /**
+     * Ctor.
+     * @param text The Text
+     * @param width Width of the result string
+     */
+    public TruncatedText(final Text text, final int width) {
+        // @checkstyle MagicNumber (1 line)
+        this(text, 0, width);
+    }
+
+    /**
+     * Ctor.
+     * @param text The Text
+     * @param offset Text position where to start
+     * @param width Width of the result string
+     */
+    public TruncatedText(final Text text, final int offset, final int width) {
+        this.origin = text;
+        this.offset = offset;
+        this.width = width;
+    }
+
+    @Override
+    public String asString() throws IOException {
+        return this.origin.asString().substring(this.offset, this.width);
+    }
 }

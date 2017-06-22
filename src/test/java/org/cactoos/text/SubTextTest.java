@@ -23,48 +23,27 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Text;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * String as Text.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link SubText}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StringAsText implements Text {
+public final class SubTextTest {
 
-    /**
-     * The source.
-     */
-    private final String source;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public StringAsText(final String text) {
-        this.source = text;
-    }
-
-    @Override
-    public String asString() {
-        return this.source;
-    }
-
-    @Override
-    public boolean equals(final Object text) {
-        return text != null
-            && text instanceof StringAsText
-            && StringAsText.class.cast(text).source.equals(this.source);
-    }
-
-    @Override
-    public int hashCode() {
-        // @checkstyle MagicNumber (1 line)
-        return 31 * this.source.hashCode();
+    @Test
+    public void subsText() {
+        MatcherAssert.assertThat(
+            "Can't cut a text",
+            // @checkstyle MagicNumber (1 line)
+            new SubText(new StringAsText("Hello World"), 2, 9),
+            new TextHasString("llo Wor")
+        );
     }
 
 }

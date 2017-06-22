@@ -23,48 +23,49 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * String as Text.
+ * Extract a sub Text from a Text.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
  */
-public final class StringAsText implements Text {
+public final class SubText implements Text {
 
     /**
-     * The source.
+     * The text.
      */
-    private final String source;
+    private final Text origin;
+
+    /**
+     * The start position in the text.
+     */
+    private final int start;
+
+    /**
+     * The end position in the text.
+     */
+    private final int end;
 
     /**
      * Ctor.
-     * @param text The text
+     * @param text The Text
+     * @param start Start position in the text
+     * @param end End position in the text
      */
-    public StringAsText(final String text) {
-        this.source = text;
+    public SubText(final Text text, final int start, final int end) {
+        this.origin = text;
+        this.start = start;
+        this.end = end;
     }
 
     @Override
-    public String asString() {
-        return this.source;
+    public String asString() throws IOException {
+        return this.origin.asString().substring(this.start, this.end);
     }
-
-    @Override
-    public boolean equals(final Object text) {
-        return text != null
-            && text instanceof StringAsText
-            && StringAsText.class.cast(text).source.equals(this.source);
-    }
-
-    @Override
-    public int hashCode() {
-        // @checkstyle MagicNumber (1 line)
-        return 31 * this.source.hashCode();
-    }
-
 }

@@ -23,48 +23,36 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Text;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * String as Text.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link RepeatedText}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StringAsText implements Text {
+public final class RepeatedTextTest {
 
-    /**
-     * The source.
-     */
-    private final String source;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public StringAsText(final String text) {
-        this.source = text;
+    @Test
+    public void repeatsWordsText() {
+        MatcherAssert.assertThat(
+            "Can't repeats a text",
+            // @checkstyle MagicNumber (1 line)
+            new RepeatedText(new StringAsText("Hello"), 2),
+            new TextHasString("HelloHello")
+        );
     }
 
-    @Override
-    public String asString() {
-        return this.source;
+    @Test
+    public void repeatsCharText() {
+        MatcherAssert.assertThat(
+            "Can't repeats a char",
+            // @checkstyle MagicNumber (1 line)
+            new RepeatedText(new StringAsText("A"), 5),
+            new TextHasString("AAAAA")
+        );
     }
-
-    @Override
-    public boolean equals(final Object text) {
-        return text != null
-            && text instanceof StringAsText
-            && StringAsText.class.cast(text).source.equals(this.source);
-    }
-
-    @Override
-    public int hashCode() {
-        // @checkstyle MagicNumber (1 line)
-        return 31 * this.source.hashCode();
-    }
-
 }

@@ -23,48 +23,22 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Func;
 import org.cactoos.Text;
 
 /**
- * String as Text.
+ * Func that converts a string to Text.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
  */
-public final class StringAsText implements Text {
-
-    /**
-     * The source.
-     */
-    private final String source;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public StringAsText(final String text) {
-        this.source = text;
-    }
-
+public final class StringAsTextFunc implements Func<String, Text> {
     @Override
-    public String asString() {
-        return this.source;
-    }
-
-    @Override
-    public boolean equals(final Object text) {
-        return text != null
-            && text instanceof StringAsText
-            && StringAsText.class.cast(text).source.equals(this.source);
-    }
-
-    @Override
-    public int hashCode() {
-        // @checkstyle MagicNumber (1 line)
-        return 31 * this.source.hashCode();
+    public Text apply(final String input) throws Exception {
+        return new StringAsText(input);
     }
 
 }

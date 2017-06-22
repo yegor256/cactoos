@@ -23,48 +23,46 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Text;
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * String as Text.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link SplitText}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StringAsText implements Text {
+public final class SplitTextTest {
 
-    /**
-     * The source.
-     */
-    private final String source;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public StringAsText(final String text) {
-        this.source = text;
+    @Test
+    public void splitsText() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't split a text",
+            new SplitText(
+                new StringAsText("one two three four five")
+            ),
+            Matchers.contains(
+                new StringAsText("one"),
+                new StringAsText("two"),
+                new StringAsText("three"),
+                new StringAsText("four"),
+                new StringAsText("five")
+             )
+        );
     }
 
-    @Override
-    public String asString() {
-        return this.source;
-    }
-
-    @Override
-    public boolean equals(final Object text) {
-        return text != null
-            && text instanceof StringAsText
-            && StringAsText.class.cast(text).source.equals(this.source);
-    }
-
-    @Override
-    public int hashCode() {
-        // @checkstyle MagicNumber (1 line)
-        return 31 * this.source.hashCode();
+    @Test
+    public void splitsEmptyText() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't split an empty text",
+            new SplitText(
+                new StringAsText("")
+            ),
+            Matchers.contains(new StringAsText(""))
+        );
     }
 
 }

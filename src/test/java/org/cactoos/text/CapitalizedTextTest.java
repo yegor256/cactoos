@@ -23,48 +23,40 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Text;
+import java.io.IOException;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * String as Text.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link CapitalizedText}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StringAsText implements Text {
+public final class CapitalizedTextTest {
 
-    /**
-     * The source.
-     */
-    private final String source;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public StringAsText(final String text) {
-        this.source = text;
+    @Test
+    public void capitalizesText() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't capitalize a text",
+            new CapitalizedText(
+                new StringAsText("hello")
+            ),
+            new TextHasString("Hello")
+        );
     }
 
-    @Override
-    public String asString() {
-        return this.source;
-    }
-
-    @Override
-    public boolean equals(final Object text) {
-        return text != null
-            && text instanceof StringAsText
-            && StringAsText.class.cast(text).source.equals(this.source);
-    }
-
-    @Override
-    public int hashCode() {
-        // @checkstyle MagicNumber (1 line)
-        return 31 * this.source.hashCode();
+    @Test
+    public void capitalizesManyText() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't capitalize many texts",
+            new CapitalizedText(
+                new StringAsText("one two three four five")
+            ),
+            new TextHasString("One Two Three Four Five")
+        );
     }
 
 }

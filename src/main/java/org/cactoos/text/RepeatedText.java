@@ -23,48 +23,46 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * String as Text.
+ * Repeat an text count times.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.3
  */
-public final class StringAsText implements Text {
+public final class RepeatedText implements Text {
 
     /**
-     * The source.
+     * The text.
      */
-    private final String source;
+    private final Text origin;
+
+    /**
+     * How many times repeat the Text.
+     */
+    private final int count;
 
     /**
      * Ctor.
-     * @param text The text
+     * @param text The Text
+     * @param count How many times repeat the Text
      */
-    public StringAsText(final String text) {
-        this.source = text;
+    public RepeatedText(final Text text, final int count) {
+        this.origin = text;
+        this.count = count;
     }
 
     @Override
-    public String asString() {
-        return this.source;
+    public String asString() throws IOException {
+        final StringBuilder out = new StringBuilder(0);
+        for (int cnt = 0; cnt < this.count; ++cnt) {
+            out.append(this.origin.asString());
+        }
+        return out.toString();
     }
-
-    @Override
-    public boolean equals(final Object text) {
-        return text != null
-            && text instanceof StringAsText
-            && StringAsText.class.cast(text).source.equals(this.source);
-    }
-
-    @Override
-    public int hashCode() {
-        // @checkstyle MagicNumber (1 line)
-        return 31 * this.source.hashCode();
-    }
-
 }
