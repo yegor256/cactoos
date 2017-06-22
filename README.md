@@ -168,7 +168,7 @@ To sort a list of words in the file:
 ```java
 List<String> sorted = new SortedList<>(
   new IterableAsList<>(
-    new TextAsLines(
+    new SplitText(
       new BytesAsText(
         new InputAsBytes(
           new FileAsInput(
