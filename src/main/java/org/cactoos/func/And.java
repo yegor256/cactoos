@@ -23,7 +23,6 @@
  */
 package org.cactoos.func;
 
-import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
@@ -112,27 +111,14 @@ public final class And implements Scalar<Boolean> {
 
     @Override
     public Boolean asValue() throws Exception {
-        return this.conjunction(this.iterable.iterator(), true);
-    }
-
-    /**
-     * Conjunction.
-     *
-     * @param iterator The iterator
-     * @param value Previous value
-     * @return The result
-     * @throws Exception If fails
-     */
-    private Boolean conjunction(
-        final Iterator<Scalar<Boolean>> iterator,
-        final boolean value
-    ) throws Exception {
-        final Boolean result;
-        if (iterator.hasNext() && value) {
-            result = this.conjunction(iterator, iterator.next().asValue());
-        } else {
-            result = value;
+        boolean result = true;
+        for (final Scalar<Boolean> item : this.iterable) {
+            if (!item.asValue()) {
+                result = false;
+                break;
+            }
         }
         return result;
     }
+
 }

@@ -23,7 +23,6 @@
  */
 package org.cactoos.func;
 
-import java.util.Iterator;
 import org.cactoos.Scalar;
 import org.cactoos.list.ArrayAsIterable;
 
@@ -62,27 +61,14 @@ public final class Or implements Scalar<Boolean> {
 
     @Override
     public Boolean asValue() throws Exception {
-        return this.disjunction(this.iterable.iterator(), false);
-    }
-
-    /**
-     * Disjunction.
-     *
-     * @param iterator The iterator
-     * @param value Previous value
-     * @return The result
-     * @throws Exception If fails
-     */
-    private Boolean disjunction(
-        final Iterator<Scalar<Boolean>> iterator,
-        final boolean value
-    ) throws Exception {
-        final Boolean result;
-        if (iterator.hasNext() && !value) {
-            result = this.disjunction(iterator, iterator.next().asValue());
-        } else {
-            result = value;
+        boolean result = false;
+        for (final Scalar<Boolean> item : this.iterable) {
+            if (item.asValue()) {
+                result = true;
+                break;
+            }
         }
         return result;
     }
+
 }
