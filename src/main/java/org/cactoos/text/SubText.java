@@ -26,6 +26,7 @@ package org.cactoos.text;
 import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * Extract a substring from a Text.
@@ -105,16 +106,10 @@ public final class SubText implements Text {
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public String asString() throws IOException {
-        try {
-            return this.origin.asString().substring(
-                this.start.asValue(),
-                this.end.asValue()
-            );
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IOException(ex);
-        }
+        return this.origin.asString().substring(
+            new UncheckedScalar<>(this.start).asValue(),
+            new UncheckedScalar<>(this.end).asValue()
+        );
     }
 }
