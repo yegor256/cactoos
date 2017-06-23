@@ -23,8 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.Iterator;
 import org.cactoos.Text;
 import org.cactoos.list.ArrayAsIterable;
@@ -34,7 +32,7 @@ import org.cactoos.list.ArrayAsIterable;
  *
  * @author Alexey Semenyuk (semenyukalexey88@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
 public final class SplitText implements Iterable<String> {
 
@@ -71,13 +69,11 @@ public final class SplitText implements Iterable<String> {
 
     @Override
     public Iterator<String> iterator() {
-        try {
-            return new ArrayAsIterable<>(
-                this.origin.asString().split(this.regex.asString())
-            ).iterator();
-        } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
-        }
+        return new ArrayAsIterable<>(
+            new UncheckedText(this.origin).asString().split(
+                new UncheckedText(this.regex).asString()
+            )
+        ).iterator();
     }
 
 }
