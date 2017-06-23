@@ -39,12 +39,12 @@ public final class SplitText implements Iterable<String> {
     /**
      * The origin string.
      */
-    private final Text origin;
+    private final UncheckedText origin;
 
     /**
      * The regex.
      */
-    private final Text regex;
+    private final UncheckedText regex;
 
     /**
      * Ctor.
@@ -53,7 +53,11 @@ public final class SplitText implements Iterable<String> {
      * @param regex The regex
      */
     public SplitText(final String text, final String regex) {
-        this(new StringAsText(text), new StringAsText(regex));
+        this(new UncheckedText(
+            new StringAsText(text)
+        ), new UncheckedText(
+            new StringAsText(regex)
+        ));
     }
 
     /**
@@ -63,6 +67,16 @@ public final class SplitText implements Iterable<String> {
      * @param regex The regex
      */
     public SplitText(final Text text, final Text regex) {
+        this(new UncheckedText(text), new UncheckedText(regex));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param text The text
+     * @param regex The regex
+     */
+    public SplitText(final UncheckedText text, final UncheckedText regex) {
         this.origin = text;
         this.regex = regex;
     }
@@ -70,8 +84,8 @@ public final class SplitText implements Iterable<String> {
     @Override
     public Iterator<String> iterator() {
         return new ArrayAsIterable<>(
-            new UncheckedText(this.origin).asString().split(
-                new UncheckedText(this.regex).asString()
+            this.origin.asString().split(
+                this.regex.asString()
             )
         ).iterator();
     }
