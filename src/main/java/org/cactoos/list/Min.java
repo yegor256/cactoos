@@ -21,12 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.list;
+
+import java.util.Iterator;
+import org.cactoos.Scalar;
 
 /**
- * Math.
+ * Find the smaller among items.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.6
+ * @param <T> Scalar type
+ * @since 0.9
  */
-package org.cactoos.math;
+public final class Min<T extends Comparable<T>> implements Scalar<T> {
+
+    /**
+     * Items.
+     */
+    private final Iterable<Scalar<T>> items;
+
+    /**
+     * Ctor.
+     * @param items The items
+     */
+    @SafeVarargs
+    public Min(final Scalar<T>... items) {
+        this(new ArrayAsIterable<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param items The items
+     */
+    public Min(final Iterable<Scalar<T>> items) {
+        this.items = items;
+    }
+
+    @Override
+    public T asValue() throws Exception {
+        final Iterator<Scalar<T>> iter = this.items.iterator();
+        T min = iter.next().asValue();
+        while (iter.hasNext()) {
+            final T next = iter.next().asValue();
+            if (next.compareTo(min) < 0) {
+                min = next;
+            }
+        }
+        return min;
+    }
+
+}
