@@ -43,7 +43,7 @@ public final class UncheckedScalarTest {
             () -> {
                 throw new IOException("intended");
             }
-        ).asValue();
+        ).value();
     }
 
 }

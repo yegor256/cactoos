@@ -53,7 +53,7 @@ public final class UncheckedOutput implements Output {
 
     @Override
     public OutputStream stream() {
-        return new UncheckedScalar<>(this.output::stream).asValue();
+        return new UncheckedScalar<>(this.output::stream).value();
     }
 
 }

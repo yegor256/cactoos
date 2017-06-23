@@ -52,6 +52,6 @@ public interface Scalar<T> {
      * @return The value
      * @throws Exception If fails
      */
-    T asValue() throws Exception;
+    T value() throws Exception;
 
 }

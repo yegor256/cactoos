@@ -40,7 +40,7 @@ public final class FalseTest {
     @Test
     public void asValue() throws Exception {
         MatcherAssert.assertThat(
-            new False().asValue(),
+            new False().value(),
             Matchers.equalTo(false)
         );
     }

@@ -53,9 +53,9 @@ public final class UncheckedScalar<T> implements Scalar<T> {
     }
 
     @Override
-    public T asValue() {
+    public T value() {
         try {
-            return new IoCheckedScalar<>(this.scalar).asValue();
+            return new IoCheckedScalar<>(this.scalar).value();
         } catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }

@@ -50,7 +50,7 @@ public final class RetryScalarTest {
                     return 0;
                 },
                 Integer.MAX_VALUE
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(0)
         );
     }

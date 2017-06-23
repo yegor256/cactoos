@@ -42,7 +42,7 @@ public final class TextAsLongTest {
     public void numberTest() throws IOException {
         MatcherAssert.assertThat(
             "Can't parse long number",
-            new TextAsLong("186789235425346").asValue(),
+            new TextAsLong("186789235425346").value(),
             // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(186789235425346L)
         );
@@ -50,6 +50,6 @@ public final class TextAsLongTest {
 
     @Test(expected = NumberFormatException.class)
     public void failsIfTextDoesNotRepresentALong() throws IOException {
-        new TextAsLong("abc").asValue();
+        new TextAsLong("abc").value();
     }
 }

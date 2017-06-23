@@ -49,9 +49,9 @@ public final class SyncScalar<T> implements Scalar<T> {
     }
 
     @Override
-    public T asValue() throws Exception {
+    public T value() throws Exception {
         synchronized (this.source) {
-            return this.source.asValue();
+            return this.source.value();
         }
     }
 }
