@@ -38,22 +38,24 @@ import org.junit.Test;
 public final class MapEntryTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void getKey() {
+        final String key = "hello";
+        final String value = "world";
         MatcherAssert.assertThat(
             "Can't get key in the map entry",
-            new MapEntry<>("hello", "world").getKey(),
-            Matchers.equalTo("hello")
+            new MapEntry<>(key, value).getKey(),
+            Matchers.equalTo(key)
         );
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void getValue() {
+        final String key = "foo";
+        final String value = "bar";
         MatcherAssert.assertThat(
             "Can't get value in the map entry",
-            new MapEntry<>("foo", "bar").getValue(),
-            Matchers.equalTo("bar")
+            new MapEntry<>(key, value).getValue(),
+            Matchers.equalTo(value)
         );
     }
 
@@ -63,11 +65,12 @@ public final class MapEntryTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void equalsTo() {
+        final String key = "eo";
+        final String value = "book";
         MatcherAssert.assertThat(
             "MapEntries are not equals",
-            new MapEntry<>("eo", "book").equals(new MapEntry<>("eo", "book")),
+            new MapEntry<>(key, value).equals(new MapEntry<>(key, value)),
             Matchers.equalTo(true)
         );
     }
