@@ -21,12 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.list;
+
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Math, tests.
+ * Test case for {@link Max}.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.6
+ * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-package org.cactoos.math;
+public final class MaxTest {
+
+    @Test
+    public void maxAmongOneTest() throws Exception {
+        final int num = 10;
+        MatcherAssert.assertThat(
+            "Can't find the greater among one",
+            new Max<Integer>(() -> new Integer(num)).asValue(),
+            Matchers.equalTo(num)
+        );
+    }
+
+    @Test
+    public void maxAmongManyTest() throws Exception {
+        final int num = 10;
+        MatcherAssert.assertThat(
+            "Can't find the greater among many",
+            new Max<Integer>(
+                () -> new Integer(num),
+                () -> new Integer(0),
+                () -> new Integer(-1),
+                () -> new Integer(2)
+             ).asValue(),
+            Matchers.equalTo(num)
+        );
+    }
+}

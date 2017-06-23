@@ -21,39 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.math;
+package org.cactoos.list;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link Max}.
+ * Test case for {@link Min}.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class MaxTest {
+public final class MinTest {
 
     @Test
-    public void maxAmongOneTest() throws Exception {
+    public void minAmongOneTest() throws Exception {
+        final int num = 10;
         MatcherAssert.assertThat(
-            "Can't find the greater among one number",
-            // @checkstyle MagicNumber (2 lines)
-            new Max(10).asValue(),
-            Matchers.equalTo(10)
+            "Can't find the smaller among one",
+            new Min<Integer>(() -> new Integer(num)).asValue(),
+            Matchers.equalTo(num)
         );
     }
 
     @Test
-    public void maxAmongManyTest() throws Exception {
+    public void minAmongManyTest() throws Exception {
+        final int num = -1;
         MatcherAssert.assertThat(
-            "Can't find the greater among many numbers",
-            // @checkstyle MagicNumber (2 lines)
-            new Max(10, 5, 7, 2, 100).asValue(),
-            Matchers.equalTo(100)
+            "Can't find the smaller among many",
+            new Min<Integer>(
+                () -> new Integer(1),
+                () -> new Integer(0),
+                () -> new Integer(num),
+                () -> new Integer(2)
+             ).asValue(),
+            Matchers.equalTo(num)
         );
     }
 }

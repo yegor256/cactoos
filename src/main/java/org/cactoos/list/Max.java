@@ -21,39 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.math;
+package org.cactoos.list;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.Iterator;
+import org.cactoos.Scalar;
 
 /**
- * Test case for {@link Min}.
+ * Find the greater among items.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.7
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Scalar type
+ * @since 0.9
  */
-public final class MinTest {
+public final class Max<T extends Comparable<T>> implements Scalar<T> {
 
-    @Test
-    public void minAmongOneTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't find the smaller among one number",
-            // @checkstyle MagicNumber (2 lines)
-            new Min(10).asValue(),
-            Matchers.equalTo(10)
-        );
+    /**
+     * Items.
+     */
+    private final Iterable<Scalar<T>> items;
+
+    /**
+     * Ctor.
+     * @param items The items
+     */
+    @SafeVarargs
+    public Max(final Scalar<T>... items) {
+        this(new ArrayAsIterable<>(items));
     }
 
-    @Test
-    public void minAmongManyTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't find the smaller among many numbers",
-            // @checkstyle MagicNumber (2 lines)
-            new Min(10, 5, 7, 2, 100).asValue(),
-            Matchers.equalTo(2)
-        );
+    /**
+     * Ctor.
+     * @param items The items
+     */
+    public Max(final Iterable<Scalar<T>> items) {
+        this.items = items;
     }
+
+    @Override
+    public T asValue() throws Exception {
+        final Iterator<Scalar<T>> iter = this.items.iterator();
+        T max = iter.next().asValue();
+        while (iter.hasNext()) {
+            final T next = iter.next().asValue();
+            if (next.compareTo(max) > 0) {
+                max = next;
+            }
+        }
+        return max;
+    }
+
 }
