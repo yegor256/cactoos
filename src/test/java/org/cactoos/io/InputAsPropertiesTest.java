@@ -26,7 +26,6 @@ package org.cactoos.io;
 import java.util.Properties;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.func.FuncAsMatcher;
-import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -44,11 +43,7 @@ public final class InputAsPropertiesTest {
         MatcherAssert.assertThat(
             "Can't read properties from an input",
             new InputAsProperties(
-                new BytesAsInput(
-                    new TextAsBytes(
-                        "foo=Hello, world!\nbar=works fine?\n"
-                    )
-                )
+                "foo=Hello, world!\nbar=works fine?\n"
             ),
             new ScalarHasValue<>(
                 new FuncAsMatcher<Properties>(
