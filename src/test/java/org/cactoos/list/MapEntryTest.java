@@ -61,4 +61,25 @@ public final class MapEntryTest {
     public void cantSetValue() {
         new MapEntry<>("one", "two").setValue("three");
     }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void equalsTo() {
+        MatcherAssert.assertThat(
+            "MapEntries are not equals",
+            new MapEntry<>("eo", "book").equals(new MapEntry<>("eo", "book")),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void compareHash() {
+        MatcherAssert.assertThat(
+            "the hash code are not equals",
+            new MapEntry<>("elegant", "objects").hashCode(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(32739498)
+        );
+    }
+
 }
