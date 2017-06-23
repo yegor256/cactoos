@@ -23,67 +23,37 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
-import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
- * Length of {@link Input}.
+ * Input that doesn't throw checked {@link Exception}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.9
  */
-public final class LengthOfInput implements Scalar<Long> {
+public final class UncheckedInput implements Input {
 
     /**
-     * The input.
+     * Original input.
      */
-    private final Input source;
-
-    /**
-     * The buffer size.
-     */
-    private final int size;
+    private final Input input;
 
     /**
      * Ctor.
-     * @param input The input
+     * @param ipt Input
      */
-    public LengthOfInput(final Input input) {
-        // @checkstyle MagicNumber (1 line)
-        this(input, 16 << 10);
-    }
-
-    /**
-     * Ctor.
-     * @param input The input
-     * @param max Buffer size
-     */
-    public LengthOfInput(final Input input, final int max) {
-        this.source = input;
-        this.size = max;
+    public UncheckedInput(final Input ipt) {
+        this.input = ipt;
     }
 
     @Override
-    public Long asValue() throws IOException {
-        try (final InputStream stream = this.source.stream()) {
-            final byte[] buf = new byte[this.size];
-            long length = 0L;
-            while (true) {
-                final int len = stream.read(buf);
-                if (len > 0) {
-                    length += (long) len;
-                }
-                if (len < 0) {
-                    break;
-                }
-            }
-            return length;
-        }
+    public InputStream stream() {
+        return new UncheckedScalar<>(this.input::stream).asValue();
     }
 
 }
