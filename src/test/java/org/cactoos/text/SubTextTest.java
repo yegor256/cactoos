@@ -34,7 +34,6 @@ import org.junit.Test;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SubTextTest {
 
     @Test
@@ -48,12 +47,12 @@ public final class SubTextTest {
     }
 
     @Test
-    public void suText() {
+    public void cutTextUntilEnd() {
         MatcherAssert.assertThat(
-            "Can't cut a text",
+            "Can't cut a text until end",
             // @checkstyle MagicNumber (1 line)
-            new SubText("hello world", 2),
-            new TextHasString("llo world")
+            new SubText("works fine?", 2),
+            new TextHasString("rks fine?")
         );
     }
 
