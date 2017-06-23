@@ -24,7 +24,6 @@
 package org.cactoos.func;
 
 import java.util.Collections;
-import java.util.Iterator;
 import org.cactoos.Func;
 
 /**
@@ -37,7 +36,7 @@ import org.cactoos.Func;
  * @param <Z> Type of output.
  * @since 0.7
  */
-public final class ComposedFunc<X, Y, Z> implements Func<X, Z> {
+public final class ChainedFunc<X, Y, Z> implements Func<X, Z> {
 
     /**
      * Before function.
@@ -60,7 +59,7 @@ public final class ComposedFunc<X, Y, Z> implements Func<X, Z> {
      * @param funcs Functions
      * @param after After function
      */
-    public ComposedFunc(
+    public ChainedFunc(
         final Func<X, Y> before,
         final Iterable<Func<Y, Y>> funcs,
         final Func<Y, Z> after
@@ -75,35 +74,16 @@ public final class ComposedFunc<X, Y, Z> implements Func<X, Z> {
      * @param before Before function
      * @param after After function
      */
-    public ComposedFunc(final Func<X, Y> before, final Func<Y, Z> after) {
+    public ChainedFunc(final Func<X, Y> before, final Func<Y, Z> after) {
         this(before, Collections.emptyList(), after);
     }
 
     @Override
     public Z apply(final X input) throws Exception {
-        return this.after.apply(
-            this.funcsApply(this.funcs.iterator(), this.before.apply(input))
-        );
-    }
-
-    /**
-     * Composed functions in this.func.
-     *
-     * @param iterator Functions
-     * @param input The input
-     * @return Functions apply
-     * @throws Exception If fails
-     */
-    private Y funcsApply(
-        final Iterator<Func<Y, Y>> iterator,
-        final Y input
-    ) throws Exception {
-        final Y result;
-        if (iterator.hasNext()) {
-            result = this.funcsApply(iterator, iterator.next().apply(input));
-        } else {
-            result = input;
+        Y temp = this.before.apply(input);
+        for (final Func<Y, Y> func : this.funcs) {
+            temp = func.apply(temp);
         }
-        return result;
+        return this.after.apply(temp);
     }
 }

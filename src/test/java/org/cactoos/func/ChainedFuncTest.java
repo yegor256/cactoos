@@ -33,7 +33,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ComposedFunc}.
+ * Test case for {@link ChainedFunc}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
@@ -41,49 +41,46 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
  */
-public final class ComposedFuncTest {
+public final class ChainedFuncTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void withoutIterable() throws Exception {
-        final Integer count = new LengthOfIterable(
-            new FilteredIterable<>(
-                new MappedIterable<>(
-                    new ArrayAsIterable<>("public", "final", "class"),
-                    new ComposedFunc<>(
-                        input -> input.concat("1"),
-                        input -> input.concat("2")
-                    )
-                ),
-                input -> input.endsWith("12")
-            )
-        ).asValue();
         MatcherAssert.assertThat(
-            count,
+            new LengthOfIterable(
+                new FilteredIterable<>(
+                    new MappedIterable<>(
+                        new ArrayAsIterable<>("public", "final", "class"),
+                        new ChainedFunc<>(
+                            input -> input.concat("1"),
+                            input -> input.concat("2")
+                        )
+                    ),
+                    input -> input.endsWith("12")
+                )
+            ).asValue(),
             Matchers.equalTo(3)
         );
     }
 
     @Test
     public void withIterable() throws Exception {
-        final Integer count = new LengthOfIterable(
-            new FilteredIterable<>(
-                new MappedIterable<>(
-                    new ArrayAsIterable<>("private", "static", "String"),
-                    new ComposedFunc<>(
-                        input -> input.concat("1"),
-                        new ArrayAsIterable<Func<String, String>>(
-                            input -> input.concat("2"),
-                            input -> input.replaceAll("a", "b")
-                        ),
-                        String::trim
-                    )
-                ),
-                input -> !input.startsWith("st")
-            )
-        ).asValue();
         MatcherAssert.assertThat(
-            count,
+            new LengthOfIterable(
+                new FilteredIterable<>(
+                    new MappedIterable<>(
+                        new ArrayAsIterable<>("private", "static", "String"),
+                        new ChainedFunc<>(
+                            input -> input.concat("1"),
+                            new ArrayAsIterable<Func<String, String>>(
+                                input -> input.concat("2"),
+                                input -> input.replaceAll("a", "b")
+                            ),
+                            String::trim
+                        )
+                    ),
+                    input -> !input.startsWith("st")
+                )
+            ).asValue(),
             Matchers.equalTo(2)
         );
     }
