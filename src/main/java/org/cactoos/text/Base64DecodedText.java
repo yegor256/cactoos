@@ -52,9 +52,10 @@ public final class Base64DecodedText implements Text {
 
     @Override
     public String asString() throws IOException {
-        final byte[] decoded = Base64.getDecoder().decode(this.origin
-            .asString()
-        );
-        return new String(decoded, "utf-8");
+        final BytesAsText bytes = new BytesAsText(
+            Base64.getDecoder().decode(
+            this.origin.asString()
+        ));
+        return bytes.asString();
     }
 }
