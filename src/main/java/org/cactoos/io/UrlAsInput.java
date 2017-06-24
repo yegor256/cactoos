@@ -25,8 +25,11 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import org.cactoos.Input;
+import org.cactoos.Scalar;
+import org.cactoos.func.IoCheckedScalar;
 
 /**
  * URL as Input.
@@ -42,19 +45,45 @@ public final class UrlAsInput implements Input {
     /**
      * The URL.
      */
-    private final URL source;
+    private final Scalar<URL> source;
+
+    /**
+     * Ctor.
+     * @param url The URL
+     * @since 0.6
+     */
+    public UrlAsInput(final String url) {
+        this(() -> new URL(url));
+    }
+
+    /**
+     * Ctor.
+     * @param url The URL
+     * @since 0.6
+     */
+    public UrlAsInput(final URI url) {
+        this(url::toURL);
+    }
 
     /**
      * Ctor.
      * @param url The URL
      */
     public UrlAsInput(final URL url) {
-        this.source = url;
+        this(() -> url);
+    }
+
+    /**
+     * Ctor.
+     * @param src Source
+     */
+    public UrlAsInput(final Scalar<URL> src) {
+        this.source = src;
     }
 
     @Override
     public InputStream stream() throws IOException {
-        return this.source.openStream();
+        return new IoCheckedScalar<>(this.source).asValue().openStream();
     }
 
 }

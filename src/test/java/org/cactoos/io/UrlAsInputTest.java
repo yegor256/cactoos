@@ -63,9 +63,7 @@ public final class UrlAsInputTest {
                 "Can't fetch bytes from the URL",
                 new BytesAsText(
                     new InputAsBytes(
-                        new UrlAsInput(
-                            home.toURL()
-                        )
+                        new UrlAsInput(home)
                     )
                 ),
                 new TextHasString(
@@ -75,6 +73,22 @@ public final class UrlAsInputTest {
                     )
                 )
             )
+        );
+    }
+
+    @Test
+    public void readsStringUrl() {
+        MatcherAssert.assertThat(
+            "Can't fetch bytes from the HTTPS URL",
+            new BytesAsText(
+                new InputAsBytes(
+                    new UrlAsInput(
+                        // @checkstyle LineLength (1 line)
+                        "file:src/test/resources/org/cactoos/large-text.txt"
+                    )
+                )
+            ),
+            new TextHasString(Matchers.containsString("Lorem ipsum"))
         );
     }
 

@@ -61,4 +61,17 @@ public final class ReplacedTextTest {
             new TextHasString(text)
         );
     }
+
+    @Test
+    public void replacesAllOccurrences() {
+        MatcherAssert.assertThat(
+            "Can't replace a text with multiple needle occurrences",
+            new ReplacedText(
+                new StringAsText("one cat, two cats, three cats"),
+                "cat",
+                "dog"
+            ),
+            new TextHasString("one dog, two dogs, three dogs")
+        );
+    }
 }

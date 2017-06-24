@@ -23,7 +23,7 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
+import org.cactoos.text.UncheckedText;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -62,11 +62,7 @@ public final class TextHasString extends TypeSafeMatcher<Text> {
 
     @Override
     public boolean matchesSafely(final Text item) {
-        try {
-            return this.matcher.matches(item.asString());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+        return this.matcher.matches(new UncheckedText(item).asString());
     }
 
     @Override

@@ -47,16 +47,32 @@ public final class ProcAsFunc<X, Y> implements Func<X, Y> {
     private final Proc<X> proc;
 
     /**
+     * The result.
+     */
+    private final Y result;
+
+    /**
      * Ctor.
      * @param prc The proc
      */
     public ProcAsFunc(final Proc<X> prc) {
+        this(prc, null);
+    }
+
+    /**
+     * Ctor.
+     * @param prc The proc
+     * @param rslt Result to return
+     * @since 0.7
+     */
+    public ProcAsFunc(final Proc<X> prc, final Y rslt) {
         this.proc = prc;
+        this.result = rslt;
     }
 
     @Override
     public Y apply(final X input) throws Exception {
         this.proc.exec(input);
-        return null;
+        return this.result;
     }
 }

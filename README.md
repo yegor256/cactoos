@@ -3,6 +3,7 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/cactoos)](http://www.rultor.com/p/yegor256/cactoos)
 
 [![Build Status](https://travis-ci.org/yegor256/cactoos.svg?branch=master)](https://travis-ci.org/yegor256/cactoos)
+[![Build status](https://ci.appveyor.com/api/projects/status/8vs8huy61og6jwif?svg=true)](https://ci.appveyor.com/project/yegor256/cactoos)
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/org.cactoos/cactoos/badge.svg?color=blue&prefix=v)](http://www.javadoc.io/doc/org.cactoos/cactoos)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/cactoos)](http://www.0pdd.com/p?name=yegor256/cactoos)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg)](https://codecov.io/github/yegor256/cactoos?branch=master)
@@ -52,7 +53,10 @@ Java version required: 1.8+.
 
 ## Input/Output
 
-To read a file:
+More about it here:
+[Object-Oriented Declarative Input/Output in Cactoos](http://www.yegor256.com/2017/06/22/object-oriented-input-output-in-cactoos.html).
+
+To read a text file in UTF-8:
 
 ```java
 String text = new BytesAsText(
@@ -69,8 +73,10 @@ To write a text into a file:
 ```java
 new LengthOfInput(
   new TeeInput(
-    new TextAsInput(
-      new StringAsText("Hello, world!")
+    new BytesAsInput(
+      new TextAsBytes(
+        new StringAsText("Hello, world!")
+      )
     ),
     new FileAsOutput(
       new File("/code/a.txt")
@@ -83,9 +89,7 @@ To read a binary file from classpath:
 
 ```java
 byte[] data = new InputAsBytes(
-  new UrlAsInput(
-    this.getClass().getResource("/foo/img.jpg")
-  )
+  new ResourceAsInput("foo/img.jpg")
 ).asBytes();
 ```
 
@@ -141,15 +145,14 @@ new IterableAsCollection<>(
 To iterate a collection:
 
 ```java
-new AllOf(
-  new TransformedIterable<>(
+new And(
+  new MappedIterable<>(
     new ArrayAsIterable<>("how", "are", "you"),
-    new Func.Quiet<String>() {
-      @Override
-      public void exec(final String input) throws Exception {
+    new ProcAsFunc<>(
+      input -> {
         System.out.printf("Item: %s\n", input);
       }
-    }
+    )
   )
 ).asValue();
 ```
@@ -157,9 +160,9 @@ new AllOf(
 Or even more compact:
 
 ```java
-new IterableAsBoolean(
-  new ArrayAsIterable<>("how", "are", "you"),
-  (Func.Quiet<String>) i -> System.out.printf("Item: %s\n", i)
+new And(
+  input -> System.out.printf("Item: %s\n", i),
+  "how", "are", "you"
 ).asValue();
 ```
 
@@ -168,10 +171,12 @@ To sort a list of words in the file:
 ```java
 List<String> sorted = new SortedList<>(
   new IterableAsList<>(
-    new TextAsLines(
-      new InputAsText(
-        new FileAsInput(
-          new File("/tmp/names.txt")
+    new SplitText(
+      new BytesAsText(
+        new InputAsBytes(
+          new FileAsInput(
+            new File("/tmp/names.txt")
+          )
         )
       )
     )
@@ -183,7 +188,48 @@ To count elements in an iterable:
 
 ```java
 int total = new LengthOfIterable(
-  new ArrayAsIterable<>("how", "are", "you")
+  "how", "are", "you"
+).asValue();
+```
+
+## Funcs and Procs
+
+This is a traditional `foreach` loop:
+
+```java
+for (String name : names) {
+  System.out.printf("Hello, %s!\n", name);
+}
+```
+
+This is its object-oriented alternative (no streams!):
+
+```java
+new And<>(
+  names,
+  n -> {
+    System.out.printf("Hello, %s!\n", n);
+  }
+).asValue();
+```
+
+This is an endless `while/do` loop:
+
+```java
+while (!ready) {
+  System.out.prinln("Still waiting...");
+}
+```
+
+Here is its object-oriented alternative:
+
+```java
+new And<>(
+  new EndlessIterable<>(ready),
+  r -> {
+    System.out.prinln("Still waiting...");
+    return !ready;
+  }
 ).asValue();
 ```
 
@@ -202,7 +248,15 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
 
 ## Contributors
 
- - [Kirill Che.](https://github.com/g4s8) g4s8.public@gmail.com
+  - [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](http://www.yegor256.com))
+  - [@g4s8](https://github.com/g4s8) as Kirill Che. (g4s8.public@gmail.com)
+  - [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
+  - [@englishman](https://github.com/englishman) as Andriy Kryvtsun
+  - [@VsSekorin](https://github.com/VsSekorin) as Vseslav Sekorin
+  - [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
+  - [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
+  - [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
+
 
 ## License (MIT)
 
