@@ -97,7 +97,7 @@ public final class AndTest {
         MatcherAssert.assertThat(
             "Can't iterate a list with a procedure",
             new And(
-                new MappedIterable<>(
+                new MappedIterable<String, Scalar<Boolean>>(
                     new ArrayAsIterable<>("hello", "world"),
                     new ProcAsFunc<>(list::add, () -> true)
                 )
