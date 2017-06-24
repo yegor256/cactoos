@@ -70,7 +70,7 @@ public final class ReplacedText implements Text {
 
     @Override
     public int compareTo(final Text text) {
-        return new UncheckedText(text).compareTo(this);
+        return new UncheckedText(this).compareTo(text);
     }
 
 }
