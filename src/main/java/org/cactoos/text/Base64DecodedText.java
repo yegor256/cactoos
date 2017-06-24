@@ -54,8 +54,9 @@ public final class Base64DecodedText implements Text {
     public String asString() throws IOException {
         final BytesAsText bytes = new BytesAsText(
             Base64.getDecoder().decode(
-            this.origin.asString()
-        ));
+                this.origin.asString()
+            )
+        );
         return bytes.asString();
     }
 }
