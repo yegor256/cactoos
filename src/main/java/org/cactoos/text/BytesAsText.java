@@ -114,4 +114,9 @@ public final class BytesAsText implements Text {
         return new String(this.bytes.asBytes(), this.charset);
     }
 
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(text).compareTo(this);
+    }
+
 }
