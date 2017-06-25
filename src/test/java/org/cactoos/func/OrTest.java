@@ -49,7 +49,7 @@ public final class OrTest {
                 new False(),
                 new False(),
                 new False()
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(false)
         );
     }
@@ -63,7 +63,7 @@ public final class OrTest {
                 new False(),
                 new False(),
                 new False()
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(true)
         );
     }
@@ -79,7 +79,7 @@ public final class OrTest {
                     new True(),
                     new True()
                 )
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(true)
         );
     }
@@ -87,7 +87,7 @@ public final class OrTest {
     @Test
     public void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
-            new Or(Collections.emptyList()).asValue(),
+            new Or(Collections.emptyList()).value(),
             Matchers.equalTo(false)
         );
     }

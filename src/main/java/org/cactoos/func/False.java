@@ -37,7 +37,7 @@ import org.cactoos.Scalar;
 public final class False implements Scalar<Boolean> {
 
     @Override
-    public Boolean asValue() throws Exception {
+    public Boolean value() throws Exception {
         return false;
     }
 }

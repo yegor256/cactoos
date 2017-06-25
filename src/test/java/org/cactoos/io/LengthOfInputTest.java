@@ -77,7 +77,7 @@ public final class LengthOfInputTest {
                     // @checkstyle LineLength (1 line)
                     "file:src/test/resources/org/cactoos/large-text.txt"
                 )
-            ).asValue(),
+            ).value(),
             // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(73471L)
         );

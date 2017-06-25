@@ -60,10 +60,10 @@ public final class Or implements Scalar<Boolean> {
     }
 
     @Override
-    public Boolean asValue() throws Exception {
+    public Boolean value() throws Exception {
         boolean result = false;
         for (final Scalar<Boolean> item : this.iterable) {
-            if (item.asValue()) {
+            if (item.value()) {
                 result = true;
                 break;
             }

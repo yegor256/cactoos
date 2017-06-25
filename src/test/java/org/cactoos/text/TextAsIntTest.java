@@ -42,7 +42,7 @@ public final class TextAsIntTest {
     public void numberTest() throws IOException {
         MatcherAssert.assertThat(
             "Can't parse integer number",
-            new TextAsInt("1867892354").asValue(),
+            new TextAsInt("1867892354").value(),
             // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(1867892354)
         );
@@ -50,6 +50,6 @@ public final class TextAsIntTest {
 
     @Test(expected = NumberFormatException.class)
     public void failsIfTextDoesNotRepresentAnInt() throws IOException {
-        new TextAsDouble("abc").asValue();
+        new TextAsDouble("abc").value();
     }
 }

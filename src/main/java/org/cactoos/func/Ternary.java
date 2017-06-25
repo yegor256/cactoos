@@ -69,9 +69,9 @@ public final class Ternary<T> implements Scalar<T> {
     }
 
     @Override
-    public T asValue() throws Exception {
+    public T value() throws Exception {
         final T result;
-        if (this.condition.asValue()) {
+        if (this.condition.value()) {
             result = this.cons;
         } else {
             result = this.alter;

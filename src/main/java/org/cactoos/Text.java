@@ -35,7 +35,7 @@ import java.io.IOException;
  * @see org.cactoos.text.StringAsText
  * @since 0.1
  */
-public interface Text {
+public interface Text extends Comparable<Text> {
 
     /**
      * Convert it to the string.

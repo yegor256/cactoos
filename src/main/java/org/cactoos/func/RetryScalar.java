@@ -77,9 +77,9 @@ public final class RetryScalar<T> implements Scalar<T> {
     }
 
     @Override
-    public T asValue() throws Exception {
+    public T value() throws Exception {
         return new RetryFunc<>(
-            (Func<Boolean, T>) input -> this.scalar.asValue(),
+            (Func<Boolean, T>) input -> this.scalar.value(),
             this.exit
         ).apply(true);
     }

@@ -40,7 +40,7 @@ public final class StringAsUrlTest {
     public void encodeStringToUrl() throws Exception {
         MatcherAssert.assertThat(
             "Can't encode a string as URL",
-            new StringAsUrl("друг").asValue(),
+            new StringAsUrl("друг").value(),
             Matchers.equalTo("%D0%B4%D1%80%D1%83%D0%B3")
         );
     }

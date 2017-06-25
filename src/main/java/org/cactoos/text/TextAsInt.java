@@ -62,7 +62,7 @@ public final class TextAsInt implements Scalar<Integer> {
     }
 
     @Override
-    public Integer asValue() throws IOException {
+    public Integer value() throws IOException {
         return Integer.valueOf(this.text.asString());
     }
 }

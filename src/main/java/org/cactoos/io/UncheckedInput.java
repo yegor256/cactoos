@@ -53,7 +53,7 @@ public final class UncheckedInput implements Input {
 
     @Override
     public InputStream stream() {
-        return new UncheckedScalar<>(this.input::stream).asValue();
+        return new UncheckedScalar<>(this.input::stream).value();
     }
 
 }

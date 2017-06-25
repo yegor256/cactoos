@@ -62,7 +62,7 @@ public final class TextAsFloat implements Scalar<Float> {
     }
 
     @Override
-    public Float asValue() throws IOException {
+    public Float value() throws IOException {
         return Float.valueOf(this.text.asString());
     }
 }

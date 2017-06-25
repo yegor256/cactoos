@@ -70,7 +70,7 @@ public final class MapAsProperties implements Scalar<Properties> {
     }
 
     @Override
-    public Properties asValue() {
+    public Properties value() {
         final Properties props = new Properties();
         for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
             props.setProperty(

@@ -50,8 +50,8 @@ public final class LengthOfIterable implements Scalar<Integer> {
     }
 
     @Override
-    public Integer asValue() {
-        return new LengthOfIterator(this.iterable.iterator()).asValue();
+    public Integer value() {
+        return new LengthOfIterator(this.iterable.iterator()).value();
     }
 
 }

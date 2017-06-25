@@ -42,7 +42,7 @@ public final class TextAsBoolTest {
     public void trueTest() throws IOException {
         MatcherAssert.assertThat(
             "Can't parse 'true' string",
-            new TextAsBool("true").asValue(),
+            new TextAsBool("true").value(),
             Matchers.equalTo(true)
         );
     }
@@ -51,7 +51,7 @@ public final class TextAsBoolTest {
     public void falseTest() throws IOException {
         MatcherAssert.assertThat(
             "Can't parse 'false' string",
-            new TextAsBool("false").asValue(),
+            new TextAsBool("false").value(),
             Matchers.equalTo(false)
         );
     }
@@ -60,7 +60,7 @@ public final class TextAsBoolTest {
     public void isFalseIfTextDoesNotRepresentABoolean() throws IOException {
         MatcherAssert.assertThat(
             "Can't parse a non-boolean string",
-            new TextAsBool("abc").asValue(),
+            new TextAsBool("abc").value(),
             Matchers.equalTo(false)
         );
     }
