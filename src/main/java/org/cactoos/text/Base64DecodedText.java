@@ -32,7 +32,7 @@ import org.cactoos.Text;
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.9
  */
 public final class Base64DecodedText implements Text {
 
@@ -50,13 +50,21 @@ public final class Base64DecodedText implements Text {
         this.origin = text;
     }
 
+    /**
+     * Ctor.
+     *
+     * @param text The text
+     */
+    public Base64DecodedText(final String text) {
+        this(new StringAsText(text));
+    }
+
     @Override
     public String asString() throws IOException {
-        final BytesAsText bytes = new BytesAsText(
+        return new BytesAsText(
             Base64.getDecoder().decode(
                 this.origin.asString()
             )
-        );
-        return bytes.asString();
+        ).asString();
     }
 }

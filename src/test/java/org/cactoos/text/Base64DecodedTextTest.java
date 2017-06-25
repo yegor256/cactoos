@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class Base64DecodedTextTest {
@@ -48,4 +48,14 @@ public final class Base64DecodedTextTest {
         );
     }
 
+    @Test
+    public void decodeString() {
+        MatcherAssert.assertThat(
+            "Can't decode a string",
+            new Base64DecodedText(
+                "Q2FjdG9vcw=="
+            ),
+            new TextHasString("Cactoos")
+        );
+    }
 }
