@@ -46,6 +46,9 @@ import org.cactoos.io.FileAsInput;
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @see org.cactoos.io.BytesAsInput
+ * @see FileAsInput
+ * @see org.cactoos.io.PathAsInput
  * @since 0.1
  */
 public interface Input {

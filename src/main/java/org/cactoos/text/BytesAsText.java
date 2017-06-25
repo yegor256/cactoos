@@ -27,7 +27,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
+import org.cactoos.Input;
 import org.cactoos.Text;
+import org.cactoos.io.InputAsBytes;
 
 /**
  * Bytes as Text.
@@ -55,6 +57,15 @@ public final class BytesAsText implements Text {
 
     /**
      * Ctor.
+     * @param input Bytes from the input
+     * @since 0.8
+     */
+    public BytesAsText(final Input input) {
+        this(new InputAsBytes(input));
+    }
+
+    /**
+     * Ctor.
      * @param bts Bytes to encapsulate
      */
     public BytesAsText(final byte[] bts) {
@@ -67,6 +78,16 @@ public final class BytesAsText implements Text {
      */
     public BytesAsText(final Bytes bts) {
         this(bts, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param input Input
+     * @param cset Charset
+     * @since 0.8
+     */
+    public BytesAsText(final Input input, final Charset cset) {
+        this(new InputAsBytes(input), cset);
     }
 
     /**

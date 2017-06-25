@@ -23,8 +23,13 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicBoolean;
+import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
 import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
@@ -38,6 +43,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class InputAsBytesTest {
 
@@ -80,6 +86,38 @@ public final class InputAsBytesTest {
             Matchers.allOf(
                 Matchers.startsWith("Hello,"),
                 Matchers.endsWith("товарищ!")
+            )
+        );
+    }
+
+    @Test
+    public void closesInputStream() throws IOException {
+        final AtomicBoolean closed = new AtomicBoolean();
+        final InputStream input = new ByteArrayInputStream(
+            "how are you?".getBytes()
+        );
+        MatcherAssert.assertThat(
+            "Can't close InputStream correctly",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputStreamAsInput(
+                        new InputStream() {
+                            @Override
+                            public int read() throws IOException {
+                                return input.read();
+                            }
+                            @Override
+                            public void close() throws IOException {
+                                input.close();
+                                closed.set(true);
+                            }
+                        }
+                    )
+                ).asBytes(),
+                StandardCharsets.UTF_8
+            ).asString(),
+            new FuncAsMatcher<>(
+                text -> closed.get()
             )
         );
     }

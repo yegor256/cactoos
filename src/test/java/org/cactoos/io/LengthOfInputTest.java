@@ -23,11 +23,13 @@
  */
 package org.cactoos.io;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.text.StringAsText;
 import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -63,6 +65,21 @@ public final class LengthOfInputTest {
             "Can't calculate the length of an empty input",
             new LengthOfInput(new DeadInput()),
             new ScalarHasValue<>(0L)
+        );
+    }
+
+    @Test
+    public void readsRealUrl() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't calculate length of a real page at the URL",
+            new LengthOfInput(
+                new UrlAsInput(
+                    // @checkstyle LineLength (1 line)
+                    "file:src/test/resources/org/cactoos/large-text.txt"
+                )
+            ).asValue(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(73471L)
         );
     }
 

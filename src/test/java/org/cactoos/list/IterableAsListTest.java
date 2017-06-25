@@ -24,6 +24,8 @@
 package org.cactoos.list;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -43,10 +45,7 @@ public final class IterableAsListTest {
         final int num = 345;
         MatcherAssert.assertThat(
             "Can't convert an iterable to a list",
-            new IterableAsList<>(
-                // @checkstyle MagicNumber (2 lines)
-                new ArrayAsIterable<>(0, 1, 2, num, 3, 4)
-            ).get(3),
+            new IterableAsList<>(-1, num, 0, 1).get(1),
             Matchers.equalTo(num)
         );
     }
@@ -85,4 +84,18 @@ public final class IterableAsListTest {
         // @checkstyle MagicNumber (1 line)
         new IterableAsList<>(Collections.nCopies(10, 0)).get(11);
     }
+
+    @Test
+    public void sensesChangesInIterable() throws Exception {
+        final AtomicInteger size = new AtomicInteger(2);
+        final List<Integer> list = new IterableAsList<>(
+            () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
+        );
+        MatcherAssert.assertThat(
+            "Can't sense the changes in the underlying iterable",
+            list.size(),
+            Matchers.not(Matchers.equalTo(list.size()))
+        );
+    }
+
 }

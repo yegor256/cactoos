@@ -23,86 +23,206 @@
  */
 package org.cactoos.list;
 
-import java.util.AbstractList;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.text.FormattedText;
+import java.util.ListIterator;
 
 /**
  * Iterable as {@link List}.
  *
+ * <p>This class should be used very carefully. You must understand that
+ * it will fetch the entire content of the encapsulated {@link List} on each
+ * method call. It doesn't cache the data anyhow.</p>
+ *
+ * <p>If you don't need this {@link List} to re-fresh its content on every call,
+ * by doing round-trips to the encapsulated iterable, use
+ * {@link StickyList}.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
+ * @author Alexey Semenyuk (semenyukalexey88@gmail.com)
  * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <T> List type
+ * @see StickyList
  * @since 0.1
  */
-public final class IterableAsList<T> extends AbstractList<T> {
+@SuppressWarnings("PMD.TooManyMethods")
+public final class IterableAsList<T> implements List<T> {
 
     /**
-     * Iterable source.
+     * The source.
      */
-    private final Iterable<T> source;
-
-    /**
-     * Cache for source.
-     */
-    private final List<T> cache;
-
-    /**
-     * Iterable length.
-     *
-     * @todo #39:30m Needs cached `LengthOfIterable` version
-     *  to improve `IterableAsList` performance. Now each call
-     *  to `size()` goes through all iterable to calculate the size.
-     */
-    private final LengthOfIterable length;
+    private final Iterable<T> iterable;
 
     /**
      * Ctor.
      *
-     * @param iterable An {@link Iterable}
+     * @param array An array of some elements
      */
-    public IterableAsList(final Iterable<T> iterable) {
-        super();
-        this.source = iterable;
-        this.cache = new ArrayList<>(0);
-        this.length = new LengthOfIterable(iterable);
+    @SafeVarargs
+    public IterableAsList(final T... array) {
+        this(new ArrayAsIterable<>(array));
     }
 
-    @Override
-    public T get(final int index) {
-        if (index < 0 || index >= this.size()) {
-            throw new IndexOutOfBoundsException(
-                new FormattedText(
-                    "index=%d, bounds=[%d; %d]",
-                    index,
-                    0,
-                    this.size()
-                ).asString()
-            );
-        }
-        return this.cachedItem(index);
+    /**
+     * Ctor.
+     *
+     * @param src An {@link Iterable}
+     */
+    public IterableAsList(final Iterable<T> src) {
+        this.iterable = src;
     }
 
     @Override
     public int size() {
-        return this.length.asValue();
+        return new LengthOfIterable(this.iterable).asValue();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return !this.iterable.iterator().hasNext();
+    }
+
+    @Override
+    public boolean contains(final Object object) {
+        return this.list().contains(object);
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return this.iterable.iterator();
+    }
+
+    @Override
+    public Object[] toArray() {
+        return this.list().toArray();
+    }
+
+    @Override
+    @SuppressWarnings("PMD.UseVarargs")
+    public <Y> Y[] toArray(final Y[] array) {
+        return this.list().toArray(array);
+    }
+
+    @Override
+    public boolean add(final T element) {
+        throw new UnsupportedOperationException(
+            "#add(final T element) is not supported"
+        );
+    }
+
+    @Override
+    public boolean remove(final Object object) {
+        throw new UnsupportedOperationException(
+            "#remove(final Object object) is not supported"
+        );
+    }
+
+    @Override
+    public boolean containsAll(final Collection<?> collection) {
+        return this.list().containsAll(collection);
+    }
+
+    @Override
+    public boolean addAll(final Collection<? extends T> collection) {
+        throw new UnsupportedOperationException(
+            "#addAll(final Collection<? extends T> collection) is not supported"
+        );
+    }
+
+    @Override
+    public boolean addAll(final int index,
+        final Collection<? extends T> collection) {
+        throw new UnsupportedOperationException(
+            "#addAll() is not supported"
+        );
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> collection) {
+        throw new UnsupportedOperationException(
+            "#removeAll(final Collection<?> collection) is not supported"
+        );
+    }
+
+    @Override
+    public boolean retainAll(final Collection<?> collection) {
+        throw new UnsupportedOperationException(
+            "#retainAll(final Collection<?> collection) is not supported"
+        );
+    }
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException(
+            "#clear() is not supported"
+        );
+    }
+
+    @Override
+    public T get(final int index) {
+        return this.list().get(index);
+    }
+
+    @Override
+    public T set(final int index, final T element) {
+        throw new UnsupportedOperationException(
+            "#set() is not supported"
+        );
+    }
+
+    @Override
+    public void add(final int index, final T element) {
+        throw new UnsupportedOperationException(
+            "#add(final int index, final T element) is not supported"
+        );
+    }
+
+    @Override
+    public T remove(final int index) {
+        throw new UnsupportedOperationException(
+            "#remove(final int index) is not supported"
+        );
+    }
+
+    @Override
+    public int indexOf(final Object object) {
+        return this.list().indexOf(object);
+    }
+
+    @Override
+    public int lastIndexOf(final Object object) {
+        return this.list().lastIndexOf(object);
+    }
+
+    @Override
+    public ListIterator<T> listIterator() {
+        return this.list().listIterator();
+    }
+
+    @Override
+    public ListIterator<T> listIterator(final int index) {
+        return this.list().listIterator(index);
+    }
+
+    @Override
+    public List<T> subList(final int fromindex, final int toindex) {
+        return this.list().subList(fromindex, toindex);
     }
 
     /**
-     * Find item in cache by index.
-     *
-     * @param index Item index
-     * @return Cached item
+     * Build a list.
+     * @return List
      */
-    private T cachedItem(final int index) {
-        if (this.cache.size() != this.size()) {
-            for (final T item : this.source) {
-                this.cache.add(item);
-            }
+    private List<T> list() {
+        final List<T> list = new LinkedList<>();
+        for (final T item : this.iterable) {
+            list.add(item);
         }
-        return this.cache.get(index);
+        return list;
     }
 }

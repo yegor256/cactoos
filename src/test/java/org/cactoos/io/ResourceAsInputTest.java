@@ -23,7 +23,9 @@
  */
 package org.cactoos.io;
 
+import java.io.IOException;
 import java.util.Arrays;
+import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -39,7 +41,7 @@ import org.junit.Test;
 public final class ResourceAsInputTest {
 
     @Test
-    public void readResourceTest() throws Exception {
+    public void readsBinaryResource() throws Exception {
         MatcherAssert.assertThat(
             "Can't read bytes from a classpath resource",
             Arrays.copyOfRange(
@@ -59,6 +61,48 @@ public final class ResourceAsInputTest {
                 }
             )
         );
+    }
+
+    @Test
+    public void readsTextResource() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't read a text resource from classpath",
+            new BytesAsText(
+                new InputAsBytes(
+                    new ResourceAsInput(
+                        "org/cactoos/large-text.txt"
+                    )
+                )
+            ).asString(),
+            Matchers.endsWith("est laborum.\n")
+        );
+    }
+
+    @Test
+    public void readAbsentResourceTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't replace an absent resource with a text",
+            new BytesAsText(
+                new InputAsBytes(
+                    new ResourceAsInput(
+                        "foo/this-resource-is-definitely-absent.txt",
+                        "the replacement"
+                    )
+                )
+            ).asString(),
+            Matchers.endsWith("replacement")
+        );
+    }
+
+    @Test(expected = IOException.class)
+    public void throwsWhenResourceIsAbsent() throws Exception {
+        new BytesAsText(
+            new InputAsBytes(
+                new ResourceAsInput(
+                    "bar/this-resource-is-definitely-absent.txt"
+                )
+            )
+        ).asString();
     }
 
 }

@@ -100,7 +100,7 @@ public final class FilteredIterator<X> implements Iterator<X> {
     public X next() {
         if (!this.hasNext()) {
             throw new NoSuchElementException(
-                "No more elements with fits the condition."
+                "No more elements that fit the condition"
             );
         }
         return this.buffer.poll();
@@ -108,7 +108,9 @@ public final class FilteredIterator<X> implements Iterator<X> {
 
     @Override
     public void remove() {
-        this.iterator.remove();
+        throw new UnsupportedOperationException(
+            "#remove() is not supported"
+        );
     }
 
 }

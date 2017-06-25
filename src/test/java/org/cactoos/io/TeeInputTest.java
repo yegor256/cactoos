@@ -31,7 +31,6 @@ import java.nio.file.Path;
 import org.cactoos.TextHasString;
 import org.cactoos.func.FuncAsMatcher;
 import org.cactoos.text.BytesAsText;
-import org.cactoos.text.StringAsText;
 import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -79,14 +78,7 @@ public final class TeeInputTest {
             "Can't copy Input to File and return content",
             new BytesAsText(
                 new InputAsBytes(
-                    new TeeInput(
-                        new BytesAsInput(
-                            new TextAsBytes(
-                                new StringAsText("Hello, друг!")
-                            )
-                        ),
-                        new PathAsOutput(temp)
-                    )
+                    new TeeInput("Hello, друг!", temp)
                 )
             ),
             new TextHasString(

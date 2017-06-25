@@ -23,12 +23,13 @@
  */
 package org.cactoos.text;
 
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
 import java.util.Locale;
 import org.cactoos.Text;
+import org.cactoos.list.IterableAsList;
 
 /**
  * Text in Sprinf format.
@@ -44,7 +45,7 @@ public final class FormattedText implements Text {
     /**
      * Pattern.
      */
-    private final String pattern;
+    private final Text pattern;
 
     /**
      * Arguments.
@@ -63,7 +64,17 @@ public final class FormattedText implements Text {
      * @param arguments Arguments
      */
     public FormattedText(final String ptn, final Object... arguments) {
-        this(ptn, Arrays.asList(arguments));
+        this(ptn, new IterableAsList<>(arguments));
+    }
+
+    /**
+     * New formatted string with default locale.
+     *
+     * @param ptn Pattern
+     * @param arguments Arguments
+     */
+    public FormattedText(final Text ptn, final Object... arguments) {
+        this(ptn, new IterableAsList<>(arguments));
     }
 
     /**
@@ -78,7 +89,22 @@ public final class FormattedText implements Text {
         final Locale locale,
         final Object... arguments
     ) {
-        this(ptn, locale, Arrays.asList(arguments));
+        this(ptn, locale, new IterableAsList<>(arguments));
+    }
+
+    /**
+     * New formatted string with specified locale.
+     *
+     * @param ptn Pattern
+     * @param locale Format locale
+     * @param arguments Arguments
+     */
+    public FormattedText(
+        final Text ptn,
+        final Locale locale,
+        final Object... arguments
+    ) {
+        this(ptn, locale, new IterableAsList<>(arguments));
     }
 
     /**
@@ -88,6 +114,16 @@ public final class FormattedText implements Text {
      * @param arguments Arguments
      */
     public FormattedText(final String ptn, final Collection<Object> arguments) {
+        this(ptn, Locale.getDefault(Locale.Category.FORMAT), arguments);
+    }
+
+    /**
+     * New formatted string with default locale.
+     *
+     * @param ptn Pattern
+     * @param arguments Arguments
+     */
+    public FormattedText(final Text ptn, final Collection<Object> arguments) {
         this(ptn, Locale.getDefault(Locale.Category.FORMAT), arguments);
     }
 
@@ -103,17 +139,33 @@ public final class FormattedText implements Text {
         final Locale locale,
         final Collection<Object> arguments
     ) {
+        this(new StringAsText(ptn), locale, arguments);
+    }
+
+    /**
+     * New formatted string with specified locale.
+     *
+     * @param ptn Pattern
+     * @param locale Format locale
+     * @param arguments Arguments
+     */
+    public FormattedText(
+        final Text ptn,
+        final Locale locale,
+        final Collection<Object> arguments
+    ) {
         this.pattern = ptn;
         this.locale = locale;
         this.args = Collections.unmodifiableCollection(arguments);
     }
 
     @Override
-    public String asString() {
+    public String asString() throws IOException {
         final StringBuilder out = new StringBuilder(0);
         try (final Formatter fmt = new Formatter(out, this.locale)) {
             fmt.format(
-                this.pattern, this.args.toArray(new Object[this.args.size()])
+                this.pattern.asString(),
+                this.args.toArray(new Object[this.args.size()])
             );
         }
         return out.toString();

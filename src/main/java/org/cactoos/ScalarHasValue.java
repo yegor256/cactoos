@@ -23,7 +23,7 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
+import org.cactoos.func.UncheckedScalar;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -63,11 +63,9 @@ public final class ScalarHasValue<T> extends TypeSafeMatcher<Scalar<T>> {
 
     @Override
     public boolean matchesSafely(final Scalar<T> item) {
-        try {
-            return this.matcher.matches(item.asValue());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+        return this.matcher.matches(
+            new UncheckedScalar<>(item).asValue()
+        );
     }
 
     @Override

@@ -55,4 +55,13 @@ public final class TextAsBoolTest {
             Matchers.equalTo(false)
         );
     }
+
+    @Test
+    public void isFalseIfTextDoesNotRepresentABoolean() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't parse a non-boolean string",
+            new TextAsBool("abc").asValue(),
+            Matchers.equalTo(false)
+        );
+    }
 }

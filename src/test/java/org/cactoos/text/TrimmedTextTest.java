@@ -45,4 +45,12 @@ public final class TrimmedTextTest {
         );
     }
 
+    @Test
+    public void trimmedBlankTextIsEmptyText() {
+        MatcherAssert.assertThat(
+            "Can't trim a blank text",
+            new TrimmedText(new StringAsText("  \t ")),
+            new TextHasString("")
+        );
+    }
 }
