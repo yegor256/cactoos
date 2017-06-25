@@ -123,8 +123,8 @@ Collection<String> filtered = new IterableAsCollection<>(
     new ArrayAsIterable<>("hello", "world", "dude"),
     new Func<String, Boolean>() {
       @Override
-      public boolean apply(String i) {
-        return i.length() > 4;
+      public boolean apply(String s) {
+        return s.length() > 4;
       }
     }
   )
@@ -137,7 +137,7 @@ With Lambda:
 new IterableAsCollection<>(
   new FilteredIterable<>(
     new ArrayAsIterable<>("hello", "world", "dude"),
-    i -> i.length() > 4
+    s -> s.length() > 4
   )
 );
 ```
@@ -161,7 +161,7 @@ Or even more compact:
 
 ```java
 new And(
-  input -> System.out.printf("Item: %s\n", i),
+  input -> System.out.printf("Item: %s\n", input),
   "how", "are", "you"
 ).asValue();
 ```
@@ -226,7 +226,7 @@ Here is its object-oriented alternative:
 ```java
 new And<>(
   new EndlessIterable<>(ready),
-  r -> {
+  ready -> {
     System.out.prinln("Still waiting...");
     return !ready;
   }
