@@ -75,7 +75,7 @@ public final class FileAsInput implements Input {
 
     @Override
     public InputStream stream() throws FileNotFoundException {
-        return new FileInputStream(this.file.asValue());
+        return new FileInputStream(this.file.value());
     }
 
 }

@@ -52,7 +52,7 @@ public final class AndTest {
                 new True(),
                 new True(),
                 new True()
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(true)
         );
     }
@@ -64,7 +64,7 @@ public final class AndTest {
                 new True(),
                 new False(),
                 new True()
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(false)
         );
     }
@@ -78,7 +78,7 @@ public final class AndTest {
                     new False(),
                     new False()
                 )
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(false)
         );
     }
@@ -86,7 +86,7 @@ public final class AndTest {
     @Test
     public void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
-            new And(Collections.emptyList()).asValue(),
+            new And(Collections.emptyList()).value(),
             Matchers.equalTo(true)
         );
     }

@@ -50,7 +50,7 @@ public final class StickyIterableTest {
         MatcherAssert.assertThat(
             "Can't ignore the changes in the underlying iterable",
             new LengthOfIterable(list),
-            new ScalarHasValue<>(new LengthOfIterable(list).asValue())
+            new ScalarHasValue<>(new LengthOfIterable(list).value())
         );
     }
 

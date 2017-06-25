@@ -80,8 +80,8 @@ public final class MapAsPropertiesTest {
         );
         MatcherAssert.assertThat(
             "Can't sense the changes in the underlying map",
-            props.asValue().size(),
-            Matchers.not(Matchers.equalTo(props.asValue().size()))
+            props.value().size(),
+            Matchers.not(Matchers.equalTo(props.value().size()))
         );
     }
 

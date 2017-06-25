@@ -53,9 +53,9 @@ public final class IoCheckedScalar<T> implements Scalar<T> {
     }
 
     @Override
-    public T asValue() throws IOException {
+    public T value() throws IOException {
         return new IoCheckedFunc<Scalar<T>, T>(
-            Scalar::asValue
+            Scalar::value
         ).apply(this.scalar);
     }
 

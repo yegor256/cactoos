@@ -54,12 +54,12 @@ public final class StickyScalar<T> implements Scalar<T> {
      */
     public StickyScalar(final Scalar<T> src) {
         this.func = new StickyFunc<>(
-            input -> src.asValue()
+            input -> src.value()
         );
     }
 
     @Override
-    public T asValue() throws Exception {
+    public T value() throws Exception {
         return this.func.apply(true);
     }
 }

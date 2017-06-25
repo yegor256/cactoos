@@ -45,7 +45,7 @@ public final class TernaryTest {
                 new True(),
                 6,
                 16
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(6)
         );
     }
@@ -57,7 +57,7 @@ public final class TernaryTest {
                 new False(),
                 6,
                 16
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(16)
         );
     }

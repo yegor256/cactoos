@@ -40,16 +40,16 @@ public final class NegTest {
     @Test
     public void trueToFalse() throws Exception {
         MatcherAssert.assertThat(
-            new Neg(new True()).asValue(),
-            Matchers.equalTo(new False().asValue())
+            new Neg(new True()).value(),
+            Matchers.equalTo(new False().value())
         );
     }
 
     @Test
     public void falseToTrue() throws Exception {
         MatcherAssert.assertThat(
-            new Neg(new False()).asValue(),
-            Matchers.equalTo(new True().asValue())
+            new Neg(new False()).value(),
+            Matchers.equalTo(new True().value())
         );
     }
 }

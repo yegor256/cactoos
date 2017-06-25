@@ -133,7 +133,7 @@ public final class ItemOfIterator<T> implements Scalar<T> {
     }
 
     @Override
-    public T asValue() throws Exception {
+    public T value() throws Exception {
         if (this.pos < 0) {
             throw new IOException(
                 new FormattedText(

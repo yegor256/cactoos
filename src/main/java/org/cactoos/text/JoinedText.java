@@ -110,4 +110,10 @@ public final class JoinedText implements Text {
         }
         return joint.toString();
     }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
+    }
+
 }

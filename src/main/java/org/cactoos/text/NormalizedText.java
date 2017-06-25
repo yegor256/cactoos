@@ -61,5 +61,11 @@ public final class NormalizedText implements Text {
     public String asString() throws IOException {
         return new TrimmedText(this.origin).asString().replaceAll("\\s+", " ");
     }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
+    }
+
 }
 

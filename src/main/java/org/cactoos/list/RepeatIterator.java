@@ -86,6 +86,6 @@ public final class RepeatIterator<T> implements Iterator<T> {
     @Override
     public T next() {
         --this.left;
-        return this.element.asValue();
+        return this.element.value();
     }
 }
