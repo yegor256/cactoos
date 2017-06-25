@@ -62,7 +62,7 @@ public final class TextAsLong implements Scalar<Long> {
     }
 
     @Override
-    public Long asValue() throws IOException {
+    public Long value() throws IOException {
         return Long.valueOf(this.text.asString());
     }
 }

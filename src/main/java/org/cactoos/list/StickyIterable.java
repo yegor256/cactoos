@@ -66,7 +66,7 @@ public final class StickyIterable<X> implements Iterable<X> {
 
     @Override
     public Iterator<X> iterator() {
-        return this.gate.asValue().iterator();
+        return this.gate.value().iterator();
     }
 
 }

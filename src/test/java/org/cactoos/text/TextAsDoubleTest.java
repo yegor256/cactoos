@@ -42,7 +42,7 @@ public final class TextAsDoubleTest {
     public strictfp void numberTest() throws IOException {
         MatcherAssert.assertThat(
             "Can't parse double number",
-            new TextAsDouble("185.65156465123").asValue(),
+            new TextAsDouble("185.65156465123").value(),
             // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(185.65156465123)
         );
@@ -50,6 +50,6 @@ public final class TextAsDoubleTest {
 
     @Test(expected = NumberFormatException.class)
     public void failsIfTextDoesNotRepresentADouble() throws IOException {
-        new TextAsDouble("abc").asValue();
+        new TextAsDouble("abc").value();
     }
 }

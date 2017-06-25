@@ -79,7 +79,7 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public int size() {
-        return new LengthOfIterable(this.iterable).asValue();
+        return new LengthOfIterable(this.iterable).value();
     }
 
     @Override

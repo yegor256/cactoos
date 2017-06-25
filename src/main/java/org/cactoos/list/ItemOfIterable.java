@@ -136,11 +136,11 @@ public final class ItemOfIterable<T> implements Scalar<T> {
     }
 
     @Override
-    public T asValue() throws Exception {
+    public T value() throws Exception {
         return new ItemOfIterator<>(
             this.src.iterator(),
             this.pos,
             this.fbk
-        ).asValue();
+        ).value();
     }
 }

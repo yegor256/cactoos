@@ -87,7 +87,7 @@ public final class StringAsUrl implements Scalar<String> {
     }
 
     @Override
-    public String asValue() throws IOException {
+    public String value() throws IOException {
         return URLEncoder.encode(
             this.source.asString(),
             this.encoding.name()

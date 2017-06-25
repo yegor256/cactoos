@@ -79,11 +79,11 @@ public final class
 
     @Override
     public boolean hasNext() {
-        return this.sorted.asValue().hasNext();
+        return this.sorted.value().hasNext();
     }
 
     @Override
     public T next() {
-        return this.sorted.asValue().next();
+        return this.sorted.value().next();
     }
 }

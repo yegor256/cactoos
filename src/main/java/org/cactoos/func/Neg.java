@@ -50,7 +50,7 @@ public final class Neg implements Scalar<Boolean> {
     }
 
     @Override
-    public Boolean asValue() throws Exception {
-        return !this.origin.asValue();
+    public Boolean value() throws Exception {
+        return !this.origin.value();
     }
 }

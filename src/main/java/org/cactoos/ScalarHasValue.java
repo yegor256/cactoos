@@ -64,7 +64,7 @@ public final class ScalarHasValue<T> extends TypeSafeMatcher<Scalar<T>> {
     @Override
     public boolean matchesSafely(final Scalar<T> item) {
         return this.matcher.matches(
-            new UncheckedScalar<>(item).asValue()
+            new UncheckedScalar<>(item).value()
         );
     }
 

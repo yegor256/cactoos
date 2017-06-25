@@ -75,7 +75,7 @@ public final class FileAsOutput implements Output {
 
     @Override
     public OutputStream stream() throws FileNotFoundException {
-        return new FileOutputStream(this.file.asValue());
+        return new FileOutputStream(this.file.value());
     }
 
 }

@@ -62,7 +62,7 @@ public final class TextAsBool implements Scalar<Boolean> {
     }
 
     @Override
-    public Boolean asValue() throws IOException {
+    public Boolean value() throws IOException {
         return Boolean.valueOf(this.text.asString());
     }
 }

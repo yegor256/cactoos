@@ -47,7 +47,7 @@ public final class IoCheckedScalarTest {
                 (Scalar<Integer>) () -> {
                     throw exception;
                 }
-            ).asValue();
+            ).value();
         } catch (final IOException ex) {
             MatcherAssert.assertThat(
                 ex, Matchers.is(exception)

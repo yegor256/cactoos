@@ -40,7 +40,7 @@ public final class UrlAsStringTest {
     public void decodeUrlToString() throws Exception {
         MatcherAssert.assertThat(
             "Can't convert a string to URL",
-            new UrlAsString("%D0%B0%20%D1%8F").asValue(),
+            new UrlAsString("%D0%B0%20%D1%8F").value(),
             Matchers.equalTo("а я")
         );
     }

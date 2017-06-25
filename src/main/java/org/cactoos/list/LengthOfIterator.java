@@ -51,7 +51,7 @@ public final class LengthOfIterator implements Scalar<Integer> {
     }
 
     @Override
-    public Integer asValue() {
+    public Integer value() {
         int size = 0;
         while (this.iterator.hasNext()) {
             this.iterator.next();
