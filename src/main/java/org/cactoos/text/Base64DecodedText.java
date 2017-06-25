@@ -67,4 +67,9 @@ public final class Base64DecodedText implements Text {
             )
         ).asString();
     }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
+    }
 }
