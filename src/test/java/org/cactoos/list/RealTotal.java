@@ -27,7 +27,7 @@ import java.util.Iterator;
 import org.cactoos.Scalar;
 
 /**
- * Int total of numbers.
+ * Real total of numbers.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -35,7 +35,7 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @since 0.9
  */
-public final class IntTotal implements Scalar<Long> {
+public final class RealTotal implements Scalar<Double> {
 
     /**
      * The iterable.
@@ -46,7 +46,7 @@ public final class IntTotal implements Scalar<Long> {
      * Ctor.
      * @param src The iterable
      */
-    public IntTotal(final Iterable<Scalar<Number>> src) {
+    public RealTotal(final Iterable<Scalar<Number>> src) {
         this.src = src;
     }
 
@@ -55,16 +55,16 @@ public final class IntTotal implements Scalar<Long> {
      * @param src Numbers
      */
     @SafeVarargs
-    public IntTotal(final Scalar<Number>... src) {
+    public RealTotal(final Scalar<Number>... src) {
         this(new ArrayAsIterable<>(src));
     }
 
     @Override
-    public Long value() throws Exception {
+    public Double value() throws Exception {
         final Iterator<Scalar<Number>> numbers = this.src.iterator();
-        Long result =  0L;
+        Double result =  0.;
         while (numbers.hasNext()) {
-            result += numbers.next().value().longValue();
+            result += numbers.next().value().doubleValue();
         }
         return result;
     }

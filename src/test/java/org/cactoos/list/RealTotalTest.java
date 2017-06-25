@@ -23,49 +23,45 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
 import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Int total of numbers.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link RealTotal}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class IntTotal implements Scalar<Long> {
+public final class RealTotalTest {
 
-    /**
-     * The iterable.
-     */
-    private final Iterable<Scalar<Number>> src;
-
-    /**
-     * Ctor.
-     * @param src The iterable
-     */
-    public IntTotal(final Iterable<Scalar<Number>> src) {
-        this.src = src;
+    @Test
+    public void withVarargsCtor() throws Exception {
+        MatcherAssert.assertThat(
+            new RealTotal(
+                () -> 1.2,
+                () -> 2.5,
+                () -> 3.3
+            ).value(),
+            Matchers.closeTo(7.0, 0.0)
+        );
     }
 
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    @SafeVarargs
-    public IntTotal(final Scalar<Number>... src) {
-        this(new ArrayAsIterable<>(src));
-    }
-
-    @Override
-    public Long value() throws Exception {
-        final Iterator<Scalar<Number>> numbers = this.src.iterator();
-        Long result =  0L;
-        while (numbers.hasNext()) {
-            result += numbers.next().value().longValue();
-        }
-        return result;
+    @Test
+    public void withIterCtor() throws Exception {
+        MatcherAssert.assertThat(
+            new RealTotal(
+                new ArrayAsIterable<Scalar<Number>>(
+                    () -> 7.1,
+                    () -> 8.1,
+                    () -> 10.1
+                )
+            ).value(),
+            Matchers.closeTo(25.0, 0.3)
+        );
     }
 }
