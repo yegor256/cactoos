@@ -76,6 +76,6 @@ public final class EndlessIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        return this.element.asValue();
+        return this.element.value();
     }
 }

@@ -65,7 +65,7 @@ public final class ItemOfIteratorTest {
 
     @Test(expected = IOException.class)
     public void failForEmptyCollectionTest() throws Exception {
-        new ItemOfIterator<>(Collections.emptyIterator()).asValue();
+        new ItemOfIterator<>(Collections.emptyIterator()).value();
     }
 
     @Test(expected = IOException.class)
@@ -74,7 +74,7 @@ public final class ItemOfIteratorTest {
             // @checkstyle MagicNumber (1 line)
             new ArrayAsIterable<>(1, 2, 3).iterator(),
             -1
-        ).asValue();
+        ).value();
     }
 
     @Test
@@ -96,6 +96,6 @@ public final class ItemOfIteratorTest {
             // @checkstyle MagicNumberCheck (2 lines)
             new ArrayAsIterable<>(1, 2, 3).iterator(),
             3
-        ).asValue();
+        ).value();
     }
 }

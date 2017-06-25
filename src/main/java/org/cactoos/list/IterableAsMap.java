@@ -75,7 +75,7 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
 
     @Override
     public int size() {
-        return new LengthOfIterable(this.entries).asValue();
+        return new LengthOfIterable(this.entries).value();
     }
 
     @Override

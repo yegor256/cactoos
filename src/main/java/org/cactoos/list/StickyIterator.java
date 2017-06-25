@@ -75,11 +75,11 @@ public final class StickyIterator<X> implements Iterator<X> {
 
     @Override
     public boolean hasNext() {
-        return this.gate.asValue().hasNext();
+        return this.gate.value().hasNext();
     }
 
     @Override
     public X next() {
-        return this.gate.asValue().next();
+        return this.gate.value().next();
     }
 }

@@ -66,7 +66,7 @@ public final class ItemOfIterableTest {
 
     @Test(expected = IOException.class)
     public void failForEmptyCollectionTest() throws Exception {
-        new ItemOfIterable<>(Collections.emptyList()).asValue();
+        new ItemOfIterable<>(Collections.emptyList()).value();
     }
 
     @Test

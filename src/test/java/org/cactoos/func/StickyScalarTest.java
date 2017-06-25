@@ -45,8 +45,8 @@ public final class StickyScalarTest {
             () -> new SecureRandom().nextInt()
         );
         MatcherAssert.assertThat(
-            scalar.asValue() + scalar.asValue(),
-            Matchers.equalTo(scalar.asValue() + scalar.asValue())
+            scalar.value() + scalar.value(),
+            Matchers.equalTo(scalar.value() + scalar.value())
         );
     }
 

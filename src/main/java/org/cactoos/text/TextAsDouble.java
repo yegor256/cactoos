@@ -62,7 +62,7 @@ public final class TextAsDouble implements Scalar<Double> {
     }
 
     @Override
-    public Double asValue() throws IOException {
+    public Double value() throws IOException {
         return Double.valueOf(this.text.asString());
     }
 }

@@ -53,4 +53,10 @@ public final class ReversedText implements Text {
     public String asString() throws IOException {
         return new StringBuilder(this.origin.asString()).reverse().toString();
     }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
+    }
+
 }

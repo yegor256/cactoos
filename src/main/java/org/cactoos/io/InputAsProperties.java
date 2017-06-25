@@ -85,7 +85,7 @@ public final class InputAsProperties implements Scalar<Properties> {
     }
 
     @Override
-    public Properties asValue() throws IOException {
+    public Properties value() throws IOException {
         final Properties props = new Properties();
         try (final InputStream input = this.source.stream()) {
             props.load(input);
