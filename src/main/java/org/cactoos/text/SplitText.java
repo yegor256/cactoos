@@ -32,7 +32,7 @@ import org.cactoos.list.ArrayAsIterable;
  *
  * @author Alexey Semenyuk (semenyukalexey88@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.9
  */
 public final class SplitText implements Iterable<String> {
 
@@ -50,35 +50,50 @@ public final class SplitText implements Iterable<String> {
      * Ctor.
      *
      * @param text The text
-     * @param regex The regex
+     * @param rgx The regex
      */
-    public SplitText(final String text, final String regex) {
-        this(new UncheckedText(
-            new StringAsText(text)
-        ), new UncheckedText(
-            new StringAsText(regex)
-        ));
+    public SplitText(final String text, final String rgx) {
+        this(
+            new UncheckedText(new StringAsText(text)),
+            new UncheckedText(new StringAsText(rgx))
+        );
     }
 
     /**
      * Ctor.
-     *
      * @param text The text
-     * @param regex The regex
+     * @param rgx The regex
      */
-    public SplitText(final Text text, final Text regex) {
-        this(new UncheckedText(text), new UncheckedText(regex));
+    public SplitText(final String text, final Text rgx) {
+        this(new UncheckedText(text), new UncheckedText(rgx));
     }
 
     /**
      * Ctor.
-     *
      * @param text The text
-     * @param regex The regex
+     * @param rgx The regex
      */
-    public SplitText(final UncheckedText text, final UncheckedText regex) {
+    public SplitText(final Text text, final String rgx) {
+        this(new UncheckedText(text), new UncheckedText(rgx));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param rgx The regex
+     */
+    public SplitText(final Text text, final Text rgx) {
+        this(new UncheckedText(text), new UncheckedText(rgx));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param rgx The regex
+     */
+    public SplitText(final UncheckedText text, final UncheckedText rgx) {
         this.origin = text;
-        this.regex = regex;
+        this.regex = rgx;
     }
 
     @Override
