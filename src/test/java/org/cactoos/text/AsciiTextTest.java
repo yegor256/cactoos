@@ -29,12 +29,11 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link BytesAsText}.
+ * Test case for {@link AsciiText}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.9
  */
 public final class AsciiTextTest {
 
@@ -45,7 +44,7 @@ public final class AsciiTextTest {
             new AsciiText("áéíóúñäëïöüج°¹ắβდفλж©Ǎẞª!|·$%&?¿*^Ç¨€").asString(),
             Matchers.equalTo("aeiounaeeioeuej01abdflzh(c)ASSa!|·$%&?¿*^C¨€")
         );
-    } 
+    }
 
     @Test
     public void validAsciiRangeTest() throws IOException {
