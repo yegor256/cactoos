@@ -23,6 +23,7 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.Func;
 import org.cactoos.Scalar;
 
 /**
@@ -45,12 +46,31 @@ public final class Ternary<T> implements Scalar<T> {
     /**
      * The consequent.
      */
-    private final T cons;
+    private final Scalar<T> consequent;
 
     /**
      * The alternative.
      */
-    private final T alter;
+    private final Scalar<T> alternative;
+
+    /**
+     * Ctor.
+     * @param input The input to pass to all of them
+     * @param cnd The condition
+     * @param cons The consequent
+     * @param alter The alternative
+     * @param <X> Type of input
+     * @since 0.9
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public <X> Ternary(final X input, final Func<X, Boolean> cnd,
+        final Func<X, T> cons, final Func<X, T> alter) {
+        this(
+            () -> cnd.apply(input),
+            () -> cons.apply(input),
+            () -> alter.apply(input)
+        );
+    }
 
     /**
      * Ctor.
@@ -70,19 +90,31 @@ public final class Ternary<T> implements Scalar<T> {
      * @param alter The alternative
      */
     public Ternary(final Scalar<Boolean> cnd, final T cons, final T alter) {
+        this(cnd, () -> cons, () -> alter);
+    }
+
+    /**
+     * Ctor.
+     * @param cnd The condition
+     * @param cons The consequent
+     * @param alter The alternative
+     * @since 0.9
+     */
+    public Ternary(final Scalar<Boolean> cnd, final Scalar<T> cons,
+        final Scalar<T> alter) {
         this.condition = cnd;
-        this.cons = cons;
-        this.alter = alter;
+        this.consequent = cons;
+        this.alternative = alter;
     }
 
     @Override
     public T value() throws Exception {
-        final T result;
+        final Scalar<T> result;
         if (this.condition.value()) {
-            result = this.cons;
+            result = this.consequent;
         } else {
-            result = this.alter;
+            result = this.alternative;
         }
-        return result;
+        return result.value();
     }
 }
