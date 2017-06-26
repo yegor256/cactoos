@@ -24,44 +24,46 @@
 package org.cactoos.list;
 
 import org.cactoos.Scalar;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
 
 /**
- * Test case for {@link RealMultiply}.
+ * Int result of multiplication.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class RealMultiplyTest {
+public final class IntMult implements Scalar<Long> {
 
-    @Test
-    public void withVarargsCtor() throws Exception {
-        MatcherAssert.assertThat(
-            new RealMultiply(
-                () -> 1.1,
-                () -> 2.2,
-                () -> 3.3
-            ).value(),
-            Matchers.closeTo(7.986, 0.001)
-        );
+    /**
+     * Numbers.
+     */
+    private final Iterable<Scalar<Number>> src;
+
+    /**
+     * Ctor.
+     * @param src Numbers
+     */
+    @SafeVarargs
+    public IntMult(final Scalar<Number>... src) {
+        this(new ArrayAsIterable<>(src));
     }
 
-    @Test
-    public void withIterCtor() throws Exception {
-        MatcherAssert.assertThat(
-            new RealMultiply(
-                new ArrayAsIterable<Scalar<Number>>(
-                    () -> 7.4,
-                    () -> 4.6,
-                    () -> 2.1
-                )
-            ).value(),
-            Matchers.closeTo(71.484, 0.001)
-        );
+    /**
+     * Ctor.
+     * @param src Numbers
+     */
+    public IntMult(final Iterable<Scalar<Number>> src) {
+        this.src = src;
+    }
+
+    @Override
+    public Long value() throws Exception {
+        Long result = 1L;
+        for (final Scalar<Number> val : this.src) {
+            result *= val.value().longValue();
+        }
+        return result;
     }
 }

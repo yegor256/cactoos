@@ -26,7 +26,7 @@ package org.cactoos.list;
 import org.cactoos.Scalar;
 
 /**
- * Int result of multiplication.
+ * Real result of multiplication.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -34,7 +34,7 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @since 0.9
  */
-public final class IntMultiply implements Scalar<Long> {
+public final class RealMult implements Scalar<Double> {
 
     /**
      * Numbers.
@@ -46,7 +46,7 @@ public final class IntMultiply implements Scalar<Long> {
      * @param src Numbers
      */
     @SafeVarargs
-    public IntMultiply(final Scalar<Number>... src) {
+    public RealMult(final Scalar<Number>... src) {
         this(new ArrayAsIterable<>(src));
     }
 
@@ -54,15 +54,15 @@ public final class IntMultiply implements Scalar<Long> {
      * Ctor.
      * @param src Numbers
      */
-    public IntMultiply(final Iterable<Scalar<Number>> src) {
+    public RealMult(final Iterable<Scalar<Number>> src) {
         this.src = src;
     }
 
     @Override
-    public Long value() throws Exception {
-        Long result = 1L;
+    public Double value() throws Exception {
+        Double result = 1.0;
         for (final Scalar<Number> val : this.src) {
-            result *= val.value().longValue();
+            result *= val.value().doubleValue();
         }
         return result;
     }

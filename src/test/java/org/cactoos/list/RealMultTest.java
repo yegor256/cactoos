@@ -29,7 +29,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IntMultiply}.
+ * Test case for {@link RealMult}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
@@ -37,31 +37,31 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class IntMultiplyTest {
+public final class RealMultTest {
 
     @Test
     public void withVarargsCtor() throws Exception {
         MatcherAssert.assertThat(
-            new IntMultiply(
-                () -> 2,
-                () -> 3,
-                () -> 4
+            new RealMult(
+                () -> 1.1,
+                () -> 2.2,
+                () -> 3.3
             ).value(),
-            Matchers.equalTo(24L)
+            Matchers.closeTo(7.986, 0.001)
         );
     }
 
     @Test
     public void withIterCtor() throws Exception {
         MatcherAssert.assertThat(
-            new IntMultiply(
+            new RealMult(
                 new ArrayAsIterable<Scalar<Number>>(
-                    () -> 5,
-                    () -> 6,
-                    () -> 2
+                    () -> 7.4,
+                    () -> 4.6,
+                    () -> 2.1
                 )
             ).value(),
-            Matchers.equalTo(60L)
+            Matchers.closeTo(71.484, 0.001)
         );
     }
 }

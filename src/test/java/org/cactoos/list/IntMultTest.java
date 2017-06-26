@@ -24,46 +24,44 @@
 package org.cactoos.list;
 
 import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Real result of multiplication.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link IntMult}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class RealMultiply implements Scalar<Double> {
+public final class IntMultTest {
 
-    /**
-     * Numbers.
-     */
-    private final Iterable<Scalar<Number>> src;
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    @SafeVarargs
-    public RealMultiply(final Scalar<Number>... src) {
-        this(new ArrayAsIterable<>(src));
+    @Test
+    public void withVarargsCtor() throws Exception {
+        MatcherAssert.assertThat(
+            new IntMult(
+                () -> 2,
+                () -> 3,
+                () -> 4
+            ).value(),
+            Matchers.equalTo(24L)
+        );
     }
 
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    public RealMultiply(final Iterable<Scalar<Number>> src) {
-        this.src = src;
-    }
-
-    @Override
-    public Double value() throws Exception {
-        Double result = 1.0;
-        for (final Scalar<Number> val : this.src) {
-            result *= val.value().doubleValue();
-        }
-        return result;
+    @Test
+    public void withIterCtor() throws Exception {
+        MatcherAssert.assertThat(
+            new IntMult(
+                new ArrayAsIterable<Scalar<Number>>(
+                    () -> 5,
+                    () -> 6,
+                    () -> 2
+                )
+            ).value(),
+            Matchers.equalTo(60L)
+        );
     }
 }
