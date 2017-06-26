@@ -50,11 +50,11 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     /**
      * Ctor.
      * @param key The key of the entry's map.
-     * @param value The value associated to the key of the entry's map.
+     * @param val The value associated to the key of the entry's map.
      */
-    public MapEntry(final K key, final V value) {
+    public MapEntry(final K key, final V val) {
         this.key = key;
-        this.value = value;
+        this.value = val;
     }
 
     @Override
@@ -68,8 +68,7 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     }
 
     @Override
-    // @checkstyle HiddenFieldCheck (1 line)
-    public V setValue(final V value) {
+    public V setValue(final V val) {
         throw new UnsupportedOperationException(
             "#setValue() is not supported"
         );
