@@ -35,7 +35,7 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @since 0.9
  */
-public final class SumOfInt implements Scalar<Long> {
+public final class SumOfInts implements Scalar<Long> {
 
     /**
      * The iterable.
@@ -47,7 +47,7 @@ public final class SumOfInt implements Scalar<Long> {
      * @param src Numbers
      */
     @SafeVarargs
-    public SumOfInt(final Scalar<Number>... src) {
+    public SumOfInts(final Scalar<Number>... src) {
         this(new ArrayAsIterable<>(src));
     }
 
@@ -55,7 +55,7 @@ public final class SumOfInt implements Scalar<Long> {
      * Ctor.
      * @param src The iterable
      */
-    public SumOfInt(final Iterable<Scalar<Number>> src) {
+    public SumOfInts(final Iterable<Scalar<Number>> src) {
         this.src = src;
     }
 

@@ -29,7 +29,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link SumOfInt}.
+ * Test case for {@link SumOfInts}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
@@ -37,12 +37,12 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SumOfIntTest {
+public final class SumOfIntsTest {
 
     @Test
     public void withVarargsCtor() throws Exception {
         MatcherAssert.assertThat(
-            new SumOfInt(
+            new SumOfInts(
                 () -> 1,
                 () -> 2,
                 () -> 3
@@ -54,7 +54,7 @@ public final class SumOfIntTest {
     @Test
     public void withIterCtor() throws Exception {
         MatcherAssert.assertThat(
-            new SumOfInt(
+            new SumOfInts(
                 new ArrayAsIterable<Scalar<Number>>(
                     () -> 7,
                     () -> 8,
