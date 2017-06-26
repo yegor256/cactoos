@@ -54,16 +54,23 @@ public final class Ternary<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param condition The condition
+     * @param cnd The condition
+     * @param cons The consequent
+     * @param alter The alternative
+     * @since 0.9
+     */
+    public Ternary(final boolean cnd, final T cons, final T alter) {
+        this(() -> cnd, cons, alter);
+    }
+
+    /**
+     * Ctor.
+     * @param cnd The condition
      * @param cons The consequent
      * @param alter The alternative
      */
-    public Ternary(
-        final Scalar<Boolean> condition,
-        final T cons,
-        final T alter
-    ) {
-        this.condition = condition;
+    public Ternary(final Scalar<Boolean> cnd, final T cons, final T alter) {
+        this.condition = cnd;
         this.cons = cons;
         this.alter = alter;
     }
