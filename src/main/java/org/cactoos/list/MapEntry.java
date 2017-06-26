@@ -49,12 +49,12 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
 
     /**
      * Ctor.
-     * @param ky The key of the entry's map.
-     * @param val The value associated to the key of the entry's map.
+     * @param src The key of the entry's map.
+     * @param trgt The value associated to the key of the entry's map.
      */
-    public MapEntry(final K ky, final V val) {
-        this.key = ky;
-        this.value = val;
+    public MapEntry(final K src, final V trgt) {
+        this.key = src;
+        this.value = trgt;
     }
 
     @Override
