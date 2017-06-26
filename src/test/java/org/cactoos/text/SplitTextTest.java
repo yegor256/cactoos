@@ -23,6 +23,8 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Text;
+import org.cactoos.list.MappedIterable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -40,8 +42,11 @@ public final class SplitTextTest {
     public void splitText() throws Exception {
         MatcherAssert.assertThat(
             "Can't split a text",
-            new SplitText(
-                "Hello world!", "\\s+"
+            new MappedIterable<Text, String>(
+                new SplitText(
+                    "Hello world!", "\\s+"
+                ),
+                input -> input.asString()
             ),
             Matchers.contains(
                 "Hello",

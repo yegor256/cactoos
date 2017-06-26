@@ -26,7 +26,8 @@ package org.cactoos.text;
 import java.util.Iterator;
 import org.cactoos.Text;
 import org.cactoos.list.ArrayAsIterable;
-import org.cactoos.list.FilteredIterator;
+import org.cactoos.list.FilteredIterable;
+import org.cactoos.list.MappedIterable;
 
 /**
  * Split the Text.
@@ -35,7 +36,7 @@ import org.cactoos.list.FilteredIterator;
  * @version $Id$
  * @since 0.9
  */
-public final class SplitText implements Iterable<String> {
+public final class SplitText implements Iterable<Text> {
 
     /**
      * The origin string.
@@ -98,15 +99,18 @@ public final class SplitText implements Iterable<String> {
     }
 
     @Override
-    public Iterator<String> iterator() {
-        return new FilteredIterator<>(
-            new ArrayAsIterable<>(
-                this.origin.asString().split(
-                    this.regex.asString()
-                )
-            ).iterator(),
-            input -> !input.isEmpty()
-        );
+    public Iterator<Text> iterator() {
+        return new MappedIterable<String, Text>(
+            new FilteredIterable<>(
+                new ArrayAsIterable<>(
+                    this.origin.asString().split(
+                        this.regex.asString()
+                    )
+                ),
+                input -> !input.isEmpty()
+            ),
+            str -> new StringAsText(str)
+        ).iterator();
     }
 
 }
