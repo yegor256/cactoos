@@ -233,6 +233,21 @@ new And<>(
 ).value();
 ```
 
+## Our objects vs. their static methods
+
+Cactoos | Guava | Apache Commons | JDK 8
+------ | ------ | ------ | ------
+`FormattedText` | - | - | `String.format()`
+`JoinedText` | - | - | `String.join()`
+`LoweredText` | - | - | `String#toLowerCase()`
+`NormalizedText` | - | `StringUtils.normalize()` | -
+`StringAsUrl` | - | - | `URLEncoder.encode()`
+`UrlAsString` | - | - | `URLDecoder.decode()`
+`StickyList` | ? | ? | `Arrays.asList()`
+`StickyList` | `Lists.newArrayList()` | ? | -
+`FilteredIterable` | `Iterables.filter()` | ? | -
+`BytesAsString` | ? | `IOUtils.toString()` | -
+
 ## How to contribute?
 
 Just fork the repo and send us a pull request.
