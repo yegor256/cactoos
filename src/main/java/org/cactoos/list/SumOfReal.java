@@ -23,45 +23,49 @@
  */
 package org.cactoos.list;
 
+import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
 
 /**
- * Test case for {@link IntTotal}.
+ * Real total of numbers.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class IntTotalTest {
+public final class SumOfReal implements Scalar<Double> {
 
-    @Test
-    public void withVarargsCtor() throws Exception {
-        MatcherAssert.assertThat(
-            new IntTotal(
-                () -> 1,
-                () -> 2,
-                () -> 3
-            ).value(),
-            Matchers.equalTo(6L)
-        );
+    /**
+     * The iterable.
+     */
+    private final Iterable<Scalar<Number>> src;
+
+    /**
+     * Ctor.
+     * @param src Numbers
+     */
+    @SafeVarargs
+    public SumOfReal(final Scalar<Number>... src) {
+        this(new ArrayAsIterable<>(src));
     }
 
-    @Test
-    public void withIterCtor() throws Exception {
-        MatcherAssert.assertThat(
-            new IntTotal(
-                new ArrayAsIterable<Scalar<Number>>(
-                    () -> 7,
-                    () -> 8,
-                    () -> 10
-                )
-            ).value(),
-            Matchers.equalTo(25L)
-        );
+    /**
+     * Ctor.
+     * @param src The iterable
+     */
+    public SumOfReal(final Iterable<Scalar<Number>> src) {
+        this.src = src;
+    }
+
+    @Override
+    public Double value() throws Exception {
+        final Iterator<Scalar<Number>> numbers = this.src.iterator();
+        Double result =  0.;
+        while (numbers.hasNext()) {
+            result += numbers.next().value().doubleValue();
+        }
+        return result;
     }
 }
