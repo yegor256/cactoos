@@ -51,7 +51,7 @@ public final class JoinedTextTest {
         MatcherAssert.assertThat(
             "Can't join texts",
             new JoinedText(
-                " ",
+                new StringAsText(" "),
                 new StringAsText("foo"),
                 new StringAsText("bar")
             ),
