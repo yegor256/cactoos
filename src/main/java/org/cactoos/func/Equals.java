@@ -26,7 +26,7 @@ package org.cactoos.func;
 import org.cactoos.Scalar;
 
 /**
- * Negative.
+ * Equals.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -38,27 +38,27 @@ import org.cactoos.Scalar;
 public final class Equals<T extends Comparable<T>> implements Scalar<Boolean> {
 
     /**
-     * The left scalar.
+     * The first scalar.
      */
-    private final Scalar<T> left;
+    private final Scalar<T> first;
 
     /**
-     * The right scalar.
+     * The second scalar.
      */
-    private final Scalar<T> right;
+    private final Scalar<T> second;
 
     /**
      * Ctor.
-     * @param lft The first scalar to compare.
-     * @param rght The second scalar to compare.
+     * @param frst The first scalar to compare.
+     * @param scnd The second scalar to compare.
      */
-    public Equals(final Scalar<T> lft, final Scalar<T> rght) {
-        this.left = lft;
-        this.right = rght;
+    public Equals(final Scalar<T> frst, final Scalar<T> scnd) {
+        this.first = frst;
+        this.second = scnd;
     }
 
     @Override
     public Boolean value() throws Exception {
-        return this.left.value().compareTo(this.right.value()) == 0;
+        return this.first.value().compareTo(this.second.value()) == 0;
     }
 }
