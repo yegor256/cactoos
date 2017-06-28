@@ -34,6 +34,7 @@ import org.junit.Test;
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.9
+ * @checkstyle LineLengthCheck (500 lines)
  */
 public final class AsciiTextTest {
     /**
