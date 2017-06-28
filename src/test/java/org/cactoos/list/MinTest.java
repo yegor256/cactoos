@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class MinTest {
@@ -42,7 +42,7 @@ public final class MinTest {
         final int num = 10;
         MatcherAssert.assertThat(
             "Can't find the smaller among one",
-            new Min<Integer>(() -> new Integer(num)).asValue(),
+            new Min<Integer>(() -> new Integer(num)).value(),
             Matchers.equalTo(num)
         );
     }
@@ -57,7 +57,7 @@ public final class MinTest {
                 () -> new Integer(0),
                 () -> new Integer(num),
                 () -> new Integer(2)
-             ).asValue(),
+             ).value(),
             Matchers.equalTo(num)
         );
     }

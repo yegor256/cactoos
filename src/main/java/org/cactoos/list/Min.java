@@ -61,11 +61,11 @@ public final class Min<T extends Comparable<T>> implements Scalar<T> {
     }
 
     @Override
-    public T asValue() throws Exception {
+    public T value() throws Exception {
         final Iterator<Scalar<T>> iter = this.items.iterator();
-        T min = iter.next().asValue();
+        T min = iter.next().value();
         while (iter.hasNext()) {
-            final T next = iter.next().asValue();
+            final T next = iter.next().value();
             if (next.compareTo(min) < 0) {
                 min = next;
             }

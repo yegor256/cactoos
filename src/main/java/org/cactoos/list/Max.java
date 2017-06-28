@@ -34,7 +34,7 @@ import org.cactoos.Scalar;
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @param <T> Scalar type
- * @since 0.9
+ * @since 0.10
  */
 public final class Max<T extends Comparable<T>> implements Scalar<T> {
 
@@ -61,11 +61,11 @@ public final class Max<T extends Comparable<T>> implements Scalar<T> {
     }
 
     @Override
-    public T asValue() throws Exception {
+    public T value() throws Exception {
         final Iterator<Scalar<T>> iter = this.items.iterator();
-        T max = iter.next().asValue();
+        T max = iter.next().value();
         while (iter.hasNext()) {
-            final T next = iter.next().asValue();
+            final T next = iter.next().value();
             if (next.compareTo(max) > 0) {
                 max = next;
             }
