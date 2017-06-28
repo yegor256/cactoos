@@ -72,7 +72,7 @@ public interface Output {
      * @version $Id$
      * @since 0.9
      */
-    final class NoNull implements Output {
+    final class NoNulls implements Output {
         /**
          * The output.
          */
@@ -81,7 +81,7 @@ public interface Output {
          * Ctor.
          * @param output The output
          */
-        public NoNull(final Output output) {
+        public NoNulls(final Output output) {
             this.origin = output;
         }
         @Override

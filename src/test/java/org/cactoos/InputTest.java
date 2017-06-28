@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 /**
- * Test case for {@link Input}.
+ * Test case for {@link Input.NoNulls}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @since 0.9
@@ -37,7 +37,7 @@ public final class InputTest {
 
     @Test(expected = IOException.class)
     public void failForNullInput() throws IOException {
-        new Input.NoNull(null).stream();
+        new Input.NoNulls(null).stream();
     }
 
 }

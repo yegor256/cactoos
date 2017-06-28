@@ -26,7 +26,7 @@ package org.cactoos;
 import org.junit.Test;
 
 /**
- * Test case for {@link Func}.
+ * Test case for {@link Func.NoNulls}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @since 0.9
@@ -36,12 +36,12 @@ public final class FuncTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failForNullFunc() throws Exception {
-        new Func.NoNull<>(null).apply(new Object());
+        new Func.NoNulls<>(null).apply(new Object());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void failForNullInput() throws Exception {
-        new Func.NoNull<>(
+        new Func.NoNulls<>(
             new Func<Object, Object>() {
                 @Override
                 public Object apply(final Object input) throws Exception {

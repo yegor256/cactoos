@@ -65,7 +65,7 @@ public interface Func<X, Y> {
      * @param <Y> Type of output
      * @since 0.9
      */
-    final class NoNull<X, Y> implements Func<X, Y> {
+    final class NoNulls<X, Y> implements Func<X, Y> {
         /**
          * The function.
          */
@@ -74,7 +74,7 @@ public interface Func<X, Y> {
          * Ctor.
          * @param fnc The function
          */
-        public NoNull(final Func<X, Y> fnc) {
+        public NoNulls(final Func<X, Y> fnc) {
             this.func = fnc;
         }
         @Override

@@ -68,7 +68,7 @@ public interface Input {
      * @version $Id$
      * @since 0.9
      */
-    final class NoNull implements Input {
+    final class NoNulls implements Input {
         /**
          * The input.
          */
@@ -77,7 +77,7 @@ public interface Input {
          * Ctor.
          * @param input The input
          */
-        public NoNull(final Input input) {
+        public NoNulls(final Input input) {
             this.origin = input;
         }
         @Override

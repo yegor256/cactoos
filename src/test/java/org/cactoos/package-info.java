@@ -23,7 +23,7 @@
  */
 
 /**
- * Input.NoNull, Output.NoNull and Func<>.NoNull, tests.
+ * Input.NoNulls, Output.NoNulls and Func<>.NoNulls, tests.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
