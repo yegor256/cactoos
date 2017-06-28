@@ -21,23 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos;
 
-import java.io.IOException;
 import org.junit.Test;
 
 /**
- * Test case for {@link NotNullInput}.
+ * Test case for {@link Func}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NotNullOutputTest {
+public final class FuncTest {
 
-    @Test(expected = IOException.class)
-    public void failForNullOutput() throws IOException {
-        new NotNullOutput(null).stream();
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullFunc() throws Exception {
+        new Func.NoNull<>(null).apply(new Object());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullInput() throws Exception {
+        new Func.NoNull<>(
+            new Func<Object, Object>() {
+                @Override
+                public Object apply(final Object input) throws Exception {
+                    return input;
+                }
+            }
+        ).apply(null);
+    }
 }

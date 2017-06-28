@@ -65,4 +65,31 @@ public interface Output {
      */
     OutputStream stream() throws IOException;
 
+    /**
+     * Output check for no nulls.
+     *
+     * @author Fabricio Cabral (fabriciofx@gmail.com)
+     * @version $Id$
+     * @since 0.9
+     */
+    final class NoNull implements Output {
+        /**
+         * The output.
+         */
+        private final Output origin;
+        /**
+         * Ctor.
+         * @param output The output
+         */
+        public NoNull(final Output output) {
+            this.origin = output;
+        }
+        @Override
+        public OutputStream stream() throws IOException {
+            if (this.origin == null) {
+                throw new IOException("NULL instead of a valid output");
+            }
+            return this.origin.stream();
+        }
+    }
 }

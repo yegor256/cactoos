@@ -21,42 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import org.cactoos.Output;
+import org.junit.Test;
 
 /**
- * A safe Output.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link Input}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NotNullOutput implements Output {
+public final class InputTest {
 
-    /**
-     * The output.
-     */
-    private final Output origin;
-
-    /**
-     * Ctor.
-     * @param output The output
-     */
-    public NotNullOutput(final Output output) {
-        this.origin = output;
-    }
-
-    @Override
-    public OutputStream stream() throws IOException {
-        if (this.origin == null) {
-            throw new IOException("NULL instead of a valid output");
-        }
-        return this.origin.stream();
+    @Test(expected = IOException.class)
+    public void failForNullInput() throws IOException {
+        new Input.NoNull(null).stream();
     }
 
 }
