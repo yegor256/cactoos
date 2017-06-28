@@ -23,83 +23,62 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link Ternary}.
+ * Test case for {@link Result}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class TernaryTest {
-
-    @Test
-    public void conditionTrue() throws Exception {
-        MatcherAssert.assertThat(
-            new Ternary<>(
-                new True(),
-                6,
-                16
-            ).value(),
-            Matchers.equalTo(6)
-        );
-    }
-
-    @Test
-    public void conditionFalse() throws Exception {
-        MatcherAssert.assertThat(
-            new Ternary<>(
-                new False(),
-                6,
-                16
-            ).value(),
-            Matchers.equalTo(16)
-        );
-    }
-
-    @Test
-    public void withFuncInCtor() throws Exception {
-        MatcherAssert.assertThat(
-            new Ternary<>(
-                String::isEmpty,
-                input -> input.concat("1"),
-                input -> input.concat("2"),
-                "word"
-            ).value(),
-            Matchers.equalTo("word2")
-        );
-    }
+public final class ResultTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void withScalarAndFuncInCtor() throws Exception {
+    public void value() throws Exception {
         MatcherAssert.assertThat(
-            new Ternary<>(
-                new True(),
-                input -> input.concat("1"),
-                input -> input.concat("2"),
-                "input"
+            new Result<>(
+                new ConstFunc<>("result"),
+                (Scalar<Boolean>) () -> true
             ).value(),
-            Matchers.equalTo("input1")
+            Matchers.equalTo("result")
         );
     }
 
     @Test
-    public void withSeveralArgFuncCtor() throws Exception {
+    public void withResultAsCtorArg() throws Exception {
         MatcherAssert.assertThat(
             new Ternary<>(
                 new True(),
-                input -> input.concat("!"),
-                "Hello",
-                input -> input.concat("!"),
-                "Guten Tag"
+                new Result<>(
+                    new ConstFunc<>(1),
+                    "first"
+                ),
+                new Result<>(
+                    new ConstFunc<>(2),
+                    "second"
+                )
             ).value(),
-            Matchers.equalTo("Hello!")
+            Matchers.equalTo(1)
+        );
+    }
+
+    @Test
+    public void withFuncAsCtorArg() throws Exception {
+        MatcherAssert.assertThat(
+            new Ternary<>(
+                String::isEmpty,
+                new ConstFunc<>(3),
+                new ConstFunc<>(4),
+                "input"
+            ).value(),
+            Matchers.equalTo(4)
         );
     }
 }

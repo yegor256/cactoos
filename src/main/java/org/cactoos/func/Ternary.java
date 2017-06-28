@@ -55,21 +55,65 @@ public final class Ternary<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param input The input to pass to all of them
      * @param cnd The condition
      * @param cons The consequent
      * @param alter The alternative
+     * @param input The input to pass to all of them
      * @param <X> Type of input
      * @since 0.9
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public <X> Ternary(final X input, final Func<X, Boolean> cnd,
-        final Func<X, T> cons, final Func<X, T> alter) {
+    public <X> Ternary(
+        final Func<X, Boolean> cnd,
+        final Func<X, T> cons,
+        final Func<X, T> alter,
+        final X input
+    ) {
         this(
-            () -> cnd.apply(input),
-            () -> cons.apply(input),
-            () -> alter.apply(input)
+            new Result<>(cnd, input),
+            new Result<>(cons, input),
+            new Result<>(alter, input)
         );
+    }
+
+    /**
+     * Ctor.
+     * @param cnd The condition
+     * @param cons The consequent
+     * @param alter The alternative
+     * @param input Input for all functions
+     * @param <X> Type of input
+     * @since 0.9
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public <X> Ternary(
+        final Scalar<Boolean> cnd,
+        final Func<X, T> cons,
+        final Func<X, T> alter,
+        final X input
+    ) {
+        this(cnd, new Result<>(cons, input), new Result<>(alter, input));
+    }
+
+    /**
+     * Ctor.
+     * @param cnd The condition
+     * @param cons The consequent
+     * @param first Input for consequent
+     * @param alter The alternative
+     * @param second Input for alternative
+     * @param <X> Type of input
+     * @since 0.9
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public <X> Ternary(
+        final Scalar<Boolean> cnd,
+        final Func<X, T> cons,
+        final X first,
+        final Func<X, T> alter,
+        final X second
+    ) {
+        this(cnd, new Result<>(cons, first), new Result<>(alter, second));
     }
 
     /**
