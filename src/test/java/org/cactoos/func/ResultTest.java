@@ -23,6 +23,7 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -37,6 +38,17 @@ import org.junit.Test;
  * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class ResultTest {
+
+    @Test
+    public void value() throws Exception {
+        MatcherAssert.assertThat(
+            new Result<>(
+                new ConstFunc<>("result"),
+                (Scalar<Boolean>) () -> true
+            ).value(),
+            Matchers.equalTo("result")
+        );
+    }
 
     @Test
     public void withResultAsCtorArg() throws Exception {
