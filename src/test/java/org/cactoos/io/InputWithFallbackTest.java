@@ -21,41 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
+import java.io.File;
+import org.cactoos.TextHasString;
+import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link SplitText}.
- * @author Alexey Semenyuk (semenyukalexey@gmail.com)
+ * Test case for {@link InputWithFallback}.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SplitTextTest {
+public final class InputWithFallbackTest {
 
     @Test
-    public void splitText() throws Exception {
+    public void readsAlternativeInput() {
         MatcherAssert.assertThat(
-            "Can't split a text",
-            new SplitText(
-                "Hello world!", "\\s+"
+            "Can't read alternative source",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputWithFallback(
+                        new FileAsInput(
+                            new File("/this-file-is-absent-for-sure.txt")
+                        ),
+                        new BytesAsInput("hello, world!")
+                    )
+                )
             ),
-            Matchers.contains(
-                "Hello",
-                "world!"
-            )
-        );
-    }
-
-    @Test
-    public void splitEmptyText() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't split an empty text",
-            new SplitText("", "\n"),
-            Matchers.emptyIterable()
+            new TextHasString(Matchers.endsWith("world!"))
         );
     }
 
