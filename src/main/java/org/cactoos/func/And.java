@@ -23,8 +23,11 @@
  */
 package org.cactoos.func;
 
-import java.util.Iterator;
+import org.cactoos.Func;
+import org.cactoos.Proc;
 import org.cactoos.Scalar;
+import org.cactoos.list.ArrayAsIterable;
+import org.cactoos.list.MappedIterable;
 
 /**
  * Logical conjunction.
@@ -44,36 +47,78 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param iterable The iterable
+     * @param proc Proc to map
+     * @param src The iterable
+     * @param <X> Type of items in the iterable
      */
-    public And(final Iterable<Scalar<Boolean>> iterable) {
-        this.iterable = iterable;
-    }
-
-    @Override
-    public Boolean asValue() throws Exception {
-        final Iterator<Scalar<Boolean>> iterator = this.iterable.iterator();
-        return this.conjunction(iterator, true);
+    @SafeVarargs
+    public <X> And(final Proc<X> proc, final X... src) {
+        this(new ProcAsFunc<>(proc, true), src);
     }
 
     /**
-     * Conjunction.
-     *
-     * @param iterator The iterator
-     * @param value Previous value
-     * @return The result
-     * @throws Exception If fails
+     * Ctor.
+     * @param func Func to map
+     * @param src The iterable
+     * @param <X> Type of items in the iterable
      */
-    private Boolean conjunction(
-        final Iterator<Scalar<Boolean>> iterator,
-        final boolean value
-    ) throws Exception {
-        final Boolean result;
-        if (iterator.hasNext() && value) {
-            result = this.conjunction(iterator, iterator.next().asValue());
-        } else {
-            result = value;
+    @SafeVarargs
+    public <X> And(final Func<X, Boolean> func, final X... src) {
+        this(new ArrayAsIterable<>(src), func);
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     * @param proc Proc to use
+     * @param <X> Type of items in the iterable
+     */
+    public <X> And(final Iterable<X> src, final Proc<X> proc) {
+        this(src, new ProcAsFunc<>(proc, true));
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     * @param func Func to map
+     * @param <X> Type of items in the iterable
+     */
+    public <X> And(final Iterable<X> src, final Func<X, Boolean> func) {
+        this(
+            new MappedIterable<>(
+                src,
+                item -> (Scalar<Boolean>) () -> func.apply(item)
+            )
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     */
+    @SafeVarargs
+    public And(final Scalar<Boolean>... src) {
+        this(new ArrayAsIterable<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     */
+    public And(final Iterable<Scalar<Boolean>> src) {
+        this.iterable = src;
+    }
+
+    @Override
+    public Boolean value() throws Exception {
+        boolean result = true;
+        for (final Scalar<Boolean> item : this.iterable) {
+            if (!item.value()) {
+                result = false;
+                break;
+            }
         }
         return result;
     }
+
 }

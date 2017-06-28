@@ -58,7 +58,7 @@ public final class StickyInput implements Input {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 new LengthOfInput(
                     new TeeInput(input, new OutputStreamAsOutput(baos))
-                ).asValue();
+                ).value();
                 return baos.toByteArray();
             }
         );
@@ -67,7 +67,7 @@ public final class StickyInput implements Input {
     @Override
     public InputStream stream() throws IOException {
         return new ByteArrayInputStream(
-            new IoCheckedScalar<>(this.cache).asValue()
+            new IoCheckedScalar<>(this.cache).value()
         );
     }
 

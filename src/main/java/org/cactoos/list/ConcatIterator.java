@@ -47,7 +47,6 @@ public final class ConcatIterator<T> implements Iterator<T> {
      * @param items Items to concatenate
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public ConcatIterator(final Iterator<T>... items) {
         this(new IterableAsList<>(items));
     }

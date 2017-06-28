@@ -23,8 +23,8 @@
  */
 package org.cactoos.func;
 
-import java.util.Iterator;
 import org.cactoos.Scalar;
+import org.cactoos.list.ArrayAsIterable;
 
 /**
  * Logical disjunction.
@@ -44,36 +44,31 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param iterable The iterable
+     * @param src The iterable
      */
-    public Or(final Iterable<Scalar<Boolean>> iterable) {
-        this.iterable = iterable;
-    }
-
-    @Override
-    public Boolean asValue() throws Exception {
-        final Iterator<Scalar<Boolean>> iterator = this.iterable.iterator();
-        return this.disjunction(iterator, false);
+    @SafeVarargs
+    public Or(final Scalar<Boolean>... src) {
+        this(new ArrayAsIterable<>(src));
     }
 
     /**
-     * Disjunction.
-     *
-     * @param iterator The iterator
-     * @param value Previous value
-     * @return The result
-     * @throws Exception If fails
+     * Ctor.
+     * @param src The iterable
      */
-    private Boolean disjunction(
-        final Iterator<Scalar<Boolean>> iterator,
-        final boolean value
-    ) throws Exception {
-        final Boolean result;
-        if (iterator.hasNext() && !value) {
-            result = this.disjunction(iterator, iterator.next().asValue());
-        } else {
-            result = value;
+    public Or(final Iterable<Scalar<Boolean>> src) {
+        this.iterable = src;
+    }
+
+    @Override
+    public Boolean value() throws Exception {
+        boolean result = false;
+        for (final Scalar<Boolean> item : this.iterable) {
+            if (item.value()) {
+                result = true;
+                break;
+            }
         }
         return result;
     }
+
 }

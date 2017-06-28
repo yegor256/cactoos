@@ -26,8 +26,12 @@ package org.cactoos.io;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.text.StringAsText;
+import org.cactoos.text.TextAsBytes;
 
 /**
  * Input as {@link Properties}.
@@ -47,6 +51,33 @@ public final class InputAsProperties implements Scalar<Properties> {
 
     /**
      * Ctor.
+     * @param text Text
+     * @since 0.9
+     */
+    public InputAsProperties(final String text) {
+        this(new StringAsText(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text Text
+     * @since 0.9
+     */
+    public InputAsProperties(final Text text) {
+        this(new TextAsBytes(text));
+    }
+
+    /**
+     * Ctor.
+     * @param bytes Bytes
+     * @since 0.9
+     */
+    public InputAsProperties(final Bytes bytes) {
+        this(new BytesAsInput(bytes));
+    }
+
+    /**
+     * Ctor.
      * @param input The input
      */
     public InputAsProperties(final Input input) {
@@ -54,7 +85,7 @@ public final class InputAsProperties implements Scalar<Properties> {
     }
 
     @Override
-    public Properties asValue() throws IOException {
+    public Properties value() throws IOException {
         final Properties props = new Properties();
         try (final InputStream input = this.source.stream()) {
             props.load(input);

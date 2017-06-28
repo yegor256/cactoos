@@ -83,7 +83,7 @@ public final class UrlAsInput implements Input {
 
     @Override
     public InputStream stream() throws IOException {
-        return new IoCheckedScalar<>(this.source).asValue().openStream();
+        return new IoCheckedScalar<>(this.source).value().openStream();
     }
 
 }

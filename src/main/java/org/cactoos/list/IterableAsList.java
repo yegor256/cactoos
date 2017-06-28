@@ -64,7 +64,6 @@ public final class IterableAsList<T> implements List<T> {
      * @param array An array of some elements
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public IterableAsList(final T... array) {
         this(new ArrayAsIterable<>(array));
     }
@@ -80,7 +79,7 @@ public final class IterableAsList<T> implements List<T> {
 
     @Override
     public int size() {
-        return new LengthOfIterable(this.iterable).asValue();
+        return new LengthOfIterable(this.iterable).value();
     }
 
     @Override

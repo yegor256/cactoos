@@ -53,6 +53,15 @@ public final class UncheckedText implements Text {
     /**
      * Ctor.
      * @param txt Encapsulated text
+     * @since 0.9
+     */
+    public UncheckedText(final String txt) {
+        this(new StringAsText(txt));
+    }
+
+    /**
+     * Ctor.
+     * @param txt Encapsulated text
      */
     public UncheckedText(final Text txt) {
         this(
@@ -83,6 +92,13 @@ public final class UncheckedText implements Text {
             txt = new UncheckedFunc<>(this.fallback).apply(ex);
         }
         return txt;
+    }
+
+    @Override
+    public int compareTo(final Text txt) {
+        return this.asString().compareTo(
+            new UncheckedText(txt).asString()
+        );
     }
 
 }

@@ -23,31 +23,49 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.ScalarHasValue;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import java.util.Iterator;
+import org.cactoos.Scalar;
 
 /**
- * Test case for {@link AnyOf}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Real total of numbers.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.9
  */
-public final class AnyOfTest {
+public final class SumOfReals implements Scalar<Double> {
 
-    @Test
-    public void iteratesList() {
-        MatcherAssert.assertThat(
-            "Can't iterate a list",
-            new AnyOf(
-                new MappedIterable<>(
-                    new ArrayAsIterable<>("a", "file", "is", "corrupt"),
-                    txt -> txt.length() > 2
-                )
-            ),
-            new ScalarHasValue<>(true)
-        );
+    /**
+     * The iterable.
+     */
+    private final Iterable<Scalar<Number>> src;
+
+    /**
+     * Ctor.
+     * @param src Numbers
+     */
+    @SafeVarargs
+    public SumOfReals(final Scalar<Number>... src) {
+        this(new ArrayAsIterable<>(src));
     }
 
+    /**
+     * Ctor.
+     * @param src The iterable
+     */
+    public SumOfReals(final Iterable<Scalar<Number>> src) {
+        this.src = src;
+    }
+
+    @Override
+    public Double value() throws Exception {
+        final Iterator<Scalar<Number>> numbers = this.src.iterator();
+        Double result =  0.;
+        while (numbers.hasNext()) {
+            result += numbers.next().value().doubleValue();
+        }
+        return result;
+    }
 }

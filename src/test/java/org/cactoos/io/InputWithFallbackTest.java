@@ -21,60 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.io;
 
-import org.cactoos.Func;
-import org.cactoos.Scalar;
+import java.io.File;
+import org.cactoos.TextHasString;
+import org.cactoos.text.BytesAsText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Iterable into boolean.
- *
- * <p>You can use this class, for example, in order to iterate through
- * a collection of items:</p>
- *
- * <pre> new IterableAsBoolean&lt;&gt;(
- *   new IterableAsList&lt;String&gt;("hello", "world"),
- *   i -&gt; System.out.println(i)
- * ).asValue();</pre>
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link InputWithFallback}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @see IterableAsBooleans
- * @since 0.1
+ * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableAsBoolean<X> implements Scalar<Boolean> {
+public final class InputWithFallbackTest {
 
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
-
-    /**
-     * Proc.
-     */
-    private final Func<X, Boolean> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public IterableAsBoolean(final Iterable<X> src,
-        final Func<X, Boolean> fnc) {
-        this.iterable = src;
-        this.func = fnc;
+    @Test
+    public void readsAlternativeInput() {
+        MatcherAssert.assertThat(
+            "Can't read alternative source",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputWithFallback(
+                        new FileAsInput(
+                            new File("/this-file-is-absent-for-sure.txt")
+                        ),
+                        new BytesAsInput("hello, world!")
+                    )
+                )
+            ),
+            new TextHasString(Matchers.endsWith("world!"))
+        );
     }
 
-    @Override
-    public Boolean asValue() {
-        return new AllOf(
-            new IterableAsBooleans<>(
-                this.iterable,
-                this.func
-            )
-        ).asValue();
-    }
 }

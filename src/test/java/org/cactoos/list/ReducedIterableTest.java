@@ -23,60 +23,30 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Iterable into booleans.
- *
- * <p>You can use this class, for example, in order to iterate through
- * a collection of items, in combination with {@link AllOf}:</p>
- *
- * <pre> new AllOf(
- *   new IterableAsBooleans&lt;String&gt;(
- *     new IterableAsList&lt;String&gt;("hello", "world"),
- *     i -&gt; System.out.println(i)
- *   )
- * ).asValue();</pre>
- *
- * <p>Also, consider a much shorter version with {@link IterableAsBoolean}.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link SkippedIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @see IterableAsBoolean
- * @since 0.1
+ * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class IterableAsBooleans<X> implements Iterable<Boolean> {
+public final class ReducedIterableTest {
 
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
-
-    /**
-     * Func.
-     */
-    private final Func<X, Boolean> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public IterableAsBooleans(final Iterable<X> src,
-        final Func<X, Boolean> fnc) {
-        this.iterable = src;
-        this.func = fnc;
-    }
-
-    @Override
-    public Iterator<Boolean> iterator() {
-        return new MappedIterator<>(
-            this.iterable.iterator(),
-            this.func
+    @Test
+    public void skipIterable() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't reduce elements in iterable",
+            new ReducedIterable<>(
+                new LimitedIterable<>(new NaturalNumbers(), 10),
+                0L,
+                (first, second) -> first + second
+            ).value(),
+            Matchers.equalTo(45L)
         );
     }
 

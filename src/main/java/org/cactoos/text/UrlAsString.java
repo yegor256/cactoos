@@ -24,7 +24,6 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -71,32 +70,28 @@ public final class UrlAsString implements Scalar<String> {
     /**
      * Ctor.
      * @param url The URL as String
-     * @param encoding The encoding
+     * @param enc The encoding
      */
-    public UrlAsString(final String url, final Charset encoding) {
-        this(new StringAsText(url), encoding);
+    public UrlAsString(final String url, final Charset enc) {
+        this(new StringAsText(url), enc);
     }
 
     /**
      * Ctor.
      * @param url The URL as Text
-     * @param encoding The encoding
+     * @param enc The encoding
      */
-    public UrlAsString(final Text url, final Charset encoding) {
+    public UrlAsString(final Text url, final Charset enc) {
         this.source = url;
-        this.encoding = encoding;
+        this.encoding = enc;
     }
 
     @Override
-    public String asValue() {
-        try {
-            return URLDecoder.decode(
-                this.source.asString(),
-                this.encoding.name()
-            );
-        } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
-        }
+    public String value() throws IOException {
+        return URLDecoder.decode(
+            this.source.asString(),
+            this.encoding.name()
+        );
     }
 
 }

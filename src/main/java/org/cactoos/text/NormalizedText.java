@@ -21,44 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
-import org.cactoos.Scalar;
+import java.io.IOException;
+import org.cactoos.Text;
 
 /**
- * Is {@code true} when any item in the collection is {@code true}.
+ * Normalize (replace sequences of whitespace characters by a single space)
+ * a Text.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.9
  */
-public final class AnyOf implements Scalar<Boolean> {
+public final class NormalizedText implements Text {
 
     /**
-     * Iterable.
+     * The text.
      */
-    private final Iterable<Boolean> iterable;
+    private final Text origin;
 
     /**
      * Ctor.
-     * @param src Source iterable
+     * @param text A Text
      */
-    public AnyOf(final Iterable<Boolean> src) {
-        this.iterable = src;
+    public NormalizedText(final String text) {
+        this(new StringAsText(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text A Text
+     */
+    public NormalizedText(final Text text) {
+        this.origin = text;
     }
 
     @Override
-    public Boolean asValue() {
-        boolean success = false;
-        for (final Boolean item : this.iterable) {
-            if (item) {
-                success = true;
-                break;
-            }
-        }
-        return success;
+    public String asString() throws IOException {
+        return new TrimmedText(this.origin).asString().replaceAll("\\s+", " ");
+    }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
     }
 
 }
+

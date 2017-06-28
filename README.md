@@ -53,6 +53,9 @@ Java version required: 1.8+.
 
 ## Input/Output
 
+More about it here:
+[Object-Oriented Declarative Input/Output in Cactoos](http://www.yegor256.com/2017/06/22/object-oriented-input-output-in-cactoos.html).
+
 To read a text file in UTF-8:
 
 ```java
@@ -79,7 +82,7 @@ new LengthOfInput(
       new File("/code/a.txt")
     )
   )
-).asValue();
+).value();
 ```
 
 To read a binary file from classpath:
@@ -120,8 +123,8 @@ Collection<String> filtered = new IterableAsCollection<>(
     new ArrayAsIterable<>("hello", "world", "dude"),
     new Func<String, Boolean>() {
       @Override
-      public boolean apply(String i) {
-        return i.length() > 4;
+      public boolean apply(String s) {
+        return s.length() > 4;
       }
     }
   )
@@ -134,7 +137,7 @@ With Lambda:
 new IterableAsCollection<>(
   new FilteredIterable<>(
     new ArrayAsIterable<>("hello", "world", "dude"),
-    i -> i.length() > 4
+    s -> s.length() > 4
   )
 );
 ```
@@ -142,8 +145,8 @@ new IterableAsCollection<>(
 To iterate a collection:
 
 ```java
-new AllOf(
-  new TransformedIterable<>(
+new And(
+  new MappedIterable<>(
     new ArrayAsIterable<>("how", "are", "you"),
     new ProcAsFunc<>(
       input -> {
@@ -151,18 +154,16 @@ new AllOf(
       }
     )
   )
-).asValue();
+).value();
 ```
 
 Or even more compact:
 
 ```java
-new IterableAsBoolean(
-  new ArrayAsIterable<>("how", "are", "you"),
-  new ProcAsFunc<>(
-    input -> System.out.printf("Item: %s\n", i)
-  )
-).asValue();
+new And(
+  input -> System.out.printf("Item: %s\n", input),
+  "how", "are", "you"
+).value();
 ```
 
 To sort a list of words in the file:
@@ -170,10 +171,12 @@ To sort a list of words in the file:
 ```java
 List<String> sorted = new SortedList<>(
   new IterableAsList<>(
-    new TextAsLines(
-      new InputAsText(
-        new FileAsInput(
-          new File("/tmp/names.txt")
+    new SplitText(
+      new BytesAsText(
+        new InputAsBytes(
+          new FileAsInput(
+            new File("/tmp/names.txt")
+          )
         )
       )
     )
@@ -185,8 +188,8 @@ To count elements in an iterable:
 
 ```java
 int total = new LengthOfIterable(
-  new ArrayAsIterable<>("how", "are", "you")
-).asValue();
+  "how", "are", "you"
+).value();
 ```
 
 ## Funcs and Procs
@@ -202,14 +205,12 @@ for (String name : names) {
 This is its object-oriented alternative (no streams!):
 
 ```java
-new IterableAsBoolean<>(
+new And<>(
   names,
-  new ProcAsFunc<>(
-    n -> {
-      System.out.printf("Hello, %s!\n", n);
-    }
-  )
-).asValue();
+  n -> {
+    System.out.printf("Hello, %s!\n", n);
+  }
+).value();
 ```
 
 This is an endless `while/do` loop:
@@ -223,14 +224,29 @@ while (!ready) {
 Here is its object-oriented alternative:
 
 ```java
-new IterableAsBoolean<>(
+new And<>(
   new EndlessIterable<>(ready),
-  r -> {
+  ready -> {
     System.out.prinln("Still waiting...");
     return !ready;
   }
-).asValue();
+).value();
 ```
+
+## Our objects vs. their static methods
+
+Cactoos | Guava | Apache Commons | JDK 8
+------ | ------ | ------ | ------
+`FormattedText` | - | - | `String.format()`
+`JoinedText` | - | - | `String.join()`
+`LoweredText` | - | - | `String#toLowerCase()`
+`NormalizedText` | - | `StringUtils.normalize()` | -
+`StringAsUrl` | - | - | `URLEncoder.encode()`
+`UrlAsString` | - | - | `URLDecoder.decode()`
+`StickyList` | ? | ? | `Arrays.asList()`
+`StickyList` | `Lists.newArrayList()` | ? | -
+`FilteredIterable` | `Iterables.filter()` | ? | -
+`BytesAsString` | ? | `IOUtils.toString()` | -
 
 ## How to contribute?
 

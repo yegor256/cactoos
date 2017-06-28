@@ -54,7 +54,6 @@ public final class StickyList<X> implements List<X> {
      * @param items The array
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public StickyList(final X... items) {
         this(new ArrayAsIterable<>(items));
     }
@@ -85,33 +84,33 @@ public final class StickyList<X> implements List<X> {
 
     @Override
     public int size() {
-        return this.gate.asValue().size();
+        return this.gate.value().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.gate.asValue().isEmpty();
+        return this.gate.value().isEmpty();
     }
 
     @Override
     public boolean contains(final Object object) {
-        return this.gate.asValue().contains(object);
+        return this.gate.value().contains(object);
     }
 
     @Override
     public Iterator<X> iterator() {
-        return this.gate.asValue().iterator();
+        return this.gate.value().iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return this.gate.asValue().toArray();
+        return this.gate.value().toArray();
     }
 
     @Override
     @SuppressWarnings("PMD.UseVarargs")
     public <Y> Y[] toArray(final Y[] array) {
-        return this.gate.asValue().toArray(array);
+        return this.gate.value().toArray(array);
     }
 
     @Override
@@ -130,7 +129,7 @@ public final class StickyList<X> implements List<X> {
 
     @Override
     public boolean containsAll(final Collection<?> collection) {
-        return this.gate.asValue().containsAll(collection);
+        return this.gate.value().containsAll(collection);
     }
 
     @Override
@@ -171,7 +170,7 @@ public final class StickyList<X> implements List<X> {
 
     @Override
     public X get(final int index) {
-        return this.gate.asValue().get(index);
+        return this.gate.value().get(index);
     }
 
     @Override
@@ -197,26 +196,26 @@ public final class StickyList<X> implements List<X> {
 
     @Override
     public int indexOf(final Object object) {
-        return this.gate.asValue().indexOf(object);
+        return this.gate.value().indexOf(object);
     }
 
     @Override
     public int lastIndexOf(final Object object) {
-        return this.gate.asValue().lastIndexOf(object);
+        return this.gate.value().lastIndexOf(object);
     }
 
     @Override
     public ListIterator<X> listIterator() {
-        return this.gate.asValue().listIterator();
+        return this.gate.value().listIterator();
     }
 
     @Override
     public ListIterator<X> listIterator(final int index) {
-        return this.gate.asValue().listIterator(index);
+        return this.gate.value().listIterator(index);
     }
 
     @Override
     public List<X> subList(final int fromindex, final int toindex) {
-        return this.gate.asValue().subList(fromindex, toindex);
+        return this.gate.value().subList(fromindex, toindex);
     }
 }

@@ -45,8 +45,7 @@ public final class ArrayAsBytes implements Bytes {
      * Ctor.
      * @param bts Bytes to encapsulate
      */
-    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
-    public ArrayAsBytes(final byte[] bts) {
+    public ArrayAsBytes(final byte... bts) {
         this.bytes = bts;
     }
 

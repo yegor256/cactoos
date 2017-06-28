@@ -23,8 +23,13 @@
  */
 package org.cactoos.func;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import org.cactoos.Scalar;
+import org.cactoos.ScalarHasValue;
 import org.cactoos.list.ArrayAsIterable;
+import org.cactoos.list.MappedIterable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -36,6 +41,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class AndTest {
 
@@ -43,12 +49,10 @@ public final class AndTest {
     public void allTrue() throws Exception {
         MatcherAssert.assertThat(
             new And(
-                new ArrayAsIterable<Scalar<Boolean>>(
-                    new True(),
-                    new True(),
-                    new True()
-                )
-            ).asValue(),
+                new True(),
+                new True(),
+                new True()
+            ).value(),
             Matchers.equalTo(true)
         );
     }
@@ -57,12 +61,10 @@ public final class AndTest {
     public void oneFalse() throws Exception {
         MatcherAssert.assertThat(
             new And(
-                new ArrayAsIterable<Scalar<Boolean>>(
-                    new True(),
-                    new False(),
-                    new True()
-                )
-            ).asValue(),
+                new True(),
+                new False(),
+                new True()
+            ).value(),
             Matchers.equalTo(false)
         );
     }
@@ -76,7 +78,7 @@ public final class AndTest {
                     new False(),
                     new False()
                 )
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(false)
         );
     }
@@ -84,10 +86,53 @@ public final class AndTest {
     @Test
     public void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
-            new And(
-                new ArrayAsIterable<Scalar<Boolean>>()
-            ).asValue(),
+            new And(Collections.emptyList()).value(),
             Matchers.equalTo(true)
         );
     }
+
+    @Test
+    public void iteratesList() {
+        final List<String> list = new LinkedList<>();
+        MatcherAssert.assertThat(
+            "Can't iterate a list with a procedure",
+            new And(
+                new MappedIterable<String, Scalar<Boolean>>(
+                    new ArrayAsIterable<>("hello", "world"),
+                    new ProcAsFunc<>(list::add, () -> true)
+                )
+            ),
+            new ScalarHasValue<>(
+                Matchers.allOf(
+                    Matchers.equalTo(true),
+                    new FuncAsMatcher<>(
+                        value -> list.size() == 2
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void iteratesEmptyList() {
+        final List<String> list = new LinkedList<>();
+        MatcherAssert.assertThat(
+            "Can't iterate a list",
+            new And(
+                new MappedIterable<String, Scalar<Boolean>>(
+                    Collections.emptyList(),
+                    new ProcAsFunc<>(list::add, () -> true)
+                )
+            ),
+            new ScalarHasValue<>(
+                Matchers.allOf(
+                    Matchers.equalTo(true),
+                    new FuncAsMatcher<>(
+                        value -> list.isEmpty()
+                    )
+                )
+            )
+        );
+    }
+
 }

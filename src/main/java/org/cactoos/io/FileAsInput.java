@@ -28,6 +28,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import org.cactoos.Input;
+import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * File as Input.
@@ -43,19 +45,37 @@ public final class FileAsInput implements Input {
     /**
      * The file.
      */
-    private final File file;
+    private final UncheckedScalar<File> file;
 
     /**
      * Ctor.
      * @param src The file
      */
     public FileAsInput(final File src) {
+        this(() -> src);
+    }
+
+    /**
+     * Ctor.
+     * @param src The file
+     * @since 0.8
+     */
+    public FileAsInput(final Scalar<File> src) {
+        this(new UncheckedScalar<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The file
+     * @since 0.8
+     */
+    public FileAsInput(final UncheckedScalar<File> src) {
         this.file = src;
     }
 
     @Override
     public InputStream stream() throws FileNotFoundException {
-        return new FileInputStream(this.file);
+        return new FileInputStream(this.file.value());
     }
 
 }

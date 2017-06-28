@@ -48,7 +48,6 @@ public final class ArrayAsIterable<X> implements Iterable<X> {
      * @param items The array
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public ArrayAsIterable(final X... items) {
         this.array = items;
     }

@@ -42,7 +42,7 @@ public final class TextAsFloatTest {
     public strictfp void numberTest() throws IOException {
         MatcherAssert.assertThat(
             "Can't parse float number",
-            new TextAsFloat("1656.894").asValue(),
+            new TextAsFloat("1656.894").value(),
             // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(1656.894F)
         );
@@ -50,6 +50,6 @@ public final class TextAsFloatTest {
 
     @Test(expected = NumberFormatException.class)
     public void failsIfTextDoesNotRepresentAFloat() throws IOException {
-        new TextAsFloat("abc").asValue();
+        new TextAsFloat("abc").value();
     }
 }

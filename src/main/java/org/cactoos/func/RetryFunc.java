@@ -24,7 +24,6 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
-import org.cactoos.text.FormattedText;
 
 /**
  * Func that will try a few times before throwing an exception.
@@ -45,9 +44,9 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
     private final Func<X, Y> func;
 
     /**
-     * Maximum number of attempts to make.
+     * Exit condition.
      */
-    private final int max;
+    private final Func<Integer, Boolean> exit;
 
     /**
      * Ctor.
@@ -64,8 +63,17 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
      * @param attempts Maximum number of attempts
      */
     public RetryFunc(final Func<X, Y> fnc, final int attempts) {
+        this(fnc, attempt -> attempt >= attempts);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func original
+     * @param ext Exit condition, returns TRUE if there is no more reason to try
+     */
+    public RetryFunc(final Func<X, Y> fnc, final Func<Integer, Boolean> ext) {
         this.func = fnc;
-        this.max = attempts;
+        this.exit = ext;
     }
 
     @Override
@@ -73,12 +81,9 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
     public Y apply(final X input) throws Exception {
         int attempt = 0;
         Exception error = new IllegalArgumentException(
-            new FormattedText(
-                "Maximum number of attempts is too small: %d",
-                this.max
-            ).asString()
+            "An immediate exit, didn't have a chance to try at least once"
         );
-        while (attempt < this.max) {
+        while (!this.exit.apply(attempt)) {
             try {
                 return this.func.apply(input);
             } catch (final InterruptedException ex) {

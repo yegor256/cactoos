@@ -66,10 +66,7 @@ public final class ItemOfIterator<T> implements Scalar<T> {
         this(
             src,
             itr -> {
-                throw new IOException(
-                    new FormattedText("Iterator %s is empty", itr.iterator())
-                        .asString()
-                );
+                throw new IOException("Iterator is empty");
             }
         );
     }
@@ -110,8 +107,7 @@ public final class ItemOfIterator<T> implements Scalar<T> {
             itr -> {
                 throw new IOException(
                     new FormattedText(
-                        "Iterator %s hasn't element from position %d",
-                        itr.iterator(),
+                        "Iterator doesn't have an element at #%d position",
                         pos
                     ).asString()
                 );
@@ -137,11 +133,11 @@ public final class ItemOfIterator<T> implements Scalar<T> {
     }
 
     @Override
-    public T asValue() throws Exception {
+    public T value() throws Exception {
         if (this.pos < 0) {
             throw new IOException(
                 new FormattedText(
-                    "Position must be nonnegative! But position = %d",
+                    "The position must be non-negative: %d",
                     this.pos
                 ).asString()
             );

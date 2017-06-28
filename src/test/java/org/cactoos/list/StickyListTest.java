@@ -55,4 +55,13 @@ public final class StickyListTest {
         );
     }
 
+    @Test
+    public void decoratesArray() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't decorate an array of numbers",
+            new StickyList<>(-1, 0).size(),
+            Matchers.equalTo(2)
+        );
+    }
+
 }

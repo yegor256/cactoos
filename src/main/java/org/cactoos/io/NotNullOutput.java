@@ -54,7 +54,7 @@ public final class NotNullOutput implements Output {
     @Override
     public OutputStream stream() throws IOException {
         if (this.origin == null) {
-            throw new IOException("invalid output (null)");
+            throw new IOException("NULL instead of a valid output");
         }
         return this.origin.stream();
     }

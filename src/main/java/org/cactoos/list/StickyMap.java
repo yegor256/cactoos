@@ -53,7 +53,6 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      * @param list List of entries
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public StickyMap(final Map.Entry<X, Y>... list) {
         this(new ArrayAsIterable<>(list));
     }
@@ -84,27 +83,27 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
 
     @Override
     public int size() {
-        return this.gate.asValue().size();
+        return this.gate.value().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.gate.asValue().isEmpty();
+        return this.gate.value().isEmpty();
     }
 
     @Override
     public boolean containsKey(final Object key) {
-        return this.gate.asValue().containsKey(key);
+        return this.gate.value().containsKey(key);
     }
 
     @Override
     public boolean containsValue(final Object value) {
-        return this.gate.asValue().containsValue(value);
+        return this.gate.value().containsValue(value);
     }
 
     @Override
     public Y get(final Object key) {
-        return this.gate.asValue().get(key);
+        return this.gate.value().get(key);
     }
 
     @Override
@@ -137,17 +136,17 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
 
     @Override
     public Set<X> keySet() {
-        return this.gate.asValue().keySet();
+        return this.gate.value().keySet();
     }
 
     @Override
     public Collection<Y> values() {
-        return this.gate.asValue().values();
+        return this.gate.value().values();
     }
 
     @Override
     public Set<Map.Entry<X, Y>> entrySet() {
-        return this.gate.asValue().entrySet();
+        return this.gate.value().entrySet();
     }
 
 }

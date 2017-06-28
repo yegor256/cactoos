@@ -170,4 +170,10 @@ public final class FormattedText implements Text {
         }
         return out.toString();
     }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
+    }
+
 }

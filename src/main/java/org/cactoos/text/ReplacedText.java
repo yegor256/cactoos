@@ -67,5 +67,11 @@ public final class ReplacedText implements Text {
     public String asString() throws IOException {
         return this.origin.asString().replace(this.needle, this.replacement);
     }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
+    }
+
 }
 

@@ -54,4 +54,9 @@ public final class StringAsText implements Text {
         return this.source;
     }
 
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
+    }
+
 }

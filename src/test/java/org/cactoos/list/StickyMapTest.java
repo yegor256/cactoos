@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import java.security.SecureRandom;
-import java.util.AbstractMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
@@ -47,7 +46,7 @@ public final class StickyMapTest {
         final Map<Integer, Integer> map = new StickyMap<>(
             new IterableAsMap<>(
                 () -> new RepeatIterator<>(
-                    () -> new AbstractMap.SimpleEntry<>(
+                    () -> new MapEntry<>(
                         new SecureRandom().nextInt(),
                         1
                     ),
@@ -59,6 +58,18 @@ public final class StickyMapTest {
             "Can't ignore the changes in the underlying map",
             map.size(),
             Matchers.equalTo(map.size())
+        );
+    }
+
+    @Test
+    public void decoratesEntries() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't decorate a list of entries",
+            new StickyMap<String, String>(
+                new MapEntry<>("first", "Jeffrey"),
+                new MapEntry<>("last", "Lebowski")
+            ),
+            Matchers.hasValue(Matchers.endsWith("ski"))
         );
     }
 

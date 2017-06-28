@@ -23,13 +23,13 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Input;
 import org.cactoos.text.BytesAsText;
+import org.cactoos.text.UncheckedText;
 import org.w3c.dom.ls.LSInput;
 
 // @checkstyle AbbreviationAsWordInNameCheck (10 lines)
@@ -102,11 +102,7 @@ public final class InputAsLSInput implements LSInput {
 
     @Override
     public InputStream getByteStream() {
-        try {
-            return this.input.stream();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+        return new UncheckedInput(this.input).stream();
     }
 
     @Override
@@ -118,11 +114,9 @@ public final class InputAsLSInput implements LSInput {
 
     @Override
     public String getStringData() {
-        try {
-            return new BytesAsText(new InputAsBytes(this.input)).asString();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+        return new UncheckedText(
+            new BytesAsText(new InputAsBytes(this.input))
+        ).asString();
     }
 
     @Override

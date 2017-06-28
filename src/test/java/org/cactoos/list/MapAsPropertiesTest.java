@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import java.security.SecureRandom;
-import java.util.AbstractMap;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.ScalarHasValue;
@@ -51,8 +50,8 @@ public final class MapAsPropertiesTest {
             new MapAsProperties(
                 new StickyMap<>(
                     new IterableAsMap<Integer, String>(
-                        new AbstractMap.SimpleEntry<>(0, "hello, world"),
-                        new AbstractMap.SimpleEntry<>(1, "how are you?")
+                        new MapEntry<>(0, "hello, world"),
+                        new MapEntry<>(1, "how are you?")
                     )
                 )
             ),
@@ -70,7 +69,7 @@ public final class MapAsPropertiesTest {
         final MapAsProperties props = new MapAsProperties(
             new IterableAsMap<>(
                 () -> new RepeatIterator<>(
-                    () -> new AbstractMap.SimpleEntry<>(
+                    () -> new MapEntry<>(
                         new SecureRandom().nextInt(),
                         1
                     ),
@@ -80,8 +79,8 @@ public final class MapAsPropertiesTest {
         );
         MatcherAssert.assertThat(
             "Can't sense the changes in the underlying map",
-            props.asValue().size(),
-            Matchers.not(Matchers.equalTo(props.asValue().size()))
+            props.value().size(),
+            Matchers.not(Matchers.equalTo(props.value().size()))
         );
     }
 

@@ -48,7 +48,6 @@ public final class ConcatIterable<T> implements Iterable<T> {
      * @param items Items to concatenate
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public ConcatIterable(final Iterable<T>... items) {
         this(new IterableAsList<>(items));
     }

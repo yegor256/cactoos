@@ -54,7 +54,7 @@ public final class NotNullInput implements Input {
     @Override
     public InputStream stream() throws IOException {
         if (this.origin == null) {
-            throw new IOException("invalid input (null)");
+            throw new IOException("NULL instead of a valid input");
         }
         return this.origin.stream();
     }

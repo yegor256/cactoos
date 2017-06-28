@@ -61,7 +61,6 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
      * @param list List of entries
      */
     @SafeVarargs
-    @SuppressWarnings("varargs")
     public IterableAsMap(final Map.Entry<X, Y>... list) {
         this(new ArrayAsIterable<>(list));
     }
@@ -76,7 +75,7 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
 
     @Override
     public int size() {
-        return new LengthOfIterable(this.entries).asValue();
+        return new LengthOfIterable(this.entries).value();
     }
 
     @Override

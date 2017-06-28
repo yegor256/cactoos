@@ -21,60 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.io;
 
-import org.cactoos.Func;
-import org.cactoos.Proc;
+import java.io.InputStream;
+import org.cactoos.Input;
+import org.cactoos.func.UncheckedScalar;
 
 /**
- * Func as that is always true.
- *
- * <p>You may want to use this decorator when you need
- * a procedure that returns boolean instead of a function:</p>
- *
- * <pre> List&lt;String&gt; list = new LinkedList&lt;&gt;();
- * new AllOf(
- *   new IterableAsBooleans&lt;String&gt;(
- *     Collections.emptyList(),
- *     new AlwaysTrueFunc&lt;&gt;(list::add)
- *   )
- * ).asValue();
- * </pre>
+ * Input that doesn't throw checked {@link Exception}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @since 0.2
+ * @since 0.9
  */
-public final class AlwaysTrueFunc<X> implements Func<X, Boolean> {
+public final class UncheckedInput implements Input {
 
     /**
-     * Original func.
+     * Original input.
      */
-    private final Func<X, ?> func;
-
-    /**
-     * Ctor.
-     * @param proc Encapsulated proc
-     */
-    public AlwaysTrueFunc(final Proc<X> proc) {
-        this(new ProcAsFunc<>(proc));
-    }
+    private final Input input;
 
     /**
      * Ctor.
-     * @param fnc Encapsulated func
+     * @param ipt Input
      */
-    public AlwaysTrueFunc(final Func<X, ?> fnc) {
-        this.func = fnc;
+    public UncheckedInput(final Input ipt) {
+        this.input = ipt;
     }
 
     @Override
-    public Boolean apply(final X input) throws Exception {
-        this.func.apply(input);
-        return true;
+    public InputStream stream() {
+        return new UncheckedScalar<>(this.input::stream).value();
     }
 
 }

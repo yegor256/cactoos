@@ -23,6 +23,7 @@
  */
 package org.cactoos.func;
 
+import java.util.Collections;
 import org.cactoos.Scalar;
 import org.cactoos.list.ArrayAsIterable;
 import org.hamcrest.MatcherAssert;
@@ -43,14 +44,12 @@ public final class OrTest {
     public void allFalse() throws Exception {
         MatcherAssert.assertThat(
             new Or(
-                new ArrayAsIterable<Scalar<Boolean>>(
-                    new False(),
-                    new False(),
-                    new False(),
-                    new False(),
-                    new False()
-                )
-            ).asValue(),
+                new False(),
+                new False(),
+                new False(),
+                new False(),
+                new False()
+            ).value(),
             Matchers.equalTo(false)
         );
     }
@@ -59,14 +58,12 @@ public final class OrTest {
     public void oneTrue() throws Exception {
         MatcherAssert.assertThat(
             new Or(
-                new ArrayAsIterable<Scalar<Boolean>>(
-                    new False(),
-                    new True(),
-                    new False(),
-                    new False(),
-                    new False()
-                )
-            ).asValue(),
+                new False(),
+                new True(),
+                new False(),
+                new False(),
+                new False()
+            ).value(),
             Matchers.equalTo(true)
         );
     }
@@ -82,7 +79,7 @@ public final class OrTest {
                     new True(),
                     new True()
                 )
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(true)
         );
     }
@@ -90,9 +87,7 @@ public final class OrTest {
     @Test
     public void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
-            new Or(
-                new ArrayAsIterable<Scalar<Boolean>>()
-            ).asValue(),
+            new Or(Collections.emptyList()).value(),
             Matchers.equalTo(false)
         );
     }

@@ -23,70 +23,45 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.Scalar;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * Is {@code true} when all items in the collection are {@code true}.
- *
- * <p>You can use this class in order to iterate all items
- * in the collection. This is very similar to the {@code forEach()}
- * in steams, but more object oriented. For example, if you want
- * to print all items from the array:</p>
- *
- * <pre> new AllOf(
- *   new TransformedIterable&lt;String&gt;(
- *     new IterableAsList&lt;String&gt;("hello", "world"),
- *     new ProcAsFunc&lt;&gt;(i -&gt; System.out.println(i))
- *   )
- * ).asValue();</pre>
- *
- * <p>Or even more compact, through {@link IterableAsBooleans}:</p>
- *
- * <pre> new AllOf(
- *   new IterableAsBooleans&lt;String&gt;(
- *     new IterableAsList&lt;String&gt;("hello", "world"),
- *     i -&gt; System.out.println(i)
- *   )
- * ).asValue();</pre>
- *
- * <p>Or you can even use {@link IterableAsBoolean}:</p>
- *
- * <pre> new IterableAsBoolean&lt;String&gt;(
- *   new IterableAsList&lt;String&gt;("hello", "world"),
- *   i -&gt; System.out.println(i)
- * ).asValue();</pre>
+ * Reverse iterator.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @param <X> Type of item
+ * @see FilteredIterable
+ * @since 0.9
  */
-public final class AllOf implements Scalar<Boolean> {
+public final class ReverseIterable<X> implements Iterable<X> {
 
     /**
      * Iterable.
      */
-    private final Iterable<Boolean> iterable;
+    private final Iterable<X> iterable;
 
     /**
      * Ctor.
      * @param src Source iterable
      */
-    public AllOf(final Iterable<Boolean> src) {
+    public ReverseIterable(final Iterable<X> src) {
         this.iterable = src;
     }
 
     @Override
-    public Boolean asValue() {
-        boolean success = true;
-        for (final Boolean item : this.iterable) {
-            if (!item) {
-                success = false;
-                break;
-            }
+    public Iterator<X> iterator() {
+        final List<X> list = new LinkedList<>();
+        for (final X item : this.iterable) {
+            list.add(item);
         }
-        return success;
+        Collections.reverse(list);
+        return list.iterator();
     }
 
 }

@@ -23,7 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Properties;
 import org.cactoos.Scalar;
@@ -53,7 +52,7 @@ public final class MapAsProperties implements Scalar<Properties> {
             new IterableAsMap<>(
                 new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
                     new ArrayAsIterable<>(entries),
-                    input -> new AbstractMap.SimpleEntry<>(
+                    input -> new MapEntry<>(
                         input.getKey().toString(), input.getValue().toString()
                     )
                 )
@@ -70,7 +69,7 @@ public final class MapAsProperties implements Scalar<Properties> {
     }
 
     @Override
-    public Properties asValue() {
+    public Properties value() {
         final Properties props = new Properties();
         for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
             props.setProperty(
