@@ -41,12 +41,12 @@ public final class AsciiTextTest {
      * An unicode text with latin, non-latin, numbers and spaces.
      */
     private static final String TXT_UNICODE =
-        "°áéíóúñäëïöüج°¹ắβდفλж©Ǎẞª!|·$%&?¿*^Ç¨€";
+        "°áéíóúñäëïöüج°¹ắβდفλж©Ǎẞª!|·$%&?¿*^Ç¨€ƋᴅᴆД";
     /**
      * An ascii text representation from TEX_UNICODE.
      */
     private static final String TXT_ASCII =
-        "0aeiounaeeioeuej01abdflzh(c)ASSa!|·$%&?¿*^C¨€";
+        "0aeiounaeeioeuej01abdflzh(c)ASSa!|·$%&?¿*^C¨€DDDD";
 
     /**
      * It is almost unfeasible to test the full set. Thus, it is a sample.
