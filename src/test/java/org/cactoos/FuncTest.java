@@ -50,4 +50,16 @@ public final class FuncTest {
             }
         ).apply(null);
     }
+
+    @Test
+    public void okForNoNulls() throws Exception {
+        new Func.NoNulls<>(
+            new Func<Object, Object>() {
+                @Override
+                public Object apply(final Object input) throws Exception {
+                    return input;
+                }
+            }
+        ).apply(new Object());
+    }
 }

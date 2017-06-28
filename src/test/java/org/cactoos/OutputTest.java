@@ -24,6 +24,7 @@
 package org.cactoos;
 
 import java.io.IOException;
+import org.cactoos.io.DeadOutput;
 import org.junit.Test;
 
 /**
@@ -40,4 +41,8 @@ public final class OutputTest {
         new Output.NoNulls(null).stream();
     }
 
+    @Test
+    public void okForNoNullOutput() throws IOException {
+        new Output.NoNulls(new DeadOutput()).stream();
+    }
 }
