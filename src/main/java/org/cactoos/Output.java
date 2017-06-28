@@ -70,7 +70,7 @@ public interface Output {
      *
      * @author Fabricio Cabral (fabriciofx@gmail.com)
      * @version $Id$
-     * @since 0.9
+     * @since 0.10
      */
     final class NoNulls implements Output {
         /**
@@ -89,7 +89,11 @@ public interface Output {
             if (this.origin == null) {
                 throw new IOException("NULL instead of a valid output");
             }
-            return this.origin.stream();
+            final OutputStream stream = this.origin.stream();
+            if (stream == null) {
+                throw new IOException("NULL instead of a valid stream");
+            }
+            return stream;
         }
     }
 }

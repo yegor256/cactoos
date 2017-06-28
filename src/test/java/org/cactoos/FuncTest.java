@@ -23,13 +23,14 @@
  */
 package org.cactoos;
 
+import java.io.IOException;
 import org.junit.Test;
 
 /**
  * Test case for {@link Func.NoNulls}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FuncTest {
@@ -41,25 +42,17 @@ public final class FuncTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failForNullInput() throws Exception {
-        new Func.NoNulls<>(
-            new Func<Object, Object>() {
-                @Override
-                public Object apply(final Object input) throws Exception {
-                    return input;
-                }
-            }
-        ).apply(null);
+        new Func.NoNulls<>(input -> input).apply(null);
     }
 
     @Test
     public void okForNoNulls() throws Exception {
-        new Func.NoNulls<>(
-            new Func<Object, Object>() {
-                @Override
-                public Object apply(final Object input) throws Exception {
-                    return input;
-                }
-            }
-        ).apply(new Object());
+        new Func.NoNulls<>(input -> input).apply(new Object());
     }
+
+    @Test(expected = IOException.class)
+    public void failForNullResult() throws Exception {
+        new Func.NoNulls<>(input -> null).apply(new Object());
+    }
+
 }

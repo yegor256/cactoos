@@ -31,7 +31,7 @@ import org.junit.Test;
  * Test case for {@link Output.NoNulls}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class OutputTest {
@@ -39,6 +39,11 @@ public final class OutputTest {
     @Test(expected = IOException.class)
     public void failForNullOutput() throws IOException {
         new Output.NoNulls(null).stream();
+    }
+
+    @Test(expected = IOException.class)
+    public void failForNullStream() throws IOException {
+        new Output.NoNulls(() -> null).stream();
     }
 
     @Test

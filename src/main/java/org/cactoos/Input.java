@@ -66,7 +66,7 @@ public interface Input {
      *
      * @author Fabricio Cabral (fabriciofx@gmail.com)
      * @version $Id$
-     * @since 0.9
+     * @since 0.10
      */
     final class NoNulls implements Input {
         /**
@@ -85,7 +85,11 @@ public interface Input {
             if (this.origin == null) {
                 throw new IOException("NULL instead of a valid input");
             }
-            return this.origin.stream();
+            final InputStream stream = this.origin.stream();
+            if (stream == null) {
+                throw new IOException("NULL instead of a valid stream");
+            }
+            return stream;
         }
     }
 }

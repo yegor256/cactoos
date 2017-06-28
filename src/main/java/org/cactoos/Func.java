@@ -23,6 +23,8 @@
  */
 package org.cactoos;
 
+import java.io.IOException;
+
 /**
  * Function.
  *
@@ -63,7 +65,7 @@ public interface Func<X, Y> {
      * @version $Id$
      * @param <X> Type of input
      * @param <Y> Type of output
-     * @since 0.9
+     * @since 0.10
      */
     final class NoNulls<X, Y> implements Func<X, Y> {
         /**
@@ -89,7 +91,11 @@ public interface Func<X, Y> {
                     "NULL instead of a valid input"
                 );
             }
-            return this.func.apply(input);
+            final Y result = this.func.apply(input);
+            if (result == null) {
+                throw new IOException("NULL instead of a valid result");
+            }
+            return result;
         }
     }
 }
