@@ -40,6 +40,7 @@ import org.junit.Test;
 public final class ResultTest {
 
     @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void value() throws Exception {
         MatcherAssert.assertThat(
             new Result<>(

@@ -61,4 +61,45 @@ public final class TernaryTest {
             Matchers.equalTo(16)
         );
     }
+
+    @Test
+    public void withFuncInCtor() throws Exception {
+        MatcherAssert.assertThat(
+            new Ternary<>(
+                String::isEmpty,
+                input -> input.concat("1"),
+                input -> input.concat("2"),
+                "word"
+            ).value(),
+            Matchers.equalTo("word2")
+        );
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void withScalarAndFuncInCtor() throws Exception {
+        MatcherAssert.assertThat(
+            new Ternary<>(
+                new True(),
+                input -> input.concat("1"),
+                input -> input.concat("2"),
+                "input"
+            ).value(),
+            Matchers.equalTo("input1")
+        );
+    }
+
+    @Test
+    public void withSeveralArgFuncCtor() throws Exception {
+        MatcherAssert.assertThat(
+            new Ternary<>(
+                new True(),
+                input -> input.concat("!"),
+                "Hello",
+                input -> input.concat("!"),
+                "Guten Tag"
+            ).value(),
+            Matchers.equalTo("Hello!")
+        );
+    }
 }
