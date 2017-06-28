@@ -54,6 +54,14 @@ public final class InputWithFallback implements Input {
     /**
      * Ctor.
      * @param input Main input
+     */
+    public InputWithFallback(final Input input) {
+        this(input, new DeadInput());
+    }
+
+    /**
+     * Ctor.
+     * @param input Main input
      * @param alt Alternative
      */
     public InputWithFallback(final Input input, final Input alt) {
