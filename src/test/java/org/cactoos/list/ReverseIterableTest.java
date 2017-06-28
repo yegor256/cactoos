@@ -23,8 +23,9 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.TextHasString;
+import org.cactoos.text.JoinedText;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -40,7 +41,7 @@ public final class ReverseIterableTest {
     public void reversesIterable() {
         MatcherAssert.assertThat(
             "Can't reverse an iterable",
-            String.join(
+            new JoinedText(
                 " ",
                 new ReverseIterable<>(
                     new ArrayAsIterable<>(
@@ -48,7 +49,7 @@ public final class ReverseIterableTest {
                     )
                 )
             ),
-            Matchers.equalTo("dude world hello")
+            new TextHasString("dude world hello")
         );
     }
 
