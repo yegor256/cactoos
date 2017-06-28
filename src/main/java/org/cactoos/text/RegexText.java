@@ -24,51 +24,41 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import org.cactoos.Text;
 
 /**
- * Transliterate an UTF-8 value to ASCII.
- *
- * <p>There is no thread-safety guarantee.
+ * Returns a valid regex expresion.
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.9
  */
-public final class AsciiText implements Text {
+public final class RegexText implements Text {
+
     /**
-     * Source text.
+     * The text.
      */
     private final Text origin;
 
     /**
      * Ctor.
-     *
-     * @param string Source.
+     * @param text The pattern-regex-expresion.
      */
-    public AsciiText(final String string) {
-        this(new StringAsText(string));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param text Origin.
-     */
-    public AsciiText(final Text text) {
-        this.origin =
-            new AsciiNonLatin(
-                new AsciiLatin(
-                    new AsciiNumber(
-                        new AsciiSpace(text)
-                    )
-                )
-            );
+    public RegexText(final Text text) {
+        this.origin = text;
     }
 
     @Override
     public String asString() throws IOException {
-        return this.origin.asString();
+        final String string = this.origin.asString();
+        try {
+            Pattern.compile(string);
+        } catch (final PatternSyntaxException ex) {
+            throw new IOException(ex);
+        }
+        return string;
     }
 
     @Override
@@ -76,3 +66,4 @@ public final class AsciiText implements Text {
         return new UncheckedText(this).compareTo(text);
     }
 }
+

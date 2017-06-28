@@ -35,44 +35,37 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.9
  */
-public final class AsciiText implements Text {
+public final class TrimmedNonAscii implements Text {
     /**
      * Source text.
      */
-    private final Text origin;
+    private final Text text;
 
     /**
      * Ctor.
      *
      * @param string Source.
      */
-    public AsciiText(final String string) {
+    public TrimmedNonAscii(final String string) {
         this(new StringAsText(string));
     }
 
     /**
      * Ctor.
      *
-     * @param text Origin.
+     * @param itext Origin.
      */
-    public AsciiText(final Text text) {
-        this.origin =
-            new AsciiNonLatin(
-                new AsciiLatin(
-                    new AsciiNumber(
-                        new AsciiSpace(text)
-                    )
-                )
-            );
+    public TrimmedNonAscii(final Text itext) {
+        this.text = itext;
     }
 
     @Override
     public String asString() throws IOException {
-        return this.origin.asString();
+        return this.text.asString().replaceAll("/(?u)[^\\x20-\\x7e]/", "");
     }
 
     @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
+    public int compareTo(final Text itext) {
+        return new UncheckedText(this).compareTo(itext);
     }
 }

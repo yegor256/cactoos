@@ -36,22 +36,115 @@ import org.junit.Test;
  * @since 0.9
  */
 public final class AsciiTextTest {
+    /**
+     * An unicode text with latin, non-latin, numbers and spaces.
+     */
+    private static final String TXT_UNICODE =
+        "°áéíóúñäëïöüج°¹ắβდفλж©Ǎẞª!|·$%&?¿*^Ç¨€";
+    /**
+     * An ascii text representation from TEX_UNICODE.
+     */
+    private static final String TXT_ASCII =
+        "0aeiounaeeioeuej01abdflzh(c)ASSa!|·$%&?¿*^C¨€";
 
+    /**
+     * It is almost unfeasible to test the full set. Thus, it is a sample.
+     * @throws IOException If fails
+     */
     @Test
     public void asciiMappingTest() throws IOException {
         MatcherAssert.assertThat(
             "Can't transliterate an UTF-8 value to ASCII.",
-            new AsciiText("áéíóúñäëïöüج°¹ắβდفλж©Ǎẞª!|·$%&?¿*^Ç¨€").asString(),
-            Matchers.equalTo("aeiounaeeioeuej01abdflzh(c)ASSa!|·$%&?¿*^C¨€")
+            new AsciiText(AsciiTextTest.TXT_UNICODE).asString(),
+            Matchers.equalTo(AsciiTextTest.TXT_ASCII)
         );
     }
 
+    /**
+     * It tests valid ascii symbols.
+     * @throws IOException If fails
+     */
     @Test
     public void validAsciiRangeTest() throws IOException {
+        final String ascii = "!|·$%&?¿*^¨€";
         MatcherAssert.assertThat(
-            "Can't transliterate an UTF-8 value to ASCII.",
-            new AsciiText("!|·$%&?¿*^¨€").asString(),
-            Matchers.equalTo("!|·$%&?¿*^¨€")
+            "Valid ascii characters.",
+            new AsciiText(ascii).asString(),
+            Matchers.equalTo(ascii)
+        );
+    }
+
+    /**
+     * It tests the semantics of the compareTo.
+     * @throws IOException If fails
+     */
+    @Test
+    public void compareToTest() throws IOException {
+        MatcherAssert.assertThat(
+            "This text in unicode and ascii must be equal.",
+            new AsciiText(AsciiTextTest.TXT_UNICODE)
+            .compareTo(
+                new StringAsText(AsciiTextTest.TXT_ASCII)
+            ),
+            Matchers.equalTo(0)
+        );
+    }
+
+    /**
+     * It translitarete unicode numbers to ascii.
+     * @throws IOException If fails
+     */
+    @Test
+    public void ascciNumberTest() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't transliterate unicode numbers to Ascii.",
+            new AsciiNumber("°₀۰").asString(),
+            Matchers.equalTo("000")
+        );
+    }
+
+    /**
+     * It translitarete unicode numbers to ascii.
+     * @throws IOException If fails
+     */
+    @Test
+    public void asciiSpaceTest() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't transliterate unicode spaces to Ascii.",
+            new AsciiSpace(
+                "\\xC2\\xA0\\xE2\\x80\\x80\\xE2\\x80\\x81"
+            ).asString(),
+            Matchers.equalTo("   ")
+        );
+    }
+
+    /**
+     * It translitarete unicode numbers to ascii.
+     * @throws IOException If fails
+     */
+    @Test
+    public void asciiLatinTest() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't transliterate unicode latin alphabet to Ascii.",
+            new AsciiLatin(
+                "àáảãạăắằẳẵặâấầẩẫậāąåαάἀἁἂἃἄἅἆἇᾀᾁᾂᾃᾄᾅᾆᾇὰάᾰᾱᾲᾳᾴᾶᾷаأအာါǻǎªაअا"
+            ).asString(),
+            Matchers.equalTo(
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            )
+        );
+    }
+
+    /**
+     * It translitarete unicode numbers to ascii.
+     * @throws IOException If fails
+     */
+    @Test
+    public void asciiNonLatinTest() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't transliterate unicode non-latin alphabet to Ascii.",
+            new AsciiNonLatin("عчჩჭچ").asString(),
+            Matchers.equalTo("aachchchch")
         );
     }
 }

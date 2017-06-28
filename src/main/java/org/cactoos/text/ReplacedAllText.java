@@ -27,43 +27,47 @@ import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * Transliterate an UTF-8 value to ASCII.
- *
- * <p>There is no thread-safety guarantee.
+ * Replace all elements in a text with the replacement.
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.9
  */
-public final class AsciiText implements Text {
+public final class ReplacedAllText implements Text {
+
     /**
-     * Source text.
+     * The text.
      */
     private final Text origin;
 
     /**
      * Ctor.
-     *
-     * @param string Source.
+     * @param text The text
+     * @param needles The array of needles.
+     * @param replace The replace one
      */
-    public AsciiText(final String string) {
-        this(new StringAsText(string));
+    public ReplacedAllText(final Text text, final String[] needles, final String
+        replace) {
+        this(new ReplacedArrayText(text, needles, replace));
     }
 
     /**
      * Ctor.
-     *
-     * @param text Origin.
+     * @param text The text
+     * @param pattern The array of needles.
+     * @param replace The replace one
      */
-    public AsciiText(final Text text) {
-        this.origin =
-            new AsciiNonLatin(
-                new AsciiLatin(
-                    new AsciiNumber(
-                        new AsciiSpace(text)
-                    )
-                )
-            );
+    public ReplacedAllText(final Text text, final Text pattern, final String
+        replace) {
+        this(new ReplacedRegexText(text, pattern, replace));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public ReplacedAllText(final Text text) {
+        this.origin = text;
     }
 
     @Override
@@ -76,3 +80,4 @@ public final class AsciiText implements Text {
         return new UncheckedText(this).compareTo(text);
     }
 }
+

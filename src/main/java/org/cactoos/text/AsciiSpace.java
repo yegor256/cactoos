@@ -24,6 +24,8 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import org.cactoos.Text;
 
 /**
@@ -35,7 +37,7 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.9
  */
-public final class AsciiText implements Text {
+public final class AsciiSpace implements Text {
     /**
      * Source text.
      */
@@ -46,7 +48,7 @@ public final class AsciiText implements Text {
      *
      * @param string Source.
      */
-    public AsciiText(final String string) {
+    public AsciiSpace(final String string) {
         this(new StringAsText(string));
     }
 
@@ -55,15 +57,24 @@ public final class AsciiText implements Text {
      *
      * @param text Origin.
      */
-    public AsciiText(final Text text) {
-        this.origin =
-            new AsciiNonLatin(
-                new AsciiLatin(
-                    new AsciiNumber(
-                        new AsciiSpace(text)
-                    )
-                )
-            );
+    public AsciiSpace(final Text text) {
+        this.origin = new Ascii(
+            text,
+            input -> {
+                final Map<String, String[]> map = new HashMap<>(0);
+                map.put(
+                    " ",
+                    new String[]{
+                        "\\xC2\\xA0", "\\xE2\\x80\\x80", "\\xE2\\x80\\x81",
+                        "\\xE2\\x80\\x82", "\\xE2\\x80\\x83", "\\xE2\\x80\\x84",
+                        "\\xE2\\x80\\x85", "\\xE2\\x80\\x86", "\\xE2\\x80\\x87",
+                        "\\xE2\\x80\\x88", "\\xE2\\x80\\x89", "\\xE2\\x80\\x8A",
+                        "\\xE2\\x80\\xAF", "\\xE2\\x81\\x9F", "\\xE3\\x80\\x80",
+                    }
+                );
+                return map;
+            }
+        );
     }
 
     @Override
