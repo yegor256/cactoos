@@ -31,7 +31,7 @@ import org.junit.Test;
  * Test case for {@link SplitText}.
  * @author Alexey Semenyuk (semenyukalexey@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class SplitTextTest {
@@ -47,6 +47,15 @@ public final class SplitTextTest {
                 "Hello",
                 "world!"
             )
+        );
+    }
+
+    @Test
+    public void splitEmptyText() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't split an empty text",
+            new SplitText("", "\n"),
+            Matchers.emptyIterable()
         );
     }
 
