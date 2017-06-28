@@ -57,7 +57,7 @@ public final class ChainedFuncTest {
                     ),
                     input -> input.endsWith("12")
                 )
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(3)
         );
     }
@@ -80,7 +80,7 @@ public final class ChainedFuncTest {
                     ),
                     input -> !input.startsWith("st")
                 )
-            ).asValue(),
+            ).value(),
             Matchers.equalTo(2)
         );
     }
