@@ -35,7 +35,7 @@ import org.cactoos.Proc;
  * <p>If you want your piece of code to be executed in the background,
  * use {@link AsyncFunc} as following:</p>
  *
- * <pre> new AsyncFunc(
+ * <pre> int length = new AsyncFunc(
  *   input -&gt; input.length()
  * ).apply("Hello, world!").get();</pre>
  *
