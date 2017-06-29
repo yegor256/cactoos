@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import java.io.IOException;
 import java.util.Iterator;
 import org.cactoos.Scalar;
 
@@ -63,6 +64,9 @@ public final class Min<T extends Comparable<T>> implements Scalar<T> {
     @Override
     public T value() throws Exception {
         final Iterator<Scalar<T>> iter = this.items.iterator();
+        if (!iter.hasNext()) {
+            throw new IOException("Iterable is empty");
+        }
         T min = iter.next().value();
         while (iter.hasNext()) {
             final T next = iter.next().value();

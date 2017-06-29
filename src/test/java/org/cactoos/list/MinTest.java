@@ -23,6 +23,8 @@
  */
 package org.cactoos.list;
 
+import java.io.IOException;
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -36,6 +38,11 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class MinTest {
+
+    @Test(expected = IOException.class)
+    public void minAmongEmptyTest() throws Exception {
+        new Min<>(() -> Collections.emptyIterator()).value();
+    }
 
     @Test
     public void minAmongOneTest() throws Exception {

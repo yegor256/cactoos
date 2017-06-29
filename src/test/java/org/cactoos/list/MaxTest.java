@@ -23,6 +23,8 @@
  */
 package org.cactoos.list;
 
+import java.io.IOException;
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -36,6 +38,11 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class MaxTest {
+
+    @Test(expected = IOException.class)
+    public void maxAmongEmptyTest() throws Exception {
+        new Max<>(() -> Collections.emptyIterator()).value();
+    }
 
     @Test
     public void maxAmongOneTest() throws Exception {
