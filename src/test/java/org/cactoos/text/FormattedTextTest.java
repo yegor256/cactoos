@@ -23,8 +23,13 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.IllegalFormatConversionException;
 import java.util.Locale;
+import java.util.UnknownFormatConversionException;
 import org.cactoos.TextHasString;
+import org.cactoos.list.IterableAsList;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -39,6 +44,7 @@ import org.junit.Test;
 public final class FormattedTextTest {
 
     @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void formatsText() {
         MatcherAssert.assertThat(
             "Can't format a text",
@@ -50,6 +56,59 @@ public final class FormattedTextTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void formatsTextWithObjects() {
+        MatcherAssert.assertThat(
+            "Can't format a text",
+            new FormattedText(
+                new StringAsText("%d. Formatted %s"),
+                new Integer(1),
+                new String("text")
+            ),
+            new TextHasString("1. Formatted text")
+        );
+    }
+
+    @Test(expected = UnknownFormatConversionException.class)
+    @SuppressWarnings("PMD.EmptyCatchBlock")
+    public void failsForInvalidPattern() {
+        try {
+            new FormattedText(
+                new StringAsText("%%. Formatted %$"),
+                new IterableAsList<>(1, "text")
+            ).asString();
+        } catch (final IOException ex) {
+        }
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void formatsTextWithCollection() {
+        MatcherAssert.assertThat(
+            "Can't format a text with a collection",
+            new FormattedText(
+                new StringAsText("%d. Formatted %s"),
+                new IterableAsList<>(1, "text")
+            ),
+            new TextHasString("1. Formatted text")
+        );
+    }
+
+    @Test(expected = IllegalFormatConversionException.class)
+    @SuppressWarnings("PMD.EmptyCatchBlock")
+    public void ensuresThatFormatterFails() {
+        try {
+            new FormattedText(
+                new StringAsText("Local time: %d"),
+                Locale.ROOT,
+                Calendar.getInstance()
+            ).asString();
+        } catch (final IOException ex) {
+        }
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void formatsWithLocale() {
         MatcherAssert.assertThat(
             "Can't format a text with Locale",

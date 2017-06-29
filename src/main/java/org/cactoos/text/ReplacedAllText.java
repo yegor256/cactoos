@@ -31,7 +31,7 @@ import org.cactoos.Text;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.10
  */
 public final class ReplacedAllText implements Text {
 
@@ -64,7 +64,7 @@ public final class ReplacedAllText implements Text {
 
     /**
      * Ctor.
-     * @param text The text
+     * @param text The method for replacing texts.
      */
     public ReplacedAllText(final Text text) {
         this.origin = text;

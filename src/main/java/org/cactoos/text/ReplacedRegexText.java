@@ -31,7 +31,7 @@ import org.cactoos.Text;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.10
  */
 public final class ReplacedRegexText implements Text {
 

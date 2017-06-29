@@ -33,7 +33,7 @@ import org.cactoos.Text;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.10
  */
 public final class RegexText implements Text {
 
@@ -44,7 +44,16 @@ public final class RegexText implements Text {
 
     /**
      * Ctor.
-     * @param text The pattern-regex-expresion.
+     *
+     * @param string The regex string.
+     */
+    public RegexText(final String string) {
+        this(new StringAsText(string));
+    }
+
+    /**
+     * Ctor.
+     * @param text The regex text.
      */
     public RegexText(final Text text) {
         this.origin = text;
