@@ -27,6 +27,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
  * Func that runs in the background.
@@ -60,7 +61,15 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
 
     /**
      * Ctor.
-     * @param fnc The proc
+     * @param proc The proc
+     */
+    public AsyncFunc(final Proc<X> proc) {
+        this(new ProcAsFunc<>(proc));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
      */
     public AsyncFunc(final Func<X, Y> fnc) {
         this(fnc, Executors.defaultThreadFactory());
@@ -68,7 +77,16 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
 
     /**
      * Ctor.
-     * @param fnc The proc
+     * @param proc The proc
+     * @param fct Factory
+     */
+    public AsyncFunc(final Proc<X> proc, final ThreadFactory fct) {
+        this(new ProcAsFunc<>(proc), fct);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
      * @param fct Factory
      */
     public AsyncFunc(final Func<X, Y> fnc, final ThreadFactory fct) {
