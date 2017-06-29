@@ -95,7 +95,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
     }
 
     @Override
-    public Future<Y> apply(final X input) throws Exception {
+    public Future<Y> apply(final X input) {
         return Executors.newSingleThreadExecutor(this.factory).submit(
             () -> this.func.apply(input)
         );
