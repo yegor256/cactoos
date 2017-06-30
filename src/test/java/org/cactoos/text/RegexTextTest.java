@@ -24,69 +24,35 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.Text;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Replacing all elements in a text with the replacement.
+ * Test case for {@link RegexText}.
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReplacedAllText implements Text {
+public final class RegexTextTest {
 
-    /**
-     * The text to be replaced.
-     */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     *
-     * @param text The text
-     * @param needles An array of needles
-     * @param replace The replace one
-     */
-    public ReplacedAllText(
-        final Text text,
-        final String[] needles,
-        final String replace
-    ) {
-        this(new ReplacedArrayText(text, needles, replace));
+    @Test(expected = IOException.class)
+    public void failsForInvalidRegexText() throws IOException {
+        new RegexText("***").asString();
     }
 
-    /**
-     * Ctor.
-     *
-     * @param text The text
-     * @param pattern The regular expressión
-     * @param replace The replace one
-     */
-    public ReplacedAllText(
-        final Text text,
-        final Text pattern,
-        final String replace
-    ) {
-        this(new ReplacedRegexText(text, pattern, replace));
+    @Test
+    public void failsToCompare() throws IOException {
+        MatcherAssert.assertThat(
+            "Text is equal.",
+            new RegexText("\\s+")
+            .compareTo(
+                new StringAsText("\\s++")
+            ),
+            Matchers.equalTo(-1)
+        );
     }
 
-    /**
-     * Ctor.
-     *
-     * @param text The strategy for replacing texts.
-     */
-    public ReplacedAllText(final Text text) {
-        this.origin = text;
-    }
-
-    @Override
-    public String asString() throws IOException {
-        return this.origin.asString();
-    }
-
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
 }
-

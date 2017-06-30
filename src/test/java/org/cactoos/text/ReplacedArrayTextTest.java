@@ -24,69 +24,48 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.Text;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Replacing all elements in a text with the replacement.
+ * Test case for {@link ReplacedArrayText}.
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReplacedAllText implements Text {
+public final class ReplacedArrayTextTest {
 
-    /**
-     * The text to be replaced.
-     */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     *
-     * @param text The text
-     * @param needles An array of needles
-     * @param replace The replace one
-     */
-    public ReplacedAllText(
-        final Text text,
-        final String[] needles,
-        final String replace
-    ) {
-        this(new ReplacedArrayText(text, needles, replace));
+    @Test
+    public void replacesAllOccurrencesWithReplacedArrayText() {
+        MatcherAssert.assertThat(
+            "Can't replace a text.",
+            new ReplacedArrayText(
+                new StringAsText("one cat, two cats, three cats"),
+                new String[]{"cat"},
+                "bird"
+            ),
+            new TextHasString("one bird, two birds, three birds")
+        );
     }
 
-    /**
-     * Ctor.
-     *
-     * @param text The text
-     * @param pattern The regular expressión
-     * @param replace The replace one
-     */
-    public ReplacedAllText(
-        final Text text,
-        final Text pattern,
-        final String replace
-    ) {
-        this(new ReplacedRegexText(text, pattern, replace));
+    @Test
+    public void checksCompareToForReplacedArrayText() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't compare replaced text with expected.",
+            new ReplacedArrayText(
+                new StringAsText("When the child was a child"),
+                new String[]{"child"},
+                "boy"
+            )
+            .compareTo(
+                new StringAsText("When the boy was a boy")
+            ),
+            Matchers.equalTo(0)
+        );
     }
 
-    /**
-     * Ctor.
-     *
-     * @param text The strategy for replacing texts.
-     */
-    public ReplacedAllText(final Text text) {
-        this.origin = text;
-    }
-
-    @Override
-    public String asString() throws IOException {
-        return this.origin.asString();
-    }
-
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
 }
-
