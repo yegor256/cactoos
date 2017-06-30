@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * Transliterate an UTF-8 value to ASCII.
+ * Removing non-ascii characters.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -53,10 +53,10 @@ public final class TrimmedNonAscii implements Text {
     /**
      * Ctor.
      *
-     * @param itext Origin.
+     * @param txt Origin.
      */
-    public TrimmedNonAscii(final Text itext) {
-        this.text = itext;
+    public TrimmedNonAscii(final Text txt) {
+        this.text = txt;
     }
 
     @Override
@@ -65,7 +65,7 @@ public final class TrimmedNonAscii implements Text {
     }
 
     @Override
-    public int compareTo(final Text itext) {
-        return new UncheckedText(this).compareTo(itext);
+    public int compareTo(final Text txt) {
+        return new UncheckedText(this).compareTo(txt);
     }
 }
