@@ -66,15 +66,28 @@ public final class ReplacedAllTextTest {
     }
 
     @Test
-    public void replacesTextWithRegex() {
+    public void replacesTextWithSubstring() {
         MatcherAssert.assertThat(
-            "Can't replace a text with regex.",
+            "Can't replace an substring with regex.",
             new ReplacedAllText(
                 new StringAsText("Hello with regex!"),
                 new RegexText("ello with"),
                 "i"
             ),
             new TextHasString("Hi regex!")
+        );
+    }
+
+    @Test
+    public void replacesTextWithRegex() {
+        MatcherAssert.assertThat(
+            "Can't replace a text with regex.",
+            new ReplacedAllText(
+                new StringAsText("this is_an slug"),
+                new RegexText("_| "),
+                "-"
+            ),
+            new TextHasString("this-is-an-slug")
         );
     }
 
