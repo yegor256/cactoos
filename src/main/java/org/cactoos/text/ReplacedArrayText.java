@@ -28,7 +28,7 @@ import java.util.Arrays;
 import org.cactoos.Text;
 
 /**
- * Replace all needles in the text.
+ * Replacing all needles in the text.
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
@@ -37,12 +37,12 @@ import org.cactoos.Text;
 public final class ReplacedArrayText implements Text {
 
     /**
-     * The text.
+     * The text to be replaced.
      */
     private final Text origin;
 
     /**
-     * The regex pattern as text.
+     * An array of items to be replaced.
      */
     private final String[] needles;
 
@@ -57,8 +57,11 @@ public final class ReplacedArrayText implements Text {
      * @param items The array of needles
      * @param replace The replace one
      */
-    public ReplacedArrayText(final Text text, final String[] items, final String
-        replace) {
+    public ReplacedArrayText(
+        final Text text,
+        final String[] items,
+        final String replace
+    ) {
         this.origin = text;
         this.needles = Arrays.copyOf(items, items.length);
         this.replacement = replace;

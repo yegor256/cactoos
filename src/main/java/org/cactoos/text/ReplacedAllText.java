@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * Replace all elements in a text with the replacement.
+ * Replacing all elements in a text with the replacement.
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
@@ -36,35 +36,44 @@ import org.cactoos.Text;
 public final class ReplacedAllText implements Text {
 
     /**
-     * The text.
+     * The text to be replaced.
      */
     private final Text origin;
 
     /**
      * Ctor.
+     *
      * @param text The text
-     * @param needles The array of needles.
+     * @param needles An array of needles
      * @param replace The replace one
      */
-    public ReplacedAllText(final Text text, final String[] needles, final String
-        replace) {
+    public ReplacedAllText(
+        final Text text,
+        final String[] needles,
+        final String replace
+    ) {
         this(new ReplacedArrayText(text, needles, replace));
     }
 
     /**
      * Ctor.
+     *
      * @param text The text
-     * @param pattern The array of needles.
+     * @param pattern The regular expressión
      * @param replace The replace one
      */
-    public ReplacedAllText(final Text text, final Text pattern, final String
-        replace) {
+    public ReplacedAllText(
+        final Text text,
+        final Text pattern,
+        final String replace
+    ) {
         this(new ReplacedRegexText(text, pattern, replace));
     }
 
     /**
      * Ctor.
-     * @param text The method for replacing texts.
+     *
+     * @param text The strategy for replacing texts.
      */
     public ReplacedAllText(final Text text) {
         this.origin = text;
