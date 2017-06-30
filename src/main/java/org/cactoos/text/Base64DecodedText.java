@@ -21,62 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
-import java.util.Map;
-import java.util.Properties;
-import org.cactoos.Scalar;
+import java.io.IOException;
+import java.util.Base64;
+import org.cactoos.Text;
 
 /**
- * Map as {@link java.util.Properties}.
+ * Base64 Decode the Text.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.9
  */
-public final class MapAsProperties implements Scalar<Properties> {
+public final class Base64DecodedText implements Text {
 
     /**
-     * The map.
+     * The text.
      */
-    private final Map<?, ?> map;
+    private final Text origin;
 
     /**
      * Ctor.
-     * @param entries The map with properties
+     *
+     * @param text The text
      */
-    public MapAsProperties(final Map.Entry<?, ?>... entries) {
-        this(
-            new IterableAsMap<>(
-                new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new ArrayAsIterable<>(entries),
-                    input -> new MapEntry<>(
-                        input.getKey().toString(), input.getValue().toString()
-                    )
-                )
-            )
-        );
+    public Base64DecodedText(final Text text) {
+        this.origin = text;
     }
 
     /**
      * Ctor.
-     * @param src The map with properties
+     *
+     * @param text The text
      */
-    public MapAsProperties(final Map<?, ?> src) {
-        this.map = src;
+    public Base64DecodedText(final String text) {
+        this(new StringAsText(text));
     }
 
     @Override
-    public Properties value() {
-        final Properties props = new Properties();
-        for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
-            props.setProperty(
-                entry.getKey().toString(),
-                entry.getValue().toString()
-            );
-        }
-        return props;
+    public String asString() throws IOException {
+        return new BytesAsText(
+            Base64.getDecoder().decode(
+                this.origin.asString()
+            )
+        ).asString();
+    }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
     }
 }

@@ -21,56 +21,68 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.security.SecureRandom;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyMap}.
+ * Test case for {@link Equals}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyMapTest {
+public final class EqualsTest {
 
     @Test
-    public void ignoresChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new StickyMap<>(
-            new IterableAsMap<>(
-                () -> new RepeatIterator<>(
-                    () -> new MapEntry<>(
-                        new SecureRandom().nextInt(),
-                        1
-                    ),
-                    size.incrementAndGet()
-                )
-            )
-        );
+    public void compareEquals() throws Exception {
         MatcherAssert.assertThat(
-            "Can't ignore the changes in the underlying map",
-            map.size(),
-            Matchers.equalTo(map.size())
+            "Can't compare if two integers are equals",
+            new Equals<>(
+                () -> new Integer(1),
+                () -> new Integer(1)
+            ).value(),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    public void decoratesEntries() throws Exception {
+    public void compareNotEquals() throws Exception {
         MatcherAssert.assertThat(
-            "Can't decorate a list of entries",
-            new StickyMap<String, String>(
-                new MapEntry<>("first", "Jeffrey"),
-                new MapEntry<>("last", "Lebowski")
-            ),
-            Matchers.hasValue(Matchers.endsWith("ski"))
+            "Can't compare if two integers are not equals",
+            new Equals<>(
+                () -> new Integer(1),
+                () -> new Integer(2)
+            ).value(),
+            Matchers.equalTo(false)
         );
     }
 
+    @Test
+    public void compareEqualsText() throws Exception {
+        final String str = "hello";
+        MatcherAssert.assertThat(
+            "Can't compare if two strings are equals",
+            new Equals<>(
+                () -> str,
+                () -> str
+            ).value(),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void compareNotEqualsText() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare if two strings are not equals",
+            new Equals<>(
+                () -> "world",
+                () -> "worle"
+            ).value(),
+            Matchers.equalTo(false)
+        );
+    }
 }

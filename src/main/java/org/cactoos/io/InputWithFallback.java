@@ -21,84 +21,83 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
+import java.io.InputStream;
 import org.cactoos.Func;
-import org.cactoos.Text;
-import org.cactoos.func.UncheckedFunc;
+import org.cactoos.Input;
+import org.cactoos.func.IoCheckedFunc;
 
 /**
- * Text that doesn't throw checked {@link Exception}.
+ * Input that returns an alternative input if the main one throws
+ * {@link IOException}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.9
  */
-public final class UncheckedText implements Text {
+public final class InputWithFallback implements Input {
 
     /**
-     * Original text.
+     * The main one.
      */
-    private final Text text;
+    private final Input main;
 
     /**
-     * Fallback.
+     * The alternative one.
      */
-    private final Func<IOException, String> fallback;
+    private final IoCheckedFunc<IOException, Input> alternative;
 
     /**
      * Ctor.
-     * @param txt Encapsulated text
-     * @since 0.9
+     * @param input Main input
      */
-    public UncheckedText(final String txt) {
-        this(new StringAsText(txt));
+    public InputWithFallback(final Input input) {
+        this(input, new DeadInput());
     }
 
     /**
      * Ctor.
-     * @param txt Encapsulated text
+     * @param input Main input
+     * @param alt Alternative
      */
-    public UncheckedText(final Text txt) {
-        this(
-            txt,
-            error -> {
-                throw new UncheckedIOException(error);
-            }
-        );
+    public InputWithFallback(final Input input, final Input alt) {
+        this(input, error -> alt);
     }
 
     /**
      * Ctor.
-     * @param txt Encapsulated text
-     * @param fbk Fallback func if {@link IOException} happens
-     * @since 0.5
+     * @param input Main input
+     * @param alt Alternative
      */
-    public UncheckedText(final Text txt, final Func<IOException, String> fbk) {
-        this.text = txt;
-        this.fallback = fbk;
+    public InputWithFallback(final Input input,
+        final Func<IOException, Input> alt) {
+        this(input, new IoCheckedFunc<>(alt));
+    }
+
+    /**
+     * Ctor.
+     * @param input Main input
+     * @param alt Alternative
+     */
+    public InputWithFallback(final Input input,
+        final IoCheckedFunc<IOException, Input> alt) {
+        this.main = input;
+        this.alternative = alt;
     }
 
     @Override
-    public String asString() {
-        String txt;
+    public InputStream stream() throws IOException {
+        InputStream stream;
         try {
-            txt = this.text.asString();
+            stream = this.main.stream();
         } catch (final IOException ex) {
-            txt = new UncheckedFunc<>(this.fallback).apply(ex);
+            stream = this.alternative.apply(ex).stream();
         }
-        return txt;
-    }
-
-    @Override
-    public int compareTo(final Text txt) {
-        return this.asString().compareTo(
-            new UncheckedText(txt).asString()
-        );
+        return stream;
     }
 
 }

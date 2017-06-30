@@ -23,60 +23,45 @@
  */
 package org.cactoos.list;
 
-import java.util.Map;
-import java.util.Properties;
-import org.cactoos.Scalar;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * Map as {@link java.util.Properties}.
+ * Reverse iterator.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @param <X> Type of item
+ * @see FilteredIterable
+ * @since 0.9
  */
-public final class MapAsProperties implements Scalar<Properties> {
+public final class ReverseIterable<X> implements Iterable<X> {
 
     /**
-     * The map.
+     * Iterable.
      */
-    private final Map<?, ?> map;
-
-    /**
-     * Ctor.
-     * @param entries The map with properties
-     */
-    public MapAsProperties(final Map.Entry<?, ?>... entries) {
-        this(
-            new IterableAsMap<>(
-                new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new ArrayAsIterable<>(entries),
-                    input -> new MapEntry<>(
-                        input.getKey().toString(), input.getValue().toString()
-                    )
-                )
-            )
-        );
-    }
+    private final Iterable<X> iterable;
 
     /**
      * Ctor.
-     * @param src The map with properties
+     * @param src Source iterable
      */
-    public MapAsProperties(final Map<?, ?> src) {
-        this.map = src;
+    public ReverseIterable(final Iterable<X> src) {
+        this.iterable = src;
     }
 
     @Override
-    public Properties value() {
-        final Properties props = new Properties();
-        for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
-            props.setProperty(
-                entry.getKey().toString(),
-                entry.getValue().toString()
-            );
+    public Iterator<X> iterator() {
+        final List<X> list = new LinkedList<>();
+        for (final X item : this.iterable) {
+            list.add(item);
         }
-        return props;
+        Collections.reverse(list);
+        return list.iterator();
     }
+
 }

@@ -23,60 +23,34 @@
  */
 package org.cactoos.list;
 
-import java.util.Map;
-import java.util.Properties;
-import org.cactoos.Scalar;
+import org.cactoos.TextHasString;
+import org.cactoos.text.JoinedText;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Map as {@link java.util.Properties}.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link ReverseIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class MapAsProperties implements Scalar<Properties> {
+public final class ReverseIterableTest {
 
-    /**
-     * The map.
-     */
-    private final Map<?, ?> map;
-
-    /**
-     * Ctor.
-     * @param entries The map with properties
-     */
-    public MapAsProperties(final Map.Entry<?, ?>... entries) {
-        this(
-            new IterableAsMap<>(
-                new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new ArrayAsIterable<>(entries),
-                    input -> new MapEntry<>(
-                        input.getKey().toString(), input.getValue().toString()
+    @Test
+    public void reversesIterable() {
+        MatcherAssert.assertThat(
+            "Can't reverse an iterable",
+            new JoinedText(
+                " ",
+                new ReverseIterable<>(
+                    new ArrayAsIterable<>(
+                        "hello", "world", "dude"
                     )
                 )
-            )
+            ),
+            new TextHasString("dude world hello")
         );
     }
 
-    /**
-     * Ctor.
-     * @param src The map with properties
-     */
-    public MapAsProperties(final Map<?, ?> src) {
-        this.map = src;
-    }
-
-    @Override
-    public Properties value() {
-        final Properties props = new Properties();
-        for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
-            props.setProperty(
-                entry.getKey().toString(),
-                entry.getValue().toString()
-            );
-        }
-        return props;
-    }
 }

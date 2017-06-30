@@ -23,21 +23,39 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
+import java.io.File;
+import org.cactoos.TextHasString;
+import org.cactoos.text.BytesAsText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link NotNullInput}.
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * Test case for {@link InputWithFallback}.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NotNullOutputTest {
+public final class InputWithFallbackTest {
 
-    @Test(expected = IOException.class)
-    public void failForNullOutput() throws IOException {
-        new NotNullOutput(null).stream();
+    @Test
+    public void readsAlternativeInput() {
+        MatcherAssert.assertThat(
+            "Can't read alternative source",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputWithFallback(
+                        new FileAsInput(
+                            new File("/this-file-is-absent-for-sure.txt")
+                        ),
+                        new BytesAsInput("hello, world!")
+                    )
+                )
+            ),
+            new TextHasString(Matchers.endsWith("world!"))
+        );
     }
 
 }

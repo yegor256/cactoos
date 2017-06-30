@@ -21,55 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
-import java.security.SecureRandom;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyMap}.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link SplitText}.
+ * @author Alexey Semenyuk (semenyukalexey@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyMapTest {
+public final class SplitTextTest {
 
     @Test
-    public void ignoresChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new StickyMap<>(
-            new IterableAsMap<>(
-                () -> new RepeatIterator<>(
-                    () -> new MapEntry<>(
-                        new SecureRandom().nextInt(),
-                        1
-                    ),
-                    size.incrementAndGet()
-                )
-            )
-        );
+    public void splitText() throws Exception {
         MatcherAssert.assertThat(
-            "Can't ignore the changes in the underlying map",
-            map.size(),
-            Matchers.equalTo(map.size())
+            "Can't split a text",
+            new SplitText(
+                "Hello world!", "\\s+"
+            ),
+            Matchers.contains(
+                "Hello",
+                "world!"
+            )
         );
     }
 
     @Test
-    public void decoratesEntries() throws Exception {
+    public void splitEmptyText() throws Exception {
         MatcherAssert.assertThat(
-            "Can't decorate a list of entries",
-            new StickyMap<String, String>(
-                new MapEntry<>("first", "Jeffrey"),
-                new MapEntry<>("last", "Lebowski")
-            ),
-            Matchers.hasValue(Matchers.endsWith("ski"))
+            "Can't split an empty text",
+            new SplitText("", "\n"),
+            Matchers.emptyIterable()
         );
     }
 

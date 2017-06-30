@@ -23,60 +23,49 @@
  */
 package org.cactoos.list;
 
-import java.util.Map;
-import java.util.Properties;
+import java.util.Iterator;
 import org.cactoos.Scalar;
 
 /**
- * Map as {@link java.util.Properties}.
+ * Int total of numbers.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.9
  */
-public final class MapAsProperties implements Scalar<Properties> {
+public final class SumOfInts implements Scalar<Long> {
 
     /**
-     * The map.
+     * The iterable.
      */
-    private final Map<?, ?> map;
+    private final Iterable<Scalar<Number>> src;
 
     /**
      * Ctor.
-     * @param entries The map with properties
+     * @param src Numbers
      */
-    public MapAsProperties(final Map.Entry<?, ?>... entries) {
-        this(
-            new IterableAsMap<>(
-                new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new ArrayAsIterable<>(entries),
-                    input -> new MapEntry<>(
-                        input.getKey().toString(), input.getValue().toString()
-                    )
-                )
-            )
-        );
+    @SafeVarargs
+    public SumOfInts(final Scalar<Number>... src) {
+        this(new ArrayAsIterable<>(src));
     }
 
     /**
      * Ctor.
-     * @param src The map with properties
+     * @param src The iterable
      */
-    public MapAsProperties(final Map<?, ?> src) {
-        this.map = src;
+    public SumOfInts(final Iterable<Scalar<Number>> src) {
+        this.src = src;
     }
 
     @Override
-    public Properties value() {
-        final Properties props = new Properties();
-        for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
-            props.setProperty(
-                entry.getKey().toString(),
-                entry.getValue().toString()
-            );
+    public Long value() throws Exception {
+        final Iterator<Scalar<Number>> numbers = this.src.iterator();
+        Long result =  0L;
+        while (numbers.hasNext()) {
+            result += numbers.next().value().longValue();
         }
-        return props;
+        return result;
     }
 }

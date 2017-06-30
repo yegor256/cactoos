@@ -23,53 +23,65 @@
  */
 package org.cactoos.list;
 
-import java.security.SecureRandom;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyMap}.
+ * Test case for {@link MapEntry}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyMapTest {
+public final class MapEntryTest {
 
     @Test
-    public void ignoresChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new StickyMap<>(
-            new IterableAsMap<>(
-                () -> new RepeatIterator<>(
-                    () -> new MapEntry<>(
-                        new SecureRandom().nextInt(),
-                        1
-                    ),
-                    size.incrementAndGet()
-                )
-            )
-        );
+    public void getKey() {
+        final String key = "hello";
+        final String value = "world";
         MatcherAssert.assertThat(
-            "Can't ignore the changes in the underlying map",
-            map.size(),
-            Matchers.equalTo(map.size())
+            "Can't get key in the map entry",
+            new MapEntry<>(key, value).getKey(),
+            Matchers.equalTo(key)
         );
     }
 
     @Test
-    public void decoratesEntries() throws Exception {
+    public void getValue() {
+        final String key = "foo";
+        final String value = "bar";
         MatcherAssert.assertThat(
-            "Can't decorate a list of entries",
-            new StickyMap<String, String>(
-                new MapEntry<>("first", "Jeffrey"),
-                new MapEntry<>("last", "Lebowski")
-            ),
-            Matchers.hasValue(Matchers.endsWith("ski"))
+            "Can't get value in the map entry",
+            new MapEntry<>(key, value).getValue(),
+            Matchers.equalTo(value)
+        );
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void cantSetValue() {
+        new MapEntry<>("one", "two").setValue("three");
+    }
+
+    @Test
+    public void equalsTo() {
+        final String key = "eo";
+        final String value = "book";
+        MatcherAssert.assertThat(
+            "MapEntries are not equals",
+            new MapEntry<>(key, value).equals(new MapEntry<>(key, value)),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void compareHash() {
+        MatcherAssert.assertThat(
+            "the hash code are not equals",
+            new MapEntry<>("elegant", "objects").hashCode(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(32739498)
         );
     }
 

@@ -23,6 +23,8 @@
  */
 package org.cactoos;
 
+import java.io.IOException;
+
 /**
  * Function.
  *
@@ -56,4 +58,44 @@ public interface Func<X, Y> {
      */
     Y apply(X input) throws Exception;
 
+    /**
+     * Func check for no nulls.
+     *
+     * @author Fabricio Cabral (fabriciofx@gmail.com)
+     * @version $Id$
+     * @param <X> Type of input
+     * @param <Y> Type of output
+     * @since 0.10
+     */
+    final class NoNulls<X, Y> implements Func<X, Y> {
+        /**
+         * The function.
+         */
+        private final Func<X, Y> func;
+        /**
+         * Ctor.
+         * @param fnc The function
+         */
+        public NoNulls(final Func<X, Y> fnc) {
+            this.func = fnc;
+        }
+        @Override
+        public Y apply(final X input) throws Exception {
+            if (this.func == null) {
+                throw new IllegalArgumentException(
+                    "NULL instead of a valid function"
+                );
+            }
+            if (input == null) {
+                throw new IllegalArgumentException(
+                    "NULL instead of a valid input"
+                );
+            }
+            final Y result = this.func.apply(input);
+            if (result == null) {
+                throw new IOException("NULL instead of a valid result");
+            }
+            return result;
+        }
+    }
 }

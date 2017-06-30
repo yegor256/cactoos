@@ -82,7 +82,7 @@ new LengthOfInput(
       new File("/code/a.txt")
     )
   )
-).asValue();
+).value();
 ```
 
 To read a binary file from classpath:
@@ -154,7 +154,7 @@ new And(
       }
     )
   )
-).asValue();
+).value();
 ```
 
 Or even more compact:
@@ -163,7 +163,7 @@ Or even more compact:
 new And(
   input -> System.out.printf("Item: %s\n", input),
   "how", "are", "you"
-).asValue();
+).value();
 ```
 
 To sort a list of words in the file:
@@ -189,7 +189,7 @@ To count elements in an iterable:
 ```java
 int total = new LengthOfIterable(
   "how", "are", "you"
-).asValue();
+).value();
 ```
 
 ## Funcs and Procs
@@ -210,7 +210,7 @@ new And<>(
   n -> {
     System.out.printf("Hello, %s!\n", n);
   }
-).asValue();
+).value();
 ```
 
 This is an endless `while/do` loop:
@@ -230,8 +230,23 @@ new And<>(
     System.out.prinln("Still waiting...");
     return !ready;
   }
-).asValue();
+).value();
 ```
+
+## Our objects vs. their static methods
+
+Cactoos | Guava | Apache Commons | JDK 8
+------ | ------ | ------ | ------
+`FormattedText` | - | - | `String.format()`
+`JoinedText` | - | - | `String.join()`
+`LoweredText` | - | - | `String#toLowerCase()`
+`NormalizedText` | - | `StringUtils.normalize()` | -
+`StringAsUrl` | - | - | `URLEncoder.encode()`
+`UrlAsString` | - | - | `URLDecoder.decode()`
+`StickyList` | ? | ? | `Arrays.asList()`
+`StickyList` | `Lists.newArrayList()` | ? | -
+`FilteredIterable` | `Iterables.filter()` | ? | -
+`BytesAsString` | ? | `IOUtils.toString()` | -
 
 ## How to contribute?
 

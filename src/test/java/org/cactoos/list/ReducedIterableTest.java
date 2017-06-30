@@ -21,23 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.list;
 
-import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link NotNullInput}.
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * Test case for {@link SkippedIterable}.
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class NotNullInputTest {
+public final class ReducedIterableTest {
 
-    @Test(expected = IOException.class)
-    public void failForNullInput() throws IOException {
-        new NotNullInput(null).stream();
+    @Test
+    public void skipIterable() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't reduce elements in iterable",
+            new ReducedIterable<>(
+                new LimitedIterable<>(new NaturalNumbers(), 10),
+                0L,
+                (first, second) -> first + second
+            ).value(),
+            Matchers.equalTo(45L)
+        );
     }
 
 }
