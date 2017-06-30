@@ -23,54 +23,45 @@
  */
 package org.cactoos.list;
 
-import java.security.SecureRandom;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyMap}.
+ * Test case for {@link SumOfInts}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class StickyMapTest {
+public final class SumOfIntsTest {
 
     @Test
-    public void ignoresChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new StickyMap<>(
-            new IterableAsMap<>(
-                () -> new RepeatIterator<>(
-                    () -> new MapEntry<>(
-                        new SecureRandom().nextInt(),
-                        1
-                    ),
-                    size.incrementAndGet()
+    public void withVarargsCtor() throws Exception {
+        MatcherAssert.assertThat(
+            new SumOfInts(
+                () -> 1,
+                () -> 2,
+                () -> 3
+            ).value(),
+            Matchers.equalTo(6L)
+        );
+    }
+
+    @Test
+    public void withIterCtor() throws Exception {
+        MatcherAssert.assertThat(
+            new SumOfInts(
+                new ArrayAsIterable<Scalar<Number>>(
+                    () -> 7,
+                    () -> 8,
+                    () -> 10
                 )
-            )
-        );
-        MatcherAssert.assertThat(
-            "Can't ignore the changes in the underlying map",
-            map.size(),
-            Matchers.equalTo(map.size())
+            ).value(),
+            Matchers.equalTo(25L)
         );
     }
-
-    @Test
-    public void decoratesEntries() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't decorate a list of entries",
-            new StickyMap<String, String>(
-                new MapEntry<>("first", "Jeffrey"),
-                new MapEntry<>("last", "Lebowski")
-            ),
-            Matchers.hasValue(Matchers.endsWith("ski"))
-        );
-    }
-
 }

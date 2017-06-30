@@ -45,6 +45,7 @@ import org.cactoos.io.FileAsInput;
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @see org.cactoos.io.BytesAsInput
  * @see FileAsInput
@@ -60,4 +61,35 @@ public interface Input {
      */
     InputStream stream() throws IOException;
 
+    /**
+     * Input check for no nulls.
+     *
+     * @author Fabricio Cabral (fabriciofx@gmail.com)
+     * @version $Id$
+     * @since 0.10
+     */
+    final class NoNulls implements Input {
+        /**
+         * The input.
+         */
+        private final Input origin;
+        /**
+         * Ctor.
+         * @param input The input
+         */
+        public NoNulls(final Input input) {
+            this.origin = input;
+        }
+        @Override
+        public InputStream stream() throws IOException {
+            if (this.origin == null) {
+                throw new IOException("NULL instead of a valid input");
+            }
+            final InputStream stream = this.origin.stream();
+            if (stream == null) {
+                throw new IOException("NULL instead of a valid stream");
+            }
+            return stream;
+        }
+    }
 }

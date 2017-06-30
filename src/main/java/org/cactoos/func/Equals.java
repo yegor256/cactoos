@@ -21,62 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Map;
-import java.util.Properties;
 import org.cactoos.Scalar;
 
 /**
- * Map as {@link java.util.Properties}.
+ * Equals.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @param <T> Type of object to compare
+ * @since 0.9
  */
-public final class MapAsProperties implements Scalar<Properties> {
+public final class Equals<T extends Comparable<T>> implements Scalar<Boolean> {
 
     /**
-     * The map.
+     * The first scalar.
      */
-    private final Map<?, ?> map;
+    private final Scalar<T> first;
 
     /**
-     * Ctor.
-     * @param entries The map with properties
+     * The second scalar.
      */
-    public MapAsProperties(final Map.Entry<?, ?>... entries) {
-        this(
-            new IterableAsMap<>(
-                new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new ArrayAsIterable<>(entries),
-                    input -> new MapEntry<>(
-                        input.getKey().toString(), input.getValue().toString()
-                    )
-                )
-            )
-        );
-    }
+    private final Scalar<T> second;
 
     /**
      * Ctor.
-     * @param src The map with properties
+     * @param frst The first scalar to compare.
+     * @param scnd The second scalar to compare.
      */
-    public MapAsProperties(final Map<?, ?> src) {
-        this.map = src;
+    public Equals(final Scalar<T> frst, final Scalar<T> scnd) {
+        this.first = frst;
+        this.second = scnd;
     }
 
     @Override
-    public Properties value() {
-        final Properties props = new Properties();
-        for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
-            props.setProperty(
-                entry.getKey().toString(),
-                entry.getValue().toString()
-            );
-        }
-        return props;
+    public Boolean value() throws Exception {
+        return this.first.value().compareTo(this.second.value()) == 0;
     }
 }

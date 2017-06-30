@@ -21,56 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.text;
 
-import java.security.SecureRandom;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyMap}.
+ * Test case for {@link Base64DecodedText}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyMapTest {
+public final class Base64DecodedTextTest {
 
     @Test
-    public void ignoresChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new StickyMap<>(
-            new IterableAsMap<>(
-                () -> new RepeatIterator<>(
-                    () -> new MapEntry<>(
-                        new SecureRandom().nextInt(),
-                        1
-                    ),
-                    size.incrementAndGet()
-                )
-            )
-        );
+    public void decodeText() {
         MatcherAssert.assertThat(
-            "Can't ignore the changes in the underlying map",
-            map.size(),
-            Matchers.equalTo(map.size())
-        );
-    }
-
-    @Test
-    public void decoratesEntries() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't decorate a list of entries",
-            new StickyMap<String, String>(
-                new MapEntry<>("first", "Jeffrey"),
-                new MapEntry<>("last", "Lebowski")
+            "Can't decode a text",
+            new Base64DecodedText(
+                new StringAsText("SGVsbG8h")
             ),
-            Matchers.hasValue(Matchers.endsWith("ski"))
+            new TextHasString("Hello!")
         );
     }
 
+    @Test
+    public void decodeString() {
+        MatcherAssert.assertThat(
+            "Can't decode a string",
+            new Base64DecodedText(
+                "Q2FjdG9vcw=="
+            ),
+            new TextHasString("Cactoos")
+        );
+    }
 }

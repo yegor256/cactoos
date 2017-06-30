@@ -21,62 +21,69 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.func;
 
-import java.util.Map;
-import java.util.Properties;
-import org.cactoos.Scalar;
+import java.util.Collections;
+import org.cactoos.Func;
 
 /**
- * Map as {@link java.util.Properties}.
+ * Composed function.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
+ * @param <X> Type of input.
+ * @param <Y> Intermediate type.
+ * @param <Z> Type of output.
  * @since 0.7
  */
-public final class MapAsProperties implements Scalar<Properties> {
+public final class ChainedFunc<X, Y, Z> implements Func<X, Z> {
 
     /**
-     * The map.
+     * Before function.
      */
-    private final Map<?, ?> map;
+    private final Func<X, Y> before;
+
+    /**
+     * Functions.
+     */
+    private final Iterable<Func<Y, Y>> funcs;
+
+    /**
+     * After function.
+     */
+    private final Func<Y, Z> after;
 
     /**
      * Ctor.
-     * @param entries The map with properties
+     * @param before Before function
+     * @param funcs Functions
+     * @param after After function
      */
-    public MapAsProperties(final Map.Entry<?, ?>... entries) {
-        this(
-            new IterableAsMap<>(
-                new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new ArrayAsIterable<>(entries),
-                    input -> new MapEntry<>(
-                        input.getKey().toString(), input.getValue().toString()
-                    )
-                )
-            )
-        );
+    public ChainedFunc(
+        final Func<X, Y> before,
+        final Iterable<Func<Y, Y>> funcs,
+        final Func<Y, Z> after
+    ) {
+        this.before = before;
+        this.funcs = funcs;
+        this.after = after;
     }
 
     /**
      * Ctor.
-     * @param src The map with properties
+     * @param before Before function
+     * @param after After function
      */
-    public MapAsProperties(final Map<?, ?> src) {
-        this.map = src;
+    public ChainedFunc(final Func<X, Y> before, final Func<Y, Z> after) {
+        this(before, Collections.emptyList(), after);
     }
 
     @Override
-    public Properties value() {
-        final Properties props = new Properties();
-        for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
-            props.setProperty(
-                entry.getKey().toString(),
-                entry.getValue().toString()
-            );
+    public Z apply(final X input) throws Exception {
+        Y temp = this.before.apply(input);
+        for (final Func<Y, Y> func : this.funcs) {
+            temp = func.apply(temp);
         }
-        return props;
+        return this.after.apply(temp);
     }
 }

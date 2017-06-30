@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import java.security.SecureRandom;
-import java.util.AbstractMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
@@ -46,8 +45,8 @@ public final class IterableAsMapTest {
         MatcherAssert.assertThat(
             "Can't convert iterable to map",
             new IterableAsMap<Integer, String>(
-                new AbstractMap.SimpleEntry<>(0, "hello, "),
-                new AbstractMap.SimpleEntry<>(1, "world!")
+                new MapEntry<>(0, "hello, "),
+                new MapEntry<>(1, "world!")
             ),
             Matchers.hasEntry(
                 Matchers.equalTo(0),
@@ -61,7 +60,7 @@ public final class IterableAsMapTest {
         final AtomicInteger size = new AtomicInteger(2);
         final Map<Integer, Integer> map = new IterableAsMap<>(
             () -> new RepeatIterator<>(
-                () -> new AbstractMap.SimpleEntry<>(
+                () -> new MapEntry<>(
                     new SecureRandom().nextInt(),
                     1
                 ),

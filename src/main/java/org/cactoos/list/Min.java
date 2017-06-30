@@ -23,60 +23,58 @@
  */
 package org.cactoos.list;
 
-import java.util.Map;
-import java.util.Properties;
+import java.io.IOException;
+import java.util.Iterator;
 import org.cactoos.Scalar;
 
 /**
- * Map as {@link java.util.Properties}.
+ * Find the smaller among items.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @param <T> Scalar type
+ * @since 0.9
  */
-public final class MapAsProperties implements Scalar<Properties> {
+public final class Min<T extends Comparable<T>> implements Scalar<T> {
 
     /**
-     * The map.
+     * Items.
      */
-    private final Map<?, ?> map;
+    private final Iterable<Scalar<T>> items;
 
     /**
      * Ctor.
-     * @param entries The map with properties
+     * @param items The items
      */
-    public MapAsProperties(final Map.Entry<?, ?>... entries) {
-        this(
-            new IterableAsMap<>(
-                new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new ArrayAsIterable<>(entries),
-                    input -> new MapEntry<>(
-                        input.getKey().toString(), input.getValue().toString()
-                    )
-                )
-            )
-        );
+    @SafeVarargs
+    public Min(final Scalar<T>... items) {
+        this(new ArrayAsIterable<>(items));
     }
 
     /**
      * Ctor.
-     * @param src The map with properties
+     * @param items The items
      */
-    public MapAsProperties(final Map<?, ?> src) {
-        this.map = src;
+    public Min(final Iterable<Scalar<T>> items) {
+        this.items = items;
     }
 
     @Override
-    public Properties value() {
-        final Properties props = new Properties();
-        for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
-            props.setProperty(
-                entry.getKey().toString(),
-                entry.getValue().toString()
-            );
+    public T value() throws Exception {
+        final Iterator<Scalar<T>> iter = this.items.iterator();
+        if (!iter.hasNext()) {
+            throw new IOException("Iterable is empty");
         }
-        return props;
+        T min = iter.next().value();
+        while (iter.hasNext()) {
+            final T next = iter.next().value();
+            if (next.compareTo(min) < 0) {
+                min = next;
+            }
+        }
+        return min;
     }
+
 }

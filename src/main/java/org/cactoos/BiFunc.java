@@ -21,62 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
-
-import java.util.Map;
-import java.util.Properties;
-import org.cactoos.Scalar;
+package org.cactoos;
 
 /**
- * Map as {@link java.util.Properties}.
+ * Function that accepts two arguments.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @param <X> Type of input
+ * @param <Y> Type of input
+ * @param <Z> Type of output
+ * @since 0.9
  */
-public final class MapAsProperties implements Scalar<Properties> {
+public interface BiFunc<X, Y, Z> {
 
     /**
-     * The map.
+     * Apply it.
+     * @param first The first argument
+     * @param second The second argument
+     * @return The result
+     * @throws Exception If fails
      */
-    private final Map<?, ?> map;
+    Z apply(X first, Y second) throws Exception;
 
-    /**
-     * Ctor.
-     * @param entries The map with properties
-     */
-    public MapAsProperties(final Map.Entry<?, ?>... entries) {
-        this(
-            new IterableAsMap<>(
-                new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new ArrayAsIterable<>(entries),
-                    input -> new MapEntry<>(
-                        input.getKey().toString(), input.getValue().toString()
-                    )
-                )
-            )
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param src The map with properties
-     */
-    public MapAsProperties(final Map<?, ?> src) {
-        this.map = src;
-    }
-
-    @Override
-    public Properties value() {
-        final Properties props = new Properties();
-        for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
-            props.setProperty(
-                entry.getKey().toString(),
-                entry.getValue().toString()
-            );
-        }
-        return props;
-    }
 }

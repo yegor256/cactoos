@@ -21,42 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos;
 
 import java.io.IOException;
-import org.cactoos.TextHasString;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.io.DeadInput;
 import org.junit.Test;
 
 /**
- * Test case for {@link JoinedText}.
+ * Test case for {@link Input.NoNulls}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class JoinedTextTest {
+public final class InputTest {
 
-    @Test
-    public void joinsStrings() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't join strings",
-            new JoinedText(" ", "hello", "world"),
-            new TextHasString("hello world")
-        );
+    @Test(expected = IOException.class)
+    public void failForNullInput() throws IOException {
+        new Input.NoNulls(null).stream();
+    }
+
+    @Test(expected = IOException.class)
+    public void failForNullStream() throws IOException {
+        new Input.NoNulls(() -> null).stream();
     }
 
     @Test
-    public void joinsTexts() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't join texts",
-            new JoinedText(
-                new StringAsText(" "),
-                new StringAsText("foo"),
-                new StringAsText("bar")
-            ),
-            new TextHasString("foo bar")
-        );
+    public void okForNoNullInput() throws IOException {
+        new Input.NoNulls(new DeadInput()).stream();
     }
-
 }

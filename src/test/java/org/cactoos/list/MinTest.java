@@ -23,54 +23,49 @@
  */
 package org.cactoos.list;
 
-import java.security.SecureRandom;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.IOException;
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyMap}.
+ * Test case for {@link Min}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyMapTest {
+public final class MinTest {
+
+    @Test(expected = IOException.class)
+    public void minAmongEmptyTest() throws Exception {
+        new Min<>(() -> Collections.emptyIterator()).value();
+    }
 
     @Test
-    public void ignoresChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new StickyMap<>(
-            new IterableAsMap<>(
-                () -> new RepeatIterator<>(
-                    () -> new MapEntry<>(
-                        new SecureRandom().nextInt(),
-                        1
-                    ),
-                    size.incrementAndGet()
-                )
-            )
-        );
+    public void minAmongOneTest() throws Exception {
+        final int num = 10;
         MatcherAssert.assertThat(
-            "Can't ignore the changes in the underlying map",
-            map.size(),
-            Matchers.equalTo(map.size())
+            "Can't find the smaller among one",
+            new Min<Integer>(() -> new Integer(num)).value(),
+            Matchers.equalTo(num)
         );
     }
 
     @Test
-    public void decoratesEntries() throws Exception {
+    public void minAmongManyTest() throws Exception {
+        final int num = -1;
         MatcherAssert.assertThat(
-            "Can't decorate a list of entries",
-            new StickyMap<String, String>(
-                new MapEntry<>("first", "Jeffrey"),
-                new MapEntry<>("last", "Lebowski")
-            ),
-            Matchers.hasValue(Matchers.endsWith("ski"))
+            "Can't find the smaller among many",
+            new Min<Integer>(
+                () -> new Integer(1),
+                () -> new Integer(0),
+                () -> new Integer(num),
+                () -> new Integer(2)
+             ).value(),
+            Matchers.equalTo(num)
         );
     }
-
 }

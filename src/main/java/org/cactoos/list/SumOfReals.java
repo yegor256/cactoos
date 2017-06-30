@@ -21,42 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.list;
 
-import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
+import java.util.Iterator;
+import org.cactoos.Scalar;
 
 /**
- * A safe Input.
+ * Real total of numbers.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.9
  */
-public final class NotNullInput implements Input {
+public final class SumOfReals implements Scalar<Double> {
 
     /**
-     * The input.
+     * The iterable.
      */
-    private final Input origin;
+    private final Iterable<Scalar<Number>> src;
 
     /**
      * Ctor.
-     * @param input The input
+     * @param src Numbers
      */
-    public NotNullInput(final Input input) {
-        this.origin = input;
+    @SafeVarargs
+    public SumOfReals(final Scalar<Number>... src) {
+        this(new ArrayAsIterable<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     */
+    public SumOfReals(final Iterable<Scalar<Number>> src) {
+        this.src = src;
     }
 
     @Override
-    public InputStream stream() throws IOException {
-        if (this.origin == null) {
-            throw new IOException("NULL instead of a valid input");
+    public Double value() throws Exception {
+        final Iterator<Scalar<Number>> numbers = this.src.iterator();
+        Double result =  0.;
+        while (numbers.hasNext()) {
+            result += numbers.next().value().doubleValue();
         }
-        return this.origin.stream();
+        return result;
     }
-
 }

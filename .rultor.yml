@@ -22,6 +22,7 @@ deploy:
     mvn clean deploy -Pqulice --errors --settings ../settings.xml
 release:
   script: |-
+    [[ "${tag}" =~ ^[0-9]+(\.[0-9]+)*$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mvn clean deploy -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml

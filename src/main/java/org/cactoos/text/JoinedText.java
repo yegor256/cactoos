@@ -52,14 +52,23 @@ public final class JoinedText implements Text {
 
     /**
      * Ctor.
-     * @param delimiter Delimit among texts
-     * @param texts Texts to be joined
+     * @param delimit Delimit among strings
+     * @param strs Strings to be joined
      */
-    public JoinedText(final String delimiter, final String... texts) {
+    public JoinedText(final String delimit, final String... strs) {
+        this(delimit, new ArrayAsIterable<>(strs));
+    }
+
+    /**
+     * Ctor.
+     * @param delimit Delimit among strings
+     * @param strs Strings to be joined
+     */
+    public JoinedText(final String delimit, final Iterable<String> strs) {
         this(
-            new StringAsText(delimiter),
+            new StringAsText(delimit),
             new MappedIterable<>(
-                new ArrayAsIterable<>(texts),
+                strs,
                 text -> new StringAsText(text)
             )
         );
@@ -67,39 +76,21 @@ public final class JoinedText implements Text {
 
     /**
      * Ctor.
-     * @param delimiter Delimit among texts
-     * @param texts Texts to be joined
+     * @param delimit Delimit among texts
+     * @param txts Texts to be joined
      */
-    public JoinedText(final String delimiter, final Text... texts) {
-        this(delimiter, new ArrayAsIterable<>(texts));
+    public JoinedText(final Text delimit, final Text... txts) {
+        this(delimit, new ArrayAsIterable<>(txts));
     }
 
     /**
      * Ctor.
-     * @param delimiter Delimit among texts
-     * @param texts Texts to be joined
+     * @param delimit Delimit among texts
+     * @param txts Texts to be joined
      */
-    public JoinedText(final String delimiter, final Iterable<Text> texts) {
-        this(new StringAsText(delimiter), texts);
-    }
-
-    /**
-     * Ctor.
-     * @param delimiter Delimit among texts
-     * @param texts Texts to be joined
-     */
-    public JoinedText(final Text delimiter, final Text... texts) {
-        this(delimiter, new ArrayAsIterable<>(texts));
-    }
-
-    /**
-     * Ctor.
-     * @param delimiter Delimit among texts
-     * @param texts Texts to be joined
-     */
-    public JoinedText(final Text delimiter, final Iterable<Text> texts) {
-        this.delimiter = delimiter;
-        this.texts = texts;
+    public JoinedText(final Text delimit, final Iterable<Text> txts) {
+        this.delimiter = delimit;
+        this.texts = txts;
     }
 
     @Override

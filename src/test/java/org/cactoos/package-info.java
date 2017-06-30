@@ -21,42 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
-
-import java.io.IOException;
-import org.cactoos.TextHasString;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
 
 /**
- * Test case for {@link JoinedText}.
+ * Input.NoNulls, Output.NoNulls and Func<>.NoNulls, tests.
+ *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class JoinedTextTest {
-
-    @Test
-    public void joinsStrings() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't join strings",
-            new JoinedText(" ", "hello", "world"),
-            new TextHasString("hello world")
-        );
-    }
-
-    @Test
-    public void joinsTexts() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't join texts",
-            new JoinedText(
-                new StringAsText(" "),
-                new StringAsText("foo"),
-                new StringAsText("bar")
-            ),
-            new TextHasString("foo bar")
-        );
-    }
-
-}
+package org.cactoos.io;

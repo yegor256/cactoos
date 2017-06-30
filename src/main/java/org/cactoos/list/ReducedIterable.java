@@ -23,60 +23,55 @@
  */
 package org.cactoos.list;
 
-import java.util.Map;
-import java.util.Properties;
+import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
 
 /**
- * Map as {@link java.util.Properties}.
- *
- * <p>There is no thread-safety guarantee.
+ * Iterable, which elements are "reduced" through the func.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @param <T> Type of element
+ * @param <X> Type of input and output
+ * @since 0.9
  */
-public final class MapAsProperties implements Scalar<Properties> {
+public final class ReducedIterable<X, T> implements Scalar<X> {
 
     /**
-     * The map.
+     * Original iterable.
      */
-    private final Map<?, ?> map;
+    private final Iterable<T> iterable;
 
     /**
-     * Ctor.
-     * @param entries The map with properties
+     * Input.
      */
-    public MapAsProperties(final Map.Entry<?, ?>... entries) {
-        this(
-            new IterableAsMap<>(
-                new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new ArrayAsIterable<>(entries),
-                    input -> new MapEntry<>(
-                        input.getKey().toString(), input.getValue().toString()
-                    )
-                )
-            )
-        );
-    }
+    private final X input;
+
+    /**
+     * Func.
+     */
+    private final BiFunc<X, T, X> func;
 
     /**
      * Ctor.
-     * @param src The map with properties
+     * @param list List of items
+     * @param ipt Input
+     * @param fnc Func original
      */
-    public MapAsProperties(final Map<?, ?> src) {
-        this.map = src;
+    public ReducedIterable(final Iterable<T> list, final X ipt,
+        final BiFunc<X, T, X> fnc) {
+        this.iterable = list;
+        this.input = ipt;
+        this.func = fnc;
     }
 
     @Override
-    public Properties value() {
-        final Properties props = new Properties();
-        for (final Map.Entry<?, ?> entry : this.map.entrySet()) {
-            props.setProperty(
-                entry.getKey().toString(),
-                entry.getValue().toString()
-            );
+    public X value() throws Exception {
+        X memo = this.input;
+        for (final T item : this.iterable) {
+            memo = this.func.apply(memo, item);
         }
-        return props;
+        return memo;
     }
+
 }
