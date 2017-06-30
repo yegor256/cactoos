@@ -41,7 +41,22 @@ public final class ReplacedAllText implements Text {
     private final Text origin;
 
     /**
-     * Ctor.
+     * New optimized replaced text.
+     *
+     * @param text The text
+     * @param needle Needle
+     * @param replace The replace one
+     */
+    public ReplacedAllText(
+        final Text text,
+        final String needle,
+        final String replace
+    ) {
+        this(new ReplacedText(text, needle, replace));
+    }
+
+    /**
+     * New replaced text from an array of needles.
      *
      * @param text The text
      * @param needles An array of needles
@@ -56,7 +71,10 @@ public final class ReplacedAllText implements Text {
     }
 
     /**
-     * Ctor.
+     * New replaced text from a regular expression. It also can
+     * replace a word, char or string, but it is more
+     * efficient the optimized constructor which
+     * receives an String.
      *
      * @param text The text
      * @param pattern The regular expressión

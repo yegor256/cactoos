@@ -40,15 +40,28 @@ import org.junit.Test;
 public final class ReplacedAllTextTest {
 
     @Test
-    public void replacesTextWithItem() {
+    public void replacesTextWithString() {
         MatcherAssert.assertThat(
-            "Can't replace a text.",
+            "Can't replace a text with a String.",
             new ReplacedAllText(
                 new StringAsText("Hello!"),
-                new String[]{"ello"},
+                "ello",
                 "i"
             ),
             new TextHasString("Hi!")
+        );
+    }
+
+    @Test
+    public void replacesTextWithItem() {
+        MatcherAssert.assertThat(
+            "Can't replace a text with an element.",
+            new ReplacedAllText(
+                new StringAsText("jello!"),
+                new String[]{"j"},
+                "c"
+            ),
+            new TextHasString("cello!")
         );
     }
 
