@@ -24,8 +24,11 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import org.cactoos.Text;
+import org.cactoos.list.ArrayAsIterable;
+import org.cactoos.list.IterableAsList;
 
 /**
  * Replacing all needles in the text.
@@ -34,7 +37,7 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.11
  */
-public final class ReplacedArrayText implements Text {
+public final class ReplacedItemsText implements Text {
 
     /**
      * The text to be replaced.
@@ -44,33 +47,66 @@ public final class ReplacedArrayText implements Text {
     /**
      * An array of items to be replaced.
      */
-    private final String[] needles;
+    private final Collection<String> needles;
 
     /**
-     * The new char.
+     * The new string replacement.
      */
     private final String replacement;
 
     /**
-     * Ctor.
+     * New from an array of strings.
+     *
      * @param text The text
-     * @param items The array of needles
+     * @param array The array of needles
      * @param replace The replace one
      */
-    public ReplacedArrayText(
+    public ReplacedItemsText(
         final Text text,
-        final String[] items,
+        final String[] array,
+        final String replace
+    ) {
+        this(text, new ArrayAsIterable<>(array), replace);
+    }
+
+    /**
+     * New from iterable.
+     *
+     * @param text The text
+     * @param iterable An iterable of needles
+     * @param replace The replace one
+     */
+    public ReplacedItemsText(
+        final Text text,
+        final Iterable<String> iterable,
+        final String replace
+    ) {
+        this(text, new IterableAsList<>(iterable), replace);
+    }
+
+    /**
+     * New from collection.
+     *
+     * @param text The text
+     * @param collection A collection of needles
+     * @param replace The replace one
+     */
+    public ReplacedItemsText(
+        final Text text,
+        final Collection<String> collection,
         final String replace
     ) {
         this.origin = text;
-        this.needles = Arrays.copyOf(items, items.length);
+        this.needles = Collections.unmodifiableCollection(collection);
         this.replacement = replace;
     }
 
     @Override
     public String asString() throws IOException {
         String value = this.origin.asString();
-        for (final String needle : this.needles) {
+        for (final String needle
+            : this.needles.toArray(new String[this.needles.size()])
+        ) {
             value = value.replace(needle, this.replacement);
         }
         return value;

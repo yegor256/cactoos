@@ -30,20 +30,20 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ReplacedArrayText}.
+ * Test case for {@link ReplacedItemsText}.
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReplacedArrayTextTest {
+public final class ReplacedItemsTextTest {
 
     @Test
-    public void replacesAllOccurrencesWithReplacedArrayText() {
+    public void replacesAllOccurrencesWithReplacedItemsText() {
         MatcherAssert.assertThat(
             "Can't replace a text.",
-            new ReplacedArrayText(
+            new ReplacedItemsText(
                 new StringAsText("one cat, two cats, three cats"),
                 new String[]{"cat"},
                 "bird"
@@ -53,10 +53,10 @@ public final class ReplacedArrayTextTest {
     }
 
     @Test
-    public void checksCompareToForReplacedArrayText() throws IOException {
+    public void checksCompareToForReplacedItemsText() throws IOException {
         MatcherAssert.assertThat(
             "Can't compare replaced text with expected.",
-            new ReplacedArrayText(
+            new ReplacedItemsText(
                 new StringAsText("When the child was a child"),
                 new String[]{"child"},
                 "boy"

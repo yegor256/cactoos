@@ -24,7 +24,10 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.util.Collection;
 import org.cactoos.Text;
+import org.cactoos.list.ArrayAsIterable;
+import org.cactoos.list.IterableAsList;
 
 /**
  * Replacing all elements in a text with the replacement.
@@ -67,7 +70,28 @@ public final class ReplacedAllText implements Text {
         final String[] needles,
         final String replace
     ) {
-        this(new ReplacedArrayText(text, needles, replace));
+        this(
+            new ReplacedItemsText(
+                text,
+                new IterableAsList<>(new ArrayAsIterable<>(needles)),
+                replace
+            )
+        );
+    }
+
+    /**
+     * New replaced text from a collection of needles.
+     *
+     * @param text The text
+     * @param needles An collection of needles
+     * @param replace The replace one
+     */
+    public ReplacedAllText(
+        final Text text,
+        final Collection<String> needles,
+        final String replace
+    ) {
+        this(new ReplacedItemsText(text, needles, replace));
     }
 
     /**
