@@ -33,7 +33,7 @@ import org.cactoos.Text;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.11
  */
 public final class AsciiText implements Text {
     /**

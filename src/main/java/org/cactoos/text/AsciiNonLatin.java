@@ -24,8 +24,10 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.cactoos.Text;
 
 /**
@@ -35,10 +37,77 @@ import org.cactoos.Text;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.11
  * @checkstyle JavaNCSSCheck (54 lines)
  */
 public final class AsciiNonLatin implements Text {
+
+    /**
+     * Non-latin alphabet.
+     */
+    private static final Map<String, String[]> MAPPING =
+        Arrays.stream(
+            new Object[][]{
+                {"aa", new String[]{"ع", "आ", "آ"}},
+                {"ae", new String[]{"ä", "æ", "ǽ"}},
+                {"ai", new String[]{"ऐ"}},
+                {"at", new String[]{"@"}},
+                {"ch", new String[]{"ч", "ჩ", "ჭ", "چ"}},
+                {"dj", new String[]{"ђ", "đ"}},
+                {"dz", new String[]{"џ", "ძ"}},
+                {"ei", new String[]{"ऍ"}},
+                {"gh", new String[]{"غ", "ღ"}},
+                {"ii", new String[]{"ई"}},
+                {"ij", new String[]{"ĳ"}},
+                {"kh", new String[]{"х", "خ", "ხ"}},
+                {"lj", new String[]{"љ"}},
+                {"nj", new String[]{"њ"}},
+                {"oe", new String[]{"ö", "œ", "ؤ"}},
+                {"oi", new String[]{"ऑ"}},
+                {"oii", new String[]{"ऒ"}},
+                {"ps", new String[]{"ψ"}},
+                {"sh", new String[]{"ш", "შ", "ش"}},
+                {"shch", new String[]{"щ"}},
+                {"ss", new String[]{"ß"}},
+                {"sx", new String[]{"ŝ"}},
+                {"th", new String[]{"þ", "ϑ", "ث", "ذ", "ظ"}},
+                {"ts", new String[]{"ц", "ც", "წ"}},
+                {"ue", new String[]{"ü"}},
+                {"uu", new String[]{"ऊ"}},
+                {"ya", new String[]{"я"}},
+                {"yu", new String[]{"ю"}},
+                {"zh", new String[]{"ж", "ჟ", "ژ"}},
+                {"(c)", new String[]{"©"}},
+                {"AE", new String[]{"Ä", "Æ", "Ǽ"}},
+                {"CH", new String[]{"Ч"}},
+                {"DJ", new String[]{"Ђ"}},
+                {"DZ", new String[]{"Џ"}},
+                {"GX", new String[]{"Ĝ"}},
+                {"HX", new String[]{"Ĥ"}},
+                {"IJ", new String[]{"Ĳ"}},
+                {"JX", new String[]{"Ĵ"}},
+                {"KH", new String[]{"Х"}},
+                {"LJ", new String[]{"Љ"}},
+                {"NJ", new String[]{"Њ"}},
+                {"OE", new String[]{"Ö", "Œ"}},
+                {"PS", new String[]{"Ψ"}},
+                {"SH", new String[]{"Ш"}},
+                {"SHCH", new String[]{"Щ"}},
+                {"SS", new String[]{"ẞ"}},
+                {"TH", new String[]{"Þ"}},
+                {"TS", new String[]{"Ц"}},
+                {"UE", new String[]{"Ü"}},
+                {"YA", new String[]{"Я"}},
+                {"YU", new String[]{"Ю"}},
+                {"ZH", new String[]{"Ж"}},
+            }
+        ).collect(
+            Collectors.toMap(
+                kv -> (String) kv[0],
+                kv -> (String[]) kv[1]
+            )
+        );
+
     /**
      * Source text.
      */
@@ -53,7 +122,6 @@ public final class AsciiNonLatin implements Text {
         this(new StringAsText(string));
     }
 
-    // @checkstyle ExecutableStatementCountCheck (55 line)
     /**
      * Ctor.
      *
@@ -64,58 +132,7 @@ public final class AsciiNonLatin implements Text {
             text,
             input -> {
                 final Map<String, String[]> map = new HashMap<>(0);
-                map.put("aa", new String[]{"ع", "आ", "آ"});
-                map.put("ae", new String[]{"ä", "æ", "ǽ"});
-                map.put("ai", new String[]{"ऐ"});
-                map.put("at", new String[]{"@"});
-                map.put("ch", new String[]{"ч", "ჩ", "ჭ", "چ"});
-                map.put("dj", new String[]{"ђ", "đ"});
-                map.put("dz", new String[]{"џ", "ძ"});
-                map.put("ei", new String[]{"ऍ"});
-                map.put("gh", new String[]{"غ", "ღ"});
-                map.put("ii", new String[]{"ई"});
-                map.put("ij", new String[]{"ĳ"});
-                map.put("kh", new String[]{"х", "خ", "ხ"});
-                map.put("lj", new String[]{"љ"});
-                map.put("nj", new String[]{"њ"});
-                map.put("oe", new String[]{"ö", "œ", "ؤ"});
-                map.put("oi", new String[]{"ऑ"});
-                map.put("oii", new String[]{"ऒ"});
-                map.put("ps", new String[]{"ψ"});
-                map.put("sh", new String[]{"ш", "შ", "ش"});
-                map.put("shch", new String[]{"щ"});
-                map.put("ss", new String[]{"ß"});
-                map.put("sx", new String[]{"ŝ"});
-                map.put("th", new String[]{"þ", "ϑ", "ث", "ذ", "ظ"});
-                map.put("ts", new String[]{"ц", "ც", "წ"});
-                map.put("ue", new String[]{"ü"});
-                map.put("uu", new String[]{"ऊ"});
-                map.put("ya", new String[]{"я"});
-                map.put("yu", new String[]{"ю"});
-                map.put("zh", new String[]{"ж", "ჟ", "ژ"});
-                map.put("(c)", new String[]{"©"});
-                map.put("AE", new String[]{"Ä", "Æ", "Ǽ"});
-                map.put("CH", new String[]{"Ч"});
-                map.put("DJ", new String[]{"Ђ"});
-                map.put("DZ", new String[]{"Џ"});
-                map.put("GX", new String[]{"Ĝ"});
-                map.put("HX", new String[]{"Ĥ"});
-                map.put("IJ", new String[]{"Ĳ"});
-                map.put("JX", new String[]{"Ĵ"});
-                map.put("KH", new String[]{"Х"});
-                map.put("LJ", new String[]{"Љ"});
-                map.put("NJ", new String[]{"Њ"});
-                map.put("OE", new String[]{"Ö", "Œ"});
-                map.put("PS", new String[]{"Ψ"});
-                map.put("SH", new String[]{"Ш"});
-                map.put("SHCH", new String[]{"Щ"});
-                map.put("SS", new String[]{"ẞ"});
-                map.put("TH", new String[]{"Þ"});
-                map.put("TS", new String[]{"Ц"});
-                map.put("UE", new String[]{"Ü"});
-                map.put("YA", new String[]{"Я"});
-                map.put("YU", new String[]{"Ю"});
-                map.put("ZH", new String[]{"Ж"});
+                map.putAll(AsciiNonLatin.MAPPING);
                 return map;
             }
         );

@@ -38,7 +38,7 @@ import org.cactoos.func.StickyFunc;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.11
  */
 public final class Ascii implements Text {
     /**
@@ -80,24 +80,24 @@ public final class Ascii implements Text {
     @SuppressWarnings(
         {
             "PMD.AvoidCatchingGenericException",
-            "PMD.AvoidRethrowingException",
-            "PMD.AvoidInstantiatingObjectsInLoops"
+            "PMD.AvoidRethrowingException"
         }
     )
+    // @todo Replace the loop by ReplacedAllText (approval pending).
     public String asString() throws IOException {
         final Map<String, String[]> map;
-        Text value;
+        String value;
         try {
             map = this.mapping.call();
-            value = new StringAsText(this.text.asString());
+            value = this.text.asString();
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception ex) {
             throw new IOException(ex);
         }
         for (final Map.Entry<String, String[]> entry : map.entrySet()) {
-            value = new ReplacedAllText(
-                value, entry.getValue(), entry.getKey()
-            );
+            for (final String unicode : entry.getValue()) {
+                value = value.replace(unicode, entry.getKey());
+            }
         }
         return new TrimmedNonAscii(value).asString();
     }

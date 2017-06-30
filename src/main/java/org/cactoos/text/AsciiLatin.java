@@ -39,7 +39,7 @@ import org.cactoos.Text;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.11
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class AsciiLatin implements Text {

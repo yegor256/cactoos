@@ -24,8 +24,10 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.cactoos.Text;
 
 /**
@@ -35,7 +37,7 @@ import org.cactoos.Text;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.11
  */
 public final class AsciiNumber implements Text {
     /**
@@ -62,16 +64,27 @@ public final class AsciiNumber implements Text {
             text,
             input -> {
                 final Map<String, String[]> map = new HashMap<>(0);
-                map.put("0", new String[]{"°", "₀", "۰"});
-                map.put("1", new String[]{"¹", "₁", "۱"});
-                map.put("2", new String[]{"²", "₂", "۲"});
-                map.put("3", new String[]{"³", "₃", "۳"});
-                map.put("4", new String[]{"⁴", "₄", "۴", "٤"});
-                map.put("5", new String[]{"⁵", "₅", "۵", "٥"});
-                map.put("6", new String[]{"⁶", "₆", "۶", "٦"});
-                map.put("7", new String[]{"⁷", "₇", "۷"});
-                map.put("8", new String[]{"⁸", "₈", "۸"});
-                map.put("9", new String[]{"⁹", "₉", "۹"});
+                map.putAll(
+                    Arrays.stream(
+                        new Object[][]{
+                            {"0", new String[]{"°", "₀", "۰"}},
+                            {"1", new String[]{"¹", "₁", "۱"}},
+                            {"2", new String[]{"²", "₂", "۲"}},
+                            {"3", new String[]{"³", "₃", "۳"}},
+                            {"4", new String[]{"⁴", "₄", "۴", "٤"}},
+                            {"5", new String[]{"⁵", "₅", "۵", "٥"}},
+                            {"6", new String[]{"⁶", "₆", "۶", "٦"}},
+                            {"7", new String[]{"⁷", "₇", "۷"}},
+                            {"8", new String[]{"⁸", "₈", "۸"}},
+                            {"9", new String[]{"⁹", "₉", "۹"}},
+                        }
+                    ).collect(
+                        Collectors.toMap(
+                            kv -> (String) kv[0],
+                            kv -> (String[]) kv[1]
+                        )
+                    )
+                );
                 return map;
             }
         );
