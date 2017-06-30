@@ -44,7 +44,6 @@ import org.junit.Test;
 public final class FormattedTextTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void formatsText() {
         MatcherAssert.assertThat(
             "Can't format a text",
@@ -56,59 +55,48 @@ public final class FormattedTextTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void formatsTextWithObjects() {
         MatcherAssert.assertThat(
-            "Can't format a text",
+            "Can't format a text whit objects",
             new FormattedText(
-                new StringAsText("%d. Formatted %s"),
+                new StringAsText("%d. Number as %s"),
                 new Integer(1),
-                new String("text")
+                new String("string")
             ),
-            new TextHasString("1. Formatted text")
+            new TextHasString("1. Number as string")
         );
     }
 
     @Test(expected = UnknownFormatConversionException.class)
-    @SuppressWarnings("PMD.EmptyCatchBlock")
-    public void failsForInvalidPattern() {
-        try {
-            new FormattedText(
-                new StringAsText("%%. Formatted %$"),
-                new IterableAsList<>(1, "text")
-            ).asString();
-        } catch (final IOException ex) {
-        }
+    public void failsForInvalidPattern() throws IOException {
+        new FormattedText(
+            new StringAsText("%%. Formatted %$"),
+            new IterableAsList<>(1, "invalid")
+        ).asString();
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void formatsTextWithCollection() {
         MatcherAssert.assertThat(
             "Can't format a text with a collection",
             new FormattedText(
-                new StringAsText("%d. Formatted %s"),
-                new IterableAsList<>(1, "text")
+                new StringAsText("%d. Formatted as %s"),
+                new IterableAsList<>(1, "txt")
             ),
-            new TextHasString("1. Formatted text")
+            new TextHasString("1. Formatted as txt")
         );
     }
 
     @Test(expected = IllegalFormatConversionException.class)
-    @SuppressWarnings("PMD.EmptyCatchBlock")
-    public void ensuresThatFormatterFails() {
-        try {
-            new FormattedText(
-                new StringAsText("Local time: %d"),
-                Locale.ROOT,
-                Calendar.getInstance()
-            ).asString();
-        } catch (final IOException ex) {
-        }
+    public void ensuresThatFormatterFails() throws IOException {
+        new FormattedText(
+            new StringAsText("Local time: %d"),
+            Locale.ROOT,
+            Calendar.getInstance()
+        ).asString();
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void formatsWithLocale() {
         MatcherAssert.assertThat(
             "Can't format a text with Locale",
