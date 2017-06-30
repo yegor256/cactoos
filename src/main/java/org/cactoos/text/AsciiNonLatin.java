@@ -31,15 +31,17 @@ import java.util.stream.Collectors;
 import org.cactoos.Text;
 
 /**
- * Transliterate an UTF-8 value to ASCII.
+ * Transliterate an UTF-8 value to ASCII. Error in windows. There is 1 string
+ * literal in unicode "�?" that are not encoded in this OS, and thus, this
+ * object has suppressed AvoidDuplicateLiterals in order to pass appveyor.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.11
- * @checkstyle JavaNCSSCheck (54 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class AsciiNonLatin implements Text {
 
     /**
