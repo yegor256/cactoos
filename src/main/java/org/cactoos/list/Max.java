@@ -66,7 +66,7 @@ public final class Max<T extends Comparable<T>> implements Scalar<T> {
         final Iterator<Scalar<T>> iter = this.items.iterator();
         if (!iter.hasNext()) {
             throw new NoSuchElementException(
-                "Can't find greater element in an empty interable"
+                "Can't find greater element in an empty iterable"
             );
         }
         T max = iter.next().value();

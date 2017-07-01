@@ -66,7 +66,7 @@ public final class Min<T extends Comparable<T>> implements Scalar<T> {
         final Iterator<Scalar<T>> iter = this.items.iterator();
         if (!iter.hasNext()) {
             throw new NoSuchElementException(
-                "Can't find smaller element in an empty interable"
+                "Can't find smaller element in an empty iterable"
             );
         }
         T min = iter.next().value();
