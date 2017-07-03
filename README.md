@@ -272,6 +272,9 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
   - [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
   - [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
+  - [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
+  - [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
+  - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
 
 
 ## License (MIT)
