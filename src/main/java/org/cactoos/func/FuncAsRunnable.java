@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
  * Func as Runnable.
@@ -40,6 +41,15 @@ public final class FuncAsRunnable implements Runnable {
      * Original func.
      */
     private final Func<?, ?> func;
+
+    /**
+     * Ctor.
+     * @param proc Encapsulated proc
+     * @since 0.11
+     */
+    public FuncAsRunnable(final Proc<?> proc) {
+        this(new ProcAsFunc<>(proc));
+    }
 
     /**
      * Ctor.
