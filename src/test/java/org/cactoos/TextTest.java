@@ -21,46 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos;
 
 import java.io.IOException;
-import org.cactoos.Text;
+import org.cactoos.text.StringAsText;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * A safe Text.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link Text}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NotNullText implements Text {
+public final class TextTest {
 
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public NotNullText(final Text text) {
-        this.origin = text;
+    @Test(expected = IOException.class)
+    public void failForNullText() throws IOException {
+        new Text.NoNulls(null).asString();
     }
 
-    @Override
-    public String asString() throws IOException {
-        if (this.origin == null) {
-            throw new IOException("invalid text (null)");
-        }
-        return this.origin.asString();
+    @Test(expected = IOException.class)
+    public void failForReturnNullString() throws IOException {
+        new Text.NoNulls(
+            new Text() {
+                @Override
+                public String asString() throws IOException {
+                    return null;
+                }
+                @Override
+                public int compareTo(final Text text) {
+                    return 0;
+                }
+            }
+        ).asString();
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
+    @Test
+    public void checkForNullText() throws Exception {
+        final String message = "Hello";
+        MatcherAssert.assertThat(
+            "Can't work with null text",
+            new Text.NoNulls(
+                new StringAsText(message)
+            ),
+            new TextHasString(message)
+        );
     }
 
 }
