@@ -51,10 +51,26 @@ public final class LengthOfTextTest {
     @Test
     public void valueStringAsArg() throws Exception {
         MatcherAssert.assertThat(
-            new LengthOfText(
-                new StringAsText("string")
-            ).value(),
+            new LengthOfText("string").value(),
             Matchers.equalTo(6)
+        );
+    }
+
+    @Test
+    public void valueEmptyText() throws Exception {
+        MatcherAssert.assertThat(
+            new LengthOfText(
+                new StringAsText("")
+            ).value(),
+            Matchers.equalTo(0)
+        );
+    }
+
+    @Test
+    public void valueEmptyString() throws Exception {
+        MatcherAssert.assertThat(
+            new LengthOfText("").value(),
+            Matchers.equalTo(0)
         );
     }
 }
