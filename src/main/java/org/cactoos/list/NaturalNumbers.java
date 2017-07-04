@@ -35,8 +35,43 @@ import java.util.stream.LongStream;
  */
 public final class NaturalNumbers implements Iterable<Long> {
 
+    /**
+     * First natural number.
+     */
+    private final long first;
+
+    /**
+     * Last natural number.
+     */
+    private final long last;
+
+    /**
+     * Ctor.
+     */
+    public NaturalNumbers() {
+        this(Long.MAX_VALUE);
+    }
+
+    /**
+     * Ctor.
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final long last) {
+        this(0L, last);
+    }
+
+    /**
+     * Ctor.
+     * @param first First natural number
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final long first, final long last) {
+        this.first = first;
+        this.last = last;
+    }
+
     @Override
     public Iterator<Long> iterator() {
-        return LongStream.range(0, Long.MAX_VALUE).iterator();
+        return LongStream.range(this.first, this.last).iterator();
     }
 }

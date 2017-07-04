@@ -56,4 +56,25 @@ public final class NaturalNumbersTest {
             new ScalarHasValue<>(0L)
         );
     }
+
+    @Test
+    public void containsNaturalNumbersRange() {
+        MatcherAssert.assertThat(
+            "Can't get range of natural numbers",
+            // @checkstyle MagicNumber (2 lines)
+            new NaturalNumbers(10L, 15L),
+            Matchers.hasItems(10L, 12L, 14L)
+        );
+    }
+
+    @Test
+    public void containsNaturalNumbersRangeWithoutLast() {
+        MatcherAssert.assertThat(
+            "Can't get range of natural numbers without last",
+            // @checkstyle MagicNumber (2 lines)
+            new NaturalNumbers(5L),
+            Matchers.hasItems(0L, 1L, 2L, 3L, 4L)
+        );
+    }
+
 }
