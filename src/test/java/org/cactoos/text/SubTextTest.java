@@ -31,16 +31,15 @@ import org.junit.Test;
  * Test case for {@link SubText}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SubTextTest {
 
     @Test
-    public void subsText() {
+    public void cutTextWithStartAndEnd() {
         MatcherAssert.assertThat(
-            "Can't cut a text",
+            "Can't cut a text with start and end",
             // @checkstyle MagicNumber (1 line)
             new SubText("hello world", 2, 9),
             new TextHasString("llo wor")
@@ -48,12 +47,11 @@ public final class SubTextTest {
     }
 
     @Test
-    public void suText() {
+    public void cutTextWithStart() {
         MatcherAssert.assertThat(
-            "Can't cut a text",
-            // @checkstyle MagicNumber (1 line)
-            new SubText("hello world", 2),
-            new TextHasString("llo world")
+            "Can't cut a text with start",
+            new SubText("cut here", 2),
+            new TextHasString("t here")
         );
     }
 

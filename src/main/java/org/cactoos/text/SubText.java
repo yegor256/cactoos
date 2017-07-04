@@ -26,6 +26,7 @@ package org.cactoos.text;
 import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * Extract a substring from a Text.
@@ -34,7 +35,7 @@ import org.cactoos.Text;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.11
  */
 public final class SubText implements Text {
 
@@ -46,75 +47,85 @@ public final class SubText implements Text {
     /**
      * The start position in the text.
      */
-    private final Scalar<Integer> start;
+    private final UncheckedScalar<Integer> start;
 
     /**
      * The end position in the text.
      */
-    private final Scalar<Integer> end;
+    private final UncheckedScalar<Integer> end;
 
     /**
      * Ctor.
      * @param text The String
-     * @param start Start position in the text
+     * @param strt Start position in the text
      */
-    public SubText(final String text, final int start) {
-        this(new StringAsText(text), start);
+    public SubText(final String text, final int strt) {
+        this(new StringAsText(text), strt);
     }
 
     /**
      * Ctor.
      * @param text The String
-     * @param start Start position in the text
+     * @param strt Start position in the text
      * @param end End position in the text
      */
-    public SubText(final String text, final int start, final int end) {
-        this(new StringAsText(text), start, end);
+    public SubText(final String text, final int strt, final int end) {
+        this(new StringAsText(text), strt, end);
     }
 
     /**
      * Ctor.
      * @param text The Text
-     * @param start Start position in the text
+     * @param strt Start position in the text
      */
-    public SubText(final Text text, final int start) {
-        this(text, () -> start, () -> text.asString().length());
+    public SubText(final Text text, final int strt) {
+        this(text, () -> strt, () -> text.asString().length());
     }
 
     /**
      * Ctor.
      * @param text The Text
-     * @param start Start position in the text
+     * @param strt Start position in the text
      * @param end End position in the text
      */
-    public SubText(final Text text, final int start, final int end) {
-        this(text, () -> start, () -> end);
+    public SubText(final Text text, final int strt, final int end) {
+        this(text, () -> strt, () -> end);
     }
 
     /**
      * Ctor.
      * @param text The Text
-     * @param start Start position in the text
+     * @param strt Start position in the text
      * @param end End position in the text
      */
-    public SubText(final Text text, final Scalar<Integer> start,
+    public SubText(final Text text, final Scalar<Integer> strt,
         final Scalar<Integer> end) {
+        this(text, new UncheckedScalar<>(strt), new UncheckedScalar<>(end));
+    }
+
+    /**
+     * Ctor.
+     * @param text The Text
+     * @param strt Start position in the text
+     * @param end End position in the text
+     */
+    public SubText(final Text text, final UncheckedScalar<Integer> strt,
+        final UncheckedScalar<Integer> end) {
         this.origin = text;
-        this.start = start;
+        this.start = strt;
         this.end = end;
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public String asString() throws IOException {
-        try {
-            return this.origin.asString().substring(
-                this.start.asValue(),
-                this.end.asValue()
-            );
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IOException(ex);
-        }
+        return this.origin.asString().substring(
+            this.start.value(),
+            this.end.value()
+        );
+    }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
     }
 }
