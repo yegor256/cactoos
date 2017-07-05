@@ -33,7 +33,7 @@ import org.cactoos.Text;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.11
  */
 public final class AbbreviatedText implements Text {
 
