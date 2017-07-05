@@ -23,12 +23,12 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link org.cactoos.Text}.
+ * Test case for {@link LengthOfText}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
@@ -43,16 +43,16 @@ public final class LengthOfTextTest {
         MatcherAssert.assertThat(
             new LengthOfText(
                 new StringAsText("text")
-            ).value(),
-            Matchers.equalTo(4)
+            ),
+            new ScalarHasValue<>(4)
         );
     }
 
     @Test
     public void valueStringAsArg() throws Exception {
         MatcherAssert.assertThat(
-            new LengthOfText("string").value(),
-            Matchers.equalTo(6)
+            new LengthOfText("string"),
+            new ScalarHasValue<>(6)
         );
     }
 
@@ -61,16 +61,16 @@ public final class LengthOfTextTest {
         MatcherAssert.assertThat(
             new LengthOfText(
                 new StringAsText("")
-            ).value(),
-            Matchers.equalTo(0)
+            ),
+            new ScalarHasValue<>(0)
         );
     }
 
     @Test
     public void valueEmptyString() throws Exception {
         MatcherAssert.assertThat(
-            new LengthOfText("").value(),
-            Matchers.equalTo(0)
+            new LengthOfText(""),
+            new ScalarHasValue<>(0)
         );
     }
 }
