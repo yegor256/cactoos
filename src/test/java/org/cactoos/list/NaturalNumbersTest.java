@@ -62,7 +62,7 @@ public final class NaturalNumbersTest {
         MatcherAssert.assertThat(
             "Can't get range of natural numbers",
             // @checkstyle MagicNumber (2 lines)
-            new NaturalNumbers(10L, 15L),
+            new NaturalNumbers(() -> 10L, () -> 15L),
             Matchers.hasItems(10L, 12L, 14L)
         );
     }
@@ -72,7 +72,7 @@ public final class NaturalNumbersTest {
         MatcherAssert.assertThat(
             "Can't get range of natural numbers without last",
             // @checkstyle MagicNumber (2 lines)
-            new NaturalNumbers(5L),
+            new NaturalNumbers(() -> 5L),
             Matchers.hasItems(0L, 1L, 2L, 3L, 4L)
         );
     }

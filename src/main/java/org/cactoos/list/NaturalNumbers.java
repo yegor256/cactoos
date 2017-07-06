@@ -25,6 +25,8 @@ package org.cactoos.list;
 
 import java.util.Iterator;
 import java.util.stream.LongStream;
+import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * Iterable providing Natural Numbers.
@@ -38,12 +40,12 @@ public final class NaturalNumbers implements Iterable<Long> {
     /**
      * First natural number.
      */
-    private final long first;
+    private final UncheckedScalar<Long> first;
 
     /**
      * Last natural number.
      */
-    private final long last;
+    private final UncheckedScalar<Long> last;
 
     /**
      * Ctor.
@@ -66,12 +68,50 @@ public final class NaturalNumbers implements Iterable<Long> {
      * @param last Last natural number
      */
     public NaturalNumbers(final long first, final long last) {
+        this(() -> first, () -> last);
+    }
+
+    /**
+     * Ctor.
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final Scalar<Long> last) {
+        this(new UncheckedScalar<>(last));
+    }
+
+    /**
+     * Ctor.
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final UncheckedScalar<Long> last) {
+        this(() -> 0L, last);
+    }
+
+    /**
+     * Ctor.
+     * @param first First natural number
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final Scalar<Long> first, final Scalar<Long> last) {
+        this(new UncheckedScalar<>(first), new UncheckedScalar<>(last));
+    }
+
+    /**
+     * Ctor.
+     * @param first First natural number
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final UncheckedScalar<Long> first,
+        final UncheckedScalar<Long> last) {
         this.first = first;
         this.last = last;
     }
 
     @Override
     public Iterator<Long> iterator() {
-        return LongStream.range(this.first, this.last).iterator();
+        return LongStream.range(
+            this.first.value(),
+            this.last.value()
+        ).iterator();
     }
 }
