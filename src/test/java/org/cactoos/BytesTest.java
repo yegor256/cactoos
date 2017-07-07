@@ -24,55 +24,29 @@
 package org.cactoos;
 
 import java.io.IOException;
+import org.junit.Test;
 
 /**
- * Bytes.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link Bytes.NoNulls}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @see org.cactoos.text.TextAsBytes
- * @since 0.1
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public interface Bytes {
+public final class BytesTest {
 
-    /**
-     * Convert it to the byte array.
-     * @return The byte array
-     * @throws IOException If fails
-     */
-    byte[] asBytes() throws IOException;
+    @Test(expected = IOException.class)
+    public void failForNullBytes() throws IOException {
+        new Bytes.NoNulls(null).asBytes();
+    }
 
-    /**
-     * Bytes check for no nulls.
-     *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
-     * @since 0.11
-     */
-    final class NoNulls implements Bytes {
-        /**
-         * The input.
-         */
-        private final Bytes origin;
-        /**
-         * Ctor.
-         * @param bytes The input
-         */
-        public NoNulls(final Bytes bytes) {
-            this.origin = bytes;
-        }
-        @Override
-        public byte[] asBytes() throws IOException {
-            if (this.origin == null) {
-                throw new IOException("NULL instead of a valid bytes");
-            }
-            final byte[] bytes = this.origin.asBytes();
-            if (bytes == null) {
-                throw new IOException("NULL instead of a valid byte array");
-            }
-            return bytes;
-        }
+    @Test(expected = IOException.class)
+    public void failForNullArray() throws IOException {
+        new Bytes.NoNulls(() -> null).asBytes();
+    }
+
+    @Test
+    public void okForNoNullBytes() throws IOException {
+        new Bytes.NoNulls(() -> new byte[1]).asBytes();
     }
 }
