@@ -66,11 +66,15 @@ public interface Bytes {
         @Override
         public byte[] asBytes() throws IOException {
             if (this.origin == null) {
-                throw new IOException("NULL instead of a valid bytes");
+                throw new IllegalArgumentException(
+                    "NULL instead of a valid bytes"
+                );
             }
             final byte[] bytes = this.origin.asBytes();
             if (bytes == null) {
-                throw new IOException("NULL instead of a valid byte array");
+                throw new IllegalStateException(
+                    "NULL instead of a valid byte array"
+                );
             }
             return bytes;
         }

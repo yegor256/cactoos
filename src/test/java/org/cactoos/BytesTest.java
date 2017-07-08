@@ -35,18 +35,18 @@ import org.junit.Test;
  */
 public final class BytesTest {
 
-    @Test(expected = IOException.class)
-    public void failForNullBytes() throws IOException {
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullArgument() throws IOException {
         new Bytes.NoNulls(null).asBytes();
     }
 
-    @Test(expected = IOException.class)
-    public void failForNullArray() throws IOException {
+    @Test(expected = IllegalStateException.class)
+    public void failForNullResult() throws IOException {
         new Bytes.NoNulls(() -> null).asBytes();
     }
 
     @Test
-    public void okForNoNullBytes() throws IOException {
+    public void okForNoNulls() throws IOException {
         new Bytes.NoNulls(() -> new byte[1]).asBytes();
     }
 }
