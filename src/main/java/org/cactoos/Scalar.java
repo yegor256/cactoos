@@ -23,8 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
-
 /**
  * Scalar.
  *
@@ -79,11 +77,15 @@ public interface Scalar<T> {
         @Override
         public T value() throws Exception {
             if (this.origin == null) {
-                throw new IOException("NULL instead of a valid scalar");
+                throw new IllegalArgumentException(
+                    "NULL instead of a valid scalar"
+                );
             }
             final T value = this.origin.value();
             if (value == null) {
-                throw new IOException("NULL instead of a valid value");
+                throw new IllegalStateException(
+                    "NULL instead of a valid value"
+                );
             }
             return value;
         }

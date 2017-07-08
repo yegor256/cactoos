@@ -23,7 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
 import org.junit.Test;
 
 /**
@@ -35,18 +34,18 @@ import org.junit.Test;
  */
 public final class ScalarTest {
 
-    @Test(expected = IOException.class)
-    public void failForNullScalar() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullArgument() throws Exception {
         new Scalar.NoNulls<>(null).value();
     }
 
-    @Test(expected = IOException.class)
-    public void failForNullValue() throws Exception {
+    @Test(expected = IllegalStateException.class)
+    public void failForNullResult() throws Exception {
         new Scalar.NoNulls<>(() -> null).value();
     }
 
     @Test
-    public void okForNoNullScalar() throws Exception {
+    public void okForNoNulls() throws Exception {
         new Scalar.NoNulls<>(() -> 1).value();
     }
 }
