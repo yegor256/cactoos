@@ -69,11 +69,15 @@ public interface Text extends Comparable<Text> {
         @Override
         public String asString() throws IOException {
             if (this.origin == null) {
-                throw new IOException("NULL instead of a valid text");
+                throw new IllegalArgumentException(
+                    "NULL instead of a valid text"
+                );
             }
             final String string = this.origin.asString();
             if (string == null) {
-                throw new IOException("NULL instead of a valid result string");
+                throw new IllegalStateException(
+                    "NULL instead of a valid result string"
+                );
             }
             return string;
         }

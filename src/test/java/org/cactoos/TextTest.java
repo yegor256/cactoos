@@ -37,13 +37,13 @@ import org.junit.Test;
  */
 public final class TextTest {
 
-    @Test(expected = IOException.class)
-    public void failForNullText() throws IOException {
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullArgument() throws IOException {
         new Text.NoNulls(null).asString();
     }
 
-    @Test(expected = IOException.class)
-    public void failForReturnNullString() throws IOException {
+    @Test(expected = IllegalStateException.class)
+    public void failForNullResult() throws IOException {
         new Text.NoNulls(
             new Text() {
                 @Override
@@ -59,7 +59,7 @@ public final class TextTest {
     }
 
     @Test
-    public void checkForNullText() throws Exception {
+    public void okForNoNulls() throws Exception {
         final String message = "Hello";
         MatcherAssert.assertThat(
             "Can't work with null text",
