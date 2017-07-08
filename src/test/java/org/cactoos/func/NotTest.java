@@ -23,34 +23,33 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Negative.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link Not}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.7
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Neg implements Scalar<Boolean> {
+public final class NotTest {
 
-    /**
-     * The origin scalar.
-     */
-    private final Scalar<Boolean> origin;
-
-    /**
-     * Ctor.
-     * @param origin The scalar
-     */
-    public Neg(final Scalar<Boolean> origin) {
-        this.origin = origin;
+    @Test
+    public void trueToFalse() throws Exception {
+        MatcherAssert.assertThat(
+            new Not(new True()).value(),
+            Matchers.equalTo(new False().value())
+        );
     }
 
-    @Override
-    public Boolean value() throws Exception {
-        return !this.origin.value();
+    @Test
+    public void falseToTrue() throws Exception {
+        MatcherAssert.assertThat(
+            new Not(new False()).value(),
+            Matchers.equalTo(new True().value())
+        );
     }
 }
