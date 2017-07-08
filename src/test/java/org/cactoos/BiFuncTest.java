@@ -23,7 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
 import org.junit.Test;
 
 /**
@@ -54,7 +53,7 @@ public final class BiFuncTest {
         ).apply(new Object(), null);
     }
 
-    @Test(expected = IOException.class)
+    @Test(expected = IllegalStateException.class)
     public void failForNullResult() throws Exception {
         new BiFunc.NoNulls<>(
             (first, second) -> null

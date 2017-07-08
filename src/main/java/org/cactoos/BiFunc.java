@@ -23,8 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
-
 /**
  * Function that accepts two arguments.
  *
@@ -89,7 +87,9 @@ public interface BiFunc<X, Y, Z> {
             }
             final Z result = this.origin.apply(first, second);
             if (result == null) {
-                throw new IOException("NULL instead of a valid result");
+                throw new IllegalStateException(
+                    "NULL instead of a valid result"
+                );
             }
             return result;
         }
