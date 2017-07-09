@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.cactoos.Func;
 import org.cactoos.func.StickyScalar;
 import org.cactoos.func.UncheckedScalar;
 
@@ -57,6 +58,30 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
         this(new ArrayAsIterable<>(list));
     }
 
+    /**
+     * Ctor.
+     * @param list List of items
+     * @param key Func to create key
+     * @param value Func to create value
+     * @param <Z> Type of items in the list
+     * @since 0.11
+     */
+    public <Z> StickyMap(final Iterable<Z> list, final Func<Z, X> key,
+        final Func<Z, Y> value) {
+        this(list, item -> new MapEntry<>(key.apply(item), value.apply(item)));
+    }
+
+    /**
+     * Ctor.
+     * @param list List of items
+     * @param entry Func to create entry
+     * @param <Z> Type of items in the list
+     * @since 0.11
+     */
+    public <Z> StickyMap(final Iterable<Z> list,
+        final Func<Z, Map.Entry<X, Y>> entry) {
+        this(new MappedIterable<>(list, entry));
+    }
     /**
      * Ctor.
      * @param list Entries for the entries
