@@ -21,36 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import org.cactoos.InputHasContent;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.cactoos.io.InputAsBytes;
+import org.cactoos.text.BytesAsText;
+import org.cactoos.text.UncheckedText;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsEqual;
 
 /**
- * Test case for {@link FileAsInput}.
+ * Matcher for the input.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.11
  */
-public final class FileAsInputTest {
+public final class InputHasContent extends TypeSafeMatcher<Input> {
 
-    @Test
-    public void readsSimpleFileContent() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
-        final String content = "Hello, товарищ!";
-        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
-        MatcherAssert.assertThat(
-            "Can't read file content",
-            new PathAsInput(temp),
-            new InputHasContent(content)
+    /**
+     * Matcher of the value.
+     */
+    private final Matcher<String> matcher;
+
+    /**
+     * Ctor.
+     * @param text The text to match against
+     */
+    public InputHasContent(final String text) {
+        this(new IsEqual<>(text));
+    }
+
+    /**
+     * Ctor.
+     * @param mtr Matcher of the text
+     */
+    public InputHasContent(final Matcher<String> mtr) {
+        super();
+        this.matcher = mtr;
+    }
+
+    @Override
+    public boolean matchesSafely(final Input item) {
+        return this.matcher.matches(
+            new UncheckedText(
+                new BytesAsText(new InputAsBytes(item))
+            ).asString()
         );
     }
 
+    @Override
+    public void describeTo(final Description description) {
+        description.appendText("Input with ");
+        description.appendDescriptionOf(this.matcher);
+    }
 }
