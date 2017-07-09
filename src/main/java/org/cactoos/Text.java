@@ -24,6 +24,7 @@
 package org.cactoos;
 
 import java.io.IOException;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Text.
@@ -43,5 +44,52 @@ public interface Text extends Comparable<Text> {
      * @throws IOException If fails
      */
     String asString() throws IOException;
+
+    /**
+     * Text check for no nulls.
+     *
+     * <p>There is no thread-safety guarantee.
+     *
+     * @author Fabricio Cabral (fabriciofx@gmail.com)
+     * @version $Id$
+     * @since 0.11
+     */
+    final class NoNulls implements Text {
+        /**
+         * The origin text.
+         */
+        private final Text origin;
+        /**
+         * Ctor.
+         * @param text The text
+         */
+        public NoNulls(final Text text) {
+            this.origin = text;
+        }
+        @Override
+        public String asString() throws IOException {
+            if (this.origin == null) {
+                throw new IllegalArgumentException(
+                    "NULL instead of a valid text"
+                );
+            }
+            final String string = this.origin.asString();
+            if (string == null) {
+                throw new IllegalStateException(
+                    "NULL instead of a valid result string"
+                );
+            }
+            return string;
+        }
+        @Override
+        public int compareTo(final Text text) {
+            if (text == null) {
+                throw new IllegalArgumentException(
+                    "NULL parameter instead of a valid text"
+                );
+            }
+            return new UncheckedText(this).compareTo(text);
+        }
+    }
 
 }
