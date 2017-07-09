@@ -206,7 +206,7 @@ for (String name : names) {
 This is its object-oriented alternative (no streams!):
 
 ```java
-new And<>(
+new And(
   names,
   n -> {
     System.out.printf("Hello, %s!\n", n);
@@ -225,7 +225,7 @@ while (!ready) {
 Here is its object-oriented alternative:
 
 ```java
-new And<>(
+new And(
   new EndlessIterable<>(ready),
   ready -> {
     System.out.prinln("Still waiting...");
