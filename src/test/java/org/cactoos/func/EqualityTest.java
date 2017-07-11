@@ -39,22 +39,13 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class EqualityTest {
-    final private class Weight implements Bytes {
-        private final int kilos;
-        Weight(final int kls) {
-            this.kilos = kls;
-        }
-        @Override
-        public byte[] asBytes() {
-            return ByteBuffer.allocate(4).putInt(this.kilos).array();
-        }
-    }
-      
     @Test
     public void notEqualLeft() throws Exception {
         MatcherAssert.assertThat(
             new Equality<>(
-                new Weight(400), new Weight(500)
+                // @checkstyle MagicNumberCheck (2 line)
+                new Weight(400),
+                new Weight(500)
             ).value(),
             Matchers.equalTo(-1)
         );
@@ -64,7 +55,9 @@ public final class EqualityTest {
     public void notEqualRight() throws Exception {
         MatcherAssert.assertThat(
             new Equality<>(
-                new Weight(500), new Weight(400)
+                // @checkstyle MagicNumberCheck (2 line)
+                new Weight(500),
+                new Weight(400)
             ).value(),
             Matchers.equalTo(1)
         );
@@ -74,9 +67,39 @@ public final class EqualityTest {
     public void equal() throws Exception {
         MatcherAssert.assertThat(
             new Equality<>(
-                new Weight(500), new Weight(500)
+                // @checkstyle MagicNumberCheck (2 line)
+                new Weight(500),
+                new Weight(500)
             ).value(),
             Matchers.equalTo(0)
         );
     }
+
+    /**
+     * Support for EqualityTest.
+     *
+     * @author Yegor Bugayenko (yegor256@gmail.com)
+     * @author Fabricio Cabral (fabriciofx@gmail.com)
+     * @version $Id$
+     * @since 0.12
+     */
+    private final class Weight implements Bytes {
+        /**
+         * Kilos.
+         */
+        private final int kilos;
+        /**
+         * Ctor.
+         * @param kls Kilos
+         */
+        Weight(final int kls) {
+            this.kilos = kls;
+        }
+        @Override
+        public byte[] asBytes() {
+            // @checkstyle MagicNumberCheck (1 line)
+            return ByteBuffer.allocate(4).putInt(this.kilos).array();
+        }
+    }
+
 }

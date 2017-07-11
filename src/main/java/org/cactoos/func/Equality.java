@@ -34,6 +34,7 @@ import org.cactoos.Scalar;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
+ * @param <T> Type of input
  * @since 0.12
  */
 public final class Equality<T extends Bytes> implements Scalar<Integer> {
@@ -50,8 +51,8 @@ public final class Equality<T extends Bytes> implements Scalar<Integer> {
 
     /**
      * Ctor.
-     * @param lft
-     * @param rght
+     * @param lft The first object to compare
+     * @param rght The second object to compare
      */
     public Equality(final T lft, final T rght) {
         this.left = lft;
@@ -62,8 +63,8 @@ public final class Equality<T extends Bytes> implements Scalar<Integer> {
     public Integer value() throws Exception {
         final byte[] lft = this.left.asBytes();
         final byte[] rght = this.right.asBytes();
+        final int max = Math.max(lft.length, rght.length);
         int result = 0;
-        int max = Math.max(lft.length, rght.length);
         for (int idx = 0; idx < max; ++idx) {
             if (idx >= lft.length) {
                 result = -1;
