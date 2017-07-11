@@ -31,7 +31,7 @@ import org.junit.Test;
  * Test case for {@link AbbreviatedText}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class AbbreviatedTextTest {

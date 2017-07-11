@@ -33,14 +33,14 @@ import org.cactoos.Text;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.12
  */
 public final class AbbreviatedText implements Text {
 
     /**
-     * The truncated text.
+     * The text.
      */
-    private final TruncatedText truncated;
+    private final SubText origin;
 
     /**
      * Ctor.
@@ -54,59 +54,60 @@ public final class AbbreviatedText implements Text {
     /**
      * Ctor.
      * @param text A String
-     * @param width Width of the result string
+     * @param wdth Width of the result string
      */
-    public AbbreviatedText(final String text, final int width) {
-        this(text, 0, width);
+    public AbbreviatedText(final String text, final int wdth) {
+        this(text, 0, wdth);
     }
 
     /**
      * Ctor.
      * @param text The Text
-     * @param width Width of the result string
+     * @param wdth Width of the result string
      */
-    public AbbreviatedText(final Text text, final int width) {
+    public AbbreviatedText(final Text text, final int wdth) {
         // @checkstyle MagicNumber (1 line)
-        this(text, 0, width);
+        this(text, 0, wdth);
     }
 
     /**
      * Ctor.
      * @param text A String
-     * @param offset Position where to start
-     * @param width Width of the result string
+     * @param off Position where to start
+     * @param wdth Width of the result string
      */
-    public AbbreviatedText(
-        final String text,
-        final int offset,
-        final int width
-    ) {
-        this(new StringAsText(text), offset, width);
+    public AbbreviatedText(final String text, final int off, final int wdth) {
+        this(new StringAsText(text), off, wdth);
     }
 
     /**
      * Ctor.
      * @param text The Text
-     * @param offset Position where to start
-     * @param width Width of the result string
+     * @param off Position where to start
+     * @param wdth Width of the result string
      */
-    public AbbreviatedText(final Text text, final int offset, final int width) {
-        this(new TruncatedText(text, offset, width));
+    public AbbreviatedText(final Text text, final int off, final int wdth) {
+        this(new SubText(text, off, wdth));
     }
 
     /**
      * Ctor.
      * @param text The truncated Text
      */
-    public AbbreviatedText(final TruncatedText text) {
-        this.truncated = text;
+    public AbbreviatedText(final SubText text) {
+        this.origin = text;
     }
 
     @Override
     public String asString() throws IOException {
         return new FormattedText(
             "%s...",
-            this.truncated.asString()
+            this.origin.asString()
         ).asString();
+    }
+
+    @Override
+    public int compareTo(final Text text) {
+        return 0;
     }
 }
