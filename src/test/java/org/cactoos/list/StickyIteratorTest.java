@@ -27,6 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Text;
 import org.cactoos.TextHasString;
 import org.cactoos.text.FormattedText;
+import org.cactoos.text.JoinedText;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -37,6 +38,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class StickyIteratorTest {
 
@@ -45,7 +47,7 @@ public final class StickyIteratorTest {
         final AtomicInteger count = new AtomicInteger(2);
         final Text text = new FormattedText(
             "%s",
-            String.join(
+            new JoinedText(
                 ", ",
                 () -> new MappedIterator<>(
                     new StickyIterator<>(
