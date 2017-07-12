@@ -35,6 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.InputHasContent;
 import org.cactoos.TextHasString;
 import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.UncheckedScalar;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
 import org.cactoos.text.TextAsBytes;
@@ -54,6 +55,7 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class InputOfTest {
 
     @Test
@@ -69,20 +71,60 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsAlternativeInput() {
+    public void readsAlternativeInputForCheckedCase() {
         MatcherAssert.assertThat(
-            "Can't read alternative source",
+            "Can't read alternative source for checked case.",
             new BytesAsText(
                 new InputAsBytes(
                     new InputWithFallback(
                         new InputOf(
-                            new File("/this-file-is-absent-for-sure.txt")
+                            () -> new File("/absent-file-for-checked-case.txt")
                         ),
-                        new InputOf(new StringAsText("hello, world!"))
+                        new InputOf(new StringAsText("hello, checked!"))
                     )
                 )
             ),
-            new TextHasString(Matchers.endsWith("world!"))
+            new TextHasString(Matchers.endsWith("checked!"))
+        );
+    }
+
+    @Test
+    public void readsAlternativeInputForUncheckedCase() {
+        MatcherAssert.assertThat(
+            "Can't read alternative source for unchecked case.",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputWithFallback(
+                        new InputOf(
+                            new UncheckedScalar<File>(
+                                () -> new File(
+                                    "/absent-file-for-unchecked-case.txt"
+                                )
+                            )
+                        ),
+                        new InputOf(new StringAsText("hello, unchecked!"))
+                    )
+                )
+            ),
+            new TextHasString(Matchers.endsWith("unchecked!"))
+        );
+    }
+
+    @Test
+    public void readsAlternativeInputForFileCase() {
+        MatcherAssert.assertThat(
+            "Can't read alternative source from file not found",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputWithFallback(
+                        new InputOf(
+                            new File("/this-file-does-not-exist.txt")
+                        ),
+                        new InputOf(new StringAsText("Alternative text!"))
+                    )
+                )
+            ),
+            new TextHasString(Matchers.endsWith("text!"))
         );
     }
 
@@ -101,11 +143,31 @@ public final class InputOfTest {
                 4
             ),
             Matchers.equalTo(
-                new byte[]{
-                    // @checkstyle MagicNumber (1 line)
-                    (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
-                }
+                new InputAsBytes(
+                    new InputOf(
+                        new byte[]{
+                            // @checkstyle MagicNumber (1 line)
+                            (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
+                        }
+                    )
+                ).asBytes()
             )
+        );
+    }
+
+    @Test
+    public void readsTextResource() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't read a text resource from classpath",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputOf(
+                        "org/cactoos/large-text.txt",
+                        Thread.currentThread().getContextClassLoader()
+                    )
+                )
+            ).asString(),
+            Matchers.endsWith("est laborum.\n")
         );
     }
 
