@@ -42,6 +42,7 @@ public final class EqualityTest {
     @Test
     public void notEqualLeft() throws Exception {
         MatcherAssert.assertThat(
+            "Can't compare if first object is not equal to second object",
             new Equality<>(
                 // @checkstyle MagicNumberCheck (2 line)
                 new Weight(400),
@@ -54,6 +55,7 @@ public final class EqualityTest {
     @Test
     public void notEqualRight() throws Exception {
         MatcherAssert.assertThat(
+            "Can't compare if second object is not equal to first object",
             new Equality<>(
                 // @checkstyle MagicNumberCheck (2 line)
                 new Weight(500),
@@ -66,6 +68,7 @@ public final class EqualityTest {
     @Test
     public void equal() throws Exception {
         MatcherAssert.assertThat(
+            "Can't compare if two objects are equals",
             new Equality<>(
                 // @checkstyle MagicNumberCheck (2 line)
                 new Weight(500),
