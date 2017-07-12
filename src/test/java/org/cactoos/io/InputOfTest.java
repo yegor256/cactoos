@@ -37,6 +37,7 @@ import org.cactoos.TextHasString;
 import org.cactoos.func.FuncAsMatcher;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
+import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -104,6 +105,43 @@ public final class InputOfTest {
                     // @checkstyle MagicNumber (1 line)
                     (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
                 }
+            )
+        );
+    }
+
+    @Test
+    public void readAbsentResourceTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't replace an absent resource with a text",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputOf(
+                        "foo/this-resource-is-definitely-absent.txt",
+                        "the replacement"
+                    )
+                )
+            ).asString(),
+            Matchers.endsWith("replacement")
+        );
+    }
+
+    @Test
+    public void readsInputIntoBytes() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read bytes from Input",
+            new String(
+                new InputAsBytes(
+                    new InputOf(
+                        new TextAsBytes(
+                            new StringAsText("Hello, друг!")
+                        )
+                    )
+                ).asBytes(),
+                StandardCharsets.UTF_8
+            ),
+            Matchers.allOf(
+                Matchers.startsWith("Hello, "),
+                Matchers.endsWith("друг!")
             )
         );
     }
