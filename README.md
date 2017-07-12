@@ -61,7 +61,7 @@ To read a text file in UTF-8:
 ```java
 String text = new BytesAsText(
   new InputAsBytes(
-    new FileAsInput(
+    new InputOf(
       new File("/code/a.txt")
     )
   )
@@ -73,7 +73,7 @@ To write a text into a file:
 ```java
 new LengthOfInput(
   new TeeInput(
-    new BytesAsInput(
+    new InputOf(
       new TextAsBytes(
         new StringAsText("Hello, world!")
       )
@@ -89,7 +89,7 @@ To read a binary file from classpath:
 
 ```java
 byte[] data = new InputAsBytes(
-  new ResourceAsInput("foo/img.jpg")
+  new InputOf("foo/img.jpg")
 ).asBytes();
 ```
 
@@ -174,7 +174,7 @@ List<String> sorted = new IterableAsList<>(
     new SplitText(
       new BytesAsText(
         new InputAsBytes(
-          new FileAsInput(
+          new InputOf(
             new File("/tmp/names.txt")
           )
         )
