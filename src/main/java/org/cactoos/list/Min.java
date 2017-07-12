@@ -23,8 +23,8 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
 
 /**
@@ -65,7 +65,9 @@ public final class Min<T extends Comparable<T>> implements Scalar<T> {
     public T value() throws Exception {
         final Iterator<Scalar<T>> iter = this.items.iterator();
         if (!iter.hasNext()) {
-            throw new IOException("Iterable is empty");
+            throw new NoSuchElementException(
+                "Can't find smaller element in an empty iterable"
+            );
         }
         T min = iter.next().value();
         while (iter.hasNext()) {

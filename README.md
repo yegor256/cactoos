@@ -118,12 +118,12 @@ new UpperText("Hello");
 To filter a collection:
 
 ```java
-Collection<String> filtered = new IterableAsCollection<>(
+Collection<String> filtered = new IterableAsList<>(
   new FilteredIterable<>(
     new ArrayAsIterable<>("hello", "world", "dude"),
     new Func<String, Boolean>() {
       @Override
-      public boolean apply(String s) {
+      public Boolean apply(String s) {
         return s.length() > 4;
       }
     }
@@ -134,7 +134,7 @@ Collection<String> filtered = new IterableAsCollection<>(
 With Lambda:
 
 ```java
-new IterableAsCollection<>(
+new IterableAsList<>(
   new FilteredIterable<>(
     new ArrayAsIterable<>("hello", "world", "dude"),
     s -> s.length() > 4
@@ -161,7 +161,7 @@ Or even more compact:
 
 ```java
 new And(
-  input -> System.out.printf("Item: %s\n", input),
+  (String input) -> System.out.printf("Item: %s\n", input),
   "how", "are", "you"
 ).value();
 ```
@@ -169,8 +169,8 @@ new And(
 To sort a list of words in the file:
 
 ```java
-List<String> sorted = new SortedList<>(
-  new IterableAsList<>(
+List<String> sorted = new IterableAsList<>(
+  new SortedIterable<>(
     new SplitText(
       new BytesAsText(
         new InputAsBytes(
@@ -178,7 +178,8 @@ List<String> sorted = new SortedList<>(
             new File("/tmp/names.txt")
           )
         )
-      )
+      ),
+      new StringAsText("\\s+")
     )
   )
 );
@@ -205,7 +206,7 @@ for (String name : names) {
 This is its object-oriented alternative (no streams!):
 
 ```java
-new And<>(
+new And(
   names,
   n -> {
     System.out.printf("Hello, %s!\n", n);
@@ -224,7 +225,7 @@ while (!ready) {
 Here is its object-oriented alternative:
 
 ```java
-new And<>(
+new And(
   new EndlessIterable<>(ready),
   ready -> {
     System.out.prinln("Still waiting...");
@@ -271,6 +272,9 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
   - [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
   - [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
+  - [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
+  - [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
+  - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
 
 
 ## License (MIT)

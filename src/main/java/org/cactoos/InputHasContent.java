@@ -23,58 +23,57 @@
  */
 package org.cactoos;
 
+import org.cactoos.io.InputAsBytes;
+import org.cactoos.text.BytesAsText;
+import org.cactoos.text.UncheckedText;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsEqual;
+
 /**
- * Procedure.
- *
- * <p>There is no thread-safety guarantee.
+ * Matcher for the input.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @see org.cactoos.func.ProcAsFunc
- * @since 0.1
+ * @since 0.11
  */
-public interface Proc<X> {
+public final class InputHasContent extends TypeSafeMatcher<Input> {
 
     /**
-     * Execute it.
-     * @param input The argument
-     * @throws Exception If fails
+     * Matcher of the value.
      */
-    void exec(X input) throws Exception;
+    private final Matcher<String> matcher;
 
     /**
-     * Proc check for no nulls.
-     *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
-     * @param <X> Type of input
-     * @since 0.11
+     * Ctor.
+     * @param text The text to match against
      */
-    final class NoNulls<X> implements Proc<X> {
-        /**
-         * The procedure.
-         */
-        private final Proc<X> origin;
-        /**
-         * Ctor.
-         * @param proc The procedure
-         */
-        public NoNulls(final Proc<X> proc) {
-            this.origin = proc;
-        }
-        @Override
-        public void exec(final X input) throws Exception {
-            if (this.origin == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid procedure"
-                );
-            }
-            if (input == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid input"
-                );
-            }
-        }
+    public InputHasContent(final String text) {
+        this(new IsEqual<>(text));
+    }
+
+    /**
+     * Ctor.
+     * @param mtr Matcher of the text
+     */
+    public InputHasContent(final Matcher<String> mtr) {
+        super();
+        this.matcher = mtr;
+    }
+
+    @Override
+    public boolean matchesSafely(final Input item) {
+        return this.matcher.matches(
+            new UncheckedText(
+                new BytesAsText(new InputAsBytes(item))
+            ).asString()
+        );
+    }
+
+    @Override
+    public void describeTo(final Description description) {
+        description.appendText("Input with ");
+        description.appendDescriptionOf(this.matcher);
     }
 }

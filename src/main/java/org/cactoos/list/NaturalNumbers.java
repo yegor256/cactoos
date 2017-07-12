@@ -25,6 +25,8 @@ package org.cactoos.list;
 
 import java.util.Iterator;
 import java.util.stream.LongStream;
+import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * Iterable providing Natural Numbers.
@@ -35,8 +37,81 @@ import java.util.stream.LongStream;
  */
 public final class NaturalNumbers implements Iterable<Long> {
 
+    /**
+     * First natural number.
+     */
+    private final UncheckedScalar<Long> first;
+
+    /**
+     * Last natural number.
+     */
+    private final UncheckedScalar<Long> last;
+
+    /**
+     * Ctor.
+     */
+    public NaturalNumbers() {
+        this(Long.MAX_VALUE);
+    }
+
+    /**
+     * Ctor.
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final long last) {
+        this(0L, last);
+    }
+
+    /**
+     * Ctor.
+     * @param first First natural number
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final long first, final long last) {
+        this(() -> first, () -> last);
+    }
+
+    /**
+     * Ctor.
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final Scalar<Long> last) {
+        this(new UncheckedScalar<>(last));
+    }
+
+    /**
+     * Ctor.
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final UncheckedScalar<Long> last) {
+        this(() -> 0L, last);
+    }
+
+    /**
+     * Ctor.
+     * @param first First natural number
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final Scalar<Long> first, final Scalar<Long> last) {
+        this(new UncheckedScalar<>(first), new UncheckedScalar<>(last));
+    }
+
+    /**
+     * Ctor.
+     * @param first First natural number
+     * @param last Last natural number
+     */
+    public NaturalNumbers(final UncheckedScalar<Long> first,
+        final UncheckedScalar<Long> last) {
+        this.first = first;
+        this.last = last;
+    }
+
     @Override
     public Iterator<Long> iterator() {
-        return LongStream.range(0, Long.MAX_VALUE).iterator();
+        return LongStream.range(
+            this.first.value(),
+            this.last.value()
+        ).iterator();
     }
 }

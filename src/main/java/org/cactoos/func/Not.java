@@ -21,60 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import org.cactoos.Scalar;
 
 /**
- * Procedure.
+ * Logical negative.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @see org.cactoos.func.ProcAsFunc
- * @since 0.1
+ * @since 0.7
  */
-public interface Proc<X> {
+public final class Not implements Scalar<Boolean> {
 
     /**
-     * Execute it.
-     * @param input The argument
-     * @throws Exception If fails
+     * The origin scalar.
      */
-    void exec(X input) throws Exception;
+    private final Scalar<Boolean> origin;
 
     /**
-     * Proc check for no nulls.
-     *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
-     * @param <X> Type of input
-     * @since 0.11
+     * Ctor.
+     * @param origin The scalar
      */
-    final class NoNulls<X> implements Proc<X> {
-        /**
-         * The procedure.
-         */
-        private final Proc<X> origin;
-        /**
-         * Ctor.
-         * @param proc The procedure
-         */
-        public NoNulls(final Proc<X> proc) {
-            this.origin = proc;
-        }
-        @Override
-        public void exec(final X input) throws Exception {
-            if (this.origin == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid procedure"
-                );
-            }
-            if (input == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid input"
-                );
-            }
-        }
+    public Not(final Scalar<Boolean> origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public Boolean value() throws Exception {
+        return !this.origin.value();
     }
 }

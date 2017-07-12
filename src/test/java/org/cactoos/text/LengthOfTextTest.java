@@ -23,44 +23,54 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.cactoos.Text;
+import org.cactoos.ScalarHasValue;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * A safe Text.
+ * Test case for {@link LengthOfText}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class NotNullText implements Text {
+public final class LengthOfTextTest {
 
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public NotNullText(final Text text) {
-        this.origin = text;
+    @Test
+    public void valueTextAsArg() throws Exception {
+        MatcherAssert.assertThat(
+            new LengthOfText(
+                new StringAsText("text")
+            ),
+            new ScalarHasValue<>(4)
+        );
     }
 
-    @Override
-    public String asString() throws IOException {
-        if (this.origin == null) {
-            throw new IOException("invalid text (null)");
-        }
-        return this.origin.asString();
+    @Test
+    public void valueStringAsArg() throws Exception {
+        MatcherAssert.assertThat(
+            new LengthOfText("string"),
+            new ScalarHasValue<>(6)
+        );
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
+    @Test
+    public void valueEmptyText() throws Exception {
+        MatcherAssert.assertThat(
+            new LengthOfText(
+                new StringAsText("")
+            ),
+            new ScalarHasValue<>(0)
+        );
     }
 
+    @Test
+    public void valueEmptyString() throws Exception {
+        MatcherAssert.assertThat(
+            new LengthOfText(""),
+            new ScalarHasValue<>(0)
+        );
+    }
 }
