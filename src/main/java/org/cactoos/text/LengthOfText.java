@@ -21,60 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.text;
+
+import org.cactoos.Scalar;
+import org.cactoos.Text;
 
 /**
- * Procedure.
+ * The length of {@link Text}.
+ * The length is equal to the number of Unicode code units in the text.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @see org.cactoos.func.ProcAsFunc
- * @since 0.1
+ * @since 0.11
  */
-public interface Proc<X> {
+public final class LengthOfText implements Scalar<Integer> {
 
     /**
-     * Execute it.
-     * @param input The argument
-     * @throws Exception If fails
+     * The origin text.
      */
-    void exec(X input) throws Exception;
+    private final Text origin;
 
     /**
-     * Proc check for no nulls.
-     *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
-     * @param <X> Type of input
-     * @since 0.11
+     * Ctor.
+     * @param string The string
      */
-    final class NoNulls<X> implements Proc<X> {
-        /**
-         * The procedure.
-         */
-        private final Proc<X> origin;
-        /**
-         * Ctor.
-         * @param proc The procedure
-         */
-        public NoNulls(final Proc<X> proc) {
-            this.origin = proc;
-        }
-        @Override
-        public void exec(final X input) throws Exception {
-            if (this.origin == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid procedure"
-                );
-            }
-            if (input == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid input"
-                );
-            }
-        }
+    public LengthOfText(final String string) {
+        this(new StringAsText(string));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public LengthOfText(final Text text) {
+        this.origin = text;
+    }
+
+    @Override
+    public Integer value() throws Exception {
+        return this.origin.asString().length();
     }
 }

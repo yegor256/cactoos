@@ -23,8 +23,8 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
 
 /**
@@ -65,7 +65,9 @@ public final class Max<T extends Comparable<T>> implements Scalar<T> {
     public T value() throws Exception {
         final Iterator<Scalar<T>> iter = this.items.iterator();
         if (!iter.hasNext()) {
-            throw new IOException("Iterable is empty");
+            throw new NoSuchElementException(
+                "Can't find greater element in an empty iterable"
+            );
         }
         T max = iter.next().value();
         while (iter.hasNext()) {

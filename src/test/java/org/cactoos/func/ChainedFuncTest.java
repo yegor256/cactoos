@@ -50,7 +50,7 @@ public final class ChainedFuncTest {
                 new FilteredIterable<>(
                     new MappedIterable<>(
                         new ArrayAsIterable<>("public", "final", "class"),
-                        new ChainedFunc<>(
+                        new ChainedFunc<String, String, String>(
                             input -> input.concat("1"),
                             input -> input.concat("2")
                         )

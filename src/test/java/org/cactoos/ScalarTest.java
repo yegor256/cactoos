@@ -21,46 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos;
 
-import org.cactoos.Func;
-import org.cactoos.Proc;
+import org.junit.Test;
 
 /**
- * Func as Runnable.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link Scalar.NoNulls}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncAsRunnable implements Runnable {
+public final class ScalarTest {
 
-    /**
-     * Original func.
-     */
-    private final Func<?, ?> func;
-
-    /**
-     * Ctor.
-     * @param proc Encapsulated proc
-     * @since 0.11
-     */
-    public FuncAsRunnable(final Proc<?> proc) {
-        this(new ProcAsFunc<>(proc));
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullArgument() throws Exception {
+        new Scalar.NoNulls<>(null).value();
     }
 
-    /**
-     * Ctor.
-     * @param fnc Encapsulated func
-     */
-    public FuncAsRunnable(final Func<?, ?> fnc) {
-        this.func = fnc;
+    @Test(expected = IllegalStateException.class)
+    public void failForNullResult() throws Exception {
+        new Scalar.NoNulls<>(() -> null).value();
     }
 
-    @Override
-    public void run() {
-        new UncheckedFunc<>(this.func).apply(null);
+    @Test
+    public void okForNoNulls() throws Exception {
+        new Scalar.NoNulls<>(() -> 1).value();
     }
 }

@@ -21,46 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.text;
 
-import org.cactoos.Func;
-import org.cactoos.Proc;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Func as Runnable.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link SubText}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncAsRunnable implements Runnable {
+public final class SubTextTest {
 
-    /**
-     * Original func.
-     */
-    private final Func<?, ?> func;
-
-    /**
-     * Ctor.
-     * @param proc Encapsulated proc
-     * @since 0.11
-     */
-    public FuncAsRunnable(final Proc<?> proc) {
-        this(new ProcAsFunc<>(proc));
+    @Test
+    public void cutTextWithStartAndEnd() {
+        MatcherAssert.assertThat(
+            "Can't cut a text with start and end",
+            // @checkstyle MagicNumber (1 line)
+            new SubText("hello world", 2, 9),
+            new TextHasString("llo wor")
+        );
     }
 
-    /**
-     * Ctor.
-     * @param fnc Encapsulated func
-     */
-    public FuncAsRunnable(final Func<?, ?> fnc) {
-        this.func = fnc;
+    @Test
+    public void cutTextWithStart() {
+        MatcherAssert.assertThat(
+            "Can't cut a text with start",
+            new SubText("cut here", 2),
+            new TextHasString("t here")
+        );
     }
 
-    @Override
-    public void run() {
-        new UncheckedFunc<>(this.func).apply(null);
-    }
 }

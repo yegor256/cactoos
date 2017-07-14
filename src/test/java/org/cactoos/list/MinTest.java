@@ -23,8 +23,8 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
 import java.util.Collections;
+import java.util.NoSuchElementException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -39,7 +39,7 @@ import org.junit.Test;
  */
 public final class MinTest {
 
-    @Test(expected = IOException.class)
+    @Test(expected = NoSuchElementException.class)
     public void minAmongEmptyTest() throws Exception {
         new Min<>(() -> Collections.emptyIterator()).value();
     }
