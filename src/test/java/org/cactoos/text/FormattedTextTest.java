@@ -37,6 +37,7 @@ import org.junit.Test;
  * Test case for {@link FormattedText}.
  *
  * @author Andriy Kryvtsun (kontiky@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -57,7 +58,7 @@ public final class FormattedTextTest {
     @Test
     public void formatsTextWithObjects() {
         MatcherAssert.assertThat(
-            "Can't format a text whit objects",
+            "Can't format a text with objects",
             new FormattedText(
                 new StringAsText("%d. Number as %s"),
                 new Integer(1),
