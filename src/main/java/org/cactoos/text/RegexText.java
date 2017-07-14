@@ -33,7 +33,7 @@ import org.cactoos.Text;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.12
  */
 public final class RegexText implements Text {
 
@@ -53,6 +53,7 @@ public final class RegexText implements Text {
 
     /**
      * Ctor.
+     *
      * @param text The regex text.
      */
     public RegexText(final Text text) {
