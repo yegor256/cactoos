@@ -21,35 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link Neg}.
- *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * Test case for {@link BiFunc.NoNulls}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NegTest {
+public final class BiFuncTest {
 
-    @Test
-    public void trueToFalse() throws Exception {
-        MatcherAssert.assertThat(
-            new Neg(new True()).value(),
-            Matchers.equalTo(new False().value())
-        );
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullFunc() throws Exception {
+        new BiFunc.NoNulls<>(null).apply(new Object(), new Object());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullFirstArg() throws Exception {
+        new BiFunc.NoNulls<>(
+            (first, second) -> first
+        ).apply(null, new Object());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullSecondArg() throws Exception {
+        new BiFunc.NoNulls<>(
+            (first, second) -> first
+        ).apply(new Object(), null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void failForNullResult() throws Exception {
+        new BiFunc.NoNulls<>(
+            (first, second) -> null
+        ).apply(new Object(), new Object());
     }
 
     @Test
-    public void falseToTrue() throws Exception {
-        MatcherAssert.assertThat(
-            new Neg(new False()).value(),
-            Matchers.equalTo(new True().value())
-        );
+    public void okForNoNulls() throws Exception {
+        new BiFunc.NoNulls<>(
+            (first, second) -> first
+        ).apply(new Object(), new Object());
     }
 }

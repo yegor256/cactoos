@@ -27,8 +27,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.TextHasString;
-import org.cactoos.text.BytesAsText;
+import org.cactoos.InputHasContent;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -49,12 +48,8 @@ public final class FileAsInputTest {
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "Can't read file content",
-            new BytesAsText(
-                new InputAsBytes(
-                    new PathAsInput(temp)
-                )
-            ),
-            new TextHasString(content)
+            new PathAsInput(temp),
+            new InputHasContent(content)
         );
     }
 

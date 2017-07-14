@@ -21,46 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.io;
 
-import org.cactoos.Func;
-import org.cactoos.Proc;
+import java.io.IOException;
+import org.junit.Test;
 
 /**
- * Func as Runnable.
+ * Test case for {@link UncheckedOutput}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Alexey Semenyuk (semenyukalexey88@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncAsRunnable implements Runnable {
+public final class UncheckedOutputTest {
 
-    /**
-     * Original func.
-     */
-    private final Func<?, ?> func;
-
-    /**
-     * Ctor.
-     * @param proc Encapsulated proc
-     * @since 0.11
-     */
-    public FuncAsRunnable(final Proc<?> proc) {
-        this(new ProcAsFunc<>(proc));
+    @Test(expected = RuntimeException.class)
+    public void rethrowsCheckedToUncheckedException() {
+        new UncheckedOutput(
+            () -> {
+                throw new IOException("intended");
+            }
+        ).stream();
     }
 
-    /**
-     * Ctor.
-     * @param fnc Encapsulated func
-     */
-    public FuncAsRunnable(final Func<?, ?> fnc) {
-        this.func = fnc;
-    }
-
-    @Override
-    public void run() {
-        new UncheckedFunc<>(this.func).apply(null);
-    }
 }

@@ -21,46 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.text;
 
-import org.cactoos.Func;
-import org.cactoos.Proc;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Func as Runnable.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link LowerText}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncAsRunnable implements Runnable {
+public final class LowerTextTest {
 
-    /**
-     * Original func.
-     */
-    private final Func<?, ?> func;
-
-    /**
-     * Ctor.
-     * @param proc Encapsulated proc
-     * @since 0.11
-     */
-    public FuncAsRunnable(final Proc<?> proc) {
-        this(new ProcAsFunc<>(proc));
+    @Test
+    public void convertsText() {
+        MatcherAssert.assertThat(
+            "Can't lower case a text",
+            new LowerText(new StringAsText("HelLo!")),
+            new TextHasString("hello!")
+        );
     }
 
-    /**
-     * Ctor.
-     * @param fnc Encapsulated func
-     */
-    public FuncAsRunnable(final Func<?, ?> fnc) {
-        this.func = fnc;
-    }
-
-    @Override
-    public void run() {
-        new UncheckedFunc<>(this.func).apply(null);
-    }
 }

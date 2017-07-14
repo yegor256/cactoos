@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.cactoos.Func;
 
 /**
  * Iterable as {@link Map}.
@@ -67,7 +68,32 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
-     * @param list Entries for the entries
+     * @param list List of items
+     * @param key Func to create key
+     * @param value Func to create value
+     * @param <Z> Type of items in the list
+     * @since 0.11
+     */
+    public <Z> IterableAsMap(final Iterable<Z> list, final Func<Z, X> key,
+        final Func<Z, Y> value) {
+        this(list, item -> new MapEntry<>(key.apply(item), value.apply(item)));
+    }
+
+    /**
+     * Ctor.
+     * @param list List of items
+     * @param entry Func to create entry
+     * @param <Z> Type of items in the list
+     * @since 0.11
+     */
+    public <Z> IterableAsMap(final Iterable<Z> list,
+        final Func<Z, Map.Entry<X, Y>> entry) {
+        this(new MappedIterable<>(list, entry));
+    }
+
+    /**
+     * Ctor.
+     * @param list List of the entries
      */
     public IterableAsMap(final Iterable<Map.Entry<X, Y>> list) {
         this.entries = list;

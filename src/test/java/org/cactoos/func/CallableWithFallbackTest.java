@@ -21,37 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.func;
 
 import java.io.IOException;
-import org.cactoos.TextHasString;
+import org.cactoos.FuncApplies;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link NotNullText}.
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * Test case for {@link CallableWithFallback}.
+ *
+ * @author Vladislav Cheparin (ivladislav969@gmail.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NotNullTextTest {
-
-    @Test(expected = IOException.class)
-    public void failForNullText() throws IOException {
-        new NotNullText(null).asString();
-    }
+public final class CallableWithFallbackTest {
 
     @Test
-    public void checkForNullText() throws Exception {
-        final String message = "Hello";
+    public void usesMainFunc() throws Exception {
         MatcherAssert.assertThat(
-            "Can't work with null text",
-            new NotNullText(
-                new StringAsText(message)
+            "Can't use the main function if no exception",
+            new CallableAsFunc<>(
+                new CallableWithFallback<>(
+                    () -> 1,
+                    input -> {
+                        throw new IOException(input);
+                    }
+                )
             ),
-            new TextHasString(message)
+            new FuncApplies<>(true, Matchers.equalTo(1))
         );
     }
 
+    @Test
+    public void usesFallback() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't use the fallback function if there is exception",
+            new CallableAsFunc<>(
+                new CallableWithFallback<>(
+                    () -> {
+                        throw new IllegalStateException("intended");
+                    },
+                    input -> 1
+                )
+            ),
+            new FuncApplies<>(true, Matchers.equalTo(1))
+        );
+    }
 }

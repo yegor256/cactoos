@@ -21,60 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import org.cactoos.FuncApplies;
+import java.io.IOException;
+import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link AsyncFunc}.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link Text}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.10
+ * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class AsyncFuncTest {
+public final class TextTest {
 
-    @Test
-    public void runsInBackground() {
-        MatcherAssert.assertThat(
-            "Can't run in the background",
-            new AsyncFunc<>(
-                input -> {
-                    TimeUnit.DAYS.sleep(1L);
-                    return "done!";
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullArgument() throws IOException {
+        new Text.NoNulls(null).asString();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void failForNullResult() throws IOException {
+        new Text.NoNulls(
+            new Text() {
+                @Override
+                public String asString() throws IOException {
+                    return null;
                 }
-            ),
-            new FuncApplies<>(
-                true,
-                new FuncAsMatcher<Future<String>>(
-                    future -> !future.isDone()
-                )
-            )
-        );
+                @Override
+                public int compareTo(final Text text) {
+                    return 0;
+                }
+            }
+        ).asString();
     }
 
     @Test
-    public void runsInBackgroundWithoutFuture() {
-        final CountDownLatch latch = new CountDownLatch(1);
+    public void okForNoNulls() throws Exception {
+        final String message = "Hello";
         MatcherAssert.assertThat(
-            "Can't run in the background without us touching the Future",
-            new AsyncFunc<>(
-                input -> {
-                    latch.countDown();
-                }
+            "Can't work with null text",
+            new Text.NoNulls(
+                new StringAsText(message)
             ),
-            new FuncApplies<>(
-                true,
-                new FuncAsMatcher<Future<String>>(
-                    future -> latch.await(1L, TimeUnit.SECONDS)
-                )
-            )
+            new TextHasString(message)
         );
     }
 
