@@ -35,7 +35,7 @@ import org.cactoos.Output;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.12
  */
 @SuppressWarnings("PMD.LoggerIsNotStaticFinal")
 public final class LoggingOutput implements Output {

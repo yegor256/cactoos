@@ -36,7 +36,7 @@ import java.util.logging.Logger;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.12
  */
 @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
 public final class FakeLogger extends Logger {

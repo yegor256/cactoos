@@ -36,7 +36,7 @@ import org.junit.Test;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.MoreThanOneLogger")
