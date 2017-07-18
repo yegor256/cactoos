@@ -1,0 +1,66 @@
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2017 Yegor Bugayenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+package org.cactoos.codec;
+
+import java.io.IOException;
+import org.cactoos.Codec;
+import org.cactoos.Text;
+import org.cactoos.TextHasString;
+import org.cactoos.text.BytesAsText;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+
+/**
+ * Test case for {@link Base64Codec}.
+ *
+ * @author Mehmet Yildirim (memoyil@gmail.com)
+ * @version $Id$
+ * @since 0.13
+ * @checkstyle JavadocMethodCheck (500 lines)
+ */
+public final class Base64CodecTest {
+
+    @Test
+    public void decodeCodec() throws IOException {
+        final Codec codec = new Base64Codec(new PlainCodec());
+        MatcherAssert.assertThat(
+            "Can't decode a text",
+            codec.decode("SGVsbG8h".getBytes()),
+            new TextHasString("Hello!")
+        );
+    }
+
+    @Test
+    public void encodeCodec() throws IOException {
+        final Text text = new BytesAsText(new Base64Codec(new PlainCodec())
+            .encode("Hi!")
+        );
+        MatcherAssert.assertThat(
+            "Can't encode a text",
+            text,
+            new TextHasString("SGkh")
+        );
+    }
+
+}
