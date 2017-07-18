@@ -32,7 +32,7 @@ import java.io.IOException;
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.12
  */
 public interface Codec {
 

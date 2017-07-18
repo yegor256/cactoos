@@ -36,7 +36,7 @@ import org.junit.Test;
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.13
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class Base64CodecTest {

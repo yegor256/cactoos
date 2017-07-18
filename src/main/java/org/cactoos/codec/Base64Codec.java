@@ -37,7 +37,7 @@ import org.cactoos.Text;
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.13
+ * @since 0.12
  */
 public final class Base64Codec implements Codec {
 

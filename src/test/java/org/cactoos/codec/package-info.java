@@ -27,6 +27,6 @@
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.13
+ * @since 0.12
  */
 package org.cactoos.codec;
