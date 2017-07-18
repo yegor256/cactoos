@@ -56,7 +56,7 @@ public final class InputAsLSInputTest {
             "Can't read bigger input",
             new InputAsLSInput(
                 new InputStreamAsInput(
-                    new SlowInputStream(size, 'X')
+                    new SlowInputStream(size)
                 )
             ).getStringData().length(),
             Matchers.equalTo(size)
