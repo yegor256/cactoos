@@ -23,8 +23,10 @@
  */
 package org.cactoos.func;
 
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import org.cactoos.Bytes;
+import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -38,6 +40,7 @@ import org.junit.Test;
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class EqualityTest {
     @Test
     public void notEqualLeft() throws Exception {
@@ -73,6 +76,82 @@ public final class EqualityTest {
                 // @checkstyle MagicNumberCheck (2 line)
                 new Weight(500),
                 new Weight(500)
+            ).value(),
+            Matchers.equalTo(0)
+        );
+    }
+
+    @Test
+    public void notEqualLeftWithBigNumbers() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare if first number is not equal to second number",
+            new Equality<>(
+                // @checkstyle MagicNumberCheck (2 line)
+                () -> BigInteger.valueOf(127L).toByteArray(),
+                () -> BigInteger.valueOf(126L * 126L).toByteArray()
+            ).value(),
+            Matchers.equalTo(-1)
+        );
+    }
+
+    @Test
+    public void notEqualRightWithBigNumbers() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare if second number is not equal to first number",
+            new Equality<>(
+                // @checkstyle MagicNumberCheck (2 line)
+                () -> BigInteger.valueOf(126L * 126L).toByteArray(),
+                () -> BigInteger.valueOf(127L).toByteArray()
+            ).value(),
+            Matchers.equalTo(1)
+        );
+    }
+
+    @Test
+    public void equalWithBigNumbers() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare if two numbers are equals",
+            new Equality<>(
+                // @checkstyle MagicNumberCheck (2 line)
+                () -> BigInteger.valueOf(126L * 126L).toByteArray(),
+                () -> BigInteger.valueOf(126L * 126L).toByteArray()
+            ).value(),
+            Matchers.equalTo(0)
+        );
+    }
+
+    @Test
+    public void notEqualLeftWithStrings() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare if first string is not equal to second string",
+            new Equality<>(
+                // @checkstyle MagicNumberCheck (2 line)
+                new TextAsBytes("bc"),
+                new TextAsBytes("abc")
+            ).value(),
+            Matchers.equalTo(-1)
+        );
+    }
+
+    @Test
+    public void notEqualRightWithStrings() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare if second string is not equal to first string",
+            new Equality<>(
+                new TextAsBytes("abc"),
+                new TextAsBytes("bc")
+            ).value(),
+            Matchers.equalTo(1)
+        );
+    }
+
+    @Test
+    public void equalWithStrings() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare if two strings are equals",
+            new Equality<>(
+                new TextAsBytes("abc"),
+                new TextAsBytes("abc")
             ).value(),
             Matchers.equalTo(0)
         );

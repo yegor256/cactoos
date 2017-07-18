@@ -42,39 +42,39 @@ public final class Equality<T extends Bytes> implements Scalar<Integer> {
     /**
      * Left.
      */
-    private final T left;
+    private final T lft;
 
     /**
      * Right.
      */
-    private final T right;
+    private final T rght;
 
     /**
      * Ctor.
-     * @param lft The first object to compare
-     * @param rght The second object to compare
+     * @param left The first object to compare
+     * @param right The second object to compare
      */
-    public Equality(final T lft, final T rght) {
-        this.left = lft;
-        this.right = rght;
+    public Equality(final T left, final T right) {
+        this.lft = left;
+        this.rght = right;
     }
 
     @Override
     public Integer value() throws Exception {
-        final byte[] lft = this.left.asBytes();
-        final byte[] rght = this.right.asBytes();
-        final int max = Math.max(lft.length, rght.length);
+        final byte[] left = this.lft.asBytes();
+        final byte[] right = this.rght.asBytes();
+        final int max = Math.max(left.length, right.length);
         int result = 0;
-        for (int idx = 0; idx < max; ++idx) {
-            if (idx >= lft.length) {
-                result = -1;
-                break;
+        for (int idx = max; idx > 0; --idx) {
+            byte first = 0;
+            if (idx <= left.length) {
+                first = left[max - idx];
             }
-            if (idx >= rght.length) {
-                result = 1;
-                break;
+            byte second = 0;
+            if (idx <= right.length) {
+                second = right[max - idx];
             }
-            result = lft[idx] - rght[idx];
+            result = first - second;
             if (result != 0) {
                 break;
             }
