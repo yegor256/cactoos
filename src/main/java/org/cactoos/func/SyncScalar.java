@@ -41,16 +41,31 @@ public final class SyncScalar<T> implements Scalar<T> {
     private final Scalar<T> source;
 
     /**
+     * Sync lock.
+     */
+    private final Object lck;
+
+    /**
      * Ctor.
      * @param src The Scalar to cache
      */
     public SyncScalar(final Scalar<T> src) {
+        this(src, src);
+    }
+
+    /**
+     * Ctor.
+     * @param src The Scalar to cache
+     * @param lck Sync lock
+     */
+    public SyncScalar(final Scalar<T> src, final Object lck) {
         this.source = src;
+        this.lck = lck;
     }
 
     @Override
     public T value() throws Exception {
-        synchronized (this.source) {
+        synchronized (this.lck) {
             return this.source.value();
         }
     }

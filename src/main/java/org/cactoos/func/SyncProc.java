@@ -41,18 +41,32 @@ public final class SyncProc<X> implements Proc<X> {
     private final Proc<X> proc;
 
     /**
+     * Sync lock.
+     */
+    private final Object lck;
+
+    /**
      * Ctor.
      * @param prc Func original
      */
     public SyncProc(final Proc<X> prc) {
+        this(prc, prc);
+    }
+
+    /**
+     * Ctor.
+     * @param prc Func original
+     * @param lck Sync lock
+     */
+    public SyncProc(final Proc<X> prc, final Object lck) {
         this.proc = prc;
+        this.lck = lck;
     }
 
     @Override
     public void exec(final X input) throws Exception {
-        synchronized (this.proc) {
+        synchronized (this.lck) {
             this.proc.exec(input);
         }
     }
-
 }
