@@ -31,6 +31,7 @@ import org.cactoos.Bytes;
 import org.cactoos.Codec;
 import org.cactoos.Text;
 import org.cactoos.text.ArrayAsBytes;
+import org.cactoos.text.FormattedText;
 
 /**
  * Base64 codec.
@@ -79,10 +80,10 @@ public final class Base64Codec implements Codec {
         );
         if (illegal.length > 0) {
             throw new DecodingException(
-                String.format(
+                new FormattedText(
                     "Illegal character in Base64 encoded data. %s",
-                    Arrays.toString(illegal)
-                )
+                    1, Arrays.toString(illegal)
+                ).asString()
             );
         }
         return this.origin.decode(
