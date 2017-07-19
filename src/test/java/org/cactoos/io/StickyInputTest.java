@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.cactoos.Input;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.TextHasString;
-import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.MatcherOf;
 import org.cactoos.func.RepeatedFunc;
 import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
@@ -53,7 +53,7 @@ public final class StickyInputTest {
                     "org/cactoos/large-text.txt"
                 )
             ),
-            new FuncAsMatcher<>(
+            new MatcherOf<>(
                 new RepeatedFunc<Input, Boolean>(
                     input -> new InputAsBytes(
                         new TeeInput(input, new DeadOutput())

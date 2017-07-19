@@ -42,15 +42,21 @@ import org.cactoos.Proc;
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of input
+ * @param <X> Type of input
+ * @param <T> Type of output
  * @since 0.12
  */
-public final class CallableOf<T> implements Callable<T> {
+public final class CallableOf<X, T> implements Callable<T> {
 
     /**
      * Original func.
      */
-    private final Func<?, T> func;
+    private final Func<X, T> func;
+
+    /**
+     * The input.
+     */
+    private final X input;
 
     /**
      * Ctor.
@@ -66,7 +72,7 @@ public final class CallableOf<T> implements Callable<T> {
      * @param proc Encapsulated proc
      * @since 0.12
      */
-    public CallableOf(final Proc<?> proc) {
+    public CallableOf(final Proc<X> proc) {
         this(new FuncOf<>(proc));
     }
 
@@ -74,12 +80,22 @@ public final class CallableOf<T> implements Callable<T> {
      * Ctor.
      * @param fnc Encapsulated func
      */
-    public CallableOf(final Func<?, T> fnc) {
+    public CallableOf(final Func<X, T> fnc) {
+        this(fnc, null);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     * @param ipt Input
+     */
+    public CallableOf(final Func<X, T> fnc, final X ipt) {
         this.func = fnc;
+        this.input = ipt;
     }
 
     @Override
     public T call() throws Exception {
-        return this.func.apply(null);
+        return this.func.apply(this.input);
     }
 }

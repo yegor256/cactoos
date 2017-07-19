@@ -24,8 +24,6 @@
 package org.cactoos.func;
 
 import java.util.concurrent.Callable;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 
@@ -45,22 +43,6 @@ public final class ProcOf<X> implements Proc<X> {
      * The proc.
      */
     private final Proc<X> proc;
-
-    /**
-     * Ctor.
-     * @param function The function
-     */
-    public ProcOf(final Function<X, ?> function) {
-        this((Proc<X>) function::apply);
-    }
-
-    /**
-     * Ctor.
-     * @param consumer The consumer
-     */
-    public ProcOf(final Consumer<X> consumer) {
-        this((Proc<X>) consumer::accept);
-    }
 
     /**
      * Ctor.

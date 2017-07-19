@@ -34,21 +34,27 @@ import org.cactoos.Proc;
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @param <X> Type of input
  * @since 0.12
  */
-public final class RunnableOf implements Runnable {
+public final class RunnableOf<X> implements Runnable {
 
     /**
      * Original func.
      */
-    private final Func<?, ?> func;
+    private final Func<X, ?> func;
+
+    /**
+     * The input.
+     */
+    private final X input;
 
     /**
      * Ctor.
      * @param proc Encapsulated proc
      * @since 0.11
      */
-    public RunnableOf(final Callable<?> proc) {
+    public RunnableOf(final Callable<X> proc) {
         this(new FuncOf<>(proc));
     }
 
@@ -56,7 +62,7 @@ public final class RunnableOf implements Runnable {
      * Ctor.
      * @param proc Encapsulated proc
      */
-    public RunnableOf(final Proc<?> proc) {
+    public RunnableOf(final Proc<X> proc) {
         this(new FuncOf<>(proc));
     }
 
@@ -64,12 +70,22 @@ public final class RunnableOf implements Runnable {
      * Ctor.
      * @param fnc Encapsulated func
      */
-    public RunnableOf(final Func<?, ?> fnc) {
+    public RunnableOf(final Func<X, ?> fnc) {
+        this(fnc, null);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     * @param ipt Input
+     */
+    public RunnableOf(final Func<X, ?> fnc, final X ipt) {
         this.func = fnc;
+        this.input = ipt;
     }
 
     @Override
     public void run() {
-        new UncheckedFunc<>(this.func).apply(null);
+        new UncheckedFunc<>(this.func).apply(this.input);
     }
 }

@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
+import org.cactoos.Proc;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
@@ -35,9 +36,9 @@ import org.hamcrest.TypeSafeMatcher;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <T> Type of object to match
- * @since 0.2
+ * @since 0.12
  */
-public final class FuncAsMatcher<T> extends TypeSafeMatcher<T> {
+public final class MatcherOf<T> extends TypeSafeMatcher<T> {
 
     /**
      * The func.
@@ -46,9 +47,17 @@ public final class FuncAsMatcher<T> extends TypeSafeMatcher<T> {
 
     /**
      * Ctor.
+     * @param proc The func
+     */
+    public MatcherOf(final Proc<T> proc) {
+        this(new FuncOf<>(proc));
+    }
+
+    /**
+     * Ctor.
      * @param fnc The func
      */
-    public FuncAsMatcher(final Func<T, Boolean> fnc) {
+    public MatcherOf(final Func<T, Boolean> fnc) {
         super();
         this.func = fnc;
     }

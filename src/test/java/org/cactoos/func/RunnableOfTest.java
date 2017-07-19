@@ -42,13 +42,13 @@ public final class RunnableOfTest {
         final AtomicBoolean done = new AtomicBoolean();
         MatcherAssert.assertThat(
             "Can't execute Runnable",
-            new RunnableOf(
+            new RunnableOf<>(
                 input -> {
                     done.set(true);
                     return 1;
                 }
             ),
-            new FuncAsMatcher<Runnable>(
+            new MatcherOf<Runnable>(
                 input -> {
                     input.run();
                     return done.get();

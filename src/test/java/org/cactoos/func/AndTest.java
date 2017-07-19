@@ -105,7 +105,7 @@ public final class AndTest {
             new ScalarHasValue<>(
                 Matchers.allOf(
                     Matchers.equalTo(true),
-                    new FuncAsMatcher<>(
+                    new MatcherOf<>(
                         value -> list.size() == 2
                     )
                 )
@@ -127,8 +127,10 @@ public final class AndTest {
             new ScalarHasValue<>(
                 Matchers.allOf(
                     Matchers.equalTo(true),
-                    new FuncAsMatcher<>(
-                        value -> list.isEmpty()
+                    new MatcherOf<>(
+                        value -> {
+                            return list.isEmpty();
+                        }
                     )
                 )
             )
