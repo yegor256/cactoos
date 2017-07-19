@@ -38,11 +38,11 @@ public interface Codec {
 
     /**
      * Encode text into bytes.
-     * @param text The text
-     * @return Text
+     * @param input The input
+     * @return Bytes
      * @throws IOException If fails
      */
-    byte[] encode(String text) throws IOException;
+    Bytes encode(Text input) throws IOException;
 
     /**
      * Decode text from byte array (or throw
@@ -54,10 +54,10 @@ public interface Codec {
      * that the user can't be authenticated and {@code Identity.ANONYMOUS}
      * object will be identified.
      *
-     * @param bytes Text
+     * @param input The Input
      * @return Identity
      * @throws IOException If fails
      */
-    Text decode(byte[] bytes) throws IOException;
+    Text decode(Bytes input) throws IOException;
 
 }

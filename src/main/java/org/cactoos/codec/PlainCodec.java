@@ -24,10 +24,11 @@
 package org.cactoos.codec;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import org.cactoos.Bytes;
 import org.cactoos.Codec;
 import org.cactoos.Text;
 import org.cactoos.text.BytesAsText;
+import org.cactoos.text.TextAsBytes;
 
 /**
  * Plain codec.
@@ -40,19 +41,13 @@ import org.cactoos.text.BytesAsText;
  */
 public final class PlainCodec implements Codec {
 
-    /**
-     * UTF-8 encoding.
-     */
-    private static final String ENCODING = "UTF-8";
-
     @Override
-    public byte[] encode(final String text) throws IOException {
-        return text.getBytes(Charset.forName(PlainCodec.ENCODING));
+    public Bytes encode(final Text input) throws IOException {
+        return new TextAsBytes(input);
     }
 
     @Override
-    public Text decode(final byte[] bytes) throws IOException {
+    public Text decode(final Bytes bytes) throws IOException {
         return new BytesAsText(bytes);
     }
-
 }

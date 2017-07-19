@@ -27,8 +27,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Base64;
+import org.cactoos.Bytes;
 import org.cactoos.Codec;
 import org.cactoos.Text;
+import org.cactoos.text.ArrayAsBytes;
 
 /**
  * Base64 codec.
@@ -62,13 +64,19 @@ public final class Base64Codec implements Codec {
     }
 
     @Override
-    public byte[] encode(final String text) throws IOException {
-        return Base64.getEncoder().encode(this.origin.encode(text));
+    public Bytes encode(final Text input) throws IOException {
+        final byte[] encode = Base64.getEncoder().encode(this.origin.encode(
+            input
+            ).asBytes()
+        );
+        return new ArrayAsBytes(encode);
     }
 
     @Override
-    public Text decode(final byte[] bytes) throws IOException {
-        final byte[] illegal = Base64Codec.checkIllegalCharacters(bytes);
+    public Text decode(final Bytes bytes) throws IOException {
+        final byte[] illegal = Base64Codec.checkIllegalCharacters(bytes
+            .asBytes()
+        );
         if (illegal.length > 0) {
             throw new DecodingException(
                 String.format(
@@ -77,7 +85,13 @@ public final class Base64Codec implements Codec {
                 )
             );
         }
-        return this.origin.decode(Base64.getDecoder().decode(bytes));
+        return this.origin.decode(
+            new ArrayAsBytes(
+            Base64.getDecoder().decode(
+            bytes.asBytes()
+            )
+            )
+        );
     }
 
     /**
@@ -95,4 +109,5 @@ public final class Base64Codec implements Codec {
         }
         return out.toByteArray();
     }
+
 }

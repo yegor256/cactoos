@@ -24,44 +24,33 @@
 package org.cactoos.codec;
 
 import java.io.IOException;
-import org.cactoos.Codec;
+import org.cactoos.Bytes;
 import org.cactoos.Text;
 import org.cactoos.TextHasString;
-import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link Base64Codec}.
+ * Test case for {@link GzipCodecTest}.
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Base64CodecTest {
+public final class GzipCodecTest {
 
     @Test
-    public void decodeCodec() throws IOException {
-        final Codec codec = new Base64Codec(new PlainCodec());
+    public void testGzipCodec() throws IOException {
+        final String testtext = "Hi!";
+        final GzipCodec gzipcodec = new GzipCodec(new PlainCodec());
+        final Bytes encode = gzipcodec.encode(new StringAsText(testtext));
+        final Text decode = gzipcodec.decode(encode);
         MatcherAssert.assertThat(
-            "Can't decode a text",
-            codec.decode(new TextAsBytes("SGVsbG8h")),
-            new TextHasString("Hello!")
-        );
-    }
-
-    @Test
-    public void encodeCodec() throws IOException {
-        final Text text = new BytesAsText(new Base64Codec(new PlainCodec())
-            .encode(new StringAsText("Hi!"))
-        );
-        MatcherAssert.assertThat(
-            "Can't encode a text",
-            text,
-            new TextHasString("SGkh")
+            "Can't Encode/Decode a testtext",
+            decode,
+            new TextHasString(testtext)
         );
     }
 

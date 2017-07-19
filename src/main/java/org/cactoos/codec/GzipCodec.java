@@ -29,8 +29,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import org.cactoos.Bytes;
 import org.cactoos.Codec;
 import org.cactoos.Text;
+import org.cactoos.text.ArrayAsBytes;
 
 /**
  * Gzip codec.
@@ -57,22 +59,22 @@ public final class GzipCodec implements Codec {
     }
 
     @Override
-    public byte[] encode(final String text) throws IOException {
+    public Bytes encode(final Text input) throws IOException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final GZIPOutputStream gzip = new GZIPOutputStream(out);
         try {
-            gzip.write(this.origin.encode(text));
+            gzip.write(this.origin.encode(input).asBytes());
         } finally {
             gzip.close();
         }
-        return out.toByteArray();
+        return new ArrayAsBytes(out.toByteArray());
     }
 
     @Override
-    public Text decode(final byte[] bytes) throws IOException {
+    public Text decode(final Bytes bytes) throws IOException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final InputStream gzip = new GZIPInputStream(
-            new ByteArrayInputStream(bytes)
+            new ByteArrayInputStream(bytes.asBytes())
         );
         try {
             while (true) {
@@ -85,6 +87,7 @@ public final class GzipCodec implements Codec {
         } finally {
             gzip.close();
         }
-        return this.origin.decode(out.toByteArray());
+        return this.origin.decode(new ArrayAsBytes(out.toByteArray()));
     }
+
 }
