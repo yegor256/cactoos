@@ -239,10 +239,19 @@ new And(
 Cactoos | Guava | Apache Commons | JDK 8
 ------ | ------ | ------ | ------
 `FormattedText` | - | - | `String.format()`
+`IsBlank` | - | `StringUtils.isBlank()`| -
 `JoinedText` | - | - | `String.join()`
-`LoweredText` | - | - | `String#toLowerCase()`
+`LengthOfText` | - | - | `String#length()`
+`LowerText` | - | - | `String#toLowerCase()`
 `NormalizedText` | - | `StringUtils.normalize()` | -
+`RepeatedText` | - | `StringUtils.repeat()` | -
+`ReplacedText` | - | - | `String#replace()`
+`ReversedText` | - | - | `StringBuilder#replace()`
+`SplitText` | - | - | `String#split()`
 `StringAsUrl` | - | - | `URLEncoder.encode()`
+`SubText` | - | - | `String#substring()`
+`TrimmedText` | - | - | `String#trim()`
+`UpperText` | - | - | `String#toUpperCase()`
 `UrlAsString` | - | - | `URLDecoder.decode()`
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -

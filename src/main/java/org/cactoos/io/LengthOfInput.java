@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * Length of {@link Input}.
@@ -66,6 +67,11 @@ public final class LengthOfInput implements Scalar<Long> {
     public LengthOfInput(final Input input, final int max) {
         this.source = input;
         this.size = max;
+    }
+
+    @Override
+    public String toString() {
+        return Long.toString(new UncheckedScalar<>(this).value());
     }
 
     @Override

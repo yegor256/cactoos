@@ -27,7 +27,7 @@ import java.security.SecureRandom;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.ScalarHasValue;
-import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.MatcherOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -56,8 +56,10 @@ public final class MapAsPropertiesTest {
                 )
             ),
             new ScalarHasValue<>(
-                new FuncAsMatcher<Properties>(
-                    props -> props.getProperty("0").endsWith(", world")
+                new MatcherOf<Properties>(
+                    props -> {
+                        return props.getProperty("0").endsWith(", world");
+                    }
                 )
             )
         );

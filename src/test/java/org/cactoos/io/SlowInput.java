@@ -21,42 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.io;
 
-import org.cactoos.Func;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import org.cactoos.Input;
 
 /**
- * Runnable as a Func.
- *
- * <p>There is no thread-safety guarantee.
+ * Input that returns content in small portions.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
- * @see FuncAsCallable
- * @see FuncAsRunnable
- * @see CallableAsFunc
- * @since 0.2
+ * @since 0.12
  */
-public final class RunnableAsFunc<X, Y> implements Func<X, Y> {
+final class SlowInput implements Input {
 
     /**
-     * The runnable.
+     * Original input.
      */
-    private final Runnable runnable;
+    private final Input origin;
 
     /**
      * Ctor.
-     * @param rnbl The runnable
+     * @param size The size of the array to encapsulate
      */
-    public RunnableAsFunc(final Runnable rnbl) {
-        this.runnable = rnbl;
+    SlowInput(final int size) {
+        this(new InputStreamAsInput(new ByteArrayInputStream(new byte[size])));
+    }
+
+    /**
+     * Ctor.
+     * @param input Original input to encapsulate and make slower
+     */
+    SlowInput(final Input input) {
+        this.origin = input;
     }
 
     @Override
-    public Y apply(final X input) {
-        this.runnable.run();
-        return null;
+    public InputStream stream() throws IOException {
+        return new SlowInputStream(this.origin.stream());
     }
+
 }

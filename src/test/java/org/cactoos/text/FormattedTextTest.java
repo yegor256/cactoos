@@ -23,8 +23,13 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.IllegalFormatConversionException;
 import java.util.Locale;
+import java.util.UnknownFormatConversionException;
 import org.cactoos.TextHasString;
+import org.cactoos.list.IterableAsList;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -32,6 +37,7 @@ import org.junit.Test;
  * Test case for {@link FormattedText}.
  *
  * @author Andriy Kryvtsun (kontiky@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -47,6 +53,48 @@ public final class FormattedTextTest {
             ),
             new TextHasString("1. Formatted text")
         );
+    }
+
+    @Test
+    public void formatsTextWithObjects() {
+        MatcherAssert.assertThat(
+            "Can't format a text with objects",
+            new FormattedText(
+                new StringAsText("%d. Number as %s"),
+                new Integer(1),
+                new String("string")
+            ),
+            new TextHasString("1. Number as string")
+        );
+    }
+
+    @Test(expected = UnknownFormatConversionException.class)
+    public void failsForInvalidPattern() throws IOException {
+        new FormattedText(
+            new StringAsText("%%. Formatted %$"),
+            new IterableAsList<>(1, "invalid")
+        ).asString();
+    }
+
+    @Test
+    public void formatsTextWithCollection() {
+        MatcherAssert.assertThat(
+            "Can't format a text with a collection",
+            new FormattedText(
+                new StringAsText("%d. Formatted as %s"),
+                new IterableAsList<>(1, "txt")
+            ),
+            new TextHasString("1. Formatted as txt")
+        );
+    }
+
+    @Test(expected = IllegalFormatConversionException.class)
+    public void ensuresThatFormatterFails() throws IOException {
+        new FormattedText(
+            new StringAsText("Local time: %d"),
+            Locale.ROOT,
+            Calendar.getInstance()
+        ).asString();
     }
 
     @Test

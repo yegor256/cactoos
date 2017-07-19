@@ -64,7 +64,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
      * @param proc The proc
      */
     public AsyncFunc(final Proc<X> proc) {
-        this(new ProcAsFunc<>(proc));
+        this(new FuncOf<>(proc));
     }
 
     /**
@@ -81,7 +81,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
      * @param fct Factory
      */
     public AsyncFunc(final Proc<X> proc, final ThreadFactory fct) {
-        this(new ProcAsFunc<>(proc), fct);
+        this(new FuncOf<>(proc), fct);
     }
 
     /**

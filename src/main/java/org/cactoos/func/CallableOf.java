@@ -23,43 +23,79 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.Callable;
 import org.cactoos.Func;
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
+import org.cactoos.Proc;
 
 /**
- * Func as Matcher.
+ * Func as {@link Callable}.
+ *
+ * <p>You may want to use this decorator where
+ * {@link Callable} is required, but you just have a function:</p>
+ *
+ * <pre> Callable&lt;String&gt; callable = new FuncAsCallable&lt;&gt;(
+ *   i -&gt; "Hello, world!"
+ * );
+ * </pre>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of object to match
- * @since 0.2
+ * @param <X> Type of input
+ * @param <T> Type of output
+ * @since 0.12
  */
-public final class FuncAsMatcher<T> extends TypeSafeMatcher<T> {
+public final class CallableOf<X, T> implements Callable<T> {
 
     /**
-     * The func.
+     * Original func.
      */
-    private final Func<T, Boolean> func;
+    private final Func<X, T> func;
+
+    /**
+     * The input.
+     */
+    private final X input;
 
     /**
      * Ctor.
-     * @param fnc The func
+     * @param runnable Encapsulated proc
+     * @since 0.12
      */
-    public FuncAsMatcher(final Func<T, Boolean> fnc) {
-        super();
+    public CallableOf(final Runnable runnable) {
+        this(new FuncOf<>(runnable));
+    }
+
+    /**
+     * Ctor.
+     * @param proc Encapsulated proc
+     * @since 0.12
+     */
+    public CallableOf(final Proc<X> proc) {
+        this(new FuncOf<>(proc));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     */
+    public CallableOf(final Func<X, T> fnc) {
+        this(fnc, null);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     * @param ipt Input
+     */
+    public CallableOf(final Func<X, T> fnc, final X ipt) {
         this.func = fnc;
+        this.input = ipt;
     }
 
     @Override
-    public boolean matchesSafely(final T item) {
-        return new UncheckedFunc<>(this.func).apply(item);
-    }
-
-    @Override
-    public void describeTo(final Description description) {
-        description.appendText(this.func.toString());
+    public T call() throws Exception {
+        return this.func.apply(this.input);
     }
 }

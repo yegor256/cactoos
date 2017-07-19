@@ -25,7 +25,7 @@ package org.cactoos.io;
 
 import java.util.Properties;
 import org.cactoos.ScalarHasValue;
-import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.MatcherOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -46,8 +46,10 @@ public final class InputAsPropertiesTest {
                 "foo=Hello, world!\nbar=works fine?\n"
             ),
             new ScalarHasValue<>(
-                new FuncAsMatcher<Properties>(
-                    props -> "Hello, world!".equals(props.getProperty("foo"))
+                new MatcherOf<Properties>(
+                    props -> {
+                        return "Hello, world!".equals(props.getProperty("foo"));
+                    }
                 )
             )
         );

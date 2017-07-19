@@ -25,42 +25,82 @@ package org.cactoos.func;
 
 import java.util.concurrent.Callable;
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
- * Func as {@link Callable}.
- *
- * <p>You may want to use this decorator where
- * {@link Callable} is required, but you just have a function:</p>
- *
- * <pre> Callable&lt;String&gt; callable = new FuncAsCallable&lt;&gt;(
- *   i -&gt; "Hello, world!"
- * );
- * </pre>
+ * Represents many possible inputs as {@link Func}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of input
- * @since 0.2
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @since 0.12
  */
-public final class FuncAsCallable<T> implements Callable<T> {
+public final class FuncOf<X, Y> implements Func<X, Y> {
 
     /**
-     * Original func.
+     * The func.
      */
-    private final Func<?, T> func;
+    private final Func<X, Y> func;
 
     /**
      * Ctor.
-     * @param fnc Encapsulated func
+     * @param result The result
      */
-    public FuncAsCallable(final Func<?, T> fnc) {
+    public FuncOf(final Y result) {
+        this((Func<X, Y>) input -> result);
+    }
+
+    /**
+     * Ctor.
+     * @param callable The callable
+     */
+    public FuncOf(final Callable<Y> callable) {
+        this((Func<X, Y>) input -> callable.call());
+    }
+
+    /**
+     * Ctor.
+     * @param runnable The runnable
+     */
+    public FuncOf(final Runnable runnable) {
+        this((Proc<X>) input -> runnable.run());
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     */
+    public FuncOf(final Proc<X> proc) {
+        this(proc, null);
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     * @param result Result to return
+     */
+    public FuncOf(final Proc<X> proc, final Y result) {
+        this(
+            input -> {
+                proc.exec(input);
+                return result;
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func
+     */
+    public FuncOf(final Func<X, Y> fnc) {
         this.func = fnc;
     }
 
     @Override
-    public T call() throws Exception {
-        return this.func.apply(null);
+    public Y apply(final X input) throws Exception {
+        return this.func.apply(input);
     }
 }

@@ -21,58 +21,70 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.io;
 
-import org.cactoos.Func;
-import org.cactoos.Proc;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * Proc as a Func.
- *
- * <p>Be careful, this function will always return {@code null}.</p>
- *
- * <p>There is no thread-safety guarantee.
+ * InputStream that returns content in small portions.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.2
+ * @since 0.12
  */
-public final class ProcAsFunc<X, Y> implements Func<X, Y> {
+final class SlowInputStream extends InputStream {
 
     /**
-     * The proc.
+     * Original stream.
      */
-    private final Proc<X> proc;
-
-    /**
-     * The result.
-     */
-    private final Y result;
+    private final InputStream origin;
 
     /**
      * Ctor.
-     * @param prc The proc
+     * @param size The size of the array to encapsulate
      */
-    public ProcAsFunc(final Proc<X> prc) {
-        this(prc, null);
+    SlowInputStream(final int size) {
+        this(new ByteArrayInputStream(new byte[size]));
     }
 
     /**
      * Ctor.
-     * @param prc The proc
-     * @param rslt Result to return
-     * @since 0.7
+     * @param stream Original stream to encapsulate and make slower
      */
-    public ProcAsFunc(final Proc<X> prc, final Y rslt) {
-        this.proc = prc;
-        this.result = rslt;
+    SlowInputStream(final InputStream stream) {
+        super();
+        this.origin = stream;
     }
 
     @Override
-    public Y apply(final X input) throws Exception {
-        this.proc.exec(input);
-        return this.result;
+    public int read() throws IOException {
+        final byte[] buf = new byte[1];
+        final int result;
+        if (this.read(buf) < 0) {
+            result = -1;
+        } else {
+            result = buf[0];
+        }
+        return result;
     }
+
+    @Override
+    public int read(final byte[] buf, final int offset, final int len)
+        throws IOException {
+        final int result;
+        if (len > 1) {
+            result = this.origin.read(buf, offset, len - 1);
+        } else {
+            result = this.origin.read(buf, offset, len);
+        }
+        return result;
+    }
+
+    @Override
+    public int read(final byte[] buf) throws IOException {
+        return this.read(buf, 0, buf.length);
+    }
+
 }

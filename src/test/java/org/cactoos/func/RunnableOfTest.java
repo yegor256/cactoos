@@ -23,37 +23,38 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.Func;
+import java.util.concurrent.atomic.AtomicBoolean;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Func that always returns the same result.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link RunnableOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.1
+ * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ConstFunc<X, Y> implements Func<X, Y> {
+public final class RunnableOfTest {
 
-    /**
-     * The result to return.
-     */
-    private final Y result;
-
-    /**
-     * Ctor.
-     * @param rslt What to return
-     */
-    public ConstFunc(final Y rslt) {
-        this.result = rslt;
-    }
-
-    @Override
-    public Y apply(final X input) {
-        return this.result;
+    @Test
+    public void convertsFuncIntoRunnable() throws Exception {
+        final AtomicBoolean done = new AtomicBoolean();
+        MatcherAssert.assertThat(
+            "Can't execute Runnable",
+            new RunnableOf<>(
+                input -> {
+                    done.set(true);
+                    return 1;
+                }
+            ),
+            new MatcherOf<Runnable>(
+                input -> {
+                    input.run();
+                    return done.get();
+                }
+            )
+        );
     }
 
 }
