@@ -67,18 +67,18 @@ public final class Base64Codec implements Codec {
 
     @Override
     public Bytes encode(final Text input) throws IOException {
-        final byte[] encode = Base64.getEncoder().encode(this.origin.encode(
-            input
-            ).asBytes()
+        return new ArrayAsBytes(
+            Base64.getEncoder().encode(
+                this.origin.encode(
+                    input
+                ).asBytes()
+            )
         );
-        return new ArrayAsBytes(encode);
     }
 
     @Override
     public Text decode(final Bytes bytes) throws IOException {
-        final byte[] illegal = Base64Codec.checkIllegalCharacters(bytes
-            .asBytes()
-        );
+        final byte[] illegal = Base64Codec.checkIllegalCharacters(bytes);
         if (illegal.length > 0) {
             throw new DecodingException(
                 new FormattedText(
@@ -89,9 +89,9 @@ public final class Base64Codec implements Codec {
         }
         return this.origin.decode(
             new ArrayAsBytes(
-            Base64.getDecoder().decode(
-            bytes.asBytes()
-            )
+                Base64.getDecoder().decode(
+                    bytes.asBytes()
+                )
             )
         );
     }
@@ -101,12 +101,15 @@ public final class Base64Codec implements Codec {
      *
      * @param bytes The values to check
      * @return An array of the found non-Base64 characters.
+     * @throws IOException If fails
      */
-    private static byte[] checkIllegalCharacters(final byte[] bytes) {
+    private static byte[] checkIllegalCharacters(final Bytes bytes) throws
+        IOException {
+        final byte[] bytearray = bytes.asBytes();
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        for (int pos = 0; pos < bytes.length; ++pos) {
-            if (BASE64CHARS.indexOf(bytes[pos]) < 0) {
-                out.write(bytes[pos]);
+        for (int pos = 0; pos < bytearray.length; ++pos) {
+            if (BASE64CHARS.indexOf(bytearray[pos]) < 0) {
+                out.write(bytearray[pos]);
             }
         }
         return out.toByteArray();
