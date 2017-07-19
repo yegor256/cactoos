@@ -42,7 +42,9 @@ public final class RepeatedFuncTest {
     @Test
     public void runsFuncMultipleTimes() throws Exception {
         final Func<Boolean, Integer> func = new RepeatedFunc<>(
-            input -> new SecureRandom().nextInt(),
+            input -> {
+                return new SecureRandom().nextInt();
+            },
             2
         );
         MatcherAssert.assertThat(

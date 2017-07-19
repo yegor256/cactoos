@@ -97,9 +97,9 @@ public final class AndTest {
         MatcherAssert.assertThat(
             "Can't iterate a list with a procedure",
             new And(
-                new MappedIterable<String, Scalar<Boolean>>(
+                new MappedIterable<>(
                     new ArrayAsIterable<>("hello", "world"),
-                    new ProcAsFunc<>(list::add, () -> true)
+                    new FuncOf<>(list::add, () -> true)
                 )
             ),
             new ScalarHasValue<>(
@@ -121,7 +121,7 @@ public final class AndTest {
             new And(
                 new MappedIterable<String, Scalar<Boolean>>(
                     Collections.emptyList(),
-                    new ProcAsFunc<>(list::add, () -> true)
+                    new FuncOf<>(list::add, () -> true)
                 )
             ),
             new ScalarHasValue<>(

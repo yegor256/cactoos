@@ -23,6 +23,9 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.Callable;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 
@@ -34,25 +37,65 @@ import org.cactoos.Proc;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input
- * @since 0.6
+ * @since 0.12
  */
-public final class FuncAsProc<X> implements Proc<X> {
+public final class ProcOf<X> implements Proc<X> {
 
     /**
-     * The func.
+     * The proc.
      */
-    private final Func<X, ?> func;
+    private final Proc<X> proc;
+
+    /**
+     * Ctor.
+     * @param function The function
+     */
+    public ProcOf(final Function<X, ?> function) {
+        this((Proc<X>) function::apply);
+    }
+
+    /**
+     * Ctor.
+     * @param consumer The consumer
+     */
+    public ProcOf(final Consumer<X> consumer) {
+        this((Proc<X>) consumer::accept);
+    }
+
+    /**
+     * Ctor.
+     * @param runnable The runnable
+     */
+    public ProcOf(final Runnable runnable) {
+        this((Proc<X>) input -> runnable.run());
+    }
+
+    /**
+     * Ctor.
+     * @param callable The callable
+     */
+    public ProcOf(final Callable<X> callable) {
+        this((Proc<X>) input -> callable.call());
+    }
 
     /**
      * Ctor.
      * @param fnc The proc
      */
-    public FuncAsProc(final Func<X, ?> fnc) {
-        this.func = fnc;
+    public ProcOf(final Func<X, ?> fnc) {
+        this((Proc<X>) fnc::apply);
+    }
+
+    /**
+     * Ctor.
+     * @param prc The proc
+     */
+    public ProcOf(final Proc<X> prc) {
+        this.proc = prc;
     }
 
     @Override
     public void exec(final X input) throws Exception {
-        this.func.apply(input);
+        this.proc.exec(input);
     }
 }

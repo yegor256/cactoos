@@ -23,53 +23,27 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
-import org.cactoos.FuncApplies;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link RunnableWithFallback}.
+ * Test case for {@link CallableOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.6
+ * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class RunnableWithFallbackTest {
+public final class CallableOfTest {
 
     @Test
-    public void usesMainFunc() throws Exception {
+    public void convertsFuncIntoCallable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't use the main function if no exception",
-            new RunnableAsFunc<>(
-                new RunnableWithFallback(
-                    () -> {
-                    },
-                    input -> {
-                        throw new IOException(input);
-                    }
-                )
-            ),
-            new FuncApplies<>(true, Matchers.nullValue())
-        );
-    }
-
-    @Test
-    public void usesFallback() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't use the fallback function if there is exception",
-            new RunnableAsFunc<>(
-                new RunnableWithFallback(
-                    () -> {
-                        throw new IllegalStateException("intended");
-                    },
-                    input -> {
-                    }
-                )
-            ),
-            new FuncApplies<>(true, Matchers.nullValue())
+            new CallableOf<>(
+                input -> 1
+            ).call(),
+            Matchers.equalTo(1)
         );
     }
 

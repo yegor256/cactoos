@@ -25,42 +25,51 @@ package org.cactoos.func;
 
 import java.util.concurrent.Callable;
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
- * Func as {@link Callable}.
- *
- * <p>You may want to use this decorator where
- * {@link Callable} is required, but you just have a function:</p>
- *
- * <pre> Callable&lt;String&gt; callable = new FuncAsCallable&lt;&gt;(
- *   i -&gt; "Hello, world!"
- * );
- * </pre>
+ * Func as Runnable.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of input
- * @since 0.2
+ * @since 0.12
  */
-public final class FuncAsCallable<T> implements Callable<T> {
+public final class RunnableOf implements Runnable {
 
     /**
      * Original func.
      */
-    private final Func<?, T> func;
+    private final Func<?, ?> func;
+
+    /**
+     * Ctor.
+     * @param proc Encapsulated proc
+     * @since 0.11
+     */
+    public RunnableOf(final Callable<?> proc) {
+        this(new FuncOf<>(proc));
+    }
+
+    /**
+     * Ctor.
+     * @param proc Encapsulated proc
+     */
+    public RunnableOf(final Proc<?> proc) {
+        this(new FuncOf<>(proc));
+    }
 
     /**
      * Ctor.
      * @param fnc Encapsulated func
      */
-    public FuncAsCallable(final Func<?, T> fnc) {
+    public RunnableOf(final Func<?, ?> fnc) {
         this.func = fnc;
     }
 
     @Override
-    public T call() throws Exception {
-        return this.func.apply(null);
+    public void run() {
+        new UncheckedFunc<>(this.func).apply(null);
     }
 }
