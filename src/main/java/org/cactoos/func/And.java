@@ -53,7 +53,7 @@ public final class And implements Scalar<Boolean> {
      */
     @SafeVarargs
     public <X> And(final Proc<X> proc, final X... src) {
-        this(new ProcAsFunc<>(proc, true), src);
+        this(new FuncOf<>(proc, true), src);
     }
 
     /**
@@ -74,7 +74,7 @@ public final class And implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      */
     public <X> And(final Iterable<X> src, final Proc<X> proc) {
-        this(src, new ProcAsFunc<>(proc, true));
+        this(src, new FuncOf<>(proc, true));
     }
 
     /**

@@ -55,27 +55,24 @@ public final class ChainedFunc<X, Y, Z> implements Func<X, Z> {
 
     /**
      * Ctor.
-     * @param before Before function
-     * @param funcs Functions
-     * @param after After function
+     * @param bfr Before function
+     * @param list Functions
+     * @param atr After function
      */
-    public ChainedFunc(
-        final Func<X, Y> before,
-        final Iterable<Func<Y, Y>> funcs,
-        final Func<Y, Z> after
-    ) {
-        this.before = before;
-        this.funcs = funcs;
-        this.after = after;
+    public ChainedFunc(final Func<X, Y> bfr, final Iterable<Func<Y, Y>> list,
+        final Func<Y, Z> atr) {
+        this.before = bfr;
+        this.funcs = list;
+        this.after = atr;
     }
 
     /**
      * Ctor.
-     * @param before Before function
-     * @param after After function
+     * @param bfr Before function
+     * @param atr After function
      */
-    public ChainedFunc(final Func<X, Y> before, final Func<Y, Z> after) {
-        this(before, Collections.emptyList(), after);
+    public ChainedFunc(final Func<X, Y> bfr, final Func<Y, Z> atr) {
+        this(bfr, Collections.emptyList(), atr);
     }
 
     @Override

@@ -23,27 +23,37 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FuncAsCallable}.
+ * Test case for {@link RunnableOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncAsCallableTest {
+public final class RunnableOfTest {
 
     @Test
-    public void convertsFuncIntoCallable() throws Exception {
+    public void convertsFuncIntoRunnable() throws Exception {
+        final AtomicBoolean done = new AtomicBoolean();
         MatcherAssert.assertThat(
-            new FuncAsCallable<>(
-                input -> 1
-            ).call(),
-            Matchers.equalTo(1)
+            "Can't execute Runnable",
+            new RunnableOf<>(
+                input -> {
+                    done.set(true);
+                    return 1;
+                }
+            ),
+            new MatcherOf<Runnable>(
+                input -> {
+                    input.run();
+                    return done.get();
+                }
+            )
         );
     }
 

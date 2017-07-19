@@ -23,37 +23,61 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.Callable;
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
- * Func that always returns the same result.
+ * Func as Proc.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.1
+ * @since 0.12
  */
-public final class ConstFunc<X, Y> implements Func<X, Y> {
+public final class ProcOf<X> implements Proc<X> {
 
     /**
-     * The result to return.
+     * The proc.
      */
-    private final Y result;
+    private final Proc<X> proc;
 
     /**
      * Ctor.
-     * @param rslt What to return
+     * @param runnable The runnable
      */
-    public ConstFunc(final Y rslt) {
-        this.result = rslt;
+    public ProcOf(final Runnable runnable) {
+        this((Proc<X>) input -> runnable.run());
+    }
+
+    /**
+     * Ctor.
+     * @param callable The callable
+     */
+    public ProcOf(final Callable<X> callable) {
+        this((Proc<X>) input -> callable.call());
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The proc
+     */
+    public ProcOf(final Func<X, ?> fnc) {
+        this((Proc<X>) fnc::apply);
+    }
+
+    /**
+     * Ctor.
+     * @param prc The proc
+     */
+    public ProcOf(final Proc<X> prc) {
+        this.proc = prc;
     }
 
     @Override
-    public Y apply(final X input) {
-        return this.result;
+    public void exec(final X input) throws Exception {
+        this.proc.exec(input);
     }
-
 }
