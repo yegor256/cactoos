@@ -23,21 +23,14 @@
  */
 package org.cactoos.func;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.Callable;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 
 /**
- * Func that runs in the background.
- *
- * <p>If you want your piece of code to be executed in the background,
- * use {@link AsyncFunc} as following:</p>
- *
- * <pre> int length = new AsyncFunc(
- *   input -&gt; input.length()
- * ).apply("Hello, world!").get();</pre>
+ * Represents many possible inputs as {@link Func}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -45,9 +38,9 @@ import org.cactoos.Proc;
  * @version $Id$
  * @param <X> Type of input
  * @param <Y> Type of output
- * @since 0.10
+ * @since 0.12
  */
-public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
+public final class FuncOf<X, Y> implements Func<X, Y> {
 
     /**
      * The func.
@@ -55,50 +48,77 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
     private final Func<X, Y> func;
 
     /**
-     * The threads.
+     * Ctor.
+     * @param result The result
      */
-    private final ThreadFactory factory;
+    public FuncOf(final Y result) {
+        this((Func<X, Y>) input -> result);
+    }
+
+    /**
+     * Ctor.
+     * @param function The function
+     */
+    public FuncOf(final Function<X, Y> function) {
+        this((Func<X, Y>) function::apply);
+    }
+
+    /**
+     * Ctor.
+     * @param consumer The consumer
+     */
+    public FuncOf(final Consumer<X> consumer) {
+        this((Proc<X>) consumer::accept);
+    }
+
+    /**
+     * Ctor.
+     * @param callable The callable
+     */
+    public FuncOf(final Callable<Y> callable) {
+        this((Func<X, Y>) input -> callable.call());
+    }
+
+    /**
+     * Ctor.
+     * @param runnable The runnable
+     */
+    public FuncOf(final Runnable runnable) {
+        this((Proc<X>) input -> runnable.run());
+    }
 
     /**
      * Ctor.
      * @param proc The proc
      */
-    public AsyncFunc(final Proc<X> proc) {
-        this(new FuncOf<>(proc));
-    }
-
-    /**
-     * Ctor.
-     * @param fnc The func
-     */
-    public AsyncFunc(final Func<X, Y> fnc) {
-        this(fnc, Executors.defaultThreadFactory());
+    public FuncOf(final Proc<X> proc) {
+        this(proc, null);
     }
 
     /**
      * Ctor.
      * @param proc The proc
-     * @param fct Factory
+     * @param result Result to return
      */
-    public AsyncFunc(final Proc<X> proc, final ThreadFactory fct) {
-        this(new FuncOf<>(proc), fct);
-    }
-
-    /**
-     * Ctor.
-     * @param fnc The func
-     * @param fct Factory
-     */
-    public AsyncFunc(final Func<X, Y> fnc, final ThreadFactory fct) {
-        this.func = fnc;
-        this.factory = fct;
-    }
-
-    @Override
-    public Future<Y> apply(final X input) {
-        return Executors.newSingleThreadExecutor(this.factory).submit(
-            () -> this.func.apply(input)
+    public FuncOf(final Proc<X> proc, final Y result) {
+        this(
+            (Func<X, Y>) input -> {
+                proc.exec(input);
+                return result;
+            }
         );
     }
 
+    /**
+     * Ctor.
+     * @param fnc Func
+     */
+    public FuncOf(final Func<X, Y> fnc) {
+        this.func = fnc;
+    }
+
+    @Override
+    public Y apply(final X input) throws Exception {
+        return this.func.apply(input);
+    }
 }

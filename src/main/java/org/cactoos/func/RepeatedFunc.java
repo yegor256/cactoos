@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
+import org.cactoos.Proc;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -47,6 +48,16 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
      * How many times to run.
      */
     private final int times;
+
+    /**
+     * Ctor.
+     * @param proc Proc
+     * @param max How many times
+     * @since 0.12
+     */
+    public RepeatedFunc(final Proc<X> proc, final int max) {
+        this(new FuncOf<>(proc), max);
+    }
 
     /**
      * Ctor.
