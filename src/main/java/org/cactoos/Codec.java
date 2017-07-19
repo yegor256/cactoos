@@ -50,12 +50,10 @@ public interface Codec {
      *
      * <p>This method may throw
      * {@link org.cactoos.codec.DecodingException}, if it's not
-     * possible to decode the incoming byte array. This exception will mean
-     * that the user can't be authenticated and {@code Identity.ANONYMOUS}
-     * object will be identified.
+     * possible to decode the incoming byte array.
      *
      * @param input The Input
-     * @return Identity
+     * @return Text
      * @throws IOException If fails
      */
     Text decode(Bytes input) throws IOException;
