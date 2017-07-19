@@ -25,13 +25,14 @@ package org.cactoos.codec;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Base64;
 import org.cactoos.Bytes;
 import org.cactoos.Codec;
 import org.cactoos.Text;
 import org.cactoos.text.ArrayAsBytes;
+import org.cactoos.text.BytesAsText;
 import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Base64 codec.
@@ -82,7 +83,7 @@ public final class Base64Codec implements Codec {
             throw new DecodingException(
                 new FormattedText(
                     "Illegal character in Base64 encoded data. %s",
-                    1, Arrays.toString(illegal)
+                    1, new UncheckedText(new BytesAsText(illegal)).asString()
                 ).asString()
             );
         }
