@@ -24,8 +24,6 @@
 package org.cactoos.codec;
 
 import java.io.IOException;
-import org.cactoos.Codec;
-import org.cactoos.Text;
 import org.cactoos.TextHasString;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
@@ -45,22 +43,24 @@ public final class Base64CodecTest {
 
     @Test
     public void decodeCodec() throws IOException {
-        final Codec codec = new Base64Codec(new PlainCodec());
         MatcherAssert.assertThat(
             "Can't decode a text",
-            codec.decode(new TextAsBytes("SGVsbG8h")),
+            new Base64Codec(
+                new PlainCodec()
+            ).decode(
+                new TextAsBytes("SGVsbG8h")
+            ),
             new TextHasString("Hello!")
         );
     }
 
     @Test
     public void encodeCodec() throws IOException {
-        final Text text = new BytesAsText(new Base64Codec(new PlainCodec())
-            .encode(new StringAsText("Hi!"))
-        );
         MatcherAssert.assertThat(
             "Can't encode a text",
-            text,
+            new BytesAsText(new Base64Codec(new PlainCodec())
+                .encode(new StringAsText("Hi!"))
+            ),
             new TextHasString("SGkh")
         );
     }
