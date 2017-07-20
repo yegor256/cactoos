@@ -91,8 +91,17 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
      * @param fct Factory
      */
     public AsyncFunc(final Func<X, Y> fnc, final ThreadFactory fct) {
+        this(fnc, Executors.newSingleThreadExecutor(fct));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param exec Executor Service
+     */
+    public AsyncFunc(final Func<X, Y> fnc, final ExecutorService exec) {
         this.func = fnc;
-        this.executor = Executors.newSingleThreadExecutor(fct);
+        this.executor = exec;
     }
 
     @Override
