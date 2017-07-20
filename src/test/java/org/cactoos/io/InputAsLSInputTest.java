@@ -21,29 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.io;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FuncAsCallable}.
+ * Test case for {@link InputAsLSInput}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  */
-public final class FuncAsCallableTest {
+public final class InputAsLSInputTest {
 
     @Test
-    public void convertsFuncIntoCallable() throws Exception {
+    public void readsSimpleInput() {
         MatcherAssert.assertThat(
-            new FuncAsCallable<>(
-                input -> 1
-            ).call(),
-            Matchers.equalTo(1)
+            "Can't read simple input",
+            new InputAsLSInput(
+                new BytesAsInput("hello, world!")
+            ).getStringData(),
+            Matchers.endsWith("world!")
+        );
+    }
+
+    @Test
+    public void readsBiggerInput() {
+        final int size = 400_000;
+        MatcherAssert.assertThat(
+            "Can't read bigger input",
+            new InputAsLSInput(
+                new InputStreamAsInput(
+                    new SlowInputStream(size)
+                )
+            ).getStringData().length(),
+            Matchers.equalTo(size)
+        );
+    }
+
+    @Test
+    public void countsBytesInBiggerInput() {
+        final int size = 300_000;
+        MatcherAssert.assertThat(
+            "Can't count bytes in a bigger input",
+            new InputAsLSInput(
+                new InputStreamAsInput(
+                    new SlowInputStream(size)
+                )
+            ).getStringData().length(),
+            Matchers.equalTo(size)
         );
     }
 

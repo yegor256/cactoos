@@ -23,43 +23,84 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.Callable;
 import org.cactoos.Func;
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
+import org.cactoos.Proc;
 
 /**
- * Func as Matcher.
+ * Represents many possible inputs as {@link Func}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of object to match
- * @since 0.2
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @since 0.12
  */
-public final class FuncAsMatcher<T> extends TypeSafeMatcher<T> {
+public final class FuncOf<X, Y> implements Func<X, Y> {
 
     /**
      * The func.
      */
-    private final Func<T, Boolean> func;
+    private final Func<X, Y> func;
 
     /**
      * Ctor.
-     * @param fnc The func
+     * @param result The result
      */
-    public FuncAsMatcher(final Func<T, Boolean> fnc) {
-        super();
+    public FuncOf(final Y result) {
+        this((Func<X, Y>) input -> result);
+    }
+
+    /**
+     * Ctor.
+     * @param callable The callable
+     */
+    public FuncOf(final Callable<Y> callable) {
+        this((Func<X, Y>) input -> callable.call());
+    }
+
+    /**
+     * Ctor.
+     * @param runnable The runnable
+     */
+    public FuncOf(final Runnable runnable) {
+        this((Proc<X>) input -> runnable.run());
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     */
+    public FuncOf(final Proc<X> proc) {
+        this(proc, null);
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     * @param result Result to return
+     */
+    public FuncOf(final Proc<X> proc, final Y result) {
+        this(
+            input -> {
+                proc.exec(input);
+                return result;
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func
+     */
+    private FuncOf(final Func<X, Y> fnc) {
         this.func = fnc;
     }
 
     @Override
-    public boolean matchesSafely(final T item) {
-        return new UncheckedFunc<>(this.func).apply(item);
-    }
-
-    @Override
-    public void describeTo(final Description description) {
-        description.appendText(this.func.toString());
+    public Y apply(final X input) throws Exception {
+        return this.func.apply(input);
     }
 }

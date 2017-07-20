@@ -52,7 +52,7 @@ public final class AsyncFuncTest {
             ),
             new FuncApplies<>(
                 true,
-                new FuncAsMatcher<Future<String>>(
+                new MatcherOf<Future<String>>(
                     future -> !future.isDone()
                 )
             )
@@ -71,8 +71,10 @@ public final class AsyncFuncTest {
             ),
             new FuncApplies<>(
                 true,
-                new FuncAsMatcher<Future<String>>(
-                    future -> latch.await(1L, TimeUnit.SECONDS)
+                new MatcherOf<Future<String>>(
+                    future -> {
+                        return latch.await(1L, TimeUnit.SECONDS);
+                    }
                 )
             )
         );

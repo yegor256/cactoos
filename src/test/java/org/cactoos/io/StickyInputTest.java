@@ -23,9 +23,11 @@
  */
 package org.cactoos.io;
 
+import java.io.IOException;
 import org.cactoos.Input;
+import org.cactoos.ScalarHasValue;
 import org.cactoos.TextHasString;
-import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.MatcherOf;
 import org.cactoos.func.RepeatedFunc;
 import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
@@ -51,7 +53,7 @@ public final class StickyInputTest {
                     "org/cactoos/large-text.txt"
                 )
             ),
-            new FuncAsMatcher<>(
+            new MatcherOf<>(
                 new RepeatedFunc<Input, Boolean>(
                     input -> new InputAsBytes(
                         new TeeInput(input, new DeadOutput())
@@ -80,6 +82,34 @@ public final class StickyInputTest {
             new TextHasString(
                 Matchers.endsWith("est laborum.\n")
             )
+        );
+    }
+
+    @Test
+    public void readsFileContentSlowlyAndCountsLength() {
+        final long size = 100_000L;
+        MatcherAssert.assertThat(
+            "Can't read bytes from a large source slowly and count length",
+            new LengthOfInput(
+                new StickyInput(
+                    new SlowInput((int) size)
+                )
+            ),
+            new ScalarHasValue<>(size)
+        );
+    }
+
+    @Test
+    public void readsFileContentSlowly() throws IOException {
+        final long size = 130_000L;
+        MatcherAssert.assertThat(
+            "Can't read bytes from a large source slowly",
+            new InputAsBytes(
+                new StickyInput(
+                    new SlowInput((int) size)
+                )
+            ).asBytes().length,
+            Matchers.equalTo((int) size)
         );
     }
 

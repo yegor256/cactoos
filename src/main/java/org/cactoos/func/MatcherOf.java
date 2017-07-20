@@ -25,34 +25,50 @@ package org.cactoos.func;
 
 import org.cactoos.Func;
 import org.cactoos.Proc;
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Func as Proc.
+ * Func as Matcher.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @since 0.6
+ * @param <T> Type of object to match
+ * @since 0.12
  */
-public final class FuncAsProc<X> implements Proc<X> {
+public final class MatcherOf<T> extends TypeSafeMatcher<T> {
 
     /**
      * The func.
      */
-    private final Func<X, ?> func;
+    private final Func<T, Boolean> func;
 
     /**
      * Ctor.
-     * @param fnc The proc
+     * @param proc The func
      */
-    public FuncAsProc(final Func<X, ?> fnc) {
+    public MatcherOf(final Proc<T> proc) {
+        this(new FuncOf<>(proc));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     */
+    public MatcherOf(final Func<T, Boolean> fnc) {
+        super();
         this.func = fnc;
     }
 
     @Override
-    public void exec(final X input) throws Exception {
-        this.func.apply(input);
+    public boolean matchesSafely(final T item) {
+        return new UncheckedFunc<>(this.func).apply(item);
+    }
+
+    @Override
+    public void describeTo(final Description description) {
+        description.appendText(this.func.toString());
     }
 }

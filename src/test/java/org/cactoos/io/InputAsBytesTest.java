@@ -28,7 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.MatcherOf;
+import org.cactoos.list.EndlessIterable;
+import org.cactoos.list.LimitedIterable;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
 import org.cactoos.text.TextAsBytes;
@@ -46,6 +48,42 @@ import org.junit.Test;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class InputAsBytesTest {
+
+    @Test
+    public void readsLargeInMemoryContent() throws IOException {
+        final int multiplier = 5_000;
+        final String body = "1234567890";
+        MatcherAssert.assertThat(
+            "Can't read large content from in-memory Input",
+            new InputAsBytes(
+                new BytesAsInput(
+                    String.join(
+                        "",
+                        new LimitedIterable<>(
+                            new EndlessIterable<>(body),
+                            multiplier
+                        )
+                    )
+                )
+            ).asBytes().length,
+            Matchers.equalTo(body.length() * multiplier)
+        );
+    }
+
+    @Test
+    // @checkstyle AnonInnerLengthCheck (100 lines)
+    public void readsLargeContent() throws IOException {
+        final int size = 100_000;
+        try (final InputStream slow = new SlowInputStream(size)) {
+            MatcherAssert.assertThat(
+                "Can't read large content from Input",
+                new InputAsBytes(
+                    new InputStreamAsInput(slow)
+                ).asBytes().length,
+                Matchers.equalTo(size)
+            );
+        }
+    }
 
     @Test
     public void readsInputIntoBytes() throws IOException {
@@ -116,8 +154,10 @@ public final class InputAsBytesTest {
                 ).asBytes(),
                 StandardCharsets.UTF_8
             ).asString(),
-            new FuncAsMatcher<>(
-                text -> closed.get()
+            new MatcherOf<>(
+                text -> {
+                    return closed.get();
+                }
             )
         );
     }

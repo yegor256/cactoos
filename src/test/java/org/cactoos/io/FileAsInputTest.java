@@ -48,7 +48,7 @@ public final class FileAsInputTest {
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "Can't read file content",
-            new PathAsInput(temp),
+            new SlowInput(new PathAsInput(temp)),
             new InputHasContent(content)
         );
     }

@@ -38,6 +38,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class LengthOfInputTest {
 
@@ -47,9 +48,11 @@ public final class LengthOfInputTest {
         MatcherAssert.assertThat(
             "Can't calculate the length of Input",
             new LengthOfInput(
-                new BytesAsInput(
-                    new TextAsBytes(
-                        new StringAsText(text)
+                new SlowInput(
+                    new BytesAsInput(
+                        new TextAsBytes(
+                            new StringAsText(text)
+                        )
                     )
                 )
             ),
@@ -80,6 +83,18 @@ public final class LengthOfInputTest {
             ).value(),
             // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(73471L)
+        );
+    }
+
+    @Test
+    public void readsFileContentSlowly() {
+        final long size = 100_000L;
+        MatcherAssert.assertThat(
+            "Can't calculate length if the input is slow",
+            new LengthOfInput(
+                new SlowInput((int) size)
+            ),
+            new ScalarHasValue<>(size)
         );
     }
 

@@ -23,44 +23,38 @@
  */
 package org.cactoos.func;
 
-import java.util.concurrent.Callable;
-import org.cactoos.Func;
+import java.util.concurrent.atomic.AtomicBoolean;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Func as {@link Callable}.
- *
- * <p>You may want to use this decorator where
- * {@link Callable} is required, but you just have a function:</p>
- *
- * <pre> Callable&lt;String&gt; callable = new FuncAsCallable&lt;&gt;(
- *   i -&gt; "Hello, world!"
- * );
- * </pre>
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link RunnableOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of input
  * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncAsCallable<T> implements Callable<T> {
+public final class RunnableOfTest {
 
-    /**
-     * Original func.
-     */
-    private final Func<?, T> func;
-
-    /**
-     * Ctor.
-     * @param fnc Encapsulated func
-     */
-    public FuncAsCallable(final Func<?, T> fnc) {
-        this.func = fnc;
+    @Test
+    public void convertsFuncIntoRunnable() throws Exception {
+        final AtomicBoolean done = new AtomicBoolean();
+        MatcherAssert.assertThat(
+            "Can't execute Runnable",
+            new RunnableOf<>(
+                input -> {
+                    done.set(true);
+                    return 1;
+                }
+            ),
+            new MatcherOf<Runnable>(
+                input -> {
+                    input.run();
+                    return done.get();
+                }
+            )
+        );
     }
 
-    @Override
-    public T call() throws Exception {
-        return this.func.apply(null);
-    }
 }

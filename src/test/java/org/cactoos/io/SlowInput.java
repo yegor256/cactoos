@@ -21,39 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.io;
 
-import org.cactoos.Func;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import org.cactoos.Input;
 
 /**
- * Func that always returns the same result.
- *
- * <p>There is no thread-safety guarantee.
+ * Input that returns content in small portions.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.1
+ * @since 0.12
  */
-public final class ConstFunc<X, Y> implements Func<X, Y> {
+final class SlowInput implements Input {
 
     /**
-     * The result to return.
+     * Original input.
      */
-    private final Y result;
+    private final Input origin;
 
     /**
      * Ctor.
-     * @param rslt What to return
+     * @param size The size of the array to encapsulate
      */
-    public ConstFunc(final Y rslt) {
-        this.result = rslt;
+    SlowInput(final int size) {
+        this(new InputStreamAsInput(new ByteArrayInputStream(new byte[size])));
+    }
+
+    /**
+     * Ctor.
+     * @param input Original input to encapsulate and make slower
+     */
+    SlowInput(final Input input) {
+        this.origin = input;
     }
 
     @Override
-    public Y apply(final X input) {
-        return this.result;
+    public InputStream stream() throws IOException {
+        return new SlowInputStream(this.origin.stream());
     }
 
 }
