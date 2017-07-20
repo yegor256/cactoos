@@ -78,7 +78,7 @@ public final class TeeInput implements Input {
      * @since 0.5
      */
     public TeeInput(final File input, final File output) {
-        this(new FileAsInput(input), new FileAsOutput(output));
+        this(new InputOf(input), new FileAsOutput(output));
     }
 
     /**
@@ -88,7 +88,7 @@ public final class TeeInput implements Input {
      * @since 0.5
      */
     public TeeInput(final File input, final Path output) {
-        this(new FileAsInput(input), new PathAsOutput(output));
+        this(new InputOf(input), new PathAsOutput(output));
     }
 
     /**

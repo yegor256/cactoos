@@ -34,7 +34,7 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.InputHasContent;
 import org.cactoos.TextHasString;
-import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.MatcherOf;
 import org.cactoos.func.UncheckedScalar;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
@@ -45,9 +45,9 @@ import org.junit.Test;
 
 /**
  * Test case for {@link InputOf}.
- * These cases were extracted from {@link FileAsInputTest},
- * {@link InputWithFallbackTest}, {@link ResourceAsInputTest},
- * {@link InputAsBytesTest} by Ix (ixmanuel@yahoo.com)
+ * These cases were extracted from {@link InputWithFallbackTest},
+ * {@link InputAsBytesTest}
+ * by Ix (ixmanuel@yahoo.com)
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
@@ -129,65 +129,6 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsBinaryResource() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from a classpath resource",
-            Arrays.copyOfRange(
-                new InputAsBytes(
-                    new InputOf(
-                        "org/cactoos/io/ResourceAsInputTest.class"
-                    )
-                ).asBytes(),
-                // @checkstyle MagicNumber (2 lines)
-                0,
-                4
-            ),
-            Matchers.equalTo(
-                new InputAsBytes(
-                    new InputOf(
-                        new byte[]{
-                            // @checkstyle MagicNumber (1 line)
-                            (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
-                        }
-                    )
-                ).asBytes()
-            )
-        );
-    }
-
-    @Test
-    public void readsTextResource() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read a text resource from classpath",
-            new BytesAsText(
-                new InputAsBytes(
-                    new InputOf(
-                        "org/cactoos/large-text.txt",
-                        Thread.currentThread().getContextClassLoader()
-                    )
-                )
-            ).asString(),
-            Matchers.endsWith("est laborum.\n")
-        );
-    }
-
-    @Test
-    public void readAbsentResourceTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't replace an absent resource with a text",
-            new BytesAsText(
-                new InputAsBytes(
-                    new InputOf(
-                        "foo/this-resource-is-definitely-absent.txt",
-                        "the replacement"
-                    )
-                )
-            ).asString(),
-            Matchers.endsWith("replacement")
-        );
-    }
-
-    @Test
     public void readsInputIntoBytes() throws IOException {
         MatcherAssert.assertThat(
             "Can't read bytes from Input",
@@ -234,8 +175,10 @@ public final class InputOfTest {
                 ).asBytes(),
                 StandardCharsets.UTF_8
             ).asString(),
-            new FuncAsMatcher<>(
-                text -> closed.get()
+            new MatcherOf<>(
+                text -> {
+                    return closed.get();
+                }
             )
         );
     }

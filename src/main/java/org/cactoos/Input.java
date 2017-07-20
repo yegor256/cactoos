@@ -25,7 +25,6 @@ package org.cactoos;
 
 import java.io.IOException;
 import java.io.InputStream;
-import org.cactoos.io.FileAsInput;
 
 /**
  * Input.
@@ -35,11 +34,11 @@ import org.cactoos.io.FileAsInput;
  *
  * <pre> String content = new BytesAsText(
  *   new InputAsBytes(
- *     new FileAsInput(new File("/tmp/names.txt"))
+ *     new InputOf(new File("/tmp/names.txt"))
  *   )
  * ).asString();</pre>
  *
- * <p>Here {@link FileAsInput} implements {@link Input} and behaves like
+ * <p>Here {@link InputOf} implements {@link Input} and behaves like
  * one, providing read-only access to the encapsulated {@link java.io.File}.</p>
  *
  * <p>There is no thread-safety guarantee.
@@ -48,7 +47,7 @@ import org.cactoos.io.FileAsInput;
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @see org.cactoos.io.BytesAsInput
- * @see FileAsInput
+ * @see InputOf
  * @see org.cactoos.io.PathAsInput
  * @since 0.1
  */

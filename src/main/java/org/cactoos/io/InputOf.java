@@ -24,11 +24,15 @@
 package org.cactoos.io;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Func;
+import org.cactoos.func.IoCheckedScalar;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
@@ -46,8 +50,7 @@ import org.cactoos.func.UncheckedScalar;
 public final class InputOf implements Input {
 
     /**
-     * Input: FileAsInput, ResourceAsInput, BytesAsInput,
-     * InputStreamAsInput, PathAsInput.
+     * Input: BytesAsInput, InputStreamAsInput, PathAsInput.
      */
     private final Input origin;
 
@@ -57,7 +60,7 @@ public final class InputOf implements Input {
      * @param src The file
      */
     public InputOf(final File src) {
-        this(new FileAsInput(src));
+        this(() -> src);
     }
 
     /**
@@ -66,7 +69,7 @@ public final class InputOf implements Input {
      * @param src The file
      */
     public InputOf(final Scalar<File> src) {
-        this(new FileAsInput(src));
+        this(new UncheckedScalar<>(src));
     }
 
     /**
@@ -75,68 +78,16 @@ public final class InputOf implements Input {
      * @param src The file
      */
     public InputOf(final UncheckedScalar<File> src) {
-        this(new FileAsInput(src));
+        this(() -> new FileInputStream(src.value()));
     }
 
     /**
      * Ctor.
      *
-     * @param res Resource name
+     * @param src The path
      */
-    public InputOf(final String res) {
-        this(new ResourceAsInput(res));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param res Resource name
-     * @param fbk Fallback
-     */
-    public InputOf(final String res, final String fbk) {
-        this(new ResourceAsInput(res, fbk));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param res Resource name
-     * @param fbk Fallback
-     */
-    public InputOf(final String res, final Input fbk) {
-        this(new ResourceAsInput(res, fbk));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param res Resource name
-     * @param fbk Fallback
-     */
-    public InputOf(final String res, final Func<String, Input> fbk) {
-        this(new ResourceAsInput(res, fbk));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param res Resource name
-     * @param ldr Resource class loader
-     */
-    public InputOf(final String res, final ClassLoader ldr) {
-        this(new ResourceAsInput(res, ldr));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param res Resource name
-     * @param ldr Resource class loader
-     * @param fbk Fallback
-     */
-    public InputOf(final String res, final Func<String, Input> fbk,
-        final ClassLoader ldr) {
-        this(new ResourceAsInput(res, fbk, ldr));
+    public InputOf(final Path src) {
+        this(() -> new FileInputStream(src.toFile()));
     }
 
     /**
@@ -173,15 +124,6 @@ public final class InputOf implements Input {
      */
     public InputOf(final InputStream stream) {
         this(new InputStreamAsInput(stream));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param src The path
-     */
-    public InputOf(final Path src) {
-        this(new PathAsInput(src));
     }
 
     /**

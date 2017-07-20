@@ -47,7 +47,7 @@ public final class InputWithFallbackTest {
             new BytesAsText(
                 new InputAsBytes(
                     new InputWithFallback(
-                        new FileAsInput(
+                        new InputOf(
                             new File("/this-file-is-absent-for-sure.txt")
                         ),
                         new BytesAsInput("hello, world!")
