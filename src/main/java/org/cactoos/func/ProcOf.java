@@ -72,7 +72,7 @@ public final class ProcOf<X> implements Proc<X> {
      * Ctor.
      * @param prc The proc
      */
-    public ProcOf(final Proc<X> prc) {
+    private ProcOf(final Proc<X> prc) {
         this.proc = prc;
     }
 

@@ -25,6 +25,7 @@ package org.cactoos.func;
 
 import java.io.IOException;
 import org.cactoos.FuncApplies;
+import org.cactoos.Proc;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public final class FuncWithFallbackTest {
         MatcherAssert.assertThat(
             "Can't use the callback in case of exception",
             new FuncWithFallback<>(
-                input -> {
+                (Proc<Integer>) input -> {
                     throw new IOException("Failure");
                 },
                 ex -> "Never mind"

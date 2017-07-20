@@ -67,6 +67,39 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     * @param proc The proc
+     * @param fbk The fallback
+     * @since 0.12
+     */
+    public FuncWithFallback(final Proc<X> proc,
+        final Func<Throwable, Y> fbk) {
+        this(new FuncOf<>(proc), fbk);
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     * @param fbk The fallback
+     * @since 0.12
+     */
+    public FuncWithFallback(final Proc<X> proc,
+        final Proc<Throwable> fbk) {
+        this(new FuncOf<>(proc), new FuncOf<>(fbk));
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     * @param fbk The fallback
+     * @since 0.12
+     */
+    public FuncWithFallback(final Func<X, Y> proc,
+        final Proc<Throwable> fbk) {
+        this(proc, new FuncOf<>(fbk));
+    }
+
+    /**
+     * Ctor.
      * @param fnc The func
      * @param fbk The fallback
      * @param flw The follow up func

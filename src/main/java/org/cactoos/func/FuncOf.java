@@ -95,7 +95,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
      * Ctor.
      * @param fnc Func
      */
-    public FuncOf(final Func<X, Y> fnc) {
+    private FuncOf(final Func<X, Y> fnc) {
         this.func = fnc;
     }
 
