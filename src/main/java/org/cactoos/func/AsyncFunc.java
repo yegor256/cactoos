@@ -23,9 +23,9 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 
@@ -57,7 +57,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
     /**
      * The threads.
      */
-    private final ThreadFactory factory;
+    private final ExecutorService exec;
 
     /**
      * Ctor.
@@ -72,31 +72,31 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
      * @param fnc The func
      */
     public AsyncFunc(final Func<X, Y> fnc) {
-        this(fnc, Executors.defaultThreadFactory());
+        this(fnc, Executors.newCachedThreadPool());
     }
 
     /**
      * Ctor.
      * @param proc The proc
-     * @param fct Factory
+     * @param xctr The executor
      */
-    public AsyncFunc(final Proc<X> proc, final ThreadFactory fct) {
-        this(new FuncOf<>(proc), fct);
+    public AsyncFunc(final Proc<X> proc, final ExecutorService xctr) {
+        this(new FuncOf<>(proc), xctr);
     }
 
     /**
      * Ctor.
      * @param fnc The func
-     * @param fct Factory
+     * @param xctr The executor
      */
-    public AsyncFunc(final Func<X, Y> fnc, final ThreadFactory fct) {
+    public AsyncFunc(final Func<X, Y> fnc, final ExecutorService xctr) {
         this.func = fnc;
-        this.factory = fct;
+        this.exec = xctr;
     }
 
     @Override
     public Future<Y> apply(final X input) {
-        return Executors.newSingleThreadExecutor(this.factory).submit(
+        return this.exec.submit(
             () -> this.func.apply(input)
         );
     }
