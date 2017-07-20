@@ -23,35 +23,48 @@
  */
 package org.cactoos.codec;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import org.cactoos.Bytes;
-import org.cactoos.Text;
-import org.cactoos.TextHasString;
-import org.cactoos.text.StringAsText;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import java.io.InputStream;
+import java.util.Base64;
+import org.cactoos.Input;
 
 /**
- * Test case for {@link GzipCodec}.
+ * Input to Base64.
+ * <p>
+ * <p>The class is immutable and thread-safe.
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.12
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class GzipCodecTest {
+public final class InputToBase64 implements Input {
 
-    @Test
-    public void testGzipCodec() throws IOException {
-        final String testtext = "Hi!";
-        final GzipCodec gzipcodec = new GzipCodec(new PlainCodec());
-        final Bytes encode = gzipcodec.encode(new StringAsText(testtext));
-        final Text decode = gzipcodec.decode(encode);
-        MatcherAssert.assertThat(
-            "Can't Encode/Decode a testtext",
-            decode,
-            new TextHasString(testtext)
-        );
+    /**
+     * Original input.
+     */
+    private final Input origin;
+
+    /**
+     * Ctor.
+     *
+     * @param input Original
+     */
+    public InputToBase64(final Input input) {
+        this.origin = input;
     }
 
+    @Override
+    public InputStream stream() throws IOException {
+        final InputStream stream = this.origin.stream();
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int read = stream.read();
+        while (read != -1) {
+            out.write(read);
+            read = stream.read();
+        }
+        final byte[] encode = Base64.getEncoder().encode(out.toByteArray());
+        return new ByteArrayInputStream(encode);
+    }
 }

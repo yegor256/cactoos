@@ -24,30 +24,31 @@
 package org.cactoos.codec;
 
 import java.io.IOException;
-import org.cactoos.Bytes;
-import org.cactoos.Codec;
-import org.cactoos.Text;
-import org.cactoos.text.BytesAsText;
-import org.cactoos.text.TextAsBytes;
+import org.cactoos.InputHasContent;
+import org.cactoos.io.BytesAsInput;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Plain codec.
- * <p>
- * <p>The class is immutable and thread-safe.
+ * Test case for {@link Base64ToInput}.
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.12
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class PlainCodec implements Codec {
+public final class Base64ToInputTest {
 
-    @Override
-    public Bytes encode(final Text input) throws IOException {
-        return new TextAsBytes(input);
-    }
-
-    @Override
-    public Text decode(final Bytes bytes) throws IOException {
-        return new BytesAsText(bytes);
+    @Test
+    public void decodeCodec() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't decode a text",
+            new Base64ToInput(
+                new BytesAsInput(
+                    "SGVsbG8h"
+                )
+            ),
+            new InputHasContent("Hello!")
+        );
     }
 }

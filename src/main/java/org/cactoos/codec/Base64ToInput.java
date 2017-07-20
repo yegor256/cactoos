@@ -23,19 +23,18 @@
  */
 package org.cactoos.codec;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Base64;
-import org.cactoos.Bytes;
-import org.cactoos.Codec;
-import org.cactoos.Text;
-import org.cactoos.text.ArrayAsBytes;
+import org.cactoos.Input;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
 /**
- * Base64 codec.
+ * Base64 to Input.
  * <p>
  * <p>The class is immutable and thread-safe.
  *
@@ -43,7 +42,7 @@ import org.cactoos.text.UncheckedText;
  * @version $Id$
  * @since 0.12
  */
-public final class Base64Codec implements Codec {
+public final class Base64ToInput implements Input {
 
     /**
      * All legal Base64 chars.
@@ -52,33 +51,30 @@ public final class Base64Codec implements Codec {
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
     /**
-     * Original codec.
+     * Original input.
      */
-    private final Codec origin;
+    private final Input origin;
 
     /**
      * Ctor.
      *
-     * @param codec Original codec
+     * @param input Original
      */
-    public Base64Codec(final Codec codec) {
-        this.origin = codec;
+    public Base64ToInput(final Input input) {
+        this.origin = input;
     }
 
     @Override
-    public Bytes encode(final Text input) throws IOException {
-        return new ArrayAsBytes(
-            Base64.getEncoder().encode(
-                this.origin.encode(
-                    input
-                ).asBytes()
-            )
-        );
-    }
-
-    @Override
-    public Text decode(final Bytes bytes) throws IOException {
-        final byte[] illegal = Base64Codec.checkIllegalCharacters(bytes);
+    public InputStream stream() throws IOException {
+        final InputStream stream = this.origin.stream();
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int read = stream.read();
+        while (read != -1) {
+            out.write(read);
+            read = stream.read();
+        }
+        final byte[] bytes = out.toByteArray();
+        final byte[] illegal = Base64ToInput.checkIllegalCharacters(bytes);
         if (illegal.length > 0) {
             throw new DecodingException(
                 new FormattedText(
@@ -87,25 +83,18 @@ public final class Base64Codec implements Codec {
                 ).asString()
             );
         }
-        return this.origin.decode(
-            new ArrayAsBytes(
-                Base64.getDecoder().decode(
-                    bytes.asBytes()
-                )
-            )
-        );
+        return new ByteArrayInputStream(Base64.getDecoder().decode(bytes));
     }
 
     /**
      * Check the byte array for non-Base64 characters.
      *
-     * @param bytes The values to check
+     * @param bytearray The values to check
      * @return An array of the found non-Base64 characters.
      * @throws IOException If fails
      */
-    private static byte[] checkIllegalCharacters(final Bytes bytes) throws
+    private static byte[] checkIllegalCharacters(final byte[] bytearray) throws
         IOException {
-        final byte[] bytearray = bytes.asBytes();
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         for (int pos = 0; pos < bytearray.length; ++pos) {
             if (BASE64CHARS.indexOf(bytearray[pos]) < 0) {
@@ -114,5 +103,4 @@ public final class Base64Codec implements Codec {
         }
         return out.toByteArray();
     }
-
 }
