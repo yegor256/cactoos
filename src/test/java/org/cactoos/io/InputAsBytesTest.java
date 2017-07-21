@@ -78,7 +78,7 @@ public final class InputAsBytesTest {
             MatcherAssert.assertThat(
                 "Can't read large content from Input",
                 new InputAsBytes(
-                    new InputStreamAsInput(slow)
+                    new InputOf(slow)
                 ).asBytes().length,
                 Matchers.equalTo(size)
             );
@@ -138,7 +138,7 @@ public final class InputAsBytesTest {
             "Can't close InputStream correctly",
             new BytesAsText(
                 new InputAsBytes(
-                    new InputStreamAsInput(
+                    new InputOf(
                         new InputStream() {
                             @Override
                             public int read() throws IOException {

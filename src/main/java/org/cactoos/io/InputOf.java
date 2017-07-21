@@ -209,7 +209,7 @@ public final class InputOf implements Input {
      * @param stream The stream
      */
     public InputOf(final InputStream stream) {
-        this(new InputStreamAsInput(stream));
+        this(() -> stream);
     }
 
     /**

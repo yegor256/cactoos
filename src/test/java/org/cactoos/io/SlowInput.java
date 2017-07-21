@@ -47,7 +47,7 @@ final class SlowInput implements Input {
      * @param size The size of the array to encapsulate
      */
     SlowInput(final int size) {
-        this(new InputStreamAsInput(new ByteArrayInputStream(new byte[size])));
+        this(new InputOf(new ByteArrayInputStream(new byte[size])));
     }
 
     /**
