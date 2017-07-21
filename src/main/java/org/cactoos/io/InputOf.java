@@ -157,13 +157,7 @@ public final class InputOf implements Input {
      * @param builder The string's builder
      */
     public InputOf(final StringBuilder builder) {
-        this(() -> {
-            return new IoCheckedScalar<InputStream>(
-                () -> new ByteArrayInputStream(
-                    builder.toString().getBytes(StandardCharsets.UTF_8)
-                )
-            ).value();
-        });
+        this(builder, StandardCharsets.UTF_8);
     }
 
     /**
