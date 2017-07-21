@@ -21,52 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.io;
 
-import org.cactoos.Scalar;
+import java.io.StringReader;
+import org.cactoos.text.BytesAsText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Scalar that is thread-safe.
+ * Test case for {@link ReaderAsInput}.
  *
- * @author Tim Hinkes (timmeey@timmeey.de)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @param <T> Type of result
- * @since 0.3
+ * @since 0.12
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SyncScalar<T> implements Scalar<T> {
+public final class ReaderAsInputTest {
 
-    /**
-     * The scalar to cache.
-     */
-    private final Scalar<T> source;
-
-    /**
-     * Sync lock.
-     */
-    private final Object lck;
-
-    /**
-     * Ctor.
-     * @param src The Scalar to cache
-     */
-    public SyncScalar(final Scalar<T> src) {
-        this(src, src);
+    @Test
+    public void readsString() throws Exception {
+        final String source = "hello, друг!";
+        MatcherAssert.assertThat(
+            "Can't read string through a reader",
+            new BytesAsText(
+                new InputAsBytes(
+                    new ReaderAsInput(
+                        new StringReader(source)
+                    )
+                )
+            ).asString(),
+            Matchers.equalTo(source)
+        );
     }
 
-    /**
-     * Ctor.
-     * @param src The Scalar to cache
-     * @param lck Sync lock
-     */
-    public SyncScalar(final Scalar<T> src, final Object lck) {
-        this.source = src;
-        this.lck = lck;
-    }
-
-    @Override
-    public T value() throws Exception {
-        synchronized (this.lck) {
-            return this.source.value();
-        }
-    }
 }

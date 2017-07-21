@@ -23,6 +23,7 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
@@ -55,9 +56,9 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
     private final Func<X, Y> func;
 
     /**
-     * The threads.
+     * The executor service.
      */
-    private final ThreadFactory factory;
+    private final ExecutorService executor;
 
     /**
      * Ctor.
@@ -90,13 +91,22 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
      * @param fct Factory
      */
     public AsyncFunc(final Func<X, Y> fnc, final ThreadFactory fct) {
+        this(fnc, Executors.newSingleThreadExecutor(fct));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param exec Executor Service
+     */
+    public AsyncFunc(final Func<X, Y> fnc, final ExecutorService exec) {
         this.func = fnc;
-        this.factory = fct;
+        this.executor = exec;
     }
 
     @Override
     public Future<Y> apply(final X input) {
-        return Executors.newSingleThreadExecutor(this.factory).submit(
+        return this.executor.submit(
             () -> this.func.apply(input)
         );
     }
