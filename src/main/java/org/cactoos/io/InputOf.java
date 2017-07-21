@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -119,6 +120,34 @@ public final class InputOf implements Input {
                 () -> url
             ).value().openStream();
         });
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param rdr Reader
+     */
+    public InputOf(final Reader rdr) {
+        this(new ReaderAsInput(rdr));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param cset Charset
+     */
+    public InputOf(final Reader rdr, final Charset cset) {
+        this(new ReaderAsInput(rdr, cset));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param cset Charset
+     * @param max Buffer size
+     */
+    public InputOf(final Reader rdr, final Charset cset, final int max) {
+        this(new ReaderAsInput(rdr, cset, max));
     }
 
     /**

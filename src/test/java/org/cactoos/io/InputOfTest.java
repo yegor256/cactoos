@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -312,6 +313,22 @@ public final class InputOfTest {
                 Matchers.startsWith("O que será"),
                 Matchers.endsWith(" que será")
             )
+        );
+    }
+
+    @Test
+    public void readsStringFromReader() throws Exception {
+        final String source = "hello, друг!";
+        MatcherAssert.assertThat(
+            "Can't read string through a reader",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputOf(
+                        new StringReader(source)
+                    )
+                )
+            ).asString(),
+            Matchers.equalTo(source)
         );
     }
 
