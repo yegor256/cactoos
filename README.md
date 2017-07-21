@@ -12,7 +12,7 @@
 
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
-until we release version 1.0 (July 2017).
+until we release version 1.0 (<del>July</del> August 2017).
 
 Cactoos is a collection of object-oriented Java primitives.
 
