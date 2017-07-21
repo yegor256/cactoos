@@ -236,4 +236,83 @@ public final class InputOfTest {
         );
     }
 
+    @Test
+    public void readsStringBuilder() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't receive string builder",
+            new String(
+                new InputAsBytes(
+                    new InputOf(
+                        new StringBuilder("Name it, then it exists!")
+                    )
+                ).asBytes()
+            ),
+            Matchers.allOf(
+                Matchers.startsWith("Name it, "),
+                Matchers.endsWith("then it exists!")
+            )
+        );
+    }
+
+    @Test
+    public void readsStringBuffer() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't receive string buffer",
+            new String(
+                new InputAsBytes(
+                    new InputOf(
+                        new StringBuffer("The future is now!")
+                    )
+                ).asBytes()
+            ),
+            Matchers.allOf(
+                Matchers.startsWith("The future "),
+                Matchers.endsWith("is now!")
+            )
+        );
+    }
+
+    @Test
+    public void readsArrayOfChars() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read array of chars.",
+            new String(
+                new InputAsBytes(
+                    new InputOf(
+                        new char[]{
+                            'H', 'o', 'l', 'd', ' ',
+                            'i', 'n', 'f', 'i', 'n', 'i', 't', 'y',
+                        }
+                    )
+                ).asBytes()
+            ),
+            Matchers.allOf(
+                Matchers.startsWith("Hold "),
+                Matchers.endsWith("infinity")
+            )
+        );
+    }
+
+    @Test
+    public void readsEncodedArrayOfChars() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read array of encoded chars.",
+            new String(
+                new InputAsBytes(
+                    new InputOf(
+                        new char[]{
+                            'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'á',
+                            ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'á',
+                        }
+                    )
+                ).asBytes(),
+                StandardCharsets.UTF_8
+            ),
+            Matchers.allOf(
+                Matchers.startsWith("O que será"),
+                Matchers.endsWith(" que será")
+            )
+        );
+    }
+
 }

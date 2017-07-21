@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
@@ -38,6 +39,7 @@ import org.cactoos.Text;
 import org.cactoos.func.IoCheckedScalar;
 import org.cactoos.func.UncheckedScalar;
 import org.cactoos.text.ArrayAsBytes;
+import org.cactoos.text.StringAsText;
 import org.cactoos.text.TextAsBytes;
 
 /**
@@ -48,6 +50,7 @@ import org.cactoos.text.TextAsBytes;
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.11.8
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class InputOf implements Input {
 
@@ -116,6 +119,48 @@ public final class InputOf implements Input {
                 () -> url
             ).value().openStream();
         });
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param builder The string's builder
+     */
+    public InputOf(final StringBuilder builder) {
+        this(builder.toString());
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param buffer The string's buffer
+     */
+    public InputOf(final StringBuffer buffer) {
+        this(buffer.toString());
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param chars The chars
+     */
+    public InputOf(final char... chars) {
+        this(new TextAsBytes(new String(chars)));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param array The chars
+     * @param cset The charset
+     */
+    public InputOf(final char[] array, final Charset cset) {
+        this(
+            new TextAsBytes(
+                new StringAsText(new String(array)),
+                cset
+            )
+        );
     }
 
     /**
