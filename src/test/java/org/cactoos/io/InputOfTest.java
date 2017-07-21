@@ -318,13 +318,30 @@ public final class InputOfTest {
 
     @Test
     public void readsStringFromReader() throws Exception {
-        final String source = "hello, друг!";
+        final String source = "hello, source!";
         MatcherAssert.assertThat(
             "Can't read string through a reader",
             new BytesAsText(
                 new InputAsBytes(
                     new InputOf(
                         new StringReader(source)
+                    )
+                )
+            ).asString(),
+            Matchers.equalTo(source)
+        );
+    }
+
+    @Test
+    public void readsEncodedStringFromReader() throws Exception {
+        final String source = "hello, друг!";
+        MatcherAssert.assertThat(
+            "Can't read encoded string through a reader",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputOf(
+                        new StringReader(source),
+                        StandardCharsets.UTF_8
                     )
                 )
             ).asString(),
