@@ -281,10 +281,8 @@ public final class InputOfTest {
             new String(
                 new InputAsBytes(
                     new InputOf(
-                        new char[]{
-                            'H', 'o', 'l', 'd', ' ',
-                            'i', 'n', 'f', 'i', 'n', 'i', 't', 'y',
-                        }
+                        'H', 'o', 'l', 'd', ' ',
+                        'i', 'n', 'f', 'i', 'n', 'i', 't', 'y'
                     )
                 ).asBytes()
             ),
@@ -305,7 +303,8 @@ public final class InputOfTest {
                         new char[]{
                             'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
                             ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
-                        }
+                        },
+                        StandardCharsets.UTF_8
                     )
                 ).asBytes(),
                 StandardCharsets.UTF_8
