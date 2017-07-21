@@ -89,7 +89,7 @@ To read a binary file from classpath:
 
 ```java
 byte[] data = new InputAsBytes(
-  new InputOf("foo/img.jpg")
+  new ResourceAsInput("foo/img.jpg")
 ).asBytes();
 ```
 
