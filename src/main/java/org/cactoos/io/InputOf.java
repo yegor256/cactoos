@@ -32,6 +32,7 @@ import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
@@ -156,7 +157,29 @@ public final class InputOf implements Input {
      * @param builder The string's builder
      */
     public InputOf(final StringBuilder builder) {
-        this(builder.toString());
+        this(() -> {
+            return new IoCheckedScalar<InputStream>(
+                () -> new ByteArrayInputStream(
+                    builder.toString().getBytes(StandardCharsets.UTF_8)
+                )
+            ).value();
+        });
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param builder The string's builder
+     * @param cset The charset
+     */
+    public InputOf(final StringBuilder builder, final Charset cset) {
+        this(() -> {
+            return new IoCheckedScalar<InputStream>(
+                () -> new ByteArrayInputStream(
+                    builder.toString().getBytes(cset)
+                )
+            ).value();
+        });
     }
 
     /**
@@ -165,7 +188,11 @@ public final class InputOf implements Input {
      * @param buffer The string's buffer
      */
     public InputOf(final StringBuffer buffer) {
-        this(buffer.toString());
+        this(() -> {
+            return new IoCheckedScalar<InputStream>(
+                () -> new ByteArrayInputStream(buffer.toString().getBytes())
+            ).value();
+        });
     }
 
     /**
