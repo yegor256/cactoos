@@ -73,7 +73,7 @@ public final class InputAsProperties implements Scalar<Properties> {
      * @since 0.9
      */
     public InputAsProperties(final Bytes bytes) {
-        this(new BytesAsInput(bytes));
+        this(new InputOf(bytes));
     }
 
     /**

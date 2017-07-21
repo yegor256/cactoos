@@ -98,7 +98,7 @@ public final class TeeInput implements Input {
      * @since 0.5
      */
     public TeeInput(final String input, final File file) {
-        this(new BytesAsInput(input), new FileAsOutput(file));
+        this(new InputOf(input), new FileAsOutput(file));
     }
 
     /**
@@ -108,7 +108,7 @@ public final class TeeInput implements Input {
      * @since 0.5
      */
     public TeeInput(final String input, final Path file) {
-        this(new BytesAsInput(input), new PathAsOutput(file));
+        this(new InputOf(input), new PathAsOutput(file));
     }
 
     /**
@@ -118,7 +118,7 @@ public final class TeeInput implements Input {
      * @since 0.5
      */
     public TeeInput(final byte[] input, final Path file) {
-        this(new BytesAsInput(input), new PathAsOutput(file));
+        this(new InputOf(input), new PathAsOutput(file));
     }
 
     /**
@@ -128,7 +128,7 @@ public final class TeeInput implements Input {
      * @since 0.5
      */
     public TeeInput(final String input, final Output output) {
-        this(new BytesAsInput(input), output);
+        this(new InputOf(input), output);
     }
 
     /**

@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -46,11 +47,9 @@ import org.takes.tk.TkHtml;
 
 /**
  * Test case for {@link InputOf}.
- * These cases were extracted from {@link InputWithFallbackTest},
- * {@link InputAsBytesTest}
- * by Ix (ixmanuel@yahoo.com)
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -59,9 +58,8 @@ import org.takes.tk.TkHtml;
 @SuppressWarnings("PMD.TooManyMethods")
 public final class InputOfTest {
 
-    // FileAsInput
     @Test
-    public void readsAlternativeInputForFileCase() {
+    public void readsAlternativeInputForFileCase() throws IOException {
         MatcherAssert.assertThat(
             "Can't read alternative source from file not found",
             new BytesAsText(
@@ -78,7 +76,6 @@ public final class InputOfTest {
         );
     }
 
-    // Scalar<File>AsInput
     @Test
     public void readsAlternativeInputForCheckedCase() {
         MatcherAssert.assertThat(
@@ -97,7 +94,6 @@ public final class InputOfTest {
         );
     }
 
-    // UncheckedScalar<File>AsInput
     @Test
     public void readsAlternativeInputForUncheckedCase() {
         MatcherAssert.assertThat(
@@ -120,7 +116,6 @@ public final class InputOfTest {
         );
     }
 
-    // PathAsInput
     @Test
     public void readsSimpleFileContent() throws IOException {
         final Path temp = Files.createTempFile("cactoos-1", "txt-1");
@@ -133,7 +128,6 @@ public final class InputOfTest {
         );
     }
 
-    // InputStream
     @Test
     public void closesInputStream() throws IOException {
         final AtomicBoolean closed = new AtomicBoolean();
@@ -204,14 +198,16 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringUrl() {
+    public void readsStringUrl() throws IOException {
         MatcherAssert.assertThat(
             "Can't fetch bytes from the HTTPS URL",
             new BytesAsText(
                 new InputAsBytes(
                     new InputOf(
-                        // @checkstyle LineLength (1 line)
-                        "file:src/test/resources/org/cactoos/large-text.txt"
+                        new URL(
+                            // @checkstyle LineLength (1 line)
+                            "file:src/test/resources/org/cactoos/large-text.txt"
+                        )
                     )
                 )
             ),
@@ -219,7 +215,6 @@ public final class InputOfTest {
         );
     }
 
-    // BytesAsInput
     @Test
     public void readsInputIntoBytes() throws IOException {
         MatcherAssert.assertThat(

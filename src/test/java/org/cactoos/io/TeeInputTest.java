@@ -54,7 +54,7 @@ public final class TeeInputTest {
             new BytesAsText(
                 new InputAsBytes(
                     new TeeInput(
-                        new BytesAsInput(
+                        new InputOf(
                             new TextAsBytes(content)
                         ),
                         new OutputStreamAsOutput(baos)

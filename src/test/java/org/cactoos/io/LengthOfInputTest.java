@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.text.StringAsText;
@@ -49,7 +50,7 @@ public final class LengthOfInputTest {
             "Can't calculate the length of Input",
             new LengthOfInput(
                 new SlowInput(
-                    new BytesAsInput(
+                    new InputOf(
                         new TextAsBytes(
                             new StringAsText(text)
                         )
@@ -77,8 +78,10 @@ public final class LengthOfInputTest {
             "Can't calculate length of a real page at the URL",
             new LengthOfInput(
                 new InputOf(
-                    // @checkstyle LineLength (1 line)
-                    "file:src/test/resources/org/cactoos/large-text.txt"
+                    new URL(
+                        // @checkstyle LineLength (1 line)
+                        "file:src/test/resources/org/cactoos/large-text.txt"
+                    )
                 )
             ).value(),
             // @checkstyle MagicNumber (1 line)

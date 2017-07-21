@@ -23,6 +23,7 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,6 +37,8 @@ import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.func.IoCheckedScalar;
 import org.cactoos.func.UncheckedScalar;
+import org.cactoos.text.ArrayAsBytes;
+import org.cactoos.text.TextAsBytes;
 
 /**
  * InputOf
@@ -44,12 +47,12 @@ import org.cactoos.func.UncheckedScalar;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.11.8
  */
 public final class InputOf implements Input {
 
     /**
-     * Input: BytesAsInput, InputStreamAsInput, PathAsInput.
+     * Input: PathAsInput.
      */
     private final Input origin;
 
@@ -92,28 +95,6 @@ public final class InputOf implements Input {
     /**
      * Ctor.
      *
-     * @param stream The stream
-     */
-    public InputOf(final InputStream stream) {
-        this(new InputStreamAsInput(stream));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param string The URL
-     */
-    public InputOf(final String string) {
-        this(() -> {
-            return new IoCheckedScalar<URL>(
-                () -> new URL(string)
-            ).value().openStream();
-        });
-    }
-
-    /**
-     * Ctor.
-     *
      * @param uri The URL
      */
     public InputOf(final URI uri) {
@@ -127,7 +108,7 @@ public final class InputOf implements Input {
     /**
      * Ctor.
      *
-     * @param url The URL
+     * @param url The url
      */
     public InputOf(final URL url) {
         this(() -> {
@@ -140,10 +121,19 @@ public final class InputOf implements Input {
     /**
      * Ctor.
      *
+     * @param string The string
+     */
+    public InputOf(final String string) {
+        this(new TextAsBytes(string));
+    }
+
+    /**
+     * Ctor.
+     *
      * @param text The text
      */
     public InputOf(final Text text) {
-        this(new BytesAsInput(text));
+        this(new TextAsBytes(text));
     }
 
     /**
@@ -152,16 +142,29 @@ public final class InputOf implements Input {
      * @param bytes The bytes
      */
     public InputOf(final byte[] bytes) {
-        this(new BytesAsInput(bytes));
+        this(new ArrayAsBytes(bytes));
     }
 
     /**
      * Ctor.
      *
-     * @param bytes The bytes
+     * @param src The bytes
      */
-    public InputOf(final Bytes bytes) {
-        this(new BytesAsInput(bytes));
+    public InputOf(final Bytes src) {
+        this(() -> {
+            return new IoCheckedScalar<InputStream>(
+                () -> new ByteArrayInputStream(src.asBytes())
+            ).value();
+        });
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param stream The stream
+     */
+    public InputOf(final InputStream stream) {
+        this(new InputStreamAsInput(stream));
     }
 
     /**

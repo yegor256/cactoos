@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.net.URL;
 import org.cactoos.Input;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.TextHasString;
@@ -66,15 +67,17 @@ public final class StickyInputTest {
     }
 
     @Test
-    public void readsRealUrl() {
+    public void readsRealUrl() throws IOException {
         MatcherAssert.assertThat(
             "Can't fetch text page from the URL",
             new BytesAsText(
                 new InputAsBytes(
                     new StickyInput(
                         new InputOf(
-                            // @checkstyle LineLength (1 line)
-                            "file:src/test/resources/org/cactoos/large-text.txt"
+                            new URL(
+                                // @checkstyle LineLength (1 line)
+                                "file:src/test/resources/org/cactoos/large-text.txt"
+                            )
                         )
                     )
                 )

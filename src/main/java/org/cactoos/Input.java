@@ -46,7 +46,6 @@ import java.io.InputStream;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @see org.cactoos.io.BytesAsInput
  * @see InputOf
  * @see org.cactoos.io.PathAsInput
  * @since 0.1

@@ -41,7 +41,7 @@ public final class DeadInput implements Input {
 
     @Override
     public InputStream stream() throws IOException {
-        return new BytesAsInput(new EmptyBytes()).stream();
+        return new InputOf(new EmptyBytes()).stream();
     }
 
 }

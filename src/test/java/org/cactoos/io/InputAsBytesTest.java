@@ -56,7 +56,7 @@ public final class InputAsBytesTest {
         MatcherAssert.assertThat(
             "Can't read large content from in-memory Input",
             new InputAsBytes(
-                new BytesAsInput(
+                new InputOf(
                     String.join(
                         "",
                         new LimitedIterable<>(
@@ -91,7 +91,7 @@ public final class InputAsBytesTest {
             "Can't read bytes from Input",
             new String(
                 new InputAsBytes(
-                    new BytesAsInput(
+                    new InputOf(
                         new TextAsBytes(
                             new StringAsText("Hello, друг!")
                         )
@@ -112,7 +112,7 @@ public final class InputAsBytesTest {
             "Can't read bytes from Input with a small reading buffer",
             new String(
                 new InputAsBytes(
-                    new BytesAsInput(
+                    new InputOf(
                         new TextAsBytes(
                             new StringAsText("Hello, товарищ!")
                         )

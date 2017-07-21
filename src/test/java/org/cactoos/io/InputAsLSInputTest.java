@@ -43,7 +43,7 @@ public final class InputAsLSInputTest {
         MatcherAssert.assertThat(
             "Can't read simple input",
             new InputAsLSInput(
-                new BytesAsInput("hello, world!")
+                new InputOf("hello, world!")
             ).getStringData(),
             Matchers.endsWith("world!")
         );
