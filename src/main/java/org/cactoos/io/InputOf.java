@@ -273,7 +273,7 @@ public final class InputOf implements Input {
      *
      * @param input The input
      */
-    public InputOf(final Input input) {
+    private InputOf(final Input input) {
         this.origin = input;
     }
 
