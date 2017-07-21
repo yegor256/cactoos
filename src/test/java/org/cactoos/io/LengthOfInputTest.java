@@ -76,7 +76,7 @@ public final class LengthOfInputTest {
         MatcherAssert.assertThat(
             "Can't calculate length of a real page at the URL",
             new LengthOfInput(
-                new UrlAsInput(
+                new InputOf(
                     // @checkstyle LineLength (1 line)
                     "file:src/test/resources/org/cactoos/large-text.txt"
                 )

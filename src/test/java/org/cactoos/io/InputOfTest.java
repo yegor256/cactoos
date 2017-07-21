@@ -30,7 +30,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.InputHasContent;
 import org.cactoos.TextHasString;
@@ -42,6 +41,8 @@ import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.takes.http.FtRemote;
+import org.takes.tk.TkHtml;
 
 /**
  * Test case for {@link InputOf}.
@@ -58,18 +59,26 @@ import org.junit.Test;
 @SuppressWarnings("PMD.TooManyMethods")
 public final class InputOfTest {
 
+    // FileAsInput
     @Test
-    public void readsSimpleFileContent() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
-        final String content = "Hello, товарищ!";
-        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+    public void readsAlternativeInputForFileCase() {
         MatcherAssert.assertThat(
-            "Can't read file content",
-            new InputOf(temp),
-            new InputHasContent(content)
+            "Can't read alternative source from file not found",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputWithFallback(
+                        new InputOf(
+                            new File("/this-file-does-not-exist.txt")
+                        ),
+                        new InputOf(new StringAsText("Alternative text!"))
+                    )
+                )
+            ),
+            new TextHasString(Matchers.endsWith("text!"))
         );
     }
 
+    // Scalar<File>AsInput
     @Test
     public void readsAlternativeInputForCheckedCase() {
         MatcherAssert.assertThat(
@@ -88,6 +97,7 @@ public final class InputOfTest {
         );
     }
 
+    // UncheckedScalar<File>AsInput
     @Test
     public void readsAlternativeInputForUncheckedCase() {
         MatcherAssert.assertThat(
@@ -110,45 +120,20 @@ public final class InputOfTest {
         );
     }
 
+    // PathAsInput
     @Test
-    public void readsAlternativeInputForFileCase() {
+    public void readsSimpleFileContent() throws IOException {
+        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final String content = "Hello, товарищ!";
+        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
-            "Can't read alternative source from file not found",
-            new BytesAsText(
-                new InputAsBytes(
-                    new InputWithFallback(
-                        new InputOf(
-                            new File("/this-file-does-not-exist.txt")
-                        ),
-                        new InputOf(new StringAsText("Alternative text!"))
-                    )
-                )
-            ),
-            new TextHasString(Matchers.endsWith("text!"))
+            "Can't read file content",
+            new InputOf(temp),
+            new InputHasContent(content)
         );
     }
 
-    @Test
-    public void readsInputIntoBytes() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't read bytes from Input",
-            new String(
-                new InputAsBytes(
-                    new InputOf(
-                        new TextAsBytes(
-                            new StringAsText("Hello, друг!")
-                        )
-                    )
-                ).asBytes(),
-                StandardCharsets.UTF_8
-            ),
-            Matchers.allOf(
-                Matchers.startsWith("Hello, "),
-                Matchers.endsWith("друг!")
-            )
-        );
-    }
-
+    // InputStream
     @Test
     public void closesInputStream() throws IOException {
         final AtomicBoolean closed = new AtomicBoolean();
@@ -179,6 +164,79 @@ public final class InputOfTest {
                 text -> {
                     return closed.get();
                 }
+            )
+        );
+    }
+
+    @Test
+    public void readsFileContent() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read bytes from a file-system URL",
+            new InputAsBytes(
+                new InputOf(
+                    this.getClass().getResource(
+                        "/org/cactoos/io/InputOf.class"
+                    )
+                )
+            ).asBytes().length,
+            Matchers.greaterThan(0)
+        );
+    }
+
+    @Test
+    public void readsRealUrl() throws IOException {
+        new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
+            home -> MatcherAssert.assertThat(
+                "Can't fetch bytes from the URL",
+                new BytesAsText(
+                    new InputAsBytes(
+                        new InputOf(home)
+                    )
+                ),
+                new TextHasString(
+                    Matchers.allOf(
+                        Matchers.startsWith("<html"),
+                        Matchers.endsWith("html>")
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void readsStringUrl() {
+        MatcherAssert.assertThat(
+            "Can't fetch bytes from the HTTPS URL",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputOf(
+                        // @checkstyle LineLength (1 line)
+                        "file:src/test/resources/org/cactoos/large-text.txt"
+                    )
+                )
+            ),
+            new TextHasString(Matchers.containsString("Lorem ipsum"))
+        );
+    }
+
+    // BytesAsInput
+    @Test
+    public void readsInputIntoBytes() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read bytes from Input",
+            new String(
+                new InputAsBytes(
+                    new InputOf(
+                        new TextAsBytes(
+                            new StringAsText("Hello, друг!")
+                        )
+                    )
+                ).asBytes(),
+                StandardCharsets.UTF_8
+            ),
+            Matchers.allOf(
+                Matchers.startsWith("Hello, "),
+                Matchers.endsWith("друг!")
             )
         );
     }

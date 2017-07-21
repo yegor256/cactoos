@@ -72,7 +72,7 @@ public final class StickyInputTest {
             new BytesAsText(
                 new InputAsBytes(
                     new StickyInput(
-                        new UrlAsInput(
+                        new InputOf(
                             // @checkstyle LineLength (1 line)
                             "file:src/test/resources/org/cactoos/large-text.txt"
                         )

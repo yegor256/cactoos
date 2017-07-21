@@ -31,11 +31,10 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
-import org.cactoos.Func;
-import org.cactoos.func.IoCheckedScalar;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.func.IoCheckedScalar;
 import org.cactoos.func.UncheckedScalar;
 
 /**
@@ -57,37 +56,85 @@ public final class InputOf implements Input {
     /**
      * Ctor.
      *
-     * @param src The file
+     * @param file The file
      */
-    public InputOf(final File src) {
-        this(() -> src);
+    public InputOf(final File file) {
+        this(() -> file);
     }
 
     /**
      * Ctor.
      *
-     * @param src The file
+     * @param scalar The scalar of the file
      */
-    public InputOf(final Scalar<File> src) {
-        this(new UncheckedScalar<>(src));
+    public InputOf(final Scalar<File> scalar) {
+        this(new UncheckedScalar<>(scalar));
     }
 
     /**
      * Ctor.
      *
-     * @param src The file
+     * @param scalar The unchecked scalar of the file
      */
-    public InputOf(final UncheckedScalar<File> src) {
-        this(() -> new FileInputStream(src.value()));
+    public InputOf(final UncheckedScalar<File> scalar) {
+        this(() -> new FileInputStream(scalar.value()));
     }
 
     /**
      * Ctor.
      *
-     * @param src The path
+     * @param path The path
      */
-    public InputOf(final Path src) {
-        this(() -> new FileInputStream(src.toFile()));
+    public InputOf(final Path path) {
+        this(() -> new FileInputStream(path.toFile()));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param stream The stream
+     */
+    public InputOf(final InputStream stream) {
+        this(new InputStreamAsInput(stream));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param string The URL
+     */
+    public InputOf(final String string) {
+        this(() -> {
+            return new IoCheckedScalar<URL>(
+                () -> new URL(string)
+            ).value().openStream();
+        });
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param uri The URL
+     */
+    public InputOf(final URI uri) {
+        this(() -> {
+            return new IoCheckedScalar<URL>(
+                () -> uri.toURL()
+            ).value().openStream();
+        });
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param url The URL
+     */
+    public InputOf(final URL url) {
+        this(() -> {
+            return new IoCheckedScalar<URL>(
+                () -> url
+            ).value().openStream();
+        });
     }
 
     /**
@@ -120,19 +167,10 @@ public final class InputOf implements Input {
     /**
      * Ctor.
      *
-     * @param stream The stream
+     * @param input The input
      */
-    public InputOf(final InputStream stream) {
-        this(new InputStreamAsInput(stream));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param src The input
-     */
-    public InputOf(final Input src) {
-        this.origin = src;
+    public InputOf(final Input input) {
+        this.origin = input;
     }
 
     @Override
