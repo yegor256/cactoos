@@ -52,7 +52,7 @@ import org.cactoos.text.TextAsBytes;
 public final class InputOf implements Input {
 
     /**
-     * Input: PathAsInput.
+     * Input.
      */
     private final Input origin;
 

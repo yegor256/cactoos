@@ -47,7 +47,6 @@ import java.io.InputStream;
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @see InputOf
- * @see org.cactoos.io.PathAsInput
  * @since 0.1
  */
 public interface Input {
