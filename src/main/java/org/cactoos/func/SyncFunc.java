@@ -44,6 +44,11 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
     private final Func<X, Y> func;
 
     /**
+     * Sync lock.
+     */
+    private final Object lck;
+
+    /**
      * Ctor.
      * @param runnable Func original
      * @since 0.12
@@ -75,14 +80,23 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      */
     public SyncFunc(final Func<X, Y> fnc) {
+        this(fnc, fnc);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func original
+     * @param lck Sync lock
+     */
+    public SyncFunc(final Func<X, Y> fnc, final Object lck) {
         this.func = fnc;
+        this.lck = lck;
     }
 
     @Override
     public Y apply(final X input) throws Exception {
-        synchronized (this.func) {
+        synchronized (this.lck) {
             return this.func.apply(input);
         }
     }
-
 }
