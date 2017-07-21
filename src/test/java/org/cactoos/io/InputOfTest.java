@@ -302,16 +302,16 @@ public final class InputOfTest {
                 new InputAsBytes(
                     new InputOf(
                         new char[]{
-                            'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'á',
-                            ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'á',
+                            'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
+                            ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
                         }
                     )
                 ).asBytes(),
                 StandardCharsets.UTF_8
             ),
             Matchers.allOf(
-                Matchers.startsWith("O que será"),
-                Matchers.endsWith(" que será")
+                Matchers.startsWith("O que sera"),
+                Matchers.endsWith(" que sera")
             )
         );
     }
