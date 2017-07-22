@@ -25,8 +25,6 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import org.cactoos.TextHasString;
-import org.cactoos.text.BytesAsHex;
-import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
