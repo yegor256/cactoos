@@ -75,7 +75,7 @@ public final class ResourceAsInput implements Input {
      * @param fbk Fallback
      */
     public ResourceAsInput(final String res, final String fbk) {
-        this(res, input -> new BytesAsInput(new TextAsBytes(fbk)));
+        this(res, input -> new InputOf(new TextAsBytes(fbk)));
     }
 
     /**

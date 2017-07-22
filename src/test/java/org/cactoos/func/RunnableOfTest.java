@@ -23,44 +23,38 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.Func;
-import org.cactoos.Proc;
+import java.util.concurrent.atomic.AtomicBoolean;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Func as Runnable.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link RunnableOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncAsRunnable implements Runnable {
+public final class RunnableOfTest {
 
-    /**
-     * Original func.
-     */
-    private final Func<?, ?> func;
-
-    /**
-     * Ctor.
-     * @param proc Encapsulated proc
-     * @since 0.11
-     */
-    public FuncAsRunnable(final Proc<?> proc) {
-        this(new ProcAsFunc<>(proc));
+    @Test
+    public void convertsFuncIntoRunnable() throws Exception {
+        final AtomicBoolean done = new AtomicBoolean();
+        MatcherAssert.assertThat(
+            "Can't execute Runnable",
+            new RunnableOf<>(
+                input -> {
+                    done.set(true);
+                    return 1;
+                }
+            ),
+            new MatcherOf<Runnable>(
+                input -> {
+                    input.run();
+                    return done.get();
+                }
+            )
+        );
     }
 
-    /**
-     * Ctor.
-     * @param fnc Encapsulated func
-     */
-    public FuncAsRunnable(final Func<?, ?> fnc) {
-        this.func = fnc;
-    }
-
-    @Override
-    public void run() {
-        new UncheckedFunc<>(this.func).apply(null);
-    }
 }

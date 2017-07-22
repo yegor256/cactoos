@@ -23,6 +23,8 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -35,45 +37,29 @@ import java.io.InputStream;
 final class SlowInputStream extends InputStream {
 
     /**
-     * How much is left.
+     * Original stream.
      */
-    private int left;
-
-    /**
-     * Byte to return.
-     */
-    private final byte data;
+    private final InputStream origin;
 
     /**
      * Ctor.
-     * @param size Total amount of bytes to return
+     * @param size The size of the array to encapsulate
      */
     SlowInputStream(final int size) {
-        this(size, 'A');
+        this(new ByteArrayInputStream(new byte[size]));
     }
 
     /**
      * Ctor.
-     * @param size Total amount of bytes to return
-     * @param dta Data to return
+     * @param stream Original stream to encapsulate and make slower
      */
-    SlowInputStream(final int size, final char dta) {
-        this(size, (byte) dta);
-    }
-
-    /**
-     * Ctor.
-     * @param size Total amount of bytes to return
-     * @param dta Data to return
-     */
-    SlowInputStream(final int size, final byte dta) {
+    SlowInputStream(final InputStream stream) {
         super();
-        this.left = size;
-        this.data = dta;
+        this.origin = stream;
     }
 
     @Override
-    public int read() {
+    public int read() throws IOException {
         final byte[] buf = new byte[1];
         final int result;
         if (this.read(buf) < 0) {
@@ -85,21 +71,19 @@ final class SlowInputStream extends InputStream {
     }
 
     @Override
-    public int read(final byte[] buf, final int offset, final int len) {
-        int idx = 0;
-        for (; idx < buf.length - 1 && idx < this.left; ++idx) {
-            buf[idx] = this.data;
-        }
-        this.left -= idx;
-        int result = idx;
-        if (idx == 0) {
-            result = -1;
+    public int read(final byte[] buf, final int offset, final int len)
+        throws IOException {
+        final int result;
+        if (len > 1) {
+            result = this.origin.read(buf, offset, len - 1);
+        } else {
+            result = this.origin.read(buf, offset, len);
         }
         return result;
     }
 
     @Override
-    public int read(final byte[] buf) {
+    public int read(final byte[] buf) throws IOException {
         return this.read(buf, 0, buf.length);
     }
 

@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * Length of {@link Input}.
@@ -69,6 +70,11 @@ public final class LengthOfInput implements Scalar<Long> {
     }
 
     @Override
+    public String toString() {
+        return Long.toString(new UncheckedScalar<>(this).value());
+    }
+
+    @Override
     public Long value() throws IOException {
         try (final InputStream stream = this.source.stream()) {
             final byte[] buf = new byte[this.size];
@@ -78,7 +84,7 @@ public final class LengthOfInput implements Scalar<Long> {
                 if (len > 0) {
                     length += (long) len;
                 }
-                if (len != buf.length) {
+                if (len < 0) {
                     break;
                 }
             }

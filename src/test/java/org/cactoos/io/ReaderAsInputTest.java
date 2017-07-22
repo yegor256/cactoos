@@ -21,28 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.io;
 
-import org.cactoos.FuncApplies;
+import java.io.StringReader;
+import org.cactoos.text.BytesAsText;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ConstFunc}.
+ * Test case for {@link ReaderAsInput}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ConstFuncTest {
+public final class ReaderAsInputTest {
 
     @Test
-    public void returnsConstant() {
+    public void readsString() throws Exception {
+        final String source = "hello, друг!";
         MatcherAssert.assertThat(
-            "Can't return a constant",
-            new ConstFunc<>(1),
-            new FuncApplies<>(-1, 1)
+            "Can't read string through a reader",
+            new BytesAsText(
+                new InputAsBytes(
+                    new ReaderAsInput(
+                        new StringReader(source)
+                    )
+                )
+            ).asString(),
+            Matchers.equalTo(source)
         );
     }
 

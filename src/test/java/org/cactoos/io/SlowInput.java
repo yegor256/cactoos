@@ -21,46 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.io;
 
-import java.util.concurrent.Callable;
-import org.cactoos.Func;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import org.cactoos.Input;
 
 /**
- * Func as {@link Callable}.
- *
- * <p>You may want to use this decorator where
- * {@link Callable} is required, but you just have a function:</p>
- *
- * <pre> Callable&lt;String&gt; callable = new FuncAsCallable&lt;&gt;(
- *   i -&gt; "Hello, world!"
- * );
- * </pre>
- *
- * <p>There is no thread-safety guarantee.
+ * Input that returns content in small portions.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of input
- * @since 0.2
+ * @since 0.12
  */
-public final class FuncAsCallable<T> implements Callable<T> {
+final class SlowInput implements Input {
 
     /**
-     * Original func.
+     * Original input.
      */
-    private final Func<?, T> func;
+    private final Input origin;
 
     /**
      * Ctor.
-     * @param fnc Encapsulated func
+     * @param size The size of the array to encapsulate
      */
-    public FuncAsCallable(final Func<?, T> fnc) {
-        this.func = fnc;
+    SlowInput(final int size) {
+        this(new InputOf(new ByteArrayInputStream(new byte[size])));
+    }
+
+    /**
+     * Ctor.
+     * @param input Original input to encapsulate and make slower
+     */
+    SlowInput(final Input input) {
+        this.origin = input;
     }
 
     @Override
-    public T call() throws Exception {
-        return this.func.apply(null);
+    public InputStream stream() throws IOException {
+        return new SlowInputStream(this.origin.stream());
     }
+
 }

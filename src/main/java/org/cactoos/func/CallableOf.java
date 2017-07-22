@@ -23,37 +23,79 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.Callable;
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
- * Func that always returns the same result.
+ * Func as {@link Callable}.
+ *
+ * <p>You may want to use this decorator where
+ * {@link Callable} is required, but you just have a function:</p>
+ *
+ * <pre> Callable&lt;String&gt; callable = new FuncAsCallable&lt;&gt;(
+ *   i -&gt; "Hello, world!"
+ * );
+ * </pre>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.1
+ * @param <T> Type of output
+ * @since 0.12
  */
-public final class ConstFunc<X, Y> implements Func<X, Y> {
+public final class CallableOf<X, T> implements Callable<T> {
 
     /**
-     * The result to return.
+     * Original func.
      */
-    private final Y result;
+    private final Func<X, T> func;
+
+    /**
+     * The input.
+     */
+    private final X input;
 
     /**
      * Ctor.
-     * @param rslt What to return
+     * @param runnable Encapsulated proc
+     * @since 0.12
      */
-    public ConstFunc(final Y rslt) {
-        this.result = rslt;
+    public CallableOf(final Runnable runnable) {
+        this(new FuncOf<>(runnable));
+    }
+
+    /**
+     * Ctor.
+     * @param proc Encapsulated proc
+     * @since 0.12
+     */
+    public CallableOf(final Proc<X> proc) {
+        this(new FuncOf<>(proc));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     */
+    public CallableOf(final Func<X, T> fnc) {
+        this(fnc, null);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     * @param ipt Input
+     */
+    public CallableOf(final Func<X, T> fnc, final X ipt) {
+        this.func = fnc;
+        this.input = ipt;
     }
 
     @Override
-    public Y apply(final X input) {
-        return this.result;
+    public T call() throws Exception {
+        return this.func.apply(this.input);
     }
-
 }

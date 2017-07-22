@@ -43,7 +43,7 @@ public final class InputAsLSInputTest {
         MatcherAssert.assertThat(
             "Can't read simple input",
             new InputAsLSInput(
-                new BytesAsInput("hello, world!")
+                new InputOf("hello, world!")
             ).getStringData(),
             Matchers.endsWith("world!")
         );
@@ -55,8 +55,8 @@ public final class InputAsLSInputTest {
         MatcherAssert.assertThat(
             "Can't read bigger input",
             new InputAsLSInput(
-                new InputStreamAsInput(
-                    new SlowInputStream(size, 'X')
+                new InputOf(
+                    new SlowInputStream(size)
                 )
             ).getStringData().length(),
             Matchers.equalTo(size)
@@ -69,7 +69,7 @@ public final class InputAsLSInputTest {
         MatcherAssert.assertThat(
             "Can't count bytes in a bigger input",
             new InputAsLSInput(
-                new InputStreamAsInput(
+                new InputOf(
                     new SlowInputStream(size)
                 )
             ).getStringData().length(),

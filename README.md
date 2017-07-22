@@ -12,7 +12,7 @@
 
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
-until we release version 1.0 (July 2017).
+until we release version 1.0 (<del>July</del> August 2017).
 
 Cactoos is a collection of object-oriented Java primitives.
 
@@ -61,7 +61,7 @@ To read a text file in UTF-8:
 ```java
 String text = new BytesAsText(
   new InputAsBytes(
-    new FileAsInput(
+    new InputOf(
       new File("/code/a.txt")
     )
   )
@@ -73,7 +73,7 @@ To write a text into a file:
 ```java
 new LengthOfInput(
   new TeeInput(
-    new BytesAsInput(
+    new InputOf(
       new TextAsBytes(
         new StringAsText("Hello, world!")
       )
@@ -174,7 +174,7 @@ List<String> sorted = new IterableAsList<>(
     new SplitText(
       new BytesAsText(
         new InputAsBytes(
-          new FileAsInput(
+          new InputOf(
             new File("/tmp/names.txt")
           )
         )

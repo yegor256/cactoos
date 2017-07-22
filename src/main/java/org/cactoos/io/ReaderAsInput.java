@@ -26,66 +26,80 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import org.cactoos.Bytes;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Input;
-import org.cactoos.Text;
-import org.cactoos.text.ArrayAsBytes;
-import org.cactoos.text.TextAsBytes;
 
 /**
- * Bytes as Input.
+ * Reader as {@link Input}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.12
  */
-public final class BytesAsInput implements Input {
+public final class ReaderAsInput implements Input {
 
     /**
-     * The source.
+     * The reader.
      */
-    private final Bytes source;
+    private final Reader reader;
+
+    /**
+     * The charset.
+     */
+    private final Charset charset;
+
+    /**
+     * The buffer size.
+     */
+    private final int size;
 
     /**
      * Ctor.
-     * @param text The text
-     * @since 0.8
+     * @param rdr Reader
      */
-    public BytesAsInput(final Text text) {
-        this(new TextAsBytes(text));
+    public ReaderAsInput(final Reader rdr) {
+        this(rdr, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
-     * @param text The text
-     * @since 0.4
+     * @param rdr Reader
+     * @param cset Charset
      */
-    public BytesAsInput(final String text) {
-        this(new TextAsBytes(text));
+    public ReaderAsInput(final Reader rdr, final Charset cset) {
+        // @checkstyle MagicNumber (1 line)
+        this(rdr, cset, 16 << 10);
     }
 
     /**
      * Ctor.
-     * @param bytes The bytes
+     * @param rdr Reader
+     * @param cset Charset
+     * @param max Buffer size
      */
-    public BytesAsInput(final byte[] bytes) {
-        this(new ArrayAsBytes(bytes));
-    }
-
-    /**
-     * Ctor.
-     * @param bytes The bytes
-     */
-    public BytesAsInput(final Bytes bytes) {
-        this.source = bytes;
+    public ReaderAsInput(final Reader rdr, final Charset cset, final int max) {
+        this.reader = rdr;
+        this.charset = cset;
+        this.size = max;
     }
 
     @Override
     public InputStream stream() throws IOException {
+        final char[] buffer = new char[this.size];
+        final StringBuilder builder = new StringBuilder();
+        while (true) {
+            final int done = this.reader.read(buffer, 0, buffer.length);
+            if (done < 0) {
+                break;
+            }
+            builder.append(buffer, 0, done);
+        }
         return new ByteArrayInputStream(
-            this.source.asBytes()
+            builder.toString().getBytes(this.charset)
         );
     }
 

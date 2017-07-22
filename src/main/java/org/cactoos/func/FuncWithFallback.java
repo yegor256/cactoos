@@ -23,7 +23,9 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.Callable;
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
  * Func with a fallback plan.
@@ -61,6 +63,219 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
     public FuncWithFallback(final Func<X, Y> fnc,
         final Func<Throwable, Y> fbk) {
         this(fnc, fbk, input -> input);
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     * @param fbk The fallback
+     * @since 0.12
+     */
+    public FuncWithFallback(final Proc<X> proc,
+        final Func<Throwable, Y> fbk) {
+        this(new FuncOf<>(proc), fbk);
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     * @param fbk The fallback
+     * @since 0.12
+     */
+    public FuncWithFallback(final Proc<X> proc,
+        final Proc<Throwable> fbk) {
+        this(new FuncOf<>(proc), new FuncOf<>(fbk));
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     * @param fbk The fallback
+     * @since 0.12
+     */
+    public FuncWithFallback(final Func<X, Y> proc,
+        final Proc<Throwable> fbk) {
+        this(proc, new FuncOf<>(fbk));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Func<X, Y> fnc,
+        final Proc<Throwable> fbk, final Func<Y, Y> flw) {
+        this(fnc, new FuncOf<>(fbk), flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Func<X, Y> fnc,
+        final Proc<Throwable> fbk, final Proc<Y> flw) {
+        this(fnc, new FuncOf<>(fbk), new FuncOf<>(flw));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Func<X, Y> fnc,
+        final Func<Throwable, Y> fbk, final Proc<Y> flw) {
+        this(fnc, fbk, new FuncOf<>(flw));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Proc<X> fnc,
+        final Func<Throwable, Y> fbk, final Func<Y, Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Proc<X> fnc,
+        final Proc<Throwable> fbk, final Func<Y, Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Proc<X> fnc,
+        final Proc<Throwable> fbk, final Proc<Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Proc<X> fnc,
+        final Func<Throwable, Y> fbk, final Proc<Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Callable<Y> fnc,
+        final Func<Throwable, Y> fbk, final Func<Y, Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Callable<Y> fnc,
+        final Proc<Throwable> fbk, final Func<Y, Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Callable<Y> fnc,
+        final Proc<Throwable> fbk, final Proc<Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Callable<Y> fnc,
+        final Func<Throwable, Y> fbk, final Proc<Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Runnable fnc,
+        final Func<Throwable, Y> fbk, final Proc<Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Runnable fnc,
+        final Func<Throwable, Y> fbk, final Func<Y, Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Runnable fnc,
+        final Proc<Throwable> fbk, final Func<Y, Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbk The fallback
+     * @param flw The follow up func
+     * @since 0.12
+     */
+    public FuncWithFallback(final Runnable fnc,
+        final Proc<Throwable> fbk, final Proc<Y> flw) {
+        this(new FuncOf<>(fnc), fbk, flw);
     }
 
     /**

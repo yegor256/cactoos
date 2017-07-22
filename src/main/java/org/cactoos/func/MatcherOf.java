@@ -21,61 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.Func;
+import org.cactoos.Proc;
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
 
 /**
- * File as Input.
+ * Func as Matcher.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @param <T> Type of object to match
+ * @since 0.12
  */
-public final class FileAsInput implements Input {
+public final class MatcherOf<T> extends TypeSafeMatcher<T> {
 
     /**
-     * The file.
+     * The func.
      */
-    private final UncheckedScalar<File> file;
+    private final Func<T, Boolean> func;
 
     /**
      * Ctor.
-     * @param src The file
+     * @param proc The func
      */
-    public FileAsInput(final File src) {
-        this(() -> src);
+    public MatcherOf(final Proc<T> proc) {
+        this(new FuncOf<>(proc));
     }
 
     /**
      * Ctor.
-     * @param src The file
-     * @since 0.8
+     * @param fnc The func
      */
-    public FileAsInput(final Scalar<File> src) {
-        this(new UncheckedScalar<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The file
-     * @since 0.8
-     */
-    public FileAsInput(final UncheckedScalar<File> src) {
-        this.file = src;
+    public MatcherOf(final Func<T, Boolean> fnc) {
+        super();
+        this.func = fnc;
     }
 
     @Override
-    public InputStream stream() throws FileNotFoundException {
-        return new FileInputStream(this.file.value());
+    public boolean matchesSafely(final T item) {
+        return new UncheckedFunc<>(this.func).apply(item);
     }
 
+    @Override
+    public void describeTo(final Description description) {
+        description.appendText(this.func.toString());
+    }
 }

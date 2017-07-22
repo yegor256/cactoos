@@ -23,10 +23,12 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.Callable;
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
- * Runnable as a Func.
+ * Represents many possible inputs as {@link Func}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -34,29 +36,71 @@ import org.cactoos.Func;
  * @version $Id$
  * @param <X> Type of input
  * @param <Y> Type of output
- * @see FuncAsCallable
- * @see FuncAsRunnable
- * @see CallableAsFunc
- * @since 0.2
+ * @since 0.12
  */
-public final class RunnableAsFunc<X, Y> implements Func<X, Y> {
+public final class FuncOf<X, Y> implements Func<X, Y> {
 
     /**
-     * The runnable.
+     * The func.
      */
-    private final Runnable runnable;
+    private final Func<X, Y> func;
 
     /**
      * Ctor.
-     * @param rnbl The runnable
+     * @param result The result
      */
-    public RunnableAsFunc(final Runnable rnbl) {
-        this.runnable = rnbl;
+    public FuncOf(final Y result) {
+        this((Func<X, Y>) input -> result);
+    }
+
+    /**
+     * Ctor.
+     * @param callable The callable
+     */
+    public FuncOf(final Callable<Y> callable) {
+        this((Func<X, Y>) input -> callable.call());
+    }
+
+    /**
+     * Ctor.
+     * @param runnable The runnable
+     */
+    public FuncOf(final Runnable runnable) {
+        this((Proc<X>) input -> runnable.run());
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     */
+    public FuncOf(final Proc<X> proc) {
+        this(proc, null);
+    }
+
+    /**
+     * Ctor.
+     * @param proc The proc
+     * @param result Result to return
+     */
+    public FuncOf(final Proc<X> proc, final Y result) {
+        this(
+            input -> {
+                proc.exec(input);
+                return result;
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func
+     */
+    private FuncOf(final Func<X, Y> fnc) {
+        this.func = fnc;
     }
 
     @Override
-    public Y apply(final X input) {
-        this.runnable.run();
-        return null;
+    public Y apply(final X input) throws Exception {
+        return this.func.apply(input);
     }
 }

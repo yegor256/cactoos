@@ -23,36 +23,69 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 
 /**
- * Func as Proc.
+ * Func as Runnable.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input
- * @since 0.6
+ * @since 0.12
  */
-public final class FuncAsProc<X> implements Proc<X> {
+public final class RunnableOf<X> implements Runnable {
 
     /**
-     * The func.
+     * Original func.
      */
     private final Func<X, ?> func;
 
     /**
-     * Ctor.
-     * @param fnc The proc
+     * The input.
      */
-    public FuncAsProc(final Func<X, ?> fnc) {
+    private final X input;
+
+    /**
+     * Ctor.
+     * @param proc Encapsulated proc
+     * @since 0.11
+     */
+    public RunnableOf(final Callable<X> proc) {
+        this(new FuncOf<>(proc));
+    }
+
+    /**
+     * Ctor.
+     * @param proc Encapsulated proc
+     */
+    public RunnableOf(final Proc<X> proc) {
+        this(new FuncOf<>(proc));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     */
+    public RunnableOf(final Func<X, ?> fnc) {
+        this(fnc, null);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     * @param ipt Input
+     */
+    public RunnableOf(final Func<X, ?> fnc, final X ipt) {
         this.func = fnc;
+        this.input = ipt;
     }
 
     @Override
-    public void exec(final X input) throws Exception {
-        this.func.apply(input);
+    public void run() {
+        new UncheckedFunc<>(this.func).apply(this.input);
     }
 }

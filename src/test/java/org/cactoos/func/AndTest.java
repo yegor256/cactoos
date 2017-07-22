@@ -99,13 +99,13 @@ public final class AndTest {
             new And(
                 new MappedIterable<String, Scalar<Boolean>>(
                     new ArrayAsIterable<>("hello", "world"),
-                    new ProcAsFunc<>(list::add, () -> true)
+                    new FuncOf<>(list::add, () -> true)
                 )
             ),
             new ScalarHasValue<>(
                 Matchers.allOf(
                     Matchers.equalTo(true),
-                    new FuncAsMatcher<>(
+                    new MatcherOf<>(
                         value -> list.size() == 2
                     )
                 )
@@ -121,14 +121,16 @@ public final class AndTest {
             new And(
                 new MappedIterable<String, Scalar<Boolean>>(
                     Collections.emptyList(),
-                    new ProcAsFunc<>(list::add, () -> true)
+                    new FuncOf<>(list::add, () -> true)
                 )
             ),
             new ScalarHasValue<>(
                 Matchers.allOf(
                     Matchers.equalTo(true),
-                    new FuncAsMatcher<>(
-                        value -> list.isEmpty()
+                    new MatcherOf<>(
+                        value -> {
+                            return list.isEmpty();
+                        }
                     )
                 )
             )

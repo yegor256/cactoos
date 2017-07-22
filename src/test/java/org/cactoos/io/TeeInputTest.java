@@ -29,7 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.TextHasString;
-import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.MatcherOf;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
@@ -54,7 +54,7 @@ public final class TeeInputTest {
             new BytesAsText(
                 new InputAsBytes(
                     new TeeInput(
-                        new BytesAsInput(
+                        new InputOf(
                             new TextAsBytes(content)
                         ),
                         new OutputStreamAsOutput(baos)
@@ -62,10 +62,12 @@ public final class TeeInputTest {
                 )
             ),
             new TextHasString(
-                new FuncAsMatcher<>(
-                    str -> new String(
-                        baos.toByteArray(), StandardCharsets.UTF_8
-                    ).equals(str)
+                new MatcherOf<>(
+                    str -> {
+                        return new String(
+                            baos.toByteArray(), StandardCharsets.UTF_8
+                        ).equals(str);
+                    }
                 )
             )
         );
@@ -82,13 +84,15 @@ public final class TeeInputTest {
                 )
             ),
             new TextHasString(
-                new FuncAsMatcher<>(
-                    str -> str.equals(
-                        new String(
-                            Files.readAllBytes(temp),
-                            StandardCharsets.UTF_8
-                        )
-                    )
+                new MatcherOf<>(
+                    str -> {
+                        return str.equals(
+                            new String(
+                                Files.readAllBytes(temp),
+                                StandardCharsets.UTF_8
+                            )
+                        );
+                    }
                 )
             )
         );

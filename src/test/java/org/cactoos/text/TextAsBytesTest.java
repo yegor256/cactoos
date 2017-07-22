@@ -25,8 +25,8 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import org.cactoos.Text;
-import org.cactoos.io.BytesAsInput;
 import org.cactoos.io.InputAsBytes;
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public final class TextAsBytesTest {
         MatcherAssert.assertThat(
             "Can't convert text into bytes",
             new InputAsBytes(
-                new BytesAsInput(
+                new InputOf(
                     new TextAsBytes(text)
                 )
             ).asBytes(),

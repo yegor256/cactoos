@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.cactoos.func.FuncAsMatcher;
+import org.cactoos.func.MatcherOf;
 import org.cactoos.list.EndlessIterable;
 import org.cactoos.list.LimitedIterable;
 import org.cactoos.text.BytesAsText;
@@ -56,7 +56,7 @@ public final class InputAsBytesTest {
         MatcherAssert.assertThat(
             "Can't read large content from in-memory Input",
             new InputAsBytes(
-                new BytesAsInput(
+                new InputOf(
                     String.join(
                         "",
                         new LimitedIterable<>(
@@ -78,7 +78,7 @@ public final class InputAsBytesTest {
             MatcherAssert.assertThat(
                 "Can't read large content from Input",
                 new InputAsBytes(
-                    new InputStreamAsInput(slow)
+                    new InputOf(slow)
                 ).asBytes().length,
                 Matchers.equalTo(size)
             );
@@ -91,7 +91,7 @@ public final class InputAsBytesTest {
             "Can't read bytes from Input",
             new String(
                 new InputAsBytes(
-                    new BytesAsInput(
+                    new InputOf(
                         new TextAsBytes(
                             new StringAsText("Hello, друг!")
                         )
@@ -112,7 +112,7 @@ public final class InputAsBytesTest {
             "Can't read bytes from Input with a small reading buffer",
             new String(
                 new InputAsBytes(
-                    new BytesAsInput(
+                    new InputOf(
                         new TextAsBytes(
                             new StringAsText("Hello, товарищ!")
                         )
@@ -138,7 +138,7 @@ public final class InputAsBytesTest {
             "Can't close InputStream correctly",
             new BytesAsText(
                 new InputAsBytes(
-                    new InputStreamAsInput(
+                    new InputOf(
                         new InputStream() {
                             @Override
                             public int read() throws IOException {
@@ -154,8 +154,10 @@ public final class InputAsBytesTest {
                 ).asBytes(),
                 StandardCharsets.UTF_8
             ).asString(),
-            new FuncAsMatcher<>(
-                text -> closed.get()
+            new MatcherOf<>(
+                text -> {
+                    return closed.get();
+                }
             )
         );
     }

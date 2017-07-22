@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
  * Func that will try a few times before throwing an exception.
@@ -47,6 +48,35 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
      * Exit condition.
      */
     private final Func<Integer, Boolean> exit;
+
+    /**
+     * Ctor.
+     * @param proc Func original
+     * @since 0.12
+     */
+    public RetryFunc(final Proc<X> proc) {
+        this(new FuncOf<>(proc));
+    }
+
+    /**
+     * Ctor.
+     * @param proc Func original
+     * @param attempts Maximum number of attempts
+     * @since 0.12
+     */
+    public RetryFunc(final Proc<X> proc, final int attempts) {
+        this(new FuncOf<>(proc), attempts);
+    }
+
+    /**
+     * Ctor.
+     * @param proc Func original
+     * @param ext Exit condition, returns TRUE if there is no more reason to try
+     * @since 0.12
+     */
+    public RetryFunc(final Proc<X> proc, final Func<Integer, Boolean> ext) {
+        this(new FuncOf<>(proc), ext);
+    }
 
     /**
      * Ctor.
