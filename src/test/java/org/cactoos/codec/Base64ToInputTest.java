@@ -28,6 +28,7 @@ import java.io.StringReader;
 import org.cactoos.InputHasContent;
 import org.cactoos.io.ReaderAsInput;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -50,6 +51,21 @@ public final class Base64ToInputTest {
                 )
             ),
             new InputHasContent("Hello!")
+        );
+    }
+
+    @Test
+    public void testIllegalCharacters() throws IOException {
+        final byte atchar = (byte) 64;
+        final byte[] illegalchars = new Base64IllegalAsBytes(
+            new byte[] {atchar}
+        ).asBytes();
+        MatcherAssert.assertThat(
+            "Can't Identify Illegals",
+            illegalchars,
+            Matchers.equalTo(
+                new byte[] {atchar}
+            )
         );
     }
 }

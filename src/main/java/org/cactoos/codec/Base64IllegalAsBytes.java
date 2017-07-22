@@ -23,18 +23,12 @@
  */
 package org.cactoos.codec;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Base64;
-import org.cactoos.Input;
-import org.cactoos.text.BytesAsText;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
+import org.cactoos.Bytes;
 
 /**
- * Base64 to Input.
+ * Illegal Characters.
  * <p>
  * <p>The class is immutable and thread-safe.
  *
@@ -42,42 +36,36 @@ import org.cactoos.text.UncheckedText;
  * @version $Id$
  * @since 0.12
  */
-public final class Base64ToInput implements Input {
+public final class Base64IllegalAsBytes implements Bytes {
 
     /**
-     * Original input.
+     * All legal Base64 chars.
      */
-    private final Input origin;
+    private static final String BASE64CHARS =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+    /**
+     * The input.
+     */
+    private final byte[] source;
 
     /**
      * Ctor.
      *
-     * @param input Original
+     * @param bts Source
      */
-    public Base64ToInput(final Input input) {
-        this.origin = input;
+    public Base64IllegalAsBytes(final byte[] bts) {
+        this.source = bts.clone();
     }
 
     @Override
-    public InputStream stream() throws IOException {
-        final InputStream stream = this.origin.stream();
+    public byte[] asBytes() throws IOException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        int read = stream.read();
-        while (read != -1) {
-            out.write(read);
-            read = stream.read();
+        for (int pos = 0; pos < this.source.length; ++pos) {
+            if (BASE64CHARS.indexOf(this.source[pos]) < 0) {
+                out.write(this.source[pos]);
+            }
         }
-        final byte[] bytes = out.toByteArray();
-        final byte[] illegal = new Base64IllegalAsBytes(bytes).asBytes();
-        if (illegal.length > 0) {
-            throw new DecodingException(
-                new FormattedText(
-                    "Illegal character in Base64 encoded data. %s",
-                    1, new UncheckedText(new BytesAsText(illegal)).asString()
-                ).asString()
-            );
-        }
-        return new ByteArrayInputStream(Base64.getDecoder().decode(bytes));
+        return out.toByteArray();
     }
-
 }
