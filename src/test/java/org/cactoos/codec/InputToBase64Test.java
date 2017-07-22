@@ -24,8 +24,9 @@
 package org.cactoos.codec;
 
 import java.io.IOException;
+import java.io.StringReader;
 import org.cactoos.InputHasContent;
-import org.cactoos.io.BytesAsInput;
+import org.cactoos.io.ReaderAsInput;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -44,8 +45,8 @@ public final class InputToBase64Test {
         MatcherAssert.assertThat(
             "Can't encode a text",
             new InputToBase64(
-                new BytesAsInput(
-                    "Hi!"
+                new ReaderAsInput(
+                    new StringReader("Hi!")
                 )
             ),
             new InputHasContent("SGkh")
