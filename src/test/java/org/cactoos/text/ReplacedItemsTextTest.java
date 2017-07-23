@@ -34,7 +34,7 @@ import org.junit.Test;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.11.5
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ReplacedItemsTextTest {
