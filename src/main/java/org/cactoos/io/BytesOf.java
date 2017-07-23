@@ -37,6 +37,8 @@ import org.cactoos.text.StringAsText;
  * <p>There is no thread-safety guarantee.
  *
  * @author Ix (ixmanuel@yahoo.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.12
  */
