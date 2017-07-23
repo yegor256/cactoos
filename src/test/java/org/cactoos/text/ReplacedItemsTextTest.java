@@ -24,54 +24,48 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.Text;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Replace the Text.
+ * Test case for {@link ReplacedItemsText}.
  *
- * @author Mehmet Yildirim (memoyil@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.11.5
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReplacedText implements Text {
+public final class ReplacedItemsTextTest {
 
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * The old char.
-     */
-    private final String needle;
-
-    /**
-     * The new char.
-     */
-    private final String replacement;
-
-    /**
-     * Ctor.
-     * @param text The text
-     * @param find The find one
-     * @param replace The replace one
-     */
-    public ReplacedText(final Text text, final String find, final String
-        replace) {
-        this.origin = text;
-        this.needle = find;
-        this.replacement = replace;
+    @Test
+    public void replacesAllOccurrencesWithReplacedItemsText() {
+        MatcherAssert.assertThat(
+            "Can't replace a text.",
+            new ReplacedItemsText(
+                new StringAsText("one cat, two cats, three cats"),
+                new String[]{"cat"},
+                "bird"
+            ),
+            new TextHasString("one bird, two birds, three birds")
+        );
     }
 
-    @Override
-    public String asString() throws IOException {
-        return this.origin.asString().replace(this.needle, this.replacement);
-    }
-
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
+    @Test
+    public void checksCompareToForReplacedItemsText() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't compare replaced text with expected.",
+            new ReplacedItemsText(
+                new StringAsText("When the child was a child"),
+                new String[]{"child"},
+                "boy"
+            )
+            .compareTo(
+                new StringAsText("When the boy was a boy")
+            ),
+            Matchers.equalTo(0)
+        );
     }
 
 }
-

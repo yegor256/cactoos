@@ -23,55 +23,36 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.TextHasString;
+import java.io.IOException;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ReplacedText}.
+ * Test case for {@link RegexText}.
  *
- * @author Mehmet Yildirim (memoyil@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.11.5
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReplacedTextTest {
+public final class RegexTextTest {
 
-    @Test
-    public void replaceText() {
-        MatcherAssert.assertThat(
-            "Can't replace a text",
-            new ReplacedText(
-                new StringAsText("Hello!"),
-                "ello", "i"
-            ),
-            new TextHasString("Hi!")
-        );
+    @Test(expected = IOException.class)
+    public void failsForInvalidRegexText() throws IOException {
+        new RegexText("***").asString();
     }
 
     @Test
-    public void notReplaceTextWhenSubstringNotFound() {
-        final String text = "HelloAgain!";
+    public void failsToCompare() throws IOException {
         MatcherAssert.assertThat(
-            "Replace a text abnormally",
-            new ReplacedText(
-                new StringAsText(text),
-                "xyz", "i"
+            "Text is equal.",
+            new RegexText("\\s+")
+            .compareTo(
+                new StringAsText("\\s++")
             ),
-            new TextHasString(text)
+            Matchers.equalTo(-1)
         );
     }
 
-    @Test
-    public void replacesAllOccurrences() {
-        MatcherAssert.assertThat(
-            "Can't replace a text with multiple needle occurrences",
-            new ReplacedText(
-                new StringAsText("one cat, two cats, three cats"),
-                "cat",
-                "dog"
-            ),
-            new TextHasString("one dog, two dogs, three dogs")
-        );
-    }
 }
