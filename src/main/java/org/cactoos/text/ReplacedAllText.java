@@ -135,7 +135,7 @@ public final class ReplacedAllText implements Text {
      *
      * @param text The strategy for replacing texts.
      */
-    public ReplacedAllText(final Scalar<Text> text) {
+    private ReplacedAllText(final Scalar<Text> text) {
         this.origin = text;
     }
 
