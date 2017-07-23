@@ -157,13 +157,7 @@ public final class InputOf implements Input {
      * @param builder The string's builder
      */
     public InputOf(final StringBuilder builder) {
-        this(() -> {
-            return new IoCheckedScalar<InputStream>(
-                () -> new ByteArrayInputStream(
-                    builder.toString().getBytes(StandardCharsets.UTF_8)
-                )
-            ).value();
-        });
+        this(builder, StandardCharsets.UTF_8);
     }
 
     /**
@@ -188,9 +182,21 @@ public final class InputOf implements Input {
      * @param buffer The string's buffer
      */
     public InputOf(final StringBuffer buffer) {
+        this(buffer, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param buffer The string's buffer
+     * @param cset The charset
+     */
+    public InputOf(final StringBuffer buffer, final Charset cset) {
         this(() -> {
             return new IoCheckedScalar<InputStream>(
-                () -> new ByteArrayInputStream(buffer.toString().getBytes())
+                () -> new ByteArrayInputStream(
+                    buffer.toString().getBytes(cset)
+                )
             ).value();
         });
     }
@@ -201,7 +207,7 @@ public final class InputOf implements Input {
      * @param chars The chars
      */
     public InputOf(final char... chars) {
-        this(new TextAsBytes(new String(chars)));
+        this(chars, StandardCharsets.UTF_8);
     }
 
     /**
