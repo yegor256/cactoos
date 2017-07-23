@@ -29,7 +29,7 @@ import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Text;
-import org.cactoos.io.InputAsBytes;
+import org.cactoos.io.BytesOf;
 
 /**
  * Bytes as Text.
@@ -61,7 +61,7 @@ public final class BytesAsText implements Text {
      * @since 0.8
      */
     public BytesAsText(final Input input) {
-        this(new InputAsBytes(input));
+        this(new BytesOf(input));
     }
 
     /**
@@ -87,7 +87,7 @@ public final class BytesAsText implements Text {
      * @since 0.8
      */
     public BytesAsText(final Input input, final Charset cset) {
-        this(new InputAsBytes(input), cset);
+        this(new BytesOf(input), cset);
     }
 
     /**
@@ -96,7 +96,7 @@ public final class BytesAsText implements Text {
      * @param cset Charset
      */
     public BytesAsText(final byte[] bts, final Charset cset) {
-        this(new ArrayAsBytes(bts), cset);
+        this(new BytesOf(bts), cset);
     }
 
     /**

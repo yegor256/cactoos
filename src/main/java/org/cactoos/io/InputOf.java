@@ -40,9 +40,7 @@ import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.func.IoCheckedScalar;
 import org.cactoos.func.UncheckedScalar;
-import org.cactoos.text.ArrayAsBytes;
 import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
 
 /**
  * InputOf
@@ -201,7 +199,7 @@ public final class InputOf implements Input {
      * @param chars The chars
      */
     public InputOf(final char... chars) {
-        this(new TextAsBytes(new String(chars)));
+        this(new BytesOf(new String(chars)));
     }
 
     /**
@@ -212,7 +210,7 @@ public final class InputOf implements Input {
      */
     public InputOf(final char[] array, final Charset cset) {
         this(
-            new TextAsBytes(
+            new BytesOf(
                 new StringAsText(new String(array)),
                 cset
             )
@@ -225,7 +223,7 @@ public final class InputOf implements Input {
      * @param string The string
      */
     public InputOf(final String string) {
-        this(new TextAsBytes(string));
+        this(new BytesOf(string));
     }
 
     /**
@@ -234,7 +232,7 @@ public final class InputOf implements Input {
      * @param text The text
      */
     public InputOf(final Text text) {
-        this(new TextAsBytes(text));
+        this(new BytesOf(text));
     }
 
     /**
@@ -243,7 +241,7 @@ public final class InputOf implements Input {
      * @param bytes The bytes
      */
     public InputOf(final byte[] bytes) {
-        this(new ArrayAsBytes(bytes));
+        this(new BytesOf(bytes));
     }
 
     /**

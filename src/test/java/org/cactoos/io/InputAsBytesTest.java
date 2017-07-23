@@ -33,7 +33,6 @@ import org.cactoos.list.EndlessIterable;
 import org.cactoos.list.LimitedIterable;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -92,7 +91,7 @@ public final class InputAsBytesTest {
             new String(
                 new InputAsBytes(
                     new InputOf(
-                        new TextAsBytes(
+                        new BytesOf(
                             new StringAsText("Hello, друг!")
                         )
                     )
@@ -113,7 +112,7 @@ public final class InputAsBytesTest {
             new String(
                 new InputAsBytes(
                     new InputOf(
-                        new TextAsBytes(
+                        new BytesOf(
                             new StringAsText("Hello, товарищ!")
                         )
                     ),

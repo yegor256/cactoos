@@ -28,7 +28,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -51,7 +50,7 @@ public final class LengthOfInputTest {
             new LengthOfInput(
                 new SlowInput(
                     new InputOf(
-                        new TextAsBytes(
+                        new BytesOf(
                             new StringAsText(text)
                         )
                     )

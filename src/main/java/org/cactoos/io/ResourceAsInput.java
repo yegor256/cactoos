@@ -29,7 +29,6 @@ import org.cactoos.Func;
 import org.cactoos.Input;
 import org.cactoos.func.IoCheckedFunc;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.TextAsBytes;
 
 /**
  * Classpath resource.
@@ -75,7 +74,7 @@ public final class ResourceAsInput implements Input {
      * @param fbk Fallback
      */
     public ResourceAsInput(final String res, final String fbk) {
-        this(res, input -> new InputOf(new TextAsBytes(fbk)));
+        this(res, input -> new InputOf(new BytesOf(fbk)));
     }
 
     /**

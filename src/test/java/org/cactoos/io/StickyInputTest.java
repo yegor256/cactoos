@@ -56,7 +56,7 @@ public final class StickyInputTest {
             ),
             new MatcherOf<>(
                 new RepeatedFunc<Input, Boolean>(
-                    input -> new InputAsBytes(
+                    input -> new BytesOf(
                         new TeeInput(input, new DeadOutput())
                     // @checkstyle MagicNumber (2 lines)
                     ).asBytes().length == 73471,
@@ -71,7 +71,7 @@ public final class StickyInputTest {
         MatcherAssert.assertThat(
             "Can't fetch text page from the URL",
             new BytesAsText(
-                new InputAsBytes(
+                new BytesOf(
                     new StickyInput(
                         new InputOf(
                             new URL(
@@ -107,7 +107,7 @@ public final class StickyInputTest {
         final long size = 130_000L;
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly",
-            new InputAsBytes(
+            new BytesOf(
                 new StickyInput(
                     new SlowInput((int) size)
                 )
