@@ -45,6 +45,12 @@ import org.cactoos.text.UncheckedText;
 public final class Base64ToInput implements Input {
 
     /**
+     * All legal Base64 chars.
+     */
+    private static final String BASE64CHARS =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+    /**
      * Original input.
      */
     private final Input origin;
@@ -68,7 +74,7 @@ public final class Base64ToInput implements Input {
             read = stream.read();
         }
         final byte[] bytes = out.toByteArray();
-        final byte[] illegal = new Base64IllegalAsBytes(bytes).asBytes();
+        final byte[] illegal = Base64ToInput.getIllegalCharacters(bytes);
         if (illegal.length > 0) {
             throw new DecodingException(
                 new FormattedText(
@@ -78,6 +84,23 @@ public final class Base64ToInput implements Input {
             );
         }
         return new ByteArrayInputStream(Base64.getDecoder().decode(bytes));
+    }
+
+    /**
+     * Get the byte array for non-Base64 characters.
+     * @param bytes Byte Array
+     * @return An array of the found non-Base64 characters.
+     * @throws IOException If fails
+     */
+    private static byte[] getIllegalCharacters(final byte[] bytes) throws
+        IOException {
+        final ByteArrayOutputStream output = new ByteArrayOutputStream();
+        for (int pos = 0; pos < bytes.length; ++pos) {
+            if (BASE64CHARS.indexOf(bytes[pos]) < 0) {
+                output.write(bytes[pos]);
+            }
+        }
+        return output.toByteArray();
     }
 
 }
