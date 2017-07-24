@@ -29,7 +29,6 @@ import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
 
 /**
  * Bytes of text, array and input.
@@ -69,10 +68,77 @@ public final class BytesOf implements Bytes {
     /**
      * Ctor.
      *
-     * @param text The source
+     * @param builder The source
      */
-    public BytesOf(final String text) {
-        this(new StringAsText(text));
+    public BytesOf(final StringBuilder builder) {
+        this(builder, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param builder The source
+     * @param cset The charset
+     */
+    public BytesOf(final StringBuilder builder, final Charset cset) {
+        this(() -> builder.toString().getBytes(cset));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param buffer The source
+     */
+    public BytesOf(final StringBuffer buffer) {
+        this(buffer, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param buffer The source
+     * @param cset The charset
+     */
+    public BytesOf(final StringBuffer buffer, final Charset cset) {
+        this(() -> buffer.toString().getBytes(cset));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param chars The chars
+     */
+    public BytesOf(final char... chars) {
+        this(chars, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param chars The chars
+     * @param cset The charset
+     */
+    public BytesOf(final char[] chars, final Charset cset) {
+        this(new String(chars), cset);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param string The source
+     */
+    public BytesOf(final String string) {
+        this(string, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param string The source
+     * @param cset The charset
+     */
+    public BytesOf(final String string, final Charset cset) {
+        this(() -> string.getBytes(cset));
     }
 
     /**

@@ -36,7 +36,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.InputHasContent;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
-import org.cactoos.func.UncheckedScalar;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
 import org.hamcrest.MatcherAssert;
@@ -74,46 +73,6 @@ public final class InputOfTest {
                 )
             ),
             new TextHasString(Matchers.endsWith("text!"))
-        );
-    }
-
-    @Test
-    public void readsAlternativeInputForCheckedCase() {
-        MatcherAssert.assertThat(
-            "Can't read alternative source for checked case.",
-            new BytesAsText(
-                new BytesOf(
-                    new InputWithFallback(
-                        new InputOf(
-                            () -> new File("/absent-file-for-checked-case.txt")
-                        ),
-                        new InputOf(new StringAsText("hello, checked!"))
-                    )
-                )
-            ),
-            new TextHasString(Matchers.endsWith("checked!"))
-        );
-    }
-
-    @Test
-    public void readsAlternativeInputForUncheckedCase() {
-        MatcherAssert.assertThat(
-            "Can't read alternative source for unchecked case.",
-            new BytesAsText(
-                new BytesOf(
-                    new InputWithFallback(
-                        new InputOf(
-                            new UncheckedScalar<File>(
-                                () -> new File(
-                                    "/absent-file-for-unchecked-case.txt"
-                                )
-                            )
-                        ),
-                        new InputOf(new StringAsText("hello, unchecked!"))
-                    )
-                )
-            ),
-            new TextHasString(Matchers.endsWith("unchecked!"))
         );
     }
 
