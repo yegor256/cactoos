@@ -235,36 +235,42 @@ public final class InputOfTest {
 
     @Test
     public void readsStringBuilder() throws IOException {
+        final String starts = "Name it, ";
+        final String ends = "then it exists!";
         MatcherAssert.assertThat(
-            "Can't receive string builder",
+            "Can't receive a string builder",
             new String(
                 new BytesOf(
                     new InputOf(
-                        new StringBuilder("Name it, then it exists!")
+                        new StringBuilder(starts)
+                            .append(ends)
                     )
                 ).asBytes()
             ),
             Matchers.allOf(
-                Matchers.startsWith("Name it, "),
-                Matchers.endsWith("then it exists!")
+                Matchers.startsWith(starts),
+                Matchers.endsWith(ends)
             )
         );
     }
 
     @Test
     public void readsStringBuffer() throws IOException {
+        final String starts = "The future ";
+        final String ends = "is now!";
         MatcherAssert.assertThat(
-            "Can't receive string buffer",
+            "Can't receive a string buffer",
             new String(
                 new BytesOf(
                     new InputOf(
-                        new StringBuffer("The future is now!")
+                        new StringBuffer(starts)
+                            .append(ends)
                     )
                 ).asBytes()
             ),
             Matchers.allOf(
-                Matchers.startsWith("The future "),
-                Matchers.endsWith("is now!")
+                Matchers.startsWith(starts),
+                Matchers.endsWith(ends)
             )
         );
     }
@@ -313,7 +319,7 @@ public final class InputOfTest {
 
     @Test
     public void readsStringFromReader() throws Exception {
-        final String source = "hello, друг!";
+        final String source = "hello, source!";
         MatcherAssert.assertThat(
             "Can't read string through a reader",
             new BytesAsText(
@@ -324,6 +330,35 @@ public final class InputOfTest {
                 )
             ).asString(),
             Matchers.equalTo(source)
+        );
+    }
+
+    @Test
+    public void readsEncodedStringFromReader() throws Exception {
+        final String source = "hello, друг!";
+        MatcherAssert.assertThat(
+            "Can't read encoded string through a reader",
+            new BytesAsText(
+                new InputAsBytes(
+                    new InputOf(
+                        new StringReader(source),
+                        StandardCharsets.UTF_8
+                    )
+                )
+            ).asString(),
+            Matchers.equalTo(source)
+        );
+    }
+
+    @Test
+    public void readsAnArrayOfBytes() throws Exception {
+        final byte[] bytes = new byte[] {(byte) 0xCA, (byte) 0xFE};
+        MatcherAssert.assertThat(
+            "Can't read array of bytes",
+                new InputAsBytes(
+                    new InputOf(bytes)
+            ).asBytes(),
+            Matchers.equalTo(bytes)
         );
     }
 
