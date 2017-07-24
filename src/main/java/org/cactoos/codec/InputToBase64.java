@@ -24,11 +24,11 @@
 package org.cactoos.codec;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 import org.cactoos.Input;
+import org.cactoos.io.InputAsBytes;
 
 /**
  * Input to Base64.
@@ -57,14 +57,12 @@ public final class InputToBase64 implements Input {
 
     @Override
     public InputStream stream() throws IOException {
-        final InputStream stream = this.origin.stream();
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        int read = stream.read();
-        while (read != -1) {
-            out.write(read);
-            read = stream.read();
-        }
-        final byte[] encode = Base64.getEncoder().encode(out.toByteArray());
-        return new ByteArrayInputStream(encode);
+        return new ByteArrayInputStream(
+            Base64.getEncoder().encode(
+                new InputAsBytes(
+                    this.origin
+                ).asBytes()
+            )
+        );
     }
 }

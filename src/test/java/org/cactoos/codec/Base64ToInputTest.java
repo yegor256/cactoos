@@ -25,7 +25,6 @@ package org.cactoos.codec;
 
 import java.io.IOException;
 import java.io.StringReader;
-import org.cactoos.Input;
 import org.cactoos.InputHasContent;
 import org.cactoos.io.ReaderAsInput;
 import org.hamcrest.MatcherAssert;
@@ -56,12 +55,11 @@ public final class Base64ToInputTest {
 
     @Test(expected = DecodingException.class)
     public void illegalCharacter() throws IOException {
-        final Input decoded = new Base64ToInput(
+        new Base64ToInput(
             new ReaderAsInput(
                 new StringReader("!@#$%^&*()")
             )
-        );
-        decoded.stream();
+        ).stream();
     }
 
 }

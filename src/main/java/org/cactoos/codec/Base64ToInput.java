@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 import org.cactoos.Input;
+import org.cactoos.io.InputAsBytes;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
@@ -66,14 +67,7 @@ public final class Base64ToInput implements Input {
 
     @Override
     public InputStream stream() throws IOException {
-        final InputStream stream = this.origin.stream();
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        int read = stream.read();
-        while (read != -1) {
-            out.write(read);
-            read = stream.read();
-        }
-        final byte[] bytes = out.toByteArray();
+        final byte[] bytes = new InputAsBytes(this.origin).asBytes();
         final byte[] illegal = Base64ToInput.getIllegalCharacters(bytes);
         if (illegal.length > 0) {
             throw new DecodingException(
