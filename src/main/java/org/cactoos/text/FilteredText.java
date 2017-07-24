@@ -35,7 +35,7 @@ import org.cactoos.func.IoCheckedFunc;
  * @version $Id$
  * @since 24.07.17
  */
-public class FilteredText implements Text {
+public final class FilteredText implements Text {
 
     /**
      * Original text to filter.
@@ -58,7 +58,7 @@ public class FilteredText implements Text {
     }
 
     @Override
-    public final String asString() throws IOException {
+    public String asString() throws IOException {
         final StringBuilder filtered = new StringBuilder();
         for (final char character : this.origin.asString().toCharArray()) {
             if (this.filter.apply(character)) {
@@ -69,7 +69,7 @@ public class FilteredText implements Text {
     }
 
     @Override
-    public final int compareTo(final Text text) {
+    public int compareTo(final Text text) {
         return new UncheckedText(this).compareTo(text);
     }
 
