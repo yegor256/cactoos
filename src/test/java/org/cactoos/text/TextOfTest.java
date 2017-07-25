@@ -127,7 +127,7 @@ public final class TextOfTest {
             new TextOf(
                 bytes
             ).asString(),
-            Matchers.equalTo(new String(bytes))
+            Matchers.equalTo(new String(bytes, StandardCharsets.UTF_8))
         );
     }
 
