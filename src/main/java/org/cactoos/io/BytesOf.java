@@ -23,7 +23,9 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
@@ -58,6 +60,26 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
+     *
+     * @param error The exception to serialize
+     */
+    public BytesOf(final Throwable error) {
+        this(
+            () -> {
+                try (
+                    final ByteArrayOutputStream baos =
+                        new ByteArrayOutputStream()
+                ) {
+                    error.printStackTrace(new PrintStream(baos));
+                    return baos.toByteArray();
+                }
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     *
      * @param input The input
      * @param max Max length of the buffer for reading
      */

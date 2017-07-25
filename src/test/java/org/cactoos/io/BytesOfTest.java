@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
+import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.list.EndlessIterable;
 import org.cactoos.list.LimitedIterable;
@@ -151,6 +152,29 @@ public final class BytesOfTest {
             ).asBytes(),
             Matchers.equalTo(
                 new BytesOf(text.asString()).asBytes()
+            )
+        );
+    }
+
+    @Test
+    public void printsStackTrace() {
+        MatcherAssert.assertThat(
+            "Can't print exception stacktrace",
+            new TextOf(
+                new BytesOf(
+                    new IOException(
+                        "It doesn't work at all"
+                    )
+                )
+            ),
+            new TextHasString(
+                Matchers.allOf(
+                    Matchers.containsString("java.io.IOException"),
+                    Matchers.containsString("doesn't work at all"),
+                    Matchers.containsString(
+                        "\tat org.cactoos.io.BytesOfTest"
+                    )
+                )
             )
         );
     }

@@ -92,6 +92,15 @@ public final class TextOf implements Text {
     /**
      * Ctor.
      *
+     * @param error The exception to serialize
+     */
+    public TextOf(final Throwable error) {
+        this(new BytesOf(error));
+    }
+
+    /**
+     * Ctor.
+     *
      * @param builder The String builder
      */
     public TextOf(final StringBuilder builder) {
@@ -171,9 +180,7 @@ public final class TextOf implements Text {
      * @param cset The Charset
      */
     public TextOf(final Bytes bytes, final Charset cset) {
-        this(
-            () -> new String(bytes.asBytes(), cset)
-        );
+        this(() -> new String(bytes.asBytes(), cset));
     }
 
     /**

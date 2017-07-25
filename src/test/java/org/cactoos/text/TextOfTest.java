@@ -25,6 +25,7 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.TextHasString;
 import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -157,6 +158,27 @@ public final class TextOfTest {
             Matchers.allOf(
                 Matchers.startsWith(starts),
                 Matchers.endsWith(ends)
+            )
+        );
+    }
+
+    @Test
+    public void printsStackTrace() {
+        MatcherAssert.assertThat(
+            "Can't print exception stacktrace",
+            new TextOf(
+                new IOException(
+                    "It doesn't work at all"
+                )
+            ),
+            new TextHasString(
+                Matchers.allOf(
+                    Matchers.containsString("java.io.IOException"),
+                    Matchers.containsString("doesn't work at all"),
+                    Matchers.containsString(
+                        "\tat org.cactoos.text.TextOfTest"
+                    )
+                )
             )
         );
     }
