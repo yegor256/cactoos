@@ -115,7 +115,7 @@ public final class InputAsLSInput implements LSInput {
     @Override
     public String getStringData() {
         return new UncheckedText(
-            new BytesAsText(new InputAsBytes(this.input))
+            new BytesAsText(new BytesOf(this.input))
         ).asString();
     }
 

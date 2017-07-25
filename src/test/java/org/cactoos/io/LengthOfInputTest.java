@@ -24,10 +24,10 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -49,8 +49,8 @@ public final class LengthOfInputTest {
             "Can't calculate the length of Input",
             new LengthOfInput(
                 new SlowInput(
-                    new BytesAsInput(
-                        new TextAsBytes(
+                    new InputOf(
+                        new BytesOf(
                             new StringAsText(text)
                         )
                     )
@@ -76,9 +76,11 @@ public final class LengthOfInputTest {
         MatcherAssert.assertThat(
             "Can't calculate length of a real page at the URL",
             new LengthOfInput(
-                new UrlAsInput(
-                    // @checkstyle LineLength (1 line)
-                    "file:src/test/resources/org/cactoos/large-text.txt"
+                new InputOf(
+                    new URL(
+                        // @checkstyle LineLength (1 line)
+                        "file:src/test/resources/org/cactoos/large-text.txt"
+                    )
                 )
             ).value(),
             // @checkstyle MagicNumber (1 line)

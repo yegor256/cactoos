@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.cactoos.Text;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.list.EndlessIterable;
 import org.cactoos.list.LimitedIterable;
@@ -38,15 +39,17 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link InputAsBytes}.
+ * Test case for {@link BytesOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class InputAsBytesTest {
+public final class BytesOfTest {
 
     @Test
     public void readsLargeInMemoryContent() throws IOException {
@@ -54,7 +57,7 @@ public final class InputAsBytesTest {
         final String body = "1234567890";
         MatcherAssert.assertThat(
             "Can't read large content from in-memory Input",
-            new InputAsBytes(
+            new BytesOf(
                 new InputOf(
                     String.join(
                         "",
@@ -70,31 +73,12 @@ public final class InputAsBytesTest {
     }
 
     @Test
-    // @checkstyle AnonInnerLengthCheck (100 lines)
-    public void readsLargeContent() throws IOException {
-        final int size = 100_000;
-        try (final InputStream slow = new SlowInputStream(size)) {
-            MatcherAssert.assertThat(
-                "Can't read large content from Input",
-                new InputAsBytes(
-                    new InputOf(slow)
-                ).asBytes().length,
-                Matchers.equalTo(size)
-            );
-        }
-    }
-
-    @Test
     public void readsInputIntoBytes() throws IOException {
         MatcherAssert.assertThat(
             "Can't read bytes from Input",
             new String(
-                new InputAsBytes(
-                    new InputOf(
-                        new BytesOf(
-                            new StringAsText("Hello, друг!")
-                        )
-                    )
+                new BytesOf(
+                    new InputOf("Hello, друг!")
                 ).asBytes(),
                 StandardCharsets.UTF_8
             ),
@@ -110,11 +94,9 @@ public final class InputAsBytesTest {
         MatcherAssert.assertThat(
             "Can't read bytes from Input with a small reading buffer",
             new String(
-                new InputAsBytes(
+                new BytesOf(
                     new InputOf(
-                        new BytesOf(
-                            new StringAsText("Hello, товарищ!")
-                        )
+                        new StringAsText("Hello, товарищ!")
                     ),
                     2
                 ).asBytes(),
@@ -136,7 +118,7 @@ public final class InputAsBytesTest {
         MatcherAssert.assertThat(
             "Can't close InputStream correctly",
             new BytesAsText(
-                new InputAsBytes(
+                new BytesOf(
                     new InputOf(
                         new InputStream() {
                             @Override
@@ -157,6 +139,20 @@ public final class InputAsBytesTest {
                 text -> {
                     return closed.get();
                 }
+            )
+        );
+    }
+
+    @Test
+    public void asBytes() throws IOException {
+        final Text text = new StringAsText("Hello!");
+        MatcherAssert.assertThat(
+            "Can't convert text into bytes",
+            new BytesOf(
+                new InputOf(text)
+            ).asBytes(),
+            Matchers.equalTo(
+                new BytesOf(text.asString()).asBytes()
             )
         );
     }

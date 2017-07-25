@@ -31,7 +31,6 @@ import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
 
 /**
  * Input as {@link Properties}.
@@ -64,7 +63,7 @@ public final class InputAsProperties implements Scalar<Properties> {
      * @since 0.9
      */
     public InputAsProperties(final Text text) {
-        this(new TextAsBytes(text));
+        this(new BytesOf(text));
     }
 
     /**
@@ -73,7 +72,7 @@ public final class InputAsProperties implements Scalar<Properties> {
      * @since 0.9
      */
     public InputAsProperties(final Bytes bytes) {
-        this(new BytesAsInput(bytes));
+        this(new InputOf(bytes));
     }
 
     /**

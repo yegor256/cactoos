@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.net.URL;
 import org.cactoos.Input;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.TextHasString;
@@ -55,7 +56,7 @@ public final class StickyInputTest {
             ),
             new MatcherOf<>(
                 new RepeatedFunc<Input, Boolean>(
-                    input -> new InputAsBytes(
+                    input -> new BytesOf(
                         new TeeInput(input, new DeadOutput())
                     // @checkstyle MagicNumber (2 lines)
                     ).asBytes().length == 73471,
@@ -66,15 +67,17 @@ public final class StickyInputTest {
     }
 
     @Test
-    public void readsRealUrl() {
+    public void readsRealUrl() throws IOException {
         MatcherAssert.assertThat(
             "Can't fetch text page from the URL",
             new BytesAsText(
-                new InputAsBytes(
+                new BytesOf(
                     new StickyInput(
-                        new UrlAsInput(
-                            // @checkstyle LineLength (1 line)
-                            "file:src/test/resources/org/cactoos/large-text.txt"
+                        new InputOf(
+                            new URL(
+                                // @checkstyle LineLength (1 line)
+                                "file:src/test/resources/org/cactoos/large-text.txt"
+                            )
                         )
                     )
                 )
@@ -104,7 +107,7 @@ public final class StickyInputTest {
         final long size = 130_000L;
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly",
-            new InputAsBytes(
+            new BytesOf(
                 new StickyInput(
                     new SlowInput((int) size)
                 )

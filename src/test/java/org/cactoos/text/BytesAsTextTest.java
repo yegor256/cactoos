@@ -24,6 +24,7 @@
 package org.cactoos.text;
 
 import org.cactoos.TextHasString;
+import org.cactoos.io.BytesOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -42,7 +43,7 @@ public final class BytesAsTextTest {
         MatcherAssert.assertThat(
             "Can't convert bytes to text",
             new BytesAsText(
-                new ArrayAsBytes(
+                new BytesOf(
                     new byte[]{'H', 'e', 'l', 'l', 'o'}
                 )
             ),
