@@ -135,21 +135,19 @@ public final class InputAsBytesTest {
         MatcherAssert.assertThat(
             "Can't close InputStream correctly",
             new TextOf(
-                new InputAsBytes(
-                    new InputOf(
-                        new InputStream() {
-                            @Override
-                            public int read() throws IOException {
-                                return input.read();
-                            }
-                            @Override
-                            public void close() throws IOException {
-                                input.close();
-                                closed.set(true);
-                            }
+                new InputOf(
+                    new InputStream() {
+                        @Override
+                        public int read() throws IOException {
+                            return input.read();
                         }
-                    )
-                ).asBytes(),
+                        @Override
+                        public void close() throws IOException {
+                            input.close();
+                            closed.set(true);
+                        }
+                    }
+                ),
                 StandardCharsets.UTF_8
             ).asString(),
             new MatcherOf<>(

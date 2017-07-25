@@ -174,7 +174,7 @@ public final class BytesOf implements Bytes {
      *
      * @param bytes Bytes to encapsulate
      */
-    public BytesOf(final Bytes bytes) {
+    private BytesOf(final Bytes bytes) {
         this.origin = bytes;
     }
 

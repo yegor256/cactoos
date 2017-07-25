@@ -158,16 +158,6 @@ public final class TextOf implements Text {
     /**
      * Ctor.
      *
-     * @param bytes The array of bytes
-     * @param cset The Charset
-     */
-    public TextOf(final byte[] bytes, final Charset cset) {
-        this(new BytesOf(bytes), cset);
-    }
-
-    /**
-     * Ctor.
-     *
      * @param bytes The Bytes
      */
     public TextOf(final Bytes bytes) {
@@ -182,7 +172,7 @@ public final class TextOf implements Text {
      */
     public TextOf(final Bytes bytes, final Charset cset) {
         this(
-            () -> new String(new BytesOf(bytes).asBytes(), cset)
+            () -> new String(bytes.asBytes(), cset)
         );
     }
 
