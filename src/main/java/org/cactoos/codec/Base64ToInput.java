@@ -24,15 +24,11 @@
 package org.cactoos.codec;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 import org.cactoos.Input;
 import org.cactoos.io.InputAsBytes;
-import org.cactoos.text.BytesAsText;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Base64 to Input.
@@ -68,33 +64,29 @@ public final class Base64ToInput implements Input {
     @Override
     public InputStream stream() throws IOException {
         final byte[] bytes = new InputAsBytes(this.origin).asBytes();
-        final byte[] illegal = Base64ToInput.getIllegalCharacters(bytes);
-        if (illegal.length > 0) {
+        if (Base64ToInput.checkIllegalCharacters(bytes)) {
             throw new DecodingException(
-                new FormattedText(
-                    "Illegal character in Base64 encoded data. %s",
-                    1, new UncheckedText(new BytesAsText(illegal)).asString()
-                ).asString()
+                "Illegal character in Base64 encoded data"
             );
         }
         return new ByteArrayInputStream(Base64.getDecoder().decode(bytes));
     }
 
     /**
-     * Get the byte array for non-Base64 characters.
+     * Check the byte array contains non-Base64 characters.
      * @param bytes Byte Array
-     * @return An array of the found non-Base64 characters.
+     * @return False if no characters reverse on true
      * @throws IOException If fails
      */
-    private static byte[] getIllegalCharacters(final byte[] bytes) throws
+    private static boolean checkIllegalCharacters(final byte[] bytes) throws
         IOException {
-        final ByteArrayOutputStream output = new ByteArrayOutputStream();
+        boolean status = false;
         for (int pos = 0; pos < bytes.length; ++pos) {
             if (BASE64CHARS.indexOf(bytes[pos]) < 0) {
-                output.write(bytes[pos]);
+                status =  true;
             }
         }
-        return output.toByteArray();
+        return status;
     }
 
 }
