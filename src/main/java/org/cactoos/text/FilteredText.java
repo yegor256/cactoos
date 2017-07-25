@@ -32,7 +32,7 @@ import org.cactoos.Text;
  *
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @since 24.07.17
+ * @since 0.12
  */
 public final class FilteredText implements Text {
 

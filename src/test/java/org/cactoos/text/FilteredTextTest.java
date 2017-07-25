@@ -33,7 +33,7 @@ import org.junit.Test;
  * Tests for {@link FilteredText}.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @since 24.07.17
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
