@@ -24,10 +24,8 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.text.BytesAsText;
@@ -71,27 +69,28 @@ public final class TeeInputTest {
     }
 
     @Test
-    public void copiesToFile() throws IOException {
-        final Path temp = Files.createTempFile("cactoos", "txt");
-        MatcherAssert.assertThat(
-            "Can't copy Input to File and return content",
-            new BytesAsText(
-                new BytesOf(
-                    new TeeInput("Hello, друг!", temp)
+    public void copiesToFile() throws Exception {
+        try (final TempFile temp = new TempFile("cactoos", "txt")) {
+            MatcherAssert.assertThat(
+                "Can't copy Input to File and return content",
+                new BytesAsText(
+                    new InputAsBytes(
+                        new TeeInput("Hello, друг!", temp.value())
+                    )
+                ),
+                new TextHasString(
+                    new MatcherOf<>(
+                        str -> {
+                            return str.equals(
+                                new String(
+                                    Files.readAllBytes(temp.value()),
+                                    StandardCharsets.UTF_8
+                                )
+                            );
+                        }
+                    )
                 )
-            ),
-            new TextHasString(
-                new MatcherOf<>(
-                    str -> {
-                        return str.equals(
-                            new String(
-                                Files.readAllBytes(temp),
-                                StandardCharsets.UTF_8
-                            )
-                        );
-                    }
-                )
-            )
-        );
+            );
+        }
     }
 }
