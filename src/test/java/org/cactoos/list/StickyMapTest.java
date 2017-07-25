@@ -24,6 +24,7 @@
 package org.cactoos.list;
 
 import java.security.SecureRandom;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
@@ -70,6 +71,57 @@ public final class StickyMapTest {
                 new MapEntry<>("last", "Lebowski")
             ),
             Matchers.hasValue(Matchers.endsWith("ski"))
+        );
+    }
+
+    @Test
+    public void extendsExistingMap() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't extend an existing map",
+            new StickyMap<String, String>(
+                new StickyMap<String, String>(
+                    new MapEntry<>("make", "Mercedes-Benz"),
+                    new MapEntry<>("cost", "$95,000")
+                ),
+                new MapEntry<>("year", "2017"),
+                new MapEntry<>("mileage", "12,000")
+            ),
+            Matchers.hasValue(Matchers.endsWith(",000"))
+        );
+    }
+
+    @Test
+    public void extendsExistingMapWithFunc() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't transform and decorate a list of entries",
+            new StickyMap<String, String>(
+                new StickyMap<String, String>(
+                    new MapEntry<>("black", "BLACK"),
+                    new MapEntry<>("white", "WHITE")
+                ),
+                new ArrayAsIterable<>("yellow", "red", "blue"),
+                color -> new MapEntry<>(
+                    color, color.toUpperCase(Locale.ENGLISH)
+                )
+            ),
+            Matchers.hasValue(Matchers.equalTo("BLUE"))
+        );
+    }
+
+    @Test
+    public void extendsExistingMapWithTwoFuncs() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't transform and decorate a list of entries with two funcs",
+            new StickyMap<String, String>(
+                new StickyMap<String, String>(
+                    new MapEntry<>("black!", "Black!"),
+                    new MapEntry<>("white!", "White!")
+                ),
+                new ArrayAsIterable<>("yellow!", "red!", "blue!"),
+                color -> String.format("[%s]", color),
+                String::toUpperCase
+            ),
+            Matchers.hasValue(Matchers.equalTo("BLUE!"))
         );
     }
 
