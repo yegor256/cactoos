@@ -24,8 +24,10 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.TextHasString;
+import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -42,6 +44,7 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class TextOfTest {
 
     @Test
@@ -106,6 +109,39 @@ public final class TextOfTest {
     }
 
     @Test
+    public void readsFromReader() throws Exception {
+        final String source = "hello, друг!";
+        MatcherAssert.assertThat(
+            "Can't read string through a reader",
+            new TextOf(
+                new StringReader(source),
+                StandardCharsets.UTF_8
+            ).asString(),
+            Matchers.equalTo(
+                new String(
+                    new BytesOf(source).asBytes(),
+                    StandardCharsets.UTF_8
+                )
+            )
+        );
+    }
+
+    @Test
+    public void readsFromReaderWithDefaultEncoding() throws Exception {
+        final String source = "hello, друг! with default encoding";
+        MatcherAssert.assertThat(
+            "Can't read string with default encoding through a reader",
+            new TextOf(new StringReader(source)).asString(),
+            Matchers.equalTo(
+                new String(
+                    new BytesOf(source).asBytes(),
+                    StandardCharsets.UTF_8
+                )
+            )
+        );
+    }
+
+    @Test
     public void readsEncodedArrayOfCharsIntoText() throws IOException {
         MatcherAssert.assertThat(
             "Can't read array of encoded chars into text.",
@@ -154,6 +190,22 @@ public final class TextOfTest {
             "Can't process a string builder",
             new TextOf(
                 new StringBuilder(starts).append(ends)
+            ).asString(),
+            Matchers.allOf(
+                Matchers.startsWith(starts),
+                Matchers.endsWith(ends)
+            )
+        );
+    }
+
+    @Test
+    public void readsStringBuffer() throws IOException {
+        final String starts = "In our daily life, ";
+        final String ends = "we can smile!";
+        MatcherAssert.assertThat(
+            "Can't process a string builder hahahaha",
+            new TextOf(
+                new StringBuffer(starts).append(ends)
             ).asString(),
             Matchers.allOf(
                 Matchers.startsWith(starts),

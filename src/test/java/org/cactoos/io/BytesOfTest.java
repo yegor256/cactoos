@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
@@ -87,6 +88,23 @@ public final class BytesOfTest {
                 Matchers.startsWith("Hello, "),
                 Matchers.endsWith("друг!")
             )
+        );
+    }
+
+    @Test
+    public void readsFromReader() throws Exception {
+        final String source = "hello, друг!";
+        MatcherAssert.assertThat(
+            "Can't read string through a reader",
+            new TextOf(
+                new BytesOf(
+                    new StringReader(source),
+                    StandardCharsets.UTF_8,
+                    // @checkstyle MagicNumberCheck (1 line)
+                    16 << 10
+                )
+            ).asString(),
+            Matchers.equalTo(source)
         );
     }
 

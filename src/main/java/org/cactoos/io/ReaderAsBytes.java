@@ -23,24 +23,23 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.Input;
+import org.cactoos.Bytes;
 
 /**
- * Reader as {@link Input}.
+ * Reader as {@link Bytes}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.12
  */
-public final class ReaderAsInput implements Input {
+public final class ReaderAsBytes implements Bytes {
 
     /**
      * The reader.
@@ -59,36 +58,39 @@ public final class ReaderAsInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      */
-    public ReaderAsInput(final Reader rdr) {
+    public ReaderAsBytes(final Reader rdr) {
         this(rdr, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      * @param cset Charset
      */
-    public ReaderAsInput(final Reader rdr, final Charset cset) {
+    public ReaderAsBytes(final Reader rdr, final Charset cset) {
         // @checkstyle MagicNumber (1 line)
         this(rdr, cset, 16 << 10);
     }
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      * @param cset Charset
      * @param max Buffer size
      */
-    public ReaderAsInput(final Reader rdr, final Charset cset, final int max) {
+    public ReaderAsBytes(final Reader rdr, final Charset cset, final int max) {
         this.reader = rdr;
         this.charset = cset;
         this.size = max;
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public byte[] asBytes() throws IOException {
         final char[] buffer = new char[this.size];
         final StringBuilder builder = new StringBuilder();
         while (true) {
@@ -98,9 +100,7 @@ public final class ReaderAsInput implements Input {
             }
             builder.append(buffer, 0, done);
         }
-        return new ByteArrayInputStream(
-            builder.toString().getBytes(this.charset)
-        );
+        return builder.toString().getBytes(this.charset);
     }
 
 }

@@ -24,6 +24,7 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
@@ -92,10 +93,29 @@ public final class TextOf implements Text {
     /**
      * Ctor.
      *
-     * @param error The exception to serialize
+     * @param rdr Reader
      */
-    public TextOf(final Throwable error) {
-        this(new BytesOf(error));
+    public TextOf(final Reader rdr) {
+        this(new BytesOf(rdr));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param cset Charset
+     */
+    public TextOf(final Reader rdr, final Charset cset) {
+        this(new BytesOf(rdr, cset));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param cset Charset
+     * @param max Buffer size
+     */
+    public TextOf(final Reader rdr, final Charset cset, final int max) {
+        this(new BytesOf(rdr, cset, max));
     }
 
     /**
@@ -153,6 +173,15 @@ public final class TextOf implements Text {
      */
     public TextOf(final char[] chars, final Charset cset) {
         this(new BytesOf(chars, cset));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param error The exception to serialize
+     */
+    public TextOf(final Throwable error) {
+        this(new BytesOf(error));
     }
 
     /**

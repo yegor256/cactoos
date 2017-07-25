@@ -30,14 +30,14 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ReaderAsInput}.
+ * Test case for {@link ReaderAsBytes}.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReaderAsInputTest {
+public final class ReaderAsBytesTest {
 
     @Test
     public void readsString() throws Exception {
@@ -45,7 +45,7 @@ public final class ReaderAsInputTest {
         MatcherAssert.assertThat(
             "Can't read string through a reader",
             new TextOf(
-                new ReaderAsInput(
+                new ReaderAsBytes(
                     new StringReader(source)
                 )
             ).asString(),

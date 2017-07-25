@@ -117,7 +117,7 @@ public final class InputOf implements Input {
      * @param rdr Reader
      */
     public InputOf(final Reader rdr) {
-        this(new ReaderAsInput(rdr));
+        this(new BytesOf(rdr));
     }
 
     /**
@@ -126,7 +126,7 @@ public final class InputOf implements Input {
      * @param cset Charset
      */
     public InputOf(final Reader rdr, final Charset cset) {
-        this(new ReaderAsInput(rdr, cset));
+        this(new BytesOf(rdr, cset));
     }
 
     /**
@@ -136,7 +136,7 @@ public final class InputOf implements Input {
      * @param max Buffer size
      */
     public InputOf(final Reader rdr, final Charset cset, final int max) {
-        this(new ReaderAsInput(rdr, cset, max));
+        this(new BytesOf(rdr, cset, max));
     }
 
     /**
@@ -244,6 +244,15 @@ public final class InputOf implements Input {
      */
     public InputOf(final Text text, final Charset cset) {
         this(new BytesOf(text, cset));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param error The exception to serialize
+     */
+    public InputOf(final Throwable error) {
+        this(new BytesOf(error));
     }
 
     /**
