@@ -202,7 +202,7 @@ public final class TextOf implements Text {
      * @param cset The Charset
      */
     public TextOf(final String string, final Charset cset) {
-        this(() -> new String(string.getBytes(), cset));
+        this(() -> new String(string.getBytes(cset), cset));
     }
 
     /**
