@@ -25,14 +25,13 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link BytesOf}.
+ * Test case for {@link TextOf}.
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
