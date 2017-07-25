@@ -43,7 +43,7 @@ public final class ThrowableAsBytesTest {
     public void printsStackTrace() {
         MatcherAssert.assertThat(
             "Can't print exception stacktrace",
-            new BytesAsText(
+            new TextOf(
                 new ThrowableAsBytes(
                     new IOException(
                         "It doesn't work at all"

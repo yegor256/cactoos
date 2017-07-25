@@ -56,12 +56,12 @@ public final class Base64DecodedText implements Text {
      * @param text The text
      */
     public Base64DecodedText(final String text) {
-        this(new StringAsText(text));
+        this(new TextOf(text));
     }
 
     @Override
     public String asString() throws IOException {
-        return new BytesAsText(
+        return new TextOf(
             Base64.getDecoder().decode(
                 this.origin.asString()
             )

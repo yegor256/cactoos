@@ -60,7 +60,7 @@ public final class SubText implements Text {
      * @param strt Start position in the text
      */
     public SubText(final String text, final int strt) {
-        this(new StringAsText(text), strt);
+        this(new TextOf(text), strt);
     }
 
     /**
@@ -70,7 +70,7 @@ public final class SubText implements Text {
      * @param end End position in the text
      */
     public SubText(final String text, final int strt, final int end) {
-        this(new StringAsText(text), strt, end);
+        this(new TextOf(text), strt, end);
     }
 
     /**

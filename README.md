@@ -59,7 +59,7 @@ More about it here:
 To read a text file in UTF-8:
 
 ```java
-String text = new BytesAsText(
+String text = new TextOf(
   new BytesOf(
     new InputOf(
       new File("/code/a.txt")
@@ -170,14 +170,14 @@ To sort a list of words in the file:
 List<String> sorted = new IterableAsList<>(
   new SortedIterable<>(
     new SplitText(
-      new BytesAsText(
+      new TextOf(
         new BytesOf(
           new InputOf(
             new File("/tmp/names.txt")
           )
         )
       ),
-      new StringAsText("\\s+")
+      new TextOf("\\s+")
     )
   )
 );

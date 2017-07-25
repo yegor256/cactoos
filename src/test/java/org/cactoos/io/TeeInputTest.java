@@ -30,7 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
-import org.cactoos.text.BytesAsText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -50,7 +50,7 @@ public final class TeeInputTest {
         final String content = "Hello, товарищ!";
         MatcherAssert.assertThat(
             "Can't copy Input to Output and return Input",
-            new BytesAsText(
+            new TextOf(
                 new BytesOf(
                     new TeeInput(
                         new InputOf(content),
@@ -75,7 +75,7 @@ public final class TeeInputTest {
         final Path temp = Files.createTempFile("cactoos", "txt");
         MatcherAssert.assertThat(
             "Can't copy Input to File and return content",
-            new BytesAsText(
+            new TextOf(
                 new BytesOf(
                     new TeeInput("Hello, друг!", temp)
                 )

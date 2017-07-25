@@ -49,7 +49,7 @@ public final class TextAsLong implements Scalar<Long> {
      * @param string Number-string
      */
     public TextAsLong(final String string) {
-        this(new StringAsText(string));
+        this(new TextOf(string));
     }
 
     /**

@@ -32,7 +32,7 @@ import java.io.InputStream;
  * <p>Here is for example how {@link Input} can be used
  * in order to read the content of a text file:</p>
  *
- * <pre> String content = new BytesAsText(
+ * <pre> String content = new TextOf(
  *   new BytesOf(
  *     new InputOf(new File("/tmp/names.txt"))
  *   )

@@ -29,7 +29,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link BytesAsText}.
+ * Test case for {@link TextOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
@@ -42,7 +42,7 @@ public final class BytesAsTextTest {
     public void convertsBytesToText() {
         MatcherAssert.assertThat(
             "Can't convert bytes to text",
-            new BytesAsText(
+            new TextOf(
                 new BytesOf(
                     new byte[]{'H', 'e', 'l', 'l', 'o'}
                 )

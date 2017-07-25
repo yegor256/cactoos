@@ -32,8 +32,8 @@ import org.cactoos.Text;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.list.EndlessIterable;
 import org.cactoos.list.LimitedIterable;
-import org.cactoos.text.BytesAsText;
-import org.cactoos.text.StringAsText;
+import org.cactoos.text.JoinedText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -59,7 +59,7 @@ public final class BytesOfTest {
             "Can't read large content from in-memory Input",
             new BytesOf(
                 new InputOf(
-                    String.join(
+                    new JoinedText(
                         "",
                         new LimitedIterable<>(
                             new EndlessIterable<>(body),
@@ -96,7 +96,7 @@ public final class BytesOfTest {
             new String(
                 new BytesOf(
                     new InputOf(
-                        new StringAsText("Hello, товарищ!")
+                        new TextOf("Hello, товарищ!")
                     ),
                     2
                 ).asBytes(),
@@ -117,7 +117,7 @@ public final class BytesOfTest {
         );
         MatcherAssert.assertThat(
             "Can't close InputStream correctly",
-            new BytesAsText(
+            new TextOf(
                 new BytesOf(
                     new InputOf(
                         new InputStream() {
@@ -145,7 +145,7 @@ public final class BytesOfTest {
 
     @Test
     public void asBytes() throws IOException {
-        final Text text = new StringAsText("Hello!");
+        final Text text = new TextOf("Hello!");
         MatcherAssert.assertThat(
             "Can't convert text into bytes",
             new BytesOf(

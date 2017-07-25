@@ -42,7 +42,7 @@ public final class ReversedTextTest {
         MatcherAssert.assertThat(
             "Can't reverse a text",
             new ReversedText(
-                new StringAsText("Hello!")
+                new TextOf("Hello!")
             ),
             new TextHasString("!olleH")
         );
@@ -53,7 +53,7 @@ public final class ReversedTextTest {
         MatcherAssert.assertThat(
             "Can't reverse empty text",
             new ReversedText(
-                new StringAsText("")
+                new TextOf("")
             ),
             new TextHasString("")
         );

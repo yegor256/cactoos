@@ -30,7 +30,7 @@ import org.cactoos.ScalarHasValue;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.func.RepeatedFunc;
-import org.cactoos.text.BytesAsText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -70,7 +70,7 @@ public final class StickyInputTest {
     public void readsRealUrl() throws IOException {
         MatcherAssert.assertThat(
             "Can't fetch text page from the URL",
-            new BytesAsText(
+            new TextOf(
                 new BytesOf(
                     new StickyInput(
                         new InputOf(

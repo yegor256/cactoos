@@ -41,7 +41,7 @@ public final class IsBlankTest {
         MatcherAssert.assertThat(
             "Can't determine an empty text",
             new IsBlank(
-                new StringAsText("")
+                new TextOf("")
             ),
             new ScalarHasValue<>(Boolean.TRUE)
         );
@@ -52,7 +52,7 @@ public final class IsBlankTest {
         MatcherAssert.assertThat(
             "Can't determine an empty text with spaces",
             new IsBlank(
-                new StringAsText("  ")
+                new TextOf("  ")
             ),
             new ScalarHasValue<>(Boolean.TRUE)
         );
@@ -63,7 +63,7 @@ public final class IsBlankTest {
         MatcherAssert.assertThat(
             "Can't detect a nonempty text",
             new IsBlank(
-                new StringAsText("not empty")
+                new TextOf("not empty")
             ),
             new ScalarHasValue<>(Boolean.FALSE)
         );

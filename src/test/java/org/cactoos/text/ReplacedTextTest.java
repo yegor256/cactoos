@@ -42,7 +42,7 @@ public final class ReplacedTextTest {
         MatcherAssert.assertThat(
             "Can't replace a text",
             new ReplacedText(
-                new StringAsText("Hello!"),
+                new TextOf("Hello!"),
                 "ello", "i"
             ),
             new TextHasString("Hi!")
@@ -55,7 +55,7 @@ public final class ReplacedTextTest {
         MatcherAssert.assertThat(
             "Replace a text abnormally",
             new ReplacedText(
-                new StringAsText(text),
+                new TextOf(text),
                 "xyz", "i"
             ),
             new TextHasString(text)
@@ -67,7 +67,7 @@ public final class ReplacedTextTest {
         MatcherAssert.assertThat(
             "Can't replace a text with multiple needle occurrences",
             new ReplacedText(
-                new StringAsText("one cat, two cats, three cats"),
+                new TextOf("one cat, two cats, three cats"),
                 "cat",
                 "dog"
             ),

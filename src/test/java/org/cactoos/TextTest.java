@@ -24,7 +24,7 @@
 package org.cactoos;
 
 import java.io.IOException;
-import org.cactoos.text.StringAsText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -64,7 +64,7 @@ public final class TextTest {
         MatcherAssert.assertThat(
             "Can't work with null text",
             new Text.NoNulls(
-                new StringAsText(message)
+                new TextOf(message)
             ),
             new TextHasString(message)
         );

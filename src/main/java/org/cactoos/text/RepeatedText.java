@@ -53,7 +53,7 @@ public final class RepeatedText implements Text {
      * @param count How many times repeat the Text
      */
     public RepeatedText(final String text, final int count) {
-        this(new StringAsText(text), count);
+        this(new TextOf(text), count);
     }
 
     /**

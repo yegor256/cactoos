@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import java.io.StringReader;
-import org.cactoos.text.BytesAsText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public final class ReaderAsInputTest {
         final String source = "hello, друг!";
         MatcherAssert.assertThat(
             "Can't read string through a reader",
-            new BytesAsText(
+            new TextOf(
                 new BytesOf(
                     new ReaderAsInput(
                         new StringReader(source)
