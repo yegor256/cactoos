@@ -132,4 +132,33 @@ public final class TextOfTest {
         );
     }
 
+    @Test
+    public void comparesWithASubtext() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare sub texts",
+            new TextOf(
+                "here to there"
+            ).compareTo(
+                // @checkstyle MagicNumberCheck (1 line)
+                new SubText("from here to there", 5)
+            ),
+            Matchers.is(0)
+        );
+    }
+
+    @Test
+    public void readsStringBuilder() throws IOException {
+        final String starts = "Name it, ";
+        final String ends = "then it exists!";
+        MatcherAssert.assertThat(
+            "Can't process a string builder",
+            new TextOf(
+                new StringBuilder(starts).append(ends)
+            ).asString(),
+            Matchers.allOf(
+                Matchers.startsWith(starts),
+                Matchers.endsWith(ends)
+            )
+        );
+    }
 }
