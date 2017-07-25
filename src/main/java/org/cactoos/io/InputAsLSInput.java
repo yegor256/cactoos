@@ -90,7 +90,10 @@ public final class InputAsLSInput implements LSInput {
 
     @Override
     public Reader getCharacterStream() {
-        return new InputStreamReader(this.getByteStream());
+        return new InputStreamReader(
+            this.getByteStream(),
+            StandardCharsets.UTF_8
+        );
     }
 
     @Override
@@ -115,7 +118,7 @@ public final class InputAsLSInput implements LSInput {
     @Override
     public String getStringData() {
         return new UncheckedText(
-            new BytesAsText(new InputAsBytes(this.input))
+            new BytesAsText(new BytesOf(this.input))
         ).asString();
     }
 

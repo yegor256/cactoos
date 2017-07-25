@@ -60,6 +60,36 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
+     * @param map The map to extend
+     * @param list List of entries
+     * @since 0.12
+     */
+    @SafeVarargs
+    public StickyMap(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
+        this(map, new ArrayAsIterable<>(list));
+    }
+
+    /**
+     * Ctor.
+     * @param map The map to extend
+     * @param list List of items
+     * @param key Func to create key
+     * @param value Func to create value
+     * @param <Z> Type of items in the list
+     * @since 0.12
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public <Z> StickyMap(final Map<X, Y> map,
+        final Iterable<Z> list, final Func<Z, X> key,
+        final Func<Z, Y> value) {
+        this(
+            map, list,
+            item -> new MapEntry<>(key.apply(item), value.apply(item))
+        );
+    }
+
+    /**
+     * Ctor.
      * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
@@ -82,12 +112,37 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
         final Func<Z, Map.Entry<X, Y>> entry) {
         this(new MappedIterable<>(list, entry));
     }
+
+    /**
+     * Ctor.
+     * @param map The map to extend
+     * @param list List of items
+     * @param entry Func to create entry
+     * @param <Z> Type of items in the list
+     * @since 0.12
+     */
+    public <Z> StickyMap(final Map<X, Y> map, final Iterable<Z> list,
+        final Func<Z, Map.Entry<X, Y>> entry) {
+        this(map, new MappedIterable<>(list, entry));
+    }
+
     /**
      * Ctor.
      * @param list Entries for the entries
      */
     public StickyMap(final Iterable<Map.Entry<X, Y>> list) {
         this(new IterableAsMap<>(list));
+    }
+
+    /**
+     * Ctor.
+     * @param map Pre-existing map we want to extend
+     * @param list Entries for the entries
+     * @since 0.12
+     */
+    public StickyMap(final Map<X, Y> map,
+        final Iterable<Map.Entry<X, Y>> list) {
+        this(new IterableAsMap<>(map, list));
     }
 
     /**

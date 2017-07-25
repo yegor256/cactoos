@@ -45,7 +45,7 @@ public final class ResourceAsInputTest {
         MatcherAssert.assertThat(
             "Can't read bytes from a classpath resource",
             Arrays.copyOfRange(
-                new InputAsBytes(
+                new BytesOf(
                     new ResourceAsInput(
                         "org/cactoos/io/ResourceAsInputTest.class"
                     )
@@ -68,7 +68,7 @@ public final class ResourceAsInputTest {
         MatcherAssert.assertThat(
             "Can't read a text resource from classpath",
             new BytesAsText(
-                new InputAsBytes(
+                new BytesOf(
                     new ResourceAsInput(
                         "org/cactoos/large-text.txt"
                     )
@@ -83,7 +83,7 @@ public final class ResourceAsInputTest {
         MatcherAssert.assertThat(
             "Can't replace an absent resource with a text",
             new BytesAsText(
-                new InputAsBytes(
+                new BytesOf(
                     new ResourceAsInput(
                         "foo/this-resource-is-definitely-absent.txt",
                         "the replacement"
@@ -97,7 +97,7 @@ public final class ResourceAsInputTest {
     @Test(expected = IOException.class)
     public void throwsWhenResourceIsAbsent() throws Exception {
         new BytesAsText(
-            new InputAsBytes(
+            new BytesOf(
                 new ResourceAsInput(
                     "bar/this-resource-is-definitely-absent.txt"
                 )

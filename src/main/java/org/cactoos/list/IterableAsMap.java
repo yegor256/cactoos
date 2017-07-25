@@ -68,6 +68,17 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
+     * @param map The map to extend
+     * @param list List of entries
+     * @since 0.12
+     */
+    @SafeVarargs
+    public IterableAsMap(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
+        this(map, new ArrayAsIterable<>(list));
+    }
+
+    /**
+     * Ctor.
      * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
@@ -81,6 +92,25 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
+     * @param map The map to extend
+     * @param list List of items
+     * @param key Func to create key
+     * @param value Func to create value
+     * @param <Z> Type of items in the list
+     * @since 0.12
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public <Z> IterableAsMap(final Map<X, Y> map,
+        final Iterable<Z> list, final Func<Z, X> key,
+        final Func<Z, Y> value) {
+        this(
+            map, list,
+            item -> new MapEntry<>(key.apply(item), value.apply(item))
+        );
+    }
+
+    /**
+     * Ctor.
      * @param list List of items
      * @param entry Func to create entry
      * @param <Z> Type of items in the list
@@ -89,6 +119,35 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
     public <Z> IterableAsMap(final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
         this(new MappedIterable<>(list, entry));
+    }
+
+    /**
+     * Ctor.
+     * @param map The map to extend
+     * @param list List of items
+     * @param entry Func to create entry
+     * @param <Z> Type of items in the list
+     * @since 0.11
+     */
+    public <Z> IterableAsMap(final Map<X, Y> map, final Iterable<Z> list,
+        final Func<Z, Map.Entry<X, Y>> entry) {
+        this(map, new MappedIterable<>(list, entry));
+    }
+
+    /**
+     * Ctor.
+     * @param map Map to extend
+     * @param list List of the entries
+     * @since 0.12
+     */
+    @SuppressWarnings("unchecked")
+    public IterableAsMap(final Map<X, Y> map,
+        final Iterable<Map.Entry<X, Y>> list) {
+        this(
+            new ConcatIterable<>(
+                map.entrySet(), list
+            )
+        );
     }
 
     /**

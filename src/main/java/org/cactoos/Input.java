@@ -33,7 +33,7 @@ import java.io.InputStream;
  * in order to read the content of a text file:</p>
  *
  * <pre> String content = new BytesAsText(
- *   new InputAsBytes(
+ *   new BytesOf(
  *     new InputOf(new File("/tmp/names.txt"))
  *   )
  * ).asString();</pre>

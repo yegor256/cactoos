@@ -23,7 +23,7 @@
  */
 package org.cactoos;
 
-import org.cactoos.io.InputAsBytes;
+import org.cactoos.io.BytesOf;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.UncheckedText;
 import org.hamcrest.Description;
@@ -66,7 +66,7 @@ public final class InputHasContent extends TypeSafeMatcher<Input> {
     public boolean matchesSafely(final Input item) {
         return this.matcher.matches(
             new UncheckedText(
-                new BytesAsText(new InputAsBytes(item))
+                new BytesAsText(new BytesOf(item))
             ).asString()
         );
     }

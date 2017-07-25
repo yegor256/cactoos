@@ -36,10 +36,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.InputHasContent;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
-import org.cactoos.func.UncheckedScalar;
 import org.cactoos.text.BytesAsText;
 import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -65,7 +63,7 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't read alternative source from file not found",
             new BytesAsText(
-                new InputAsBytes(
+                new BytesOf(
                     new InputWithFallback(
                         new InputOf(
                             new File("/this-file-does-not-exist.txt")
@@ -75,46 +73,6 @@ public final class InputOfTest {
                 )
             ),
             new TextHasString(Matchers.endsWith("text!"))
-        );
-    }
-
-    @Test
-    public void readsAlternativeInputForCheckedCase() {
-        MatcherAssert.assertThat(
-            "Can't read alternative source for checked case.",
-            new BytesAsText(
-                new InputAsBytes(
-                    new InputWithFallback(
-                        new InputOf(
-                            () -> new File("/absent-file-for-checked-case.txt")
-                        ),
-                        new InputOf(new StringAsText("hello, checked!"))
-                    )
-                )
-            ),
-            new TextHasString(Matchers.endsWith("checked!"))
-        );
-    }
-
-    @Test
-    public void readsAlternativeInputForUncheckedCase() {
-        MatcherAssert.assertThat(
-            "Can't read alternative source for unchecked case.",
-            new BytesAsText(
-                new InputAsBytes(
-                    new InputWithFallback(
-                        new InputOf(
-                            new UncheckedScalar<File>(
-                                () -> new File(
-                                    "/absent-file-for-unchecked-case.txt"
-                                )
-                            )
-                        ),
-                        new InputOf(new StringAsText("hello, unchecked!"))
-                    )
-                )
-            ),
-            new TextHasString(Matchers.endsWith("unchecked!"))
         );
     }
 
@@ -139,7 +97,7 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't close InputStream correctly",
             new BytesAsText(
-                new InputAsBytes(
+                new BytesOf(
                     new InputOf(
                         new InputStream() {
                             @Override
@@ -168,7 +126,7 @@ public final class InputOfTest {
     public void readsFileContent() throws IOException {
         MatcherAssert.assertThat(
             "Can't read bytes from a file-system URL",
-            new InputAsBytes(
+            new BytesOf(
                 new InputOf(
                     this.getClass().getResource(
                         "/org/cactoos/io/InputOf.class"
@@ -185,7 +143,7 @@ public final class InputOfTest {
             home -> MatcherAssert.assertThat(
                 "Can't fetch bytes from the URL",
                 new BytesAsText(
-                    new InputAsBytes(
+                    new BytesOf(
                         new InputOf(home)
                     )
                 ),
@@ -204,7 +162,7 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't fetch bytes from the HTTPS URL",
             new BytesAsText(
-                new InputAsBytes(
+                new BytesOf(
                     new InputOf(
                         new URL(
                             // @checkstyle LineLength (1 line)
@@ -218,16 +176,12 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsInputIntoBytes() throws IOException {
+    public void readsStringIntoBytes() throws IOException {
         MatcherAssert.assertThat(
             "Can't read bytes from Input",
             new String(
-                new InputAsBytes(
-                    new InputOf(
-                        new TextAsBytes(
-                            new StringAsText("Hello, друг!")
-                        )
-                    )
+                new BytesOf(
+                    new InputOf("Hello, друг!")
                 ).asBytes(),
                 StandardCharsets.UTF_8
             ),
@@ -245,7 +199,7 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't receive a string builder",
             new String(
-                new InputAsBytes(
+                new BytesOf(
                     new InputOf(
                         new StringBuilder(starts)
                             .append(ends)
@@ -266,7 +220,7 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't receive a string buffer",
             new String(
-                new InputAsBytes(
+                new BytesOf(
                     new InputOf(
                         new StringBuffer(starts)
                             .append(ends)
@@ -285,7 +239,7 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't read array of chars.",
             new String(
-                new InputAsBytes(
+                new BytesOf(
                     new InputOf(
                         'H', 'o', 'l', 'd', ' ',
                         'i', 'n', 'f', 'i', 'n', 'i', 't', 'y'
@@ -304,7 +258,7 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't read array of encoded chars.",
             new String(
-                new InputAsBytes(
+                new BytesOf(
                     new InputOf(
                         new char[]{
                             'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
@@ -328,7 +282,7 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't read string through a reader",
             new BytesAsText(
-                new InputAsBytes(
+                new BytesOf(
                     new InputOf(
                         new StringReader(source)
                     )
