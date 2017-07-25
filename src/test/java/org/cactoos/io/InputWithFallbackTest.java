@@ -45,13 +45,11 @@ public final class InputWithFallbackTest {
         MatcherAssert.assertThat(
             "Can't read alternative source",
             new TextOf(
-                new BytesOf(
-                    new InputWithFallback(
-                        new InputOf(
-                            new File("/this-file-is-absent-for-sure.txt")
-                        ),
-                        new InputOf("hello, world!")
-                    )
+                new InputWithFallback(
+                    new InputOf(
+                        new File("/this-file-is-absent-for-sure.txt")
+                    ),
+                    new InputOf("hello, world!")
                 )
             ),
             new TextHasString(Matchers.endsWith("world!"))

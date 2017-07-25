@@ -60,10 +60,8 @@ To read a text file in UTF-8:
 
 ```java
 String text = new TextOf(
-  new BytesOf(
-    new InputOf(
-      new File("/code/a.txt")
-    )
+  new InputOf(
+    new File("/code/a.txt")
   )
 ).asString();
 ```
@@ -171,10 +169,8 @@ List<String> sorted = new IterableAsList<>(
   new SortedIterable<>(
     new SplitText(
       new TextOf(
-        new BytesOf(
-          new InputOf(
-            new File("/tmp/names.txt")
-          )
+        new InputOf(
+          new File("/tmp/names.txt")
         )
       ),
       new TextOf("\\s+")
@@ -254,7 +250,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
 `FilteredIterable` | `Iterables.filter()` | ? | -
-`BytesAsString` | ? | `IOUtils.toString()` | -
+`TextOf` | ? | `IOUtils.toString()` | -
 
 ## How to contribute?
 

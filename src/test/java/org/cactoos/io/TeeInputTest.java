@@ -51,11 +51,9 @@ public final class TeeInputTest {
         MatcherAssert.assertThat(
             "Can't copy Input to Output and return Input",
             new TextOf(
-                new BytesOf(
-                    new TeeInput(
-                        new InputOf(content),
-                        new OutputStreamAsOutput(baos)
-                    )
+                new TeeInput(
+                    new InputOf(content),
+                    new OutputStreamAsOutput(baos)
                 )
             ),
             new TextHasString(

@@ -71,13 +71,11 @@ public final class StickyInputTest {
         MatcherAssert.assertThat(
             "Can't fetch text page from the URL",
             new TextOf(
-                new BytesOf(
-                    new StickyInput(
-                        new InputOf(
-                            new URL(
-                                // @checkstyle LineLength (1 line)
-                                "file:src/test/resources/org/cactoos/large-text.txt"
-                            )
+                new StickyInput(
+                    new InputOf(
+                        new URL(
+                            // @checkstyle LineLength (1 line)
+                            "file:src/test/resources/org/cactoos/large-text.txt"
                         )
                     )
                 )

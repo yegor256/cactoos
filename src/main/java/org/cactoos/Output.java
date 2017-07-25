@@ -37,7 +37,7 @@ import org.cactoos.io.TeeInput;
  *
  * <pre> new LengthOfInput(
  *   new TeeInput(
- *     new TextAsInput(new TextOf("Hello, world!")),
+ *     new InputOf(new TextOf("Hello, world!")),
  *     new FileAsOutput(new File("/tmp/names.txt"))
  *   )
  * ).asValue();</pre>

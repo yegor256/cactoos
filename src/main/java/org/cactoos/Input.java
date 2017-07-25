@@ -33,9 +33,7 @@ import java.io.InputStream;
  * in order to read the content of a text file:</p>
  *
  * <pre> String content = new TextOf(
- *   new BytesOf(
- *     new InputOf(new File("/tmp/names.txt"))
- *   )
+ *   new InputOf(new File("/tmp/names.txt"))
  * ).asString();</pre>
  *
  * <p>Here {@link InputOf} implements {@link Input} and behaves like

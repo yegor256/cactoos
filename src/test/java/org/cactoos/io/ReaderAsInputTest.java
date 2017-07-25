@@ -45,10 +45,8 @@ public final class ReaderAsInputTest {
         MatcherAssert.assertThat(
             "Can't read string through a reader",
             new TextOf(
-                new BytesOf(
-                    new ReaderAsInput(
-                        new StringReader(source)
-                    )
+                new ReaderAsInput(
+                    new StringReader(source)
                 )
             ).asString(),
             Matchers.equalTo(source)

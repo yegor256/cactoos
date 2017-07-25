@@ -68,10 +68,8 @@ public final class ResourceAsInputTest {
         MatcherAssert.assertThat(
             "Can't read a text resource from classpath",
             new TextOf(
-                new BytesOf(
-                    new ResourceAsInput(
-                        "org/cactoos/large-text.txt"
-                    )
+                new ResourceAsInput(
+                    "org/cactoos/large-text.txt"
                 )
             ).asString(),
             Matchers.endsWith("est laborum.\n")
@@ -97,10 +95,8 @@ public final class ResourceAsInputTest {
     @Test(expected = IOException.class)
     public void throwsWhenResourceIsAbsent() throws Exception {
         new TextOf(
-            new BytesOf(
-                new ResourceAsInput(
-                    "bar/this-resource-is-definitely-absent.txt"
-                )
+            new ResourceAsInput(
+                "bar/this-resource-is-definitely-absent.txt"
             )
         ).asString();
     }

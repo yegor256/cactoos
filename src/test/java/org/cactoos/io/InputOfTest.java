@@ -62,13 +62,11 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't read alternative source from file not found",
             new TextOf(
-                new BytesOf(
-                    new InputWithFallback(
-                        new InputOf(
-                            new File("/this-file-does-not-exist.txt")
-                        ),
-                        new InputOf(new TextOf("Alternative text!"))
-                    )
+                new InputWithFallback(
+                    new InputOf(
+                        new File("/this-file-does-not-exist.txt")
+                    ),
+                    new InputOf(new TextOf("Alternative text!"))
                 )
             ),
             new TextHasString(Matchers.endsWith("text!"))
@@ -139,9 +137,7 @@ public final class InputOfTest {
             home -> MatcherAssert.assertThat(
                 "Can't fetch bytes from the URL",
                 new TextOf(
-                    new BytesOf(
-                        new InputOf(home)
-                    )
+                    new InputOf(home)
                 ),
                 new TextHasString(
                     Matchers.allOf(
@@ -278,10 +274,8 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't read string through a reader",
             new TextOf(
-                new BytesOf(
-                    new InputOf(
-                        new StringReader(source)
-                    )
+                new InputOf(
+                    new StringReader(source)
                 )
             ).asString(),
             Matchers.equalTo(source)

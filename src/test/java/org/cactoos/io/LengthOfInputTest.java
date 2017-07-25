@@ -50,9 +50,7 @@ public final class LengthOfInputTest {
             new LengthOfInput(
                 new SlowInput(
                     new InputOf(
-                        new BytesOf(
-                            new TextOf(text)
-                        )
+                        new TextOf(text)
                     )
                 )
             ),
