@@ -23,55 +23,49 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ReplacedText}.
+ * Test case for {@link ReplacedItemsText}.
  *
- * @author Mehmet Yildirim (memoyil@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReplacedTextTest {
+public final class ReplacedItemsTextTest {
 
     @Test
-    public void replaceText() {
+    public void replacesAllOccurrencesWithReplacedItemsText() {
         MatcherAssert.assertThat(
-            "Can't replace a text",
-            new ReplacedText(
-                new StringAsText("Hello!"),
-                "ello", "i"
-            ),
-            new TextHasString("Hi!")
-        );
-    }
-
-    @Test
-    public void notReplaceTextWhenSubstringNotFound() {
-        final String text = "HelloAgain!";
-        MatcherAssert.assertThat(
-            "Replace a text abnormally",
-            new ReplacedText(
-                new StringAsText(text),
-                "xyz", "i"
-            ),
-            new TextHasString(text)
-        );
-    }
-
-    @Test
-    public void replacesAllOccurrences() {
-        MatcherAssert.assertThat(
-            "Can't replace a text with multiple needle occurrences",
-            new ReplacedText(
+            "Can't replace a text.",
+            new ReplacedItemsText(
                 new StringAsText("one cat, two cats, three cats"),
-                "cat",
-                "dog"
+                new String[]{"cat"},
+                "bird"
             ),
-            new TextHasString("one dog, two dogs, three dogs")
+            new TextHasString("one bird, two birds, three birds")
         );
     }
+
+    @Test
+    public void checksCompareToForReplacedItemsText() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't compare replaced text with expected.",
+            new ReplacedItemsText(
+                new StringAsText("When the child was a child"),
+                new String[]{"child"},
+                "boy"
+            )
+            .compareTo(
+                new StringAsText("When the boy was a boy")
+            ),
+            Matchers.equalTo(0)
+        );
+    }
+
 }

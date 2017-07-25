@@ -24,16 +24,18 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import org.cactoos.Text;
 
 /**
- * Replace the Text.
+ * Returns a valid regex expresion.
  *
- * @author Mehmet Yildirim (memoyil@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.12
  */
-public final class ReplacedText implements Text {
+public final class RegexText implements Text {
 
     /**
      * The text.
@@ -41,37 +43,36 @@ public final class ReplacedText implements Text {
     private final Text origin;
 
     /**
-     * The old char.
+     * Ctor.
+     *
+     * @param string The regex string.
      */
-    private final String needle;
-
-    /**
-     * The new char.
-     */
-    private final String replacement;
+    public RegexText(final String string) {
+        this(new StringAsText(string));
+    }
 
     /**
      * Ctor.
-     * @param text The text
-     * @param find The find one
-     * @param replace The replace one
+     * @param text The regex text.
      */
-    public ReplacedText(final Text text, final String find, final String
-        replace) {
+    public RegexText(final Text text) {
         this.origin = text;
-        this.needle = find;
-        this.replacement = replace;
     }
 
     @Override
     public String asString() throws IOException {
-        return this.origin.asString().replace(this.needle, this.replacement);
+        final String string = this.origin.asString();
+        try {
+            Pattern.compile(string);
+        } catch (final PatternSyntaxException ex) {
+            throw new IOException(ex);
+        }
+        return string;
     }
 
     @Override
     public int compareTo(final Text text) {
         return new UncheckedText(this).compareTo(text);
     }
-
 }
 
