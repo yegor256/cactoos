@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import java.util.Arrays;
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -43,8 +44,7 @@ public class FilteredTextTest {
         MatcherAssert.assertThat(
             "Can't filter a text",
             new FilteredText(
-                new StringAsText("abc"),
-                input -> !Character.valueOf('c').equals(input)
+                new StringAsText("abc"), Arrays.asList(new StringAsText("c"))
             ),
             new TextHasString("ab")
         );
@@ -55,8 +55,7 @@ public class FilteredTextTest {
         MatcherAssert.assertThat(
             "Can't filter empty text",
             new FilteredText(
-                new StringAsText(""),
-                input -> !Character.valueOf('c').equals(input)
+                new StringAsText(""), Arrays.asList(new StringAsText("c"))
             ),
             new TextHasString("")
         );
@@ -67,8 +66,7 @@ public class FilteredTextTest {
         MatcherAssert.assertThat(
             "Can't compare filtered text",
             new FilteredText(
-                new StringAsText("abc"),
-                input -> !Character.valueOf('c').equals(input)
+                new StringAsText("abc"), Arrays.asList(new StringAsText("c"))
             ).compareTo(new StringAsText("ab")),
             Matchers.is(0)
         );

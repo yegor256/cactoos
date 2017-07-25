@@ -24,9 +24,8 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.Func;
+import java.util.Collection;
 import org.cactoos.Text;
-import org.cactoos.func.IoCheckedFunc;
 
 /**
  * Text filtered by a {@link org.cactoos.Func} working as a filter.
@@ -42,30 +41,29 @@ public final class FilteredText implements Text {
      */
     private final Text origin;
     /**
-     * The {@link Func} as {@link IoCheckedFunc} to use for filtering.
+     * Texts to filter from origin.
      */
-    private final IoCheckedFunc<Character, Boolean> filter;
+    private final Collection<Text> filters;
 
     /**
      * Ctor.
      * @param origin The original text to filter.
-     * @param filter The filter to use.
+     * @param filters Texts to filter from origin.
      */
     public FilteredText(final Text origin,
-        final Func<Character, Boolean> filter) {
+        final Collection<Text> filters) {
         this.origin = origin;
-        this.filter = new IoCheckedFunc<>(filter);
+        this.filters = filters;
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public String asString() throws IOException {
-        final StringBuilder filtered = new StringBuilder();
-        for (final char character : this.origin.asString().toCharArray()) {
-            if (this.filter.apply(character)) {
-                filtered.append(character);
-            }
+        Text filtered = this.origin;
+        for (final Text filter : this.filters) {
+            filtered = new ReplacedText(filtered, filter.asString(), "");
         }
-        return filtered.toString();
+        return filtered.asString();
     }
 
     @Override
