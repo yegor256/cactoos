@@ -133,7 +133,7 @@ public final class TextOf implements Text {
      * @param chars The chars
      */
     public TextOf(final char... chars) {
-        this(chars, StandardCharsets.UTF_8);
+        this(new BytesOf(chars));
     }
 
     /**
@@ -143,7 +143,7 @@ public final class TextOf implements Text {
      * @param cset The charset
      */
     public TextOf(final char[] chars, final Charset cset) {
-        this(new String(chars), cset);
+        this(new BytesOf(chars, cset));
     }
 
     /**
