@@ -28,8 +28,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.Scalar;
+import org.cactoos.Text;
 import org.cactoos.func.StickyScalar;
 import org.cactoos.func.UncheckedScalar;
+import org.cactoos.text.StringAsText;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Create a temporary file used only for tests.
@@ -55,12 +58,49 @@ public final class TempFile implements Scalar<Path>, Closeable {
     /**
      * Ctor.
      * @param prefix The prefix of the temporary filename
+     */
+    public TempFile(final String prefix) {
+        this(new StringAsText(prefix));
+    }
+
+    /**
+     * Ctor.
+     * @param prefix The prefix of the temporary filename
+     */
+    public TempFile(final Text prefix) {
+        this(prefix, new StringAsText(".tmp"));
+    }
+
+    /**
+     * Ctor.
+     * @param prefix The prefix of the temporary filename
      * @param suffix The suffix of the temporary filename
      */
     public TempFile(final String prefix, final String suffix) {
+        this(new StringAsText(prefix), new StringAsText(suffix));
+    }
+
+    /**
+     * Ctor.
+     * @param prefix The prefix of the temporary filename
+     * @param suffix The suffix of the temporary filename
+     */
+    public TempFile(final Text prefix, final Text suffix) {
+        this(new UncheckedText(prefix), new UncheckedText(suffix));
+    }
+
+    /**
+     * Ctor.
+     * @param prefix The prefix of the temporary filename
+     * @param suffix The suffix of the temporary filename
+     */
+    public TempFile(final UncheckedText prefix, final UncheckedText suffix) {
         this(
             new StickyScalar<>(
-                () -> Files.createTempFile(prefix, suffix)
+                () -> Files.createTempFile(
+                    prefix.asString(),
+                    suffix.asString()
+                )
             )
         );
     }
