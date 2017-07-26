@@ -31,7 +31,6 @@ import java.io.StringReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.InputHasContent;
 import org.cactoos.TextHasString;
@@ -77,15 +76,19 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsSimpleFileContent() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+    public void readsSimpleFileContent() throws Exception {
         final String content = "Hello, товарищ!";
-        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
-        MatcherAssert.assertThat(
-            "Can't read file content",
-            new InputOf(temp),
-            new InputHasContent(content)
-        );
+        try (final TempFile temp = new TempFile("cactoos-1", "txt-1")) {
+            Files.write(
+                temp.value(),
+                content.getBytes(StandardCharsets.UTF_8)
+            );
+            MatcherAssert.assertThat(
+                "Can't read file content",
+                new InputOf(temp.value()),
+                new InputHasContent(content)
+            );
+        }
     }
 
     @Test
