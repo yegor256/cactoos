@@ -63,7 +63,7 @@ public final class StickyList<X> implements List<X> {
      * @param items The array
      */
     public StickyList(final Iterable<X> items) {
-        this(new IterableAsList<>(items));
+        this(new ListOf<>(items));
     }
 
     /**

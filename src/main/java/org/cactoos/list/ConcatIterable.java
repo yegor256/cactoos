@@ -49,7 +49,7 @@ public final class ConcatIterable<T> implements Iterable<T> {
      */
     @SafeVarargs
     public ConcatIterable(final Iterable<T>... items) {
-        this(new IterableAsList<>(items));
+        this(new ListOf<>(items));
     }
 
     /**

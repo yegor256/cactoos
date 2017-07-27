@@ -33,7 +33,7 @@ import org.cactoos.Proc;
  * <p>You may want to use this decorator where
  * {@link Callable} is required, but you just have a function:</p>
  *
- * <pre> Callable&lt;String&gt; callable = new FuncAsCallable&lt;&gt;(
+ * <pre> Callable&lt;String&gt; callable = new CallableOf&lt;&gt;(
  *   i -&gt; "Hello, world!"
  * );
  * </pre>
