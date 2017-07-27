@@ -66,10 +66,10 @@ public final class JoinedText implements Text {
      */
     public JoinedText(final String delimit, final Iterable<String> strs) {
         this(
-            new StringAsText(delimit),
+            new TextOf(delimit),
             new MappedIterable<>(
                 strs,
-                text -> new StringAsText(text)
+                text -> new TextOf(text)
             )
         );
     }

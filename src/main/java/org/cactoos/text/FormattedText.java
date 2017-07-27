@@ -139,7 +139,7 @@ public final class FormattedText implements Text {
         final Locale locale,
         final Collection<Object> arguments
     ) {
-        this(new StringAsText(ptn), locale, arguments);
+        this(new TextOf(ptn), locale, arguments);
     }
 
     /**

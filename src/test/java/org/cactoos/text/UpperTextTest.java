@@ -40,7 +40,7 @@ public final class UpperTextTest {
     public void convertsText() {
         MatcherAssert.assertThat(
             "Can't upper case a text",
-            new UpperText(new StringAsText("Hello!")),
+            new UpperText(new TextOf("Hello!")),
             new TextHasString("HELLO!")
         );
     }

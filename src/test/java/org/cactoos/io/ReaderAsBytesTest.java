@@ -21,44 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
-import java.io.IOException;
-import org.cactoos.TextHasString;
+import java.io.StringReader;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ThrowableAsBytes}.
+ * Test case for {@link ReaderAsBytes}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ThrowableAsBytesTest {
+public final class ReaderAsBytesTest {
 
     @Test
-    public void printsStackTrace() {
+    public void readsString() throws Exception {
+        final String source = "hello, друг!";
         MatcherAssert.assertThat(
-            "Can't print exception stacktrace",
-            new BytesAsText(
-                new ThrowableAsBytes(
-                    new IOException(
-                        "It doesn't work at all"
-                    )
+            "Can't read string through a reader",
+            new TextOf(
+                new ReaderAsBytes(
+                    new StringReader(source)
                 )
-            ),
-            new TextHasString(
-                Matchers.allOf(
-                    Matchers.containsString("java.io.IOException"),
-                    Matchers.containsString("doesn't work at all"),
-                    Matchers.containsString(
-                        "\tat org.cactoos.text.ThrowableAsBytesTest"
-                    )
-                )
-            )
+            ).asString(),
+            Matchers.equalTo(source)
         );
     }
+
 }

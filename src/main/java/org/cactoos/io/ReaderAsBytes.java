@@ -21,46 +21,86 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
 
 /**
- * Throwable as Text.
- *
- * <p>This class is doing something similar to what
- * ExceptionUtils are doing from Apache Commons.</p>
+ * Reader as {@link Bytes}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.12
  */
-public final class ThrowableAsBytes implements Bytes {
+public final class ReaderAsBytes implements Bytes {
 
     /**
-     * The throwable.
+     * The reader.
      */
-    private final Throwable throwable;
+    private final Reader reader;
+
+    /**
+     * The charset.
+     */
+    private final Charset charset;
+
+    /**
+     * The buffer size.
+     */
+    private final int size;
 
     /**
      * Ctor.
-     * @param error The exception to serialize
+     *
+     * @param rdr Reader
      */
-    public ThrowableAsBytes(final Throwable error) {
-        this.throwable = error;
+    public ReaderAsBytes(final Reader rdr) {
+        this(rdr, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param rdr Reader
+     * @param cset Charset
+     */
+    public ReaderAsBytes(final Reader rdr, final Charset cset) {
+        // @checkstyle MagicNumber (1 line)
+        this(rdr, cset, 16 << 10);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param rdr Reader
+     * @param cset Charset
+     * @param max Buffer size
+     */
+    public ReaderAsBytes(final Reader rdr, final Charset cset, final int max) {
+        this.reader = rdr;
+        this.charset = cset;
+        this.size = max;
     }
 
     @Override
     public byte[] asBytes() throws IOException {
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            this.throwable.printStackTrace(new PrintStream(baos));
-            return baos.toByteArray();
+        final char[] buffer = new char[this.size];
+        final StringBuilder builder = new StringBuilder();
+        while (true) {
+            final int done = this.reader.read(buffer, 0, buffer.length);
+            if (done < 0) {
+                break;
+            }
+            builder.append(buffer, 0, done);
         }
+        return builder.toString().getBytes(this.charset);
     }
 
 }

@@ -56,7 +56,7 @@ public final class UncheckedText implements Text {
      * @since 0.9
      */
     public UncheckedText(final String txt) {
-        this(new StringAsText(txt));
+        this(new TextOf(txt));
     }
 
     /**

@@ -49,7 +49,7 @@ public final class TextAsInt implements Scalar<Integer> {
      * @param string Number-string
      */
     public TextAsInt(final String string) {
-        this(new StringAsText(string));
+        this(new TextOf(string));
     }
 
     /**

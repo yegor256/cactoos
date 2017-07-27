@@ -26,7 +26,7 @@ package org.cactoos.list;
 import java.io.IOException;
 import java.util.Collections;
 import org.cactoos.Text;
-import org.cactoos.text.StringAsText;
+import org.cactoos.text.TextOf;
 import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -49,7 +49,7 @@ public final class MappedIterableTest {
                 new ArrayAsIterable<>(
                     "hello", "world", "друг"
                 ),
-                input -> new UpperText(new StringAsText(input))
+                input -> new UpperText(new TextOf(input))
             ).iterator().next().asString(),
             Matchers.equalTo("HELLO")
         );
@@ -61,7 +61,7 @@ public final class MappedIterableTest {
             "Can't transform an empty iterable",
             new MappedIterable<String, Text>(
                 Collections.emptyList(),
-                input -> new UpperText(new StringAsText(input))
+                input -> new UpperText(new TextOf(input))
             ),
             Matchers.emptyIterable()
         );

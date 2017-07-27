@@ -55,8 +55,8 @@ public final class SplitText implements Iterable<String> {
      */
     public SplitText(final String text, final String rgx) {
         this(
-            new UncheckedText(new StringAsText(text)),
-            new UncheckedText(new StringAsText(rgx))
+            new UncheckedText(new TextOf(text)),
+            new UncheckedText(new TextOf(rgx))
         );
     }
 

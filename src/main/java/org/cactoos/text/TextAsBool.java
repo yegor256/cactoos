@@ -49,7 +49,7 @@ public final class TextAsBool implements Scalar<Boolean> {
      * @param string True or false string
      */
     public TextAsBool(final String string) {
-        this(new StringAsText(string));
+        this(new TextOf(string));
     }
 
     /**
