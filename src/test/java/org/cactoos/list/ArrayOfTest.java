@@ -87,7 +87,7 @@ public final class ArrayOfTest {
             "Can't flatten a map to an iterable of values",
             new ItemOfIterable<>(
                 new ArrayOf<>(
-                    new IterableAsMap<Integer, String>(
+                    new MapOf<Integer, String>(
                         new MapEntry<>(0, expected),
                         new MapEntry<>(1, "world!")
                     )

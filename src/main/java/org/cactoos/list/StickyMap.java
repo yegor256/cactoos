@@ -87,7 +87,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      * @param list Entries for the entries
      */
     public StickyMap(final Iterable<Map.Entry<X, Y>> list) {
-        this(new IterableAsMap<>(list));
+        this(new MapOf<>(list));
     }
 
     /**

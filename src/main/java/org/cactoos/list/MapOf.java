@@ -50,7 +50,7 @@ import org.cactoos.Func;
  * @since 0.4
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class IterableAsMap<X, Y> implements Map<X, Y> {
+public final class MapOf<X, Y> implements Map<X, Y> {
 
     /**
      * The iterable.
@@ -62,7 +62,7 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
      * @param list List of entries
      */
     @SafeVarargs
-    public IterableAsMap(final Map.Entry<X, Y>... list) {
+    public MapOf(final Map.Entry<X, Y>... list) {
         this(new ArrayOf<>(list));
     }
 
@@ -74,7 +74,7 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
      * @param <Z> Type of items in the list
      * @since 0.11
      */
-    public <Z> IterableAsMap(final Iterable<Z> list, final Func<Z, X> key,
+    public <Z> MapOf(final Iterable<Z> list, final Func<Z, X> key,
         final Func<Z, Y> value) {
         this(list, item -> new MapEntry<>(key.apply(item), value.apply(item)));
     }
@@ -86,7 +86,7 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
      * @param <Z> Type of items in the list
      * @since 0.11
      */
-    public <Z> IterableAsMap(final Iterable<Z> list,
+    public <Z> MapOf(final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
         this(new MappedIterable<>(list, entry));
     }
@@ -95,7 +95,7 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
      * Ctor.
      * @param list List of the entries
      */
-    public IterableAsMap(final Iterable<Map.Entry<X, Y>> list) {
+    public MapOf(final Iterable<Map.Entry<X, Y>> list) {
         this.entries = list;
     }
 

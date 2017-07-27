@@ -49,7 +49,7 @@ public final class MapAsProperties implements Scalar<Properties> {
      */
     public MapAsProperties(final Map.Entry<?, ?>... entries) {
         this(
-            new IterableAsMap<>(
+            new MapOf<>(
                 new MappedIterable<Map.Entry<?, ?>, Map.Entry<String, String>>(
                     new ArrayOf<>(entries),
                     input -> new MapEntry<>(

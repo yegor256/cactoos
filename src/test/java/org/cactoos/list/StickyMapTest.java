@@ -44,7 +44,7 @@ public final class StickyMapTest {
     public void ignoresChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
         final Map<Integer, Integer> map = new StickyMap<>(
-            new IterableAsMap<>(
+            new MapOf<>(
                 () -> new RepeatIterator<>(
                     () -> new MapEntry<>(
                         new SecureRandom().nextInt(),
