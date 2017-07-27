@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
-import org.cactoos.list.ArrayAsIterable;
+import org.cactoos.list.ArrayOf;
 import org.cactoos.list.FilteredIterable;
 import org.cactoos.list.LengthOfIterable;
 import org.cactoos.list.MappedIterable;
@@ -49,7 +49,7 @@ public final class ChainedFuncTest {
             new LengthOfIterable(
                 new FilteredIterable<>(
                     new MappedIterable<>(
-                        new ArrayAsIterable<>("public", "final", "class"),
+                        new ArrayOf<>("public", "final", "class"),
                         new ChainedFunc<String, String, String>(
                             input -> input.concat("1"),
                             input -> input.concat("2")
@@ -68,10 +68,10 @@ public final class ChainedFuncTest {
             new LengthOfIterable(
                 new FilteredIterable<>(
                     new MappedIterable<>(
-                        new ArrayAsIterable<>("private", "static", "String"),
+                        new ArrayOf<>("private", "static", "String"),
                         new ChainedFunc<>(
                             input -> input.concat("1"),
-                            new ArrayAsIterable<Func<String, String>>(
+                            new ArrayOf<Func<String, String>>(
                                 input -> input.concat("2"),
                                 input -> input.replaceAll("a", "b")
                             ),

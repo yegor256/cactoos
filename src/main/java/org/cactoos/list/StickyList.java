@@ -55,7 +55,7 @@ public final class StickyList<X> implements List<X> {
      */
     @SafeVarargs
     public StickyList(final X... items) {
-        this(new ArrayAsIterable<>(items));
+        this(new ArrayOf<>(items));
     }
 
     /**

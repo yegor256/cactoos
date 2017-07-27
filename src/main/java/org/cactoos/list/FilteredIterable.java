@@ -34,7 +34,7 @@ import org.cactoos.Func;
  * this code will create a list of two strings "hello" and "world":</p>
  *
  * <pre> Iterable&lt;String&gt; list = new FilteredIterable&lt;&gt;(
- *   new ArrayAsIterable&lt;&gt;(
+ *   new ArrayOf&lt;&gt;(
  *     "hey", "hello", "world"
  *   ),
  *   input -&gt; input.length() &gt; 4

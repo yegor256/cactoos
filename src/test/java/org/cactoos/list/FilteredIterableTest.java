@@ -42,7 +42,7 @@ public final class FilteredIterableTest {
             "Can't calculate the length of an iterable",
             new LengthOfIterable(
                 new FilteredIterable<>(
-                    new ArrayAsIterable<>(
+                    new ArrayOf<>(
                         "hello", "world", "друг"
                     ),
                     // @checkstyle MagicNumber (1 line)
@@ -59,7 +59,7 @@ public final class FilteredIterableTest {
             "Can't calculate the length of an empty iterable",
             new LengthOfIterable(
                 new FilteredIterable<>(
-                    new ArrayAsIterable<String>(),
+                    new ArrayOf<String>(),
                     input -> input.length() > 1
                 )
             ),

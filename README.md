@@ -116,7 +116,7 @@ To filter a collection:
 ```java
 Collection<String> filtered = new IterableAsList<>(
   new FilteredIterable<>(
-    new ArrayAsIterable<>("hello", "world", "dude"),
+    new ArrayOf<>("hello", "world", "dude"),
     new Func<String, Boolean>() {
       @Override
       public Boolean apply(String s) {
@@ -132,7 +132,7 @@ With Lambda:
 ```java
 new IterableAsList<>(
   new FilteredIterable<>(
-    new ArrayAsIterable<>("hello", "world", "dude"),
+    new ArrayOf<>("hello", "world", "dude"),
     s -> s.length() > 4
   )
 );
@@ -143,7 +143,7 @@ To iterate a collection:
 ```java
 new And(
   new MappedIterable<>(
-    new ArrayAsIterable<>("how", "are", "you"),
+    new ArrayOf<>("how", "are", "you"),
     new ProcAsFunc<>(
       input -> {
         System.out.printf("Item: %s\n", input);

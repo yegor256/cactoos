@@ -44,7 +44,7 @@ public final class ReverseIterableTest {
             new JoinedText(
                 " ",
                 new ReverseIterable<>(
-                    new ArrayAsIterable<>(
+                    new ArrayOf<>(
                         "hello", "world", "dude"
                     )
                 )

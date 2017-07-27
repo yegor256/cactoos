@@ -48,7 +48,7 @@ public final class SumOfInts implements Scalar<Long> {
      */
     @SafeVarargs
     public SumOfInts(final Scalar<Number>... src) {
-        this(new ArrayAsIterable<>(src));
+        this(new ArrayOf<>(src));
     }
 
     /**

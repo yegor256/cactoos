@@ -45,7 +45,7 @@ public final class SortedIterableTest {
         MatcherAssert.assertThat(
             "Can't sort an iterable",
             new SortedIterable<>(
-                new ArrayAsIterable<>(
+                new ArrayOf<>(
                     3, 2, 10, 44, -6, 0
                 )
             ),
@@ -60,7 +60,7 @@ public final class SortedIterableTest {
             "Can't sort an iterable with a comparator",
             new SortedIterable<>(
                 Comparator.reverseOrder(),
-                new ArrayAsIterable<>(
+                new ArrayOf<>(
                     "a", "c", "hello", "dude", "Friend"
                 )
             ),

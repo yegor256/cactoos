@@ -43,7 +43,7 @@ public final class SkippedIteratorTest {
         MatcherAssert.assertThat(
             "Can't skip elements in iterator",
             () -> new SkippedIterator<>(
-                new ArrayAsIterable<>(
+                new ArrayOf<>(
                     "one", "two", "three", "four"
                 ).iterator(),
                 2
@@ -58,7 +58,7 @@ public final class SkippedIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void errorSkippedMoreThanExists() throws Exception {
         new SkippedIterator<>(
-            new ArrayAsIterable<>(
+            new ArrayOf<>(
                 "one", "two"
             ).iterator(),
             2

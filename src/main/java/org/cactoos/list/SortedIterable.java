@@ -56,7 +56,7 @@ public final class
      */
     @SafeVarargs
     public SortedIterable(final T... src) {
-        this(new ArrayAsIterable<>(src));
+        this(new ArrayOf<>(src));
     }
 
     /**
@@ -74,7 +74,7 @@ public final class
      */
     @SafeVarargs
     public SortedIterable(final Comparator<T> cmp, final T... src) {
-        this(cmp, new ArrayAsIterable<>(src));
+        this(cmp, new ArrayOf<>(src));
     }
 
     /**

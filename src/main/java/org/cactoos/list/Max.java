@@ -50,7 +50,7 @@ public final class Max<T extends Comparable<T>> implements Scalar<T> {
      */
     @SafeVarargs
     public Max(final Scalar<T>... items) {
-        this(new ArrayAsIterable<>(items));
+        this(new ArrayOf<>(items));
     }
 
     /**

@@ -65,7 +65,7 @@ public final class IterableAsList<T> implements List<T> {
      */
     @SafeVarargs
     public IterableAsList(final T... array) {
-        this(new ArrayAsIterable<>(array));
+        this(new ArrayOf<>(array));
     }
 
     /**

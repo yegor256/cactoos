@@ -42,7 +42,7 @@ public final class SkippedIterableTest {
         MatcherAssert.assertThat(
             "Can't skip elements in iterable",
             new SkippedIterable<>(
-                new ArrayAsIterable<>(
+                new ArrayOf<>(
                     "one", "two", "three", "four"
                 ),
                 2

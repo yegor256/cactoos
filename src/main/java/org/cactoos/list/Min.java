@@ -50,7 +50,7 @@ public final class Min<T extends Comparable<T>> implements Scalar<T> {
      */
     @SafeVarargs
     public Min(final Scalar<T>... items) {
-        this(new ArrayAsIterable<>(items));
+        this(new ArrayOf<>(items));
     }
 
     /**

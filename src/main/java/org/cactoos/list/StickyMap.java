@@ -55,7 +55,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     @SafeVarargs
     public StickyMap(final Map.Entry<X, Y>... list) {
-        this(new ArrayAsIterable<>(list));
+        this(new ArrayOf<>(list));
     }
 
     /**

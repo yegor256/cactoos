@@ -63,7 +63,7 @@ public final class IterableAsMap<X, Y> implements Map<X, Y> {
      */
     @SafeVarargs
     public IterableAsMap(final Map.Entry<X, Y>... list) {
-        this(new ArrayAsIterable<>(list));
+        this(new ArrayOf<>(list));
     }
 
     /**
