@@ -44,7 +44,7 @@ public final class ItemOfIteratorTest {
             "Can't take the first item from the iterator",
             new ItemOfIterator<>(
                 // @checkstyle MagicNumber (1 line)
-                new ArrayAsIterable<>(1, 2, 3).iterator()
+                new ArrayOf<>(1, 2, 3).iterator()
             ),
             new ScalarHasValue<>(1)
         );
@@ -56,7 +56,7 @@ public final class ItemOfIteratorTest {
             "Can't take the item by position from the iterator",
             new ItemOfIterator<>(
                 // @checkstyle MagicNumber (1 line)
-                new ArrayAsIterable<>(1, 2, 3).iterator(),
+                new ArrayOf<>(1, 2, 3).iterator(),
                 1
             ),
             new ScalarHasValue<>(2)
@@ -72,7 +72,7 @@ public final class ItemOfIteratorTest {
     public void failForNegativePositionTest() throws Exception {
         new ItemOfIterator<>(
             // @checkstyle MagicNumber (1 line)
-            new ArrayAsIterable<>(1, 2, 3).iterator(),
+            new ArrayOf<>(1, 2, 3).iterator(),
             -1
         ).value();
     }
@@ -94,7 +94,7 @@ public final class ItemOfIteratorTest {
     public void failForPosMoreLengthTest() throws Exception {
         new ItemOfIterator<>(
             // @checkstyle MagicNumberCheck (2 lines)
-            new ArrayAsIterable<>(1, 2, 3).iterator(),
+            new ArrayOf<>(1, 2, 3).iterator(),
             3
         ).value();
     }

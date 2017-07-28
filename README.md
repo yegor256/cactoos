@@ -114,10 +114,10 @@ new UpperText("Hello");
 To filter a collection:
 
 ```java
-Collection<String> filtered = new IterableAsList<>(
-  new FilteredIterable<>(
-    new ArrayAsIterable<>("hello", "world", "dude"),
-    new Func<String, Boolean>() {
+Collection<String> filtered = new ListOf<>(
+  new FilteredOf<>(
+    new ArrayOf<>("hello", "world", "dude"),
+    new FuncOf<String, Boolean>() {
       @Override
       public Boolean apply(String s) {
         return s.length() > 4;
@@ -130,9 +130,9 @@ Collection<String> filtered = new IterableAsList<>(
 With Lambda:
 
 ```java
-new IterableAsList<>(
-  new FilteredIterable<>(
-    new ArrayAsIterable<>("hello", "world", "dude"),
+new ListOf<>(
+  new FilteredOf<>(
+    new ArrayOf<>("hello", "world", "dude"),
     s -> s.length() > 4
   )
 );
@@ -142,9 +142,9 @@ To iterate a collection:
 
 ```java
 new And(
-  new MappedIterable<>(
-    new ArrayAsIterable<>("how", "are", "you"),
-    new ProcAsFunc<>(
+  new MappedOf<>(
+    new ArrayOf<>("how", "are", "you"),
+    new FuncOf<>(
       input -> {
         System.out.printf("Item: %s\n", input);
       }
@@ -165,8 +165,8 @@ new And(
 To sort a list of words in the file:
 
 ```java
-List<String> sorted = new IterableAsList<>(
-  new SortedIterable<>(
+List<String> sorted = new ListOf<>(
+  new SortedOf<>(
     new SplitText(
       new TextOf(
         new InputOf(
@@ -220,7 +220,7 @@ Here is its object-oriented alternative:
 
 ```java
 new And(
-  new EndlessIterable<>(ready),
+  new EndlessOf<>(ready),
   ready -> {
     System.out.prinln("Still waiting...");
     return !ready;
@@ -240,7 +240,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `NormalizedText` | - | `StringUtils.normalize()` | -
 `RepeatedText` | - | `StringUtils.repeat()` | -
 `ReplacedText` | - | - | `String#replace()`
-`ReversedText` | - | - | `StringBuilder#replace()`
+`ReversedText` | - | - | `StringBuilder#reverse()`
 `SplitText` | - | - | `String#split()`
 `StringAsUrl` | - | - | `URLEncoder.encode()`
 `SubText` | - | - | `String#substring()`
@@ -249,7 +249,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `UrlAsString` | - | - | `URLDecoder.decode()`
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
-`FilteredIterable` | `Iterables.filter()` | ? | -
+`FilteredOf` | `Iterables.filter()` | ? | -
 `TextOf` | ? | `IOUtils.toString()` | -
 
 ## How to contribute?

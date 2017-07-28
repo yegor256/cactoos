@@ -31,21 +31,21 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableAsList}.
+ * Test case for {@link ListOf}.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableAsListTest {
+public final class ListOfTest {
 
     @Test
     public void elementAtIndexTest() throws Exception {
         final int num = 345;
         MatcherAssert.assertThat(
             "Can't convert an iterable to a list",
-            new IterableAsList<>(-1, num, 0, 1).get(1),
+            new ListOf<>(-1, num, 0, 1).get(1),
             Matchers.equalTo(num)
         );
     }
@@ -55,7 +55,7 @@ public final class IterableAsListTest {
         final int size = 42;
         MatcherAssert.assertThat(
             "Can't build a list with a certain size",
-            new IterableAsList<>(
+            new ListOf<>(
                 Collections.nCopies(size, 0)
             ),
             Matchers.hasSize(size)
@@ -66,7 +66,7 @@ public final class IterableAsListTest {
     public void emptyTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't convert an empty iterable to an empty list",
-            new IterableAsList<>(
+            new ListOf<>(
                 Collections.emptyList()
             ).size(),
             Matchers.equalTo(0)
@@ -76,19 +76,19 @@ public final class IterableAsListTest {
     @Test(expected = IndexOutOfBoundsException.class)
     public void lowBoundTest() throws Exception {
         // @checkstyle MagicNumber (1 line)
-        new IterableAsList<>(Collections.nCopies(10, 0)).get(-1);
+        new ListOf<>(Collections.nCopies(10, 0)).get(-1);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void highBoundTest() throws Exception {
         // @checkstyle MagicNumber (1 line)
-        new IterableAsList<>(Collections.nCopies(10, 0)).get(11);
+        new ListOf<>(Collections.nCopies(10, 0)).get(11);
     }
 
     @Test
     public void sensesChangesInIterable() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
-        final List<Integer> list = new IterableAsList<>(
+        final List<Integer> list = new ListOf<>(
             () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
         );
         MatcherAssert.assertThat(

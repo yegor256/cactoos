@@ -23,47 +23,50 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.util.Collections;
+import org.cactoos.ScalarHasValue;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Mapped iterable.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test Case for {@link CycledOf}.
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @since 0.8
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class MappedIterable<X, Y> implements Iterable<Y> {
+public final class CycledOfTest {
 
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public MappedIterable(final Iterable<X> src, final Func<X, Y> fnc) {
-        this.iterable = src;
-        this.func = fnc;
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new MappedIterator<>(
-            this.iterable.iterator(), this.func
+    @Test
+    public void repeatIterableTest() throws Exception {
+        final String expected = "two";
+        MatcherAssert.assertThat(
+            "Can't repeat iterable",
+            new ItemOfIterable<>(
+                new CycledOf<>(
+                    new ArrayOf<>(
+                        "one", expected, "three"
+                    )
+                ),
+                // @checkstyle MagicNumberCheck (1 line)<
+                7
+            ),
+            new ScalarHasValue<>(
+                expected
+            )
         );
     }
 
+    @Test()
+    public void notCycledEmptyTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't generate an empty iterable",
+            new LengthOfIterable(
+                new CycledOf<>(
+                    Collections::emptyIterator
+                )
+            ),
+            new ScalarHasValue<>(0)
+        );
+    }
 }

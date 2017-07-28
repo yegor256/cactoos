@@ -23,59 +23,47 @@
  */
 package org.cactoos.list;
 
-import java.util.Collections;
-import java.util.Comparator;
+import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link SortedIterable}.
- *
+ * Test case for {@link FilteredOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SortedIterableTest {
+public final class FilteredOfTest {
 
     @Test
-    public void sortsAnArray() throws Exception {
+    public void filtersList() {
         MatcherAssert.assertThat(
-            "Can't sort an iterable",
-            new SortedIterable<>(
-                new ArrayAsIterable<>(
-                    3, 2, 10, 44, -6, 0
+            "Can't calculate the length of an iterable",
+            new LengthOfIterable(
+                new FilteredOf<>(
+                    new ArrayOf<>(
+                        "hello", "world", "друг"
+                    ),
+                    // @checkstyle MagicNumber (1 line)
+                    input -> input.length() > 4
                 )
             ),
-            Matchers.hasItems(-6, 0, 2, 3, 10, 44)
+            new ScalarHasValue<>(2)
         );
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sortsAnArrayWithComparator() throws Exception {
+    public void filtersEmptyList() {
         MatcherAssert.assertThat(
-            "Can't sort an iterable with a comparator",
-            new SortedIterable<>(
-                Comparator.reverseOrder(),
-                new ArrayAsIterable<>(
-                    "a", "c", "hello", "dude", "Friend"
+            "Can't calculate the length of an empty iterable",
+            new LengthOfIterable(
+                new FilteredOf<>(
+                    new ArrayOf<String>(),
+                    input -> input.length() > 1
                 )
             ),
-            Matchers.hasItems("hello", "dude", "c", "a", "Friend")
-        );
-    }
-
-    @Test
-    public void sortsAnEmptyArray() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't sort an empty iterable",
-            new SortedIterable<Integer>(
-                Collections.emptyList()
-            ),
-            Matchers.iterableWithSize(0)
+            new ScalarHasValue<>(0)
         );
     }
 

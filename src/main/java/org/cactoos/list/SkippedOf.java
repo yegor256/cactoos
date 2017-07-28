@@ -23,55 +23,42 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.BiFunc;
-import org.cactoos.Scalar;
+import java.util.Iterator;
 
 /**
- * Iterable, which elements are "reduced" through the func.
+ * Skipped iterable.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @param <T> Type of element
- * @param <X> Type of input and output
- * @since 0.9
+ * @param <T> Element type
+ * @since 0.8
  */
-public final class ReducedIterable<X, T> implements Scalar<X> {
+public final class SkippedOf<T> implements Iterable<T> {
 
     /**
-     * Original iterable.
+     * Decorated iterable.
      */
     private final Iterable<T> iterable;
 
     /**
-     * Input.
+     * Count skip elements.
      */
-    private final X input;
-
-    /**
-     * Func.
-     */
-    private final BiFunc<X, T, X> func;
+    private final int skip;
 
     /**
      * Ctor.
-     * @param list List of items
-     * @param ipt Input
-     * @param fnc Func original
+     * @param iterable Decorated iterable
+     * @param skip Count skip elements
      */
-    public ReducedIterable(final Iterable<T> list, final X ipt,
-        final BiFunc<X, T, X> fnc) {
-        this.iterable = list;
-        this.input = ipt;
-        this.func = fnc;
+    public SkippedOf(final Iterable<T> iterable, final int skip) {
+        this.iterable = iterable;
+        this.skip = skip;
     }
 
     @Override
-    public X value() throws Exception {
-        X memo = this.input;
-        for (final T item : this.iterable) {
-            memo = this.func.apply(memo, item);
-        }
-        return memo;
+    public Iterator<T> iterator() {
+        return new SkippedIterator<>(this.iterable.iterator(), this.skip);
     }
-
 }

@@ -48,7 +48,7 @@ public final class ConcatIterator<T> implements Iterator<T> {
      */
     @SafeVarargs
     public ConcatIterator(final Iterator<T>... items) {
-        this(new IterableAsList<>(items));
+        this(new ListOf<>(items));
     }
 
     /**
@@ -61,14 +61,14 @@ public final class ConcatIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return new FilteredIterable<>(
+        return new FilteredOf<>(
             this.list, Iterator::hasNext
         ).iterator().hasNext();
     }
 
     @Override
     public T next() {
-        return new FilteredIterable<>(
+        return new FilteredOf<>(
             this.list, Iterator::hasNext
         ).iterator().next().next();
     }

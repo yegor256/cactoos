@@ -24,47 +24,81 @@
 package org.cactoos.list;
 
 import org.cactoos.ScalarHasValue;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link FilteredIterable}.
+ * Test case for {@link ArrayOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FilteredIterableTest {
+public final class ArrayOfTest {
 
     @Test
-    public void filtersList() {
+    public void convertsTextToIterableOfChars() {
         MatcherAssert.assertThat(
-            "Can't calculate the length of an iterable",
+            "Can't convert array to a iterable of chars",
             new LengthOfIterable(
-                new FilteredIterable<>(
-                    new ArrayAsIterable<>(
-                        "hello", "world", "друг"
-                    ),
-                    // @checkstyle MagicNumber (1 line)
-                    input -> input.length() > 4
+                new ArrayOf<>(
+                    new TextOf("abc")
                 )
             ),
-            new ScalarHasValue<>(2)
+            // @checkstyle MagicNumber (1 line)
+            new ScalarHasValue<>(3)
         );
     }
 
     @Test
-    public void filtersEmptyList() {
+    public void convertsScalarsToIterable() {
         MatcherAssert.assertThat(
-            "Can't calculate the length of an empty iterable",
+            "Can't convert scalars to iterable",
             new LengthOfIterable(
-                new FilteredIterable<>(
-                    new ArrayAsIterable<String>(),
-                    input -> input.length() > 1
+                new ArrayOf<>(
+                    "a", "b", "c"
                 )
             ),
-            new ScalarHasValue<>(0)
+            // @checkstyle MagicNumber (1 line)
+            new ScalarHasValue<>(3)
+        );
+    }
+
+    @Test
+    public void convertsObjectsToIterable() {
+        MatcherAssert.assertThat(
+            "Can't convert objects to iterable",
+            new LengthOfIterable(
+                new ArrayOf<>(
+                    new TextOf("a"), new TextOf("b"), new TextOf("c")
+                )
+            ),
+            // @checkstyle MagicNumber (1 line)
+            new ScalarHasValue<>(3)
+        );
+    }
+
+    @Test
+    public void convertsMapToIterable() {
+        final String expected = "hello, ";
+        MatcherAssert.assertThat(
+            "Can't flatten a map to an iterable of values",
+            new ItemOfIterable<>(
+                new ArrayOf<>(
+                    new MapOf<Integer, String>(
+                        new MapEntry<>(0, expected),
+                        new MapEntry<>(1, "world!")
+                    )
+                ),
+                0
+            ),
+            new ScalarHasValue<>(
+                expected
+            )
         );
     }
 
 }
+

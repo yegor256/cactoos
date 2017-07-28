@@ -36,7 +36,7 @@ import java.util.List;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
- * @see FilteredIterable
+ * @see FilteredOf
  * @since 0.9
  */
 public final class ReverseIterable<X> implements Iterable<X> {

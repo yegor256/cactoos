@@ -23,72 +23,71 @@
  */
 package org.cactoos.list;
 
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Map;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.func.UncheckedScalar;
 
 /**
- * Sorted iterable.
+ * Array as iterable.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.7
+ * @param <X> Type of item
+ * @since 0.12
  */
-public final class
-    SortedIterable<T extends Comparable<? super T>> implements
-    Iterable<T> {
+public final class ArrayOf<X> implements Iterable<X> {
 
     /**
-     * Decorated iterable.
+     * The encapsulated iterator of X.
      */
-    private final Iterable<T> iterable;
-
-    /**
-     * Comparator.
-     */
-    private final Comparator<T> comparator;
+    private final UncheckedScalar<Iterator<X>> scalar;
 
     /**
      * Ctor.
-     * @param src The underlying iterable
+     * @param text The text
+     */
+    public ArrayOf(final Text text) {
+        this(() -> new CharactersOf<X>(text).iterator());
+    }
+
+    /**
+     * Ctor.
+     * @param map The map to be flatten as an array of values
+     */
+    @SuppressWarnings("unchecked")
+    public ArrayOf(final Map<?, ?> map) {
+        this(
+            () -> (Iterator<X>) Arrays.asList(
+                map.values().toArray()
+            ).iterator()
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param items The array
      */
     @SafeVarargs
-    public SortedIterable(final T... src) {
-        this(new ArrayAsIterable<>(src));
+    public ArrayOf(final X... items) {
+        this(() -> Arrays.asList(items).iterator());
     }
 
     /**
      * Ctor.
-     * @param src The underlying iterable
+     * @param sclr The encapsulated iterator of x
      */
-    public SortedIterable(final Iterable<T> src) {
-        this(Comparator.naturalOrder(), src);
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying iterable
-     * @param cmp The comparator
-     */
-    @SafeVarargs
-    public SortedIterable(final Comparator<T> cmp, final T... src) {
-        this(cmp, new ArrayAsIterable<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying iterable
-     * @param cmp The comparator
-     */
-    public SortedIterable(final Comparator<T> cmp, final Iterable<T> src) {
-        this.iterable = src;
-        this.comparator = cmp;
+    private ArrayOf(final Scalar<Iterator<X>> sclr) {
+        this.scalar = new UncheckedScalar<>(sclr);
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new SortedIterator<>(this.comparator, this.iterable.iterator());
+    public Iterator<X> iterator() {
+        return this.scalar.value();
     }
+
 }

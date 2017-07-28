@@ -28,22 +28,25 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ArrayAsIterable}.
+ * Test case for {@link SkippedOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class ArrayAsIterableTest {
+public final class ReducedOfTest {
 
     @Test
-    public void convertsArrayToIterable() {
+    public void skipIterable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't convert array to iterable",
-            new ArrayAsIterable<>(
-                "hello", "world"
-            ),
-            Matchers.iterableWithSize(2)
+            "Can't reduce elements in iterable",
+            new ReducedOf<>(
+                new LimitedIterable<>(new NaturalNumbers(), 10),
+                0L,
+                (first, second) -> first + second
+            ).value(),
+            Matchers.equalTo(45L)
         );
     }
 

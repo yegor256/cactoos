@@ -24,41 +24,46 @@
 package org.cactoos.list;
 
 import java.util.Iterator;
+import org.cactoos.Func;
 
 /**
- * Skipped iterable.
+ * Mapped iterable.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.8
+ * @param <X> Type of source item
+ * @param <Y> Type of target item
+ * @since 0.1
  */
-public final class SkippedIterable<T> implements Iterable<T> {
+public final class MappedOf<X, Y> implements Iterable<Y> {
 
     /**
-     * Decorated iterable.
+     * Iterable.
      */
-    private final Iterable<T> iterable;
+    private final Iterable<X> iterable;
 
     /**
-     * Count skip elements.
+     * Function.
      */
-    private final int skip;
+    private final Func<X, Y> func;
 
     /**
      * Ctor.
-     * @param iterable Decorated iterable
-     * @param skip Count skip elements
+     * @param src Source iterable
+     * @param fnc Func
      */
-    public SkippedIterable(final Iterable<T> iterable, final int skip) {
-        this.iterable = iterable;
-        this.skip = skip;
+    public MappedOf(final Iterable<X> src, final Func<X, Y> fnc) {
+        this.iterable = src;
+        this.func = fnc;
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new SkippedIterator<>(this.iterable.iterator(), this.skip);
+    public Iterator<Y> iterator() {
+        return new MappedIterator<>(
+            this.iterable.iterator(), this.func
+        );
     }
+
 }

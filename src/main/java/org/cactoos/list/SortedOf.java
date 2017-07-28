@@ -23,38 +23,71 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * Array as iterable.
+ * Sorted iterable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @param <T> Element type
+ * @since 0.7
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
+public final class SortedOf<T extends Comparable<? super T>> implements
+    Iterable<T> {
 
     /**
-     * The array.
+     * Decorated iterable.
      */
-    private final X[] array;
+    private final Iterable<T> iterable;
+
+    /**
+     * Comparator.
+     */
+    private final Comparator<T> comparator;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param src The underlying iterable
      */
     @SafeVarargs
-    public ArrayAsIterable(final X... items) {
-        this.array = items;
+    public SortedOf(final T... src) {
+        this(new ArrayOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The underlying iterable
+     */
+    public SortedOf(final Iterable<T> src) {
+        this(Comparator.naturalOrder(), src);
+    }
+
+    /**
+     * Ctor.
+     * @param src The underlying iterable
+     * @param cmp The comparator
+     */
+    @SafeVarargs
+    public SortedOf(final Comparator<T> cmp, final T... src) {
+        this(cmp, new ArrayOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The underlying iterable
+     * @param cmp The comparator
+     */
+    public SortedOf(final Comparator<T> cmp, final Iterable<T> src) {
+        this.iterable = src;
+        this.comparator = cmp;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return Arrays.asList(this.array).iterator();
+    public Iterator<T> iterator() {
+        return new SortedIterator<>(this.comparator, this.iterable.iterator());
     }
-
 }

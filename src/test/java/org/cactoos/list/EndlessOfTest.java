@@ -23,45 +23,25 @@
  */
 package org.cactoos.list;
 
-import java.util.NoSuchElementException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link SkippedIterator}.
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * Test Case for {@link EndlessOf}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SkippedIteratorTest {
+public final class EndlessOfTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipIterator() throws Exception {
+    public void endlessIterableTest() throws Exception {
         MatcherAssert.assertThat(
-            "Can't skip elements in iterator",
-            () -> new SkippedIterator<>(
-                new ArrayOf<>(
-                    "one", "two", "three", "four"
-                ).iterator(),
-                2
-            ),
-            Matchers.contains(
-                "three",
-                "four"
-            )
+            "Can't get unique endless iterable item",
+            new EndlessOf<>(1),
+            Matchers.hasItem(1)
         );
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void errorSkippedMoreThanExists() throws Exception {
-        new SkippedIterator<>(
-            new ArrayOf<>(
-                "one", "two"
-            ).iterator(),
-            2
-        ).next();
     }
 }

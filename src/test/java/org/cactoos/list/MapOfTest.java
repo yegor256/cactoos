@@ -31,20 +31,20 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableAsMap}.
+ * Test case for {@link MapOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableAsMapTest {
+public final class MapOfTest {
 
     @Test
     public void convertsIterableToMap() {
         MatcherAssert.assertThat(
             "Can't convert iterable to map",
-            new IterableAsMap<Integer, String>(
+            new MapOf<Integer, String>(
                 new MapEntry<>(0, "hello, "),
                 new MapEntry<>(1, "world!")
             ),
@@ -58,7 +58,7 @@ public final class IterableAsMapTest {
     @Test
     public void sensesChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new IterableAsMap<>(
+        final Map<Integer, Integer> map = new MapOf<>(
             () -> new RepeatIterator<>(
                 () -> new MapEntry<>(
                     new SecureRandom().nextInt(),

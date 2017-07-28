@@ -21,33 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package org.cactoos.list;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.Iterator;
 
 /**
- * Test case for {@link SkippedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Cycled Iterable.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
+ * @param <T> Type of item
+ * @since 0.8
  */
-public final class ReducedIterableTest {
+public final class CycledOf<T> implements Iterable<T> {
 
-    @Test
-    public void skipIterable() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't reduce elements in iterable",
-            new ReducedIterable<>(
-                new LimitedIterable<>(new NaturalNumbers(), 10),
-                0L,
-                (first, second) -> first + second
-            ).value(),
-            Matchers.equalTo(45L)
-        );
+    /**
+     * Iterable.
+     */
+    private final Iterable<T> iterable;
+
+    /**
+     * Ctor.
+     * @param iterable Iterable
+     */
+    public CycledOf(final Iterable<T> iterable) {
+        this.iterable = iterable;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new CycledIterator<>(this.iterable);
+    }
 }

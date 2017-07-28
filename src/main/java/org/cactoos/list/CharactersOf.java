@@ -23,60 +23,69 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
-import org.cactoos.Func;
+import java.util.List;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.func.UncheckedScalar;
+import org.cactoos.text.TextOf;
 
 /**
- * Filtered iterable.
- *
- * <p>You can use it in order to create a declarative/lazy
- * version of a filtered collection/iterable. For example,
- * this code will create a list of two strings "hello" and "world":</p>
- *
- * <pre> Iterable&lt;String&gt; list = new FilteredIterable&lt;&gt;(
- *   new ArrayAsIterable&lt;&gt;(
- *     "hey", "hello", "world"
- *   ),
- *   input -&gt; input.length() &gt; 4
- * );
- * </pre>
+ * Characters of.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @param <X> Type of item
- * @see FilteredIterator
- * @since 0.1
+ * @since 0.12
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class CharactersOf<X> implements Iterable<X> {
 
     /**
-     * Iterable.
+     * The encapsulated iterator of X.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Boolean> func;
+    private final UncheckedScalar<Iterator<X>> scalar;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param fnc Predicate
+     * @param string The string
      */
-    public FilteredIterable(final Iterable<X> src, final Func<X, Boolean> fnc) {
-        this.iterable = src;
-        this.func = fnc;
+    public CharactersOf(final String string) {
+        this(new TextOf(string));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    @SuppressWarnings("unchecked")
+    public CharactersOf(final Text text) {
+        this(() -> {
+            final char[] raws = text.asString().toCharArray();
+            final List<Character> chars = new ArrayList<>(raws.length);
+            for (final char chr : raws) {
+                chars.add(chr);
+            }
+            return (Iterator<X>) Arrays.asList(
+                chars.toArray(new Character[raws.length])
+            ).iterator();
+        });
+    }
+
+    /**
+     * Ctor.
+     * @param sclr The encapsulated iterator of x
+     */
+    private CharactersOf(final Scalar<Iterator<X>> sclr) {
+        this.scalar = new UncheckedScalar<>(sclr);
     }
 
     @Override
     public Iterator<X> iterator() {
-        return new FilteredIterator<>(
-            this.iterable.iterator(),
-            this.func
-        );
+        return this.scalar.value();
     }
 
 }

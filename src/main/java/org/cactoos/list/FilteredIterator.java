@@ -38,7 +38,7 @@ import org.cactoos.func.UncheckedFunc;
  * this code will create a list of two strings "hello" and "world":</p>
  *
  * <pre> Iterator&lt;String&gt; list = new FilteredIterator&lt;&gt;(
- *   new ArrayAsIterable&lt;&gt;(
+ *   new ArrayOf&lt;&gt;(
  *     "hey", "hello", "world"
  *   ).iterator(),
  *   input -&gt; input.length() &gt; 4
@@ -50,7 +50,7 @@ import org.cactoos.func.UncheckedFunc;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
- * @see FilteredIterable
+ * @see FilteredOf
  * @since 0.1
  */
 public final class FilteredIterator<X> implements Iterator<X> {

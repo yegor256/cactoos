@@ -23,25 +23,60 @@
  */
 package org.cactoos.list;
 
+import java.util.Collections;
+import java.util.Comparator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link EndlessIterable}.
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * Test case for {@link SortedOf}.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class EndlessIterableTest {
+public final class SortedOfTest {
 
     @Test
-    public void endlessIterableTest() throws Exception {
+    public void sortsAnArray() throws Exception {
         MatcherAssert.assertThat(
-            "Can't get unique endless iterable item",
-            new EndlessIterable<>(1),
-            Matchers.hasItem(1)
+            "Can't sort an iterable",
+            new SortedOf<>(
+                new ArrayOf<>(
+                    3, 2, 10, 44, -6, 0
+                )
+            ),
+            Matchers.hasItems(-6, 0, 2, 3, 10, 44)
         );
     }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void sortsAnArrayWithComparator() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't sort an iterable with a comparator",
+            new SortedOf<>(
+                Comparator.reverseOrder(),
+                new ArrayOf<>(
+                    "a", "c", "hello", "dude", "Friend"
+                )
+            ),
+            Matchers.hasItems("hello", "dude", "c", "a", "Friend")
+        );
+    }
+
+    @Test
+    public void sortsAnEmptyArray() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't sort an empty iterable",
+            new SortedOf<Integer>(
+                Collections.emptyList()
+            ),
+            Matchers.iterableWithSize(0)
+        );
+    }
+
 }

@@ -36,7 +36,7 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.4
  */
-public final class EndlessIterable<T> implements Iterable<T> {
+public final class EndlessOf<T> implements Iterable<T> {
 
     /**
      * Element to repeat.
@@ -47,7 +47,7 @@ public final class EndlessIterable<T> implements Iterable<T> {
      * Ctor.
      * @param elm To repeat
      */
-    public EndlessIterable(final T elm) {
+    public EndlessOf(final T elm) {
         this.element = elm;
     }
 

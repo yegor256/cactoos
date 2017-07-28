@@ -23,50 +23,35 @@
  */
 package org.cactoos.list;
 
-import java.util.Collections;
-import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link CycledIterable}.
+ * Test Case for {@link SkippedOf}.
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CycledIterableTest {
+public final class SkippedOfTest {
 
     @Test
-    public void repeatIterableTest() throws Exception {
-        final String expected = "two";
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void skipIterable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't repeat iterable",
-            new ItemOfIterable<>(
-                new CycledIterable<>(
-                    new ArrayAsIterable<>(
-                        "one", expected, "three"
-                    )
+            "Can't skip elements in iterable",
+            new SkippedOf<>(
+                new ArrayOf<>(
+                    "one", "two", "three", "four"
                 ),
-                // @checkstyle MagicNumberCheck (1 line)<
-                7
+                2
             ),
-            new ScalarHasValue<>(
-                expected
+            Matchers.contains(
+                "three",
+                "four"
             )
         );
     }
 
-    @Test()
-    public void notCycledEmptyTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't generate an empty iterable",
-            new LengthOfIterable(
-                new CycledIterable<>(
-                    Collections::emptyIterator
-                )
-            ),
-            new ScalarHasValue<>(0)
-        );
-    }
 }
