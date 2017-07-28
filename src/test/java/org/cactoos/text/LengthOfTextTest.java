@@ -42,7 +42,7 @@ public final class LengthOfTextTest {
     public void valueTextAsArg() throws Exception {
         MatcherAssert.assertThat(
             new LengthOfText(
-                new StringAsText("text")
+                new TextOf("text")
             ),
             new ScalarHasValue<>(4)
         );
@@ -60,7 +60,7 @@ public final class LengthOfTextTest {
     public void valueEmptyText() throws Exception {
         MatcherAssert.assertThat(
             new LengthOfText(
-                new StringAsText("")
+                new TextOf("")
             ),
             new ScalarHasValue<>(0)
         );

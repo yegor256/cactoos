@@ -23,7 +23,10 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
@@ -58,11 +61,40 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param max Max length of the buffer for reading
      */
     public BytesOf(final Input input, final int max) {
         this(new InputAsBytes(input, max));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param rdr Reader
+     */
+    public BytesOf(final Reader rdr) {
+        this(new ReaderAsBytes(rdr));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param cset Charset
+     */
+    public BytesOf(final Reader rdr, final Charset cset) {
+        this(new ReaderAsBytes(rdr, cset));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param cset Charset
+     * @param max Buffer size
+     */
+    public BytesOf(final Reader rdr, final Charset cset, final int max) {
+        this(new ReaderAsBytes(rdr, cset, max));
     }
 
     /**
@@ -158,6 +190,25 @@ public final class BytesOf implements Bytes {
      */
     public BytesOf(final Text text, final Charset cset) {
         this(() -> text.asString().getBytes(cset));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param error The exception to serialize
+     */
+    public BytesOf(final Throwable error) {
+        this(
+            () -> {
+                try (
+                    final ByteArrayOutputStream baos =
+                        new ByteArrayOutputStream()
+                ) {
+                    error.printStackTrace(new PrintStream(baos));
+                    return baos.toByteArray();
+                }
+            }
+        );
     }
 
     /**

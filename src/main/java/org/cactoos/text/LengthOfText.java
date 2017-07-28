@@ -48,7 +48,7 @@ public final class LengthOfText implements Scalar<Integer> {
      * @param string The string
      */
     public LengthOfText(final String string) {
-        this(new StringAsText(string));
+        this(new TextOf(string));
     }
 
     /**

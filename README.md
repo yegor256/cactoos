@@ -59,11 +59,9 @@ More about it here:
 To read a text file in UTF-8:
 
 ```java
-String text = new BytesAsText(
-  new BytesOf(
-    new InputOf(
-      new File("/code/a.txt")
-    )
+String text = new TextOf(
+  new InputOf(
+    new File("/code/a.txt")
   )
 ).asString();
 ```
@@ -170,14 +168,12 @@ To sort a list of words in the file:
 List<String> sorted = new IterableAsList<>(
   new SortedIterable<>(
     new SplitText(
-      new BytesAsText(
-        new BytesOf(
-          new InputOf(
-            new File("/tmp/names.txt")
-          )
+      new TextOf(
+        new InputOf(
+          new File("/tmp/names.txt")
         )
       ),
-      new StringAsText("\\s+")
+      new TextOf("\\s+")
     )
   )
 );
@@ -254,7 +250,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
 `FilteredIterable` | `Iterables.filter()` | ? | -
-`BytesAsString` | ? | `IOUtils.toString()` | -
+`TextOf` | ? | `IOUtils.toString()` | -
 
 ## How to contribute?
 

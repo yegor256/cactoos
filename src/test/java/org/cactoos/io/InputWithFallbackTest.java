@@ -25,7 +25,7 @@ package org.cactoos.io;
 
 import java.io.File;
 import org.cactoos.TextHasString;
-import org.cactoos.text.BytesAsText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,14 +44,12 @@ public final class InputWithFallbackTest {
     public void readsAlternativeInput() {
         MatcherAssert.assertThat(
             "Can't read alternative source",
-            new BytesAsText(
-                new BytesOf(
-                    new InputWithFallback(
-                        new InputOf(
-                            new File("/this-file-is-absent-for-sure.txt")
-                        ),
-                        new InputOf("hello, world!")
-                    )
+            new TextOf(
+                new InputWithFallback(
+                    new InputOf(
+                        new File("/this-file-is-absent-for-sure.txt")
+                    ),
+                    new InputOf("hello, world!")
                 )
             ),
             new TextHasString(Matchers.endsWith("world!"))

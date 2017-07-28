@@ -31,8 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.list.EndlessIterable;
 import org.cactoos.list.LimitedIterable;
-import org.cactoos.text.BytesAsText;
-import org.cactoos.text.StringAsText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -92,7 +91,7 @@ public final class InputAsBytesTest {
                 new InputAsBytes(
                     new InputOf(
                         new BytesOf(
-                            new StringAsText("Hello, друг!")
+                            new TextOf("Hello, друг!")
                         )
                     )
                 ).asBytes(),
@@ -113,7 +112,7 @@ public final class InputAsBytesTest {
                 new InputAsBytes(
                     new InputOf(
                         new BytesOf(
-                            new StringAsText("Hello, товарищ!")
+                            new TextOf("Hello, товарищ!")
                         )
                     ),
                     2
@@ -135,22 +134,20 @@ public final class InputAsBytesTest {
         );
         MatcherAssert.assertThat(
             "Can't close InputStream correctly",
-            new BytesAsText(
-                new InputAsBytes(
-                    new InputOf(
-                        new InputStream() {
-                            @Override
-                            public int read() throws IOException {
-                                return input.read();
-                            }
-                            @Override
-                            public void close() throws IOException {
-                                input.close();
-                                closed.set(true);
-                            }
+            new TextOf(
+                new InputOf(
+                    new InputStream() {
+                        @Override
+                        public int read() throws IOException {
+                            return input.read();
                         }
-                    )
-                ).asBytes(),
+                        @Override
+                        public void close() throws IOException {
+                            input.close();
+                            closed.set(true);
+                        }
+                    }
+                ),
                 StandardCharsets.UTF_8
             ).asString(),
             new MatcherOf<>(

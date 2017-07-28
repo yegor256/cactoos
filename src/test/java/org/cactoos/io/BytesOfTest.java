@@ -26,14 +26,16 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
+import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.list.EndlessIterable;
 import org.cactoos.list.LimitedIterable;
-import org.cactoos.text.BytesAsText;
-import org.cactoos.text.StringAsText;
+import org.cactoos.text.JoinedText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -59,7 +61,7 @@ public final class BytesOfTest {
             "Can't read large content from in-memory Input",
             new BytesOf(
                 new InputOf(
-                    String.join(
+                    new JoinedText(
                         "",
                         new LimitedIterable<>(
                             new EndlessIterable<>(body),
@@ -90,13 +92,30 @@ public final class BytesOfTest {
     }
 
     @Test
+    public void readsFromReader() throws Exception {
+        final String source = "hello, друг!";
+        MatcherAssert.assertThat(
+            "Can't read string through a reader",
+            new TextOf(
+                new BytesOf(
+                    new StringReader(source),
+                    StandardCharsets.UTF_8,
+                    // @checkstyle MagicNumberCheck (1 line)
+                    16 << 10
+                )
+            ).asString(),
+            Matchers.equalTo(source)
+        );
+    }
+
+    @Test
     public void readsInputIntoBytesWithSmallBuffer() throws IOException {
         MatcherAssert.assertThat(
             "Can't read bytes from Input with a small reading buffer",
             new String(
                 new BytesOf(
                     new InputOf(
-                        new StringAsText("Hello, товарищ!")
+                        new TextOf("Hello, товарищ!")
                     ),
                     2
                 ).asBytes(),
@@ -117,22 +136,20 @@ public final class BytesOfTest {
         );
         MatcherAssert.assertThat(
             "Can't close InputStream correctly",
-            new BytesAsText(
-                new BytesOf(
-                    new InputOf(
-                        new InputStream() {
-                            @Override
-                            public int read() throws IOException {
-                                return input.read();
-                            }
-                            @Override
-                            public void close() throws IOException {
-                                input.close();
-                                closed.set(true);
-                            }
+            new TextOf(
+                new InputOf(
+                    new InputStream() {
+                        @Override
+                        public int read() throws IOException {
+                            return input.read();
                         }
-                    )
-                ).asBytes(),
+                        @Override
+                        public void close() throws IOException {
+                            input.close();
+                            closed.set(true);
+                        }
+                    }
+                ),
                 StandardCharsets.UTF_8
             ).asString(),
             new MatcherOf<>(
@@ -145,7 +162,7 @@ public final class BytesOfTest {
 
     @Test
     public void asBytes() throws IOException {
-        final Text text = new StringAsText("Hello!");
+        final Text text = new TextOf("Hello!");
         MatcherAssert.assertThat(
             "Can't convert text into bytes",
             new BytesOf(
@@ -153,6 +170,29 @@ public final class BytesOfTest {
             ).asBytes(),
             Matchers.equalTo(
                 new BytesOf(text.asString()).asBytes()
+            )
+        );
+    }
+
+    @Test
+    public void printsStackTrace() {
+        MatcherAssert.assertThat(
+            "Can't print exception stacktrace",
+            new TextOf(
+                new BytesOf(
+                    new IOException(
+                        "It doesn't work at all"
+                    )
+                )
+            ),
+            new TextHasString(
+                Matchers.allOf(
+                    Matchers.containsString("java.io.IOException"),
+                    Matchers.containsString("doesn't work at all"),
+                    Matchers.containsString(
+                        "\tat org.cactoos.io.BytesOfTest"
+                    )
+                )
             )
         );
     }

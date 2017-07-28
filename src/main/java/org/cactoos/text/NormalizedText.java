@@ -46,7 +46,7 @@ public final class NormalizedText implements Text {
      * @param text A Text
      */
     public NormalizedText(final String text) {
-        this(new StringAsText(text));
+        this(new TextOf(text));
     }
 
     /**

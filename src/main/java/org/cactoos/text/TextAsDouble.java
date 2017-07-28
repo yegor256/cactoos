@@ -49,7 +49,7 @@ public final class TextAsDouble implements Scalar<Double> {
      * @param string Number-string
      */
     public TextAsDouble(final String string) {
-        this(new StringAsText(string));
+        this(new TextOf(string));
     }
 
     /**

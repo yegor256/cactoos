@@ -49,7 +49,7 @@ public final class TextAsFloat implements Scalar<Float> {
      * @param string Number-string
      */
     public TextAsFloat(final String string) {
-        this(new StringAsText(string));
+        this(new TextOf(string));
     }
 
     /**

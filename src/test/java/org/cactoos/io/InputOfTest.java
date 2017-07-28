@@ -36,8 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.InputHasContent;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
-import org.cactoos.text.BytesAsText;
-import org.cactoos.text.StringAsText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -62,14 +61,12 @@ public final class InputOfTest {
     public void readsAlternativeInputForFileCase() throws IOException {
         MatcherAssert.assertThat(
             "Can't read alternative source from file not found",
-            new BytesAsText(
-                new BytesOf(
-                    new InputWithFallback(
-                        new InputOf(
-                            new File("/this-file-does-not-exist.txt")
-                        ),
-                        new InputOf(new StringAsText("Alternative text!"))
-                    )
+            new TextOf(
+                new InputWithFallback(
+                    new InputOf(
+                        new File("/this-file-does-not-exist.txt")
+                    ),
+                    new InputOf(new TextOf("Alternative text!"))
                 )
             ),
             new TextHasString(Matchers.endsWith("text!"))
@@ -96,23 +93,20 @@ public final class InputOfTest {
         );
         MatcherAssert.assertThat(
             "Can't close InputStream correctly",
-            new BytesAsText(
-                new BytesOf(
-                    new InputOf(
-                        new InputStream() {
-                            @Override
-                            public int read() throws IOException {
-                                return input.read();
-                            }
-                            @Override
-                            public void close() throws IOException {
-                                input.close();
-                                closed.set(true);
-                            }
+            new TextOf(
+                new InputOf(
+                    new InputStream() {
+                        @Override
+                        public int read() throws IOException {
+                            return input.read();
                         }
-                    )
-                ).asBytes(),
-                StandardCharsets.UTF_8
+                        @Override
+                        public void close() throws IOException {
+                            input.close();
+                            closed.set(true);
+                        }
+                    }
+                )
             ).asString(),
             new MatcherOf<>(
                 text -> {
@@ -142,10 +136,8 @@ public final class InputOfTest {
         new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
             home -> MatcherAssert.assertThat(
                 "Can't fetch bytes from the URL",
-                new BytesAsText(
-                    new BytesOf(
-                        new InputOf(home)
-                    )
+                new TextOf(
+                    new InputOf(home)
                 ),
                 new TextHasString(
                     Matchers.allOf(
@@ -161,7 +153,7 @@ public final class InputOfTest {
     public void readsStringUrl() throws IOException {
         MatcherAssert.assertThat(
             "Can't fetch bytes from the HTTPS URL",
-            new BytesAsText(
+            new TextOf(
                 new BytesOf(
                     new InputOf(
                         new URL(
@@ -281,11 +273,9 @@ public final class InputOfTest {
         final String source = "hello, source!";
         MatcherAssert.assertThat(
             "Can't read string through a reader",
-            new BytesAsText(
-                new BytesOf(
-                    new InputOf(
-                        new StringReader(source)
-                    )
+            new TextOf(
+                new InputOf(
+                    new StringReader(source)
                 )
             ).asString(),
             Matchers.equalTo(source)
@@ -297,7 +287,7 @@ public final class InputOfTest {
         final String source = "hello, друг!";
         MatcherAssert.assertThat(
             "Can't read encoded string through a reader",
-            new BytesAsText(
+            new TextOf(
                 new InputAsBytes(
                     new InputOf(
                         new StringReader(source),

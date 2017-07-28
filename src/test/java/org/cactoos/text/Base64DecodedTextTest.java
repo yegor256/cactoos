@@ -42,7 +42,7 @@ public final class Base64DecodedTextTest {
         MatcherAssert.assertThat(
             "Can't decode a text",
             new Base64DecodedText(
-                new StringAsText("SGVsbG8h")
+                new TextOf("SGVsbG8h")
             ),
             new TextHasString("Hello!")
         );
