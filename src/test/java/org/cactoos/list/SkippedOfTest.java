@@ -23,55 +23,35 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.BiFunc;
-import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Iterable, which elements are "reduced" through the func.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test Case for {@link SkippedOf}.
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @param <T> Type of element
- * @param <X> Type of input and output
- * @since 0.9
+ * @since 0.8
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReducedIterable<X, T> implements Scalar<X> {
+public final class SkippedOfTest {
 
-    /**
-     * Original iterable.
-     */
-    private final Iterable<T> iterable;
-
-    /**
-     * Input.
-     */
-    private final X input;
-
-    /**
-     * Func.
-     */
-    private final BiFunc<X, T, X> func;
-
-    /**
-     * Ctor.
-     * @param list List of items
-     * @param ipt Input
-     * @param fnc Func original
-     */
-    public ReducedIterable(final Iterable<T> list, final X ipt,
-        final BiFunc<X, T, X> fnc) {
-        this.iterable = list;
-        this.input = ipt;
-        this.func = fnc;
-    }
-
-    @Override
-    public X value() throws Exception {
-        X memo = this.input;
-        for (final T item : this.iterable) {
-            memo = this.func.apply(memo, item);
-        }
-        return memo;
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void skipIterable() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't skip elements in iterable",
+            new SkippedOf<>(
+                new ArrayOf<>(
+                    "one", "two", "three", "four"
+                ),
+                2
+            ),
+            Matchers.contains(
+                "three",
+                "four"
+            )
+        );
     }
 
 }

@@ -23,34 +23,59 @@
  */
 package org.cactoos.list;
 
+import java.util.Collections;
+import java.util.Comparator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link SkippedIterable}.
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * Test case for {@link SortedOf}.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SkippedIterableTest {
+public final class SortedOfTest {
+
+    @Test
+    public void sortsAnArray() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't sort an iterable",
+            new SortedOf<>(
+                new ArrayOf<>(
+                    3, 2, 10, 44, -6, 0
+                )
+            ),
+            Matchers.hasItems(-6, 0, 2, 3, 10, 44)
+        );
+    }
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipIterable() throws Exception {
+    public void sortsAnArrayWithComparator() throws Exception {
         MatcherAssert.assertThat(
-            "Can't skip elements in iterable",
-            new SkippedIterable<>(
+            "Can't sort an iterable with a comparator",
+            new SortedOf<>(
+                Comparator.reverseOrder(),
                 new ArrayOf<>(
-                    "one", "two", "three", "four"
-                ),
-                2
+                    "a", "c", "hello", "dude", "Friend"
+                )
             ),
-            Matchers.contains(
-                "three",
-                "four"
-            )
+            Matchers.hasItems("hello", "dude", "c", "a", "Friend")
+        );
+    }
+
+    @Test
+    public void sortsAnEmptyArray() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't sort an empty iterable",
+            new SortedOf<Integer>(
+                Collections.emptyList()
+            ),
+            Matchers.iterableWithSize(0)
         );
     }
 

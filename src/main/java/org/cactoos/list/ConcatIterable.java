@@ -63,7 +63,7 @@ public final class ConcatIterable<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new ConcatIterator<>(
-            new MappedIterable<>(
+            new MappedOf<>(
                 this.list,
                 new StickyFunc<>(Iterable::iterator)
             )

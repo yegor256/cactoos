@@ -21,38 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.cactoos.list;
 
-import java.util.Iterator;
+import org.cactoos.BiFunc;
+import org.cactoos.Scalar;
 
 /**
- * Cycled Iterable.
+ * Iterable, which elements are "reduced" through the func.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.8
+ * @param <T> Type of element
+ * @param <X> Type of input and output
+ * @since 0.9
  */
-public final class CycledIterable<T> implements Iterable<T> {
+public final class ReducedOf<X, T> implements Scalar<X> {
 
     /**
-     * Iterable.
+     * Original iterable.
      */
     private final Iterable<T> iterable;
 
     /**
-     * Ctor.
-     * @param iterable Iterable
+     * Input.
      */
-    public CycledIterable(final Iterable<T> iterable) {
-        this.iterable = iterable;
+    private final X input;
+
+    /**
+     * Func.
+     */
+    private final BiFunc<X, T, X> func;
+
+    /**
+     * Ctor.
+     * @param list List of items
+     * @param ipt Input
+     * @param fnc Func original
+     */
+    public ReducedOf(final Iterable<T> list, final X ipt,
+        final BiFunc<X, T, X> fnc) {
+        this.iterable = list;
+        this.input = ipt;
+        this.func = fnc;
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new CycledIterator<>(this.iterable);
+    public X value() throws Exception {
+        X memo = this.input;
+        for (final T item : this.iterable) {
+            memo = this.func.apply(memo, item);
+        }
+        return memo;
     }
+
 }

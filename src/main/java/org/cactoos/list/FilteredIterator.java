@@ -50,7 +50,7 @@ import org.cactoos.func.UncheckedFunc;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
- * @see FilteredIterable
+ * @see FilteredOf
  * @since 0.1
  */
 public final class FilteredIterator<X> implements Iterator<X> {

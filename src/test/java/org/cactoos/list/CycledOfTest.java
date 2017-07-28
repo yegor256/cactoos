@@ -23,48 +23,50 @@
  */
 package org.cactoos.list;
 
+import java.util.Collections;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link FilteredIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test Case for {@link CycledOf}.
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FilteredIterableTest {
+public final class CycledOfTest {
 
     @Test
-    public void filtersList() {
+    public void repeatIterableTest() throws Exception {
+        final String expected = "two";
         MatcherAssert.assertThat(
-            "Can't calculate the length of an iterable",
-            new LengthOfIterable(
-                new FilteredIterable<>(
+            "Can't repeat iterable",
+            new ItemOfIterable<>(
+                new CycledOf<>(
                     new ArrayOf<>(
-                        "hello", "world", "друг"
-                    ),
-                    // @checkstyle MagicNumber (1 line)
-                    input -> input.length() > 4
-                )
+                        "one", expected, "three"
+                    )
+                ),
+                // @checkstyle MagicNumberCheck (1 line)<
+                7
             ),
-            new ScalarHasValue<>(2)
+            new ScalarHasValue<>(
+                expected
+            )
         );
     }
 
-    @Test
-    public void filtersEmptyList() {
+    @Test()
+    public void notCycledEmptyTest() throws Exception {
         MatcherAssert.assertThat(
-            "Can't calculate the length of an empty iterable",
+            "Can't generate an empty iterable",
             new LengthOfIterable(
-                new FilteredIterable<>(
-                    new ArrayOf<String>(),
-                    input -> input.length() > 1
+                new CycledOf<>(
+                    Collections::emptyIterator
                 )
             ),
             new ScalarHasValue<>(0)
         );
     }
-
 }

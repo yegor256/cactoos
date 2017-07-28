@@ -28,20 +28,20 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link SkippedIterable}.
+ * Test case for {@link SkippedOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class ReducedIterableTest {
+public final class ReducedOfTest {
 
     @Test
     public void skipIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't reduce elements in iterable",
-            new ReducedIterable<>(
+            new ReducedOf<>(
                 new LimitedIterable<>(new NaturalNumbers(), 10),
                 0L,
                 (first, second) -> first + second

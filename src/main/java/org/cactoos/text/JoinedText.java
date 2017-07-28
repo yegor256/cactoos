@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.StringJoiner;
 import org.cactoos.Text;
 import org.cactoos.list.ArrayOf;
-import org.cactoos.list.MappedIterable;
+import org.cactoos.list.MappedOf;
 
 /**
  * Join a Text.
@@ -67,7 +67,7 @@ public final class JoinedText implements Text {
     public JoinedText(final String delimit, final Iterable<String> strs) {
         this(
             new TextOf(delimit),
-            new MappedIterable<>(
+            new MappedOf<>(
                 strs,
                 text -> new TextOf(text)
             )

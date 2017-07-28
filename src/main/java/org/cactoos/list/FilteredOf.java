@@ -33,7 +33,7 @@ import org.cactoos.Func;
  * version of a filtered collection/iterable. For example,
  * this code will create a list of two strings "hello" and "world":</p>
  *
- * <pre> Iterable&lt;String&gt; list = new FilteredIterable&lt;&gt;(
+ * <pre> Iterable&lt;String&gt; list = new FilteredOf&lt;&gt;(
  *   new ArrayOf&lt;&gt;(
  *     "hey", "hello", "world"
  *   ),
@@ -49,7 +49,7 @@ import org.cactoos.Func;
  * @see FilteredIterator
  * @since 0.1
  */
-public final class FilteredIterable<X> implements Iterable<X> {
+public final class FilteredOf<X> implements Iterable<X> {
 
     /**
      * Iterable.
@@ -66,7 +66,7 @@ public final class FilteredIterable<X> implements Iterable<X> {
      * @param src Source iterable
      * @param fnc Predicate
      */
-    public FilteredIterable(final Iterable<X> src, final Func<X, Boolean> fnc) {
+    public FilteredOf(final Iterable<X> src, final Func<X, Boolean> fnc) {
         this.iterable = src;
         this.func = fnc;
     }

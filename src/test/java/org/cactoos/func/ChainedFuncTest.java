@@ -25,9 +25,9 @@ package org.cactoos.func;
 
 import org.cactoos.Func;
 import org.cactoos.list.ArrayOf;
-import org.cactoos.list.FilteredIterable;
+import org.cactoos.list.FilteredOf;
 import org.cactoos.list.LengthOfIterable;
-import org.cactoos.list.MappedIterable;
+import org.cactoos.list.MappedOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -47,8 +47,8 @@ public final class ChainedFuncTest {
     public void withoutIterable() throws Exception {
         MatcherAssert.assertThat(
             new LengthOfIterable(
-                new FilteredIterable<>(
-                    new MappedIterable<>(
+                new FilteredOf<>(
+                    new MappedOf<>(
                         new ArrayOf<>("public", "final", "class"),
                         new ChainedFunc<String, String, String>(
                             input -> input.concat("1"),
@@ -66,8 +66,8 @@ public final class ChainedFuncTest {
     public void withIterable() throws Exception {
         MatcherAssert.assertThat(
             new LengthOfIterable(
-                new FilteredIterable<>(
-                    new MappedIterable<>(
+                new FilteredOf<>(
+                    new MappedOf<>(
                         new ArrayOf<>("private", "static", "String"),
                         new ChainedFunc<>(
                             input -> input.concat("1"),

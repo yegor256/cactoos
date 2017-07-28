@@ -23,48 +23,42 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.text.TextOf;
-import org.cactoos.text.UpperText;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.Iterator;
 
 /**
- * Test case for {@link MappedIterable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Skipped iterable.
+ *
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Element type
+ * @since 0.8
  */
-public final class MappedIterableTest {
+public final class SkippedOf<T> implements Iterable<T> {
 
-    @Test
-    public void transformsList() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't transform an iterable",
-            new MappedIterable<String, Text>(
-                new ArrayOf<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new TextOf(input))
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
+    /**
+     * Decorated iterable.
+     */
+    private final Iterable<T> iterable;
+
+    /**
+     * Count skip elements.
+     */
+    private final int skip;
+
+    /**
+     * Ctor.
+     * @param iterable Decorated iterable
+     * @param skip Count skip elements
+     */
+    public SkippedOf(final Iterable<T> iterable, final int skip) {
+        this.iterable = iterable;
+        this.skip = skip;
     }
 
-    @Test
-    public void transformsEmptyList() {
-        MatcherAssert.assertThat(
-            "Can't transform an empty iterable",
-            new MappedIterable<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new TextOf(input))
-            ),
-            Matchers.emptyIterable()
-        );
+    @Override
+    public Iterator<T> iterator() {
+        return new SkippedIterator<>(this.iterable.iterator(), this.skip);
     }
-
 }

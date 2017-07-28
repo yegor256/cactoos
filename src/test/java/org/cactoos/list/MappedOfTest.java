@@ -23,25 +23,48 @@
  */
 package org.cactoos.list;
 
+import java.io.IOException;
+import java.util.Collections;
+import org.cactoos.Text;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link EndlessIterable}.
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * Test case for {@link MappedOf}.
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class EndlessIterableTest {
+public final class MappedOfTest {
 
     @Test
-    public void endlessIterableTest() throws Exception {
+    public void transformsList() throws IOException {
         MatcherAssert.assertThat(
-            "Can't get unique endless iterable item",
-            new EndlessIterable<>(1),
-            Matchers.hasItem(1)
+            "Can't transform an iterable",
+            new MappedOf<String, Text>(
+                new ArrayOf<>(
+                    "hello", "world", "друг"
+                ),
+                input -> new UpperText(new TextOf(input))
+            ).iterator().next().asString(),
+            Matchers.equalTo("HELLO")
         );
     }
+
+    @Test
+    public void transformsEmptyList() {
+        MatcherAssert.assertThat(
+            "Can't transform an empty iterable",
+            new MappedOf<String, Text>(
+                Collections.emptyList(),
+                input -> new UpperText(new TextOf(input))
+            ),
+            Matchers.emptyIterable()
+        );
+    }
+
 }

@@ -23,47 +23,71 @@
  */
 package org.cactoos.list;
 
+import java.util.Comparator;
 import java.util.Iterator;
-import org.cactoos.Func;
 
 /**
- * Mapped iterable.
+ * Sorted iterable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @param <T> Element type
+ * @since 0.7
  */
-public final class MappedIterable<X, Y> implements Iterable<Y> {
+public final class SortedOf<T extends Comparable<? super T>> implements
+    Iterable<T> {
 
     /**
-     * Iterable.
+     * Decorated iterable.
      */
-    private final Iterable<X> iterable;
+    private final Iterable<T> iterable;
 
     /**
-     * Function.
+     * Comparator.
      */
-    private final Func<X, Y> func;
+    private final Comparator<T> comparator;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
+     * @param src The underlying iterable
      */
-    public MappedIterable(final Iterable<X> src, final Func<X, Y> fnc) {
+    @SafeVarargs
+    public SortedOf(final T... src) {
+        this(new ArrayOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The underlying iterable
+     */
+    public SortedOf(final Iterable<T> src) {
+        this(Comparator.naturalOrder(), src);
+    }
+
+    /**
+     * Ctor.
+     * @param src The underlying iterable
+     * @param cmp The comparator
+     */
+    @SafeVarargs
+    public SortedOf(final Comparator<T> cmp, final T... src) {
+        this(cmp, new ArrayOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The underlying iterable
+     * @param cmp The comparator
+     */
+    public SortedOf(final Comparator<T> cmp, final Iterable<T> src) {
         this.iterable = src;
-        this.func = fnc;
+        this.comparator = cmp;
     }
 
     @Override
-    public Iterator<Y> iterator() {
-        return new MappedIterator<>(
-            this.iterable.iterator(), this.func
-        );
+    public Iterator<T> iterator() {
+        return new SortedIterator<>(this.comparator, this.iterable.iterator());
     }
-
 }

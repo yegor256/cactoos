@@ -30,7 +30,7 @@ import org.cactoos.func.UncheckedScalar;
 /**
  * Repeat an element.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessIterable}.</p>
+ * <p>If you need to repeat endlessly, use {@link EndlessOf}.</p>
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)

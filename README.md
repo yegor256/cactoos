@@ -115,7 +115,7 @@ To filter a collection:
 
 ```java
 Collection<String> filtered = new ListOf<>(
-  new FilteredIterable<>(
+  new FilteredOf<>(
     new ArrayOf<>("hello", "world", "dude"),
     new FuncOf<String, Boolean>() {
       @Override
@@ -131,7 +131,7 @@ With Lambda:
 
 ```java
 new ListOf<>(
-  new FilteredIterable<>(
+  new FilteredOf<>(
     new ArrayOf<>("hello", "world", "dude"),
     s -> s.length() > 4
   )
@@ -142,7 +142,7 @@ To iterate a collection:
 
 ```java
 new And(
-  new MappedIterable<>(
+  new MappedOf<>(
     new ArrayOf<>("how", "are", "you"),
     new FuncOf<>(
       input -> {
@@ -166,7 +166,7 @@ To sort a list of words in the file:
 
 ```java
 List<String> sorted = new ListOf<>(
-  new SortedIterable<>(
+  new SortedOf<>(
     new SplitText(
       new TextOf(
         new InputOf(
@@ -220,7 +220,7 @@ Here is its object-oriented alternative:
 
 ```java
 new And(
-  new EndlessIterable<>(ready),
+  new EndlessOf<>(ready),
   ready -> {
     System.out.prinln("Still waiting...");
     return !ready;
@@ -249,7 +249,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `UrlAsString` | - | - | `URLDecoder.decode()`
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
-`FilteredIterable` | `Iterables.filter()` | ? | -
+`FilteredOf` | `Iterables.filter()` | ? | -
 `TextOf` | ? | `IOUtils.toString()` | -
 
 ## How to contribute?

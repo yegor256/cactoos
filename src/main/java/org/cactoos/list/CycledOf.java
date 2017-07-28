@@ -21,74 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package org.cactoos.list;
 
-import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * Sorted iterable.
+ * Cycled Iterable.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.7
+ * @param <T> Type of item
+ * @since 0.8
  */
-public final class
-    SortedIterable<T extends Comparable<? super T>> implements
-    Iterable<T> {
+public final class CycledOf<T> implements Iterable<T> {
 
     /**
-     * Decorated iterable.
+     * Iterable.
      */
     private final Iterable<T> iterable;
 
     /**
-     * Comparator.
-     */
-    private final Comparator<T> comparator;
-
-    /**
      * Ctor.
-     * @param src The underlying iterable
+     * @param iterable Iterable
      */
-    @SafeVarargs
-    public SortedIterable(final T... src) {
-        this(new ArrayOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying iterable
-     */
-    public SortedIterable(final Iterable<T> src) {
-        this(Comparator.naturalOrder(), src);
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying iterable
-     * @param cmp The comparator
-     */
-    @SafeVarargs
-    public SortedIterable(final Comparator<T> cmp, final T... src) {
-        this(cmp, new ArrayOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying iterable
-     * @param cmp The comparator
-     */
-    public SortedIterable(final Comparator<T> cmp, final Iterable<T> src) {
-        this.iterable = src;
-        this.comparator = cmp;
+    public CycledOf(final Iterable<T> iterable) {
+        this.iterable = iterable;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new SortedIterator<>(this.comparator, this.iterable.iterator());
+        return new CycledIterator<>(this.iterable);
     }
 }
