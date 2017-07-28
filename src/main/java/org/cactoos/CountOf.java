@@ -64,6 +64,14 @@ public final class CountOf implements Scalar<Number> {
 
     /**
      * Ctor.
+     * @param bytes The bytes
+     */
+    public CountOf(final Bytes bytes) {
+        this(() -> bytes.asBytes().length);
+    }
+
+    /**
+     * Ctor.
      * @param input The input
      */
     public CountOf(final Input input) {

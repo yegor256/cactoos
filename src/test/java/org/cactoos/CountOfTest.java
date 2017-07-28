@@ -24,6 +24,7 @@
 package org.cactoos.list;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.CountOf;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.Text;
@@ -70,6 +71,24 @@ public final class CountOfTest {
     }
 
     @Test
+    public void sizeOfBytes() throws IOException {
+        final Text text = new TextOf("How are you, друг?");
+        MatcherAssert.assertThat(
+            "Can't calculate the size of bytes",
+            new CountOf(
+                new BytesOf(
+                    text
+                )
+            ),
+            new ScalarHasValue<>(
+                text.asString().getBytes(
+                    StandardCharsets.UTF_8
+                ).length
+            )
+        );
+    }
+
+    @Test
     public void sizeInBytesOfInput() throws IOException {
         final Text text = new TextOf("What's up, друг?");
         MatcherAssert.assertThat(
@@ -79,7 +98,6 @@ public final class CountOfTest {
                     text
                 )
             ),
-            // @checkstyle MagicNumber (1 line)
             new ScalarHasValue<>(
                 (long) new BytesOf(text).asBytes().length
             )
