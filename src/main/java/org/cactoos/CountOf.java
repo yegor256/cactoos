@@ -21,42 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos;
 
-import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
+import java.util.Iterator;
 import org.cactoos.func.UncheckedScalar;
+import org.cactoos.io.CountOfInput;
+import org.cactoos.list.CountOfIterable;
+import org.cactoos.list.CountOfIterator;
+import org.cactoos.text.TextOf;
 
 /**
- * Length of {@link Input}.
+ * Length of iterator.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.12
  */
-public final class LengthOfInput implements Scalar<Long> {
+public final class CountOf implements Scalar<Number> {
 
     /**
-     * The input.
+     * The underlying scalar number.
      */
-    private final Input source;
+    private final UncheckedScalar<?> scalar;
 
     /**
-     * The buffer size.
+     * Ctor.
+     * @param string The string
      */
-    private final int size;
+    public CountOf(final String string) {
+        this(new TextOf(string));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public CountOf(final Text text) {
+        this(() -> text.asString().length());
+    }
 
     /**
      * Ctor.
      * @param input The input
      */
-    public LengthOfInput(final Input input) {
-        // @checkstyle MagicNumber (1 line)
-        this(input, 16 << 10);
+    public CountOf(final Input input) {
+        this(new CountOfInput(input));
     }
 
     /**
@@ -64,32 +75,43 @@ public final class LengthOfInput implements Scalar<Long> {
      * @param input The input
      * @param max Buffer size
      */
-    public LengthOfInput(final Input input, final int max) {
-        this.source = input;
-        this.size = max;
+    public CountOf(final Input input, final int max) {
+        this(new CountOfInput(input, max));
+    }
+
+    /**
+     * Ctor.
+     * @param iterable The array of items
+     */
+    public CountOf(final Iterable<?> iterable) {
+        this(new CountOfIterable(iterable));
+    }
+
+    /**
+     * Ctor.
+     * @param iterator The iterator
+     */
+    public CountOf(final Iterator<?> iterator) {
+        this(new CountOfIterator(iterator));
+    }
+
+    /**
+     * Ctor.
+     * @param sclr The underlying scalar length
+     */
+    public CountOf(final Scalar<?> sclr) {
+        this.scalar = new UncheckedScalar<>(sclr);
     }
 
     @Override
     public String toString() {
-        return Long.toString(new UncheckedScalar<>(this).value());
+        return String.valueOf(this.value());
     }
 
     @Override
-    public Long value() throws IOException {
-        try (final InputStream stream = this.source.stream()) {
-            final byte[] buf = new byte[this.size];
-            long length = 0L;
-            while (true) {
-                final int len = stream.read(buf);
-                if (len > 0) {
-                    length += (long) len;
-                }
-                if (len < 0) {
-                    break;
-                }
-            }
-            return length;
-        }
+    public Number value() {
+        return (Number) this.scalar.value();
     }
 
 }
+

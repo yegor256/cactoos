@@ -21,12 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.io;
 
+import java.io.IOException;
+import java.io.InputStream;
+import org.cactoos.Input;
 import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedScalar;
 
 /**
- * Length of iterable.
+ * Length of {@link Input}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -34,24 +38,58 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @since 0.1
  */
-public final class LengthOfIterable implements Scalar<Integer> {
+public final class CountOfInput implements Scalar<Long> {
 
     /**
-     * The iterable.
+     * The input.
      */
-    private final Iterable<?> iterable;
+    private final Input source;
+
+    /**
+     * The buffer size.
+     */
+    private final int size;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param input The input
      */
-    public LengthOfIterable(final Iterable<?> items) {
-        this.iterable = items;
+    public CountOfInput(final Input input) {
+        // @checkstyle MagicNumber (1 line)
+        this(input, 16 << 10);
+    }
+
+    /**
+     * Ctor.
+     * @param input The input
+     * @param max Buffer size
+     */
+    public CountOfInput(final Input input, final int max) {
+        this.source = input;
+        this.size = max;
     }
 
     @Override
-    public Integer value() {
-        return new LengthOfIterator(this.iterable.iterator()).value();
+    public String toString() {
+        return Long.toString(new UncheckedScalar<>(this).value());
+    }
+
+    @Override
+    public Long value() throws IOException {
+        try (final InputStream stream = this.source.stream()) {
+            final byte[] buf = new byte[this.size];
+            long length = 0L;
+            while (true) {
+                final int len = stream.read(buf);
+                if (len > 0) {
+                    length += (long) len;
+                }
+                if (len < 0) {
+                    break;
+                }
+            }
+            return length;
+        }
     }
 
 }

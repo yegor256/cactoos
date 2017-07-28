@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.CountOf;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -43,7 +44,7 @@ public final class RepeatIterableTest {
         final int element = 11;
         MatcherAssert.assertThat(
             "Can't generate an iterable with fixed size",
-            new LengthOfIterable(
+            new CountOf(
                 new FilteredOf<>(
                     new RepeatIterable<>(
                         element,
@@ -60,7 +61,7 @@ public final class RepeatIterableTest {
     public void emptyTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't generate an empty iterable",
-            new LengthOfIterable(
+            new CountOf(
                 new RepeatIterable<>(0, 0)
             ),
             new ScalarHasValue<>(0)

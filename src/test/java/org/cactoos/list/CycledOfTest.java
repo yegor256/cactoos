@@ -24,6 +24,7 @@
 package org.cactoos.list;
 
 import java.util.Collections;
+import org.cactoos.CountOf;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -61,7 +62,7 @@ public final class CycledOfTest {
     public void notCycledEmptyTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't generate an empty iterable",
-            new LengthOfIterable(
+            new CountOf(
                 new CycledOf<>(
                     Collections::emptyIterator
                 )

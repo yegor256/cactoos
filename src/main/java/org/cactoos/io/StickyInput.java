@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import org.cactoos.CountOf;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.func.IoCheckedScalar;
@@ -56,7 +57,7 @@ public final class StickyInput implements Input {
         this.cache = new StickyScalar<>(
             () -> {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                new LengthOfInput(
+                new CountOf(
                     new TeeInput(input, new OutputStreamAsOutput(baos))
                 ).value();
                 return baos.toByteArray();

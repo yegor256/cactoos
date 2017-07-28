@@ -21,46 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.list;
 
+import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.cactoos.Text;
 
 /**
- * The length of {@link Text}.
- * The length is equal to the number of Unicode code units in the text.
+ * Length of iterator.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.1
  */
-public final class LengthOfText implements Scalar<Integer> {
+public final class CountOfIterator implements Scalar<Integer> {
 
     /**
-     * The origin text.
+     * The iterator.
      */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     * @param string The string
-     */
-    public LengthOfText(final String string) {
-        this(new TextOf(string));
-    }
+    private final Iterator<?> iterator;
 
     /**
      * Ctor.
-     * @param text The text
+     * @param items The iterator
      */
-    public LengthOfText(final Text text) {
-        this.origin = text;
+    public CountOfIterator(final Iterator<?> items) {
+        this.iterator = items;
     }
 
     @Override
-    public Integer value() throws Exception {
-        return this.origin.asString().length();
+    public Integer value() {
+        int size = 0;
+        while (this.iterator.hasNext()) {
+            this.iterator.next();
+            ++size;
+        }
+        return size;
     }
+
 }

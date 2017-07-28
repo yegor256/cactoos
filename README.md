@@ -69,7 +69,7 @@ String text = new TextOf(
 To write a text into a file:
 
 ```java
-new LengthOfInput(
+new CountOf(
   new TeeInput(
     new InputOf(
       "Hello, world!"
@@ -182,7 +182,7 @@ List<String> sorted = new ListOf<>(
 To count elements in an iterable:
 
 ```java
-int total = new LengthOfIterable(
+int total = new CountOf(
   "how", "are", "you"
 ).value();
 ```
@@ -235,7 +235,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `FormattedText` | - | - | `String.format()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
 `JoinedText` | - | - | `String.join()`
-`LengthOfText` | - | - | `String#length()`
+`CountOf` | - | - | `String#length()`
 `LowerText` | - | - | `String#toLowerCase()`
 `NormalizedText` | - | `StringUtils.normalize()` | -
 `RepeatedText` | - | `StringUtils.repeat()` | -

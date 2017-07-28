@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.CountOf;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public final class FilteredOfTest {
     public void filtersList() {
         MatcherAssert.assertThat(
             "Can't calculate the length of an iterable",
-            new LengthOfIterable(
+            new CountOf(
                 new FilteredOf<>(
                     new ArrayOf<>(
                         "hello", "world", "друг"
@@ -57,7 +58,7 @@ public final class FilteredOfTest {
     public void filtersEmptyList() {
         MatcherAssert.assertThat(
             "Can't calculate the length of an empty iterable",
-            new LengthOfIterable(
+            new CountOf(
                 new FilteredOf<>(
                     new ArrayOf<String>(),
                     input -> input.length() > 1

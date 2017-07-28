@@ -23,10 +23,10 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.CountOf;
 import org.cactoos.Func;
 import org.cactoos.list.ArrayOf;
 import org.cactoos.list.FilteredOf;
-import org.cactoos.list.LengthOfIterable;
 import org.cactoos.list.MappedOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -46,7 +46,7 @@ public final class ChainedFuncTest {
     @Test
     public void withoutIterable() throws Exception {
         MatcherAssert.assertThat(
-            new LengthOfIterable(
+            new CountOf(
                 new FilteredOf<>(
                     new MappedOf<>(
                         new ArrayOf<>("public", "final", "class"),
@@ -65,7 +65,7 @@ public final class ChainedFuncTest {
     @Test
     public void withIterable() throws Exception {
         MatcherAssert.assertThat(
-            new LengthOfIterable(
+            new CountOf(
                 new FilteredOf<>(
                     new MappedOf<>(
                         new ArrayOf<>("private", "static", "String"),

@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.cactoos.CountOf;
 import org.cactoos.Func;
 
 /**
@@ -160,7 +161,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
 
     @Override
     public int size() {
-        return new LengthOfIterable(this.entries).value();
+        return (int) new CountOf(this.entries).value();
     }
 
     @Override

@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import org.cactoos.CountOf;
 
 /**
  * Iterable as {@link List}.
@@ -79,7 +80,7 @@ public final class ListOf<T> implements List<T> {
 
     @Override
     public int size() {
-        return new LengthOfIterable(this.iterable).value();
+        return (int) new CountOf(this.iterable).value();
     }
 
     @Override

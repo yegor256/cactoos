@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.CountOf;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -42,7 +43,7 @@ public final class ArrayOfTest {
     public void convertsTextToIterableOfChars() {
         MatcherAssert.assertThat(
             "Can't convert array to a iterable of chars",
-            new LengthOfIterable(
+            new CountOf(
                 new ArrayOf<>(
                     new TextOf("abc")
                 )
@@ -56,7 +57,7 @@ public final class ArrayOfTest {
     public void convertsScalarsToIterable() {
         MatcherAssert.assertThat(
             "Can't convert scalars to iterable",
-            new LengthOfIterable(
+            new CountOf(
                 new ArrayOf<>(
                     "a", "b", "c"
                 )
@@ -70,7 +71,7 @@ public final class ArrayOfTest {
     public void convertsObjectsToIterable() {
         MatcherAssert.assertThat(
             "Can't convert objects to iterable",
-            new LengthOfIterable(
+            new CountOf(
                 new ArrayOf<>(
                     new TextOf("a"), new TextOf("b"), new TextOf("c")
                 )

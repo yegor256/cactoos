@@ -25,6 +25,7 @@ package org.cactoos.list;
 
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.CountOf;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -49,8 +50,8 @@ public final class StickyIterableTest {
         );
         MatcherAssert.assertThat(
             "Can't ignore the changes in the underlying iterable",
-            new LengthOfIterable(list),
-            new ScalarHasValue<>(new LengthOfIterable(list).value())
+            new CountOf(list),
+            new ScalarHasValue<>(new CountOf(list).value())
         );
     }
 

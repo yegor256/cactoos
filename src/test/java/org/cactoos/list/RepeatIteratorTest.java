@@ -44,7 +44,7 @@ public final class RepeatIteratorTest {
         final int element = 11;
         MatcherAssert.assertThat(
             "Can't generate an iterable with fixed size",
-            new LengthOfIterator(
+            new CountOfIterator(
                 new RepeatIterator<>(
                     element,
                     size

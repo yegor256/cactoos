@@ -33,21 +33,21 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link LengthOfInput}.
+ * Test case for {@link CountOfInput}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class LengthOfInputTest {
+public final class CountOfInputTest {
 
     @Test
     public void calculatesLength() {
         final String text = "What's up, друг?";
         MatcherAssert.assertThat(
             "Can't calculate the length of Input",
-            new LengthOfInput(
+            new CountOfInput(
                 new SlowInput(
                     new InputOf(
                         new TextOf(text)
@@ -64,7 +64,7 @@ public final class LengthOfInputTest {
     public void calculatesZeroLength() {
         MatcherAssert.assertThat(
             "Can't calculate the length of an empty input",
-            new LengthOfInput(new DeadInput()),
+            new CountOfInput(new DeadInput()),
             new ScalarHasValue<>(0L)
         );
     }
@@ -73,7 +73,7 @@ public final class LengthOfInputTest {
     public void readsRealUrl() throws IOException {
         MatcherAssert.assertThat(
             "Can't calculate length of a real page at the URL",
-            new LengthOfInput(
+            new CountOfInput(
                 new InputOf(
                     new URL(
                         // @checkstyle LineLength (1 line)
@@ -91,7 +91,7 @@ public final class LengthOfInputTest {
         final long size = 100_000L;
         MatcherAssert.assertThat(
             "Can't calculate length if the input is slow",
-            new LengthOfInput(
+            new CountOfInput(
                 new SlowInput((int) size)
             ),
             new ScalarHasValue<>(size)

@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.CountOf;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public final class ConcatIterableTest {
     public void transformsList() {
         MatcherAssert.assertThat(
             "Can't concatenate iterables together",
-            new LengthOfIterable(
+            new CountOf(
                 new ConcatIterable<String>(
                     new ArrayOf<>("hello", "world", "друг"),
                     new ArrayOf<>("how", "are", "you"),
