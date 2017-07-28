@@ -55,7 +55,7 @@ public final class SumOfIntsTest {
     public void withIterCtor() throws Exception {
         MatcherAssert.assertThat(
             new SumOfInts(
-                new ArrayAsIterable<Scalar<Number>>(
+                new ArrayOf<Scalar<Number>>(
                     () -> 7,
                     () -> 8,
                     () -> 10

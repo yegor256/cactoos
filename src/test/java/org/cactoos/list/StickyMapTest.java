@@ -45,7 +45,7 @@ public final class StickyMapTest {
     public void ignoresChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
         final Map<Integer, Integer> map = new StickyMap<>(
-            new IterableAsMap<>(
+            new MapOf<>(
                 () -> new RepeatIterator<>(
                     () -> new MapEntry<>(
                         new SecureRandom().nextInt(),
@@ -99,7 +99,7 @@ public final class StickyMapTest {
                     new MapEntry<>("black", "BLACK"),
                     new MapEntry<>("white", "WHITE")
                 ),
-                new ArrayAsIterable<>("yellow", "red", "blue"),
+                new ArrayOf<>("yellow", "red", "blue"),
                 color -> new MapEntry<>(
                     color, color.toUpperCase(Locale.ENGLISH)
                 )
@@ -117,7 +117,7 @@ public final class StickyMapTest {
                     new MapEntry<>("black!", "Black!"),
                     new MapEntry<>("white!", "White!")
                 ),
-                new ArrayAsIterable<>("yellow!", "red!", "blue!"),
+                new ArrayOf<>("yellow!", "red!", "blue!"),
                 color -> String.format("[%s]", color),
                 String::toUpperCase
             ),

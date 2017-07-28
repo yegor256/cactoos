@@ -42,9 +42,9 @@ public final class ConcatIterableTest {
             "Can't concatenate iterables together",
             new LengthOfIterable(
                 new ConcatIterable<String>(
-                    new ArrayAsIterable<>("hello", "world", "друг"),
-                    new ArrayAsIterable<>("how", "are", "you"),
-                    new ArrayAsIterable<>("what's", "up")
+                    new ArrayOf<>("hello", "world", "друг"),
+                    new ArrayOf<>("how", "are", "you"),
+                    new ArrayOf<>("what's", "up")
                 )
             ),
             // @checkstyle MagicNumber (1 line)

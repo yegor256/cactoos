@@ -114,10 +114,10 @@ new UpperText("Hello");
 To filter a collection:
 
 ```java
-Collection<String> filtered = new IterableAsList<>(
+Collection<String> filtered = new ListOf<>(
   new FilteredIterable<>(
-    new ArrayAsIterable<>("hello", "world", "dude"),
-    new Func<String, Boolean>() {
+    new ArrayOf<>("hello", "world", "dude"),
+    new FuncOf<String, Boolean>() {
       @Override
       public Boolean apply(String s) {
         return s.length() > 4;
@@ -130,9 +130,9 @@ Collection<String> filtered = new IterableAsList<>(
 With Lambda:
 
 ```java
-new IterableAsList<>(
+new ListOf<>(
   new FilteredIterable<>(
-    new ArrayAsIterable<>("hello", "world", "dude"),
+    new ArrayOf<>("hello", "world", "dude"),
     s -> s.length() > 4
   )
 );
@@ -143,8 +143,8 @@ To iterate a collection:
 ```java
 new And(
   new MappedIterable<>(
-    new ArrayAsIterable<>("how", "are", "you"),
-    new ProcAsFunc<>(
+    new ArrayOf<>("how", "are", "you"),
+    new FuncOf<>(
       input -> {
         System.out.printf("Item: %s\n", input);
       }
@@ -165,7 +165,7 @@ new And(
 To sort a list of words in the file:
 
 ```java
-List<String> sorted = new IterableAsList<>(
+List<String> sorted = new ListOf<>(
   new SortedIterable<>(
     new SplitText(
       new TextOf(
@@ -240,7 +240,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `NormalizedText` | - | `StringUtils.normalize()` | -
 `RepeatedText` | - | `StringUtils.repeat()` | -
 `ReplacedText` | - | - | `String#replace()`
-`ReversedText` | - | - | `StringBuilder#replace()`
+`ReversedText` | - | - | `StringBuilder#reverse()`
 `SplitText` | - | - | `String#split()`
 `StringAsUrl` | - | - | `URLEncoder.encode()`
 `SubText` | - | - | `String#substring()`

@@ -23,27 +23,54 @@
  */
 package org.cactoos.list;
 
+import java.security.SecureRandom;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ArrayAsIterable}.
+ * Test case for {@link MapOf}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ArrayAsIterableTest {
+public final class MapOfTest {
 
     @Test
-    public void convertsArrayToIterable() {
+    public void convertsIterableToMap() {
         MatcherAssert.assertThat(
-            "Can't convert array to iterable",
-            new ArrayAsIterable<>(
-                "hello", "world"
+            "Can't convert iterable to map",
+            new MapOf<Integer, String>(
+                new MapEntry<>(0, "hello, "),
+                new MapEntry<>(1, "world!")
             ),
-            Matchers.iterableWithSize(2)
+            Matchers.hasEntry(
+                Matchers.equalTo(0),
+                Matchers.startsWith("hello")
+            )
+        );
+    }
+
+    @Test
+    public void sensesChangesInMap() throws Exception {
+        final AtomicInteger size = new AtomicInteger(2);
+        final Map<Integer, Integer> map = new MapOf<>(
+            () -> new RepeatIterator<>(
+                () -> new MapEntry<>(
+                    new SecureRandom().nextInt(),
+                    1
+                ),
+                size.incrementAndGet()
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't sense the changes in the underlying map",
+            map.size(),
+            Matchers.not(Matchers.equalTo(map.size()))
         );
     }
 

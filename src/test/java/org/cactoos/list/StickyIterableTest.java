@@ -43,7 +43,7 @@ public final class StickyIterableTest {
     public void ignoresChangesInIterable() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
         final Iterable<Integer> list = new StickyIterable<>(
-            new IterableAsList<>(
+            new ListOf<>(
                 () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
         );

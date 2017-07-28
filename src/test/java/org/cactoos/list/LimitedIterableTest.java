@@ -43,7 +43,7 @@ public final class LimitedIterableTest {
         MatcherAssert.assertThat(
             "Can't limit an iterable with more items",
             new LimitedIterable<>(
-                new ArrayAsIterable<>(0, 1, 2, 3, 4),
+                new ArrayOf<>(0, 1, 2, 3, 4),
                 3
             ),
             Matchers.contains(0, 1, 2)
@@ -56,7 +56,7 @@ public final class LimitedIterableTest {
         MatcherAssert.assertThat(
             "Can't limit an iterable with less items",
             new LimitedIterable<>(
-                new ArrayAsIterable<>(0, 1, 2, 3, 4),
+                new ArrayOf<>(0, 1, 2, 3, 4),
                 10
             ),
             Matchers.contains(0, 1, 2, 3, 4)
@@ -69,7 +69,7 @@ public final class LimitedIterableTest {
         MatcherAssert.assertThat(
             "Can't limit an iterable to zero items",
             new LimitedIterable<>(
-                new ArrayAsIterable<>(0, 1, 2, 3, 4),
+                new ArrayOf<>(0, 1, 2, 3, 4),
                 0
             ),
             Matchers.iterableWithSize(0)
@@ -82,7 +82,7 @@ public final class LimitedIterableTest {
         MatcherAssert.assertThat(
             "Can't limit an iterable to negative number of items",
             new LimitedIterable<>(
-                new ArrayAsIterable<>(0, 1, 2, 3, 4),
+                new ArrayOf<>(0, 1, 2, 3, 4),
                 -1
             ),
             Matchers.iterableWithSize(0)
@@ -95,7 +95,7 @@ public final class LimitedIterableTest {
         MatcherAssert.assertThat(
             "Can't limit an empty iterable",
             new LimitedIterable<>(
-                new ArrayAsIterable<>(),
+                new ArrayOf<>(),
                 10
             ),
             Matchers.iterableWithSize(0)

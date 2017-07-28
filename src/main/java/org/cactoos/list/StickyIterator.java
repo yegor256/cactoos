@@ -52,7 +52,7 @@ public final class StickyIterator<X> implements Iterator<X> {
      */
     @SafeVarargs
     public StickyIterator(final X... items) {
-        this(new ArrayAsIterable<>(items).iterator());
+        this(new ArrayOf<>(items).iterator());
     }
 
     /**
