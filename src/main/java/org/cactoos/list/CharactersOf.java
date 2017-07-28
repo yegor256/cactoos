@@ -23,15 +23,17 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.func.UncheckedScalar;
+import org.cactoos.text.TextOf;
 
 /**
- * Array as iterable.
+ * Characters of.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -40,7 +42,7 @@ import org.cactoos.func.UncheckedScalar;
  * @param <X> Type of item
  * @since 0.12
  */
-public final class ArrayOf<X> implements Iterable<X> {
+public final class CharactersOf<X> implements Iterable<X> {
 
     /**
      * The encapsulated iterator of X.
@@ -49,39 +51,35 @@ public final class ArrayOf<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     * @param string The string
+     */
+    public CharactersOf(final String string) {
+        this(new TextOf(string));
+    }
+
+    /**
+     * Ctor.
      * @param text The text
      */
-    public ArrayOf(final Text text) {
-        this(() -> new CharactersOf<X>(text).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param map The map to be flatten as an array of values
-     */
     @SuppressWarnings("unchecked")
-    public ArrayOf(final Map<?, ?> map) {
-        this(
-            () -> (Iterator<X>) Arrays.asList(
-                map.values().toArray()
-            ).iterator()
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param items The array
-     */
-    @SafeVarargs
-    public ArrayOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
+    public CharactersOf(final Text text) {
+        this(() -> {
+            final char[] raws = text.asString().toCharArray();
+            final List<Character> chars = new ArrayList<>(raws.length);
+            for (final char chr : raws) {
+                chars.add(chr);
+            }
+            return (Iterator<X>) Arrays.asList(
+                chars.toArray(new Character[raws.length])
+            ).iterator();
+        });
     }
 
     /**
      * Ctor.
      * @param sclr The encapsulated iterator of x
      */
-    private ArrayOf(final Scalar<Iterator<X>> sclr) {
+    private CharactersOf(final Scalar<Iterator<X>> sclr) {
         this.scalar = new UncheckedScalar<>(sclr);
     }
 
