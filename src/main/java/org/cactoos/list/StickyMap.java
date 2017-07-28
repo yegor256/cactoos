@@ -55,7 +55,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     @SafeVarargs
     public StickyMap(final Map.Entry<X, Y>... list) {
-        this(new ArrayAsIterable<>(list));
+        this(new ArrayOf<>(list));
     }
 
     /**
@@ -66,7 +66,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     @SafeVarargs
     public StickyMap(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
-        this(map, new ArrayAsIterable<>(list));
+        this(map, new ArrayOf<>(list));
     }
 
     /**
@@ -131,7 +131,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      * @param list Entries for the entries
      */
     public StickyMap(final Iterable<Map.Entry<X, Y>> list) {
-        this(new IterableAsMap<>(list));
+        this(new MapOf<>(list));
     }
 
     /**
@@ -142,7 +142,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     public StickyMap(final Map<X, Y> map,
         final Iterable<Map.Entry<X, Y>> list) {
-        this(new IterableAsMap<>(map, list));
+        this(new MapOf<>(map, list));
     }
 
     /**

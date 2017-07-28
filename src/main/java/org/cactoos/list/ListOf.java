@@ -51,7 +51,7 @@ import java.util.ListIterator;
  * @since 0.1
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class IterableAsList<T> implements List<T> {
+public final class ListOf<T> implements List<T> {
 
     /**
      * The source.
@@ -64,8 +64,8 @@ public final class IterableAsList<T> implements List<T> {
      * @param array An array of some elements
      */
     @SafeVarargs
-    public IterableAsList(final T... array) {
-        this(new ArrayAsIterable<>(array));
+    public ListOf(final T... array) {
+        this(new ArrayOf<>(array));
     }
 
     /**
@@ -73,7 +73,7 @@ public final class IterableAsList<T> implements List<T> {
      *
      * @param src An {@link Iterable}
      */
-    public IterableAsList(final Iterable<T> src) {
+    public ListOf(final Iterable<T> src) {
         this.iterable = src;
     }
 

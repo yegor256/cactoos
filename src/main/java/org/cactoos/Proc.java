@@ -31,7 +31,7 @@ package org.cactoos;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input
- * @see org.cactoos.func.ProcAsFunc
+ * @see org.cactoos.func.FuncOf
  * @since 0.1
  */
 public interface Proc<X> {

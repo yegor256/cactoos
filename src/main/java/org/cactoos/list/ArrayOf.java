@@ -25,36 +25,69 @@ package org.cactoos.list;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Map;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.func.UncheckedScalar;
 
 /**
  * Array as iterable.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @param <X> Type of item
- * @since 0.1
+ * @since 0.12
  */
-public final class ArrayAsIterable<X> implements Iterable<X> {
+public final class ArrayOf<X> implements Iterable<X> {
 
     /**
-     * The array.
+     * The encapsulated iterator of X.
      */
-    private final X[] array;
+    private final UncheckedScalar<Iterator<X>> scalar;
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public ArrayOf(final Text text) {
+        this(() -> new CharactersOf<X>(text).iterator());
+    }
+
+    /**
+     * Ctor.
+     * @param map The map to be flatten as an array of values
+     */
+    @SuppressWarnings("unchecked")
+    public ArrayOf(final Map<?, ?> map) {
+        this(
+            () -> (Iterator<X>) Arrays.asList(
+                map.values().toArray()
+            ).iterator()
+        );
+    }
 
     /**
      * Ctor.
      * @param items The array
      */
     @SafeVarargs
-    public ArrayAsIterable(final X... items) {
-        this.array = items;
+    public ArrayOf(final X... items) {
+        this(() -> Arrays.asList(items).iterator());
+    }
+
+    /**
+     * Ctor.
+     * @param sclr The encapsulated iterator of x
+     */
+    private ArrayOf(final Scalar<Iterator<X>> sclr) {
+        this.scalar = new UncheckedScalar<>(sclr);
     }
 
     @Override
     public Iterator<X> iterator() {
-        return Arrays.asList(this.array).iterator();
+        return this.scalar.value();
     }
 
 }

@@ -29,7 +29,7 @@ import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
 import org.cactoos.TextHasString;
-import org.cactoos.list.IterableAsList;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -72,7 +72,7 @@ public final class FormattedTextTest {
     public void failsForInvalidPattern() throws IOException {
         new FormattedText(
             new TextOf("%%. Formatted %$"),
-            new IterableAsList<>(1, "invalid")
+            new ListOf<>(1, "invalid")
         ).asString();
     }
 
@@ -82,7 +82,7 @@ public final class FormattedTextTest {
             "Can't format a text with a collection",
             new FormattedText(
                 new TextOf("%d. Formatted as %s"),
-                new IterableAsList<>(1, "txt")
+                new ListOf<>(1, "txt")
             ),
             new TextHasString("1. Formatted as txt")
         );

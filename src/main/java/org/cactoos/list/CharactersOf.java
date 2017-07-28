@@ -21,54 +21,71 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.list;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import org.cactoos.Scalar;
-import org.cactoos.list.ArrayOf;
+import org.cactoos.Text;
+import org.cactoos.func.UncheckedScalar;
+import org.cactoos.text.TextOf;
 
 /**
- * Logical disjunction.
+ * Characters of.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.8
+ * @param <X> Type of item
+ * @since 0.12
  */
-public final class Or implements Scalar<Boolean> {
+public final class CharactersOf<X> implements Iterable<X> {
 
     /**
-     * The iterator.
+     * The encapsulated iterator of X.
      */
-    private final Iterable<Scalar<Boolean>> iterable;
+    private final UncheckedScalar<Iterator<X>> scalar;
 
     /**
      * Ctor.
-     * @param src The iterable
+     * @param string The string
      */
-    @SafeVarargs
-    public Or(final Scalar<Boolean>... src) {
-        this(new ArrayOf<>(src));
+    public CharactersOf(final String string) {
+        this(new TextOf(string));
     }
 
     /**
      * Ctor.
-     * @param src The iterable
+     * @param text The text
      */
-    public Or(final Iterable<Scalar<Boolean>> src) {
-        this.iterable = src;
+    @SuppressWarnings("unchecked")
+    public CharactersOf(final Text text) {
+        this(() -> {
+            final char[] raws = text.asString().toCharArray();
+            final List<Character> chars = new ArrayList<>(raws.length);
+            for (final char chr : raws) {
+                chars.add(chr);
+            }
+            return (Iterator<X>) Arrays.asList(
+                chars.toArray(new Character[raws.length])
+            ).iterator();
+        });
+    }
+
+    /**
+     * Ctor.
+     * @param sclr The encapsulated iterator of x
+     */
+    private CharactersOf(final Scalar<Iterator<X>> sclr) {
+        this.scalar = new UncheckedScalar<>(sclr);
     }
 
     @Override
-    public Boolean value() throws Exception {
-        boolean result = false;
-        for (final Scalar<Boolean> item : this.iterable) {
-            if (item.value()) {
-                result = true;
-                break;
-            }
-        }
-        return result;
+    public Iterator<X> iterator() {
+        return this.scalar.value();
     }
 
 }

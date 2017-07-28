@@ -49,7 +49,7 @@ public final class MapAsPropertiesTest {
             "Can't convert map to properties",
             new MapAsProperties(
                 new StickyMap<>(
-                    new IterableAsMap<Integer, String>(
+                    new MapOf<Integer, String>(
                         new MapEntry<>(0, "hello, world"),
                         new MapEntry<>(1, "how are you?")
                     )
@@ -69,7 +69,7 @@ public final class MapAsPropertiesTest {
     public void sensesChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
         final MapAsProperties props = new MapAsProperties(
-            new IterableAsMap<>(
+            new MapOf<>(
                 () -> new RepeatIterator<>(
                     () -> new MapEntry<>(
                         new SecureRandom().nextInt(),

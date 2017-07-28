@@ -55,7 +55,7 @@ public final class SumOfRealsTest {
     public void withIterCtor() throws Exception {
         MatcherAssert.assertThat(
             new SumOfReals(
-                new ArrayAsIterable<Scalar<Number>>(
+                new ArrayOf<Scalar<Number>>(
                     () -> 7.1,
                     () -> 8.1,
                     () -> 10.1

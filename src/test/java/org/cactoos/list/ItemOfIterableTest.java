@@ -45,7 +45,7 @@ public final class ItemOfIterableTest {
             "Can't take the first item from the iterable",
             new ItemOfIterable<>(
                 // @checkstyle MagicNumber (1 line)
-                new ArrayAsIterable<>(1, 2, 3)
+                new ArrayOf<>(1, 2, 3)
             ),
             new ScalarHasValue<>(1)
         );
@@ -57,7 +57,7 @@ public final class ItemOfIterableTest {
             "Can't take the item by position from the iterable",
             new ItemOfIterable<>(
                 // @checkstyle MagicNumber (1 line)
-                new ArrayAsIterable<>(1, 2, 3),
+                new ArrayOf<>(1, 2, 3),
                 1
             ),
             new ScalarHasValue<>(2)
