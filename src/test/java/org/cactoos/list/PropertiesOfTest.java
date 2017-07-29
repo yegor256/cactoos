@@ -28,12 +28,13 @@ import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.func.MatcherOf;
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link MapAsProperties}.
+ * Test case for {@link PropertiesOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
@@ -41,13 +42,51 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class MapAsPropertiesTest {
+public final class PropertiesOfTest {
+
+    @Test
+    public void readsStringContent() {
+        MatcherAssert.assertThat(
+            "Can't read properties from an input string",
+            new PropertiesOf(
+                "foo=Hello, world!\nbar=works fine?\n"
+            ),
+            new ScalarHasValue<>(
+                new MatcherOf<Properties>(
+                    props -> {
+                        return "Hello, world!".equals(
+                            props.getProperty("foo")
+                        );
+                    }
+                )
+            )
+        );
+    }
+
+    @Test
+    public void readsInputContent() {
+        MatcherAssert.assertThat(
+            "Can't read properties from an input",
+            new PropertiesOf(
+                new InputOf("greet=Hello, inner world!\nask=works fine?\n")
+            ),
+            new ScalarHasValue<>(
+                new MatcherOf<Properties>(
+                    props -> {
+                        return "Hello, inner world!".equals(
+                            props.getProperty("greet")
+                        );
+                    }
+                )
+            )
+        );
+    }
 
     @Test
     public void convertsMapToProperties() {
         MatcherAssert.assertThat(
             "Can't convert map to properties",
-            new MapAsProperties(
+            new PropertiesOf(
                 new StickyMap<>(
                     new MapOf<Integer, String>(
                         new MapEntry<>(0, "hello, world"),
@@ -68,7 +107,7 @@ public final class MapAsPropertiesTest {
     @Test
     public void sensesChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
-        final MapAsProperties props = new MapAsProperties(
+        final PropertiesOf props = new PropertiesOf(
             new MapOf<>(
                 () -> new RepeatIterator<>(
                     () -> new MapEntry<>(
