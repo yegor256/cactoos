@@ -30,7 +30,7 @@ import org.cactoos.func.UncheckedScalar;
 /**
  * Repeat an element.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessOf}.</p>
+ * <p>If you need to repeat endlessly, use {@link EndlessItem}.</p>
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
@@ -38,7 +38,7 @@ import org.cactoos.func.UncheckedScalar;
  * @param <T> Element type
  * @since 0.4
  */
-public final class RepeatIterator<T> implements Iterator<T> {
+public final class RepeatedIterator<T> implements Iterator<T> {
 
     /**
      * The element to repeat.
@@ -55,7 +55,7 @@ public final class RepeatIterator<T> implements Iterator<T> {
      * @param elm Element to repeat
      * @param max How many times to repeat
      */
-    public RepeatIterator(final T elm, final int max) {
+    public RepeatedIterator(final T elm, final int max) {
         this(() -> elm, max);
     }
 
@@ -64,7 +64,7 @@ public final class RepeatIterator<T> implements Iterator<T> {
      * @param elm Element to repeat
      * @param max How many times to repeat
      */
-    public RepeatIterator(final Scalar<T> elm, final int max) {
+    public RepeatedIterator(final Scalar<T> elm, final int max) {
         this(new UncheckedScalar<T>(elm), max);
     }
 
@@ -73,7 +73,7 @@ public final class RepeatIterator<T> implements Iterator<T> {
      * @param elm Element to repeat
      * @param max How many times to repeat
      */
-    public RepeatIterator(final UncheckedScalar<T> elm, final int max) {
+    public RepeatedIterator(final UncheckedScalar<T> elm, final int max) {
         this.element = elm;
         this.left = max;
     }

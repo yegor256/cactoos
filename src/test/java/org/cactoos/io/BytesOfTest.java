@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
-import org.cactoos.list.EndlessOf;
+import org.cactoos.list.EndlessItem;
 import org.cactoos.list.LimitedIterable;
 import org.cactoos.text.JoinedText;
 import org.cactoos.text.TextOf;
@@ -64,7 +64,7 @@ public final class BytesOfTest {
                     new JoinedText(
                         "",
                         new LimitedIterable<>(
-                            new EndlessOf<>(body),
+                            new EndlessItem<>(body),
                             multiplier
                         )
                     )

@@ -29,14 +29,14 @@ import java.util.Iterator;
  * Endless iterable.
  *
  * <p>If you need to repeat certain amount of time,
- * use {@link RepeatIterable}.</p>
+ * use {@link RepeatedItem}.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <T> Element type
  * @since 0.4
  */
-public final class EndlessOf<T> implements Iterable<T> {
+public final class EndlessItem<T> implements Iterable<T> {
 
     /**
      * Element to repeat.
@@ -47,7 +47,7 @@ public final class EndlessOf<T> implements Iterable<T> {
      * Ctor.
      * @param elm To repeat
      */
-    public EndlessOf(final T elm) {
+    public EndlessItem(final T elm) {
         this.element = elm;
     }
 

@@ -109,7 +109,7 @@ public final class PropertiesOfTest {
         final AtomicInteger size = new AtomicInteger(2);
         final PropertiesOf props = new PropertiesOf(
             new MapOf<>(
-                () -> new RepeatIterator<>(
+                () -> new RepeatedIterator<>(
                     () -> new MapEntry<>(
                         new SecureRandom().nextInt(),
                         1

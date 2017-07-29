@@ -220,7 +220,7 @@ Here is its object-oriented alternative:
 
 ```java
 new And(
-  new EndlessOf<>(ready),
+  new EndlessItem<>(ready),
   ready -> {
     System.out.prinln("Still waiting...");
     return !ready;

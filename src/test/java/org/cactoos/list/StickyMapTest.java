@@ -46,7 +46,7 @@ public final class StickyMapTest {
         final AtomicInteger size = new AtomicInteger(2);
         final Map<Integer, Integer> map = new StickyMap<>(
             new MapOf<>(
-                () -> new RepeatIterator<>(
+                () -> new RepeatedIterator<>(
                     () -> new MapEntry<>(
                         new SecureRandom().nextInt(),
                         1

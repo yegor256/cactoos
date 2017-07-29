@@ -29,14 +29,14 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link RepeatIterator}.
+ * Test case for {@link RepeatedIterator}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class RepeatIteratorTest {
+public final class RepeatedIteratorTest {
 
     @Test
     public void allSameTest() throws Exception {
@@ -45,7 +45,7 @@ public final class RepeatIteratorTest {
         MatcherAssert.assertThat(
             "Can't generate an iterable with fixed size",
             new CountOfIterator(
-                new RepeatIterator<>(
+                new RepeatedIterator<>(
                     element,
                     size
                 )
@@ -58,7 +58,7 @@ public final class RepeatIteratorTest {
     public void emptyTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't generate an empty iterator",
-            (Iterable<Integer>) () -> new RepeatIterator<>(0, 0),
+            (Iterable<Integer>) () -> new RepeatedIterator<>(0, 0),
             Matchers.iterableWithSize(0)
         );
     }

@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Scalar;
-import org.cactoos.Text;
 import org.cactoos.func.UncheckedScalar;
 
 /**
@@ -46,14 +45,6 @@ public final class ArrayOf<X> implements Iterable<X> {
      * The encapsulated iterator of X.
      */
     private final UncheckedScalar<Iterator<X>> scalar;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public ArrayOf(final Text text) {
-        this(() -> new CharactersOf<X>(text).iterator());
-    }
 
     /**
      * Ctor.

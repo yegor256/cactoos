@@ -31,7 +31,7 @@ import org.cactoos.func.UncheckedScalar;
  * Iterator that never ends.
  *
  * <p>If you need to repeat certain amount of time,
- * use {@link RepeatIterator}.</p>
+ * use {@link RepeatedIterator}.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$

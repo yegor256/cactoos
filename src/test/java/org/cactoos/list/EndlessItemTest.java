@@ -28,19 +28,19 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link EndlessOf}.
+ * Test Case for {@link EndlessItem}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class EndlessOfTest {
+public final class EndlessItemTest {
 
     @Test
     public void endlessIterableTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't get unique endless iterable item",
-            new EndlessOf<>(1),
+            new EndlessItem<>(1),
             Matchers.hasItem(1)
         );
     }

@@ -25,27 +25,27 @@ package org.cactoos.list;
 
 import org.cactoos.CountOf;
 import org.cactoos.ScalarHasValue;
+import org.cactoos.io.BytesOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link ArrayOf}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link CharactersOf}.
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ArrayOfTest {
+public final class CharactersOfTest {
 
     @Test
-    public void convertsScalarsToIterable() {
+    public void convertsStringToIterableOfChars() {
         MatcherAssert.assertThat(
-            "Can't convert scalars to iterable",
+            "Can't convert string to a iterable of Characters",
             new CountOf(
-                new ArrayOf<>(
-                    "a", "b", "c"
+                new CharactersOf<>(
+                    "abc"
                 )
             ),
             // @checkstyle MagicNumber (1 line)
@@ -54,12 +54,26 @@ public final class ArrayOfTest {
     }
 
     @Test
-    public void convertsObjectsToIterable() {
+    public void convertsTextToIterableOfChars() {
         MatcherAssert.assertThat(
-            "Can't convert objects to iterable",
+            "Can't convert text to a iterable of Characters",
             new CountOf(
-                new ArrayOf<>(
-                    new TextOf("a"), new TextOf("b"), new TextOf("c")
+                new CharactersOf<>(
+                    new TextOf("abcd")
+                )
+            ),
+            // @checkstyle MagicNumber (1 line)
+            new ScalarHasValue<>(4)
+        );
+    }
+
+    @Test
+    public void convertsScalarCharsToIterableOfChars() {
+        MatcherAssert.assertThat(
+            "Can't convert scalars to a iterable of Characters",
+            new CountOf(
+                new CharactersOf<>(
+                    new char[]{'a', 'b', 'c'}
                 )
             ),
             // @checkstyle MagicNumber (1 line)
@@ -68,22 +82,16 @@ public final class ArrayOfTest {
     }
 
     @Test
-    public void convertsMapToIterable() {
-        final String expected = "hello, ";
+    public void convertsBytesToCharacters() {
         MatcherAssert.assertThat(
-            "Can't flat a map into an interable of values",
-            new ItemOfIterable<>(
-                new ArrayOf<>(
-                    new MapOf<Integer, String>(
-                        new MapEntry<>(0, expected),
-                        new MapEntry<>(1, "world!")
-                    )
-                ),
-                0
+            "Can't convert bytes to a iterable of Characters",
+            new CountOf(
+                new CharactersOf<>(
+                    new BytesOf("Hello, друг?")
+                )
             ),
-            new ScalarHasValue<>(
-                expected
-            )
+            // @checkstyle MagicNumber (1 line)
+            new ScalarHasValue<>(12)
         );
     }
 

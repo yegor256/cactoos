@@ -149,7 +149,7 @@ public final class CountOfTest {
         MatcherAssert.assertThat(
             "Can't count the number of elements in the iterator",
             new CountOf(
-                new RepeatIterator<>(
+                new RepeatedIterator<>(
                     element,
                     size
                 )
@@ -168,7 +168,7 @@ public final class CountOfTest {
                 )
             ),
             // @checkstyle MagicNumber (1 line)
-            new ScalarHasValue<>(3)
+            new ScalarHasValue<>(1)
         );
     }
 

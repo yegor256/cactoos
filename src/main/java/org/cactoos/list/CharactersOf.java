@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import org.cactoos.Bytes;
+import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.func.UncheckedScalar;
@@ -51,36 +53,62 @@ public final class CharactersOf<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     * @param bytes The bytes
+     */
+    public CharactersOf(final Bytes bytes) {
+        this(new TextOf(bytes));
+    }
+
+    /**
+     * Ctor.
+     * @param input The input
+     */
+    public CharactersOf(final Input input) {
+        this(new TextOf(input));
+    }
+
+    /**
+     * Ctor.
+     * @param chars The scalar chars
+     */
+    public CharactersOf(final char... chars) {
+        this(() -> chars);
+    }
+
+    /**
+     * Ctor.
      * @param string The string
      */
     public CharactersOf(final String string) {
-        this(new TextOf(string));
+        this(() -> string.toCharArray());
     }
 
     /**
      * Ctor.
      * @param text The text
      */
-    @SuppressWarnings("unchecked")
     public CharactersOf(final Text text) {
-        this(() -> {
-            final char[] raws = text.asString().toCharArray();
-            final List<Character> chars = new ArrayList<>(raws.length);
-            for (final char chr : raws) {
-                chars.add(chr);
-            }
-            return (Iterator<X>) Arrays.asList(
-                chars.toArray(new Character[raws.length])
-            ).iterator();
-        });
+        this(() -> text.asString().toCharArray());
     }
 
     /**
      * Ctor.
-     * @param sclr The encapsulated iterator of x
+     * @param sclr The encapsulated scalar chars
      */
-    private CharactersOf(final Scalar<Iterator<X>> sclr) {
-        this.scalar = new UncheckedScalar<>(sclr);
+    @SuppressWarnings("unchecked")
+    private CharactersOf(final Scalar<char[]> sclr) {
+        this.scalar = new UncheckedScalar<>(
+            () -> {
+                final char[] raws = sclr.value();
+                final List<Character> chars = new ArrayList<>(raws.length);
+                for (final char chr : raws) {
+                    chars.add(chr);
+                }
+                return (Iterator<X>) Arrays.asList(
+                    chars.toArray(new Character[raws.length])
+                ).iterator();
+            }
+        );
     }
 
     @Override

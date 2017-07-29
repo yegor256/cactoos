@@ -30,7 +30,7 @@ import org.cactoos.func.UncheckedScalar;
 /**
  * Repeat an element.
  *
- * <p>If you need to repeat endlessly, use {@link EndlessOf}.</p>
+ * <p>If you need to repeat endlessly, use {@link EndlessItem}.</p>
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
@@ -38,7 +38,7 @@ import org.cactoos.func.UncheckedScalar;
  * @param <T> Element type
  * @since 0.1
  */
-public final class RepeatIterable<T> implements Iterable<T> {
+public final class RepeatedItem<T> implements Iterable<T> {
 
     /**
      * Element to repeat.
@@ -52,35 +52,35 @@ public final class RepeatIterable<T> implements Iterable<T> {
 
     /**
      * Ctor.
-     * @param elm To repeat
-     * @param cnt Count
+     * @param elm The element to repeat
+     * @param total The total number of repetitions
      */
-    public RepeatIterable(final T elm, final int cnt) {
-        this(() -> elm, cnt);
+    public RepeatedItem(final T elm, final int total) {
+        this(() -> elm, total);
     }
 
     /**
      * Ctor.
-     * @param elm To repeat
-     * @param cnt Count
+     * @param elm The element to repeat
+     * @param total The total number of repetitions
      */
-    public RepeatIterable(final Scalar<T> elm, final int cnt) {
-        this(new UncheckedScalar<T>(elm), cnt);
+    public RepeatedItem(final Scalar<T> elm, final int total) {
+        this(new UncheckedScalar<T>(elm), total);
     }
 
     /**
      * Ctor.
-     * @param elm To repeat
-     * @param cnt Count
+     * @param elm The element to repeat
+     * @param total The total number of repetitions
      */
-    public RepeatIterable(final UncheckedScalar<T> elm, final int cnt) {
+    public RepeatedItem(final UncheckedScalar<T> elm, final int total) {
         this.element = elm;
-        this.count = cnt;
+        this.count = total;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new RepeatIterator<>(this.element, this.count);
+        return new RepeatedIterator<>(this.element, this.count);
     }
 
 }
