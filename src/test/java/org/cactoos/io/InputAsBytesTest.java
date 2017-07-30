@@ -30,7 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.list.EndlessItem;
-import org.cactoos.list.LimitedIterable;
+import org.cactoos.list.SubOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -57,7 +57,7 @@ public final class InputAsBytesTest {
                 new InputOf(
                     String.join(
                         "",
-                        new LimitedIterable<>(
+                        new SubOf<>(
                             new EndlessItem<>(body),
                             multiplier
                         )

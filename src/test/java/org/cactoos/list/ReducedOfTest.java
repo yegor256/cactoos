@@ -42,7 +42,7 @@ public final class ReducedOfTest {
         MatcherAssert.assertThat(
             "Can't reduce elements in iterable",
             new ReducedOf<>(
-                new LimitedIterable<>(new NaturalNumbers(), 10),
+                new SubOf<>(new NaturalNumbers(), 10),
                 0L,
                 (first, second) -> first + second
             ).value(),

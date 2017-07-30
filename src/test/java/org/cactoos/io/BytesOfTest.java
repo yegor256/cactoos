@@ -33,7 +33,7 @@ import org.cactoos.Text;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.list.EndlessItem;
-import org.cactoos.list.LimitedIterable;
+import org.cactoos.list.SubOf;
 import org.cactoos.text.JoinedText;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -63,7 +63,7 @@ public final class BytesOfTest {
                 new InputOf(
                     new JoinedText(
                         "",
-                        new LimitedIterable<>(
+                        new SubOf<>(
                             new EndlessItem<>(body),
                             multiplier
                         )

@@ -38,7 +38,7 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.6
  */
-public final class LimitedIterable<T> implements Iterable<T> {
+public final class SubOf<T> implements Iterable<T> {
 
     /**
      * Decorated iterable.
@@ -56,7 +56,7 @@ public final class LimitedIterable<T> implements Iterable<T> {
      * @param iterable The underlying iterable
      * @param limit The requested number of elements
      */
-    public LimitedIterable(final Iterable<T> iterable, final int limit) {
+    public SubOf(final Iterable<T> iterable, final int limit) {
         this.iterable = iterable;
         this.limit = limit;
     }
