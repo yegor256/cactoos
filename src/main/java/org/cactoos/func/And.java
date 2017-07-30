@@ -26,8 +26,8 @@ package org.cactoos.func;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.list.ArrayOf;
-import org.cactoos.list.MappedOf;
+import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Logical conjunction.
@@ -85,7 +85,7 @@ public final class And implements Scalar<Boolean> {
      */
     public <X> And(final Iterable<X> src, final Func<X, Boolean> func) {
         this(
-            new MappedOf<>(
+            new Mapped<>(
                 src,
                 item -> (Scalar<Boolean>) () -> func.apply(item)
             )

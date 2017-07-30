@@ -35,7 +35,7 @@ import org.cactoos.io.TeeInput;
  * together with {@link Input} in order to modify the content
  * of a text file:</p>
  *
- * <pre> new CountOf(
+ * <pre> new LengthOf(
  *   new TeeInput(
  *     new InputOf(new TextOf("Hello, world!")),
  *     new OutputTo(new File("/tmp/names.txt"))
@@ -45,7 +45,7 @@ import org.cactoos.io.TeeInput;
  * <p>Here {@link OutputTo} implements {@link Output} and behaves like
  * one, providing write-only access to the encapsulated
  * {@link java.io.File}. The {@link TeeInput} copies the content of the
- * input to the output. The {@link org.cactoos.io.CountOf}
+ * input to the output. The {@link org.cactoos.io.LengthOf}
  * calculates the size of the copied data.</p>
  *
  * <p>There is no thread-safety guarantee.

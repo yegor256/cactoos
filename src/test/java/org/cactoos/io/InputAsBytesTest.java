@@ -29,8 +29,8 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.func.MatcherOf;
-import org.cactoos.list.EndlessItem;
-import org.cactoos.list.SubOf;
+import org.cactoos.iterable.Endless;
+import org.cactoos.iterable.Subset;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -57,8 +57,8 @@ public final class InputAsBytesTest {
                 new InputOf(
                     String.join(
                         "",
-                        new SubOf<>(
-                            new EndlessItem<>(body),
+                        new Subset<>(
+                            new Endless<>(body),
                             multiplier
                         )
                     )

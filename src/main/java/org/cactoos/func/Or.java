@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Scalar;
-import org.cactoos.list.ArrayOf;
+import org.cactoos.iterable.ArrayOf;
 
 /**
  * Logical disjunction.

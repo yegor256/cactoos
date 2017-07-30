@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.Formatter;
 import java.util.Locale;
 import org.cactoos.Text;
-import org.cactoos.list.ListOf;
+import org.cactoos.iterable.ListOf;
 
 /**
  * Text in Sprinf format.

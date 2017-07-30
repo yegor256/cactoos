@@ -25,8 +25,8 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.net.URL;
-import org.cactoos.CountOf;
 import org.cactoos.Input;
+import org.cactoos.LengthOf;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
@@ -92,7 +92,7 @@ public final class StickyInputTest {
         final long size = 100_000L;
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly and count length",
-            new CountOf(
+            new LengthOf(
                 new StickyInput(
                     new SlowInput((int) size)
                 )
