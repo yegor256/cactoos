@@ -43,7 +43,7 @@ public final class CycledOfTest {
         final String expected = "two";
         MatcherAssert.assertThat(
             "Can't repeat iterable",
-            new ItemOfIterable<>(
+            new ItemAt<>(
                 new CycledOf<>(
                     new ArrayOf<>(
                         "one", expected, "three"

@@ -39,7 +39,7 @@ import org.cactoos.text.FormattedText;
  * @param <T> Scalar type
  * @since 0.7
  */
-public final class ItemOfIterable<T> implements Scalar<T> {
+public final class ItemAt<T> implements Scalar<T> {
 
     /**
      * Source iterable.
@@ -61,7 +61,7 @@ public final class ItemOfIterable<T> implements Scalar<T> {
      *
      * @param src Iterable
      */
-    public ItemOfIterable(final Iterable<T> src) {
+    public ItemAt(final Iterable<T> src) {
         this(
             src,
             itr -> {
@@ -79,7 +79,7 @@ public final class ItemOfIterable<T> implements Scalar<T> {
      * @param src Iterable
      * @param fbk Fallback value
      */
-    public ItemOfIterable(final Iterable<T> src, final T fbk) {
+    public ItemAt(final Iterable<T> src, final T fbk) {
         this(src, itr -> fbk);
     }
 
@@ -89,7 +89,7 @@ public final class ItemOfIterable<T> implements Scalar<T> {
      * @param src Iterable
      * @param fbk Fallback value
      */
-    public ItemOfIterable(
+    public ItemAt(
         final Iterable<T> src,
         final Func<Iterable<T>, T> fbk
     ) {
@@ -102,7 +102,7 @@ public final class ItemOfIterable<T> implements Scalar<T> {
      * @param src Iterable
      * @param pos Position
      */
-    public ItemOfIterable(final Iterable<T> src, final int pos) {
+    public ItemAt(final Iterable<T> src, final int pos) {
         this(
             src,
             pos,
@@ -125,7 +125,7 @@ public final class ItemOfIterable<T> implements Scalar<T> {
      * @param pos Position
      * @param fbk Fallback value
      */
-    public ItemOfIterable(
+    public ItemAt(
         final Iterable<T> src,
         final int pos,
         final Func<Iterable<T>, T> fbk

@@ -31,14 +31,14 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ResourceAsInput}.
+ * Test case for {@link ResourceOf}.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ResourceAsInputTest {
+public final class ResourceOfTest {
 
     @Test
     public void readsBinaryResource() throws Exception {
@@ -46,8 +46,8 @@ public final class ResourceAsInputTest {
             "Can't read bytes from a classpath resource",
             Arrays.copyOfRange(
                 new BytesOf(
-                    new ResourceAsInput(
-                        "org/cactoos/io/ResourceAsInputTest.class"
+                    new ResourceOf(
+                        "org/cactoos/io/ResourceOfTest.class"
                     )
                 ).asBytes(),
                 // @checkstyle MagicNumber (2 lines)
@@ -68,7 +68,7 @@ public final class ResourceAsInputTest {
         MatcherAssert.assertThat(
             "Can't read a text resource from classpath",
             new TextOf(
-                new ResourceAsInput(
+                new ResourceOf(
                     "org/cactoos/large-text.txt"
                 )
             ).asString(),
@@ -82,7 +82,7 @@ public final class ResourceAsInputTest {
             "Can't replace an absent resource with a text",
             new TextOf(
                 new BytesOf(
-                    new ResourceAsInput(
+                    new ResourceOf(
                         "foo/this-resource-is-definitely-absent.txt",
                         "the replacement"
                     )
@@ -95,7 +95,7 @@ public final class ResourceAsInputTest {
     @Test(expected = IOException.class)
     public void throwsWhenResourceIsAbsent() throws Exception {
         new TextOf(
-            new ResourceAsInput(
+            new ResourceOf(
                 "bar/this-resource-is-definitely-absent.txt"
             )
         ).asString();

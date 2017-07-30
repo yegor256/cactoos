@@ -51,7 +51,7 @@ public final class StickyInputTest {
         MatcherAssert.assertThat(
             "Can't read bytes from a file",
             new StickyInput(
-                new ResourceAsInput(
+                new ResourceOf(
                     "org/cactoos/large-text.txt"
                 )
             ),

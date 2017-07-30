@@ -43,7 +43,7 @@ import org.cactoos.text.FormattedText;
  * @see ClassLoader#getResource(String)
  * @since 0.1
  */
-public final class ResourceAsInput implements Input {
+public final class ResourceOf implements Input {
 
     /**
      * Resource name.
@@ -64,7 +64,7 @@ public final class ResourceAsInput implements Input {
      * New resource input with current context {@link ClassLoader}.
      * @param res Resource name
      */
-    public ResourceAsInput(final String res) {
+    public ResourceOf(final String res) {
         this(res, Thread.currentThread().getContextClassLoader());
     }
 
@@ -73,7 +73,7 @@ public final class ResourceAsInput implements Input {
      * @param res Resource name
      * @param fbk Fallback
      */
-    public ResourceAsInput(final String res, final String fbk) {
+    public ResourceOf(final String res, final String fbk) {
         this(res, input -> new InputOf(new BytesOf(fbk)));
     }
 
@@ -82,7 +82,7 @@ public final class ResourceAsInput implements Input {
      * @param res Resource name
      * @param fbk Fallback
      */
-    public ResourceAsInput(final String res, final Input fbk) {
+    public ResourceOf(final String res, final Input fbk) {
         this(res, input -> fbk);
     }
 
@@ -91,7 +91,7 @@ public final class ResourceAsInput implements Input {
      * @param res Resource name
      * @param fbk Fallback
      */
-    public ResourceAsInput(final String res, final Func<String, Input> fbk) {
+    public ResourceOf(final String res, final Func<String, Input> fbk) {
         this(res, fbk, Thread.currentThread().getContextClassLoader());
     }
 
@@ -100,7 +100,7 @@ public final class ResourceAsInput implements Input {
      * @param res Resource name
      * @param ldr Resource class loader
      */
-    public ResourceAsInput(final String res, final ClassLoader ldr) {
+    public ResourceOf(final String res, final ClassLoader ldr) {
         this(
             res,
             input -> {
@@ -121,7 +121,7 @@ public final class ResourceAsInput implements Input {
      * @param ldr Resource class loader
      * @param fbk Fallback
      */
-    public ResourceAsInput(final String res, final Func<String, Input> fbk,
+    public ResourceOf(final String res, final Func<String, Input> fbk,
         final ClassLoader ldr) {
         this.path = res;
         this.loader = ldr;

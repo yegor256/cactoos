@@ -30,20 +30,20 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link ItemOfIterable}.
+ * Test case for {@link ItemAt}.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ItemOfIterableTest {
+public final class ItemAtTest {
 
     @Test
     public void firstElementTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't take the first item from the iterable",
-            new ItemOfIterable<>(
+            new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
                 new ArrayOf<>(1, 2, 3)
             ),
@@ -55,7 +55,7 @@ public final class ItemOfIterableTest {
     public void elementByPosTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't take the item by position from the iterable",
-            new ItemOfIterable<>(
+            new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
                 new ArrayOf<>(1, 2, 3),
                 1
@@ -66,7 +66,7 @@ public final class ItemOfIterableTest {
 
     @Test(expected = IOException.class)
     public void failForEmptyCollectionTest() throws Exception {
-        new ItemOfIterable<>(Collections.emptyList()).value();
+        new ItemAt<>(Collections.emptyList()).value();
     }
 
     @Test
@@ -74,7 +74,7 @@ public final class ItemOfIterableTest {
         final String fallback = "fallback";
         MatcherAssert.assertThat(
             "Can't fallback to default value",
-            new ItemOfIterable<>(
+            new ItemAt<>(
                 Collections.emptyList(),
                 fallback
             ),

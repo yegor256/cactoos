@@ -72,7 +72,7 @@ public final class ArrayOfTest {
         final String expected = "hello, ";
         MatcherAssert.assertThat(
             "Can't flat a map into an interable of values",
-            new ItemOfIterable<>(
+            new ItemAt<>(
                 new ArrayOf<>(
                     new MapOf<Integer, String>(
                         new MapEntry<>(0, expected),
