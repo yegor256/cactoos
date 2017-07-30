@@ -39,7 +39,7 @@ import java.util.List;
  * @see FilteredOf
  * @since 0.9
  */
-public final class ReverseIterable<X> implements Iterable<X> {
+public final class ReversedOf<X> implements Iterable<X> {
 
     /**
      * Iterable.
@@ -50,7 +50,7 @@ public final class ReverseIterable<X> implements Iterable<X> {
      * Ctor.
      * @param src Source iterable
      */
-    public ReverseIterable(final Iterable<X> src) {
+    public ReversedOf(final Iterable<X> src) {
         this.iterable = src;
     }
 

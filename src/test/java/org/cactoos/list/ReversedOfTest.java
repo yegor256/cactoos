@@ -29,13 +29,13 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link ReverseIterable}.
+ * Test case for {@link ReversedOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReverseIterableTest {
+public final class ReversedOfTest {
 
     @Test
     public void reversesIterable() {
@@ -43,7 +43,7 @@ public final class ReverseIterableTest {
             "Can't reverse an iterable",
             new JoinedText(
                 " ",
-                new ReverseIterable<>(
+                new ReversedOf<>(
                     new ArrayOf<>(
                         "hello", "world", "dude"
                     )
