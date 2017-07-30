@@ -107,7 +107,7 @@ public final class CountOf implements Scalar<Number> {
      * Ctor.
      * @param sclr The underlying scalar length
      */
-    public CountOf(final Scalar<?> sclr) {
+    private CountOf(final Scalar<?> sclr) {
         this.scalar = new UncheckedScalar<>(sclr);
     }
 

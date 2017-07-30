@@ -27,12 +27,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
-import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.func.IoCheckedScalar;
-import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
 import org.cactoos.text.TextOf;
 
@@ -67,15 +65,7 @@ public final class PropertiesOf implements Scalar<Properties> {
      * @param text Text
      */
     public PropertiesOf(final Text text) {
-        this(new BytesOf(text));
-    }
-
-    /**
-     * Ctor.
-     * @param bytes Bytes
-     */
-    public PropertiesOf(final Bytes bytes) {
-        this(new InputOf(bytes));
+        this(new InputOf(text));
     }
 
     /**
@@ -134,7 +124,7 @@ public final class PropertiesOf implements Scalar<Properties> {
      * Ctor.
      * @param sclr The underlying properties
      */
-    public PropertiesOf(final Scalar<Properties> sclr) {
+    private PropertiesOf(final Scalar<Properties> sclr) {
         this.scalar = new IoCheckedScalar<>(sclr);
     }
 
