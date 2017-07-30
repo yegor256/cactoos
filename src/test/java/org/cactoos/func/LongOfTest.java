@@ -21,28 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.func;
 
+import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link EncodedUrl}.
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * Test case for {@link LongOf}.
+ *
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class EncodedUrlTest {
+public final class LongOfTest {
 
     @Test
-    public void encodeStringToUrl() throws Exception {
+    public void numberTest() throws IOException {
         MatcherAssert.assertThat(
-            "Can't encode a string as URL",
-            new EncodedUrl("друг").value(),
-            Matchers.equalTo("%D0%B4%D1%80%D1%83%D0%B3")
+            "Can't parse long number",
+            new LongOf("186789235425346").value(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(186789235425346L)
         );
     }
 
+    @Test(expected = NumberFormatException.class)
+    public void failsIfTextDoesNotRepresentALong() throws IOException {
+        new LongOf("abc").value();
+    }
 }

@@ -21,14 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.func;
 
 import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.text.TextOf;
 
 /**
- * Text as {@link Double}.
+ * Text as {@link Float}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -36,7 +37,7 @@ import org.cactoos.Text;
  * @version $Id$
  * @since 0.2
  */
-public final class TextAsDouble implements Scalar<Double> {
+public final class FloatOf implements Scalar<Float> {
 
     /**
      * Source text.
@@ -48,7 +49,7 @@ public final class TextAsDouble implements Scalar<Double> {
      *
      * @param string Number-string
      */
-    public TextAsDouble(final String string) {
+    public FloatOf(final String string) {
         this(new TextOf(string));
     }
 
@@ -57,12 +58,12 @@ public final class TextAsDouble implements Scalar<Double> {
      *
      * @param text Number-text
      */
-    public TextAsDouble(final Text text) {
+    public FloatOf(final Text text) {
         this.text = text;
     }
 
     @Override
-    public Double value() throws IOException {
-        return Double.valueOf(this.text.asString());
+    public Float value() throws IOException {
+        return Float.valueOf(this.text.asString());
     }
 }

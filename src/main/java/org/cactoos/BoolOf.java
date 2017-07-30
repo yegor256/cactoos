@@ -21,77 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.func;
 
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.text.TextOf;
 
 /**
- * URL as String.
+ * Text as {@link Boolean}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.2
  */
-public final class DecodedUrl implements Scalar<String> {
+public final class BoolOf implements Scalar<Boolean> {
 
     /**
-     * The source.
+     * Source text.
      */
-    private final Text source;
-
-    /**
-     * The encoding.
-     */
-    private final Charset encoding;
+    private final Text text;
 
     /**
      * Ctor.
-     * @param url The URL as String
+     *
+     * @param string True or false string
      */
-    public DecodedUrl(final String url) {
-        this(url, StandardCharsets.UTF_8);
+    public BoolOf(final String string) {
+        this(new TextOf(string));
     }
 
     /**
      * Ctor.
-     * @param url The URL as Text
+     *
+     * @param text True or false text
      */
-    public DecodedUrl(final Text url) {
-        this(url, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Ctor.
-     * @param url The URL as String
-     * @param enc The encoding
-     */
-    public DecodedUrl(final String url, final Charset enc) {
-        this(new TextOf(url), enc);
-    }
-
-    /**
-     * Ctor.
-     * @param url The URL as Text
-     * @param enc The encoding
-     */
-    public DecodedUrl(final Text url, final Charset enc) {
-        this.source = url;
-        this.encoding = enc;
+    public BoolOf(final Text text) {
+        this.text = text;
     }
 
     @Override
-    public String value() throws IOException {
-        return URLDecoder.decode(
-            this.source.asString(),
-            this.encoding.name()
-        );
+    public Boolean value() throws IOException {
+        return Boolean.valueOf(this.text.asString());
     }
-
 }

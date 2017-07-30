@@ -21,48 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
-import java.io.IOException;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Text as {@link Integer}.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Kirill (g4s8.public@gmail.com)
+ * Test case for {@link EncodedUrl}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TextAsInt implements Scalar<Integer> {
+public final class EncodedUrlTest {
 
-    /**
-     * Source text.
-     */
-    private final Text text;
-
-    /**
-     * Ctor.
-     *
-     * @param string Number-string
-     */
-    public TextAsInt(final String string) {
-        this(new TextOf(string));
+    @Test
+    public void encodeStringToUrl() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't encode a string as URL",
+            new EncodedUrl("друг").value(),
+            Matchers.equalTo("%D0%B4%D1%80%D1%83%D0%B3")
+        );
     }
 
-    /**
-     * Ctor.
-     *
-     * @param text Number-text
-     */
-    public TextAsInt(final Text text) {
-        this.text = text;
-    }
-
-    @Override
-    public Integer value() throws IOException {
-        return Integer.valueOf(this.text.asString());
-    }
 }

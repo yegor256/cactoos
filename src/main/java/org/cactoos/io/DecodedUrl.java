@@ -21,48 +21,78 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.text.TextOf;
 
 /**
- * Text as {@link Long}.
+ * URL as String.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.4
  */
-public final class TextAsLong implements Scalar<Long> {
+public final class DecodedUrl implements Scalar<String> {
 
     /**
-     * Source text.
+     * The source.
      */
-    private final Text text;
+    private final Text source;
+
+    /**
+     * The encoding.
+     */
+    private final Charset encoding;
 
     /**
      * Ctor.
-     *
-     * @param string Number-string
+     * @param url The URL as String
      */
-    public TextAsLong(final String string) {
-        this(new TextOf(string));
+    public DecodedUrl(final String url) {
+        this(url, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
-     *
-     * @param text Number-text
+     * @param url The URL as Text
      */
-    public TextAsLong(final Text text) {
-        this.text = text;
+    public DecodedUrl(final Text url) {
+        this(url, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param url The URL as String
+     * @param enc The encoding
+     */
+    public DecodedUrl(final String url, final Charset enc) {
+        this(new TextOf(url), enc);
+    }
+
+    /**
+     * Ctor.
+     * @param url The URL as Text
+     * @param enc The encoding
+     */
+    public DecodedUrl(final Text url, final Charset enc) {
+        this.source = url;
+        this.encoding = enc;
     }
 
     @Override
-    public Long value() throws IOException {
-        return Long.valueOf(this.text.asString());
+    public String value() throws IOException {
+        return URLDecoder.decode(
+            this.source.asString(),
+            this.encoding.name()
+        );
     }
+
 }

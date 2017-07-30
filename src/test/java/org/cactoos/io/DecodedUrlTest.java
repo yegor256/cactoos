@@ -21,24 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
-import org.cactoos.Bytes;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Bytes with no data.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link DecodedUrl}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class EmptyBytes implements Bytes {
+public final class DecodedUrlTest {
 
-    @Override
-    public byte[] asBytes() {
-        return new byte[] {};
+    @Test
+    public void decodeUrlToString() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't convert a string to URL",
+            new DecodedUrl("%D0%B0%20%D1%8F").value(),
+            Matchers.equalTo("а я")
+        );
     }
 
 }

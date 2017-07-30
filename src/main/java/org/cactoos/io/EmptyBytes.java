@@ -21,48 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
-import java.io.IOException;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
+import org.cactoos.Bytes;
 
 /**
- * Text as {@link Float}.
+ * Bytes with no data.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.2
  */
-public final class TextAsFloat implements Scalar<Float> {
-
-    /**
-     * Source text.
-     */
-    private final Text text;
-
-    /**
-     * Ctor.
-     *
-     * @param string Number-string
-     */
-    public TextAsFloat(final String string) {
-        this(new TextOf(string));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param text Number-text
-     */
-    public TextAsFloat(final Text text) {
-        this.text = text;
-    }
+public final class EmptyBytes implements Bytes {
 
     @Override
-    public Float value() throws IOException {
-        return Float.valueOf(this.text.asString());
+    public byte[] asBytes() {
+        return new byte[] {};
     }
+
 }

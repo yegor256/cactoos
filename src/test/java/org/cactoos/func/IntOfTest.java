@@ -21,28 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.func;
 
+import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link DecodedUrl}.
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * Test case for {@link IntOf}.
+ *
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @since 0.4
+ * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class DecodedUrlTest {
+public final class IntOfTest {
 
     @Test
-    public void decodeUrlToString() throws Exception {
+    public void numberTest() throws IOException {
         MatcherAssert.assertThat(
-            "Can't convert a string to URL",
-            new DecodedUrl("%D0%B0%20%D1%8F").value(),
-            Matchers.equalTo("а я")
+            "Can't parse integer number",
+            new IntOf("1867892354").value(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(1867892354)
         );
     }
 
+    @Test(expected = NumberFormatException.class)
+    public void failsIfTextDoesNotRepresentAnInt() throws IOException {
+        new DoubleOf("abc").value();
+    }
 }

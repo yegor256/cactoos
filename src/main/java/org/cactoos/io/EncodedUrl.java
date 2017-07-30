@@ -21,48 +21,78 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.text.TextOf;
 
 /**
- * Text as {@link Boolean}.
+ * String as URL.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.4
  */
-public final class TextAsBool implements Scalar<Boolean> {
+public final class EncodedUrl implements Scalar<String> {
 
     /**
-     * Source text.
+     * The source.
      */
-    private final Text text;
+    private final Text source;
+
+    /**
+     * The encoding.
+     */
+    private final Charset encoding;
 
     /**
      * Ctor.
-     *
-     * @param string True or false string
+     * @param url The URL as String
      */
-    public TextAsBool(final String string) {
-        this(new TextOf(string));
+    public EncodedUrl(final String url) {
+        this(url, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
-     *
-     * @param text True or false text
+     * @param url The URL as Text
      */
-    public TextAsBool(final Text text) {
-        this.text = text;
+    public EncodedUrl(final Text url) {
+        this(url, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param url The URL as String
+     * @param enc The encoding
+     */
+    public EncodedUrl(final String url, final Charset enc) {
+        this(new TextOf(url), enc);
+    }
+
+    /**
+     * Ctor.
+     * @param url The URL as Text
+     * @param enc The encoding
+     */
+    public EncodedUrl(final Text url, final Charset enc) {
+        this.source = url;
+        this.encoding = enc;
     }
 
     @Override
-    public Boolean value() throws IOException {
-        return Boolean.valueOf(this.text.asString());
+    public String value() throws IOException {
+        return URLEncoder.encode(
+            this.source.asString(),
+            this.encoding.name()
+        );
     }
+
 }

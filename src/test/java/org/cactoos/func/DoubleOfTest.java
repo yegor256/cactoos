@@ -21,26 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.func;
 
 import java.io.IOException;
-import java.io.InputStream;
-import org.cactoos.Input;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Input with no data.
+ * Test case for {@link DoubleOf}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class DeadInput implements Input {
+public final class DoubleOfTest {
 
-    @Override
-    public InputStream stream() throws IOException {
-        return new InputOf(new EmptyBytes()).stream();
+    @Test
+    public strictfp void numberTest() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't parse double number",
+            new DoubleOf("185.65156465123").value(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(185.65156465123)
+        );
     }
 
+    @Test(expected = NumberFormatException.class)
+    public void failsIfTextDoesNotRepresentADouble() throws IOException {
+        new DoubleOf("abc").value();
+    }
 }

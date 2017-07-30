@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.func;
 
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
@@ -29,39 +29,27 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TextAsBool}.
+ * Test case for {@link FloatOf}.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TextAsBoolTest {
+public final class FloatOfTest {
 
     @Test
-    public void trueTest() throws IOException {
+    public strictfp void numberTest() throws IOException {
         MatcherAssert.assertThat(
-            "Can't parse 'true' string",
-            new TextAsBool("true").value(),
-            Matchers.equalTo(true)
+            "Can't parse float number",
+            new FloatOf("1656.894").value(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(1656.894F)
         );
     }
 
-    @Test
-    public void falseTest() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse 'false' string",
-            new TextAsBool("false").value(),
-            Matchers.equalTo(false)
-        );
-    }
-
-    @Test
-    public void isFalseIfTextDoesNotRepresentABoolean() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse a non-boolean string",
-            new TextAsBool("abc").value(),
-            Matchers.equalTo(false)
-        );
+    @Test(expected = NumberFormatException.class)
+    public void failsIfTextDoesNotRepresentAFloat() throws IOException {
+        new FloatOf("abc").value();
     }
 }

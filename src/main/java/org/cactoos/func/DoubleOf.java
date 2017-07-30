@@ -21,35 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.func;
 
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.text.TextOf;
 
 /**
- * Test case for {@link TextAsDouble}.
+ * Text as {@link Double}.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TextAsDoubleTest {
+public final class DoubleOf implements Scalar<Double> {
 
-    @Test
-    public strictfp void numberTest() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse double number",
-            new TextAsDouble("185.65156465123").value(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(185.65156465123)
-        );
+    /**
+     * Source text.
+     */
+    private final Text text;
+
+    /**
+     * Ctor.
+     *
+     * @param string Number-string
+     */
+    public DoubleOf(final String string) {
+        this(new TextOf(string));
     }
 
-    @Test(expected = NumberFormatException.class)
-    public void failsIfTextDoesNotRepresentADouble() throws IOException {
-        new TextAsDouble("abc").value();
+    /**
+     * Ctor.
+     *
+     * @param text Number-text
+     */
+    public DoubleOf(final Text text) {
+        this.text = text;
+    }
+
+    @Override
+    public Double value() throws IOException {
+        return Double.valueOf(this.text.asString());
     }
 }

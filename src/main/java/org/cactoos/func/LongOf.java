@@ -21,35 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.func;
 
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.text.TextOf;
 
 /**
- * Test case for {@link TextAsInt}.
+ * Text as {@link Long}.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TextAsIntTest {
+public final class LongOf implements Scalar<Long> {
 
-    @Test
-    public void numberTest() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse integer number",
-            new TextAsInt("1867892354").value(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(1867892354)
-        );
+    /**
+     * Source text.
+     */
+    private final Text text;
+
+    /**
+     * Ctor.
+     *
+     * @param string Number-string
+     */
+    public LongOf(final String string) {
+        this(new TextOf(string));
     }
 
-    @Test(expected = NumberFormatException.class)
-    public void failsIfTextDoesNotRepresentAnInt() throws IOException {
-        new TextAsDouble("abc").value();
+    /**
+     * Ctor.
+     *
+     * @param text Number-text
+     */
+    public LongOf(final Text text) {
+        this.text = text;
+    }
+
+    @Override
+    public Long value() throws IOException {
+        return Long.valueOf(this.text.asString());
     }
 }
