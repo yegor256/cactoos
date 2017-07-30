@@ -23,50 +23,33 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.func.StickyFunc;
+import org.cactoos.CountOf;
+import org.cactoos.ScalarHasValue;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * A few Iterables joined together.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link JoinedOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of item
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ConcatIterable<T> implements Iterable<T> {
+public final class JoinedOfTest {
 
-    /**
-     * Iterables.
-     */
-    private final Iterable<Iterable<T>> list;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    public ConcatIterable(final Iterable<T>... items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public ConcatIterable(final Iterable<Iterable<T>> items) {
-        this.list = items;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new ConcatIterator<>(
-            new MappedOf<>(
-                this.list,
-                new StickyFunc<>(Iterable::iterator)
-            )
+    @Test
+    public void transformsList() {
+        MatcherAssert.assertThat(
+            "Can't concatenate iterables together",
+            new CountOf(
+                new JoinedOf<String>(
+                    new ArrayOf<>("hello", "world", "друг"),
+                    new ArrayOf<>("how", "are", "you"),
+                    new ArrayOf<>("what's", "up")
+                )
+            ),
+            // @checkstyle MagicNumber (1 line)
+            new ScalarHasValue<>(8)
         );
     }
 

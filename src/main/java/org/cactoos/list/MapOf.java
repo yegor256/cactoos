@@ -145,7 +145,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
     public MapOf(final Map<X, Y> map,
         final Iterable<Map.Entry<X, Y>> list) {
         this(
-            new ConcatIterable<>(
+            new JoinedOf<>(
                 map.entrySet(), list
             )
         );
