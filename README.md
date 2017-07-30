@@ -74,7 +74,7 @@ new CountOf(
     new InputOf(
       "Hello, world!"
     ),
-    new FileAsOutput(
+    new OutputTo(
       new File("/code/a.txt")
     )
   )

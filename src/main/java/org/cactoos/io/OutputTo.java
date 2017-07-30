@@ -23,39 +23,65 @@
  */
 package org.cactoos.io;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import org.cactoos.Output;
 
 /**
- * Path as Output.
+ * Output to.
  *
  * <p>There is no thread-safety guarantee.
  *
+ * @author Ix (ixmanuel@yahoo.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.12
  */
-public final class PathAsOutput implements Output {
+public final class OutputTo implements Output {
 
     /**
-     * The path.
+     * The output.
      */
-    private final Path path;
+    private final Output origin;
 
     /**
      * Ctor.
-     * @param src The path
+     * @param file The file
      */
-    public PathAsOutput(final Path src) {
-        this.path = src;
+    public OutputTo(final File file) {
+        this(() -> new FileOutputStream(file));
+    }
+
+    /**
+     * Ctor.
+     * @param path The path
+     */
+    public OutputTo(final Path path) {
+        this(() -> new FileOutputStream(path.toFile()));
+    }
+
+    /**
+     * Ctor.
+     * @param stream The stream
+     */
+    public OutputTo(final OutputStream stream) {
+        this(() -> stream);
+    }
+
+    /**
+     * Ctor.
+     * @param output The output
+     */
+    private OutputTo(final Output output) {
+        this.origin = output;
     }
 
     @Override
-    public OutputStream stream() throws FileNotFoundException {
-        return new FileOutputStream(this.path.toFile());
+    public OutputStream stream() throws IOException {
+        return this.origin.stream();
     }
 
 }

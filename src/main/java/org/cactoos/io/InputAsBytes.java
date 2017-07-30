@@ -73,7 +73,7 @@ public final class InputAsBytes implements Bytes {
     public byte[] asBytes() throws IOException {
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final InputStream stream = new TeeInput(
-                this.source, new OutputStreamAsOutput(baos)
+                this.source, new OutputTo(baos)
             ).stream()) {
             final byte[] buf = new byte[this.size];
             while (true) {

@@ -53,7 +53,7 @@ public final class TeeInputTest {
             new TextOf(
                 new TeeInput(
                     new InputOf(content),
-                    new OutputStreamAsOutput(baos)
+                    new OutputTo(baos)
                 )
             ),
             new TextHasString(
