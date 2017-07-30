@@ -39,7 +39,7 @@ import org.cactoos.func.UncheckedScalar;
  * @param <X> Type of item
  * @since 0.1
  */
-public final class StickyIterable<X> implements Iterable<X> {
+public final class StickyOf<X> implements Iterable<X> {
 
     /**
      * The gate.
@@ -50,7 +50,7 @@ public final class StickyIterable<X> implements Iterable<X> {
      * Ctor.
      * @param iterable The iterable
      */
-    public StickyIterable(final Iterable<X> iterable) {
+    public StickyOf(final Iterable<X> iterable) {
         this.gate = new UncheckedScalar<>(
             new StickyScalar<>(
                 () -> {

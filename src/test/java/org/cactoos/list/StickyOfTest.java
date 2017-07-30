@@ -31,19 +31,19 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyIterable}.
+ * Test case for {@link StickyOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyIterableTest {
+public final class StickyOfTest {
 
     @Test
     public void ignoresChangesInIterable() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
-        final Iterable<Integer> list = new StickyIterable<>(
+        final Iterable<Integer> list = new StickyOf<>(
             new ListOf<>(
                 () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
