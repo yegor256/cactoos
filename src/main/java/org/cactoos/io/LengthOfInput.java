@@ -21,12 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos;
 
 import java.io.IOException;
 import java.io.InputStream;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedScalar;
 
 /**
@@ -38,7 +36,7 @@ import org.cactoos.func.UncheckedScalar;
  * @version $Id$
  * @since 0.1
  */
-public final class LengthOfInput implements Scalar<Long> {
+final class LengthOfInput implements Scalar<Long> {
 
     /**
      * The input.
@@ -54,7 +52,7 @@ public final class LengthOfInput implements Scalar<Long> {
      * Ctor.
      * @param input The input
      */
-    public LengthOfInput(final Input input) {
+    LengthOfInput(final Input input) {
         // @checkstyle MagicNumber (1 line)
         this(input, 16 << 10);
     }
@@ -64,7 +62,7 @@ public final class LengthOfInput implements Scalar<Long> {
      * @param input The input
      * @param max Buffer size
      */
-    public LengthOfInput(final Input input, final int max) {
+    LengthOfInput(final Input input, final int max) {
         this.source = input;
         this.size = max;
     }

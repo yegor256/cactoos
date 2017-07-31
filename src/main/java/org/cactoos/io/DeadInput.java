@@ -26,7 +26,6 @@ package org.cactoos.io;
 import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
-import org.cactoos.text.EmptyBytes;
 
 /**
  * Input with no data.

@@ -39,7 +39,7 @@ import org.cactoos.Bytes;
  * @version $Id$
  * @since 0.12
  */
-public final class ReaderAsBytes implements Bytes {
+final class ReaderAsBytes implements Bytes {
 
     /**
      * The reader.
@@ -61,7 +61,7 @@ public final class ReaderAsBytes implements Bytes {
      *
      * @param rdr Reader
      */
-    public ReaderAsBytes(final Reader rdr) {
+    ReaderAsBytes(final Reader rdr) {
         this(rdr, StandardCharsets.UTF_8);
     }
 
@@ -71,7 +71,7 @@ public final class ReaderAsBytes implements Bytes {
      * @param rdr Reader
      * @param cset Charset
      */
-    public ReaderAsBytes(final Reader rdr, final Charset cset) {
+    ReaderAsBytes(final Reader rdr, final Charset cset) {
         // @checkstyle MagicNumber (1 line)
         this(rdr, cset, 16 << 10);
     }
@@ -83,7 +83,7 @@ public final class ReaderAsBytes implements Bytes {
      * @param cset Charset
      * @param max Buffer size
      */
-    public ReaderAsBytes(final Reader rdr, final Charset cset, final int max) {
+    ReaderAsBytes(final Reader rdr, final Charset cset, final int max) {
         this.reader = rdr;
         this.charset = cset;
         this.size = max;
