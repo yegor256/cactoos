@@ -44,7 +44,7 @@ public class FilteredTextTest {
         MatcherAssert.assertThat(
             "Can't filter a text",
             new FilteredText(
-                new StringAsText("abc"), Arrays.asList(new StringAsText("c"))
+                new TextOf("abc"), Arrays.asList(new TextOf("c"))
             ),
             new TextHasString("ab")
         );
@@ -55,7 +55,7 @@ public class FilteredTextTest {
         MatcherAssert.assertThat(
             "Can't filter empty text",
             new FilteredText(
-                new StringAsText(""), Arrays.asList(new StringAsText("c"))
+                new TextOf(""), Arrays.asList(new TextOf("c"))
             ),
             new TextHasString("")
         );
@@ -66,8 +66,8 @@ public class FilteredTextTest {
         MatcherAssert.assertThat(
             "Can't compare filtered text",
             new FilteredText(
-                new StringAsText("abc"), Arrays.asList(new StringAsText("c"))
-            ).compareTo(new StringAsText("ab")),
+                new TextOf("abc"), Arrays.asList(new TextOf("c"))
+            ).compareTo(new TextOf("ab")),
             Matchers.is(0)
         );
     }
