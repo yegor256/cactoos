@@ -246,7 +246,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `SubText` | - | - | `String#substring()`
 `TrimmedText` | - | - | `String#trim()`
 `UpperText` | - | - | `String#toUpperCase()`
-`FilteredText` | - | `StringUtils.remove()` | -
+`FilteredText` | - | `StringUtils.remove()` | `String#replaceAll()`
 `DecodedUrl` | - | - | `URLDecoder.decode()`
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
