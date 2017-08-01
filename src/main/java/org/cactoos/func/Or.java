@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Scalar;
-import org.cactoos.list.ArrayAsIterable;
+import org.cactoos.iterable.ArrayOf;
 
 /**
  * Logical disjunction.
@@ -48,7 +48,7 @@ public final class Or implements Scalar<Boolean> {
      */
     @SafeVarargs
     public Or(final Scalar<Boolean>... src) {
-        this(new ArrayAsIterable<>(src));
+        this(new ArrayOf<>(src));
     }
 
     /**

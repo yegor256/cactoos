@@ -64,8 +64,8 @@ public final class UncheckedTextTest {
         MatcherAssert.assertThat(
             "These UncheckedText are not equal",
             new UncheckedText(
-                new StringAsText(txt)
-            ).compareTo(new StringAsText(txt)),
+                new TextOf(txt)
+            ).compareTo(new TextOf(txt)),
             Matchers.equalTo(0)
         );
     }

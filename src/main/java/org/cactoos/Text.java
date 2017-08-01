@@ -33,7 +33,7 @@ import org.cactoos.text.UncheckedText;
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @see org.cactoos.text.StringAsText
+ * @see org.cactoos.text.TextOf
  * @since 0.1
  */
 public interface Text extends Comparable<Text> {

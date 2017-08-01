@@ -26,8 +26,8 @@ package org.cactoos.text;
 import java.io.IOException;
 import java.util.StringJoiner;
 import org.cactoos.Text;
-import org.cactoos.list.ArrayAsIterable;
-import org.cactoos.list.MappedIterable;
+import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Join a Text.
@@ -56,7 +56,7 @@ public final class JoinedText implements Text {
      * @param strs Strings to be joined
      */
     public JoinedText(final String delimit, final String... strs) {
-        this(delimit, new ArrayAsIterable<>(strs));
+        this(delimit, new ArrayOf<>(strs));
     }
 
     /**
@@ -66,10 +66,10 @@ public final class JoinedText implements Text {
      */
     public JoinedText(final String delimit, final Iterable<String> strs) {
         this(
-            new StringAsText(delimit),
-            new MappedIterable<>(
+            new TextOf(delimit),
+            new Mapped<>(
                 strs,
-                text -> new StringAsText(text)
+                text -> new TextOf(text)
             )
         );
     }
@@ -80,7 +80,7 @@ public final class JoinedText implements Text {
      * @param txts Texts to be joined
      */
     public JoinedText(final Text delimit, final Text... txts) {
-        this(delimit, new ArrayAsIterable<>(txts));
+        this(delimit, new ArrayOf<>(txts));
     }
 
     /**

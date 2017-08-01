@@ -26,11 +26,12 @@ package org.cactoos.io;
 import java.io.IOException;
 import java.net.URL;
 import org.cactoos.Input;
+import org.cactoos.LengthOf;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.func.RepeatedFunc;
-import org.cactoos.text.BytesAsText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -50,13 +51,13 @@ public final class StickyInputTest {
         MatcherAssert.assertThat(
             "Can't read bytes from a file",
             new StickyInput(
-                new ResourceAsInput(
+                new ResourceOf(
                     "org/cactoos/large-text.txt"
                 )
             ),
             new MatcherOf<>(
                 new RepeatedFunc<Input, Boolean>(
-                    input -> new InputAsBytes(
+                    input -> new BytesOf(
                         new TeeInput(input, new DeadOutput())
                     // @checkstyle MagicNumber (2 lines)
                     ).asBytes().length == 73471,
@@ -70,14 +71,12 @@ public final class StickyInputTest {
     public void readsRealUrl() throws IOException {
         MatcherAssert.assertThat(
             "Can't fetch text page from the URL",
-            new BytesAsText(
-                new InputAsBytes(
-                    new StickyInput(
-                        new InputOf(
-                            new URL(
-                                // @checkstyle LineLength (1 line)
-                                "file:src/test/resources/org/cactoos/large-text.txt"
-                            )
+            new TextOf(
+                new StickyInput(
+                    new InputOf(
+                        new URL(
+                            // @checkstyle LineLength (1 line)
+                            "file:src/test/resources/org/cactoos/large-text.txt"
                         )
                     )
                 )
@@ -93,7 +92,7 @@ public final class StickyInputTest {
         final long size = 100_000L;
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly and count length",
-            new LengthOfInput(
+            new LengthOf(
                 new StickyInput(
                     new SlowInput((int) size)
                 )
@@ -107,7 +106,7 @@ public final class StickyInputTest {
         final long size = 130_000L;
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly",
-            new InputAsBytes(
+            new BytesOf(
                 new StickyInput(
                     new SlowInput((int) size)
                 )

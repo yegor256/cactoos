@@ -59,11 +59,9 @@ More about it here:
 To read a text file in UTF-8:
 
 ```java
-String text = new BytesAsText(
-  new InputAsBytes(
-    new InputOf(
-      new File("/code/a.txt")
-    )
+String text = new TextOf(
+  new InputOf(
+    new File("/code/a.txt")
   )
 ).asString();
 ```
@@ -71,14 +69,12 @@ String text = new BytesAsText(
 To write a text into a file:
 
 ```java
-new LengthOfInput(
+new LengthOf(
   new TeeInput(
     new InputOf(
-      new TextAsBytes(
-        new StringAsText("Hello, world!")
-      )
+      "Hello, world!"
     ),
-    new FileAsOutput(
+    new OutputTo(
       new File("/code/a.txt")
     )
   )
@@ -88,8 +84,8 @@ new LengthOfInput(
 To read a binary file from classpath:
 
 ```java
-byte[] data = new InputAsBytes(
-  new ResourceAsInput("foo/img.jpg")
+byte[] data = new BytesOf(
+  new ResourceOf("foo/img.jpg")
 ).asBytes();
 ```
 
@@ -118,10 +114,10 @@ new UpperText("Hello");
 To filter a collection:
 
 ```java
-Collection<String> filtered = new IterableAsList<>(
-  new FilteredIterable<>(
-    new ArrayAsIterable<>("hello", "world", "dude"),
-    new Func<String, Boolean>() {
+Collection<String> filtered = new ListOf<>(
+  new Filtered<>(
+    new ArrayOf<>("hello", "world", "dude"),
+    new FuncOf<String, Boolean>() {
       @Override
       public Boolean apply(String s) {
         return s.length() > 4;
@@ -134,9 +130,9 @@ Collection<String> filtered = new IterableAsList<>(
 With Lambda:
 
 ```java
-new IterableAsList<>(
-  new FilteredIterable<>(
-    new ArrayAsIterable<>("hello", "world", "dude"),
+new ListOf<>(
+  new Filtered<>(
+    new ArrayOf<>("hello", "world", "dude"),
     s -> s.length() > 4
   )
 );
@@ -146,9 +142,9 @@ To iterate a collection:
 
 ```java
 new And(
-  new MappedIterable<>(
-    new ArrayAsIterable<>("how", "are", "you"),
-    new ProcAsFunc<>(
+  new Mappped<>(
+    new ArrayOf<>("how", "are", "you"),
+    new FuncOf<>(
       input -> {
         System.out.printf("Item: %s\n", input);
       }
@@ -169,17 +165,15 @@ new And(
 To sort a list of words in the file:
 
 ```java
-List<String> sorted = new IterableAsList<>(
-  new SortedIterable<>(
+List<String> sorted = new ListOf<>(
+  new Sorted<>(
     new SplitText(
-      new BytesAsText(
-        new InputAsBytes(
-          new InputOf(
-            new File("/tmp/names.txt")
-          )
+      new TextOf(
+        new InputOf(
+          new File("/tmp/names.txt")
         )
       ),
-      new StringAsText("\\s+")
+      new TextOf("\\s+")
     )
   )
 );
@@ -188,7 +182,7 @@ List<String> sorted = new IterableAsList<>(
 To count elements in an iterable:
 
 ```java
-int total = new LengthOfIterable(
+int total = new LengthOf(
   "how", "are", "you"
 ).value();
 ```
@@ -226,7 +220,7 @@ Here is its object-oriented alternative:
 
 ```java
 new And(
-  new EndlessIterable<>(ready),
+  new Endless<>(ready),
   ready -> {
     System.out.prinln("Still waiting...");
     return !ready;
@@ -241,22 +235,22 @@ Cactoos | Guava | Apache Commons | JDK 8
 `FormattedText` | - | - | `String.format()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
 `JoinedText` | - | - | `String.join()`
-`LengthOfText` | - | - | `String#length()`
+`LengthOf` | - | - | `String#length()`
 `LowerText` | - | - | `String#toLowerCase()`
 `NormalizedText` | - | `StringUtils.normalize()` | -
 `RepeatedText` | - | `StringUtils.repeat()` | -
 `ReplacedText` | - | - | `String#replace()`
-`ReversedText` | - | - | `StringBuilder#replace()`
+`ReversedText` | - | - | `StringBuilder#reverse()`
 `SplitText` | - | - | `String#split()`
-`StringAsUrl` | - | - | `URLEncoder.encode()`
+`EncodedUrl` | - | - | `URLEncoder.encode()`
 `SubText` | - | - | `String#substring()`
 `TrimmedText` | - | - | `String#trim()`
 `UpperText` | - | - | `String#toUpperCase()`
-`UrlAsString` | - | - | `URLDecoder.decode()`
+`DecodedUrl` | - | - | `URLDecoder.decode()`
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
-`FilteredIterable` | `Iterables.filter()` | ? | -
-`BytesAsString` | ? | `IOUtils.toString()` | -
+`Filtered` | `Iterables.filter()` | ? | -
+`TextOf` | ? | `IOUtils.toString()` | -
 
 ## How to contribute?
 

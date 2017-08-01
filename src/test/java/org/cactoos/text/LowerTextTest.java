@@ -40,7 +40,7 @@ public final class LowerTextTest {
     public void convertsText() {
         MatcherAssert.assertThat(
             "Can't lower case a text",
-            new LowerText(new StringAsText("HelLo!")),
+            new LowerText(new TextOf("HelLo!")),
             new TextHasString("hello!")
         );
     }

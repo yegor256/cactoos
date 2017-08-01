@@ -28,8 +28,8 @@ import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.ScalarHasValue;
-import org.cactoos.list.ArrayAsIterable;
-import org.cactoos.list.MappedIterable;
+import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -73,7 +73,7 @@ public final class AndTest {
     public void allFalse() throws Exception {
         MatcherAssert.assertThat(
             new And(
-                new ArrayAsIterable<Scalar<Boolean>>(
+                new ArrayOf<Scalar<Boolean>>(
                     new False(),
                     new False(),
                     new False()
@@ -97,8 +97,8 @@ public final class AndTest {
         MatcherAssert.assertThat(
             "Can't iterate a list with a procedure",
             new And(
-                new MappedIterable<String, Scalar<Boolean>>(
-                    new ArrayAsIterable<>("hello", "world"),
+                new Mapped<String, Scalar<Boolean>>(
+                    new ArrayOf<>("hello", "world"),
                     new FuncOf<>(list::add, () -> true)
                 )
             ),
@@ -119,7 +119,7 @@ public final class AndTest {
         MatcherAssert.assertThat(
             "Can't iterate a list",
             new And(
-                new MappedIterable<String, Scalar<Boolean>>(
+                new Mapped<String, Scalar<Boolean>>(
                     Collections.emptyList(),
                     new FuncOf<>(list::add, () -> true)
                 )

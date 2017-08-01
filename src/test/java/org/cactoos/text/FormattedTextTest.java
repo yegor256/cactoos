@@ -29,7 +29,7 @@ import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
 import org.cactoos.TextHasString;
-import org.cactoos.list.IterableAsList;
+import org.cactoos.iterable.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -60,7 +60,7 @@ public final class FormattedTextTest {
         MatcherAssert.assertThat(
             "Can't format a text with objects",
             new FormattedText(
-                new StringAsText("%d. Number as %s"),
+                new TextOf("%d. Number as %s"),
                 new Integer(1),
                 new String("string")
             ),
@@ -71,8 +71,8 @@ public final class FormattedTextTest {
     @Test(expected = UnknownFormatConversionException.class)
     public void failsForInvalidPattern() throws IOException {
         new FormattedText(
-            new StringAsText("%%. Formatted %$"),
-            new IterableAsList<>(1, "invalid")
+            new TextOf("%%. Formatted %$"),
+            new ListOf<>(1, "invalid")
         ).asString();
     }
 
@@ -81,8 +81,8 @@ public final class FormattedTextTest {
         MatcherAssert.assertThat(
             "Can't format a text with a collection",
             new FormattedText(
-                new StringAsText("%d. Formatted as %s"),
-                new IterableAsList<>(1, "txt")
+                new TextOf("%d. Formatted as %s"),
+                new ListOf<>(1, "txt")
             ),
             new TextHasString("1. Formatted as txt")
         );
@@ -91,7 +91,7 @@ public final class FormattedTextTest {
     @Test(expected = IllegalFormatConversionException.class)
     public void ensuresThatFormatterFails() throws IOException {
         new FormattedText(
-            new StringAsText("Local time: %d"),
+            new TextOf("Local time: %d"),
             Locale.ROOT,
             Calendar.getInstance()
         ).asString();

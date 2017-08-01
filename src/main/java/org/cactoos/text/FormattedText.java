@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.Formatter;
 import java.util.Locale;
 import org.cactoos.Text;
-import org.cactoos.list.IterableAsList;
+import org.cactoos.iterable.ListOf;
 
 /**
  * Text in Sprinf format.
@@ -64,7 +64,7 @@ public final class FormattedText implements Text {
      * @param arguments Arguments
      */
     public FormattedText(final String ptn, final Object... arguments) {
-        this(ptn, new IterableAsList<>(arguments));
+        this(ptn, new ListOf<>(arguments));
     }
 
     /**
@@ -74,7 +74,7 @@ public final class FormattedText implements Text {
      * @param arguments Arguments
      */
     public FormattedText(final Text ptn, final Object... arguments) {
-        this(ptn, new IterableAsList<>(arguments));
+        this(ptn, new ListOf<>(arguments));
     }
 
     /**
@@ -89,7 +89,7 @@ public final class FormattedText implements Text {
         final Locale locale,
         final Object... arguments
     ) {
-        this(ptn, locale, new IterableAsList<>(arguments));
+        this(ptn, locale, new ListOf<>(arguments));
     }
 
     /**
@@ -104,7 +104,7 @@ public final class FormattedText implements Text {
         final Locale locale,
         final Object... arguments
     ) {
-        this(ptn, locale, new IterableAsList<>(arguments));
+        this(ptn, locale, new ListOf<>(arguments));
     }
 
     /**
@@ -139,7 +139,7 @@ public final class FormattedText implements Text {
         final Locale locale,
         final Collection<Object> arguments
     ) {
-        this(new StringAsText(ptn), locale, arguments);
+        this(new TextOf(ptn), locale, arguments);
     }
 
     /**

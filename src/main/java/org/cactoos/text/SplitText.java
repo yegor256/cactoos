@@ -25,8 +25,8 @@ package org.cactoos.text;
 
 import java.util.Iterator;
 import org.cactoos.Text;
-import org.cactoos.list.ArrayAsIterable;
-import org.cactoos.list.FilteredIterator;
+import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterator.Filtered;
 
 /**
  * Split the Text.
@@ -55,8 +55,8 @@ public final class SplitText implements Iterable<String> {
      */
     public SplitText(final String text, final String rgx) {
         this(
-            new UncheckedText(new StringAsText(text)),
-            new UncheckedText(new StringAsText(rgx))
+            new UncheckedText(new TextOf(text)),
+            new UncheckedText(new TextOf(rgx))
         );
     }
 
@@ -99,8 +99,8 @@ public final class SplitText implements Iterable<String> {
 
     @Override
     public Iterator<String> iterator() {
-        return new FilteredIterator<>(
-            new ArrayAsIterable<>(
+        return new Filtered<>(
+            new ArrayOf<>(
                 this.origin.asString().split(
                     this.regex.asString()
                 )
