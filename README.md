@@ -234,6 +234,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 ------ | ------ | ------ | ------
 `FormattedText` | - | - | `String.format()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
+`IsBlank` | - | `StringUtils.isBlank()`| -
 `JoinedText` | - | - | `String.join()`
 `LengthOfText` | - | - | `String#length()`
 `LowerText` | - | - | `String#toLowerCase()`
@@ -241,7 +242,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `RepeatedText` | - | `StringUtils.repeat()` | -
 `ReplacedText` | - | - | `String#replace()`
 `ReversedText` | - | - | `StringBuilder#reverse()`
-`RotatedText` | - | - | `StringUtils#rotate()`
+`RotatedText` | - | `StringUtils#rotate()`| -
 `SplitText` | - | - | `String#split()`
 `StringAsUrl` | - | - | `URLEncoder.encode()`
 `SubText` | - | - | `String#substring()`
