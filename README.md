@@ -241,6 +241,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `RepeatedText` | - | `StringUtils.repeat()` | -
 `ReplacedText` | - | - | `String#replace()`
 `ReversedText` | - | - | `StringBuilder#reverse()`
+`RotatedText` | - | - | `StringUtils#rotate()`
 `SplitText` | - | - | `String#split()`
 `StringAsUrl` | - | - | `URLEncoder.encode()`
 `SubText` | - | - | `String#substring()`
