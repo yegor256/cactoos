@@ -28,8 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.Func;
-import org.cactoos.func.StickyScalar;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Map decorator that goes through the map only once.

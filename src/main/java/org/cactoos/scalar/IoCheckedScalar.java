@@ -21,64 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
+import java.io.IOException;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.func.IoCheckedFunc;
 
 /**
- * Array as iterable.
+ * Scalar that doesn't throw checked {@link Exception}, but throws
+ * {@link IOException} instead.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.12
+ * @param <T> Type of result
+ * @since 0.4
  */
-public final class ArrayOf<X> implements Iterable<X> {
+public final class IoCheckedScalar<T> implements Scalar<T> {
 
     /**
-     * The encapsulated iterator of X.
+     * Original scalar.
      */
-    private final UncheckedScalar<Iterator<X>> scalar;
-
-    /**
-     * Ctor.
-     * @param map The map to be flatten as an array of values
-     */
-    @SuppressWarnings("unchecked")
-    public ArrayOf(final Map<?, ?> map) {
-        this(
-            () -> (Iterator<X>) Arrays.asList(
-                map.values().toArray()
-            ).iterator()
-        );
-    }
+    private final Scalar<T> scalar;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param scalar Encapsulated scalar
      */
-    @SafeVarargs
-    public ArrayOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param sclr The encapsulated iterator of x
-     */
-    private ArrayOf(final Scalar<Iterator<X>> sclr) {
-        this.scalar = new UncheckedScalar<>(sclr);
+    public IoCheckedScalar(final Scalar<T> scalar) {
+        this.scalar = scalar;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.scalar.value();
+    public T value() throws IOException {
+        return new IoCheckedFunc<Scalar<T>, T>(
+            Scalar::value
+        ).apply(this.scalar);
     }
 
 }

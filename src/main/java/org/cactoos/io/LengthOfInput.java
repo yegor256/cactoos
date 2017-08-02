@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Length of {@link Input}.

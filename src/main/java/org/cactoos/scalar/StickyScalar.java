@@ -21,64 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.func.StickyFunc;
 
 /**
- * Array as iterable.
+ * Cached version of a Scalar.
+ *
+ * <p>This {@link Scalar} decorator technically is an in-memory
+ * cache.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
+ * @author Tim Hinkes (timmeey@timmeey.de)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.12
+ * @param <T> Type of result
+ * @see StickyFunc
+ * @since 0.3
  */
-public final class ArrayOf<X> implements Iterable<X> {
+public final class StickyScalar<T> implements Scalar<T> {
 
     /**
-     * The encapsulated iterator of X.
+     * Func.
      */
-    private final UncheckedScalar<Iterator<X>> scalar;
+    private final Func<Boolean, T> func;
 
     /**
      * Ctor.
-     * @param map The map to be flatten as an array of values
+     * @param src The Scalar to cache
      */
-    @SuppressWarnings("unchecked")
-    public ArrayOf(final Map<?, ?> map) {
-        this(
-            () -> (Iterator<X>) Arrays.asList(
-                map.values().toArray()
-            ).iterator()
+    public StickyScalar(final Scalar<T> src) {
+        this.func = new StickyFunc<>(
+            input -> src.value()
         );
     }
 
-    /**
-     * Ctor.
-     * @param items The array
-     */
-    @SafeVarargs
-    public ArrayOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param sclr The encapsulated iterator of x
-     */
-    private ArrayOf(final Scalar<Iterator<X>> sclr) {
-        this.scalar = new UncheckedScalar<>(sclr);
-    }
-
     @Override
-    public Iterator<X> iterator() {
-        return this.scalar.value();
+    public T value() throws Exception {
+        return this.func.apply(true);
     }
-
 }

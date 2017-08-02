@@ -21,56 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.scalar;
 
-import org.cactoos.scalar.UncheckedScalar;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsEqual;
+import java.io.IOException;
+import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Matcher for the value.
+ * Test case for {@link IoCheckedScalar}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of result
- * @since 0.2
+ * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ScalarHasValue<T> extends TypeSafeMatcher<Scalar<T>> {
+public final class IoCheckedScalarTest {
 
-    /**
-     * Matcher of the value.
-     */
-    private final Matcher<T> matcher;
-
-    /**
-     * Ctor.
-     * @param text The text to match against
-     */
-    public ScalarHasValue(final T text) {
-        this(new IsEqual<>(text));
+    @Test
+    public void rethrowsCheckedToUncheckedException() {
+        final IOException exception = new IOException("intended");
+        try {
+            new IoCheckedScalar<>(
+                (Scalar<Integer>) () -> {
+                    throw exception;
+                }
+            ).value();
+        } catch (final IOException ex) {
+            MatcherAssert.assertThat(
+                ex, Matchers.is(exception)
+            );
+        }
     }
 
-    /**
-     * Ctor.
-     * @param mtr Matcher of the text
-     */
-    public ScalarHasValue(final Matcher<T> mtr) {
-        super();
-        this.matcher = mtr;
-    }
-
-    @Override
-    public boolean matchesSafely(final Scalar<T> item) {
-        return this.matcher.matches(
-            new UncheckedScalar<>(item).value()
-        );
-    }
-
-    @Override
-    public void describeTo(final Description description) {
-        description.appendText("Scalar with ");
-        description.appendDescriptionOf(this.matcher);
-    }
 }

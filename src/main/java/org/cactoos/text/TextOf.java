@@ -31,8 +31,8 @@ import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.IoCheckedScalar;
 import org.cactoos.io.BytesOf;
+import org.cactoos.scalar.IoCheckedScalar;
 
 /**
  * TextOf

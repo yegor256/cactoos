@@ -30,8 +30,8 @@ import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.LengthOf;
 import org.cactoos.Scalar;
-import org.cactoos.func.IoCheckedScalar;
-import org.cactoos.func.StickyScalar;
+import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.StickyScalar;
 
 /**
  * Input that reads only once.

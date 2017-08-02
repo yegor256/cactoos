@@ -31,7 +31,7 @@ import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.scalar.UncheckedScalar;
 import org.cactoos.text.TextOf;
 
 /**

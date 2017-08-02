@@ -21,64 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
+import java.io.IOException;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.Text;
+import org.cactoos.text.TextOf;
 
 /**
- * Array as iterable.
+ * Text as {@link Float}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
+ * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.12
+ * @since 0.2
  */
-public final class ArrayOf<X> implements Iterable<X> {
+public final class FloatOf implements Scalar<Float> {
 
     /**
-     * The encapsulated iterator of X.
+     * Source text.
      */
-    private final UncheckedScalar<Iterator<X>> scalar;
+    private final Text text;
 
     /**
      * Ctor.
-     * @param map The map to be flatten as an array of values
+     *
+     * @param string Number-string
      */
-    @SuppressWarnings("unchecked")
-    public ArrayOf(final Map<?, ?> map) {
-        this(
-            () -> (Iterator<X>) Arrays.asList(
-                map.values().toArray()
-            ).iterator()
-        );
+    public FloatOf(final String string) {
+        this(new TextOf(string));
     }
 
     /**
      * Ctor.
-     * @param items The array
+     *
+     * @param text Number-text
      */
-    @SafeVarargs
-    public ArrayOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param sclr The encapsulated iterator of x
-     */
-    private ArrayOf(final Scalar<Iterator<X>> sclr) {
-        this.scalar = new UncheckedScalar<>(sclr);
+    public FloatOf(final Text text) {
+        this.text = text;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.scalar.value();
+    public Float value() throws IOException {
+        return Float.valueOf(this.text.asString());
     }
-
 }

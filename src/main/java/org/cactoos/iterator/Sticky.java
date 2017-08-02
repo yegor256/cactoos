@@ -26,9 +26,9 @@ package org.cactoos.iterator;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
-import org.cactoos.func.StickyScalar;
-import org.cactoos.func.UncheckedScalar;
 import org.cactoos.iterable.ArrayOf;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterator that returns the same set of elements always.

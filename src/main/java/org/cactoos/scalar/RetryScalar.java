@@ -21,64 +21,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.func.RetryFunc;
 
 /**
- * Array as iterable.
+ * Func that will try a few times before throwing an exception.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.12
+ * @param <T> Type of output
+ * @since 0.9
  */
-public final class ArrayOf<X> implements Iterable<X> {
+public final class RetryScalar<T> implements Scalar<T> {
 
     /**
-     * The encapsulated iterator of X.
+     * Original scalar.
      */
-    private final UncheckedScalar<Iterator<X>> scalar;
+    private final Scalar<T> scalar;
+
+    /**
+     * Exit condition.
+     */
+    private final Func<Integer, Boolean> exit;
 
     /**
      * Ctor.
-     * @param map The map to be flatten as an array of values
+     * @param slr Scalar original
      */
-    @SuppressWarnings("unchecked")
-    public ArrayOf(final Map<?, ?> map) {
-        this(
-            () -> (Iterator<X>) Arrays.asList(
-                map.values().toArray()
-            ).iterator()
-        );
+    public RetryScalar(final Scalar<T> slr) {
+        // @checkstyle MagicNumberCheck (1 line)
+        this(slr, 3);
     }
 
     /**
      * Ctor.
-     * @param items The array
+     * @param slr Scalar original
+     * @param attempts Maximum number of attempts
      */
-    @SafeVarargs
-    public ArrayOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
+    public RetryScalar(final Scalar<T> slr, final int attempts) {
+        this(slr, attempt -> attempt >= attempts);
     }
 
     /**
      * Ctor.
-     * @param sclr The encapsulated iterator of x
+     * @param slr Func original
+     * @param ext Exit condition, returns TRUE if there is no more reason to try
      */
-    private ArrayOf(final Scalar<Iterator<X>> sclr) {
-        this.scalar = new UncheckedScalar<>(sclr);
+    public RetryScalar(final Scalar<T> slr, final Func<Integer, Boolean> ext) {
+        this.scalar = slr;
+        this.exit = ext;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.scalar.value();
+    public T value() throws Exception {
+        return new RetryFunc<>(
+            (Func<Boolean, T>) input -> this.scalar.value(),
+            this.exit
+        ).apply(true);
     }
-
 }

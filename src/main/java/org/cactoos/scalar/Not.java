@@ -21,64 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Array as iterable.
+ * Logical negative.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.12
+ * @since 0.7
  */
-public final class ArrayOf<X> implements Iterable<X> {
+public final class Not implements Scalar<Boolean> {
 
     /**
-     * The encapsulated iterator of X.
+     * The origin scalar.
      */
-    private final UncheckedScalar<Iterator<X>> scalar;
-
-    /**
-     * Ctor.
-     * @param map The map to be flatten as an array of values
-     */
-    @SuppressWarnings("unchecked")
-    public ArrayOf(final Map<?, ?> map) {
-        this(
-            () -> (Iterator<X>) Arrays.asList(
-                map.values().toArray()
-            ).iterator()
-        );
-    }
+    private final Scalar<Boolean> origin;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param origin The scalar
      */
-    @SafeVarargs
-    public ArrayOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param sclr The encapsulated iterator of x
-     */
-    private ArrayOf(final Scalar<Iterator<X>> sclr) {
-        this.scalar = new UncheckedScalar<>(sclr);
+    public Not(final Scalar<Boolean> origin) {
+        this.origin = origin;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.scalar.value();
+    public Boolean value() throws Exception {
+        return !this.origin.value();
     }
-
 }

@@ -21,64 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Array as iterable.
+ * Equals.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.12
+ * @param <T> Type of object to compare
+ * @since 0.9
  */
-public final class ArrayOf<X> implements Iterable<X> {
+public final class Equals<T extends Comparable<T>> implements Scalar<Boolean> {
 
     /**
-     * The encapsulated iterator of X.
+     * The first scalar.
      */
-    private final UncheckedScalar<Iterator<X>> scalar;
+    private final Scalar<T> first;
 
     /**
-     * Ctor.
-     * @param map The map to be flatten as an array of values
+     * The second scalar.
      */
-    @SuppressWarnings("unchecked")
-    public ArrayOf(final Map<?, ?> map) {
-        this(
-            () -> (Iterator<X>) Arrays.asList(
-                map.values().toArray()
-            ).iterator()
-        );
-    }
+    private final Scalar<T> second;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param frst The first scalar to compare.
+     * @param scnd The second scalar to compare.
      */
-    @SafeVarargs
-    public ArrayOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param sclr The encapsulated iterator of x
-     */
-    private ArrayOf(final Scalar<Iterator<X>> sclr) {
-        this.scalar = new UncheckedScalar<>(sclr);
+    public Equals(final Scalar<T> frst, final Scalar<T> scnd) {
+        this.first = frst;
+        this.second = scnd;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.scalar.value();
+    public Boolean value() throws Exception {
+        return this.first.value().compareTo(this.second.value()) == 0;
     }
-
 }

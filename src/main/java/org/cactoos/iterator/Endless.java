@@ -25,7 +25,7 @@ package org.cactoos.iterator;
 
 import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterator that never ends.

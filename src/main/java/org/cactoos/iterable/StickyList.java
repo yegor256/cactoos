@@ -28,8 +28,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import org.cactoos.func.StickyScalar;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * List decorator that goes through the list only once.

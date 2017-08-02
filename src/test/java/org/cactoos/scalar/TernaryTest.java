@@ -21,56 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.scalar;
 
-import org.cactoos.scalar.UncheckedScalar;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsEqual;
+import org.cactoos.func.Ternary;
+import org.cactoos.func.True;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Matcher for the value.
+ * Test case for {@link Ternary}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @param <T> Type of result
- * @since 0.2
+ * @since 0.8
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class ScalarHasValue<T> extends TypeSafeMatcher<Scalar<T>> {
+public final class TernaryTest {
 
-    /**
-     * Matcher of the value.
-     */
-    private final Matcher<T> matcher;
-
-    /**
-     * Ctor.
-     * @param text The text to match against
-     */
-    public ScalarHasValue(final T text) {
-        this(new IsEqual<>(text));
-    }
-
-    /**
-     * Ctor.
-     * @param mtr Matcher of the text
-     */
-    public ScalarHasValue(final Matcher<T> mtr) {
-        super();
-        this.matcher = mtr;
-    }
-
-    @Override
-    public boolean matchesSafely(final Scalar<T> item) {
-        return this.matcher.matches(
-            new UncheckedScalar<>(item).value()
+    @Test
+    public void conditionTrue() throws Exception {
+        MatcherAssert.assertThat(
+            new Ternary<>(
+                new True(),
+                6,
+                16
+            ).value(),
+            Matchers.equalTo(6)
         );
     }
 
-    @Override
-    public void describeTo(final Description description) {
-        description.appendText("Scalar with ");
-        description.appendDescriptionOf(this.matcher);
+    @Test
+    public void conditionFalse() throws Exception {
+        MatcherAssert.assertThat(
+            new Ternary<>(
+                new False(),
+                6,
+                16
+            ).value(),
+            Matchers.equalTo(16)
+        );
     }
 }

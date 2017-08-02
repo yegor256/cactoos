@@ -30,8 +30,8 @@ import java.util.Properties;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.IoCheckedScalar;
 import org.cactoos.io.InputOf;
+import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.text.TextOf;
 
 /**

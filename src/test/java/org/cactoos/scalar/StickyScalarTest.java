@@ -21,64 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
+import java.security.SecureRandom;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Array as iterable.
+ * Test case for {@link StickyScalar}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Ix (ixmanuel@yahoo.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.12
+ * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ArrayOf<X> implements Iterable<X> {
+public final class StickyScalarTest {
 
-    /**
-     * The encapsulated iterator of X.
-     */
-    private final UncheckedScalar<Iterator<X>> scalar;
-
-    /**
-     * Ctor.
-     * @param map The map to be flatten as an array of values
-     */
-    @SuppressWarnings("unchecked")
-    public ArrayOf(final Map<?, ?> map) {
-        this(
-            () -> (Iterator<X>) Arrays.asList(
-                map.values().toArray()
-            ).iterator()
+    @Test
+    public void cachesScalarResults() throws Exception {
+        final Scalar<Integer> scalar = new StickyScalar<>(
+            () -> new SecureRandom().nextInt()
         );
-    }
-
-    /**
-     * Ctor.
-     * @param items The array
-     */
-    @SafeVarargs
-    public ArrayOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param sclr The encapsulated iterator of x
-     */
-    private ArrayOf(final Scalar<Iterator<X>> sclr) {
-        this.scalar = new UncheckedScalar<>(sclr);
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return this.scalar.value();
+        MatcherAssert.assertThat(
+            scalar.value() + scalar.value(),
+            Matchers.equalTo(scalar.value() + scalar.value())
+        );
     }
 
 }

@@ -26,6 +26,7 @@ package org.cactoos.func;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.Func;
+import org.cactoos.scalar.StickyScalar;
 
 /**
  * Func that caches previously calculated values and doesn't

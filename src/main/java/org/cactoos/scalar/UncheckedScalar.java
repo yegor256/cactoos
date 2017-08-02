@@ -21,64 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Array as iterable.
+ * Scalar that doesn't throw checked {@link Exception}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.12
+ * @param <T> Type of result
+ * @since 0.3
  */
-public final class ArrayOf<X> implements Iterable<X> {
+public final class UncheckedScalar<T> implements Scalar<T> {
 
     /**
-     * The encapsulated iterator of X.
+     * Original scalar.
      */
-    private final UncheckedScalar<Iterator<X>> scalar;
-
-    /**
-     * Ctor.
-     * @param map The map to be flatten as an array of values
-     */
-    @SuppressWarnings("unchecked")
-    public ArrayOf(final Map<?, ?> map) {
-        this(
-            () -> (Iterator<X>) Arrays.asList(
-                map.values().toArray()
-            ).iterator()
-        );
-    }
+    private final Scalar<T> scalar;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param scr Encapsulated scalar
      */
-    @SafeVarargs
-    public ArrayOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param sclr The encapsulated iterator of x
-     */
-    private ArrayOf(final Scalar<Iterator<X>> sclr) {
-        this.scalar = new UncheckedScalar<>(sclr);
+    public UncheckedScalar(final Scalar<T> scr) {
+        this.scalar = scr;
     }
 
     @Override
-    public Iterator<X> iterator() {
-        return this.scalar.value();
+    public T value() {
+        try {
+            return new IoCheckedScalar<>(this.scalar).value();
+        } catch (final IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
     }
 
 }
