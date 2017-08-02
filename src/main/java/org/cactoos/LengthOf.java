@@ -25,6 +25,7 @@ package org.cactoos;
 
 import java.util.Iterator;
 import org.cactoos.func.UncheckedScalar;
+import org.cactoos.io.LengthOfInput;
 import org.cactoos.text.TextOf;
 
 /**
