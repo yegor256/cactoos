@@ -21,15 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
- * Limited iterable.
+ * Limited iterator.
  *
- * <p>This is a view of an existing iterable containing the given number of its
- * first elements.</p>
+ * <p>This is a decorator over an existing iterator. Returns elements of the
+ * original iterator, until either the requested number of items have been
+ * returned or the underlying iterator has been exhausted.</p>
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -38,12 +40,12 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.6
  */
-public final class Subset<T> implements Iterable<T> {
+public final class Limited<T> implements Iterator<T> {
 
     /**
-     * Decorated iterable.
+     * Decorated iterator.
      */
-    private final Iterable<T> iterable;
+    private final Iterator<T> iterator;
 
     /**
      * Number of elements to return.
@@ -51,20 +53,33 @@ public final class Subset<T> implements Iterable<T> {
     private final int limit;
 
     /**
+     * Number of elements returned so far.
+     */
+    private int consumed;
+
+    /**
      * Ctor.
      *
-     * @param iterable The underlying iterable
+     * @param iterator The underlying iterator
      * @param limit The requested number of elements
      */
-    public Subset(final Iterable<T> iterable, final int limit) {
-        this.iterable = iterable;
+    public Limited(final Iterator<T> iterator, final int limit) {
+        this.iterator = iterator;
         this.limit = limit;
+        this.consumed = 0;
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new org.cactoos.iterator.Subset<>(
-            this.iterable.iterator(), this.limit
-        );
+    public boolean hasNext() {
+        return this.consumed < this.limit && this.iterator.hasNext();
+    }
+
+    @Override
+    public T next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException("No more elements.");
+        }
+        ++this.consumed;
+        return this.iterator.next();
     }
 }

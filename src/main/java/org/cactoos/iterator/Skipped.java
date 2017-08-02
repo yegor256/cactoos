@@ -50,12 +50,12 @@ public final class Skipped<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param iterator Decorated iterator
-     * @param skip Count skip elements
+     * @param itr Decorated iterator
+     * @param skp Count skip elements
      */
-    public Skipped(final Iterator<T> iterator, final int skip) {
-        this.iterator = iterator;
-        this.skip = skip;
+    public Skipped(final Iterator<T> itr, final int skp) {
+        this.iterator = itr;
+        this.skip = skp;
     }
 
     @Override
@@ -70,7 +70,9 @@ public final class Skipped<T> implements Iterator<T> {
     @Override
     public T next() {
         if (!this.hasNext()) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException(
+                "The iterator doesn't have items any more"
+            );
         }
         return this.iterator.next();
     }

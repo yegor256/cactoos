@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.ArrayOf;
 
 /**
  * Find the smaller among items.

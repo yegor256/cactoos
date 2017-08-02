@@ -21,62 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.NoSuchElementException;
-import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Find the greater among items.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link Max}.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
  * @since 0.10
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Max<T extends Comparable<T>> implements Scalar<T> {
+public final class MaxTest {
 
-    /**
-     * Items.
-     */
-    private final Iterable<Scalar<T>> items;
-
-    /**
-     * Ctor.
-     * @param items The items
-     */
-    @SafeVarargs
-    public Max(final Scalar<T>... items) {
-        this(new ArrayOf<>(items));
+    @Test(expected = NoSuchElementException.class)
+    public void maxAmongEmptyTest() throws Exception {
+        new Max<>(() -> Collections.emptyIterator()).value();
     }
 
-    /**
-     * Ctor.
-     * @param items The items
-     */
-    public Max(final Iterable<Scalar<T>> items) {
-        this.items = items;
+    @Test
+    public void maxAmongOneTest() throws Exception {
+        final int num = 10;
+        MatcherAssert.assertThat(
+            "Can't find the greater among one",
+            new Max<Integer>(() -> new Integer(num)).value(),
+            Matchers.equalTo(num)
+        );
     }
 
-    @Override
-    public T value() throws Exception {
-        final Iterator<Scalar<T>> iter = this.items.iterator();
-        if (!iter.hasNext()) {
-            throw new NoSuchElementException(
-                "Can't find greater element in an empty iterable"
-            );
-        }
-        T max = iter.next().value();
-        while (iter.hasNext()) {
-            final T next = iter.next().value();
-            if (next.compareTo(max) > 0) {
-                max = next;
-            }
-        }
-        return max;
+    @Test
+    public void maxAmongManyTest() throws Exception {
+        final int num = 10;
+        MatcherAssert.assertThat(
+            "Can't find the greater among many",
+            new Max<Integer>(
+                () -> new Integer(num),
+                () -> new Integer(0),
+                () -> new Integer(-1),
+                () -> new Integer(2)
+             ).value(),
+            Matchers.equalTo(num)
+        );
     }
-
 }

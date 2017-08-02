@@ -23,49 +23,48 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.Iterator;
 
 /**
- * Test case for {@link Max}.
+ * Limited iterable.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * <p>This is a view of an existing iterable containing the given number of its
+ * first elements.</p>
+ *
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @version $Id$
- * @since 0.10
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Element type
+ * @since 0.6
  */
-public final class MaxTest {
+public final class Limited<T> implements Iterable<T> {
 
-    @Test(expected = NoSuchElementException.class)
-    public void maxAmongEmptyTest() throws Exception {
-        new Max<>(() -> Collections.emptyIterator()).value();
+    /**
+     * Decorated iterable.
+     */
+    private final Iterable<T> iterable;
+
+    /**
+     * Number of elements to return.
+     */
+    private final int limit;
+
+    /**
+     * Ctor.
+     *
+     * @param itr The underlying iterable
+     * @param lmt The requested number of elements
+     */
+    public Limited(final Iterable<T> itr, final int lmt) {
+        this.iterable = itr;
+        this.limit = lmt;
     }
 
-    @Test
-    public void maxAmongOneTest() throws Exception {
-        final int num = 10;
-        MatcherAssert.assertThat(
-            "Can't find the greater among one",
-            new Max<Integer>(() -> new Integer(num)).value(),
-            Matchers.equalTo(num)
-        );
-    }
-
-    @Test
-    public void maxAmongManyTest() throws Exception {
-        final int num = 10;
-        MatcherAssert.assertThat(
-            "Can't find the greater among many",
-            new Max<Integer>(
-                () -> new Integer(num),
-                () -> new Integer(0),
-                () -> new Integer(-1),
-                () -> new Integer(2)
-             ).value(),
-            Matchers.equalTo(num)
+    @Override
+    public Iterator<T> iterator() {
+        return new org.cactoos.iterator.Limited<>(
+            this.iterable.iterator(), this.limit
         );
     }
 }

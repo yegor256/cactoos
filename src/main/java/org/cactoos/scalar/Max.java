@@ -21,65 +21,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.scalar;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.cactoos.Scalar;
+import org.cactoos.iterable.ArrayOf;
 
 /**
- * Limited iterator.
+ * Find the greater among items.
  *
- * <p>This is a decorator over an existing iterator. Returns elements of the
- * original iterator, until either the requested number of items have been
- * returned or the underlying iterator has been exhausted.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * <p>There is no thread-safety guarantee.</p>
- *
- * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.6
+ * @param <T> Scalar type
+ * @since 0.10
  */
-public final class Subset<T> implements Iterator<T> {
+public final class Max<T extends Comparable<T>> implements Scalar<T> {
 
     /**
-     * Decorated iterator.
+     * Items.
      */
-    private final Iterator<T> iterator;
-
-    /**
-     * Number of elements to return.
-     */
-    private final int limit;
-
-    /**
-     * Number of elements returned so far.
-     */
-    private int consumed;
+    private final Iterable<Scalar<T>> items;
 
     /**
      * Ctor.
-     *
-     * @param iterator The underlying iterator
-     * @param limit The requested number of elements
+     * @param items The items
      */
-    public Subset(final Iterator<T> iterator, final int limit) {
-        this.iterator = iterator;
-        this.limit = limit;
-        this.consumed = 0;
+    @SafeVarargs
+    public Max(final Scalar<T>... items) {
+        this(new ArrayOf<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param items The items
+     */
+    public Max(final Iterable<Scalar<T>> items) {
+        this.items = items;
     }
 
     @Override
-    public boolean hasNext() {
-        return this.consumed < this.limit && this.iterator.hasNext();
-    }
-
-    @Override
-    public T next() {
-        if (!this.hasNext()) {
-            throw new NoSuchElementException("No more elements.");
+    public T value() throws Exception {
+        final Iterator<Scalar<T>> iter = this.items.iterator();
+        if (!iter.hasNext()) {
+            throw new NoSuchElementException(
+                "Can't find greater element in an empty iterable"
+            );
         }
-        ++this.consumed;
-        return this.iterator.next();
+        T max = iter.next().value();
+        while (iter.hasNext()) {
+            final T next = iter.next().value();
+            if (next.compareTo(max) > 0) {
+                max = next;
+            }
+        }
+        return max;
     }
+
 }

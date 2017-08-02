@@ -26,7 +26,7 @@ package org.cactoos.iterable;
 import java.util.Map;
 
 /**
- * MapEntry as {@link java.util.AbastractMap.Entry}.
+ * MapEntry as {@link java.util.AbstractMap.Entry}.
  *
  * <p>There is no thread-safety guarantee.
  *

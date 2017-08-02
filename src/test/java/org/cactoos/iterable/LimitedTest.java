@@ -28,21 +28,21 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link Subset}.
+ * Test case for {@link Limited}.
  *
  * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
  * @version $Id$
  * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SubsetTest {
+public final class LimitedTest {
 
     @Test
     public void iteratesOverPrefixOfGivenLength() {
         // @checkstyle MagicNumber (7 lines)
         MatcherAssert.assertThat(
             "Can't limit an iterable with more items",
-            new Subset<>(
+            new Limited<>(
                 new ArrayOf<>(0, 1, 2, 3, 4),
                 3
             ),
@@ -55,7 +55,7 @@ public final class SubsetTest {
         // @checkstyle MagicNumber (7 lines)
         MatcherAssert.assertThat(
             "Can't limit an iterable with less items",
-            new Subset<>(
+            new Limited<>(
                 new ArrayOf<>(0, 1, 2, 3, 4),
                 10
             ),
@@ -68,7 +68,7 @@ public final class SubsetTest {
         // @checkstyle MagicNumber (7 lines)
         MatcherAssert.assertThat(
             "Can't limit an iterable to zero items",
-            new Subset<>(
+            new Limited<>(
                 new ArrayOf<>(0, 1, 2, 3, 4),
                 0
             ),
@@ -81,7 +81,7 @@ public final class SubsetTest {
         // @checkstyle MagicNumber (7 lines)
         MatcherAssert.assertThat(
             "Can't limit an iterable to negative number of items",
-            new Subset<>(
+            new Limited<>(
                 new ArrayOf<>(0, 1, 2, 3, 4),
                 -1
             ),
@@ -94,7 +94,7 @@ public final class SubsetTest {
         // @checkstyle MagicNumber (7 lines)
         MatcherAssert.assertThat(
             "Can't limit an empty iterable",
-            new Subset<>(
+            new Limited<>(
                 new ArrayOf<>(),
                 10
             ),
