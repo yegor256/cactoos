@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import org.cactoos.Input;
 import org.cactoos.LengthOf;
@@ -68,7 +69,7 @@ public final class StickyInputTest {
     }
 
     @Test
-    public void readsRealUrl() throws IOException {
+    public void readsRealUrl() throws MalformedURLException {
         MatcherAssert.assertThat(
             "Can't fetch text page from the URL",
             new TextOf(

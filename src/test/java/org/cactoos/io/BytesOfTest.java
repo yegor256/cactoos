@@ -92,7 +92,7 @@ public final class BytesOfTest {
     }
 
     @Test
-    public void readsFromReader() throws Exception {
+    public void readsFromReader() throws IOException {
         final String source = "hello, друг!";
         MatcherAssert.assertThat(
             "Can't read string through a reader",
