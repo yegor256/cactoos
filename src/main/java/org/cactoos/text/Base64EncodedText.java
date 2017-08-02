@@ -29,7 +29,7 @@ import org.cactoos.Text;
 import org.cactoos.io.BytesOf;
 
 /**
- * Base64 Decode the Text.
+ * Base64 Encode the Text.
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
