@@ -234,7 +234,6 @@ Cactoos | Guava | Apache Commons | JDK 8
 ------ | ------ | ------ | ------
 `FormattedText` | - | - | `String.format()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
-`IsBlank` | - | `StringUtils.isBlank()`| -
 `JoinedText` | - | - | `String.join()`
 `LengthOfText` | - | - | `String#length()`
 `LowerText` | - | - | `String#toLowerCase()`
