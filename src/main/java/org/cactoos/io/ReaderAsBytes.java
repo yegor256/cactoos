@@ -92,7 +92,7 @@ final class ReaderAsBytes implements Bytes {
     @Override
     public byte[] asBytes() throws IOException {
         final char[] buffer = new char[this.size];
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(this.size);
         while (true) {
             final int done = this.reader.read(buffer, 0, buffer.length);
             if (done < 0) {

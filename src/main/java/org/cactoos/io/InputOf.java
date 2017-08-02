@@ -88,7 +88,7 @@ public final class InputOf implements Input {
      * @param uri The URI
      */
     public InputOf(final URI uri) {
-        this(() -> uri.toURL());
+        this(uri::toURL);
     }
 
     /**
@@ -106,9 +106,7 @@ public final class InputOf implements Input {
      * @param scalar The url
      */
     public InputOf(final Scalar<URL> scalar) {
-        this(() -> {
-            return new IoCheckedScalar<URL>(scalar).value().openStream();
-        });
+        this(() -> new IoCheckedScalar<>(scalar).value().openStream());
     }
 
     /**
@@ -155,13 +153,11 @@ public final class InputOf implements Input {
      * @param cset The charset
      */
     public InputOf(final StringBuilder builder, final Charset cset) {
-        this(() -> {
-            return new IoCheckedScalar<InputStream>(
-                () -> new ByteArrayInputStream(
-                    new BytesOf(builder, cset).asBytes()
-                )
-            ).value();
-        });
+        this(() -> new IoCheckedScalar<InputStream>(
+            () -> new ByteArrayInputStream(
+                new BytesOf(builder, cset).asBytes()
+            )
+        ).value());
     }
 
     /**
@@ -180,13 +176,11 @@ public final class InputOf implements Input {
      * @param cset The charset
      */
     public InputOf(final StringBuffer buffer, final Charset cset) {
-        this(() -> {
-            return new IoCheckedScalar<InputStream>(
-                () -> new ByteArrayInputStream(
-                    new BytesOf(buffer, cset).asBytes()
-                )
-            ).value();
-        });
+        this(() -> new IoCheckedScalar<InputStream>(
+            () -> new ByteArrayInputStream(
+                new BytesOf(buffer, cset).asBytes()
+            )
+        ).value());
     }
 
     /**
@@ -211,20 +205,20 @@ public final class InputOf implements Input {
     /**
      * Ctor.
      *
-     * @param string The string
+     * @param source The string
      */
-    public InputOf(final String string) {
-        this(new BytesOf(string));
+    public InputOf(final String source) {
+        this(new BytesOf(source));
     }
 
     /**
      * Ctor.
      *
-     * @param string The string
+     * @param source The string
      * @param cset The charset
      */
-    public InputOf(final String string, final Charset cset) {
-        this(new BytesOf(string, cset));
+    public InputOf(final String source, final Charset cset) {
+        this(new BytesOf(source, cset));
     }
 
     /**
@@ -270,11 +264,9 @@ public final class InputOf implements Input {
      * @param src The bytes
      */
     public InputOf(final Bytes src) {
-        this(() -> {
-            return new IoCheckedScalar<InputStream>(
-                () -> new ByteArrayInputStream(src.asBytes())
-            ).value();
-        });
+        this(() -> new IoCheckedScalar<InputStream>(
+            () -> new ByteArrayInputStream(src.asBytes())
+        ).value());
     }
 
     /**
