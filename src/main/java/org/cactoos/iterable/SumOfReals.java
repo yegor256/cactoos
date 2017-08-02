@@ -62,7 +62,7 @@ public final class SumOfReals implements Scalar<Double> {
     @Override
     public Double value() throws Exception {
         final Iterator<Scalar<Number>> numbers = this.src.iterator();
-        Double result =  0.;
+        double result = 0.0d;
         while (numbers.hasNext()) {
             result += numbers.next().value().doubleValue();
         }
