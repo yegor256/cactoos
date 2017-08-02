@@ -36,9 +36,14 @@ import org.cactoos.Bytes;
  */
 public final class EmptyBytes implements Bytes {
 
+    /**
+     * Empty array of bytes.
+     */
+    private static final byte[] EMPTY = {};
+
     @Override
     public byte[] asBytes() {
-        return new byte[] {};
+        return EmptyBytes.EMPTY;
     }
 
 }

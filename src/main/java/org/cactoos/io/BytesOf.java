@@ -102,7 +102,7 @@ public final class BytesOf implements Bytes {
      *
      * @param builder The source
      */
-    public BytesOf(final StringBuilder builder) {
+    public BytesOf(final CharSequence builder) {
         this(builder, StandardCharsets.UTF_8);
     }
 
@@ -112,27 +112,8 @@ public final class BytesOf implements Bytes {
      * @param builder The source
      * @param cset The charset
      */
-    public BytesOf(final StringBuilder builder, final Charset cset) {
+    public BytesOf(final CharSequence builder, final Charset cset) {
         this(() -> builder.toString().getBytes(cset));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param buffer The source
-     */
-    public BytesOf(final StringBuffer buffer) {
-        this(buffer, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param buffer The source
-     * @param cset The charset
-     */
-    public BytesOf(final StringBuffer buffer, final Charset cset) {
-        this(() -> buffer.toString().getBytes(cset));
     }
 
     /**
@@ -157,20 +138,20 @@ public final class BytesOf implements Bytes {
     /**
      * Ctor.
      *
-     * @param string The source
+     * @param source The source
      */
-    public BytesOf(final String string) {
-        this(string, StandardCharsets.UTF_8);
+    public BytesOf(final String source) {
+        this(source, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
      *
-     * @param string The source
+     * @param source The source
      * @param cset The charset
      */
-    public BytesOf(final String string, final Charset cset) {
-        this(() -> string.getBytes(cset));
+    public BytesOf(final String source, final Charset cset) {
+        this(() -> source.getBytes(cset));
     }
 
     /**
