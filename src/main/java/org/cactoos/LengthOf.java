@@ -24,7 +24,6 @@
 package org.cactoos;
 
 import java.util.Iterator;
-import org.cactoos.io.LengthOfInput;
 import org.cactoos.scalar.UncheckedScalar;
 import org.cactoos.text.TextOf;
 
@@ -73,7 +72,7 @@ public final class LengthOf implements Scalar<Number> {
      * @param input The input
      */
     public LengthOf(final Input input) {
-        this(new LengthOfInput(input));
+        this(new org.cactoos.io.LengthOf(input));
     }
 
     /**
@@ -82,7 +81,7 @@ public final class LengthOf implements Scalar<Number> {
      * @param max Buffer size
      */
     public LengthOf(final Input input, final int max) {
-        this(new LengthOfInput(input, max));
+        this(new org.cactoos.io.LengthOf(input, max));
     }
 
     /**

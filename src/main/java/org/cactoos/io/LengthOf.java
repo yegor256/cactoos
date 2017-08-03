@@ -38,7 +38,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @version $Id$
  * @since 0.1
  */
-public final class LengthOfInput implements Scalar<Long> {
+public final class LengthOf implements Scalar<Long> {
 
     /**
      * The input.
@@ -54,7 +54,7 @@ public final class LengthOfInput implements Scalar<Long> {
      * Ctor.
      * @param input The input
      */
-    public LengthOfInput(final Input input) {
+    public LengthOf(final Input input) {
         // @checkstyle MagicNumber (1 line)
         this(input, 16 << 10);
     }
@@ -64,7 +64,7 @@ public final class LengthOfInput implements Scalar<Long> {
      * @param input The input
      * @param max Buffer size
      */
-    public LengthOfInput(final Input input, final int max) {
+    public LengthOf(final Input input, final int max) {
         this.source = input;
         this.size = max;
     }
