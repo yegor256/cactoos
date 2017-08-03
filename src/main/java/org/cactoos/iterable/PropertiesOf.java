@@ -54,10 +54,10 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
-     * @param string String
+     * @param content String
      */
-    public PropertiesOf(final String string) {
-        this(new TextOf(string));
+    public PropertiesOf(final String content) {
+        this(new TextOf(content));
     }
 
     /**

@@ -161,7 +161,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
 
     @Override
     public int size() {
-        return (int) new LengthOf(this.entries).value();
+        return new LengthOf(this.entries).value().intValue();
     }
 
     @Override

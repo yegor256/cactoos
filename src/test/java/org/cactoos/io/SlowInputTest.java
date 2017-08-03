@@ -65,7 +65,7 @@ public final class SlowInputTest {
         MatcherAssert.assertThat(
             "Can't calculate length if the input is slow",
             new LengthOf(
-                new SlowInput((int) size)
+                new SlowInput(size)
             ),
             new ScalarHasValue<>(size)
         );

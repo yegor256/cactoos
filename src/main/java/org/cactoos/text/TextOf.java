@@ -215,20 +215,20 @@ public final class TextOf implements Text {
     /**
      * Ctor.
      *
-     * @param string The String
+     * @param input The String
      */
-    public TextOf(final String string) {
-        this(string, StandardCharsets.UTF_8);
+    public TextOf(final String input) {
+        this(input, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
      *
-     * @param string The String
+     * @param input The String
      * @param cset The Charset
      */
-    public TextOf(final String string, final Charset cset) {
-        this(() -> new String(string.getBytes(cset), cset));
+    public TextOf(final String input, final Charset cset) {
+        this(() -> new String(input.getBytes(cset), cset));
     }
 
     /**

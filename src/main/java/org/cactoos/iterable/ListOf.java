@@ -80,7 +80,7 @@ public final class ListOf<T> implements List<T> {
 
     @Override
     public int size() {
-        return (int) new LengthOf(this.iterable).value();
+        return new LengthOf(this.iterable).value().intValue();
     }
 
     @Override
@@ -211,8 +211,8 @@ public final class ListOf<T> implements List<T> {
     }
 
     @Override
-    public List<T> subList(final int fromindex, final int toindex) {
-        return this.list().subList(fromindex, toindex);
+    public List<T> subList(final int from, final int end) {
+        return this.list().subList(from, end);
     }
 
     /**

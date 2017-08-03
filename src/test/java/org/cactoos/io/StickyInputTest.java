@@ -95,7 +95,7 @@ public final class StickyInputTest {
             "Can't read bytes from a large source slowly and count length",
             new LengthOf(
                 new StickyInput(
-                    new SlowInput((int) size)
+                    new SlowInput(size)
                 )
             ),
             new ScalarHasValue<>(size)
@@ -104,15 +104,15 @@ public final class StickyInputTest {
 
     @Test
     public void readsFileContentSlowly() throws IOException {
-        final long size = 130_000L;
+        final int size = 130_000;
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly",
             new BytesOf(
                 new StickyInput(
-                    new SlowInput((int) size)
+                    new SlowInput(size)
                 )
             ).asBytes().length,
-            Matchers.equalTo((int) size)
+            Matchers.equalTo(size)
         );
     }
 

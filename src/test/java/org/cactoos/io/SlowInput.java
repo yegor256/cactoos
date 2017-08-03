@@ -46,6 +46,14 @@ final class SlowInput implements Input {
      * Ctor.
      * @param size The size of the array to encapsulate
      */
+    SlowInput(final long size) {
+        this((int) size);
+    }
+
+    /**
+     * Ctor.
+     * @param size The size of the array to encapsulate
+     */
     SlowInput(final int size) {
         this(new InputOf(new ByteArrayInputStream(new byte[size])));
     }
