@@ -42,7 +42,7 @@ public final class FloatOf implements Scalar<Float> {
     /**
      * Source text.
      */
-    private final Text text;
+    private final Text origin;
 
     /**
      * Ctor.
@@ -59,11 +59,11 @@ public final class FloatOf implements Scalar<Float> {
      * @param text Number-text
      */
     public FloatOf(final Text text) {
-        this.text = text;
+        this.origin = text;
     }
 
     @Override
     public Float value() throws IOException {
-        return Float.valueOf(this.text.asString());
+        return Float.valueOf(this.origin.asString());
     }
 }

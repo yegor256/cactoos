@@ -38,12 +38,12 @@ public final class SyncScalar<T> implements Scalar<T> {
     /**
      * The scalar to cache.
      */
-    private final Scalar<T> source;
+    private final Scalar<T> origin;
 
     /**
      * Sync lock.
      */
-    private final Object lck;
+    private final Object mutex;
 
     /**
      * Ctor.
@@ -55,18 +55,18 @@ public final class SyncScalar<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param src The Scalar to cache
-     * @param lck Sync lock
+     * @param scalar The Scalar to cache
+     * @param lock Sync lock
      */
-    public SyncScalar(final Scalar<T> src, final Object lck) {
-        this.source = src;
-        this.lck = lck;
+    public SyncScalar(final Scalar<T> scalar, final Object lock) {
+        this.origin = scalar;
+        this.mutex = lock;
     }
 
     @Override
     public T value() throws Exception {
-        synchronized (this.lck) {
-            return this.source.value();
+        synchronized (this.mutex) {
+            return this.origin.value();
         }
     }
 }

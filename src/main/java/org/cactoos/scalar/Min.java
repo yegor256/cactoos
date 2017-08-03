@@ -47,19 +47,19 @@ public final class Min<T extends Comparable<T>> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param items The items
+     * @param scalars The items
      */
     @SafeVarargs
-    public Min(final Scalar<T>... items) {
-        this(new IterableOf<>(items));
+    public Min(final Scalar<T>... scalars) {
+        this(new IterableOf<>(scalars));
     }
 
     /**
      * Ctor.
-     * @param items The items
+     * @param iterable The items
      */
-    public Min(final Iterable<Scalar<T>> items) {
-        this.items = items;
+    public Min(final Iterable<Scalar<T>> iterable) {
+        this.items = iterable;
     }
 
     @Override

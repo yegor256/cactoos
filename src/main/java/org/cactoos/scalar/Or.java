@@ -40,29 +40,29 @@ public final class Or implements Scalar<Boolean> {
     /**
      * The iterator.
      */
-    private final Iterable<Scalar<Boolean>> iterable;
+    private final Iterable<Scalar<Boolean>> origin;
 
     /**
      * Ctor.
-     * @param src The iterable
+     * @param scalar The Scalar.
      */
     @SafeVarargs
-    public Or(final Scalar<Boolean>... src) {
-        this(new IterableOf<>(src));
+    public Or(final Scalar<Boolean>... scalar) {
+        this(new IterableOf<>(scalar));
     }
 
     /**
      * Ctor.
-     * @param src The iterable
+     * @param iterable The iterable.
      */
-    public Or(final Iterable<Scalar<Boolean>> src) {
-        this.iterable = src;
+    public Or(final Iterable<Scalar<Boolean>> iterable) {
+        this.origin = iterable;
     }
 
     @Override
     public Boolean value() throws Exception {
         boolean result = false;
-        for (final Scalar<Boolean> item : this.iterable) {
+        for (final Scalar<Boolean> item : this.origin) {
             if (item.value()) {
                 result = true;
                 break;

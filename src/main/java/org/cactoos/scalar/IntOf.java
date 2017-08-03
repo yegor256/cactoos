@@ -42,7 +42,7 @@ public final class IntOf implements Scalar<Integer> {
     /**
      * Source text.
      */
-    private final Text text;
+    private final Text origin;
 
     /**
      * Ctor.
@@ -59,11 +59,11 @@ public final class IntOf implements Scalar<Integer> {
      * @param text Number-text
      */
     public IntOf(final Text text) {
-        this.text = text;
+        this.origin = text;
     }
 
     @Override
     public Integer value() throws IOException {
-        return Integer.valueOf(this.text.asString());
+        return Integer.valueOf(this.origin.asString());
     }
 }

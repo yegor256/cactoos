@@ -43,21 +43,21 @@ public final class IoCheckedScalar<T> implements Scalar<T> {
     /**
      * Original scalar.
      */
-    private final Scalar<T> scalar;
+    private final Scalar<T> origin;
 
     /**
      * Ctor.
      * @param scalar Encapsulated scalar
      */
     public IoCheckedScalar(final Scalar<T> scalar) {
-        this.scalar = scalar;
+        this.origin = scalar;
     }
 
     @Override
     public T value() throws IOException {
         return new IoCheckedFunc<Scalar<T>, T>(
             Scalar::value
-        ).apply(this.scalar);
+        ).apply(this.origin);
     }
 
 }
