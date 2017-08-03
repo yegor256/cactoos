@@ -55,7 +55,7 @@ public final class Sorted<T extends Comparable<? super T>> implements
      */
     @SafeVarargs
     public Sorted(final T... src) {
-        this(new ArrayOf<>(src));
+        this(new IterableOf<>(src));
     }
 
     /**
@@ -73,7 +73,7 @@ public final class Sorted<T extends Comparable<? super T>> implements
      */
     @SafeVarargs
     public Sorted(final Comparator<T> cmp, final T... src) {
-        this(cmp, new ArrayOf<>(src));
+        this(cmp, new IterableOf<>(src));
     }
 
     /**

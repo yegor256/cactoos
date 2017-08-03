@@ -45,7 +45,7 @@ public final class CycledTest {
             "Can't repeat iterable",
             new ItemAt<>(
                 new Cycled<>(
-                    new ArrayOf<>(
+                    new IterableOf<>(
                         "one", expected, "three"
                     )
                 ),

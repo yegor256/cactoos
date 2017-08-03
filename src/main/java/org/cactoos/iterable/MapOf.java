@@ -64,7 +64,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      */
     @SafeVarargs
     public MapOf(final Map.Entry<X, Y>... list) {
-        this(new ArrayOf<>(list));
+        this(new IterableOf<>(list));
     }
 
     /**
@@ -75,7 +75,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      */
     @SafeVarargs
     public MapOf(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
-        this(map, new ArrayOf<>(list));
+        this(map, new IterableOf<>(list));
     }
 
     /**

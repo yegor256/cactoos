@@ -27,7 +27,7 @@ import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
-import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 
 /**
@@ -65,7 +65,7 @@ public final class And implements Scalar<Boolean> {
      */
     @SafeVarargs
     public <X> And(final Func<X, Boolean> func, final X... src) {
-        this(new ArrayOf<>(src), func);
+        this(new IterableOf<>(src), func);
     }
 
     /**
@@ -99,7 +99,7 @@ public final class And implements Scalar<Boolean> {
      */
     @SafeVarargs
     public And(final Scalar<Boolean>... src) {
-        this(new ArrayOf<>(src));
+        this(new IterableOf<>(src));
     }
 
     /**

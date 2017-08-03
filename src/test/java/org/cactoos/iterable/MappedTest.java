@@ -46,7 +46,7 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
             new Mapped<String, Text>(
-                new ArrayOf<>(
+                new IterableOf<>(
                     "hello", "world", "друг"
                 ),
                 input -> new UpperText(new TextOf(input))

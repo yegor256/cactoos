@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
-import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Find the greater among items.
@@ -51,7 +51,7 @@ public final class Max<T extends Comparable<T>> implements Scalar<T> {
      */
     @SafeVarargs
     public Max(final Scalar<T>... items) {
-        this(new ArrayOf<>(items));
+        this(new IterableOf<>(items));
     }
 
     /**

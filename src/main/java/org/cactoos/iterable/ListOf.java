@@ -66,7 +66,7 @@ public final class ListOf<T> implements List<T> {
      */
     @SafeVarargs
     public ListOf(final T... array) {
-        this(new ArrayOf<>(array));
+        this(new IterableOf<>(array));
     }
 
     /**

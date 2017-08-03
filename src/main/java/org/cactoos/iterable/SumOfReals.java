@@ -48,7 +48,7 @@ public final class SumOfReals implements Scalar<Double> {
      */
     @SafeVarargs
     public SumOfReals(final Scalar<Number>... src) {
-        this(new ArrayOf<>(src));
+        this(new IterableOf<>(src));
     }
 
     /**

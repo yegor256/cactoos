@@ -29,7 +29,7 @@ import java.nio.charset.StandardCharsets;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.DeadInput;
 import org.cactoos.io.InputOf;
-import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Repeated;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -166,7 +166,7 @@ public final class LengthOfTest {
         MatcherAssert.assertThat(
             "Can't count the number of elements in the itrable",
             new LengthOf(
-                new ArrayOf<>(
+                new IterableOf<>(
                     new TextOf("abc")
                 )
             ),

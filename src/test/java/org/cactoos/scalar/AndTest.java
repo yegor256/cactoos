@@ -31,7 +31,7 @@ import org.cactoos.ScalarHasValue;
 import org.cactoos.func.FuncOf;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.func.True;
-import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -76,7 +76,7 @@ public final class AndTest {
     public void allFalse() throws Exception {
         MatcherAssert.assertThat(
             new And(
-                new ArrayOf<Scalar<Boolean>>(
+                new IterableOf<Scalar<Boolean>>(
                     new False(),
                     new False(),
                     new False()
@@ -101,7 +101,7 @@ public final class AndTest {
             "Can't iterate a list with a procedure",
             new And(
                 new Mapped<String, Scalar<Boolean>>(
-                    new ArrayOf<>("hello", "world"),
+                    new IterableOf<>("hello", "world"),
                     new FuncOf<>(list::add, () -> true)
                 )
             ),

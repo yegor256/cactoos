@@ -30,21 +30,21 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link ArrayOf}.
+ * Test case for {@link IterableOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ArrayOfTest {
+public final class IterableOfTest {
 
     @Test
     public void convertsScalarsToIterable() {
         MatcherAssert.assertThat(
             "Can't convert scalars to iterable",
             new LengthOf(
-                new ArrayOf<>(
+                new IterableOf<>(
                     "a", "b", "c"
                 )
             ),
@@ -58,32 +58,12 @@ public final class ArrayOfTest {
         MatcherAssert.assertThat(
             "Can't convert objects to iterable",
             new LengthOf(
-                new ArrayOf<>(
+                new IterableOf<>(
                     new TextOf("a"), new TextOf("b"), new TextOf("c")
                 )
             ),
             // @checkstyle MagicNumber (1 line)
             new ScalarHasValue<>(3)
-        );
-    }
-
-    @Test
-    public void convertsMapToIterable() {
-        final String expected = "hello, ";
-        MatcherAssert.assertThat(
-            "Can't flat a map into an interable of values",
-            new ItemAt<>(
-                new ArrayOf<>(
-                    new MapOf<Integer, String>(
-                        new MapEntry<>(0, expected),
-                        new MapEntry<>(1, "world!")
-                    )
-                ),
-                0
-            ),
-            new ScalarHasValue<>(
-                expected
-            )
         );
     }
 

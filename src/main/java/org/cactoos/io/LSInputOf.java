@@ -32,7 +32,6 @@ import org.cactoos.text.TextOf;
 import org.cactoos.text.UncheckedText;
 import org.w3c.dom.ls.LSInput;
 
-// @checkstyle AbbreviationAsWordInNameCheck (10 lines)
 /**
  * Input as LSInput.
  *
@@ -41,6 +40,7 @@ import org.w3c.dom.ls.LSInput;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.6
+ * @checkstyle AbbreviationAsWordInNameCheck (10 lines)
  */
 public final class LSInputOf implements LSInput {
 
@@ -72,13 +72,13 @@ public final class LSInputOf implements LSInput {
         this(inpt, "#public", "#system", "#base");
     }
 
-    // @checkstyle ParameterNumberCheck (10 lines)
     /**
      * Ctor.
      * @param inpt Input
      * @param pubid PublicID
      * @param sysid SystemID
      * @param bse Base
+     * @checkstyle ParameterNumberCheck (3 lines)
      */
     public LSInputOf(final Input inpt, final String pubid,
         final String sysid, final String bse) {

@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import java.util.Collections;
 import org.cactoos.Scalar;
 import org.cactoos.func.True;
-import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -73,7 +73,7 @@ public final class OrTest {
     public void allTrue() throws Exception {
         MatcherAssert.assertThat(
             new Or(
-                new ArrayOf<Scalar<Boolean>>(
+                new IterableOf<Scalar<Boolean>>(
                     new True(),
                     new True(),
                     new True(),

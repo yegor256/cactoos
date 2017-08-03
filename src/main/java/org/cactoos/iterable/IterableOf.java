@@ -25,7 +25,6 @@ package org.cactoos.iterable;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Map;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -39,7 +38,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <X> Type of item
  * @since 0.12
  */
-public final class ArrayOf<X> implements Iterable<X> {
+public final class IterableOf<X> implements Iterable<X> {
 
     /**
      * The encapsulated iterator of X.
@@ -48,23 +47,10 @@ public final class ArrayOf<X> implements Iterable<X> {
 
     /**
      * Ctor.
-     * @param map The map to be flatten as an array of values
-     */
-    @SuppressWarnings("unchecked")
-    public ArrayOf(final Map<?, ?> map) {
-        this(
-            () -> (Iterator<X>) Arrays.asList(
-                map.values().toArray()
-            ).iterator()
-        );
-    }
-
-    /**
-     * Ctor.
      * @param items The array
      */
     @SafeVarargs
-    public ArrayOf(final X... items) {
+    public IterableOf(final X... items) {
         this(() -> Arrays.asList(items).iterator());
     }
 
@@ -72,7 +58,7 @@ public final class ArrayOf<X> implements Iterable<X> {
      * Ctor.
      * @param sclr The encapsulated iterator of x
      */
-    private ArrayOf(final Scalar<Iterator<X>> sclr) {
+    private IterableOf(final Scalar<Iterator<X>> sclr) {
         this.scalar = new UncheckedScalar<>(sclr);
     }
 

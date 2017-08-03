@@ -26,7 +26,7 @@ package org.cactoos.iterator;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
-import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -53,7 +53,7 @@ public final class Sticky<X> implements Iterator<X> {
      */
     @SafeVarargs
     public Sticky(final X... items) {
-        this(new ArrayOf<>(items).iterator());
+        this(new IterableOf<>(items).iterator());
     }
 
     /**
