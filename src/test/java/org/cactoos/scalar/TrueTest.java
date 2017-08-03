@@ -21,23 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Logical truth.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link True}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.7
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class True implements Scalar<Boolean> {
+public final class TrueTest {
 
-    @Override
-    public Boolean value() throws Exception {
-        return true;
+    @Test
+    public void asValue() throws Exception {
+        MatcherAssert.assertThat(
+            new True().value(),
+            Matchers.equalTo(true)
+        );
     }
 }

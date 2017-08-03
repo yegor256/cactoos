@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.cactoos.Input;
-import org.cactoos.LengthOf;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;

@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.Func;
-import org.cactoos.LengthOf;
 
 /**
  * Iterable as {@link Map}.

@@ -23,8 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.func.Ternary;
-import org.cactoos.func.True;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;

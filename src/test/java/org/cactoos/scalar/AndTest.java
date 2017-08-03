@@ -30,7 +30,6 @@ import org.cactoos.Scalar;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.func.FuncOf;
 import org.cactoos.func.MatcherOf;
-import org.cactoos.func.True;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
