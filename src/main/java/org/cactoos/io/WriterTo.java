@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Output;
 import org.cactoos.Scalar;
@@ -79,7 +81,16 @@ public final class WriterTo extends Writer {
      * @param output The input
      */
     public WriterTo(final Output output) {
-        this(() -> new OutputStreamWriter(output.stream()));
+        this(output, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param output The input
+     * @param charset The charset
+     */
+    public WriterTo(final Output output, final Charset charset) {
+        this(() -> new OutputStreamWriter(output.stream(), charset));
     }
 
     /**

@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.TextHasString;
@@ -55,7 +56,8 @@ public final class WriterAsOutputTest {
                     new ResourceOf("org/cactoos/large-text.txt"),
                     new WriterAsOutput(
                         new OutputStreamWriter(
-                            new FileOutputStream(temp.toFile())
+                            new FileOutputStream(temp.toFile()),
+                            StandardCharsets.UTF_8
                         )
                     )
                 )

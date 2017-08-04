@@ -89,7 +89,8 @@ public final class WriterAsOutputStreamTest {
                     new OutputTo(
                         new WriterAsOutputStream(
                             new OutputStreamWriter(
-                                new FileOutputStream(temp.toFile())
+                                new FileOutputStream(temp.toFile()),
+                                StandardCharsets.UTF_8
                             ),
                             StandardCharsets.UTF_8,
                             // @checkstyle MagicNumber (1 line)
