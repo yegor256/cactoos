@@ -60,9 +60,7 @@ To read a text file in UTF-8:
 
 ```java
 String text = new TextOf(
-  new InputOf(
-    new File("/code/a.txt")
-  )
+  new File("/code/a.txt")
 ).asString();
 ```
 
@@ -169,9 +167,7 @@ List<String> sorted = new ListOf<>(
   new Sorted<>(
     new SplitText(
       new TextOf(
-        new InputOf(
-          new File("/tmp/names.txt")
-        )
+        new File("/tmp/names.txt")
       ),
       new TextOf("\\s+")
     )
