@@ -28,7 +28,6 @@ import org.cactoos.Text;
 
 /**
  * Rotate (circular shift) a String of shift characters.
- *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.12
@@ -65,8 +64,10 @@ public final class RotatedText implements Text {
             if (offset < 0) {
                 offset = text.length() + offset;
             }
-            text = builder.append(text.substring(offset)).append(text
-                .substring(0, offset)
+            text = builder.append(
+                text.substring(offset)
+            ).append(
+                text.substring(0, offset)
             ).toString();
         }
         return text;
