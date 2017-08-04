@@ -24,11 +24,13 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Text;
@@ -57,6 +59,24 @@ public final class BytesOf implements Bytes {
      */
     public BytesOf(final Input input) {
         this(new InputAsBytes(input));
+    }
+
+    /**
+     * Ctor.
+     * @param file The input
+     * @since 0.13
+     */
+    public BytesOf(final File file) {
+        this(new InputOf(file));
+    }
+
+    /**
+     * Ctor.
+     * @param path The input
+     * @since 0.13
+     */
+    public BytesOf(final Path path) {
+        this(new InputOf(path));
     }
 
     /**

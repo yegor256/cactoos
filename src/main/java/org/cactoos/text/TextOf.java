@@ -23,15 +23,18 @@
  */
 package org.cactoos.text;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.io.BytesOf;
+import org.cactoos.io.InputOf;
 import org.cactoos.scalar.IoCheckedScalar;
 
 /**
@@ -57,6 +60,24 @@ public final class TextOf implements Text {
      */
     public TextOf(final Input input) {
         this(new BytesOf(input));
+    }
+
+    /**
+     * Ctor.
+     * @param path The Input
+     * @since 0.13
+     */
+    public TextOf(final Path path) {
+        this(new InputOf(path));
+    }
+
+    /**
+     * Ctor.
+     * @param file The Input
+     * @since 0.13
+     */
+    public TextOf(final File file) {
+        this(new InputOf(file));
     }
 
     /**

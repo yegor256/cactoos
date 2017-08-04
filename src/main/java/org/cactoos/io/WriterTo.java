@@ -24,73 +24,87 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.file.Path;
 import org.cactoos.Output;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Output to.
+ * Wrapper of {@link Writer}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.13
  */
-public final class OutputTo implements Output {
+public final class WriterTo extends Writer {
 
     /**
-     * The output.
+     * The target.
      */
-    private final Output origin;
-
-    /**
-     * Ctor.
-     * @param file The file
-     */
-    public OutputTo(final File file) {
-        this(() -> new FileOutputStream(file));
-    }
+    private final UncheckedScalar<Writer> target;
 
     /**
      * Ctor.
      * @param path The path
      */
-    public OutputTo(final Path path) {
-        this(() -> new FileOutputStream(path.toFile()));
+    public WriterTo(final Path path) {
+        this(new OutputTo(path));
     }
 
     /**
      * Ctor.
-     * @param writer The writer
+     * @param file The file
      */
-    public OutputTo(final Writer writer) {
-        this(new WriterAsOutputStream(writer));
+    public WriterTo(final File file) {
+        this(new OutputTo(file));
     }
 
     /**
      * Ctor.
-     * @param stream The stream
+     * @param stream The outpup
      */
-    public OutputTo(final OutputStream stream) {
-        this(() -> stream);
+    public WriterTo(final OutputStream stream) {
+        this(new OutputTo(stream));
     }
 
     /**
      * Ctor.
-     * @param output The output
+     * @param output The input
      */
-    private OutputTo(final Output output) {
-        this.origin = output;
+    public WriterTo(final Output output) {
+        this(() -> new OutputStreamWriter(output.stream()));
+    }
+
+    /**
+     * Ctor.
+     * @param tgt Target
+     */
+    private WriterTo(final Scalar<Writer> tgt) {
+        super();
+        this.target = new UncheckedScalar<>(new StickyScalar<>(tgt));
     }
 
     @Override
-    public OutputStream stream() throws IOException {
-        return this.origin.stream();
+    public void write(final char[] cbuf, final int off, final int len)
+        throws IOException {
+        this.target.value().write(cbuf, off, len);
+    }
+
+    @Override
+    public void flush() throws IOException {
+        this.target.value().flush();
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.target.value().close();
     }
 
 }
