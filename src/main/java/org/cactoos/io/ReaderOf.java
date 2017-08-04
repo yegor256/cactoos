@@ -1,0 +1,157 @@
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2017 Yegor Bugayenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+package org.cactoos.io;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URI;
+import java.net.URL;
+import java.nio.file.Path;
+import org.cactoos.Bytes;
+import org.cactoos.Input;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.UncheckedScalar;
+
+/**
+ * Create a {@link Reader}.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @version $Id$
+ * @since 0.13
+ */
+public final class ReaderOf extends Reader {
+
+    /**
+     * The source.
+     */
+    private final UncheckedScalar<Reader> source;
+
+    /**
+     * Ctor.
+     * @param path The path
+     */
+    public ReaderOf(final Path path) {
+        this(new InputOf(path));
+    }
+
+    /**
+     * Ctor.
+     * @param file The file
+     */
+    public ReaderOf(final File file) {
+        this(new InputOf(file));
+    }
+
+    /**
+     * Ctor.
+     * @param url The URL
+     */
+    public ReaderOf(final URL url) {
+        this(new InputOf(url));
+    }
+
+    /**
+     * Ctor.
+     * @param uri The URI
+     */
+    public ReaderOf(final URI uri) {
+        this(new InputOf(uri));
+    }
+
+    /**
+     * Ctor.
+     * @param bytes The text
+     */
+    public ReaderOf(final Bytes bytes) {
+        this(new InputOf(bytes));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public ReaderOf(final Text text) {
+        this(new InputOf(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public ReaderOf(final String text) {
+        this(new InputOf(text));
+    }
+
+    /**
+     * Ctor.
+     * @param input The input
+     */
+    public ReaderOf(final Input input) {
+        this(() -> new InputStreamReader(input.stream()));
+    }
+
+    /**
+     * Ctor.
+     * @param stream The stream
+     */
+    public ReaderOf(final InputStream stream) {
+        this(new InputStreamReader(stream));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr The reader
+     */
+    private ReaderOf(final Reader rdr) {
+        this(() -> rdr);
+    }
+
+    /**
+     * Ctor.
+     * @param src Source
+     */
+    private ReaderOf(final Scalar<Reader> src) {
+        super();
+        this.source = new UncheckedScalar<>(new StickyScalar<>(src));
+    }
+
+    @Override
+    public int read(final char[] cbuf, final int off, final int len)
+        throws IOException {
+        return this.source.value().read(cbuf, off, len);
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.source.value().close();
+    }
+
+}
