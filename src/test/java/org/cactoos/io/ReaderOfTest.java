@@ -23,74 +23,35 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.Output;
+import org.cactoos.InputHasContent;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Output to.
+ * Test case for {@link ReaderOf}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Ix (ixmanuel@yahoo.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.13
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class OutputTo implements Output {
+public final class ReaderOfTest {
 
-    /**
-     * The output.
-     */
-    private final Output origin;
-
-    /**
-     * Ctor.
-     * @param file The file
-     */
-    public OutputTo(final File file) {
-        this(() -> new FileOutputStream(file));
-    }
-
-    /**
-     * Ctor.
-     * @param path The path
-     */
-    public OutputTo(final Path path) {
-        this(() -> new FileOutputStream(path.toFile()));
-    }
-
-    /**
-     * Ctor.
-     * @param writer The writer
-     */
-    public OutputTo(final Writer writer) {
-        this(new WriterAsOutputStream(writer));
-    }
-
-    /**
-     * Ctor.
-     * @param stream The stream
-     */
-    public OutputTo(final OutputStream stream) {
-        this(() -> stream);
-    }
-
-    /**
-     * Ctor.
-     * @param output The output
-     */
-    private OutputTo(final Output output) {
-        this.origin = output;
-    }
-
-    @Override
-    public OutputStream stream() throws IOException {
-        return this.origin.stream();
+    @Test
+    public void readsSimpleFileContent() throws IOException {
+        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final String content = "Hello, товарищ!";
+        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+        MatcherAssert.assertThat(
+            "Can't read file content",
+            new InputOf(new ReaderOf(temp)),
+            new InputHasContent(content)
+        );
     }
 
 }

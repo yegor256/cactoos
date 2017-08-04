@@ -60,7 +60,7 @@ public final class StickyInputTest {
                     input -> new BytesOf(
                         new TeeInput(input, new DeadOutput())
                     // @checkstyle MagicNumber (2 lines)
-                    ).asBytes().length == 73471,
+                    ).asBytes().length == 74536,
                     10
                 )
             )

@@ -23,74 +23,82 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.nio.file.Path;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Output;
 
 /**
- * Output to.
+ * Writer as {@link Output}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.13
  */
-public final class OutputTo implements Output {
+final class WriterAsOutput implements Output {
 
     /**
-     * The output.
+     * The writer.
      */
-    private final Output origin;
+    private final Writer writer;
+
+    /**
+     * The charset decoder.
+     */
+    private final CharsetDecoder decoder;
+
+    /**
+     * The buffer size.
+     */
+    private final int size;
 
     /**
      * Ctor.
-     * @param file The file
+     * @param wtr Writer
      */
-    public OutputTo(final File file) {
-        this(() -> new FileOutputStream(file));
+    WriterAsOutput(final Writer wtr) {
+        this(wtr, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
-     * @param path The path
+     * @param wtr Writer
+     * @param cset Charset
      */
-    public OutputTo(final Path path) {
-        this(() -> new FileOutputStream(path.toFile()));
+    WriterAsOutput(final Writer wtr, final Charset cset) {
+        // @checkstyle MagicNumber (1 line)
+        this(wtr, cset, 16 << 10);
     }
 
     /**
      * Ctor.
-     * @param writer The writer
+     * @param wtr Reader
+     * @param cset Charset
+     * @param max Buffer size
      */
-    public OutputTo(final Writer writer) {
-        this(new WriterAsOutputStream(writer));
+    WriterAsOutput(final Writer wtr, final Charset cset, final int max) {
+        this(wtr, cset.newDecoder(), max);
     }
 
     /**
      * Ctor.
-     * @param stream The stream
+     * @param wtr Reader
+     * @param ddr Decoder
+     * @param max Buffer size
      */
-    public OutputTo(final OutputStream stream) {
-        this(() -> stream);
-    }
-
-    /**
-     * Ctor.
-     * @param output The output
-     */
-    private OutputTo(final Output output) {
-        this.origin = output;
+    WriterAsOutput(final Writer wtr, final CharsetDecoder ddr, final int max) {
+        this.writer = wtr;
+        this.decoder = ddr;
+        this.size = max;
     }
 
     @Override
-    public OutputStream stream() throws IOException {
-        return this.origin.stream();
+    public OutputStream stream() {
+        return new WriterAsOutputStream(this.writer, this.decoder, this.size);
     }
 
 }

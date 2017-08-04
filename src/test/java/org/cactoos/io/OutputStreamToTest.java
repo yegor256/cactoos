@@ -23,74 +23,45 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Writer;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.Output;
+import org.cactoos.TextHasString;
+import org.cactoos.func.MatcherOf;
+import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Output to.
+ * Test case for {@link OutputStreamTo}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Ix (ixmanuel@yahoo.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.13
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class OutputTo implements Output {
+public final class OutputStreamToTest {
 
-    /**
-     * The output.
-     */
-    private final Output origin;
-
-    /**
-     * Ctor.
-     * @param file The file
-     */
-    public OutputTo(final File file) {
-        this(() -> new FileOutputStream(file));
-    }
-
-    /**
-     * Ctor.
-     * @param path The path
-     */
-    public OutputTo(final Path path) {
-        this(() -> new FileOutputStream(path.toFile()));
-    }
-
-    /**
-     * Ctor.
-     * @param writer The writer
-     */
-    public OutputTo(final Writer writer) {
-        this(new WriterAsOutputStream(writer));
-    }
-
-    /**
-     * Ctor.
-     * @param stream The stream
-     */
-    public OutputTo(final OutputStream stream) {
-        this(() -> stream);
-    }
-
-    /**
-     * Ctor.
-     * @param output The output
-     */
-    private OutputTo(final Output output) {
-        this.origin = output;
-    }
-
-    @Override
-    public OutputStream stream() throws IOException {
-        return this.origin.stream();
+    @Test
+    public void writesLargeContentToFile() throws IOException {
+        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        MatcherAssert.assertThat(
+            "Can't copy Input to Output and return Input",
+            new TextOf(
+                new TeeInput(
+                    new ResourceOf("org/cactoos/large-text.txt"),
+                    new OutputTo(new OutputStreamTo(temp))
+                )
+            ),
+            new TextHasString(
+                new MatcherOf<>(
+                    str -> {
+                        return new TextOf(temp).asString().equals(str);
+                    }
+                )
+            )
+        );
     }
 
 }
