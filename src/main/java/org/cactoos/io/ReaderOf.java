@@ -30,6 +30,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
@@ -131,7 +133,16 @@ public final class ReaderOf extends Reader {
      * @param input The input
      */
     public ReaderOf(final Input input) {
-        this(() -> new InputStreamReader(input.stream()));
+        this(input, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param input The input
+     * @param charset The charset
+     */
+    public ReaderOf(final Input input, final Charset charset) {
+        this(() -> new InputStreamReader(input.stream(), charset));
     }
 
     /**
@@ -139,7 +150,16 @@ public final class ReaderOf extends Reader {
      * @param stream The stream
      */
     public ReaderOf(final InputStream stream) {
-        this(new InputStreamReader(stream));
+        this(stream, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param stream The stream
+     * @param charset The charset
+     */
+    public ReaderOf(final InputStream stream, final Charset charset) {
+        this(new InputStreamReader(stream, charset));
     }
 
     /**
