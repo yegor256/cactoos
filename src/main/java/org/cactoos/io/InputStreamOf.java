@@ -26,7 +26,6 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
@@ -39,7 +38,7 @@ import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Wrapper of {@link Reader}.
+ * Wrapper of {@link InputStream}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -47,34 +46,18 @@ import org.cactoos.scalar.UncheckedScalar;
  * @version $Id$
  * @since 0.13
  */
-public final class ReaderOf extends Reader {
+public final class InputStreamOf extends InputStream {
 
     /**
      * The source.
      */
-    private final UncheckedScalar<Reader> source;
-
-    /**
-     * Ctor.
-     * @param chars Chars
-     */
-    public ReaderOf(final char... chars) {
-        this(new InputOf(chars));
-    }
-
-    /**
-     * Ctor.
-     * @param bytes Bytes
-     */
-    public ReaderOf(final byte[] bytes) {
-        this(new InputOf(bytes));
-    }
+    private final UncheckedScalar<InputStream> source;
 
     /**
      * Ctor.
      * @param path The path
      */
-    public ReaderOf(final Path path) {
+    public InputStreamOf(final Path path) {
         this(new InputOf(path));
     }
 
@@ -82,7 +65,7 @@ public final class ReaderOf extends Reader {
      * Ctor.
      * @param file The file
      */
-    public ReaderOf(final File file) {
+    public InputStreamOf(final File file) {
         this(new InputOf(file));
     }
 
@@ -90,7 +73,7 @@ public final class ReaderOf extends Reader {
      * Ctor.
      * @param url The URL
      */
-    public ReaderOf(final URL url) {
+    public InputStreamOf(final URL url) {
         this(new InputOf(url));
     }
 
@@ -98,7 +81,7 @@ public final class ReaderOf extends Reader {
      * Ctor.
      * @param uri The URI
      */
-    public ReaderOf(final URI uri) {
+    public InputStreamOf(final URI uri) {
         this(new InputOf(uri));
     }
 
@@ -106,7 +89,7 @@ public final class ReaderOf extends Reader {
      * Ctor.
      * @param bytes The text
      */
-    public ReaderOf(final Bytes bytes) {
+    public InputStreamOf(final Bytes bytes) {
         this(new InputOf(bytes));
     }
 
@@ -114,7 +97,7 @@ public final class ReaderOf extends Reader {
      * Ctor.
      * @param text The text
      */
-    public ReaderOf(final Text text) {
+    public InputStreamOf(final Text text) {
         this(new InputOf(text));
     }
 
@@ -122,47 +105,49 @@ public final class ReaderOf extends Reader {
      * Ctor.
      * @param text The text
      */
-    public ReaderOf(final String text) {
+    public InputStreamOf(final String text) {
         this(new InputOf(text));
-    }
-
-    /**
-     * Ctor.
-     * @param input The input
-     */
-    public ReaderOf(final Input input) {
-        this(() -> new InputStreamReader(input.stream()));
-    }
-
-    /**
-     * Ctor.
-     * @param stream The stream
-     */
-    public ReaderOf(final InputStream stream) {
-        this(new InputStreamReader(stream));
     }
 
     /**
      * Ctor.
      * @param rdr The reader
      */
-    private ReaderOf(final Reader rdr) {
-        this(() -> rdr);
+    private InputStreamOf(final Reader rdr) {
+        this(new InputOf(rdr));
+    }
+
+    /**
+     * Ctor.
+     * @param input The input
+     */
+    public InputStreamOf(final Input input) {
+        this((Scalar<InputStream>) input::stream);
     }
 
     /**
      * Ctor.
      * @param src Source
      */
-    private ReaderOf(final Scalar<Reader> src) {
+    private InputStreamOf(final Scalar<InputStream> src) {
         super();
         this.source = new UncheckedScalar<>(new StickyScalar<>(src));
     }
 
     @Override
-    public int read(final char[] cbuf, final int off, final int len)
-        throws IOException {
-        return this.source.value().read(cbuf, off, len);
+    public int read() throws IOException {
+        return this.source.value().read();
+    }
+
+    @Override
+    public int read(final byte[] buffer) throws IOException {
+        return this.source.value().read(buffer);
+    }
+
+    @Override
+    public int read(final byte[] buffer, final int offset,
+        final int length) throws IOException {
+        return this.source.value().read(buffer, offset, length);
     }
 
     @Override
