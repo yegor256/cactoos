@@ -244,9 +244,9 @@ Cactoos | Guava | Apache Commons | JDK 8
 `SplitText` | - | - | `String#split()`
 `StringAsUrl` | - | - | `URLEncoder.encode()`
 `SubText` | - | - | `String#substring()`
-`TrimmedText` | - | - | `String#trim()`
-`TrimmedLeftText` | - | - | -
-`TrimmedRightText` | - | - | -
+`TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
+`TrimmedLeftText` | - | `StringUtils.stripStart()` | -
+`TrimmedRightText` | - | `StringUtils.stripEnd()` | -
 `UpperText` | - | - | `String#toUpperCase()`
 `UrlAsString` | - | - | `URLDecoder.decode()`
 `StickyList` | ? | ? | `Arrays.asList()`
