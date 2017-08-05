@@ -25,13 +25,16 @@ package org.cactoos.func;
 
 import org.cactoos.Func;
 import org.cactoos.Proc;
-import org.cactoos.text.FormattedText;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.ValidBound;
+import org.cactoos.text.JoinedText;
 
 /**
  * Func that repeats its calculation a few times before
  * returning the last result.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -47,7 +50,7 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
     /**
      * How many times to run.
      */
-    private final int times;
+    private final Scalar<Integer> times;
 
     /**
      * Ctor.
@@ -68,22 +71,23 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      * @param max How many times
      */
-    public RepeatedFunc(final Func<X, Y> fnc, final int max) {
+    public RepeatedFunc(final Func<X, Y> fnc, final Integer max) {
         this.func = fnc;
-        this.times = max;
+        this.times = new ValidBound<>(max, ">", 0);
     }
 
     @Override
     public Y apply(final X input) throws Exception {
         Y result = null;
-        for (int idx = 0; idx < this.times; ++idx) {
+        for (int idx = 0; idx < this.times.value(); ++idx) {
             result = this.func.apply(input);
         }
         if (result == null) {
-            throw new IllegalArgumentException(
-                new FormattedText(
-                    "Repeat counter is equal or less than zero: %d",
-                    this.times
+            throw new IllegalStateException(
+                new JoinedText(
+                    "\n",
+                    "\nThe result <null> is an invalid value in Cactoos:",
+                    "    - If required, try a null object instead.\n"
                 ).asString()
             );
         }

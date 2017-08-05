@@ -33,6 +33,7 @@ import org.junit.Test;
  * Test case for {@link RepeatedFunc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -50,6 +51,34 @@ public final class RepeatedFuncTest {
         MatcherAssert.assertThat(
             func.apply(true),
             Matchers.not(Matchers.equalTo(func.apply(true)))
+        );
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void failsToRepeatNulls() throws Exception {
+        final Func<Boolean, Integer> func = new RepeatedFunc<>(
+            input -> {
+                return null;
+            },
+            2
+        );
+        MatcherAssert.assertThat(
+            func.apply(true),
+            Matchers.not(Matchers.equalTo(func.apply(true)))
+        );
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void doesntRepeatAny() throws Exception {
+        final Func<Boolean, Integer> func = new RepeatedFunc<>(
+            input -> {
+                return new SecureRandom().nextInt();
+            },
+            0
+        );
+        MatcherAssert.assertThat(
+            func.apply(true),
+            Matchers.equalTo(func.apply(true))
         );
     }
 
