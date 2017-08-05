@@ -25,7 +25,6 @@ package org.cactoos.func;
 
 import java.util.Iterator;
 import org.cactoos.Func;
-import org.cactoos.list.ListOf;
 import org.cactoos.list.StickyIterator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
