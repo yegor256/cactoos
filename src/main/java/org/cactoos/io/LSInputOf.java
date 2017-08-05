@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Input;
@@ -90,10 +89,7 @@ public final class LSInputOf implements LSInput {
 
     @Override
     public Reader getCharacterStream() {
-        return new InputStreamReader(
-            this.getByteStream(),
-            StandardCharsets.UTF_8
-        );
+        return new ReaderOf(this.getByteStream());
     }
 
     @Override

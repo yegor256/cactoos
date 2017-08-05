@@ -33,6 +33,8 @@ import org.cactoos.Output;
 /**
  * Writer as {@link Output}.
  *
+ * <p>This class is for internal use only. Use {@link OutputTo} instead.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)

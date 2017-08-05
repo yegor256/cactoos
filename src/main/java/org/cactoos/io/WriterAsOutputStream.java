@@ -37,13 +37,16 @@ import java.nio.charset.StandardCharsets;
 /**
  * Writer as {@link OutputStream}.
  *
+ * <p>This class is for internal use only. Use {@link OutputStreamTo}
+ * instead.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.13
  */
-public final class WriterAsOutputStream extends OutputStream {
+final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Incoming data.
@@ -69,7 +72,7 @@ public final class WriterAsOutputStream extends OutputStream {
      * Ctor.
      * @param wtr Writer
      */
-    public WriterAsOutputStream(final Writer wtr) {
+    WriterAsOutputStream(final Writer wtr) {
         this(wtr, StandardCharsets.UTF_8);
     }
 
@@ -78,7 +81,7 @@ public final class WriterAsOutputStream extends OutputStream {
      * @param wtr Writer
      * @param charset Charset
      */
-    public WriterAsOutputStream(final Writer wtr, final Charset charset) {
+    WriterAsOutputStream(final Writer wtr, final Charset charset) {
         // @checkstyle MagicNumber (1 line)
         this(wtr, charset, 16 << 10);
     }
@@ -89,7 +92,7 @@ public final class WriterAsOutputStream extends OutputStream {
      * @param charset Charset
      * @param size Buffer size
      */
-    public WriterAsOutputStream(final Writer wtr, final Charset charset,
+    WriterAsOutputStream(final Writer wtr, final Charset charset,
         final int size) {
         this(
             wtr,
@@ -106,7 +109,7 @@ public final class WriterAsOutputStream extends OutputStream {
      * @param ddr Charset decoder
      * @param size Buffer size
      */
-    public WriterAsOutputStream(final Writer wtr, final CharsetDecoder ddr,
+    WriterAsOutputStream(final Writer wtr, final CharsetDecoder ddr,
         final int size) {
         super();
         this.writer = wtr;

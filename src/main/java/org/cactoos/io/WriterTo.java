@@ -29,6 +29,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Output;
@@ -91,6 +92,16 @@ public final class WriterTo extends Writer {
      */
     public WriterTo(final Output output, final Charset charset) {
         this(() -> new OutputStreamWriter(output.stream(), charset));
+    }
+
+    /**
+     * Ctor.
+     * @param output The input
+     * @param encoder Charset encoder
+     * @since 0.13.1
+     */
+    public WriterTo(final Output output, final CharsetEncoder encoder) {
+        this(() -> new OutputStreamWriter(output.stream(), encoder));
     }
 
     /**
