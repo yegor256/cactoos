@@ -23,16 +23,19 @@
  */
 package org.cactoos.text;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.IoCheckedScalar;
 import org.cactoos.io.BytesOf;
+import org.cactoos.io.InputOf;
+import org.cactoos.scalar.IoCheckedScalar;
 
 /**
  * TextOf
@@ -57,6 +60,24 @@ public final class TextOf implements Text {
      */
     public TextOf(final Input input) {
         this(new BytesOf(input));
+    }
+
+    /**
+     * Ctor.
+     * @param path The Input
+     * @since 0.13
+     */
+    public TextOf(final Path path) {
+        this(new InputOf(path));
+    }
+
+    /**
+     * Ctor.
+     * @param file The Input
+     * @since 0.13
+     */
+    public TextOf(final File file) {
+        this(new InputOf(file));
     }
 
     /**
@@ -215,20 +236,20 @@ public final class TextOf implements Text {
     /**
      * Ctor.
      *
-     * @param string The String
+     * @param input The String
      */
-    public TextOf(final String string) {
-        this(string, StandardCharsets.UTF_8);
+    public TextOf(final String input) {
+        this(input, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
      *
-     * @param string The String
+     * @param input The String
      * @param cset The Charset
      */
-    public TextOf(final String string, final Charset cset) {
-        this(() -> new String(string.getBytes(cset), cset));
+    public TextOf(final String input, final Charset cset) {
+        this(() -> new String(input.getBytes(cset), cset));
     }
 
     /**

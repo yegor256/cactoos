@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Collections;
-import org.cactoos.LengthOf;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -45,7 +44,7 @@ public final class CycledTest {
             "Can't repeat iterable",
             new ItemAt<>(
                 new Cycled<>(
-                    new ArrayOf<>(
+                    new IterableOf<>(
                         "one", expected, "three"
                     )
                 ),

@@ -59,16 +59,13 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param src Iterable
+     * @param source Iterable
      */
-    public ItemAt(final Iterable<T> src) {
+    public ItemAt(final Iterable<T> source) {
         this(
-            src,
+            source,
             itr -> {
-                throw new IOException(
-                    new FormattedText("Iterable %s is empty", itr)
-                        .asString()
-                );
+                throw new IOException("The iterable is empty");
             }
         );
     }
@@ -76,42 +73,39 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param src Iterable
-     * @param fbk Fallback value
+     * @param source Iterable
+     * @param fallback Fallback value
      */
-    public ItemAt(final Iterable<T> src, final T fbk) {
-        this(src, itr -> fbk);
+    public ItemAt(final Iterable<T> source, final T fallback) {
+        this(source, itr -> fallback);
     }
 
     /**
      * Ctor.
      *
-     * @param src Iterable
-     * @param fbk Fallback value
+     * @param source Iterable
+     * @param fallback Fallback value
      */
-    public ItemAt(
-        final Iterable<T> src,
-        final Func<Iterable<T>, T> fbk
-    ) {
-        this(src, 0, fbk);
+    public ItemAt(final Iterable<T> source,
+        final Func<Iterable<T>, T> fallback) {
+        this(source, 0, fallback);
     }
 
     /**
      * Ctor.
      *
-     * @param src Iterable
-     * @param pos Position
+     * @param source Iterable
+     * @param position Position
      */
-    public ItemAt(final Iterable<T> src, final int pos) {
+    public ItemAt(final Iterable<T> source, final int position) {
         this(
-            src,
-            pos,
+            source,
+            position,
             itr -> {
                 throw new IOException(
                     new FormattedText(
-                        "Iterable %s doesn't have element at position #%d",
-                        itr,
-                        pos
+                        "The iterable doesn't have the position #%d",
+                        position
                     ).asString()
                 );
             }
@@ -121,26 +115,21 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param src Iterable
-     * @param pos Position
-     * @param fbk Fallback value
+     * @param source Iterable
+     * @param position Position
+     * @param fallback Fallback value
      */
-    public ItemAt(
-        final Iterable<T> src,
-        final int pos,
-        final Func<Iterable<T>, T> fbk
-    ) {
-        this.pos = pos;
-        this.src = src;
-        this.fbk = fbk;
+    public ItemAt(final Iterable<T> source, final int position,
+        final Func<Iterable<T>, T> fallback) {
+        this.pos = position;
+        this.src = source;
+        this.fbk = fallback;
     }
 
     @Override
     public T value() throws Exception {
         return new org.cactoos.iterator.ItemAt<>(
-            this.src.iterator(),
-            this.pos,
-            this.fbk
+            this.src.iterator(), this.pos, this.fbk
         ).value();
     }
 }

@@ -24,7 +24,7 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
-import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public final class SkippedTest {
         MatcherAssert.assertThat(
             "Can't skip elements in iterator",
             () -> new Skipped<>(
-                new ArrayOf<>(
+                new IterableOf<>(
                     "one", "two", "three", "four"
                 ).iterator(),
                 2
@@ -59,7 +59,7 @@ public final class SkippedTest {
     @Test(expected = NoSuchElementException.class)
     public void errorSkippedMoreThanExists() throws Exception {
         new Skipped<>(
-            new ArrayOf<>(
+            new IterableOf<>(
                 "one", "two"
             ).iterator(),
             2

@@ -33,7 +33,7 @@ import org.cactoos.Text;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.iterable.Endless;
-import org.cactoos.iterable.Subset;
+import org.cactoos.iterable.Limited;
 import org.cactoos.text.JoinedText;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -63,7 +63,7 @@ public final class BytesOfTest {
                 new InputOf(
                     new JoinedText(
                         "",
-                        new Subset<>(
+                        new Limited<>(
                             new Endless<>(body),
                             multiplier
                         )
@@ -92,7 +92,7 @@ public final class BytesOfTest {
     }
 
     @Test
-    public void readsFromReader() throws Exception {
+    public void readsFromReader() throws IOException {
         final String source = "hello, друг!";
         MatcherAssert.assertThat(
             "Can't read string through a reader",

@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.Func;
-import org.cactoos.LengthOf;
 
 /**
  * Iterable as {@link Map}.
@@ -64,7 +63,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      */
     @SafeVarargs
     public MapOf(final Map.Entry<X, Y>... list) {
-        this(new ArrayOf<>(list));
+        this(new IterableOf<>(list));
     }
 
     /**
@@ -75,7 +74,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      */
     @SafeVarargs
     public MapOf(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
-        this(map, new ArrayOf<>(list));
+        this(map, new IterableOf<>(list));
     }
 
     /**
@@ -161,7 +160,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
 
     @Override
     public int size() {
-        return (int) new LengthOf(this.entries).value();
+        return new LengthOf(this.entries).value().intValue();
     }
 
     @Override

@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import java.util.Iterator;
 import org.cactoos.Text;
-import org.cactoos.iterable.ArrayOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Filtered;
 
 /**
@@ -100,7 +100,7 @@ public final class SplitText implements Iterable<String> {
     @Override
     public Iterator<String> iterator() {
         return new Filtered<>(
-            new ArrayOf<>(
+            new IterableOf<>(
                 this.origin.asString().split(
                     this.regex.asString()
                 )

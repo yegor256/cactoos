@@ -26,7 +26,7 @@ package org.cactoos.iterable;
 import java.util.Iterator;
 import java.util.stream.LongStream;
 import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable providing Natural Numbers.

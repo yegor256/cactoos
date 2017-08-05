@@ -23,6 +23,7 @@
  */
 package org.cactoos.io;
 
+import java.io.IOException;
 import java.io.StringReader;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -40,7 +41,7 @@ import org.junit.Test;
 public final class ReaderAsBytesTest {
 
     @Test
-    public void readsString() throws Exception {
+    public void readsString() throws IOException {
         final String source = "hello, друг!";
         MatcherAssert.assertThat(
             "Can't read string through a reader",

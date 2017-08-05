@@ -28,8 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.Func;
-import org.cactoos.func.StickyScalar;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Map decorator that goes through the map only once.
@@ -55,7 +55,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     @SafeVarargs
     public StickyMap(final Map.Entry<X, Y>... list) {
-        this(new ArrayOf<>(list));
+        this(new IterableOf<>(list));
     }
 
     /**
@@ -66,7 +66,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     @SafeVarargs
     public StickyMap(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
-        this(map, new ArrayOf<>(list));
+        this(map, new IterableOf<>(list));
     }
 
     /**

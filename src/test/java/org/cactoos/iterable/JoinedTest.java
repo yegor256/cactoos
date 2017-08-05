@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.LengthOf;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -43,9 +42,9 @@ public final class JoinedTest {
             "Can't concatenate iterables together",
             new LengthOf(
                 new Joined<String>(
-                    new ArrayOf<>("hello", "world", "друг"),
-                    new ArrayOf<>("how", "are", "you"),
-                    new ArrayOf<>("what's", "up")
+                    new IterableOf<>("hello", "world", "друг"),
+                    new IterableOf<>("how", "are", "you"),
+                    new IterableOf<>("what's", "up")
                 )
             ),
             // @checkstyle MagicNumber (1 line)
