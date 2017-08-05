@@ -66,7 +66,7 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
      * Ctor.
      *
      * <p>If {@code max} is equal or less than zero {@link #apply(Object)}
-     * will return {@code null}.</p>
+     * will return an exception.</p>
      *
      * @param fnc Func original
      * @param max How many times
