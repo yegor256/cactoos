@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.LengthOf;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -43,7 +42,7 @@ public final class FilteredTest {
             "Can't calculate the length of an iterable",
             new LengthOf(
                 new Filtered<>(
-                    new ArrayOf<>(
+                    new IterableOf<>(
                         "hello", "world", "друг"
                     ),
                     // @checkstyle MagicNumber (1 line)
@@ -60,7 +59,7 @@ public final class FilteredTest {
             "Can't calculate the length of an empty iterable",
             new LengthOf(
                 new Filtered<>(
-                    new ArrayOf<String>(),
+                    new IterableOf<String>(),
                     input -> input.length() > 1
                 )
             ),

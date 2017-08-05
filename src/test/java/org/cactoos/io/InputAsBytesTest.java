@@ -23,14 +23,11 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.atomic.AtomicBoolean;
-import org.cactoos.func.MatcherOf;
 import org.cactoos.iterable.Endless;
-import org.cactoos.iterable.Subset;
+import org.cactoos.iterable.Limited;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -57,7 +54,7 @@ public final class InputAsBytesTest {
                 new InputOf(
                     String.join(
                         "",
-                        new Subset<>(
+                        new Limited<>(
                             new Endless<>(body),
                             multiplier
                         )
@@ -122,38 +119,6 @@ public final class InputAsBytesTest {
             Matchers.allOf(
                 Matchers.startsWith("Hello,"),
                 Matchers.endsWith("товарищ!")
-            )
-        );
-    }
-
-    @Test
-    public void closesInputStream() throws IOException {
-        final AtomicBoolean closed = new AtomicBoolean();
-        final InputStream input = new ByteArrayInputStream(
-            "how are you?".getBytes()
-        );
-        MatcherAssert.assertThat(
-            "Can't close InputStream correctly",
-            new TextOf(
-                new InputOf(
-                    new InputStream() {
-                        @Override
-                        public int read() throws IOException {
-                            return input.read();
-                        }
-                        @Override
-                        public void close() throws IOException {
-                            input.close();
-                            closed.set(true);
-                        }
-                    }
-                ),
-                StandardCharsets.UTF_8
-            ).asString(),
-            new MatcherOf<>(
-                text -> {
-                    return closed.get();
-                }
             )
         );
     }

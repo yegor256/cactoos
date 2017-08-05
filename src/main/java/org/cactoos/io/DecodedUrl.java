@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -88,11 +89,15 @@ public final class DecodedUrl implements Scalar<String> {
     }
 
     @Override
-    public String value() throws IOException {
-        return URLDecoder.decode(
-            this.source.asString(),
-            this.encoding.name()
-        );
+    public String value() {
+        try {
+            return URLDecoder.decode(
+                this.source.asString(),
+                this.encoding.name()
+            );
+        } catch (final IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
     }
 
 }

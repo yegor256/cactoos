@@ -32,6 +32,8 @@ import org.cactoos.Input;
 /**
  * Input as Byte Array.
  *
+ * <p>This class is for internal use only. Use {@link BytesOf} instead.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)

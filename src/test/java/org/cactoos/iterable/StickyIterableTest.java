@@ -25,7 +25,6 @@ package org.cactoos.iterable;
 
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.LengthOf;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;

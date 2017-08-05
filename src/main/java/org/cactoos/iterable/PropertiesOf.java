@@ -30,8 +30,8 @@ import java.util.Properties;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.IoCheckedScalar;
 import org.cactoos.io.InputOf;
+import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.text.TextOf;
 
 /**
@@ -54,10 +54,10 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
-     * @param string String
+     * @param content String
      */
-    public PropertiesOf(final String string) {
-        this(new TextOf(string));
+    public PropertiesOf(final String content) {
+        this(new TextOf(content));
     }
 
     /**
@@ -92,7 +92,7 @@ public final class PropertiesOf implements Scalar<Properties> {
         this(
             new MapOf<>(
                 new Mapped<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new ArrayOf<>(entries),
+                    new IterableOf<>(entries),
                     input -> new MapEntry<>(
                         input.getKey().toString(), input.getValue().toString()
                     )

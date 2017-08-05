@@ -51,10 +51,10 @@ public final class Cycled<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param iterable Iterable.
+     * @param itr Iterable.
      */
-    public Cycled(final Iterable<T> iterable) {
-        this.iterable = iterable;
+    public Cycled(final Iterable<T> itr) {
+        this.iterable = itr;
     }
 
     @Override
@@ -68,7 +68,9 @@ public final class Cycled<T> implements Iterator<T> {
     @Override
     public T next() {
         if (!this.hasNext()) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
         }
         return this.iterator.next();
     }

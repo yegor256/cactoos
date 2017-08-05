@@ -100,7 +100,7 @@ public final class StickyMapTest {
                     new MapEntry<>("black", "BLACK"),
                     new MapEntry<>("white", "WHITE")
                 ),
-                new ArrayOf<>("yellow", "red", "blue"),
+                new IterableOf<>("yellow", "red", "blue"),
                 color -> new MapEntry<>(
                     color, color.toUpperCase(Locale.ENGLISH)
                 )
@@ -118,7 +118,7 @@ public final class StickyMapTest {
                     new MapEntry<>("black!", "Black!"),
                     new MapEntry<>("white!", "White!")
                 ),
-                new ArrayOf<>("yellow!", "red!", "blue!"),
+                new IterableOf<>("yellow!", "red!", "blue!"),
                 color -> String.format("[%s]", color),
                 String::toUpperCase
             ),

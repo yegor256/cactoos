@@ -38,8 +38,8 @@ import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.IoCheckedScalar;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * InputOf
@@ -88,7 +88,7 @@ public final class InputOf implements Input {
      * @param uri The URI
      */
     public InputOf(final URI uri) {
-        this(() -> uri.toURL());
+        this(uri::toURL);
     }
 
     /**
@@ -106,9 +106,7 @@ public final class InputOf implements Input {
      * @param scalar The url
      */
     public InputOf(final Scalar<URL> scalar) {
-        this(() -> {
-            return new IoCheckedScalar<URL>(scalar).value().openStream();
-        });
+        this(() -> new IoCheckedScalar<>(scalar).value().openStream());
     }
 
     /**
@@ -155,13 +153,11 @@ public final class InputOf implements Input {
      * @param cset The charset
      */
     public InputOf(final StringBuilder builder, final Charset cset) {
-        this(() -> {
-            return new IoCheckedScalar<InputStream>(
-                () -> new ByteArrayInputStream(
-                    new BytesOf(builder, cset).asBytes()
-                )
-            ).value();
-        });
+        this(() -> new IoCheckedScalar<InputStream>(
+            () -> new ByteArrayInputStream(
+                new BytesOf(builder, cset).asBytes()
+            )
+        ).value());
     }
 
     /**
@@ -180,13 +176,11 @@ public final class InputOf implements Input {
      * @param cset The charset
      */
     public InputOf(final StringBuffer buffer, final Charset cset) {
-        this(() -> {
-            return new IoCheckedScalar<InputStream>(
-                () -> new ByteArrayInputStream(
-                    new BytesOf(buffer, cset).asBytes()
-                )
-            ).value();
-        });
+        this(() -> new IoCheckedScalar<InputStream>(
+            () -> new ByteArrayInputStream(
+                new BytesOf(buffer, cset).asBytes()
+            )
+        ).value());
     }
 
     /**
@@ -210,26 +204,23 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
-     * @param string The string
+     * @param source The string
      */
-    public InputOf(final String string) {
-        this(new BytesOf(string));
+    public InputOf(final CharSequence source) {
+        this(new BytesOf(source));
     }
 
     /**
      * Ctor.
-     *
-     * @param string The string
+     * @param source The string
      * @param cset The charset
      */
-    public InputOf(final String string, final Charset cset) {
-        this(new BytesOf(string, cset));
+    public InputOf(final CharSequence source, final Charset cset) {
+        this(new BytesOf(source, cset));
     }
 
     /**
      * Ctor.
-     *
      * @param text The text
      */
     public InputOf(final Text text) {
@@ -238,7 +229,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param cset The charset
      */
@@ -248,7 +238,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      */
     public InputOf(final Throwable error) {
@@ -257,7 +246,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param bytes The bytes
      */
     public InputOf(final byte[] bytes) {
@@ -266,20 +254,16 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param src The bytes
      */
     public InputOf(final Bytes src) {
-        this(() -> {
-            return new IoCheckedScalar<InputStream>(
-                () -> new ByteArrayInputStream(src.asBytes())
-            ).value();
-        });
+        this(() -> new IoCheckedScalar<InputStream>(
+            () -> new ByteArrayInputStream(src.asBytes())
+        ).value());
     }
 
     /**
      * Ctor.
-     *
      * @param stream The stream
      */
     public InputOf(final InputStream stream) {

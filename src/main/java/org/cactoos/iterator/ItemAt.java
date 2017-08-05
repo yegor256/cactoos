@@ -60,11 +60,11 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param src Iterator
+     * @param iterator Iterator
      */
-    public ItemAt(final Iterator<T> src) {
+    public ItemAt(final Iterator<T> iterator) {
         this(
-            src,
+            iterator,
             itr -> {
                 throw new IOException("Iterator is empty");
             }
@@ -74,41 +74,39 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param src Iterator
-     * @param fbk Fallback value
+     * @param iterator Iterator
+     * @param fallback Fallback value
      */
-    public ItemAt(final Iterator<T> src, final T fbk) {
-        this(src, itr -> fbk);
+    public ItemAt(final Iterator<T> iterator, final T fallback) {
+        this(iterator, itr -> fallback);
     }
 
     /**
      * Ctor.
      *
-     * @param src Iterator
-     * @param fbk Fallback value
+     * @param iterator Iterator
+     * @param fallback Fallback value
      */
-    public ItemAt(
-        final Iterator<T> src,
-        final Func<Iterable<T>, T> fbk
-    ) {
-        this(src, 0, fbk);
+    public ItemAt(final Iterator<T> iterator,
+        final Func<Iterable<T>, T> fallback) {
+        this(iterator, 0, fallback);
     }
 
     /**
      * Ctor.
      *
-     * @param src Iterator
-     * @param pos Position
+     * @param iterator Iterator
+     * @param position Position
      */
-    public ItemAt(final Iterator<T> src, final int pos) {
+    public ItemAt(final Iterator<T> iterator, final int position) {
         this(
-            src,
-            pos,
+            iterator,
+            position,
             itr -> {
                 throw new IOException(
                     new FormattedText(
                         "Iterator doesn't have an element at #%d position",
-                        pos
+                        position
                     ).asString()
                 );
             }
@@ -118,18 +116,15 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param src Iterator
-     * @param pos Position
-     * @param fbk Fallback value
+     * @param iterator Iterator
+     * @param position Position
+     * @param fallback Fallback value
      */
-    public ItemAt(
-        final Iterator<T> src,
-        final int pos,
-        final Func<Iterable<T>, T> fbk
-    ) {
-        this.pos = pos;
-        this.src = src;
-        this.fbk = fbk;
+    public ItemAt(final Iterator<T> iterator, final int position,
+        final Func<Iterable<T>, T> fallback) {
+        this.pos = position;
+        this.src = iterator;
+        this.fbk = fallback;
     }
 
     @Override
@@ -142,11 +137,11 @@ public final class ItemAt<T> implements Scalar<T> {
                 ).asString()
             );
         }
-        final T ret;
         int cur;
         for (cur = 0; cur < this.pos && this.src.hasNext(); ++cur) {
             this.src.next();
         }
+        final T ret;
         if (cur == this.pos && this.src.hasNext()) {
             ret = this.src.next();
         } else {

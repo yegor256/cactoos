@@ -60,9 +60,7 @@ To read a text file in UTF-8:
 
 ```java
 String text = new TextOf(
-  new InputOf(
-    new File("/code/a.txt")
-  )
+  new File("/code/a.txt")
 ).asString();
 ```
 
@@ -169,9 +167,7 @@ List<String> sorted = new ListOf<>(
   new Sorted<>(
     new SplitText(
       new TextOf(
-        new InputOf(
-          new File("/tmp/names.txt")
-        )
+        new File("/tmp/names.txt")
       ),
       new TextOf("\\s+")
     )
@@ -241,10 +237,13 @@ Cactoos | Guava | Apache Commons | JDK 8
 `RepeatedText` | - | `StringUtils.repeat()` | -
 `ReplacedText` | - | - | `String#replace()`
 `ReversedText` | - | - | `StringBuilder#reverse()`
+`RotatedText` | - | `StringUtils.rotate()`| -
 `SplitText` | - | - | `String#split()`
 `EncodedUrl` | - | - | `URLEncoder.encode()`
 `SubText` | - | - | `String#substring()`
-`TrimmedText` | - | - | `String#trim()`
+`TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
+`TrimmedLeftText` | - | `StringUtils.stripStart()` | -
+`TrimmedRightText` | - | `StringUtils.stripEnd()` | -
 `UpperText` | - | - | `String#toUpperCase()`
 `FilteredText` | - | `StringUtils.remove()` | `String#replaceAll()`
 `DecodedUrl` | - | - | `URLDecoder.decode()`

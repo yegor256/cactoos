@@ -24,11 +24,13 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Text;
@@ -61,7 +63,24 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
-     *
+     * @param file The input
+     * @since 0.13
+     */
+    public BytesOf(final File file) {
+        this(new InputOf(file));
+    }
+
+    /**
+     * Ctor.
+     * @param path The input
+     * @since 0.13
+     */
+    public BytesOf(final Path path) {
+        this(new InputOf(path));
+    }
+
+    /**
+     * Ctor.
      * @param input The input
      * @param max Max length of the buffer for reading
      */
@@ -71,7 +90,6 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      */
     public BytesOf(final Reader rdr) {
@@ -102,7 +120,7 @@ public final class BytesOf implements Bytes {
      *
      * @param builder The source
      */
-    public BytesOf(final StringBuilder builder) {
+    public BytesOf(final CharSequence builder) {
         this(builder, StandardCharsets.UTF_8);
     }
 
@@ -112,27 +130,8 @@ public final class BytesOf implements Bytes {
      * @param builder The source
      * @param cset The charset
      */
-    public BytesOf(final StringBuilder builder, final Charset cset) {
+    public BytesOf(final CharSequence builder, final Charset cset) {
         this(() -> builder.toString().getBytes(cset));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param buffer The source
-     */
-    public BytesOf(final StringBuffer buffer) {
-        this(buffer, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param buffer The source
-     * @param cset The charset
-     */
-    public BytesOf(final StringBuffer buffer, final Charset cset) {
-        this(() -> buffer.toString().getBytes(cset));
     }
 
     /**
@@ -156,26 +155,6 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
-     *
-     * @param string The source
-     */
-    public BytesOf(final String string) {
-        this(string, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param string The source
-     * @param cset The charset
-     */
-    public BytesOf(final String string, final Charset cset) {
-        this(() -> string.getBytes(cset));
-    }
-
-    /**
-     * Ctor.
-     *
      * @param text The source
      */
     public BytesOf(final Text text) {
@@ -184,7 +163,6 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param text The source
      * @param cset The charset
      */
@@ -194,7 +172,6 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      */
     public BytesOf(final Throwable error) {

@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import org.cactoos.LengthOf;
 
 /**
  * Iterable as {@link List}.
@@ -66,7 +65,7 @@ public final class ListOf<T> implements List<T> {
      */
     @SafeVarargs
     public ListOf(final T... array) {
-        this(new ArrayOf<>(array));
+        this(new IterableOf<>(array));
     }
 
     /**
@@ -80,7 +79,7 @@ public final class ListOf<T> implements List<T> {
 
     @Override
     public int size() {
-        return (int) new LengthOf(this.iterable).value();
+        return new LengthOf(this.iterable).value().intValue();
     }
 
     @Override
@@ -211,8 +210,8 @@ public final class ListOf<T> implements List<T> {
     }
 
     @Override
-    public List<T> subList(final int fromindex, final int toindex) {
-        return this.list().subList(fromindex, toindex);
+    public List<T> subList(final int from, final int end) {
+        return this.list().subList(from, end);
     }
 
     /**

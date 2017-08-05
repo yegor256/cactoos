@@ -32,6 +32,8 @@ import org.cactoos.Bytes;
 /**
  * Reader as {@link Bytes}.
  *
+ * <p>This class is for internal use only. Use {@link BytesOf} instead.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
@@ -92,7 +94,7 @@ final class ReaderAsBytes implements Bytes {
     @Override
     public byte[] asBytes() throws IOException {
         final char[] buffer = new char[this.size];
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(this.size);
         while (true) {
             final int done = this.reader.read(buffer, 0, buffer.length);
             if (done < 0) {

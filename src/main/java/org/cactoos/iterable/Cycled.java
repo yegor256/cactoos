@@ -45,10 +45,10 @@ public final class Cycled<T> implements Iterable<T> {
 
     /**
      * Ctor.
-     * @param iterable Iterable
+     * @param itr Iterable
      */
-    public Cycled(final Iterable<T> iterable) {
-        this.iterable = iterable;
+    public Cycled(final Iterable<T> itr) {
+        this.iterable = itr;
     }
 
     @Override

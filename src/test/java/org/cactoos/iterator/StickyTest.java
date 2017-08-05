@@ -51,7 +51,7 @@ public final class StickyTest {
                 ", ",
                 () -> new Mapped<>(
                     new Sticky<>(
-                        new Subset<>(
+                        new Limited<>(
                             new Endless<>(count::incrementAndGet),
                             2
                         )

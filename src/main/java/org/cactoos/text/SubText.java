@@ -26,7 +26,7 @@ package org.cactoos.text;
 import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.UncheckedScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Extract a substring from a Text.
