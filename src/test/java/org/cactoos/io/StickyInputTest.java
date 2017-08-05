@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import org.cactoos.Input;
 import org.cactoos.ScalarHasValue;
@@ -50,7 +51,7 @@ public final class StickyInputTest {
         MatcherAssert.assertThat(
             "Can't read bytes from a file",
             new StickyInput(
-                new ResourceAsInput(
+                new ResourceOf(
                     "org/cactoos/large-text.txt"
                 )
             ),
@@ -59,7 +60,7 @@ public final class StickyInputTest {
                     input -> new BytesOf(
                         new TeeInput(input, new DeadOutput())
                     // @checkstyle MagicNumber (2 lines)
-                    ).asBytes().length == 73471,
+                    ).asBytes().length == 74536,
                     10
                 )
             )
@@ -67,7 +68,7 @@ public final class StickyInputTest {
     }
 
     @Test
-    public void readsRealUrl() throws IOException {
+    public void readsRealUrl() throws MalformedURLException {
         MatcherAssert.assertThat(
             "Can't fetch text page from the URL",
             new TextOf(
@@ -91,9 +92,9 @@ public final class StickyInputTest {
         final long size = 100_000L;
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly and count length",
-            new LengthOfInput(
+            new LengthOf(
                 new StickyInput(
-                    new SlowInput((int) size)
+                    new SlowInput(size)
                 )
             ),
             new ScalarHasValue<>(size)
@@ -102,15 +103,15 @@ public final class StickyInputTest {
 
     @Test
     public void readsFileContentSlowly() throws IOException {
-        final long size = 130_000L;
+        final int size = 130_000;
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly",
             new BytesOf(
                 new StickyInput(
-                    new SlowInput((int) size)
+                    new SlowInput(size)
                 )
             ).asBytes().length,
-            Matchers.equalTo((int) size)
+            Matchers.equalTo(size)
         );
     }
 

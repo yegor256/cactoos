@@ -29,8 +29,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
-import org.cactoos.func.IoCheckedScalar;
-import org.cactoos.func.StickyScalar;
+import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.StickyScalar;
 
 /**
  * Input that reads only once.
@@ -56,8 +56,8 @@ public final class StickyInput implements Input {
         this.cache = new StickyScalar<>(
             () -> {
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                new LengthOfInput(
-                    new TeeInput(input, new OutputStreamAsOutput(baos))
+                new LengthOf(
+                    new TeeInput(input, new OutputTo(baos))
                 ).value();
                 return baos.toByteArray();
             }

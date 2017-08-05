@@ -25,7 +25,7 @@ package org.cactoos;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import org.cactoos.io.FileAsOutput;
+import org.cactoos.io.OutputTo;
 import org.cactoos.io.TeeInput;
 
 /**
@@ -35,25 +35,25 @@ import org.cactoos.io.TeeInput;
  * together with {@link Input} in order to modify the content
  * of a text file:</p>
  *
- * <pre> new LengthOfInput(
+ * <pre> new LengthOf(
  *   new TeeInput(
  *     new InputOf(new TextOf("Hello, world!")),
- *     new FileAsOutput(new File("/tmp/names.txt"))
+ *     new OutputTo(new File("/tmp/names.txt"))
  *   )
  * ).asValue();</pre>
  *
- * <p>Here {@link FileAsOutput} implements {@link Output} and behaves like
+ * <p>Here {@link OutputTo} implements {@link Output} and behaves like
  * one, providing write-only access to the encapsulated
  * {@link java.io.File}. The {@link TeeInput} copies the content of the
- * input to the output. The {@link org.cactoos.io.LengthOfInput}
+ * input to the output. The {@link org.cactoos.io.LengthOf}
  * calculates the size of the copied data.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @see FileAsOutput
- * @see org.cactoos.io.PathAsOutput
+ * @see OutputTo
+ * @see org.cactoos.io.OutputTo
  * @since 0.1
  */
 public interface Output {

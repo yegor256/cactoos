@@ -60,21 +60,19 @@ To read a text file in UTF-8:
 
 ```java
 String text = new TextOf(
-  new InputOf(
-    new File("/code/a.txt")
-  )
+  new File("/code/a.txt")
 ).asString();
 ```
 
 To write a text into a file:
 
 ```java
-new LengthOfInput(
+new LengthOf(
   new TeeInput(
     new InputOf(
       "Hello, world!"
     ),
-    new FileAsOutput(
+    new OutputTo(
       new File("/code/a.txt")
     )
   )
@@ -85,7 +83,7 @@ To read a binary file from classpath:
 
 ```java
 byte[] data = new BytesOf(
-  new ResourceAsInput("foo/img.jpg")
+  new ResourceOf("foo/img.jpg")
 ).asBytes();
 ```
 
@@ -115,7 +113,7 @@ To filter a collection:
 
 ```java
 Collection<String> filtered = new ListOf<>(
-  new FilteredOf<>(
+  new Filtered<>(
     new ArrayOf<>("hello", "world", "dude"),
     new FuncOf<String, Boolean>() {
       @Override
@@ -131,7 +129,7 @@ With Lambda:
 
 ```java
 new ListOf<>(
-  new FilteredOf<>(
+  new Filtered<>(
     new ArrayOf<>("hello", "world", "dude"),
     s -> s.length() > 4
   )
@@ -142,7 +140,7 @@ To iterate a collection:
 
 ```java
 new And(
-  new MappedOf<>(
+  new Mappped<>(
     new ArrayOf<>("how", "are", "you"),
     new FuncOf<>(
       input -> {
@@ -166,12 +164,10 @@ To sort a list of words in the file:
 
 ```java
 List<String> sorted = new ListOf<>(
-  new SortedOf<>(
+  new Sorted<>(
     new SplitText(
       new TextOf(
-        new InputOf(
-          new File("/tmp/names.txt")
-        )
+        new File("/tmp/names.txt")
       ),
       new TextOf("\\s+")
     )
@@ -182,7 +178,7 @@ List<String> sorted = new ListOf<>(
 To count elements in an iterable:
 
 ```java
-int total = new LengthOfIterable(
+int total = new LengthOf(
   "how", "are", "you"
 ).value();
 ```
@@ -220,7 +216,7 @@ Here is its object-oriented alternative:
 
 ```java
 new And(
-  new EndlessOf<>(ready),
+  new Endless<>(ready),
   ready -> {
     System.out.prinln("Still waiting...");
     return !ready;
@@ -235,21 +231,24 @@ Cactoos | Guava | Apache Commons | JDK 8
 `FormattedText` | - | - | `String.format()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
 `JoinedText` | - | - | `String.join()`
-`LengthOfText` | - | - | `String#length()`
+`LengthOf` | - | - | `String#length()`
 `LowerText` | - | - | `String#toLowerCase()`
 `NormalizedText` | - | `StringUtils.normalize()` | -
 `RepeatedText` | - | `StringUtils.repeat()` | -
 `ReplacedText` | - | - | `String#replace()`
 `ReversedText` | - | - | `StringBuilder#reverse()`
+`RotatedText` | - | `StringUtils.rotate()`| -
 `SplitText` | - | - | `String#split()`
-`StringAsUrl` | - | - | `URLEncoder.encode()`
+`EncodedUrl` | - | - | `URLEncoder.encode()`
 `SubText` | - | - | `String#substring()`
-`TrimmedText` | - | - | `String#trim()`
+`TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
+`TrimmedLeftText` | - | `StringUtils.stripStart()` | -
+`TrimmedRightText` | - | `StringUtils.stripEnd()` | -
 `UpperText` | - | - | `String#toUpperCase()`
-`UrlAsString` | - | - | `URLDecoder.decode()`
+`DecodedUrl` | - | - | `URLDecoder.decode()`
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
-`FilteredOf` | `Iterables.filter()` | ? | -
+`Filtered` | `Iterables.filter()` | ? | -
 `TextOf` | ? | `IOUtils.toString()` | -
 
 ## How to contribute?

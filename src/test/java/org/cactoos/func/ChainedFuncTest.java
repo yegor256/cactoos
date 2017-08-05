@@ -24,10 +24,10 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
-import org.cactoos.list.ArrayOf;
-import org.cactoos.list.FilteredOf;
-import org.cactoos.list.LengthOfIterable;
-import org.cactoos.list.MappedOf;
+import org.cactoos.iterable.Filtered;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.LengthOf;
+import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -46,10 +46,10 @@ public final class ChainedFuncTest {
     @Test
     public void withoutIterable() throws Exception {
         MatcherAssert.assertThat(
-            new LengthOfIterable(
-                new FilteredOf<>(
-                    new MappedOf<>(
-                        new ArrayOf<>("public", "final", "class"),
+            new LengthOf(
+                new Filtered<>(
+                    new Mapped<>(
+                        new IterableOf<>("public", "final", "class"),
                         new ChainedFunc<String, String, String>(
                             input -> input.concat("1"),
                             input -> input.concat("2")
@@ -65,13 +65,13 @@ public final class ChainedFuncTest {
     @Test
     public void withIterable() throws Exception {
         MatcherAssert.assertThat(
-            new LengthOfIterable(
-                new FilteredOf<>(
-                    new MappedOf<>(
-                        new ArrayOf<>("private", "static", "String"),
+            new LengthOf(
+                new Filtered<>(
+                    new Mapped<>(
+                        new IterableOf<>("private", "static", "String"),
                         new ChainedFunc<>(
                             input -> input.concat("1"),
-                            new ArrayOf<Func<String, String>>(
+                            new IterableOf<Func<String, String>>(
                                 input -> input.concat("2"),
                                 input -> input.replaceAll("a", "b")
                             ),
