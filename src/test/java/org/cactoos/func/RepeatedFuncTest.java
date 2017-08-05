@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import java.security.SecureRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -42,15 +43,17 @@ public final class RepeatedFuncTest {
 
     @Test
     public void runsFuncMultipleTimes() throws Exception {
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
+        final Integer repeated = 2;
+        final AtomicInteger count = new AtomicInteger(0);
+        final Func<AtomicInteger, Integer> func = new RepeatedFunc<>(
             input -> {
-                return new SecureRandom().nextInt();
+                return count.incrementAndGet();
             },
-            2
+            repeated
         );
         MatcherAssert.assertThat(
-            func.apply(true),
-            Matchers.not(Matchers.equalTo(func.apply(true)))
+            func.apply(count),
+            Matchers.equalTo(repeated)
         );
     }
 
