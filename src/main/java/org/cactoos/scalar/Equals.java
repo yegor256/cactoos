@@ -49,12 +49,12 @@ public final class Equals<T extends Comparable<T>> implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param frst The first scalar to compare.
-     * @param scnd The second scalar to compare.
+     * @param source The first scalar to compare.
+     * @param compared The second scalar to compare.
      */
-    public Equals(final Scalar<T> frst, final Scalar<T> scnd) {
-        this.first = frst;
-        this.second = scnd;
+    public Equals(final Scalar<T> source, final Scalar<T> compared) {
+        this.first = source;
+        this.second = compared;
     }
 
     @Override

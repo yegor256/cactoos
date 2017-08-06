@@ -43,10 +43,10 @@ public final class Not implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param origin The scalar
+     * @param scalar The scalar
      */
-    public Not(final Scalar<Boolean> origin) {
-        this.origin = origin;
+    public Not(final Scalar<Boolean> scalar) {
+        this.origin = scalar;
     }
 
     @Override
