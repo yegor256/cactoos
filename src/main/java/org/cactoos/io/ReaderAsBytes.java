@@ -51,7 +51,7 @@ final class ReaderAsBytes implements Bytes {
     /**
      * The charset.
      */
-    private final Charset charset;
+    private final CharSequence charset;
 
     /**
      * The buffer size.
@@ -83,9 +83,32 @@ final class ReaderAsBytes implements Bytes {
      *
      * @param rdr Reader
      * @param cset Charset
+     * @since 0.13.2
+     */
+    ReaderAsBytes(final Reader rdr, final CharSequence cset) {
+        // @checkstyle MagicNumber (1 line)
+        this(rdr, cset, 16 << 10);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param rdr Reader
+     * @param cset Charset
      * @param max Buffer size
      */
     ReaderAsBytes(final Reader rdr, final Charset cset, final int max) {
+        this(rdr, cset.name(), max);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param rdr Reader
+     * @param cset Charset
+     * @param max Buffer size
+     */
+    ReaderAsBytes(final Reader rdr, final CharSequence cset, final int max) {
         this.reader = rdr;
         this.charset = cset;
         this.size = max;
@@ -102,7 +125,7 @@ final class ReaderAsBytes implements Bytes {
             }
             builder.append(buffer, 0, done);
         }
-        return builder.toString().getBytes(this.charset);
+        return builder.toString().getBytes(this.charset.toString());
     }
 
 }

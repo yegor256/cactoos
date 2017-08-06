@@ -97,7 +97,7 @@ public final class TeeInput implements Input {
      * @param file The output file
      * @since 0.5
      */
-    public TeeInput(final String input, final File file) {
+    public TeeInput(final CharSequence input, final File file) {
         this(new InputOf(input), new OutputTo(file));
     }
 
@@ -107,7 +107,7 @@ public final class TeeInput implements Input {
      * @param file The output file
      * @since 0.5
      */
-    public TeeInput(final String input, final Path file) {
+    public TeeInput(final CharSequence input, final Path file) {
         this(new InputOf(input), new OutputTo(file));
     }
 
@@ -127,7 +127,7 @@ public final class TeeInput implements Input {
      * @param output The target
      * @since 0.5
      */
-    public TeeInput(final String input, final Output output) {
+    public TeeInput(final CharSequence input, final Output output) {
         this(new InputOf(input), output);
     }
 

@@ -30,6 +30,7 @@ import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
@@ -39,7 +40,7 @@ import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Wrapper of {@link InputStream}.
+ * An {@link InputStream} that encapsulates other sources of data.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -96,18 +97,62 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
-     * @param text The text
+     * @param bytes The text
      */
-    public InputStreamOf(final Text text) {
-        this(new InputOf(text));
+    public InputStreamOf(final byte[] bytes) {
+        this(new InputOf(bytes));
     }
 
     /**
      * Ctor.
      * @param text The text
      */
-    public InputStreamOf(final String text) {
+    public InputStreamOf(final Text text) {
+        this(text, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param charset Charset
+     */
+    public InputStreamOf(final Text text, final Charset charset) {
+        this(new InputOf(text, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param charset Charset
+     */
+    public InputStreamOf(final Text text, final CharSequence charset) {
+        this(new InputOf(text, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public InputStreamOf(final CharSequence text) {
         this(new InputOf(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param charset Charset
+     */
+    public InputStreamOf(final CharSequence text, final Charset charset) {
+        this(new InputOf(text, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param charset Charset
+     */
+    public InputStreamOf(final CharSequence text, final CharSequence charset) {
+        this(new InputOf(text, charset));
     }
 
     /**
@@ -116,17 +161,27 @@ public final class InputStreamOf extends InputStream {
      * @since 0.13.2
      */
     public InputStreamOf(final Reader rdr) {
-        this(new InputOf(rdr));
+        this(rdr, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
      * @param rdr Reader
-     * @param cset Charset
+     * @param charset Charset
      * @since 0.13.2
      */
-    public InputStreamOf(final Reader rdr, final Charset cset) {
-        this(new InputOf(rdr, cset));
+    public InputStreamOf(final Reader rdr, final Charset charset) {
+        this(new InputOf(rdr, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param charset Charset
+     * @since 0.13.2
+     */
+    public InputStreamOf(final Reader rdr, final CharSequence charset) {
+        this(new InputOf(rdr, charset));
     }
 
     /**
@@ -138,6 +193,28 @@ public final class InputStreamOf extends InputStream {
      */
     public InputStreamOf(final Reader rdr, final Charset cset, final int max) {
         this(new InputOf(rdr, cset, max));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param max Buffer size
+     * @since 0.13.2
+     */
+    public InputStreamOf(final Reader rdr, final int max) {
+        this(new InputOf(rdr, StandardCharsets.UTF_8, max));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param charset Charset
+     * @param max Buffer size
+     * @since 0.13.2
+     */
+    public InputStreamOf(final Reader rdr, final CharSequence charset,
+        final int max) {
+        this(new InputOf(rdr, charset, max));
     }
 
     /**

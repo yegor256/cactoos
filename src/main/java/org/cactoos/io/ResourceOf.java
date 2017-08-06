@@ -48,12 +48,12 @@ public final class ResourceOf implements Input {
     /**
      * Resource name.
      */
-    private final String path;
+    private final CharSequence path;
 
     /**
      * Fallback.
      */
-    private final Func<String, Input> fallback;
+    private final Func<CharSequence, Input> fallback;
 
     /**
      * Resource class loader.
@@ -64,7 +64,7 @@ public final class ResourceOf implements Input {
      * New resource input with current context {@link ClassLoader}.
      * @param res Resource name
      */
-    public ResourceOf(final String res) {
+    public ResourceOf(final CharSequence res) {
         this(res, Thread.currentThread().getContextClassLoader());
     }
 
@@ -73,7 +73,7 @@ public final class ResourceOf implements Input {
      * @param res Resource name
      * @param fbk Fallback
      */
-    public ResourceOf(final String res, final String fbk) {
+    public ResourceOf(final CharSequence res, final CharSequence fbk) {
         this(res, input -> new InputOf(new BytesOf(fbk)));
     }
 
@@ -82,7 +82,7 @@ public final class ResourceOf implements Input {
      * @param res Resource name
      * @param fbk Fallback
      */
-    public ResourceOf(final String res, final Input fbk) {
+    public ResourceOf(final CharSequence res, final Input fbk) {
         this(res, input -> fbk);
     }
 
@@ -91,7 +91,8 @@ public final class ResourceOf implements Input {
      * @param res Resource name
      * @param fbk Fallback
      */
-    public ResourceOf(final String res, final Func<String, Input> fbk) {
+    public ResourceOf(final CharSequence res,
+        final Func<CharSequence, Input> fbk) {
         this(res, fbk, Thread.currentThread().getContextClassLoader());
     }
 
@@ -100,7 +101,7 @@ public final class ResourceOf implements Input {
      * @param res Resource name
      * @param ldr Resource class loader
      */
-    public ResourceOf(final String res, final ClassLoader ldr) {
+    public ResourceOf(final CharSequence res, final ClassLoader ldr) {
         this(
             res,
             input -> {
@@ -121,8 +122,8 @@ public final class ResourceOf implements Input {
      * @param ldr Resource class loader
      * @param fbk Fallback
      */
-    public ResourceOf(final String res, final Func<String, Input> fbk,
-        final ClassLoader ldr) {
+    public ResourceOf(final CharSequence res,
+        final Func<CharSequence, Input> fbk, final ClassLoader ldr) {
         this.path = res;
         this.loader = ldr;
         this.fallback = fbk;
@@ -130,7 +131,9 @@ public final class ResourceOf implements Input {
 
     @Override
     public InputStream stream() throws IOException {
-        InputStream input = this.loader.getResourceAsStream(this.path);
+        InputStream input = this.loader.getResourceAsStream(
+            this.path.toString()
+        );
         if (input == null) {
             input = new IoCheckedFunc<>(this.fallback)
                 .apply(this.path)

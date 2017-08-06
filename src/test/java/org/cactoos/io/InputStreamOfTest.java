@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,6 +51,26 @@ public final class InputStreamOfTest {
         MatcherAssert.assertThat(
             "Can't read file content",
             new InputOf(new InputStreamOf(temp)),
+            new InputHasContent(content)
+        );
+    }
+
+    @Test
+    public void readsFromReader() {
+        final String content = "Hello, дорогой товарищ!";
+        MatcherAssert.assertThat(
+            "Can't read from reader",
+            new InputOf(new InputStreamOf(new StringReader(content))),
+            new InputHasContent(content)
+        );
+    }
+
+    @Test
+    public void readsFromReaderThroughSmallBuffer() {
+        final String content = "Hello, صديق!";
+        MatcherAssert.assertThat(
+            "Can't read from reader through small buffer",
+            new InputOf(new InputStreamOf(new StringReader(content), 1)),
             new InputHasContent(content)
         );
     }

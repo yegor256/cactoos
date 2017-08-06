@@ -81,9 +81,30 @@ final class WriterAsOutputStream extends OutputStream {
      * @param wtr Writer
      * @param charset Charset
      */
-    WriterAsOutputStream(final Writer wtr, final Charset charset) {
+    WriterAsOutputStream(final Writer wtr, final CharSequence charset) {
         // @checkstyle MagicNumber (1 line)
         this(wtr, charset, 16 << 10);
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Writer
+     * @param charset Charset
+     */
+    WriterAsOutputStream(final Writer wtr, final Charset charset) {
+        // @checkstyle MagicNumber (1 line)
+        this(wtr, charset.name());
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Reader
+     * @param charset Charset
+     * @param size Buffer size
+     */
+    WriterAsOutputStream(final Writer wtr, final CharSequence charset,
+        final int size) {
+        this(wtr, Charset.forName(charset.toString()), size);
     }
 
     /**

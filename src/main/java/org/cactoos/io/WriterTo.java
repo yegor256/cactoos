@@ -38,7 +38,7 @@ import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Wrapper of {@link Writer}.
+ * A {@link Writer} that encapsulates other destination for the data.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -92,6 +92,15 @@ public final class WriterTo extends Writer {
      */
     public WriterTo(final Output output, final Charset charset) {
         this(() -> new OutputStreamWriter(output.stream(), charset));
+    }
+
+    /**
+     * Ctor.
+     * @param output The input
+     * @param charset The charset
+     */
+    public WriterTo(final Output output, final CharSequence charset) {
+        this(() -> new OutputStreamWriter(output.stream(), charset.toString()));
     }
 
     /**
