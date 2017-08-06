@@ -204,26 +204,23 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param source The string
      */
-    public InputOf(final String source) {
+    public InputOf(final CharSequence source) {
         this(new BytesOf(source));
     }
 
     /**
      * Ctor.
-     *
      * @param source The string
      * @param cset The charset
      */
-    public InputOf(final String source, final Charset cset) {
+    public InputOf(final CharSequence source, final Charset cset) {
         this(new BytesOf(source, cset));
     }
 
     /**
      * Ctor.
-     *
      * @param text The text
      */
     public InputOf(final Text text) {
@@ -232,7 +229,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param cset The charset
      */
@@ -242,7 +238,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      */
     public InputOf(final Throwable error) {
@@ -251,7 +246,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param bytes The bytes
      */
     public InputOf(final byte[] bytes) {
@@ -260,7 +254,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param src The bytes
      */
     public InputOf(final Bytes src) {
@@ -271,7 +264,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param stream The stream
      */
     public InputOf(final InputStream stream) {

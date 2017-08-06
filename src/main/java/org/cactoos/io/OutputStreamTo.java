@@ -27,6 +27,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.nio.file.Path;
 import org.cactoos.Output;
 import org.cactoos.Scalar;
@@ -69,8 +71,42 @@ public final class OutputStreamTo extends OutputStream {
      * Ctor.
      * @param wtr The writer
      */
-    private OutputStreamTo(final Writer wtr) {
+    public OutputStreamTo(final Writer wtr) {
         this(new OutputTo(wtr));
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Writer
+     * @param charset Charset
+     * @since 0.13.1
+     */
+    OutputStreamTo(final Writer wtr, final Charset charset) {
+        this(new OutputTo(wtr, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Reader
+     * @param charset Charset
+     * @param size Buffer size
+     * @since 0.13.1
+     */
+    OutputStreamTo(final Writer wtr, final Charset charset,
+        final int size) {
+        this(new OutputTo(wtr, charset, size));
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Reader
+     * @param ddr Charset decoder
+     * @param size Buffer size
+     * @since 0.13.1
+     */
+    OutputStreamTo(final Writer wtr, final CharsetDecoder ddr,
+        final int size) {
+        this(new OutputTo(wtr, ddr, size));
     }
 
     /**

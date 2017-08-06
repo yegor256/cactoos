@@ -81,7 +81,6 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param input The input
      * @param max Max length of the buffer for reading
      */
@@ -91,7 +90,6 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      */
     public BytesOf(final Reader rdr) {
@@ -157,26 +155,6 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
-     *
-     * @param source The source
-     */
-    public BytesOf(final String source) {
-        this(source, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param source The source
-     * @param cset The charset
-     */
-    public BytesOf(final String source, final Charset cset) {
-        this(() -> source.getBytes(cset));
-    }
-
-    /**
-     * Ctor.
-     *
      * @param text The source
      */
     public BytesOf(final Text text) {
@@ -185,7 +163,6 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param text The source
      * @param cset The charset
      */
@@ -195,7 +172,6 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      */
     public BytesOf(final Throwable error) {

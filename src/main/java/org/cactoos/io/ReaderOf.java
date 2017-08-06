@@ -31,6 +31,7 @@ import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
@@ -147,6 +148,16 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     * @param input The input
+     * @param decoder The decoder
+     * @since 0.13.1
+     */
+    public ReaderOf(final Input input, final CharsetDecoder decoder) {
+        this(() -> new InputStreamReader(input.stream(), decoder));
+    }
+
+    /**
+     * Ctor.
      * @param stream The stream
      */
     public ReaderOf(final InputStream stream) {
@@ -160,6 +171,16 @@ public final class ReaderOf extends Reader {
      */
     public ReaderOf(final InputStream stream, final Charset charset) {
         this(new InputStreamReader(stream, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param stream The stream
+     * @param decoder The charset decoder
+     * @since 0.13.1
+     */
+    public ReaderOf(final InputStream stream, final CharsetDecoder decoder) {
+        this(new InputStreamReader(stream, decoder));
     }
 
     /**
