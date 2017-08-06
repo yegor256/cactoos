@@ -48,7 +48,7 @@ public final
     private final String symbol;
 
     /**
-     * The endpoint of the interval, either left or right.
+     * The half-endpoint of the interval, either left or right.
      */
     private final T endpoint;
 
@@ -60,13 +60,13 @@ public final
     /**
      * Ctor.
      * @param value The value expected in the interval
-     * @param type Bounded or unbounded symbol type
-     * @param bound The value of the endpoint
+     * @param sybl Bounded or unbounded symbol type
+     * @param end The value of the endpoint
      */
-    public ValidBound(final T value, final String type, final T bound) {
+    public ValidBound(final T value, final String sybl, final T end) {
         this.val = value;
-        this.symbol = type;
-        this.endpoint = bound;
+        this.symbol = sybl;
+        this.endpoint = end;
     }
 
     @Override

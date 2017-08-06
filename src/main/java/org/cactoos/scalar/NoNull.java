@@ -53,7 +53,7 @@ public final class NoNull<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param src The encapsulated value type
+     * @param src The encapsulated value
      */
     public NoNull(final Scalar<T> src) {
         this.origin = src;
