@@ -81,7 +81,7 @@ public final class OutputStreamTo extends OutputStream {
      * @param charset Charset
      * @since 0.13.1
      */
-    OutputStreamTo(final Writer wtr, final Charset charset) {
+    public OutputStreamTo(final Writer wtr, final Charset charset) {
         this(new OutputTo(wtr, charset));
     }
 
@@ -92,7 +92,7 @@ public final class OutputStreamTo extends OutputStream {
      * @param size Buffer size
      * @since 0.13.1
      */
-    OutputStreamTo(final Writer wtr, final Charset charset,
+    public OutputStreamTo(final Writer wtr, final Charset charset,
         final int size) {
         this(new OutputTo(wtr, charset, size));
     }
@@ -104,7 +104,7 @@ public final class OutputStreamTo extends OutputStream {
      * @param size Buffer size
      * @since 0.13.1
      */
-    OutputStreamTo(final Writer wtr, final CharsetDecoder ddr,
+    public OutputStreamTo(final Writer wtr, final CharsetDecoder ddr,
         final int size) {
         this(new OutputTo(wtr, ddr, size));
     }

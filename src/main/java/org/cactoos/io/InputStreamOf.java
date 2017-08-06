@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
@@ -112,9 +113,31 @@ public final class InputStreamOf extends InputStream {
     /**
      * Ctor.
      * @param rdr The reader
+     * @since 0.13.2
      */
-    private InputStreamOf(final Reader rdr) {
+    public InputStreamOf(final Reader rdr) {
         this(new InputOf(rdr));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param cset Charset
+     * @since 0.13.2
+     */
+    public InputStreamOf(final Reader rdr, final Charset cset) {
+        this(new InputOf(rdr, cset));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param cset Charset
+     * @param max Buffer size
+     * @since 0.13.2
+     */
+    public InputStreamOf(final Reader rdr, final Charset cset, final int max) {
+        this(new InputOf(rdr, cset, max));
     }
 
     /**
