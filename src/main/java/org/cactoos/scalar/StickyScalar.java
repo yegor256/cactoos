@@ -51,11 +51,11 @@ public final class StickyScalar<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param src The Scalar to cache
+     * @param scalar The Scalar to cache
      */
-    public StickyScalar(final Scalar<T> src) {
+    public StickyScalar(final Scalar<T> scalar) {
         this.func = new StickyFunc<>(
-            input -> src.value()
+            input -> scalar.value()
         );
     }
 

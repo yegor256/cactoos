@@ -40,22 +40,22 @@ import org.cactoos.Scalar;
 public final class UncheckedScalar<T> implements Scalar<T> {
 
     /**
-     * Original scalar.
+     * Original origin.
      */
-    private final Scalar<T> scalar;
+    private final Scalar<T> origin;
 
     /**
      * Ctor.
-     * @param scr Encapsulated scalar
+     * @param scalar Encapsulated origin
      */
-    public UncheckedScalar(final Scalar<T> scr) {
-        this.scalar = scr;
+    public UncheckedScalar(final Scalar<T> scalar) {
+        this.origin = scalar;
     }
 
     @Override
     public T value() {
         try {
-            return new IoCheckedScalar<>(this.scalar).value();
+            return new IoCheckedScalar<>(this.origin).value();
         } catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
