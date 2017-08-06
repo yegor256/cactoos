@@ -246,6 +246,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `TrimmedLeftText` | - | `StringUtils.stripStart()` | -
 `TrimmedRightText` | - | `StringUtils.stripEnd()` | -
 `UpperText` | - | - | `String#toUpperCase()`
+`FilteredText` | - | `StringUtils.remove()` | `String#replaceAll()`
 `DecodedUrl` | - | - | `URLDecoder.decode()`
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
@@ -278,6 +279,7 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
   - [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
   - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
+  - [@svendiedrichsen](https://github.com/svendiedrichsen) as Sven Diedrichsen
 
 
 ## License (MIT)
