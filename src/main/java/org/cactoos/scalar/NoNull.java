@@ -21,68 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.scalar;
 
-import org.cactoos.Func;
-import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.NoNull;
-import org.cactoos.scalar.ValidBound;
+import org.cactoos.text.JoinedText;
 
 /**
- * Func that repeats its calculation a few times before
- * returning the last result.
+ * No null.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.6
+ * @param <T> Type of entity to validate
+ * @since 0.13.2
  */
-public final class RepeatedFunc<X, Y> implements Func<X, Y> {
+public final class NoNull<T> implements Scalar<T> {
 
     /**
-     * Original func.
+     * The origin scalar.
      */
-    private final Func<X, Y> func;
-
-    /**
-     * How many times to run.
-     */
-    private final Scalar<Integer> times;
+    private final Scalar<T> origin;
 
     /**
      * Ctor.
-     * @param proc Proc
-     * @param max How many times
-     * @since 0.12
+     * @param src The scalar
      */
-    public RepeatedFunc(final Proc<X> proc, final int max) {
-        this(new FuncOf<>(proc), max);
+    public NoNull(final T src) {
+        this(() -> src);
     }
 
     /**
      * Ctor.
-     *
-     * <p>If {@code max} is equal or less than zero {@link #apply(Object)}
-     * will return an exception.</p>
-     *
-     * @param fnc Func original
-     * @param max How many times
+     * @param src The encapsulated value type
      */
-    public RepeatedFunc(final Func<X, Y> fnc, final Integer max) {
-        this.func = fnc;
-        this.times = new ValidBound<>(max, ">", 0);
+    public NoNull(final Scalar<T> src) {
+        this.origin = src;
     }
 
     @Override
-    public Y apply(final X input) throws Exception {
-        Y result = null;
-        for (int idx = 0; idx < this.times.value(); ++idx) {
-            result = this.func.apply(input);
+    public T value() throws Exception {
+        final T val = this.origin.value();
+        if (val == null) {
+            throw new IllegalStateException(
+                new JoinedText(
+                    "\n",
+                    "\nNull is an invalid value in Cactoos:",
+                    "    - If required, try a null object instead.\n"
+                ).asString()
+            );
         }
-        return new NoNull<>(result).value();
+        return val;
     }
-
 }

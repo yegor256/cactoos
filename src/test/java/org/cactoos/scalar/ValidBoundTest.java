@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.13.1
+ * @since 0.13.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ValidBoundTest {

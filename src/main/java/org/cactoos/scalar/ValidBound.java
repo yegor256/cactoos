@@ -37,7 +37,7 @@ import org.cactoos.text.JoinedText;
  * @version $Id$
  * @param <T> Type of result
  * @see <a href="http://en.wikipedia.org/wiki/Interval_(mathematics)">terms</a>
- * @since 0.13.1
+ * @since 0.13.2
  */
 public final
     class ValidBound<T extends Comparable<T>> implements Scalar<T> {
