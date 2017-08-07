@@ -240,13 +240,11 @@ Cactoos | Guava | Apache Commons | JDK 8
 `ReversedText` | - | - | `StringBuilder#reverse()`
 `RotatedText` | - | `StringUtils.rotate()`| -
 `SplitText` | - | - | `String#split()`
-`EncodedUrl` | - | - | `URLEncoder.encode()`
 `SubText` | - | - | `String#substring()`
 `TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
 `TrimmedLeftText` | - | `StringUtils.stripStart()` | -
 `TrimmedRightText` | - | `StringUtils.stripEnd()` | -
 `UpperText` | - | - | `String#toUpperCase()`
-`DecodedUrl` | - | - | `URLDecoder.decode()`
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
 `Filtered` | `Iterables.filter()` | ? | -
