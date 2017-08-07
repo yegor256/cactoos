@@ -27,11 +27,11 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Limited iterator.
+ * Limited origin.
  *
- * <p>This is a decorator over an existing iterator. Returns elements of the
- * original iterator, until either the requested number of items have been
- * returned or the underlying iterator has been exhausted.</p>
+ * <p>This is a decorator over an existing origin. Returns elements of the
+ * original origin, until either the requested number of items have been
+ * returned or the underlying origin has been exhausted.</p>
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -43,14 +43,14 @@ import java.util.NoSuchElementException;
 public final class Limited<T> implements Iterator<T> {
 
     /**
-     * Decorated iterator.
+     * Decorated origin.
      */
-    private final Iterator<T> iterator;
+    private final Iterator<T> origin;
 
     /**
      * Number of elements to return.
      */
-    private final int limit;
+    private final int restrict;
 
     /**
      * Number of elements returned so far.
@@ -64,14 +64,14 @@ public final class Limited<T> implements Iterator<T> {
      * @param limit The requested number of elements
      */
     public Limited(final Iterator<T> iterator, final int limit) {
-        this.iterator = iterator;
-        this.limit = limit;
+        this.origin = iterator;
+        this.restrict = limit;
         this.consumed = 0;
     }
 
     @Override
     public boolean hasNext() {
-        return this.consumed < this.limit && this.iterator.hasNext();
+        return this.consumed < this.restrict && this.origin.hasNext();
     }
 
     @Override
@@ -80,6 +80,6 @@ public final class Limited<T> implements Iterator<T> {
             throw new NoSuchElementException("No more elements.");
         }
         ++this.consumed;
-        return this.iterator.next();
+        return this.origin.next();
     }
 }

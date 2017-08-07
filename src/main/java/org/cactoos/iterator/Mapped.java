@@ -43,36 +43,36 @@ public final class Mapped<X, Y> implements Iterator<Y> {
     /**
      * Iterator.
      */
-    private final Iterator<X> iterator;
+    private final Iterator<X> origin;
 
     /**
      * Function.
      */
-    private final Func<X, Y> func;
+    private final Func<X, Y> fnc;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
+     * @param iterator Source iterator
+     * @param func Func
      */
-    public Mapped(final Iterator<X> src, final Func<X, Y> fnc) {
-        this.iterator = src;
-        this.func = fnc;
+    public Mapped(final Iterator<X> iterator, final Func<X, Y> func) {
+        this.origin = iterator;
+        this.fnc = func;
     }
 
     @Override
     public boolean hasNext() {
-        return this.iterator.hasNext();
+        return this.origin.hasNext();
     }
 
     @Override
     public Y next() {
-        return new UncheckedFunc<>(this.func).apply(this.iterator.next());
+        return new UncheckedFunc<>(this.fnc).apply(this.origin.next());
     }
 
     @Override
     public void remove() {
-        this.iterator.remove();
+        this.origin.remove();
     }
 
 }

@@ -51,26 +51,26 @@ public final class
 
     /**
      * Ctor.
-     * @param src The underlying iterator
+     * @param items The underlying iterator
      */
-    public Sorted(final Iterator<T> src) {
-        this(Comparator.naturalOrder(), src);
+    public Sorted(final Iterator<T> items) {
+        this(Comparator.naturalOrder(), items);
     }
 
     /**
      * Ctor.
-     * @param src The underlying iterator
-     * @param cmp The comparator
+     * @param iterator The underlying iterator
+     * @param comparator The comparator
      */
-    public Sorted(final Comparator<T> cmp, final Iterator<T> src) {
+    public Sorted(final Comparator<T> comparator, final Iterator<T> iterator) {
         this.scalar = new UncheckedScalar<>(
             new StickyScalar<>(
                 () -> {
                     final List<T> items = new LinkedList<>();
-                    while (src.hasNext()) {
-                        items.add(src.next());
+                    while (iterator.hasNext()) {
+                        items.add(iterator.next());
                     }
-                    items.sort(cmp);
+                    items.sort(comparator);
                     return items.iterator();
                 }
             )
