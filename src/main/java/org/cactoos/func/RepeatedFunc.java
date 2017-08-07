@@ -26,15 +26,12 @@ package org.cactoos.func;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.NoNull;
-import org.cactoos.scalar.ValidBound;
 
 /**
  * Func that repeats its calculation a few times before
  * returning the last result.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -50,7 +47,7 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
     /**
      * How many times to run.
      */
-    private final Scalar<Integer> times;
+    private final int times;
 
     /**
      * Ctor.
@@ -73,16 +70,20 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
      */
     public RepeatedFunc(final Func<X, Y> fnc, final Integer max) {
         this.func = fnc;
-        this.times = new ValidBound<>(max, ">", 0);
+        this.times = max;
     }
 
     @Override
     public Y apply(final X input) throws Exception {
+        if (this.times <= 0) {
+            throw new IllegalArgumentException("max > 0");
+        }
         Y result = null;
-        for (int idx = 0; idx < this.times.value(); ++idx) {
+        for (int idx = 0; idx < this.times; ++idx) {
             result = this.func.apply(input);
         }
-        return new NoNull<>(result).value();
+        final Y rslt = result;
+        return new Scalar.NoNulls<Y>(()->rslt).value();
     }
 
 }

@@ -71,7 +71,7 @@ public final class RepeatedFuncTest {
         );
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void doesntRepeatAny() throws Exception {
         final Func<Boolean, Integer> func = new RepeatedFunc<>(
             input -> {
