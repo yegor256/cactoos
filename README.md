@@ -229,8 +229,6 @@ new And(
 
 Cactoos | Guava | Apache Commons | JDK 8
 ------ | ------ | ------ | ------
-`DecodedUrl` | - | - | `URLDecoder.decode()`
-`EncodedUrl` | - | - | `URLEncoder.encode()`
 `Filtered` | `Iterables.filter()` | ? | -
 `FormattedText` | - | - | `String.format()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
