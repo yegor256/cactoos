@@ -68,7 +68,7 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      * @param max How many times
      */
-    public RepeatedFunc(final Func<X, Y> fnc, final Integer max) {
+    public RepeatedFunc(final Func<X, Y> fnc, final int max) {
         this.func = fnc;
         this.times = max;
     }
@@ -76,7 +76,9 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
     @Override
     public Y apply(final X input) throws Exception {
         if (this.times <= 0) {
-            throw new IllegalArgumentException("max > 0");
+            throw new IllegalArgumentException(
+                "The number of repetitions must be at least 1"
+            );
         }
         Y result = null;
         for (int idx = 0; idx < this.times; ++idx) {
