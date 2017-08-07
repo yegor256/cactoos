@@ -47,19 +47,19 @@ public final class Max<T extends Comparable<T>> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param items The items
+     * @param scalars The items
      */
     @SafeVarargs
-    public Max(final Scalar<T>... items) {
-        this(new IterableOf<>(items));
+    public Max(final Scalar<T>... scalars) {
+        this(new IterableOf<>(scalars));
     }
 
     /**
      * Ctor.
-     * @param items The items
+     * @param iterable The items
      */
-    public Max(final Iterable<Scalar<T>> items) {
-        this.items = items;
+    public Max(final Iterable<Scalar<T>> iterable) {
+        this.items = iterable;
     }
 
     @Override

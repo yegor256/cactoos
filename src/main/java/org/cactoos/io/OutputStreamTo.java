@@ -29,6 +29,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Output;
 import org.cactoos.Scalar;
@@ -36,7 +37,7 @@ import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Wrapper of {@link OutputStream}.
+ * An {@link OutputStream} that encapsulates other destination for the data.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -72,7 +73,7 @@ public final class OutputStreamTo extends OutputStream {
      * @param wtr The writer
      */
     public OutputStreamTo(final Writer wtr) {
-        this(new OutputTo(wtr));
+        this(wtr, StandardCharsets.UTF_8);
     }
 
     /**
@@ -81,7 +82,17 @@ public final class OutputStreamTo extends OutputStream {
      * @param charset Charset
      * @since 0.13.1
      */
-    OutputStreamTo(final Writer wtr, final Charset charset) {
+    public OutputStreamTo(final Writer wtr, final Charset charset) {
+        this(new OutputTo(wtr, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Writer
+     * @param charset Charset
+     * @since 0.13.1
+     */
+    public OutputStreamTo(final Writer wtr, final CharSequence charset) {
         this(new OutputTo(wtr, charset));
     }
 
@@ -92,7 +103,19 @@ public final class OutputStreamTo extends OutputStream {
      * @param size Buffer size
      * @since 0.13.1
      */
-    OutputStreamTo(final Writer wtr, final Charset charset,
+    public OutputStreamTo(final Writer wtr, final Charset charset,
+        final int size) {
+        this(new OutputTo(wtr, charset, size));
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Reader
+     * @param charset Charset
+     * @param size Buffer size
+     * @since 0.13.1
+     */
+    public OutputStreamTo(final Writer wtr, final CharSequence charset,
         final int size) {
         this(new OutputTo(wtr, charset, size));
     }
@@ -104,7 +127,7 @@ public final class OutputStreamTo extends OutputStream {
      * @param size Buffer size
      * @since 0.13.1
      */
-    OutputStreamTo(final Writer wtr, final CharsetDecoder ddr,
+    public OutputStreamTo(final Writer wtr, final CharsetDecoder ddr,
         final int size) {
         this(new OutputTo(wtr, ddr, size));
     }

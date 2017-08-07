@@ -42,7 +42,7 @@ public final class DoubleOf implements Scalar<Double> {
     /**
      * Source text.
      */
-    private final Text text;
+    private final Text origin;
 
     /**
      * Ctor.
@@ -59,11 +59,11 @@ public final class DoubleOf implements Scalar<Double> {
      * @param text Number-text
      */
     public DoubleOf(final Text text) {
-        this.text = text;
+        this.origin = text;
     }
 
     @Override
     public Double value() throws IOException {
-        return Double.valueOf(this.text.asString());
+        return Double.valueOf(this.origin.asString());
     }
 }

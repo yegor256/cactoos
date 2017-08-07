@@ -103,6 +103,16 @@ public final class TextOf implements Text {
     /**
      * Ctor.
      *
+     * @param input The Input
+     * @param cset The Charset
+     */
+    public TextOf(final Input input, final String cset) {
+        this(new BytesOf(input), cset);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param input The input
      * @param max Max length of the buffer for reading
      * @param cset The Charset
@@ -144,7 +154,7 @@ public final class TextOf implements Text {
      *
      * @param builder The String builder
      */
-    public TextOf(final StringBuilder builder) {
+    public TextOf(final CharSequence builder) {
         this(new BytesOf(builder));
     }
 
@@ -154,27 +164,8 @@ public final class TextOf implements Text {
      * @param builder The String builder
      * @param cset The Charset
      */
-    public TextOf(final StringBuilder builder, final Charset cset) {
+    public TextOf(final CharSequence builder, final Charset cset) {
         this(new BytesOf(builder, cset), cset);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param buffer The source
-     */
-    public TextOf(final StringBuffer buffer) {
-        this(new BytesOf(buffer));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param buffer The source
-     * @param cset The charset
-     */
-    public TextOf(final StringBuffer buffer, final Charset cset) {
-        this(new BytesOf(buffer, cset), cset);
     }
 
     /**
@@ -230,6 +221,16 @@ public final class TextOf implements Text {
      * @param cset The Charset
      */
     public TextOf(final Bytes bytes, final Charset cset) {
+        this(() -> new String(bytes.asBytes(), cset));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param bytes The Bytes
+     * @param cset The Charset
+     */
+    public TextOf(final Bytes bytes, final String cset) {
         this(() -> new String(bytes.asBytes(), cset));
     }
 

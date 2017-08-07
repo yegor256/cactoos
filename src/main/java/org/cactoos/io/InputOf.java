@@ -32,7 +32,6 @@ import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
@@ -42,7 +41,7 @@ import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * InputOf
+ * An {@link Input} that encapsulates other sources of data.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -121,66 +120,40 @@ public final class InputOf implements Input {
     /**
      * Ctor.
      * @param rdr Reader
-     * @param cset Charset
+     * @param charset Charset
      */
-    public InputOf(final Reader rdr, final Charset cset) {
-        this(new BytesOf(rdr, cset));
+    public InputOf(final Reader rdr, final Charset charset) {
+        this(new BytesOf(rdr, charset));
     }
 
     /**
      * Ctor.
      * @param rdr Reader
-     * @param cset Charset
+     * @param charset Charset
+     */
+    public InputOf(final Reader rdr, final CharSequence charset) {
+        this(new BytesOf(rdr, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param charset Charset
      * @param max Buffer size
      */
-    public InputOf(final Reader rdr, final Charset cset, final int max) {
-        this(new BytesOf(rdr, cset, max));
+    public InputOf(final Reader rdr, final Charset charset, final int max) {
+        this(new BytesOf(rdr, charset, max));
     }
 
     /**
      * Ctor.
-     *
-     * @param builder The string's builder
+     * @param rdr Reader
+     * @param charset Charset
+     * @param max Buffer size
      */
-    public InputOf(final StringBuilder builder) {
-        this(builder, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param builder The string's builder
-     * @param cset The charset
-     */
-    public InputOf(final StringBuilder builder, final Charset cset) {
-        this(() -> new IoCheckedScalar<InputStream>(
-            () -> new ByteArrayInputStream(
-                new BytesOf(builder, cset).asBytes()
-            )
-        ).value());
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param buffer The string's buffer
-     */
-    public InputOf(final StringBuffer buffer) {
-        this(buffer, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param buffer The string's buffer
-     * @param cset The charset
-     */
-    public InputOf(final StringBuffer buffer, final Charset cset) {
-        this(() -> new IoCheckedScalar<InputStream>(
-            () -> new ByteArrayInputStream(
-                new BytesOf(buffer, cset).asBytes()
-            )
-        ).value());
+    public InputOf(final Reader rdr, final CharSequence charset,
+        final int max) {
+        this(new BytesOf(rdr, charset, max));
     }
 
     /**
@@ -196,10 +169,20 @@ public final class InputOf implements Input {
      * Ctor.
      *
      * @param chars The chars
-     * @param cset The charset
+     * @param charset The charset
      */
-    public InputOf(final char[] chars, final Charset cset) {
-        this(new BytesOf(chars, cset));
+    public InputOf(final char[] chars, final Charset charset) {
+        this(new BytesOf(chars, charset));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param chars The chars
+     * @param charset The charset
+     */
+    public InputOf(final char[] chars, final CharSequence charset) {
+        this(new BytesOf(chars, charset));
     }
 
     /**
@@ -213,10 +196,19 @@ public final class InputOf implements Input {
     /**
      * Ctor.
      * @param source The string
-     * @param cset The charset
+     * @param charset The charset
      */
-    public InputOf(final CharSequence source, final Charset cset) {
-        this(new BytesOf(source, cset));
+    public InputOf(final CharSequence source, final Charset charset) {
+        this(new BytesOf(source, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param source The string
+     * @param charset The charset
+     */
+    public InputOf(final CharSequence source, final CharSequence charset) {
+        this(new BytesOf(source, charset));
     }
 
     /**
@@ -230,10 +222,19 @@ public final class InputOf implements Input {
     /**
      * Ctor.
      * @param text The text
-     * @param cset The charset
+     * @param charset The charset
      */
-    public InputOf(final Text text, final Charset cset) {
-        this(new BytesOf(text, cset));
+    public InputOf(final Text text, final Charset charset) {
+        this(new BytesOf(text, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param charset The charset
+     */
+    public InputOf(final Text text, final CharSequence charset) {
+        this(new BytesOf(text, charset));
     }
 
     /**
@@ -242,6 +243,24 @@ public final class InputOf implements Input {
      */
     public InputOf(final Throwable error) {
         this(new BytesOf(error));
+    }
+
+    /**
+     * Ctor.
+     * @param error The exception to serialize
+     * @param charset Charset
+     */
+    public InputOf(final Throwable error, final Charset charset) {
+        this(new BytesOf(error, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param error The exception to serialize
+     * @param charset Charset
+     */
+    public InputOf(final Throwable error, final CharSequence charset) {
+        this(new BytesOf(error, charset));
     }
 
     /**
@@ -257,9 +276,11 @@ public final class InputOf implements Input {
      * @param src The bytes
      */
     public InputOf(final Bytes src) {
-        this(() -> new IoCheckedScalar<InputStream>(
-            () -> new ByteArrayInputStream(src.asBytes())
-        ).value());
+        this(
+            () -> new IoCheckedScalar<InputStream>(
+                () -> new ByteArrayInputStream(src.asBytes())
+            ).value()
+        );
     }
 
     /**

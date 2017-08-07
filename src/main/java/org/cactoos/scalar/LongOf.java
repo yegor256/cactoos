@@ -42,7 +42,7 @@ public final class LongOf implements Scalar<Long> {
     /**
      * Source text.
      */
-    private final Text text;
+    private final Text origin;
 
     /**
      * Ctor.
@@ -59,11 +59,11 @@ public final class LongOf implements Scalar<Long> {
      * @param text Number-text
      */
     public LongOf(final Text text) {
-        this.text = text;
+        this.origin = text;
     }
 
     @Override
     public Long value() throws IOException {
-        return Long.valueOf(this.text.asString());
+        return Long.valueOf(this.origin.asString());
     }
 }

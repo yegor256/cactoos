@@ -34,7 +34,7 @@ import java.nio.file.Path;
 import org.cactoos.Output;
 
 /**
- * Output to.
+ * An {@link Output} that encapsulates other destination for the data.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -85,11 +85,31 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     * @param wtr Writer
+     * @param charset Charset
+     */
+    OutputTo(final Writer wtr, final CharSequence charset) {
+        this(new WriterAsOutputStream(wtr, charset));
+    }
+
+    /**
+     * Ctor.
      * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
      */
     OutputTo(final Writer wtr, final Charset charset,
+        final int size) {
+        this(new WriterAsOutputStream(wtr, charset, size));
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Reader
+     * @param charset Charset
+     * @param size Buffer size
+     */
+    OutputTo(final Writer wtr, final CharSequence charset,
         final int size) {
         this(new WriterAsOutputStream(wtr, charset, size));
     }

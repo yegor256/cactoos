@@ -42,46 +42,47 @@ public final class RetryScalar<T> implements Scalar<T> {
     /**
      * Original scalar.
      */
-    private final Scalar<T> scalar;
+    private final Scalar<T> origin;
 
     /**
      * Exit condition.
      */
-    private final Func<Integer, Boolean> exit;
+    private final Func<Integer, Boolean> func;
 
     /**
      * Ctor.
-     * @param slr Scalar original
+     * @param scalar Scalar original
      */
-    public RetryScalar(final Scalar<T> slr) {
+    public RetryScalar(final Scalar<T> scalar) {
         // @checkstyle MagicNumberCheck (1 line)
-        this(slr, 3);
+        this(scalar, 3);
     }
 
     /**
      * Ctor.
-     * @param slr Scalar original
+     * @param scalar Scalar original
      * @param attempts Maximum number of attempts
      */
-    public RetryScalar(final Scalar<T> slr, final int attempts) {
-        this(slr, attempt -> attempt >= attempts);
+    public RetryScalar(final Scalar<T> scalar, final int attempts) {
+        this(scalar, attempt -> attempt >= attempts);
     }
 
     /**
      * Ctor.
-     * @param slr Func original
-     * @param ext Exit condition, returns TRUE if there is no more reason to try
+     * @param scalar Func original
+     * @param exit Exit condition, returns TRUE if there is no reason to try
      */
-    public RetryScalar(final Scalar<T> slr, final Func<Integer, Boolean> ext) {
-        this.scalar = slr;
-        this.exit = ext;
+    public RetryScalar(final Scalar<T> scalar,
+        final Func<Integer, Boolean> exit) {
+        this.origin = scalar;
+        this.func = exit;
     }
 
     @Override
     public T value() throws Exception {
         return new RetryFunc<>(
-            (Func<Boolean, T>) input -> this.scalar.value(),
-            this.exit
+            (Func<Boolean, T>) input -> this.origin.value(),
+            this.func
         ).apply(true);
     }
 }

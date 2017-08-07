@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -42,7 +43,7 @@ import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Wrapper of {@link Reader}.
+ * A {@link Reader} that encapsulates other sources of data.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -67,10 +68,46 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     * @param chars Chars
+     * @param charset Charset
+     */
+    public ReaderOf(final char[] chars, final Charset charset) {
+        this(new InputOf(chars, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param chars Chars
+     * @param charset Charset
+     */
+    public ReaderOf(final char[] chars, final CharSequence charset) {
+        this(new InputOf(chars, charset));
+    }
+
+    /**
+     * Ctor.
      * @param bytes Bytes
      */
     public ReaderOf(final byte[] bytes) {
         this(new InputOf(bytes));
+    }
+
+    /**
+     * Ctor.
+     * @param bytes Bytes
+     * @param charset Charset
+     */
+    public ReaderOf(final byte[] bytes, final Charset charset) {
+        this(new InputOf(bytes), charset);
+    }
+
+    /**
+     * Ctor.
+     * @param bytes Bytes
+     * @param charset Charset
+     */
+    public ReaderOf(final byte[] bytes, final CharSequence charset) {
+        this(new InputOf(bytes), charset);
     }
 
     /**
@@ -124,9 +161,45 @@ public final class ReaderOf extends Reader {
     /**
      * Ctor.
      * @param text The text
+     * @param charset Charset
      */
-    public ReaderOf(final String text) {
+    public ReaderOf(final Text text, final Charset charset) {
+        this(new InputOf(text, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param charset Charset
+     */
+    public ReaderOf(final Text text, final CharSequence charset) {
+        this(new InputOf(text, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public ReaderOf(final CharSequence text) {
         this(new InputOf(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param charset Charset
+     */
+    public ReaderOf(final CharSequence text, final Charset charset) {
+        this(new InputOf(text, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param charset Charset
+     */
+    public ReaderOf(final CharSequence text, final CharSequence charset) {
+        this(new InputOf(text, charset));
     }
 
     /**
@@ -144,6 +217,15 @@ public final class ReaderOf extends Reader {
      */
     public ReaderOf(final Input input, final Charset charset) {
         this(() -> new InputStreamReader(input.stream(), charset));
+    }
+
+    /**
+     * Ctor.
+     * @param input The input
+     * @param charset The charset
+     */
+    public ReaderOf(final Input input, final CharSequence charset) {
+        this(() -> new InputStreamReader(input.stream(), charset.toString()));
     }
 
     /**
@@ -171,6 +253,17 @@ public final class ReaderOf extends Reader {
      */
     public ReaderOf(final InputStream stream, final Charset charset) {
         this(new InputStreamReader(stream, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param stream The stream
+     * @param charset The charset
+     * @throws UnsupportedEncodingException If fails
+     */
+    public ReaderOf(final InputStream stream, final CharSequence charset)
+        throws UnsupportedEncodingException {
+        this(new InputStreamReader(stream, charset.toString()));
     }
 
     /**

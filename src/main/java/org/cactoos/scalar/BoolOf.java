@@ -42,7 +42,7 @@ public final class BoolOf implements Scalar<Boolean> {
     /**
      * Source text.
      */
-    private final Text text;
+    private final Text origin;
 
     /**
      * Ctor.
@@ -59,11 +59,11 @@ public final class BoolOf implements Scalar<Boolean> {
      * @param text True or false text
      */
     public BoolOf(final Text text) {
-        this.text = text;
+        this.origin = text;
     }
 
     @Override
     public Boolean value() throws IOException {
-        return Boolean.valueOf(this.text.asString());
+        return Boolean.valueOf(this.origin.asString());
     }
 }

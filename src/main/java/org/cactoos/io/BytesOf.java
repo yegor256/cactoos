@@ -36,7 +36,7 @@ import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
- * Bytes of text, array and input.
+ * A {@link Bytes} that encapsulates other sources of data.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -99,39 +99,69 @@ public final class BytesOf implements Bytes {
     /**
      * Ctor.
      * @param rdr Reader
-     * @param cset Charset
+     * @param charset Charset
      */
-    public BytesOf(final Reader rdr, final Charset cset) {
-        this(new ReaderAsBytes(rdr, cset));
+    public BytesOf(final Reader rdr, final Charset charset) {
+        this(new ReaderAsBytes(rdr, charset));
     }
 
     /**
      * Ctor.
      * @param rdr Reader
-     * @param cset Charset
+     * @param charset Charset
+     */
+    public BytesOf(final Reader rdr, final CharSequence charset) {
+        this(new ReaderAsBytes(rdr, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param charset Charset
      * @param max Buffer size
      */
-    public BytesOf(final Reader rdr, final Charset cset, final int max) {
-        this(new ReaderAsBytes(rdr, cset, max));
+    public BytesOf(final Reader rdr, final Charset charset, final int max) {
+        this(new ReaderAsBytes(rdr, charset, max));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param charset Charset
+     * @param max Buffer size
+     */
+    public BytesOf(final Reader rdr, final CharSequence charset,
+        final int max) {
+        this(new ReaderAsBytes(rdr, charset, max));
     }
 
     /**
      * Ctor.
      *
-     * @param builder The source
+     * @param input The source
      */
-    public BytesOf(final CharSequence builder) {
-        this(builder, StandardCharsets.UTF_8);
+    public BytesOf(final CharSequence input) {
+        this(input, StandardCharsets.UTF_8);
     }
 
     /**
      * Ctor.
      *
-     * @param builder The source
-     * @param cset The charset
+     * @param input The source
+     * @param charset The charset
      */
-    public BytesOf(final CharSequence builder, final Charset cset) {
-        this(() -> builder.toString().getBytes(cset));
+    public BytesOf(final CharSequence input, final Charset charset) {
+        this(() -> input.toString().getBytes(charset));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param input The source
+     * @param charset The charset
+     */
+    public BytesOf(final CharSequence input, final CharSequence charset) {
+        this(() -> input.toString().getBytes(charset.toString()));
     }
 
     /**
@@ -147,10 +177,20 @@ public final class BytesOf implements Bytes {
      * Ctor.
      *
      * @param chars The chars
-     * @param cset The charset
+     * @param charset The charset
      */
-    public BytesOf(final char[] chars, final Charset cset) {
-        this(new String(chars), cset);
+    public BytesOf(final char[] chars, final Charset charset) {
+        this(new String(chars), charset);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param chars The chars
+     * @param charset The charset
+     */
+    public BytesOf(final char[] chars, final CharSequence charset) {
+        this(new String(chars), charset);
     }
 
     /**
@@ -164,10 +204,19 @@ public final class BytesOf implements Bytes {
     /**
      * Ctor.
      * @param text The source
-     * @param cset The charset
+     * @param charset The charset
      */
-    public BytesOf(final Text text, final Charset cset) {
-        this(() -> text.asString().getBytes(cset));
+    public BytesOf(final Text text, final Charset charset) {
+        this(() -> text.asString().getBytes(charset));
+    }
+
+    /**
+     * Ctor.
+     * @param text The source
+     * @param charset The charset
+     */
+    public BytesOf(final Text text, final CharSequence charset) {
+        this(() -> text.asString().getBytes(charset.toString()));
     }
 
     /**
@@ -175,13 +224,33 @@ public final class BytesOf implements Bytes {
      * @param error The exception to serialize
      */
     public BytesOf(final Throwable error) {
+        this(error, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param error The exception to serialize
+     * @param charset Charset
+     */
+    public BytesOf(final Throwable error, final Charset charset) {
+        this(error, charset.name());
+    }
+
+    /**
+     * Ctor.
+     * @param error The exception to serialize
+     * @param charset Charset
+     */
+    public BytesOf(final Throwable error, final CharSequence charset) {
         this(
             () -> {
                 try (
                     final ByteArrayOutputStream baos =
                         new ByteArrayOutputStream()
                 ) {
-                    error.printStackTrace(new PrintStream(baos));
+                    error.printStackTrace(
+                        new PrintStream(baos, true, charset.toString())
+                    );
                     return baos.toByteArray();
                 }
             }
