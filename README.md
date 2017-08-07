@@ -229,6 +229,9 @@ new And(
 
 Cactoos | Guava | Apache Commons | JDK 8
 ------ | ------ | ------ | ------
+`DecodedUrl` | - | - | `URLDecoder.decode()`
+`EncodedUrl` | - | - | `URLEncoder.encode()`
+`Filtered` | `Iterables.filter()` | ? | -
 `FormattedText` | - | - | `String.format()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
 `JoinedText` | - | - | `String.join()`
@@ -240,17 +243,15 @@ Cactoos | Guava | Apache Commons | JDK 8
 `ReversedText` | - | - | `StringBuilder#reverse()`
 `RotatedText` | - | `StringUtils.rotate()`| -
 `SplitText` | - | - | `String#split()`
-`EncodedUrl` | - | - | `URLEncoder.encode()`
-`SubText` | - | - | `String#substring()`
-`TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
-`TrimmedLeftText` | - | `StringUtils.stripStart()` | -
-`TrimmedRightText` | - | `StringUtils.stripEnd()` | -
-`UpperText` | - | - | `String#toUpperCase()`
-`DecodedUrl` | - | - | `URLDecoder.decode()`
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
-`Filtered` | `Iterables.filter()` | ? | -
+`SubText` | - | - | `String#substring()`
+`SwappedCaseText` | - | `StringUtils.swapCase()` | -
 `TextOf` | ? | `IOUtils.toString()` | -
+`TrimmedLeftText` | - | `StringUtils.stripStart()` | -
+`TrimmedRightText` | - | `StringUtils.stripEnd()` | -
+`TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
+`UpperText` | - | - | `String#toUpperCase()`
 
 ## How to contribute?
 
