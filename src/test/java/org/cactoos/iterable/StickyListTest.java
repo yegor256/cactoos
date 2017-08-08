@@ -125,11 +125,12 @@ public final class StickyListTest {
 
     @Test
     public void testSubList() {
-        final List<Integer> list = new StickyList<>(1, 2, 0, -1).subList
-            (0, 2);
+        final List<Integer> list = new StickyList<>(
+            1, 2, 0, -1
+        ).subList(0, 2);
         MatcherAssert.assertThat(
             list.size(),
-            Matchers.equalTo(3)
+            Matchers.equalTo(2)
         );
     }
 
