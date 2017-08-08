@@ -44,7 +44,7 @@ public final class SyncFuncTest {
         final Object lockobject = new Object();
         final int delta = 3;
         final int result = 9;
-        final long mainwait = 10L;
+        final long mainwait = 30L;
         final long threadwait = 150L;
         final AtomicInteger resource = new AtomicInteger(5);
         final Func<Integer, Integer> func = new SyncFunc<>(
