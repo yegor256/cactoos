@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.io.Writer;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -778,6 +779,79 @@ public final class TeeInput implements Input {
      */
     public TeeInput(final Input input, final File file) {
         this(input, new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param writer The output
+     * @since 0.13.3
+     */
+    public TeeInput(final Input input, final Writer writer) {
+        this(input, new OutputTo(writer));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param writer The output
+     * @param size Writing buffer size
+     * @since 0.13.3
+     */
+    public TeeInput(final Input input, final Writer writer, final int size) {
+        this(input, new OutputTo(writer, size));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param writer The output
+     * @param charset The charset
+     * @since 0.13.3
+     */
+    public TeeInput(final Input input, final Writer writer,
+        final Charset charset) {
+        this(input, new OutputTo(writer, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param writer The output
+     * @param charset The charset
+     * @param size Writing buffer size
+     * @since 0.13.3
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public TeeInput(final Input input, final Writer writer,
+        final Charset charset, final int size) {
+        this(input, new OutputTo(writer, charset, size));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param writer The output
+     * @param charset The charset
+     * @since 0.13.3
+     */
+    public TeeInput(final Input input, final Writer writer,
+        final CharSequence charset) {
+        this(input, new OutputTo(writer, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param writer The output
+     * @param charset The charset
+     * @param size Writing buffer size
+     * @since 0.13.3
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public TeeInput(final Input input, final Writer writer,
+        final CharSequence charset, final int size) {
+        this(input, new OutputTo(writer, charset, size));
     }
 
     /**

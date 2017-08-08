@@ -106,6 +106,16 @@ public final class OutputTo implements Output {
     /**
      * Ctor.
      * @param wtr Reader
+     * @param size Buffer size
+     * @since 0.13.3
+     */
+    OutputTo(final Writer wtr, final int size) {
+        this(new WriterAsOutputStream(wtr, size));
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
      */

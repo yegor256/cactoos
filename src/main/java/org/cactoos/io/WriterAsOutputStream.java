@@ -110,6 +110,16 @@ final class WriterAsOutputStream extends OutputStream {
     /**
      * Ctor.
      * @param wtr Reader
+     * @param size Buffer size
+     * @since 0.13.3
+     */
+    WriterAsOutputStream(final Writer wtr, final int size) {
+        this(wtr, StandardCharsets.UTF_8, size);
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
      */
