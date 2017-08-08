@@ -25,7 +25,6 @@ package org.cactoos.func;
 
 import org.cactoos.Func;
 import org.cactoos.Proc;
-import org.cactoos.text.FormattedText;
 
 /**
  * Func that repeats its calculation a few times before
@@ -63,7 +62,7 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
      * Ctor.
      *
      * <p>If {@code max} is equal or less than zero {@link #apply(Object)}
-     * will return {@code null}.</p>
+     * will return an exception.</p>
      *
      * @param fnc Func original
      * @param max How many times
@@ -75,17 +74,14 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
 
     @Override
     public Y apply(final X input) throws Exception {
+        if (this.times <= 0) {
+            throw new IllegalArgumentException(
+                "The number of repetitions must be at least 1"
+            );
+        }
         Y result = null;
         for (int idx = 0; idx < this.times; ++idx) {
             result = this.func.apply(input);
-        }
-        if (result == null) {
-            throw new IllegalArgumentException(
-                new FormattedText(
-                    "Repeat counter is equal or less than zero: %d",
-                    this.times
-                ).asString()
-            );
         }
         return result;
     }
