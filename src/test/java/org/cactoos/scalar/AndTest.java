@@ -26,6 +26,7 @@ package org.cactoos.scalar;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.func.FuncOf;
@@ -38,8 +39,8 @@ import org.junit.Test;
 
 /**
  * Test case for {@link And}.
- *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -136,6 +137,30 @@ public final class AndTest {
                     )
                 )
             )
+        );
+    }
+
+    @Test
+    public void testProc() throws Exception {
+        final List<Integer> list = new LinkedList<>();
+        new And(
+            (Proc<Integer>) list::add,
+            1, 1
+        ).value();
+        MatcherAssert.assertThat(
+            list.size(),
+            Matchers.equalTo(2)
+        );
+    }
+
+    @Test
+    public void testFunc() throws Exception {
+        MatcherAssert.assertThat(
+            new And(
+                input -> input > 0,
+                1, -1, 0
+            ).value(),
+            Matchers.equalTo(false)
         );
     }
 
