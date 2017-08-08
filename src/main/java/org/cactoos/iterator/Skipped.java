@@ -41,30 +41,30 @@ public final class Skipped<T> implements Iterator<T> {
     /**
      * Decorated iterator.
      */
-    private final Iterator<T> iterator;
+    private final Iterator<T> origin;
 
     /**
      * Count skip elements.
      */
-    private int skip;
+    private int omit;
 
     /**
      * Ctor.
-     * @param itr Decorated iterator
-     * @param skp Count skip elements
+     * @param iterator Decorated iterator
+     * @param skip Count skip elements
      */
-    public Skipped(final Iterator<T> itr, final int skp) {
-        this.iterator = itr;
-        this.skip = skp;
+    public Skipped(final Iterator<T> iterator, final int skip) {
+        this.origin = iterator;
+        this.omit = skip;
     }
 
     @Override
     public boolean hasNext() {
-        while (this.skip > 0 && this.iterator.hasNext()) {
-            this.iterator.next();
-            --this.skip;
+        while (this.omit > 0 && this.origin.hasNext()) {
+            this.origin.next();
+            --this.omit;
         }
-        return this.iterator.hasNext();
+        return this.origin.hasNext();
     }
 
     @Override
@@ -74,6 +74,6 @@ public final class Skipped<T> implements Iterator<T> {
                 "The iterator doesn't have items any more"
             );
         }
-        return this.iterator.next();
+        return this.origin.next();
     }
 }

@@ -43,30 +43,30 @@ public final class Endless<T> implements Iterator<T> {
     /**
      * The element to repeat.
      */
-    private final UncheckedScalar<T> element;
+    private final UncheckedScalar<T> origin;
 
     /**
      * Ctor.
-     * @param elm Element to repeat
+     * @param element Element to repeat
      */
-    public Endless(final T elm) {
-        this(() -> elm);
+    public Endless(final T element) {
+        this(() -> element);
     }
 
     /**
      * Ctor.
-     * @param elm Element to repeat
+     * @param scalar Scalar to repeat
      */
-    public Endless(final Scalar<T> elm) {
-        this(new UncheckedScalar<>(elm));
+    public Endless(final Scalar<T> scalar) {
+        this(new UncheckedScalar<>(scalar));
     }
 
     /**
      * Ctor.
-     * @param elm Element to repeat
+     * @param scalar Scalar to repeat
      */
-    public Endless(final UncheckedScalar<T> elm) {
-        this.element = elm;
+    public Endless(final UncheckedScalar<T> scalar) {
+        this.origin = scalar;
     }
 
     @Override
@@ -76,6 +76,6 @@ public final class Endless<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        return this.element.value();
+        return this.origin.value();
     }
 }
