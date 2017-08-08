@@ -24,7 +24,6 @@
 package org.cactoos.func;
 
 import java.security.SecureRandom;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.iterator.Sticky;
@@ -36,7 +35,6 @@ import org.junit.Test;
  * Test case for {@link RepeatedFunc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.13.1
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -56,6 +54,34 @@ public final class RepeatedFuncTest {
         MatcherAssert.assertThat(
             func.apply(true),
             Matchers.equalTo(5)
+        );
+    }
+
+    @Test
+    public void repeatsNullsResults() throws Exception {
+        final Func<Boolean, Integer> func = new RepeatedFunc<>(
+            input -> {
+                return null;
+            },
+            2
+        );
+        MatcherAssert.assertThat(
+            func.apply(true),
+            Matchers.equalTo(null)
+        );
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void doesntRepeatAny() throws Exception {
+        final Func<Boolean, Integer> func = new RepeatedFunc<>(
+            input -> {
+                return new SecureRandom().nextInt();
+            },
+            0
+        );
+        MatcherAssert.assertThat(
+            func.apply(true),
+            Matchers.equalTo(func.apply(true))
         );
     }
 }
