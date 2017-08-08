@@ -92,6 +92,15 @@ public final class StickyListTest {
     }
 
     @Test
+    public void testToArrayIntoArray() {
+        final Integer[] arr = new Integer[2];
+        MatcherAssert.assertThat(
+            new StickyList<>(1, 2).toArray(arr),
+            Matchers.arrayContaining(1, 2)
+        );
+    }
+
+    @Test
     public void testContainsAll() {
         MatcherAssert.assertThat(
             new StickyList<>(1, 2).containsAll(Arrays.asList(1, 2)),
