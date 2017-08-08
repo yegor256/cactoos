@@ -21,58 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.text;
 
-import java.util.Iterator;
-import org.cactoos.Func;
-import org.cactoos.func.UncheckedFunc;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Mapped iterator.
+ * Test case for {@link SwappedCaseText}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @since 0.13.3
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Mapped<X, Y> implements Iterator<Y> {
+public final class SwappedCaseTextTest {
 
-    /**
-     * Iterator.
-     */
-    private final Iterator<X> origin;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> fnc;
-
-    /**
-     * Ctor.
-     * @param iterator Source iterator
-     * @param func Func
-     */
-    public Mapped(final Iterator<X> iterator, final Func<X, Y> func) {
-        this.origin = iterator;
-        this.fnc = func;
+    @Test
+    public void swapText() {
+        MatcherAssert.assertThat(
+            "Can't swap a text",
+            new SwappedCaseText(
+                new TextOf("HellO!")
+            ),
+            new TextHasString("hELLo!")
+        );
     }
 
-    @Override
-    public boolean hasNext() {
-        return this.origin.hasNext();
-    }
-
-    @Override
-    public Y next() {
-        return new UncheckedFunc<>(this.fnc).apply(this.origin.next());
-    }
-
-    @Override
-    public void remove() {
-        this.origin.remove();
+    @Test
+    public void swapEmptyText() {
+        MatcherAssert.assertThat(
+            "Empty swapped text should be the same as original",
+            new SwappedCaseText(
+                new TextOf("")
+            ),
+            new TextHasString("")
+        );
     }
 
 }

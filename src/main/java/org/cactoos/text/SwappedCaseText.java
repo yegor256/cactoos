@@ -21,58 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.text;
 
-import java.util.Iterator;
-import org.cactoos.Func;
-import org.cactoos.func.UncheckedFunc;
+import java.io.IOException;
+import org.cactoos.Text;
 
 /**
- * Mapped iterator.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Swaps the case of a Text changing upper and title case to lower case,
+ * and lower case to upper case.
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @since 0.13.3
  */
-public final class Mapped<X, Y> implements Iterator<Y> {
+public final class SwappedCaseText implements Text {
 
     /**
-     * Iterator.
+     * The text.
      */
-    private final Iterator<X> origin;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> fnc;
+    private final Text origin;
 
     /**
      * Ctor.
-     * @param iterator Source iterator
-     * @param func Func
+     * @param text The text
      */
-    public Mapped(final Iterator<X> iterator, final Func<X, Y> func) {
-        this.origin = iterator;
-        this.fnc = func;
+    public SwappedCaseText(final Text text) {
+        this.origin = text;
     }
 
     @Override
-    public boolean hasNext() {
-        return this.origin.hasNext();
+    public String asString() throws IOException {
+        final String text = this.origin.asString();
+        final char[] chars = text.toCharArray();
+        for (int idx = 0; idx < chars.length; idx += 1) {
+            final char chr = chars[idx];
+            if (Character.isUpperCase(chr)) {
+                chars[idx] = Character.toLowerCase(chr);
+            } else if (Character.isLowerCase(chr)) {
+                chars[idx] = Character.toUpperCase(chr);
+            }
+        }
+        return new String(chars);
     }
 
     @Override
-    public Y next() {
-        return new UncheckedFunc<>(this.fnc).apply(this.origin.next());
-    }
-
-    @Override
-    public void remove() {
-        this.origin.remove();
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
     }
 
 }

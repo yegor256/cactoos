@@ -42,7 +42,7 @@ public final class Cycled<T> implements Iterator<T> {
     /**
      * Iterable.
      */
-    private final Iterable<T> iterable;
+    private final Iterable<T> origin;
 
     /**
      * Iterator.
@@ -51,16 +51,16 @@ public final class Cycled<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param itr Iterable.
+     * @param iterable Iterable.
      */
-    public Cycled(final Iterable<T> itr) {
-        this.iterable = itr;
+    public Cycled(final Iterable<T> iterable) {
+        this.origin = iterable;
     }
 
     @Override
     public boolean hasNext() {
         if (this.iterator == null || !this.iterator.hasNext()) {
-            this.iterator = this.iterable.iterator();
+            this.iterator = this.origin.iterator();
         }
         return this.iterator.hasNext();
     }

@@ -58,15 +58,15 @@ public final class Sticky<X> implements Iterator<X> {
 
     /**
      * Ctor.
-     * @param src The iterable
+     * @param iterator The iterator
      */
-    public Sticky(final Iterator<X> src) {
+    public Sticky(final Iterator<X> iterator) {
         this.gate = new UncheckedScalar<>(
             new StickyScalar<>(
                 () -> {
                     final Collection<X> temp = new LinkedList<>();
-                    while (src.hasNext()) {
-                        temp.add(src.next());
+                    while (iterator.hasNext()) {
+                        temp.add(iterator.next());
                     }
                     return temp.iterator();
                 }

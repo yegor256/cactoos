@@ -23,6 +23,8 @@
  */
 package org.cactoos.iterable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,12 +34,13 @@ import org.junit.Test;
 
 /**
  * Test case for {@link StickyList}.
- *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class StickyListTest {
 
     @Test
@@ -62,6 +65,127 @@ public final class StickyListTest {
             new StickyList<>(-1, 0).size(),
             Matchers.equalTo(2)
         );
+    }
+
+    @Test
+    public void testEmpty() {
+        MatcherAssert.assertThat(
+            new StickyList<>().isEmpty(),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void testContains() {
+        MatcherAssert.assertThat(
+            new StickyList<>(1, 2).contains(1),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void testToArray() {
+        MatcherAssert.assertThat(
+            new StickyList<>(1, 2).toArray(),
+            Matchers.arrayContaining(1, 2)
+        );
+    }
+
+    @Test
+    public void testToArrayIntoArray() {
+        final Integer[] arr = new Integer[2];
+        MatcherAssert.assertThat(
+            new StickyList<>(1, 2).toArray(arr),
+            Matchers.arrayContaining(1, 2)
+        );
+    }
+
+    @Test
+    public void testContainsAll() {
+        MatcherAssert.assertThat(
+            new StickyList<>(1, 2).containsAll(Arrays.asList(1, 2)),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void testIndexOf() {
+        MatcherAssert.assertThat(
+            new StickyList<>(1, 2).indexOf(1),
+            Matchers.equalTo(0)
+        );
+    }
+
+    @Test
+    public void testLastIndexOf() {
+        MatcherAssert.assertThat(
+            new StickyList<>(1, 2, 2).lastIndexOf(2),
+            Matchers.equalTo(2)
+        );
+    }
+
+    @Test
+    public void testGet() {
+        MatcherAssert.assertThat(
+            new StickyList<>(1, 2).get(1),
+            Matchers.equalTo(2)
+        );
+    }
+
+    @Test
+    public void testSubList() {
+        final List<Integer> list = new StickyList<>(
+            1, 2, 0, -1
+        ).subList(0, 2);
+        MatcherAssert.assertThat(
+            list.size(),
+            Matchers.equalTo(2)
+        );
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testAdd() throws Exception {
+        new StickyList<>(1, 2).add(1);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRemove() throws Exception {
+        new StickyList<>(1, 2).remove(1);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testAddAll() throws Exception {
+        new StickyList<>(1, 2).addAll(new ArrayList<>(2));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRemoveAll() throws Exception {
+        new StickyList<>(1, 2).removeAll(new ArrayList<>(2));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRetainAll() throws Exception {
+        new StickyList<>(1, 2).retainAll(new ArrayList<>(2));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testClear() throws Exception {
+        new StickyList<>(1, 2).clear();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testSet() throws Exception {
+        new StickyList<>(1, 2).set(1, 1);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testAddIndex() throws Exception {
+        new StickyList<>(1, 2).add(1, 1);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRemoveIndex() throws Exception {
+        new StickyList<>(1, 2).remove(1);
     }
 
 }

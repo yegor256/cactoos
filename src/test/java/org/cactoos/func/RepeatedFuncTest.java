@@ -25,7 +25,9 @@ package org.cactoos.func;
 
 import java.security.SecureRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Iterator;
 import org.cactoos.Func;
+import org.cactoos.iterator.Sticky;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -36,53 +38,24 @@ import org.junit.Test;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
- * @since 0.6
+ * @since 0.13.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 line)
  */
 public final class RepeatedFuncTest {
 
     @Test
     public void runsFuncMultipleTimes() throws Exception {
-        final Integer repeated = 2;
-        final AtomicInteger count = new AtomicInteger(0);
-        final Func<AtomicInteger, Integer> func = new RepeatedFunc<>(
-            input -> {
-                return count.incrementAndGet();
-            },
-            repeated
-        );
-        MatcherAssert.assertThat(
-            func.apply(count),
-            Matchers.equalTo(repeated)
-        );
-    }
-
-    @Test
-    public void repeatsNullsResults() throws Exception {
+        final Iterator<Integer> iter = new Sticky<>(1, 2, 5, 6);
         final Func<Boolean, Integer> func = new RepeatedFunc<>(
             input -> {
-                return null;
+                return iter.next();
             },
-            2
+            3
         );
         MatcherAssert.assertThat(
             func.apply(true),
-            Matchers.equalTo(null)
+            Matchers.equalTo(5)
         );
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void doesntRepeatAny() throws Exception {
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
-            input -> {
-                return new SecureRandom().nextInt();
-            },
-            0
-        );
-        MatcherAssert.assertThat(
-            func.apply(true),
-            Matchers.equalTo(func.apply(true))
-        );
-    }
-
 }

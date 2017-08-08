@@ -40,21 +40,21 @@ public final class LengthOf implements Scalar<Integer> {
     /**
      * The iterator.
      */
-    private final Iterator<?> iterator;
+    private final Iterator<?> origin;
 
     /**
      * Ctor.
-     * @param items The iterator
+     * @param iterator The iterator
      */
-    public LengthOf(final Iterator<?> items) {
-        this.iterator = items;
+    public LengthOf(final Iterator<?> iterator) {
+        this.origin = iterator;
     }
 
     @Override
     public Integer value() {
         int size = 0;
-        while (this.iterator.hasNext()) {
-            this.iterator.next();
+        while (this.origin.hasNext()) {
+            this.origin.next();
             ++size;
         }
         return size;

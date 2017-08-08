@@ -29,8 +29,8 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Ternary}.
- *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -59,6 +59,31 @@ public final class TernaryTest {
                 16
             ).value(),
             Matchers.equalTo(16)
+        );
+    }
+
+    @Test
+    public void conditionBoolean() throws Exception {
+        MatcherAssert.assertThat(
+            new Ternary<>(
+                true,
+                6,
+                16
+            ).value(),
+            Matchers.equalTo(6)
+        );
+    }
+
+    @Test
+    public void conditionFunc() throws Exception {
+        MatcherAssert.assertThat(
+            new Ternary<>(
+                5,
+                input -> input > 3,
+                input -> input = 8,
+                input -> input = 2
+            ).value(),
+            Matchers.equalTo(8)
         );
     }
 }
