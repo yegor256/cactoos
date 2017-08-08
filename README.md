@@ -244,6 +244,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `StickyList` | ? | ? | `Arrays.asList()`
 `StickyList` | `Lists.newArrayList()` | ? | -
 `SubText` | - | - | `String#substring()`
+`SwappedCaseText` | - | `StringUtils.swapCase()` | -
 `TextOf` | ? | `IOUtils.toString()` | -
 `TrimmedLeftText` | - | `StringUtils.stripStart()` | -
 `TrimmedRightText` | - | `StringUtils.stripEnd()` | -
