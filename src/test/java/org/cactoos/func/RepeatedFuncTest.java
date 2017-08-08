@@ -57,8 +57,8 @@ public final class RepeatedFuncTest {
         );
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void failsToRepeatNulls() throws Exception {
+    @Test
+    public void repeatsNullsResults() throws Exception {
         final Func<Boolean, Integer> func = new RepeatedFunc<>(
             input -> {
                 return null;
@@ -67,7 +67,7 @@ public final class RepeatedFuncTest {
         );
         MatcherAssert.assertThat(
             func.apply(true),
-            Matchers.not(Matchers.equalTo(func.apply(true)))
+            Matchers.equalTo(null)
         );
     }
 

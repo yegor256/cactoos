@@ -25,7 +25,6 @@ package org.cactoos.func;
 
 import org.cactoos.Func;
 import org.cactoos.Proc;
-import org.cactoos.Scalar;
 
 /**
  * Func that repeats its calculation a few times before
@@ -84,8 +83,7 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
         for (int idx = 0; idx < this.times; ++idx) {
             result = this.func.apply(input);
         }
-        final Y rslt = result;
-        return new Scalar.NoNulls<Y>(()->rslt).value();
+        return result;
     }
 
 }
