@@ -25,11 +25,13 @@ package org.cactoos.text;
 
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link TrimmedText}.
  * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -53,4 +55,15 @@ public final class TrimmedTextTest {
             new TextHasString("")
         );
     }
+
+    @Test
+    public void testCompare() {
+        MatcherAssert.assertThat(
+            new TrimmedText(
+                new TextOf("  Cactoos!   \t ")
+            ).compareTo(new TextOf("Cactoos!")),
+            Matchers.equalTo(0)
+        );
+    }
+
 }

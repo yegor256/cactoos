@@ -25,6 +25,7 @@ package org.cactoos.text;
 
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -91,6 +92,17 @@ public final class RotatedTextTest {
                 new TextOf(""), 2
             ),
             new TextHasString("")
+        );
+    }
+
+    @Test
+    public void testCompare() {
+        MatcherAssert.assertThat(
+            new RotatedText(
+                new TextOf("Primitive"),
+                1
+            ).compareTo(new TextOf("ePrimitiv")),
+            Matchers.equalTo(0)
         );
     }
 }
