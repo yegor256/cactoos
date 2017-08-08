@@ -30,6 +30,7 @@ import org.junit.Test;
 /**
  * Test case for {@link SplitText}.
  * @author Alexey Semenyuk (semenyukalexey@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -56,6 +57,42 @@ public final class SplitTextTest {
             "Can't split an empty text",
             new SplitText("", "\n"),
             Matchers.emptyIterable()
+        );
+    }
+
+    @Test
+    public void splitStringWithTextRegex() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't split an string with text regex",
+            new SplitText("Cactoos OOP!", new TextOf("\\s")),
+            Matchers.contains(
+                "Cactoos",
+                "OOP!"
+            )
+        );
+    }
+
+    @Test
+    public void splitTextWithStringRegex() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't split an text with string regex",
+            new SplitText(new TextOf("Cact4Primitives!"), "\\d+"),
+            Matchers.contains(
+                "Cact",
+                "Primitives!"
+            )
+        );
+    }
+
+    @Test
+    public void splitTextWithTextRegex() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't split an text with text regex",
+            new SplitText(new TextOf("Split#OOP!"), "\\W+"),
+            Matchers.contains(
+                "Split",
+                "OOP"
+            )
         );
     }
 
