@@ -127,6 +127,16 @@ public final class BytesOf implements Bytes {
     /**
      * Ctor.
      * @param rdr Reader
+     * @param max Buffer size
+     * @since 0.13.3
+     */
+    public BytesOf(final Reader rdr, final int max) {
+        this(new ReaderAsBytes(rdr, max));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
      * @param charset Charset
      * @param max Buffer size
      */

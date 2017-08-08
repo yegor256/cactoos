@@ -138,6 +138,16 @@ public final class InputOf implements Input {
     /**
      * Ctor.
      * @param rdr Reader
+     * @param max Buffer size
+     * @since 0.13.3
+     */
+    public InputOf(final Reader rdr, final int max) {
+        this(new BytesOf(rdr, max));
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
      * @param charset Charset
      * @param max Buffer size
      */

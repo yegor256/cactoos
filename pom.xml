@@ -152,12 +152,12 @@
                                                 <limit>
                                                     <counter>INSTRUCTION</counter>
                                                     <value>COVEREDRATIO</value>
-                                                    <minimum>0.64</minimum>
+                                                    <minimum>0.62</minimum>
                                                 </limit>
                                                 <limit>
                                                     <counter>LINE</counter>
                                                     <value>COVEREDRATIO</value>
-                                                    <minimum>0.70</minimum>
+                                                    <minimum>0.68</minimum>
                                                 </limit>
                                                 <limit>
                                                     <counter>BRANCH</counter>
@@ -167,12 +167,12 @@
                                                 <limit>
                                                     <counter>COMPLEXITY</counter>
                                                     <value>COVEREDRATIO</value>
-                                                    <minimum>0.61</minimum>
+                                                    <minimum>0.60</minimum>
                                                 </limit>
                                                 <limit>
                                                     <counter>METHOD</counter>
                                                     <value>COVEREDRATIO</value>
-                                                    <minimum>0.61</minimum>
+                                                    <minimum>0.60</minimum>
                                                 </limit>
                                                 <limit>
                                                     <counter>CLASS</counter>

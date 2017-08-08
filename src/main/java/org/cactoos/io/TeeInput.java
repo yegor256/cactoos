@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -276,6 +277,225 @@ public final class TeeInput implements Input {
     public TeeInput(final CharSequence input, final Output output,
         final CharSequence charset) {
         this(new InputOf(input, charset), output);
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final File file) {
+        this(new InputOf(input), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @param size Reading buffer size
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final File file, final int size) {
+        this(new InputOf(input, size), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @param charset The charset
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final File file,
+        final Charset charset) {
+        this(new InputOf(input, charset), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @param charset The charset
+     * @param size Reading buffer size
+     * @since 0.13.3
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public TeeInput(final Reader input, final File file,
+        final Charset charset, final int size) {
+        this(new InputOf(input, charset, size), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @param charset The charset
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final File file,
+        final CharSequence charset) {
+        this(new InputOf(input, charset), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @param charset The charset
+     * @param size Reading buffer size
+     * @since 0.13.3
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public TeeInput(final Reader input, final File file,
+        final CharSequence charset, final int size) {
+        this(new InputOf(input, charset, size), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final Path file) {
+        this(new InputOf(input), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @param size Reading buffer size
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final Path file, final int size) {
+        this(new InputOf(input, size), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @param charset The charset
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final Path file,
+        final Charset charset) {
+        this(new InputOf(input, charset), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @param charset The charset
+     * @param size Reading buffer size
+     * @since 0.13.3
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public TeeInput(final Reader input, final Path file,
+        final Charset charset, final int size) {
+        this(new InputOf(input, charset, size), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @param charset The charset
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final Path file,
+        final CharSequence charset) {
+        this(new InputOf(input, charset), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param file The output file
+     * @param charset The charset
+     * @param size Reading buffer size
+     * @since 0.13.3
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public TeeInput(final Reader input, final Path file,
+        final CharSequence charset, final int size) {
+        this(new InputOf(input, charset, size), new OutputTo(file));
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The target
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final Output output) {
+        this(new InputOf(input), output);
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The target
+     * @param size Reading buffer size
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final Output output, final int size) {
+        this(new InputOf(input, size), output);
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The target
+     * @param charset The charset
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final Output output,
+        final Charset charset) {
+        this(new InputOf(input, charset), output);
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The target
+     * @param charset The charset
+     * @param size Reading buffer size
+     * @since 0.13.3
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public TeeInput(final Reader input, final Output output,
+        final Charset charset, final int size) {
+        this(new InputOf(input, charset, size), output);
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The target
+     * @param charset The charset
+     * @since 0.13.3
+     */
+    public TeeInput(final Reader input, final Output output,
+        final CharSequence charset) {
+        this(new InputOf(input, charset), output);
+    }
+
+    /**
+     * Ctor.
+     * @param input The source
+     * @param output The target
+     * @param charset The charset
+     * @param size Reading buffer size
+     * @since 0.13.3
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public TeeInput(final Reader input, final Output output,
+        final CharSequence charset, final int size) {
+        this(new InputOf(input, charset, size), output);
     }
 
     /**

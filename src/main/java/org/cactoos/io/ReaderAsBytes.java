@@ -103,6 +103,16 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
+     * @param rdr Reader
+     * @param max Buffer size
+     * @since 0.13.3
+     */
+    ReaderAsBytes(final Reader rdr, final int max) {
+        this(rdr, StandardCharsets.UTF_8, max);
+    }
+
+    /**
+     * Ctor.
      *
      * @param rdr Reader
      * @param cset Charset
