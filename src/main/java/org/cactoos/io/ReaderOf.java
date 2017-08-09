@@ -303,14 +303,7 @@ public final class ReaderOf extends Reader {
      */
     public ReaderOf(final Input input, final Charset inchar,
         final Output output, final Charset outchar) {
-        this(
-            new TeeReader(
-                input,
-                inchar,
-                output,
-                outchar
-            )
-        );
+        this(new TeeReader(input, inchar, output, outchar));
     }
 
     /**
