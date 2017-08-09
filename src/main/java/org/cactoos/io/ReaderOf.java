@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -39,6 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
+import org.cactoos.Output;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.scalar.StickyScalar;
@@ -280,13 +280,13 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
-     * @param input The input stream
-     * @param out The output stream
+     * @param input The input
+     * @param out The output
      */
-    public ReaderOf(final InputStream input, final OutputStream out) {
+    public ReaderOf(final Input input, final Output out) {
         this(
             new TeeReader(
-            input,
+                input,
                 StandardCharsets.UTF_8,
                 out,
                 StandardCharsets.UTF_8
@@ -297,26 +297,26 @@ public final class ReaderOf extends Reader {
     // @checkstyle ParameterNumberCheck (8 line)
     /**
      * Ctor.
-     * @param input The input stream
+     * @param input The input
      * @param dec The input decoder
-     * @param out The output stream
+     * @param out The output
      * @param enc The output encoder
      */
-    public ReaderOf(final InputStream input, final CharsetDecoder dec,
-        final OutputStream out, final CharsetEncoder enc) {
+    public ReaderOf(final Input input, final CharsetDecoder dec,
+        final Output out, final CharsetEncoder enc) {
         this(new TeeReader(input, dec.charset(), out, enc.charset()));
     }
 
     // @checkstyle ParameterNumberCheck (8 line)
     /**
      * Ctor.
-     * @param input The input stream
+     * @param input The input
      * @param inchar The input charset
-     * @param out The output stream
+     * @param out The output
      * @param outchar The output charset
      */
-    public ReaderOf(final InputStream input, final Charset inchar,
-        final OutputStream out, final Charset outchar) {
+    public ReaderOf(final Input input, final Charset inchar,
+        final Output out, final Charset outchar) {
         this(
             new TeeReader(
                 input,
@@ -330,13 +330,13 @@ public final class ReaderOf extends Reader {
     // @checkstyle ParameterNumberCheck (8 line)
     /**
      * Ctor.
-     * @param input The input stream
+     * @param input The input
      * @param inchar The input charset
-     * @param out The output stream
+     * @param out The output
      * @param outchar The output charset
      */
-    public ReaderOf(final InputStream input, final String inchar,
-        final OutputStream out, final String outchar) {
+    public ReaderOf(final Input input, final String inchar,
+        final Output out, final String outchar) {
         this(
             new TeeReader(
                 input,

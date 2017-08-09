@@ -24,12 +24,11 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.nio.charset.Charset;
+import org.cactoos.Input;
+import org.cactoos.Output;
 
 /**
  * Input to Output copying reader.
@@ -44,12 +43,12 @@ public final class TeeReader extends Reader {
     /**
      * The source.
      */
-    private final InputStreamReader reader;
+    private final Reader reader;
 
     /**
      * The destination.
      */
-    private final OutputStreamWriter writer;
+    private final Writer writer;
 
     // @checkstyle ParameterNumberCheck (8 line)
     /**
@@ -59,11 +58,11 @@ public final class TeeReader extends Reader {
      * @param out The destination
      * @param outcharset The destination charset
      */
-    TeeReader(final InputStream input, final Charset incharset,
-        final OutputStream out, final Charset outcharset) {
+    TeeReader(final Input input, final Charset incharset,
+        final Output out, final Charset outcharset) {
         super();
-        this.reader = new InputStreamReader(input, incharset);
-        this.writer = new OutputStreamWriter(out, outcharset);
+        this.reader = new ReaderOf(input, incharset);
+        this.writer = new WriterTo(out, outcharset);
     }
 
     @Override

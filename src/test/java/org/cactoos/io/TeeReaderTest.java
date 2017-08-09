@@ -23,8 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
@@ -51,8 +49,8 @@ public final class TeeReaderTest {
         final String content = "Hello, товарищ!";
         Files.write(src, content.getBytes(StandardCharsets.UTF_8));
         final Reader reader = new ReaderOf(
-            new FileInputStream(src.toFile()),
-            new FileOutputStream(dst.toFile())
+            new InputOf(src),
+            new OutputTo(dst)
         );
         int done = 0;
         while (done >= 0) {
