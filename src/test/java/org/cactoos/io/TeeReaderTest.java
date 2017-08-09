@@ -64,4 +64,27 @@ public final class TeeReaderTest {
         );
     }
 
+    @Test
+    public void testTeeReaderWithCharset() throws IOException {
+        final Path src = Files.createTempFile("cactoos-3", "txt-3");
+        final Path dst = Files.createTempFile("cactoos-4", "txt-4");
+        final String content = "Cactoos!";
+        Files.write(src, content.getBytes(StandardCharsets.UTF_8));
+        final Reader reader = new ReaderOf(
+            new InputOf(src),
+            StandardCharsets.UTF_8,
+            new OutputTo(dst),
+            StandardCharsets.ISO_8859_1
+        );
+        int done = 0;
+        while (done >= 0) {
+            done = reader.read();
+        }
+        reader.close();
+        MatcherAssert.assertThat(
+            new InputOf(new ReaderOf(dst)),
+            new InputHasContent(content)
+        );
+    }
+
 }

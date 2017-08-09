@@ -33,7 +33,6 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
@@ -281,14 +280,14 @@ public final class ReaderOf extends Reader {
     /**
      * Ctor.
      * @param input The input
-     * @param out The output
+     * @param output The output
      */
-    public ReaderOf(final Input input, final Output out) {
+    public ReaderOf(final Input input, final Output output) {
         this(
             new TeeReader(
                 input,
                 StandardCharsets.UTF_8,
-                out,
+                output,
                 StandardCharsets.UTF_8
             )
         );
@@ -298,51 +297,18 @@ public final class ReaderOf extends Reader {
     /**
      * Ctor.
      * @param input The input
-     * @param dec The input decoder
-     * @param out The output
-     * @param enc The output encoder
-     */
-    public ReaderOf(final Input input, final CharsetDecoder dec,
-        final Output out, final CharsetEncoder enc) {
-        this(new TeeReader(input, dec.charset(), out, enc.charset()));
-    }
-
-    // @checkstyle ParameterNumberCheck (8 line)
-    /**
-     * Ctor.
-     * @param input The input
      * @param inchar The input charset
-     * @param out The output
+     * @param output The output
      * @param outchar The output charset
      */
     public ReaderOf(final Input input, final Charset inchar,
-        final Output out, final Charset outchar) {
+        final Output output, final Charset outchar) {
         this(
             new TeeReader(
                 input,
                 inchar,
-                out,
+                output,
                 outchar
-            )
-        );
-    }
-
-    // @checkstyle ParameterNumberCheck (8 line)
-    /**
-     * Ctor.
-     * @param input The input
-     * @param inchar The input charset
-     * @param out The output
-     * @param outchar The output charset
-     */
-    public ReaderOf(final Input input, final String inchar,
-        final Output out, final String outchar) {
-        this(
-            new TeeReader(
-                input,
-                Charset.forName(inchar),
-                out,
-                Charset.forName(outchar)
             )
         );
     }
