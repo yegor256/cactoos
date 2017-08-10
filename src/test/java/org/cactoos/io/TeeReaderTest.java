@@ -23,11 +23,9 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Reader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import org.cactoos.InputHasContent;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -44,13 +42,11 @@ public final class TeeReaderTest {
 
     @Test
     public void testTeeReader() throws IOException {
-        final Path src = Files.createTempFile("cactoos-1", "txt-1");
-        final Path dst = Files.createTempFile("cactoos-2", "txt-2");
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final String content = "Hello, товарищ!";
-        Files.write(src, content.getBytes(StandardCharsets.UTF_8));
-        final Reader reader = new ReaderOf(
-            new InputOf(src),
-            new OutputTo(dst)
+        final Reader reader = new TeeReader(
+            new ReaderOf(content),
+            new WriterTo(baos)
         );
         int done = 0;
         while (done >= 0) {
@@ -58,31 +54,8 @@ public final class TeeReaderTest {
         }
         reader.close();
         MatcherAssert.assertThat(
-            "Can't read file content",
-            new InputOf(new ReaderOf(dst)),
-            new InputHasContent(content)
-        );
-    }
-
-    @Test
-    public void testTeeReaderWithCharset() throws IOException {
-        final Path src = Files.createTempFile("cactoos-3", "txt-3");
-        final Path dst = Files.createTempFile("cactoos-4", "txt-4");
-        final String content = "Cactoos!";
-        Files.write(src, content.getBytes(StandardCharsets.UTF_8));
-        final Reader reader = new ReaderOf(
-            new InputOf(src),
-            StandardCharsets.UTF_8,
-            new OutputTo(dst),
-            StandardCharsets.ISO_8859_1
-        );
-        int done = 0;
-        while (done >= 0) {
-            done = reader.read();
-        }
-        reader.close();
-        MatcherAssert.assertThat(
-            new InputOf(new ReaderOf(dst)),
+            "Can't read content",
+            new InputOf(new ReaderOf(baos.toByteArray())),
             new InputHasContent(content)
         );
     }

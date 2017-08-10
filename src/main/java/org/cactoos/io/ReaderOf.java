@@ -37,7 +37,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
-import org.cactoos.Output;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.scalar.StickyScalar;
@@ -275,35 +274,6 @@ public final class ReaderOf extends Reader {
      */
     public ReaderOf(final InputStream stream, final CharsetDecoder decoder) {
         this(new InputStreamReader(stream, decoder));
-    }
-
-    /**
-     * Ctor.
-     * @param input The input
-     * @param output The output
-     */
-    public ReaderOf(final Input input, final Output output) {
-        this(
-            new TeeReader(
-                input,
-                StandardCharsets.UTF_8,
-                output,
-                StandardCharsets.UTF_8
-            )
-        );
-    }
-
-    // @checkstyle ParameterNumberCheck (8 line)
-    /**
-     * Ctor.
-     * @param input The input
-     * @param inchar The input charset
-     * @param output The output
-     * @param outchar The output charset
-     */
-    public ReaderOf(final Input input, final Charset inchar,
-        final Output output, final Charset outchar) {
-        this(new TeeReader(input, inchar, output, outchar));
     }
 
     /**

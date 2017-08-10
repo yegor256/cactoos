@@ -26,9 +26,6 @@ package org.cactoos.io;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.nio.charset.Charset;
-import org.cactoos.Input;
-import org.cactoos.Output;
 
 /**
  * Input to Output copying reader.
@@ -43,42 +40,41 @@ public final class TeeReader extends Reader {
     /**
      * The source.
      */
-    private final Reader reader;
+    private final Reader source;
 
     /**
      * The destination.
      */
-    private final Writer writer;
+    private final Writer destination;
 
-    // @checkstyle ParameterNumberCheck (8 line)
     /**
      * Ctor.
-     * @param input The source
-     * @param incharset The source charset
-     * @param out The destination
-     * @param outcharset The destination charset
+     * @param reader The source
+     * @param writer The destination
      */
-    TeeReader(final Input input, final Charset incharset,
-        final Output out, final Charset outcharset) {
+    public TeeReader(final Reader reader, final Writer writer) {
         super();
-        this.reader = new ReaderOf(input, incharset);
-        this.writer = new WriterTo(out, outcharset);
+        this.source = reader;
+        this.destination = writer;
     }
 
     @Override
     public int read(final char[] cbuf, final int offset, final int length)
         throws IOException {
-        final int done = this.reader.read(cbuf, 0, length);
+        final int done = this.source.read(cbuf, 0, length);
         if (done >= 0) {
-            this.writer.write(cbuf);
+            this.destination.write(cbuf);
         }
         return done;
     }
 
     @Override
     public void close() throws IOException {
-        this.reader.close();
-        this.writer.close();
+        try {
+            this.source.close();
+        } finally {
+            this.destination.close();
+        }
     }
 
 }
