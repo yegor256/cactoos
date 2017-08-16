@@ -23,8 +23,9 @@
  */
 package org.cactoos.iterable;
 
+import java.util.Collection;
 import java.util.Iterator;
-import org.cactoos.func.StickyFunc;
+import java.util.LinkedList;
 
 /**
  * A few Iterables joined together.
@@ -62,12 +63,11 @@ public final class Joined<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new org.cactoos.iterator.Joined<>(
-            new Mapped<>(
-                this.list,
-                new StickyFunc<>(Iterable::iterator)
-            )
-        );
+        final Collection<Iterator<T>> iterators = new LinkedList<>();
+        for (final Iterable<T> item : this.list) {
+            iterators.add(item.iterator());
+        }
+        return new org.cactoos.iterator.Joined<>(iterators);
     }
 
 }

@@ -21,50 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
-import org.cactoos.Func;
+import java.util.Collections;
+import java.util.Iterator;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link Joined}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.14
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class JoinedTest {
 
     @Test
-    public void transformsList() {
+    public void joinsIterators() {
         MatcherAssert.assertThat(
-            "Can't concatenate iterables together",
+            "Can't concatenate mapped iterators together",
             new LengthOf(
-                new Joined<String>(
-                    new IterableOf<>("hello", "world", "друг"),
-                    new IterableOf<>("how", "are", "you"),
-                    new IterableOf<>("what's", "up")
+                new Joined<Iterator<String>>(
+                    new Mapped<>(
+                        Collections.singleton("x").iterator(),
+                        input -> Collections.singleton(input).iterator()
+                    )
                 )
             ),
-            // @checkstyle MagicNumber (1 line)
-            new ScalarHasValue<>(8)
-        );
-    }
-
-    @Test
-    public void joinsIterables() {
-        MatcherAssert.assertThat(
-            "Can't concatenate mapped iterables together",
-            new Joined<>(
-                new Mapped<>(
-                    new IterableOf<>("x"),
-                    (Func<String, Iterable<String>>) IterableOf::new
-                )
-            ),
-            Matchers.iterableWithSize(1)
+            new ScalarHasValue<>(1)
         );
     }
 
