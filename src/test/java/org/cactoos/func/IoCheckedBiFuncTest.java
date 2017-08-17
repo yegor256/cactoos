@@ -59,9 +59,9 @@ public final class IoCheckedBiFuncTest {
             new IoCheckedBiFunc<>(
                 (fst, scd) -> new IllegalArgumentException("illegalArgument")
             ).apply(1, 2);
-        } catch (final IllegalArgumentException ex) {
+        } catch (final IOException ex) {
             MatcherAssert.assertThat(
-                ex, Matchers.any(IllegalArgumentException.class)
+                ex, Matchers.any(IOException.class)
             );
         }
     }
