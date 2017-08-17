@@ -28,7 +28,6 @@ import java.util.Calendar;
 import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
-import org.cactoos.Text;
 import org.cactoos.TextHasString;
 import org.cactoos.iterable.ListOf;
 import org.hamcrest.MatcherAssert;
@@ -113,7 +112,7 @@ public final class FormattedTextTest {
     @Test
     public void formatsWithText() {
         MatcherAssert.assertThat(
-            "Can't format a text with Locale",
+            "Can't format a string with text",
             new FormattedText(
                 "Here is a file content: %s",
                 new TextOf("Cactoos")
