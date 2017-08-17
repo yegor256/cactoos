@@ -30,11 +30,10 @@ import org.junit.Test;
 
 /**
  * Test case for {@link IoCheckedBiFunc}.
- *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.13
  */
 public final class IoCheckedBiFuncTest {
 
@@ -50,6 +49,19 @@ public final class IoCheckedBiFuncTest {
         } catch (final IOException ex) {
             MatcherAssert.assertThat(
                 ex, Matchers.is(exception)
+            );
+        }
+    }
+
+    @Test
+    public void throwsException() {
+        try {
+            new IoCheckedBiFunc<>(
+                (fst, scd) -> new Exception("intended")
+            ).apply(1, 2);
+        } catch (final Exception ex) {
+            MatcherAssert.assertThat(
+                ex, Matchers.any(Exception.class)
             );
         }
     }
