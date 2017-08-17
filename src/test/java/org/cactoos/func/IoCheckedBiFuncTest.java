@@ -32,8 +32,8 @@ import org.junit.Test;
  * Test case for {@link IoCheckedBiFunc}.
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @checkstyle JavadocMethodCheck (500 lines)
  * @since 0.13
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class IoCheckedBiFuncTest {
 
@@ -54,14 +54,14 @@ public final class IoCheckedBiFuncTest {
     }
 
     @Test
-    public void throwsException() {
+    public void throwsException() throws IOException {
         try {
             new IoCheckedBiFunc<>(
-                (fst, scd) -> new Exception("intended")
+                (fst, scd) -> new IllegalArgumentException("illegalArgument")
             ).apply(1, 2);
-        } catch (final Exception ex) {
+        } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
-                ex, Matchers.any(Exception.class)
+                ex, Matchers.any(IllegalArgumentException.class)
             );
         }
     }
