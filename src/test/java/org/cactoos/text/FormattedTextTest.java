@@ -114,10 +114,10 @@ public final class FormattedTextTest {
         MatcherAssert.assertThat(
             "Can't format a string with text",
             new FormattedText(
-                "Here is a file content: %s",
+                "Format with text: %s",
                 new TextOf("Cactoos")
             ),
-            new TextHasString("Here is a file content: Cactoos")
+            new TextHasString("Format with text: Cactoos")
         );
     }
 }
