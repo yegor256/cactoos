@@ -28,6 +28,7 @@ import java.util.Calendar;
 import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
+import org.cactoos.Text;
 import org.cactoos.TextHasString;
 import org.cactoos.iterable.ListOf;
 import org.hamcrest.MatcherAssert;
@@ -106,6 +107,18 @@ public final class FormattedTextTest {
                 "%,d", Locale.GERMAN, 1234567890
             ),
             new TextHasString("1.234.567.890")
+        );
+    }
+
+    @Test
+    public void formatsWithText() {
+        MatcherAssert.assertThat(
+            "Can't format a text with Locale",
+            new FormattedText(
+                "Here is a file content: %s",
+                new TextOf("Cactoos")
+            ),
+            new TextHasString("Here is a file content: Cactoos")
         );
     }
 }

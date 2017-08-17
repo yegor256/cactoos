@@ -272,4 +272,9 @@ public final class TextOf implements Text {
         return new UncheckedText(this).compareTo(text);
     }
 
+    @Override
+    public String toString() {
+        return new UncheckedText(this).asString();
+    }
+
 }
