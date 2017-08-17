@@ -53,17 +53,13 @@ public final class IoCheckedBiFuncTest {
         }
     }
 
-    @Test
-    public void throwsException() throws IOException {
-        try {
-            new IoCheckedBiFunc<>(
-                (fst, scd) -> new IllegalArgumentException("illegalArgument")
-            ).apply(1, 2);
-        } catch (final IOException ex) {
-            MatcherAssert.assertThat(
-                ex, Matchers.any(IOException.class)
-            );
-        }
+    @Test(expected = IOException.class)
+    public void throwsException() throws Exception {
+        new IoCheckedBiFunc<>(
+            (fst, scd) -> {
+                throw new Exception();
+            }
+        ).apply(1, 2);
     }
 
 }

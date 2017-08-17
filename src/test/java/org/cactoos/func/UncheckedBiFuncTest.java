@@ -25,11 +25,12 @@ package org.cactoos.func;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link UncheckedBiFunc}.
- *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.13
@@ -44,6 +45,16 @@ public final class UncheckedBiFuncTest {
                 throw new IOException("intended");
             }
         ).apply(1, 2);
+    }
+
+    @Test
+    public void testUncheckedBiFunc() {
+        MatcherAssert.assertThat(
+            new UncheckedBiFunc<>(
+                (fst, scd) -> true
+            ).apply(1, 2),
+            Matchers.equalTo(true)
+        );
     }
 
 }
