@@ -67,7 +67,7 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     @Override
     public Z apply(final X first, final Y second) throws Exception {
-        final Map<X, Y> keymap = new HashMap<>(2);
+        final Map<X, Y> keymap = new HashMap<>(1,1);
         keymap.put(first, second);
         if (!this.cache.containsKey(keymap)) {
             this.cache.put(keymap, this.func.apply(first, second));
