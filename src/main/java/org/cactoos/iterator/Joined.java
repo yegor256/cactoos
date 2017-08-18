@@ -23,12 +23,13 @@
  */
 package org.cactoos.iterator;
 
+import java.util.Collections;
 import java.util.Iterator;
-import org.cactoos.iterable.Filtered;
+
 import org.cactoos.iterable.ListOf;
 
 /**
- * A few Iterables joined together.
+ * A few Iterators joined together.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -40,9 +41,14 @@ import org.cactoos.iterable.ListOf;
 public final class Joined<T> implements Iterator<T> {
 
     /**
-     * Iterables.
+     * Iterators.
      */
-    private final Iterable<Iterator<T>> list;
+    private final Iterator<Iterator<T>> iters;
+
+    /**
+     * Current traversal iterator
+     */
+    private Iterator<T> current = Collections.emptyIterator();
 
     /**
      * Ctor.
@@ -58,20 +64,19 @@ public final class Joined<T> implements Iterator<T> {
      * @param items Items to concatenate
      */
     public Joined(final Iterable<Iterator<T>> items) {
-        this.list = items;
+        this.iters = items.iterator();
     }
 
     @Override
     public boolean hasNext() {
-        return new Filtered<>(
-            this.list, Iterator::hasNext
-        ).iterator().hasNext();
+        while (!current.hasNext() && iters.hasNext()) {
+            current = iters.next();
+        }
+        return current.hasNext();
     }
 
     @Override
     public T next() {
-        return new Filtered<>(
-            this.list, Iterator::hasNext
-        ).iterator().next().next();
+        return current.next();
     }
 }
