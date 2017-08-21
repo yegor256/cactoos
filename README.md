@@ -103,9 +103,13 @@ To manipulate with a text:
 
 ```java
 // To lower case
-new LowerText("Hello");
+new LowerText(
+	new TextOf("Hello")
+);
 // To upper case
-new UpperText("Hello");
+new UpperText(
+	new TextOf("Hello")
+);
 ```
 
 ## Iterables/Collections/Lists/Sets
@@ -115,23 +119,7 @@ To filter a collection:
 ```java
 Collection<String> filtered = new ListOf<>(
   new Filtered<>(
-    new ArrayOf<>("hello", "world", "dude"),
-    new FuncOf<String, Boolean>() {
-      @Override
-      public Boolean apply(String s) {
-        return s.length() > 4;
-      }
-    }
-  )
-);
-```
-
-With Lambda:
-
-```java
-new ListOf<>(
-  new Filtered<>(
-    new ArrayOf<>("hello", "world", "dude"),
+    new IterableOf<>("hello", "world", "dude"),
     s -> s.length() > 4
   )
 );
@@ -141,8 +129,8 @@ To iterate a collection:
 
 ```java
 new And(
-  new Mappped<>(
-    new ArrayOf<>("how", "are", "you"),
+  new Mapped<>(
+    new IterableOf<>("how", "are", "you"),
     new FuncOf<>(
       input -> {
         System.out.printf("Item: %s\n", input);
@@ -219,7 +207,7 @@ Here is its object-oriented alternative:
 new And(
   new Endless<>(ready),
   ready -> {
-    System.out.prinln("Still waiting...");
+    System.out.println("Still waiting...");
     return !ready;
   }
 ).value();
