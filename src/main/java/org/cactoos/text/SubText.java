@@ -67,10 +67,10 @@ public final class SubText implements Text {
      * Ctor.
      * @param text The String
      * @param strt Start position in the text
-     * @param end End position in the text
+     * @param finish End position in the text
      */
-    public SubText(final String text, final int strt, final int end) {
-        this(new TextOf(text), strt, end);
+    public SubText(final String text, final int strt, final int finish) {
+        this(new TextOf(text), strt, finish);
     }
 
     /**
@@ -86,42 +86,48 @@ public final class SubText implements Text {
      * Ctor.
      * @param text The Text
      * @param strt Start position in the text
-     * @param end End position in the text
+     * @param finish End position in the text
      */
-    public SubText(final Text text, final int strt, final int end) {
-        this(text, () -> strt, () -> end);
+    public SubText(final Text text, final int strt, final int finish) {
+        this(text, () -> strt, () -> finish);
     }
 
     /**
      * Ctor.
      * @param text The Text
      * @param strt Start position in the text
-     * @param end End position in the text
+     * @param finish End position in the text
      */
     public SubText(final Text text, final Scalar<Integer> strt,
-        final Scalar<Integer> end) {
-        this(text, new UncheckedScalar<>(strt), new UncheckedScalar<>(end));
+        final Scalar<Integer> finish) {
+        this(text, new UncheckedScalar<>(strt), new UncheckedScalar<>(finish));
     }
 
     /**
      * Ctor.
      * @param text The Text
      * @param strt Start position in the text
-     * @param end End position in the text
+     * @param finish End position in the text
      */
     public SubText(final Text text, final UncheckedScalar<Integer> strt,
-        final UncheckedScalar<Integer> end) {
+        final UncheckedScalar<Integer> finish) {
         this.origin = text;
         this.start = strt;
-        this.end = end;
+        this.end = finish;
     }
 
     @Override
     public String asString() throws IOException {
-        return this.origin.asString().substring(
-            this.start.value(),
-            this.end.value()
-        );
+        int begin = this.start.value();
+        if (begin < 0) {
+            begin = 0;
+        }
+        int finish = this.end.value();
+        final String text = this.origin.asString();
+        if (text.length() < finish) {
+            finish = text.length();
+        }
+        return text.substring(begin, finish);
     }
 
     @Override

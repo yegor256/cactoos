@@ -41,8 +41,8 @@ public final class SubTextTest {
         MatcherAssert.assertThat(
             "Can't cut a text with start and end",
             // @checkstyle MagicNumber (1 line)
-            new SubText("hello world", 2, 9),
-            new TextHasString("llo wor")
+            new SubText("hello world", 2, 50),
+            new TextHasString("llo world")
         );
     }
 
