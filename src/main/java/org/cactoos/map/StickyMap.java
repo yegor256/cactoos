@@ -21,24 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.map;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.Func;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Iterable as {@link Map}.
- *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link Map} on each
- * method call. It doesn't cache the data anyhow.</p>
- *
- * <p>If you don't need this {@link Map} to re-fresh its content on every call,
- * by doing round-trips to the encapsulated iterable, use
- * {@link StickyMap}.</p>
+ * Map decorator that goes through the map only once.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -46,23 +42,21 @@ import org.cactoos.Func;
  * @version $Id$
  * @param <X> Type of key
  * @param <Y> Type of value
- * @see StickyMap
- * @since 0.4
+ * @since 0.8
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class MapOf<X, Y> implements Map<X, Y> {
+public final class StickyMap<X, Y> implements Map<X, Y> {
 
     /**
-     * The iterable.
+     * The gate.
      */
-    private final Iterable<Map.Entry<X, Y>> entries;
+    private final UncheckedScalar<Map<X, Y>> gate;
 
     /**
      * Ctor.
      * @param list List of entries
      */
     @SafeVarargs
-    public MapOf(final Map.Entry<X, Y>... list) {
+    public StickyMap(final Map.Entry<X, Y>... list) {
         this(new IterableOf<>(list));
     }
 
@@ -73,21 +67,8 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      * @since 0.12
      */
     @SafeVarargs
-    public MapOf(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
+    public StickyMap(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
         this(map, new IterableOf<>(list));
-    }
-
-    /**
-     * Ctor.
-     * @param list List of items
-     * @param key Func to create key
-     * @param value Func to create value
-     * @param <Z> Type of items in the list
-     * @since 0.11
-     */
-    public <Z> MapOf(final Iterable<Z> list, final Func<Z, X> key,
-        final Func<Z, Y> value) {
-        this(list, item -> new MapEntry<>(key.apply(item), value.apply(item)));
     }
 
     /**
@@ -100,7 +81,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      * @since 0.12
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public <Z> MapOf(final Map<X, Y> map,
+    public <Z> StickyMap(final Map<X, Y> map,
         final Iterable<Z> list, final Func<Z, X> key,
         final Func<Z, Y> value) {
         this(
@@ -112,11 +93,24 @@ public final class MapOf<X, Y> implements Map<X, Y> {
     /**
      * Ctor.
      * @param list List of items
+     * @param key Func to create key
+     * @param value Func to create value
+     * @param <Z> Type of items in the list
+     * @since 0.11
+     */
+    public <Z> StickyMap(final Iterable<Z> list, final Func<Z, X> key,
+        final Func<Z, Y> value) {
+        this(list, item -> new MapEntry<>(key.apply(item), value.apply(item)));
+    }
+
+    /**
+     * Ctor.
+     * @param list List of items
      * @param entry Func to create entry
      * @param <Z> Type of items in the list
      * @since 0.11
      */
-    public <Z> MapOf(final Iterable<Z> list,
+    public <Z> StickyMap(final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
         this(new Mapped<>(list, entry));
     }
@@ -127,60 +121,71 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      * @param list List of items
      * @param entry Func to create entry
      * @param <Z> Type of items in the list
-     * @since 0.11
+     * @since 0.12
      */
-    public <Z> MapOf(final Map<X, Y> map, final Iterable<Z> list,
+    public <Z> StickyMap(final Map<X, Y> map, final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
         this(map, new Mapped<>(list, entry));
     }
 
     /**
      * Ctor.
-     * @param map Map to extend
-     * @param list List of the entries
-     * @since 0.12
+     * @param list Entries for the entries
      */
-    @SuppressWarnings("unchecked")
-    public MapOf(final Map<X, Y> map,
-        final Iterable<Map.Entry<X, Y>> list) {
-        this(
-            new Joined<>(
-                map.entrySet(), list
-            )
-        );
+    public StickyMap(final Iterable<Map.Entry<X, Y>> list) {
+        this(new MapOf<>(list));
     }
 
     /**
      * Ctor.
-     * @param list List of the entries
+     * @param map Pre-existing map we want to extend
+     * @param list Entries for the entries
+     * @since 0.12
      */
-    public MapOf(final Iterable<Map.Entry<X, Y>> list) {
-        this.entries = list;
+    public StickyMap(final Map<X, Y> map,
+        final Iterable<Map.Entry<X, Y>> list) {
+        this(new MapOf<>(map, list));
+    }
+
+    /**
+     * Ctor.
+     * @param map The map
+     */
+    public StickyMap(final Map<X, Y> map) {
+        this.gate = new UncheckedScalar<>(
+            new StickyScalar<>(
+                () -> {
+                    final Map<X, Y> temp = new HashMap<>(0);
+                    temp.putAll(map);
+                    return temp;
+                }
+            )
+        );
     }
 
     @Override
     public int size() {
-        return new LengthOf(this.entries).value().intValue();
+        return this.gate.value().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return !this.entries.iterator().hasNext();
+        return this.gate.value().isEmpty();
     }
 
     @Override
     public boolean containsKey(final Object key) {
-        return this.map().containsKey(key);
+        return this.gate.value().containsKey(key);
     }
 
     @Override
     public boolean containsValue(final Object value) {
-        return this.map().containsValue(value);
+        return this.gate.value().containsValue(value);
     }
 
     @Override
     public Y get(final Object key) {
-        return this.map().get(key);
+        return this.gate.value().get(key);
     }
 
     @Override
@@ -198,7 +203,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
     }
 
     @Override
-    public void putAll(final Map<? extends X, ? extends Y> list) {
+    public void putAll(final Map<? extends X, ? extends Y> map) {
         throw new UnsupportedOperationException(
             "#putAll() is not supported"
         );
@@ -213,29 +218,17 @@ public final class MapOf<X, Y> implements Map<X, Y> {
 
     @Override
     public Set<X> keySet() {
-        return this.map().keySet();
+        return this.gate.value().keySet();
     }
 
     @Override
     public Collection<Y> values() {
-        return this.map().values();
+        return this.gate.value().values();
     }
 
     @Override
     public Set<Map.Entry<X, Y>> entrySet() {
-        return this.map().entrySet();
-    }
-
-    /**
-     * Make a map.
-     * @return Map
-     */
-    private Map<X, Y> map() {
-        final Map<X, Y> temp = new HashMap<>(0);
-        for (final Map.Entry<X, Y> entry : this.entries) {
-            temp.put(entry.getKey(), entry.getValue());
-        }
-        return temp;
+        return this.gate.value().entrySet();
     }
 
 }
