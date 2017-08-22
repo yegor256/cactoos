@@ -311,4 +311,14 @@ public final class InputOfTest {
         );
     }
 
+    @Test
+    public void makesDataAvailable() throws IOException {
+        final String content = "Hello,חבר!";
+        MatcherAssert.assertThat(
+            "Can't show that data is available",
+            new InputOf(content).stream().available(),
+            Matchers.greaterThan(0)
+        );
+    }
+
 }

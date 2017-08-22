@@ -170,4 +170,9 @@ public final class OutputStreamTo extends OutputStream {
         this.target.value().close();
     }
 
+    @Override
+    public void flush() throws IOException {
+        this.target.value().flush();
+    }
+
 }

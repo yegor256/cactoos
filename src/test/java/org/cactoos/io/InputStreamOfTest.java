@@ -30,6 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.InputHasContent;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -72,6 +73,16 @@ public final class InputStreamOfTest {
             "Can't read from reader through small buffer",
             new InputOf(new InputStreamOf(new StringReader(content), 1)),
             new InputHasContent(content)
+        );
+    }
+
+    @Test
+    public void makesDataAvailable() throws IOException {
+        final String content = "Hello,חבר!";
+        MatcherAssert.assertThat(
+            "Can't show that data is available",
+            new InputStreamOf(content).available(),
+            Matchers.greaterThan(0)
         );
     }
 
