@@ -44,6 +44,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <Y> Type of value
  * @since 0.8
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class StickyMap<X, Y> implements Map<X, Y> {
 
     /**
@@ -161,6 +162,11 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
                 }
             )
         );
+    }
+
+    @Override
+    public String toString() {
+        return this.gate.value().toString();
     }
 
     @Override

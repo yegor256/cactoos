@@ -62,6 +62,11 @@ public final class Limited<T> implements Iterable<T> {
     }
 
     @Override
+    public String toString() {
+        return this.iterable.toString();
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new org.cactoos.iterator.Limited<>(
             this.iterable.iterator(), this.limit

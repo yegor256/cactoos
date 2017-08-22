@@ -52,6 +52,11 @@ public final class Endless<T> implements Iterable<T> {
     }
 
     @Override
+    public String toString() {
+        return String.format("[%s...]", this.element);
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new org.cactoos.iterator.Endless<>(this.element);
     }

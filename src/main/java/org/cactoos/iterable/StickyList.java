@@ -83,6 +83,11 @@ public final class StickyList<X> implements List<X> {
     }
 
     @Override
+    public String toString() {
+        return this.gate.value().toString();
+    }
+
+    @Override
     public int size() {
         return this.gate.value().size();
     }

@@ -58,6 +58,11 @@ public final class Skipped<T> implements Iterable<T> {
     }
 
     @Override
+    public String toString() {
+        return this.iterable.toString();
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new org.cactoos.iterator.Skipped<>(
             this.iterable.iterator(), this.skip

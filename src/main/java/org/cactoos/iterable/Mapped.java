@@ -60,6 +60,11 @@ public final class Mapped<X, Y> implements Iterable<Y> {
     }
 
     @Override
+    public String toString() {
+        return this.iterable.toString();
+    }
+
+    @Override
     public Iterator<Y> iterator() {
         return new org.cactoos.iterator.Mapped<>(
             this.iterable.iterator(), this.func

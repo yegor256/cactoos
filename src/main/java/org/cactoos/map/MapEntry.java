@@ -58,6 +58,11 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     }
 
     @Override
+    public String toString() {
+        return String.format("%s=%s", this.key, this.value);
+    }
+
+    @Override
     public K getKey() {
         return this.key;
     }

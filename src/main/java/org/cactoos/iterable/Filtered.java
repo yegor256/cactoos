@@ -72,6 +72,11 @@ public final class Filtered<X> implements Iterable<X> {
     }
 
     @Override
+    public String toString() {
+        return this.iterable.toString();
+    }
+
+    @Override
     public Iterator<X> iterator() {
         return new org.cactoos.iterator.Filtered<>(
             this.iterable.iterator(),

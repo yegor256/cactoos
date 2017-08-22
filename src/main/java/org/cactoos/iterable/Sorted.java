@@ -87,6 +87,11 @@ public final class Sorted<T extends Comparable<? super T>> implements
     }
 
     @Override
+    public String toString() {
+        return this.iterable.toString();
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new org.cactoos.iterator.Sorted<>(
             this.comparator, this.iterable.iterator()
