@@ -23,7 +23,7 @@
  */
 
 /**
- * Iterable, tests.
+ * Iterables, tests.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$

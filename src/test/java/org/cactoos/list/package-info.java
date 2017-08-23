@@ -21,57 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
-
-import java.util.Iterator;
-import org.cactoos.iterable.Filtered;
-import org.cactoos.list.ListOf;
 
 /**
- * A few Iterables joined together.
- *
- * <p>There is no thread-safety guarantee.
+ * Lists.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @since 0.14
  */
-public final class Joined<T> implements Iterator<T> {
-
-    /**
-     * Iterables.
-     */
-    private final Iterable<Iterator<T>> list;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    public Joined(final Iterator<T>... items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public Joined(final Iterable<Iterator<T>> items) {
-        this.list = items;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return new Filtered<>(
-            this.list, Iterator::hasNext
-        ).iterator().hasNext();
-    }
-
-    @Override
-    public T next() {
-        return new Filtered<>(
-            this.list, Iterator::hasNext
-        ).iterator().next().next();
-    }
-}
+package org.cactoos.list;

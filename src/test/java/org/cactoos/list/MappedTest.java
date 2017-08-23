@@ -21,57 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.iterable.Filtered;
-import org.cactoos.list.ListOf;
+import java.io.IOException;
+import java.util.Collections;
+import org.cactoos.Text;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UpperText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * A few Iterables joined together.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link Mapped}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @since 0.14
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Joined<T> implements Iterator<T> {
+public final class MappedTest {
 
-    /**
-     * Iterables.
-     */
-    private final Iterable<Iterator<T>> list;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    public Joined(final Iterator<T>... items) {
-        this(new ListOf<>(items));
+    @Test
+    public void transformsList() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't transform an iterable",
+            new Mapped<String, Text>(
+                new IterableOf<>(
+                    "hello", "world", "друг"
+                ),
+                input -> new UpperText(new TextOf(input))
+            ).iterator().next().asString(),
+            Matchers.equalTo("HELLO")
+        );
     }
 
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public Joined(final Iterable<Iterator<T>> items) {
-        this.list = items;
+    @Test
+    public void transformsEmptyList() {
+        MatcherAssert.assertThat(
+            "Can't transform an empty iterable",
+            new Mapped<String, Text>(
+                Collections.emptyList(),
+                input -> new UpperText(new TextOf(input))
+            ),
+            Matchers.emptyIterable()
+        );
     }
 
-    @Override
-    public boolean hasNext() {
-        return new Filtered<>(
-            this.list, Iterator::hasNext
-        ).iterator().hasNext();
-    }
-
-    @Override
-    public T next() {
-        return new Filtered<>(
-            this.list, Iterator::hasNext
-        ).iterator().next().next();
-    }
 }

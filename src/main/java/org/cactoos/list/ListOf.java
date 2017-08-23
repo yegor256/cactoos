@@ -21,13 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.list;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.LengthOf;
+import org.cactoos.iterable.StickyList;
 
 /**
  * Iterable as {@link List}.
@@ -79,7 +82,7 @@ public final class ListOf<T> implements List<T> {
 
     @Override
     public int size() {
-        return new LengthOf(this.iterable).value().intValue();
+        return new LengthOf(this.iterable).value();
     }
 
     @Override
