@@ -25,7 +25,6 @@ package org.cactoos.iterator;
 
 import java.util.Collections;
 import java.util.Iterator;
-
 import org.cactoos.iterable.ListOf;
 
 /**
@@ -46,9 +45,9 @@ public final class Joined<T> implements Iterator<T> {
     private final Iterator<Iterator<T>> iters;
 
     /**
-     * Current traversal iterator
+     * Current traversal iterator.
      */
-    private Iterator<T> current = Collections.emptyIterator();
+    private Iterator<T> current;
 
     /**
      * Ctor.
@@ -65,18 +64,19 @@ public final class Joined<T> implements Iterator<T> {
      */
     public Joined(final Iterable<Iterator<T>> items) {
         this.iters = items.iterator();
+        this.current = Collections.emptyIterator();
     }
 
     @Override
     public boolean hasNext() {
-        while (!current.hasNext() && iters.hasNext()) {
-            current = iters.next();
+        while (!this.current.hasNext() && this.iters.hasNext()) {
+            this.current = this.iters.next();
         }
-        return current.hasNext();
+        return this.current.hasNext();
     }
 
     @Override
     public T next() {
-        return current.next();
+        return this.current.next();
     }
 }
