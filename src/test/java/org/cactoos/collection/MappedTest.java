@@ -21,67 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.collection;
 
+import java.io.IOException;
+import java.util.Collections;
+import org.cactoos.Text;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link MapEntry}.
- *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * Test case for {@link Mapped}.
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.14
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class MapEntryTest {
+public final class MappedTest {
 
     @Test
-    public void getKey() {
-        final String key = "hello";
-        final String value = "world";
+    public void transformsList() throws IOException {
         MatcherAssert.assertThat(
-            "Can't get key in the map entry",
-            new MapEntry<>(key, value).getKey(),
-            Matchers.equalTo(key)
+            "Can't transform an iterable",
+            new Mapped<String, Text>(
+                new IterableOf<>(
+                    "hello", "world", "друг"
+                ),
+                input -> new UpperText(new TextOf(input))
+            ).iterator().next().asString(),
+            Matchers.equalTo("HELLO")
         );
     }
 
     @Test
-    public void getValue() {
-        final String key = "foo";
-        final String value = "bar";
+    public void transformsEmptyList() {
         MatcherAssert.assertThat(
-            "Can't get value in the map entry",
-            new MapEntry<>(key, value).getValue(),
-            Matchers.equalTo(value)
-        );
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void cantSetValue() {
-        new MapEntry<>("one", "two").setValue("three");
-    }
-
-    @Test
-    public void equalsTo() {
-        final String key = "eo";
-        final String value = "book";
-        MatcherAssert.assertThat(
-            "MapEntries are not equals",
-            new MapEntry<>(key, value).equals(new MapEntry<>(key, value)),
-            Matchers.equalTo(true)
-        );
-    }
-
-    @Test
-    public void compareHash() {
-        MatcherAssert.assertThat(
-            "the hash code are not equals",
-            new MapEntry<>("elegant", "objects").hashCode(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(32739498)
+            "Can't transform an empty iterable",
+            new Mapped<String, Text>(
+                Collections.emptyList(),
+                input -> new UpperText(new TextOf(input))
+            ),
+            Matchers.emptyIterable()
         );
     }
 

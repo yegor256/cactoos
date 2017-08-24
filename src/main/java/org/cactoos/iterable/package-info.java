@@ -23,7 +23,7 @@
  */
 
 /**
- * Lists, collections, sets, iterables.
+ * Iterables.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$

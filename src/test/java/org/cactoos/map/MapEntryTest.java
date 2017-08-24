@@ -21,37 +21,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.map;
 
-import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link SubText}.
+ * Test case for {@link MapEntry}.
+ *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.11
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SubTextTest {
+public final class MapEntryTest {
 
     @Test
-    public void cutTextWithStartAndEnd() {
+    public void getKey() {
+        final String key = "hello";
+        final String value = "world";
         MatcherAssert.assertThat(
-            "Can't cut a text with start and end",
-            // @checkstyle MagicNumber (1 line)
-            new SubText("hello world", 2, 50),
-            new TextHasString("llo world")
+            "Can't get key in the map entry",
+            new MapEntry<>(key, value).getKey(),
+            Matchers.equalTo(key)
         );
     }
 
     @Test
-    public void cutTextWithStart() {
+    public void getValue() {
+        final String key = "foo";
+        final String value = "bar";
         MatcherAssert.assertThat(
-            "Can't cut a text with start",
-            new SubText("cut here", 2),
-            new TextHasString("t here")
+            "Can't get value in the map entry",
+            new MapEntry<>(key, value).getValue(),
+            Matchers.equalTo(value)
+        );
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void cantSetValue() {
+        new MapEntry<>("one", "two").setValue("three");
+    }
+
+    @Test
+    public void equalsTo() {
+        final String key = "eo";
+        final String value = "book";
+        MatcherAssert.assertThat(
+            "MapEntries are not equals",
+            new MapEntry<>(key, value).equals(new MapEntry<>(key, value)),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void compareHash() {
+        MatcherAssert.assertThat(
+            "the hash code are not equals",
+            new MapEntry<>("elegant", "objects").hashCode(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(32739498)
         );
     }
 

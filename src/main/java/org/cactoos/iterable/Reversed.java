@@ -55,6 +55,11 @@ public final class Reversed<X> implements Iterable<X> {
     }
 
     @Override
+    public String toString() {
+        return this.iterable.toString();
+    }
+
+    @Override
     public Iterator<X> iterator() {
         final List<X> list = new LinkedList<>();
         for (final X item : this.iterable) {

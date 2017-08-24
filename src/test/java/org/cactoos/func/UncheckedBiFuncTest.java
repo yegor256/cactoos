@@ -21,53 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.func;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Mapped iterable.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link UncheckedBiFunc}.
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @since 0.13
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Mapped<X, Y> implements Iterable<Y> {
+public final class UncheckedBiFuncTest {
 
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public Mapped(final Iterable<X> src, final Func<X, Y> fnc) {
-        this.iterable = src;
-        this.func = fnc;
+    @Test(expected = UncheckedIOException.class)
+    public void rethrowsCheckedToUncheckedException() {
+        new UncheckedBiFunc<>(
+            (fst, scd) -> {
+                throw new IOException("intended");
+            }
+        ).apply(1, 2);
     }
 
-    @Override
-    public String toString() {
-        return this.iterable.toString();
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new org.cactoos.iterator.Mapped<>(
-            this.iterable.iterator(), this.func
+    @Test
+    public void testUncheckedBiFunc() {
+        MatcherAssert.assertThat(
+            new UncheckedBiFunc<>(
+                (fst, scd) -> true
+            ).apply(1, 2),
+            Matchers.equalTo(true)
         );
     }
 

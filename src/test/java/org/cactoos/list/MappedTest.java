@@ -21,53 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.list;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.io.IOException;
+import java.util.Collections;
+import org.cactoos.Text;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UpperText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Mapped iterable.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link Mapped}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @since 0.14
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Mapped<X, Y> implements Iterable<Y> {
+public final class MappedTest {
 
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public Mapped(final Iterable<X> src, final Func<X, Y> fnc) {
-        this.iterable = src;
-        this.func = fnc;
+    @Test
+    public void transformsList() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't transform an iterable",
+            new Mapped<String, Text>(
+                new IterableOf<>(
+                    "hello", "world", "друг"
+                ),
+                input -> new UpperText(new TextOf(input))
+            ).iterator().next().asString(),
+            Matchers.equalTo("HELLO")
+        );
     }
 
-    @Override
-    public String toString() {
-        return this.iterable.toString();
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new org.cactoos.iterator.Mapped<>(
-            this.iterable.iterator(), this.func
+    @Test
+    public void transformsEmptyList() {
+        MatcherAssert.assertThat(
+            "Can't transform an empty iterable",
+            new Mapped<String, Text>(
+                Collections.emptyList(),
+                input -> new UpperText(new TextOf(input))
+            ),
+            Matchers.emptyIterable()
         );
     }
 

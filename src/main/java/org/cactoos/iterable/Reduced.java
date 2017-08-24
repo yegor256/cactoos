@@ -66,6 +66,11 @@ public final class Reduced<X, T> implements Scalar<X> {
     }
 
     @Override
+    public String toString() {
+        return this.iterable.toString();
+    }
+
+    @Override
     public X value() throws Exception {
         X memo = this.input;
         for (final T item : this.iterable) {

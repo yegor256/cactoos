@@ -21,54 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.func;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.util.HashMap;
+import java.util.Map;
+import org.cactoos.BiFunc;
+import org.cactoos.scalar.StickyScalar;
 
 /**
- * Mapped iterable.
+ * Func that accepts two arguments and caches previously calculated values
+ * and doesn't recalculate again.
+ *
+ * <p>This {@link BiFunc} decorator technically is an in-memory
+ * cache.</p>
  *
  * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @param <X> Type of input
+ * @param <Y> Type of input
+ * @param <Z> Type of output
+ * @see StickyScalar
+ * @since 0.13
  */
-public final class Mapped<X, Y> implements Iterable<Y> {
+public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
-     * Iterable.
+     * Original func.
      */
-    private final Iterable<X> iterable;
+    private final BiFunc<X, Y, Z> func;
 
     /**
-     * Function.
+     * Cache.
      */
-    private final Func<X, Y> func;
+    private final Map<Map<X, Y>, Z> cache;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
+     * @param fnc Func original
      */
-    public Mapped(final Iterable<X> src, final Func<X, Y> fnc) {
-        this.iterable = src;
+    public StickyBiFunc(final BiFunc<X, Y, Z> fnc) {
         this.func = fnc;
+        this.cache = new HashMap<>(0);
     }
 
     @Override
-    public String toString() {
-        return this.iterable.toString();
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new org.cactoos.iterator.Mapped<>(
-            this.iterable.iterator(), this.func
-        );
+    public Z apply(final X first, final Y second) throws Exception {
+        final Map<X, Y> keymap = new HashMap<>(1, 1.0F);
+        keymap.put(first, second);
+        if (!this.cache.containsKey(keymap)) {
+            this.cache.put(keymap, this.func.apply(first, second));
+        }
+        return this.cache.get(keymap);
     }
 
 }

@@ -21,53 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.func;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.security.SecureRandom;
+import org.cactoos.BiFunc;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Mapped iterable.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link StickyBiFunc}.
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @since 0.13
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Mapped<X, Y> implements Iterable<Y> {
+public final class StickyBiFuncTest {
 
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public Mapped(final Iterable<X> src, final Func<X, Y> fnc) {
-        this.iterable = src;
-        this.func = fnc;
-    }
-
-    @Override
-    public String toString() {
-        return this.iterable.toString();
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new org.cactoos.iterator.Mapped<>(
-            this.iterable.iterator(), this.func
+    @Test
+    public void cachesFuncResults() throws Exception {
+        final BiFunc<Boolean, Boolean, Integer> func = new StickyBiFunc<>(
+            (first, second) -> new SecureRandom().nextInt()
+        );
+        MatcherAssert.assertThat(
+            func.apply(true, true) + func.apply(true, true),
+            Matchers.equalTo(func.apply(true, true) + func.apply(true, true))
         );
     }
 

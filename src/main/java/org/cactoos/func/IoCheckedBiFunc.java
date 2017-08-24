@@ -21,54 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.func;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.io.IOException;
+import org.cactoos.BiFunc;
 
 /**
- * Mapped iterable.
+ * Func that doesn't throw checked {@link Exception}, but throws
+ * {@link IOException} instead.
  *
  * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @param <X> Type of input
+ * @param <Y> Type of input
+ * @param <Z> Type of output
+ * @since 0.13
  */
-public final class Mapped<X, Y> implements Iterable<Y> {
+public final class IoCheckedBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
-     * Iterable.
+     * Original func.
      */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
+    private final BiFunc<X, Y, Z> func;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
+     * @param fnc Encapsulated func
      */
-    public Mapped(final Iterable<X> src, final Func<X, Y> fnc) {
-        this.iterable = src;
+    public IoCheckedBiFunc(final BiFunc<X, Y, Z> fnc) {
         this.func = fnc;
     }
 
     @Override
-    public String toString() {
-        return this.iterable.toString();
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new org.cactoos.iterator.Mapped<>(
-            this.iterable.iterator(), this.func
-        );
+    @SuppressWarnings
+        (
+            {
+                "PMD.AvoidCatchingGenericException",
+                "PMD.AvoidRethrowingException"
+            }
+        )
+    public Z apply(final X first, final Y second) throws IOException {
+        try {
+            return this.func.apply(first, second);
+        } catch (final IOException ex) {
+            throw ex;
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IOException(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IOException(ex);
+        }
     }
 
 }

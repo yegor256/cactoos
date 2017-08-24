@@ -21,54 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.func;
 
-import java.util.Iterator;
-import org.cactoos.Func;
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Mapped iterable.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link IoCheckedBiFunc}.
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.1
+ * @since 0.13
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Mapped<X, Y> implements Iterable<Y> {
+public final class IoCheckedBiFuncTest {
 
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @param fnc Func
-     */
-    public Mapped(final Iterable<X> src, final Func<X, Y> fnc) {
-        this.iterable = src;
-        this.func = fnc;
+    @Test
+    public void rethrowsCheckedToUncheckedException() {
+        final IOException exception = new IOException("intended");
+        try {
+            new IoCheckedBiFunc<>(
+                (fst, scd) -> {
+                    throw exception;
+                }
+            ).apply(1, 2);
+        } catch (final IOException ex) {
+            MatcherAssert.assertThat(
+                ex, Matchers.is(exception)
+            );
+        }
     }
 
-    @Override
-    public String toString() {
-        return this.iterable.toString();
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new org.cactoos.iterator.Mapped<>(
-            this.iterable.iterator(), this.func
-        );
+    @Test(expected = IOException.class)
+    public void throwsException() throws Exception {
+        new IoCheckedBiFunc<>(
+            (fst, scd) -> {
+                throw new Exception();
+            }
+        ).apply(1, 2);
     }
 
 }

@@ -255,4 +255,29 @@ public final class InputStreamOf extends InputStream {
         this.source.value().close();
     }
 
+    @Override
+    public long skip(final long num) throws IOException {
+        return this.source.value().skip(num);
+    }
+
+    @Override
+    public int available() throws IOException {
+        return this.source.value().available();
+    }
+
+    @Override
+    public void mark(final int limit) {
+        this.source.value().mark(limit);
+    }
+
+    @Override
+    public void reset() throws IOException {
+        this.source.value().reset();
+    }
+
+    @Override
+    public boolean markSupported() {
+        return this.source.value().markSupported();
+    }
+
 }

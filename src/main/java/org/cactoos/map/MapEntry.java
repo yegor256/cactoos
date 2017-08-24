@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.map;
 
 import java.util.Map;
 
@@ -55,6 +55,11 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     public MapEntry(final K src, final V trgt) {
         this.key = src;
         this.value = trgt;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s=%s", this.key, this.value);
     }
 
     @Override
