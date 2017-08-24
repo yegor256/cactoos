@@ -25,7 +25,7 @@ package org.cactoos.iterator;
 
 import java.util.Collections;
 import java.util.Iterator;
-import org.cactoos.iterable.ListOf;
+import org.cactoos.list.ListOf;
 
 /**
  * A few Iterators joined together.
