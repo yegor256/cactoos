@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.list;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import org.cactoos.list.ListOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
 

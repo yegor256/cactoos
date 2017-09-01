@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.LengthOf;
-import org.cactoos.iterable.StickyList;
 
 /**
  * Iterable as {@link List}.
