@@ -55,7 +55,24 @@ public final class OutputTo implements Output {
      * @param file The file
      */
     public OutputTo(final File file) {
-        this(() -> new FileOutputStream(file));
+        this(file, true);
+    }
+
+    /**
+     * Ctor.
+     * @param file The file
+     * @param mkdirs Should we do mkdirs beforehand?
+     * @since 0.15
+     */
+    public OutputTo(final File file, final boolean mkdirs) {
+        this(
+            () -> {
+                if (mkdirs) {
+                    file.getParentFile().mkdirs();
+                }
+                return new FileOutputStream(file);
+            }
+        );
     }
 
     /**
@@ -63,7 +80,25 @@ public final class OutputTo implements Output {
      * @param path The path
      */
     public OutputTo(final Path path) {
-        this(() -> new FileOutputStream(path.toFile()));
+        this(path, true);
+    }
+
+    /**
+     * Ctor.
+     * @param path The path
+     * @param mkdirs Should we do mkdirs beforehand?
+     * @since 0.15
+     */
+    public OutputTo(final Path path, final boolean mkdirs) {
+        this(
+            () -> {
+                final File file = path.toFile();
+                if (mkdirs) {
+                    file.getParentFile().mkdirs();
+                }
+                return new FileOutputStream(file);
+            }
+        );
     }
 
     /**
