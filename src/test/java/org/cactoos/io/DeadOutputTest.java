@@ -23,23 +23,32 @@
  */
 package org.cactoos.io;
 
-import java.io.InputStream;
-import org.cactoos.Input;
+import org.cactoos.InputHasContent;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Input with no data.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link DeadOutput}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.16
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class DeadInput implements Input {
+public final class DeadOutputTest {
 
-    @Override
-    public InputStream stream() {
-        return new DeadInputStream();
+    @Test
+    public void readsEmptyContent() {
+        MatcherAssert.assertThat(
+            "Can't write empty content",
+            new TeeInput(
+                new InputOf("How are you, мой друг?"),
+                new DeadOutput()
+            ),
+            new InputHasContent(Matchers.endsWith("друг?"))
+        );
     }
 
 }

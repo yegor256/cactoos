@@ -23,11 +23,10 @@
  */
 package org.cactoos.io;
 
-import java.io.InputStream;
-import org.cactoos.Input;
+import java.io.OutputStream;
 
 /**
- * Input with no data.
+ * OutputStream that accepts anything.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -35,11 +34,10 @@ import org.cactoos.Input;
  * @version $Id$
  * @since 0.1
  */
-public final class DeadInput implements Input {
+public final class DeadOutputStream extends OutputStream {
 
     @Override
-    public InputStream stream() {
-        return new DeadInputStream();
+    public void write(final int data) {
+        // nothing to do here
     }
-
 }

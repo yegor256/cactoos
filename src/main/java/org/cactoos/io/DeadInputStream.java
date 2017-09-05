@@ -24,22 +24,20 @@
 package org.cactoos.io;
 
 import java.io.InputStream;
-import org.cactoos.Input;
 
 /**
- * Input with no data.
+ * InputStream with no data.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.16
  */
-public final class DeadInput implements Input {
+public final class DeadInputStream extends InputStream {
 
     @Override
-    public InputStream stream() {
-        return new DeadInputStream();
+    public int read() {
+        return -1;
     }
-
 }

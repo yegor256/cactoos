@@ -23,23 +23,28 @@
  */
 package org.cactoos.io;
 
-import java.io.InputStream;
-import org.cactoos.Input;
+import org.cactoos.InputHasContent;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Input with no data.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link DeadInput}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.16
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class DeadInput implements Input {
+public final class DeadInputTest {
 
-    @Override
-    public InputStream stream() {
-        return new DeadInputStream();
+    @Test
+    public void readsEmptyContent() {
+        MatcherAssert.assertThat(
+            "Can't read empty content",
+            new DeadInput(),
+            new InputHasContent("")
+        );
     }
 
 }
