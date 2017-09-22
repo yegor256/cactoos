@@ -23,6 +23,7 @@
  */
 package org.cactoos.collection;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
@@ -99,5 +100,59 @@ public final class ReversedTest {
             ).contains(word),
             Matchers.equalTo(true)
         );
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testAdd() throws Exception {
+        new Reversed<>(
+            new IterableOf<>(
+                1, 2, 3, 4
+            )
+        ).add(6);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRemove() throws Exception {
+        new Reversed<>(
+            new IterableOf<>(
+                1, 2, 3, 4
+            )
+        ).remove(1);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testAddAll() throws Exception {
+        new Reversed<>(
+            new IterableOf<>(
+                1, 2, 3, 4
+            )
+        ).addAll(new ArrayList<>(6));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRemoveAll() throws Exception {
+        new Reversed<>(
+            new IterableOf<>(
+                1, 2, 3, 4
+            )
+        ).removeAll(new ArrayList<>(2));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRetainAll() throws Exception {
+        new Reversed<>(
+            new IterableOf<>(
+                1, 2, 3, 4
+            )
+        ).retainAll(new ArrayList<>(2));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testClear() throws Exception {
+        new Reversed<>(
+            new IterableOf<>(
+                1, 2, 3, 4
+            )
+        ).clear();
     }
 }
