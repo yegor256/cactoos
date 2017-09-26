@@ -96,6 +96,16 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
 
     /**
      * Ctor.
+     * @param proc The proc
+     * @param exec Executor Service
+     * @since 0.17
+     */
+    public AsyncFunc(final Proc<X> proc, final ExecutorService exec) {
+        this(new FuncOf<>(proc), exec);
+    }
+
+    /**
+     * Ctor.
      * @param fnc The func
      * @param exec Executor Service
      */
