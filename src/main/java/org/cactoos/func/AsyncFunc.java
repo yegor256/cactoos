@@ -48,7 +48,7 @@ import org.cactoos.Proc;
  * @param <Y> Type of output
  * @since 0.10
  */
-public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
+public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
 
     /**
      * The func.
@@ -111,4 +111,8 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>> {
         );
     }
 
+    @Override
+    public void exec(final X input) {
+        this.apply(input);
+    }
 }

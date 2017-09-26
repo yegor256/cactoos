@@ -27,7 +27,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.FuncApplies;
+import org.cactoos.Proc;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -55,6 +57,24 @@ public final class AsyncFuncTest {
                 new MatcherOf<Future<String>>(
                     future -> !future.isDone()
                 )
+            )
+        );
+    }
+
+    @Test
+    public void runsAsProcInBackground() {
+        MatcherAssert.assertThat(
+            "Can't run proc in the background",
+            input -> {
+                final CountDownLatch latch = new CountDownLatch(1);
+                new AsyncFunc<>(
+                    (Proc<Boolean>) ipt -> latch.countDown()
+                ).exec(input);
+                latch.await();
+                return true;
+            },
+            new FuncApplies<>(
+                true, Matchers.equalTo(true)
             )
         );
     }
