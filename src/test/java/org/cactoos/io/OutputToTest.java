@@ -59,7 +59,9 @@ public final class OutputToTest {
         final Path temp = Files.createTempDirectory("cactoos-2");
         final Path path = temp.resolve("a/b/c/file.txt");
         final String txt = "Hello, друг!";
-        new LengthOf(new TeeInput(txt, new OutputTo(path.toFile()))).value();
+        new LengthOf(
+            new TeeInput(txt, new SyncOutput(new OutputTo(path.toFile())))
+        ).value();
         MatcherAssert.assertThat(
             "Can't write file content",
             new InputOf(path.toFile()),
