@@ -32,7 +32,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link Sticky}.
+ * Test case for {@link StickyIterator}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
@@ -50,7 +50,7 @@ public final class StickyTest {
             new JoinedText(
                 ", ",
                 () -> new Mapped<>(
-                    new Sticky<>(
+                    new StickyIterator<>(
                         new Limited<>(
                             new Endless<>(count::incrementAndGet),
                             2

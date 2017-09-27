@@ -30,10 +30,13 @@ import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * List decorator that goes through the list only once.
+ *
+ * <p>The list is read only.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -73,12 +76,14 @@ public final class StickyList<X> implements List<X> {
      */
     public StickyList(final Collection<X> list) {
         this.gate = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final List<X> temp = new LinkedList<>();
-                    temp.addAll(list);
-                    return temp;
-                }
+            new SyncScalar<>(
+                new StickyScalar<>(
+                    () -> {
+                        final List<X> temp = new LinkedList<>();
+                        temp.addAll(list);
+                        return temp;
+                    }
+                )
             )
         );
     }

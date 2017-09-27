@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -40,7 +41,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <X> Type of item
  * @since 0.8
  */
-public final class Sticky<X> implements Iterator<X> {
+public final class StickyIterator<X> implements Iterator<X> {
 
     /**
      * The gate.
@@ -52,7 +53,7 @@ public final class Sticky<X> implements Iterator<X> {
      * @param items Items to iterate
      */
     @SafeVarargs
-    public Sticky(final X... items) {
+    public StickyIterator(final X... items) {
         this(new IterableOf<>(items).iterator());
     }
 
@@ -60,16 +61,18 @@ public final class Sticky<X> implements Iterator<X> {
      * Ctor.
      * @param iterator The iterator
      */
-    public Sticky(final Iterator<X> iterator) {
+    public StickyIterator(final Iterator<X> iterator) {
         this.gate = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    while (iterator.hasNext()) {
-                        temp.add(iterator.next());
+            new SyncScalar<>(
+                new StickyScalar<>(
+                    () -> {
+                        final Collection<X> temp = new LinkedList<>();
+                        while (iterator.hasNext()) {
+                            temp.add(iterator.next());
+                        }
+                        return temp.iterator();
                     }
-                    return temp.iterator();
-                }
+                )
             )
         );
     }

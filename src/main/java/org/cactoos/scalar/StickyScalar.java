@@ -33,6 +33,9 @@ import org.cactoos.func.StickyFunc;
  * <p>This {@link Scalar} decorator technically is an in-memory
  * cache.</p>
  *
+ * <p>Pay attention that this class is not thread-safe. It is highly
+ * recommended to always decorate it with {@link SyncScalar}.</p>
+
  * <p>There is no thread-safety guarantee.
  *
  * @author Tim Hinkes (timmeey@timmeey.de)

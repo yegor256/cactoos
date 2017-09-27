@@ -30,6 +30,7 @@ import java.util.List;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -73,12 +74,14 @@ public final class StickyCollection<E> implements Collection<E> {
      */
     public StickyCollection(final Collection<E> list) {
         this.gate = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final List<E> temp = new LinkedList<>();
-                    temp.addAll(list);
-                    return temp;
-                }
+            new SyncScalar<>(
+                new StickyScalar<>(
+                    () -> {
+                        final List<E> temp = new LinkedList<>();
+                        temp.addAll(list);
+                        return temp;
+                    }
+                )
             )
         );
     }
