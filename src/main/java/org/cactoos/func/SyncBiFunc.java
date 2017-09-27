@@ -23,31 +23,19 @@
  */
 package org.cactoos.func;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.cactoos.BiFunc;
-import org.cactoos.scalar.StickyScalar;
 
 /**
- * Func that accepts two arguments and caches previously calculated values
- * and doesn't recalculate again.
+ * BiFunc that is thread-safe.
  *
- * <p>Pay attention that this class is not thread-safe. It is highly
- * recommended to always decorate it with {@link SyncBiFunc}.</p>
- *
- * <p>This {@link BiFunc} decorator technically is an in-memory
- * cache.</p>
- *
- * <p>There is no thread-safety guarantee.
- * @author Mehmet Yildirim (memoyil@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of input
+ * @param <X> Type of first input
+ * @param <Y> Type of second input
  * @param <Z> Type of output
- * @see StickyScalar
- * @since 0.13
+ * @since 0.18
  */
-public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
+public final class SyncBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Original func.
@@ -55,27 +43,32 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
     private final BiFunc<X, Y, Z> func;
 
     /**
-     * Cache.
+     * Sync lock.
      */
-    private final Map<Map<X, Y>, Z> cache;
+    private final Object lock;
 
     /**
      * Ctor.
      * @param fnc Func original
      */
-    public StickyBiFunc(final BiFunc<X, Y, Z> fnc) {
+    public SyncBiFunc(final BiFunc<X, Y, Z> fnc) {
+        this(fnc, fnc);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func original
+     * @param lck Sync lock
+     */
+    public SyncBiFunc(final BiFunc<X, Y, Z> fnc, final Object lck) {
         this.func = fnc;
-        this.cache = new HashMap<>(0);
+        this.lock = lck;
     }
 
     @Override
     public Z apply(final X first, final Y second) throws Exception {
-        final Map<X, Y> keymap = new HashMap<>(1, 1.0F);
-        keymap.put(first, second);
-        if (!this.cache.containsKey(keymap)) {
-            this.cache.put(keymap, this.func.apply(first, second));
+        synchronized (this.lock) {
+            return this.func.apply(first, second);
         }
-        return this.cache.get(keymap);
     }
-
 }
