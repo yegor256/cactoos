@@ -44,8 +44,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @since 0.19
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class Sorted<T extends Comparable<? super T>> implements
-    List<T> {
+public final class Sorted<T> implements List<T> {
 
     /**
      * Sorted one.
@@ -63,10 +62,16 @@ public final class Sorted<T extends Comparable<? super T>> implements
 
     /**
      * Ctor.
+     *
+     * <p>If you're using this ctor you must be sure that type {@code T}
+     * implements {@link Comparable} interface. Otherwise, there will be
+     * a type casting exception in runtime.</p>
+     *
      * @param src The underlying collection
      */
+    @SuppressWarnings("unchecked")
     public Sorted(final Iterable<T> src) {
-        this(Comparator.naturalOrder(), new ListOf<>(src));
+        this((Comparator<T>) Comparator.naturalOrder(), new ListOf<>(src));
     }
 
     /**

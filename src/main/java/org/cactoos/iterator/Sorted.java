@@ -41,9 +41,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <T> Element type
  * @since 0.7
  */
-public final class
-    Sorted<T extends Comparable<? super T>> implements
-    Iterator<T> {
+public final class Sorted<T> implements Iterator<T> {
 
     /**
      * Sorted one.
@@ -52,10 +50,16 @@ public final class
 
     /**
      * Ctor.
+     *
+     * <p>If you're using this ctor you must be sure that type {@code T}
+     * implements {@link Comparable} interface. Otherwise, there will be
+     * a type casting exception in runtime.</p>
+     *
      * @param items The underlying iterator
      */
+    @SuppressWarnings("unchecked")
     public Sorted(final Iterator<T> items) {
-        this(Comparator.naturalOrder(), items);
+        this((Comparator<T>) Comparator.naturalOrder(), items);
     }
 
     /**
