@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -64,15 +65,17 @@ public final class
      */
     public Sorted(final Comparator<T> comparator, final Iterator<T> iterator) {
         this.scalar = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final List<T> items = new LinkedList<>();
-                    while (iterator.hasNext()) {
-                        items.add(iterator.next());
+            new SyncScalar<>(
+                new StickyScalar<>(
+                    () -> {
+                        final List<T> items = new LinkedList<>();
+                        while (iterator.hasNext()) {
+                            items.add(iterator.next());
+                        }
+                        items.sort(comparator);
+                        return items.iterator();
                     }
-                    items.sort(comparator);
-                    return items.iterator();
-                }
+                )
             )
         );
     }
