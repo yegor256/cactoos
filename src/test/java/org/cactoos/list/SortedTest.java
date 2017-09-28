@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.list;
 
-import org.cactoos.list.ListOf;
+import java.util.Comparator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -35,13 +35,13 @@ import org.junit.Test;
  * @since 0.19
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SortedTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void sortsCollection() throws Exception {
         MatcherAssert.assertThat(
-            "Can't sort elements in collection",
+            "Can't sort elements in list",
             new Sorted<>(
                 new ListOf<>(
                     "one", "two", "three", "four"
@@ -50,6 +50,18 @@ public final class SortedTest {
             Matchers.contains(
                 "four", "one", "three", "two"
             )
+        );
+    }
+
+    @Test
+    public void takesItemFromSortedList() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't take one element from sorted list",
+            new Sorted<>(
+                Comparator.reverseOrder(),
+                "alpha", "beta", "gamma", "delta"
+            ).get(1),
+            Matchers.equalTo("delta")
         );
     }
 
