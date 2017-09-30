@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.util.function.Consumer;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
@@ -35,7 +34,8 @@ import org.cactoos.iterable.Mapped;
  * Logical conjunction.
  *
  * <p>This class can be effectively used to iterate through
- * a collection, just like {@link java.util.stream.Stream#forEach(Consumer)}
+ * a collection, just like
+ * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)}
  * works:</p>
  *
  * <pre> new And(
