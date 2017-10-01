@@ -34,6 +34,7 @@ import java.nio.file.Path;
 import org.cactoos.Output;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -146,7 +147,11 @@ public final class OutputStreamTo extends OutputStream {
      */
     private OutputStreamTo(final Scalar<OutputStream> tgt) {
         super();
-        this.target = new UncheckedScalar<>(new StickyScalar<>(tgt));
+        this.target = new UncheckedScalar<>(
+            new SyncScalar<>(
+                new StickyScalar<>(tgt)
+            )
+        );
     }
 
     @Override
