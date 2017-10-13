@@ -9,6 +9,7 @@ env:
   JAVA_OPTS: -XX:MaxPermSize=256m -Xmx1g
 install: |
   sudo gem install --no-rdoc --no-ri pdd
+  sudo gem install --no-rdoc --no-ri xcop
 architect:
 - yegor256
 merge:
@@ -25,4 +26,4 @@ release:
     [[ "${tag}" =~ ^[0-9]+(\.[0-9]+)*$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
-    mvn clean deploy -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml
+    mvn clean deploy -Pcactoos -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml
