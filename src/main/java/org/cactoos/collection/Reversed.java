@@ -24,7 +24,10 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import org.cactoos.list.ListOf;
 
 /**
@@ -90,13 +93,17 @@ public final class Reversed<X> implements Collection<X> {
 
     @Override
     public Object[] toArray() {
-        throw new UnsupportedOperationException("#toArray()");
+        final List<X> list = new LinkedList<>(this.collection);
+        Collections.reverse(list);
+        return list.toArray();
     }
 
     @Override
     @SuppressWarnings("PMD.UseVarargs")
     public <T> T[] toArray(final T[] array) {
-        throw new UnsupportedOperationException("#toArray(array)");
+        final List<X> list = new LinkedList<>(this.collection);
+        Collections.reverse(list);
+        return list.toArray(array);
     }
 
     @Override
@@ -111,7 +118,7 @@ public final class Reversed<X> implements Collection<X> {
 
     @Override
     public boolean containsAll(final Collection<?> list) {
-        throw new UnsupportedOperationException("#containsAll()");
+        return this.collection.containsAll(list);
     }
 
     @Override
