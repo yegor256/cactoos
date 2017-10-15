@@ -24,6 +24,9 @@
 package org.cactoos.scalar;
 
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
@@ -37,6 +40,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumber (500 line)
  */
 public final class OrTest {
 
@@ -89,6 +93,30 @@ public final class OrTest {
         MatcherAssert.assertThat(
             new Or(Collections.emptyList()).value(),
             Matchers.equalTo(false)
+        );
+    }
+
+    @Test
+    public void testProc() throws Exception {
+        final List<Integer> list = new LinkedList<>();
+        new Or(
+            new IterableOf<>(1, 2, 3, 4),
+            (Proc<Integer>) list::add
+        ).value();
+        MatcherAssert.assertThat(
+            list.size(),
+            Matchers.equalTo(4)
+        );
+    }
+
+    @Test
+    public void testFunc() throws Exception {
+        MatcherAssert.assertThat(
+            new Or(
+                new IterableOf<>(-1, 1, 0),
+                input -> input > 0
+            ).value(),
+            Matchers.equalTo(true)
         );
     }
 }

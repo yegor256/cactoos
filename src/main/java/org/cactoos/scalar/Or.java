@@ -54,7 +54,7 @@ public final class Or implements Scalar<Boolean> {
      */
     @SafeVarargs
     public <X> Or(final Proc<X> proc, final X... src) {
-        this(new FuncOf<>(proc, true), src);
+        this(new FuncOf<>(proc, false), src);
     }
 
     /**
