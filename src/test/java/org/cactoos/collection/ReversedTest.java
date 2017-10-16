@@ -26,6 +26,7 @@ package org.cactoos.collection;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public final class ReversedTest {
         MatcherAssert.assertThat(
             new Reversed<>(
                 new IterableOf<>(
-                    "first", last
+                    "item", last
                 )
             ).iterator().next(),
             Matchers.equalTo(last)
@@ -154,5 +155,43 @@ public final class ReversedTest {
                 1, 2, 3, 4
             )
         ).clear();
+    }
+
+    @Test
+    public void toArray() throws Exception {
+        MatcherAssert.assertThat(
+            new Reversed<>(
+                new IterableOf<>(
+                    1, 2, 3, 4
+                )
+            ).toArray(),
+            Matchers.arrayContaining(4, 3, 2, 1)
+        );
+    }
+
+    @Test
+    public void toArrayWithArray() throws Exception {
+        MatcherAssert.assertThat(
+            new Reversed<>(
+                new IterableOf<>(
+                    1, 2, 3, 4, 5
+                )
+            ).toArray(new Integer[]{5, 6}),
+            Matchers.arrayContaining(5, 4, 3, 2, 1)
+        );
+    }
+
+    @Test
+    public void containsAll() throws Exception {
+        final String first = "first";
+        final String second = "second";
+        MatcherAssert.assertThat(
+            new Reversed<>(
+                new IterableOf<>(
+                    first, second, "third"
+                )
+            ).containsAll(new ListOf<>(first, second)),
+            Matchers.equalTo(true)
+        );
     }
 }
