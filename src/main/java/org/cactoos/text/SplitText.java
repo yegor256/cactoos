@@ -100,12 +100,11 @@ public final class SplitText implements Iterable<String> {
     @Override
     public Iterator<String> iterator() {
         return new Filtered<>(
-            new IterableOf<>(
+            input -> !input.isEmpty(), new IterableOf<>(
                 this.origin.asString().split(
                     this.regex.asString()
                 )
-            ).iterator(),
-            input -> !input.isEmpty()
+            ).iterator()
         );
     }
 

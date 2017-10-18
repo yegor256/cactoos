@@ -79,8 +79,7 @@ public final class Limited<X> implements Collection<X> {
     public int size() {
         return new LengthOf(
             new org.cactoos.iterable.Limited<>(
-                this.collection,
-                this.limit
+                this.limit, this.collection
             )
         ).value();
     }
@@ -89,8 +88,7 @@ public final class Limited<X> implements Collection<X> {
     public boolean isEmpty() {
         return new LengthOf(
             new org.cactoos.iterable.Limited<>(
-                this.collection,
-                this.limit
+                this.limit, this.collection
             )
         ).value() == 0;
     }
@@ -98,8 +96,7 @@ public final class Limited<X> implements Collection<X> {
     @Override
     public Iterator<X> iterator() {
         return new org.cactoos.iterator.Limited<>(
-            this.collection.iterator(),
-            this.limit
+            this.limit, this.collection.iterator()
         );
     }
 

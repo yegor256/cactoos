@@ -49,11 +49,10 @@ public final class StickyMapTest {
         final Map<Integer, Integer> map = new StickyMap<>(
             new MapOf<>(
                 () -> new Repeated<>(
-                    () -> new MapEntry<>(
+                    size.incrementAndGet(), () -> new MapEntry<>(
                         new SecureRandom().nextInt(),
                         1
-                    ),
-                    size.incrementAndGet()
+                    )
                 )
             )
         );

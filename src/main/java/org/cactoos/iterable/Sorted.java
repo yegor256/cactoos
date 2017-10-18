@@ -99,7 +99,7 @@ public final class Sorted<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new org.cactoos.iterator.Sorted<>(
-            this.comparator, this.iterable.iterator()
+            this.iterable.iterator(), this.comparator
         );
     }
 }

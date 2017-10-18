@@ -105,7 +105,7 @@ public final class Mapped<X, Y> implements List<Y> {
     @Override
     public Iterator<Y> iterator() {
         return new org.cactoos.iterator.Mapped<>(
-            this.list.iterator(), this.func
+            this.func, this.list.iterator()
         );
     }
 

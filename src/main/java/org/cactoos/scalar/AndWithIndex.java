@@ -105,9 +105,8 @@ public final class AndWithIndex implements Scalar<Boolean> {
         final BiFunc<X, Integer, Boolean> func) {
         this(
             new Mapped<>(
-                src,
                 item -> (Func<Integer, Boolean>) input
-                    -> func.apply(item, input)
+                    -> func.apply(item, input), src
             )
         );
     }

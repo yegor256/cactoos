@@ -122,7 +122,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      */
     public <Z> MapOf(final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
-        this(new Mapped<>(list, entry));
+        this(new Mapped<>(entry, list));
     }
 
     /**
@@ -135,7 +135,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      */
     public <Z> MapOf(final Map<X, Y> map, final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
-        this(map, new Mapped<>(list, entry));
+        this(map, new Mapped<>(entry, list));
     }
 
     /**

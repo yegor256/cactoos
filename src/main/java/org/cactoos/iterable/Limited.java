@@ -53,10 +53,10 @@ public final class Limited<T> implements Iterable<T> {
     /**
      * Ctor.
      *
-     * @param itr The underlying iterable
      * @param lmt The requested number of elements
+     * @param itr The underlying iterable
      */
-    public Limited(final Iterable<T> itr, final int lmt) {
+    public Limited(final int lmt, final Iterable<T> itr) {
         this.iterable = itr;
         this.limit = lmt;
     }
@@ -69,7 +69,7 @@ public final class Limited<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new org.cactoos.iterator.Limited<>(
-            this.iterable.iterator(), this.limit
+            this.limit, this.iterable.iterator()
         );
     }
 }

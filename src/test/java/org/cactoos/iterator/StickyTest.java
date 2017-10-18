@@ -50,13 +50,11 @@ public final class StickyTest {
             new JoinedText(
                 ", ",
                 () -> new Mapped<>(
-                    new StickyIterator<>(
+                    Object::toString, new StickyIterator<>(
                         new Limited<>(
-                            new Endless<>(count::incrementAndGet),
-                            2
+                            2, new Endless<>(count::incrementAndGet)
                         )
-                    ),
-                    Object::toString
+                    )
                 )
             )
         );

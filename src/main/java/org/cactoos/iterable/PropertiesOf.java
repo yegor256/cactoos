@@ -94,10 +94,9 @@ public final class PropertiesOf implements Scalar<Properties> {
         this(
             new MapOf<>(
                 new Mapped<Map.Entry<?, ?>, Map.Entry<String, String>>(
-                    new IterableOf<>(entries),
                     input -> new MapEntry<>(
                         input.getKey().toString(), input.getValue().toString()
-                    )
+                    ), new IterableOf<>(entries)
                 )
             )
         );

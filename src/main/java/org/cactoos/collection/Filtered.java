@@ -80,7 +80,7 @@ public final class Filtered<X> implements Collection<X> {
     public int size() {
         return new LengthOf(
             new org.cactoos.iterable.Filtered<X>(
-                this.collection, this.filter
+                this.filter, this.collection
             )
         ).value();
     }
@@ -89,7 +89,7 @@ public final class Filtered<X> implements Collection<X> {
     public boolean isEmpty() {
         return new LengthOf(
             new org.cactoos.iterable.Filtered<X>(
-                this.collection, this.filter
+                this.filter, this.collection
             )
         ).value() == 0;
     }
@@ -97,7 +97,7 @@ public final class Filtered<X> implements Collection<X> {
     @Override
     public Iterator<X> iterator() {
         return new org.cactoos.iterator.Filtered<>(
-            this.collection.iterator(), this.filter
+            this.filter, this.collection.iterator()
         );
     }
 

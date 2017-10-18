@@ -48,14 +48,12 @@ public final class ChainedFuncTest {
         MatcherAssert.assertThat(
             new LengthOf(
                 new Filtered<>(
-                    new Mapped<>(
-                        new IterableOf<>("public", "final", "class"),
-                        new ChainedFunc<String, String, String>(
-                            input -> input.concat("1"),
-                            input -> input.concat("2")
-                        )
-                    ),
-                    input -> input.endsWith("12")
+                    input -> input.endsWith("12"), new Mapped<>(
+                    new ChainedFunc<String, String, String>(
+                        input -> input.concat("1"),
+                        input -> input.concat("2")
+                    ), new IterableOf<>("public", "final", "class")
+                )
                 )
             ).value(),
             Matchers.equalTo(3)
@@ -67,18 +65,16 @@ public final class ChainedFuncTest {
         MatcherAssert.assertThat(
             new LengthOf(
                 new Filtered<>(
-                    new Mapped<>(
-                        new IterableOf<>("private", "static", "String"),
-                        new ChainedFunc<>(
-                            input -> input.concat("1"),
-                            new IterableOf<Func<String, String>>(
-                                input -> input.concat("2"),
-                                input -> input.replaceAll("a", "b")
-                            ),
-                            String::trim
-                        )
-                    ),
-                    input -> !input.startsWith("st")
+                    input -> !input.startsWith("st"), new Mapped<>(
+                    new ChainedFunc<>(
+                        input -> input.concat("1"),
+                        new IterableOf<Func<String, String>>(
+                            input -> input.concat("2"),
+                            input -> input.replaceAll("a", "b")
+                        ),
+                        String::trim
+                    ), new IterableOf<>("private", "static", "String")
+                )
                 )
             ).value(),
             Matchers.equalTo(2)

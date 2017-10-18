@@ -45,8 +45,8 @@ public final class JoinedTest {
             new LengthOf(
                 new Joined<Iterator<String>>(
                     new Mapped<>(
-                        Collections.singleton("x").iterator(),
-                        input -> Collections.singleton(input).iterator()
+                        input -> Collections.singleton(input).iterator(),
+                        Collections.singleton("x").iterator()
                     )
                 )
             ),

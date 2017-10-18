@@ -42,11 +42,10 @@ public final class FilteredTest {
             "Can't calculate the length of an iterable",
             new LengthOf(
                 new Filtered<>(
-                    new IterableOf<>(
-                        "hello", "world", "друг"
-                    ),
                     // @checkstyle MagicNumber (1 line)
-                    input -> input.length() > 4
+                    input -> input.length() > 4, new IterableOf<>(
+                        "hello", "world", "друг"
+                    )
                 )
             ),
             new ScalarHasValue<>(2)
@@ -59,8 +58,7 @@ public final class FilteredTest {
             "Can't calculate the length of an empty iterable",
             new LengthOf(
                 new Filtered<>(
-                    new IterableOf<String>(),
-                    input -> input.length() > 1
+                    input -> input.length() > 1, new IterableOf<String>()
                 )
             ),
             new ScalarHasValue<>(0)

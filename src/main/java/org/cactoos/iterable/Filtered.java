@@ -63,10 +63,10 @@ public final class Filtered<X> implements Iterable<X> {
 
     /**
      * Ctor.
-     * @param src Source iterable
      * @param fnc Predicate
+     * @param src Source iterable
      */
-    public Filtered(final Iterable<X> src, final Func<X, Boolean> fnc) {
+    public Filtered(final Func<X, Boolean> fnc, final Iterable<X> src) {
         this.iterable = src;
         this.func = fnc;
     }
@@ -79,8 +79,7 @@ public final class Filtered<X> implements Iterable<X> {
     @Override
     public Iterator<X> iterator() {
         return new org.cactoos.iterator.Filtered<>(
-            this.iterable.iterator(),
-            this.func
+            this.func, this.iterable.iterator()
         );
     }
 

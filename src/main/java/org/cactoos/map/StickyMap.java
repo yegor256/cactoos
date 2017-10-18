@@ -116,7 +116,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     public <Z> StickyMap(final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
-        this(new Mapped<>(list, entry));
+        this(new Mapped<>(entry, list));
     }
 
     /**
@@ -129,7 +129,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     public <Z> StickyMap(final Map<X, Y> map, final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
-        this(map, new Mapped<>(list, entry));
+        this(map, new Mapped<>(entry, list));
     }
 
     /**

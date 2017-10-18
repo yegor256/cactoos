@@ -46,10 +46,10 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
             new Mapped<String, Text>(
+                input -> new UpperText(new TextOf(input)),
                 new IterableOf<>(
                     "hello", "world", "друг"
-                ),
-                input -> new UpperText(new TextOf(input))
+                )
             ).iterator().next().asString(),
             Matchers.equalTo("HELLO")
         );
@@ -60,8 +60,8 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an empty iterable",
             new Mapped<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new TextOf(input))
+                input -> new UpperText(new TextOf(input)),
+                Collections.emptyList()
             ),
             Matchers.emptyIterable()
         );

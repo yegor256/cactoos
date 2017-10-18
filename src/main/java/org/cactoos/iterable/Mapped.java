@@ -51,10 +51,10 @@ public final class Mapped<X, Y> implements Iterable<Y> {
 
     /**
      * Ctor.
-     * @param src Source iterable
      * @param fnc Func
+     * @param src Source iterable
      */
-    public Mapped(final Iterable<X> src, final Func<X, Y> fnc) {
+    public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
         this.iterable = src;
         this.func = fnc;
     }
@@ -67,7 +67,7 @@ public final class Mapped<X, Y> implements Iterable<Y> {
     @Override
     public Iterator<Y> iterator() {
         return new org.cactoos.iterator.Mapped<>(
-            this.iterable.iterator(), this.func
+            this.func, this.iterable.iterator()
         );
     }
 

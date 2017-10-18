@@ -52,10 +52,10 @@ public final class Mapped<X, Y> implements Iterator<Y> {
 
     /**
      * Ctor.
-     * @param iterator Source iterator
      * @param func Func
+     * @param iterator Source iterator
      */
-    public Mapped(final Iterator<X> iterator, final Func<X, Y> func) {
+    public Mapped(final Func<X, Y> func, final Iterator<X> iterator) {
         this.origin = iterator;
         this.fnc = func;
     }

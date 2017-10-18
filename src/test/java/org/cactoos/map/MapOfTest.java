@@ -61,11 +61,10 @@ public final class MapOfTest {
         final AtomicInteger size = new AtomicInteger(2);
         final Map<Integer, Integer> map = new MapOf<>(
             () -> new Repeated<>(
-                () -> new MapEntry<>(
+                size.incrementAndGet(), () -> new MapEntry<>(
                     new SecureRandom().nextInt(),
                     1
-                ),
-                size.incrementAndGet()
+                )
             )
         );
         MatcherAssert.assertThat(

@@ -97,8 +97,7 @@ public final class And implements Scalar<Boolean> {
     public <X> And(final Iterable<X> src, final Func<X, Boolean> func) {
         this(
             new Mapped<>(
-                src,
-                item -> (Scalar<Boolean>) () -> func.apply(item)
+                item -> (Scalar<Boolean>) () -> func.apply(item), src
             )
         );
     }

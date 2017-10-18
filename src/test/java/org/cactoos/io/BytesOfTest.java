@@ -64,8 +64,7 @@ public final class BytesOfTest {
                     new JoinedText(
                         "",
                         new Limited<>(
-                            new Endless<>(body),
-                            multiplier
+                            multiplier, new Endless<>(body)
                         )
                     )
                 )

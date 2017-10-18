@@ -43,13 +43,12 @@ public final class CycledTest {
         MatcherAssert.assertThat(
             "Can't repeat iterable",
             new ItemAt<>(
-                new Cycled<>(
+                // @checkstyle MagicNumberCheck (1 line)<
+                7, new Cycled<>(
                     new IterableOf<>(
                         "one", expected, "three"
                     )
-                ),
-                // @checkstyle MagicNumberCheck (1 line)<
-                7
+                )
             ),
             new ScalarHasValue<>(
                 expected
