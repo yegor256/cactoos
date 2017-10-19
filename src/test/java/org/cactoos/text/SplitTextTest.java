@@ -23,8 +23,10 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.ScalarHasValue;
+import org.cactoos.TextHasString;
+import org.cactoos.iterable.LengthOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -38,25 +40,23 @@ import org.junit.Test;
 public final class SplitTextTest {
 
     @Test
-    public void splitText() throws Exception {
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void splitTextLength() throws Exception {
         MatcherAssert.assertThat(
-            "Can't split a text",
-            new SplitText(
-                "Hello world!", "\\s+"
+            "Can't split a text. Incorrect length",
+            new LengthOf(
+                new SplitText("Hello world!", "\\s+")
             ),
-            Matchers.contains(
-                "Hello",
-                "world!"
-            )
+            new ScalarHasValue<>(2)
         );
     }
 
     @Test
-    public void splitEmptyText() throws Exception {
+    public void splitTextItem() throws Exception {
         MatcherAssert.assertThat(
-            "Can't split an empty text",
-            new SplitText("", "\n"),
-            Matchers.emptyIterable()
+            "Can't split a text. Incorrect item",
+            new SplitText("Hello world! [2]", "\\s+").iterator().next(),
+            new TextHasString("Hello")
         );
     }
 
@@ -64,11 +64,11 @@ public final class SplitTextTest {
     public void splitStringWithTextRegex() throws Exception {
         MatcherAssert.assertThat(
             "Can't split an string with text regex",
-            new SplitText("Cactoos OOP!", new TextOf("\\s")),
-            Matchers.contains(
-                "Cactoos",
-                "OOP!"
-            )
+            new SplitText(
+                "Cactoos OOP!",
+                new TextOf("\\s")
+            ).iterator().next(),
+            new TextHasString("Cactoos")
         );
     }
 
@@ -76,11 +76,11 @@ public final class SplitTextTest {
     public void splitTextWithStringRegex() throws Exception {
         MatcherAssert.assertThat(
             "Can't split an text with string regex",
-            new SplitText(new TextOf("Cact4Primitives!"), "\\d+"),
-            Matchers.contains(
-                "Cact",
-                "Primitives!"
-            )
+            new SplitText(
+                new TextOf("Cact4Primitives!"),
+                "\\d+"
+            ).iterator().next(),
+            new TextHasString("Cact")
         );
     }
 
@@ -88,12 +88,11 @@ public final class SplitTextTest {
     public void splitTextWithTextRegex() throws Exception {
         MatcherAssert.assertThat(
             "Can't split an text with text regex",
-            new SplitText(new TextOf("Split#OOP!"), "\\W+"),
-            Matchers.contains(
-                "Split",
-                "OOP"
-            )
+            new SplitText(
+                new TextOf("Split#OOP!"),
+                "\\W+"
+            ).iterator().next(),
+            new TextHasString("Split")
         );
     }
-
 }
