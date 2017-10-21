@@ -25,6 +25,7 @@ package org.cactoos.iterator;
 
 import java.util.Iterator;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -76,6 +77,6 @@ public final class Endless<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        return this.origin.value();
+        return new IterableOf<T>(this.origin.value()).iterator().next();
     }
 }
