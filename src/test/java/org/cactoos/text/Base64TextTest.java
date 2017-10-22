@@ -22,40 +22,36 @@
  * SOFTWARE.
  */
 
-package org.cactoos.bytes;
+package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.io.BytesOf;
+import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link org.cactoos.bytes.Base64Bytes}.
+ * Test Case for {@link org.cactoos.text.Base64Text}.
  *
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @since 0.20.2
  */
-public final class Base64BytesTest {
+public final class Base64TextTest {
 
     /**
-     * Check bytes decodes using the Base64 encoding scheme.
+     * Check text decodes using the Base64 encoding scheme.
      * @throws IOException If fails.
      */
     @Test
     public void checkDecode() throws IOException {
         MatcherAssert.assertThat(
-            "Can't decodes bytes using the Base64 encoding scheme",
-            new Base64Bytes(
-                new BytesOf(
-                    "SGVsbG8h"
-                )
-            ).asBytes(),
-            Matchers.equalTo(
-                new BytesOf("Hello!").asBytes()
+            "Can't decodes text using the Base64 encoding scheme",
+            new Base64Text(
+                "SGVsbG8h"
+            ),
+            new TextHasString(
+                "Hello!"
             )
         );
     }
-
 }

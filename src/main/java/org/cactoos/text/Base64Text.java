@@ -22,40 +22,56 @@
  * SOFTWARE.
  */
 
-package org.cactoos.bytes;
+package org.cactoos.text;
 
 import java.io.IOException;
+import org.cactoos.Text;
+import org.cactoos.bytes.Base64Bytes;
 import org.cactoos.io.BytesOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
 
 /**
- * Test case for {@link org.cactoos.bytes.Base64Bytes}.
+ * Decodes the origin text using the Base64 encoding scheme.
  *
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @since 0.20.2
  */
-public final class Base64BytesTest {
+public final class Base64Text implements Text {
 
     /**
-     * Check bytes decodes using the Base64 encoding scheme.
-     * @throws IOException If fails.
+     * Origin text.
      */
-    @Test
-    public void checkDecode() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't decodes bytes using the Base64 encoding scheme",
-            new Base64Bytes(
-                new BytesOf(
-                    "SGVsbG8h"
-                )
-            ).asBytes(),
-            Matchers.equalTo(
-                new BytesOf("Hello!").asBytes()
-            )
-        );
+    private final Text origin;
+
+    /**
+     * Ctor.
+     *
+     * @param input The String
+     */
+    public Base64Text(final String input) {
+        this(new TextOf(input));
     }
 
+    /**
+     * Ctor.
+     *
+     * @param origin Origin text
+     */
+    public Base64Text(final Text origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public String asString() throws IOException {
+        return new TextOf(
+            new Base64Bytes(
+                new BytesOf(this.origin)
+            )
+        ).asString();
+    }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
+    }
 }
