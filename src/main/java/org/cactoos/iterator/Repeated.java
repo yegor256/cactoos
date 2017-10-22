@@ -24,6 +24,7 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -85,6 +86,11 @@ public final class Repeated<T> implements Iterator<T> {
 
     @Override
     public T next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator can't repeat anymore."
+            );
+        }
         --this.repeat;
         return this.elm.value();
     }
