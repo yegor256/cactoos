@@ -65,6 +65,16 @@ public final class Filtered<X> implements Iterable<X> {
      * Ctor.
      * @param fnc Predicate
      * @param src Source iterable
+     * @since 0.21
+     */
+    public Filtered(final Func<X, Boolean> fnc, final Iterator<X> src) {
+        this(fnc, () -> src);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Predicate
+     * @param src Source iterable
      */
     public Filtered(final Func<X, Boolean> fnc, final Iterable<X> src) {
         this.iterable = src;

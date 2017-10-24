@@ -45,7 +45,7 @@ public final class Joined<X> implements List<X> {
     /**
      * The original lists.
      */
-    private final List<List<X>> lists;
+    private final Iterable<List<X>> lists;
 
     /**
      * Ctor.
@@ -61,7 +61,7 @@ public final class Joined<X> implements List<X> {
      * Ctor.
      * @param src Source lists
      */
-    public Joined(final List<List<X>> src) {
+    public Joined(final Iterable<List<X>> src) {
         this.lists = src;
     }
 
@@ -206,7 +206,7 @@ public final class Joined<X> implements List<X> {
      * @return Result list
      */
     private List<X> joined() {
-        return this.lists.stream()
+        return new ListOf<>(this.lists).stream()
             .flatMap(List::stream)
             .collect(Collectors.toList());
     }

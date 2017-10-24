@@ -72,7 +72,15 @@ public final class ListOf<T> implements List<T> {
 
     /**
      * Ctor.
-     *
+     * @param src An {@link Iterator}
+     * @since 0.21
+     */
+    public ListOf(final Iterator<T> src) {
+        this(() -> src);
+    }
+
+    /**
+     * Ctor.
      * @param src An {@link Iterable}
      */
     public ListOf(final Iterable<T> src) {

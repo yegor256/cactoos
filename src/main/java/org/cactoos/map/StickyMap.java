@@ -25,6 +25,7 @@ package org.cactoos.map;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.Func;
@@ -138,6 +139,15 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     public StickyMap(final Iterable<Map.Entry<X, Y>> list) {
         this(new MapOf<>(list));
+    }
+
+    /**
+     * Ctor.
+     * @param list Entries for the entries
+     * @since 0.21
+     */
+    public StickyMap(final Iterator<Map.Entry<X, Y>> list) {
+        this(() -> list);
     }
 
     /**

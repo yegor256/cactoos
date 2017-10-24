@@ -63,6 +63,15 @@ public final class StickyCollection<E> implements Collection<E> {
     /**
      * Ctor.
      * @param items The array
+     * @since 0.21
+     */
+    public StickyCollection(final Iterator<E> items) {
+        this(() -> items);
+    }
+
+    /**
+     * Ctor.
+     * @param items The array
      */
     public StickyCollection(final Iterable<E> items) {
         this(new ListOf<>(items));

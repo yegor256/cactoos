@@ -57,6 +57,15 @@ public final class Joined<T> implements Iterable<T> {
     /**
      * Ctor.
      * @param items Items to concatenate
+     * @since 0.21
+     */
+    public Joined(final Iterator<Iterable<T>> items) {
+        this(() -> items);
+    }
+
+    /**
+     * Ctor.
+     * @param items Items to concatenate
      */
     public Joined(final Iterable<Iterable<T>> items) {
         this.list = items;

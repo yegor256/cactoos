@@ -72,6 +72,15 @@ public final class StickyList<X> implements List<X> {
 
     /**
      * Ctor.
+     * @param items The array
+     * @since 0.21
+     */
+    public StickyList(final Iterator<X> items) {
+        this(new ListOf<>(items));
+    }
+
+    /**
+     * Ctor.
      * @param list The iterable
      */
     public StickyList(final Collection<X> list) {

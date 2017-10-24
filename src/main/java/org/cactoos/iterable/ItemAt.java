@@ -24,6 +24,7 @@
 package org.cactoos.iterable;
 
 import java.io.IOException;
+import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.text.FormattedText;
@@ -65,7 +66,8 @@ public final class ItemAt<T> implements Scalar<T> {
         this(
             itr -> {
                 throw new IOException("The iterable is empty");
-            }, source
+            },
+            source
         );
     }
 
@@ -107,6 +109,17 @@ public final class ItemAt<T> implements Scalar<T> {
                 );
             }, source
         );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param position Position
+     * @param source Iterable
+     * @since 0.21
+     */
+    public ItemAt(final int position, final Iterator<T> source) {
+        this(position, () -> source);
     }
 
     /**

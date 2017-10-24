@@ -58,6 +58,16 @@ public final class Mapped<X, Y> implements List<Y> {
      * Ctor.
      * @param src Source list
      * @param fnc Func
+     * @since 0.21
+     */
+    public Mapped(final Iterator<X> src, final Func<X, Y> fnc) {
+        this(new ListOf<>(src), fnc);
+    }
+
+    /**
+     * Ctor.
+     * @param src Source list
+     * @param fnc Func
      */
     public Mapped(final Iterable<X> src, final Func<X, Y> fnc) {
         this(new ListOf<>(src), fnc);

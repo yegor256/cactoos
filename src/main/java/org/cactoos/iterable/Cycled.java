@@ -46,6 +46,15 @@ public final class Cycled<T> implements Iterable<T> {
     /**
      * Ctor.
      * @param itr Iterable
+     * @since 0.21
+     */
+    public Cycled(final Iterator<T> itr) {
+        this(() -> itr);
+    }
+
+    /**
+     * Ctor.
+     * @param itr Iterable
      */
     public Cycled(final Iterable<T> itr) {
         this.iterable = itr;

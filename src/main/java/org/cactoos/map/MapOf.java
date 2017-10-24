@@ -25,6 +25,7 @@ package org.cactoos.map;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.Func;
@@ -152,6 +153,14 @@ public final class MapOf<X, Y> implements Map<X, Y> {
                 map.entrySet(), list
             )
         );
+    }
+
+    /**
+     * Ctor.
+     * @param list List of the entries
+     */
+    public MapOf(final Iterator<Map.Entry<X, Y>> list) {
+        this(() -> list);
     }
 
     /**
