@@ -32,6 +32,9 @@ import org.cactoos.scalar.StickyScalar;
  * Func that accepts two arguments and caches previously calculated values
  * and doesn't recalculate again.
  *
+ * <p>Pay attention that this class is not thread-safe. It is highly
+ * recommended to always decorate it with {@link SyncBiFunc}.</p>
+ *
  * <p>This {@link BiFunc} decorator technically is an in-memory
  * cache.</p>
  *

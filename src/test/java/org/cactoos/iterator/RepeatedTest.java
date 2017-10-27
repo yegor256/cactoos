@@ -46,8 +46,7 @@ public final class RepeatedTest {
             "Can't generate an iterable with fixed size",
             new LengthOf(
                 new Repeated<>(
-                    element,
-                    size
+                    size, element
                 )
             ),
             new ScalarHasValue<>(size)

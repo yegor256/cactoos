@@ -305,7 +305,7 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't read array of bytes",
                 new InputAsBytes(
-                    new InputOf(bytes)
+                    new SyncInput(new InputOf(bytes))
             ).asBytes(),
             Matchers.equalTo(bytes)
         );

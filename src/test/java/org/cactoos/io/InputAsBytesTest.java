@@ -55,8 +55,7 @@ public final class InputAsBytesTest {
                     String.join(
                         "",
                         new Limited<>(
-                            new Endless<>(body),
-                            multiplier
+                            multiplier, new Endless<>(body)
                         )
                     )
                 )

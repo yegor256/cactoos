@@ -57,8 +57,7 @@ public final class ItemAtTest {
             "Can't take the item by position from the iterable",
             new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
-                new IterableOf<>(1, 2, 3),
-                1
+                1, new IterableOf<>(1, 2, 3)
             ),
             new ScalarHasValue<>(2)
         );
@@ -75,8 +74,7 @@ public final class ItemAtTest {
         MatcherAssert.assertThat(
             "Can't fallback to default value",
             new ItemAt<>(
-                Collections.emptyList(),
-                fallback
+                fallback, Collections.emptyList()
             ),
             new ScalarHasValue<>(fallback)
         );

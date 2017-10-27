@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -40,9 +41,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <T> Element type
  * @since 0.7
  */
-public final class
-    Sorted<T extends Comparable<? super T>> implements
-    Iterator<T> {
+public final class Sorted<T> implements Iterator<T> {
 
     /**
      * Sorted one.
@@ -51,10 +50,16 @@ public final class
 
     /**
      * Ctor.
+     *
+     * <p>If you're using this ctor you must be sure that type {@code T}
+     * implements {@link Comparable} interface. Otherwise, there will be
+     * a type casting exception in runtime.</p>
+     *
      * @param items The underlying iterator
      */
+    @SuppressWarnings("unchecked")
     public Sorted(final Iterator<T> items) {
-        this(Comparator.naturalOrder(), items);
+        this(items, (Comparator<T>) Comparator.naturalOrder());
     }
 
     /**
@@ -62,17 +67,19 @@ public final class
      * @param iterator The underlying iterator
      * @param comparator The comparator
      */
-    public Sorted(final Comparator<T> comparator, final Iterator<T> iterator) {
+    public Sorted(final Iterator<T> iterator, final Comparator<T> comparator) {
         this.scalar = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final List<T> items = new LinkedList<>();
-                    while (iterator.hasNext()) {
-                        items.add(iterator.next());
+            new SyncScalar<>(
+                new StickyScalar<>(
+                    () -> {
+                        final List<T> items = new LinkedList<>();
+                        while (iterator.hasNext()) {
+                            items.add(iterator.next());
+                        }
+                        items.sort(comparator);
+                        return items.iterator();
                     }
-                    items.sort(comparator);
-                    return items.iterator();
-                }
+                )
             )
         );
     }

@@ -60,8 +60,8 @@ public final class JoinedTest {
             "Can't concatenate mapped iterables together",
             new Joined<>(
                 new Mapped<>(
-                    new IterableOf<>("x"),
-                    (Func<String, Iterable<String>>) IterableOf::new
+                    (Func<String, Iterable<String>>) IterableOf::new,
+                    new IterableOf<>("x")
                 )
             ),
             Matchers.iterableWithSize(1)

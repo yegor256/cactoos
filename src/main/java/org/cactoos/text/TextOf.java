@@ -26,6 +26,8 @@ package org.cactoos.text;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
+import java.net.URI;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -60,6 +62,24 @@ public final class TextOf implements Text {
      */
     public TextOf(final Input input) {
         this(new BytesOf(input));
+    }
+
+    /**
+     * Ctor.
+     * @param url The URL
+     * @since 0.16
+     */
+    public TextOf(final URL url) {
+        this(new InputOf(url));
+    }
+
+    /**
+     * Ctor.
+     * @param uri The URI
+     * @since 0.16
+     */
+    public TextOf(final URI uri) {
+        this(new InputOf(uri));
     }
 
     /**

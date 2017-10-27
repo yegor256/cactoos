@@ -68,8 +68,7 @@ public final class JoinedText implements Text {
         this(
             new TextOf(delimit),
             new Mapped<>(
-                strs,
-                text -> new TextOf(text)
+                text -> new TextOf(text), strs
             )
         );
     }

@@ -42,9 +42,8 @@ public final class ReducedTest {
         MatcherAssert.assertThat(
             "Can't reduce elements in iterable",
             new Reduced<>(
-                new Limited<>(new NaturalNumbers(), 10),
-                0L,
-                (first, second) -> first + second
+                0L, (first, second) -> first + second,
+                new Limited<>(10, new NaturalNumbers())
             ).value(),
             Matchers.equalTo(45L)
         );

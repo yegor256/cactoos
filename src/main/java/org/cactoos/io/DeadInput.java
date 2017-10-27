@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 
@@ -39,8 +38,8 @@ import org.cactoos.Input;
 public final class DeadInput implements Input {
 
     @Override
-    public InputStream stream() throws IOException {
-        return new InputOf(new EmptyBytes()).stream();
+    public InputStream stream() {
+        return new DeadInputStream();
     }
 
 }

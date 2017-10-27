@@ -72,10 +72,10 @@ public final class Filtered<X> implements Iterator<X> {
 
     /**
      * Ctor.
-     * @param src Source iterable
      * @param fnc Predicate
+     * @param src Source iterable
      */
-    public Filtered(final Iterator<X> src, final Func<X, Boolean> fnc) {
+    public Filtered(final Func<X, Boolean> fnc, final Iterator<X> src) {
         this.iterator = src;
         this.func = fnc;
         this.buffer = new LinkedList<>();

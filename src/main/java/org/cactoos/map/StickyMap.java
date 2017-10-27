@@ -25,16 +25,20 @@ package org.cactoos.map;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Map decorator that goes through the map only once.
+ *
+ * <p>The map is read-only.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -113,7 +117,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     public <Z> StickyMap(final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
-        this(new Mapped<>(list, entry));
+        this(new Mapped<>(entry, list));
     }
 
     /**
@@ -126,7 +130,7 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     public <Z> StickyMap(final Map<X, Y> map, final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
-        this(map, new Mapped<>(list, entry));
+        this(map, new Mapped<>(entry, list));
     }
 
     /**
@@ -135,6 +139,15 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     public StickyMap(final Iterable<Map.Entry<X, Y>> list) {
         this(new MapOf<>(list));
+    }
+
+    /**
+     * Ctor.
+     * @param list Entries for the entries
+     * @since 0.21
+     */
+    public StickyMap(final Iterator<Map.Entry<X, Y>> list) {
+        this(() -> list);
     }
 
     /**
@@ -154,12 +167,14 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      */
     public StickyMap(final Map<X, Y> map) {
         this.gate = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Map<X, Y> temp = new HashMap<>(0);
-                    temp.putAll(map);
-                    return temp;
-                }
+            new SyncScalar<>(
+                new StickyScalar<>(
+                    () -> {
+                        final Map<X, Y> temp = new HashMap<>(0);
+                        temp.putAll(map);
+                        return temp;
+                    }
+                )
             )
         );
     }

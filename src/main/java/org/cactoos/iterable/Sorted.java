@@ -36,8 +36,7 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.7
  */
-public final class Sorted<T extends Comparable<? super T>> implements
-    Iterable<T> {
+public final class Sorted<T> implements Iterable<T> {
 
     /**
      * Decorated iterable.
@@ -60,10 +59,16 @@ public final class Sorted<T extends Comparable<? super T>> implements
 
     /**
      * Ctor.
+     *
+     * <p>If you're using this ctor you must be sure that type {@code T}
+     * implements {@link Comparable} interface. Otherwise, there will be
+     * a type casting exception in runtime.</p>
+     *
      * @param src The underlying iterable
      */
+    @SuppressWarnings("unchecked")
     public Sorted(final Iterable<T> src) {
-        this(Comparator.naturalOrder(), src);
+        this((Comparator<T>) Comparator.naturalOrder(), src);
     }
 
     /**
@@ -94,7 +99,7 @@ public final class Sorted<T extends Comparable<? super T>> implements
     @Override
     public Iterator<T> iterator() {
         return new org.cactoos.iterator.Sorted<>(
-            this.comparator, this.iterable.iterator()
+            this.iterable.iterator(), this.comparator
         );
     }
 }

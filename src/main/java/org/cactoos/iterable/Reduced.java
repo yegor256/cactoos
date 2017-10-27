@@ -54,12 +54,12 @@ public final class Reduced<X, T> implements Scalar<X> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param ipt Input
      * @param fnc Func original
+     * @param list List of items
      */
-    public Reduced(final Iterable<T> list, final X ipt,
-        final BiFunc<X, T, X> fnc) {
+    public Reduced(final X ipt, final BiFunc<X, T, X> fnc,
+        final Iterable<T> list) {
         this.iterable = list;
         this.input = ipt;
         this.func = fnc;

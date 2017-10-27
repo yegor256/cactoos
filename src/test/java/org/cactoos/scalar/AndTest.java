@@ -101,8 +101,8 @@ public final class AndTest {
             "Can't iterate a list with a procedure",
             new And(
                 new Mapped<String, Scalar<Boolean>>(
-                    new IterableOf<>("hello", "world"),
-                    new FuncOf<>(list::add, () -> true)
+                    new FuncOf<>(list::add, () -> true),
+                    new IterableOf<>("hello", "world")
                 )
             ),
             new ScalarHasValue<>(
@@ -123,8 +123,7 @@ public final class AndTest {
             "Can't iterate a list",
             new And(
                 new Mapped<String, Scalar<Boolean>>(
-                    Collections.emptyList(),
-                    new FuncOf<>(list::add, () -> true)
+                    new FuncOf<>(list::add, () -> true), Collections.emptyList()
                 )
             ),
             new ScalarHasValue<>(

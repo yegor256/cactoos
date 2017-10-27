@@ -51,9 +51,11 @@ public final class TextOfTest {
     public void readsInputIntoText() throws IOException {
         MatcherAssert.assertThat(
             "Can't read text from Input",
-            new TextOf(
-                new InputOf("привет, друг!"),
-                StandardCharsets.UTF_8
+            new SyncText(
+                new TextOf(
+                    new InputOf("привет, друг!"),
+                    StandardCharsets.UTF_8
+                )
             ).asString(),
             Matchers.allOf(
                 Matchers.startsWith("привет, "),

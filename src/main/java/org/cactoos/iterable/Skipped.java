@@ -49,10 +49,10 @@ public final class Skipped<T> implements Iterable<T> {
 
     /**
      * Ctor.
-     * @param iterable Decorated iterable
      * @param skip Count skip elements
+     * @param iterable Decorated iterable
      */
-    public Skipped(final Iterable<T> iterable, final int skip) {
+    public Skipped(final int skip, final Iterable<T> iterable) {
         this.iterable = iterable;
         this.skip = skip;
     }

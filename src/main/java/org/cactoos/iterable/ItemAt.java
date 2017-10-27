@@ -24,6 +24,7 @@
 package org.cactoos.iterable;
 
 import java.io.IOException;
+import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.text.FormattedText;
@@ -63,64 +64,72 @@ public final class ItemAt<T> implements Scalar<T> {
      */
     public ItemAt(final Iterable<T> source) {
         this(
-            source,
             itr -> {
                 throw new IOException("The iterable is empty");
-            }
+            },
+            source
         );
     }
 
     /**
      * Ctor.
      *
-     * @param source Iterable
      * @param fallback Fallback value
+     * @param source Iterable
      */
-    public ItemAt(final Iterable<T> source, final T fallback) {
-        this(source, itr -> fallback);
+    public ItemAt(final T fallback, final Iterable<T> source) {
+        this(itr -> fallback, source);
     }
 
     /**
      * Ctor.
      *
-     * @param source Iterable
      * @param fallback Fallback value
+     * @param source Iterable
      */
-    public ItemAt(final Iterable<T> source,
-        final Func<Iterable<T>, T> fallback) {
-        this(source, 0, fallback);
+    public ItemAt(final Func<Iterable<T>, T> fallback,
+        final Iterable<T> source) {
+        this(0, fallback, source);
     }
 
     /**
      * Ctor.
      *
-     * @param source Iterable
      * @param position Position
+     * @param source Iterable
      */
-    public ItemAt(final Iterable<T> source, final int position) {
+    public ItemAt(final int position, final Iterable<T> source) {
         this(
-            source,
-            position,
-            itr -> {
+            position, itr -> {
                 throw new IOException(
                     new FormattedText(
                         "The iterable doesn't have the position #%d",
                         position
                     ).asString()
                 );
-            }
+            }, source
         );
     }
 
     /**
      * Ctor.
      *
-     * @param source Iterable
      * @param position Position
-     * @param fallback Fallback value
+     * @param source Iterable
+     * @since 0.21
      */
-    public ItemAt(final Iterable<T> source, final int position,
-        final Func<Iterable<T>, T> fallback) {
+    public ItemAt(final int position, final Iterator<T> source) {
+        this(position, () -> source);
+    }
+
+    /**
+     * Ctor.
+     *  @param position Position
+     * @param fallback Fallback value
+     * @param source Iterable
+     */
+    public ItemAt(final int position,
+        final Func<Iterable<T>, T> fallback, final Iterable<T> source) {
         this.pos = position;
         this.src = source;
         this.fbk = fallback;

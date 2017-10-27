@@ -39,12 +39,7 @@ public final class DeadOutput implements Output {
 
     @Override
     public OutputStream stream() {
-        return new OutputStream() {
-            @Override
-            @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
-            public void write(final int data) {
-            }
-        };
+        return new DeadOutputStream();
     }
 
 }

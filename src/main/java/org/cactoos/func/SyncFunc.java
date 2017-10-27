@@ -46,7 +46,7 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
     /**
      * Sync lock.
      */
-    private final Object lck;
+    private final Object lock;
 
     /**
      * Ctor.
@@ -90,12 +90,12 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
      */
     public SyncFunc(final Func<X, Y> fnc, final Object lck) {
         this.func = fnc;
-        this.lck = lck;
+        this.lock = lck;
     }
 
     @Override
     public Y apply(final X input) throws Exception {
-        synchronized (this.lck) {
+        synchronized (this.lock) {
             return this.func.apply(input);
         }
     }

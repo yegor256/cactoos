@@ -114,11 +114,10 @@ public final class PropertiesOfTest {
         final PropertiesOf props = new PropertiesOf(
             new MapOf<>(
                 () -> new Repeated<>(
-                    () -> new MapEntry<>(
+                    size.incrementAndGet(), () -> new MapEntry<>(
                         new SecureRandom().nextInt(),
                         1
-                    ),
-                    size.incrementAndGet()
+                    )
                 )
             )
         );

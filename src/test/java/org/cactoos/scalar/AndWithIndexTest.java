@@ -21,66 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.scalar;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import org.cactoos.ScalarHasValue;
+import org.cactoos.func.BiFuncOf;
+import org.cactoos.func.MatcherOf;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Iterator that returns the same set of elements always.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link AndWithIndex}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
  * @since 0.8
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class Sticky<X> implements Iterator<X> {
+public final class AndWithIndexTest {
 
-    /**
-     * The gate.
-     */
-    private final UncheckedScalar<Iterator<X>> gate;
-
-    /**
-     * Ctor.
-     * @param items Items to iterate
-     */
-    @SafeVarargs
-    public Sticky(final X... items) {
-        this(new IterableOf<>(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param iterator The iterator
-     */
-    public Sticky(final Iterator<X> iterator) {
-        this.gate = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    while (iterator.hasNext()) {
-                        temp.add(iterator.next());
-                    }
-                    return temp.iterator();
-                }
+    @Test
+    public void iteratesListWithIndex() {
+        final List<String> list = new LinkedList<>();
+        MatcherAssert.assertThat(
+            "Can't iterate a list with a procedure",
+            new AndWithIndex(
+                new IterableOf<>("hello", "world"),
+                new BiFuncOf<>(
+                    (text, index) -> list.add(index, text),
+                    true
+                )
+            ),
+            new ScalarHasValue<>(
+                Matchers.allOf(
+                    Matchers.equalTo(true),
+                    new MatcherOf<>(
+                        value -> list.size() == 2
+                    )
+                )
             )
         );
-    }
-
-    @Override
-    public boolean hasNext() {
-        return this.gate.value().hasNext();
-    }
-
-    @Override
-    public X next() {
-        return this.gate.value().next();
     }
 }

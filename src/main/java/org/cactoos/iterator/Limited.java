@@ -60,10 +60,10 @@ public final class Limited<T> implements Iterator<T> {
     /**
      * Ctor.
      *
-     * @param iterator The underlying iterator
      * @param limit The requested number of elements
+     * @param iterator The underlying iterator
      */
-    public Limited(final Iterator<T> iterator, final int limit) {
+    public Limited(final int limit, final Iterator<T> iterator) {
         this.origin = iterator;
         this.restrict = limit;
         this.consumed = 0;
