@@ -75,6 +75,7 @@ public interface Proc<X> {
                     "NULL instead of a valid input"
                 );
             }
+            this.origin.exec(input);
         }
     }
 }

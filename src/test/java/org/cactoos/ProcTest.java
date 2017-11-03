@@ -23,6 +23,9 @@
  */
 package org.cactoos;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -46,6 +49,13 @@ public final class ProcTest {
 
     @Test
     public void okForNoNulls() throws Exception {
-        new Proc.NoNulls<>(input -> { }).exec(new Object());
+        final AtomicInteger counter = new AtomicInteger();
+        new Proc.NoNulls<AtomicInteger>(input -> { input.incrementAndGet(); })
+            .exec(counter);
+        MatcherAssert.assertThat(
+            "Can't involve the \"Proc.exec(X input)\" method",
+            counter.get(),
+            Matchers.equalTo(1)
+        );
     }
 }
