@@ -23,9 +23,8 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
+import org.cactoos.func.MaxFunc;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -43,7 +42,7 @@ public final class Max<T extends Comparable<T>> implements Scalar<T> {
     /**
      * Items.
      */
-    private final Iterable<Scalar<T>> items;
+    private final Scalar<T> result;
 
     /**
      * Ctor.
@@ -59,25 +58,15 @@ public final class Max<T extends Comparable<T>> implements Scalar<T> {
      * @param iterable The items
      */
     public Max(final Iterable<Scalar<T>> iterable) {
-        this.items = iterable;
+        this.result = new Folded<>(
+            new MaxFunc<>(),
+            iterable
+        );
     }
 
     @Override
     public T value() throws Exception {
-        final Iterator<Scalar<T>> iter = this.items.iterator();
-        if (!iter.hasNext()) {
-            throw new NoSuchElementException(
-                "Can't find greater element in an empty iterable"
-            );
-        }
-        T max = iter.next().value();
-        while (iter.hasNext()) {
-            final T next = iter.next().value();
-            if (next.compareTo(max) > 0) {
-                max = next;
-            }
-        }
-        return max;
+        return this.result.value();
     }
 
 }

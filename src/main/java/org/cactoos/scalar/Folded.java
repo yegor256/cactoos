@@ -23,50 +23,56 @@
  */
 package org.cactoos.scalar;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
-import org.cactoos.func.MinFunc;
-import org.cactoos.iterable.IterableOf;
 
 /**
- * Find the smaller among items.
+ * Folds iterable via BiFunc
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Alexander Dyadyushenko (gookven@gmail.com)
  * @version $Id$
  * @param <T> Scalar type
  * @since 0.9
  */
-public final class Min<T extends Comparable<T>> implements Scalar<T> {
+public final class Folded<T> implements Scalar<T> {
 
     /**
      * Items.
      */
-    private final Scalar<T> result;
+    private final Iterable<Scalar<T>> items;
+
+    /**
+     * Folding function.
+     */
+    private final BiFunc<T, T, T> fold;
 
     /**
      * Ctor.
-     * @param scalars The items
+     * @param fold Folding function
+     * @param items The items
      */
-    @SafeVarargs
-    public Min(final Scalar<T>... scalars) {
-        this(new IterableOf<>(scalars));
-    }
-
-    /**
-     * Ctor.
-     * @param iterable The items
-     */
-    public Min(final Iterable<Scalar<T>> iterable) {
-        this.result = new Folded<>(
-            new MinFunc<>(),
-            iterable
-        );
+    public Folded(final BiFunc<T, T, T> fold, final Iterable<Scalar<T>> items) {
+        this.items = items;
+        this.fold = fold;
     }
 
     @Override
     public T value() throws Exception {
-        return this.result.value();
+        final Iterator<Scalar<T>> iter = this.items.iterator();
+        if (!iter.hasNext()) {
+            throw new NoSuchElementException(
+                "Can't find first element in an empty iterable"
+            );
+        }
+        T acc = iter.next().value();
+        while (iter.hasNext()) {
+            final T next = iter.next().value();
+            acc = this.fold.apply(acc, next);
+        }
+        return acc;
     }
-
 }

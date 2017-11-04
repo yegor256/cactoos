@@ -21,52 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.func;
 
-import org.cactoos.Scalar;
-import org.cactoos.func.MinFunc;
-import org.cactoos.iterable.IterableOf;
+import org.cactoos.BiFunc;
 
 /**
- * Find the smaller among items.
+ * Function, finding max among two items.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Alexander Dyadyushenko (gookven@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
+ * @param <T> comparable type
  * @since 0.9
  */
-public final class Min<T extends Comparable<T>> implements Scalar<T> {
-
-    /**
-     * Items.
-     */
-    private final Scalar<T> result;
-
-    /**
-     * Ctor.
-     * @param scalars The items
-     */
-    @SafeVarargs
-    public Min(final Scalar<T>... scalars) {
-        this(new IterableOf<>(scalars));
-    }
-
-    /**
-     * Ctor.
-     * @param iterable The items
-     */
-    public Min(final Iterable<Scalar<T>> iterable) {
-        this.result = new Folded<>(
-            new MinFunc<>(),
-            iterable
-        );
-    }
-
+public final class MaxFunc<T extends Comparable<T>> implements BiFunc<T, T, T> {
     @Override
-    public T value() throws Exception {
-        return this.result.value();
+    public T apply(final T first, final T second) throws Exception {
+        T max = first;
+        if (second.compareTo(max) > 0) {
+            max = second;
+        }
+        return max;
     }
-
 }
