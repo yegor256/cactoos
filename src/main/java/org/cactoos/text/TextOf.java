@@ -37,6 +37,7 @@ import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
+import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.IoCheckedScalar;
 
 /**
@@ -271,6 +272,23 @@ public final class TextOf implements Text {
      */
     public TextOf(final String input, final Charset cset) {
         this(() -> new String(input.getBytes(cset), cset));
+    }
+
+    /**
+     * Ctor.
+     * @param iterable The iterable to convert to string
+     * @since 0.21
+     */
+    public TextOf(final Iterable<?> iterable) {
+        this(
+            () -> new JoinedText(
+                ", ",
+                new Mapped<>(
+                    Object::toString,
+                    iterable
+                )
+            ).asString()
+        );
     }
 
     /**
