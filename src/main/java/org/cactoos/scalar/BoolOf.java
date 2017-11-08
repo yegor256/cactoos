@@ -52,10 +52,10 @@ public final class BoolOf implements Scalar<Boolean> {
     /**
      * Ctor.
      *
-     * @param string True or false string
+     * @param txt True or false string
      */
-    public BoolOf(final String string) {
-        this(new TextOf(string));
+    public BoolOf(final String txt) {
+        this(new TextOf(txt));
     }
 
     /**

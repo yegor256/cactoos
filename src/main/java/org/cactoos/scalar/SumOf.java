@@ -47,7 +47,7 @@ import org.cactoos.iterable.Mapped;
  * @version $Id$
  * @since 0.9
  */
-public final class SumOf extends Number {
+public final class SumOf extends Number implements Scalar<Number> {
 
     /**
      * Serialization marker.
@@ -199,4 +199,10 @@ public final class SumOf extends Number {
     public double doubleValue() {
         return new UncheckedScalar<>(this.dsum).value();
     }
+
+    @Override
+    public Number value() {
+        return this;
+    }
+
 }
