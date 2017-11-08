@@ -21,51 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.func;
 
-import java.util.Iterator;
-import org.cactoos.Scalar;
+import java.io.IOException;
+import org.cactoos.BiProc;
 
 /**
- * Real total of numbers.
+ * BiProc that doesn't throw checked {@link Exception}, but throws
+ * {@link IOException} instead.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @param <X> Type of input
+ * @param <Y> Type of input
+ * @since 0.22
  */
-public final class SumOfReals implements Scalar<Double> {
+public final class IoCheckedBiProc<X, Y> implements BiProc<X, Y> {
 
     /**
-     * The iterable.
+     * Original proc.
      */
-    private final Iterable<Scalar<Number>> src;
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    @SafeVarargs
-    public SumOfReals(final Scalar<Number>... src) {
-        this(new IterableOf<>(src));
-    }
+    private final BiProc<X, Y> proc;
 
     /**
      * Ctor.
-     * @param src The iterable
+     * @param prc Encapsulated func
      */
-    public SumOfReals(final Iterable<Scalar<Number>> src) {
-        this.src = src;
+    public IoCheckedBiProc(final BiProc<X, Y> prc) {
+        this.proc = prc;
     }
 
     @Override
-    public Double value() throws Exception {
-        final Iterator<Scalar<Number>> numbers = this.src.iterator();
-        double result = 0.0d;
-        while (numbers.hasNext()) {
-            result += numbers.next().value().doubleValue();
+    @SuppressWarnings
+        (
+            {
+                "PMD.AvoidCatchingGenericException",
+                "PMD.AvoidRethrowingException"
+            }
+        )
+    public void exec(final X first, final Y second) throws IOException {
+        try {
+            this.proc.exec(first, second);
+        } catch (final IOException ex) {
+            throw ex;
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IOException(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IOException(ex);
         }
-        return result;
     }
+
 }

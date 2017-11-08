@@ -26,6 +26,11 @@ package org.cactoos;
 /**
  * Proc that accepts two arguments.
  *
+ * <p>If you don't want to have any checked exceptions being thrown
+ * out of your {@link BiProc}, you can use
+ * {@link org.cactoos.func.UncheckedBiProc} decorator. Also
+ * you may try {@link org.cactoos.func.IoCheckedBiProc}.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)

@@ -26,6 +26,7 @@ package org.cactoos.iterable;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -49,6 +50,15 @@ public final class IterableOfTest {
             ),
             // @checkstyle MagicNumber (1 line)
             new ScalarHasValue<>(3)
+        );
+    }
+
+    @Test
+    public void convertsArrayOfIntsToIterable() {
+        MatcherAssert.assertThat(
+            "Can't convert int scalars to iterable",
+            new IterableOf<>(1, 2, 0, 2),
+            Matchers.hasItem(0)
         );
     }
 

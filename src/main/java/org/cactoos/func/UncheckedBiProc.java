@@ -21,47 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.func;
 
-import org.cactoos.Scalar;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import org.cactoos.BiProc;
 
 /**
- * Test case for {@link SumOfInts}.
+ * BiProc that doesn't throw checked {@link Exception}.
  *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
+ * @param <X> Type of input
+ * @param <Y> Type of input
+ * @since 0.22
  */
-public final class SumOfIntsTest {
+public final class UncheckedBiProc<X, Y> implements BiProc<X, Y> {
 
-    @Test
-    public void withVarargsCtor() throws Exception {
-        MatcherAssert.assertThat(
-            new SumOfInts(
-                () -> 1,
-                () -> 2,
-                () -> 3
-            ).value(),
-            Matchers.equalTo(6L)
-        );
+    /**
+     * Original proc.
+     */
+    private final BiProc<X, Y> proc;
+
+    /**
+     * Ctor.
+     * @param prc Encapsulated proc
+     */
+    public UncheckedBiProc(final BiProc<X, Y> prc) {
+        this.proc = prc;
     }
 
-    @Test
-    public void withIterCtor() throws Exception {
-        MatcherAssert.assertThat(
-            new SumOfInts(
-                new IterableOf<Scalar<Number>>(
-                    () -> 7,
-                    () -> 8,
-                    () -> 10
-                )
-            ).value(),
-            Matchers.equalTo(25L)
-        );
+    @Override
+    public void exec(final X first, final Y second) {
+        try {
+            new IoCheckedBiProc<>(this.proc).exec(first, second);
+        } catch (final IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
     }
 }
