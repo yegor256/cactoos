@@ -30,11 +30,18 @@ import org.cactoos.iterable.IterableOf;
 /**
  * Find the greater among items.
  *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @param <T> Scalar type
+ * @see UncheckedScalar
+ * @see IoCheckedScalar
  * @since 0.10
  */
 public final class Max<T extends Comparable<T>> implements Scalar<T> {

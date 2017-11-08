@@ -35,7 +35,12 @@ import org.cactoos.func.StickyFunc;
  *
  * <p>Pay attention that this class is not thread-safe. It is highly
  * recommended to always decorate it with {@link SyncScalar}.</p>
-
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Tim Hinkes (timmeey@timmeey.de)
