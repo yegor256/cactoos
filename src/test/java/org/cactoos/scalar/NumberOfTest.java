@@ -29,27 +29,72 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link DoubleOf}.
+ * Test case for {@link NumberOf}.
  *
  * @author Kirill (g4s8.public@gmail.com)
  * @version $Id$
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class DoubleOfTest {
+public final class NumberOfTest {
 
     @Test
-    public strictfp void numberTest() throws IOException {
+    public void parsesFloat() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't parse float number",
+            new NumberOf("1656.894").floatValue(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(1656.894F)
+        );
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void failsIfTextDoesNotRepresentAFloat() throws IOException {
+        new NumberOf("abcfds").floatValue();
+    }
+
+    @Test
+    public void parsesLong() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't parse long number",
+            new NumberOf("186789235425346").longValue(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(186789235425346L)
+        );
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void failsIfTextDoesNotRepresentALong() throws IOException {
+        new NumberOf("abcddd").longValue();
+    }
+
+    @Test
+    public void parsesInteger() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't parse integer number",
+            new NumberOf("1867892354").intValue(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(1867892354)
+        );
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void failsIfTextDoesNotRepresentAnInt() throws IOException {
+        new NumberOf("abc fdsf").intValue();
+    }
+
+    @Test
+    public void parsesDouble() throws IOException {
         MatcherAssert.assertThat(
             "Can't parse double number",
-            new DoubleOf("185.65156465123").value(),
+            new NumberOf("185.65156465123").doubleValue(),
             // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(185.65156465123)
         );
     }
 
-    @Test(expected = NumberFormatException.class)
+    @Test(expected = RuntimeException.class)
     public void failsIfTextDoesNotRepresentADouble() throws IOException {
-        new DoubleOf("abc").value();
+        new NumberOf("abfdsc").doubleValue();
     }
 }
