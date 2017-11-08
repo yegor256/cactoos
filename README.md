@@ -242,6 +242,10 @@ Cactoos | Guava | Apache Commons | JDK 8
 `TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
 `UpperText` | - | - | `String#toUpperCase()`
 
+## Questions
+
+Ask your questions related to cactoos library on [Stackoverflow](https://stackoverflow.com/questions/ask) with [cactoos](https://stackoverflow.com/tags/cactoos/info) tag.
+
 ## How to contribute?
 
 Just fork the repo and send us a pull request.
