@@ -21,59 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
-import org.cactoos.func.MaxFunc;
-import org.cactoos.iterable.IterableOf;
+package org.cactoos.bytes;
+
+import java.io.IOException;
+import java.util.Base64;
+import org.cactoos.Bytes;
 
 /**
- * Find the greater among items.
+ * Decodes all origin bytes using the Base64 encoding scheme.
  *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
- * @see UncheckedScalar
- * @see IoCheckedScalar
- * @since 0.10
+ * @since 0.20.2
  */
-public final class Max<T extends Comparable<T>> implements Scalar<T> {
+public final class Base64Bytes implements Bytes {
 
     /**
-     * Items.
+     * Origin bytes.
      */
-    private final Scalar<T> result;
-
-    /**
-     * Ctor.
-     * @param scalars The items
-     */
-    @SafeVarargs
-    public Max(final Scalar<T>... scalars) {
-        this(new IterableOf<>(scalars));
-    }
+    private final Bytes origin;
 
     /**
      * Ctor.
-     * @param iterable The items
+     *
+     * @param origin Origin bytes
      */
-    public Max(final Iterable<Scalar<T>> iterable) {
-        this.result = new Folded<>(
-            new MaxFunc<>(),
-            iterable
-        );
+    public Base64Bytes(final Bytes origin) {
+        this.origin = origin;
     }
 
     @Override
-    public T value() throws Exception {
-        return this.result.value();
+    public byte[] asBytes() throws IOException {
+        return Base64.getDecoder().decode(this.origin.asBytes());
     }
-
 }

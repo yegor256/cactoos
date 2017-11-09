@@ -21,35 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.func;
 
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.io.UncheckedIOException;
+import org.cactoos.BiProc;
 
 /**
- * Test case for {@link IntOf}.
+ * BiProc that doesn't throw checked {@link Exception}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <X> Type of input
+ * @param <Y> Type of input
+ * @since 0.22
  */
-public final class IntOfTest {
+public final class UncheckedBiProc<X, Y> implements BiProc<X, Y> {
 
-    @Test
-    public void numberTest() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse integer number",
-            new IntOf("1867892354").value(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(1867892354)
-        );
+    /**
+     * Original proc.
+     */
+    private final BiProc<X, Y> proc;
+
+    /**
+     * Ctor.
+     * @param prc Encapsulated proc
+     */
+    public UncheckedBiProc(final BiProc<X, Y> prc) {
+        this.proc = prc;
     }
 
-    @Test(expected = NumberFormatException.class)
-    public void failsIfTextDoesNotRepresentAnInt() throws IOException {
-        new DoubleOf("abc").value();
+    @Override
+    public void exec(final X first, final Y second) {
+        try {
+            new IoCheckedBiProc<>(this.proc).exec(first, second);
+        } catch (final IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
     }
 }

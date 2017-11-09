@@ -23,13 +23,12 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
 
 /**
- * Text as {@link Boolean}.
+ * Text as {@link Float}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -42,33 +41,93 @@ import org.cactoos.text.TextOf;
  * @version $Id$
  * @since 0.2
  */
-public final class BoolOf implements Scalar<Boolean> {
+public final class NumberOf extends Number implements Scalar<Number> {
 
     /**
-     * Source text.
+     * Serialization marker.
      */
-    private final Text origin;
+    private static final long serialVersionUID = -1924406337256921883L;
+
+    /**
+     * The LONG number.
+     */
+    private final Scalar<Long> lnum;
+
+    /**
+     * The INT number.
+     */
+    private final Scalar<Integer> inum;
+
+    /**
+     * The FLOAT number.
+     */
+    private final Scalar<Float> fnum;
+
+    /**
+     * The DOUBLE number.
+     */
+    private final Scalar<Double> dnum;
 
     /**
      * Ctor.
      *
-     * @param txt True or false string
+     * @param txt Number-string
      */
-    public BoolOf(final String txt) {
+    public NumberOf(final String txt) {
         this(new TextOf(txt));
     }
 
     /**
      * Ctor.
      *
-     * @param text True or false text
+     * @param text Number-text
      */
-    public BoolOf(final Text text) {
-        this.origin = text;
+    public NumberOf(final Text text) {
+        super();
+        this.lnum = new SyncScalar<>(
+            new StickyScalar<>(
+                () -> Long.parseLong(text.asString())
+            )
+        );
+        this.inum = new SyncScalar<>(
+            new StickyScalar<>(
+                () -> Integer.parseInt(text.asString())
+            )
+        );
+        this.fnum = new SyncScalar<>(
+            new StickyScalar<>(
+                () -> Float.parseFloat(text.asString())
+            )
+        );
+        this.dnum = new SyncScalar<>(
+            new StickyScalar<>(
+                () -> Double.parseDouble(text.asString())
+            )
+        );
     }
 
     @Override
-    public Boolean value() throws IOException {
-        return Boolean.valueOf(this.origin.asString());
+    public Number value() {
+        return this;
+    }
+
+    @Override
+    public int intValue() {
+        return new UncheckedScalar<>(this.inum).value();
+    }
+
+    @Override
+    public long longValue() {
+        return new UncheckedScalar<>(this.lnum).value();
+    }
+
+    @Override
+    public float floatValue() {
+        return new UncheckedScalar<>(this.fnum).value();
+    }
+
+    @Override
+    public double doubleValue() {
+        return new UncheckedScalar<>(this.dnum).value();
     }
 }

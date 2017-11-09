@@ -21,57 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
-import org.cactoos.func.MinFunc;
-import org.cactoos.iterable.IterableOf;
+package org.cactoos.bytes;
+
+import java.io.IOException;
+import org.cactoos.io.BytesOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Find the smaller among items.
+ * Test case for {@link org.cactoos.bytes.Base64Bytes}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
- *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
- * @since 0.9
+ * @since 0.20.2
  */
-public final class Min<T extends Comparable<T>> implements Scalar<T> {
+public final class Base64BytesTest {
 
     /**
-     * Items.
+     * Check bytes decodes using the Base64 encoding scheme.
+     * @throws IOException If fails.
      */
-    private final Scalar<T> result;
-
-    /**
-     * Ctor.
-     * @param scalars The items
-     */
-    @SafeVarargs
-    public Min(final Scalar<T>... scalars) {
-        this(new IterableOf<>(scalars));
-    }
-
-    /**
-     * Ctor.
-     * @param iterable The items
-     */
-    public Min(final Iterable<Scalar<T>> iterable) {
-        this.result = new Folded<>(
-            new MinFunc<>(),
-            iterable
+    @Test
+    public void checkDecode() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't decodes bytes using the Base64 encoding scheme",
+            new Base64Bytes(
+                new BytesOf(
+                    "SGVsbG8h"
+                )
+            ).asBytes(),
+            Matchers.equalTo(
+                new BytesOf("Hello!").asBytes()
+            )
         );
-    }
-
-    @Override
-    public T value() throws Exception {
-        return this.result.value();
     }
 
 }

@@ -21,49 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+
+package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
-import org.cactoos.text.TextOf;
+import org.cactoos.TextHasString;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Text as {@link Integer}.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Kirill (g4s8.public@gmail.com)
+ * Test case for  {@link org.cactoos.text.TextBase64}.
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.20.2
  */
-public final class IntOf implements Scalar<Integer> {
+public final class TextBase64Test {
 
     /**
-     * Source text.
+     * Check text encodes using the Base64 encoding scheme.
+     * @throws IOException If fails.
      */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     *
-     * @param string Number-string
-     */
-    public IntOf(final String string) {
-        this(new TextOf(string));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param text Number-text
-     */
-    public IntOf(final Text text) {
-        this.origin = text;
-    }
-
-    @Override
-    public Integer value() throws IOException {
-        return Integer.valueOf(this.origin.asString());
+    @Test
+    public void checkEncode() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't encodes text using the Base64 encoding scheme",
+            new TextBase64(
+                "Hello!"
+            ),
+            new TextHasString(
+                "SGVsbG8h"
+            )
+        );
     }
 }

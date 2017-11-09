@@ -23,47 +23,61 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
-import org.cactoos.Text;
-import org.cactoos.text.TextOf;
 
 /**
- * Text as {@link Double}.
+ * Folds iterable via BiFunc
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
+ *
+ * @author Alexander Dyadyushenko (gookven@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @param <T> Scalar type
+ * @since 0.9
  */
-public final class DoubleOf implements Scalar<Double> {
+public final class Folded<T> implements Scalar<T> {
 
     /**
-     * Source text.
+     * Items.
      */
-    private final Text origin;
+    private final Iterable<Scalar<T>> items;
 
     /**
-     * Ctor.
-     *
-     * @param string Number-string
+     * Folding function.
      */
-    public DoubleOf(final String string) {
-        this(new TextOf(string));
-    }
+    private final BiFunc<T, T, T> fold;
 
     /**
      * Ctor.
-     *
-     * @param text Number-text
+     * @param fold Folding function
+     * @param items The items
      */
-    public DoubleOf(final Text text) {
-        this.origin = text;
+    public Folded(final BiFunc<T, T, T> fold, final Iterable<Scalar<T>> items) {
+        this.items = items;
+        this.fold = fold;
     }
 
     @Override
-    public Double value() throws IOException {
-        return Double.valueOf(this.origin.asString());
+    public T value() throws Exception {
+        final Iterator<Scalar<T>> iter = this.items.iterator();
+        if (!iter.hasNext()) {
+            throw new NoSuchElementException(
+                "Can't find first element in an empty iterable"
+            );
+        }
+        T acc = iter.next().value();
+        while (iter.hasNext()) {
+            final T next = iter.next().value();
+            acc = this.fold.apply(acc, next);
+        }
+        return acc;
     }
 }

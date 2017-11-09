@@ -21,35 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+
+package org.cactoos.text;
 
 import java.io.IOException;
+import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link LongOf}.
+ * Test Case for {@link org.cactoos.text.Base64Text}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.20.2
  */
-public final class LongOfTest {
+public final class Base64TextTest {
 
+    /**
+     * Check text decodes using the Base64 encoding scheme.
+     * @throws IOException If fails.
+     */
     @Test
-    public void numberTest() throws IOException {
+    public void checkDecode() throws IOException {
         MatcherAssert.assertThat(
-            "Can't parse long number",
-            new LongOf("186789235425346").value(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(186789235425346L)
+            "Can't decodes text using the Base64 encoding scheme",
+            new Base64Text(
+                "SGVsbG8h"
+            ),
+            new TextHasString(
+                "Hello!"
+            )
         );
-    }
-
-    @Test(expected = NumberFormatException.class)
-    public void failsIfTextDoesNotRepresentALong() throws IOException {
-        new LongOf("abc").value();
     }
 }

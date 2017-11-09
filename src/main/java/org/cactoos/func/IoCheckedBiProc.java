@@ -21,59 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.func;
 
-import org.cactoos.Scalar;
-import org.cactoos.func.MaxFunc;
-import org.cactoos.iterable.IterableOf;
+import java.io.IOException;
+import org.cactoos.BiProc;
 
 /**
- * Find the greater among items.
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
+ * BiProc that doesn't throw checked {@link Exception}, but throws
+ * {@link IOException} instead.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
- * @see UncheckedScalar
- * @see IoCheckedScalar
- * @since 0.10
+ * @param <X> Type of input
+ * @param <Y> Type of input
+ * @since 0.22
  */
-public final class Max<T extends Comparable<T>> implements Scalar<T> {
+public final class IoCheckedBiProc<X, Y> implements BiProc<X, Y> {
 
     /**
-     * Items.
+     * Original proc.
      */
-    private final Scalar<T> result;
-
-    /**
-     * Ctor.
-     * @param scalars The items
-     */
-    @SafeVarargs
-    public Max(final Scalar<T>... scalars) {
-        this(new IterableOf<>(scalars));
-    }
+    private final BiProc<X, Y> proc;
 
     /**
      * Ctor.
-     * @param iterable The items
+     * @param prc Encapsulated func
      */
-    public Max(final Iterable<Scalar<T>> iterable) {
-        this.result = new Folded<>(
-            new MaxFunc<>(),
-            iterable
-        );
+    public IoCheckedBiProc(final BiProc<X, Y> prc) {
+        this.proc = prc;
     }
 
     @Override
-    public T value() throws Exception {
-        return this.result.value();
+    @SuppressWarnings
+        (
+            {
+                "PMD.AvoidCatchingGenericException",
+                "PMD.AvoidRethrowingException"
+            }
+        )
+    public void exec(final X first, final Y second) throws IOException {
+        try {
+            this.proc.exec(first, second);
+        } catch (final IOException ex) {
+            throw ex;
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IOException(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IOException(ex);
+        }
     }
 
 }

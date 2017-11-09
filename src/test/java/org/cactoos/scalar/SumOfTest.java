@@ -21,15 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link SumOfInts}.
+ * Test case for {@link SumOf}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
@@ -37,16 +38,36 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SumOfIntsTest {
+public final class SumOfTest {
+
+    @Test
+    public void withListOfNumbers() throws Exception {
+        MatcherAssert.assertThat(
+            new SumOf(1, 2, 3).intValue(),
+            Matchers.equalTo(6)
+        );
+        MatcherAssert.assertThat(
+            new SumOf(1.0d, 2.0d, 3.0d).doubleValue(),
+            Matchers.equalTo(6.0d)
+        );
+        MatcherAssert.assertThat(
+            new SumOf(1.0f, 2.0f, 3.0f).floatValue(),
+            Matchers.equalTo(6.0f)
+        );
+        MatcherAssert.assertThat(
+            new SumOf(1L, 2L, 3L).longValue(),
+            Matchers.equalTo(6L)
+        );
+    }
 
     @Test
     public void withVarargsCtor() throws Exception {
         MatcherAssert.assertThat(
-            new SumOfInts(
+            new SumOf(
                 () -> 1,
                 () -> 2,
                 () -> 3
-            ).value(),
+            ).longValue(),
             Matchers.equalTo(6L)
         );
     }
@@ -54,13 +75,13 @@ public final class SumOfIntsTest {
     @Test
     public void withIterCtor() throws Exception {
         MatcherAssert.assertThat(
-            new SumOfInts(
+            new SumOf(
                 new IterableOf<Scalar<Number>>(
                     () -> 7,
                     () -> 8,
                     () -> 10
                 )
-            ).value(),
+            ).longValue(),
             Matchers.equalTo(25L)
         );
     }

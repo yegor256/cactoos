@@ -21,35 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
-
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
 
 /**
- * Test case for {@link DoubleOf}.
+ * Bytes.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.20.2
  */
-public final class DoubleOfTest {
-
-    @Test
-    public strictfp void numberTest() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse double number",
-            new DoubleOf("185.65156465123").value(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(185.65156465123)
-        );
-    }
-
-    @Test(expected = NumberFormatException.class)
-    public void failsIfTextDoesNotRepresentADouble() throws IOException {
-        new DoubleOf("abc").value();
-    }
-}
+package org.cactoos.bytes;

@@ -21,35 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
-
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
 
 /**
- * Test case for {@link FloatOf}.
+ * Bytes, tests.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.20.2
  */
-public final class FloatOfTest {
-
-    @Test
-    public strictfp void numberTest() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse float number",
-            new FloatOf("1656.894").value(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(1656.894F)
-        );
-    }
-
-    @Test(expected = NumberFormatException.class)
-    public void failsIfTextDoesNotRepresentAFloat() throws IOException {
-        new FloatOf("abc").value();
-    }
-}
+package org.cactoos.bytes;

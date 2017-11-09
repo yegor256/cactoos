@@ -21,59 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
-import org.cactoos.func.MaxFunc;
-import org.cactoos.iterable.IterableOf;
+package org.cactoos.text;
+
+import java.io.IOException;
+import org.cactoos.Text;
+import org.cactoos.bytes.BytesBase64;
+import org.cactoos.io.BytesOf;
 
 /**
- * Find the greater among items.
+ * Encodes the origin text using the Base64 encoding scheme.
  *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
- * @see UncheckedScalar
- * @see IoCheckedScalar
- * @since 0.10
+ * @since 0.20.2
  */
-public final class Max<T extends Comparable<T>> implements Scalar<T> {
+public final class TextBase64 implements Text {
 
     /**
-     * Items.
+     * Origin text.
      */
-    private final Scalar<T> result;
+    private final Text origin;
 
     /**
      * Ctor.
-     * @param scalars The items
+     *
+     * @param input The String
      */
-    @SafeVarargs
-    public Max(final Scalar<T>... scalars) {
-        this(new IterableOf<>(scalars));
+    public TextBase64(final String input) {
+        this(new TextOf(input));
     }
 
     /**
      * Ctor.
-     * @param iterable The items
+     *
+     * @param origin Origin text
      */
-    public Max(final Iterable<Scalar<T>> iterable) {
-        this.result = new Folded<>(
-            new MaxFunc<>(),
-            iterable
-        );
+    public TextBase64(final Text origin) {
+        this.origin = origin;
     }
 
     @Override
-    public T value() throws Exception {
-        return this.result.value();
+    public String asString() throws IOException {
+        return new TextOf(
+            new BytesBase64(
+                new BytesOf(this.origin)
+            )
+        ).asString();
     }
 
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
+    }
 }

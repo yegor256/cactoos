@@ -21,51 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.func;
 
-import java.util.Iterator;
-import org.cactoos.Scalar;
+import org.cactoos.BiFunc;
 
 /**
- * Real total of numbers.
+ * Function, finding max among two items.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Alexander Dyadyushenko (gookven@gmail.com)
  * @version $Id$
+ * @param <T> comparable type
  * @since 0.9
  */
-public final class SumOfReals implements Scalar<Double> {
-
-    /**
-     * The iterable.
-     */
-    private final Iterable<Scalar<Number>> src;
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    @SafeVarargs
-    public SumOfReals(final Scalar<Number>... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The iterable
-     */
-    public SumOfReals(final Iterable<Scalar<Number>> src) {
-        this.src = src;
-    }
-
+public final class MaxFunc<T extends Comparable<T>> implements BiFunc<T, T, T> {
     @Override
-    public Double value() throws Exception {
-        final Iterator<Scalar<Number>> numbers = this.src.iterator();
-        double result = 0.0d;
-        while (numbers.hasNext()) {
-            result += numbers.next().value().doubleValue();
+    public T apply(final T first, final T second) throws Exception {
+        T max = first;
+        if (second.compareTo(max) > 0) {
+            max = second;
         }
-        return result;
+        return max;
     }
 }

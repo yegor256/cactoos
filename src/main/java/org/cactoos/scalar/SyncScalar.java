@@ -28,6 +28,11 @@ import org.cactoos.Scalar;
 /**
  * Scalar that is thread-safe.
  *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
+ *
  * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
  * @param <T> Type of result

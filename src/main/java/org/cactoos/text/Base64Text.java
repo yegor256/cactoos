@@ -21,51 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
 
-import java.util.Iterator;
-import org.cactoos.Scalar;
+package org.cactoos.text;
+
+import java.io.IOException;
+import org.cactoos.Text;
+import org.cactoos.bytes.Base64Bytes;
+import org.cactoos.io.BytesOf;
 
 /**
- * Int total of numbers.
+ * Decodes the origin text using the Base64 encoding scheme.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.20.2
  */
-public final class SumOfInts implements Scalar<Long> {
+public final class Base64Text implements Text {
 
     /**
-     * The iterable.
+     * Origin text.
      */
-    private final Iterable<Scalar<Number>> src;
+    private final Text origin;
 
     /**
      * Ctor.
-     * @param src Numbers
+     *
+     * @param input The String
      */
-    @SafeVarargs
-    public SumOfInts(final Scalar<Number>... src) {
-        this(new IterableOf<>(src));
+    public Base64Text(final String input) {
+        this(new TextOf(input));
     }
 
     /**
      * Ctor.
-     * @param src The iterable
+     *
+     * @param origin Origin text
      */
-    public SumOfInts(final Iterable<Scalar<Number>> src) {
-        this.src = src;
+    public Base64Text(final Text origin) {
+        this.origin = origin;
     }
 
     @Override
-    public Long value() throws Exception {
-        final Iterator<Scalar<Number>> numbers = this.src.iterator();
-        Long result =  0L;
-        while (numbers.hasNext()) {
-            result += numbers.next().value().longValue();
-        }
-        return result;
+    public String asString() throws IOException {
+        return new TextOf(
+            new Base64Bytes(
+                new BytesOf(this.origin)
+            )
+        ).asString();
+    }
+
+    @Override
+    public int compareTo(final Text text) {
+        return new UncheckedText(this).compareTo(text);
     }
 }

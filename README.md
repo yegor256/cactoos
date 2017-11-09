@@ -5,7 +5,7 @@
 
 [![Build Status](https://travis-ci.org/yegor256/cactoos.svg?branch=master)](https://travis-ci.org/yegor256/cactoos)
 [![Build status](https://ci.appveyor.com/api/projects/status/8vs8huy61og6jwif?svg=true)](https://ci.appveyor.com/project/yegor256/cactoos)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/org.cactoos/cactoos/badge.svg?color=blue&prefix=v)](http://www.javadoc.io/doc/org.cactoos/cactoos)
+[![Javadoc](http://www.javadoc.io/badge/org.cactoos/cactoos.svg)](http://www.javadoc.io/doc/org.cactoos/cactoos)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/cactoos)](http://www.0pdd.com/p?name=yegor256/cactoos)
 [![Maven Central](https://img.shields.io/maven-central/v/org.cactoos/cactoos.svg)](https://maven-badges.herokuapp.com/maven-central/org.cactoos/cactoos)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/cactoos/blob/master/LICENSE.txt)
@@ -241,6 +241,10 @@ Cactoos | Guava | Apache Commons | JDK 8
 `TrimmedRightText` | - | `StringUtils.stripEnd()` | -
 `TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
 `UpperText` | - | - | `String#toUpperCase()`
+
+## Questions
+
+Ask your questions related to cactoos library on [Stackoverflow](https://stackoverflow.com/questions/ask) with [cactoos](https://stackoverflow.com/tags/cactoos/info) tag.
 
 ## How to contribute?
 

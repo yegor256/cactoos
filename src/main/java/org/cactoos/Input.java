@@ -36,15 +36,17 @@ import java.io.InputStream;
  *   new InputOf(new File("/tmp/names.txt"))
  * ).asString();</pre>
  *
- * <p>Here {@link InputOf} implements {@link Input} and behaves like
- * one, providing read-only access to the encapsulated {@link java.io.File}.</p>
+ * <p>Here {@link org.cactoos.io.InputOf} implements
+ * {@link Input} and behaves like
+ * one, providing read-only access to
+ * the encapsulated {@link java.io.File}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @see InputOf
+ * @see org.cactoos.io.InputOf
  * @since 0.1
  */
 public interface Input {

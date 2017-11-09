@@ -21,47 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.io;
 
-import org.cactoos.Scalar;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link SumOfReals}.
- *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * Test case for {@link Directory}.
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class SumOfRealsTest {
+public final class DirectoryTest {
 
     @Test
-    public void withVarargsCtor() throws Exception {
+    public void listsFilesInDirectory() throws IOException {
+        final Path dir = Files.createTempDirectory("x1");
+        dir.resolve("x/y").toFile().mkdirs();
+        Files.write(dir.resolve("x/y/test"), "".getBytes());
         MatcherAssert.assertThat(
-            new SumOfReals(
-                () -> 1.2,
-                () -> 2.5,
-                () -> 3.3
-            ).value(),
-            Matchers.closeTo(7.0, 0.0)
+            "Can't list files in a directory",
+            new Directory(dir),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.iterableWithSize(4)
         );
     }
 
-    @Test
-    public void withIterCtor() throws Exception {
-        MatcherAssert.assertThat(
-            new SumOfReals(
-                new IterableOf<Scalar<Number>>(
-                    () -> 7.1,
-                    () -> 8.1,
-                    () -> 10.1
-                )
-            ).value(),
-            Matchers.closeTo(25.0, 0.3)
-        );
-    }
 }

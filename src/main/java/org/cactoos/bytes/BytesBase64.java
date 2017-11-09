@@ -21,49 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+
+package org.cactoos.bytes;
 
 import java.io.IOException;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
-import org.cactoos.text.TextOf;
+import java.util.Base64;
+import org.cactoos.Bytes;
 
 /**
- * Text as {@link Long}.
+ * Encodes all origin bytes using the Base64 encoding scheme.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.20.2
  */
-public final class LongOf implements Scalar<Long> {
+public final class BytesBase64 implements Bytes {
 
     /**
-     * Source text.
+     * Origin bytes.
      */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     *
-     * @param string Number-string
-     */
-    public LongOf(final String string) {
-        this(new TextOf(string));
-    }
+    private final Bytes origin;
 
     /**
      * Ctor.
-     *
-     * @param text Number-text
+     * @param origin Origin bytes.
      */
-    public LongOf(final Text text) {
-        this.origin = text;
+    public BytesBase64(final Bytes origin) {
+        this.origin = origin;
     }
 
     @Override
-    public Long value() throws IOException {
-        return Long.valueOf(this.origin.asString());
+    public byte[] asBytes() throws IOException {
+        return Base64.getEncoder().encode(this.origin.asBytes());
     }
 }

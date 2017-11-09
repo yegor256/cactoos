@@ -21,49 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+
+package org.cactoos.bytes;
 
 import java.io.IOException;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
-import org.cactoos.text.TextOf;
+import org.cactoos.io.BytesOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Text as {@link Float}.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Kirill (g4s8.public@gmail.com)
+ * Test case for {@link org.cactoos.bytes.BytesBase64}.
+ * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.20.2
  */
-public final class FloatOf implements Scalar<Float> {
+public final class BytesBase64Test {
 
     /**
-     * Source text.
+     * Check bytes encodes using the Base64 encoding scheme.
+     * @throws IOException If fails.
      */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     *
-     * @param string Number-string
-     */
-    public FloatOf(final String string) {
-        this(new TextOf(string));
+    @Test
+    public void checkEncode() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't encodes bytes using the Base64 encoding scheme",
+            new BytesBase64(
+                new BytesOf(
+                    "Hello!"
+                )
+            ).asBytes(),
+            Matchers.equalTo(
+                new BytesOf("SGVsbG8h").asBytes()
+            )
+        );
     }
 
-    /**
-     * Ctor.
-     *
-     * @param text Number-text
-     */
-    public FloatOf(final Text text) {
-        this.origin = text;
-    }
-
-    @Override
-    public Float value() throws IOException {
-        return Float.valueOf(this.origin.asString());
-    }
 }

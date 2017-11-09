@@ -26,6 +26,11 @@ package org.cactoos;
 /**
  * Function that accepts two arguments.
  *
+ * <p>If you don't want to have any checked exceptions being thrown
+ * out of your {@link BiFunc}, you can use
+ * {@link org.cactoos.func.UncheckedBiFunc} decorator. Also
+ * you may try {@link org.cactoos.func.IoCheckedBiFunc}.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)

@@ -29,6 +29,10 @@ import org.cactoos.text.UncheckedText;
 /**
  * Text.
  *
+ * <p>If you don't want to have any checked exceptions being thrown
+ * out of your {@link Text}, you can use
+ * {@link UncheckedText} decorator.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)

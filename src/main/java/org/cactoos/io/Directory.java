@@ -21,59 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.io;
 
-import org.cactoos.Scalar;
-import org.cactoos.func.MaxFunc;
-import org.cactoos.iterable.IterableOf;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Iterator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
- * Find the greater among items.
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
+ * Files in a directory.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
- * @see UncheckedScalar
- * @see IoCheckedScalar
- * @since 0.10
+ * @since 0.21
  */
-public final class Max<T extends Comparable<T>> implements Scalar<T> {
+public final class Directory implements Iterable<Path> {
 
     /**
-     * Items.
+     * Path of the directory.
      */
-    private final Scalar<T> result;
+    private final Path dir;
 
     /**
      * Ctor.
-     * @param scalars The items
+     * @param path Path of the dir
      */
-    @SafeVarargs
-    public Max(final Scalar<T>... scalars) {
-        this(new IterableOf<>(scalars));
+    public Directory(final File path) {
+        this(path.toPath());
     }
 
     /**
      * Ctor.
-     * @param iterable The items
+     * @param path Path of the dir
      */
-    public Max(final Iterable<Scalar<T>> iterable) {
-        this.result = new Folded<>(
-            new MaxFunc<>(),
-            iterable
-        );
+    public Directory(final Path path) {
+        this.dir = path;
     }
 
     @Override
-    public T value() throws Exception {
-        return this.result.value();
+    public Iterator<Path> iterator() {
+        try (final Stream<Path> files = Files.walk(this.dir)) {
+            return files.collect(Collectors.toList()).iterator();
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
 }
