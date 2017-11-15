@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
+import org.cactoos.BiFunc;
 import org.cactoos.Func;
 
 /**
@@ -54,25 +55,10 @@ public final class IoCheckedFunc<X, Y> implements Func<X, Y> {
     }
 
     @Override
-    @SuppressWarnings
-        (
-            {
-                "PMD.AvoidCatchingGenericException",
-                "PMD.AvoidRethrowingException"
-            }
-        )
     public Y apply(final X input) throws IOException {
-        try {
-            return this.func.apply(input);
-        } catch (final IOException ex) {
-            throw ex;
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IOException(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IOException(ex);
-        }
+        return new IoCheckedBiFunc<>(
+            (BiFunc<X, Boolean, Y>) (first, second) -> this.func.apply(first)
+        ).apply(input, true);
     }
 
 }

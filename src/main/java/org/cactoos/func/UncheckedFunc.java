@@ -23,8 +23,7 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
+import org.cactoos.BiFunc;
 import org.cactoos.Func;
 
 /**
@@ -55,11 +54,9 @@ public final class UncheckedFunc<X, Y> implements Func<X, Y> {
 
     @Override
     public Y apply(final X input) {
-        try {
-            return new IoCheckedFunc<>(this.func).apply(input);
-        } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
-        }
+        return new UncheckedBiFunc<>(
+            (BiFunc<X, Boolean, Y>) (first, second) -> this.func.apply(first)
+        ).apply(input, true);
     }
 
 }
