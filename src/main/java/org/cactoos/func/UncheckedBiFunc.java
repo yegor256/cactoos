@@ -55,20 +55,11 @@ public final class UncheckedBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
     }
 
     @Override
-    @SuppressWarnings(
-        {
-            "PMD.AvoidRethrowingException",
-            "PMD.AvoidCatchingGenericException"
-        }
-    )
     public Z apply(final X first, final Y second) {
         try {
             return new IoCheckedBiFunc<>(this.func).apply(first, second);
         } catch (final IOException ex) {
             throw new UncheckedIOException(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final RuntimeException ex) {
-            throw ex;
         }
     }
 }

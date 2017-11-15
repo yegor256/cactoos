@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedFunc;
 
 /**
  * Scalar that doesn't throw checked {@link Exception}.
@@ -54,11 +54,9 @@ public final class UncheckedScalar<T> implements Scalar<T> {
 
     @Override
     public T value() {
-        try {
-            return new IoCheckedScalar<>(this.origin).value();
-        } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
-        }
+        return new UncheckedFunc<>(
+            (Func<Boolean, T>) input -> this.origin.value()
+        ).apply(true);
     }
 
 }

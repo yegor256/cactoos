@@ -57,9 +57,17 @@ public final class IoCheckedBiFuncTest {
     public void throwsException() throws Exception {
         new IoCheckedBiFunc<>(
             (fst, scd) -> {
-                throw new Exception();
+                throw new Exception("intended to fail");
             }
         ).apply(1, 2);
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() throws IOException {
+        new IoCheckedBiFunc<>(
+            (fst, scd) -> {
+                throw new IllegalStateException("intended to fail here");
+            }
+        ).apply(1, 2);
+    }
 }
