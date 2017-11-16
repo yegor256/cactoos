@@ -73,12 +73,8 @@ To write a text into a file:
 ```java
 new LengthOf(
   new TeeInput(
-    new InputOf(
-      "Hello, world!"
-    ),
-    new OutputTo(
-      new File("/code/a.txt")
-    )
+    "Hello, world!",
+    new File("/code/a.txt")
   )
 ).value();
 ```
@@ -122,8 +118,8 @@ To filter a collection:
 ```java
 Collection<String> filtered = new ListOf<>(
   new Filtered<>(
-    new IterableOf<>("hello", "world", "dude"),
-    s -> s.length() > 4
+    s -> s.length() > 4,
+    new IterableOf<>("hello", "world", "dude")
   )
 );
 ```
@@ -133,12 +129,12 @@ To iterate a collection:
 ```java
 new And(
   new Mapped<>(
-    new IterableOf<>("how", "are", "you"),
     new FuncOf<>(
       input -> {
         System.out.printf("Item: %s\n", input);
       }
-    )
+    ),
+    new IterableOf<>("how", "are", "you")
   )
 ).value();
 ```
