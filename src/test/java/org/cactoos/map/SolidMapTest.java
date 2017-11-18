@@ -21,48 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.map;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import org.cactoos.scalar.StickyScalar;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Iterable that returns the same set of elements, always.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link SolidMap}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.1
+ * @since 0.24
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class StickyIterable<X> extends IterableEnvelope<X> {
+public final class SolidMapTest {
 
-    /**
-     * Ctor.
-     * @param src The underlying iterable
-     */
-    @SafeVarargs
-    public StickyIterable(final X... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param iterable The iterable
-     */
-    public StickyIterable(final Iterable<X> iterable) {
-        super(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    for (final X item : iterable) {
-                        temp.add(item);
-                    }
-                    return temp;
-                }
-            )
+    @Test
+    public void behavesAsMap() {
+        MatcherAssert.assertThat(
+            "Can't behave as a map",
+            new SolidMap<Integer, Integer>(
+                new MapEntry<>(0, -1),
+                new MapEntry<>(1, 1)
+            ),
+            new BehavesAsMap<>(0, 1)
         );
     }
 

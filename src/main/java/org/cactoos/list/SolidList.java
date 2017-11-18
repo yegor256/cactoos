@@ -21,49 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.list;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import org.cactoos.scalar.StickyScalar;
+import java.util.Iterator;
+import org.cactoos.iterable.IterableOf;
 
 /**
- * Iterable that returns the same set of elements, always.
+ * A {@link java.util.List} that is both synchronized and sticky.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>Objects of this class are thread-safe.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
- * @since 0.1
+ * @since 0.24
  */
-public final class StickyIterable<X> extends IterableEnvelope<X> {
+public final class SolidList<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
-     * @param src The underlying iterable
+     * @param items The array
      */
     @SafeVarargs
-    public StickyIterable(final X... src) {
-        this(new IterableOf<>(src));
+    public SolidList(final X... items) {
+        this(new IterableOf<>(items));
     }
 
     /**
      * Ctor.
-     * @param iterable The iterable
+     * @param items The array
      */
-    public StickyIterable(final Iterable<X> iterable) {
-        super(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    for (final X item : iterable) {
-                        temp.add(item);
-                    }
-                    return temp;
-                }
-            )
-        );
+    public SolidList(final Iterable<X> items) {
+        this(new ListOf<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param items The array
+     * @since 0.21
+     */
+    public SolidList(final Iterator<X> items) {
+        this(new ListOf<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param list The iterable
+     */
+    public SolidList(final Collection<X> list) {
+        super(() -> new SyncList<>(new StickyList<>(list)));
     }
 
 }

@@ -46,6 +46,15 @@ public final class SyncIterable<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
+     * @param src The underlying iterable
+     */
+    @SafeVarargs
+    public SyncIterable(final X... src) {
+        this(new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
      * @param iterable The iterable
      */
     public SyncIterable(final Iterable<X> iterable) {
