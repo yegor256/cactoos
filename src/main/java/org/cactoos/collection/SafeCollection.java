@@ -24,58 +24,53 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
 
 /**
- * Reversed collection.
+ * A {@link Collection} that is both synchronized and sticky.
  *
- * <p>Pay attention that sorting will happen on each operation
- * with the collection. Every time you touch it, it will fetch the
- * entire collection from the encapsulated object and reverse it. If you
- * want to avoid that "side-effect", decorate it with
- * {@link StickyCollection}.</p>
+ * <p>Objects of this class are thread-safe.</p>
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @since 1.16
+ * @param <T> List type
+ * @see StickyCollection
+ * @since 0.24
  */
-public final class Reversed<X> extends CollectionEnvelope<X> {
+public final class SafeCollection<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
-     * @param src Source collection
-     * @since 0.23
+     * @param array An array of some elements
      */
     @SafeVarargs
-    public Reversed(final X... src) {
+    public SafeCollection(final T... array) {
+        this(new IterableOf<>(array));
+    }
+
+    /**
+     * Ctor.
+     * @param src An {@link Iterator}
+     */
+    public SafeCollection(final Iterator<T> src) {
         this(new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param src Source collection
+     * @param src An {@link Iterator}
      */
-    public Reversed(final Iterable<X> src) {
+    public SafeCollection(final Iterable<T> src) {
         this(new CollectionOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param src Source collection
+     * @param src An {@link Iterable}
      */
-    public Reversed(final Collection<X> src) {
-        super(() -> {
-            final List<X> items = new LinkedList<>();
-            items.addAll(src);
-            Collections.reverse(items);
-            return items;
-        });
+    public SafeCollection(final Collection<T> src) {
+        super(() -> new SyncCollection<T>(new StickyCollection<>(src)));
     }
 
 }

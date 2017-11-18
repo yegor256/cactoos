@@ -23,12 +23,11 @@
  */
 package org.cactoos.collection;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 
 /**
@@ -69,7 +68,10 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
      */
     @SuppressWarnings("unchecked")
     public Sorted(final Iterable<T> src) {
-        this((Comparator<T>) Comparator.naturalOrder(), new ListOf<>(src));
+        this(
+            (Comparator<T>) Comparator.naturalOrder(),
+            new CollectionOf<>(src)
+        );
     }
 
     /**
@@ -79,7 +81,7 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
      */
     @SafeVarargs
     public Sorted(final Comparator<T> cmp, final T... src) {
-        this(cmp, new ListOf<>(src));
+        this(cmp, new CollectionOf<>(src));
     }
 
     /**
@@ -89,7 +91,7 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
      * @since 0.23
      */
     public Sorted(final Comparator<T> cmp, final Iterator<T> src) {
-        this(cmp, new IterableOf<>(src));
+        this(cmp, new CollectionOf<>(src));
     }
 
     /**
@@ -98,7 +100,7 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
      * @param cmp The comparator
      */
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
-        this(cmp, new ListOf<>(src));
+        this(cmp, new CollectionOf<>(src));
     }
 
     /**
@@ -108,7 +110,7 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
      */
     public Sorted(final Comparator<T> cmp, final Collection<T> src) {
         super(() -> {
-            final List<T> items = new LinkedList<>();
+            final List<T> items = new ArrayList<>(src.size());
             items.addAll(src);
             items.sort(cmp);
             return items;

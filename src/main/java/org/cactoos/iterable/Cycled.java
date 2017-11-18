@@ -54,7 +54,7 @@ public final class Cycled<T> extends IterableEnvelope<T> {
      * @since 0.21
      */
     public Cycled(final Iterator<T> itr) {
-        this(() -> itr);
+        this(new IterableOf<T>(itr));
     }
 
     /**

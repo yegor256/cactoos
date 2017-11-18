@@ -23,63 +23,25 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collection;
-import java.util.Iterator;
-import org.cactoos.Func;
-import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Mapped collection.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test Case for {@link SafeCollection}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.14
+ * @since 0.24
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
+public final class SafeCollectionTest {
 
-    /**
-     * Ctor.
-     * @param src Source collection
-     * @param fnc Func
-     * @since 0.23
-     */
-    @SafeVarargs
-    public Mapped(final Func<X, Y> fnc, final X... src) {
-        this(fnc, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Source collection
-     * @param fnc Func
-     * @since 0.23
-     */
-    public Mapped(final Func<X, Y> fnc, final Iterator<X> src) {
-        this(fnc, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Source collection
-     * @param fnc Func
-     */
-    public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
-        this(fnc, new CollectionOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Source collection
-     * @param fnc Func
-     */
-    public Mapped(final Func<X, Y> fnc, final Collection<X> src) {
-        super(() -> new CollectionOf<Y>(
-            new org.cactoos.iterable.Mapped<X, Y>(fnc, src)
-        ));
+    @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection",
+            new SafeCollection<>(1, 2, 0, -1),
+            new BehavesAsCollection<>(-1)
+        );
     }
 
 }

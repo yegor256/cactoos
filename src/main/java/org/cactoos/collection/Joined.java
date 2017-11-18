@@ -23,8 +23,6 @@
  */
 package org.cactoos.collection;
 
-import org.cactoos.list.ListOf;
-
 /**
  * Joined collection.
  *
@@ -43,7 +41,7 @@ public final class Joined<X> extends CollectionEnvelope<X> {
      */
     @SafeVarargs
     public Joined(final Iterable<X>... list) {
-        this(new ListOf<>(list));
+        this(new CollectionOf<>(list));
     }
 
     /**

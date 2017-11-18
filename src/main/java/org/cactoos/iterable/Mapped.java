@@ -37,17 +37,7 @@ import org.cactoos.Func;
  * @param <Y> Type of target item
  * @since 0.1
  */
-public final class Mapped<X, Y> implements Iterable<Y> {
-
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
+public final class Mapped<X, Y> extends IterableEnvelope<Y> {
 
     /**
      * Ctor.
@@ -74,15 +64,9 @@ public final class Mapped<X, Y> implements Iterable<Y> {
      * @param src Source iterable
      */
     public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
-        this.iterable = src;
-        this.func = fnc;
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new org.cactoos.iterator.Mapped<>(
-            this.func, this.iterable.iterator()
-        );
+        super(() -> () -> new org.cactoos.iterator.Mapped<>(
+            fnc, src.iterator()
+        ));
     }
 
 }

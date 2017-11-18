@@ -39,7 +39,7 @@ import org.cactoos.scalar.SyncScalar;
  * its content on every call, by doing round-trips to
  * the encapsulated iterable, use {@link StickyCollection}.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>Objects of this class are thread-safe.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
@@ -63,7 +63,7 @@ public final class SyncCollection<T> extends CollectionEnvelope<T> {
      * @param src An {@link Iterator}
      */
     public SyncCollection(final Iterator<T> src) {
-        this(() -> src);
+        this(new IterableOf<>(src));
     }
 
     /**
@@ -71,11 +71,17 @@ public final class SyncCollection<T> extends CollectionEnvelope<T> {
      * @param src An {@link Iterable}
      */
     public SyncCollection(final Iterable<T> src) {
+        this(new CollectionOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src An {@link Iterable}
+     */
+    public SyncCollection(final Collection<T> src) {
         super(
             new SyncScalar<>(
-                () -> Collections.synchronizedCollection(
-                    new CollectionOf<>(src)
-                )
+                () -> Collections.synchronizedCollection(src)
             )
         );
     }

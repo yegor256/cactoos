@@ -32,9 +32,16 @@ import org.cactoos.scalar.SyncScalar;
 /**
  * Synchronized list.
  *
+ * <p>This class should be used very carefully. You must understand that
+ * it will fetch the entire content of the encapsulated {@link Iterable} on each
+ * method call. It doesn't cache the data anyhow. If you don't
+ * need this {@link java.util.List} to re-fresh
+ * its content on every call, by doing round-trips to
+ * the encapsulated iterable, use {@link StickyList}.</p>
+
  * <p>The list is read only.</p>
  *
- * <p>This list is thread-safe.</p>
+ * <p>Objects of this class are thread-safe.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$

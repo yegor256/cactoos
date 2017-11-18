@@ -64,7 +64,7 @@ public final class CollectionOf<T> extends CollectionEnvelope<T> {
      * @since 0.21
      */
     public CollectionOf(final Iterator<T> src) {
-        this(() -> src);
+        this(new IterableOf<>(src));
     }
 
     /**

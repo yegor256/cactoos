@@ -23,9 +23,9 @@
  */
 package org.cactoos.collection;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -69,7 +69,7 @@ public final class Shuffled<T> extends CollectionEnvelope<T> {
      */
     public Shuffled(final Collection<T> src) {
         super(() -> {
-            final List<T> items = new LinkedList<>();
+            final List<T> items = new ArrayList<>(src.size());
             items.addAll(src);
             Collections.shuffle(items);
             return items;

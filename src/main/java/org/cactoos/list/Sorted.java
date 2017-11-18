@@ -23,11 +23,11 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -103,7 +103,7 @@ public final class Sorted<T> extends ListEnvelope<T> {
      */
     public Sorted(final Comparator<T> cmp, final Collection<T> src) {
         super(() -> {
-            final List<T> items = new LinkedList<>();
+            final List<T> items = new ArrayList<>(src.size());
             items.addAll(src);
             items.sort(cmp);
             return Collections.unmodifiableList(items);

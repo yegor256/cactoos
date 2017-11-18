@@ -23,12 +23,11 @@
  */
 package org.cactoos.collection;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.list.ListOf;
 import org.cactoos.scalar.StickyScalar;
 
 /**
@@ -58,7 +57,7 @@ public final class StickyCollection<E> extends CollectionEnvelope<E> {
      * @since 0.21
      */
     public StickyCollection(final Iterator<E> items) {
-        this(() -> items);
+        this(new IterableOf<>(items));
     }
 
     /**
@@ -66,7 +65,7 @@ public final class StickyCollection<E> extends CollectionEnvelope<E> {
      * @param items The array
      */
     public StickyCollection(final Iterable<E> items) {
-        this(new ListOf<>(items));
+        this(new CollectionOf<>(items));
     }
 
     /**
@@ -77,7 +76,7 @@ public final class StickyCollection<E> extends CollectionEnvelope<E> {
         super(
             new StickyScalar<>(
                 () -> {
-                    final Collection<E> temp = new LinkedList<>();
+                    final Collection<E> temp = new ArrayList<>(list.size());
                     temp.addAll(list);
                     return Collections.unmodifiableCollection(temp);
                 }

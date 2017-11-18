@@ -26,7 +26,6 @@ package org.cactoos.collection;
 import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.list.ListOf;
 
 /**
  * Limited collection.
@@ -67,7 +66,7 @@ public final class Limited<X> extends CollectionEnvelope<X> {
      * @param lmt Requested number of elements
      */
     public Limited(final int lmt, final Iterable<X> src) {
-        this(lmt, new ListOf<>(src));
+        this(lmt, new CollectionOf<>(src));
     }
 
     /**
