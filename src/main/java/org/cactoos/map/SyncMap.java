@@ -30,7 +30,7 @@ import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 
 /**
  * Map decorator that goes through the map only once.
@@ -43,16 +43,16 @@ import org.cactoos.scalar.StickyScalar;
  * @version $Id$
  * @param <X> Type of key
  * @param <Y> Type of value
- * @since 0.8
+ * @since 0.24
  */
-public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
+public final class SyncMap<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
      * @param list List of entries
      */
     @SafeVarargs
-    public StickyMap(final Map.Entry<X, Y>... list) {
+    public SyncMap(final Map.Entry<X, Y>... list) {
         this(new IterableOf<>(list));
     }
 
@@ -60,10 +60,9 @@ public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param map The map to extend
      * @param list List of entries
-     * @since 0.12
      */
     @SafeVarargs
-    public StickyMap(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
+    public SyncMap(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
         this(map, new IterableOf<>(list));
     }
 
@@ -74,10 +73,9 @@ public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
      * @param key Func to create key
      * @param value Func to create value
      * @param <Z> Type of items in the list
-     * @since 0.12
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public <Z> StickyMap(final Map<X, Y> map,
+    public <Z> SyncMap(final Map<X, Y> map,
         final Iterable<Z> list, final Func<Z, X> key,
         final Func<Z, Y> value) {
         this(
@@ -92,9 +90,8 @@ public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
      * @param key Func to create key
      * @param value Func to create value
      * @param <Z> Type of items in the list
-     * @since 0.11
      */
-    public <Z> StickyMap(final Iterable<Z> list, final Func<Z, X> key,
+    public <Z> SyncMap(final Iterable<Z> list, final Func<Z, X> key,
         final Func<Z, Y> value) {
         this(list, item -> new MapEntry<>(key.apply(item), value.apply(item)));
     }
@@ -104,9 +101,8 @@ public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
      * @param list List of items
      * @param entry Func to create entry
      * @param <Z> Type of items in the list
-     * @since 0.11
      */
-    public <Z> StickyMap(final Iterable<Z> list,
+    public <Z> SyncMap(final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
         this(new Mapped<>(entry, list));
     }
@@ -117,9 +113,8 @@ public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
      * @param list List of items
      * @param entry Func to create entry
      * @param <Z> Type of items in the list
-     * @since 0.12
      */
-    public <Z> StickyMap(final Map<X, Y> map, final Iterable<Z> list,
+    public <Z> SyncMap(final Map<X, Y> map, final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
         this(map, new Mapped<>(entry, list));
     }
@@ -128,16 +123,15 @@ public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param list Entries for the entries
      */
-    public StickyMap(final Iterable<Map.Entry<X, Y>> list) {
+    public SyncMap(final Iterable<Map.Entry<X, Y>> list) {
         this(new MapOf<>(list));
     }
 
     /**
      * Ctor.
      * @param list Entries for the entries
-     * @since 0.21
      */
-    public StickyMap(final Iterator<Map.Entry<X, Y>> list) {
+    public SyncMap(final Iterator<Map.Entry<X, Y>> list) {
         this(() -> list);
     }
 
@@ -145,9 +139,8 @@ public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param map Pre-existing map we want to extend
      * @param list Entries for the entries
-     * @since 0.12
      */
-    public StickyMap(final Map<X, Y> map,
+    public SyncMap(final Map<X, Y> map,
         final Iterable<Map.Entry<X, Y>> list) {
         this(new MapOf<>(map, list));
     }
@@ -156,9 +149,9 @@ public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param map The map
      */
-    public StickyMap(final Map<X, Y> map) {
+    public SyncMap(final Map<X, Y> map) {
         super(
-            new StickyScalar<>(
+            new SyncScalar<>(
                 () -> {
                     final Map<X, Y> temp = new HashMap<>(0);
                     temp.putAll(map);

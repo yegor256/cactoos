@@ -21,44 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.map;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Joined list.
+ * Test case for {@link StickyMap}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of source item
- * @since 0.20
+ * @since 0.24
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class Joined<X> extends ListEnvelope<X> {
+public final class SyncMapTest {
 
-    /**
-     * Ctor.
-     * @param src Source lists
-     */
-    @SafeVarargs
-    @SuppressWarnings("PMD.UseVarargs")
-    public Joined(final List<X>... src) {
-        this(new ListOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Source lists
-     */
-    public Joined(final Iterable<List<X>> src) {
-        super(() -> Collections.unmodifiableList(
-            new ListOf<>(src).stream()
-                .flatMap(List::stream)
-                .collect(Collectors.toList())
-            )
+    @Test
+    public void behavesAsMap() {
+        MatcherAssert.assertThat(
+            "Can't behave as a map",
+            new SyncMap<Integer, Integer>(
+                new MapEntry<>(0, -1),
+                new MapEntry<>(1, 1)
+            ),
+            new BehavesAsMap<>(0, 1)
         );
     }
 
