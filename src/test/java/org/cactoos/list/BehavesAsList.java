@@ -23,59 +23,49 @@
  */
 package org.cactoos.list;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.Text;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.text.TextOf;
-import org.cactoos.text.UpperText;
+import java.util.List;
+import org.cactoos.collection.BehavesAsCollection;
+import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Test case for {@link Mapped}.
+ * Matcher for collection.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.14
+ * @param <E> Type of source item
+ * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class MappedTest {
+public final class BehavesAsList<E> extends TypeSafeMatcher<List<E>>  {
 
-    @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't behave as a list",
-            new Mapped<Integer, Integer>(
-                i -> i + 1,
-                new IterableOf<>(-1, 1, 1)
-            ),
-            new BehavesAsList<>(0)
-        );
+    /**
+     * Sample item.
+     */
+    private final E sample;
+
+    /**
+     * Ctor.
+     * @param item Sample item
+     */
+    public BehavesAsList(final E item) {
+        super();
+        this.sample = item;
     }
 
-    @Test
-    public void transformsList() throws IOException {
+    @Override
+    public boolean matchesSafely(final List<E> list) {
+        MatcherAssert.assertThat(list.get(0), Matchers.notNullValue());
         MatcherAssert.assertThat(
-            "Can't transform an iterable",
-            new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
-                new IterableOf<>("hello", "world", "друг")
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
+            list.indexOf(this.sample),
+            Matchers.greaterThanOrEqualTo(0)
         );
+        return new BehavesAsCollection<E>(this.sample).matchesSafely(list);
     }
 
-    @Test
-    public void transformsEmptyList() {
-        MatcherAssert.assertThat(
-            "Can't transform an empty iterable",
-            new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
-                Collections.emptyList()
-            ),
-            Matchers.emptyIterable()
-        );
+    @Override
+    public void describeTo(final Description desc) {
+        desc.appendText("not a valid list");
     }
-
 }

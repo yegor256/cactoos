@@ -40,6 +40,18 @@ import org.junit.Test;
 public final class JoinedTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a list",
+            new Joined<Integer>(
+                new ListOf<>(1, 2),
+                new ListOf<>(3, 4)
+            ),
+            new BehavesAsList<>(2)
+        );
+    }
+
+    @Test
     public void size() throws Exception {
         MatcherAssert.assertThat(
             new Joined<Integer>(
@@ -54,7 +66,7 @@ public final class JoinedTest {
     public void isEmpty() throws Exception {
         MatcherAssert.assertThat(
             new Joined<Integer>(
-                new ListOf<>(5, 6)
+                new ListOf<Integer>(5, 6)
             ).isEmpty(),
             Matchers.equalTo(false)
         );
@@ -97,12 +109,12 @@ public final class JoinedTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void add() throws Exception {
-        new Joined<String>(new ListOf<>("add0")).add("new add0");
+        new Joined<String>(new ListOf<String>("add0")).add("new add0");
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void remove() throws Exception {
-        new Joined<String>(new ListOf<>("remove")).remove("new remove");
+        new Joined<String>(new ListOf<String>("remove")).remove("new remove");
     }
 
     @Test
@@ -121,21 +133,21 @@ public final class JoinedTest {
     @Test(expected = UnsupportedOperationException.class)
     public void addAll() throws Exception {
         new Joined<String>(
-            new ListOf<>("addAll")
+            new ListOf<String>("addAll")
         ).addAll(new ListOf<>("new addAll"));
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void addAllSecond() throws Exception {
         new Joined<String>(
-            new ListOf<>("addAll1")
+            new ListOf<String>("addAll1")
         ).addAll(22, new ListOf<>("new addAll1"));
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void removeAll() throws Exception {
         new Joined<String>(
-            new ListOf<>("removeAll")
+            new ListOf<String>("removeAll")
         ).removeAll(new ListOf<>("new removeAll"));
     }
 
@@ -146,7 +158,7 @@ public final class JoinedTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void clear() throws Exception {
-        new Joined<String>(new ListOf<>("clear")).clear();
+        new Joined<String>(new ListOf<String>("clear")).clear();
     }
 
     @Test
@@ -163,12 +175,12 @@ public final class JoinedTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void set() throws Exception {
-        new Joined<String>(new ListOf<>("set")).set(33, "new set");
+        new Joined<String>(new ListOf<String>("set")).set(33, "new set");
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void addSecond() throws Exception {
-        new Joined<String>(new ListOf<>("add")).add(44, "new add");
+        new Joined<String>(new ListOf<String>("add")).add(44, "new add");
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -176,22 +188,7 @@ public final class JoinedTest {
         new Joined<String>().remove(55);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void indexOf() throws Exception {
-        new Joined<String>().indexOf("indexOf");
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void lastIndexOf() throws Exception {
-        new Joined<String>().lastIndexOf("lastIndexOf");
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void listIterator() throws Exception {
-        new Joined<String>().listIterator();
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void listIteratorSecond() throws Exception {
         new Joined<Integer>().listIterator(66);
     }

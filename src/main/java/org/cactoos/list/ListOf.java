@@ -23,14 +23,11 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable as {@link List}.
@@ -52,13 +49,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @see StickyList
  * @since 0.1
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class ListOf<T> implements List<T> {
-
-    /**
-     * The list.
-     */
-    private final UncheckedScalar<List<T>> list;
+public final class ListOf<T> extends ListEnvelope<T> {
 
     /**
      * Ctor.
@@ -84,152 +75,13 @@ public final class ListOf<T> implements List<T> {
      * @param src An {@link Iterable}
      */
     public ListOf(final Iterable<T> src) {
-        this.list = new UncheckedScalar<>(
-            () -> {
-                final List<T> temp = new LinkedList<>();
-                for (final T item : src) {
-                    temp.add(item);
-                }
-                return Collections.unmodifiableList(temp);
+        super(() -> {
+            final List<T> temp = new LinkedList<>();
+            for (final T item : src) {
+                temp.add(item);
             }
-        );
-    }
-
-    @Override
-    public int size() {
-        return this.list.value().size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.list.value().isEmpty();
-    }
-
-    @Override
-    public boolean contains(final Object object) {
-        return this.list.value().contains(object);
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return this.list.value().iterator();
-    }
-
-    @Override
-    public Object[] toArray() {
-        return this.list.value().toArray();
-    }
-
-    @Override
-    @SuppressWarnings("PMD.UseVarargs")
-    public <Y> Y[] toArray(final Y[] array) {
-        return this.list.value().toArray(array);
-    }
-
-    @Override
-    public boolean add(final T element) {
-        throw new UnsupportedOperationException(
-            "#add(final T element) is not supported"
-        );
-    }
-
-    @Override
-    public boolean remove(final Object object) {
-        throw new UnsupportedOperationException(
-            "#remove(final Object object) is not supported"
-        );
-    }
-
-    @Override
-    public boolean containsAll(final Collection<?> collection) {
-        return this.list.value().containsAll(collection);
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends T> collection) {
-        throw new UnsupportedOperationException(
-            "#addAll(final Collection<? extends T> collection) is not supported"
-        );
-    }
-
-    @Override
-    public boolean addAll(final int index,
-        final Collection<? extends T> collection) {
-        throw new UnsupportedOperationException(
-            "#addAll() is not supported"
-        );
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> collection) {
-        throw new UnsupportedOperationException(
-            "#removeAll(final Collection<?> collection) is not supported"
-        );
-    }
-
-    @Override
-    public boolean retainAll(final Collection<?> collection) {
-        throw new UnsupportedOperationException(
-            "#retainAll(final Collection<?> collection) is not supported"
-        );
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException(
-            "#clear() is not supported"
-        );
-    }
-
-    @Override
-    public T get(final int index) {
-        return this.list.value().get(index);
-    }
-
-    @Override
-    public T set(final int index, final T element) {
-        throw new UnsupportedOperationException(
-            "#set() is not supported"
-        );
-    }
-
-    @Override
-    public void add(final int index, final T element) {
-        throw new UnsupportedOperationException(
-            "#add(final int index, final T element) is not supported"
-        );
-    }
-
-    @Override
-    public T remove(final int index) {
-        throw new UnsupportedOperationException(
-            "#remove(final int index) is not supported"
-        );
-    }
-
-    @Override
-    public int indexOf(final Object object) {
-        return this.list.value().indexOf(object);
-    }
-
-    @Override
-    public int lastIndexOf(final Object object) {
-        return this.list.value().lastIndexOf(object);
-    }
-
-    @Override
-    public ListIterator<T> listIterator() {
-        return this.list.value().listIterator();
-    }
-
-    @Override
-    public ListIterator<T> listIterator(final int index) {
-        return this.list.value().listIterator(index);
-    }
-
-    @Override
-    public List<T> subList(final int from, final int end) {
-        return this.list.value().subList(from, end);
+            return Collections.unmodifiableList(temp);
+        });
     }
 
 }

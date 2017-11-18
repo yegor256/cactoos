@@ -39,7 +39,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @since 0.23
  */
 @SuppressWarnings("PMD.TooManyMethods")
-class CollectionEnvelope<X> implements Collection<X> {
+public class CollectionEnvelope<X> implements Collection<X> {
 
     /**
      * Shuffled one.
@@ -50,7 +50,7 @@ class CollectionEnvelope<X> implements Collection<X> {
      * Ctor.
      * @param slr The scalar
      */
-    CollectionEnvelope(final Scalar<Collection<X>> slr) {
+    public CollectionEnvelope(final Scalar<Collection<X>> slr) {
         this.col = new UncheckedScalar<>(slr);
     }
 

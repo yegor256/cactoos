@@ -38,6 +38,17 @@ import org.junit.Test;
 public final class ShuffledTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a list",
+            new Shuffled<>(
+                new ListOf<>(1, 0, -1, -1, 2)
+            ),
+            new BehavesAsList<>(0)
+        );
+    }
+
+    @Test
     public void shufflesList() throws Exception {
         MatcherAssert.assertThat(
             "Can't shuffle elements in list",
