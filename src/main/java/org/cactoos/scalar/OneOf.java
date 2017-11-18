@@ -39,6 +39,8 @@ import org.cactoos.Scalar;
  * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
  * @param <T> Scalar type
+ * @see UncheckedScalar
+ * @see IoCheckedScalar
  * @since 1.0
  */
 public class OneOf<T> implements Scalar<T> {

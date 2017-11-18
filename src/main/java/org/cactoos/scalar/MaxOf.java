@@ -43,8 +43,6 @@ import org.cactoos.iterable.Mapped;
  * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
  * @param <T> Scalar type
- * @see UncheckedScalar
- * @see IoCheckedScalar
  * @since 0.10
  */
 public class MaxOf<T extends Comparable<T>> extends OneOf<T> {
