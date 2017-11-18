@@ -21,42 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.scalar;
 
+import java.util.LinkedList;
+import java.util.List;
 import org.cactoos.RunsInThreads;
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link SyncList}.
+ * Test case for {@link SyncScalar}.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class SyncListTest {
-
-    @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't behave as a list",
-            new SyncList<>(1, 0, -1, -1, 2),
-            new BehavesAsList<>(0)
-        );
-    }
+public final class SyncScalarTest {
 
     @Test
     public void worksInThreads() {
+        final List<Integer> list = new LinkedList<>();
+        final int threads = 100;
         MatcherAssert.assertThat(
-            "Can't behave as a list in multiple threads",
-            list -> {
-                MatcherAssert.assertThat(list, new BehavesAsList<>(0));
-                return true;
-            },
-            new RunsInThreads<>(new SyncList<>(1, 0, -1, -1, 2))
+            "Can't work well in multiple threads",
+            Scalar::value,
+            new RunsInThreads<>(
+                new SyncScalar<>(() -> list.add(1)), threads
+            )
         );
+        MatcherAssert.assertThat(list.size(), Matchers.equalTo(threads));
     }
 
 }

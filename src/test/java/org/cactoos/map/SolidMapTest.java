@@ -23,6 +23,7 @@
  */
 package org.cactoos.map;
 
+import org.cactoos.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -46,6 +47,23 @@ public final class SolidMapTest {
                 new MapEntry<>(1, 1)
             ),
             new BehavesAsMap<>(0, 1)
+        );
+    }
+
+    @Test
+    public void worksInThreads() {
+        MatcherAssert.assertThat(
+            "Can't behave as a map in multiple threads",
+            map -> {
+                MatcherAssert.assertThat(map, new BehavesAsMap<>(0, 1));
+                return true;
+            },
+            new RunsInThreads<>(
+                new SolidMap<Integer, Integer>(
+                    new MapEntry<>(0, -1),
+                    new MapEntry<>(1, 1)
+                )
+            )
         );
     }
 

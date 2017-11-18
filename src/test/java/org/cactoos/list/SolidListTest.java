@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -42,6 +43,18 @@ public final class SolidListTest {
             "Can't behave as a list",
             new SolidList<>(1, 0, -1, -1, 2),
             new BehavesAsList<>(0)
+        );
+    }
+
+    @Test
+    public void worksInThreads() {
+        MatcherAssert.assertThat(
+            "Can't behave as a list in multiple threads",
+            list -> {
+                MatcherAssert.assertThat(list, new BehavesAsList<>(0));
+                return true;
+            },
+            new RunsInThreads<>(new SolidList<>(1, 0, -1, -1, 2))
         );
     }
 
