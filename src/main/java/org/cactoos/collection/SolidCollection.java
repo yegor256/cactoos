@@ -38,14 +38,14 @@ import org.cactoos.iterable.IterableOf;
  * @see StickyCollection
  * @since 0.24
  */
-public final class SafeCollection<T> extends CollectionEnvelope<T> {
+public final class SolidCollection<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
      * @param array An array of some elements
      */
     @SafeVarargs
-    public SafeCollection(final T... array) {
+    public SolidCollection(final T... array) {
         this(new IterableOf<>(array));
     }
 
@@ -53,7 +53,7 @@ public final class SafeCollection<T> extends CollectionEnvelope<T> {
      * Ctor.
      * @param src An {@link Iterator}
      */
-    public SafeCollection(final Iterator<T> src) {
+    public SolidCollection(final Iterator<T> src) {
         this(new IterableOf<>(src));
     }
 
@@ -61,7 +61,7 @@ public final class SafeCollection<T> extends CollectionEnvelope<T> {
      * Ctor.
      * @param src An {@link Iterator}
      */
-    public SafeCollection(final Iterable<T> src) {
+    public SolidCollection(final Iterable<T> src) {
         this(new CollectionOf<>(src));
     }
 
@@ -69,7 +69,7 @@ public final class SafeCollection<T> extends CollectionEnvelope<T> {
      * Ctor.
      * @param src An {@link Iterable}
      */
-    public SafeCollection(final Collection<T> src) {
+    public SolidCollection(final Collection<T> src) {
         super(() -> new SyncCollection<T>(new StickyCollection<>(src)));
     }
 

@@ -27,19 +27,19 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test Case for {@link SafeCollection}.
+ * Test Case for {@link SolidCollection}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SafeCollectionTest {
+public final class SolidCollectionTest {
 
     @Test
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a collection",
-            new SafeCollection<>(1, 2, 0, -1),
+            new SolidCollection<>(1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
         );
     }
