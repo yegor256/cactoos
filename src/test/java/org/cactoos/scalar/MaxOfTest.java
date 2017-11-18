@@ -30,42 +30,70 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link Min}.
+ * Test case for {@link MaxOf}.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class MinTest {
+public final class MaxOfTest {
 
     @Test(expected = NoSuchElementException.class)
-    public void minAmongEmptyTest() throws Exception {
-        new Min<>(() -> Collections.emptyIterator()).value();
+    public void maxAmongEmptyTest() throws Exception {
+        new MaxOf<>(() -> Collections.emptyIterator()).value();
     }
 
     @Test
-    public void minAmongOneTest() throws Exception {
+    public void maxAmongOneTest() throws Exception {
         final int num = 10;
         MatcherAssert.assertThat(
-            "Can't find the smaller among one",
-            new Min<Integer>(() -> new Integer(num)).value(),
+            "Can't find the greater among one",
+            new MaxOf<Integer>(() -> new Integer(num)).value(),
             Matchers.equalTo(num)
         );
     }
 
     @Test
-    public void minAmongManyTest() throws Exception {
-        final int num = -1;
+    public void maxAmongManyTest() throws Exception {
+        final int num = 10;
         MatcherAssert.assertThat(
-            "Can't find the smaller among many",
-            new Min<Integer>(
-                () -> new Integer(1),
-                () -> new Integer(0),
+            "Can't find the greater among many",
+            new MaxOf<Integer>(
                 () -> new Integer(num),
+                () -> new Integer(0),
+                () -> new Integer(-1),
                 () -> new Integer(2)
              ).value(),
             Matchers.equalTo(num)
+        );
+    }
+
+    @Test
+    public void withListOfNumbers() throws Exception {
+        final int ivalue = 4;
+        MatcherAssert.assertThat(
+            "Can't find the largest in the integer array",
+            new MaxOf.Integers(ivalue, 2, 3).value(),
+            Matchers.equalTo(ivalue)
+        );
+        final double dvalue = 3.95d;
+        MatcherAssert.assertThat(
+            "Can't find the largest in the double array",
+            new MaxOf.Doubles(1.0d, dvalue, 3.0d).value(),
+            Matchers.equalTo(dvalue)
+        );
+        final long lvalue = 30000000000L;
+        MatcherAssert.assertThat(
+            "Can't find the largest in the long array",
+            new MaxOf.Longs(
+                10000000000L,
+                20000000000L,
+                lvalue
+            )
+            .value(),
+            Matchers.equalTo(lvalue)
         );
     }
 }
