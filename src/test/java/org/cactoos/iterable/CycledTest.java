@@ -56,7 +56,7 @@ public final class CycledTest {
         );
     }
 
-    @Test()
+    @Test
     public void notCycledEmptyTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't generate an empty iterable",
