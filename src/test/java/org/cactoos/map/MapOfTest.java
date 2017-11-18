@@ -42,6 +42,18 @@ import org.junit.Test;
 public final class MapOfTest {
 
     @Test
+    public void behavesAsMap() {
+        MatcherAssert.assertThat(
+            "Can't behave as a map",
+            new MapOf<Integer, Integer>(
+                new MapEntry<>(0, -1),
+                new MapEntry<>(1, 1)
+            ),
+            new BehavesAsMap<>(0, 1)
+        );
+    }
+
+    @Test
     public void convertsIterableToMap() {
         MatcherAssert.assertThat(
             "Can't convert iterable to map",

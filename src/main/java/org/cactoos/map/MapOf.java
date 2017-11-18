@@ -23,25 +23,21 @@
  */
 package org.cactoos.map;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable as {@link Map}.
  *
  * <p>This class should be used very carefully. You must understand that
  * it will fetch the entire content of the encapsulated {@link Map} on each
- * method call. It doesn't cache the data anyhow.</p>
- *
- * <p>If you don't need this {@link Map} to re-fresh its content on every call,
+ * method call. It doesn't cache the data anyhow.
+ * If you don't need this {@link Map} to re-fresh its content on every call,
  * by doing round-trips to the encapsulated iterable, use
  * {@link StickyMap}.</p>
  *
@@ -54,13 +50,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @see StickyMap
  * @since 0.4
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class MapOf<X, Y> implements Map<X, Y> {
-
-    /**
-     * The map.
-     */
-    private final UncheckedScalar<Map<X, Y>> map;
+public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
@@ -168,83 +158,13 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      * @param entries List of the entries
      */
     public MapOf(final Iterable<Map.Entry<X, Y>> entries) {
-        this.map = new UncheckedScalar<>(
-            () -> {
-                final Map<X, Y> temp = new HashMap<>(0);
-                for (final Map.Entry<X, Y> entry : entries) {
-                    temp.put(entry.getKey(), entry.getValue());
-                }
-                return temp;
+        super(() -> {
+            final Map<X, Y> temp = new HashMap<>(0);
+            for (final Map.Entry<X, Y> entry : entries) {
+                temp.put(entry.getKey(), entry.getValue());
             }
-        );
-    }
-
-    @Override
-    public int size() {
-        return this.map.value().size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.map.value().isEmpty();
-    }
-
-    @Override
-    public boolean containsKey(final Object key) {
-        return this.map.value().containsKey(key);
-    }
-
-    @Override
-    public boolean containsValue(final Object value) {
-        return this.map.value().containsValue(value);
-    }
-
-    @Override
-    public Y get(final Object key) {
-        return this.map.value().get(key);
-    }
-
-    @Override
-    public Y put(final X key, final Y value) {
-        throw new UnsupportedOperationException(
-            "#put() is not supported"
-        );
-    }
-
-    @Override
-    public Y remove(final Object key) {
-        throw new UnsupportedOperationException(
-            "#remove() is not supported"
-        );
-    }
-
-    @Override
-    public void putAll(final Map<? extends X, ? extends Y> list) {
-        throw new UnsupportedOperationException(
-            "#putAll() is not supported"
-        );
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException(
-            "#clear() is not supported"
-        );
-    }
-
-    @Override
-    public Set<X> keySet() {
-        return this.map.value().keySet();
-    }
-
-    @Override
-    public Collection<Y> values() {
-        return this.map.value().values();
-    }
-
-    @Override
-    public Set<Map.Entry<X, Y>> entrySet() {
-        return this.map.value().entrySet();
+            return temp;
+        });
     }
 
 }

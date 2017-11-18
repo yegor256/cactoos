@@ -24,8 +24,8 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -33,8 +33,8 @@ import org.cactoos.iterable.IterableOf;
  *
  * <p>This class should be used very carefully. You must understand that
  * it will fetch the entire content of the encapsulated {@link Iterable} on each
- * method call. It doesn't cache the data anyhow.
- * If you don't need this {@link Collection} to re-fresh
+ * method call. It doesn't cache the data anyhow. If you don't
+ * need this {@link Collection} to re-fresh
  * its content on every call, by doing round-trips to
  * the encapsulated iterable, use {@link StickyCollection}.</p>
  *
@@ -44,26 +44,24 @@ import org.cactoos.iterable.IterableOf;
  * @version $Id$
  * @param <T> List type
  * @see StickyCollection
- * @since 0.1
+ * @since 0.24
  */
-public final class CollectionOf<T> extends CollectionEnvelope<T> {
+public final class SyncCollection<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param array An array of some elements
      */
     @SafeVarargs
-    public CollectionOf(final T... array) {
+    public SyncCollection(final T... array) {
         this(new IterableOf<>(array));
     }
 
     /**
      * Ctor.
      * @param src An {@link Iterator}
-     * @since 0.21
      */
-    public CollectionOf(final Iterator<T> src) {
+    public SyncCollection(final Iterator<T> src) {
         this(() -> src);
     }
 
@@ -71,14 +69,10 @@ public final class CollectionOf<T> extends CollectionEnvelope<T> {
      * Ctor.
      * @param src An {@link Iterable}
      */
-    public CollectionOf(final Iterable<T> src) {
-        super(() -> {
-            final Collection<T> list = new LinkedList<>();
-            for (final T item : src) {
-                list.add(item);
-            }
-            return list;
-        });
+    public SyncCollection(final Iterable<T> src) {
+        super(() -> Collections.synchronizedCollection(
+            new CollectionOf<>(src)
+        ));
     }
 
 }
