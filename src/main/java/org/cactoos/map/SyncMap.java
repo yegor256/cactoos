@@ -24,7 +24,6 @@
 package org.cactoos.map;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Func;
@@ -152,11 +151,7 @@ public final class SyncMap<X, Y> extends MapEnvelope<X, Y> {
     public SyncMap(final Map<X, Y> map) {
         super(
             new SyncScalar<>(
-                () -> {
-                    final Map<X, Y> temp = new HashMap<>(0);
-                    temp.putAll(map);
-                    return Collections.unmodifiableMap(temp);
-                }
+                () -> Collections.synchronizedMap(map)
             )
         );
     }

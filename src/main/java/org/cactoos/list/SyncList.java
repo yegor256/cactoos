@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.list;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -30,51 +30,54 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.StickyScalar;
 
 /**
- * Iterable as {@link Collection}.
+ * Synchronized list.
  *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link Iterable} on each
- * method call. It doesn't cache the data anyhow. If you don't
- * need this {@link Collection} to re-fresh
- * its content on every call, by doing round-trips to
- * the encapsulated iterable, use {@link StickyCollection}.</p>
+ * <p>The list is read only.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>This list is thread-safe.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> List type
- * @see StickyCollection
+ * @param <X> Type of item
  * @since 0.24
  */
-public final class SyncCollection<T> extends CollectionEnvelope<T> {
+public final class SyncList<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
-     * @param array An array of some elements
+     * @param items The array
      */
     @SafeVarargs
-    public SyncCollection(final T... array) {
-        this(new IterableOf<>(array));
+    public SyncList(final X... items) {
+        this(new IterableOf<>(items));
     }
 
     /**
      * Ctor.
-     * @param src An {@link Iterator}
+     * @param items The array
      */
-    public SyncCollection(final Iterator<T> src) {
-        this(() -> src);
+    public SyncList(final Iterable<X> items) {
+        this(new ListOf<>(items));
     }
 
     /**
      * Ctor.
-     * @param src An {@link Iterable}
+     * @param items The array
+     * @since 0.21
      */
-    public SyncCollection(final Iterable<T> src) {
+    public SyncList(final Iterator<X> items) {
+        this(new ListOf<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param list The iterable
+     */
+    public SyncList(final Collection<X> list) {
         super(
             new StickyScalar<>(
-                () -> Collections.synchronizedCollection(
-                    new CollectionOf<>(src)
+                () -> Collections.synchronizedList(
+                    new ListOf<>(list)
                 )
             )
         );

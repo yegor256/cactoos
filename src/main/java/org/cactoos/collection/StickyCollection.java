@@ -24,6 +24,7 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
@@ -78,7 +79,7 @@ public final class StickyCollection<E> extends CollectionEnvelope<E> {
                 () -> {
                     final Collection<E> temp = new LinkedList<>();
                     temp.addAll(list);
-                    return temp;
+                    return Collections.unmodifiableCollection(temp);
                 }
             )
         );
