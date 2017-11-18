@@ -26,7 +26,6 @@ package org.cactoos.iterable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
-import org.cactoos.list.ListOf;
 
 /**
  * A few Iterables joined together.
@@ -38,12 +37,7 @@ import org.cactoos.list.ListOf;
  * @param <T> Type of item
  * @since 0.1
  */
-public final class Joined<T> implements Iterable<T> {
-
-    /**
-     * Iterables.
-     */
-    private final Iterable<Iterable<T>> list;
+public final class Joined<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
@@ -51,7 +45,7 @@ public final class Joined<T> implements Iterable<T> {
      */
     @SafeVarargs
     public Joined(final Iterable<T>... items) {
-        this(new ListOf<>(items));
+        this(new IterableOf<>(items));
     }
 
     /**
@@ -60,7 +54,7 @@ public final class Joined<T> implements Iterable<T> {
      * @since 0.21
      */
     public Joined(final Iterator<Iterable<T>> items) {
-        this(() -> items);
+        this(new IterableOf<>(items));
     }
 
     /**
@@ -68,16 +62,13 @@ public final class Joined<T> implements Iterable<T> {
      * @param items Items to concatenate
      */
     public Joined(final Iterable<Iterable<T>> items) {
-        this.list = items;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        final Collection<Iterator<T>> iterators = new LinkedList<>();
-        for (final Iterable<T> item : this.list) {
-            iterators.add(item.iterator());
-        }
-        return new org.cactoos.iterator.Joined<>(iterators);
+        super(() -> {
+            final Collection<Iterator<T>> iterators = new LinkedList<>();
+            for (final Iterable<T> item : items) {
+                iterators.add(item.iterator());
+            }
+            return () -> new org.cactoos.iterator.Joined<>(iterators);
+        });
     }
 
 }

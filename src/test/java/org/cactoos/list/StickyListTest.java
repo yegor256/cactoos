@@ -44,10 +44,19 @@ import org.junit.Test;
 public final class StickyListTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a list",
+            new StickyList<>(1, 0, -1, -1, 2),
+            new BehavesAsList<>(0)
+        );
+    }
+
+    @Test
     public void ignoresChangesInIterable() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
         final List<Integer> list = new StickyList<>(
-            new ListOf<>(
+            new ListOf<Integer>(
                 () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
         );

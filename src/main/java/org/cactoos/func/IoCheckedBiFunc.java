@@ -64,7 +64,8 @@ public final class IoCheckedBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
     public Z apply(final X first, final Y second) throws IOException {
         try {
             return this.func.apply(first, second);
-        } catch (final IOException ex) {
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final IOException | RuntimeException ex) {
             throw ex;
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();

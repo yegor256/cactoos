@@ -44,6 +44,17 @@ import org.junit.Test;
 public final class ReversedTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection",
+            new Reversed<>(
+                new IterableOf<Integer>(0, -1, 2)
+            ),
+            new BehavesAsCollection<>(0)
+        );
+    }
+
+    @Test
     public void reverseList() throws Exception {
         final String last = "last";
         MatcherAssert.assertThat(

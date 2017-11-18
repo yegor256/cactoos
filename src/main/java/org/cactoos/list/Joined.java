@@ -23,10 +23,8 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 /**
@@ -39,13 +37,7 @@ import java.util.stream.Collectors;
  * @param <X> Type of source item
  * @since 0.20
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class Joined<X> implements List<X> {
-
-    /**
-     * The original lists.
-     */
-    private final Iterable<List<X>> lists;
+public final class Joined<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
@@ -62,152 +54,12 @@ public final class Joined<X> implements List<X> {
      * @param src Source lists
      */
     public Joined(final Iterable<List<X>> src) {
-        this.lists = src;
+        super(() -> Collections.unmodifiableList(
+            new ListOf<>(src).stream()
+                .flatMap(List::stream)
+                .collect(Collectors.toList())
+            )
+        );
     }
 
-    @Override
-    public int size() {
-        int result = 0;
-        for (final List<X> list : this.lists) {
-            result += list.size();
-        }
-        return result;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        boolean result = true;
-        for (final List<X> list : this.lists) {
-            if (!list.isEmpty()) {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public boolean contains(final Object obj) {
-        boolean result = false;
-        for (final List<X> list : this.lists) {
-            if (list.contains(obj)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return this.joined().iterator();
-    }
-
-    @Override
-    public Object[] toArray() {
-        return this.joined().toArray();
-    }
-
-    @Override
-    @SuppressWarnings("PMD.UseVarargs")
-    public <T> T[] toArray(final T[] array) {
-        return this.joined().toArray(array);
-    }
-
-    @Override
-    public boolean add(final X item) {
-        throw new UnsupportedOperationException("#add()");
-    }
-
-    @Override
-    public boolean remove(final Object item) {
-        throw new UnsupportedOperationException("#remove()");
-    }
-
-    @Override
-    public boolean containsAll(final Collection<?> collection) {
-        return this.joined().containsAll(collection);
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends X> items) {
-        throw new UnsupportedOperationException("#addAll()");
-    }
-
-    @Override
-    public boolean addAll(final int index,
-        final Collection<? extends X> items) {
-        throw new UnsupportedOperationException("#addAll(index)");
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> items) {
-        throw new UnsupportedOperationException("#removeAll()");
-    }
-
-    @Override
-    public boolean retainAll(final Collection<?> items) {
-        throw new UnsupportedOperationException("#retainAll()");
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("#clear()");
-    }
-
-    @Override
-    public X get(final int index) {
-        return this.joined().get(index);
-    }
-
-    @Override
-    public X set(final int index, final X element) {
-        throw new UnsupportedOperationException("#set()");
-    }
-
-    @Override
-    public void add(final int index, final X element) {
-        throw new UnsupportedOperationException("#add(index)");
-    }
-
-    @Override
-    public X remove(final int index) {
-        throw new UnsupportedOperationException("#remove(index)");
-    }
-
-    @Override
-    public int indexOf(final Object item) {
-        throw new UnsupportedOperationException("#indexOf()");
-    }
-
-    @Override
-    public int lastIndexOf(final Object item) {
-        throw new UnsupportedOperationException("#lastIndexOf()");
-    }
-
-    @Override
-    public ListIterator<X> listIterator() {
-        throw new UnsupportedOperationException("#listIterator()");
-    }
-
-    @Override
-    public ListIterator<X> listIterator(final int index) {
-        throw new UnsupportedOperationException("#listIterator(index)");
-    }
-
-    @Override
-    public List<X> subList(final int start, final int end) {
-        return this.joined().subList(start, end);
-    }
-
-    /**
-     * Joined list.
-     *
-     * @return Result list
-     */
-    private List<X> joined() {
-        return new ListOf<>(this.lists).stream()
-            .flatMap(List::stream)
-            .collect(Collectors.toList());
-    }
 }

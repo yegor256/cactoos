@@ -39,12 +39,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <X> Type of item
  * @since 0.12
  */
-public final class IterableOf<X> implements Iterable<X> {
-
-    /**
-     * The encapsulated iterator of X.
-     */
-    private final UncheckedScalar<Iterator<X>> scalar;
+public final class IterableOf<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
@@ -77,12 +72,7 @@ public final class IterableOf<X> implements Iterable<X> {
      * @param sclr The encapsulated iterator of x
      */
     private IterableOf(final Scalar<Iterator<X>> sclr) {
-        this.scalar = new UncheckedScalar<>(sclr);
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return this.scalar.value();
+        super(() -> () -> new UncheckedScalar<>(sclr).value());
     }
 
 }

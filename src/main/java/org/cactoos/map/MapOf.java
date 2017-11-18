@@ -23,15 +23,13 @@
  */
 package org.cactoos.map;
 
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
-import org.cactoos.iterable.LengthOf;
 import org.cactoos.iterable.Mapped;
 
 /**
@@ -39,9 +37,8 @@ import org.cactoos.iterable.Mapped;
  *
  * <p>This class should be used very carefully. You must understand that
  * it will fetch the entire content of the encapsulated {@link Map} on each
- * method call. It doesn't cache the data anyhow.</p>
- *
- * <p>If you don't need this {@link Map} to re-fresh its content on every call,
+ * method call. It doesn't cache the data anyhow.
+ * If you don't need this {@link Map} to re-fresh its content on every call,
  * by doing round-trips to the encapsulated iterable, use
  * {@link StickyMap}.</p>
  *
@@ -54,13 +51,7 @@ import org.cactoos.iterable.Mapped;
  * @see StickyMap
  * @since 0.4
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class MapOf<X, Y> implements Map<X, Y> {
-
-    /**
-     * The iterable.
-     */
-    private final Iterable<Map.Entry<X, Y>> entries;
+public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
@@ -73,13 +64,13 @@ public final class MapOf<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
-     * @param map The map to extend
+     * @param src The map to extend
      * @param list List of entries
      * @since 0.12
      */
     @SafeVarargs
-    public MapOf(final Map<X, Y> map, final Map.Entry<X, Y>... list) {
-        this(map, new IterableOf<>(list));
+    public MapOf(final Map<X, Y> src, final Map.Entry<X, Y>... list) {
+        this(src, new IterableOf<>(list));
     }
 
     /**
@@ -97,7 +88,7 @@ public final class MapOf<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
-     * @param map The map to extend
+     * @param src The map to extend
      * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
@@ -105,11 +96,11 @@ public final class MapOf<X, Y> implements Map<X, Y> {
      * @since 0.12
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public <Z> MapOf(final Map<X, Y> map,
+    public <Z> MapOf(final Map<X, Y> src,
         final Iterable<Z> list, final Func<Z, X> key,
         final Func<Z, Y> value) {
         this(
-            map, list,
+            src, list,
             item -> new MapEntry<>(key.apply(item), value.apply(item))
         );
     }
@@ -128,127 +119,53 @@ public final class MapOf<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
-     * @param map The map to extend
+     * @param src The map to extend
      * @param list List of items
      * @param entry Func to create entry
      * @param <Z> Type of items in the list
      * @since 0.11
      */
-    public <Z> MapOf(final Map<X, Y> map, final Iterable<Z> list,
+    public <Z> MapOf(final Map<X, Y> src, final Iterable<Z> list,
         final Func<Z, Map.Entry<X, Y>> entry) {
-        this(map, new Mapped<>(entry, list));
+        this(src, new Mapped<>(entry, list));
     }
 
     /**
      * Ctor.
-     * @param map Map to extend
+     * @param src Map to extend
      * @param list List of the entries
      * @since 0.12
      */
     @SuppressWarnings("unchecked")
-    public MapOf(final Map<X, Y> map,
+    public MapOf(final Map<X, Y> src,
         final Iterable<Map.Entry<X, Y>> list) {
         this(
             new Joined<>(
-                map.entrySet(), list
+                src.entrySet(), list
             )
         );
     }
 
     /**
      * Ctor.
-     * @param list List of the entries
+     * @param entries List of the entries
      */
-    public MapOf(final Iterator<Map.Entry<X, Y>> list) {
-        this(() -> list);
+    public MapOf(final Iterator<Map.Entry<X, Y>> entries) {
+        this(() -> entries);
     }
 
     /**
      * Ctor.
-     * @param list List of the entries
+     * @param entries List of the entries
      */
-    public MapOf(final Iterable<Map.Entry<X, Y>> list) {
-        this.entries = list;
-    }
-
-    @Override
-    public int size() {
-        return new LengthOf(this.entries).value().intValue();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return !this.entries.iterator().hasNext();
-    }
-
-    @Override
-    public boolean containsKey(final Object key) {
-        return this.map().containsKey(key);
-    }
-
-    @Override
-    public boolean containsValue(final Object value) {
-        return this.map().containsValue(value);
-    }
-
-    @Override
-    public Y get(final Object key) {
-        return this.map().get(key);
-    }
-
-    @Override
-    public Y put(final X key, final Y value) {
-        throw new UnsupportedOperationException(
-            "#put() is not supported"
-        );
-    }
-
-    @Override
-    public Y remove(final Object key) {
-        throw new UnsupportedOperationException(
-            "#remove() is not supported"
-        );
-    }
-
-    @Override
-    public void putAll(final Map<? extends X, ? extends Y> list) {
-        throw new UnsupportedOperationException(
-            "#putAll() is not supported"
-        );
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException(
-            "#clear() is not supported"
-        );
-    }
-
-    @Override
-    public Set<X> keySet() {
-        return this.map().keySet();
-    }
-
-    @Override
-    public Collection<Y> values() {
-        return this.map().values();
-    }
-
-    @Override
-    public Set<Map.Entry<X, Y>> entrySet() {
-        return this.map().entrySet();
-    }
-
-    /**
-     * Make a map.
-     * @return Map
-     */
-    private Map<X, Y> map() {
-        final Map<X, Y> temp = new HashMap<>(0);
-        for (final Map.Entry<X, Y> entry : this.entries) {
-            temp.put(entry.getKey(), entry.getValue());
-        }
-        return temp;
+    public MapOf(final Iterable<Map.Entry<X, Y>> entries) {
+        super(() -> {
+            final Map<X, Y> temp = new HashMap<>(0);
+            for (final Map.Entry<X, Y> entry : entries) {
+                temp.put(entry.getKey(), entry.getValue());
+            }
+            return Collections.unmodifiableMap(temp);
+        });
     }
 
 }

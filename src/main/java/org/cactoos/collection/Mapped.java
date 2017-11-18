@@ -26,7 +26,7 @@ package org.cactoos.collection;
 import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.Func;
-import org.cactoos.list.ListOf;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Mapped collection.
@@ -39,109 +39,47 @@ import org.cactoos.list.ListOf;
  * @param <Y> Type of target item
  * @since 0.14
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class Mapped<X, Y> implements Collection<Y> {
-
-    /**
-     * Original collection.
-     */
-    private final Collection<X> collection;
-
-    /**
-     * Function.
-     */
-    private final Func<X, Y> func;
+public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
 
     /**
      * Ctor.
      * @param src Source collection
      * @param fnc Func
+     * @since 0.23
      */
-    public Mapped(final Iterable<X> src, final Func<X, Y> fnc) {
-        this(new ListOf<>(src), fnc);
+    @SafeVarargs
+    public Mapped(final Func<X, Y> fnc, final X... src) {
+        this(fnc, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
      * @param src Source collection
      * @param fnc Func
+     * @since 0.23
      */
-    public Mapped(final Collection<X> src, final Func<X, Y> fnc) {
-        this.collection = src;
-        this.func = fnc;
+    public Mapped(final Func<X, Y> fnc, final Iterator<X> src) {
+        this(fnc, new IterableOf<>(src));
     }
 
-    @Override
-    public String toString() {
-        return this.collection.toString();
+    /**
+     * Ctor.
+     * @param src Source collection
+     * @param fnc Func
+     */
+    public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
+        this(fnc, new CollectionOf<>(src));
     }
 
-    @Override
-    public int size() {
-        return this.collection.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.collection.isEmpty();
-    }
-
-    @Override
-    public boolean contains(final Object object) {
-        throw new UnsupportedOperationException("#contains()");
-    }
-
-    @Override
-    public Iterator<Y> iterator() {
-        return new org.cactoos.iterator.Mapped<>(
-            this.func, this.collection.iterator()
-        );
-    }
-
-    @Override
-    public Object[] toArray() {
-        throw new UnsupportedOperationException("#toArray()");
-    }
-
-    @Override
-    @SuppressWarnings("PMD.UseVarargs")
-    public <T> T[] toArray(final T[] array) {
-        throw new UnsupportedOperationException("#toArray(array)");
-    }
-
-    @Override
-    public boolean add(final Y item) {
-        throw new UnsupportedOperationException("#add()");
-    }
-
-    @Override
-    public boolean remove(final Object item) {
-        throw new UnsupportedOperationException("#remove()");
-    }
-
-    @Override
-    public boolean containsAll(final Collection<?> list) {
-        throw new UnsupportedOperationException("#containsAll()");
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends Y> list) {
-        throw new UnsupportedOperationException("#addAll()");
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> list) {
-        throw new UnsupportedOperationException("#removeAll()");
-    }
-
-    @Override
-    public boolean retainAll(final Collection<?> list) {
-        throw new UnsupportedOperationException("#retainAll()");
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("#clear()");
+    /**
+     * Ctor.
+     * @param src Source collection
+     * @param fnc Func
+     */
+    public Mapped(final Func<X, Y> fnc, final Collection<X> src) {
+        super(() -> new CollectionOf<Y>(
+            new org.cactoos.iterable.Mapped<X, Y>(fnc, src)
+        ));
     }
 
 }

@@ -23,17 +23,14 @@
  */
 package org.cactoos.map;
 
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.SyncScalar;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Map decorator that goes through the map only once.
@@ -48,13 +45,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <Y> Type of value
  * @since 0.8
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class StickyMap<X, Y> implements Map<X, Y> {
-
-    /**
-     * The gate.
-     */
-    private final UncheckedScalar<Map<X, Y>> gate;
+public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
@@ -166,90 +157,15 @@ public final class StickyMap<X, Y> implements Map<X, Y> {
      * @param map The map
      */
     public StickyMap(final Map<X, Y> map) {
-        this.gate = new UncheckedScalar<>(
-            new SyncScalar<>(
-                new StickyScalar<>(
-                    () -> {
-                        final Map<X, Y> temp = new HashMap<>(0);
-                        temp.putAll(map);
-                        return temp;
-                    }
-                )
+        super(
+            new StickyScalar<>(
+                () -> {
+                    final Map<X, Y> temp = new HashMap<>(0);
+                    temp.putAll(map);
+                    return Collections.unmodifiableMap(temp);
+                }
             )
         );
-    }
-
-    @Override
-    public String toString() {
-        return this.gate.value().toString();
-    }
-
-    @Override
-    public int size() {
-        return this.gate.value().size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.gate.value().isEmpty();
-    }
-
-    @Override
-    public boolean containsKey(final Object key) {
-        return this.gate.value().containsKey(key);
-    }
-
-    @Override
-    public boolean containsValue(final Object value) {
-        return this.gate.value().containsValue(value);
-    }
-
-    @Override
-    public Y get(final Object key) {
-        return this.gate.value().get(key);
-    }
-
-    @Override
-    public Y put(final X key, final Y value) {
-        throw new UnsupportedOperationException(
-            "#put() is not supported"
-        );
-    }
-
-    @Override
-    public Y remove(final Object key) {
-        throw new UnsupportedOperationException(
-            "#remove() is not supported"
-        );
-    }
-
-    @Override
-    public void putAll(final Map<? extends X, ? extends Y> map) {
-        throw new UnsupportedOperationException(
-            "#putAll() is not supported"
-        );
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException(
-            "#clear() is not supported"
-        );
-    }
-
-    @Override
-    public Set<X> keySet() {
-        return this.gate.value().keySet();
-    }
-
-    @Override
-    public Collection<Y> values() {
-        return this.gate.value().values();
-    }
-
-    @Override
-    public Set<Map.Entry<X, Y>> entrySet() {
-        return this.gate.value().entrySet();
     }
 
 }

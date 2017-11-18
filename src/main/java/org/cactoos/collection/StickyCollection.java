@@ -23,15 +23,12 @@
  */
 package org.cactoos.collection;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.list.ListOf;
 import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.SyncScalar;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Collection decorator that goes through the list only once.
@@ -43,13 +40,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <E> Type of item
  * @since 0.16
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class StickyCollection<E> implements Collection<E> {
-
-    /**
-     * The gate.
-     */
-    private final UncheckedScalar<List<E>> gate;
+public final class StickyCollection<E> extends CollectionEnvelope<E> {
 
     /**
      * Ctor.
@@ -66,7 +57,7 @@ public final class StickyCollection<E> implements Collection<E> {
      * @since 0.21
      */
     public StickyCollection(final Iterator<E> items) {
-        this(() -> items);
+        this(new IterableOf<>(items));
     }
 
     /**
@@ -74,7 +65,7 @@ public final class StickyCollection<E> implements Collection<E> {
      * @param items The array
      */
     public StickyCollection(final Iterable<E> items) {
-        this(new ListOf<>(items));
+        this(new CollectionOf<>(items));
     }
 
     /**
@@ -82,94 +73,15 @@ public final class StickyCollection<E> implements Collection<E> {
      * @param list The iterable
      */
     public StickyCollection(final Collection<E> list) {
-        this.gate = new UncheckedScalar<>(
-            new SyncScalar<>(
-                new StickyScalar<>(
-                    () -> {
-                        final List<E> temp = new LinkedList<>();
-                        temp.addAll(list);
-                        return temp;
-                    }
-                )
+        super(
+            new StickyScalar<>(
+                () -> {
+                    final Collection<E> temp = new ArrayList<>(list.size());
+                    temp.addAll(list);
+                    return Collections.unmodifiableCollection(temp);
+                }
             )
         );
     }
 
-    @Override
-    public int size() {
-        return this.gate.value().size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.gate.value().isEmpty();
-    }
-
-    @Override
-    public boolean contains(final Object object) {
-        return this.gate.value().contains(object);
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return this.gate.value().iterator();
-    }
-
-    @Override
-    public Object[] toArray() {
-        return this.gate.value().toArray();
-    }
-
-    @Override
-    @SuppressWarnings("PMD.UseVarargs")
-    public <T> T[] toArray(final T[] array) {
-        return this.gate.value().toArray(array);
-    }
-
-    @Override
-    public boolean add(final E element) {
-        throw new UnsupportedOperationException(
-            "#add(final E element) is not supported"
-        );
-    }
-
-    @Override
-    public boolean remove(final Object object) {
-        throw new UnsupportedOperationException(
-            "#remove(final Object object) is not supported"
-        );
-    }
-
-    @Override
-    public boolean containsAll(final Collection<?> collection) {
-        return this.gate.value().containsAll(collection);
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends E> collection) {
-        throw new UnsupportedOperationException(
-            "#addAll(final Collection<? extends T> collection) is not supported"
-        );
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> collection) {
-        throw new UnsupportedOperationException(
-            "#removeAll(final Collection<?> collection) is not supported"
-        );
-    }
-
-    @Override
-    public boolean retainAll(final Collection<?> collection) {
-        throw new UnsupportedOperationException(
-            "#retainAll(final Collection<?> collection) is not supported"
-        );
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException(
-            "#clear() is not supported"
-        );
-    }
 }

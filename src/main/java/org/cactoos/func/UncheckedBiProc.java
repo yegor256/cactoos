@@ -23,8 +23,7 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
+import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 
 /**
@@ -55,10 +54,11 @@ public final class UncheckedBiProc<X, Y> implements BiProc<X, Y> {
 
     @Override
     public void exec(final X first, final Y second) {
-        try {
-            new IoCheckedBiProc<>(this.proc).exec(first, second);
-        } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
-        }
+        new UncheckedBiFunc<>(
+            (BiFunc<X, Y, Boolean>) (fst, snd) -> {
+                this.proc.exec(fst, snd);
+                return true;
+            }
+        ).apply(first, second);
     }
 }

@@ -16,7 +16,7 @@
 
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
-until we release version 1.0 (<del>July</del> August 2017).
+until we release version 1.0 (<del>July</del> <del>August</del> December 2017).
 
 Cactoos is a collection of object-oriented Java primitives.
 
@@ -73,12 +73,8 @@ To write a text into a file:
 ```java
 new LengthOf(
   new TeeInput(
-    new InputOf(
-      "Hello, world!"
-    ),
-    new OutputTo(
-      new File("/code/a.txt")
-    )
+    "Hello, world!",
+    new File("/code/a.txt")
   )
 ).value();
 ```
@@ -117,13 +113,15 @@ new UpperText(
 
 ## Iterables/Collections/Lists/Sets
 
+More about it here: [Lazy Loading and Caching via Sticky Cactoos Primitives](http://www.yegor256.com/2017/10/17/lazy-loading-caching-sticky-cactoos.html).
+
 To filter a collection:
 
 ```java
 Collection<String> filtered = new ListOf<>(
   new Filtered<>(
-    new IterableOf<>("hello", "world", "dude"),
-    s -> s.length() > 4
+    s -> s.length() > 4,
+    new IterableOf<>("hello", "world", "dude")
   )
 );
 ```
@@ -133,12 +131,12 @@ To iterate a collection:
 ```java
 new And(
   new Mapped<>(
-    new IterableOf<>("how", "are", "you"),
     new FuncOf<>(
       input -> {
         System.out.printf("Item: %s\n", input);
       }
-    )
+    ),
+    new IterableOf<>("how", "are", "you")
   )
 ).value();
 ```

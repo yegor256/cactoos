@@ -38,6 +38,15 @@ import org.junit.Test;
 public final class SortedTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection",
+            new Sorted<>(new ListOf<Integer>(1, 2, 0, -1)),
+            new BehavesAsCollection<>(0)
+        );
+    }
+
+    @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void sortsCollection() throws Exception {
         MatcherAssert.assertThat(

@@ -41,6 +41,15 @@ import org.junit.Test;
 public final class ListOfTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a list",
+            new ListOf<>(1, 2),
+            new BehavesAsList<>(2)
+        );
+    }
+
+    @Test
     public void elementAtIndexTest() throws Exception {
         final int num = 345;
         MatcherAssert.assertThat(

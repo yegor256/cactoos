@@ -39,6 +39,17 @@ import org.junit.Test;
 public final class SortedTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a list",
+            new Sorted<>(
+                new ListOf<>(1, 0, -1, -1, 2)
+            ),
+            new BehavesAsList<>(0)
+        );
+    }
+
+    @Test
     public void sortsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't sort elements in list",

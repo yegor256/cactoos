@@ -57,4 +57,13 @@ public final class UncheckedBiFuncTest {
         );
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() {
+        new UncheckedBiFunc<>(
+            (fst, scd) -> {
+                throw new IllegalStateException("intended to fail");
+            }
+        ).apply(1, 2);
+    }
+
 }

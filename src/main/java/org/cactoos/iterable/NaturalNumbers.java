@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
 import java.util.stream.LongStream;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
@@ -35,17 +34,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @version $Id$
  * @since 0.7
  */
-public final class NaturalNumbers implements Iterable<Long> {
-
-    /**
-     * First natural number.
-     */
-    private final UncheckedScalar<Long> first;
-
-    /**
-     * Last natural number.
-     */
-    private final UncheckedScalar<Long> last;
+public final class NaturalNumbers extends IterableEnvelope<Long> {
 
     /**
      * Ctor.
@@ -56,44 +45,44 @@ public final class NaturalNumbers implements Iterable<Long> {
 
     /**
      * Ctor.
-     * @param last Last natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final long last) {
-        this(0L, last);
+    public NaturalNumbers(final long lst) {
+        this(0L, lst);
     }
 
     /**
      * Ctor.
-     * @param first First natural number
-     * @param last Last natural number
+     * @param fst First natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final long first, final long last) {
-        this(() -> first, () -> last);
+    public NaturalNumbers(final long fst, final long lst) {
+        this(() -> fst, () -> lst);
     }
 
     /**
      * Ctor.
-     * @param last Last natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final Scalar<Long> last) {
-        this(new UncheckedScalar<>(last));
+    public NaturalNumbers(final Scalar<Long> lst) {
+        this(new UncheckedScalar<>(lst));
     }
 
     /**
      * Ctor.
-     * @param last Last natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final UncheckedScalar<Long> last) {
-        this(() -> 0L, last);
+    public NaturalNumbers(final UncheckedScalar<Long> lst) {
+        this(() -> 0L, lst);
     }
 
     /**
      * Ctor.
-     * @param first First natural number
-     * @param last Last natural number
+     * @param fst First natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final Scalar<Long> first, final Scalar<Long> last) {
-        this(new UncheckedScalar<>(first), new UncheckedScalar<>(last));
+    public NaturalNumbers(final Scalar<Long> fst, final Scalar<Long> lst) {
+        this(new UncheckedScalar<>(fst), new UncheckedScalar<>(lst));
     }
 
     /**
@@ -103,15 +92,9 @@ public final class NaturalNumbers implements Iterable<Long> {
      */
     public NaturalNumbers(final UncheckedScalar<Long> first,
         final UncheckedScalar<Long> last) {
-        this.first = first;
-        this.last = last;
+        super(() -> () -> LongStream.range(
+            first.value(), last.value()
+        ).iterator());
     }
 
-    @Override
-    public Iterator<Long> iterator() {
-        return LongStream.range(
-            this.first.value(),
-            this.last.value()
-        ).iterator();
-    }
 }

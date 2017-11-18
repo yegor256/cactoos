@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
+import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 
 /**
@@ -54,25 +55,13 @@ public final class IoCheckedBiProc<X, Y> implements BiProc<X, Y> {
     }
 
     @Override
-    @SuppressWarnings
-        (
-            {
-                "PMD.AvoidCatchingGenericException",
-                "PMD.AvoidRethrowingException"
-            }
-        )
     public void exec(final X first, final Y second) throws IOException {
-        try {
-            this.proc.exec(first, second);
-        } catch (final IOException ex) {
-            throw ex;
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IOException(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IOException(ex);
-        }
+        new IoCheckedBiFunc<>(
+            (BiFunc<X, Y, Boolean>) (fst, snd) -> {
+                this.proc.exec(fst, snd);
+                return true;
+            }
+        ).apply(first, second);
     }
 
 }

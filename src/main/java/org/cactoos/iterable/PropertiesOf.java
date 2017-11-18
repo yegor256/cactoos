@@ -91,12 +91,22 @@ public final class PropertiesOf implements Scalar<Properties> {
      * @param entries The map with properties
      */
     public PropertiesOf(final Map.Entry<?, ?>... entries) {
+        this(new IterableOf<>(entries));
+    }
+
+    /**
+     * Ctor.
+     * @param entries The map with properties
+     * @since 0.23
+     */
+    public PropertiesOf(final Iterable<Map.Entry<?, ?>> entries) {
         this(
             new MapOf<>(
                 new Mapped<Map.Entry<?, ?>, Map.Entry<String, String>>(
                     input -> new MapEntry<>(
                         input.getKey().toString(), input.getValue().toString()
-                    ), new IterableOf<>(entries)
+                    ),
+                    entries
                 )
             )
         );

@@ -84,25 +84,17 @@ public final class NumberOf extends Number implements Scalar<Number> {
      */
     public NumberOf(final Text text) {
         super();
-        this.lnum = new SyncScalar<>(
-            new StickyScalar<>(
-                () -> Long.parseLong(text.asString())
-            )
+        this.lnum = new StickyScalar<>(
+            () -> Long.parseLong(text.asString())
         );
-        this.inum = new SyncScalar<>(
-            new StickyScalar<>(
-                () -> Integer.parseInt(text.asString())
-            )
+        this.inum = new StickyScalar<>(
+            () -> Integer.parseInt(text.asString())
         );
-        this.fnum = new SyncScalar<>(
-            new StickyScalar<>(
-                () -> Float.parseFloat(text.asString())
-            )
+        this.fnum = new StickyScalar<>(
+            () -> Float.parseFloat(text.asString())
         );
-        this.dnum = new SyncScalar<>(
-            new StickyScalar<>(
-                () -> Double.parseDouble(text.asString())
-            )
+        this.dnum = new StickyScalar<>(
+            () -> Double.parseDouble(text.asString())
         );
     }
 

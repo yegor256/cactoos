@@ -43,14 +43,24 @@ import org.junit.Test;
 public final class MappedTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection",
+            new Mapped<Integer, Integer>(
+                i -> i + 1,
+                new IterableOf<>(-1, 1, 2)
+            ),
+            new BehavesAsCollection<>(0)
+        );
+    }
+
+    @Test
     public void transformsList() throws IOException {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
             new Mapped<String, Text>(
-                new IterableOf<>(
-                    "hello", "world", "друг"
-                ),
-                input -> new UpperText(new TextOf(input))
+                input -> new UpperText(new TextOf(input)),
+                new IterableOf<>("hello", "world", "друг")
             ).iterator().next().asString(),
             Matchers.equalTo("HELLO")
         );
@@ -61,8 +71,8 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an empty iterable",
             new Mapped<String, Text>(
-                Collections.emptyList(),
-                input -> new UpperText(new TextOf(input))
+                input -> new UpperText(new TextOf(input)),
+                Collections.emptyList()
             ),
             Matchers.emptyIterable()
         );

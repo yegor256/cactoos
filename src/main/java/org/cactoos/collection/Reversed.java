@@ -25,13 +25,18 @@ package org.cactoos.collection;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.list.ListOf;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Reversed collection.
+ *
+ * <p>Pay attention that sorting will happen on each operation
+ * with the collection. Every time you touch it, it will fetch the
+ * entire collection from the encapsulated object and reverse it. If you
+ * want to avoid that "side-effect", decorate it with
+ * {@link StickyCollection}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -40,20 +45,24 @@ import org.cactoos.list.ListOf;
  * @param <X> Type of source item
  * @since 1.16
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class Reversed<X> implements Collection<X> {
+public final class Reversed<X> extends CollectionEnvelope<X> {
 
     /**
-     * Original collection.
+     * Ctor.
+     * @param src Source collection
+     * @since 0.23
      */
-    private final Collection<X> collection;
+    @SafeVarargs
+    public Reversed(final X... src) {
+        this(new IterableOf<>(src));
+    }
 
     /**
      * Ctor.
      * @param src Source collection
      */
     public Reversed(final Iterable<X> src) {
-        this(new ListOf<>(src));
+        this(new CollectionOf<>(src));
     }
 
     /**
@@ -61,83 +70,12 @@ public final class Reversed<X> implements Collection<X> {
      * @param src Source collection
      */
     public Reversed(final Collection<X> src) {
-        this.collection = src;
+        super(() -> {
+            final List<X> items = new LinkedList<>();
+            items.addAll(src);
+            Collections.reverse(items);
+            return items;
+        });
     }
 
-    @Override
-    public String toString() {
-        return this.collection.toString();
-    }
-
-    @Override
-    public int size() {
-        return this.collection.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.collection.isEmpty();
-    }
-
-    @Override
-    public boolean contains(final Object object) {
-        return this.collection.contains(object);
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return new org.cactoos.iterable.Reversed<>(
-            this.collection
-        ).iterator();
-    }
-
-    @Override
-    public Object[] toArray() {
-        final List<X> list = new LinkedList<>(this.collection);
-        Collections.reverse(list);
-        return list.toArray();
-    }
-
-    @Override
-    @SuppressWarnings("PMD.UseVarargs")
-    public <T> T[] toArray(final T[] array) {
-        final List<X> list = new LinkedList<>(this.collection);
-        Collections.reverse(list);
-        return list.toArray(array);
-    }
-
-    @Override
-    public boolean add(final X item) {
-        throw new UnsupportedOperationException("#add()");
-    }
-
-    @Override
-    public boolean remove(final Object item) {
-        throw new UnsupportedOperationException("#remove()");
-    }
-
-    @Override
-    public boolean containsAll(final Collection<?> list) {
-        return this.collection.containsAll(list);
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends X> list) {
-        throw new UnsupportedOperationException("#addAll()");
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> list) {
-        throw new UnsupportedOperationException("#removeAll()");
-    }
-
-    @Override
-    public boolean retainAll(final Collection<?> list) {
-        throw new UnsupportedOperationException("#retainAll()");
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("#clear()");
-    }
 }
