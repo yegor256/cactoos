@@ -42,14 +42,21 @@ import org.junit.Test;
 public final class FilteredTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection",
+            new Filtered<>(i -> i < 2, 1, 2, 0, -1),
+            new BehavesAsCollection<>(-1)
+        );
+    }
+
+    @Test
     public void filterList() {
         MatcherAssert.assertThat(
             new LengthOf(
                 new Filtered<String>(
-                    new IterableOf<>(
-                        "hello", "world", "друг"
-                    ),
-                    input -> input.length() > 4
+                    input -> input.length() > 4,
+                    new IterableOf<>("hello", "world", "друг")
                 )
             ).value(),
             Matchers.equalTo(2)
@@ -60,8 +67,8 @@ public final class FilteredTest {
     public void filterEmptyList() {
         MatcherAssert.assertThat(
             new Filtered<String>(
-                Collections.emptyList(),
-                input -> input.length() > 4
+                input -> input.length() > 4,
+                Collections.emptyList()
             ),
             Matchers.emptyIterable()
         );
@@ -71,10 +78,8 @@ public final class FilteredTest {
     public void size() throws Exception {
         MatcherAssert.assertThat(
             new Filtered<String>(
-                new IterableOf<>(
-                    "some", "text", "yes"
-                ),
-                input -> input.length() >= 4
+                input -> input.length() >= 4,
+                new IterableOf<>("some", "text", "yes")
             ).size(),
             Matchers.equalTo(2)
         );
@@ -84,10 +89,8 @@ public final class FilteredTest {
     public void withItemsNotEmpty() throws Exception {
         MatcherAssert.assertThat(
             new Filtered<String>(
-                new IterableOf<>(
-                    "first", "second"
-                ),
-                input -> input.length() > 4
+                input -> input.length() > 4,
+                new IterableOf<>("first", "second")
             ).isEmpty(),
             Matchers.equalTo(false)
         );
@@ -97,10 +100,8 @@ public final class FilteredTest {
     public void withoutItemsIsEmpty() throws Exception {
         MatcherAssert.assertThat(
             new Filtered<String>(
-                new IterableOf<>(
-                    "third", "fourth"
-                ),
-                input -> input.length() > 16
+                input -> input.length() > 16,
+                new IterableOf<>("third", "fourth")
             ).isEmpty(),
             Matchers.equalTo(true)
         );

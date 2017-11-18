@@ -27,61 +27,59 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.list.ListOf;
-import org.cactoos.scalar.StickyScalar;
 
 /**
- * Collection decorator that goes through the list only once.
+ * Iterable as {@link Collection}.
+ *
+ * <p>This class should be used very carefully. You must understand that
+ * it will fetch the entire content of the encapsulated {@link Iterable} on each
+ * method call. It doesn't cache the data anyhow.</p>
+ *
+ * <p>If you don't need this {@link Collection} to re-fresh
+ * its content on every call, by doing round-trips to
+ * the encapsulated iterable, use {@link StickyCollection}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Mykola Yashchenko (vkont4@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <E> Type of item
- * @since 0.16
+ * @param <T> List type
+ * @see StickyCollection
+ * @since 0.1
  */
-public final class StickyCollection<E> extends CollectionEnvelope<E> {
+public final class CollectionOf<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
-     * @param items The array
+     *
+     * @param array An array of some elements
      */
     @SafeVarargs
-    public StickyCollection(final E... items) {
-        this(new IterableOf<>(items));
+    public CollectionOf(final T... array) {
+        this(new IterableOf<>(array));
     }
 
     /**
      * Ctor.
-     * @param items The array
+     * @param src An {@link Iterator}
      * @since 0.21
      */
-    public StickyCollection(final Iterator<E> items) {
-        this(() -> items);
+    public CollectionOf(final Iterator<T> src) {
+        this(() -> src);
     }
 
     /**
      * Ctor.
-     * @param items The array
+     * @param src An {@link Iterable}
      */
-    public StickyCollection(final Iterable<E> items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param list The iterable
-     */
-    public StickyCollection(final Collection<E> list) {
-        super(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<E> temp = new LinkedList<>();
-                    temp.addAll(list);
-                    return temp;
-                }
-            )
-        );
+    public CollectionOf(final Iterable<T> src) {
+        super(() -> {
+            final Collection<T> list = new LinkedList<>();
+            for (final T item : src) {
+                list.add(item);
+            }
+            return list;
+        });
     }
 
 }

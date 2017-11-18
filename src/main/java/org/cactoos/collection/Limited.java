@@ -25,7 +25,7 @@ package org.cactoos.collection;
 
 import java.util.Collection;
 import java.util.Iterator;
-import org.cactoos.iterable.LengthOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 
 /**
@@ -38,116 +38,47 @@ import org.cactoos.list.ListOf;
  * @param <X> Type of source item
  * @since 1.16
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class Limited<X> implements Collection<X> {
-
-    /**
-     * Original collection.
-     */
-    private final Collection<X> collection;
-
-    /**
-     * Number of elements to return.
-     */
-    private final int limit;
+public final class Limited<X> extends CollectionEnvelope<X> {
 
     /**
      * Ctor.
      * @param src Source collection
      * @param lmt Requested number of elements
+     * @since 0.23
      */
-    public Limited(final Iterable<X> src, final int lmt) {
-        this(new ListOf<>(src), lmt);
+    @SafeVarargs
+    public Limited(final int lmt, final X... src) {
+        this(lmt, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
      * @param src Source collection
      * @param lmt Requested number of elements
+     * @since 0.23
      */
-    public Limited(final Collection<X> src, final int lmt) {
-        this.collection = src;
-        this.limit = lmt;
+    public Limited(final int lmt, final Iterator<X> src) {
+        this(lmt, new IterableOf<>(src));
     }
 
-    @Override
-    public String toString() {
-        return this.collection.toString();
+    /**
+     * Ctor.
+     * @param src Source collection
+     * @param lmt Requested number of elements
+     */
+    public Limited(final int lmt, final Iterable<X> src) {
+        this(lmt, new ListOf<>(src));
     }
 
-    @Override
-    public int size() {
-        return new LengthOf(
-            new org.cactoos.iterable.Limited<>(
-                this.limit, this.collection
-            )
-        ).value();
+    /**
+     * Ctor.
+     * @param src Source collection
+     * @param lmt Requested number of elements
+     */
+    public Limited(final int lmt, final Collection<X> src) {
+        super(() -> new CollectionOf<X>(
+            new org.cactoos.iterable.Limited<>(lmt, src)
+        ));
     }
 
-    @Override
-    public boolean isEmpty() {
-        return new LengthOf(
-            new org.cactoos.iterable.Limited<>(
-                this.limit, this.collection
-            )
-        ).value() == 0;
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return new org.cactoos.iterator.Limited<>(
-            this.limit, this.collection.iterator()
-        );
-    }
-
-    @Override
-    public boolean contains(final Object object) {
-        throw new UnsupportedOperationException("#contains()");
-    }
-
-    @Override
-    public Object[] toArray() {
-        throw new UnsupportedOperationException("#toArray()");
-    }
-
-    @Override
-    @SuppressWarnings("PMD.UseVarargs")
-    public <T> T[] toArray(final T[] array) {
-        throw new UnsupportedOperationException("#toArray(array)");
-    }
-
-    @Override
-    public boolean add(final X item) {
-        throw new UnsupportedOperationException("#add()");
-    }
-
-    @Override
-    public boolean remove(final Object object) {
-        throw new UnsupportedOperationException("#remove()");
-    }
-
-    @Override
-    public boolean containsAll(final Collection<?> list) {
-        throw new UnsupportedOperationException("#containsAll()");
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends X> list) {
-        throw new UnsupportedOperationException("#addAll()");
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> list) {
-        throw new UnsupportedOperationException("#removeAll()");
-    }
-
-    @Override
-    public boolean retainAll(final Collection<?> list) {
-        throw new UnsupportedOperationException("#retainAll()");
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("#clear()");
-    }
 }

@@ -52,18 +52,32 @@ public final class Limited<T> implements Iterable<T> {
 
     /**
      * Ctor.
-     *
+     * @param lmt The requested number of elements
+     * @param itr The underlying iterable
+     * @since 0.23
+     */
+    @SafeVarargs
+    public Limited(final int lmt, final T... itr) {
+        this(lmt, new IterableOf<>(itr));
+    }
+
+    /**
+     * Ctor.
+     * @param lmt The requested number of elements
+     * @param itr The underlying iterable
+     */
+    public Limited(final int lmt, final Iterator<T> itr) {
+        this(lmt, new IterableOf<>(itr));
+    }
+
+    /**
+     * Ctor.
      * @param lmt The requested number of elements
      * @param itr The underlying iterable
      */
     public Limited(final int lmt, final Iterable<T> itr) {
         this.iterable = itr;
         this.limit = lmt;
-    }
-
-    @Override
-    public String toString() {
-        return this.iterable.toString();
     }
 
     @Override

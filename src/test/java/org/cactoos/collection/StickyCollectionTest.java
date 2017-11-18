@@ -44,6 +44,15 @@ import org.junit.Test;
 public final class StickyCollectionTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection",
+            new StickyCollection<>(new ListOf<Integer>(1, 2, 0, -1)),
+            new BehavesAsCollection<>(0)
+        );
+    }
+
+    @Test
     public void ignoresChangesInIterable() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
         final Collection<Integer> list = new StickyCollection<>(

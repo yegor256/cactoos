@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.SyncScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -63,16 +62,14 @@ public final class StickyIterator<X> implements Iterator<X> {
      */
     public StickyIterator(final Iterator<X> iterator) {
         this.gate = new UncheckedScalar<>(
-            new SyncScalar<>(
-                new StickyScalar<>(
-                    () -> {
-                        final Collection<X> temp = new LinkedList<>();
-                        while (iterator.hasNext()) {
-                            temp.add(iterator.next());
-                        }
-                        return temp.iterator();
+            new StickyScalar<>(
+                () -> {
+                    final Collection<X> temp = new LinkedList<>();
+                    while (iterator.hasNext()) {
+                        temp.add(iterator.next());
                     }
-                )
+                    return temp.iterator();
+                }
             )
         );
     }

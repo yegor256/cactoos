@@ -45,14 +45,28 @@ public final class Shuffled<T> implements Iterable<T> {
     /**
      * Ctor.
      * @param src The underlying iterable
+     * @since 0.23
+     */
+    @SafeVarargs
+    public Shuffled(final T... src) {
+        this(new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The underlying iterable
+     * @since 0.23
+     */
+    public Shuffled(final Iterator<T> src) {
+        this(new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The underlying iterable
      */
     public Shuffled(final Iterable<T> src) {
         this.iterable = src;
-    }
-
-    @Override
-    public String toString() {
-        return this.iterable.toString();
     }
 
     @Override

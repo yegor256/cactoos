@@ -37,7 +37,6 @@ import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.SyncScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -232,11 +231,7 @@ public final class InputStreamOf extends InputStream {
      */
     private InputStreamOf(final Scalar<InputStream> src) {
         super();
-        this.source = new UncheckedScalar<>(
-            new SyncScalar<>(
-                new StickyScalar<>(src)
-            )
-        );
+        this.source = new UncheckedScalar<>(new StickyScalar<>(src));
     }
 
     @Override

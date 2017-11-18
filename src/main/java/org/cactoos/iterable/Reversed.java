@@ -49,14 +49,19 @@ public final class Reversed<X> implements Iterable<X> {
     /**
      * Ctor.
      * @param src Source iterable
+     * @since 0.23
+     */
+    @SafeVarargs
+    public Reversed(final X... src) {
+        this(new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src Source iterable
      */
     public Reversed(final Iterable<X> src) {
         this.iterable = src;
-    }
-
-    @Override
-    public String toString() {
-        return this.iterable.toString();
     }
 
     @Override

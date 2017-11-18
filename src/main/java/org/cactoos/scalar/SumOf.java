@@ -126,57 +126,49 @@ public final class SumOf extends Number implements Scalar<Number> {
      */
     public SumOf(final Iterable<Scalar<Number>> src) {
         super();
-        this.lsum = new SyncScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Iterator<Scalar<Number>> numbers = src.iterator();
-                    long sum = 0L;
-                    while (numbers.hasNext()) {
-                        final Number next = numbers.next().value();
-                        sum += next.longValue();
-                    }
-                    return sum;
+        this.lsum = new StickyScalar<>(
+            () -> {
+                final Iterator<Scalar<Number>> numbers = src.iterator();
+                long sum = 0L;
+                while (numbers.hasNext()) {
+                    final Number next = numbers.next().value();
+                    sum += next.longValue();
                 }
-            )
+                return sum;
+            }
         );
-        this.isum = new SyncScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Iterator<Scalar<Number>> numbers = src.iterator();
-                    int sum = 0;
-                    while (numbers.hasNext()) {
-                        final Number next = numbers.next().value();
-                        sum += next.intValue();
-                    }
-                    return sum;
+        this.isum = new StickyScalar<>(
+            () -> {
+                final Iterator<Scalar<Number>> numbers = src.iterator();
+                int sum = 0;
+                while (numbers.hasNext()) {
+                    final Number next = numbers.next().value();
+                    sum += next.intValue();
                 }
-            )
+                return sum;
+            }
         );
-        this.fsum = new SyncScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Iterator<Scalar<Number>> numbers = src.iterator();
-                    float sum = 0.0f;
-                    while (numbers.hasNext()) {
-                        final Number next = numbers.next().value();
-                        sum += next.floatValue();
-                    }
-                    return sum;
+        this.fsum = new StickyScalar<>(
+            () -> {
+                final Iterator<Scalar<Number>> numbers = src.iterator();
+                float sum = 0.0f;
+                while (numbers.hasNext()) {
+                    final Number next = numbers.next().value();
+                    sum += next.floatValue();
                 }
-            )
+                return sum;
+            }
         );
-        this.dsum = new SyncScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Iterator<Scalar<Number>> numbers = src.iterator();
-                    double sum = 0.0d;
-                    while (numbers.hasNext()) {
-                        final Number next = numbers.next().value();
-                        sum += next.doubleValue();
-                    }
-                    return sum;
+        this.dsum = new StickyScalar<>(
+            () -> {
+                final Iterator<Scalar<Number>> numbers = src.iterator();
+                double sum = 0.0d;
+                while (numbers.hasNext()) {
+                    final Number next = numbers.next().value();
+                    sum += next.doubleValue();
                 }
-            )
+                return sum;
+            }
         );
     }
 

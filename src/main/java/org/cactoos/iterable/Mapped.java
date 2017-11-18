@@ -54,14 +54,28 @@ public final class Mapped<X, Y> implements Iterable<Y> {
      * @param fnc Func
      * @param src Source iterable
      */
+    @SafeVarargs
+    public Mapped(final Func<X, Y> fnc, final X... src) {
+        this(fnc, new IterableOf<X>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func
+     * @param src Source iterable
+     */
+    public Mapped(final Func<X, Y> fnc, final Iterator<X> src) {
+        this(fnc, new IterableOf<X>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func
+     * @param src Source iterable
+     */
     public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
         this.iterable = src;
         this.func = fnc;
-    }
-
-    @Override
-    public String toString() {
-        return this.iterable.toString();
     }
 
     @Override

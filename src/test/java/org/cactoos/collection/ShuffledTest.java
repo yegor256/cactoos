@@ -23,42 +23,54 @@
  */
 package org.cactoos.collection;
 
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link Sorted}.
+ * Test Case for {@link Shuffled}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.19
+ * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SortedTest {
+public final class ShuffledTest {
 
     @Test
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a collection",
-            new Sorted<>(new ListOf<Integer>(1, 2, 0, -1)),
+            new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
             new BehavesAsCollection<>(0)
         );
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sortsCollection() throws Exception {
+    public void shufflesCollection() throws Exception {
         MatcherAssert.assertThat(
-            "Can't sort elements in collection",
-            new Sorted<>(
-                new ListOf<>(
-                    "one", "two", "three", "four"
-                )
-            ),
-            Matchers.contains(
-                "four", "one", "three", "two"
-            )
+            "Can't shuffle elements in collection",
+            new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
+            Matchers.hasItem(-1)
+        );
+    }
+
+    @Test
+    public void shufflesArray() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't shuffle elements in array",
+            new Shuffled<>(1, 2, 0, -1),
+            Matchers.hasItem(-1)
+        );
+    }
+
+    @Test
+    public void shufflesIterable() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't shuffle elements in iterable",
+            new Shuffled<>(new IterableOf<>(1, 2, 0, -1)),
+            Matchers.hasItem(-1)
         );
     }
 

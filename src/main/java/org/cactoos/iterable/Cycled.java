@@ -46,6 +46,16 @@ public final class Cycled<T> implements Iterable<T> {
     /**
      * Ctor.
      * @param itr Iterable
+     * @since 0.23
+     */
+    @SafeVarargs
+    public Cycled(final T... itr) {
+        this(new IterableOf<T>(itr));
+    }
+
+    /**
+     * Ctor.
+     * @param itr Iterable
      * @since 0.21
      */
     public Cycled(final Iterator<T> itr) {
@@ -58,11 +68,6 @@ public final class Cycled<T> implements Iterable<T> {
      */
     public Cycled(final Iterable<T> itr) {
         this.iterable = itr;
-    }
-
-    @Override
-    public String toString() {
-        return this.iterable.toString();
     }
 
     @Override

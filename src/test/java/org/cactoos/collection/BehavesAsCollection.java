@@ -23,43 +23,63 @@
  */
 package org.cactoos.collection;
 
+import java.util.Collection;
 import org.cactoos.list.ListOf;
+import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Test Case for {@link Sorted}.
+ * Matcher for collection.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.19
+ * @param <E> Type of source item
+ * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SortedTest {
+public final class BehavesAsCollection<E> extends
+    TypeSafeMatcher<Collection<E>>  {
 
-    @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't behave as a collection",
-            new Sorted<>(new ListOf<Integer>(1, 2, 0, -1)),
-            new BehavesAsCollection<>(0)
-        );
+    /**
+     * Sample item.
+     */
+    private final E sample;
+
+    /**
+     * Ctor.
+     * @param item Sample item
+     */
+    public BehavesAsCollection(final E item) {
+        super();
+        this.sample = item;
     }
 
-    @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sortsCollection() throws Exception {
+    @Override
+    @SuppressWarnings({ "unchecked", "PMD.ClassCastExceptionWithToArray" })
+    public boolean matchesSafely(final Collection<E> col) {
+        MatcherAssert.assertThat(col, Matchers.hasItem(this.sample));
+        MatcherAssert.assertThat(col, Matchers.not(Matchers.emptyIterable()));
         MatcherAssert.assertThat(
-            "Can't sort elements in collection",
-            new Sorted<>(
-                new ListOf<>(
-                    "one", "two", "three", "four"
-                )
-            ),
-            Matchers.contains(
-                "four", "one", "three", "two"
-            )
+            col, Matchers.hasSize(Matchers.greaterThan(0))
         );
+        MatcherAssert.assertThat(
+            new ListOf<>((E[]) col.toArray()),
+            Matchers.hasItem(this.sample)
+        );
+        final E[] array = (E[]) new Object[col.size()];
+        col.toArray(array);
+        MatcherAssert.assertThat(
+            new ListOf<>(array), Matchers.hasItem(this.sample)
+        );
+        MatcherAssert.assertThat(
+            col.containsAll(new ListOf<>(this.sample)), Matchers.is(true)
+        );
+        return true;
     }
 
+    @Override
+    public void describeTo(final Description desc) {
+        desc.appendText("not a valid collection");
+    }
 }

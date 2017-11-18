@@ -43,6 +43,19 @@ import org.junit.Test;
 public final class JoinedTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection",
+            new Joined<Integer>(
+                new IterableOf<>(1, -1, 2, 0),
+                new IterableOf<>(1, -1, 2, 0),
+                new IterableOf<>(1, -1, 2, 0)
+            ),
+            new BehavesAsCollection<>(-1)
+        );
+    }
+
+    @Test
     public void size() {
         MatcherAssert.assertThat(
             new Joined<String>(

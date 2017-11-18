@@ -56,55 +56,55 @@ public final class NaturalNumbers implements Iterable<Long> {
 
     /**
      * Ctor.
-     * @param last Last natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final long last) {
-        this(0L, last);
+    public NaturalNumbers(final long lst) {
+        this(0L, lst);
     }
 
     /**
      * Ctor.
-     * @param first First natural number
-     * @param last Last natural number
+     * @param fst First natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final long first, final long last) {
-        this(() -> first, () -> last);
+    public NaturalNumbers(final long fst, final long lst) {
+        this(() -> fst, () -> lst);
     }
 
     /**
      * Ctor.
-     * @param last Last natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final Scalar<Long> last) {
-        this(new UncheckedScalar<>(last));
+    public NaturalNumbers(final Scalar<Long> lst) {
+        this(new UncheckedScalar<>(lst));
     }
 
     /**
      * Ctor.
-     * @param last Last natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final UncheckedScalar<Long> last) {
-        this(() -> 0L, last);
+    public NaturalNumbers(final UncheckedScalar<Long> lst) {
+        this(() -> 0L, lst);
     }
 
     /**
      * Ctor.
-     * @param first First natural number
-     * @param last Last natural number
+     * @param fst First natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final Scalar<Long> first, final Scalar<Long> last) {
-        this(new UncheckedScalar<>(first), new UncheckedScalar<>(last));
+    public NaturalNumbers(final Scalar<Long> fst, final Scalar<Long> lst) {
+        this(new UncheckedScalar<>(fst), new UncheckedScalar<>(lst));
     }
 
     /**
      * Ctor.
-     * @param first First natural number
-     * @param last Last natural number
+     * @param fst First natural number
+     * @param lst Last natural number
      */
-    public NaturalNumbers(final UncheckedScalar<Long> first,
-        final UncheckedScalar<Long> last) {
-        this.first = first;
-        this.last = last;
+    public NaturalNumbers(final UncheckedScalar<Long> fst,
+        final UncheckedScalar<Long> lst) {
+        this.first = fst;
+        this.last = lst;
     }
 
     @Override

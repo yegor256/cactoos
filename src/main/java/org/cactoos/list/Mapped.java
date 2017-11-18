@@ -93,11 +93,6 @@ public final class Mapped<X, Y> implements List<Y> {
     }
 
     @Override
-    public String toString() {
-        return this.list.toString();
-    }
-
-    @Override
     public int size() {
         return this.list.size();
     }

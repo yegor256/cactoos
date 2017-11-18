@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.SyncScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -54,17 +53,15 @@ public final class Shuffled<T> implements Iterator<T> {
      */
     public Shuffled(final Iterator<T> iterator) {
         this.scalar = new UncheckedScalar<>(
-            new SyncScalar<>(
-                new StickyScalar<>(
-                    () -> {
-                        final List<T> items = new LinkedList<>();
-                        while (iterator.hasNext()) {
-                            items.add(iterator.next());
-                        }
-                        Collections.shuffle(items);
-                        return items.iterator();
+            new StickyScalar<>(
+                () -> {
+                    final List<T> items = new LinkedList<>();
+                    while (iterator.hasNext()) {
+                        items.add(iterator.next());
                     }
-                )
+                    Collections.shuffle(items);
+                    return items.iterator();
+                }
             )
         );
     }

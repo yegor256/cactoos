@@ -23,43 +23,57 @@
  */
 package org.cactoos.collection;
 
-import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * Test Case for {@link Sorted}.
+ * Sorted collection.
+ *
+ * <p>Pay attention that sorting will happen on each operation
+ * with the collection. Every time you touch it, it will fetch the
+ * entire collection from the encapsulated object and shuffle it. If you
+ * want to avoid that "side-effect", decorate it with
+ * {@link StickyCollection}.</p>
+ *
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.19
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Element type
+ * @since 0.23
  */
-public final class SortedTest {
+public final class Shuffled<T> extends CollectionEnvelope<T> {
 
-    @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't behave as a collection",
-            new Sorted<>(new ListOf<Integer>(1, 2, 0, -1)),
-            new BehavesAsCollection<>(0)
-        );
+    /**
+     * Ctor.
+     * @param src The underlying collection
+     */
+    @SafeVarargs
+    public Shuffled(final T... src) {
+        this(new CollectionOf<>(src));
     }
 
-    @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sortsCollection() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't sort elements in collection",
-            new Sorted<>(
-                new ListOf<>(
-                    "one", "two", "three", "four"
-                )
-            ),
-            Matchers.contains(
-                "four", "one", "three", "two"
-            )
-        );
+    /**
+     * Ctor.
+     * @param src The underlying collection
+     */
+    public Shuffled(final Iterable<T> src) {
+        this(new CollectionOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The underlying collection
+     */
+    public Shuffled(final Collection<T> src) {
+        super(() -> {
+            final List<T> items = new LinkedList<>();
+            items.addAll(src);
+            Collections.shuffle(items);
+            return items;
+        });
     }
 
 }

@@ -43,13 +43,25 @@ import org.junit.Test;
 public final class LimitedTest {
 
     @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection",
+            new Limited<>(
+                2,
+                new IterableOf<>(1, -1, 2, 0)
+            ),
+            new BehavesAsCollection<>(-1)
+        );
+    }
+
+    @Test
     public void size() {
         MatcherAssert.assertThat(
             new Limited<>(
+                2,
                 new IterableOf<>(
                     "hello", "world", "друг"
-                ),
-                2
+                )
             ).size(),
             Matchers.equalTo(2)
         );
@@ -59,8 +71,8 @@ public final class LimitedTest {
     public void sizeEmptyReturnZero() {
         MatcherAssert.assertThat(
             new Limited<>(
-                Collections.emptyList(),
-                2
+                2,
+                Collections.emptyList()
             ).size(),
             Matchers.equalTo(0)
         );
@@ -70,98 +82,71 @@ public final class LimitedTest {
     public void sizeLimitZeroReturnZero() {
         MatcherAssert.assertThat(
             new Limited<>(
-                new IterableOf<>(
-                    "1", "2", "3"
-                ),
-                0
+                0, new IterableOf<>("1", "2", "3")
             ).size(),
             Matchers.equalTo(0)
         );
     }
 
     @Test
-    public void withItemsNotEmpty() throws Exception {
+    public void withItemsNotEmpty() {
         MatcherAssert.assertThat(
             new Limited<String>(
-                new IterableOf<>(
-                    "first", "second"
-                ),
-                2
+                2, new IterableOf<>("first", "second")
             ).isEmpty(),
             Matchers.equalTo(false)
         );
     }
 
     @Test
-    public void withoutItemsIsEmpty() throws Exception {
+    public void withoutItemsIsEmpty() {
         MatcherAssert.assertThat(
             new Limited<String>(
-                new IterableOf<>(
-                    "third", "fourth"
-                ),
-                0
+                0, new IterableOf<>("third", "fourth")
             ).isEmpty(),
             Matchers.equalTo(true)
         );
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testAdd() throws Exception {
+    public void testAdd() {
         new Limited<>(
-            new IterableOf<>(
-                1, 2, 3, 4
-            ),
-            2
+            2, new IterableOf<>(1, 2, 3, 4)
         ).add(6);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRemove() throws Exception {
+    public void testRemove() {
         new Limited<>(
-            new IterableOf<>(
-                1, 2, 3, 4
-            ),
-            2
+            2, new IterableOf<>(1, 2, 3, 4)
         ).remove(1);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testAddAll() throws Exception {
+    public void testAddAll() {
         new Limited<>(
-            new IterableOf<>(
-                1, 2, 3, 4
-            ),
-            2
+            2, new IterableOf<Integer>(1, 2, 3, 4)
         ).addAll(new ArrayList<>(6));
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRemoveAll() throws Exception {
+    public void testRemoveAll() {
         new Limited<>(
-            new IterableOf<>(
-                1, 2, 3, 4
-            ),
-            2
-        ).removeAll(new ArrayList<>(2));
+            2, new IterableOf<>(1, 2, 3, 4)
+        ).removeAll(new ArrayList<Integer>(2));
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRetainAll() throws Exception {
+    public void testRetainAll() {
         new Limited<>(
-            new IterableOf<>(
-                1, 2, 3, 4
-            ),
-            2
+            2, new IterableOf<>(1, 2, 3, 4)
         ).retainAll(new ArrayList<>(2));
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testClear() throws Exception {
-        new Limited<>(
-            new IterableOf<>(
-                1, 2, 3, 4
-            ),
-            2
+    public void testClear() {
+        new Limited<Integer>(
+            2, new IterableOf<>(1, 2, 3, 4)
         ).clear();
     }
 }

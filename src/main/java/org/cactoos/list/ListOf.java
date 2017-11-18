@@ -24,22 +24,22 @@
 package org.cactoos.list;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.LengthOf;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable as {@link List}.
  *
  * <p>This class should be used very carefully. You must understand that
  * it will fetch the entire content of the encapsulated {@link List} on each
- * method call. It doesn't cache the data anyhow.</p>
- *
- * <p>If you don't need this {@link List} to re-fresh its content on every call,
- * by doing round-trips to the encapsulated iterable, use
+ * method call. It doesn't cache the data anyhow. If you don't
+ * need this {@link List} to re-fresh its content on every call,
+ * by doing round-trips to the encapsulated iterable, decorate it with
  * {@link StickyList}.</p>
  *
  * <p>There is no thread-safety guarantee.
@@ -56,9 +56,9 @@ import org.cactoos.iterable.LengthOf;
 public final class ListOf<T> implements List<T> {
 
     /**
-     * The source.
+     * The list.
      */
-    private final Iterable<T> iterable;
+    private final UncheckedScalar<List<T>> list;
 
     /**
      * Ctor.
@@ -84,38 +84,46 @@ public final class ListOf<T> implements List<T> {
      * @param src An {@link Iterable}
      */
     public ListOf(final Iterable<T> src) {
-        this.iterable = src;
+        this.list = new UncheckedScalar<>(
+            () -> {
+                final List<T> temp = new LinkedList<>();
+                for (final T item : src) {
+                    temp.add(item);
+                }
+                return Collections.unmodifiableList(temp);
+            }
+        );
     }
 
     @Override
     public int size() {
-        return new LengthOf(this.iterable).value();
+        return this.list.value().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return !this.iterable.iterator().hasNext();
+        return this.list.value().isEmpty();
     }
 
     @Override
     public boolean contains(final Object object) {
-        return this.list().contains(object);
+        return this.list.value().contains(object);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return this.iterable.iterator();
+        return this.list.value().iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return this.list().toArray();
+        return this.list.value().toArray();
     }
 
     @Override
     @SuppressWarnings("PMD.UseVarargs")
     public <Y> Y[] toArray(final Y[] array) {
-        return this.list().toArray(array);
+        return this.list.value().toArray(array);
     }
 
     @Override
@@ -134,7 +142,7 @@ public final class ListOf<T> implements List<T> {
 
     @Override
     public boolean containsAll(final Collection<?> collection) {
-        return this.list().containsAll(collection);
+        return this.list.value().containsAll(collection);
     }
 
     @Override
@@ -175,7 +183,7 @@ public final class ListOf<T> implements List<T> {
 
     @Override
     public T get(final int index) {
-        return this.list().get(index);
+        return this.list.value().get(index);
     }
 
     @Override
@@ -201,38 +209,27 @@ public final class ListOf<T> implements List<T> {
 
     @Override
     public int indexOf(final Object object) {
-        return this.list().indexOf(object);
+        return this.list.value().indexOf(object);
     }
 
     @Override
     public int lastIndexOf(final Object object) {
-        return this.list().lastIndexOf(object);
+        return this.list.value().lastIndexOf(object);
     }
 
     @Override
     public ListIterator<T> listIterator() {
-        return this.list().listIterator();
+        return this.list.value().listIterator();
     }
 
     @Override
     public ListIterator<T> listIterator(final int index) {
-        return this.list().listIterator(index);
+        return this.list.value().listIterator(index);
     }
 
     @Override
     public List<T> subList(final int from, final int end) {
-        return this.list().subList(from, end);
+        return this.list.value().subList(from, end);
     }
 
-    /**
-     * Build a list.
-     * @return List
-     */
-    private List<T> list() {
-        final List<T> list = new LinkedList<>();
-        for (final T item : this.iterable) {
-            list.add(item);
-        }
-        return list;
-    }
 }

@@ -29,36 +29,38 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link Sorted}.
+ * Test Case for {@link CollectionOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.19
+ * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SortedTest {
+public final class CollectionOfTest {
 
     @Test
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a collection",
-            new Sorted<>(new ListOf<Integer>(1, 2, 0, -1)),
-            new BehavesAsCollection<>(0)
+            new CollectionOf<>(1, 2, 0, -1),
+            new BehavesAsCollection<>(-1)
         );
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sortsCollection() throws Exception {
+    public void buildsCollection() throws Exception {
         MatcherAssert.assertThat(
-            "Can't sort elements in collection",
-            new Sorted<>(
-                new ListOf<>(
-                    "one", "two", "three", "four"
-                )
-            ),
-            Matchers.contains(
-                "four", "one", "three", "two"
-            )
+            "Can't build a collection",
+            new CollectionOf<Integer>(1, 2, 0, -1),
+            Matchers.hasItem(-1)
+        );
+    }
+
+    @Test
+    public void buildsCollectionFromIterator() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't build a collection from iterator",
+            new CollectionOf<Integer>(new ListOf<>(1, 2, 0, -1).iterator()),
+            Matchers.hasItem(-1)
         );
     }
 

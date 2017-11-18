@@ -21,45 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.list;
 
-import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link Sorted}.
+ * Test Case for {@link Shuffled}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.19
+ * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SortedTest {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class ShuffledTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
+    public void shufflesList() throws Exception {
         MatcherAssert.assertThat(
-            "Can't behave as a collection",
-            new Sorted<>(new ListOf<Integer>(1, 2, 0, -1)),
-            new BehavesAsCollection<>(0)
-        );
-    }
-
-    @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sortsCollection() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't sort elements in collection",
-            new Sorted<>(
-                new ListOf<>(
-                    "one", "two", "three", "four"
-                )
+            "Can't shuffle elements in list",
+            new Shuffled<>(
+                new ListOf<>(1, 0, -1, -1, 2)
             ),
-            Matchers.contains(
-                "four", "one", "three", "two"
-            )
+            Matchers.hasItem(-1)
         );
     }
-
 }
