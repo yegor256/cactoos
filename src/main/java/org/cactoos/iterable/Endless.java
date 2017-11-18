@@ -23,8 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
-
 /**
  * Endless iterable.
  *
@@ -36,24 +34,14 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.4
  */
-public final class Endless<T> implements Iterable<T> {
-
-    /**
-     * Element to repeat.
-     */
-    private final T element;
+public final class Endless<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param elm To repeat
+     * @param item The item to repeat
      */
-    public Endless(final T elm) {
-        this.element = elm;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new org.cactoos.iterator.Endless<>(this.element);
+    public Endless(final T item) {
+        super(() -> () -> new org.cactoos.iterator.Endless<>(item));
     }
 
 }

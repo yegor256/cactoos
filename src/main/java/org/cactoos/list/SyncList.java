@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 
 /**
  * Synchronized list.
@@ -75,7 +75,7 @@ public final class SyncList<X> extends ListEnvelope<X> {
      */
     public SyncList(final Collection<X> list) {
         super(
-            new StickyScalar<>(
+            new SyncScalar<>(
                 () -> Collections.synchronizedList(
                     new ListOf<>(list)
                 )

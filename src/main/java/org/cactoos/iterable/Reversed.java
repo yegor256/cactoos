@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,12 +38,7 @@ import java.util.List;
  * @see Filtered
  * @since 0.9
  */
-public final class Reversed<X> implements Iterable<X> {
-
-    /**
-     * Iterable.
-     */
-    private final Iterable<X> iterable;
+public final class Reversed<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
@@ -61,17 +55,14 @@ public final class Reversed<X> implements Iterable<X> {
      * @param src Source iterable
      */
     public Reversed(final Iterable<X> src) {
-        this.iterable = src;
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        final List<X> list = new LinkedList<>();
-        for (final X item : this.iterable) {
-            list.add(item);
-        }
-        Collections.reverse(list);
-        return list.iterator();
+        super(() -> {
+            final List<X> list = new LinkedList<>();
+            for (final X item : src) {
+                list.add(item);
+            }
+            Collections.reverse(list);
+            return list;
+        });
     }
 
 }

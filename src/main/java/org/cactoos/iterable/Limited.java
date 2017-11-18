@@ -38,17 +38,7 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.6
  */
-public final class Limited<T> implements Iterable<T> {
-
-    /**
-     * Decorated iterable.
-     */
-    private final Iterable<T> iterable;
-
-    /**
-     * Number of elements to return.
-     */
-    private final int limit;
+public final class Limited<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
@@ -76,14 +66,9 @@ public final class Limited<T> implements Iterable<T> {
      * @param itr The underlying iterable
      */
     public Limited(final int lmt, final Iterable<T> itr) {
-        this.iterable = itr;
-        this.limit = lmt;
+        super(() -> () -> new org.cactoos.iterator.Limited<>(
+            lmt, itr.iterator()
+        ));
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return new org.cactoos.iterator.Limited<>(
-            this.limit, this.iterable.iterator()
-        );
-    }
 }

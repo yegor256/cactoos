@@ -35,12 +35,7 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.20
  */
-public final class Shuffled<T> implements Iterable<T> {
-
-    /**
-     * Decorated iterable.
-     */
-    private final Iterable<T> iterable;
+public final class Shuffled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
@@ -66,13 +61,7 @@ public final class Shuffled<T> implements Iterable<T> {
      * @param src The underlying iterable
      */
     public Shuffled(final Iterable<T> src) {
-        this.iterable = src;
+        super(() -> () -> new org.cactoos.iterator.Shuffled<>(src.iterator()));
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return new org.cactoos.iterator.Shuffled<>(
-            this.iterable.iterator()
-        );
-    }
 }

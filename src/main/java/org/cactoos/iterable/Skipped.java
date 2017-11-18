@@ -23,8 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
-
 /**
  * Skipped iterable.
  *
@@ -35,17 +33,7 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.8
  */
-public final class Skipped<T> implements Iterable<T> {
-
-    /**
-     * Decorated iterable.
-     */
-    private final Iterable<T> iterable;
-
-    /**
-     * Count skip elements.
-     */
-    private final int skip;
+public final class Skipped<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
@@ -53,14 +41,9 @@ public final class Skipped<T> implements Iterable<T> {
      * @param iterable Decorated iterable
      */
     public Skipped(final int skip, final Iterable<T> iterable) {
-        this.iterable = iterable;
-        this.skip = skip;
+        super(() -> () -> new org.cactoos.iterator.Skipped<>(
+            skip, iterable.iterator()
+        ));
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return new org.cactoos.iterator.Skipped<>(
-            this.iterable.iterator(), this.skip
-        );
-    }
 }

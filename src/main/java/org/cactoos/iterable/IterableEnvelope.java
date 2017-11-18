@@ -23,56 +23,38 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Array as iterable.
+ * Iterable envelope.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
- * @since 0.12
+ * @since 0.24
  */
-public final class IterableOf<X> extends IterableEnvelope<X> {
+public class IterableEnvelope<X> implements Iterable<X> {
+
+    /**
+     * The iterable.
+     */
+    private final UncheckedScalar<Iterable<X>> iterable;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param scalar The source
      */
-    @SafeVarargs
-    public IterableOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
+    public IterableEnvelope(final Scalar<Iterable<X>> scalar) {
+        this.iterable = new UncheckedScalar<>(scalar);
     }
 
-    /**
-     * Ctor.
-     * @param list The list
-     */
-    public IterableOf(final List<X> list) {
-        this(list::iterator);
-    }
-
-    /**
-     * Ctor.
-     * @param list The list
-     * @since 0.21
-     */
-    public IterableOf(final Iterator<X> list) {
-        this(() -> list);
-    }
-
-    /**
-     * Ctor.
-     * @param sclr The encapsulated iterator of x
-     */
-    private IterableOf(final Scalar<Iterator<X>> sclr) {
-        super(() -> () -> new UncheckedScalar<>(sclr).value());
+    @Override
+    public final Iterator<X> iterator() {
+        return this.iterable.value().iterator();
     }
 
 }

@@ -58,7 +58,7 @@ public final class Sorted<T> implements Iterator<T> {
      */
     @SuppressWarnings("unchecked")
     public Sorted(final Iterator<T> items) {
-        this(items, (Comparator<T>) Comparator.naturalOrder());
+        this((Comparator<T>) Comparator.naturalOrder(), items);
     }
 
     /**
@@ -66,7 +66,7 @@ public final class Sorted<T> implements Iterator<T> {
      * @param iterator The underlying iterator
      * @param comparator The comparator
      */
-    public Sorted(final Iterator<T> iterator, final Comparator<T> comparator) {
+    public Sorted(final Comparator<T> comparator, final Iterator<T> iterator) {
         this.scalar = new UncheckedScalar<>(
             new StickyScalar<>(
                 () -> {

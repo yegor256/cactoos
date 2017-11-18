@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 
 /**
  * Iterable as {@link Collection}.
@@ -72,7 +72,7 @@ public final class SyncCollection<T> extends CollectionEnvelope<T> {
      */
     public SyncCollection(final Iterable<T> src) {
         super(
-            new StickyScalar<>(
+            new SyncScalar<>(
                 () -> Collections.synchronizedCollection(
                     new CollectionOf<>(src)
                 )

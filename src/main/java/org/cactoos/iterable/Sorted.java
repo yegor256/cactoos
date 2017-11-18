@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Comparator;
-import java.util.Iterator;
 
 /**
  * Sorted iterable.
@@ -36,17 +35,7 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.7
  */
-public final class Sorted<T> implements Iterable<T> {
-
-    /**
-     * Decorated iterable.
-     */
-    private final Iterable<T> iterable;
-
-    /**
-     * Comparator.
-     */
-    private final Comparator<T> comparator;
+public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
@@ -87,14 +76,8 @@ public final class Sorted<T> implements Iterable<T> {
      * @param cmp The comparator
      */
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
-        this.iterable = src;
-        this.comparator = cmp;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new org.cactoos.iterator.Sorted<>(
-            this.iterable.iterator(), this.comparator
-        );
+        super(() -> () -> new org.cactoos.iterator.Sorted<>(
+            cmp, src.iterator()
+        ));
     }
 }

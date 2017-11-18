@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
 import java.util.stream.LongStream;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
@@ -35,17 +34,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @version $Id$
  * @since 0.7
  */
-public final class NaturalNumbers implements Iterable<Long> {
-
-    /**
-     * First natural number.
-     */
-    private final UncheckedScalar<Long> first;
-
-    /**
-     * Last natural number.
-     */
-    private final UncheckedScalar<Long> last;
+public final class NaturalNumbers extends IterableEnvelope<Long> {
 
     /**
      * Ctor.
@@ -98,20 +87,14 @@ public final class NaturalNumbers implements Iterable<Long> {
 
     /**
      * Ctor.
-     * @param fst First natural number
-     * @param lst Last natural number
+     * @param first First natural number
+     * @param last Last natural number
      */
-    public NaturalNumbers(final UncheckedScalar<Long> fst,
-        final UncheckedScalar<Long> lst) {
-        this.first = fst;
-        this.last = lst;
+    public NaturalNumbers(final UncheckedScalar<Long> first,
+        final UncheckedScalar<Long> last) {
+        super(() -> () -> LongStream.range(
+            first.value(), last.value()
+        ).iterator());
     }
 
-    @Override
-    public Iterator<Long> iterator() {
-        return LongStream.range(
-            this.first.value(),
-            this.last.value()
-        ).iterator();
-    }
 }

@@ -53,7 +53,7 @@ public final class Skipped<T> implements Iterator<T> {
      * @param iterator Decorated iterator
      * @param skip Count skip elements
      */
-    public Skipped(final Iterator<T> iterator, final int skip) {
+    public Skipped(final int skip, final Iterator<T> iterator) {
         this.origin = iterator;
         this.omit = skip;
     }

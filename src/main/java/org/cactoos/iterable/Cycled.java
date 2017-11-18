@@ -36,12 +36,7 @@ import java.util.Iterator;
  * @param <T> Type of item
  * @since 0.8
  */
-public final class Cycled<T> implements Iterable<T> {
-
-    /**
-     * Iterable.
-     */
-    private final Iterable<T> iterable;
+public final class Cycled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
@@ -67,11 +62,7 @@ public final class Cycled<T> implements Iterable<T> {
      * @param itr Iterable
      */
     public Cycled(final Iterable<T> itr) {
-        this.iterable = itr;
+        super(() -> () -> new org.cactoos.iterator.Cycled<>(itr));
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return new org.cactoos.iterator.Cycled<>(this.iterable);
-    }
 }

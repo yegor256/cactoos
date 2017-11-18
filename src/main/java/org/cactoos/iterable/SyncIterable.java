@@ -23,56 +23,26 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.SyncScalar;
 
 /**
- * Array as iterable.
+ * Synchronized iterable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There class is thread-safe.</p>
  *
- * @author Ix (ixmanuel@yahoo.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
- * @since 0.12
+ * @since 0.24
  */
-public final class IterableOf<X> extends IterableEnvelope<X> {
+public final class SyncIterable<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     * @param items The array
+     * @param iterable The iterable
      */
-    @SafeVarargs
-    public IterableOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param list The list
-     */
-    public IterableOf(final List<X> list) {
-        this(list::iterator);
-    }
-
-    /**
-     * Ctor.
-     * @param list The list
-     * @since 0.21
-     */
-    public IterableOf(final Iterator<X> list) {
-        this(() -> list);
-    }
-
-    /**
-     * Ctor.
-     * @param sclr The encapsulated iterator of x
-     */
-    private IterableOf(final Scalar<Iterator<X>> sclr) {
-        super(() -> () -> new UncheckedScalar<>(sclr).value());
+    public SyncIterable(final Iterable<X> iterable) {
+        super(new SyncScalar<>(() -> iterable));
     }
 
 }
