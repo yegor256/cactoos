@@ -23,57 +23,36 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link Repeated}.
- *
- * @author Kirill (g4s8.public@gmail.com)
+ * Test Case for {@link SolidIterable}.
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
-public final class RepeatedTest {
+public final class SolidIterableTest {
 
     @Test
-    public void allSameTest() throws Exception {
-        final int size = 42;
-        final int element = 11;
+    public void makesListFromMappedIterable() throws Exception {
+        final Iterable<Integer> list = new SolidIterable<>(
+            new org.cactoos.list.Mapped<>(
+                i -> i + 1,
+                new IterableOf<>(1, -1, 0, 1)
+            )
+        );
         MatcherAssert.assertThat(
-            "Can't generate an iterable with fixed size",
-            new LengthOf(
-                new Filtered<>(
-                    input -> input == element,
-                    new Repeated<>(size, element)
-                )
-            ),
-            new ScalarHasValue<>(size)
+            "Can't turn a mapped iterable into a list",
+            list, Matchers.iterableWithSize(4)
+        );
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list, again",
+            list, Matchers.iterableWithSize(4)
         );
     }
 
-    @Test
-    public void emptyTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't generate an empty iterable",
-            new LengthOf(new Repeated<>(0, 0)),
-            new ScalarHasValue<>(0)
-        );
-    }
-
-    @Test
-    public void repeatsIntegerTwice() throws Exception {
-        final Iterable<Integer> list = new Repeated<>(5, 1);
-        MatcherAssert.assertThat(
-            "Can't repeat an integer",
-            list, Matchers.iterableWithSize(5)
-        );
-        MatcherAssert.assertThat(
-            "Can't repeat an integer, again",
-            list, Matchers.iterableWithSize(5)
-        );
-    }
 }
