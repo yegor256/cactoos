@@ -25,7 +25,11 @@ package org.cactoos.list;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 
 /**
  * A {@link java.util.List} that is both synchronized and sticky.
@@ -51,18 +55,18 @@ public final class SolidList<X> extends ListEnvelope<X> {
     /**
      * Ctor.
      * @param items The array
+     * @since 0.21
      */
-    public SolidList(final Iterable<X> items) {
-        this(new ListOf<>(items));
+    public SolidList(final Iterator<X> items) {
+        this(new IterableOf<>(items));
     }
 
     /**
      * Ctor.
      * @param items The array
-     * @since 0.21
      */
-    public SolidList(final Iterator<X> items) {
-        this(new ListOf<>(items));
+    public SolidList(final Iterable<X> items) {
+        this(new CollectionOf<>(items));
     }
 
     /**
@@ -70,7 +74,11 @@ public final class SolidList<X> extends ListEnvelope<X> {
      * @param list The iterable
      */
     public SolidList(final Collection<X> list) {
-        super(() -> new SyncList<>(new StickyList<>(list)));
+        super(
+            new SyncScalar<List<X>>(
+                new StickyScalar<>(() -> new SyncList<>(new StickyList<>(list)))
+            )
+        );
     }
 
 }

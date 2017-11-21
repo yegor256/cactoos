@@ -24,6 +24,7 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
+import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -66,4 +67,17 @@ public final class SolidCollectionTest {
         );
     }
 
+    @Test
+    public void mapsToSameObjects() throws Exception {
+        final Iterable<Scalar<Integer>> list = new SolidCollection<>(
+            new org.cactoos.list.Mapped<>(
+                i -> (Scalar<Integer>) () -> i,
+                new IterableOf<>(1, -1, 0, 1)
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't map only once",
+            list.iterator().next(), Matchers.equalTo(list.iterator().next())
+        );
+    }
 }

@@ -23,6 +23,9 @@
  */
 package org.cactoos.iterable;
 
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
+
 /**
  * An {@link Iterable} that is both synchronized and sticky.
  *
@@ -49,7 +52,13 @@ public final class SolidIterable<X> extends IterableEnvelope<X> {
      * @param iterable The iterable
      */
     public SolidIterable(final Iterable<X> iterable) {
-        super(() -> new SyncIterable<>(new StickyIterable<>(iterable)));
+        super(
+            new SyncScalar<Iterable<X>>(
+                new StickyScalar<Iterable<X>>(
+                    () -> new SyncIterable<>(new StickyIterable<>(iterable))
+                )
+            )
+        );
     }
 
 }

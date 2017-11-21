@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -214,6 +215,20 @@ public final class StickyListTest {
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list, again",
             list, Matchers.iterableWithSize(4)
+        );
+    }
+
+    @Test
+    public void mapsToSameObjects() throws Exception {
+        final List<Scalar<Integer>> list = new StickyList<>(
+            new Mapped<>(
+                i -> (Scalar<Integer>) () -> i,
+                new IterableOf<>(1, -1, 0, 1)
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't map only once",
+            list.get(0), Matchers.equalTo(list.get(0))
         );
     }
 

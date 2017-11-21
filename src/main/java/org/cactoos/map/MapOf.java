@@ -81,9 +81,9 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      * @since 0.11
      */
-    public <Z> MapOf(final Iterable<Z> list, final Func<Z, X> key,
-        final Func<Z, Y> value) {
-        this(list, item -> new MapEntry<>(key.apply(item), value.apply(item)));
+    public <Z> MapOf(final Func<Z, X> key,
+        final Func<Z, Y> value, final Iterable<Z> list) {
+        this(item -> new MapEntry<>(key.apply(item), value.apply(item)), list);
     }
 
     /**
@@ -96,12 +96,12 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @since 0.12
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public <Z> MapOf(final Map<X, Y> src,
-        final Iterable<Z> list, final Func<Z, X> key,
-        final Func<Z, Y> value) {
+    public <Z> MapOf(final Func<Z, X> key,
+        final Func<Z, Y> value, final Map<X, Y> src,
+        final Iterable<Z> list) {
         this(
-            src, list,
-            item -> new MapEntry<>(key.apply(item), value.apply(item))
+            item -> new MapEntry<>(key.apply(item), value.apply(item)),
+            src, list
         );
     }
 
@@ -112,8 +112,8 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      * @since 0.11
      */
-    public <Z> MapOf(final Iterable<Z> list,
-        final Func<Z, Map.Entry<X, Y>> entry) {
+    public <Z> MapOf(final Func<Z, Map.Entry<X, Y>> entry,
+        final Iterable<Z> list) {
         this(new Mapped<>(entry, list));
     }
 
@@ -125,8 +125,8 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      * @since 0.11
      */
-    public <Z> MapOf(final Map<X, Y> src, final Iterable<Z> list,
-        final Func<Z, Map.Entry<X, Y>> entry) {
+    public <Z> MapOf(final Func<Z, Map.Entry<X, Y>> entry,
+        final Map<X, Y> src, final Iterable<Z> list) {
         this(src, new Mapped<>(entry, list));
     }
 

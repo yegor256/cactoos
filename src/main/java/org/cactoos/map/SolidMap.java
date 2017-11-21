@@ -28,6 +28,8 @@ import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 
 /**
  * A {@link Map} that is both synchronized and sticky.
@@ -39,6 +41,7 @@ import org.cactoos.iterable.Mapped;
  * @param <X> Type of key
  * @param <Y> Type of value
  * @since 0.24
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class SolidMap<X, Y> extends MapEnvelope<X, Y> {
 
@@ -70,12 +73,12 @@ public final class SolidMap<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public <Z> SolidMap(final Map<X, Y> map,
-        final Iterable<Z> list, final Func<Z, X> key,
-        final Func<Z, Y> value) {
+    public <Z> SolidMap(final Func<Z, X> key,
+        final Func<Z, Y> value, final Map<X, Y> map,
+        final Iterable<Z> list) {
         this(
-            map, list,
-            item -> new MapEntry<>(key.apply(item), value.apply(item))
+            item -> new MapEntry<>(key.apply(item), value.apply(item)),
+            map, list
         );
     }
 
@@ -86,9 +89,9 @@ public final class SolidMap<X, Y> extends MapEnvelope<X, Y> {
      * @param value Func to create value
      * @param <Z> Type of items in the list
      */
-    public <Z> SolidMap(final Iterable<Z> list, final Func<Z, X> key,
-        final Func<Z, Y> value) {
-        this(list, item -> new MapEntry<>(key.apply(item), value.apply(item)));
+    public <Z> SolidMap(final Func<Z, X> key,
+        final Func<Z, Y> value, final Iterable<Z> list) {
+        this(item -> new MapEntry<>(key.apply(item), value.apply(item)), list);
     }
 
     /**
@@ -97,8 +100,20 @@ public final class SolidMap<X, Y> extends MapEnvelope<X, Y> {
      * @param entry Func to create entry
      * @param <Z> Type of items in the list
      */
-    public <Z> SolidMap(final Iterable<Z> list,
-        final Func<Z, Map.Entry<X, Y>> entry) {
+    @SafeVarargs
+    public <Z> SolidMap(final Func<Z, Map.Entry<X, Y>> entry,
+        final Z... list) {
+        this(new Mapped<>(entry, list));
+    }
+
+    /**
+     * Ctor.
+     * @param list List of items
+     * @param entry Func to create entry
+     * @param <Z> Type of items in the list
+     */
+    public <Z> SolidMap(final Func<Z, Map.Entry<X, Y>> entry,
+        final Iterable<Z> list) {
         this(new Mapped<>(entry, list));
     }
 
@@ -109,8 +124,8 @@ public final class SolidMap<X, Y> extends MapEnvelope<X, Y> {
      * @param entry Func to create entry
      * @param <Z> Type of items in the list
      */
-    public <Z> SolidMap(final Map<X, Y> map, final Iterable<Z> list,
-        final Func<Z, Map.Entry<X, Y>> entry) {
+    public <Z> SolidMap(final Func<Z, Map.Entry<X, Y>> entry,
+        final Map<X, Y> map, final Iterable<Z> list) {
         this(map, new Mapped<>(entry, list));
     }
 
@@ -145,7 +160,13 @@ public final class SolidMap<X, Y> extends MapEnvelope<X, Y> {
      * @param map The map
      */
     public SolidMap(final Map<X, Y> map) {
-        super(() -> new SyncMap<>(new StickyMap<>(map)));
+        super(
+            new SyncScalar<Map<X, Y>>(
+                new StickyScalar<Map<X, Y>>(
+                    () -> new SyncMap<>(new StickyMap<X, Y>(map))
+                )
+            )
+        );
     }
 
 }

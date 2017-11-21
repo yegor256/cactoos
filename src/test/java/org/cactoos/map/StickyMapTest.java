@@ -109,14 +109,14 @@ public final class StickyMapTest {
         MatcherAssert.assertThat(
             "Can't transform and decorate a list of entries",
             new StickyMap<String, String>(
+                color -> new MapEntry<>(
+                    color, color.toUpperCase(Locale.ENGLISH)
+                ),
                 new StickyMap<String, String>(
                     new MapEntry<>("black", "BLACK"),
                     new MapEntry<>("white", "WHITE")
                 ),
-                new IterableOf<>("yellow", "red", "blue"),
-                color -> new MapEntry<>(
-                    color, color.toUpperCase(Locale.ENGLISH)
-                )
+                new IterableOf<>("yellow", "red", "blue")
             ),
             Matchers.hasValue(Matchers.equalTo("BLUE"))
         );
@@ -127,13 +127,13 @@ public final class StickyMapTest {
         MatcherAssert.assertThat(
             "Can't transform and decorate a list of entries with two funcs",
             new StickyMap<String, String>(
+                color -> String.format("[%s]", color),
+                String::toUpperCase,
                 new StickyMap<String, String>(
                     new MapEntry<>("black!", "Black!"),
                     new MapEntry<>("white!", "White!")
                 ),
-                new IterableOf<>("yellow!", "red!", "blue!"),
-                color -> String.format("[%s]", color),
-                String::toUpperCase
+                new IterableOf<>("yellow!", "red!", "blue!")
             ),
             Matchers.hasValue(Matchers.equalTo("BLUE!"))
         );
