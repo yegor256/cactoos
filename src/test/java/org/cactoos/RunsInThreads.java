@@ -98,8 +98,8 @@ public final class RunsInThreads<T> extends TypeSafeMatcher<Func<T, Boolean>> {
         latch.countDown();
         final boolean matches = new UncheckedScalar<>(
             new And(
-                futures,
-                (Func<Future<Boolean>, Boolean>) Future::get
+                (Func<Future<Boolean>, Boolean>) Future::get,
+                futures
             )
         ).value();
         service.shutdown();

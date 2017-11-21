@@ -26,6 +26,7 @@ package org.cactoos.scalar;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.iterable.IterableOf;
@@ -100,8 +101,8 @@ public final class OrTest {
     public void testProc() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new Or(
-            new IterableOf<>(1, 2, 3, 4),
-            input -> { list.add(input); }
+            (Proc<Integer>) list::add,
+            new IterableOf<>(1, 2, 3, 4)
         ).value();
         MatcherAssert.assertThat(
             list.size(),
@@ -113,7 +114,7 @@ public final class OrTest {
     public void testProcVarargs() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new Or(
-            input -> { list.add(input); },
+            (Proc<Integer>) list::add,
             2, 3, 4
         ).value();
         MatcherAssert.assertThat(
@@ -126,8 +127,8 @@ public final class OrTest {
     public void testFunc() throws Exception {
         MatcherAssert.assertThat(
             new Or(
-                new IterableOf<>(-1, 1, 0),
-                input -> input > 0
+                input -> input > 0,
+                new IterableOf<>(-1, 1, 0)
             ),
             new ScalarHasValue<>(true)
         );

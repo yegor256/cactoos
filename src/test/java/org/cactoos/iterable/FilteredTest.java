@@ -25,6 +25,7 @@ package org.cactoos.iterable;
 
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -33,6 +34,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class FilteredTest {
 
@@ -62,6 +64,22 @@ public final class FilteredTest {
                 )
             ),
             new ScalarHasValue<>(0)
+        );
+    }
+
+    @Test
+    public void filtersIterablesWithSize() {
+        final Iterable<Integer> list = new Filtered<>(
+            i -> i > 0,
+            new IterableOf<>(1, 2, -1, 0, 1)
+        );
+        MatcherAssert.assertThat(
+            "Can't filter the iterable twice",
+            list, Matchers.iterableWithSize(3)
+        );
+        MatcherAssert.assertThat(
+            "Can't filter the iterable twice, again",
+            list, Matchers.iterableWithSize(3)
         );
     }
 

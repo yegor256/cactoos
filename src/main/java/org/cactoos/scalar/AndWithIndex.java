@@ -23,6 +23,7 @@
  */
 package org.cactoos.scalar;
 
+import java.util.Iterator;
 import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 import org.cactoos.Func;
@@ -86,7 +87,7 @@ public final class AndWithIndex implements Scalar<Boolean> {
     @SafeVarargs
     public <X> AndWithIndex(final BiFunc<X, Integer, Boolean> func,
         final X... src) {
-        this(new IterableOf<>(src), func);
+        this(func, new IterableOf<>(src));
     }
 
     /**
@@ -94,10 +95,11 @@ public final class AndWithIndex implements Scalar<Boolean> {
      * @param src The iterable
      * @param proc Proc to use
      * @param <X> Type of items in the iterable
+     * @since 0.24
      */
-    public <X> AndWithIndex(final Iterable<X> src,
-        final BiProc<X, Integer> proc) {
-        this(src, new BiFuncOf<>(proc, true));
+    public <X> AndWithIndex(final BiProc<X, Integer> proc,
+        final Iterable<X> src) {
+        this(new BiFuncOf<>(proc, true), src);
     }
 
     /**
@@ -105,9 +107,10 @@ public final class AndWithIndex implements Scalar<Boolean> {
      * @param src The iterable
      * @param func Func to map
      * @param <X> Type of items in the iterable
+     * @since 0.24
      */
-    public <X> AndWithIndex(final Iterable<X> src,
-        final BiFunc<X, Integer, Boolean> func) {
+    public <X> AndWithIndex(final BiFunc<X, Integer, Boolean> func,
+        final Iterable<X> src) {
         this(
             new Mapped<>(
                 item -> (Func<Integer, Boolean>) input
@@ -122,6 +125,15 @@ public final class AndWithIndex implements Scalar<Boolean> {
      */
     @SafeVarargs
     public AndWithIndex(final Func<Integer, Boolean>... src) {
+        this(new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterator
+     * @since 0.24
+     */
+    public AndWithIndex(final Iterator<Func<Integer, Boolean>> src) {
         this(new IterableOf<>(src));
     }
 

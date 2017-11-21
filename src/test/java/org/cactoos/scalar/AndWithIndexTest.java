@@ -28,7 +28,6 @@ import java.util.List;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.func.BiFuncOf;
 import org.cactoos.func.MatcherOf;
-import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -50,11 +49,11 @@ public final class AndWithIndexTest {
         MatcherAssert.assertThat(
             "Can't iterate a list with a procedure",
             new AndWithIndex(
-                new IterableOf<>("hello", "world"),
                 new BiFuncOf<>(
                     (text, index) -> list.add(index, text),
                     true
-                )
+                ),
+                "hello", "world"
             ),
             new ScalarHasValue<>(
                 Matchers.allOf(
