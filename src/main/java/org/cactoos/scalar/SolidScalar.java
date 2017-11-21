@@ -21,56 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.scalar;
 
-import org.cactoos.BiFunc;
+import org.cactoos.Func;
+import org.cactoos.Scalar;
+import org.cactoos.func.StickyFunc;
+import org.cactoos.func.SyncFunc;
 
 /**
- * BiFunc that is thread-safe.
+ * Cached and synchronized version of a Scalar.
  *
- * <p>Objects of this class are thread safe.</p>
+ * <p>Objects of this class are thread safe.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of first input
- * @param <Y> Type of second input
- * @param <Z> Type of output
- * @since 0.18
+ * @param <T> Type of result
+ * @see StickyScalar
+ * @see SyncScalar
+ * @since 0.24
  */
-public final class SyncBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
+public final class SolidScalar<T> implements Scalar<T> {
 
     /**
-     * Original func.
+     * Func.
      */
-    private final BiFunc<X, Y, Z> func;
-
-    /**
-     * Sync lock.
-     */
-    private final Object lock;
+    private final Func<Boolean, T> func;
 
     /**
      * Ctor.
-     * @param fnc Func original
+     * @param scalar The Scalar to cache
      */
-    public SyncBiFunc(final BiFunc<X, Y, Z> fnc) {
-        this(fnc, fnc);
-    }
-
-    /**
-     * Ctor.
-     * @param fnc Func original
-     * @param lck Sync lock
-     */
-    public SyncBiFunc(final BiFunc<X, Y, Z> fnc, final Object lck) {
-        this.func = fnc;
-        this.lock = lck;
+    public SolidScalar(final Scalar<T> scalar) {
+        this.func = new SyncFunc<>(
+            new StickyFunc<>(
+                input -> scalar.value()
+            )
+        );
     }
 
     @Override
-    public Z apply(final X first, final Y second) throws Exception {
-        synchronized (this.lock) {
-            return this.func.apply(first, second);
-        }
+    public T value() throws Exception {
+        return this.func.apply(true);
     }
 }

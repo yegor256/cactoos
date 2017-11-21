@@ -30,6 +30,8 @@ import org.cactoos.Proc;
 /**
  * Func that is thread-safe.
  *
+ * <p>Objects of this class are thread safe.</p>
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input

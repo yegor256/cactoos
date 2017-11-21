@@ -26,7 +26,7 @@ package org.cactoos.func;
 import org.cactoos.BiFunc;
 
 /**
- * BiFunc that is thread-safe.
+ * BiFunc that is thread-safe and sticky.
  *
  * <p>Objects of this class are thread safe.</p>
  *
@@ -35,9 +35,9 @@ import org.cactoos.BiFunc;
  * @param <X> Type of first input
  * @param <Y> Type of second input
  * @param <Z> Type of output
- * @since 0.18
+ * @since 0.24
  */
-public final class SyncBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
+public final class SolidBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Original func.
@@ -45,32 +45,15 @@ public final class SyncBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
     private final BiFunc<X, Y, Z> func;
 
     /**
-     * Sync lock.
-     */
-    private final Object lock;
-
-    /**
      * Ctor.
      * @param fnc Func original
      */
-    public SyncBiFunc(final BiFunc<X, Y, Z> fnc) {
-        this(fnc, fnc);
-    }
-
-    /**
-     * Ctor.
-     * @param fnc Func original
-     * @param lck Sync lock
-     */
-    public SyncBiFunc(final BiFunc<X, Y, Z> fnc, final Object lck) {
-        this.func = fnc;
-        this.lock = lck;
+    public SolidBiFunc(final BiFunc<X, Y, Z> fnc) {
+        this.func = new SyncBiFunc<>(new StickyBiFunc<>(fnc));
     }
 
     @Override
     public Z apply(final X first, final Y second) throws Exception {
-        synchronized (this.lock) {
-            return this.func.apply(first, second);
-        }
+        return this.func.apply(first, second);
     }
 }
