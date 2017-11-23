@@ -23,49 +23,50 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.BiFunc;
+import org.cactoos.Scalar;
 
 /**
- * Test case for {@link Max}.
+ * Find the some among items.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * <p>There is no thread-safety guarantee.
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
+ *
+ * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
- * @since 0.10
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Scalar type
+ * @see UncheckedScalar
+ * @see IoCheckedScalar
+ * @since 1.0
  */
-public final class MaxTest {
+public class OneOf<T> implements Scalar<T> {
 
-    @Test(expected = NoSuchElementException.class)
-    public void maxAmongEmptyTest() throws Exception {
-        new Max<>(() -> Collections.emptyIterator()).value();
-    }
+    /**
+     * Items.
+     */
+    private final Scalar<T> result;
 
-    @Test
-    public void maxAmongOneTest() throws Exception {
-        final int num = 10;
-        MatcherAssert.assertThat(
-            "Can't find the greater among one",
-            new Max<Integer>(() -> new Integer(num)).value(),
-            Matchers.equalTo(num)
+    /**
+     * Ctor.
+     * @param fold Folding function
+     * @param iterable The items
+     */
+    public OneOf(
+        final BiFunc<T, T, T> fold,
+        final Iterable<Scalar<T>> iterable
+    ) {
+        this.result = new Folded<>(
+            fold,
+            iterable
         );
     }
 
-    @Test
-    public void maxAmongManyTest() throws Exception {
-        final int num = 10;
-        MatcherAssert.assertThat(
-            "Can't find the greater among many",
-            new Max<Integer>(
-                () -> new Integer(num),
-                () -> new Integer(0),
-                () -> new Integer(-1),
-                () -> new Integer(2)
-             ).value(),
-            Matchers.equalTo(num)
-        );
+    @Override
+    public final T value() throws Exception {
+        return this.result.value();
     }
 }
