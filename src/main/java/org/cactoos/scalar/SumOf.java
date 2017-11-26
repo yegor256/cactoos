@@ -24,16 +24,19 @@
 package org.cactoos.scalar;
 
 import java.util.Iterator;
-import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Mapped;
 
 /**
  * Int total of numbers.
+ *
+ * <p>Here is how you can use it to summarize numbers:</p>
+ *
+ * <pre>
+ * int sum = new SumOf(1, 2, 3, 4).intValue();
+ * long sum = new SumOf(1L, 2L, 3L).longValue();
+ * int sum = new SumOf(numbers.toArray(new Integer[numbers.size()])).intValue();
+ * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -47,7 +50,14 @@ import org.cactoos.iterable.Mapped;
  * @version $Id$
  * @since 0.9
  */
-public final class SumOf extends Number implements Scalar<Number> {
+@SuppressWarnings(
+    {
+        "PMD.CallSuperInConstructor",
+        "PMD.OnlyOneConstructorShouldDoInitialization",
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
+    }
+)
+public final class SumOf extends Number {
 
     /**
      * Serialization marker.
@@ -79,11 +89,37 @@ public final class SumOf extends Number implements Scalar<Number> {
      * @param src Numbers
      * @since 0.22
      */
-    public SumOf(final int... src) {
-        this(new Mapped<>(
-            input -> () -> input,
-            IntStream.of(src).boxed().collect(Collectors.toList())
-        ));
+    public SumOf(final Integer... src) {
+        this(
+            () -> {
+                int sum = 0;
+                for (final int val : src) {
+                    sum += val;
+                }
+                return sum;
+            },
+            () -> {
+                long sum = 0L;
+                for (final int val : src) {
+                    sum += (long) val;
+                }
+                return sum;
+            },
+            () -> {
+                double sum = 0.0d;
+                for (final int val : src) {
+                    sum += (double) val;
+                }
+                return sum;
+            },
+            () -> {
+                float sum = 0.0f;
+                for (final int val : src) {
+                    sum += (float) val;
+                }
+                return sum;
+            }
+        );
     }
 
     /**
@@ -91,11 +127,37 @@ public final class SumOf extends Number implements Scalar<Number> {
      * @param src Numbers
      * @since 0.22
      */
-    public SumOf(final long... src) {
-        this(new Mapped<>(
-            input -> () -> input,
-            LongStream.of(src).boxed().collect(Collectors.toList())
-        ));
+    public SumOf(final Long... src) {
+        this(
+            () -> {
+                int sum = 0;
+                for (final long val : src) {
+                    sum += (int) val;
+                }
+                return sum;
+            },
+            () -> {
+                long sum = 0L;
+                for (final long val : src) {
+                    sum += val;
+                }
+                return sum;
+            },
+            () -> {
+                double sum = 0.0d;
+                for (final long val : src) {
+                    sum += (double) val;
+                }
+                return sum;
+            },
+            () -> {
+                float sum = 0.0f;
+                for (final long val : src) {
+                    sum += (float) val;
+                }
+                return sum;
+            }
+        );
     }
 
     /**
@@ -103,11 +165,75 @@ public final class SumOf extends Number implements Scalar<Number> {
      * @param src Numbers
      * @since 0.22
      */
-    public SumOf(final double... src) {
-        this(new Mapped<>(
-            input -> () -> input,
-            DoubleStream.of(src).boxed().collect(Collectors.toList())
-        ));
+    public SumOf(final Double... src) {
+        this(
+            () -> {
+                int sum = 0;
+                for (final double val : src) {
+                    sum += (int) val;
+                }
+                return sum;
+            },
+            () -> {
+                long sum = 0L;
+                for (final double val : src) {
+                    sum += (long) val;
+                }
+                return sum;
+            },
+            () -> {
+                double sum = 0.0d;
+                for (final double val : src) {
+                    sum += val;
+                }
+                return sum;
+            },
+            () -> {
+                float sum = 0.0f;
+                for (final double val : src) {
+                    sum += (float) val;
+                }
+                return sum;
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param src Numbers
+     * @since 0.22
+     */
+    public SumOf(final Float... src) {
+        this(
+            () -> {
+                int sum = 0;
+                for (final float val : src) {
+                    sum += (int) val;
+                }
+                return sum;
+            },
+            () -> {
+                long sum = 0L;
+                for (final float val : src) {
+                    sum += (long) val;
+                }
+                return sum;
+            },
+            () -> {
+                double sum = 0.0d;
+                for (final float val : src) {
+                    sum += (double) val;
+                }
+                return sum;
+            },
+            () -> {
+                float sum = 0.0f;
+                for (final float val : src) {
+                    sum += val;
+                }
+                return sum;
+            }
+        );
     }
 
     /**
@@ -125,19 +251,7 @@ public final class SumOf extends Number implements Scalar<Number> {
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public SumOf(final Iterable<Scalar<Number>> src) {
-        super();
-        this.lsum = new StickyScalar<>(
-            () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
-                long sum = 0L;
-                while (numbers.hasNext()) {
-                    final Number next = numbers.next().value();
-                    sum += next.longValue();
-                }
-                return sum;
-            }
-        );
-        this.isum = new StickyScalar<>(
+        this(
             () -> {
                 final Iterator<Scalar<Number>> numbers = src.iterator();
                 int sum = 0;
@@ -146,9 +260,25 @@ public final class SumOf extends Number implements Scalar<Number> {
                     sum += next.intValue();
                 }
                 return sum;
-            }
-        );
-        this.fsum = new StickyScalar<>(
+            },
+            () -> {
+                final Iterator<Scalar<Number>> numbers = src.iterator();
+                long sum = 0L;
+                while (numbers.hasNext()) {
+                    final Number next = numbers.next().value();
+                    sum += next.longValue();
+                }
+                return sum;
+            },
+            () -> {
+                final Iterator<Scalar<Number>> numbers = src.iterator();
+                double sum = 0.0d;
+                while (numbers.hasNext()) {
+                    final Number next = numbers.next().value();
+                    sum += next.doubleValue();
+                }
+                return sum;
+            },
             () -> {
                 final Iterator<Scalar<Number>> numbers = src.iterator();
                 float sum = 0.0f;
@@ -159,17 +289,23 @@ public final class SumOf extends Number implements Scalar<Number> {
                 return sum;
             }
         );
-        this.dsum = new StickyScalar<>(
-            () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
-                double sum = 0.0d;
-                while (numbers.hasNext()) {
-                    final Number next = numbers.next().value();
-                    sum += next.doubleValue();
-                }
-                return sum;
-            }
-        );
+    }
+
+    /**
+     * Ctor.
+     * @param isr Integer
+     * @param lsr Long
+     * @param dsr Double
+     * @param fsr Float
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public SumOf(final Scalar<Integer> isr, final Scalar<Long> lsr,
+        final Scalar<Double> dsr, final Scalar<Float> fsr) {
+        super();
+        this.lsum = new StickyScalar<>(lsr);
+        this.isum = new StickyScalar<>(isr);
+        this.dsum = new StickyScalar<>(dsr);
+        this.fsum = new StickyScalar<>(fsr);
     }
 
     @Override
@@ -190,11 +326,6 @@ public final class SumOf extends Number implements Scalar<Number> {
     @Override
     public double doubleValue() {
         return new UncheckedScalar<>(this.dsum).value();
-    }
-
-    @Override
-    public Number value() {
-        return this;
     }
 
 }
