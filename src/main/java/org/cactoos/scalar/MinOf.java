@@ -28,27 +28,27 @@ import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 
 /**
- * Int total of numbers.
+ * Find the smaller among items.
  *
  * <p>Here is how you can use it to summarize numbers:</p>
  *
  * <pre>
- * int sum = new SumOf(1, 2, 3, 4).intValue();
- * long sum = new SumOf(1L, 2L, 3L).longValue();
- * int sum = new SumOf(numbers.toArray(new Integer[numbers.size()])).intValue();
+ * int sum = new MinOf(1, 2, 3, 4).intValue();
+ * long sum = new MinOf(1L, 2L, 3L).longValue();
+ * int sum = new MinOf(numbers.toArray(new Integer[numbers.size()])).intValue();
  * </pre>
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
  * it more convenient and get rid of the checked exception you can
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
- * <p>There is no thread-safety guarantee.
- *
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.24
  */
 @SuppressWarnings(
     {
@@ -57,7 +57,7 @@ import org.cactoos.iterable.IterableOf;
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
     }
 )
-public final class SumOf extends Number {
+public final class MinOf extends Number {
 
     /**
      * Serialization marker.
@@ -87,37 +87,44 @@ public final class SumOf extends Number {
     /**
      * Ctor.
      * @param src Numbers
-     * @since 0.22
      */
-    public SumOf(final Integer... src) {
+    public MinOf(final Integer... src) {
         this(
             () -> {
-                int sum = 0;
+                int min = Integer.MAX_VALUE;
                 for (final int val : src) {
-                    sum += val;
+                    if (val < min) {
+                        min = val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                long sum = 0L;
+                long min = Long.MAX_VALUE;
                 for (final int val : src) {
-                    sum += (long) val;
+                    if ((long) val < min) {
+                        min = (long) val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                double sum = 0.0d;
+                double min = Double.MAX_VALUE;
                 for (final int val : src) {
-                    sum += (double) val;
+                    if ((double) val < min) {
+                        min = (double) val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                float sum = 0.0f;
+                float min = Float.MAX_VALUE;
                 for (final int val : src) {
-                    sum += (float) val;
+                    if ((float) val < min) {
+                        min = (float) val;
+                    }
                 }
-                return sum;
+                return min;
             }
         );
     }
@@ -125,37 +132,44 @@ public final class SumOf extends Number {
     /**
      * Ctor.
      * @param src Numbers
-     * @since 0.22
      */
-    public SumOf(final Long... src) {
+    public MinOf(final Long... src) {
         this(
             () -> {
-                int sum = 0;
+                int min = Integer.MAX_VALUE;
                 for (final long val : src) {
-                    sum += (int) val;
+                    if ((int) val < min) {
+                        min = (int) val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                long sum = 0L;
+                long min = Long.MAX_VALUE;
                 for (final long val : src) {
-                    sum += val;
+                    if (val < min) {
+                        min = val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                double sum = 0.0d;
+                double min = Double.MAX_VALUE;
                 for (final long val : src) {
-                    sum += (double) val;
+                    if ((double) val < min) {
+                        min = (double) val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                float sum = 0.0f;
+                float min = Float.MAX_VALUE;
                 for (final long val : src) {
-                    sum += (float) val;
+                    if ((float) val < min) {
+                        min = (float) val;
+                    }
                 }
-                return sum;
+                return min;
             }
         );
     }
@@ -163,37 +177,44 @@ public final class SumOf extends Number {
     /**
      * Ctor.
      * @param src Numbers
-     * @since 0.22
      */
-    public SumOf(final Double... src) {
+    public MinOf(final Double... src) {
         this(
             () -> {
-                int sum = 0;
+                int min = Integer.MAX_VALUE;
                 for (final double val : src) {
-                    sum += (int) val;
+                    if ((int) val < min) {
+                        min = (int) val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                long sum = 0L;
+                long min = Long.MAX_VALUE;
                 for (final double val : src) {
-                    sum += (long) val;
+                    if ((long) val < min) {
+                        min = (long) val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                double sum = 0.0d;
+                double min = Double.MAX_VALUE;
                 for (final double val : src) {
-                    sum += val;
+                    if (val < min) {
+                        min = val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                float sum = 0.0f;
+                float min = Float.MAX_VALUE;
                 for (final double val : src) {
-                    sum += (float) val;
+                    if ((float) val < min) {
+                        min = (float) val;
+                    }
                 }
-                return sum;
+                return min;
             }
         );
     }
@@ -201,37 +222,44 @@ public final class SumOf extends Number {
     /**
      * Ctor.
      * @param src Numbers
-     * @since 0.22
      */
-    public SumOf(final Float... src) {
+    public MinOf(final Float... src) {
         this(
             () -> {
-                int sum = 0;
+                int min = Integer.MAX_VALUE;
                 for (final float val : src) {
-                    sum += (int) val;
+                    if ((int) val < min) {
+                        min = (int) val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                long sum = 0L;
+                long min = Long.MAX_VALUE;
                 for (final float val : src) {
-                    sum += (long) val;
+                    if ((long) val < min) {
+                        min = (long) val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                double sum = 0.0d;
+                double min = Double.MAX_VALUE;
                 for (final float val : src) {
-                    sum += (double) val;
+                    if ((double) val < min) {
+                        min = (double) val;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
-                float sum = 0.0f;
+                float min = Float.MAX_VALUE;
                 for (final float val : src) {
-                    sum += val;
+                    if (val < min) {
+                        min = val;
+                    }
                 }
-                return sum;
+                return min;
             }
         );
     }
@@ -241,7 +269,7 @@ public final class SumOf extends Number {
      * @param src Numbers
      */
     @SafeVarargs
-    public SumOf(final Scalar<Number>... src) {
+    public MinOf(final Scalar<Number>... src) {
         this(new IterableOf<>(src));
     }
 
@@ -250,39 +278,51 @@ public final class SumOf extends Number {
      * @param src The iterable
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
-    public SumOf(final Iterable<Scalar<Number>> src) {
+    public MinOf(final Iterable<Scalar<Number>> src) {
         this(
             () -> {
                 final Iterator<Scalar<Number>> numbers = src.iterator();
-                int sum = 0;
+                int min = Integer.MAX_VALUE;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().value().intValue();
+                    final int next = numbers.next().value().intValue();
+                    if (next < min) {
+                        min = next;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
                 final Iterator<Scalar<Number>> numbers = src.iterator();
-                long sum = 0L;
+                long min = Long.MAX_VALUE;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().value().longValue();
+                    final long next = numbers.next().value().longValue();
+                    if (next < min) {
+                        min = next;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
                 final Iterator<Scalar<Number>> numbers = src.iterator();
-                double sum = 0.0d;
+                double min = Double.MAX_VALUE;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().value().doubleValue();
+                    final double next = numbers.next().value().doubleValue();
+                    if (next < min) {
+                        min = next;
+                    }
                 }
-                return sum;
+                return min;
             },
             () -> {
                 final Iterator<Scalar<Number>> numbers = src.iterator();
-                float sum = 0.0f;
+                float min = Float.MAX_VALUE;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().value().floatValue();
+                    final float next = numbers.next().value().floatValue();
+                    if (next < min) {
+                        min = next;
+                    }
                 }
-                return sum;
+                return min;
             }
         );
     }
@@ -295,7 +335,7 @@ public final class SumOf extends Number {
      * @param fsr Float
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    private SumOf(final Scalar<Integer> isr, final Scalar<Long> lsr,
+    private MinOf(final Scalar<Integer> isr, final Scalar<Long> lsr,
         final Scalar<Double> dsr, final Scalar<Float> fsr) {
         super();
         this.lsum = new StickyScalar<>(lsr);

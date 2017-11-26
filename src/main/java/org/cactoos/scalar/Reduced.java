@@ -23,49 +23,55 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.BiFunc;
+import org.cactoos.Scalar;
 
 /**
- * Test case for {@link Max}.
+ * Iterable, which elements are "reduced" through the func.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.10
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Type of element
+ * @param <X> Type of input and output
+ * @since 0.9
  */
-public final class MaxTest {
+public final class Reduced<X, T> implements Scalar<X> {
 
-    @Test(expected = NoSuchElementException.class)
-    public void maxAmongEmptyTest() throws Exception {
-        new Max<>(() -> Collections.emptyIterator()).value();
+    /**
+     * Original iterable.
+     */
+    private final Iterable<T> iterable;
+
+    /**
+     * Input.
+     */
+    private final X input;
+
+    /**
+     * Func.
+     */
+    private final BiFunc<X, T, X> func;
+
+    /**
+     * Ctor.
+     * @param ipt Input
+     * @param fnc Func original
+     * @param list List of items
+     */
+    public Reduced(final X ipt, final BiFunc<X, T, X> fnc,
+        final Iterable<T> list) {
+        this.iterable = list;
+        this.input = ipt;
+        this.func = fnc;
     }
 
-    @Test
-    public void maxAmongOneTest() throws Exception {
-        final int num = 10;
-        MatcherAssert.assertThat(
-            "Can't find the greater among one",
-            new Max<Integer>(() -> new Integer(num)).value(),
-            Matchers.equalTo(num)
-        );
+    @Override
+    public X value() throws Exception {
+        X memo = this.input;
+        for (final T item : this.iterable) {
+            memo = this.func.apply(memo, item);
+        }
+        return memo;
     }
 
-    @Test
-    public void maxAmongManyTest() throws Exception {
-        final int num = 10;
-        MatcherAssert.assertThat(
-            "Can't find the greater among many",
-            new Max<Integer>(
-                () -> new Integer(num),
-                () -> new Integer(0),
-                () -> new Integer(-1),
-                () -> new Integer(2)
-             ).value(),
-            Matchers.equalTo(num)
-        );
-    }
 }
