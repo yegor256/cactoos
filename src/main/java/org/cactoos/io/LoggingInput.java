@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import org.cactoos.Input;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.29
  */
 @SuppressWarnings("PMD.LoggerIsNotStaticFinal")
 public final class LoggingInput implements Input {
@@ -70,7 +70,11 @@ public final class LoggingInput implements Input {
      * @param src The name of source data
      * @param lgr Message logger
      */
-    public LoggingInput(final Input input, final String src, final Logger lgr) {
+    public LoggingInput(
+        final Input input,
+        final String src,
+        final Logger lgr
+    ) {
         this.origin = input;
         this.source = src;
         this.logger = lgr;

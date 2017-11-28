@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,14 @@
  */
 package org.cactoos.io;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import org.cactoos.text.JoinedText;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Fake logger.
@@ -36,15 +39,24 @@ import java.util.logging.Logger;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.29
  */
 @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
 public final class FakeLogger extends Logger {
+
     /**
      * Ctor.
      */
     public FakeLogger() {
-        this("FakeLogger");
+        this(Level.INFO);
+    }
+
+    /**
+     * Ctor.
+     * @param lvl Logging level
+     */
+    public FakeLogger(final Level lvl) {
+        this("FakeLogger", lvl);
     }
 
     /**
@@ -52,17 +64,19 @@ public final class FakeLogger extends Logger {
      * @param name Logger name
      */
     public FakeLogger(final String name) {
-        this(name, null);
+        this(name, Level.INFO);
     }
 
     /**
      * Ctor.
      * @param name Logger name
-     * @param resource Resource name
+     * @param lvl Logging level
      */
-    public FakeLogger(final String name, final String resource) {
-        super(name, resource);
+    public FakeLogger(final String name, final Level lvl) {
+        super(name, null);
+        this.setUseParentHandlers(false);
         this.addHandler(new FakeHandler());
+        this.setLevel(lvl);
     }
 
     @Override
@@ -76,23 +90,23 @@ public final class FakeLogger extends Logger {
      *
      * @author Fabricio Cabral (fabriciofx@gmail.com)
      * @version $Id$
-     * @since 0.11
+     * @since 0.29
      */
     private static final class FakeHandler extends Handler {
         /**
-         * Last recorded log.
+         * Lines.
          */
-        private final List<LogRecord> last;
+        private final List<String> entries;
         /**
          * Ctor.
          */
         FakeHandler() {
             super();
-            this.last = new ArrayList<>(0);
+            this.entries = new LinkedList<>();
         }
         @Override
         public void publish(final LogRecord record) {
-            this.last.add(record);
+            this.entries.add(record.getMessage());
         }
         @Override
         public void close() {
@@ -104,7 +118,12 @@ public final class FakeLogger extends Logger {
         }
         @Override
         public String toString() {
-            return this.last.get(0).getMessage();
+            return new UncheckedText(
+                new JoinedText(
+                    System.lineSeparator(),
+                    this.entries
+                )
+            ).asString();
         }
     }
 }

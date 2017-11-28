@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.cactoos.text.FormattedText;
 
 /**
  * Logged input stream.
@@ -37,7 +38,7 @@ import org.cactoos.text.FormattedText;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.29
  */
 @SuppressWarnings("PMD.LoggerIsNotStaticFinal")
 public final class LoggingInputStream extends InputStream {
@@ -58,6 +59,16 @@ public final class LoggingInputStream extends InputStream {
     private final Logger logger;
 
     /**
+     * The bytes read.
+     */
+    private final AtomicLong bytes;
+
+    /**
+     * The time took to read.
+     */
+    private final AtomicLong time;
+
+    /**
      * Ctor.
      * @param input Source of data
      * @param src The name of source data
@@ -70,14 +81,19 @@ public final class LoggingInputStream extends InputStream {
      * Ctor.
      * @param input Source of data
      * @param src The name of source data
-     * @param lgr Message logger
+     * @param lgr The message logger
      */
-    public LoggingInputStream(final InputStream input, final String src,
-        final Logger lgr) {
+    public LoggingInputStream(
+        final InputStream input,
+        final String src,
+        final Logger lgr
+    ) {
         super();
         this.origin = input;
         this.source = src;
         this.logger = lgr;
+        this.bytes = new AtomicLong();
+        this.time = new AtomicLong();
     }
 
     @Override
@@ -93,52 +109,128 @@ public final class LoggingInputStream extends InputStream {
     }
 
     @Override
-    public int read(final byte[] buf, final int offset,
-        final int len) throws IOException {
+    public int read(final byte[] buf, final int offset, final int len)
+        throws IOException {
         final Instant start = Instant.now();
-        int bytes = this.origin.read(buf, offset, len);
+        final int byts = this.origin.read(buf, offset, len);
         final Instant end = Instant.now();
-        if (bytes == -1) {
-            bytes = 0;
+        final long millis = Duration.between(start, end).toMillis();
+        final Level level = this.logger.getLevel();
+        final String msg = "Read %d byte(s) from %s in %dms.";
+        if (byts > 0) {
+            this.bytes.getAndAdd(byts);
+            this.time.getAndAdd(millis);
+            if (!level.equals(Level.INFO)) {
+                this.logger.log(
+                    level,
+                    String.format(
+                        msg,
+                        this.bytes.get(),
+                        this.source,
+                        this.time.get()
+                    )
+                );
+            }
+        } else {
+            if (level.equals(Level.INFO)) {
+                this.logger.info(
+                    String.format(
+                        msg,
+                        this.bytes.get(),
+                        this.source,
+                        this.time.get()
+                    )
+                );
+            }
         }
-        this.logger.info(
-            new FormattedText(
-                "Read %d byte(s) from %s in %dms.",
-                bytes,
-                this.source,
-                Duration.between(start, end).toMillis()
-            ).asString()
-        );
-        return bytes;
+        return byts;
     }
 
     @Override
     public long skip(final long num) throws IOException {
-        return this.origin.skip(num);
+        final long skipped = this.origin.skip(num);
+        this.logger.log(
+            this.logger.getLevel(),
+            String.format(
+                "Skipped %d byte(s) from %s.",
+                skipped,
+                this.source
+            )
+        );
+        return skipped;
     }
 
     @Override
     public int available() throws IOException {
-        return this.origin.available();
+        final int avail = this.origin.available();
+        this.logger.log(
+            this.logger.getLevel(),
+            String.format(
+                "There is(are) %d byte(s) avaliable from %s.",
+                avail,
+                this.source
+            )
+        );
+        return avail;
     }
 
     @Override
     public void close() throws IOException {
         this.origin.close();
+        this.logger.log(
+            this.logger.getLevel(),
+            String.format(
+                "Closed input stream from %s.",
+                this.source
+            )
+        );
     }
 
     @Override
     public void mark(final int limit) {
         this.origin.mark(limit);
+        this.logger.log(
+            this.logger.getLevel(),
+            String.format(
+                "Marked position %d from %s.",
+                limit,
+                this.source
+            )
+        );
     }
 
     @Override
     public void reset() throws IOException {
         this.origin.reset();
+        this.logger.log(
+            this.logger.getLevel(),
+            String.format(
+                "Reseted input stream from %s.",
+                this.source
+            )
+        );
     }
 
     @Override
     public boolean markSupported() {
-        return this.origin.markSupported();
+        final boolean supported = this.origin.markSupported();
+        if (supported) {
+            this.logger.log(
+                this.logger.getLevel(),
+                String.format(
+                    "Mark and reset methods are supported from %s.",
+                    this.source
+                )
+            );
+        } else {
+            this.logger.log(
+                this.logger.getLevel(),
+                String.format(
+                    "Mark and reset methods are *not* supported from %s.",
+                    this.source
+                )
+            );
+        }
+        return supported;
     }
 }
