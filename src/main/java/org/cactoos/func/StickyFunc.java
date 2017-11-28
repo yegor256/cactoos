@@ -23,8 +23,7 @@
  */
 package org.cactoos.func;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.scalar.StickyScalar;
 
@@ -50,30 +49,34 @@ import org.cactoos.scalar.StickyScalar;
 public final class StickyFunc<X, Y> implements Func<X, Y> {
 
     /**
-     * Original func.
+     * Sticky bi-func.
      */
-    private final Func<X, Y> func;
-
-    /**
-     * Cache.
-     */
-    private final Map<X, Y> cache;
+    private final BiFunc<X, Boolean, Y> func;
 
     /**
      * Ctor.
      * @param fnc Func original
      */
     public StickyFunc(final Func<X, Y> fnc) {
-        this.func = fnc;
-        this.cache = new HashMap<>(0);
+        this(fnc, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func original
+     * @param max Maximum cache size
+     * @since 0.26
+     */
+    public StickyFunc(final Func<X, Y> fnc, final int max) {
+        this.func = new StickyBiFunc<>(
+            (first, second) -> fnc.apply(first),
+            max
+        );
     }
 
     @Override
     public Y apply(final X input) throws Exception {
-        if (!this.cache.containsKey(input)) {
-            this.cache.put(input, this.func.apply(input));
-        }
-        return this.cache.get(input);
+        return this.func.apply(input, true);
     }
 
 }

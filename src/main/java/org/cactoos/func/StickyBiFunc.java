@@ -26,6 +26,7 @@ package org.cactoos.func;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.BiFunc;
+import org.cactoos.map.MapEntry;
 import org.cactoos.scalar.StickyScalar;
 
 /**
@@ -57,25 +58,43 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
     /**
      * Cache.
      */
-    private final Map<Map<X, Y>, Z> cache;
+    private final Map<Map.Entry<X, Y>, Z> cache;
+
+    /**
+     * Maximum cache size.
+     */
+    private final int size;
 
     /**
      * Ctor.
      * @param fnc Func original
      */
     public StickyBiFunc(final BiFunc<X, Y, Z> fnc) {
+        this(fnc, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func original
+     * @param max Maximum buffer size
+     * @since 0.26
+     */
+    public StickyBiFunc(final BiFunc<X, Y, Z> fnc, final int max) {
         this.func = fnc;
         this.cache = new HashMap<>(0);
+        this.size = max;
     }
 
     @Override
     public Z apply(final X first, final Y second) throws Exception {
-        final Map<X, Y> keymap = new HashMap<>(1, 1.0F);
-        keymap.put(first, second);
-        if (!this.cache.containsKey(keymap)) {
-            this.cache.put(keymap, this.func.apply(first, second));
+        final Map.Entry<X, Y> key = new MapEntry<>(first, second);
+        while (this.cache.size() > this.size) {
+            this.cache.remove(this.cache.keySet().iterator().next());
         }
-        return this.cache.get(keymap);
+        if (!this.cache.containsKey(key)) {
+            this.cache.put(key, this.func.apply(first, second));
+        }
+        return this.cache.get(key);
     }
 
 }

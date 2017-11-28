@@ -49,7 +49,17 @@ public final class SolidBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
      * @param fnc Func original
      */
     public SolidBiFunc(final BiFunc<X, Y, Z> fnc) {
-        this.func = new SyncBiFunc<>(new StickyBiFunc<>(fnc));
+        this(fnc, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func original
+     * @param max Max buffer length
+     * @since 0.26
+     */
+    public SolidBiFunc(final BiFunc<X, Y, Z> fnc, final int max) {
+        this.func = new SyncBiFunc<>(new StickyBiFunc<>(fnc, max));
     }
 
     @Override

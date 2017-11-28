@@ -25,8 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.func.StickyFunc;
-import org.cactoos.func.SyncFunc;
+import org.cactoos.func.SolidFunc;
 
 /**
  * Cached and synchronized version of a Scalar.
@@ -52,10 +51,8 @@ public final class SolidScalar<T> implements Scalar<T> {
      * @param scalar The Scalar to cache
      */
     public SolidScalar(final Scalar<T> scalar) {
-        this.func = new SyncFunc<>(
-            new StickyFunc<>(
-                input -> scalar.value()
-            )
+        this.func = new SolidFunc<>(
+            input -> scalar.value()
         );
     }
 
