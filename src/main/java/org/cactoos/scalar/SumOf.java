@@ -25,7 +25,6 @@ package org.cactoos.scalar;
 
 import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Int total of numbers.
@@ -238,49 +237,40 @@ public final class SumOf extends Number {
 
     /**
      * Ctor.
-     * @param src Numbers
-     */
-    @SafeVarargs
-    public SumOf(final Scalar<Number>... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
      * @param src The iterable
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
-    public SumOf(final Iterable<Scalar<Number>> src) {
+    public SumOf(final Iterable<Number> src) {
         this(
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 int sum = 0;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().value().intValue();
+                    sum += numbers.next().intValue();
                 }
                 return sum;
             },
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 long sum = 0L;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().value().longValue();
+                    sum += numbers.next().longValue();
                 }
                 return sum;
             },
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 double sum = 0.0d;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().value().doubleValue();
+                    sum += numbers.next().doubleValue();
                 }
                 return sum;
             },
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 float sum = 0.0f;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().value().floatValue();
+                    sum += numbers.next().floatValue();
                 }
                 return sum;
             }

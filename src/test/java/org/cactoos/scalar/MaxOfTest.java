@@ -23,8 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -150,22 +148,6 @@ public final class MaxOfTest {
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
             ).floatValue(),
             Matchers.equalTo(4.0f)
-        );
-    }
-
-    @Test
-    public void withScalars() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                () -> 1L, () -> 2L, () -> 10L
-            ).longValue(),
-            Matchers.equalTo(10L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new IterableOf<Scalar<Number>>(() -> 1L, () -> 2L, () -> 10L)
-            ).longValue(),
-            Matchers.equalTo(10L)
         );
     }
 

@@ -25,7 +25,6 @@ package org.cactoos.scalar;
 
 import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Find the greater among items.
@@ -268,25 +267,16 @@ public final class MaxOf extends Number {
 
     /**
      * Ctor.
-     * @param src Numbers
-     */
-    @SafeVarargs
-    public MaxOf(final Scalar<Number>... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
      * @param src The iterable
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
-    public MaxOf(final Iterable<Scalar<Number>> src) {
+    public MaxOf(final Iterable<Number> src) {
         this(
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 int max = Integer.MIN_VALUE;
                 while (numbers.hasNext()) {
-                    final int next = numbers.next().value().intValue();
+                    final int next = numbers.next().intValue();
                     if (next > max) {
                         max = next;
                     }
@@ -294,10 +284,10 @@ public final class MaxOf extends Number {
                 return max;
             },
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 long max = Long.MIN_VALUE;
                 while (numbers.hasNext()) {
-                    final long next = numbers.next().value().longValue();
+                    final long next = numbers.next().longValue();
                     if (next > max) {
                         max = next;
                     }
@@ -305,10 +295,10 @@ public final class MaxOf extends Number {
                 return max;
             },
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 double max = Double.MIN_VALUE;
                 while (numbers.hasNext()) {
-                    final double next = numbers.next().value().doubleValue();
+                    final double next = numbers.next().doubleValue();
                     if (next > max) {
                         max = next;
                     }
@@ -316,10 +306,10 @@ public final class MaxOf extends Number {
                 return max;
             },
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 float max = Float.MIN_VALUE;
                 while (numbers.hasNext()) {
-                    final float next = numbers.next().value().floatValue();
+                    final float next = numbers.next().floatValue();
                     if (next > max) {
                         max = next;
                     }

@@ -23,8 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -153,19 +151,4 @@ public final class MinOfTest {
         );
     }
 
-    @Test
-    public void withScalars() {
-        MatcherAssert.assertThat(
-            new MinOf(
-                () -> 1L, () -> 2L, () -> 10L
-            ).longValue(),
-            Matchers.equalTo(1L)
-        );
-        MatcherAssert.assertThat(
-            new MinOf(
-                new IterableOf<Scalar<Number>>(() -> 1L, () -> 2L, () -> 10L)
-            ).longValue(),
-            Matchers.equalTo(1L)
-        );
-    }
 }

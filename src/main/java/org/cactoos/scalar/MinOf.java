@@ -25,7 +25,6 @@ package org.cactoos.scalar;
 
 import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Find the smaller among items.
@@ -266,25 +265,16 @@ public final class MinOf extends Number {
 
     /**
      * Ctor.
-     * @param src Numbers
-     */
-    @SafeVarargs
-    public MinOf(final Scalar<Number>... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
      * @param src The iterable
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
-    public MinOf(final Iterable<Scalar<Number>> src) {
+    public MinOf(final Iterable<Number> src) {
         this(
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 int min = Integer.MAX_VALUE;
                 while (numbers.hasNext()) {
-                    final int next = numbers.next().value().intValue();
+                    final int next = numbers.next().intValue();
                     if (next < min) {
                         min = next;
                     }
@@ -292,10 +282,10 @@ public final class MinOf extends Number {
                 return min;
             },
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 long min = Long.MAX_VALUE;
                 while (numbers.hasNext()) {
-                    final long next = numbers.next().value().longValue();
+                    final long next = numbers.next().longValue();
                     if (next < min) {
                         min = next;
                     }
@@ -303,10 +293,10 @@ public final class MinOf extends Number {
                 return min;
             },
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 double min = Double.MAX_VALUE;
                 while (numbers.hasNext()) {
-                    final double next = numbers.next().value().doubleValue();
+                    final double next = numbers.next().doubleValue();
                     if (next < min) {
                         min = next;
                     }
@@ -314,10 +304,10 @@ public final class MinOf extends Number {
                 return min;
             },
             () -> {
-                final Iterator<Scalar<Number>> numbers = src.iterator();
+                final Iterator<Number> numbers = src.iterator();
                 float min = Float.MAX_VALUE;
                 while (numbers.hasNext()) {
-                    final float next = numbers.next().value().floatValue();
+                    final float next = numbers.next().floatValue();
                     if (next < min) {
                         min = next;
                     }
