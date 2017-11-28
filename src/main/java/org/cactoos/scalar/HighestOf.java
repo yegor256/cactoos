@@ -24,7 +24,6 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
-import org.cactoos.func.MaxFunc;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -66,7 +65,15 @@ public final class HighestOf<T extends Comparable<T>> implements Scalar<T> {
      */
     public HighestOf(final Iterable<Scalar<T>> iterable) {
         this.result = new Folded<>(
-            new MaxFunc<>(),
+            (first, second) -> {
+                final T value;
+                if (first.compareTo(second) > 0) {
+                    value = first;
+                } else {
+                    value = second;
+                }
+                return value;
+            },
             iterable
         );
     }

@@ -24,7 +24,6 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
-import org.cactoos.func.MinFunc;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -64,7 +63,15 @@ public final class LowestOf<T extends Comparable<T>> implements Scalar<T> {
      */
     public LowestOf(final Iterable<Scalar<T>> iterable) {
         this.result = new Folded<>(
-            new MinFunc<>(),
+            (first, second) -> {
+                final T value;
+                if (first.compareTo(second) < 0) {
+                    value = first;
+                } else {
+                    value = second;
+                }
+                return value;
+            },
             iterable
         );
     }
