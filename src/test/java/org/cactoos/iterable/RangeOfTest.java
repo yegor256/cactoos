@@ -25,6 +25,7 @@ package org.cactoos.iterable;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import org.cactoos.Func;
 import org.cactoos.collection.CollectionOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -49,6 +50,30 @@ public class RangeOfTest {
                 new RangeOf.Integer(1, 5)
             ),
             Matchers.contains(1, 2, 3, 4, 5)
+        );
+    }
+
+    @Test
+    public final void testIntegerFibonacciRange() {
+        MatcherAssert.assertThat(
+            "Can't generate a range of fibonacci integers",
+            new CollectionOf<>(
+                new RangeOf.Integer(
+                    1,
+                    100,
+                    new Func<Integer, Integer>() {
+                        private int last;
+                        @Override
+                        public Integer apply(
+                            final Integer input) throws Exception {
+                            final int next = this.last + input;
+                            this.last = input;
+                            return next;
+                        }
+                    }
+                )
+            ),
+            Matchers.contains(1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
         );
     }
 
