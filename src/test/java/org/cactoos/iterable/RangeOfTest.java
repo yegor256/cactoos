@@ -42,18 +42,18 @@ import org.junit.Test;
 public class RangeOfTest {
 
     @Test
-    public final void testIntegerRange() throws Exception {
+    public final void testIntegerRange() {
         MatcherAssert.assertThat(
             "Can't generate a range of integers",
             new CollectionOf<>(
-                new RangeOf<>(1, 5, input -> input + 1)
+                new RangeOf<>(1, 5, input -> ++input)
             ),
             Matchers.contains(1, 2, 3, 4, 5)
         );
     }
 
-    @Test
-    public final void testIntegerEmptyRange() throws Exception {
+    @Test(expected = NullPointerException.class)
+    public final void testIntegerEmptyRange() {
         MatcherAssert.assertThat(
             "Can't generate an empty range of integers",
             new CollectionOf<>(
@@ -64,7 +64,7 @@ public class RangeOfTest {
     }
 
     @Test
-    public final void testCharacterRange() throws Exception {
+    public final void testCharacterRange() {
         MatcherAssert.assertThat(
             "Can't generate a range of characters",
             new CollectionOf<>(

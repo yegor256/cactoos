@@ -58,8 +58,7 @@ public class RangeOf<T extends Comparable<T>> extends IterableEnvelope<T> {
                     final List<T> values =
                         new ArrayList<>(0);
                     T value = min;
-                    while (value != null
-                        && (max == null || value.compareTo(max) < 1)) {
+                    while (value.compareTo(max) < 1) {
                         values.add(value);
                         value = func.apply(value);
                     }
