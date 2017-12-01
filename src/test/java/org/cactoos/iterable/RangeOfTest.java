@@ -46,20 +46,20 @@ public class RangeOfTest {
         MatcherAssert.assertThat(
             "Can't generate a range of integers",
             new CollectionOf<>(
-                new RangeOf<>(1, 5, input -> ++input)
+                new RangeOf.Integer(1, 5)
             ),
             Matchers.contains(1, 2, 3, 4, 5)
         );
     }
 
-    @Test(expected = NullPointerException.class)
-    public final void testIntegerEmptyRange() {
+    @Test
+    public final void testLongRange() {
         MatcherAssert.assertThat(
-            "Can't generate an empty range of integers",
+            "Can't generate a range of long",
             new CollectionOf<>(
-                new RangeOf<Integer>(null, null, null)
+                new RangeOf.Long(1L, 5L)
             ),
-            Matchers.empty()
+            Matchers.contains(1L, 2L, 3L, 4L, 5L)
         );
     }
 
@@ -68,14 +68,14 @@ public class RangeOfTest {
         MatcherAssert.assertThat(
             "Can't generate a range of characters",
             new CollectionOf<>(
-                new RangeOf<>('a', 'c', value -> ++value)
+                new RangeOf.Character('a', 'c')
             ),
             Matchers.contains('a', 'b', 'c')
         );
     }
 
     @Test
-    public final void testLocalDateRange() throws Exception {
+    public final void testLocalDateRange() {
         MatcherAssert.assertThat(
             "Can't generate a range of local dates.",
             new CollectionOf<>(
