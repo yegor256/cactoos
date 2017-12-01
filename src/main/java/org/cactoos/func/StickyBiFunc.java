@@ -23,7 +23,7 @@
  */
 package org.cactoos.func;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.cactoos.BiFunc;
 import org.cactoos.map.MapEntry;
@@ -81,7 +81,7 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
      */
     public StickyBiFunc(final BiFunc<X, Y, Z> fnc, final int max) {
         this.func = fnc;
-        this.cache = new HashMap<>(0);
+        this.cache = new LinkedHashMap<>(0);
         this.size = max;
     }
 
