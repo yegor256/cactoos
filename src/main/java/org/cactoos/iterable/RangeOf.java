@@ -23,11 +23,10 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.Func;
 import org.cactoos.func.UncheckedFunc;
-import org.cactoos.scalar.StickyScalar;
 
 /**
  * Iterable implementation to model range functionality.
@@ -50,22 +49,28 @@ public class RangeOf<T extends Comparable<T>> extends IterableEnvelope<T> {
         }
     )
     public RangeOf(final T min, final T max, final Func<T, T> incrementor) {
-        super(
-            new StickyScalar<>(
-                () -> {
-                    final UncheckedFunc<T, T> func =
-                        new UncheckedFunc<>(incrementor);
-                    final List<T> values =
-                        new ArrayList<>(0);
-                    T value = min;
-                    while (value.compareTo(max) < 1) {
-                        values.add(value);
-                        value = func.apply(value);
-                    }
-                    return values;
+        super(() -> new IterableOf<>(
+            new Iterator<T>() {
+                private final UncheckedFunc<T, T> inc =
+                    new UncheckedFunc<>(incrementor);
+                private T value = min;
+
+                @Override
+                public boolean hasNext() {
+                    return this.value.compareTo(max) < 1;
                 }
-            )
-        );
+
+                @Override
+                public T next() {
+                    if (!this.hasNext()) {
+                        throw new NoSuchElementException();
+                    }
+                    final T result = this.value;
+                    this.value = this.inc.apply(this.value);
+                    return result;
+                }
+            }
+        ));
     }
 
     /**
