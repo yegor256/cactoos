@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
 import org.junit.Test;
 
 /**
