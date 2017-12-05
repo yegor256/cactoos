@@ -32,20 +32,20 @@ import org.junit.Test;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NoNullsScalarTest {
+public final class NoNullScalarTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failForNullArgument() throws Exception {
-        new NoNullsScalar<>(null).value();
+        new NoNullScalar<>(null).value();
     }
 
     @Test(expected = IllegalStateException.class)
     public void failForNullResult() throws Exception {
-        new NoNullsScalar<>(() -> null).value();
+        new NoNullScalar<>(() -> null).value();
     }
 
     @Test
     public void okForNoNulls() throws Exception {
-        new NoNullsScalar<>(() -> 1).value();
+        new NoNullScalar<>(() -> 1).value();
     }
 }
