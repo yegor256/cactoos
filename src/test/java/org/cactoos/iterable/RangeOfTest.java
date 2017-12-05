@@ -47,7 +47,7 @@ public class RangeOfTest {
         MatcherAssert.assertThat(
             "Can't generate a range of integers",
             new CollectionOf<>(
-                new RangeOf.Integer(1, 5)
+                new RangeOf<>(1, 5, value -> ++value)
             ),
             Matchers.contains(1, 2, 3, 4, 5)
         );
@@ -58,7 +58,7 @@ public class RangeOfTest {
         MatcherAssert.assertThat(
             "Can't generate a range of fibonacci integers",
             new CollectionOf<>(
-                new RangeOf.Integer(
+                new RangeOf<>(
                     1,
                     100,
                     new Func<Integer, Integer>() {
@@ -82,7 +82,7 @@ public class RangeOfTest {
         MatcherAssert.assertThat(
             "Can't generate a range of long",
             new CollectionOf<>(
-                new RangeOf.Long(1L, 5L)
+                new RangeOf<>(1L, 5L, value -> ++value)
             ),
             Matchers.contains(1L, 2L, 3L, 4L, 5L)
         );
@@ -93,7 +93,7 @@ public class RangeOfTest {
         MatcherAssert.assertThat(
             "Can't generate a range of characters",
             new CollectionOf<>(
-                new RangeOf.Character('a', 'c')
+                new RangeOf<>('a', 'c', value -> ++value)
             ),
             Matchers.contains('a', 'b', 'c')
         );

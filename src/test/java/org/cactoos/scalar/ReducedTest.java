@@ -46,7 +46,10 @@ public final class ReducedTest {
             "Can't reduce elements in iterable",
             new Reduced<>(
                 0L, (first, second) -> first + second,
-                new Limited<>(10, new RangeOf.Long(0L, Long.MAX_VALUE))
+                new Limited<>(
+                    10,
+                    new RangeOf<>(0L, Long.MAX_VALUE, value -> ++value)
+                )
             ).value(),
             Matchers.equalTo(45L)
         );
