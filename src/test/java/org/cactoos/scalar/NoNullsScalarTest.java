@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.scalar;
 
+import org.cactoos.Scalar;
 import org.junit.Test;
 
 /**
@@ -32,20 +33,20 @@ import org.junit.Test;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ScalarTest {
+public final class NoNullsScalarTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failForNullArgument() throws Exception {
-        new Scalar.NoNulls<>(null).value();
+        new NoNullsScalar<>(null).value();
     }
 
     @Test(expected = IllegalStateException.class)
     public void failForNullResult() throws Exception {
-        new Scalar.NoNulls<>(() -> null).value();
+        new NoNullsScalar<>(() -> null).value();
     }
 
     @Test
     public void okForNoNulls() throws Exception {
-        new Scalar.NoNulls<>(() -> 1).value();
+        new NoNullsScalar<>(() -> 1).value();
     }
 }
