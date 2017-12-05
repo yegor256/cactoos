@@ -53,13 +53,13 @@ public final class NoNullScalar<T> implements Scalar<T> {
     public T value() throws Exception {
         if (this.origin == null) {
             throw new IllegalArgumentException(
-                    "NULL instead of a valid scalar"
+                "NULL instead of a valid scalar"
             );
         }
         final T value = this.origin.value();
         if (value == null) {
             throw new IllegalStateException(
-                    "NULL instead of a valid value"
+                "NULL instead of a valid value"
             );
         }
         return value;
