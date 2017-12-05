@@ -30,16 +30,18 @@ import org.cactoos.scalar.UncheckedScalar;
 /**
  * Scalar.
  *
- * <p>If you don't want to have any checked exceptions being thrown
- * out of your {@link Scalar}, you can use
- * {@link UncheckedScalar} decorator. Also
- * you may try {@link IoCheckedScalar}.</p>
+ * <p>
+ * If you don't want to have any checked exceptions being thrown out of your
+ * {@link Scalar}, you can use {@link UncheckedScalar} decorator. Also you may
+ * try {@link IoCheckedScalar}.</p>
  *
- * <p>If you want to cache the result of the {@link Scalar} and
- * make sure it doesn't calculate anything twice, you can use
- * {@link StickyScalar} decorator.</p>
+ * <p>
+ * If you want to cache the result of the {@link Scalar} and make sure it
+ * doesn't calculate anything twice, you can use {@link StickyScalar}
+ * decorator.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>
+ * There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
@@ -53,46 +55,10 @@ public interface Scalar<T> {
 
     /**
      * Convert it to the value.
+     *
      * @return The value
      * @throws Exception If fails
      */
     T value() throws Exception;
-
-    /**
-     * Scalar check for no nulls.
-     *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
-     * @param <T> Type of result
-     * @since 0.11
-     */
-    final class NoNulls<T> implements Scalar<T> {
-        /**
-         * The scalar.
-         */
-        private final Scalar<T> origin;
-        /**
-         * Ctor.
-         * @param sclr The scalar
-         */
-        public NoNulls(final Scalar<T> sclr) {
-            this.origin = sclr;
-        }
-        @Override
-        public T value() throws Exception {
-            if (this.origin == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid scalar"
-                );
-            }
-            final T value = this.origin.value();
-            if (value == null) {
-                throw new IllegalStateException(
-                    "NULL instead of a valid value"
-                );
-            }
-            return value;
-        }
-    }
 
 }
