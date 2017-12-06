@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -40,6 +41,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public class SyncIteratorTest {
     /**
@@ -60,24 +62,50 @@ public class SyncIteratorTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public final void testNextBlocksDifferentThread() {
+    public final void testNextBlocksDifferentThread() throws Exception {
         final ExecutorService executor = Executors.newFixedThreadPool(1);
         this.lock.writeLock().lock();
-        final List<String> callsToIterator = new ArrayList<>(0);
-        executor.submit(
+        final List<String> calls = new ArrayList<>(0);
+        final Future<?> other = executor.submit(
             () -> {
                 this.iterator.next();
-                callsToIterator.add("otherThread");
+                calls.add("otherThread");
             }
         );
         this.iterator.next();
-        callsToIterator.add("thisThread");
+        calls.add("thisThread");
         this.lock.writeLock().unlock();
         executor.shutdown();
+        other.get();
         MatcherAssert.assertThat(
             "Unexpected result from iterator.",
-            callsToIterator,
+            calls,
             Matchers.contains("thisThread", "otherThread")
+        );
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public final void testHasNextNotBlocksDifferentThread() throws Exception {
+        final ExecutorService executor = Executors.newFixedThreadPool(1);
+        this.lock.readLock().lock();
+        final List<String> calls = new ArrayList<>(0);
+        final Future<?> other = executor.submit(
+            () -> {
+                this.iterator.hasNext();
+                calls.add("otherThread");
+            }
+        );
+        Thread.sleep(100);
+        this.iterator.hasNext();
+        calls.add("thisThread");
+        this.lock.readLock().unlock();
+        executor.shutdown();
+        other.get();
+        MatcherAssert.assertThat(
+            "Unexpected result from iterator.",
+            calls,
+            Matchers.contains("otherThread", "thisThread")
         );
     }
 
