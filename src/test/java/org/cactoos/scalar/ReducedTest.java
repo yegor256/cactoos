@@ -24,7 +24,7 @@
 package org.cactoos.scalar;
 
 import org.cactoos.iterable.Limited;
-import org.cactoos.iterable.NaturalNumbers;
+import org.cactoos.iterable.RangeOf;
 import org.cactoos.iterable.Skipped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -46,7 +46,10 @@ public final class ReducedTest {
             "Can't reduce elements in iterable",
             new Reduced<>(
                 0L, (first, second) -> first + second,
-                new Limited<>(10, new NaturalNumbers())
+                new Limited<>(
+                    10,
+                    new RangeOf<>(0L, Long.MAX_VALUE, value -> ++value)
+                )
             ).value(),
             Matchers.equalTo(45L)
         );
