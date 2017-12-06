@@ -26,6 +26,7 @@ package org.cactoos.collection;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.SyncScalar;
 
@@ -81,7 +82,11 @@ public final class SyncCollection<T> extends CollectionEnvelope<T> {
     public SyncCollection(final Collection<T> src) {
         super(
             new SyncScalar<>(
-                () -> Collections.synchronizedCollection(src)
+                () -> {
+                    final Collection<T> temp = new LinkedList<>();
+                    temp.addAll(src);
+                    return Collections.synchronizedCollection(temp);
+                }
             )
         );
     }

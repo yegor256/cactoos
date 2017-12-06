@@ -24,6 +24,7 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
+import org.cactoos.RunsInThreads;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
@@ -80,4 +81,17 @@ public final class SolidCollectionTest {
             list.iterator().next(), Matchers.equalTo(list.iterator().next())
         );
     }
+
+    @Test
+    public void worksInThreads() {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection in multiple threads",
+            list -> {
+                MatcherAssert.assertThat(list, new BehavesAsCollection<>(0));
+                return true;
+            },
+            new RunsInThreads<>(new SolidCollection<>(1, 0, -1, -1, 2))
+        );
+    }
+
 }

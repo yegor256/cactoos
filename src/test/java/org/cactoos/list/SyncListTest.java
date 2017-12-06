@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import java.util.Collections;
 import org.cactoos.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -50,7 +51,10 @@ public final class SyncListTest {
     @Test
     public void worksInThreads() {
         MatcherAssert.assertThat(
-            "Can't behave as a list in multiple threads",
+            list -> !list.iterator().hasNext(),
+            new RunsInThreads<>(new SyncList<>(Collections.emptyList()))
+        );
+        MatcherAssert.assertThat(
             list -> {
                 MatcherAssert.assertThat(list, new BehavesAsList<>(0));
                 return true;

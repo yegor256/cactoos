@@ -73,7 +73,9 @@ public final class SolidList<X> extends ListEnvelope<X> {
      */
     public SolidList(final Collection<X> list) {
         super(
-            new SolidScalar<>(() -> new SyncList<>(new StickyList<>(list)))
+            new SolidScalar<>(
+                () -> new SyncList<>(new StickyList<>(list))
+            )
         );
     }
 

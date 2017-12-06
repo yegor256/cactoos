@@ -68,7 +68,8 @@ public final class RunsInThreads<T> extends TypeSafeMatcher<Func<T, Boolean>> {
      * @param object Input object
      */
     public RunsInThreads(final T object) {
-        this(object, Runtime.getRuntime().availableProcessors());
+        // @checkstyle MagicNumber (1 line)
+        this(object, Runtime.getRuntime().availableProcessors() << 4);
     }
 
     /**

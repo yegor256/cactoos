@@ -21,53 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.iterable;
 
-import java.security.SecureRandom;
 import org.cactoos.RunsInThreads;
-import org.cactoos.Scalar;
-import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link SolidScalar}.
- *
+ * Test Case for {@link SyncIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumber (500 lines)
  */
-public final class SolidScalarTest {
-
-    @Test
-    public void cachesScalarResults() throws Exception {
-        final Scalar<Integer> scalar = new SolidScalar<>(
-            () -> new SecureRandom().nextInt()
-        );
-        MatcherAssert.assertThat(
-            scalar.value() + scalar.value(),
-            Matchers.equalTo(scalar.value() + scalar.value())
-        );
-    }
+public final class SyncIterableTest {
 
     @Test
     public void worksInThreads() {
         MatcherAssert.assertThat(
-            "Can't work well in multiple threads",
-            scalar -> {
+            "Can't behave as an iterable in multiple threads",
+            list -> {
                 MatcherAssert.assertThat(
-                    scalar.value(),
-                    Matchers.equalTo(scalar.value())
+                    list.iterator().next(),
+                    Matchers.equalTo(list.iterator().next())
                 );
                 return true;
             },
-            new RunsInThreads<>(
-                new UncheckedScalar<>(
-                    new SolidScalar<>(() -> new ListOf<>(1, 2))
-                )
-            )
+            new RunsInThreads<>(new SyncIterable<>(1, 0, -1, -1, 2))
         );
     }
 

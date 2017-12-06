@@ -23,6 +23,7 @@
  */
 package org.cactoos.iterable;
 
+import org.cactoos.RunsInThreads;
 import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -69,4 +70,20 @@ public final class SolidIterableTest {
             list.iterator().next(), Matchers.equalTo(list.iterator().next())
         );
     }
+
+    @Test
+    public void worksInThreads() {
+        MatcherAssert.assertThat(
+            "Can't behave as an iterable in multiple threads",
+            list -> {
+                MatcherAssert.assertThat(
+                    list.iterator().next(),
+                    Matchers.equalTo(list.iterator().next())
+                );
+                return true;
+            },
+            new RunsInThreads<>(new SolidIterable<>(1, 0, -1, -1, 2))
+        );
+    }
+
 }
