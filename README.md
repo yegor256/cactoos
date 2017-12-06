@@ -232,8 +232,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `ReversedText` | - | - | `StringBuilder#reverse()`
 `RotatedText` | - | `StringUtils.rotate()`| -
 `SplitText` | - | - | `String#split()`
-`StickyList` | ? | ? | `Arrays.asList()`
-`StickyList` | `Lists.newArrayList()` | ? | -
+`StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()`
 `SubText` | - | - | `String#substring()`
 `SwappedCaseText` | - | `StringUtils.swapCase()` | -
 `TextOf` | ? | `IOUtils.toString()` | -
