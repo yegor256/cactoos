@@ -63,20 +63,20 @@ public class SyncIteratorTest {
     public final void testNextBlocksDifferentThread() {
         final ExecutorService executor = Executors.newFixedThreadPool(1);
         this.lock.writeLock().lock();
-        final List<String> values = new ArrayList<>(0);
+        final List<String> callsToIterator = new ArrayList<>(0);
         executor.submit(
             () -> {
                 this.iterator.next();
-                values.add("otherThread");
+                callsToIterator.add("otherThread");
             }
         );
         this.iterator.next();
-        values.add("thisThread");
+        callsToIterator.add("thisThread");
         this.lock.writeLock().unlock();
         executor.shutdown();
         MatcherAssert.assertThat(
             "Unexpected result from iterator.",
-            values,
+            callsToIterator,
             Matchers.contains("thisThread", "otherThread")
         );
     }
