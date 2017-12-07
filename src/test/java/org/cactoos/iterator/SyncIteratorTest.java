@@ -44,37 +44,30 @@ import org.junit.Test;
  * @checkstyle MagicNumberCheck (500 lines)
  */
 public class SyncIteratorTest {
-    /**
-     * The lock to sync threads.
-     */
-    private final ReentrantReadWriteLock lock =
-        new ReentrantReadWriteLock();
-    /**
-     * The {@link Iterator} containing data to test.
-     */
-    private final Iterator<String> strings =
-        Arrays.asList("a", "a").iterator();
-    /**
-     * {@link SyncIterator} to test.
-     */
-    private final SyncIterator<String> iterator =
-        new SyncIterator<>(this.strings, this.lock);
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public final void testNextBlocksDifferentThread() throws Exception {
-        final ExecutorService executor = Executors.newFixedThreadPool(1);
-        this.lock.writeLock().lock();
+        final ReentrantReadWriteLock lock =
+            new ReentrantReadWriteLock();
+        final Iterator<String> strings =
+            Arrays.asList("a", "a").iterator();
+        final SyncIterator<String> iterator =
+            new SyncIterator<>(strings, lock);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(1);
+
+        lock.writeLock().lock();
         final List<String> calls = new ArrayList<>(0);
         final Future<?> other = executor.submit(
             () -> {
-                this.iterator.next();
+                iterator.next();
                 calls.add("otherThread");
             }
         );
-        this.iterator.next();
+        iterator.next();
         calls.add("thisThread");
-        this.lock.writeLock().unlock();
+        lock.writeLock().unlock();
         executor.shutdown();
         other.get();
         MatcherAssert.assertThat(
@@ -87,19 +80,27 @@ public class SyncIteratorTest {
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public final void testHasNextNotBlocksDifferentThread() throws Exception {
-        final ExecutorService executor = Executors.newFixedThreadPool(1);
-        this.lock.readLock().lock();
+        final ReentrantReadWriteLock lock =
+            new ReentrantReadWriteLock();
+        final Iterator<String> strings =
+            Arrays.asList("a", "a").iterator();
+        final SyncIterator<String> iterator =
+            new SyncIterator<>(strings, lock);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(1);
+
+        lock.readLock().lock();
         final List<String> calls = new ArrayList<>(0);
         final Future<?> other = executor.submit(
             () -> {
-                this.iterator.hasNext();
+                iterator.hasNext();
                 calls.add("otherThread");
             }
         );
         Thread.sleep(100);
-        this.iterator.hasNext();
+        iterator.hasNext();
         calls.add("thisThread");
-        this.lock.readLock().unlock();
+        lock.readLock().unlock();
         executor.shutdown();
         other.get();
         MatcherAssert.assertThat(

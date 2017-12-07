@@ -24,6 +24,7 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
+import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -41,7 +42,7 @@ public class SyncIterator<T> implements Iterator<T> {
     /**
      * The lock to use.
      */
-    private final ReentrantReadWriteLock lock;
+    private final ReadWriteLock lock;
 
     /**
      * Ctor.
@@ -58,7 +59,7 @@ public class SyncIterator<T> implements Iterator<T> {
      */
     public SyncIterator(
         final Iterator<T> iterator,
-        final ReentrantReadWriteLock lock) {
+        final ReadWriteLock lock) {
         this.iterator = iterator;
         this.lock = lock;
     }
