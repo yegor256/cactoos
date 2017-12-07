@@ -55,8 +55,7 @@ public class SyncIteratorTest {
         final SyncIterator<String> iterator =
             new SyncIterator<>(strings, lock);
         final ExecutorService executor =
-                Executors.newFixedThreadPool(1);
-
+            Executors.newFixedThreadPool(1);
         lock.writeLock().lock();
         final List<String> calls = new ArrayList<>(0);
         final Future<?> other = executor.submit(
@@ -87,8 +86,7 @@ public class SyncIteratorTest {
         final SyncIterator<String> iterator =
             new SyncIterator<>(strings, lock);
         final ExecutorService executor =
-                Executors.newFixedThreadPool(1);
-
+            Executors.newFixedThreadPool(1);
         lock.readLock().lock();
         final List<String> calls = new ArrayList<>(0);
         final Future<?> other = executor.submit(
