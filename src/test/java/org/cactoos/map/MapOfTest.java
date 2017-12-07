@@ -26,6 +26,7 @@ package org.cactoos.map;
 import java.security.SecureRandom;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Scalar;
 import org.cactoos.iterator.Repeated;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -83,6 +84,18 @@ public final class MapOfTest {
             "Can't sense the changes in the underlying map",
             map.size(),
             Matchers.not(Matchers.equalTo(map.size()))
+        );
+    }
+
+    @Test
+    public void createsMapWithFunctions() {
+        MatcherAssert.assertThat(
+            "Can't create a map with functions as values",
+            new MapOf<Integer, Scalar<Boolean>>(
+                new MapEntry<>(0, () -> true),
+                new MapEntry<>(1, () -> true)
+            ),
+            Matchers.hasKey(0)
         );
     }
 
