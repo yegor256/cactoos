@@ -93,4 +93,76 @@ public class DateAsTextTest {
             Matchers.is("2017-12-13T14:15:16.017")
         );
     }
+
+    @Test
+    public final void testDateFormattedUsingCustomFormat() throws Exception {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
+        MatcherAssert.assertThat(
+            "Can't format a java.util.Date with custom format.",
+            new DateAsText(
+                calendar.getTime(), "yyyy MM dd hh:mm:ss"
+            ).asString(),
+            Matchers.is("2017 12 13 02:15:16")
+        );
+    }
+
+    @Test
+    public final void testDateFormattedUsingCustomFormatDifferentLocale()
+        throws Exception {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
+        MatcherAssert.assertThat(
+            "Can't format a java.util.Date with custom format.",
+            new DateAsText(
+                calendar.getTime(), "yyyy MMM dd hh:mm:ss", Locale.ITALIAN
+            ).asString(),
+            Matchers.is("2017 dic 13 02:15:16")
+        );
+    }
+
+    @Test
+    public final void testMillisFormattedUsingIsoFormatter()
+        throws Exception {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
+        calendar.set(Calendar.MILLISECOND, 17);
+        MatcherAssert.assertThat(
+            "Can't format a java.util.Date with ISO format.",
+            new DateAsText(calendar.getTime().getTime()).asString(),
+            Matchers.is("2017-12-13T14:15:16.017")
+        );
+    }
+
+    @Test
+    public final void testMillisFormattedUsingCustomFormat()
+        throws Exception {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
+        MatcherAssert.assertThat(
+            "Can't format a java.util.Date with custom format.",
+            new DateAsText(
+                calendar.getTime().getTime(),
+                "yyyy MM dd hh:mm:ss"
+            ).asString(),
+            Matchers.is("2017 12 13 02:15:16")
+        );
+    }
+
+    @Test
+    public final void testMillisFormattedUsingCustomFormatDifferentLocale()
+        throws Exception {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
+        MatcherAssert.assertThat(
+            "Can't format a java.util.Date with custom format.",
+            new DateAsText(
+                calendar.getTime().getTime(),
+                "yyyy MMMM dd hh:mm:ss",
+                Locale.US
+            ).asString(),
+            Matchers.is("2017 December 13 02:15:16")
+        );
+    }
+
 }
