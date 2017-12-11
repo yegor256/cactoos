@@ -48,6 +48,19 @@ public class DateAsText implements Text {
     private final UncheckedScalar<String> formatted;
 
     /**
+     * Formats the milliseconds using the ISO format.
+     * @param milliseconds Milliseconds to format.
+     */
+    public DateAsText(final long milliseconds) {
+        this(
+            LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(milliseconds), ZoneId.systemDefault()
+            ),
+            DateTimeFormatter.ISO_DATE_TIME
+        );
+    }
+
+    /**
      * Formats the milliseconds using the format and the default locale.
      * @param milliseconds Milliseconds to format.
      * @param format The format to use.
@@ -75,6 +88,17 @@ public class DateAsText implements Text {
                 Instant.ofEpochMilli(milliseconds), ZoneId.systemDefault()
             ),
             DateTimeFormatter.ofPattern(format, locale)
+        );
+    }
+
+    /**
+     * Formats the date with ISO format using the system zone.
+     * @param date The date to format.
+     */
+    public DateAsText(final Date date) {
+        this(
+            LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()),
+            DateTimeFormatter.ISO_DATE_TIME
         );
     }
 

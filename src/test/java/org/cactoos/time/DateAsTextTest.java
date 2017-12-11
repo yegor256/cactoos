@@ -25,6 +25,7 @@ package org.cactoos.time;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Calendar;
 import java.util.Locale;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -36,11 +37,12 @@ import org.junit.Test;
  * @version $Id$
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class DateAsTextTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public final void testZonedDateTimeFormattedAsIsoDateTime()
         throws Exception {
         final ZonedDateTime date = ZonedDateTime.of(
@@ -54,7 +56,6 @@ public class DateAsTextTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public final void testZonedDateTimeFormattedWithFormatString()
         throws Exception {
         final ZonedDateTime date = ZonedDateTime.of(
@@ -68,7 +69,6 @@ public class DateAsTextTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public final void testZonedDateTimeFormattedWithFormatStringWithLocale()
         throws Exception {
         final ZonedDateTime date = ZonedDateTime.of(
@@ -79,6 +79,18 @@ public class DateAsTextTest {
             new DateAsText(date, "yyyy MMM dd. HH.mm.ss", Locale.FRENCH)
                 .asString(),
             Matchers.is("2017 déc. 13. 14.15.16")
+        );
+    }
+
+    @Test
+    public final void testDateFormattedUsingIsoFormatter() throws Exception {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
+        calendar.set(Calendar.MILLISECOND, 17);
+        MatcherAssert.assertThat(
+            "Can't format a java.util.Date with ISO format.",
+            new DateAsText(calendar.getTime()).asString(),
+            Matchers.is("2017-12-13T14:15:16.017")
         );
     }
 }
