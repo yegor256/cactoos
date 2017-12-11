@@ -23,10 +23,12 @@
  */
 package org.cactoos.time;
 
-import java.time.ZoneId;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
-import java.util.Locale;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -34,66 +36,149 @@ import org.cactoos.scalar.UncheckedScalar;
  * Parser for date instances.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
+ * @param <T> Type of the date to parse to.
  * @since 1.0
  */
-public class DateOf implements Scalar<TemporalAccessor> {
+public class DateOf<T extends TemporalAccessor> implements Scalar<T> {
 
     /**
      * The parsed date.
      */
-    private UncheckedScalar<TemporalAccessor> parsed;
-
-    /**
-     * Parses the date using the provided format and the zone.
-     * @param date The date to parse.
-     * @param format The format to use.
-     * @param zone The zone to use.
-     */
-    public DateOf(final String date, final String format, final ZoneId zone) {
-        this(date, DateTimeFormatter.ofPattern(format).withZone(zone));
-    }
-
-    /**
-     * Parses the provided date using the custom format and the provided locale.
-     * @param date The date to parse.
-     * @param format The custom format to use.
-     * @param locale The local to interpret the format.
-     */
-    public DateOf(final String date, final String format, final Locale locale) {
-        this(date, DateTimeFormatter.ofPattern(format).withLocale(locale));
-    }
+    private UncheckedScalar<T> parsed;
 
     /**
      * Parses the date using the provided format.
      * @param date The date to parse.
      * @param format The format to use.
+     * @param converter The converter to convert
+     *  {@link TemporalAccessor} into type T
      */
-    public DateOf(final String date, final String format) {
-        this(date, DateTimeFormatter.ofPattern(format));
+    public DateOf(final String date, final String format,
+        final Func<TemporalAccessor, T> converter) {
+        this(date, DateTimeFormatter.ofPattern(format), converter);
     }
 
     /**
      * Parses the provided date as ISO formatted.
      * @param date The date to parse.
+     * @param converter The converter to convert
+     *  {@link TemporalAccessor} into type T
      */
-    public DateOf(final String date) {
-        this(date, DateTimeFormatter.ISO_DATE_TIME);
+    public DateOf(final String date,
+        final Func<TemporalAccessor, T> converter) {
+        this(date, DateTimeFormatter.ISO_DATE_TIME, converter);
     }
 
     /**
      * Parsing the date using the provided formatter.
      * @param date The date to parse.
      * @param formatter The formatter to use.
+     * @param converter The converter to convert
+     *  {@link TemporalAccessor} into type T
      */
-    public DateOf(final String date, final DateTimeFormatter formatter) {
+    public DateOf(final String date, final DateTimeFormatter formatter,
+        final Func<TemporalAccessor, T> converter) {
         this.parsed = new UncheckedScalar<>(
-            () -> formatter.parse(date)
+            () -> converter.apply(formatter.parse(date))
         );
     }
 
     @Override
-    public final TemporalAccessor value() throws Exception {
+    public final T value() throws Exception {
         return this.parsed.value();
+    }
+
+    /**
+     * Convenience class for parsing to {@link LocalDateTime} instances.
+     */
+    public static class Local extends DateOf<LocalDateTime> {
+        /**
+         * Parses date using the provided format to create
+         *  {@link LocalDateTime} instances.
+         * @param date The date to parse.
+         * @param format The format to use.
+         */
+        public Local(final String date, final String format) {
+            super(date, format, LocalDateTime::from);
+        }
+        /**
+         * Parses date to create {@link LocalDateTime} instances.
+         * @param date The date to parse.
+         */
+        public Local(final String date) {
+            super(date, LocalDateTime::from);
+        }
+        /**
+         * Parses the date using the formatter to create
+         *  {@link LocalDateTime} instances.
+         * @param date The date to parse.
+         * @param formatter The formatter to use.
+         */
+        public Local(final String date, final DateTimeFormatter formatter) {
+            super(date, formatter, LocalDateTime::from);
+        }
+    }
+
+    /**
+     * Convenience class for parsing to {@link OffsetDateTime} instances.
+     */
+    public static class Offset extends DateOf<OffsetDateTime> {
+        /**
+         * Parses date using the provided format to create
+         *  {@link OffsetDateTime} instances.
+         * @param date The date to parse.
+         * @param format The format to use.
+         */
+        public Offset(final String date, final String format) {
+            super(date, format, OffsetDateTime::from);
+        }
+        /**
+         * Parses date to create {@link OffsetDateTime} instances.
+         * @param date The date to parse.
+         */
+        public Offset(final String date) {
+            super(date, OffsetDateTime::from);
+        }
+        /**
+         * Parses the date using the formatter to create
+         *  {@link OffsetDateTime} instances.
+         * @param date The date to parse.
+         * @param formatter The formatter to use.
+         */
+        public Offset(final String date, final DateTimeFormatter formatter) {
+            super(date, formatter, OffsetDateTime::from);
+        }
+    }
+
+    /**
+     * Convenience class for parsing to {@link ZonedDateTime} instances.
+     */
+    public static class Zoned extends DateOf<ZonedDateTime> {
+        /**
+         * Parses date using the provided format to create
+         *  {@link ZonedDateTime} instances.
+         * @param date The date to parse.
+         * @param format The format to use.
+         */
+        public Zoned(final String date, final String format) {
+            super(date, format, ZonedDateTime::from);
+        }
+        /**
+         * Parses date to create {@link ZonedDateTime} instances.
+         * @param date The date to parse.
+         */
+        public Zoned(final String date) {
+            super(date, ZonedDateTime::from);
+        }
+        /**
+         * Parses the date using the formatter to create
+         *  {@link ZonedDateTime} instances.
+         * @param date The date to parse.
+         * @param formatter The formatter to use.
+         */
+        public Zoned(final String date, final DateTimeFormatter formatter) {
+            super(date, formatter, ZonedDateTime::from);
+        }
     }
 
 }

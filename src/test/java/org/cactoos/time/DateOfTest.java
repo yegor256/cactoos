@@ -23,6 +23,7 @@
  */
 package org.cactoos.time;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -47,11 +48,9 @@ public class DateOfTest {
         throws Exception {
         MatcherAssert.assertThat(
             "Can't parse a ZonedDateTime with default/ISO format.",
-            ZonedDateTime.from(
-                new DateOf(
-                    "2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]"
-                ).value()
-            ),
+            new DateOf.Zoned(
+            "2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]"
+            ).value(),
             Matchers.is(
                 ZonedDateTime.of(
                 2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
@@ -65,16 +64,26 @@ public class DateOfTest {
         throws Exception {
         MatcherAssert.assertThat(
             "Can't parse a OffsetDateTime with default/ISO format.",
-            OffsetDateTime.from(
-                new DateOf(
-                    "2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]"
-                ).value()
-            ),
+            new DateOf.Offset(
+            "2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]"
+            ).value(),
             Matchers.is(
                 OffsetDateTime.of(
                     2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
                 )
             )
+        );
+    }
+
+    @Test
+    public final void testParsingIsoFormattedStringToLocalDateTime()
+        throws Exception {
+        MatcherAssert.assertThat(
+            "Can't parse a LocalDateTime with default/ISO format.",
+            new DateOf.Local(
+            "2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]"
+            ).value(),
+            Matchers.is(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
         );
     }
 
