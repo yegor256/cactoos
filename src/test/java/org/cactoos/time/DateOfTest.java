@@ -28,6 +28,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -60,6 +61,44 @@ public class DateOfTest {
     }
 
     @Test
+    public final void testParsingFormattedStringWithZoneToZonedDateTime()
+        throws Exception {
+        MatcherAssert.assertThat(
+            "Can't parse a ZonedDateTime with custom format and zone.",
+            new DateOf.Zoned(
+            "2017-12-13 14:15:16",
+            "yyyy-MM-dd HH:mm:ss",
+                ZoneId.of("Europe/Berlin")
+            ).value(),
+            Matchers.is(
+                ZonedDateTime.of(
+                    LocalDateTime.of(2017, 12, 13, 14, 15, 16),
+                    ZoneId.of("Europe/Berlin")
+                )
+            )
+        );
+    }
+
+    @Test
+    public final void testParsingFormattedStringWithFormatterToZonedDateTime()
+        throws Exception {
+        MatcherAssert.assertThat(
+            "Can't parse a ZonedDateTime with custom format and zone.",
+            new DateOf.Zoned(
+            "2017-12-13 14:15:16",
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                    .withZone(ZoneId.of("Europe/Berlin"))
+            ).value(),
+            Matchers.is(
+                ZonedDateTime.of(
+                    LocalDateTime.of(2017, 12, 13, 14, 15, 16),
+                    ZoneId.of("Europe/Berlin")
+                )
+            )
+        );
+    }
+
+    @Test
     public final void testParsingIsoFormattedStringToOffsetDateTime()
         throws Exception {
         MatcherAssert.assertThat(
@@ -76,12 +115,57 @@ public class DateOfTest {
     }
 
     @Test
+    public final void testParsingFormattedStringWithOffsetToOffsetDateTime()
+        throws Exception {
+        MatcherAssert.assertThat(
+            "Can't parse a OffsetDateTime with custom format.",
+            new DateOf.Offset(
+            "2017-12-13 14:15:16",
+            "yyyy-MM-dd HH:mm:ss",
+                ZoneOffset.ofHours(1)
+            ).value(),
+            Matchers.is(
+                OffsetDateTime.of(
+                    LocalDateTime.of(2017, 12, 13, 14, 15, 16),
+                    ZoneOffset.ofHours(1)
+                )
+            )
+        );
+    }
+
+    @Test
     public final void testParsingIsoFormattedStringToLocalDateTime()
         throws Exception {
         MatcherAssert.assertThat(
             "Can't parse a LocalDateTime with default/ISO format.",
             new DateOf.Local(
             "2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]"
+            ).value(),
+            Matchers.is(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
+        );
+    }
+
+    @Test
+    public final void testParsingFormattedStringWithFormatToLocalDateTime()
+        throws Exception {
+        MatcherAssert.assertThat(
+            "Can't parse a LocalDateTime with custom format.",
+            new DateOf.Local(
+            "2017-12-13 14:15:16.000000017",
+            "yyyy-MM-dd HH:mm:ss.n"
+            ).value(),
+            Matchers.is(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
+        );
+    }
+
+    @Test
+    public final void testParsingFormattedStringWithFormatterToLocalDateTime()
+        throws Exception {
+        MatcherAssert.assertThat(
+            "Can't parse a LocalDateTime with custom formatter.",
+            new DateOf.Local(
+            "2017-12-13 14:15:16.000000017",
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
             ).value(),
             Matchers.is(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
         );
