@@ -23,6 +23,7 @@
  */
 package org.cactoos.map;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -93,7 +94,12 @@ public final class MapOfTest {
             "Can't create a map with functions as values",
             new MapOf<Integer, Scalar<Boolean>>(
                 new MapEntry<>(0, () -> true),
-                new MapEntry<>(1, () -> true)
+                new MapEntry<>(
+                    1,
+                    () -> {
+                        throw new IOException("oops");
+                    }
+                )
             ),
             Matchers.hasKey(0)
         );
