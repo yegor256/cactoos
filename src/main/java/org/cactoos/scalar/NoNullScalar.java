@@ -21,41 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.scalar;
 
-import org.cactoos.scalar.IoCheckedScalar;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.Scalar;
 
 /**
- * Scalar.
+ * Scalar check for no nulls.
  *
- * <p>If you don't want to have any checked exceptions being thrown
- * out of your {@link Scalar}, you can use
- * {@link UncheckedScalar} decorator. Also
- * you may try {@link IoCheckedScalar}.</p>
- *
- * <p>If you want to cache the result of the {@link Scalar} and
- * make sure it doesn't calculate anything twice, you can use
- * {@link StickyScalar} decorator.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @param <T> Type of result
- * @see StickyScalar
- * @see UncheckedScalar
- * @see IoCheckedScalar
- * @since 0.1
+ * @since 0.11
  */
-public interface Scalar<T> {
+public final class NoNullScalar<T> implements Scalar<T> {
 
     /**
-     * Convert it to the value.
-     * @return The value
-     * @throws Exception If fails
+     * The scalar.
      */
-    T value() throws Exception;
+    private final Scalar<T> origin;
 
+    /**
+     * Ctor.
+     *
+     * @param sclr The scalar
+     */
+    public NoNullScalar(final Scalar<T> sclr) {
+        this.origin = sclr;
+    }
+
+    @Override
+    public T value() throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid scalar"
+            );
+        }
+        final T value = this.origin.value();
+        if (value == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid value"
+            );
+        }
+        return value;
+    }
 }
