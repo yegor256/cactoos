@@ -45,7 +45,7 @@ public final class FilteredTest {
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a collection",
-            new Filtered<>(i -> i < 2, 1, 2, 0, -1),
+            new Filtered<Integer>(i -> i < 2, 1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
         );
     }
