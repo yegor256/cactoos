@@ -25,8 +25,8 @@ package org.cactoos.time;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
@@ -41,6 +41,7 @@ import org.cactoos.text.UncheckedText;
  * @version $Id$
  * @since 1.0
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class DateAsText implements Text {
     /**
      * Scalar carrying the formatted date.
@@ -53,8 +54,8 @@ public class DateAsText implements Text {
      */
     public DateAsText(final long milliseconds) {
         this(
-            LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(milliseconds), ZoneId.systemDefault()
+            ZonedDateTime.ofInstant(
+                Instant.ofEpochMilli(milliseconds), ZoneId.of("UTC")
             ),
             DateTimeFormatter.ISO_DATE_TIME
         );
@@ -67,8 +68,8 @@ public class DateAsText implements Text {
      */
     public DateAsText(final long milliseconds, final String format) {
         this(
-            LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(milliseconds), ZoneId.systemDefault()
+            ZonedDateTime.ofInstant(
+                Instant.ofEpochMilli(milliseconds), ZoneId.of("UTC")
             ),
             format,
             Locale.getDefault(Locale.Category.FORMAT)
@@ -84,8 +85,8 @@ public class DateAsText implements Text {
     public DateAsText(final long milliseconds, final String format,
         final Locale locale) {
         this(
-            LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(milliseconds), ZoneId.systemDefault()
+            ZonedDateTime.ofInstant(
+                Instant.ofEpochMilli(milliseconds), ZoneId.of("UTC")
             ),
             DateTimeFormatter.ofPattern(format, locale)
         );
@@ -97,7 +98,7 @@ public class DateAsText implements Text {
      */
     public DateAsText(final Date date) {
         this(
-            LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()),
+            ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")),
             DateTimeFormatter.ISO_DATE_TIME
         );
     }
@@ -110,7 +111,7 @@ public class DateAsText implements Text {
      */
     public DateAsText(final Date date, final String format) {
         this(
-            LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()),
+            ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")),
             DateTimeFormatter.ofPattern(
                 format,
                 Locale.getDefault(Locale.Category.FORMAT)
@@ -128,7 +129,7 @@ public class DateAsText implements Text {
     public DateAsText(final Date date, final String format,
         final Locale locale) {
         this(
-            LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()),
+            ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")),
             DateTimeFormatter.ofPattern(format, locale)
         );
     }
