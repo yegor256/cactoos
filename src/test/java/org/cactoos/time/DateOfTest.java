@@ -23,6 +23,7 @@
  */
 package org.cactoos.time;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -41,8 +42,61 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.TooManyMethods"})
 public class DateOfTest {
+
+    @Test
+    public final void testParsingIsoFormattedStringToDate()
+        throws Exception {
+        MatcherAssert.assertThat(
+            "Can't parse a Date with default/ISO format.",
+            new DateOf.Date(
+                "2017-12-13T14:15:16.000000017"
+            ).value(),
+            Matchers.is(
+                Date.from(
+                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
+                        .toInstant(ZoneOffset.UTC)
+                )
+            )
+        );
+    }
+
+    @Test
+    public final void testParsingCustomFormattedStringToDate()
+        throws Exception {
+        MatcherAssert.assertThat(
+            "Can't parse a Date with custom format.",
+            new DateOf.Date(
+                "2017-12-13 14:15:16.000000017",
+                "yyyy-MM-dd HH:mm:ss.n"
+            ).value(),
+            Matchers.is(
+                Date.from(
+                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
+                        .toInstant(ZoneOffset.UTC)
+                )
+            )
+        );
+    }
+
+    @Test
+    public final void testParsingCustomFormatterStringToDate()
+        throws Exception {
+        MatcherAssert.assertThat(
+            "Can't parse a Date with custom format.",
+            new DateOf.Date(
+                "2017-12-13 14:15:16.000000017",
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
+            ).value(),
+            Matchers.is(
+                Date.from(
+                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
+                        .toInstant(ZoneOffset.UTC)
+                )
+            )
+        );
+    }
 
     @Test
     public final void testParsingIsoFormattedStringToZonedDateTime()

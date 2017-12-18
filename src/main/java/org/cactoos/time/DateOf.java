@@ -91,6 +91,54 @@ public class DateOf<T extends TemporalAccessor> implements Scalar<T> {
     }
 
     /**
+     * Convenience class for parsing to {@link java.util.Date} instances.
+     */
+    public static class Date implements Scalar<java.util.Date> {
+        /**
+         * Internal parser to create {@link LocalDateTime} instance.
+         */
+        private final Local internal;
+        /**
+         * Parses ISO date string to create {@link java.util.Date} instances.
+         * @param date The date to parse.
+         */
+        public Date(final String date) {
+            this(new Local(date));
+        }
+        /**
+         * Parses date using the provided format to create
+         *  {@link java.util.Date} instances.
+         * @param date The date to parse.
+         * @param format The format to use.
+         */
+        public Date(final String date, final String format) {
+            this(new Local(date, format));
+        }
+        /**
+         * Parses the date using the formatter to create
+         *  {@link java.util.Date} instances.
+         * @param date The date to parse.
+         * @param formatter The formatter to use.
+         */
+        public Date(final String date, final DateTimeFormatter formatter) {
+            this(new Local(date, formatter));
+        }
+        /**
+         * Private stor.
+         * @param local The {@link Local} to use.
+         */
+        private Date(final Local local) {
+            this.internal = local;
+        }
+
+        @Override
+        public final java.util.Date value() throws Exception {
+            return java.util.Date.from(
+                this.internal.value().toInstant(ZoneOffset.UTC)
+            );
+        }
+    }
+    /**
      * Convenience class for parsing to {@link LocalDateTime} instances.
      */
     public static class Local extends DateOf<LocalDateTime> {
