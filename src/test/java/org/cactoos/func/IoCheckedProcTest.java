@@ -38,9 +38,8 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class IoCheckedProcTest {
-
     @Test
-    public void rethrowsCheckedToUncheckedException() {
+    public void rethrowsIoException() {
         final IOException exception = new IOException("intended");
         try {
             new IoCheckedProc<>(
@@ -53,6 +52,24 @@ public final class IoCheckedProcTest {
                 ex, Matchers.is(exception)
             );
         }
+    }
+
+    @Test(expected = IOException.class)
+    public void rethrowsCheckedToIoException() throws Exception {
+        new IoCheckedProc<>(
+            i -> {
+                throw new Exception("intended to fail");
+            }
+        ).exec(1);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() throws IOException {
+        new IoCheckedProc<>(
+            i -> {
+                throw new IllegalStateException("intended to fail here");
+            }
+        ).exec(1);
     }
 
 }

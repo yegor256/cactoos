@@ -24,7 +24,6 @@
 package org.cactoos.scalar;
 
 import java.io.IOException;
-import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -40,11 +39,11 @@ import org.junit.Test;
 public final class IoCheckedScalarTest {
 
     @Test
-    public void rethrowsCheckedToUncheckedException() {
+    public void rethrowsIoException() {
         final IOException exception = new IOException("intended");
         try {
             new IoCheckedScalar<>(
-                (Scalar<Integer>) () -> {
+                () -> {
                     throw exception;
                 }
             ).value();
@@ -53,6 +52,24 @@ public final class IoCheckedScalarTest {
                 ex, Matchers.is(exception)
             );
         }
+    }
+
+    @Test(expected = IOException.class)
+    public void throwsException() throws Exception {
+        new IoCheckedScalar<>(
+            () -> {
+                throw new Exception("intended to fail");
+            }
+        ).value();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() throws IOException {
+        new IoCheckedScalar<>(
+            () -> {
+                throw new IllegalStateException("intended to fail here");
+            }
+        ).value();
     }
 
 }

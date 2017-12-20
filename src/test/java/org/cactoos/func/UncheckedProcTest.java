@@ -31,7 +31,7 @@ import org.junit.Test;
  * Test case for {@link UncheckedProc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ * @version $Id: 59361df323d11d09fefce8e88269d4021d4d0dfe $
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -42,6 +42,15 @@ public final class UncheckedProcTest {
         new UncheckedProc<>(
             input -> {
                 throw new IOException("intended");
+            }
+        ).exec(1);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() {
+        new UncheckedProc<>(
+            i -> {
+                throw new IllegalStateException("intended to fail");
             }
         ).exec(1);
     }
