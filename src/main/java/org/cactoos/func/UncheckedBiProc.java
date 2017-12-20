@@ -23,7 +23,6 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 
 /**
@@ -55,10 +54,7 @@ public final class UncheckedBiProc<X, Y> implements BiProc<X, Y> {
     @Override
     public void exec(final X first, final Y second) {
         new UncheckedBiFunc<>(
-            (BiFunc<X, Y, Boolean>) (fst, snd) -> {
-                this.proc.exec(fst, snd);
-                return true;
-            }
+            new BiFuncOf<>(this.proc, null)
         ).apply(first, second);
     }
 }
