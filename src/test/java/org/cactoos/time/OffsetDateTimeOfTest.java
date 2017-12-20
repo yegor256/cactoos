@@ -23,16 +23,15 @@
  */
 package org.cactoos.time;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for DateOf.
+ * Tests for {@link OffsetDateTimeOf}.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
  * @since 1.0
@@ -40,56 +39,38 @@ import org.junit.Test;
  * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class DateOfTest {
+public class OffsetDateTimeOfTest {
 
     @Test
-    public final void testParsingIsoFormattedStringToDate()
+    public final void testParsingIsoFormattedStringToOffsetDateTime()
         throws Exception {
         MatcherAssert.assertThat(
-            "Can't parse a Date with default/ISO format.",
-            new DateOf(
-                "2017-12-13T14:15:16.000000017"
+            "Can't parse a OffsetDateTime with default/ISO format.",
+            new OffsetDateTimeOf(
+            "2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]"
             ).value(),
             Matchers.is(
-                Date.from(
-                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
-                        .toInstant(ZoneOffset.UTC)
+                OffsetDateTime.of(
+                    2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
                 )
             )
         );
     }
 
     @Test
-    public final void testParsingCustomFormattedStringToDate()
+    public final void testParsingFormattedStringWithOffsetToOffsetDateTime()
         throws Exception {
         MatcherAssert.assertThat(
-            "Can't parse a Date with custom format.",
-            new DateOf(
-                "2017-12-13 14:15:16.000000017",
-                "yyyy-MM-dd HH:mm:ss.n"
+            "Can't parse a OffsetDateTime with custom format.",
+            new OffsetDateTimeOf(
+            "2017-12-13 14:15:16",
+            "yyyy-MM-dd HH:mm:ss",
+                ZoneOffset.ofHours(1)
             ).value(),
             Matchers.is(
-                Date.from(
-                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
-                        .toInstant(ZoneOffset.UTC)
-                )
-            )
-        );
-    }
-
-    @Test
-    public final void testParsingCustomFormatterStringToDate()
-        throws Exception {
-        MatcherAssert.assertThat(
-            "Can't parse a Date with custom format.",
-            new DateOf(
-                "2017-12-13 14:15:16.000000017",
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
-            ).value(),
-            Matchers.is(
-                Date.from(
-                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
-                        .toInstant(ZoneOffset.UTC)
+                OffsetDateTime.of(
+                    LocalDateTime.of(2017, 12, 13, 14, 15, 16),
+                    ZoneOffset.ofHours(1)
                 )
             )
         );

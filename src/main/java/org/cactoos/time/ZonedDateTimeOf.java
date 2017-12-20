@@ -23,63 +23,61 @@
  */
 package org.cactoos.time;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
-import java.util.Date;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Parser for {@link Date} instances.
+ * Parser for {@link ZonedDateTime} instances.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
  * @since 1.0
  */
-public class DateOf implements Scalar<Date> {
-
+public class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
     /**
      * The parsed date.
      */
-    private Scalar<Date> parsed;
+    private final UncheckedScalar<ZonedDateTime> parsed;
 
     /**
-     * Parses the provided date as ISO formatted.
+     * Parses date to create {@link ZonedDateTime} instances.
      * @param date The date to parse.
-     *  {@link TemporalAccessor} into type T
      */
-    public DateOf(final String date) {
+    public ZonedDateTimeOf(final String date) {
         this(date, DateTimeFormatter.ISO_DATE_TIME);
     }
 
     /**
-     * Parses the date using the provided format.
+     * Parses date using the provided format to create
+     *  {@link ZonedDateTime} instances.
      * @param date The date to parse.
      * @param format The format to use.
-     *  {@link TemporalAccessor} into type T
+     * @param zone The zone to use.
      */
-    public DateOf(final String date, final String format) {
-        this(date, DateTimeFormatter.ofPattern(format));
+    public ZonedDateTimeOf(final String date, final String format,
+        final ZoneId zone) {
+        this(date,
+            DateTimeFormatter.ofPattern(format).withZone(zone)
+        );
     }
 
     /**
-     * Parsing the date using the provided formatter.
+     * Parses the date using the formatter to create
+     *  {@link ZonedDateTime} instances.
      * @param date The date to parse.
      * @param formatter The formatter to use.
-     *  {@link TemporalAccessor} into type T
      */
-    public DateOf(final String date, final DateTimeFormatter formatter) {
+    public ZonedDateTimeOf(final String date,
+        final DateTimeFormatter formatter) {
         this.parsed = new UncheckedScalar<>(
-            () -> Date.from(
-                LocalDateTime.from(formatter.parse(date))
-                    .toInstant(ZoneOffset.UTC)
-            )
+            () -> ZonedDateTime.from(formatter.parse(date))
         );
     }
 
     @Override
-    public final Date value() throws Exception {
+    public final ZonedDateTime value() throws Exception {
         return this.parsed.value();
     }
 

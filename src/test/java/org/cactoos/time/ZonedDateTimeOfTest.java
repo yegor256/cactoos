@@ -23,16 +23,16 @@
  */
 package org.cactoos.time;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for DateOf.
+ * Tests for {@link ZonedDateTimeOf}.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
  * @since 1.0
@@ -40,56 +40,57 @@ import org.junit.Test;
  * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class DateOfTest {
+public class ZonedDateTimeOfTest {
 
     @Test
-    public final void testParsingIsoFormattedStringToDate()
+    public final void testParsingIsoFormattedStringToZonedDateTime()
         throws Exception {
         MatcherAssert.assertThat(
-            "Can't parse a Date with default/ISO format.",
-            new DateOf(
-                "2017-12-13T14:15:16.000000017"
+            "Can't parse a ZonedDateTime with default/ISO format.",
+            new ZonedDateTimeOf(
+            "2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]"
             ).value(),
             Matchers.is(
-                Date.from(
-                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
-                        .toInstant(ZoneOffset.UTC)
+                ZonedDateTime.of(
+                2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
                 )
             )
         );
     }
 
     @Test
-    public final void testParsingCustomFormattedStringToDate()
+    public final void testParsingFormattedStringWithZoneToZonedDateTime()
         throws Exception {
         MatcherAssert.assertThat(
-            "Can't parse a Date with custom format.",
-            new DateOf(
-                "2017-12-13 14:15:16.000000017",
-                "yyyy-MM-dd HH:mm:ss.n"
+            "Can't parse a ZonedDateTime with custom format and zone.",
+            new ZonedDateTimeOf(
+            "2017-12-13 14:15:16",
+            "yyyy-MM-dd HH:mm:ss",
+                ZoneId.of("Europe/Berlin")
             ).value(),
             Matchers.is(
-                Date.from(
-                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
-                        .toInstant(ZoneOffset.UTC)
+                ZonedDateTime.of(
+                    LocalDateTime.of(2017, 12, 13, 14, 15, 16),
+                    ZoneId.of("Europe/Berlin")
                 )
             )
         );
     }
 
     @Test
-    public final void testParsingCustomFormatterStringToDate()
+    public final void testParsingFormattedStringWithFormatterToZonedDateTime()
         throws Exception {
         MatcherAssert.assertThat(
-            "Can't parse a Date with custom format.",
-            new DateOf(
-                "2017-12-13 14:15:16.000000017",
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
+            "Can't parse a ZonedDateTime with custom format and zone.",
+            new ZonedDateTimeOf(
+            "2017-12-13 14:15:16",
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                    .withZone(ZoneId.of("Europe/Berlin"))
             ).value(),
             Matchers.is(
-                Date.from(
-                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
-                        .toInstant(ZoneOffset.UTC)
+                ZonedDateTime.of(
+                    LocalDateTime.of(2017, 12, 13, 14, 15, 16),
+                    ZoneId.of("Europe/Berlin")
                 )
             )
         );

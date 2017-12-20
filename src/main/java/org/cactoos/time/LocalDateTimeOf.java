@@ -24,62 +24,55 @@
 package org.cactoos.time;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
-import java.util.Date;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Parser for {@link Date} instances.
+ * Parser for {@link LocalDateTime} instances.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
  * @since 1.0
  */
-public class DateOf implements Scalar<Date> {
-
+public class LocalDateTimeOf implements Scalar<LocalDateTime> {
     /**
      * The parsed date.
      */
-    private Scalar<Date> parsed;
+    private final UncheckedScalar<LocalDateTime> parsed;
 
     /**
-     * Parses the provided date as ISO formatted.
+     * Parses ISO date to create {@link LocalDateTime} instances.
      * @param date The date to parse.
-     *  {@link TemporalAccessor} into type T
      */
-    public DateOf(final String date) {
+    public LocalDateTimeOf(final String date) {
         this(date, DateTimeFormatter.ISO_DATE_TIME);
     }
 
     /**
-     * Parses the date using the provided format.
+     * Parses date using the provided format to create
+     *  {@link LocalDateTime} instances.
      * @param date The date to parse.
      * @param format The format to use.
-     *  {@link TemporalAccessor} into type T
      */
-    public DateOf(final String date, final String format) {
+    public LocalDateTimeOf(final String date, final String format) {
         this(date, DateTimeFormatter.ofPattern(format));
     }
 
     /**
-     * Parsing the date using the provided formatter.
+     * Parses the date using the formatter to create
+     *  {@link LocalDateTime} instances.
      * @param date The date to parse.
      * @param formatter The formatter to use.
-     *  {@link TemporalAccessor} into type T
      */
-    public DateOf(final String date, final DateTimeFormatter formatter) {
+    public LocalDateTimeOf(final String date,
+        final DateTimeFormatter formatter) {
         this.parsed = new UncheckedScalar<>(
-            () -> Date.from(
-                LocalDateTime.from(formatter.parse(date))
-                    .toInstant(ZoneOffset.UTC)
-            )
+            () -> LocalDateTime.from(formatter.parse(date))
         );
     }
 
     @Override
-    public final Date value() throws Exception {
+    public final LocalDateTime value() throws Exception {
         return this.parsed.value();
     }
 
