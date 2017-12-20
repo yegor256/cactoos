@@ -45,12 +45,7 @@ public final class TextTest {
     @Test(expected = IllegalStateException.class)
     public void failForNullResult() throws IOException {
         new Text.NoNulls(
-            new Text() {
-                @Override
-                public String asString() throws IOException {
-                    return null;
-                }
-            }
+            () -> null
         ).asString();
     }
 
