@@ -62,8 +62,4 @@ public final class TrimmedLeftText implements Text {
         return text.substring(cursor);
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
 }

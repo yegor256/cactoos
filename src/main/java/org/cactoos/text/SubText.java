@@ -130,8 +130,4 @@ public final class SubText implements Text {
         return text.substring(begin, finish);
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
 }

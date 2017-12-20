@@ -50,10 +50,6 @@ public final class TextTest {
                 public String asString() throws IOException {
                     return null;
                 }
-                @Override
-                public int compareTo(final Text text) {
-                    return 0;
-                }
             }
         ).asString();
     }

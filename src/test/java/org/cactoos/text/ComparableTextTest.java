@@ -23,36 +23,51 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.cactoos.Text;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Text without control characters (char &lt;= 32) from both ends.
+ * Test case for {@link FormattedText}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Sergey Sharov (zefick@mail.ru)
  * @version $Id$
- * @since 0.1
+ * @since 0.27
+ * @checkstyle JavadocMethodCheck (100 lines)
  */
-public final class TrimmedText implements Text {
+public final class ComparableTextTest {
 
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public TrimmedText(final Text text) {
-        this.origin = text;
+    @Test
+    public void comparesWithASubtext() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare sub texts",
+            new ComparableText(
+                new TextOf(
+                    "here to there"
+                )
+            ).compareTo(
+                // @checkstyle MagicNumberCheck (2 lines)
+                new ComparableText(
+                    new SubText("from here to there", 5)
+                )
+            ),
+            Matchers.is(0)
+        );
     }
 
-    @Override
-    public String asString() throws IOException {
-        return this.origin.asString().trim();
+    @Test
+    public void comparesToUncheckedText() {
+        final String txt = "foobar";
+        MatcherAssert.assertThat(
+            "These UncheckedText are not equal",
+            new ComparableText(
+                new UncheckedText(
+                    new TextOf(txt)
+                )
+            ).compareTo(
+                new ComparableText(new TextOf(txt))
+            ),
+            Matchers.equalTo(0)
+        );
     }
-
 }

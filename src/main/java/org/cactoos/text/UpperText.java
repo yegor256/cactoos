@@ -71,9 +71,4 @@ public final class UpperText implements Text {
         return this.origin.asString().toUpperCase(this.locale);
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
-
 }

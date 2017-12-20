@@ -23,36 +23,57 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * Text without control characters (char &lt;= 32) from both ends.
+ * Text implementing Comparable.<br>
+ * Below the example how you can sort words in a string:
+ * <pre>
+ * Iterable&lt;Text> sorted = new Sorted<>(
+ *   new Mapped<>(
+ *     ComparableText::new,
+ *     new SplitText("The quick brown fox jumps over the lazy dog", " ")
+ *   )
+ * )
+ * </pre>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Sergey Sharov (zefick@mail.ru)
  * @version $Id$
- * @since 0.1
+ * @since 0.27
  */
-public final class TrimmedText implements Text {
+public final class ComparableText implements Text, Comparable<ComparableText> {
 
     /**
-     * The text.
+     * The origin.
      */
-    private final Text origin;
+    private final UncheckedText text;
 
     /**
      * Ctor.
      * @param text The text
      */
-    public TrimmedText(final Text text) {
-        this.origin = text;
+    public ComparableText(final Text text) {
+        this(new UncheckedText(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public ComparableText(final UncheckedText text) {
+        this.text = text;
     }
 
     @Override
-    public String asString() throws IOException {
-        return this.origin.asString().trim();
+    public int compareTo(final ComparableText other) {
+        return this.text.asString().compareTo(other.asString());
+    }
+
+    @Override
+    public String asString() {
+        return this.text.asString();
     }
 
 }

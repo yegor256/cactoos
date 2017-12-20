@@ -63,9 +63,4 @@ public final class SwappedCaseText implements Text {
         return new String(chars);
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
-
 }

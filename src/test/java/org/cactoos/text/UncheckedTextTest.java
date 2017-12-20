@@ -24,9 +24,6 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.Text;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -42,32 +39,10 @@ public final class UncheckedTextTest {
     @Test(expected = RuntimeException.class)
     public void rethrowsCheckedToUncheckedException() {
         new UncheckedText(
-            new Text() {
-                @Override
-                public String asString() throws IOException {
-                    throw new IOException("intended");
-                }
-
-                @Override
-                public int compareTo(final Text text) {
-                    throw new UnsupportedOperationException(
-                        "#compareTo() not supported"
-                    );
-                }
+            () -> {
+                throw new IOException("intended");
             }
         ).asString();
-    }
-
-    @Test
-    public void comparesToOtherUncheckedText() {
-        final String txt = "foobar";
-        MatcherAssert.assertThat(
-            "These UncheckedText are not equal",
-            new UncheckedText(
-                new TextOf(txt)
-            ).compareTo(new TextOf(txt)),
-            Matchers.equalTo(0)
-        );
     }
 
 }

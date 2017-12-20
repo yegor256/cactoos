@@ -72,11 +72,4 @@ public final class SyncText implements Text {
         }
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        synchronized (this.lock) {
-            return new UncheckedText(this).compareTo(text);
-        }
-    }
-
 }

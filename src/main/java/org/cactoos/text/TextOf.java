@@ -305,9 +305,4 @@ public final class TextOf implements Text {
         return new IoCheckedScalar<>(this.origin).value();
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
-
 }
