@@ -26,7 +26,6 @@ package org.cactoos.time;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
@@ -42,12 +41,11 @@ public class DateOf implements Scalar<Date> {
     /**
      * The parsed date.
      */
-    private Scalar<Date> parsed;
+    private final Scalar<Date> parsed;
 
     /**
      * Parses the provided date as ISO formatted.
      * @param date The date to parse.
-     *  {@link TemporalAccessor} into type T
      */
     public DateOf(final String date) {
         this(date, DateTimeFormatter.ISO_DATE_TIME);
@@ -57,7 +55,6 @@ public class DateOf implements Scalar<Date> {
      * Parses the date using the provided format.
      * @param date The date to parse.
      * @param format The format to use.
-     *  {@link TemporalAccessor} into type T
      */
     public DateOf(final String date, final String format) {
         this(date, DateTimeFormatter.ofPattern(format));
@@ -67,7 +64,6 @@ public class DateOf implements Scalar<Date> {
      * Parsing the date using the provided formatter.
      * @param date The date to parse.
      * @param formatter The formatter to use.
-     *  {@link TemporalAccessor} into type T
      */
     public DateOf(final String date, final DateTimeFormatter formatter) {
         this.parsed = new UncheckedScalar<>(
