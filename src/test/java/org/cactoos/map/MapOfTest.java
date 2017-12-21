@@ -40,6 +40,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class MapOfTest {
 
@@ -47,9 +48,11 @@ public final class MapOfTest {
     public void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
-            new MapOf<Integer, Integer>(
-                new MapEntry<>(0, -1),
-                new MapEntry<>(1, 1)
+            new MapNoNulls<>(
+                new MapOf<Integer, Integer>(
+                    new MapEntry<>(0, -1),
+                    new MapEntry<>(1, 1)
+                )
             ),
             new BehavesAsMap<>(0, 1)
         );
