@@ -23,10 +23,9 @@
  */
 package org.cactoos.iterator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Arrays;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -43,77 +42,18 @@ public class SyncIteratorTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public final void testNextBlocksDifferentThread() throws Exception {
+    public final void testHoldingTheLockDoesNotStopProcessing() throws Exception {
         final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-        final MockIterator<String> mock = new MockIterator<>();
-        final SyncIterator<String> iterator = new SyncIterator<>(mock, lock);
-        Thread.currentThread().setName("thisThread");
+        final SyncIterator<String> iterator = new SyncIterator<>(
+            Arrays.asList("a", "b").iterator(), lock
+        );
         lock.writeLock().lock();
-        final Thread other = new Thread(iterator::next, "otherThread");
-        other.start();
-        iterator.next();
+        MatcherAssert.assertThat(
+            "Unexpected value found.",
+            new ListOf<>(iterator),
+            Matchers.contains("a", "b")
+        );
         lock.writeLock().unlock();
-        other.join(100);
-        MatcherAssert.assertThat(
-            "Unexpected calls order to next() from iterator.",
-            mock.getNextCalls(),
-            Matchers.contains("thisThread", "otherThread")
-        );
     }
 
-    @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public final void testHasNextNotBlocksDifferentThread() throws Exception {
-        final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-        final MockIterator<String> mock = new MockIterator<>();
-        final SyncIterator<String> iterator = new SyncIterator<>(mock, lock);
-        Thread.currentThread().setName("thisThread");
-        lock.readLock().lock();
-        final Thread other = new Thread(iterator::hasNext, "otherThread");
-        other.start();
-        other.join(100);
-        iterator.hasNext();
-        lock.readLock().unlock();
-        MatcherAssert.assertThat(
-            "Unexpected calls order to hasNext() from iterator.",
-            mock.getHasNextCalls(),
-            Matchers.contains("otherThread", "thisThread")
-        );
-    }
-
-    /**
-     * Mock iterator to track calls to next and hasNext methods.
-     * @param <T> Type of the Iterator
-     * @checkstyle MemberNameCheck (500 lines)
-     */
-    private class MockIterator<T> implements Iterator<T> {
-        /**
-         * List of thread names called hasNext method.
-         */
-        private final List<String> hasNextCalls = new ArrayList<>(0);
-        /**
-         * List of thread names called next method.
-         */
-        private final List<String> nextCalls = new ArrayList<>(0);
-
-        @Override
-        public boolean hasNext() {
-            this.hasNextCalls.add(Thread.currentThread().getName());
-            return true;
-        }
-
-        @Override
-        public T next() {
-            this.nextCalls.add(Thread.currentThread().getName());
-            return null;
-        }
-
-        public List<String> getHasNextCalls() {
-            return this.hasNextCalls;
-        }
-
-        public List<String> getNextCalls() {
-            return this.nextCalls;
-        }
-    }
 }

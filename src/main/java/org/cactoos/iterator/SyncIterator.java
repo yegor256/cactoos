@@ -57,9 +57,7 @@ public class SyncIterator<T> implements Iterator<T> {
      * @param iterator The iterator to synchronize access to.
      * @param lock The lock to use for synchronization.
      */
-    public SyncIterator(
-        final Iterator<T> iterator,
-        final ReadWriteLock lock) {
+    public SyncIterator(final Iterator<T> iterator, final ReadWriteLock lock) {
         this.iterator = iterator;
         this.lock = lock;
     }
