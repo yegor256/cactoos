@@ -42,7 +42,8 @@ public class SyncIteratorTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public final void testHoldingTheLockDoesNotStopProcessing() throws Exception {
+    public final void testHoldingTheLockDoesNotStopProcessing()
+        throws Exception {
         final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
         final SyncIterator<String> iterator = new SyncIterator<>(
             Arrays.asList("a", "b").iterator(), lock
