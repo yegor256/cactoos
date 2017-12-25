@@ -44,21 +44,28 @@ import org.junit.Test;
 public class DateAsTextTest {
 
     @Test
-    public final void testZonedDateTimeFormattedAsIsoDateTime()
-        throws Exception {
+    public final void formatsCurrentTime() {
+        MatcherAssert.assertThat(
+            "Can't format current time",
+            new DateAsText().asString(),
+            Matchers.notNullValue()
+        );
+    }
+
+    @Test
+    public final void testZonedDateTimeFormattedAsIsoDateTime() {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
         MatcherAssert.assertThat(
             "Can't format a ZonedDateTime with default/ISO format.",
             new DateAsText(date).asString(),
-            Matchers.is("2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]")
+            Matchers.is("2017-12-13T14:15:16.000000017+01:00")
         );
     }
 
     @Test
-    public final void testZonedDateTimeFormattedWithFormatString()
-        throws Exception {
+    public final void testZonedDateTimeFormattedWithFormatString() {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
@@ -70,8 +77,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testZonedDateTimeFormattedWithFormatStringWithLocale()
-        throws Exception {
+    public final void testZonedDateTimeFormattedWithFormatStringWithLocale() {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
@@ -84,7 +90,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testDateFormattedUsingIsoFormatter() throws Exception {
+    public final void testDateFormattedUsingIsoFormatter() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -92,12 +98,12 @@ public class DateAsTextTest {
         MatcherAssert.assertThat(
             "Can't format a java.util.Date with ISO format.",
             new DateAsText(calendar.getTime()).asString(),
-            Matchers.is("2017-12-13T14:15:16.017Z[UTC]")
+            Matchers.is("2017-12-13T14:15:16.017Z")
         );
     }
 
     @Test
-    public final void testDateFormattedUsingCustomFormat() throws Exception {
+    public final void testDateFormattedUsingCustomFormat() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -111,8 +117,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testDateFormattedUsingCustomFormatDifferentLocale()
-        throws Exception {
+    public final void testDateFormattedUsingCustomFormatDifferentLocale() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -126,8 +131,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testMillisFormattedUsingIsoFormatter()
-        throws Exception {
+    public final void testMillisFormattedUsingIsoFormatter() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -135,13 +139,12 @@ public class DateAsTextTest {
         MatcherAssert.assertThat(
             "Can't format a java.util.Date with ISO format.",
             new DateAsText(calendar.getTime().getTime()).asString(),
-            Matchers.is("2017-12-13T14:15:16.017Z[UTC]")
+            Matchers.is("2017-12-13T14:15:16.017Z")
         );
     }
 
     @Test
-    public final void testMillisFormattedUsingCustomFormat()
-        throws Exception {
+    public final void testMillisFormattedUsingCustomFormat() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -156,8 +159,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testMillisFormattedUsingCustomFormatDifferentLocale()
-        throws Exception {
+    public final void testMillisFormattedUsingCustomFormatDifferentLocale() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);

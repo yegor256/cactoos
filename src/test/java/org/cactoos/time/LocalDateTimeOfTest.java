@@ -41,37 +41,32 @@ import org.junit.Test;
 public class LocalDateTimeOfTest {
 
     @Test
-    public final void testParsingIsoFormattedStringToLocalDateTime()
-        throws Exception {
+    public final void testParsingIsoFormattedStringToLocalDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a LocalDateTime with default/ISO format.",
-            new LocalDateTimeOf(
-            "2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]"
-            ).value(),
+            new LocalDateTimeOf("2017-12-13T14:15:16.000000017+01:00").value(),
             Matchers.is(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
         );
     }
 
     @Test
-    public final void testParsingFormattedStringWithFormatToLocalDateTime()
-        throws Exception {
+    public final void testParsingFormattedStringWithFormatToLocalDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a LocalDateTime with custom format.",
             new LocalDateTimeOf(
-            "2017-12-13 14:15:16.000000017",
-            "yyyy-MM-dd HH:mm:ss.n"
+                "2017-12-13 14:15:16.000000017",
+                "yyyy-MM-dd HH:mm:ss.n"
             ).value(),
             Matchers.is(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
         );
     }
 
     @Test
-    public final void testParsingFormattedStringWithFormatterToLocalDateTime()
-        throws Exception {
+    public final void testParsingFormattedStringWithFormatterToLocalDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a LocalDateTime with custom formatter.",
             new LocalDateTimeOf(
-            "2017-12-13 14:15:16.000000017",
+                "2017-12-13 14:15:16.000000017",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
             ).value(),
             Matchers.is(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))

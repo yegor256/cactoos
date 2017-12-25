@@ -23,10 +23,10 @@
  */
 package org.cactoos.time;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -43,25 +43,22 @@ import org.junit.Test;
 public class DateOfTest {
 
     @Test
-    public final void testParsingIsoFormattedStringToDate()
-        throws Exception {
+    public final void testParsingIsoFormattedStringToDate() {
         MatcherAssert.assertThat(
             "Can't parse a Date with default/ISO format.",
-            new DateOf(
-                "2017-12-13T14:15:16.000000017"
-            ).value(),
+            new DateOf("2017-12-13T14:15:16.000000017Z").value(),
             Matchers.is(
                 Date.from(
-                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
-                        .toInstant(ZoneOffset.UTC)
+                    LocalDateTime.of(
+                        2017, 12, 13, 14, 15, 16, 17
+                    ).toInstant(ZoneOffset.UTC)
                 )
             )
         );
     }
 
     @Test
-    public final void testParsingCustomFormattedStringToDate()
-        throws Exception {
+    public final void testParsingCustomFormattedStringToDate() {
         MatcherAssert.assertThat(
             "Can't parse a Date with custom format.",
             new DateOf(
@@ -70,16 +67,16 @@ public class DateOfTest {
             ).value(),
             Matchers.is(
                 Date.from(
-                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
-                        .toInstant(ZoneOffset.UTC)
+                    LocalDateTime.of(
+                        2017, 12, 13, 14, 15, 16, 17
+                    ).toInstant(ZoneOffset.UTC)
                 )
             )
         );
     }
 
     @Test
-    public final void testParsingCustomFormatterStringToDate()
-        throws Exception {
+    public final void testParsingCustomFormatterStringToDate() {
         MatcherAssert.assertThat(
             "Can't parse a Date with custom format.",
             new DateOf(
@@ -88,8 +85,9 @@ public class DateOfTest {
             ).value(),
             Matchers.is(
                 Date.from(
-                    LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17)
-                        .toInstant(ZoneOffset.UTC)
+                    LocalDateTime.of(
+                        2017, 12, 13, 14, 15, 16, 17
+                    ).toInstant(ZoneOffset.UTC)
                 )
             )
         );

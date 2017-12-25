@@ -32,9 +32,9 @@ import org.cactoos.scalar.UncheckedScalar;
  * Parser for {@link LocalDateTime} instances.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.27
  */
-public class LocalDateTimeOf implements Scalar<LocalDateTime> {
+public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
     /**
      * The parsed date.
      */
@@ -44,8 +44,8 @@ public class LocalDateTimeOf implements Scalar<LocalDateTime> {
      * Parses ISO date to create {@link LocalDateTime} instances.
      * @param date The date to parse.
      */
-    public LocalDateTimeOf(final String date) {
-        this(date, DateTimeFormatter.ISO_DATE_TIME);
+    public LocalDateTimeOf(final CharSequence date) {
+        this(date, new Iso().get());
     }
 
     /**
@@ -54,7 +54,7 @@ public class LocalDateTimeOf implements Scalar<LocalDateTime> {
      * @param date The date to parse.
      * @param format The format to use.
      */
-    public LocalDateTimeOf(final String date, final String format) {
+    public LocalDateTimeOf(final CharSequence date, final String format) {
         this(date, DateTimeFormatter.ofPattern(format));
     }
 
@@ -64,7 +64,7 @@ public class LocalDateTimeOf implements Scalar<LocalDateTime> {
      * @param date The date to parse.
      * @param formatter The formatter to use.
      */
-    public LocalDateTimeOf(final String date,
+    public LocalDateTimeOf(final CharSequence date,
         final DateTimeFormatter formatter) {
         this.parsed = new UncheckedScalar<>(
             () -> LocalDateTime.from(formatter.parse(date))
@@ -72,7 +72,7 @@ public class LocalDateTimeOf implements Scalar<LocalDateTime> {
     }
 
     @Override
-    public final LocalDateTime value() throws Exception {
+    public LocalDateTime value() {
         return this.parsed.value();
     }
 

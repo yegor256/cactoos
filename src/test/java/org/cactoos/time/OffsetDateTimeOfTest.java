@@ -42,13 +42,10 @@ import org.junit.Test;
 public class OffsetDateTimeOfTest {
 
     @Test
-    public final void testParsingIsoFormattedStringToOffsetDateTime()
-        throws Exception {
+    public final void testParsingIsoFormattedStringToOffsetDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a OffsetDateTime with default/ISO format.",
-            new OffsetDateTimeOf(
-            "2017-12-13T14:15:16.000000017+01:00[Europe/Berlin]"
-            ).value(),
+            new OffsetDateTimeOf("2017-12-13T14:15:16.000000017+01:00").value(),
             Matchers.is(
                 OffsetDateTime.of(
                     2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
@@ -58,13 +55,12 @@ public class OffsetDateTimeOfTest {
     }
 
     @Test
-    public final void testParsingFormattedStringWithOffsetToOffsetDateTime()
-        throws Exception {
+    public final void testParsingFormattedStringWithOffsetToOffsetDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a OffsetDateTime with custom format.",
             new OffsetDateTimeOf(
-            "2017-12-13 14:15:16",
-            "yyyy-MM-dd HH:mm:ss",
+                "2017-12-13 14:15:16",
+                "yyyy-MM-dd HH:mm:ss",
                 ZoneOffset.ofHours(1)
             ).value(),
             Matchers.is(

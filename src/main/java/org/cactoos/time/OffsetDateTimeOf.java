@@ -34,9 +34,9 @@ import org.cactoos.scalar.UncheckedScalar;
  * Parser for {@link OffsetDateTime} instances.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.27
  */
-public class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
+public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
     /**
      * The parsed date.
      */
@@ -46,8 +46,8 @@ public class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
      * Parses ISO date to create {@link OffsetDateTime} instances.
      * @param date The date to parse.
      */
-    public OffsetDateTimeOf(final String date) {
-        this(date, DateTimeFormatter.ISO_DATE_TIME);
+    public OffsetDateTimeOf(final CharSequence date) {
+        this(date, new Iso().get());
     }
 
     /**
@@ -57,7 +57,7 @@ public class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
      * @param format The format to use.
      * @param offset The offset to use.
      */
-    public OffsetDateTimeOf(final String date, final String format,
+    public OffsetDateTimeOf(final CharSequence date, final String format,
         final ZoneOffset offset) {
         this(date,
             DateTimeFormatter.ofPattern(format).withZone(offset.normalized())
@@ -70,7 +70,7 @@ public class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
      * @param date The date to parse.
      * @param formatter The formatter to use.
      */
-    public OffsetDateTimeOf(final String date,
+    public OffsetDateTimeOf(final CharSequence date,
         final DateTimeFormatter formatter) {
         this.parsed = new UncheckedScalar<>(
             () -> ZonedDateTime.from(formatter.parse(date)).toOffsetDateTime()
@@ -78,7 +78,7 @@ public class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
     }
 
     @Override
-    public final OffsetDateTime value() throws Exception {
+    public OffsetDateTime value() {
         return this.parsed.value();
     }
 
