@@ -32,7 +32,7 @@ import org.junit.Test;
  * Test case for {@link UncheckedFunc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id: c6da6ab1708d13ee64fe35d89fe217387d703e17 $
+ * @version $Id$
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */

@@ -31,7 +31,7 @@ import org.junit.Test;
  * Test case for {@link UncheckedProc}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id: 59361df323d11d09fefce8e88269d4021d4d0dfe $
+ * @version $Id$
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
