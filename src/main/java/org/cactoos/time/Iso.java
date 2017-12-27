@@ -21,39 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.time;
 
-import java.util.Collections;
-import java.util.Iterator;
-import org.cactoos.ScalarHasValue;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import java.time.format.DateTimeFormatter;
 
 /**
- * Test case for {@link Joined}.
+ * The formatter.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.14
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.27
  */
-public final class JoinedTest {
+final class Iso {
 
-    @Test
-    public void joinsIterators() {
-        MatcherAssert.assertThat(
-            "Can't concatenate mapped iterators together",
-            new LengthOf(
-                new IteratorNoNulls<>(
-                    new Joined<Iterator<String>>(
-                        new Mapped<>(
-                            input -> Collections.singleton(input).iterator(),
-                            Collections.singleton("x").iterator()
-                        )
-                    )
-                )
-            ),
-            new ScalarHasValue<>(1)
-        );
+    /**
+     * Take it.
+     * @return Formatter
+     */
+    public DateTimeFormatter get() {
+        assert this != null;
+        return DateTimeFormatter.ISO_OFFSET_DATE_TIME;
     }
 
 }
+

@@ -47,8 +47,10 @@ public final class ReversedTest {
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a collection",
-            new Reversed<>(
-                new IterableOf<Integer>(0, -1, 2)
+            new CollectionNoNulls<>(
+                new Reversed<>(
+                    new IterableOf<Integer>(0, -1, 2)
+                )
             ),
             new BehavesAsCollection<>(0)
         );

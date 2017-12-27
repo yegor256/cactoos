@@ -21,39 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.iterable;
 
-import java.util.Collections;
 import java.util.Iterator;
-import org.cactoos.ScalarHasValue;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.cactoos.iterator.IteratorNoNulls;
 
 /**
- * Test case for {@link Joined}.
+ * A decorator for {@link Iterable} that doesn't allow any NULL.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.14
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <X> Type of item
+ * @since 0.27
  */
-public final class JoinedTest {
+public final class IterableNoNulls<X> implements Iterable<X> {
 
-    @Test
-    public void joinsIterators() {
-        MatcherAssert.assertThat(
-            "Can't concatenate mapped iterators together",
-            new LengthOf(
-                new IteratorNoNulls<>(
-                    new Joined<Iterator<String>>(
-                        new Mapped<>(
-                            input -> Collections.singleton(input).iterator(),
-                            Collections.singleton("x").iterator()
-                        )
-                    )
-                )
-            ),
-            new ScalarHasValue<>(1)
-        );
+    /**
+     * Original iterable.
+     */
+    private final Iterable<X> origin;
+
+    /**
+     * Ctor.
+     * @param items The items
+     */
+    public IterableNoNulls(final Iterable<X> items) {
+        this.origin = items;
+    }
+
+    @Override
+    public Iterator<X> iterator() {
+        return new IteratorNoNulls<>(this.origin.iterator());
     }
 
 }

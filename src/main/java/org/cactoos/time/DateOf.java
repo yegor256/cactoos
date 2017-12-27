@@ -34,21 +34,21 @@ import org.cactoos.scalar.UncheckedScalar;
  * Parser for {@link Date} instances.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.27
  */
-public class DateOf implements Scalar<Date> {
+public final class DateOf implements Scalar<Date> {
 
     /**
      * The parsed date.
      */
-    private final Scalar<Date> parsed;
+    private final UncheckedScalar<Date> parsed;
 
     /**
      * Parses the provided date as ISO formatted.
      * @param date The date to parse.
      */
-    public DateOf(final String date) {
-        this(date, DateTimeFormatter.ISO_DATE_TIME);
+    public DateOf(final CharSequence date) {
+        this(date, new Iso().get());
     }
 
     /**
@@ -56,7 +56,7 @@ public class DateOf implements Scalar<Date> {
      * @param date The date to parse.
      * @param format The format to use.
      */
-    public DateOf(final String date, final String format) {
+    public DateOf(final CharSequence date, final String format) {
         this(date, DateTimeFormatter.ofPattern(format));
     }
 
@@ -65,17 +65,18 @@ public class DateOf implements Scalar<Date> {
      * @param date The date to parse.
      * @param formatter The formatter to use.
      */
-    public DateOf(final String date, final DateTimeFormatter formatter) {
+    public DateOf(final CharSequence date, final DateTimeFormatter formatter) {
         this.parsed = new UncheckedScalar<>(
             () -> Date.from(
-                LocalDateTime.from(formatter.parse(date))
-                    .toInstant(ZoneOffset.UTC)
+                LocalDateTime.from(
+                    formatter.parse(date)
+                ).toInstant(ZoneOffset.UTC)
             )
         );
     }
 
     @Override
-    public final Date value() throws Exception {
+    public Date value() {
         return this.parsed.value();
     }
 

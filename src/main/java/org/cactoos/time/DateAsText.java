@@ -23,7 +23,6 @@
  */
 package org.cactoos.time;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -38,14 +37,22 @@ import org.cactoos.scalar.UncheckedScalar;
  * Formatter for date instances.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.27
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class DateAsText implements Text {
+public final class DateAsText implements Text {
+
     /**
      * Scalar carrying the formatted date.
      */
     private final UncheckedScalar<String> formatted;
+
+    /**
+     * Formats current time using the ISO format.
+     */
+    public DateAsText() {
+        this(System.currentTimeMillis());
+    }
 
     /**
      * Formats the milliseconds using the ISO format.
@@ -56,7 +63,7 @@ public class DateAsText implements Text {
             ZonedDateTime.ofInstant(
                 Instant.ofEpochMilli(milliseconds), ZoneId.of("UTC")
             ),
-            DateTimeFormatter.ISO_DATE_TIME
+            new Iso().get()
         );
     }
 
@@ -98,7 +105,7 @@ public class DateAsText implements Text {
     public DateAsText(final Date date) {
         this(
             ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")),
-            DateTimeFormatter.ISO_DATE_TIME
+            new Iso().get()
         );
     }
 
@@ -138,7 +145,7 @@ public class DateAsText implements Text {
      * @param date The date to format.
      */
     public DateAsText(final TemporalAccessor date) {
-        this(date, DateTimeFormatter.ISO_DATE_TIME);
+        this(date, new Iso().get());
     }
 
     /**
@@ -175,7 +182,7 @@ public class DateAsText implements Text {
     }
 
     @Override
-    public final String asString() throws IOException {
+    public String asString() {
         return this.formatted.value();
     }
 

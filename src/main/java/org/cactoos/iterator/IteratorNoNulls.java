@@ -23,37 +23,63 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Collections;
 import java.util.Iterator;
-import org.cactoos.ScalarHasValue;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Test case for {@link Joined}.
+ * A decorator of an {@link Iterator} that returns no NULL.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.14
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <X> Type of item
+ * @since 0.27
  */
-public final class JoinedTest {
+public final class IteratorNoNulls<X> implements Iterator<X> {
 
-    @Test
-    public void joinsIterators() {
-        MatcherAssert.assertThat(
-            "Can't concatenate mapped iterators together",
-            new LengthOf(
-                new IteratorNoNulls<>(
-                    new Joined<Iterator<String>>(
-                        new Mapped<>(
-                            input -> Collections.singleton(input).iterator(),
-                            Collections.singleton("x").iterator()
-                        )
-                    )
+    /**
+     * Iterator.
+     */
+    private final Iterator<X> iterator;
+
+    /**
+     * Position.
+     */
+    private final AtomicLong pos;
+
+    /**
+     * Ctor.
+     * @param src Source iterable
+     */
+    public IteratorNoNulls(final Iterator<X> src) {
+        this.iterator = src;
+        this.pos = new AtomicLong();
+    }
+
+    @Override
+    public boolean hasNext() {
+        return this.iterator.hasNext();
+    }
+
+    @Override
+    public X next() {
+        final X next = this.iterator.next();
+        if (next == null) {
+            throw new IllegalStateException(
+                String.format(
+                    "Item #%d of %s is NULL",
+                    this.pos.get(), this.iterator
                 )
-            ),
-            new ScalarHasValue<>(1)
-        );
+            );
+        }
+        this.pos.incrementAndGet();
+        return next;
+    }
+
+    @Override
+    public void remove() {
+        this.iterator.remove();
     }
 
 }
