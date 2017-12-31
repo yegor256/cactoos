@@ -33,12 +33,12 @@ import org.cactoos.Text;
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.28
  */
 public final class AbbreviatedText implements Text {
 
     /**
-     * The text.
+     * The sub text.
      */
     private final SubText origin;
 
@@ -77,7 +77,7 @@ public final class AbbreviatedText implements Text {
      * @param wdth Width of the result string
      */
     public AbbreviatedText(final String text, final int off, final int wdth) {
-        this(new StringAsText(text), off, wdth);
+        this(new TextOf(text), off, wdth);
     }
 
     /**
@@ -108,6 +108,6 @@ public final class AbbreviatedText implements Text {
 
     @Override
     public int compareTo(final Text text) {
-        return 0;
+        return new UncheckedText(this).compareTo(text);
     }
 }
