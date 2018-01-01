@@ -34,15 +34,132 @@ import org.junit.Test;
  * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings(
+    {
+        "PMD.AvoidDuplicateLiterals",
+        "PMD.TooManyMethods"
+    }
+)
 public final class AbbreviatedTextTest {
+
+    @Test
+    public void abbreviatesAnEmptyText() {
+        MatcherAssert.assertThat(
+            "Can't abbreviate an empty text",
+            // @checkstyle MagicNumber (1 line)
+            new AbbreviatedText("", 8),
+            new TextHasString("")
+        );
+    }
 
     @Test
     public void abbreviatesText() {
         MatcherAssert.assertThat(
-            "Can't abbreviated a text",
+            "Can't abbreviate a text",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText("hello world", 5),
+            new AbbreviatedText("hello world", 8),
             new TextHasString("hello...")
+        );
+    }
+
+    @Test
+    public void abbreviatesTextOneCharSmaller() {
+        MatcherAssert.assertThat(
+            "Can't abbreviate a text one char smaller",
+            // @checkstyle MagicNumber (1 line)
+            new AbbreviatedText("oo programming", 10),
+            new TextHasString("oo prog...")
+        );
+    }
+
+    @Test
+    public void abbreviatesTextWithSameLength() {
+        MatcherAssert.assertThat(
+            "Can't abbreviate a text with same length",
+            // @checkstyle MagicNumber (1 line)
+            new AbbreviatedText("elegant objects", 15),
+            new TextHasString("elegant objects")
+        );
+    }
+
+    @Test
+    public void abbreviatesTextOneCharBigger() {
+        MatcherAssert.assertThat(
+            "Can't abbreviate a text one char bigger",
+            // @checkstyle MagicNumber (1 line)
+            new AbbreviatedText("the old mcdonald", 17),
+            new TextHasString("the old mcdonald")
+        );
+    }
+
+    @Test
+    public void abbreviatesTextTwoCharsBigger() {
+        MatcherAssert.assertThat(
+            "Can't abbreviate a text two chars bigger",
+            // @checkstyle MagicNumber (1 line)
+            new AbbreviatedText("elegant objects", 17),
+            new TextHasString("elegant objects")
+        );
+    }
+
+    @Test
+    public void abbreviatesTextWithWidthBiggerThanLength() {
+        MatcherAssert.assertThat(
+            "Can't abbreviate a text with width bigger than length",
+            // @checkstyle MagicNumber (1 line)
+            new AbbreviatedText("cactoos framework", 50),
+            new TextHasString("cactoos framework")
+        );
+    }
+
+    @Test
+    public void abbreviatesTextWithOffsetAndWidthSmaller() {
+        MatcherAssert.assertThat(
+            "Can't abbreviate a text with offset and width smaller",
+            // @checkstyle MagicNumber (1 line)
+            new AbbreviatedText("it's a beautiful day", 2, 17),
+            new TextHasString("'s a beautiful...")
+        );
+    }
+
+    @Test
+    public void abbreviatesTextWithOffsetAndWidthBigger() {
+        MatcherAssert.assertThat(
+            "Can't abbreviate a text with offset and width bigger",
+            // @checkstyle MagicNumber (1 line)
+            new AbbreviatedText("game of thrones", 2, 50),
+            new TextHasString("me of thrones")
+        );
+    }
+
+    @Test
+    public void abbreviatesTextBiggerThanDefaultMaxWidth() {
+        // @checkstyle LineLengthCheck (10 line)
+        MatcherAssert.assertThat(
+            "Can't abbreviate a text bigger than default max width",
+            new AbbreviatedText(
+                "The quick brown fox jumps over the lazy black dog and after that returned to the cave"
+            ),
+            new TextHasString(
+                "The quick brown fox jumps over the lazy black dog and after that returned to ..."
+            )
+        );
+    }
+
+    @Test
+    public void abbreviatesTextWithOffsetAndBiggerThanDefaultMaxWidth() {
+        // @checkstyle LineLengthCheck (10 line)
+        MatcherAssert.assertThat(
+            "Can't abbreviate a text with offset and bigger than default max width",
+            new AbbreviatedText(
+                "I tried making beer in the bathtub, I tried making synthetic gin, I tried making fudge for a living",
+                2,
+                // @checkstyle MagicNumberCheck (1 line)
+                80
+            ),
+            new TextHasString(
+                "tried making beer in the bathtub, I tried making synthetic gin, I tried makin..."
+            )
         );
     }
 
