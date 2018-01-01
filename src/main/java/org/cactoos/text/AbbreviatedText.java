@@ -38,9 +38,27 @@ import org.cactoos.Text;
 public final class AbbreviatedText implements Text {
 
     /**
-     * The sub text.
+     * The origin Text.
      */
-    private final SubText origin;
+    private final Text origin;
+
+    /**
+     * The position where to start.
+     */
+    private final int offset;
+
+    /**
+     * The max width of the resulting string.
+     */
+    private final int width;
+
+    /**
+     * Ctor.
+     * @param text The Text
+     */
+    public AbbreviatedText(final String text) {
+        this(new TextOf(text));
+    }
 
     /**
      * Ctor.
@@ -48,62 +66,71 @@ public final class AbbreviatedText implements Text {
      */
     public AbbreviatedText(final Text text) {
         // @checkstyle MagicNumber (1 line)
-        this(text, 0, 77);
+        this(text, 0, 80);
     }
 
     /**
      * Ctor.
      * @param text A String
-     * @param wdth Width of the result string
+     * @param max Max width of the result string
      */
-    public AbbreviatedText(final String text, final int wdth) {
-        this(text, 0, wdth);
+    public AbbreviatedText(final String text, final int max) {
+        this(text, 0, max);
     }
 
     /**
      * Ctor.
      * @param text The Text
-     * @param wdth Width of the result string
+     * @param max Max width of the result string
      */
-    public AbbreviatedText(final Text text, final int wdth) {
+    public AbbreviatedText(final Text text, final int max) {
         // @checkstyle MagicNumber (1 line)
-        this(text, 0, wdth);
+        this(text, 0, max);
     }
 
     /**
      * Ctor.
      * @param text A String
      * @param off Position where to start
-     * @param wdth Width of the result string
+     * @param max Max width of the result string
      */
-    public AbbreviatedText(final String text, final int off, final int wdth) {
-        this(new TextOf(text), off, wdth);
+    public AbbreviatedText(final String text, final int off, final int max) {
+        this(new TextOf(text), off, max);
     }
 
     /**
      * Ctor.
      * @param text The Text
      * @param off Position where to start
-     * @param wdth Width of the result string
+     * @param max Max width of result string
      */
-    public AbbreviatedText(final Text text, final int off, final int wdth) {
-        this(new SubText(text, off, wdth));
-    }
-
-    /**
-     * Ctor.
-     * @param text The truncated Text
-     */
-    public AbbreviatedText(final SubText text) {
+    public AbbreviatedText(final Text text, final int off, final int max) {
         this.origin = text;
+        this.offset = off;
+        this.width = max;
     }
 
     @Override
     public String asString() throws IOException {
-        return new FormattedText(
-            "%s...",
-            this.origin.asString()
-        ).asString();
+        final Text abbreviated;
+        if (this.origin.asString().length() <= this.width) {
+            abbreviated = new SubText(
+                this.origin,
+                this.offset,
+                this.origin.asString().length()
+            );
+        } else {
+            abbreviated = new FormattedText(
+                "%s...",
+                new SubText(
+                    this.origin,
+                    this.offset,
+                    // @checkstyle MagicNumber (1 line)
+                    this.offset + this.width - 3
+                ).asString()
+            );
+        }
+        return abbreviated.asString();
     }
 
     @Override
