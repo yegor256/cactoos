@@ -67,23 +67,23 @@ public final class DigestOf implements Bytes {
     /**
      * Ctor.
      * @param input The input
-     * @param algorithm The algorithm
+     * @param algo The algorithm
      */
-    public DigestOf(final Input input, final String algorithm) {
+    public DigestOf(final Input input, final String algo) {
         // @checkstyle MagicNumber (1 line)
-        this(input, 16 << 10, algorithm);
+        this(input, 16 << 10, algo);
     }
 
     /**
      * Ctor.
      * @param input The input
      * @param max Buffer size
-     * @param algorithm The algorithm
+     * @param algo The algorithm
      */
-    public DigestOf(final Input input, final int max, final String algorithm) {
+    public DigestOf(final Input input, final int max, final String algo) {
         this.source = input;
         this.size = max;
-        this.algorithm = algorithm;
+        this.algorithm = algo;
     }
 
     @Override
@@ -101,8 +101,8 @@ public final class DigestOf implements Bytes {
                 }
                 return msg.digest();
             }
-        } catch (final NoSuchAlgorithmException nsae) {
-            throw new IOException(nsae);
+        } catch (final NoSuchAlgorithmException ex) {
+            throw new IOException(ex);
         }
     }
 
