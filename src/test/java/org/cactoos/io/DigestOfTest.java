@@ -24,9 +24,8 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import org.cactoos.TextHasString;
-import org.cactoos.text.FormattedText;
+import org.cactoos.text.HexOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -46,14 +45,10 @@ public final class DigestOfTest {
     public void md5() throws IOException {
         MatcherAssert.assertThat(
             "Can't calculate the MD5 checksum",
-            new FormattedText(
-                "%1$032x",
-                new BigInteger(
-                    1,
-                    new DigestOf(
-                        new InputOf("Hi Guys!"),
-                        "MD5"
-                    ).asBytes()
+            new HexOf(
+                new DigestOf(
+                    new InputOf("Hi Guys!"),
+                    "MD5"
                 )
             ),
             new TextHasString(
@@ -67,14 +62,10 @@ public final class DigestOfTest {
     public void sha1() throws IOException {
         MatcherAssert.assertThat(
             "Can't calculate the SHA-1 checksum",
-            new FormattedText(
-                "%1$032x",
-                new BigInteger(
-                    1,
-                    new DigestOf(
-                        new InputOf("Elegant Objects!"),
-                        "SHA-1"
-                    ).asBytes()
+            new HexOf(
+                new DigestOf(
+                    new InputOf("Elegant Objects!"),
+                    "SHA-1"
                 )
             ),
             new TextHasString(
@@ -88,13 +79,9 @@ public final class DigestOfTest {
     public void sha256() throws IOException {
         MatcherAssert.assertThat(
             "Can't calculate the SHA-256 checksum",
-            new FormattedText(
-                "%1$032x",
-                new BigInteger(
-                    1,
-                    new DigestOf(
-                        new InputOf("Hello World!")
-                    ).asBytes()
+            new HexOf(
+                new DigestOf(
+                    new InputOf("Hello World!")
                 )
             ),
             new TextHasString(
@@ -109,22 +96,34 @@ public final class DigestOfTest {
     public void sha256File() throws IOException {
         MatcherAssert.assertThat(
             "Can't calculate the file SHA-256 checksum",
-            new FormattedText(
-                "%1$032x",
-                new BigInteger(
-                    1,
-                    new DigestOf(
-                        new InputOf(
-                            new ResourceOf(
-                                "org/cactoos/io/DigestOf.class"
-                            ).stream()
-                        )
-                    ).asBytes()
+            new HexOf(
+                new DigestOf(
+                    new InputOf(
+                        new ResourceOf(
+                            "org/cactoos/io/DigestOf.class"
+                        ).stream()
+                    )
                 )
             ),
             new TextHasString(
                 // @checkstyle LineLengthCheck (1 lines)
-                "d18872897e261f968124a22a7e1e36b7bb7e64ead93bbc574111cec870878077"
+                "6b395f5aacffa56fe67a148098d7bd86e09b406cc595c705c5fb6f437016835d"
+            )
+        );
+    }
+
+    @Test
+    public void empty() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't calculate the SHA-256 checksum of empty string",
+            new HexOf(
+                new DigestOf(
+                    new InputOf("")
+                )
+            ),
+            new TextHasString(
+                // @checkstyle LineLengthCheck (1 lines)
+                "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             )
         );
     }
