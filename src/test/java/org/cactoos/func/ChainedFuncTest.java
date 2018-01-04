@@ -55,7 +55,7 @@ public final class ChainedFuncTest {
                     ), new IterableOf<>("public", "final", "class")
                 )
                 )
-            ).value(),
+            ).intValue(),
             Matchers.equalTo(3)
         );
     }
@@ -76,7 +76,7 @@ public final class ChainedFuncTest {
                     ), new IterableOf<>("private", "static", "String")
                 )
                 )
-            ).value(),
+            ).intValue(),
             Matchers.equalTo(2)
         );
     }

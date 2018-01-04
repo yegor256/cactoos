@@ -23,10 +23,10 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.ScalarHasValue;
 import org.cactoos.TextHasString;
 import org.cactoos.iterable.LengthOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -46,8 +46,8 @@ public final class SplitTextTest {
             "Can't split a text. Incorrect length",
             new LengthOf(
                 new SplitText("Hello world!", "\\s+")
-            ),
-            new ScalarHasValue<>(2)
+            ).intValue(),
+            Matchers.equalTo(2)
         );
     }
 

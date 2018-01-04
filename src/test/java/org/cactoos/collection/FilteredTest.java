@@ -58,7 +58,7 @@ public final class FilteredTest {
                     input -> input.length() > 4,
                     new IterableOf<>("hello", "world", "друг")
                 )
-            ).value(),
+            ).intValue(),
             Matchers.equalTo(2)
         );
     }

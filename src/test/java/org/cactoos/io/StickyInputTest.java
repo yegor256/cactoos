@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.cactoos.Input;
-import org.cactoos.ScalarHasValue;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.func.RepeatedFunc;
@@ -96,8 +95,8 @@ public final class StickyInputTest {
                 new StickyInput(
                     new SlowInput(size)
                 )
-            ),
-            new ScalarHasValue<>(size)
+            ).longValue(),
+            Matchers.equalTo(size)
         );
     }
 

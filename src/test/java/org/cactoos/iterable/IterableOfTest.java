@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.ScalarHasValue;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -47,9 +46,9 @@ public final class IterableOfTest {
                 new IterableOf<>(
                     "a", "b", "c"
                 )
-            ),
+            ).intValue(),
             // @checkstyle MagicNumber (1 line)
-            new ScalarHasValue<>(3)
+            Matchers.equalTo(3)
         );
     }
 
@@ -70,9 +69,9 @@ public final class IterableOfTest {
                 new IterableOf<>(
                     new TextOf("a"), new TextOf("b"), new TextOf("c")
                 )
-            ),
+            ).intValue(),
             // @checkstyle MagicNumber (1 line)
-            new ScalarHasValue<>(3)
+            Matchers.equalTo(3)
         );
     }
 

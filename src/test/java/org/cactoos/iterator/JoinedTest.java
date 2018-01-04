@@ -25,8 +25,8 @@ package org.cactoos.iterator;
 
 import java.util.Collections;
 import java.util.Iterator;
-import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -51,8 +51,8 @@ public final class JoinedTest {
                         )
                     )
                 )
-            ),
-            new ScalarHasValue<>(1)
+            ).intValue(),
+            Matchers.equalTo(1)
         );
     }
 

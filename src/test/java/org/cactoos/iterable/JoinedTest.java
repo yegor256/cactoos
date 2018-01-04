@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import org.cactoos.Func;
-import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -49,8 +48,8 @@ public final class JoinedTest {
                     new IterableOf<>("how", "are", "you"),
                     new IterableOf<>("what's", "up")
                 )
-            ),
-            new ScalarHasValue<>(8)
+            ).intValue(),
+            Matchers.equalTo(8)
         );
     }
 

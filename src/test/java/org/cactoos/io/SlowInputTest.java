@@ -24,9 +24,9 @@
 package org.cactoos.io;
 
 import java.nio.charset.StandardCharsets;
-import org.cactoos.ScalarHasValue;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -51,10 +51,8 @@ public final class SlowInputTest {
                         new TextOf(text)
                     )
                 )
-            ),
-            new ScalarHasValue<>(
-                (long) text.getBytes(StandardCharsets.UTF_8).length
-            )
+            ).intValue(),
+            Matchers.equalTo(text.getBytes(StandardCharsets.UTF_8).length)
         );
     }
 
@@ -65,8 +63,8 @@ public final class SlowInputTest {
             "Can't calculate length if the input is slow",
             new LengthOf(
                 new SlowInput(size)
-            ),
-            new ScalarHasValue<>(size)
+            ).longValue(),
+            Matchers.equalTo(size)
         );
     }
 

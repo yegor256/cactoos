@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -49,8 +48,8 @@ public final class FilteredTest {
                         "hello", "world", "друг"
                     )
                 )
-            ),
-            new ScalarHasValue<>(2)
+            ).intValue(),
+            Matchers.equalTo(2)
         );
     }
 
@@ -60,10 +59,11 @@ public final class FilteredTest {
             "Can't calculate the length of an empty iterable",
             new LengthOf(
                 new Filtered<>(
-                    input -> input.length() > 1, new IterableOf<String>()
+                    input -> input.length() > 1,
+                    new IterableOf<String>()
                 )
-            ),
-            new ScalarHasValue<>(0)
+            ).intValue(),
+            Matchers.equalTo(0)
         );
     }
 

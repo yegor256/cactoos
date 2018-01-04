@@ -34,7 +34,7 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @since 0.26
  */
-public class NumberEnvelope extends Number implements Scalar<Number> {
+public class NumberEnvelope extends Number {
 
     /**
      * Serialization marker.
@@ -111,8 +111,4 @@ public class NumberEnvelope extends Number implements Scalar<Number> {
         return new UncheckedScalar<>(this.dnum).value();
     }
 
-    @Override
-    public final Number value() {
-        return this;
-    }
 }

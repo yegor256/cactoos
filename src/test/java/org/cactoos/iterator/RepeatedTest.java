@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterator;
 
-import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -48,8 +47,8 @@ public final class RepeatedTest {
                 new Repeated<>(
                     size, element
                 )
-            ),
-            new ScalarHasValue<>(size)
+            ).intValue(),
+            Matchers.equalTo(size)
         );
     }
 

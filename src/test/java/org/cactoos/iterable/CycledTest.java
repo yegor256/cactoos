@@ -26,6 +26,7 @@ package org.cactoos.iterable;
 import java.util.Collections;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -64,8 +65,8 @@ public final class CycledTest {
                 new Cycled<>(
                     Collections::emptyIterator
                 )
-            ),
-            new ScalarHasValue<>(0)
+            ).intValue(),
+            Matchers.equalTo(0)
         );
     }
 }
