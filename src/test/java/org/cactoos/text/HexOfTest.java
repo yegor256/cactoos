@@ -21,61 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.FuncApplies;
+import org.cactoos.TextHasString;
+import org.cactoos.io.BytesOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FuncWithFallback}.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link HexOf}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncWithFallbackTest {
+public final class HexOfTest {
 
     @Test
-    public void usesMainFunc() throws Exception {
+    public void empytString() {
         MatcherAssert.assertThat(
-            "Can't use the main function if no exception",
-            new FuncWithFallback<>(
-                input -> "It's success",
-                ex -> "In case of failure..."
+            "Can't represent an empty string as hexadecimal",
+            new HexOf(
+                new BytesOf("")
             ),
-            new FuncApplies<>(1, Matchers.containsString("success"))
+            new TextHasString("")
         );
     }
 
     @Test
-    public void usesFallback() throws Exception {
+    public void notEmpytString() throws IOException {
         MatcherAssert.assertThat(
-            "Can't use the callback in case of exception",
-            new FuncWithFallback<>(
-                input -> {
-                    throw new IOException("Failure");
-                },
-                ex -> "Never mind"
+            "Can't represent a string as hexadecimal",
+            new HexOf(
+                new BytesOf("What's up, друг?")
             ),
-            new FuncApplies<>(1, Matchers.containsString("Never"))
+            new TextHasString("5768617427732075702c20d0b4d180d183d0b33f")
         );
     }
-
-    @Test
-    public void usesFollowUp() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't use the follow-up func",
-            new FuncWithFallback<>(
-                input -> "works fine",
-                ex -> "won't happen",
-                input -> "follow up"
-            ),
-            new FuncApplies<>(1, Matchers.containsString("follow"))
-        );
-    }
-
 }

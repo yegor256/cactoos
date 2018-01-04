@@ -71,7 +71,7 @@ public final class WriterTo extends Writer {
 
     /**
      * Ctor.
-     * @param stream The outpup
+     * @param stream The output
      */
     public WriterTo(final OutputStream stream) {
         this(new OutputTo(stream));
