@@ -76,7 +76,7 @@ new LengthOf(
     "Hello, world!",
     new File("/code/a.txt")
   )
-).value();
+).intValue();
 ```
 
 To read a binary file from classpath:
@@ -170,7 +170,7 @@ To count elements in an iterable:
 ```java
 int total = new LengthOf(
   "how", "are", "you"
-).value();
+).intValue();
 ```
 
 ## Funcs and Procs
