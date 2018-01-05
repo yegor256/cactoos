@@ -26,11 +26,13 @@ package org.cactoos.text;
 import java.io.IOException;
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link NormalizedText}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -43,6 +45,16 @@ public final class NormalizedTextTest {
             "Can't normalize a text",
             new NormalizedText(" \t hello  \t\tworld   \t"),
             new TextHasString("hello world")
+        );
+    }
+
+    @Test
+    public void testCompare() {
+        MatcherAssert.assertThat(
+            new NormalizedText(
+                " \t Cac  \t\ttoos   \t"
+            ).compareTo(new TextOf("Cac toos")),
+            Matchers.equalTo(0)
         );
     }
 

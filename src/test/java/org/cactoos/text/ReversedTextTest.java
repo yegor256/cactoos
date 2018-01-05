@@ -25,6 +25,7 @@ package org.cactoos.text;
 
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -56,6 +57,16 @@ public final class ReversedTextTest {
                 new TextOf("")
             ),
             new TextHasString("")
+        );
+    }
+
+    @Test
+    public void testCompare() {
+        MatcherAssert.assertThat(
+            new ReversedText(
+                new TextOf("Cactoos!")
+            ).compareTo(new TextOf("!sootcaC")),
+            Matchers.equalTo(0)
         );
     }
 }

@@ -25,11 +25,13 @@ package org.cactoos.text;
 
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link LowerText}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -42,6 +44,16 @@ public final class LowerTextTest {
             "Can't lower case a text",
             new LowerText(new TextOf("HelLo!")),
             new TextHasString("hello!")
+        );
+    }
+
+    @Test
+    public void testCompare() {
+        MatcherAssert.assertThat(
+            new LowerText(
+                new TextOf("CactooS!")
+            ).compareTo(new TextOf("cactoos!")),
+            Matchers.equalTo(0)
         );
     }
 

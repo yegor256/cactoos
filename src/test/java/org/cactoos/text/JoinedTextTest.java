@@ -26,11 +26,13 @@ package org.cactoos.text;
 import java.io.IOException;
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link JoinedText}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -56,6 +58,17 @@ public final class JoinedTextTest {
                 new TextOf("bar")
             ),
             new TextHasString("foo bar")
+        );
+    }
+
+    @Test
+    public void testCompare() {
+        MatcherAssert.assertThat(
+            new JoinedText(
+                "",
+                "Cac", "toos"
+            ).compareTo(new TextOf("Cactoos")),
+            Matchers.equalTo(0)
         );
     }
 

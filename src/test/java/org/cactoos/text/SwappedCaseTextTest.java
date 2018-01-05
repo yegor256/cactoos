@@ -25,6 +25,7 @@ package org.cactoos.text;
 
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -56,6 +57,16 @@ public final class SwappedCaseTextTest {
                 new TextOf("")
             ),
             new TextHasString("")
+        );
+    }
+
+    @Test
+    public void testCompare() {
+        MatcherAssert.assertThat(
+            new SwappedCaseText(
+                new TextOf("CacTooS!")
+            ).compareTo(new TextOf("cACtOOs!")),
+            Matchers.equalTo(0)
         );
     }
 

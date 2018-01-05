@@ -31,12 +31,14 @@ import java.util.UnknownFormatConversionException;
 import org.cactoos.TextHasString;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link FormattedText}.
  *
  * @author Andriy Kryvtsun (kontiky@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.1
@@ -106,6 +108,16 @@ public final class FormattedTextTest {
                 "%,d", Locale.GERMAN, 1234567890
             ),
             new TextHasString("1.234.567.890")
+        );
+    }
+
+    @Test
+    public void testCompare() {
+        MatcherAssert.assertThat(
+            new FormattedText(
+                "Integer : %d", 1
+            ).compareTo(new TextOf("Integer : 1")),
+            Matchers.equalTo(0)
         );
     }
 }
