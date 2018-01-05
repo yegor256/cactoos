@@ -1,4 +1,6 @@
- The MIT License (MIT)
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+The MIT License (MIT)
 
  Copyright (c) 2017-2018 Yegor Bugayenko
 
@@ -19,3 +21,12 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
+-->
+<verifications xmlns="http://maven.apache.org/verifications/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/verifications/1.0.0 http://maven.apache.org/xsd/verifications-1.0.0.xsd">
+  <files>
+    <file>
+      <location>LICENSE.txt</location>
+      <contains>2017-2018</contains>
+    </file>
+  </files>
+</verifications>
