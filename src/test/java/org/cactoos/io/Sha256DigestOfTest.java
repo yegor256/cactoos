@@ -30,57 +30,37 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link DigestOf}.
+ * Test case for {@link Sha256DigestOf}.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.28
+ * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class DigestOfTest {
+public final class Sha256DigestOfTest {
 
     @Test
-    // @checkstyle MethodNameCheck (1 line)
-    public void md5() throws IOException {
+    public void checksumOfEmptyString() throws IOException {
         MatcherAssert.assertThat(
-            "Can't calculate the MD5 checksum",
+            "Can't calculate the empty string's SHA-256 checksum",
             new HexOf(
-                new DigestOf(
-                    new InputOf("Hi Guys!"),
-                    "MD5"
+                new Sha256DigestOf(
+                    new InputOf("")
                 )
             ),
             new TextHasString(
-                "371fda3e6a3104dcbc5fabd85a2aea42"
+                // @checkstyle LineLengthCheck (1 lines)
+                "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             )
         );
     }
 
     @Test
-    // @checkstyle MethodNameCheck (1 line)
-    public void sha1() throws IOException {
+    public void checksumOfString() throws IOException {
         MatcherAssert.assertThat(
-            "Can't calculate the SHA-1 checksum",
+            "Can't calculate the string's SHA-256 checksum",
             new HexOf(
-                new DigestOf(
-                    new InputOf("Elegant Objects!"),
-                    "SHA-1"
-                )
-            ),
-            new TextHasString(
-                "17b44115042086bd5f43397552374932614e333d"
-            )
-        );
-    }
-
-    @Test
-    // @checkstyle MethodNameCheck (1 line)
-    public void sha256() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't calculate the SHA-256 checksum",
-            new HexOf(
-                new DigestOf(
+                new Sha256DigestOf(
                     new InputOf("Hello World!")
                 )
             ),
@@ -92,38 +72,21 @@ public final class DigestOfTest {
     }
 
     @Test
-    // @checkstyle MethodNameCheck (1 line)
-    public void sha256File() throws IOException {
+    public void checksumFromFile() throws IOException {
         MatcherAssert.assertThat(
-            "Can't calculate the file SHA-256 checksum",
+            "Can't calculate the file's SHA-256 checksum",
             new HexOf(
-                new DigestOf(
+                new Sha256DigestOf(
                     new InputOf(
                         new ResourceOf(
-                            "org/cactoos/io/DigestOf.class"
+                            "org/cactoos/io/DigestEnvelope.class"
                         ).stream()
                     )
                 )
             ),
             new TextHasString(
                 // @checkstyle LineLengthCheck (1 lines)
-                "6b395f5aacffa56fe67a148098d7bd86e09b406cc595c705c5fb6f437016835d"
-            )
-        );
-    }
-
-    @Test
-    public void empty() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't calculate the SHA-256 checksum of empty string",
-            new HexOf(
-                new DigestOf(
-                    new InputOf("")
-                )
-            ),
-            new TextHasString(
-                // @checkstyle LineLengthCheck (1 lines)
-                "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                "cb91fc07467c7c71f4622aceea357780b3d1eb41222424e46e2a90396ef0b507"
             )
         );
     }

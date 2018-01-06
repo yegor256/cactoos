@@ -31,15 +31,18 @@ import org.cactoos.Bytes;
 import org.cactoos.Input;
 
 /**
- * Checksum calculation of {@link Input}.
+ * Digest Envelope.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.28
+ * @since 0.29
+ * @checkstyle AbstractClassNameCheck (500 lines)
+ * @checkstyle DesignForExtensionCheck (500 lines)
  */
-public final class DigestOf implements Bytes {
+@SuppressWarnings("PMD.AbstractNaming")
+public abstract class DigestEnvelope implements Bytes {
 
     /**
      * The input.
@@ -59,17 +62,9 @@ public final class DigestOf implements Bytes {
     /**
      * Ctor.
      * @param input The input
-     */
-    public DigestOf(final Input input) {
-        this(input, "SHA-256");
-    }
-
-    /**
-     * Ctor.
-     * @param input The input
      * @param algo The algorithm
      */
-    public DigestOf(final Input input, final String algo) {
+    public DigestEnvelope(final Input input, final String algo) {
         // @checkstyle MagicNumber (1 line)
         this(input, 16 << 10, algo);
     }
@@ -80,7 +75,7 @@ public final class DigestOf implements Bytes {
      * @param max Buffer size
      * @param algo The algorithm
      */
-    public DigestOf(final Input input, final int max, final String algo) {
+    public DigestEnvelope(final Input input, final int max, final String algo) {
         this.source = input;
         this.size = max;
         this.algorithm = algo;
