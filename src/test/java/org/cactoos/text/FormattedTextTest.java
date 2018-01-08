@@ -108,4 +108,16 @@ public final class FormattedTextTest {
             new TextHasString("1.234.567.890")
         );
     }
+
+    @Test
+    public void formatsWithText() {
+        MatcherAssert.assertThat(
+            "Can't format a string with text",
+            new FormattedText(
+                "Format with text: %s",
+                new TextOf("Cactoos")
+            ),
+            new TextHasString("Format with text: Cactoos")
+        );
+    }
 }
