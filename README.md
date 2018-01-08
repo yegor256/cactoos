@@ -40,7 +40,7 @@ There are a few design principles behind Cactoos:
   * No `instanceof`, type casting, or reflection ([why?](http://www.yegor256.com/2015/04/02/class-casting-is-anti-pattern.html))
   * No public methods without `@Override`
   * No statements in test methods except `assertThat` ([why?](http://www.yegor256.com/2017/05/17/single-statement-unit-tests.html))
-  * Inheritance implementation **only** for decorating ([why?](http://www.yegor256.com/2017/01/31/decorating-envelopes.html))
+  * Inheritance implementation **only** for *Decorating Envelopes* ([why?](http://www.yegor256.com/2017/01/31/decorating-envelopes.html) and why [don't use inheritance implementation for anything else](http://www.yegor256.com/2016/09/13/inheritance-is-procedural.html))
 
 **How to use**.
 The library has no dependencies. All you need is this
