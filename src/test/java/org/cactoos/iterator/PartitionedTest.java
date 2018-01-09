@@ -24,6 +24,7 @@
 package org.cactoos.iterator;
 
 import java.util.Collections;
+import java.util.NoSuchElementException;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -94,6 +95,13 @@ public class PartitionedTest {
         new Partitioned<>(
             2, new ListOf<>(1, 2).iterator()
         ).next().clear();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public final void testEmptyPartitionedNextThrowsException() {
+        new Partitioned<>(
+            2, Collections.emptyList().iterator()
+        ).next();
     }
 
 }
