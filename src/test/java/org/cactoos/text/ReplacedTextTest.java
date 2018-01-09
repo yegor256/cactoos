@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import java.util.regex.Pattern;
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -72,6 +73,32 @@ public final class ReplacedTextTest {
                 "dog"
             ),
             new TextHasString("one dog, two dogs, three dogs")
+        );
+    }
+
+    @Test
+    public void regexConstantReplace() {
+        MatcherAssert.assertThat(
+            "Cannot perform simple replacement with regex",
+            new ReplacedText(
+                new TextOf("one cow two cows in the yard"),
+                Pattern.compile("cow"),
+                matcher -> "pig"
+            ),
+            new TextHasString("one pig two pigs in the yard")
+        );
+    }
+
+    @Test
+    public void regexDynamicReplace() {
+        MatcherAssert.assertThat(
+            "Cannot perform dynamic string replacement",
+            new ReplacedText(
+                new TextOf("one two THREE four FIVE six"),
+                Pattern.compile("[a-z]+"),
+                matcher -> String.valueOf(matcher.group().length())
+            ),
+            new TextHasString("3 3 THREE 4 FIVE 3")
         );
     }
 }
