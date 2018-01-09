@@ -46,7 +46,7 @@ import java.util.List;
  * @see StickyList
  * @since 0.23
  */
-public final class Shuffled<T> extends ListEnvelope<T> {
+public final class Shuffled<T> extends AbstractListEnvelope<T> {
 
     /**
      * Ctor.

@@ -23,7 +23,7 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.scalar.NumberEnvelope;
+import org.cactoos.scalar.AbstractNumberEnvelope;
 
 /**
  * Length of iterable.
@@ -34,7 +34,7 @@ import org.cactoos.scalar.NumberEnvelope;
  * @version $Id$
  * @since 0.1
  */
-public final class LengthOf extends NumberEnvelope {
+public final class LengthOf extends AbstractNumberEnvelope {
 
     /**
      * Serialization marker.

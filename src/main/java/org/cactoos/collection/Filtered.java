@@ -37,7 +37,7 @@ import org.cactoos.iterable.IterableOf;
  * @param <X> Type of source item
  * @since 1.16
  */
-public final class Filtered<X> extends CollectionEnvelope<X> {
+public final class Filtered<X> extends AbstractCollectionEnvelope<X> {
 
     /**
      * Ctor.

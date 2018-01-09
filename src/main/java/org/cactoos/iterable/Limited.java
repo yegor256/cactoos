@@ -38,7 +38,7 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.6
  */
-public final class Limited<T> extends IterableEnvelope<T> {
+public final class Limited<T> extends AbstractIterableEnvelope<T> {
 
     /**
      * Ctor.

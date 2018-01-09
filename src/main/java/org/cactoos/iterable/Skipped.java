@@ -33,7 +33,7 @@ package org.cactoos.iterable;
  * @param <T> Element type
  * @since 0.8
  */
-public final class Skipped<T> extends IterableEnvelope<T> {
+public final class Skipped<T> extends AbstractIterableEnvelope<T> {
 
     /**
      * Ctor.

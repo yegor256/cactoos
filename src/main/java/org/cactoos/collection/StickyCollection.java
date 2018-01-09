@@ -40,7 +40,7 @@ import org.cactoos.scalar.StickyScalar;
  * @param <E> Type of item
  * @since 0.16
  */
-public final class StickyCollection<E> extends CollectionEnvelope<E> {
+public final class StickyCollection<E> extends AbstractCollectionEnvelope<E> {
 
     /**
      * Ctor.

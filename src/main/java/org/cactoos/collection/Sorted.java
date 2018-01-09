@@ -46,7 +46,7 @@ import org.cactoos.list.ListOf;
  * @param <T> Element type
  * @since 0.19
  */
-public final class Sorted<T> extends CollectionEnvelope<T> {
+public final class Sorted<T> extends AbstractCollectionEnvelope<T> {
 
     /**
      * Ctor.

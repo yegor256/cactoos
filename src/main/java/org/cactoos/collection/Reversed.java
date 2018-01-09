@@ -45,7 +45,7 @@ import org.cactoos.iterable.IterableOf;
  * @param <X> Type of source item
  * @since 1.16
  */
-public final class Reversed<X> extends CollectionEnvelope<X> {
+public final class Reversed<X> extends AbstractCollectionEnvelope<X> {
 
     /**
      * Ctor.

@@ -49,7 +49,7 @@ import org.cactoos.Func;
  * @see Filtered
  * @since 0.1
  */
-public final class Filtered<X> extends IterableEnvelope<X> {
+public final class Filtered<X> extends AbstractIterableEnvelope<X> {
 
     /**
      * Ctor.

@@ -45,7 +45,7 @@ import org.cactoos.scalar.StickyScalar;
  * @param <Y> Type of value
  * @since 0.8
  */
-public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
+public final class StickyMap<X, Y> extends AbstractMapEnvelope<X, Y> {
 
     /**
      * Ctor.

@@ -42,7 +42,7 @@ import org.cactoos.scalar.SolidScalar;
  * @since 0.24
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class SolidMap<X, Y> extends MapEnvelope<X, Y> {
+public final class SolidMap<X, Y> extends AbstractMapEnvelope<X, Y> {
 
     /**
      * Ctor.

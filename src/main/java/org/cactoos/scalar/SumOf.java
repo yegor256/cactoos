@@ -56,7 +56,7 @@ import org.cactoos.Scalar;
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
     }
 )
-public final class SumOf extends NumberEnvelope {
+public final class SumOf extends AbstractNumberEnvelope {
 
     /**
      * Serialization marker.

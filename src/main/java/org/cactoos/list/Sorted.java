@@ -47,7 +47,7 @@ import java.util.List;
  * @see StickyList
  * @since 0.19
  */
-public final class Sorted<T> extends ListEnvelope<T> {
+public final class Sorted<T> extends AbstractListEnvelope<T> {
 
     /**
      * Ctor.

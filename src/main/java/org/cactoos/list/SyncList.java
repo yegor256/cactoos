@@ -50,7 +50,7 @@ import org.cactoos.scalar.SyncScalar;
  * @param <X> Type of item
  * @since 0.24
  */
-public final class SyncList<X> extends ListEnvelope<X> {
+public final class SyncList<X> extends AbstractListEnvelope<X> {
 
     /**
      * Ctor.

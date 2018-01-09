@@ -37,7 +37,7 @@ import org.cactoos.Func;
  * @param <Y> Type of target item
  * @since 0.1
  */
-public final class Mapped<X, Y> extends IterableEnvelope<Y> {
+public final class Mapped<X, Y> extends AbstractIterableEnvelope<Y> {
 
     /**
      * Ctor.

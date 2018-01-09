@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.Scalar;
-import org.cactoos.collection.CollectionEnvelope;
+import org.cactoos.collection.AbstractCollectionEnvelope;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -41,7 +41,8 @@ import org.cactoos.scalar.UncheckedScalar;
  * @since 0.23
  */
 @SuppressWarnings("PMD.TooManyMethods")
-class ListEnvelope<T> extends CollectionEnvelope<T> implements List<T> {
+abstract class AbstractListEnvelope<T> extends
+    AbstractCollectionEnvelope<T> implements List<T> {
 
     /**
      * Encapsulated list.
@@ -52,7 +53,7 @@ class ListEnvelope<T> extends CollectionEnvelope<T> implements List<T> {
      * Ctor.
      * @param src Source
      */
-    ListEnvelope(final Scalar<List<T>> src) {
+    AbstractListEnvelope(final Scalar<List<T>> src) {
         super(src::value);
         this.list = new UncheckedScalar<>(src);
     }

@@ -37,7 +37,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <T> Element type
  * @since 0.1
  */
-public final class Repeated<T> extends IterableEnvelope<T> {
+public final class Repeated<T> extends AbstractIterableEnvelope<T> {
 
     /**
      * Ctor.

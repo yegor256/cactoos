@@ -59,7 +59,7 @@ import org.cactoos.iterable.IterableOf;
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
     }
 )
-public final class AvgOf extends NumberEnvelope {
+public final class AvgOf extends AbstractNumberEnvelope {
 
     /**
      * Serialization marker.

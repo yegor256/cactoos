@@ -58,7 +58,7 @@ import org.cactoos.Scalar;
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
     }
 )
-public final class MaxOf extends NumberEnvelope {
+public final class MaxOf extends AbstractNumberEnvelope {
 
     /**
      * Serialization marker.

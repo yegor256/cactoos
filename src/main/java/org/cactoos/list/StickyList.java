@@ -43,7 +43,7 @@ import org.cactoos.scalar.StickyScalar;
  * @param <X> Type of item
  * @since 0.8
  */
-public final class StickyList<X> extends ListEnvelope<X> {
+public final class StickyList<X> extends AbstractListEnvelope<X> {
 
     /**
      * Ctor.

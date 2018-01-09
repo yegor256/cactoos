@@ -51,7 +51,7 @@ import org.cactoos.iterable.Mapped;
  * @see StickyMap
  * @since 0.4
  */
-public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
+public final class MapOf<X, Y> extends AbstractMapEnvelope<X, Y> {
 
     /**
      * Ctor.

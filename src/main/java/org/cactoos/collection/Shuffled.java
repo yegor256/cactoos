@@ -44,7 +44,7 @@ import java.util.List;
  * @param <T> Element type
  * @since 0.23
  */
-public final class Shuffled<T> extends CollectionEnvelope<T> {
+public final class Shuffled<T> extends AbstractCollectionEnvelope<T> {
 
     /**
      * Ctor.

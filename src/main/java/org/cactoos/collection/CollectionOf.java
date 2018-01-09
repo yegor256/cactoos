@@ -46,7 +46,7 @@ import org.cactoos.iterable.IterableOf;
  * @see StickyCollection
  * @since 0.1
  */
-public final class CollectionOf<T> extends CollectionEnvelope<T> {
+public final class CollectionOf<T> extends AbstractCollectionEnvelope<T> {
 
     /**
      * Ctor.

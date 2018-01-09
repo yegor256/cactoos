@@ -39,7 +39,7 @@ import org.cactoos.scalar.SolidScalar;
  * @see StickyCollection
  * @since 0.24
  */
-public final class SolidCollection<T> extends CollectionEnvelope<T> {
+public final class SolidCollection<T> extends AbstractCollectionEnvelope<T> {
 
     /**
      * Ctor.

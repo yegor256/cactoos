@@ -44,7 +44,7 @@ import org.cactoos.scalar.SyncScalar;
  * @param <Y> Type of value
  * @since 0.24
  */
-public final class SyncMap<X, Y> extends MapEnvelope<X, Y> {
+public final class SyncMap<X, Y> extends AbstractMapEnvelope<X, Y> {
 
     /**
      * Ctor.

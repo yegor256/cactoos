@@ -37,7 +37,7 @@ import java.util.LinkedList;
  * @param <T> Type of item
  * @since 0.1
  */
-public final class Joined<T> extends IterableEnvelope<T> {
+public final class Joined<T> extends AbstractIterableEnvelope<T> {
 
     /**
      * Ctor.
