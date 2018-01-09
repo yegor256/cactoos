@@ -35,7 +35,7 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.20
  */
-public final class Shuffled<T> extends IterableEnvelope<T> {
+public final class Shuffled<T> extends AbstractIterableEnvelope<T> {
 
     /**
      * Ctor.

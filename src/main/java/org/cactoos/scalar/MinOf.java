@@ -56,7 +56,7 @@ import org.cactoos.Scalar;
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
     }
 )
-public final class MinOf extends NumberEnvelope {
+public final class MinOf extends AbstractNumberEnvelope {
 
     /**
      * Serialization marker.

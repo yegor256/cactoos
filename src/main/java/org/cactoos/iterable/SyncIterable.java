@@ -42,7 +42,7 @@ import org.cactoos.scalar.SyncScalar;
  * @param <X> Type of item
  * @since 0.24
  */
-public final class SyncIterable<X> extends IterableEnvelope<X> {
+public final class SyncIterable<X> extends AbstractIterableEnvelope<X> {
 
     /**
      * Ctor.

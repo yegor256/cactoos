@@ -35,7 +35,7 @@ import java.util.Comparator;
  * @param <T> Element type
  * @since 0.7
  */
-public final class Sorted<T> extends IterableEnvelope<T> {
+public final class Sorted<T> extends AbstractIterableEnvelope<T> {
 
     /**
      * Ctor.

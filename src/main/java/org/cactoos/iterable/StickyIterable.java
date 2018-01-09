@@ -37,7 +37,7 @@ import org.cactoos.scalar.StickyScalar;
  * @param <X> Type of item
  * @since 0.1
  */
-public final class StickyIterable<X> extends IterableEnvelope<X> {
+public final class StickyIterable<X> extends AbstractIterableEnvelope<X> {
 
     /**
      * Ctor.

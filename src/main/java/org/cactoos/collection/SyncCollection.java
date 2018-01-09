@@ -48,7 +48,7 @@ import org.cactoos.scalar.SyncScalar;
  * @see StickyCollection
  * @since 0.24
  */
-public final class SyncCollection<T> extends CollectionEnvelope<T> {
+public final class SyncCollection<T> extends AbstractCollectionEnvelope<T> {
 
     /**
      * Ctor.

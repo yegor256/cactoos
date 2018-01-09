@@ -34,7 +34,7 @@ package org.cactoos.iterable;
  * @param <T> Element type
  * @since 0.4
  */
-public final class Endless<T> extends IterableEnvelope<T> {
+public final class Endless<T> extends AbstractIterableEnvelope<T> {
 
     /**
      * Ctor.

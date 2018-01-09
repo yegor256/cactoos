@@ -33,7 +33,7 @@ package org.cactoos.collection;
  * @param <X> Type of source item
  * @since 1.16
  */
-public final class Joined<X> extends CollectionEnvelope<X> {
+public final class Joined<X> extends AbstractCollectionEnvelope<X> {
 
     /**
      * Ctor.

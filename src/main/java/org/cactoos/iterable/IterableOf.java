@@ -39,7 +39,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <X> Type of item
  * @since 0.12
  */
-public final class IterableOf<X> extends IterableEnvelope<X> {
+public final class IterableOf<X> extends AbstractIterableEnvelope<X> {
 
     /**
      * Ctor.

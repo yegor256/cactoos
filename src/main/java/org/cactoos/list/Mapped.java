@@ -38,7 +38,7 @@ import org.cactoos.Func;
  * @param <Y> Type of target item
  * @since 0.14
  */
-public final class Mapped<X, Y> extends ListEnvelope<Y> {
+public final class Mapped<X, Y> extends AbstractListEnvelope<Y> {
 
     /**
      * Ctor.

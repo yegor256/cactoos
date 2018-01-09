@@ -21,114 +21,108 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.map;
 
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Base collection.
+ * Map envelope.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Element type
- * @since 0.23
+ * @param <X> Type of key
+ * @param <Y> Type of value
+ * @see StickyMap
+ * @since 0.24
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public class CollectionEnvelope<X> implements Collection<X> {
+public abstract class AbstractMapEnvelope<X, Y> implements Map<X, Y> {
 
     /**
-     * Shuffled one.
+     * The map.
      */
-    private final UncheckedScalar<Collection<X>> col;
+    private final UncheckedScalar<Map<X, Y>> map;
 
     /**
      * Ctor.
-     * @param slr The scalar
+     * @param scalar The scalar
      */
-    public CollectionEnvelope(final Scalar<Collection<X>> slr) {
-        this.col = new UncheckedScalar<>(slr);
+    public AbstractMapEnvelope(final Scalar<Map<X, Y>> scalar) {
+        this.map = new UncheckedScalar<>(scalar);
     }
 
     @Override
     public final int size() {
-        return this.col.value().size();
+        return this.map.value().size();
     }
 
     @Override
     public final boolean isEmpty() {
-        return this.col.value().isEmpty();
+        return this.map.value().isEmpty();
     }
 
     @Override
-    public final Iterator<X> iterator() {
-        return this.col.value().iterator();
+    public final boolean containsKey(final Object key) {
+        return this.map.value().containsKey(key);
     }
 
     @Override
-    public final boolean contains(final Object object) {
-        return this.col.value().contains(object);
+    public final boolean containsValue(final Object value) {
+        return this.map.value().containsValue(value);
     }
 
     @Override
-    public final Object[] toArray() {
-        return this.col.value().toArray();
+    public final Y get(final Object key) {
+        return this.map.value().get(key);
     }
 
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
-    public final <T> T[] toArray(final T[] array) {
-        return this.col.value().toArray(array);
-    }
-
-    @Override
-    public final boolean add(final X item) {
+    public final Y put(final X key, final Y value) {
         throw new UnsupportedOperationException(
-            "#add(): the collection is ready only"
+            "#put() is not supported, it's a read-only map"
         );
     }
 
     @Override
-    public final boolean remove(final Object object) {
+    public final Y remove(final Object key) {
         throw new UnsupportedOperationException(
-            "#remove(): the collection is ready only"
+            "#remove() is not supported, it's a read-only map"
         );
     }
 
     @Override
-    public final boolean containsAll(final Collection<?> list) {
-        return this.col.value().containsAll(list);
-    }
-
-    @Override
-    public final boolean addAll(final Collection<? extends X> list) {
+    public final void putAll(final Map<? extends X, ? extends Y> list) {
         throw new UnsupportedOperationException(
-            "#addAll(): the collection is ready only"
-        );
-    }
-
-    @Override
-    public final boolean removeAll(final Collection<?> list) {
-        throw new UnsupportedOperationException(
-            "#removeAll(): the collection is ready only"
-        );
-    }
-
-    @Override
-    public final boolean retainAll(final Collection<?> list) {
-        throw new UnsupportedOperationException(
-            "#retainAll(): the collection is ready only"
+            "#putAll() is not supported, it's a read-only map"
         );
     }
 
     @Override
     public final void clear() {
         throw new UnsupportedOperationException(
-            "#clear(): the collection is ready only"
+            "#clear() is not supported, it's a read-only map"
         );
     }
+
+    @Override
+    public final Set<X> keySet() {
+        return this.map.value().keySet();
+    }
+
+    @Override
+    public final Collection<Y> values() {
+        return this.map.value().values();
+    }
+
+    @Override
+    public final Set<Map.Entry<X, Y>> entrySet() {
+        return this.map.value().entrySet();
+    }
+
 }

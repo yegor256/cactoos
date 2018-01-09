@@ -25,7 +25,7 @@ package org.cactoos.io;
 
 import java.io.InputStream;
 import org.cactoos.Input;
-import org.cactoos.scalar.NumberEnvelope;
+import org.cactoos.scalar.AbstractNumberEnvelope;
 
 /**
  * Length of {@link Input}.
@@ -36,7 +36,7 @@ import org.cactoos.scalar.NumberEnvelope;
  * @version $Id$
  * @since 0.1
  */
-public final class LengthOf extends NumberEnvelope {
+public final class LengthOf extends AbstractNumberEnvelope {
 
     /**
      * Serialization marker.

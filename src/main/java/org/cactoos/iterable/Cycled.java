@@ -36,7 +36,7 @@ import java.util.Iterator;
  * @param <T> Type of item
  * @since 0.8
  */
-public final class Cycled<T> extends IterableEnvelope<T> {
+public final class Cycled<T> extends AbstractIterableEnvelope<T> {
 
     /**
      * Ctor.

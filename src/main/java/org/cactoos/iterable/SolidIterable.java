@@ -36,7 +36,7 @@ import org.cactoos.scalar.SolidScalar;
  * @param <X> Type of item
  * @since 0.24
  */
-public final class SolidIterable<X> extends IterableEnvelope<X> {
+public final class SolidIterable<X> extends AbstractIterableEnvelope<X> {
 
     /**
      * Ctor.

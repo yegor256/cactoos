@@ -35,7 +35,8 @@ import org.cactoos.func.UncheckedFunc;
  * @param <T> Range value type
  * @since 1.0
  */
-public class RangeOf<T extends Comparable<T>> extends IterableEnvelope<T> {
+public class RangeOf<T extends Comparable<T>> extends
+    AbstractIterableEnvelope<T> {
 
     /**
      * Ctor.

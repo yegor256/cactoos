@@ -37,7 +37,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <X> Type of item
  * @since 0.24
  */
-public class IterableEnvelope<X> implements Iterable<X> {
+public abstract class AbstractIterableEnvelope<X> implements Iterable<X> {
 
     /**
      * The iterable.
@@ -48,7 +48,7 @@ public class IterableEnvelope<X> implements Iterable<X> {
      * Ctor.
      * @param scalar The source
      */
-    public IterableEnvelope(final Scalar<Iterable<X>> scalar) {
+    public AbstractIterableEnvelope(final Scalar<Iterable<X>> scalar) {
         this.iterable = new UncheckedScalar<>(scalar);
     }
 

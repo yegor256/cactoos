@@ -39,7 +39,7 @@ import org.cactoos.scalar.SolidScalar;
  * @param <X> Type of item
  * @since 0.24
  */
-public final class SolidList<X> extends ListEnvelope<X> {
+public final class SolidList<X> extends AbstractListEnvelope<X> {
 
     /**
      * Ctor.

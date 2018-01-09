@@ -39,7 +39,7 @@ import org.cactoos.iterable.IterableOf;
  * @param <Y> Type of target item
  * @since 0.14
  */
-public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
+public final class Mapped<X, Y> extends AbstractCollectionEnvelope<Y> {
 
     /**
      * Ctor.

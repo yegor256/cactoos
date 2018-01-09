@@ -49,7 +49,7 @@ import org.cactoos.iterable.IterableOf;
  * @see StickyList
  * @since 0.1
  */
-public final class ListOf<T> extends ListEnvelope<T> {
+public final class ListOf<T> extends AbstractListEnvelope<T> {
 
     /**
      * Ctor.

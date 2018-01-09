@@ -38,7 +38,7 @@ import java.util.List;
  * @see Filtered
  * @since 0.9
  */
-public final class Reversed<X> extends IterableEnvelope<X> {
+public final class Reversed<X> extends AbstractIterableEnvelope<X> {
 
     /**
      * Ctor.

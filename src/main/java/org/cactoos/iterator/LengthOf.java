@@ -24,7 +24,7 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import org.cactoos.scalar.NumberEnvelope;
+import org.cactoos.scalar.AbstractNumberEnvelope;
 
 /**
  * Length of iterator.
@@ -35,7 +35,7 @@ import org.cactoos.scalar.NumberEnvelope;
  * @version $Id$
  * @since 0.1
  */
-public final class LengthOf extends NumberEnvelope {
+public final class LengthOf extends AbstractNumberEnvelope {
 
     /**
      * Serialization marker.

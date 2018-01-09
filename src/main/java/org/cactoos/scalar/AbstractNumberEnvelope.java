@@ -34,7 +34,9 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @since 0.26
  */
-public class NumberEnvelope extends Number implements Scalar<Double> {
+public abstract class AbstractNumberEnvelope
+    extends Number
+    implements Scalar<Double> {
 
     /**
      * Serialization marker.
@@ -65,7 +67,7 @@ public class NumberEnvelope extends Number implements Scalar<Double> {
      * Ctor.
      * @param dnm Double scalar
      */
-    public NumberEnvelope(final Scalar<Double> dnm) {
+    public AbstractNumberEnvelope(final Scalar<Double> dnm) {
         this(
             () -> dnm.value().longValue(),
             () -> dnm.value().intValue(),
@@ -82,8 +84,12 @@ public class NumberEnvelope extends Number implements Scalar<Double> {
      * @param dnm Long scalar
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public NumberEnvelope(final Scalar<Long> lnm, final Scalar<Integer> inm,
-        final Scalar<Float> fnm, final Scalar<Double> dnm) {
+    public AbstractNumberEnvelope(
+        final Scalar<Long> lnm,
+        final Scalar<Integer> inm,
+        final Scalar<Float> fnm,
+        final Scalar<Double> dnm
+    ) {
         super();
         this.lnum = lnm;
         this.inum = inm;

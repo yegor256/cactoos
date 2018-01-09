@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  * @param <X> Type of source item
  * @since 0.20
  */
-public final class Joined<X> extends ListEnvelope<X> {
+public final class Joined<X> extends AbstractListEnvelope<X> {
 
     /**
      * Ctor.
