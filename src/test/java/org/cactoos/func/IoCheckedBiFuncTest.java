@@ -38,7 +38,7 @@ import org.junit.Test;
 public final class IoCheckedBiFuncTest {
 
     @Test
-    public void rethrowsCheckedToUncheckedException() {
+    public void rethrowsIoException() {
         final IOException exception = new IOException("intended");
         try {
             new IoCheckedBiFunc<>(
@@ -54,7 +54,7 @@ public final class IoCheckedBiFuncTest {
     }
 
     @Test(expected = IOException.class)
-    public void throwsException() throws Exception {
+    public void rethrowsCheckedToIoException() throws Exception {
         new IoCheckedBiFunc<>(
             (fst, scd) -> {
                 throw new Exception("intended to fail");

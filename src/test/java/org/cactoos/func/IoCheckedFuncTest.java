@@ -40,7 +40,7 @@ import org.junit.Test;
 public final class IoCheckedFuncTest {
 
     @Test
-    public void rethrowsCheckedToUncheckedException() {
+    public void rethrowsIoException() {
         final IOException exception = new IOException("intended");
         try {
             new IoCheckedFunc<>(
@@ -53,6 +53,24 @@ public final class IoCheckedFuncTest {
                 ex, Matchers.is(exception)
             );
         }
+    }
+
+    @Test(expected = IOException.class)
+    public void rethrowsCheckedToIoException() throws Exception {
+        new IoCheckedFunc<>(
+            i -> {
+                throw new Exception("intended to fail");
+            }
+        ).apply(1);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() throws IOException {
+        new IoCheckedFunc<>(
+            i -> {
+                throw new IllegalStateException("intended to fail here");
+            }
+        ).apply(1);
     }
 
 }

@@ -46,4 +46,13 @@ public final class UncheckedProcTest {
         ).exec(1);
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() {
+        new UncheckedProc<>(
+            i -> {
+                throw new IllegalStateException("intended to fail");
+            }
+        ).exec(1);
+    }
+
 }

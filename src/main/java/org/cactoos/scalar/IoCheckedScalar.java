@@ -25,7 +25,6 @@ package org.cactoos.scalar;
 
 import java.io.IOException;
 import org.cactoos.Scalar;
-import org.cactoos.func.IoCheckedFunc;
 
 /**
  * Scalar that doesn't throw checked {@link Exception}, but throws
@@ -59,10 +58,26 @@ public final class IoCheckedScalar<T> implements Scalar<T> {
     }
 
     @Override
+    @SuppressWarnings
+        (
+            {
+                "PMD.AvoidCatchingGenericException",
+                "PMD.AvoidRethrowingException"
+            }
+        )
     public T value() throws IOException {
-        return new IoCheckedFunc<Scalar<T>, T>(
-            Scalar::value
-        ).apply(this.origin);
+        try {
+            return this.origin.value();
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final IOException | RuntimeException ex) {
+            throw ex;
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IOException(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IOException(ex);
+        }
     }
 
 }

@@ -23,9 +23,8 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import org.cactoos.BiFunc;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * BiFunc that doesn't throw checked {@link Exception}.
@@ -56,10 +55,8 @@ public final class UncheckedBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     @Override
     public Z apply(final X first, final Y second) {
-        try {
-            return new IoCheckedBiFunc<>(this.func).apply(first, second);
-        } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
-        }
+        return new UncheckedScalar<>(
+            () -> this.func.apply(first, second)
+        ).value();
     }
 }

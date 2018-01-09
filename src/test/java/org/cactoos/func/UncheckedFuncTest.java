@@ -47,4 +47,13 @@ public final class UncheckedFuncTest {
         ).apply(1);
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() {
+        new UncheckedFunc<>(
+            i -> {
+                throw new IllegalStateException("intended to fail");
+            }
+        ).apply(1);
+    }
+
 }

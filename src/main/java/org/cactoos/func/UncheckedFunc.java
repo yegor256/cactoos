@@ -23,8 +23,8 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.BiFunc;
 import org.cactoos.Func;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Func that doesn't throw checked {@link Exception}.
@@ -54,9 +54,9 @@ public final class UncheckedFunc<X, Y> implements Func<X, Y> {
 
     @Override
     public Y apply(final X input) {
-        return new UncheckedBiFunc<>(
-            (BiFunc<X, Boolean, Y>) (first, second) -> this.func.apply(first)
-        ).apply(input, true);
+        return new UncheckedScalar<>(
+            () -> this.func.apply(input)
+        ).value();
     }
 
 }

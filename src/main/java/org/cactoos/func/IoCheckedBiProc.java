@@ -24,7 +24,6 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 
 /**
@@ -57,10 +56,7 @@ public final class IoCheckedBiProc<X, Y> implements BiProc<X, Y> {
     @Override
     public void exec(final X first, final Y second) throws IOException {
         new IoCheckedBiFunc<>(
-            (BiFunc<X, Y, Boolean>) (fst, snd) -> {
-                this.proc.exec(fst, snd);
-                return true;
-            }
+            new BiFuncOf<>(this.proc, null)
         ).apply(first, second);
     }
 
