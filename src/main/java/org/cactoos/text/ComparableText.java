@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-
 import org.cactoos.Text;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -43,7 +42,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * <p>There is no thread-safety guarantee.
  *
  * @author Sergey Sharov (zefick@mail.ru)
- * @version $Id: 2cde8d3d5a01b77a1f5f10f0bf925b9f172ab57e $
+ * @version $Id$
  * @since 0.27
  */
 public final class ComparableText implements Text, Comparable<Text> {
