@@ -209,4 +209,55 @@ public final class AvgOfTest {
                 Matchers.equalTo(Float.MAX_VALUE)
         );
     }
+
+    @Test
+    public void withMinValueCollections() {
+        MatcherAssert.assertThat(
+            new AvgOf(
+                new ListOf<>(Double.MIN_VALUE, Double.MIN_VALUE)
+                    .toArray(new Double[2])
+                        ).doubleValue(),
+                Matchers.equalTo(Double.MIN_VALUE)
+        );
+        MatcherAssert.assertThat(
+            new AvgOf(
+                new ListOf<>(Integer.MIN_VALUE, Integer.MIN_VALUE)
+                    .toArray(new Integer[2])
+                        ).intValue(),
+                Matchers.equalTo(Integer.MIN_VALUE)
+        );
+        MatcherAssert.assertThat(
+            new AvgOf(
+                new ListOf<>(Long.MIN_VALUE, Long.MIN_VALUE)
+                    .toArray(new Long[2])
+                        ).longValue(),
+                Matchers.equalTo(Long.MIN_VALUE)
+        );
+        MatcherAssert.assertThat(
+            new AvgOf(
+                new ListOf<>(Float.MIN_VALUE, Float.MIN_VALUE)
+                    .toArray(new Float[2])
+                        ).floatValue(),
+                Matchers.equalTo(Float.MIN_VALUE)
+        );
+    }
+
+    @Test
+    public void withEvenOddValues() {
+        final Float[] array = new ListOf<>(12345.0f, -12345.0f)
+            .toArray(new Float[2]);
+        final int expected = 0;
+        MatcherAssert.assertThat(
+            new AvgOf(array).intValue(), Matchers.equalTo(expected)
+        );
+        MatcherAssert.assertThat(
+            new AvgOf(array).longValue(), Matchers.equalTo((long) expected)
+        );
+        MatcherAssert.assertThat(
+            new AvgOf(array).doubleValue(), Matchers.equalTo((double) expected)
+        );
+        MatcherAssert.assertThat(
+            new AvgOf(array).floatValue(), Matchers.equalTo((float) expected)
+        );
+    }
 }
