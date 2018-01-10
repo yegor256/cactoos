@@ -23,7 +23,10 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
+
 import org.cactoos.Text;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Text implementing Comparable.<br>
@@ -40,39 +43,33 @@ import org.cactoos.Text;
  * <p>There is no thread-safety guarantee.
  *
  * @author Sergey Sharov (zefick@mail.ru)
- * @version $Id$
+ * @version $Id: 2cde8d3d5a01b77a1f5f10f0bf925b9f172ab57e $
  * @since 0.27
  */
-public final class ComparableText implements Text, Comparable<ComparableText> {
+public final class ComparableText implements Text, Comparable<Text> {
 
     /**
      * The origin.
      */
-    private final UncheckedText text;
+    private final Text text;
 
     /**
      * Ctor.
      * @param text The text
      */
     public ComparableText(final Text text) {
-        this(new UncheckedText(text));
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public ComparableText(final UncheckedText text) {
         this.text = text;
     }
 
     @Override
-    public int compareTo(final ComparableText other) {
-        return this.text.asString().compareTo(other.asString());
+    public int compareTo(final Text other) {
+        return new UncheckedScalar<>(
+            () -> this.text.asString().compareTo(other.asString())
+        ).value();
     }
 
     @Override
-    public String asString() {
+    public String asString() throws IOException {
         return this.text.asString();
     }
 
