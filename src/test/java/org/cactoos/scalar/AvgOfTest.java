@@ -178,4 +178,36 @@ public final class AvgOfTest {
         );
     }
 
+    @Test
+    public void withDoubleMAX_VALUE() {       
+        ListOf<Double> listOf = new ListOf<>(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
+        
+        MatcherAssert.assertThat(
+            new AvgOf(
+                listOf.toArray(new Double[listOf.size()])
+                        ).doubleValue(), 
+                Matchers.equalTo(Double.MAX_VALUE));
+    }
+    
+    @Test
+    public void withDoubleMIN_VALUE() {       
+        ListOf<Double> listOf = new ListOf<>(Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE);
+        
+        MatcherAssert.assertThat(
+            new AvgOf(
+                    listOf.toArray(new Double[listOf.size()])
+                        ).doubleValue(), 
+                Matchers.equalTo(Double.MIN_VALUE));
+    }
+    
+    @Test
+    public void withDoublePOSITIVE_INFINITY() {       
+        ListOf<Double> listOf = new ListOf<>(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+        
+        MatcherAssert.assertThat(
+            new AvgOf(
+                    listOf.toArray(new Double[listOf.size()])
+                        ).doubleValue(), 
+                Matchers.equalTo(Double.NaN));
+    }
 }

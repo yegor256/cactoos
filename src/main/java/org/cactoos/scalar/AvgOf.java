@@ -210,15 +210,15 @@ public final class AvgOf extends NumberEnvelope {
             return sum / total;
         }, () -> {
             double sum = 0.0d;
-            double total = 0.0d;
+            double total = 1.0d;
             for (final double val : src) {
-                sum += val;
+                sum += (val - sum) / total;
                 total += 1.0d;
             }
             if (total == 0.0d) {
                 total = 1.0d;
             }
-            return sum / total;
+            return sum;
         });
     }
 
