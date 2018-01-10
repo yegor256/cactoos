@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import org.cactoos.Scalar;
+import org.cactoos.scalar.NumberEnvelope;
 
 /**
  * Length of iterator.
@@ -35,29 +35,26 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @since 0.1
  */
-public final class LengthOf implements Scalar<Integer> {
+public final class LengthOf extends NumberEnvelope {
 
     /**
-     * The iterator.
+     * Serialization marker.
      */
-    private final Iterator<?> origin;
+    private static final long serialVersionUID = -4873269624693202730L;
 
     /**
      * Ctor.
      * @param iterator The iterator
      */
     public LengthOf(final Iterator<?> iterator) {
-        this.origin = iterator;
-    }
-
-    @Override
-    public Integer value() {
-        int size = 0;
-        while (this.origin.hasNext()) {
-            this.origin.next();
-            ++size;
-        }
-        return size;
+        super(() -> {
+            int size = 0;
+            while (iterator.hasNext()) {
+                iterator.next();
+                ++size;
+            }
+            return (double) size;
+        });
     }
 
 }

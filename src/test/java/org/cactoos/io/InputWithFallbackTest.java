@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.File;
+import java.net.URI;
 import org.cactoos.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -53,6 +54,24 @@ public final class InputWithFallbackTest {
                 )
             ),
             new TextHasString(Matchers.endsWith("world!"))
+        );
+    }
+
+    @Test
+    public void readsAlternativeInputUri() {
+        MatcherAssert.assertThat(
+            "Can't read alternative source from URI",
+            new TextOf(
+                new InputWithFallback(
+                    new StickyInput(
+                        new InputOf(
+                            URI.create("http://www.cactoos.org/path-is-absent")
+                        )
+                    ),
+                    new InputOf("it works!")
+                )
+            ),
+            new TextHasString(Matchers.endsWith("works!"))
         );
     }
 

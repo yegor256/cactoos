@@ -2,7 +2,7 @@
 <!--
 The MIT License (MIT)
 
- Copyright (c) 2017 Yegor Bugayenko
+ Copyright (c) 2017-2018 Yegor Bugayenko
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -103,6 +103,23 @@ The MIT License (MIT)
             <source>1.8</source>
             <target>1.8</target>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-verifier-plugin</artifactId>
+          <version>1.1</version>
+          <executions>
+            <execution>
+              <id>main</id>
+              <phase>package</phase>
+              <goals>
+                <goal>verify</goal>
+              </goals>
+              <configuration>
+                <verificationFile>src/verifier/verifications.xml</verificationFile>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>

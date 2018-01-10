@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -106,6 +106,18 @@ public final class FormattedTextTest {
                 "%,d", Locale.GERMAN, 1234567890
             ),
             new TextHasString("1.234.567.890")
+        );
+    }
+
+    @Test
+    public void formatsWithText() {
+        MatcherAssert.assertThat(
+            "Can't format a string with text",
+            new FormattedText(
+                "Format with text: %s",
+                new TextOf("Cactoos")
+            ),
+            new TextHasString("Format with text: Cactoos")
         );
     }
 }

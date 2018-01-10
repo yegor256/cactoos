@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ package org.cactoos.iterable;
 import java.util.Collections;
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -64,8 +65,8 @@ public final class CycledTest {
                 new Cycled<>(
                     Collections::emptyIterator
                 )
-            ),
-            new ScalarHasValue<>(0)
+            ).intValue(),
+            Matchers.equalTo(0)
         );
     }
 }

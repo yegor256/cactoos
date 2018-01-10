@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,11 +25,11 @@ package org.cactoos.time;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -43,18 +43,15 @@ import org.junit.Test;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class ZonedDateTimeOfTest {
 
-    // @todo #504:30min This test fails for some reason and I can't
-    //  understand what's wrong. Seems to be some issue with the Zone
-    //  we are not detecting in the text.
     @Test
-    @Ignore
     public final void testParsingIsoFormattedStringToZonedDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a ZonedDateTime with default/ISO format.",
             new ZonedDateTimeOf("2017-12-13T14:15:16.000000017+01:00").value(),
             Matchers.equalTo(
                 ZonedDateTime.of(
-                    2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
+                    2017, 12, 13, 14, 15, 16, 17,
+                    ZoneId.ofOffset("", ZoneOffset.ofHours(1))
                 )
             )
         );
