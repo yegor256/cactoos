@@ -83,16 +83,16 @@ public final class AvgOf extends NumberEnvelope {
             }
             return sum / total;
         }, () -> {
-            int sum = 0;
-            int total = 0;
-            for (final int val : src) {
-                sum += val;
+            double sum = 0;
+            double total = 1;
+            for (final double val : src) {
+                sum += (val - sum) / total;
                 ++total;
             }
             if (total == 0) {
                 total = 1;
             }
-            return sum / total;
+            return (int) sum;
         }, () -> {
             float sum = 0.0f;
             float total = 0.0f;
@@ -124,16 +124,16 @@ public final class AvgOf extends NumberEnvelope {
      */
     public AvgOf(final Long... src) {
         super(() -> {
-            long sum = 0L;
-            long total = 0L;
-            for (final long val : src) {
-                sum += val;
+            double sum = 0d;
+            double total = 1d;
+            for (final double val : src) {
+                sum += (val - sum) / total;
                 ++total;
             }
             if (total == 0L) {
                 total = 1L;
             }
-            return sum / total;
+            return (long) sum;
         }, () -> {
             int sum = 0;
             int total = 0;
@@ -250,16 +250,16 @@ public final class AvgOf extends NumberEnvelope {
             }
             return sum / total;
         }, () -> {
-            float sum = 0.0f;
-            float total = 0.0f;
-            for (final float val : src) {
-                sum += val;
+            double sum = 0.0d;
+            double total = 1.0d;
+            for (final double val : src) {
+                sum += (val - sum) / total;
                 total += 1.0f;
             }
             if (total == 0.0f) {
                 total = 1.0f;
             }
-            return sum / total;
+            return (float) sum;
         }, () -> {
             double sum = 0.0d;
             double total = 0.0d;
@@ -343,5 +343,4 @@ public final class AvgOf extends NumberEnvelope {
             return sum / total;
         });
     }
-
 }

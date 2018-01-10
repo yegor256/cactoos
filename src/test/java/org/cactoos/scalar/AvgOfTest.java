@@ -179,7 +179,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withDoubleMaxValue() {
+    public void withMaxValueCollections() {
         MatcherAssert.assertThat(
             new AvgOf(
                 new ListOf<>(Double.MAX_VALUE, Double.MAX_VALUE)
@@ -187,27 +187,26 @@ public final class AvgOfTest {
                         ).doubleValue(),
                 Matchers.equalTo(Double.MAX_VALUE)
         );
-    }
-
-    @Test
-    public void withDoubleMinValue() {
         MatcherAssert.assertThat(
             new AvgOf(
-                new ListOf<>(Double.MIN_VALUE, Double.MIN_VALUE)
-                    .toArray(new Double[2])
-                        ).doubleValue(),
-                Matchers.equalTo(Double.MIN_VALUE)
+                new ListOf<>(Integer.MAX_VALUE, Integer.MAX_VALUE)
+                    .toArray(new Integer[2])
+                        ).intValue(),
+                Matchers.equalTo(Integer.MAX_VALUE)
         );
-    }
-
-    @Test
-    public void withDoublePositiveInfinity() {
         MatcherAssert.assertThat(
             new AvgOf(
-                new ListOf<>(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
-                    .toArray(new Double[2])
-                        ).doubleValue(),
-                Matchers.equalTo(Double.NaN)
+                new ListOf<>(Long.MAX_VALUE, Long.MAX_VALUE)
+                    .toArray(new Long[2])
+                        ).longValue(),
+                Matchers.equalTo(Long.MAX_VALUE)
+        );
+        MatcherAssert.assertThat(
+            new AvgOf(
+                new ListOf<>(Float.MAX_VALUE, Float.MAX_VALUE)
+                    .toArray(new Float[2])
+                        ).floatValue(),
+                Matchers.equalTo(Float.MAX_VALUE)
         );
     }
 }
