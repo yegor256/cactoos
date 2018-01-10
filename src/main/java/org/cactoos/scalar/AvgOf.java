@@ -89,9 +89,6 @@ public final class AvgOf extends NumberEnvelope {
                 sum += (val - sum) / total;
                 ++total;
             }
-            if (total == 0) {
-                total = 1;
-            }
             return (int) sum;
         }, () -> {
             float sum = 0.0f;
@@ -129,9 +126,6 @@ public final class AvgOf extends NumberEnvelope {
             for (final double val : src) {
                 sum += (val - sum) / total;
                 ++total;
-            }
-            if (total == 0L) {
-                total = 1L;
             }
             return (long) sum;
         }, () -> {
@@ -215,9 +209,6 @@ public final class AvgOf extends NumberEnvelope {
                 sum += (val - sum) / total;
                 total += 1.0d;
             }
-            if (total == 0.0d) {
-                total = 1.0d;
-            }
             return sum;
         });
     }
@@ -255,9 +246,6 @@ public final class AvgOf extends NumberEnvelope {
             for (final double val : src) {
                 sum += (val - sum) / total;
                 total += 1.0f;
-            }
-            if (total == 0.0f) {
-                total = 1.0f;
             }
             return (float) sum;
         }, () -> {
