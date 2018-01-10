@@ -179,35 +179,35 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withDoubleMAX_VALUE() {       
-        ListOf<Double> listOf = new ListOf<>(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
-        
+    public void withDoubleMaxValue() {
         MatcherAssert.assertThat(
             new AvgOf(
-                listOf.toArray(new Double[listOf.size()])
-                        ).doubleValue(), 
-                Matchers.equalTo(Double.MAX_VALUE));
+                new ListOf<>(Double.MAX_VALUE, Double.MAX_VALUE)
+                    .toArray(new Double[2])
+                        ).doubleValue(),
+                Matchers.equalTo(Double.MAX_VALUE)
+        );
     }
-    
+
     @Test
-    public void withDoubleMIN_VALUE() {       
-        ListOf<Double> listOf = new ListOf<>(Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE);
-        
+    public void withDoubleMinValue() {
         MatcherAssert.assertThat(
             new AvgOf(
-                    listOf.toArray(new Double[listOf.size()])
-                        ).doubleValue(), 
-                Matchers.equalTo(Double.MIN_VALUE));
+                new ListOf<>(Double.MIN_VALUE, Double.MIN_VALUE)
+                    .toArray(new Double[2])
+                        ).doubleValue(),
+                Matchers.equalTo(Double.MIN_VALUE)
+        );
     }
-    
+
     @Test
-    public void withDoublePOSITIVE_INFINITY() {       
-        ListOf<Double> listOf = new ListOf<>(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
-        
+    public void withDoublePositiveInfinity() {
         MatcherAssert.assertThat(
             new AvgOf(
-                    listOf.toArray(new Double[listOf.size()])
-                        ).doubleValue(), 
-                Matchers.equalTo(Double.NaN));
+                new ListOf<>(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
+                    .toArray(new Double[2])
+                        ).doubleValue(),
+                Matchers.equalTo(Double.NaN)
+        );
     }
 }
