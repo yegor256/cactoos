@@ -55,6 +55,8 @@ The library has no dependencies. All you need is this
 
 Java version required: 1.8+.
 
+StackOverflow tag is [cactoos](https://stackoverflow.com/questions/tagged/cactoos).
+
 ## Input/Output
 
 More about it here:
