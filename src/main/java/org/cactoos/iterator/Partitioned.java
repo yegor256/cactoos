@@ -24,12 +24,10 @@
 package org.cactoos.iterator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import org.cactoos.list.StickyList;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterator implementation for {@link Iterator} partitioning.
@@ -42,10 +40,13 @@ import org.cactoos.scalar.UncheckedScalar;
 public class Partitioned<T> implements Iterator<List<T>> {
 
     /**
-     * Iterator of partitions.
+     * Iterator to decorate.
      */
-    private final UncheckedScalar<Iterator<List<T>>> partitions;
-
+    private final Iterator<T> decorated;
+    /**
+     * Size of the partitions.
+     */
+    private final int partition;
     /**
      * Ctor.
      *
@@ -53,32 +54,13 @@ public class Partitioned<T> implements Iterator<List<T>> {
      * @param src Source iterator.
      */
     public Partitioned(final int partition, final Iterator<T> src) {
-        this.partitions = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    if (partition < 1) {
-                        throw new IllegalArgumentException(
-                            "Partition size must be > 0."
-                        );
-                    }
-                    final List<T> base = new StickyList<>(src);
-                    final List<List<T>> result = new ArrayList<>(0);
-                    int start = 0;
-                    while (start < base.size()) {
-                        final int end =
-                            start + Math.min(base.size() - start, partition);
-                        result.add(base.subList(start, end));
-                        start = end;
-                    }
-                    return result.iterator();
-                }
-            )
-        );
+        this.partition = partition;
+        this.decorated = src;
     }
 
     @Override
     public final boolean hasNext() {
-        return this.partitions.value().hasNext();
+        return this.decorated.hasNext();
     }
 
     @Override
@@ -86,6 +68,14 @@ public class Partitioned<T> implements Iterator<List<T>> {
         if (!this.hasNext()) {
             throw new NoSuchElementException("No partition left.");
         }
-        return this.partitions.value().next();
+        if (this.partition < 1) {
+            throw new IllegalArgumentException("Partition size < 1");
+        }
+        final List<T> result = new ArrayList<>(0);
+        for (int count = 0; count < this.partition && this.hasNext(); ++count) {
+            result.add(this.decorated.next());
+        }
+        return Collections.unmodifiableList(result);
     }
+
 }

@@ -87,7 +87,7 @@ public class PartitionedTest {
 
     @Test(expected = IllegalArgumentException.class)
     public final void testPartitionedWithPartitionSizeSmallerOne() {
-        new Partitioned<>(0, Collections.emptyIterator()).hasNext();
+        new Partitioned<>(0, new ListOf<>(1).iterator()).next();
     }
 
     @Test(expected = UnsupportedOperationException.class)
