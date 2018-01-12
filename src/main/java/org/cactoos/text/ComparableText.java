@@ -25,51 +25,51 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import org.cactoos.Text;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Text that is thread-safe.
+ * Text implementing Comparable.<br>
+ * Below the example how you can sort words in a string:
+ * <pre>
+ * Iterable&lt;Text> sorted = new Sorted<>(
+ *   new Mapped<>(
+ *     ComparableText::new,
+ *     new SplitText("The quick brown fox jumps over the lazy dog", " ")
+ *   )
+ * )
+ * </pre>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Sergey Sharov (zefick@mail.ru)
  * @version $Id$
- * @since 0.18
+ * @since 0.27
  */
-public final class SyncText implements Text {
+public final class ComparableText implements Text, Comparable<Text> {
 
     /**
-     * The text.
+     * The origin.
      */
-    private final Text origin;
-
-    /**
-     * The lock.
-     */
-    private final Object lock;
+    private final Text text;
 
     /**
      * Ctor.
      * @param text The text
      */
-    public SyncText(final Text text) {
-        this(text, text);
+    public ComparableText(final Text text) {
+        this.text = text;
     }
 
-    /**
-     * Ctor.
-     * @param text The text
-     * @param lck The lock
-     */
-    public SyncText(final Text text, final Object lck) {
-        this.origin = text;
-        this.lock = lck;
+    @Override
+    public int compareTo(final Text other) {
+        return new UncheckedScalar<>(
+            () -> this.text.asString().compareTo(other.asString())
+        ).value();
     }
 
     @Override
     public String asString() throws IOException {
-        synchronized (this.lock) {
-            return this.origin.asString();
-        }
+        return this.text.asString();
     }
 
 }

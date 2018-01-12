@@ -55,8 +55,4 @@ public final class TrimmedText implements Text {
         return this.origin.asString().trim();
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
 }

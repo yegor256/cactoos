@@ -306,11 +306,6 @@ public final class TextOf implements Text {
     }
 
     @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
-
-    @Override
     public String toString() {
         return new UncheckedText(this).asString();
     }

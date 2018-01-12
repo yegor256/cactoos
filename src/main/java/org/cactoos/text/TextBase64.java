@@ -70,8 +70,4 @@ public final class TextBase64 implements Text {
         ).asString();
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
 }
