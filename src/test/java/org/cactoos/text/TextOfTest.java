@@ -23,7 +23,9 @@
  */
 package org.cactoos.text;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.TextHasString;
@@ -234,6 +236,34 @@ public final class TextOfTest {
                     )
                 )
             )
+        );
+    }
+
+    @Test
+    public void readsFromInputStream() throws Exception {
+        final byte[] bytes = new byte[] {(byte) 0xCA, (byte) 0xFE};
+        final ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
+        MatcherAssert.assertThat(
+            "Can't read inputStream",
+            new TextOf(
+                stream
+            ).asString(),
+                Matchers.equalTo(new String(bytes, StandardCharsets.UTF_8))
+        );
+    }
+
+    @Test
+    public void readsMultilineInputStream() throws Exception {
+        final String before = "line1-\nline2";
+        final InputStream stream = new ByteArrayInputStream(
+            before.getBytes(StandardCharsets.UTF_8.name())
+        );
+        MatcherAssert.assertThat(
+            "Can't read multiline inputStream",
+            new TextOf(
+                stream
+           ).asString(),
+               Matchers.equalTo("line1-line2")
         );
     }
 }
