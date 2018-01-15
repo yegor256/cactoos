@@ -241,14 +241,18 @@ public final class TextOfTest {
 
     @Test
     public void readsFromInputStream() throws Exception {
-        final byte[] bytes = new byte[] {(byte) 0xCA, (byte) 0xFE};
-        final ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
+        final String before = "line1";
+        final InputStream stream = new ByteArrayInputStream(
+            before.getBytes(StandardCharsets.UTF_8.name())
+        );
         MatcherAssert.assertThat(
             "Can't read inputStream",
             new TextOf(
                 stream
             ).asString(),
-                Matchers.equalTo(new String(bytes, StandardCharsets.UTF_8))
+            Matchers.equalTo(
+                new String(before.getBytes(), StandardCharsets.UTF_8)
+            )
         );
     }
 
