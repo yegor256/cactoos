@@ -241,48 +241,69 @@ public final class TextOfTest {
 
     @Test
     public void readsFromInputStream() throws Exception {
-        final String before = "line1";
+        final String content = "line1";
         final InputStream stream = new ByteArrayInputStream(
-            before.getBytes(StandardCharsets.UTF_8.name())
+            content.getBytes(StandardCharsets.UTF_8.name())
         );
         MatcherAssert.assertThat(
             "Can't read inputStream",
-            new TextOf(
-                stream
-            ).asString(),
+            new TextOf(stream).asString(),
             Matchers.equalTo(
-                new String(before.getBytes(), StandardCharsets.UTF_8)
+                new String(content.getBytes(), StandardCharsets.UTF_8)
             )
         );
     }
 
     @Test
     public void readsMultilineInputStream() throws Exception {
-        final String before = "line1-\nline2";
+        final String content = "line1-\nline2";
         final InputStream stream = new ByteArrayInputStream(
-            before.getBytes(StandardCharsets.UTF_8.name())
+            content.getBytes(StandardCharsets.UTF_8.name())
         );
         MatcherAssert.assertThat(
             "Can't read multiline inputStream",
-            new TextOf(
-                stream
-           ).asString(),
-               Matchers.equalTo(before)
+            new TextOf(stream).asString(),
+            Matchers.equalTo(content)
         );
     }
 
     @Test
     public void readsMultilineInputStreamWithCarriageReturn() throws Exception {
-        final String before = "line1-\rline2";
+        final String content = "line1-\rline2";
         final InputStream stream = new ByteArrayInputStream(
-            before.getBytes(StandardCharsets.UTF_8.name())
+            content.getBytes(StandardCharsets.UTF_8.name())
         );
         MatcherAssert.assertThat(
             "Can't read multiline inputStream with carriage return",
-            new TextOf(
-                stream
-            ).asString(),
-            Matchers.equalTo(before)
+            new TextOf(stream).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsClosedInputStream() throws Exception {
+        final String content = "content";
+        final InputStream stream = new ByteArrayInputStream(
+            content.getBytes(StandardCharsets.UTF_8.name())
+        );
+        stream.close();
+        MatcherAssert.assertThat(
+            "Can't read closed input stream",
+            new TextOf(stream).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsEmptyInputStream() throws Exception {
+        final String content = "";
+        final InputStream stream = new ByteArrayInputStream(
+            content.getBytes(StandardCharsets.UTF_8.name())
+        );
+        MatcherAssert.assertThat(
+            "Can't read empty input stream",
+            new TextOf(stream).asString(),
+            Matchers.equalTo(content)
         );
     }
 }

@@ -295,7 +295,7 @@ public final class TextOf implements Text {
 
     /**
      * Ctor.
-     * @param input The inputStream
+     * @param input The InputStream where the text is read from
      * @since 0.21
      */
     public TextOf(final InputStream input) {
