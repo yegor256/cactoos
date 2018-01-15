@@ -26,9 +26,12 @@ package org.cactoos.text;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import org.cactoos.Func;
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.func.IoCheckedFunc;
+import org.cactoos.scalar.IoCheckedScalar;
 
 /**
  * Replace the Text.
@@ -47,12 +50,27 @@ public final class ReplacedText implements Text {
     /**
      * The regular expression identifying the text to replace.
      */
-    private final Pattern regex;
+    private final Scalar<Pattern> regex;
 
     /**
      * The new replacement text.
      */
     private final Func<Matcher, String> replacement;
+
+    /**
+     * Shorthand ctor.
+     * <p>
+     * Will replace all instances of the substring matched by {@code find}
+     * with {@code replace}.
+     * @param text The text
+     * @param find The regular expression
+     * @param replace The replacement string
+     * @see #ReplacedText(Text, Pattern, Func)
+     */
+    public ReplacedText(final Text text, final String find, final String
+        replace) {
+        this(text, () -> Pattern.compile(find), matcher -> replace);
+    }
 
     /**
      * Primary ctor.
@@ -67,44 +85,34 @@ public final class ReplacedText implements Text {
      * {@code
      *     final String result = new ReplacedText(
      *          new TextOf("one two THREE four FIVE six"),
-     *          Pattern.compile("[a-z]+"),
+     *          () -> Pattern.compile("[a-z]+"),
      *          matcher -> String.valueOf(matcher.group().length())
-     *     ).asString;  //will return the string "3 3 THREE 4 FIVE 3"
+     *     ).asString();  //will return the string "3 3 THREE 4 FIVE 3"
      * }
      * </pre>
+     * <p>
+     * Note: a {@link PatternSyntaxException} will be thrown if the
+     * regular expression's syntax is invalid.
      * @param text The text
-     * @param regex The regular expression
+     * @param pattern The regular expression
      * @param func Transforms the resulting matcher object into a replacement
      *  string. Any exceptions will be wrapped in an {@link IOException}.
      */
     public ReplacedText(
         final Text text,
-        final Pattern regex,
+        final Scalar<Pattern> pattern,
         final Func<Matcher, String> func) {
         this.origin = text;
-        this.regex = regex;
+        this.regex = pattern;
         this.replacement = func;
-    }
-
-    /**
-     * Shorthand ctor.
-     * <p>
-     * Will replace all instances of the substring matched by {@code find}
-     * with {@code replace}.
-     * @param text The text
-     * @param find The regular expression
-     * @param replace The replacement string
-     * @see #ReplacedText(Text, Pattern, Func)
-     */
-    public ReplacedText(final Text text, final String find, final String
-        replace) {
-        this(text, Pattern.compile(find), matcher -> replace);
     }
 
     @Override
     public String asString() throws IOException {
         final StringBuffer buffer = new StringBuffer();
-        final Matcher matcher = this.regex.matcher(this.origin.asString());
+        final Matcher matcher = new IoCheckedScalar<>(this.regex)
+            .value()
+            .matcher(this.origin.asString());
         final IoCheckedFunc<Matcher, String> iofunc =
             new IoCheckedFunc<>(this.replacement);
         while (matcher.find()) {
