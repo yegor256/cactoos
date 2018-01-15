@@ -33,26 +33,26 @@ import java.util.List;
  * @param <T> Partitions value type
  * @since 0.29
  */
-public class Partitioned<T> extends IterableEnvelope<List<T>> {
+public final class Partitioned<T> extends IterableEnvelope<List<T>> {
 
     /**
      * Ctor.
-     * @param partition The partitions size.
+     * @param size The partitions size.
      * @param items The source items.
      */
     @SafeVarargs
-    public Partitioned(final int partition, final T...items) {
-        this(partition, new IterableOf<>(items));
+    public Partitioned(final int size, final T...items) {
+        this(size, new IterableOf<>(items));
     }
 
     /**
      * Ctor.
-     * @param partition The partitions size.
+     * @param size The partitions size.
      * @param iterable The source {@link Iterable}.
      */
-    public Partitioned(final int partition, final Iterable<T> iterable) {
+    public Partitioned(final int size, final Iterable<T> iterable) {
         super(() -> () -> new org.cactoos.iterator.Partitioned<>(
-            partition, iterable.iterator()
+            size, iterable.iterator()
         ));
     }
 

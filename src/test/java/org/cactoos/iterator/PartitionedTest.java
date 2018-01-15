@@ -23,6 +23,8 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.NoSuchElementException;
 import org.cactoos.list.ListOf;
@@ -31,7 +33,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Partitioned tests.
+ * Test case for {@link Partitioned}.
  *
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
@@ -39,10 +41,10 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
-public class PartitionedTest {
+public final class PartitionedTest {
 
     @Test
-    public final void testEmptyPartitioned() {
+    public void emptyPartitioned() {
         MatcherAssert.assertThat(
             "Can't generate an empty Partitioned.",
             new LengthOf(
@@ -53,52 +55,66 @@ public class PartitionedTest {
     }
 
     @Test
-    public final void testPartitionedOne() {
+    public void partitionedOne() {
         MatcherAssert.assertThat(
-            "Can't generate an Partitioned of partition size 1.",
-            new LengthOf(
-                new Partitioned<>(1, new ListOf<>(1, 2, 3).iterator())
-            ).intValue(),
-            Matchers.equalTo(3)
+            "Can't generate a Partitioned of partition size 1.",
+            new ArrayList<>(
+                new ListOf<>(
+                    new Partitioned<>(1, Arrays.asList(1, 2, 3).iterator())
+                )
+            ),
+            Matchers.equalTo(
+                Arrays.asList(
+                    Arrays.asList(1), Arrays.asList(2), Arrays.asList(3)
+                )
+            )
         );
     }
 
     @Test
-    public final void testPartitionedEqualSize() {
+    public void partitionedEqualSize() {
         MatcherAssert.assertThat(
-            "Can't generate an Partitioned of partition size 2.",
-            new LengthOf(
-                new Partitioned<>(2, new ListOf<>(1, 2, 3, 4).iterator())
-            ).intValue(),
-            Matchers.equalTo(2)
+            "Can't generate a Partitioned of partition size 2.",
+            new ArrayList<>(
+                new ListOf<>(
+                    new Partitioned<>(2, new ListOf<>(1, 2, 3, 4).iterator())
+                )
+            ),
+            Matchers.equalTo(
+                Arrays.asList(Arrays.asList(1, 2), Arrays.asList(3, 4))
+            )
         );
     }
 
     @Test
-    public final void testPartitionedLastPartitionSmaller() {
+    public void partitionedLastPartitionSmaller() {
         MatcherAssert.assertThat(
-            "Can't generate an Partitioned of size 2 last partition smaller.",
-            new LengthOf(
-                new Partitioned<>(2, new ListOf<>(1, 2, 3).iterator())
-            ).intValue(),
-            Matchers.equalTo(2)
+            "Can't generate a Partitioned of size 2 last partition smaller.",
+            new ArrayList<>(
+                new ListOf<>(
+                    new Partitioned<>(2, new ListOf<>(1, 2, 3).iterator())
+                )
+            ),
+            Matchers.equalTo(
+                Arrays.asList(Arrays.asList(1, 2), Arrays.asList(3))
+            )
         );
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public final void testPartitionedWithPartitionSizeSmallerOne() {
+    public void partitionedWithPartitionSizeSmallerOne() {
         new Partitioned<>(0, new ListOf<>(1).iterator()).next();
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public final void testPartitionedListsAreUnmodifiable() {
+    public void partitionedListsAreUnmodifiable() {
         new Partitioned<>(
             2, new ListOf<>(1, 2).iterator()
         ).next().clear();
     }
 
     @Test(expected = NoSuchElementException.class)
-    public final void testEmptyPartitionedNextThrowsException() {
+    public void emptyPartitionedNextThrowsException() {
         new Partitioned<>(
             2, Collections.emptyList().iterator()
         ).next();

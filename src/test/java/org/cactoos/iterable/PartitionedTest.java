@@ -28,7 +28,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Partitioned tests.
+ * Test case for {@link Partitioned}.
  *
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
@@ -36,12 +36,12 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
-public class PartitionedTest {
+public final class PartitionedTest {
 
     @Test
-    public final void testPartitionedEmpty() {
+    public void partitionedEmpty() {
         MatcherAssert.assertThat(
-            "Can't generate an Partitioned without values.",
+            "Can't generate a Partitioned without values.",
             new LengthOf(
                 new Partitioned<>(2)
             ).intValue(),
@@ -50,9 +50,9 @@ public class PartitionedTest {
     }
 
     @Test
-    public final void testPartitionedWithPartial() {
+    public void partitionedWithPartial() {
         MatcherAssert.assertThat(
-            "Can't generate an Partitioned with partition size.",
+            "Can't generate a Partitioned with partition size.",
             new LengthOf(
                 new Partitioned<>(2, new IterableOf<>(1, 2, 3))
             ).intValue(),

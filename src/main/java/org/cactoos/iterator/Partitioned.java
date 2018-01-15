@@ -23,9 +23,9 @@
  */
 package org.cactoos.iterator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -37,7 +37,7 @@ import java.util.NoSuchElementException;
  * @param <T> Partitions value type
  * @since 0.29
  */
-public class Partitioned<T> implements Iterator<List<T>> {
+public final class Partitioned<T> implements Iterator<List<T>> {
 
     /**
      * Iterator to decorate.
@@ -46,33 +46,33 @@ public class Partitioned<T> implements Iterator<List<T>> {
     /**
      * Size of the partitions.
      */
-    private final int partition;
+    private final int size;
     /**
      * Ctor.
      *
-     * @param partition Size of the partitions.
+     * @param sze Size of the partitions.
      * @param src Source iterator.
      */
-    public Partitioned(final int partition, final Iterator<T> src) {
-        this.partition = partition;
+    public Partitioned(final int sze, final Iterator<T> src) {
+        this.size = sze;
         this.decorated = src;
     }
 
     @Override
-    public final boolean hasNext() {
+    public boolean hasNext() {
         return this.decorated.hasNext();
     }
 
     @Override
-    public final List<T> next() {
+    public List<T> next() {
         if (!this.hasNext()) {
             throw new NoSuchElementException("No partition left.");
         }
-        if (this.partition < 1) {
+        if (this.size < 1) {
             throw new IllegalArgumentException("Partition size < 1");
         }
-        final List<T> result = new ArrayList<>(0);
-        for (int count = 0; count < this.partition && this.hasNext(); ++count) {
+        final List<T> result = new LinkedList<>();
+        for (int count = 0; count < this.size && this.hasNext(); ++count) {
             result.add(this.decorated.next());
         }
         return Collections.unmodifiableList(result);
