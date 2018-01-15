@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,7 +51,6 @@ import org.cactoos.scalar.IoCheckedScalar;
  * @version $Id$
  * @since 0.12
  */
-@SuppressWarnings("checkstyle:classdataabstractioncoupling")
 public final class TextOf implements Text {
 
     /**
@@ -301,14 +299,7 @@ public final class TextOf implements Text {
      * @since 0.21
      */
     public TextOf(final InputStream input) {
-        this(
-            () -> {
-                final StringBuilder builder = new StringBuilder();
-                new BufferedReader(new InputStreamReader(input)).lines()
-                    .forEachOrdered(builder::append);
-                return builder.toString();
-            }
-        );
+        this(new InputOf(new InputStreamReader(input)));
     }
 
     /**

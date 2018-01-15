@@ -263,7 +263,22 @@ public final class TextOfTest {
             new TextOf(
                 stream
            ).asString(),
-               Matchers.equalTo("line1-line2")
+               Matchers.equalTo(before)
+        );
+    }
+
+    @Test
+    public void readsMultilineInputStreamWithCarriageReturn() throws Exception {
+        final String before = "line1-\rline2";
+        final InputStream stream = new ByteArrayInputStream(
+            before.getBytes(StandardCharsets.UTF_8.name())
+        );
+        MatcherAssert.assertThat(
+            "Can't read multiline inputStream with carriage return",
+            new TextOf(
+                stream
+            ).asString(),
+            Matchers.equalTo(before)
         );
     }
 }
