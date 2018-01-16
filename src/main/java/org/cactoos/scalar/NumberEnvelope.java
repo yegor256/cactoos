@@ -33,8 +33,10 @@ import org.cactoos.Scalar;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.26
+ * @checkstyle AbstractClassNameCheck (500 lines)
  */
-public class NumberEnvelope extends Number implements Scalar<Double> {
+@SuppressWarnings("PMD.AbstractNaming")
+public abstract class NumberEnvelope extends Number implements Scalar<Double> {
 
     /**
      * Serialization marker.

@@ -40,9 +40,15 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <Y> Type of value
  * @see StickyMap
  * @since 0.24
+ * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public class MapEnvelope<X, Y> implements Map<X, Y> {
+@SuppressWarnings(
+    {
+        "PMD.TooManyMethods",
+        "PMD.AbstractNaming"
+    }
+)
+public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     /**
      * The map.

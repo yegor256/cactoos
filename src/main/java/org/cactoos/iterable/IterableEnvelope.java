@@ -36,8 +36,10 @@ import org.cactoos.scalar.UncheckedScalar;
  * @version $Id$
  * @param <X> Type of item
  * @since 0.24
+ * @checkstyle AbstractClassNameCheck (500 lines)
  */
-public class IterableEnvelope<X> implements Iterable<X> {
+@SuppressWarnings("PMD.AbstractNaming")
+public abstract class IterableEnvelope<X> implements Iterable<X> {
 
     /**
      * The iterable.
