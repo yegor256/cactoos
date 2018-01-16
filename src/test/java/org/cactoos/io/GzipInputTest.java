@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 import org.cactoos.InputHasContent;
 import org.hamcrest.MatcherAssert;
@@ -34,13 +33,13 @@ import org.junit.Test;
  * Test case for {@link org.cactoos.io.GzipInput}.
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.28
+ * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class GzipInputTest {
 
     @Test
-    public void readFromGzipInput() throws IOException {
+    public void readFromGzipInput() {
         final byte[] bytes = {
             (byte) GZIPInputStream.GZIP_MAGIC,
             // @checkstyle MagicNumberCheck (1 line)
