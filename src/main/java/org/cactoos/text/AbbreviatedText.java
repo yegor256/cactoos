@@ -43,11 +43,6 @@ public final class AbbreviatedText implements Text {
     private final Text origin;
 
     /**
-     * The position where to start.
-     */
-    private final int offset;
-
-    /**
      * The max width of the resulting string.
      */
     private final int width;
@@ -66,7 +61,7 @@ public final class AbbreviatedText implements Text {
      */
     public AbbreviatedText(final Text text) {
         // @checkstyle MagicNumber (1 line)
-        this(text, 0, 80);
+        this(text, 80);
     }
 
     /**
@@ -75,7 +70,7 @@ public final class AbbreviatedText implements Text {
      * @param max Max width of the result string
      */
     public AbbreviatedText(final String text, final int max) {
-        this(text, 0, max);
+        this(new TextOf(text), max);
     }
 
     /**
@@ -84,29 +79,7 @@ public final class AbbreviatedText implements Text {
      * @param max Max width of the result string
      */
     public AbbreviatedText(final Text text, final int max) {
-        // @checkstyle MagicNumber (1 line)
-        this(text, 0, max);
-    }
-
-    /**
-     * Ctor.
-     * @param text A String
-     * @param off Position where to start
-     * @param max Max width of the result string
-     */
-    public AbbreviatedText(final String text, final int off, final int max) {
-        this(new TextOf(text), off, max);
-    }
-
-    /**
-     * Ctor.
-     * @param text The Text
-     * @param off Position where to start
-     * @param max Max width of result string
-     */
-    public AbbreviatedText(final Text text, final int off, final int max) {
         this.origin = text;
-        this.offset = off;
         this.width = max;
     }
 
@@ -114,19 +87,15 @@ public final class AbbreviatedText implements Text {
     public String asString() throws IOException {
         final Text abbreviated;
         if (this.origin.asString().length() <= this.width) {
-            abbreviated = new SubText(
-                this.origin,
-                this.offset,
-                this.origin.asString().length()
-            );
+            abbreviated = this.origin;
         } else {
             abbreviated = new FormattedText(
                 "%s...",
                 new SubText(
                     this.origin,
-                    this.offset,
+                    0,
                     // @checkstyle MagicNumber (1 line)
-                    this.offset + this.width - 3
+                    this.width - 3
                 ).asString()
             );
         }
