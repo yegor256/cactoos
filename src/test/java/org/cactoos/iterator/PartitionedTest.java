@@ -65,7 +65,8 @@ public final class PartitionedTest {
             ),
             Matchers.equalTo(
                 Arrays.asList(
-                    Arrays.asList(1), Arrays.asList(2), Arrays.asList(3)
+                    Collections.singletonList(1), Collections.singletonList(2),
+                    Collections.singletonList(3)
                 )
             )
         );
@@ -96,7 +97,10 @@ public final class PartitionedTest {
                 )
             ),
             Matchers.equalTo(
-                Arrays.asList(Arrays.asList(1, 2), Arrays.asList(3))
+                Arrays.asList(
+                    Arrays.asList(1, 2),
+                    Collections.singletonList(3)
+                )
             )
         );
     }
