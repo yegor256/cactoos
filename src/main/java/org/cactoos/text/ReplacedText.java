@@ -58,22 +58,23 @@ public final class ReplacedText implements Text {
     private final Func<Matcher, String> replacement;
 
     /**
-     * Shorthand ctor.
+     * Ctor.
      * <p>
      * Will replace all instances of the substring matched by {@code find}
      * with {@code replace}.
      * @param text The text
      * @param find The regular expression
      * @param replace The replacement string
-     * @see #ReplacedText(Text, Pattern, Func)
      */
-    public ReplacedText(final Text text, final String find, final String
-        replace) {
+    public ReplacedText(
+        final Text text,
+        final String find,
+        final String replace) {
         this(text, () -> Pattern.compile(find), matcher -> replace);
     }
 
     /**
-     * Primary ctor.
+     * Ctor.
      * <p>
      * The given {@link Pattern regex} is used to produce a
      * {@link Pattern#matcher(java.lang.CharSequence) matcher} that will be
@@ -113,12 +114,12 @@ public final class ReplacedText implements Text {
         final Matcher matcher = new IoCheckedScalar<>(this.regex)
             .value()
             .matcher(this.origin.asString());
-        final IoCheckedFunc<Matcher, String> iofunc =
+        final IoCheckedFunc<Matcher, String> safe =
             new IoCheckedFunc<>(this.replacement);
         while (matcher.find()) {
             matcher.appendReplacement(
                 buffer,
-                iofunc.apply(matcher)
+                safe.apply(matcher)
             );
         }
         matcher.appendTail(buffer);
