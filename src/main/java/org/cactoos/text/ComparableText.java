@@ -21,62 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.text;
 
-import java.util.Collections;
-import java.util.Iterator;
-import org.cactoos.list.ListOf;
+import java.io.IOException;
+import org.cactoos.Text;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * A few Iterators joined together.
+ * Text implementing Comparable.<br>
+ * Below the example how you can sort words in a string:
+ * <pre>
+ * Iterable&lt;Text> sorted = new Sorted<>(
+ *   new Mapped<>(
+ *     ComparableText::new,
+ *     new SplitText("The quick brown fox jumps over the lazy dog", " ")
+ *   )
+ * )
+ * </pre>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Sergey Sharov (zefick@mail.ru)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @since 0.27
  */
-public final class Joined<T> implements Iterator<T> {
+public final class ComparableText implements Text, Comparable<Text> {
 
     /**
-     * Iterators.
+     * The origin.
      */
-    private final Iterator<Iterator<T>> iters;
-
-    /**
-     * Current traversal iterator.
-     */
-    private Iterator<T> current;
+    private final Text text;
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     * @param text The text
      */
-    @SafeVarargs
-    public Joined(final Iterator<T>... items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public Joined(final Iterable<Iterator<T>> items) {
-        this.iters = items.iterator();
-        this.current = Collections.emptyIterator();
+    public ComparableText(final Text text) {
+        this.text = text;
     }
 
     @Override
-    public boolean hasNext() {
-        while (!this.current.hasNext() && this.iters.hasNext()) {
-            this.current = this.iters.next();
-        }
-        return this.current.hasNext();
+    public int compareTo(final Text other) {
+        return new UncheckedScalar<>(
+            () -> this.text.asString().compareTo(other.asString())
+        ).value();
     }
 
     @Override
-    public T next() {
-        return this.current.next();
+    public String asString() throws IOException {
+        return this.text.asString();
     }
+
 }

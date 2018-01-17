@@ -32,7 +32,6 @@ import java.util.Date;
 import java.util.Locale;
 import org.cactoos.Text;
 import org.cactoos.scalar.UncheckedScalar;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Formatter for date instances.
@@ -185,11 +184,6 @@ public final class DateAsText implements Text {
     @Override
     public String asString() {
         return this.formatted.value();
-    }
-
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
     }
 
 }

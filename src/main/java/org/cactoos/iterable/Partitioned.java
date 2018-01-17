@@ -21,62 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.iterable;
 
-import java.util.Collections;
-import java.util.Iterator;
-import org.cactoos.list.ListOf;
+import java.util.List;
 
 /**
- * A few Iterators joined together.
+ * Iterable implementation for partitioning functionality.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @param <T> Partitions value type
+ * @since 0.29
  */
-public final class Joined<T> implements Iterator<T> {
-
-    /**
-     * Iterators.
-     */
-    private final Iterator<Iterator<T>> iters;
-
-    /**
-     * Current traversal iterator.
-     */
-    private Iterator<T> current;
+public final class Partitioned<T> extends IterableEnvelope<List<T>> {
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     * @param size The partitions size.
+     * @param items The source items.
      */
     @SafeVarargs
-    public Joined(final Iterator<T>... items) {
-        this(new ListOf<>(items));
+    public Partitioned(final int size, final T...items) {
+        this(size, new IterableOf<>(items));
     }
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     * @param size The partitions size.
+     * @param iterable The source {@link Iterable}.
      */
-    public Joined(final Iterable<Iterator<T>> items) {
-        this.iters = items.iterator();
-        this.current = Collections.emptyIterator();
+    public Partitioned(final int size, final Iterable<T> iterable) {
+        super(() -> () -> new org.cactoos.iterator.Partitioned<>(
+            size, iterable.iterator()
+        ));
     }
 
-    @Override
-    public boolean hasNext() {
-        while (!this.current.hasNext() && this.iters.hasNext()) {
-            this.current = this.iters.next();
-        }
-        return this.current.hasNext();
-    }
-
-    @Override
-    public T next() {
-        return this.current.next();
-    }
 }

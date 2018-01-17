@@ -25,58 +25,57 @@ package org.cactoos.iterator;
 
 import java.util.Collections;
 import java.util.Iterator;
-import org.cactoos.list.ListOf;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
- * A few Iterators joined together.
+ * Iterator implementation for {@link Iterator} partitioning.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @param <T> Partitions value type
+ * @since 0.29
  */
-public final class Joined<T> implements Iterator<T> {
+public final class Partitioned<T> implements Iterator<List<T>> {
 
     /**
-     * Iterators.
+     * Iterator to decorate.
      */
-    private final Iterator<Iterator<T>> iters;
-
+    private final Iterator<T> decorated;
     /**
-     * Current traversal iterator.
+     * Size of the partitions.
      */
-    private Iterator<T> current;
-
+    private final int size;
     /**
      * Ctor.
-     * @param items Items to concatenate
+     *
+     * @param sze Size of the partitions.
+     * @param src Source iterator.
      */
-    @SafeVarargs
-    public Joined(final Iterator<T>... items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public Joined(final Iterable<Iterator<T>> items) {
-        this.iters = items.iterator();
-        this.current = Collections.emptyIterator();
+    public Partitioned(final int sze, final Iterator<T> src) {
+        this.size = sze;
+        this.decorated = src;
     }
 
     @Override
     public boolean hasNext() {
-        while (!this.current.hasNext() && this.iters.hasNext()) {
-            this.current = this.iters.next();
-        }
-        return this.current.hasNext();
+        return this.decorated.hasNext();
     }
 
     @Override
-    public T next() {
-        return this.current.next();
+    public List<T> next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException("No partition left.");
+        }
+        if (this.size < 1) {
+            throw new IllegalArgumentException("Partition size < 1");
+        }
+        final List<T> result = new LinkedList<>();
+        for (int count = 0; count < this.size && this.hasNext(); ++count) {
+            result.add(this.decorated.next());
+        }
+        return Collections.unmodifiableList(result);
     }
+
 }

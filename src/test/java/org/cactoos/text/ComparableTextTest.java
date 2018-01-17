@@ -23,53 +23,51 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.cactoos.Text;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Text that is thread-safe.
+ * Test case for {@link FormattedText}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Sergey Sharov (zefick@mail.ru)
  * @version $Id$
- * @since 0.18
+ * @since 0.27
+ * @checkstyle JavadocMethodCheck (100 lines)
  */
-public final class SyncText implements Text {
+public final class ComparableTextTest {
 
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * The lock.
-     */
-    private final Object lock;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public SyncText(final Text text) {
-        this(text, text);
+    @Test
+    public void comparesWithASubtext() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare sub texts",
+            new ComparableText(
+                new TextOf(
+                    "here to there"
+                )
+            ).compareTo(
+                // @checkstyle MagicNumberCheck (2 lines)
+                new ComparableText(
+                    new SubText("from here to there", 5)
+                )
+            ),
+            Matchers.is(0)
+        );
     }
 
-    /**
-     * Ctor.
-     * @param text The text
-     * @param lck The lock
-     */
-    public SyncText(final Text text, final Object lck) {
-        this.origin = text;
-        this.lock = lck;
+    @Test
+    public void comparesToUncheckedText() {
+        final String txt = "foobar";
+        MatcherAssert.assertThat(
+            "These UncheckedText are not equal",
+            new ComparableText(
+                new UncheckedText(
+                    new TextOf(txt)
+                )
+            ).compareTo(
+                new ComparableText(new TextOf(txt))
+            ),
+            Matchers.equalTo(0)
+        );
     }
-
-    @Override
-    public String asString() throws IOException {
-        synchronized (this.lock) {
-            return this.origin.asString();
-        }
-    }
-
 }

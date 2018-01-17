@@ -94,11 +94,4 @@ public final class UncheckedText implements Text {
         return txt;
     }
 
-    @Override
-    public int compareTo(final Text txt) {
-        return this.asString().compareTo(
-            new UncheckedText(txt).asString()
-        );
-    }
-
 }

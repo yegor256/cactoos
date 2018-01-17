@@ -21,62 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.iterable;
 
-import java.util.Collections;
-import java.util.Iterator;
-import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * A few Iterators joined together.
+ * Test case for {@link Partitioned}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @since 0.29
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumber (500 lines)
  */
-public final class Joined<T> implements Iterator<T> {
+public final class PartitionedTest {
 
-    /**
-     * Iterators.
-     */
-    private final Iterator<Iterator<T>> iters;
-
-    /**
-     * Current traversal iterator.
-     */
-    private Iterator<T> current;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    public Joined(final Iterator<T>... items) {
-        this(new ListOf<>(items));
+    @Test
+    public void partitionedEmpty() {
+        MatcherAssert.assertThat(
+            "Can't generate a Partitioned without values.",
+            new LengthOf(
+                new Partitioned<>(2)
+            ).intValue(),
+            Matchers.equalTo(0)
+        );
     }
 
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public Joined(final Iterable<Iterator<T>> items) {
-        this.iters = items.iterator();
-        this.current = Collections.emptyIterator();
+    @Test
+    public void partitionedWithPartial() {
+        MatcherAssert.assertThat(
+            "Can't generate a Partitioned with partition size.",
+            new LengthOf(
+                new Partitioned<>(2, new IterableOf<>(1, 2, 3))
+            ).intValue(),
+            Matchers.equalTo(2)
+        );
     }
 
-    @Override
-    public boolean hasNext() {
-        while (!this.current.hasNext() && this.iters.hasNext()) {
-            this.current = this.iters.next();
-        }
-        return this.current.hasNext();
-    }
-
-    @Override
-    public T next() {
-        return this.current.next();
-    }
 }

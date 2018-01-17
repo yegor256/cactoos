@@ -23,7 +23,9 @@
  */
 package org.cactoos.text;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.TextHasString;
@@ -171,20 +173,6 @@ public final class TextOfTest {
     }
 
     @Test
-    public void comparesWithASubtext() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't compare sub texts",
-            new TextOf(
-                "here to there"
-            ).compareTo(
-                // @checkstyle MagicNumberCheck (1 line)
-                new SubText("from here to there", 5)
-            ),
-            Matchers.is(0)
-        );
-    }
-
-    @Test
     public void readsStringBuilder() throws IOException {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
@@ -234,6 +222,74 @@ public final class TextOfTest {
                     )
                 )
             )
+        );
+    }
+
+    @Test
+    public void readsFromInputStream() throws Exception {
+        final String content = "line1";
+        final InputStream stream = new ByteArrayInputStream(
+            content.getBytes(StandardCharsets.UTF_8.name())
+        );
+        MatcherAssert.assertThat(
+            "Can't read inputStream",
+            new TextOf(stream).asString(),
+            Matchers.equalTo(
+                new String(content.getBytes(), StandardCharsets.UTF_8)
+            )
+        );
+    }
+
+    @Test
+    public void readsMultilineInputStream() throws Exception {
+        final String content = "line1-\nline2";
+        final InputStream stream = new ByteArrayInputStream(
+            content.getBytes(StandardCharsets.UTF_8.name())
+        );
+        MatcherAssert.assertThat(
+            "Can't read multiline inputStream",
+            new TextOf(stream).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsMultilineInputStreamWithCarriageReturn() throws Exception {
+        final String content = "line1-\rline2";
+        final InputStream stream = new ByteArrayInputStream(
+            content.getBytes(StandardCharsets.UTF_8.name())
+        );
+        MatcherAssert.assertThat(
+            "Can't read multiline inputStream with carriage return",
+            new TextOf(stream).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsClosedInputStream() throws Exception {
+        final String content = "content";
+        final InputStream stream = new ByteArrayInputStream(
+            content.getBytes(StandardCharsets.UTF_8.name())
+        );
+        stream.close();
+        MatcherAssert.assertThat(
+            "Can't read closed input stream",
+            new TextOf(stream).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsEmptyInputStream() throws Exception {
+        final String content = "";
+        final InputStream stream = new ByteArrayInputStream(
+            content.getBytes(StandardCharsets.UTF_8.name())
+        );
+        MatcherAssert.assertThat(
+            "Can't read empty input stream",
+            new TextOf(stream).asString(),
+            Matchers.equalTo(content)
         );
     }
 }

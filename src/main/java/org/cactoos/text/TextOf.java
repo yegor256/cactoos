@@ -25,6 +25,8 @@ package org.cactoos.text;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
@@ -293,6 +295,15 @@ public final class TextOf implements Text {
 
     /**
      * Ctor.
+     * @param input The InputStream where the text is read from
+     * @since 0.21
+     */
+    public TextOf(final InputStream input) {
+        this(new InputOf(new InputStreamReader(input)));
+    }
+
+    /**
+     * Ctor.
      *
      * @param scalar The Scalar of String
      */
@@ -303,11 +314,6 @@ public final class TextOf implements Text {
     @Override
     public String asString() throws IOException {
         return new IoCheckedScalar<>(this.origin).value();
-    }
-
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
     }
 
     @Override

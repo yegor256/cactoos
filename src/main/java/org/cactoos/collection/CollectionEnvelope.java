@@ -37,9 +37,15 @@ import org.cactoos.scalar.UncheckedScalar;
  * @version $Id$
  * @param <X> Element type
  * @since 0.23
+ * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public class CollectionEnvelope<X> implements Collection<X> {
+@SuppressWarnings(
+    {
+        "PMD.TooManyMethods",
+        "PMD.AbstractNaming"
+    }
+)
+public abstract class CollectionEnvelope<X> implements Collection<X> {
 
     /**
      * Shuffled one.

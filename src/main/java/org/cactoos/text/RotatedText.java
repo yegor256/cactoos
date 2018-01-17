@@ -73,9 +73,4 @@ public final class RotatedText implements Text {
         return text;
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
-
 }

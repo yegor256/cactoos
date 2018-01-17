@@ -71,9 +71,4 @@ public final class LowerText implements Text {
         return this.origin.asString().toLowerCase(this.locale);
     }
 
-    @Override
-    public int compareTo(final Text text) {
-        return new UncheckedText(this).compareTo(text);
-    }
-
 }
