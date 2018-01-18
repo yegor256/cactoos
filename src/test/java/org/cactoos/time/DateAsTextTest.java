@@ -23,8 +23,6 @@
  */
 package org.cactoos.time;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -40,11 +38,11 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class DateAsTextTest {
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.TooManyMethods"})
+public final class DateAsTextTest {
 
     @Test
-    public final void formatsCurrentTime() {
+    public void formatsCurrentTime() {
         MatcherAssert.assertThat(
             "Can't format current time",
             new DateAsText().asString(),
@@ -53,44 +51,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testZonedDateTimeFormattedAsIsoDateTime() {
-        final ZonedDateTime date = ZonedDateTime.of(
-            2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
-        );
-        MatcherAssert.assertThat(
-            "Can't format a ZonedDateTime with default/ISO format.",
-            new DateAsText(date).asString(),
-            Matchers.is("2017-12-13T14:15:16.000000017+01:00")
-        );
-    }
-
-    @Test
-    public final void testZonedDateTimeFormattedWithFormatString() {
-        final ZonedDateTime date = ZonedDateTime.of(
-            2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
-        );
-        MatcherAssert.assertThat(
-            "Can't format a ZonedDateTime with format.",
-            new DateAsText(date, "yyyy-MM-dd HH:mm:ss").asString(),
-            Matchers.is("2017-12-13 14:15:16")
-        );
-    }
-
-    @Test
-    public final void testZonedDateTimeFormattedWithFormatStringWithLocale() {
-        final ZonedDateTime date = ZonedDateTime.of(
-            2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
-        );
-        MatcherAssert.assertThat(
-            "Can't format a ZonedDateTime with format using locale.",
-            new DateAsText(date, "yyyy MMM dd. HH.mm.ss", Locale.FRENCH)
-                .asString(),
-            Matchers.is("2017 déc. 13. 14.15.16")
-        );
-    }
-
-    @Test
-    public final void testDateFormattedUsingIsoFormatter() {
+    public void dateFormattedUsingIsoFormatter() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -103,7 +64,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testDateFormattedUsingCustomFormat() {
+    public void dateFormattedUsingCustomFormat() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -117,7 +78,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testDateFormattedUsingCustomFormatDifferentLocale() {
+    public void dateFormattedUsingCustomFormatDifferentLocale() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -131,7 +92,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testMillisFormattedUsingIsoFormatter() {
+    public void millisFormattedUsingIsoFormatter() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -144,7 +105,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testMillisFormattedUsingCustomFormat() {
+    public void millisFormattedUsingCustomFormat() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -159,7 +120,7 @@ public class DateAsTextTest {
     }
 
     @Test
-    public final void testMillisFormattedUsingCustomFormatDifferentLocale() {
+    public void millisFormattedUsingCustomFormatDifferentLocale() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
