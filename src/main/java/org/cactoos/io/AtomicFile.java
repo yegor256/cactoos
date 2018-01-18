@@ -40,6 +40,7 @@ import java.nio.charset.Charset;
 public final class AtomicFile extends File {
 
     private static final long serialVersionUID = -276474606113419118L;
+    private final File temp;
 
     /**
      * Ctor.
@@ -48,23 +49,37 @@ public final class AtomicFile extends File {
      */
     public AtomicFile(final String pathname) {
         super(pathname);
+        this.temp = new File(System.getProperty("java.io.tmpdir") + File.separator + this.getName() + "_tmp");
     }
 
-    public synchronized void write(final String string, final Charset charset) throws IOException {
-        File tempFile = new File(System.getProperty("java.io.tmpdir") + File.separator + this.getName() + "_tmp");
-        if ((!this.exists()) && (!tempFile.exists())) {
-            throw new IOException(this.getClass().getName() + " could not perform write. File and Temp File do not exist:\n" + "File: " + this.getAbsolutePath() + "\n" + "Temp File: " + tempFile.getAbsolutePath());
+    public Boolean printTempExists() {
+        return this.temp.exists();
+    }
+
+    public synchronized void write() {
+        /**
+         * @TODO add a variation of overwrite that appends content to a file
+         * instead of replacing all content
+         */
+    }
+
+    public synchronized void overwrite(final String string, final Charset charset) throws IOException {
+        if ((!this.exists()) && (!this.temp.exists())) {
+            throw new IOException(this.getClass().getName() + " could not perform write. File and Temp File do not exist:\n" + "File: " + this.getAbsolutePath() + "\n" + "Temp File: " + this.temp.getAbsolutePath());
         }
-        if ((!this.exists()) && (tempFile.exists())) {
-            tempFile.renameTo(this);
+        InterruptedAtomicFile interruptedAtomicFile = new InterruptedAtomicFile(this);
+        if (interruptedAtomicFile.interruptedAfterWrite()) {
+            this.temp.renameTo(this);
         }
-        if ((this.exists()) && (tempFile.exists())) {
-            tempFile.delete();
+        if (interruptedAtomicFile.interruptedDuringWrite()) {
+            this.temp.delete();
         }
-        OutputTo outputTo = new OutputTo(tempFile, Boolean.TRUE);
+        this.temp.getParentFile().mkdirs();
+        this.temp.createNewFile();
+        OutputTo outputTo = new OutputTo(this.temp, Boolean.FALSE);
         outputTo.stream().write(string.getBytes(charset));
         this.delete();
-        tempFile.renameTo(this);
+        this.temp.renameTo(this);
     }
 
 }

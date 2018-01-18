@@ -23,43 +23,55 @@
  */
 package org.cactoos.io;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
-import org.cactoos.TextHasString;
-import org.cactoos.func.MatcherOf;
-import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link AtomicFile}.
+ *
  * @author Ashton Hogan (https://twitter.com/TheAshtonHogan)
  * @version $Id$
  * @since 0.49.2
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class AtomicFileTest {
+public final class InterruptedAtomicFileTest {
 
     @Test
-    public void writesStringToFileAtomically() throws IOException {
-        AtomicFile atomicFile = new AtomicFile(
-                Files.createTempFile("x1", ".tmp").toString()
-        );
-        atomicFile.overwrite("abc", Charset.forName("UTF-8"));
+    public void determineInterruptAfterWrite() throws IOException {
+        final File original = Files.createTempFile("cactoos-1", "txt-1").toFile();
+        original.delete();
+        final File temp = new File(System.getProperty("java.io.tmpdir") + File.separator + original.getName() + "_tmp");
+        temp.createNewFile();
         MatcherAssert.assertThat(
-            "Can't write to an atomic file",
-            new TextOf(
-                atomicFile
-            ),
-            new TextHasString(
-                new MatcherOf<>(
-                    str -> {
-                        return new TextOf(atomicFile).asString().equals(str);
-                    }
-                )
-            )
+                "Could not determine post-write interruption status",
+                new InterruptedAtomicFile(
+                        new AtomicFile(
+                                original.getAbsolutePath()
+                        )
+                ).interruptedAfterWrite(),
+                Matchers.equalTo(Boolean.TRUE)
+        );
+    }
+
+    @Test
+    public void determineInterruptDuringWrite() throws IOException {
+        final File original = Files.createTempFile("cactoos-1", "txt-1").toFile();
+        original.createNewFile();
+        final File temp = new File(System.getProperty("java.io.tmpdir") + File.separator + original.getName() + "_tmp");
+        temp.createNewFile();
+        MatcherAssert.assertThat(
+                "Could not determine mid-write interruption status",
+                new InterruptedAtomicFile(
+                        new AtomicFile(
+                                original.getAbsolutePath()
+                        )
+                ).interruptedDuringWrite(),
+                Matchers.equalTo(Boolean.TRUE)
         );
     }
 

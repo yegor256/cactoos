@@ -23,44 +23,47 @@
  */
 package org.cactoos.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import org.cactoos.TextHasString;
-import org.cactoos.func.MatcherOf;
-import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
 
 /**
- * Test case for {@link AtomicFile}.
+ * A file that may have been interrupted
+ *
+ * <p>
+ * There is no thread-safety guarantee.
+ *
  * @author Ashton Hogan (https://twitter.com/TheAshtonHogan)
  * @version $Id$
  * @since 0.49.2
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class AtomicFileTest {
+public final class InterruptedAtomicFile {
 
-    @Test
-    public void writesStringToFileAtomically() throws IOException {
-        AtomicFile atomicFile = new AtomicFile(
-                Files.createTempFile("x1", ".tmp").toString()
-        );
-        atomicFile.overwrite("abc", Charset.forName("UTF-8"));
-        MatcherAssert.assertThat(
-            "Can't write to an atomic file",
-            new TextOf(
-                atomicFile
-            ),
-            new TextHasString(
-                new MatcherOf<>(
-                    str -> {
-                        return new TextOf(atomicFile).asString().equals(str);
-                    }
-                )
-            )
-        );
+    private static final long serialVersionUID = -1682046414065640315L;
+
+    private final AtomicFile atomicFile;
+
+    /**
+     * Ctor.
+     *
+     * @param atomicFile that will be checked for previous interruptions
+     */
+    public InterruptedAtomicFile(final AtomicFile atomicFile) {
+        this.atomicFile = atomicFile;
+    }
+
+    public Boolean interruptedAfterWrite() {
+        if ((!this.atomicFile.exists()) && (this.atomicFile.printTempExists())) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
+    public Boolean interruptedDuringWrite() {
+        if ((this.atomicFile.exists()) && (this.atomicFile.printTempExists())) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
 }
