@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,10 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import org.cactoos.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -35,6 +39,7 @@ import org.junit.Test;
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class ReplacedTextTest {
 
     @Test
@@ -72,6 +77,106 @@ public final class ReplacedTextTest {
                 "dog"
             ),
             new TextHasString("one dog, two dogs, three dogs")
+        );
+    }
+
+    @Test
+    public void regexConstantReplace() {
+        MatcherAssert.assertThat(
+            "Cannot do simple replacement with regex",
+            new ReplacedText(
+                new TextOf("one cow two cows in the yard"),
+                () -> Pattern.compile("cow"),
+                matcher -> "pig"
+            ),
+            new TextHasString("one pig two pigs in the yard")
+        );
+    }
+
+    @Test
+    public void regexDynamicReplace() {
+        MatcherAssert.assertThat(
+            "Cannot do dynamic string replacement",
+            new ReplacedText(
+                new TextOf("one two THREE four FIVE six"),
+                () -> Pattern.compile("[a-z]+"),
+                matcher -> String.valueOf(matcher.group().length())
+            ),
+            new TextHasString("3 3 THREE 4 FIVE 3")
+        );
+    }
+
+    @Test
+    public void emptyText() {
+        MatcherAssert.assertThat(
+            "Substitution in empty text with non-empty regex.",
+            new ReplacedText(
+                new TextOf(""),
+                "123",
+                "WOW"
+            ),
+            new TextHasString("")
+        );
+    }
+
+    @Test
+    public void emptyRegex() {
+        MatcherAssert.assertThat(
+            "Substitution in text with empty regex.",
+            new ReplacedText(
+                new TextOf("abc"),
+                "",
+                "1"
+            ),
+            new TextHasString("1a1b1c1")
+        );
+    }
+
+    @Test
+    public void emptyTextAndEmptyRegex() {
+        MatcherAssert.assertThat(
+            "Substitution in empty text with empty regex.",
+            new ReplacedText(
+                new TextOf(""),
+                "",
+                "1"
+            ),
+            new TextHasString("1")
+        );
+    }
+
+    @Test(expected = PatternSyntaxException.class)
+    public void invalidRegex() throws IOException {
+        new ReplacedText(
+            new TextOf("text"),
+            "invalid_regex{0,",
+            "error"
+        ).asString();
+    }
+
+    @Test
+    public void nonDefaultCharsetText() {
+        MatcherAssert.assertThat(
+            "Cannot do dynamic string replacement with non-default charset",
+            new ReplacedText(
+                new TextOf("abc def GHI JKL", StandardCharsets.UTF_16LE),
+                () -> Pattern.compile("[A-Z]+"),
+                matcher -> String.valueOf(matcher.group().length())
+            ),
+            new TextHasString("abc def 3 3")
+        );
+    }
+
+    @Test
+    public void unicodeText() {
+        MatcherAssert.assertThat(
+            "Cannot do dynamic string replacement with unicode characters",
+            new ReplacedText(
+                new TextOf("abc def GHI\u2300JKL"),
+                () -> Pattern.compile("[a-z]+|\u2300"),
+                matcher -> String.valueOf(matcher.group().length())
+            ),
+            new TextHasString("3 3 GHI1JKL")
         );
     }
 }

@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,8 +33,10 @@ import org.cactoos.Scalar;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.26
+ * @checkstyle AbstractClassNameCheck (500 lines)
  */
-public class NumberEnvelope extends Number {
+@SuppressWarnings("PMD.AbstractNaming")
+public abstract class NumberEnvelope extends Number implements Scalar<Double> {
 
     /**
      * Serialization marker.
@@ -111,4 +113,8 @@ public class NumberEnvelope extends Number {
         return new UncheckedScalar<>(this.dnum).value();
     }
 
+    @Override
+    public final Double value() throws Exception {
+        return this.dnum.value();
+    }
 }

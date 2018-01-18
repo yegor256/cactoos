@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.cactoos.Func;
 import org.cactoos.Proc;
 
 /**
@@ -55,12 +54,7 @@ public final class IoCheckedProc<X> implements Proc<X> {
 
     @Override
     public void exec(final X input) throws IOException {
-        new IoCheckedFunc<>(
-            (Func<X, Boolean>) arg -> {
-                this.proc.exec(arg);
-                return true;
-            }
-        ).apply(input);
+        new IoCheckedFunc<>(new FuncOf<>(this.proc)).apply(input);
     }
 
 }

@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,9 +39,16 @@ import org.cactoos.scalar.UncheckedScalar;
  * @version $Id$
  * @param <T> Element type
  * @since 0.23
+ * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
-class ListEnvelope<T> extends CollectionEnvelope<T> implements List<T> {
+@SuppressWarnings(
+    {
+        "PMD.TooManyMethods",
+        "PMD.AbstractNaming"
+    }
+)
+abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
+    List<T> {
 
     /**
      * Encapsulated list.
