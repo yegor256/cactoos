@@ -24,8 +24,8 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import org.cactoos.TextHasString;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.text.TextOf;
@@ -44,15 +44,14 @@ public final class AtomicFileTest {
 
     @Test
     public void writesStringToFileAtomically() throws IOException {
-        Path atomicFile = Files.createTempFile("x1", ".tmp");
-        Files.write(atomicFile, "abc".getBytes());
+        AtomicFile atomicFile = new AtomicFile(
+                Files.createTempFile("x1", ".tmp").toString()
+        );
+        atomicFile.write("abc", Charset.forName("UTF-8"));
         MatcherAssert.assertThat(
             "Can't write to an atomic file",
             new TextOf(
-                new TeeInput(
-                    "abc",
-                    new WriterAsOutput(new WriterTo(atomicFile))
-                )
+                atomicFile
             ),
             new TextHasString(
                 new MatcherOf<>(

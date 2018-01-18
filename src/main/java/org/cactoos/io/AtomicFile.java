@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 /**
- * A file that can only be written to in an atomic fashion.
+ * A file that can only be written to in an atomic way.
  *
  * <p>
  * There is no thread-safety guarantee.
@@ -37,37 +37,34 @@ import java.nio.charset.Charset;
  * @version $Id$
  * @since 0.49.2
  */
-public final class AtomicFile {
+public final class AtomicFile extends File {
 
-    /**
-     * File that should be written to.
-     */
-    private final File file;
+    private static final long serialVersionUID = -276474606113419118L;
 
     /**
      * Ctor.
      *
-     * @param file File that should be written to
+     * @param pathname that should be written to
      */
-    public AtomicFile(final File file) {
-        this.file = file;
+    public AtomicFile(final String pathname) {
+        super(pathname);
     }
 
     public synchronized void write(final String string, final Charset charset) throws IOException {
-        File tempFile = new File(System.getProperty("java.io.tmpdir") + File.separator + this.file.getName() + "_tmp");
-        if ((!this.file.exists()) && (!tempFile.exists())) {
-            throw new IOException(this.getClass().getName() + " could not perform write. File and Temp File do not exist:\n" + "File: " + this.file.getAbsolutePath() + "\n" + "Temp File: " + tempFile.getAbsolutePath());
+        File tempFile = new File(System.getProperty("java.io.tmpdir") + File.separator + this.getName() + "_tmp");
+        if ((!this.exists()) && (!tempFile.exists())) {
+            throw new IOException(this.getClass().getName() + " could not perform write. File and Temp File do not exist:\n" + "File: " + this.getAbsolutePath() + "\n" + "Temp File: " + tempFile.getAbsolutePath());
         }
-        if ((!this.file.exists()) && (tempFile.exists())) {
-            tempFile.renameTo(this.file);
+        if ((!this.exists()) && (tempFile.exists())) {
+            tempFile.renameTo(this);
         }
-        if ((this.file.exists()) && (tempFile.exists())) {
+        if ((this.exists()) && (tempFile.exists())) {
             tempFile.delete();
         }
         OutputTo outputTo = new OutputTo(tempFile, Boolean.TRUE);
         outputTo.stream().write(string.getBytes(charset));
-        this.file.delete();
-        tempFile.renameTo(this.file);
+        this.delete();
+        tempFile.renameTo(this);
     }
 
 }
