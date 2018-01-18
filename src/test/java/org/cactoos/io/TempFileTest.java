@@ -42,7 +42,7 @@ import org.junit.Test;
 public final class TempFileTest {
 
     @Test
-    public void tmpFileIsCreated() throws Exception {
+    public void createFile() throws Exception {
         try (final TempFile file = new TempFile()) {
             MatcherAssert.assertThat(
                 "Cannot create a temp file",
@@ -76,7 +76,7 @@ public final class TempFileTest {
     }
 
     @Test
-    public void closedFileCeasesToExist() throws Exception {
+    public void deleteFile() throws Exception {
         final TempFile file = new TempFile();
         file.close();
         MatcherAssert.assertThat(
@@ -87,7 +87,7 @@ public final class TempFileTest {
     }
 
     @Test
-    public void prefix() throws Exception {
+    public void createFileWithPrefix() throws Exception {
         final String prefix =
             String.format("randomPrefix%s", System.currentTimeMillis());
         try (final TempFile file = new TempFile(prefix, "")) {
@@ -100,9 +100,10 @@ public final class TempFileTest {
     }
 
     @Test
-    public void suffix() throws Exception {
-        final String suffix =
-            String.format("randomSuffix%s", System.currentTimeMillis());
+    public void createFileWithSuffix() throws Exception {
+        final String suffix = String.format(
+            "randomSuffix%s", System.currentTimeMillis()
+        );
         try (final TempFile file = new TempFile("", suffix)) {
             MatcherAssert.assertThat(
                 "File not created with the given suffix",

@@ -78,9 +78,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
      * @param suffix The temp filename's suffix
      * @since 1.0
      */
-    public TempFile(
-        final String prefix,
-        final String suffix) {
+    public TempFile(final String prefix, final String suffix) {
         this(
             () -> Paths.get(System.getProperty("java.io.tmpdir")),
             prefix,
@@ -142,6 +140,11 @@ public final class TempFile implements Scalar<Path>, Closeable {
         return this.file.value();
     }
 
+    /**
+     * Deletes the file from the filesystem.
+     * @checkstyle NoJavadocForOverriddenMethodsCheck (5 lines)
+     * @checkstyle JavadocMethodCheck (5 lines)
+     */
     @Override
     public void close() throws IOException {
         Files.delete(new IoCheckedScalar<>(this).value());
