@@ -41,7 +41,7 @@ import org.cactoos.Text;
 public final class DateAsText implements Text {
 
     /**
-     * Scalar carrying the formatted date.
+     * Internal text carrying the formatted date.
      */
     private final ZonedDateTimeAsText text;
 
