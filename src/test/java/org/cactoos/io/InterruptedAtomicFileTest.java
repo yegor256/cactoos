@@ -45,10 +45,10 @@ public final class InterruptedAtomicFileTest {
     @Test
     public void determineInterruptAfterWrite() throws IOException {
         final File original = Files.createTempFile("cactoos-1", "txt-1")
-                .toFile();
+                    .toFile();
         original.delete();
-        JoinedText tempAbsPath = new JoinedText(
-                "",
+        final JoinedText tempAbsPath = new JoinedText(
+                    "",
                 System.getProperty("java.io.tmpdir"),
                 original.getName(),
                 "_tmp"
@@ -56,10 +56,10 @@ public final class InterruptedAtomicFileTest {
         final File temp = new File(tempAbsPath.asString());
         temp.createNewFile();
         MatcherAssert.assertThat(
-                    "Could not determine post-write interruption status",
+                        "Could not determine post-write interruption status",
                 new InterruptedAtomicFile(
-                            new AtomicFile(
-                                    original.getAbsolutePath()
+                                new AtomicFile(
+                                        original.getAbsolutePath()
                         )
                 ).interruptedAfterWrite(),
                 Matchers.equalTo(Boolean.TRUE)
@@ -69,10 +69,10 @@ public final class InterruptedAtomicFileTest {
     @Test
     public void determineInterruptDuringWrite() throws IOException {
         final File original = Files.createTempFile("cactoos-1", "txt-1")
-                .toFile();
+                    .toFile();
         original.createNewFile();
         final JoinedText tempAbsPath = new JoinedText(
-                "",
+                    "",
                 System.getProperty("java.io.tmpdir"),
                 original.getName(),
                 "_tmp"
@@ -80,10 +80,10 @@ public final class InterruptedAtomicFileTest {
         final File temp = new File(tempAbsPath.asString());
         temp.createNewFile();
         MatcherAssert.assertThat(
-                    "Could not determine mid-write interruption status",
+                        "Could not determine mid-write interruption status",
                 new InterruptedAtomicFile(
-                            new AtomicFile(
-                                    original.getAbsolutePath()
+                                new AtomicFile(
+                                        original.getAbsolutePath()
                         )
                 ).interruptedDuringWrite(),
                 Matchers.equalTo(Boolean.TRUE)

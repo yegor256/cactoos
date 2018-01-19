@@ -54,20 +54,18 @@ public final class InterruptedAtomicFile {
     }
 
     public Boolean interruptedAfterWrite() throws IOException {
-        return ((!this.atomicFile.exists()) &&
-                (this.atomicFile.printTempExists()));
+        return ((!this.atomicFile.exists())
+                && (this.atomicFile.printTempExists()));
     }
 
     public Boolean interruptedDuringWrite() throws IOException {
-        return ((this.atomicFile.exists()) &&
-                (this.atomicFile.printTempExists()));
+        return ((this.atomicFile.exists())
+                && (this.atomicFile.printTempExists()));
     }
 
     public Boolean interruptedBeforeCreation() throws IOException {
-        if ((!this.atomicFile.exists()) && (!this.atomicFile.printTempExists())) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
+        return ((!this.atomicFile.exists())
+                && (!this.atomicFile.printTempExists()));
     }
 
 }

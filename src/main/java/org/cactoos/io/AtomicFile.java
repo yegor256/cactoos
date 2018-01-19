@@ -24,8 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -48,7 +46,7 @@ public final class AtomicFile extends File {
     /**
      * Temp file absolute path.
      */
-    private final JoinedText tempAbsolutePath;
+    private final JoinedText tempAbsPath;
 
     /**
      * Ctor.
@@ -58,11 +56,15 @@ public final class AtomicFile extends File {
      */
     public AtomicFile(final String pathname) {
         super(pathname);
-        this.tempAbsolutePath = new JoinedText("", System.getProperty("java.io.tmpdir"), this.getName(), "_tmp");
+        this.tempAbsPath = new JoinedText("",
+                System.getProperty("java.io.tmpdir"),
+                this.getName(),
+                "_tmp"
+        );
     }
 
     public Boolean printTempExists() throws IOException {
-        return new File(this.tempAbsolutePath.asString()).exists();
+        return new File(this.tempAbsPath.asString()).exists();
     }
 
     public synchronized void write() {
@@ -72,16 +74,18 @@ public final class AtomicFile extends File {
          */
     }
 
-    public synchronized void overwrite(final String content, final Charset charset) throws IOException, InterruptedException {
-        File tmp = new File(this.tempAbsolutePath.asString());
-        InterruptedAtomicFile interruptedAtomicFile = new InterruptedAtomicFile(this);
-        if (interruptedAtomicFile.interruptedAfterWrite()) {
+    public synchronized void overwrite(final String content,
+            final Charset charset) throws IOException, InterruptedException {
+        File tmp = new File(this.tempAbsPath.asString());
+        final InterruptedAtomicFile inAtomFile 
+                = new InterruptedAtomicFile(this);
+        if (inAtomFile.interruptedAfterWrite()) {
             tmp.renameTo(this);
         }
-        if (interruptedAtomicFile.interruptedDuringWrite()) {
+        if (inAtomFile.interruptedDuringWrite()) {
             tmp.delete();
         }
-        if (interruptedAtomicFile.interruptedBeforeCreation()) {
+        if (inAtomFile.interruptedBeforeCreation()) {
             this.getParentFile().mkdirs();
             this.createNewFile();
         }
@@ -89,7 +93,7 @@ public final class AtomicFile extends File {
         tmp.createNewFile();
         OutputTo outputTo = new OutputTo(tmp, Boolean.FALSE);
         outputTo.stream().write(content.getBytes(charset));
-        move(tmp, this);
+        this.move(tmp, this);
     }
 
     public boolean move(final File oldFile, final File newFile) throws IOException, InterruptedException {
