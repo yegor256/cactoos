@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -73,7 +73,9 @@ public final class SolidList<X> extends ListEnvelope<X> {
      */
     public SolidList(final Collection<X> list) {
         super(
-            new SolidScalar<>(() -> new SyncList<>(new StickyList<>(list)))
+            new SolidScalar<>(
+                () -> new SyncList<>(new StickyList<>(list))
+            )
         );
     }
 

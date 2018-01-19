@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,9 @@
 package org.cactoos.scalar;
 
 import java.security.SecureRandom;
+import org.cactoos.RunsInThreads;
 import org.cactoos.Scalar;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -47,6 +49,25 @@ public final class SolidScalarTest {
         MatcherAssert.assertThat(
             scalar.value() + scalar.value(),
             Matchers.equalTo(scalar.value() + scalar.value())
+        );
+    }
+
+    @Test
+    public void worksInThreads() {
+        MatcherAssert.assertThat(
+            "Can't work well in multiple threads",
+            scalar -> {
+                MatcherAssert.assertThat(
+                    scalar.value(),
+                    Matchers.equalTo(scalar.value())
+                );
+                return true;
+            },
+            new RunsInThreads<>(
+                new UncheckedScalar<>(
+                    new SolidScalar<>(() -> new ListOf<>(1, 2))
+                )
+            )
         );
     }
 

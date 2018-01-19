@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,6 +43,15 @@ public final class UncheckedFuncTest {
         new UncheckedFunc<>(
             (Func<Integer, String>) i -> {
                 throw new IOException("intended");
+            }
+        ).apply(1);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() {
+        new UncheckedFunc<>(
+            i -> {
+                throw new IllegalStateException("intended to fail");
             }
         ).apply(1);
     }

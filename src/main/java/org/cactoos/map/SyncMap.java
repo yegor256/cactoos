@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@
  */
 package org.cactoos.map;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
@@ -163,7 +163,11 @@ public final class SyncMap<X, Y> extends MapEnvelope<X, Y> {
     public SyncMap(final Map<X, Y> map) {
         super(
             new SyncScalar<>(
-                () -> Collections.synchronizedMap(map)
+                () -> {
+                    final Map<X, Y> temp = new ConcurrentHashMap<>(0);
+                    temp.putAll(map);
+                    return temp;
+                }
             )
         );
     }

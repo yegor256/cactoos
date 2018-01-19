@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,11 @@
  */
 package org.cactoos.map;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Scalar;
 import org.cactoos.iterator.Repeated;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -38,6 +40,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class MapOfTest {
 
@@ -45,9 +48,11 @@ public final class MapOfTest {
     public void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
-            new MapOf<Integer, Integer>(
-                new MapEntry<>(0, -1),
-                new MapEntry<>(1, 1)
+            new MapNoNulls<>(
+                new MapOf<Integer, Integer>(
+                    new MapEntry<>(0, -1),
+                    new MapEntry<>(1, 1)
+                )
             ),
             new BehavesAsMap<>(0, 1)
         );
@@ -83,6 +88,23 @@ public final class MapOfTest {
             "Can't sense the changes in the underlying map",
             map.size(),
             Matchers.not(Matchers.equalTo(map.size()))
+        );
+    }
+
+    @Test
+    public void createsMapWithFunctions() {
+        MatcherAssert.assertThat(
+            "Can't create a map with functions as values",
+            new MapOf<Integer, Scalar<Boolean>>(
+                new MapEntry<>(0, () -> true),
+                new MapEntry<>(
+                    1,
+                    () -> {
+                        throw new IOException("oops");
+                    }
+                )
+            ),
+            Matchers.hasKey(0)
         );
     }
 

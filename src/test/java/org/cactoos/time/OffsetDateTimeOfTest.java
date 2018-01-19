@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,59 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.time;
 
-import org.cactoos.ScalarHasValue;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link NaturalNumbers}.
- *
- * @author Tim Hinkes (timmeey@timmeey.de)
+ * Tests for {@link OffsetDateTimeOf}.
+ * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class NaturalNumbersTest {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public class OffsetDateTimeOfTest {
 
     @Test
-    public void containsSequentialNaturalNumbers() {
+    public final void testParsingIsoFormattedStringToOffsetDateTime() {
         MatcherAssert.assertThat(
-            "Can't get sequential natural numbers",
-            new NaturalNumbers(),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.hasItems(0L, 1L, 5L, 10L)
+            "Can't parse a OffsetDateTime with default/ISO format.",
+            new OffsetDateTimeOf("2017-12-13T14:15:16.000000017+01:00").value(),
+            Matchers.is(
+                OffsetDateTime.of(
+                    2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
+                )
+            )
         );
     }
 
     @Test
-    public void notStartsWithNegativeNumbers() {
+    public final void testParsingFormattedStringWithOffsetToOffsetDateTime() {
         MatcherAssert.assertThat(
-            "Contains negative Numbers",
-            new ItemAt<Long>(0, new NaturalNumbers()),
-            new ScalarHasValue<>(0L)
-        );
-    }
-
-    @Test
-    public void containsNaturalNumbersRange() {
-        MatcherAssert.assertThat(
-            "Can't get range of natural numbers",
-            // @checkstyle MagicNumber (2 lines)
-            new NaturalNumbers(() -> 10L, () -> 15L),
-            Matchers.hasItems(10L, 12L, 14L)
-        );
-    }
-
-    @Test
-    public void containsNaturalNumbersRangeWithoutLast() {
-        MatcherAssert.assertThat(
-            "Can't get range of natural numbers without last",
-            // @checkstyle MagicNumber (2 lines)
-            new NaturalNumbers(() -> 5L),
-            Matchers.hasItems(0L, 1L, 2L, 3L, 4L)
+            "Can't parse a OffsetDateTime with custom format.",
+            new OffsetDateTimeOf(
+                "2017-12-13 14:15:16",
+                "yyyy-MM-dd HH:mm:ss",
+                ZoneOffset.ofHours(1)
+            ).value(),
+            Matchers.is(
+                OffsetDateTime.of(
+                    LocalDateTime.of(2017, 12, 13, 14, 15, 16),
+                    ZoneOffset.ofHours(1)
+                )
+            )
         );
     }
 
