@@ -68,23 +68,23 @@ public final class InterruptedAtomicFileTest {
 
     @Test
     public void determineInterruptDuringWrite() throws IOException {
-        final File original = Files.createTempFile("cactoos-1", "txt-1")
-                    .toFile();
+        final File original = Files
+                        .createTempFile("cactoos-1", "txt-1")
+                        .toFile();
         original.createNewFile();
-            final JoinedText tempAbsPath = new JoinedText(
-                        "",
-                System.getProperty("java.io.tmpdir"),
-                original.getName(),
-                "_tmp"
-        );
+            final JoinedText tempAbsPath = 
+                new JoinedText(
+                    "",
+                    System.getProperty("java.io.tmpdir"),
+                    original.getName(),
+                    "_tmp"
+                );
         final File temp = new File(tempAbsPath.asString());
         temp.createNewFile();
-        MatcherAssert
-                .assertThat("Could not determine mid-write interruption status",
+        MatcherAssert.assertThat(
+                "Could not determine mid-write interruption status",
                 new InterruptedAtomicFile(
-                                        new AtomicFile(
-                                                original.getAbsolutePath()
-                        )
+                        new AtomicFile(original.getAbsolutePath())
                 ).interruptedDuringWrite(),
                 Matchers.equalTo(Boolean.TRUE)
         );
