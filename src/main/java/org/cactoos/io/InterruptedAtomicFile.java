@@ -31,7 +31,7 @@ import java.io.IOException;
  * <p>
  * There is no thread-safety guarantee.
  *
- * @author Ashton Hogan (https://twitter.com/TheAshtonHogan)
+ * @author Ashton Hogan (info@ashtonhogan.com)
  * @version $Id$
  * @since 0.49.2
  */
@@ -39,29 +39,28 @@ public final class InterruptedAtomicFile {
 
     private static final long serialVersionUID = -1682046414065640315L;
 
+   /**
+    * File that can be checked for previous interruptions.
+    */
     private final AtomicFile atomicFile;
 
     /**
      * Ctor.
      *
-     * @param atomicFile that will be checked for previous interruptions
+     * @param atomicFile File that can be checked for previous interruptions
      */
     public InterruptedAtomicFile(final AtomicFile atomicFile) {
         this.atomicFile = atomicFile;
     }
 
     public Boolean interruptedAfterWrite() throws IOException {
-        if ((!this.atomicFile.exists()) && (this.atomicFile.printTempExists())) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
+        return ((!this.atomicFile.exists()) &&
+                (this.atomicFile.printTempExists()));
     }
 
     public Boolean interruptedDuringWrite() throws IOException {
-        if ((this.atomicFile.exists()) && (this.atomicFile.printTempExists())) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
+        return ((this.atomicFile.exists()) &&
+                (this.atomicFile.printTempExists()));
     }
 
     public Boolean interruptedBeforeCreation() throws IOException {

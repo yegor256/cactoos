@@ -45,23 +45,27 @@ import org.junit.Test;
 public final class AtomicFileTest {
 
     @Test
-    public void writesStringToFileAtomically() throws IOException, InterruptedException {
-        final File original = Files.createTempFile("cactoos-1", "tmp-1").toFile();
-        AtomicFile atomicFile = new AtomicFile(
-                original.getAbsolutePath()
+    public void writesStringToFileAtomically() throws IOException, 
+            InterruptedException {
+        final File original = Files.createTempFile("cactoos-1", "tmp-1")
+                .toFile();
+        final AtomicFile atomicFile = new AtomicFile(
+                    original.getAbsolutePath()
         );
         atomicFile.overwrite("abc", Charset.forName("UTF-8"));
         MatcherAssert.assertThat(
-                "Can't write to an atomic file",
+                    "Can't write to an atomic file",
                 new TextOf(
-                        new AtomicFile(
-                                original.getAbsolutePath()
+                            new AtomicFile(
+                                    original.getAbsolutePath()
                         )
                 ),
                 new TextHasString(
-                        new MatcherOf<>(
-                                str -> {
-                                    return new TextOf(atomicFile).asString().equals(str);
+                            new MatcherOf<>(
+                                    str -> {
+                            return new TextOf(atomicFile)
+                                        .asString()
+                                        .equals(str);
                                 }
                         )
                 )

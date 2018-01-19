@@ -89,20 +89,22 @@ public final class AtomicFile extends File {
         tmp.createNewFile();
         OutputTo outputTo = new OutputTo(tmp, Boolean.FALSE);
         outputTo.stream().write(content.getBytes(charset));
-        while (!move(tmp, this)) {
-            /**
-             * @TODO this should be removed but for some reason java takes like
-             * 20 seconds to release the lock on tmp after writing content to it
-             */
-            Thread.sleep(100);
-        }
+        move(tmp, this);
     }
 
-    public boolean move(File oldFile, File newFile) throws IOException {
+    public boolean move(final File oldFile, final File newFile) throws IOException, InterruptedException {
         try {
-            Files.move(oldFile.toPath(), newFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-        } catch (java.nio.file.FileSystemException e) {
-            return false;
+            Files.move(oldFile.toPath(), newFile.toPath(), 
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        } catch (final java.nio.file.FileSystemException ex) {
+            /**
+             * @TODO this method should be removed
+             * but for some reason java takes
+             * like 20 seconds to release the lock on tmp 
+             * after writing content to it
+             */
+            Thread.sleep(100);
+            move(oldFile, newFile);
         }
         return true;
     }
