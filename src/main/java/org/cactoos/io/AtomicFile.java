@@ -24,8 +24,11 @@
 package org.cactoos.io;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import org.cactoos.text.JoinedText;
 
 /**
@@ -55,7 +58,7 @@ public final class AtomicFile extends File {
      */
     public AtomicFile(final String pathname) {
         super(pathname);
-        this.tempAbsolutePath = new JoinedText("", System.getProperty("java.io.tmpdir"), File.separator, this.getName(), "_tmp");
+        this.tempAbsolutePath = new JoinedText("", System.getProperty("java.io.tmpdir"), this.getName(), "_tmp");
     }
 
     public Boolean printTempExists() throws IOException {
@@ -69,11 +72,8 @@ public final class AtomicFile extends File {
          */
     }
 
-    public synchronized void overwrite(final String string, final Charset charset) throws IOException {
+    public synchronized void overwrite(final String content, final Charset charset) throws IOException, InterruptedException {
         File tmp = new File(this.tempAbsolutePath.asString());
-        if ((!this.exists()) && (!tmp.exists())) {
-            throw new IOException(this.getClass().getName() + " could not perform write. File and Temp File do not exist:\n" + "File: " + this.getAbsolutePath() + "\n" + "Temp File: " + tmp.getAbsolutePath());
-        }
         InterruptedAtomicFile interruptedAtomicFile = new InterruptedAtomicFile(this);
         if (interruptedAtomicFile.interruptedAfterWrite()) {
             tmp.renameTo(this);
@@ -81,12 +81,30 @@ public final class AtomicFile extends File {
         if (interruptedAtomicFile.interruptedDuringWrite()) {
             tmp.delete();
         }
+        if (interruptedAtomicFile.interruptedBeforeCreation()) {
+            this.getParentFile().mkdirs();
+            this.createNewFile();
+        }
         tmp.getParentFile().mkdirs();
         tmp.createNewFile();
         OutputTo outputTo = new OutputTo(tmp, Boolean.FALSE);
-        outputTo.stream().write(string.getBytes(charset));
-        this.delete();
-        tmp.renameTo(this);
+        outputTo.stream().write(content.getBytes(charset));
+        while (!move(tmp, this)) {
+            /**
+             * @TODO this should be removed but for some reason java takes like
+             * 20 seconds to release the lock on tmp after writing content to it
+             */
+            Thread.sleep(100);
+        }
+    }
+
+    public boolean move(File oldFile, File newFile) throws IOException {
+        try {
+            Files.move(oldFile.toPath(), newFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        } catch (java.nio.file.FileSystemException e) {
+            return false;
+        }
+        return true;
     }
 
 }

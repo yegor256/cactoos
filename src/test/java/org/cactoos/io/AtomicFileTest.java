@@ -23,6 +23,7 @@
  */
 package org.cactoos.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -34,6 +35,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link AtomicFile}.
+ *
  * @author Ashton Hogan (info@ashtonhogan.com)
  * @version $Id$
  * @since 0.49.2
@@ -43,23 +45,26 @@ import org.junit.Test;
 public final class AtomicFileTest {
 
     @Test
-    public void writesStringToFileAtomically() throws IOException {
+    public void writesStringToFileAtomically() throws IOException, InterruptedException {
+        final File original = Files.createTempFile("cactoos-1", "tmp-1").toFile();
         AtomicFile atomicFile = new AtomicFile(
-                Files.createTempFile("x1", ".tmp").toString()
+                original.getAbsolutePath()
         );
         atomicFile.overwrite("abc", Charset.forName("UTF-8"));
         MatcherAssert.assertThat(
-            "Can't write to an atomic file",
-            new TextOf(
-                atomicFile
-            ),
-            new TextHasString(
-                new MatcherOf<>(
-                    str -> {
-                        return new TextOf(atomicFile).asString().equals(str);
-                    }
+                "Can't write to an atomic file",
+                new TextOf(
+                        new AtomicFile(
+                                original.getAbsolutePath()
+                        )
+                ),
+                new TextHasString(
+                        new MatcherOf<>(
+                                str -> {
+                                    return new TextOf(atomicFile).asString().equals(str);
+                                }
+                        )
                 )
-            )
         );
     }
 

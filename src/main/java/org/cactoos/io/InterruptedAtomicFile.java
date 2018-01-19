@@ -64,4 +64,11 @@ public final class InterruptedAtomicFile {
         return Boolean.FALSE;
     }
 
+    public Boolean interruptedBeforeCreation() throws IOException {
+        if ((!this.atomicFile.exists()) && (!this.atomicFile.printTempExists())) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
 }

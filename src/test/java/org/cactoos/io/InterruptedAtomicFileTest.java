@@ -46,7 +46,7 @@ public final class InterruptedAtomicFileTest {
     public void determineInterruptAfterWrite() throws IOException {
         final File original = Files.createTempFile("cactoos-1", "txt-1").toFile();
         original.delete();
-        JoinedText tempAbsolutePath = new JoinedText("", System.getProperty("java.io.tmpdir"), File.separator, original.getName(), "_tmp");
+        JoinedText tempAbsolutePath = new JoinedText("", System.getProperty("java.io.tmpdir"), original.getName(), "_tmp");
         final File temp = new File(tempAbsolutePath.asString());
         temp.createNewFile();
         MatcherAssert.assertThat(
@@ -64,7 +64,7 @@ public final class InterruptedAtomicFileTest {
     public void determineInterruptDuringWrite() throws IOException {
         final File original = Files.createTempFile("cactoos-1", "txt-1").toFile();
         original.createNewFile();
-        JoinedText tempAbsolutePath = new JoinedText("", System.getProperty("java.io.tmpdir"), File.separator, original.getName(), "_tmp");
+        JoinedText tempAbsolutePath = new JoinedText("", System.getProperty("java.io.tmpdir"), original.getName(), "_tmp");
         final File temp = new File(tempAbsolutePath.asString());
         temp.createNewFile();
         MatcherAssert.assertThat(
