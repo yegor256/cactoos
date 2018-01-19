@@ -115,7 +115,8 @@ public final class LoggingInputTest {
                 Matchers.not(
                     Matchers.containsString("Read 16384 byte(s) from text file")
                 ),
-                Matchers.containsString("Read 74536 byte(s) from text file in")
+                Matchers.containsString("Read 74536 byte(s) from text file in"),
+                Matchers.containsString("Closed input stream from text file")
             )
         );
     }
@@ -172,7 +173,7 @@ public final class LoggingInputTest {
             "Can't log avaliable byte(s) from text file",
             logger.toString(),
             Matchers.containsString(
-                "There is(are) 74536 byte(s) avaliable from text file"
+                "There is(are) 74536 byte(s) available from text file"
             )
         );
     }
@@ -193,7 +194,7 @@ public final class LoggingInputTest {
             logger.toString(),
             Matchers.allOf(
                 Matchers.containsString("Marked position 150 from text file"),
-                Matchers.containsString("Reseted input stream from text file")
+                Matchers.containsString("Reset input stream from text file")
             )
         );
     }
@@ -210,7 +211,7 @@ public final class LoggingInputTest {
             "Can't log mark and reset are not supported from text file",
             logger.toString(),
             Matchers.containsString(
-                "Mark and reset methods are supported from text file"
+                "Mark and reset are supported from text file"
             )
         );
     }

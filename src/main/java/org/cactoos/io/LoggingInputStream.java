@@ -116,31 +116,23 @@ public final class LoggingInputStream extends InputStream {
         final Instant end = Instant.now();
         final long millis = Duration.between(start, end).toMillis();
         final Level level = this.logger.getLevel();
-        final String msg = "Read %d byte(s) from %s in %dms.";
         if (byts > 0) {
             this.bytes.getAndAdd(byts);
             this.time.getAndAdd(millis);
+        }
+        final String msg = String.format(
+            "Read %d byte(s) from %s in %dms.",
+            this.bytes.get(),
+            this.source,
+            this.time.get()
+        );
+        if (byts > 0) {
             if (!level.equals(Level.INFO)) {
-                this.logger.log(
-                    level,
-                    String.format(
-                        msg,
-                        this.bytes.get(),
-                        this.source,
-                        this.time.get()
-                    )
-                );
+                this.logger.log(level, msg);
             }
         } else {
             if (level.equals(Level.INFO)) {
-                this.logger.info(
-                    String.format(
-                        msg,
-                        this.bytes.get(),
-                        this.source,
-                        this.time.get()
-                    )
-                );
+                this.logger.info(msg);
             }
         }
         return byts;
@@ -166,7 +158,7 @@ public final class LoggingInputStream extends InputStream {
         this.logger.log(
             this.logger.getLevel(),
             String.format(
-                "There is(are) %d byte(s) avaliable from %s.",
+                "There is(are) %d byte(s) available from %s.",
                 avail,
                 this.source
             )
@@ -205,7 +197,7 @@ public final class LoggingInputStream extends InputStream {
         this.logger.log(
             this.logger.getLevel(),
             String.format(
-                "Reseted input stream from %s.",
+                "Reset input stream from %s.",
                 this.source
             )
         );
@@ -214,23 +206,19 @@ public final class LoggingInputStream extends InputStream {
     @Override
     public boolean markSupported() {
         final boolean supported = this.origin.markSupported();
+        final String msg;
         if (supported) {
-            this.logger.log(
-                this.logger.getLevel(),
-                String.format(
-                    "Mark and reset methods are supported from %s.",
-                    this.source
-                )
-            );
+            msg = "Mark and reset are supported from %s";
         } else {
-            this.logger.log(
-                this.logger.getLevel(),
-                String.format(
-                    "Mark and reset methods are *not* supported from %s.",
-                    this.source
-                )
-            );
+            msg = "Mark and reset NOT supported from %s";
         }
+        this.logger.log(
+            this.logger.getLevel(),
+            String.format(
+                msg,
+                this.source
+            )
+        );
         return supported;
     }
 }
