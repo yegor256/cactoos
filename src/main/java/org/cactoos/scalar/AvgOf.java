@@ -23,7 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.stream.StreamSupport;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 
@@ -71,48 +73,19 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Integer... src) {
-        super(() -> {
-            long sum = 0L;
-            long total = 0L;
-            for (final int val : src) {
-                sum += (long) val;
-                ++total;
-            }
-            if (total == 0L) {
-                total = 1L;
-            }
-            return sum / total;
-        }, () -> {
-            double sum = 0;
-            double total = 1;
-            for (final double val : src) {
-                sum += (val - sum) / total;
-                ++total;
-            }
-            return (int) sum;
-        }, () -> {
-            float sum = 0.0f;
-            float total = 0.0f;
-            for (final int val : src) {
-                sum += (float) val;
-                total += 1.0f;
-            }
-            if (total == 0.0f) {
-                total = 1.0f;
-            }
-            return sum / total;
-        }, () -> {
-            double sum = 0.0d;
-            double total = 0.0d;
-            for (final int val : src) {
-                sum += (double) val;
-                total += 1.0d;
-            }
-            if (total == 0.0d) {
-                total = 1.0d;
-            }
-            return sum / total;
-        });
+        super(() -> avgArray(
+            number -> BigDecimal.valueOf(number.intValue()), src
+            ).longValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number.intValue()), src
+            ).intValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number.intValue()), src
+            ).floatValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number.intValue()), src
+            ).doubleValue()
+        );
     }
 
     /**
@@ -120,48 +93,19 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Long... src) {
-        super(() -> {
-            double sum = 0d;
-            double total = 1d;
-            for (final double val : src) {
-                sum += (val - sum) / total;
-                ++total;
-            }
-            return (long) sum;
-        }, () -> {
-            int sum = 0;
-            int total = 0;
-            for (final long val : src) {
-                sum += (int) val;
-                ++total;
-            }
-            if (total == 0) {
-                total = 1;
-            }
-            return sum / total;
-        }, () -> {
-            float sum = 0.0f;
-            float total = 0.0f;
-            for (final long val : src) {
-                sum += (float) val;
-                total += 1.0f;
-            }
-            if (total == 0.0f) {
-                total = 1.0f;
-            }
-            return sum / total;
-        }, () -> {
-            double sum = 0.0d;
-            double total = 0.0d;
-            for (final long val : src) {
-                sum += (double) val;
-                total += 1.0d;
-            }
-            if (total == 0.0d) {
-                total = 1.0d;
-            }
-            return sum / total;
-        });
+        super(() -> avgArray(
+            number -> BigDecimal.valueOf(number.longValue()), src
+            ).longValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number.longValue()), src
+            ).intValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number.longValue()), src
+            ).floatValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number.longValue()), src
+            ).doubleValue()
+        );
     }
 
     /**
@@ -169,48 +113,19 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Double... src) {
-        super(() -> {
-            long sum = 0L;
-            long total = 0L;
-            for (final double val : src) {
-                sum += (long) val;
-                ++total;
-            }
-            if (total == 0L) {
-                total = 1L;
-            }
-            return sum / total;
-        }, () -> {
-            int sum = 0;
-            int total = 0;
-            for (final double val : src) {
-                sum += (int) val;
-                ++total;
-            }
-            if (total == 0) {
-                total = 1;
-            }
-            return sum / total;
-        }, () -> {
-            float sum = 0.0f;
-            float total = 0.0f;
-            for (final double val : src) {
-                sum += (float) val;
-                total += 1.0f;
-            }
-            if (total == 0.0f) {
-                total = 1.0f;
-            }
-            return sum / total;
-        }, () -> {
-            double sum = 0.0d;
-            double total = 1.0d;
-            for (final double val : src) {
-                sum += (val - sum) / total;
-                total += 1.0d;
-            }
-            return sum;
-        });
+        super(() -> avgArray(
+            number -> BigDecimal.valueOf(number), src
+            ).longValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number), src
+            ).intValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number), src
+            ).floatValue(),
+            () -> avgArray(
+                number -> new BigDecimal(number), src
+            ).doubleValue()
+        );
     }
 
     /**
@@ -218,48 +133,19 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Float... src) {
-        super(() -> {
-            long sum = 0L;
-            long total = 0L;
-            for (final float val : src) {
-                sum += (long) val;
-                ++total;
-            }
-            if (total == 0L) {
-                total = 1L;
-            }
-            return sum / total;
-        }, () -> {
-            int sum = 0;
-            int total = 0;
-            for (final float val : src) {
-                sum += (int) val;
-                ++total;
-            }
-            if (total == 0) {
-                total = 1;
-            }
-            return sum / total;
-        }, () -> {
-            double sum = 0.0d;
-            double total = 1.0d;
-            for (final double val : src) {
-                sum += (val - sum) / total;
-                total += 1.0f;
-            }
-            return (float) sum;
-        }, () -> {
-            double sum = 0.0d;
-            double total = 0.0d;
-            for (final float val : src) {
-                sum += (double) val;
-                total += 1.0d;
-            }
-            if (total == 0.0d) {
-                total = 1.0d;
-            }
-            return sum / total;
-        });
+        super(() -> avgArray(
+            number -> BigDecimal.valueOf(number.floatValue()), src
+            ).longValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number.floatValue()), src
+            ).intValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number.floatValue()), src
+            ).floatValue(),
+            () -> avgArray(
+                number -> BigDecimal.valueOf(number.floatValue()), src
+            ).doubleValue()
+        );
     }
 
     /**
@@ -277,58 +163,76 @@ public final class AvgOf extends NumberEnvelope {
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public AvgOf(final Iterable<Scalar<Number>> src) {
-        super(() -> {
-            final Iterator<Scalar<Number>> numbers = src.iterator();
-            long sum = 0L;
-            long total = 0L;
-            while (numbers.hasNext()) {
-                final Number next = numbers.next().value();
-                sum += next.longValue();
-                ++total;
-            }
-            if (total == 0L) {
-                total = 1L;
-            }
-            return sum / total;
-        }, () -> {
-            final Iterator<Scalar<Number>> numbers = src.iterator();
-            int sum = 0;
-            int total = 0;
-            while (numbers.hasNext()) {
-                final Number next = numbers.next().value();
-                sum += next.intValue();
-                ++total;
-            }
-            if (total == 0) {
-                total = 1;
-            }
-            return sum / total;
-        }, () -> {
-            final Iterator<Scalar<Number>> numbers = src.iterator();
-            float sum = 0.0f;
-            float total = 0.0f;
-            while (numbers.hasNext()) {
-                final Number next = numbers.next().value();
-                sum += next.floatValue();
-                total += 1.0f;
-            }
-            if (total == 0.0f) {
-                total = 1.0f;
-            }
-            return sum / total;
-        }, () -> {
-            final Iterator<Scalar<Number>> numbers = src.iterator();
-            double sum = 0.0d;
-            double total = 0.0d;
-            while (numbers.hasNext()) {
-                final Number next = numbers.next().value();
-                sum += next.doubleValue();
-                total += 1.0d;
-            }
-            if (total == 0.0d) {
-                total = 1.0d;
-            }
-            return sum / total;
-        });
+        super(() -> avgIterator(
+            number -> BigDecimal.valueOf(number.longValue()), src
+            ).longValue(),
+            () -> avgIterator(
+                number -> BigDecimal.valueOf(number.intValue()), src
+            ).intValue(),
+            () -> avgIterator(
+                number -> BigDecimal.valueOf(number.floatValue()), src
+            ).floatValue(),
+            () -> avgIterator(
+                number -> BigDecimal.valueOf(number.doubleValue()), src
+            ).doubleValue()
+        );
+    }
+
+    /**
+     * Calculates average from the provided numbers and uses {@link Converter}
+     * to create {@link BigDecimal}.
+     * @param converter The {@link Converter} to create {@link BigDecimal}
+     * @param src The numbers to calculate average.
+     * @return The average.
+     */
+    private static BigDecimal avgIterator(
+        final Converter<Number> converter, final Iterable<Scalar<Number>> src
+    ) {
+        return avgArray(
+            converter,
+            StreamSupport.stream(src.spliterator(), false)
+                .map(scalar -> new UncheckedScalar<>(scalar).value())
+                .toArray(Number[]::new)
+        );
+    }
+
+    /**
+     * Calculates average from the provided numbers and uses {@link Converter}
+     * to create {@link BigDecimal}.
+     * @param converter The {@link Converter} to create {@link BigDecimal}
+     * @param src The numbers to calculate average.
+     * @param <T> The type of numbers.
+     * @return The average.
+     */
+    @SafeVarargs
+    private static <T extends Number> BigDecimal avgArray(
+        final Converter<T> converter, final T... src
+    ) {
+        BigDecimal sum = BigDecimal.ZERO;
+        long count = 0;
+        for (final T value : src) {
+            sum = sum.add(converter.convert(value));
+            ++count;
+        }
+        if (count == 0) {
+            count = 1;
+        }
+        return sum.divide(
+            BigDecimal.valueOf(count), MathContext.DECIMAL128
+        );
+    }
+
+    /**
+     * The converter interface to provide {@link BigDecimal}.
+     * @param <T> The type of number.
+     */
+    @FunctionalInterface
+    private interface Converter<T extends Number> {
+        /**
+         * Converts the number to {@link BigDecimal}.
+         * @param number The number to convert.
+         * @return A {@link BigDecimal}.
+         */
+        BigDecimal convert(final T number);
     }
 }

@@ -26,7 +26,6 @@ package org.cactoos.scalar;
 import java.util.Collections;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -52,7 +51,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntegerCollectionIntValue() {
+    public void withIntCollectionIntValue() {
         MatcherAssert.assertThat(
             new AvgOf(
                 1, 2, 3, 4
@@ -62,7 +61,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntegerCollectionIntValueMaxValues() {
+    public void withIntCollectionIntValueMaxValues() {
         MatcherAssert.assertThat(
             new AvgOf(
                 Integer.MAX_VALUE, Integer.MAX_VALUE
@@ -72,7 +71,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntegerCollectionLongValue() {
+    public void withIntCollectionLongValue() {
         MatcherAssert.assertThat(
             new AvgOf(
                 1, 2, 3, 4
@@ -82,7 +81,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntegerCollectionDoubleValue() {
+    public void withIntCollectionDoubleValue() {
         MatcherAssert.assertThat(
             new AvgOf(
                 1, 2, 3, 4
@@ -92,7 +91,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntegerCollectionFloatValue() {
+    public void withIntCollectionFloatValue() {
         MatcherAssert.assertThat(
             new AvgOf(
                 1, 2, 3, 4
@@ -192,22 +191,63 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withDoubleCollectionFloatValue() {
+    public void withDoubleCollectionMinValue() {
         MatcherAssert.assertThat(
             new AvgOf(
-                1.0d, 2.0d, 3.0d, 4.0d
-            ).floatValue(),
-            Matchers.equalTo(2.5f)
+                Double.MIN_VALUE, Double.MIN_VALUE
+            ).doubleValue(),
+            Matchers.equalTo(Double.MIN_VALUE)
+        );
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void withDoubleCollectionPositiveInfinity() {
+        new AvgOf(
+            Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY
+        ).doubleValue();
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void withDoubleCollectionNegativeInfinity() {
+        new AvgOf(
+            Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY
+        ).doubleValue();
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void withDoubleCollectionNaN() {
+        new AvgOf(
+            Double.NaN, Double.NaN
+        ).doubleValue();
+    }
+
+    @Test
+    public void withDoubleCollectionNegativeNumbersDoubleValue() {
+        MatcherAssert.assertThat(
+            new AvgOf(
+                -1.0d, -2.0d, -3.0d, -4.0d
+            ).doubleValue(),
+            Matchers.equalTo(-2.5d)
         );
     }
 
     @Test
-    public void withDoubleCollectionPrecisionProblem() {
+    public void withDecimalCollectionPrecisionProblem() {
         MatcherAssert.assertThat(
             new AvgOf(
-                100.0, 100.266
-            ).doubleValue(),
-            Matchers.equalTo(100.133d)
+                100.0, 100.666, 100.0
+            ).floatValue(),
+            Matchers.equalTo(100.222f)
+        );
+    }
+
+    @Test
+    public void withDecimalCollectionPrecisionProblemExtraDecimalRange() {
+        MatcherAssert.assertThat(
+            new AvgOf(
+                100.266, 100.267
+            ).floatValue(),
+            Matchers.equalTo(100.2665f)
         );
     }
 
@@ -262,12 +302,52 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withScalars() {
+    public void withFloatCollectionMinValue() {
+        MatcherAssert.assertThat(
+            new AvgOf(
+                Float.MIN_VALUE, Float.MIN_VALUE
+            ).floatValue(),
+            Matchers.equalTo(Float.MIN_VALUE)
+        );
+    }
+
+    @Test
+    public void withIntScalarsIntValue() {
+        MatcherAssert.assertThat(
+            new AvgOf(
+                () -> 1, () -> 2, () -> 10
+            ).intValue(),
+            Matchers.equalTo(4)
+        );
+    }
+
+    @Test
+    public void withLongScalarsIntValue() {
         MatcherAssert.assertThat(
             new AvgOf(
                 () -> 1L, () -> 2L, () -> 10L
+            ).intValue(),
+            Matchers.equalTo(4)
+        );
+    }
+
+    @Test
+    public void withFloatScalarsIntValue() {
+        MatcherAssert.assertThat(
+            new AvgOf(
+                () -> 1f, () -> 2f, () -> 10f
             ).longValue(),
             Matchers.equalTo(4L)
+        );
+    }
+
+    @Test
+    public void withDoubleScalarsIntValue() {
+        MatcherAssert.assertThat(
+            new AvgOf(
+                () -> 1.0d, () -> 2.0d, () -> 10.0d
+            ).intValue(),
+            Matchers.equalTo(4)
         );
     }
 
@@ -278,89 +358,6 @@ public final class AvgOfTest {
                 new IterableOf<Scalar<Number>>(() -> 1L, () -> 2L, () -> 10L)
             ).longValue(),
             Matchers.equalTo(4L)
-        );
-    }
-
-    @Test
-    public void withMaxValueCollections() {
-        MatcherAssert.assertThat(
-            new AvgOf(
-                new ListOf<>(Double.MAX_VALUE, Double.MAX_VALUE)
-                    .toArray(new Double[2])
-                        ).doubleValue(),
-                Matchers.equalTo(Double.MAX_VALUE)
-        );
-        MatcherAssert.assertThat(
-            new AvgOf(
-                new ListOf<>(Integer.MAX_VALUE, Integer.MAX_VALUE)
-                    .toArray(new Integer[2])
-                        ).intValue(),
-                Matchers.equalTo(Integer.MAX_VALUE)
-        );
-        MatcherAssert.assertThat(
-            new AvgOf(
-                new ListOf<>(Long.MAX_VALUE, Long.MAX_VALUE)
-                    .toArray(new Long[2])
-                        ).longValue(),
-                Matchers.equalTo(Long.MAX_VALUE)
-        );
-        MatcherAssert.assertThat(
-            new AvgOf(
-                new ListOf<>(Float.MAX_VALUE, Float.MAX_VALUE)
-                    .toArray(new Float[2])
-                        ).floatValue(),
-                Matchers.equalTo(Float.MAX_VALUE)
-        );
-    }
-
-    @Test
-    public void withMinValueCollections() {
-        MatcherAssert.assertThat(
-            new AvgOf(
-                new ListOf<>(Double.MIN_VALUE, Double.MIN_VALUE)
-                    .toArray(new Double[2])
-                        ).doubleValue(),
-                Matchers.equalTo(Double.MIN_VALUE)
-        );
-        MatcherAssert.assertThat(
-            new AvgOf(
-                new ListOf<>(Integer.MIN_VALUE, Integer.MIN_VALUE)
-                    .toArray(new Integer[2])
-                        ).intValue(),
-                Matchers.equalTo(Integer.MIN_VALUE)
-        );
-        MatcherAssert.assertThat(
-            new AvgOf(
-                new ListOf<>(Long.MIN_VALUE, Long.MIN_VALUE)
-                    .toArray(new Long[2])
-                        ).longValue(),
-                Matchers.equalTo(Long.MIN_VALUE)
-        );
-        MatcherAssert.assertThat(
-            new AvgOf(
-                new ListOf<>(Float.MIN_VALUE, Float.MIN_VALUE)
-                    .toArray(new Float[2])
-                        ).floatValue(),
-                Matchers.equalTo(Float.MIN_VALUE)
-        );
-    }
-
-    @Test
-    public void withEvenOddValues() {
-        final Float[] array = new ListOf<>(12345.0f, -12345.0f)
-            .toArray(new Float[2]);
-        final int expected = 0;
-        MatcherAssert.assertThat(
-            new AvgOf(array).intValue(), Matchers.equalTo(expected)
-        );
-        MatcherAssert.assertThat(
-            new AvgOf(array).longValue(), Matchers.equalTo((long) expected)
-        );
-        MatcherAssert.assertThat(
-            new AvgOf(array).doubleValue(), Matchers.equalTo((double) expected)
-        );
-        MatcherAssert.assertThat(
-            new AvgOf(array).floatValue(), Matchers.equalTo((float) expected)
         );
     }
 }
