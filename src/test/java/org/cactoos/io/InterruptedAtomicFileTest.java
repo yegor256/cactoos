@@ -71,7 +71,7 @@ public final class InterruptedAtomicFileTest {
         final File original = Files.createTempFile("cactoos-1", "txt-1")
                     .toFile();
         original.createNewFile();
-        final JoinedText tempAbsPath = new JoinedText(
+            final JoinedText tempAbsPath = new JoinedText(
                         "",
                 System.getProperty("java.io.tmpdir"),
                 original.getName(),
@@ -79,11 +79,11 @@ public final class InterruptedAtomicFileTest {
         );
         final File temp = new File(tempAbsPath.asString());
         temp.createNewFile();
-        MatcherAssert.assertThat(
-                            "Could not determine mid-write interruption status",
+        MatcherAssert
+                .assertThat("Could not determine mid-write interruption status",
                 new InterruptedAtomicFile(
-                                    new AtomicFile(
-                                            original.getAbsolutePath()
+                                        new AtomicFile(
+                                                original.getAbsolutePath()
                         )
                 ).interruptedDuringWrite(),
                 Matchers.equalTo(Boolean.TRUE)

@@ -56,7 +56,7 @@ public final class AtomicFile extends File {
     public AtomicFile(final String pathname) {
         super(pathname);
         this.joinedText = new JoinedText(
-                "",
+                    "",
                 System.getProperty("java.io.tmpdir"),
                 this.getName(),
                 "_tmp"
@@ -70,15 +70,15 @@ public final class AtomicFile extends File {
     /**
      * @TODO Appends content instead of overwriting it
      */
-    public synchronized void write() {
+    public static synchronized void write() {
         
     }
 
     public synchronized void overwrite(final String content,
             final Charset charset) throws IOException, InterruptedException {
         final File tmp = new File(this.joinedText.asString());
-        final InterruptedAtomicFile interrupted 
-                = new InterruptedAtomicFile(this);
+        final InterruptedAtomicFile interrupted
+                    = new InterruptedAtomicFile(this);
         if (interrupted.interruptedAfterWrite()) {
             tmp.renameTo(this);
         }
@@ -96,7 +96,8 @@ public final class AtomicFile extends File {
         this.move(tmp, this);
     }
 
-    public boolean move(final File file1, final File file2) throws IOException, InterruptedException {
+    public boolean move(final File file1, final File file2) throws IOException,
+            InterruptedException {
         try {
             Files.move(file1.toPath(), file2.toPath(), 
                     java.nio.file.StandardCopyOption.REPLACE_EXISTING);
