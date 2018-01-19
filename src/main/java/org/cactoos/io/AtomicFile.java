@@ -46,17 +46,17 @@ public final class AtomicFile extends File {
     /**
      * Temp file absolute path.
      */
-    private final JoinedText tempAbsPath;
+    private final JoinedText joinedText;
 
     /**
      * Ctor.
      *
-     * @param pathname File to be replaced after writing to temp file is
-     * complete
+     * @param pathname Written to and replaced
      */
     public AtomicFile(final String pathname) {
         super(pathname);
-        this.tempAbsPath = new JoinedText("",
+        this.joinedText = new JoinedText(
+                "",
                 System.getProperty("java.io.tmpdir"),
                 this.getName(),
                 "_tmp"
@@ -64,41 +64,41 @@ public final class AtomicFile extends File {
     }
 
     public Boolean printTempExists() throws IOException {
-        return new File(this.tempAbsPath.asString()).exists();
+        return new File(this.joinedText.asString()).exists();
     }
 
+    /**
+     * @TODO Appends content instead of overwriting it
+     */
     public synchronized void write() {
-        /**
-         * @TODO Add a variation of overwrite that appends content to a file
-         * instead of replacing all content
-         */
+        
     }
 
     public synchronized void overwrite(final String content,
             final Charset charset) throws IOException, InterruptedException {
-        File tmp = new File(this.tempAbsPath.asString());
-        final InterruptedAtomicFile inAtomFile 
+        final File tmp = new File(this.joinedText.asString());
+        final InterruptedAtomicFile interrupted 
                 = new InterruptedAtomicFile(this);
-        if (inAtomFile.interruptedAfterWrite()) {
+        if (interrupted.interruptedAfterWrite()) {
             tmp.renameTo(this);
         }
-        if (inAtomFile.interruptedDuringWrite()) {
+        if (interrupted.interruptedDuringWrite()) {
             tmp.delete();
         }
-        if (inAtomFile.interruptedBeforeCreation()) {
+        if (interrupted.interruptedBeforeCreation()) {
             this.getParentFile().mkdirs();
             this.createNewFile();
         }
         tmp.getParentFile().mkdirs();
         tmp.createNewFile();
-        OutputTo outputTo = new OutputTo(tmp, Boolean.FALSE);
+        final OutputTo outputTo = new OutputTo(tmp, Boolean.FALSE);
         outputTo.stream().write(content.getBytes(charset));
         this.move(tmp, this);
     }
 
-    public boolean move(final File oldFile, final File newFile) throws IOException, InterruptedException {
+    public boolean move(final File file1, final File file2) throws IOException, InterruptedException {
         try {
-            Files.move(oldFile.toPath(), newFile.toPath(), 
+            Files.move(file1.toPath(), file2.toPath(), 
                     java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         } catch (final java.nio.file.FileSystemException ex) {
             /**
@@ -107,8 +107,9 @@ public final class AtomicFile extends File {
              * like 20 seconds to release the lock on tmp 
              * after writing content to it
              */
-            Thread.sleep(100);
-            move(oldFile, newFile);
+            int sleepDuration = 100;
+            Thread.sleep(sleepDuration);
+            this.move(file1, file2);
         }
         return true;
     }
