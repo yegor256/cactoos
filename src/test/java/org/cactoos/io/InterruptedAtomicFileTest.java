@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import org.cactoos.text.JoinedText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -33,7 +34,7 @@ import org.junit.Test;
 /**
  * Test case for {@link AtomicFile}.
  *
- * @author Ashton Hogan (https://twitter.com/TheAshtonHogan)
+ * @author Ashton Hogan (info@ashtonhogan.com)
  * @version $Id$
  * @since 0.49.2
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -45,7 +46,8 @@ public final class InterruptedAtomicFileTest {
     public void determineInterruptAfterWrite() throws IOException {
         final File original = Files.createTempFile("cactoos-1", "txt-1").toFile();
         original.delete();
-        final File temp = new File(System.getProperty("java.io.tmpdir") + File.separator + original.getName() + "_tmp");
+        JoinedText tempAbsolutePath = new JoinedText("", System.getProperty("java.io.tmpdir"), File.separator, original.getName(), "_tmp");
+        final File temp = new File(tempAbsolutePath.asString());
         temp.createNewFile();
         MatcherAssert.assertThat(
                 "Could not determine post-write interruption status",
@@ -62,7 +64,8 @@ public final class InterruptedAtomicFileTest {
     public void determineInterruptDuringWrite() throws IOException {
         final File original = Files.createTempFile("cactoos-1", "txt-1").toFile();
         original.createNewFile();
-        final File temp = new File(System.getProperty("java.io.tmpdir") + File.separator + original.getName() + "_tmp");
+        JoinedText tempAbsolutePath = new JoinedText("", System.getProperty("java.io.tmpdir"), File.separator, original.getName(), "_tmp");
+        final File temp = new File(tempAbsolutePath.asString());
         temp.createNewFile();
         MatcherAssert.assertThat(
                 "Could not determine mid-write interruption status",

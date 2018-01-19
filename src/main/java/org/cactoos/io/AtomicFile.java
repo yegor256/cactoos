@@ -55,7 +55,7 @@ public final class AtomicFile extends File {
      */
     public AtomicFile(final String pathname) {
         super(pathname);
-        this.tempAbsolutePath = new JoinedText(System.getProperty("java.io.tmpdir"), File.separator, this.getName(), "_tmp");
+        this.tempAbsolutePath = new JoinedText("", System.getProperty("java.io.tmpdir"), File.separator, this.getName(), "_tmp");
     }
 
     public Boolean printTempExists() throws IOException {
