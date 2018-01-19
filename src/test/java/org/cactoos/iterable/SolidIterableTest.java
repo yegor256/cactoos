@@ -23,30 +23,50 @@
  */
 package org.cactoos.iterable;
 
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link Skipped}.
+ * Test Case for {@link SolidIterable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle MagicNumber (500 lines)
  */
-public final class ReducedTest {
+public final class SolidIterableTest {
 
     @Test
-    public void skipIterable() throws Exception {
+    public void makesListFromMappedIterable() throws Exception {
+        final Iterable<Integer> list = new SolidIterable<>(
+            new org.cactoos.list.Mapped<>(
+                i -> i + 1,
+                new IterableOf<>(1, -1, 0, 1)
+            )
+        );
         MatcherAssert.assertThat(
-            "Can't reduce elements in iterable",
-            new Reduced<>(
-                0L, (first, second) -> first + second,
-                new Limited<>(10, new NaturalNumbers())
-            ).value(),
-            Matchers.equalTo(45L)
+            "Can't turn a mapped iterable into a list",
+            list, Matchers.iterableWithSize(4)
+        );
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list, again",
+            list, Matchers.iterableWithSize(4)
         );
     }
 
+    @Test
+    public void mapsToSameObjects() throws Exception {
+        final Iterable<Scalar<Integer>> list = new SolidIterable<>(
+            new org.cactoos.list.Mapped<>(
+                i -> (Scalar<Integer>) () -> i,
+                new IterableOf<>(1, -1, 0, 1)
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't map only once",
+            list.iterator().next(), Matchers.equalTo(list.iterator().next())
+        );
+    }
 }

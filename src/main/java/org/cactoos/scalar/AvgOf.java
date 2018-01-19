@@ -25,16 +25,17 @@ package org.cactoos.scalar;
 
 import java.util.Iterator;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
 
 /**
- * Int total of numbers.
+ * Average of numbers.
  *
- * <p>Here is how you can use it to summarize numbers:</p>
+ * <p>Here is how you can use it to fine mathematical average of numbers:</p>
  *
  * <pre>
- * int sum = new SumOf(1, 2, 3, 4).intValue();
- * long sum = new SumOf(1L, 2L, 3L).longValue();
- * int sum = new SumOf(numbers.toArray(new Integer[numbers.size()])).intValue();
+ * int sum = new AvgOf(1, 2, 3, 4).intValue();
+ * long sum = new AvgOf(1L, 2L, 3L).longValue();
+ * int sum = new AvgOf(numbers.toArray(new Integer[numbers.size()])).intValue();
  * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
@@ -47,7 +48,9 @@ import org.cactoos.Scalar;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.24
+ * @checkstyle ExecutableStatementCountCheck (500 lines)
+ * @checkstyle NPathComplexityCheck (500 lines)
  */
 @SuppressWarnings(
     {
@@ -56,7 +59,7 @@ import org.cactoos.Scalar;
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
     }
 )
-public final class SumOf extends Number {
+public final class AvgOf extends Number {
 
     /**
      * Serialization marker.
@@ -86,37 +89,56 @@ public final class SumOf extends Number {
     /**
      * Ctor.
      * @param src Numbers
-     * @since 0.22
      */
-    public SumOf(final Integer... src) {
+    public AvgOf(final Integer... src) {
         this(
             () -> {
                 int sum = 0;
+                int total = 0;
                 for (final int val : src) {
                     sum += val;
+                    ++total;
                 }
-                return sum;
+                if (total == 0) {
+                    total = 1;
+                }
+                return sum / total;
             },
             () -> {
                 long sum = 0L;
+                long total = 0L;
                 for (final int val : src) {
                     sum += (long) val;
+                    ++total;
                 }
-                return sum;
+                if (total == 0L) {
+                    total = 1L;
+                }
+                return sum / total;
             },
             () -> {
                 double sum = 0.0d;
+                double total = 0.0d;
                 for (final int val : src) {
                     sum += (double) val;
+                    total += 1.0d;
                 }
-                return sum;
+                if (total == 0.0d) {
+                    total = 1.0d;
+                }
+                return sum / total;
             },
             () -> {
                 float sum = 0.0f;
+                float total = 0.0f;
                 for (final int val : src) {
-                    sum += (float) val;
+                    sum += val;
+                    total += 1.0f;
                 }
-                return sum;
+                if (total == 0.0f) {
+                    total = 1.0f;
+                }
+                return sum / total;
             }
         );
     }
@@ -124,37 +146,56 @@ public final class SumOf extends Number {
     /**
      * Ctor.
      * @param src Numbers
-     * @since 0.22
      */
-    public SumOf(final Long... src) {
+    public AvgOf(final Long... src) {
         this(
             () -> {
                 int sum = 0;
+                int total = 0;
                 for (final long val : src) {
                     sum += (int) val;
+                    ++total;
                 }
-                return sum;
+                if (total == 0) {
+                    total = 1;
+                }
+                return sum / total;
             },
             () -> {
                 long sum = 0L;
+                long total = 0L;
                 for (final long val : src) {
                     sum += val;
+                    ++total;
                 }
-                return sum;
+                if (total == 0L) {
+                    total = 1L;
+                }
+                return sum / total;
             },
             () -> {
                 double sum = 0.0d;
+                double total = 0.0d;
                 for (final long val : src) {
                     sum += (double) val;
+                    total += 1.0d;
                 }
-                return sum;
+                if (total == 0.0d) {
+                    total = 1.0d;
+                }
+                return sum / total;
             },
             () -> {
                 float sum = 0.0f;
+                float total = 0.0f;
                 for (final long val : src) {
                     sum += (float) val;
+                    total += 1.0f;
                 }
-                return sum;
+                if (total == 0.0f) {
+                    total = 1.0f;
+                }
+                return sum / total;
             }
         );
     }
@@ -162,37 +203,56 @@ public final class SumOf extends Number {
     /**
      * Ctor.
      * @param src Numbers
-     * @since 0.22
      */
-    public SumOf(final Double... src) {
+    public AvgOf(final Double... src) {
         this(
             () -> {
                 int sum = 0;
+                int total = 0;
                 for (final double val : src) {
                     sum += (int) val;
+                    ++total;
                 }
-                return sum;
+                if (total == 0) {
+                    total = 1;
+                }
+                return sum / total;
             },
             () -> {
                 long sum = 0L;
+                long total = 0L;
                 for (final double val : src) {
                     sum += (long) val;
+                    ++total;
                 }
-                return sum;
+                if (total == 0L) {
+                    total = 1L;
+                }
+                return sum / total;
             },
             () -> {
                 double sum = 0.0d;
+                double total = 0.0d;
                 for (final double val : src) {
                     sum += val;
+                    total += 1.0d;
                 }
-                return sum;
+                if (total == 0.0d) {
+                    total = 1.0d;
+                }
+                return sum / total;
             },
             () -> {
                 float sum = 0.0f;
+                float total = 0.0f;
                 for (final double val : src) {
                     sum += (float) val;
+                    total += 1.0f;
                 }
-                return sum;
+                if (total == 0.0f) {
+                    total = 1.0f;
+                }
+                return sum / total;
             }
         );
     }
@@ -200,39 +260,67 @@ public final class SumOf extends Number {
     /**
      * Ctor.
      * @param src Numbers
-     * @since 0.22
      */
-    public SumOf(final Float... src) {
+    public AvgOf(final Float... src) {
         this(
             () -> {
                 int sum = 0;
+                int total = 0;
                 for (final float val : src) {
                     sum += (int) val;
+                    ++total;
                 }
-                return sum;
+                if (total == 0) {
+                    total = 1;
+                }
+                return sum / total;
             },
             () -> {
                 long sum = 0L;
+                long total = 0L;
                 for (final float val : src) {
                     sum += (long) val;
+                    ++total;
                 }
-                return sum;
+                if (total == 0L) {
+                    total = 1L;
+                }
+                return sum / total;
             },
             () -> {
                 double sum = 0.0d;
+                double total = 0.0d;
                 for (final float val : src) {
                     sum += (double) val;
+                    total += 1.0d;
                 }
-                return sum;
+                if (total == 0.0d) {
+                    total = 1.0d;
+                }
+                return sum / total;
             },
             () -> {
                 float sum = 0.0f;
+                float total = 0.0f;
                 for (final float val : src) {
                     sum += val;
+                    total += 1.0f;
                 }
-                return sum;
+                if (total == 0.0f) {
+                    total = 1.0f;
+                }
+                return sum / total;
             }
         );
+    }
+
+    /**
+     * Ctor.
+     * @param src Numbers
+     */
+    @SafeVarargs
+    public AvgOf(final Scalar<Number>... src) {
+        this(new IterableOf<>(src));
     }
 
     /**
@@ -240,39 +328,63 @@ public final class SumOf extends Number {
      * @param src The iterable
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
-    public SumOf(final Iterable<Number> src) {
+    public AvgOf(final Iterable<Scalar<Number>> src) {
         this(
             () -> {
-                final Iterator<Number> numbers = src.iterator();
+                final Iterator<Scalar<Number>> numbers = src.iterator();
                 int sum = 0;
+                int total = 0;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().intValue();
+                    final Number next = numbers.next().value();
+                    sum += next.intValue();
+                    ++total;
                 }
-                return sum;
+                if (total == 0) {
+                    total = 1;
+                }
+                return sum / total;
             },
             () -> {
-                final Iterator<Number> numbers = src.iterator();
+                final Iterator<Scalar<Number>> numbers = src.iterator();
                 long sum = 0L;
+                long total = 0L;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().longValue();
+                    final Number next = numbers.next().value();
+                    sum += next.longValue();
+                    ++total;
                 }
-                return sum;
+                if (total == 0L) {
+                    total = 1L;
+                }
+                return sum / total;
             },
             () -> {
-                final Iterator<Number> numbers = src.iterator();
+                final Iterator<Scalar<Number>> numbers = src.iterator();
                 double sum = 0.0d;
+                double total = 0.0d;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().doubleValue();
+                    final Number next = numbers.next().value();
+                    sum += next.doubleValue();
+                    total += 1.0d;
                 }
-                return sum;
+                if (total == 0.0d) {
+                    total = 1.0d;
+                }
+                return sum / total;
             },
             () -> {
-                final Iterator<Number> numbers = src.iterator();
+                final Iterator<Scalar<Number>> numbers = src.iterator();
                 float sum = 0.0f;
+                float total = 0.0f;
                 while (numbers.hasNext()) {
-                    sum += numbers.next().floatValue();
+                    final Number next = numbers.next().value();
+                    sum += next.floatValue();
+                    total += 1.0f;
                 }
-                return sum;
+                if (total == 0.0f) {
+                    total = 1.0f;
+                }
+                return sum / total;
             }
         );
     }
@@ -285,7 +397,7 @@ public final class SumOf extends Number {
      * @param fsr Float
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    private SumOf(final Scalar<Integer> isr, final Scalar<Long> lsr,
+    private AvgOf(final Scalar<Integer> isr, final Scalar<Long> lsr,
         final Scalar<Double> dsr, final Scalar<Float> fsr) {
         super();
         this.lsum = new StickyScalar<>(lsr);

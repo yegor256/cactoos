@@ -35,6 +35,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumber (500 lines)
  */
 public final class JoinedTest {
 
@@ -49,7 +50,6 @@ public final class JoinedTest {
                     new IterableOf<>("what's", "up")
                 )
             ),
-            // @checkstyle MagicNumber (1 line)
             new ScalarHasValue<>(8)
         );
     }
@@ -65,6 +65,25 @@ public final class JoinedTest {
                 )
             ),
             Matchers.iterableWithSize(1)
+        );
+    }
+
+    @Test
+    public void joinsIterablesWithSize() {
+        // @checkstyle DiamondOperatorCheck (1 line)
+        final Iterable<Integer> list = new Joined<Integer>(
+            new IterableOf<>(1, 2, -1, 0, 1),
+            new IterableOf<>(),
+            new IterableOf<>(1, -1, 0, 0),
+            new IterableOf<>(1)
+        );
+        MatcherAssert.assertThat(
+            "Can't concatenate four iterables together",
+            list, Matchers.iterableWithSize(10)
+        );
+        MatcherAssert.assertThat(
+            "Can't concatenate four iterables together, again",
+            list, Matchers.iterableWithSize(10)
         );
     }
 

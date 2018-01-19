@@ -50,4 +50,26 @@ public final class StickyFuncTest {
         );
     }
 
+    @Test
+    public void cachesWithLimitedBuffer() throws Exception {
+        final Func<Boolean, Integer> func = new StickyFunc<>(
+            input -> new SecureRandom().nextInt(), 1
+        );
+        MatcherAssert.assertThat(
+            func.apply(true) + func.apply(true),
+            Matchers.equalTo(func.apply(true) + func.apply(true))
+        );
+    }
+
+    @Test
+    public void cachesWithZeroBuffer() throws Exception {
+        final Func<Boolean, Integer> func = new StickyFunc<>(
+            input -> new SecureRandom().nextInt(), 0
+        );
+        MatcherAssert.assertThat(
+            func.apply(true) + func.apply(true),
+            Matchers.not(Matchers.equalTo(func.apply(true) + func.apply(true)))
+        );
+    }
+
 }

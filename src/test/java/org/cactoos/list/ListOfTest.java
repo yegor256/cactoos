@@ -26,6 +26,7 @@ package org.cactoos.list;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -37,6 +38,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class ListOfTest {
 
@@ -104,6 +106,24 @@ public final class ListOfTest {
             "Can't sense the changes in the underlying iterable",
             list.size(),
             Matchers.not(Matchers.equalTo(list.size()))
+        );
+    }
+
+    @Test
+    public void makesListFromMappedIterable() throws Exception {
+        final List<Integer> list = new ListOf<>(
+            new Mapped<>(
+                i -> i + 1,
+                new IterableOf<>(1, -1, 0, 1)
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list",
+            list, Matchers.iterableWithSize(4)
+        );
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list, again",
+            list, Matchers.iterableWithSize(4)
         );
     }
 

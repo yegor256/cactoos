@@ -25,6 +25,7 @@ package org.cactoos.iterable;
 
 import org.cactoos.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -34,6 +35,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumber (500 lines)
  */
 public final class RepeatedTest {
 
@@ -45,9 +47,8 @@ public final class RepeatedTest {
             "Can't generate an iterable with fixed size",
             new LengthOf(
                 new Filtered<>(
-                    input -> input == element, new Repeated<>(
-                    size, element
-                )
+                    input -> input == element,
+                    new Repeated<>(size, element)
                 )
             ),
             new ScalarHasValue<>(size)
@@ -58,10 +59,21 @@ public final class RepeatedTest {
     public void emptyTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't generate an empty iterable",
-            new LengthOf(
-                new Repeated<>(0, 0)
-            ),
+            new LengthOf(new Repeated<>(0, 0)),
             new ScalarHasValue<>(0)
+        );
+    }
+
+    @Test
+    public void repeatsIntegerTwice() throws Exception {
+        final Iterable<Integer> list = new Repeated<>(5, 1);
+        MatcherAssert.assertThat(
+            "Can't repeat an integer",
+            list, Matchers.iterableWithSize(5)
+        );
+        MatcherAssert.assertThat(
+            "Can't repeat an integer, again",
+            list, Matchers.iterableWithSize(5)
         );
     }
 }

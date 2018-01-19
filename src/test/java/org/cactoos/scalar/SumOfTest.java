@@ -23,8 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -61,28 +60,30 @@ public final class SumOfTest {
     }
 
     @Test
-    public void withVarargsCtor() throws Exception {
+    public void withCollection() throws Exception {
         MatcherAssert.assertThat(
             new SumOf(
-                () -> 1,
-                () -> 2,
-                () -> 3
+                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
             ).longValue(),
-            Matchers.equalTo(6L)
+            Matchers.equalTo(10L)
         );
-    }
-
-    @Test
-    public void withIterCtor() throws Exception {
         MatcherAssert.assertThat(
             new SumOf(
-                new IterableOf<Scalar<Number>>(
-                    () -> 7,
-                    () -> 8,
-                    () -> 10
-                )
-            ).longValue(),
-            Matchers.equalTo(25L)
+                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
+            ).intValue(),
+            Matchers.equalTo(10)
+        );
+        MatcherAssert.assertThat(
+            new SumOf(
+                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
+            ).floatValue(),
+            Matchers.equalTo(10.0f)
+        );
+        MatcherAssert.assertThat(
+            new SumOf(
+                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
+            ).doubleValue(),
+            Matchers.equalTo(10.0d)
         );
     }
 }

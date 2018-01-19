@@ -23,10 +23,10 @@
  */
 
 /**
- * Input.NoNulls, Output.NoNulls and Func<>.NoNulls, tests.
+ * Tests.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
  * @since 0.9
  */
-package org.cactoos.io;
+package org.cactoos;

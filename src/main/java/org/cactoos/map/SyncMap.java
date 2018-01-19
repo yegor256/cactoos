@@ -74,12 +74,12 @@ public final class SyncMap<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public <Z> SyncMap(final Map<X, Y> map,
-        final Iterable<Z> list, final Func<Z, X> key,
-        final Func<Z, Y> value) {
+    public <Z> SyncMap(final Func<Z, X> key,
+        final Func<Z, Y> value, final Map<X, Y> map,
+        final Iterable<Z> list) {
         this(
-            map, list,
-            item -> new MapEntry<>(key.apply(item), value.apply(item))
+            item -> new MapEntry<>(key.apply(item), value.apply(item)),
+            map, list
         );
     }
 
@@ -92,7 +92,7 @@ public final class SyncMap<X, Y> extends MapEnvelope<X, Y> {
      */
     public <Z> SyncMap(final Iterable<Z> list, final Func<Z, X> key,
         final Func<Z, Y> value) {
-        this(list, item -> new MapEntry<>(key.apply(item), value.apply(item)));
+        this(item -> new MapEntry<>(key.apply(item), value.apply(item)), list);
     }
 
     /**
@@ -101,8 +101,20 @@ public final class SyncMap<X, Y> extends MapEnvelope<X, Y> {
      * @param entry Func to create entry
      * @param <Z> Type of items in the list
      */
-    public <Z> SyncMap(final Iterable<Z> list,
-        final Func<Z, Map.Entry<X, Y>> entry) {
+    @SafeVarargs
+    public <Z> SyncMap(final Func<Z, Map.Entry<X, Y>> entry,
+        final Z... list) {
+        this(new Mapped<>(entry, list));
+    }
+
+    /**
+     * Ctor.
+     * @param list List of items
+     * @param entry Func to create entry
+     * @param <Z> Type of items in the list
+     */
+    public <Z> SyncMap(final Func<Z, Map.Entry<X, Y>> entry,
+        final Iterable<Z> list) {
         this(new Mapped<>(entry, list));
     }
 
@@ -113,8 +125,8 @@ public final class SyncMap<X, Y> extends MapEnvelope<X, Y> {
      * @param entry Func to create entry
      * @param <Z> Type of items in the list
      */
-    public <Z> SyncMap(final Map<X, Y> map, final Iterable<Z> list,
-        final Func<Z, Map.Entry<X, Y>> entry) {
+    public <Z> SyncMap(final Func<Z, Map.Entry<X, Y>> entry,
+        final Map<X, Y> map, final Iterable<Z> list) {
         this(map, new Mapped<>(entry, list));
     }
 

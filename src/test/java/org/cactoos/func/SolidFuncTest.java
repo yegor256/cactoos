@@ -23,23 +23,31 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.BiFunc;
+import java.security.SecureRandom;
+import org.cactoos.Func;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Function, finding max among two items.
+ * Test case for {@link SolidFunc}.
  *
- * @author Alexander Dyadyushenko (gookven@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> comparable type
- * @since 0.9
+ * @since 0.24
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class MaxFunc<T extends Comparable<T>> implements BiFunc<T, T, T> {
-    @Override
-    public T apply(final T first, final T second) throws Exception {
-        T max = first;
-        if (second.compareTo(max) > 0) {
-            max = second;
-        }
-        return max;
+public final class SolidFuncTest {
+
+    @Test
+    public void cachesFuncResults() throws Exception {
+        final Func<Boolean, Integer> func = new SolidFunc<>(
+            input -> new SecureRandom().nextInt()
+        );
+        MatcherAssert.assertThat(
+            func.apply(true) + func.apply(true),
+            Matchers.equalTo(func.apply(true) + func.apply(true))
+        );
     }
+
 }

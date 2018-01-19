@@ -28,6 +28,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -39,6 +41,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class StickyListTest {
@@ -195,6 +198,38 @@ public final class StickyListTest {
     @Test(expected = UnsupportedOperationException.class)
     public void testRemoveIndex() throws Exception {
         new StickyList<>(1, 2).remove(1);
+    }
+
+    @Test
+    public void makesListFromMappedIterable() throws Exception {
+        final List<Integer> list = new StickyList<>(
+            new Mapped<>(
+                i -> i + 1,
+                new IterableOf<>(1, -1, 0, 1)
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list",
+            list, Matchers.iterableWithSize(4)
+        );
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list, again",
+            list, Matchers.iterableWithSize(4)
+        );
+    }
+
+    @Test
+    public void mapsToSameObjects() throws Exception {
+        final List<Scalar<Integer>> list = new StickyList<>(
+            new Mapped<>(
+                i -> (Scalar<Integer>) () -> i,
+                new IterableOf<>(1, -1, 0, 1)
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't map only once",
+            list.get(0), Matchers.equalTo(list.get(0))
+        );
     }
 
 }

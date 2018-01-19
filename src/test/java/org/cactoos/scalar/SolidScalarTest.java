@@ -21,57 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import org.cactoos.BiFunc;
+import java.security.SecureRandom;
 import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Iterable, which elements are "reduced" through the func.
+ * Test case for {@link SolidScalar}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of element
- * @param <X> Type of input and output
- * @since 0.9
+ * @since 0.24
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Reduced<X, T> implements Scalar<X> {
+public final class SolidScalarTest {
 
-    /**
-     * Original iterable.
-     */
-    private final Iterable<T> iterable;
-
-    /**
-     * Input.
-     */
-    private final X input;
-
-    /**
-     * Func.
-     */
-    private final BiFunc<X, T, X> func;
-
-    /**
-     * Ctor.
-     * @param ipt Input
-     * @param fnc Func original
-     * @param list List of items
-     */
-    public Reduced(final X ipt, final BiFunc<X, T, X> fnc,
-        final Iterable<T> list) {
-        this.iterable = list;
-        this.input = ipt;
-        this.func = fnc;
-    }
-
-    @Override
-    public X value() throws Exception {
-        X memo = this.input;
-        for (final T item : this.iterable) {
-            memo = this.func.apply(memo, item);
-        }
-        return memo;
+    @Test
+    public void cachesScalarResults() throws Exception {
+        final Scalar<Integer> scalar = new SolidScalar<>(
+            () -> new SecureRandom().nextInt()
+        );
+        MatcherAssert.assertThat(
+            scalar.value() + scalar.value(),
+            Matchers.equalTo(scalar.value() + scalar.value())
+        );
     }
 
 }

@@ -23,49 +23,41 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.Func;
+import org.cactoos.Scalar;
+import org.cactoos.func.SolidFunc;
 
 /**
- * Test case for {@link Max}.
+ * Cached and synchronized version of a Scalar.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * <p>Objects of this class are thread safe.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.10
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Type of result
+ * @see StickyScalar
+ * @see SyncScalar
+ * @since 0.24
  */
-public final class MaxTest {
+public final class SolidScalar<T> implements Scalar<T> {
 
-    @Test(expected = NoSuchElementException.class)
-    public void maxAmongEmptyTest() throws Exception {
-        new Max<>(() -> Collections.emptyIterator()).value();
-    }
+    /**
+     * Func.
+     */
+    private final Func<Boolean, T> func;
 
-    @Test
-    public void maxAmongOneTest() throws Exception {
-        final int num = 10;
-        MatcherAssert.assertThat(
-            "Can't find the greater among one",
-            new Max<Integer>(() -> new Integer(num)).value(),
-            Matchers.equalTo(num)
+    /**
+     * Ctor.
+     * @param scalar The Scalar to cache
+     */
+    public SolidScalar(final Scalar<T> scalar) {
+        this.func = new SolidFunc<>(
+            input -> scalar.value()
         );
     }
 
-    @Test
-    public void maxAmongManyTest() throws Exception {
-        final int num = 10;
-        MatcherAssert.assertThat(
-            "Can't find the greater among many",
-            new Max<Integer>(
-                () -> new Integer(num),
-                () -> new Integer(0),
-                () -> new Integer(-1),
-                () -> new Integer(2)
-             ).value(),
-            Matchers.equalTo(num)
-        );
+    @Override
+    public T value() throws Exception {
+        return this.func.apply(true);
     }
 }

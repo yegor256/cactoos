@@ -23,57 +23,33 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
-import org.cactoos.func.MaxFunc;
-import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Limited;
+import org.cactoos.iterable.NaturalNumbers;
+import org.cactoos.iterable.Skipped;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Find the greater among items.
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * Test case for {@link Skipped}.
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
- * @see UncheckedScalar
- * @see IoCheckedScalar
- * @since 0.10
+ * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class Max<T extends Comparable<T>> implements Scalar<T> {
+public final class ReducedTest {
 
-    /**
-     * Items.
-     */
-    private final Scalar<T> result;
-
-    /**
-     * Ctor.
-     * @param scalars The items
-     */
-    @SafeVarargs
-    public Max(final Scalar<T>... scalars) {
-        this(new IterableOf<>(scalars));
-    }
-
-    /**
-     * Ctor.
-     * @param iterable The items
-     */
-    public Max(final Iterable<Scalar<T>> iterable) {
-        this.result = new Folded<>(
-            new MaxFunc<>(),
-            iterable
+    @Test
+    public void skipIterable() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't reduce elements in iterable",
+            new Reduced<>(
+                0L, (first, second) -> first + second,
+                new Limited<>(10, new NaturalNumbers())
+            ).value(),
+            Matchers.equalTo(45L)
         );
-    }
-
-    @Override
-    public T value() throws Exception {
-        return this.result.value();
     }
 
 }

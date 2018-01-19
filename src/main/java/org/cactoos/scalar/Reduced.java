@@ -23,55 +23,55 @@
  */
 package org.cactoos.scalar;
 
+import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
-import org.cactoos.func.MinFunc;
-import org.cactoos.iterable.IterableOf;
 
 /**
- * Find the smaller among items.
+ * Iterable, which elements are "reduced" through the func.
  *
- * <p>There is no thread-safety guarantee.
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
- *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
+ * @param <T> Type of element
+ * @param <X> Type of input and output
  * @since 0.9
  */
-public final class Min<T extends Comparable<T>> implements Scalar<T> {
+public final class Reduced<X, T> implements Scalar<X> {
 
     /**
-     * Items.
+     * Original iterable.
      */
-    private final Scalar<T> result;
+    private final Iterable<T> iterable;
+
+    /**
+     * Input.
+     */
+    private final X input;
+
+    /**
+     * Func.
+     */
+    private final BiFunc<X, T, X> func;
 
     /**
      * Ctor.
-     * @param scalars The items
+     * @param ipt Input
+     * @param fnc Func original
+     * @param list List of items
      */
-    @SafeVarargs
-    public Min(final Scalar<T>... scalars) {
-        this(new IterableOf<>(scalars));
-    }
-
-    /**
-     * Ctor.
-     * @param iterable The items
-     */
-    public Min(final Iterable<Scalar<T>> iterable) {
-        this.result = new Folded<>(
-            new MinFunc<>(),
-            iterable
-        );
+    public Reduced(final X ipt, final BiFunc<X, T, X> fnc,
+        final Iterable<T> list) {
+        this.iterable = list;
+        this.input = ipt;
+        this.func = fnc;
     }
 
     @Override
-    public T value() throws Exception {
-        return this.result.value();
+    public X value() throws Exception {
+        X memo = this.input;
+        for (final T item : this.iterable) {
+            memo = this.func.apply(memo, item);
+        }
+        return memo;
     }
 
 }

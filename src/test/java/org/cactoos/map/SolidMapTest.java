@@ -23,8 +23,11 @@
  */
 package org.cactoos.map;
 
+import java.util.Map;
 import org.cactoos.RunsInThreads;
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -67,4 +70,15 @@ public final class SolidMapTest {
         );
     }
 
+    @Test
+    public void mapsToSameObjects() throws Exception {
+        final Map<Integer, Scalar<Integer>> map = new SolidMap<>(
+            input -> new MapEntry<>(input, () -> input),
+            1, -1, 0, 1
+        );
+        MatcherAssert.assertThat(
+            "Can't map only once",
+            map.get(0), Matchers.equalTo(map.get(0))
+        );
+    }
 }
