@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -83,7 +83,7 @@ public final class Sha1DigestOfTest {
                 )
             ),
             new TextHasString(
-                "50c18da503d38e65805d5ed9fcf2cfa768368f24"
+                "9d47e35afdcbf845aa9f05f15b4d936b97e55f0e"
             )
         );
     }

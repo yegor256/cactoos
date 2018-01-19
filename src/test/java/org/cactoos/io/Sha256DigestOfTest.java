@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -86,7 +86,7 @@ public final class Sha256DigestOfTest {
             ),
             new TextHasString(
                 // @checkstyle LineLengthCheck (1 lines)
-                "cb91fc07467c7c71f4622aceea357780b3d1eb41222424e46e2a90396ef0b507"
+                "a56c3be45f9be8dda0653e33ae7ef3abf2939f926eda801f329e0830b6e7cc22"
             )
         );
     }

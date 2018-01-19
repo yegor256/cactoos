@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -62,23 +62,27 @@ public abstract class DigestEnvelope implements Bytes {
     /**
      * Ctor.
      * @param input The input
-     * @param algo The algorithm
+     * @param algrthm The algorithm
      */
-    public DigestEnvelope(final Input input, final String algo) {
+    public DigestEnvelope(final Input input, final String algrthm) {
         // @checkstyle MagicNumber (1 line)
-        this(input, 16 << 10, algo);
+        this(input, 16 << 10, algrthm);
     }
 
     /**
      * Ctor.
      * @param input The input
      * @param max Buffer size
-     * @param algo The algorithm
+     * @param algrthm The algorithm
      */
-    public DigestEnvelope(final Input input, final int max, final String algo) {
+    public DigestEnvelope(
+        final Input input,
+        final int max,
+        final String algrthm
+    ) {
         this.source = input;
         this.size = max;
-        this.algorithm = algo;
+        this.algorithm = algrthm;
     }
 
     @Override
