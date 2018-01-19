@@ -190,7 +190,7 @@ public final class ResourceOf implements Input {
     @Override
     public InputStream stream() throws IOException {
         InputStream input = this.loader.getResourceAsStream(
-            this.path.toString()
+            this.path.asString()
         );
         if (input == null) {
             input = new IoCheckedFunc<>(this.fallback)
