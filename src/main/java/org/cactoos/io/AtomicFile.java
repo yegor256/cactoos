@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import org.cactoos.text.JoinedText;
 
 /**
  * A file that can only be written to in an atomic way.
@@ -33,53 +34,59 @@ import java.nio.charset.Charset;
  * <p>
  * There is no thread-safety guarantee.
  *
- * @author Ashton Hogan (https://twitter.com/TheAshtonHogan)
+ * @author Ashton Hogan (info@ashtonhogan.com)
  * @version $Id$
  * @since 0.49.2
  */
 public final class AtomicFile extends File {
 
     private static final long serialVersionUID = -276474606113419118L;
-    private final File temp;
+
+    /**
+     * Temp file absolute path.
+     */
+    private final JoinedText tempAbsolutePath;
 
     /**
      * Ctor.
      *
-     * @param pathname that should be written to
+     * @param pathname File to be replaced after writing to temp file is
+     * complete
      */
     public AtomicFile(final String pathname) {
         super(pathname);
-        this.temp = new File(System.getProperty("java.io.tmpdir") + File.separator + this.getName() + "_tmp");
+        this.tempAbsolutePath = new JoinedText(System.getProperty("java.io.tmpdir"), File.separator, this.getName(), "_tmp");
     }
 
-    public Boolean printTempExists() {
-        return this.temp.exists();
+    public Boolean printTempExists() throws IOException {
+        return new File(this.tempAbsolutePath.asString()).exists();
     }
 
     public synchronized void write() {
         /**
-         * @TODO add a variation of overwrite that appends content to a file
+         * @TODO Add a variation of overwrite that appends content to a file
          * instead of replacing all content
          */
     }
 
     public synchronized void overwrite(final String string, final Charset charset) throws IOException {
-        if ((!this.exists()) && (!this.temp.exists())) {
-            throw new IOException(this.getClass().getName() + " could not perform write. File and Temp File do not exist:\n" + "File: " + this.getAbsolutePath() + "\n" + "Temp File: " + this.temp.getAbsolutePath());
+        File tmp = new File(this.tempAbsolutePath.asString());
+        if ((!this.exists()) && (!tmp.exists())) {
+            throw new IOException(this.getClass().getName() + " could not perform write. File and Temp File do not exist:\n" + "File: " + this.getAbsolutePath() + "\n" + "Temp File: " + tmp.getAbsolutePath());
         }
         InterruptedAtomicFile interruptedAtomicFile = new InterruptedAtomicFile(this);
         if (interruptedAtomicFile.interruptedAfterWrite()) {
-            this.temp.renameTo(this);
+            tmp.renameTo(this);
         }
         if (interruptedAtomicFile.interruptedDuringWrite()) {
-            this.temp.delete();
+            tmp.delete();
         }
-        this.temp.getParentFile().mkdirs();
-        this.temp.createNewFile();
-        OutputTo outputTo = new OutputTo(this.temp, Boolean.FALSE);
+        tmp.getParentFile().mkdirs();
+        tmp.createNewFile();
+        OutputTo outputTo = new OutputTo(tmp, Boolean.FALSE);
         outputTo.stream().write(string.getBytes(charset));
         this.delete();
-        this.temp.renameTo(this);
+        tmp.renameTo(this);
     }
 
 }
