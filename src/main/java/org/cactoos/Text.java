@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 package org.cactoos;
 
 import java.io.IOException;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Text.
@@ -40,7 +39,7 @@ import org.cactoos.text.UncheckedText;
  * @see org.cactoos.text.TextOf
  * @since 0.1
  */
-public interface Text extends Comparable<Text> {
+public interface Text {
 
     /**
      * Convert it to the string.
@@ -84,15 +83,6 @@ public interface Text extends Comparable<Text> {
                 );
             }
             return string;
-        }
-        @Override
-        public int compareTo(final Text text) {
-            if (text == null) {
-                throw new IllegalArgumentException(
-                    "NULL parameter instead of a valid text"
-                );
-            }
-            return new UncheckedText(this).compareTo(text);
         }
     }
 

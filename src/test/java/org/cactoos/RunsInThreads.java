@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -68,7 +68,8 @@ public final class RunsInThreads<T> extends TypeSafeMatcher<Func<T, Boolean>> {
      * @param object Input object
      */
     public RunsInThreads(final T object) {
-        this(object, Runtime.getRuntime().availableProcessors());
+        // @checkstyle MagicNumber (1 line)
+        this(object, Runtime.getRuntime().availableProcessors() << 4);
     }
 
     /**

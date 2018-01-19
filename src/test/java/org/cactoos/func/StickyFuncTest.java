@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,12 +52,19 @@ public final class StickyFuncTest {
 
     @Test
     public void cachesWithLimitedBuffer() throws Exception {
-        final Func<Boolean, Integer> func = new StickyFunc<>(
-            input -> new SecureRandom().nextInt(), 1
+        final Func<Integer, Integer> func = new StickyFunc<>(
+            input -> new SecureRandom().nextInt(), 2
         );
+        final int first = func.apply(0);
+        final int second = func.apply(1);
         MatcherAssert.assertThat(
-            func.apply(true) + func.apply(true),
-            Matchers.equalTo(func.apply(true) + func.apply(true))
+            first + second,
+            Matchers.equalTo(func.apply(0) + func.apply(1))
+        );
+        final int third = func.apply(-1);
+        MatcherAssert.assertThat(
+            second + third,
+            Matchers.equalTo(func.apply(1) + func.apply(-1))
         );
     }
 

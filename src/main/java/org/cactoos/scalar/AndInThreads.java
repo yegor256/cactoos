@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
@@ -73,6 +74,11 @@ public final class AndInThreads implements Scalar<Boolean> {
      * The iterator.
      */
     private final Iterable<Scalar<Boolean>> iterable;
+
+    /**
+     * Shut down the service when it's done.
+     */
+    private final boolean shut;
 
     /**
      * Ctor.
@@ -165,7 +171,7 @@ public final class AndInThreads implements Scalar<Boolean> {
      * @param src The iterable
      */
     public AndInThreads(final Iterable<Scalar<Boolean>> src) {
-        this(Executors.newCachedThreadPool(), src);
+        this(Executors.newCachedThreadPool(), src, true);
     }
 
     /**
@@ -275,8 +281,20 @@ public final class AndInThreads implements Scalar<Boolean> {
      */
     public AndInThreads(final ExecutorService svc,
         final Iterable<Scalar<Boolean>> src) {
+        this(svc, src, false);
+    }
+
+    /**
+     * Ctor.
+     * @param svc Executable service to run thread in
+     * @param src The iterable
+     * @param sht Shut it down
+     */
+    private AndInThreads(final ExecutorService svc,
+        final Iterable<Scalar<Boolean>> src, final boolean sht) {
         this.service = svc;
         this.iterable = src;
+        this.shut = sht;
     }
 
     @Override
@@ -285,10 +303,27 @@ public final class AndInThreads implements Scalar<Boolean> {
         for (final Scalar<Boolean> item : this.iterable) {
             futures.add(this.service.submit(item::value));
         }
-        return new And(
+        final boolean result = new And(
             (Func<Future<Boolean>, Boolean>) Future::get,
             futures
         ).value();
+        if (this.shut) {
+            this.service.shutdown();
+            try {
+                if (!this.service.awaitTermination(1L, TimeUnit.MINUTES)) {
+                    throw new IllegalStateException(
+                        String.format(
+                            "Can't terminate the service, result=%b",
+                            result
+                        )
+                    );
+                }
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException(ex);
+            }
+        }
+        return result;
     }
 
 }

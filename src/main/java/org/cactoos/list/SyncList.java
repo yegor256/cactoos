@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,8 @@ package org.cactoos.list;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.SyncScalar;
 
@@ -83,9 +85,11 @@ public final class SyncList<X> extends ListEnvelope<X> {
     public SyncList(final Collection<X> list) {
         super(
             new SyncScalar<>(
-                () -> Collections.synchronizedList(
-                    new ListOf<>(list)
-                )
+                () -> {
+                    final List<X> temp = new LinkedList<>();
+                    temp.addAll(list);
+                    return Collections.synchronizedList(temp);
+                }
             )
         );
     }

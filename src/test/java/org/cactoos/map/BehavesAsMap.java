@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -65,6 +65,8 @@ public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>>  {
     public boolean matchesSafely(final Map<K, V> map) {
         MatcherAssert.assertThat(map, Matchers.hasKey(this.key));
         MatcherAssert.assertThat(map, Matchers.hasValue(this.value));
+        MatcherAssert.assertThat(map.keySet(), Matchers.hasItem(this.key));
+        MatcherAssert.assertThat(map.values(), Matchers.hasItem(this.value));
         return true;
     }
 

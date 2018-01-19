@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
  */
 package org.cactoos.collection;
 
+import org.cactoos.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -41,6 +42,18 @@ public final class SyncCollectionTest {
             "Can't behave as a collection",
             new SyncCollection<>(1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
+        );
+    }
+
+    @Test
+    public void worksInThreads() {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection in multiple threads",
+            list -> {
+                MatcherAssert.assertThat(list, new BehavesAsCollection<>(0));
+                return true;
+            },
+            new RunsInThreads<>(new SyncCollection<>(1, 0, -1, -1, 2))
         );
     }
 
