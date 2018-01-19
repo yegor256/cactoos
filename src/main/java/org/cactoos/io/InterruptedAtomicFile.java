@@ -23,9 +23,7 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 /**
  * A file that may have been interrupted
@@ -52,14 +50,14 @@ public final class InterruptedAtomicFile {
         this.atomicFile = atomicFile;
     }
 
-    public Boolean interruptedAfterWrite() {
+    public Boolean interruptedAfterWrite() throws IOException {
         if ((!this.atomicFile.exists()) && (this.atomicFile.printTempExists())) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
 
-    public Boolean interruptedDuringWrite() {
+    public Boolean interruptedDuringWrite() throws IOException {
         if ((this.atomicFile.exists()) && (this.atomicFile.printTempExists())) {
             return Boolean.TRUE;
         }

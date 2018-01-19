@@ -34,7 +34,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link AtomicFile}.
- * @author Ashton Hogan (https://twitter.com/TheAshtonHogan)
+ * @author Ashton Hogan (info@ashtonhogan.com)
  * @version $Id$
  * @since 0.49.2
  * @checkstyle JavadocMethodCheck (500 lines)
