@@ -135,6 +135,7 @@ final class ReaderAsBytes implements Bytes {
             }
             builder.append(buffer, 0, done);
         }
+        this.reader.close();
         return builder.toString().getBytes(this.charset.toString());
     }
 
