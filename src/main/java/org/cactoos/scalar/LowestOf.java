@@ -37,6 +37,7 @@ import org.cactoos.iterable.IterableOf;
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
  * @param <T> Scalar type
  * @since 0.9

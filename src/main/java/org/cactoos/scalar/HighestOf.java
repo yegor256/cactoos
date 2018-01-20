@@ -37,6 +37,7 @@ import org.cactoos.iterable.IterableOf;
  * <p>There is no thread-safety guarantee.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
  * @param <T> Scalar type
  * @see UncheckedScalar
