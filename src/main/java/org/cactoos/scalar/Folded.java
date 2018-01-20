@@ -53,16 +53,19 @@ public final class Folded<T> implements Scalar<T> {
     /**
      * Folding function.
      */
-    private final BiFunc<T, T, T> fold;
+    private final BiFunc<T, T, T> function;
 
     /**
      * Ctor.
      * @param fold Folding function
-     * @param items The items
+     * @param scalars The scalars
      */
-    public Folded(final BiFunc<T, T, T> fold, final Iterable<Scalar<T>> items) {
-        this.items = items;
-        this.fold = fold;
+    public Folded(
+        final BiFunc<T, T, T> fold,
+        final Iterable<Scalar<T>> scalars
+    ) {
+        this.items = scalars;
+        this.function = fold;
     }
 
     @Override
@@ -76,7 +79,7 @@ public final class Folded<T> implements Scalar<T> {
         T acc = iter.next().value();
         while (iter.hasNext()) {
             final T next = iter.next().value();
-            acc = this.fold.apply(acc, next);
+            acc = this.function.apply(acc, next);
         }
         return acc;
     }
