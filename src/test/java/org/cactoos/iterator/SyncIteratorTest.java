@@ -32,29 +32,33 @@ import org.junit.Test;
 
 /**
  * Test for {@link SyncIterator}.
+ *
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle TodoCommentCheck (500 lines)
  */
-public class SyncIteratorTest {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class SyncIteratorTest {
 
+    /**
+     * TODO: There needs to more tests which test for multi-threaded safety
+     * when accessing the iterator.
+     */
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public final void testHoldingTheLockDoesNotStopProcessing()
-        throws Exception {
+    public void syncIteratorReturnsCorrectValues() {
         final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-        final SyncIterator<String> iterator = new SyncIterator<>(
-            Arrays.asList("a", "b").iterator(), lock
-        );
-        lock.writeLock().lock();
         MatcherAssert.assertThat(
             "Unexpected value found.",
-            new ListOf<>(iterator),
-            Matchers.contains("a", "b")
+            new ListOf<>(
+                new SyncIterator<>(
+                    Arrays.asList("a", "b").iterator(), lock
+                )
+            ).toArray(),
+            Matchers.equalTo(new Object[]{"a", "b"})
         );
-        lock.writeLock().unlock();
     }
 
 }
