@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,6 @@ package org.cactoos.func;
 
 import java.io.IOException;
 import org.cactoos.FuncApplies;
-import org.cactoos.Proc;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -53,11 +52,11 @@ public final class FuncWithFallbackTest {
     }
 
     @Test
-    public void usesCallback() throws Exception {
+    public void usesFallback() throws Exception {
         MatcherAssert.assertThat(
             "Can't use the callback in case of exception",
             new FuncWithFallback<>(
-                (Proc<Integer>) input -> {
+                input -> {
                     throw new IOException("Failure");
                 },
                 ex -> "Never mind"

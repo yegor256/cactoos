@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ public final class FilteredTest {
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a collection",
-            new Filtered<>(i -> i < 2, 1, 2, 0, -1),
+            new Filtered<Integer>(i -> i < 2, 1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
         );
     }
@@ -58,7 +58,7 @@ public final class FilteredTest {
                     input -> input.length() > 4,
                     new IterableOf<>("hello", "world", "друг")
                 )
-            ).value(),
+            ).intValue(),
             Matchers.equalTo(2)
         );
     }

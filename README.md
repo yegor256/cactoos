@@ -55,6 +55,8 @@ The library has no dependencies. All you need is this
 
 Java version required: 1.8+.
 
+StackOverflow tag is [cactoos](https://stackoverflow.com/questions/tagged/cactoos).
+
 ## Input/Output
 
 More about it here:
@@ -76,7 +78,7 @@ new LengthOf(
     "Hello, world!",
     new File("/code/a.txt")
   )
-).value();
+).intValue();
 ```
 
 To read a binary file from classpath:
@@ -170,7 +172,7 @@ To count elements in an iterable:
 ```java
 int total = new LengthOf(
   "how", "are", "you"
-).value();
+).intValue();
 ```
 
 ## Funcs and Procs
@@ -232,8 +234,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `ReversedText` | - | - | `StringBuilder#reverse()`
 `RotatedText` | - | `StringUtils.rotate()`| -
 `SplitText` | - | - | `String#split()`
-`StickyList` | ? | ? | `Arrays.asList()`
-`StickyList` | `Lists.newArrayList()` | ? | -
+`StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()`
 `SubText` | - | - | `String#substring()`
 `SwappedCaseText` | - | `StringUtils.swapCase()` | -
 `TextOf` | ? | `IOUtils.toString()` | -
@@ -276,7 +277,7 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
 
 ## License (MIT)
 
-Copyright (c) 2017 Yegor Bugayenko
+Copyright (c) 2017-2018 Yegor Bugayenko
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

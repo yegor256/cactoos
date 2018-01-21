@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,76 +56,51 @@ import org.cactoos.Scalar;
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
     }
 )
-public final class MinOf extends Number {
+public final class MinOf extends NumberEnvelope {
 
     /**
      * Serialization marker.
      */
-    private static final long serialVersionUID = -1924406337256921883L;
-
-    /**
-     * The LONG sum.
-     */
-    private final Scalar<Long> lsum;
-
-    /**
-     * The INT sum.
-     */
-    private final Scalar<Integer> isum;
-
-    /**
-     * The FLOAT sum.
-     */
-    private final Scalar<Float> fsum;
-
-    /**
-     * The DOUBLE sum.
-     */
-    private final Scalar<Double> dsum;
+    private static final long serialVersionUID = 7081070952159683108L;
 
     /**
      * Ctor.
      * @param src Numbers
      */
     public MinOf(final Integer... src) {
-        this(
-            () -> {
-                int min = Integer.MAX_VALUE;
-                for (final int val : src) {
-                    if (val < min) {
-                        min = val;
-                    }
+        super(() -> {
+            long min = Long.MAX_VALUE;
+            for (final int val : src) {
+                if ((long) val < min) {
+                    min = (long) val;
                 }
-                return min;
-            },
-            () -> {
-                long min = Long.MAX_VALUE;
-                for (final int val : src) {
-                    if ((long) val < min) {
-                        min = (long) val;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                double min = Double.MAX_VALUE;
-                for (final int val : src) {
-                    if ((double) val < min) {
-                        min = (double) val;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                float min = Float.MAX_VALUE;
-                for (final int val : src) {
-                    if ((float) val < min) {
-                        min = (float) val;
-                    }
-                }
-                return min;
             }
-        );
+            return min;
+        }, () -> {
+            int min = Integer.MAX_VALUE;
+            for (final int val : src) {
+                if (val < min) {
+                    min = val;
+                }
+            }
+            return min;
+        }, () -> {
+            float min = Float.MAX_VALUE;
+            for (final int val : src) {
+                if ((float) val < min) {
+                    min = (float) val;
+                }
+            }
+            return min;
+        }, () -> {
+            double min = Double.MAX_VALUE;
+            for (final int val : src) {
+                if ((double) val < min) {
+                    min = (double) val;
+                }
+            }
+            return min;
+        });
     }
 
     /**
@@ -133,44 +108,39 @@ public final class MinOf extends Number {
      * @param src Numbers
      */
     public MinOf(final Long... src) {
-        this(
-            () -> {
-                int min = Integer.MAX_VALUE;
-                for (final long val : src) {
-                    if ((int) val < min) {
-                        min = (int) val;
-                    }
+        super(() -> {
+            long min = Long.MAX_VALUE;
+            for (final long val : src) {
+                if (val < min) {
+                    min = val;
                 }
-                return min;
-            },
-            () -> {
-                long min = Long.MAX_VALUE;
-                for (final long val : src) {
-                    if (val < min) {
-                        min = val;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                double min = Double.MAX_VALUE;
-                for (final long val : src) {
-                    if ((double) val < min) {
-                        min = (double) val;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                float min = Float.MAX_VALUE;
-                for (final long val : src) {
-                    if ((float) val < min) {
-                        min = (float) val;
-                    }
-                }
-                return min;
             }
-        );
+            return min;
+        }, () -> {
+            int min = Integer.MAX_VALUE;
+            for (final long val : src) {
+                if ((int) val < min) {
+                    min = (int) val;
+                }
+            }
+            return min;
+        }, () -> {
+            float min = Float.MAX_VALUE;
+            for (final long val : src) {
+                if ((float) val < min) {
+                    min = (float) val;
+                }
+            }
+            return min;
+        }, () -> {
+            double min = Double.MAX_VALUE;
+            for (final long val : src) {
+                if ((double) val < min) {
+                    min = (double) val;
+                }
+            }
+            return min;
+        });
     }
 
     /**
@@ -178,44 +148,39 @@ public final class MinOf extends Number {
      * @param src Numbers
      */
     public MinOf(final Double... src) {
-        this(
-            () -> {
-                int min = Integer.MAX_VALUE;
-                for (final double val : src) {
-                    if ((int) val < min) {
-                        min = (int) val;
-                    }
+        super(() -> {
+            long min = Long.MAX_VALUE;
+            for (final double val : src) {
+                if ((long) val < min) {
+                    min = (long) val;
                 }
-                return min;
-            },
-            () -> {
-                long min = Long.MAX_VALUE;
-                for (final double val : src) {
-                    if ((long) val < min) {
-                        min = (long) val;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                double min = Double.MAX_VALUE;
-                for (final double val : src) {
-                    if (val < min) {
-                        min = val;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                float min = Float.MAX_VALUE;
-                for (final double val : src) {
-                    if ((float) val < min) {
-                        min = (float) val;
-                    }
-                }
-                return min;
             }
-        );
+            return min;
+        }, () -> {
+            int min = Integer.MAX_VALUE;
+            for (final double val : src) {
+                if ((int) val < min) {
+                    min = (int) val;
+                }
+            }
+            return min;
+        }, () -> {
+            float min = Float.MAX_VALUE;
+            for (final double val : src) {
+                if ((float) val < min) {
+                    min = (float) val;
+                }
+            }
+            return min;
+        }, () -> {
+            double min = Double.MAX_VALUE;
+            for (final double val : src) {
+                if (val < min) {
+                    min = val;
+                }
+            }
+            return min;
+        });
     }
 
     /**
@@ -223,44 +188,39 @@ public final class MinOf extends Number {
      * @param src Numbers
      */
     public MinOf(final Float... src) {
-        this(
-            () -> {
-                int min = Integer.MAX_VALUE;
-                for (final float val : src) {
-                    if ((int) val < min) {
-                        min = (int) val;
-                    }
+        super(() -> {
+            long min = Long.MAX_VALUE;
+            for (final float val : src) {
+                if ((long) val < min) {
+                    min = (long) val;
                 }
-                return min;
-            },
-            () -> {
-                long min = Long.MAX_VALUE;
-                for (final float val : src) {
-                    if ((long) val < min) {
-                        min = (long) val;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                double min = Double.MAX_VALUE;
-                for (final float val : src) {
-                    if ((double) val < min) {
-                        min = (double) val;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                float min = Float.MAX_VALUE;
-                for (final float val : src) {
-                    if (val < min) {
-                        min = val;
-                    }
-                }
-                return min;
             }
-        );
+            return min;
+        }, () -> {
+            int min = Integer.MAX_VALUE;
+            for (final float val : src) {
+                if ((int) val < min) {
+                    min = (int) val;
+                }
+            }
+            return min;
+        }, () -> {
+            float min = Float.MAX_VALUE;
+            for (final float val : src) {
+                if (val < min) {
+                    min = val;
+                }
+            }
+            return min;
+        }, () -> {
+            double min = Double.MAX_VALUE;
+            for (final float val : src) {
+                if ((double) val < min) {
+                    min = (double) val;
+                }
+            }
+            return min;
+        });
     }
 
     /**
@@ -269,89 +229,47 @@ public final class MinOf extends Number {
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public MinOf(final Iterable<Number> src) {
-        this(
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                int min = Integer.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final int next = numbers.next().intValue();
-                    if (next < min) {
-                        min = next;
-                    }
+        super(() -> {
+            final Iterator<Number> numbers = src.iterator();
+            long min = Long.MAX_VALUE;
+            while (numbers.hasNext()) {
+                final long next = numbers.next().longValue();
+                if (next < min) {
+                    min = next;
                 }
-                return min;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                long min = Long.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final long next = numbers.next().longValue();
-                    if (next < min) {
-                        min = next;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                double min = Double.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final double next = numbers.next().doubleValue();
-                    if (next < min) {
-                        min = next;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                float min = Float.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final float next = numbers.next().floatValue();
-                    if (next < min) {
-                        min = next;
-                    }
-                }
-                return min;
             }
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param isr Integer
-     * @param lsr Long
-     * @param dsr Double
-     * @param fsr Float
-     * @checkstyle ParameterNumberCheck (5 lines)
-     */
-    private MinOf(final Scalar<Integer> isr, final Scalar<Long> lsr,
-        final Scalar<Double> dsr, final Scalar<Float> fsr) {
-        super();
-        this.lsum = new StickyScalar<>(lsr);
-        this.isum = new StickyScalar<>(isr);
-        this.dsum = new StickyScalar<>(dsr);
-        this.fsum = new StickyScalar<>(fsr);
-    }
-
-    @Override
-    public int intValue() {
-        return new UncheckedScalar<>(this.isum).value();
-    }
-
-    @Override
-    public long longValue() {
-        return new UncheckedScalar<>(this.lsum).value();
-    }
-
-    @Override
-    public float floatValue() {
-        return new UncheckedScalar<>(this.fsum).value();
-    }
-
-    @Override
-    public double doubleValue() {
-        return new UncheckedScalar<>(this.dsum).value();
+            return min;
+        }, () -> {
+            final Iterator<Number> numbers = src.iterator();
+            int min = Integer.MAX_VALUE;
+            while (numbers.hasNext()) {
+                final int next = numbers.next().intValue();
+                if (next < min) {
+                    min = next;
+                }
+            }
+            return min;
+        }, () -> {
+            final Iterator<Number> numbers = src.iterator();
+            float min = Float.MAX_VALUE;
+            while (numbers.hasNext()) {
+                final float next = numbers.next().floatValue();
+                if (next < min) {
+                    min = next;
+                }
+            }
+            return min;
+        }, () -> {
+            final Iterator<Number> numbers = src.iterator();
+            double min = Double.MAX_VALUE;
+            while (numbers.hasNext()) {
+                final double next = numbers.next().doubleValue();
+                if (next < min) {
+                    min = next;
+                }
+            }
+            return min;
+        });
     }
 
 }
