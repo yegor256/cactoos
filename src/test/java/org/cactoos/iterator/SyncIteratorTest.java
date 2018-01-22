@@ -48,13 +48,26 @@ public final class SyncIteratorTest {
      * when accessing the iterator.
      */
     @Test
-    public void syncIteratorReturnsCorrectValues() {
+    public void syncIteratorReturnsCorrectValuesWithExternalLock() {
         final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
         MatcherAssert.assertThat(
             "Unexpected value found.",
             new ListOf<>(
                 new SyncIterator<>(
                     Arrays.asList("a", "b").iterator(), lock
+                )
+            ).toArray(),
+            Matchers.equalTo(new Object[]{"a", "b"})
+        );
+    }
+
+    @Test
+    public void syncIteratorReturnsCorrectValuesWithInternalLock() {
+        MatcherAssert.assertThat(
+            "Unexpected value found.",
+            new ListOf<>(
+                new SyncIterator<>(
+                    Arrays.asList("a", "b").iterator()
                 )
             ).toArray(),
             Matchers.equalTo(new Object[]{"a", "b"})
