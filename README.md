@@ -38,9 +38,9 @@ There are a few design principles behind Cactoos:
   * No mutable objects ([why?](http://www.yegor256.com/2014/06/09/objects-should-be-immutable.html))
   * No `static` methods, not even `private` ones ([why?](http://www.yegor256.com/2017/02/07/private-method-is-new-class.html))
   * No `instanceof`, type casting, or reflection ([why?](http://www.yegor256.com/2015/04/02/class-casting-is-anti-pattern.html))
-  * No implementation inheritance ([why?](http://www.yegor256.com/2016/09/13/inheritance-is-procedural.html))
   * No public methods without `@Override`
   * No statements in test methods except `assertThat` ([why?](http://www.yegor256.com/2017/05/17/single-statement-unit-tests.html))
+  * Inheritance implementation **only** for *Decorating Envelopes* ([why?](http://www.yegor256.com/2017/01/31/decorating-envelopes.html) and why [don't use inheritance implementation for anything else](http://www.yegor256.com/2016/09/13/inheritance-is-procedural.html))
 
 **How to use**.
 The library has no dependencies. All you need is this
