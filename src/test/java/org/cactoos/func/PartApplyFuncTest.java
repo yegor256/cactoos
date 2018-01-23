@@ -30,7 +30,7 @@ import org.junit.Test;
 /**
  * Test case for {@link PartApplyFunc}.
  *
- * @author Vseslav Sekorin (yegor256@gmail.com)
+ * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
