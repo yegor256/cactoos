@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.util.Arrays;
+import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -99,6 +100,32 @@ public final class ResourceOfTest {
                 "bar/this-resource-is-definitely-absent.txt"
             )
         ).asString();
+    }
+
+    @Test
+    public void acceptsTextAsResourceName() throws Exception {
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ResourceOf(
+                    new TextOf("org/cactoos/small-text.txt")
+                )
+            ).asString(),
+            Matchers.endsWith("ex ea commodo")
+        );
+    }
+
+    @Test
+    public void acceptsTextsAsResourceNameAndFallback() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't use Texts as parameters",
+            new TextOf(
+                new ResourceOf(
+                    new FormattedText("%s/absent.txt", "baz"),
+                    new TextOf("another replacement")
+                )
+            ).asString(),
+            Matchers.startsWith("another")
+        );
     }
 
 }
