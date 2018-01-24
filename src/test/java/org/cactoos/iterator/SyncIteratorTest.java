@@ -39,12 +39,12 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle TodoCommentCheck (500 lines)
+ * @checkstyle RegexpMultilineCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SyncIteratorTest {
 
     /**
-     * Puzzle for multi-threaded tests.
      * @todo #482:60min/DEV There needs to be more tests which test for
      *  multi-threaded safety when accessing the iterator.
      */

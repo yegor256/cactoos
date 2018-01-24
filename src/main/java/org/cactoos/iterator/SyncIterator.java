@@ -28,7 +28,13 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * Synchronized {@link Iterator} implementation.
+ * Synchronized {@link Iterator} implementation using a {@link ReadWriteLock}
+ * either provided to the constructor or an internally created
+ * {@link ReentrantReadWriteLock}.
+ * The {@link ReadWriteLock} is used to synchronize read calls to
+ * {@link SyncIterator#hasNext()} against write calls to
+ * {@link SyncIterator#next()} and write calls to any other read or write
+ * calls.
  * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
  * @param <T> The type of the iterator.
