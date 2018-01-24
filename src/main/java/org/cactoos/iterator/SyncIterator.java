@@ -40,7 +40,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @param <T> The type of the iterator.
  * @since 1.0
  */
-public class SyncIterator<T> implements Iterator<T> {
+public final class SyncIterator<T> implements Iterator<T> {
     /**
      * The original iterator.
      */
@@ -69,7 +69,7 @@ public class SyncIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public final boolean hasNext() {
+    public boolean hasNext() {
         this.lock.readLock().lock();
         try {
             return this.iterator.hasNext();
@@ -79,7 +79,7 @@ public class SyncIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public final T next() {
+    public T next() {
         this.lock.writeLock().lock();
         try {
             return this.iterator.next();
