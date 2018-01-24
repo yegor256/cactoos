@@ -44,8 +44,9 @@ import org.junit.Test;
 public final class SyncIteratorTest {
 
     /**
-     * TODO: There needs to more tests which test for multi-threaded safety
-     * when accessing the iterator.
+     * Puzzle for multi-threaded tests.
+     * @todo #482:60min/DEV There needs to be more tests which test for
+     *  multi-threaded safety when accessing the iterator.
      */
     @Test
     public void syncIteratorReturnsCorrectValuesWithExternalLock() {
