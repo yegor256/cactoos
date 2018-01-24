@@ -39,6 +39,7 @@ import org.cactoos.Scalar;
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * @author Alexander Dyadyushenko (gookven@gmail.com)
+ * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
  * @param <T> Scalar type
  * @since 0.9
