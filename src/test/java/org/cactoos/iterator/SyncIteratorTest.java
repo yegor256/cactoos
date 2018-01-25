@@ -30,6 +30,9 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+// @todo #482:30min add multi-threaded tests which test that the lock syncs the
+//  access to the next method against next and hasNext calls and calls to the
+//  hasNext method against next calls.
 /**
  * Test for {@link SyncIterator}.
  *
@@ -43,7 +46,6 @@ import org.junit.Test;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SyncIteratorTest {
 
-    // @todo #482 add multi-threaded tests
     @Test
     public void syncIteratorReturnsCorrectValuesWithExternalLock() {
         final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
