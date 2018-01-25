@@ -38,6 +38,16 @@ import org.cactoos.Text;
 public final class AbbreviatedText implements Text {
 
     /**
+     * The default max line width.
+     */
+    private static final int MAX_WIDTH = 80;
+
+    /**
+     * The ellipses width.
+     */
+    private static final int ELLIPSES_WIDTH = 3;
+
+    /**
      * The origin Text.
      */
     private final Text origin;
@@ -49,6 +59,9 @@ public final class AbbreviatedText implements Text {
 
     /**
      * Ctor.
+     *
+     * <p> By default, the max line width is 80 characters.
+     *
      * @param text The Text
      */
     public AbbreviatedText(final String text) {
@@ -57,15 +70,18 @@ public final class AbbreviatedText implements Text {
 
     /**
      * Ctor.
+     *
+     * <p> By default, the max line width is 80 characters.
+     *
      * @param text The Text
      */
     public AbbreviatedText(final Text text) {
-        // @checkstyle MagicNumber (1 line)
-        this(text, 80);
+        this(text, AbbreviatedText.MAX_WIDTH);
     }
 
     /**
      * Ctor.
+     *
      * @param text A String
      * @param max Max width of the result string
      */
@@ -94,8 +110,7 @@ public final class AbbreviatedText implements Text {
                 new SubText(
                     this.origin,
                     0,
-                    // @checkstyle MagicNumber (1 line)
-                    this.width - 3
+                    this.width - AbbreviatedText.ELLIPSES_WIDTH
                 ).asString()
             );
         }
