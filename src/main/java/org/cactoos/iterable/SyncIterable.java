@@ -23,7 +23,8 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.scalar.SyncScalar;
+import java.util.Iterator;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Synchronized iterable.
@@ -42,7 +43,12 @@ import org.cactoos.scalar.SyncScalar;
  * @param <X> Type of item
  * @since 0.24
  */
-public final class SyncIterable<X> extends IterableEnvelope<X> {
+public final class SyncIterable<X> implements Iterable<X> {
+
+    /**
+     * The iterable.
+     */
+    private final UncheckedScalar<Iterable<X>> iterable;
 
     /**
      * Ctor.
@@ -58,7 +64,16 @@ public final class SyncIterable<X> extends IterableEnvelope<X> {
      * @param iterable The iterable
      */
     public SyncIterable(final Iterable<X> iterable) {
-        super(new SyncScalar<>(() -> iterable));
+        this.iterable = new UncheckedScalar<>(
+            () -> iterable
+        );
+    }
+
+    @Override
+    public Iterator<X> iterator() {
+        synchronized (this.iterable) {
+            return this.iterable.value().iterator();
+        }
     }
 
 }

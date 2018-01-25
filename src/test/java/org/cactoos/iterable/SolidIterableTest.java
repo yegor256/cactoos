@@ -40,7 +40,7 @@ import org.junit.Test;
 public final class SolidIterableTest {
 
     @Test
-    public void makesListFromMappedIterable() throws Exception {
+    public void makesListFromMappedIterable() {
         final Iterable<Integer> list = new SolidIterable<>(
             new org.cactoos.list.Mapped<>(
                 i -> i + 1,
@@ -58,7 +58,7 @@ public final class SolidIterableTest {
     }
 
     @Test
-    public void mapsToSameObjects() throws Exception {
+    public void mapsToSameObjects() {
         final Iterable<Scalar<Integer>> list = new SolidIterable<>(
             new org.cactoos.list.Mapped<>(
                 i -> (Scalar<Integer>) () -> i,
@@ -69,6 +69,13 @@ public final class SolidIterableTest {
             "Can't map only once",
             list.iterator().next(), Matchers.equalTo(list.iterator().next())
         );
+    }
+
+    @Test
+    public void worksInThreadsMultipleTimes() {
+        for (int count = 0; count < 100; ++count) {
+            this.worksInThreads();
+        }
     }
 
     @Test
