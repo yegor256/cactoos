@@ -142,7 +142,7 @@ public final class AvgOf extends NumberEnvelope {
                 len -> len > 0,
                 len -> new Reduced<>(
                     BigDecimal.ZERO,
-                    BigDecimal::add,
+                    (sum, value) -> sum.add(value, MathContext.DECIMAL128),
                     new Mapped<>(
                         number -> BigDecimal.valueOf(
                             number.value().doubleValue()
