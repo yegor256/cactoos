@@ -23,6 +23,10 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.TextHasString;
+import org.cactoos.text.SubText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -32,20 +36,31 @@ import org.junit.Test;
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
- * @since 0.28
+ * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 line)
  */
 public final class PartApplyFuncTest {
 
     @Test
-    public void apply() throws Exception {
+    public void applyInteger() throws Exception {
         MatcherAssert.assertThat(
             new PartApplyFunc<Integer, Integer, Integer>(
                 (fst, snd) -> fst * snd,
                 2
             ).apply(3),
             Matchers.equalTo(6)
+        );
+    }
+
+    @Test
+    public void applyText() throws Exception {
+        MatcherAssert.assertThat(
+            new PartApplyFunc<Text, Scalar<Double>, Text>(
+                (txt, nmb) -> new SubText(txt, nmb.value().intValue()),
+                () -> "applyText"
+            ).apply(() -> 5.5),
+            new TextHasString("Text")
         );
     }
 }
