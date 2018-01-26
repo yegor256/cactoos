@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Synchronized iterable.
@@ -48,7 +47,11 @@ public final class SyncIterable<X> implements Iterable<X> {
     /**
      * The iterable.
      */
-    private final UncheckedScalar<Iterable<X>> iterable;
+    private final Iterable<X> origin;
+    /**
+     * Sync lock.
+     */
+    private final Object lock;
 
     /**
      * Ctor.
@@ -61,18 +64,26 @@ public final class SyncIterable<X> implements Iterable<X> {
 
     /**
      * Ctor.
-     * @param iterable The iterable
+     * @param iterable The iterable synchronize access to.
      */
     public SyncIterable(final Iterable<X> iterable) {
-        this.iterable = new UncheckedScalar<>(
-            () -> iterable
-        );
+        this(iterable, new Object());
+    }
+
+    /**
+     * Ctor.
+     * @param iterable The iterable synchronize access to.
+     * @param lck The lock to synchronize with.
+     */
+    public SyncIterable(final Iterable<X> iterable, final Object lck) {
+        this.origin = iterable;
+        this.lock = lck;
     }
 
     @Override
     public Iterator<X> iterator() {
-        synchronized (this.iterable) {
-            return this.iterable.value().iterator();
+        synchronized (this.lock) {
+            return this.origin.iterator();
         }
     }
 
