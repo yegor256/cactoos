@@ -335,7 +335,7 @@ public final class AvgOfTest {
     public void withFloatScalarsIntValue() {
         MatcherAssert.assertThat(
             new AvgOf(
-                () -> 1f, () -> 2f, () -> 10f
+                () -> 1.0f, () -> 2.0f, () -> 10.0f
             ).longValue(),
             Matchers.equalTo(4L)
         );
