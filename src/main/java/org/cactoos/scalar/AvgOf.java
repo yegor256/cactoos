@@ -76,7 +76,7 @@ public final class AvgOf extends NumberEnvelope {
     public AvgOf(final Integer... src) {
         this(
             new Mapped<>(
-                (number) -> () -> number,
+                number -> () -> number,
                 new IterableOf<>(src)
             )
         );
@@ -89,7 +89,7 @@ public final class AvgOf extends NumberEnvelope {
     public AvgOf(final Long... src) {
         this(
             new Mapped<>(
-                (number) -> () -> number,
+                number -> () -> number,
                 new IterableOf<>(src)
             )
         );
@@ -102,7 +102,7 @@ public final class AvgOf extends NumberEnvelope {
     public AvgOf(final Double... src) {
         this(
             new Mapped<>(
-                (number) -> () -> number,
+                number -> () -> number,
                 new IterableOf<>(src)
             )
         );
@@ -115,7 +115,7 @@ public final class AvgOf extends NumberEnvelope {
     public AvgOf(final Float... src) {
         this(
             new Mapped<>(
-                (number) -> () -> number,
+                number -> () -> number,
                 new IterableOf<>(src)
             )
         );
@@ -139,12 +139,12 @@ public final class AvgOf extends NumberEnvelope {
         super(
             new Ternary<>(
                 new LengthOf(src).longValue(),
-                (len) -> len > 0,
-                (len) -> new Reduced<>(
+                len -> len > 0,
+                len -> new Reduced<>(
                     BigDecimal.ZERO,
                     BigDecimal::add,
                     new Mapped<>(
-                        (number) -> BigDecimal.valueOf(
+                        number -> BigDecimal.valueOf(
                             number.value().doubleValue()
                         ),
                         src
@@ -153,7 +153,7 @@ public final class AvgOf extends NumberEnvelope {
                     BigDecimal.valueOf(len),
                     MathContext.DECIMAL128
                 ).doubleValue(),
-                (len) -> 0.0
+                len -> 0.0
             )
         );
     }
