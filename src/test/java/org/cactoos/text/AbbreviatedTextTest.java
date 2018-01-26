@@ -34,21 +34,17 @@ import org.junit.Test;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.AvoidDuplicateLiterals",
-        "PMD.TooManyMethods"
-    }
-)
+@SuppressWarnings("PMD.TooManyMethods")
 public final class AbbreviatedTextTest {
 
     @Test
     public void abbreviatesAnEmptyText() {
+        final String msg = "";
         MatcherAssert.assertThat(
-            "Can't abbreviate an empty text",
+            "Can't abbreviate an msg text",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText("", 8),
-            new TextHasString("")
+            new AbbreviatedText(msg, 8),
+            new TextHasString(msg)
         );
     }
 
@@ -74,41 +70,45 @@ public final class AbbreviatedTextTest {
 
     @Test
     public void abbreviatesTextWithSameLength() {
+        final String msg = "elegant objects";
         MatcherAssert.assertThat(
             "Can't abbreviate a text with same length",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText("elegant objects", 15),
-            new TextHasString("elegant objects")
+            new AbbreviatedText(msg, 15),
+            new TextHasString(msg)
         );
     }
 
     @Test
     public void abbreviatesTextOneCharBigger() {
+        final String msg = "the old mcdonald";
         MatcherAssert.assertThat(
             "Can't abbreviate a text one char bigger",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText("the old mcdonald", 17),
-            new TextHasString("the old mcdonald")
+            new AbbreviatedText(msg, 17),
+            new TextHasString(msg)
         );
     }
 
     @Test
     public void abbreviatesTextTwoCharsBigger() {
+        final String msg = "hi everybody!";
         MatcherAssert.assertThat(
             "Can't abbreviate a text two chars bigger",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText("elegant objects", 17),
-            new TextHasString("elegant objects")
+            new AbbreviatedText(msg, 15),
+            new TextHasString(msg)
         );
     }
 
     @Test
     public void abbreviatesTextWithWidthBiggerThanLength() {
+        final String msg = "cactoos framework";
         MatcherAssert.assertThat(
             "Can't abbreviate a text with width bigger than length",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText("cactoos framework", 50),
-            new TextHasString("cactoos framework")
+            new AbbreviatedText(msg, 50),
+            new TextHasString(msg)
         );
     }
 
