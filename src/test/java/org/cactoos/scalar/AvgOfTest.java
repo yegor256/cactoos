@@ -368,7 +368,7 @@ public final class AvgOfTest {
                 () -> new MinOf(1.0d, 2.0d),
                 () -> new MaxOf(2.0d, 4.0d),
                 () -> new SumOf(1.0d, 2.0d, 2.0d),
-                new Ternary<>(true, 5.0, 1.0d)
+                new Ternary<>(true, 5.0d, 1.0d)
             ).intValue(),
             Matchers.equalTo(3)
         );
