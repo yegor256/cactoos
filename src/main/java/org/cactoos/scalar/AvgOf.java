@@ -25,9 +25,10 @@ package org.cactoos.scalar;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.stream.StreamSupport;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.LengthOf;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Average of numbers.
@@ -73,18 +74,11 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Integer... src) {
-        super(() -> avgArray(
-            number -> BigDecimal.valueOf(number.intValue()), src
-            ).longValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number.intValue()), src
-            ).intValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number.intValue()), src
-            ).floatValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number.intValue()), src
-            ).doubleValue()
+        this(
+            new Mapped<>(
+                (number) -> () -> number,
+                new IterableOf<>(src)
+            )
         );
     }
 
@@ -93,18 +87,11 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Long... src) {
-        super(() -> avgArray(
-            number -> BigDecimal.valueOf(number.longValue()), src
-            ).longValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number.longValue()), src
-            ).intValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number.longValue()), src
-            ).floatValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number.longValue()), src
-            ).doubleValue()
+        this(
+            new Mapped<>(
+                (number) -> () -> number,
+                new IterableOf<>(src)
+            )
         );
     }
 
@@ -113,18 +100,11 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Double... src) {
-        super(() -> avgArray(
-            number -> BigDecimal.valueOf(number), src
-            ).longValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number), src
-            ).intValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number), src
-            ).floatValue(),
-            () -> avgArray(
-                number -> new BigDecimal(number), src
-            ).doubleValue()
+        this(
+            new Mapped<>(
+                (number) -> () -> number,
+                new IterableOf<>(src)
+            )
         );
     }
 
@@ -133,18 +113,11 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Float... src) {
-        super(() -> avgArray(
-            number -> BigDecimal.valueOf(number.floatValue()), src
-            ).longValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number.floatValue()), src
-            ).intValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number.floatValue()), src
-            ).floatValue(),
-            () -> avgArray(
-                number -> BigDecimal.valueOf(number.floatValue()), src
-            ).doubleValue()
+        this(
+            new Mapped<>(
+                (number) -> () -> number,
+                new IterableOf<>(src)
+            )
         );
     }
 
@@ -163,76 +136,25 @@ public final class AvgOf extends NumberEnvelope {
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public AvgOf(final Iterable<Scalar<Number>> src) {
-        super(() -> avgIterator(
-            number -> BigDecimal.valueOf(number.longValue()), src
-            ).longValue(),
-            () -> avgIterator(
-                number -> BigDecimal.valueOf(number.intValue()), src
-            ).intValue(),
-            () -> avgIterator(
-                number -> BigDecimal.valueOf(number.floatValue()), src
-            ).floatValue(),
-            () -> avgIterator(
-                number -> BigDecimal.valueOf(number.doubleValue()), src
-            ).doubleValue()
+        super(
+            new Ternary<>(
+                new LengthOf(src).longValue(),
+                (len) -> len > 0,
+                (len) -> new Reduced<>(
+                    BigDecimal.ZERO,
+                    BigDecimal::add,
+                    new Mapped<>(
+                        (number) -> BigDecimal.valueOf(
+                            number.value().doubleValue()
+                        ),
+                        src
+                    )
+                ).value().divide(
+                    BigDecimal.valueOf(len),
+                    MathContext.DECIMAL128
+                ).doubleValue(),
+                (len) -> 0.0
+            )
         );
-    }
-
-    /**
-     * Calculates average from the provided numbers and uses {@link Converter}
-     * to create {@link BigDecimal}.
-     * @param converter The {@link Converter} to create {@link BigDecimal}
-     * @param src The numbers to calculate average.
-     * @return The average.
-     */
-    private static BigDecimal avgIterator(
-        final Converter<Number> converter, final Iterable<Scalar<Number>> src
-    ) {
-        return avgArray(
-            converter,
-            StreamSupport.stream(src.spliterator(), false)
-                .map(scalar -> new UncheckedScalar<>(scalar).value())
-                .toArray(Number[]::new)
-        );
-    }
-
-    /**
-     * Calculates average from the provided numbers and uses {@link Converter}
-     * to create {@link BigDecimal}.
-     * @param converter The {@link Converter} to create {@link BigDecimal}
-     * @param src The numbers to calculate average.
-     * @param <T> The type of numbers.
-     * @return The average.
-     */
-    @SafeVarargs
-    private static <T extends Number> BigDecimal avgArray(
-        final Converter<T> converter, final T... src
-    ) {
-        BigDecimal sum = BigDecimal.ZERO;
-        long count = 0;
-        for (final T value : src) {
-            sum = sum.add(converter.convert(value));
-            ++count;
-        }
-        if (count == 0) {
-            count = 1;
-        }
-        return sum.divide(
-            BigDecimal.valueOf(count), MathContext.DECIMAL128
-        );
-    }
-
-    /**
-     * The converter interface to provide {@link BigDecimal}.
-     * @param <T> The type of number.
-     */
-    @FunctionalInterface
-    private interface Converter<T extends Number> {
-        /**
-         * Converts the number to {@link BigDecimal}.
-         * @param number The number to convert.
-         * @return A {@link BigDecimal}.
-         */
-        BigDecimal convert(final T number);
     }
 }
