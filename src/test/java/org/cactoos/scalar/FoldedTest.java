@@ -36,13 +36,13 @@ import org.junit.Test;
  *
  * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
- * @since 0.10
+ * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FoldedTest {
 
     @Test(expected = NoSuchElementException.class)
-    public void emptyListTest() throws Exception {
+    public void failsForEmptyIterable() throws Exception {
         new Folded<>(
             (first, last) -> first,
             Collections.emptyList()
@@ -51,21 +51,20 @@ public final class FoldedTest {
     }
 
     @Test
-    public void singleTest() throws Exception {
+    public void singleAtSingleIterable() throws Exception {
         final Integer single = 10;
         MatcherAssert.assertThat(
             "Can't find the single",
             new Folded<>(
                 (first, last) -> first,
-                new IterableOf<Scalar<Integer>>((Scalar<Integer>) () -> single)
-            )
-                .value(),
+                new IterableOf<Scalar<Integer>>(() -> single)
+            ).value(),
             Matchers.equalTo(single)
         );
     }
 
     @Test
-    public void firstTest() throws Exception {
+    public void firstAtIterable() throws Exception {
         final String one = "Apple";
         final String two = "Banana";
         final String three = "Orange";
@@ -74,18 +73,17 @@ public final class FoldedTest {
             new Folded<>(
                 (first, last) -> first,
                 new IterableOf<Scalar<String>>(
-                    (Scalar<String>) () -> one,
-                    (Scalar<String>) () -> two,
-                    (Scalar<String>) () -> three
+                    () -> one,
+                    () -> two,
+                    () -> three
                 )
-            )
-                .value(),
+            ).value(),
             Matchers.equalTo(one)
         );
     }
 
     @Test
-    public void lastTest() throws Exception {
+    public void lastAtIterable() throws Exception {
         final Character one = 'A';
         final Character two = 'B';
         final Character three = 'O';
@@ -94,12 +92,11 @@ public final class FoldedTest {
             new Folded<>(
                 (first, last) -> last,
                 new IterableOf<Scalar<Character>>(
-                    (Scalar<Character>) () -> one,
-                    (Scalar<Character>) () -> two,
-                    (Scalar<Character>) () -> three
+                    () -> one,
+                    () -> two,
+                    () -> three
                 )
-            )
-                .value(),
+            ).value(),
             Matchers.equalTo(three)
         );
     }
