@@ -31,6 +31,28 @@ import org.cactoos.Scalar;
 /**
  * Folds iterable via BiFunc
  *
+ * <p>Here is how you can use it to
+ * find one of items according to the specified {@link BiFunc}:</p>
+ *
+ * <pre>
+ *  final String apple = new Folded&lt;&gt;(
+ *          (first, last) -&gt; first,
+ *          new IterableOf&lt;Scalar&lt;String&gt;&gt;(
+ *              () -&gt; "Apple",
+ *              () -&gt; "Banana",
+ *              () -&gt; "Orange"
+ *          )
+ *      ).value();
+ *  final String orange = new Folded&lt;&gt;(
+ *          (first, last) -&gt; last,
+ *          new IterableOf&lt;Scalar&lt;String&gt;&gt;(
+ *              () -&gt; "Apple",
+ *              () -&gt; "Banana",
+ *              () -&gt; "Orange"
+ *          )
+ *      ).value();
+ * </pre>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
@@ -42,7 +64,7 @@ import org.cactoos.Scalar;
  * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
  * @param <T> Scalar type
- * @since 0.9
+ * @since 1.0
  */
 public final class Folded<T> implements Scalar<T> {
 

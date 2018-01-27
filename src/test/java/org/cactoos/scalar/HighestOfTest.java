@@ -35,31 +35,31 @@ import org.junit.Test;
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
- * @since 0.10
+ * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class HighestOfTest {
 
     @Test(expected = NoSuchElementException.class)
-    public void maxAmongEmptyTest() throws Exception {
+    public void failsForEmptyIterable() throws Exception {
         new HighestOf<>(() -> Collections.emptyIterator()).value();
     }
 
     @Test
-    public void maxAmongOneTest() throws Exception {
+    public void singleAtSingleIterable() throws Exception {
         final int num = 10;
         MatcherAssert.assertThat(
-            "Can't find the greater among one",
+            "Can't find the highest among one",
             new HighestOf<Integer>(() -> new Integer(num)).value(),
             Matchers.equalTo(num)
         );
     }
 
     @Test
-    public void maxAmongManyTest() throws Exception {
+    public void highestIntegerAtIterable() throws Exception {
         final int num = 10;
         MatcherAssert.assertThat(
-            "Can't find the greater among many",
+            "Can't find the highest among many",
             new HighestOf<Integer>(
                 () -> new Integer(num),
                 () -> new Integer(0),
@@ -71,7 +71,7 @@ public final class HighestOfTest {
     }
 
     @Test
-    public void highestStringTest() throws Exception {
+    public void highestStringAtIterable() throws Exception {
         final String lowest = "Apple";
         final String highest = "Orange";
         MatcherAssert.assertThat(
@@ -82,7 +82,7 @@ public final class HighestOfTest {
     }
 
     @Test
-    public void highestCharTest() throws Exception {
+    public void highestCharAtIterable() throws Exception {
         final char lowest = 'A';
         final char highest = 'B';
         MatcherAssert.assertThat(

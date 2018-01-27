@@ -46,8 +46,7 @@ public final class FoldedTest {
         new Folded<>(
             (first, last) -> first,
             Collections.emptyList()
-        )
-            .value();
+        ).value();
     }
 
     @Test

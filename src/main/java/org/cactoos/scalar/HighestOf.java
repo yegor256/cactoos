@@ -27,7 +27,17 @@ import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 
 /**
- * Find the greater among items.
+ * Find the highest item.
+ *
+ * <p>Here is how you can use it to find highest of {@link Comparable} items:</p>
+ *
+ * <pre>
+ * final String highest = new HighestOf&lt;String&gt;(
+ *         () -&gt; "Apple", () -&gt; "Orange"
+ *     ).value();
+ * long sum = new MaxOf(1L, 2L, 3L).longValue();
+ * int sum = new MaxOf(numbers.toArray(new Integer[numbers.size()])).intValue();
+ * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -42,18 +52,18 @@ import org.cactoos.iterable.IterableOf;
  * @param <T> Scalar type
  * @see UncheckedScalar
  * @see IoCheckedScalar
- * @since 0.10
+ * @since 1.0
  */
 public final class HighestOf<T extends Comparable<T>> implements Scalar<T> {
 
     /**
-     * Items.
+     * Result.
      */
     private final Scalar<T> result;
 
     /**
      * Ctor.
-     * @param scalars The items
+     * @param scalars The scalars
      */
     @SafeVarargs
     public HighestOf(final Scalar<T>... scalars) {
@@ -83,5 +93,4 @@ public final class HighestOf<T extends Comparable<T>> implements Scalar<T> {
     public T value() throws Exception {
         return this.result.value();
     }
-
 }
