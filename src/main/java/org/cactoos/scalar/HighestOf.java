@@ -25,6 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Find the highest item.
@@ -60,6 +61,20 @@ public final class HighestOf<T extends Comparable<T>> implements Scalar<T> {
      * Result.
      */
     private final Scalar<T> result;
+
+    /**
+     * Ctor.
+     * @param items The comparable items
+     */
+    @SafeVarargs
+    public HighestOf(final T... items) {
+        this(
+            new Mapped<>(
+                item -> () -> item,
+                items
+            )
+        );
+    }
 
     /**
      * Ctor.
