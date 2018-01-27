@@ -40,7 +40,9 @@ import org.junit.Test;
  * @version $Id$
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class HighestOfTest {
 
     @Test(expected = NoSuchElementException.class)
@@ -63,12 +65,7 @@ public final class HighestOfTest {
         final int num = 10;
         MatcherAssert.assertThat(
             "Can't find the highest integer among many",
-            new HighestOf<Integer>(
-                () -> num,
-                () -> 0,
-                () -> -1,
-                () -> 2
-             ).value(),
+            new HighestOf<Integer>(10, 0, -1, 2).value(),
             Matchers.equalTo(num)
         );
     }
@@ -128,12 +125,7 @@ public final class HighestOfTest {
         final double num = 10.;
         MatcherAssert.assertThat(
             "Can't find the highest double among many",
-            new HighestOf<Double>(
-                num,
-                0.,
-                -1.,
-                2.
-            ).value(),
+            new HighestOf<Double>(num, 0., -1., 2.).value(),
             Matchers.equalTo(num)
         );
     }
@@ -143,10 +135,7 @@ public final class HighestOfTest {
         final double num = Double.MAX_VALUE;
         MatcherAssert.assertThat(
             "Can't find the highest max double among many",
-            new HighestOf<Double>(
-                num,
-                Double.MIN_VALUE
-            ).value(),
+            new HighestOf<Double>(num, Double.MIN_VALUE).value(),
             Matchers.equalTo(num)
         );
     }
@@ -170,10 +159,7 @@ public final class HighestOfTest {
         final double num = -15.;
         MatcherAssert.assertThat(
             "Can't find the highest negative double among many",
-            new HighestOf<Double>(
-                num,
-                -272.
-            ).value(),
+            new HighestOf<Double>(num, -272.).value(),
             Matchers.equalTo(num)
         );
     }
@@ -183,11 +169,7 @@ public final class HighestOfTest {
         final double num = Double.MIN_VALUE;
         MatcherAssert.assertThat(
             "Can't find the highest min double among many",
-            new HighestOf<Double>(
-                num,
-                -272.,
-                -15.
-            ).value(),
+            new HighestOf<Double>(num, -272., -15.).value(),
             Matchers.equalTo(num)
         );
     }
@@ -225,10 +207,7 @@ public final class HighestOfTest {
         final Scalar<Boolean> bool = new BoolOf("true");
         MatcherAssert.assertThat(
             "Can't find the highest boolean among many",
-            new HighestOf<Boolean>(
-                new BoolOf("false"),
-                bool
-            ).value(),
+            new HighestOf<Boolean>(new BoolOf("false"), bool).value(),
             Matchers.equalTo(bool.value())
         );
     }

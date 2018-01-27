@@ -30,7 +30,8 @@ import org.cactoos.iterable.Mapped;
 /**
  * Find the highest item.
  *
- * <p>Here is how you can use it to find highest of {@link Comparable} items:</p>
+ * <p>Here is how you can use it to
+ * find highest of {@link Comparable} items:</p>
  *
  * <pre>
  * final String highest = new HighestOf&lt;String&gt;(
