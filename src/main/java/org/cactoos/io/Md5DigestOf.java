@@ -21,39 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.io;
 
-import java.io.IOException;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
+import org.cactoos.Input;
 
 /**
- * Determines if text is blank (consists of spaces) or no.
+ * MD5 checksum calculation of {@link Input}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Andriy Kryvtsun (kontiky@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.29
  */
-public final class IsBlank implements Scalar<Boolean> {
-
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class Md5DigestOf extends DigestEnvelope {
     /**
-     * The text.
+     * Ctor.
+     * @param input The input
      */
-    private final Text origin;
+    public Md5DigestOf(final Input input) {
+        super(input, "MD5");
+    }
 
     /**
      * Ctor.
-     * @param text The text
+     * @param input The input
+     * @param max Buffer size
      */
-    public IsBlank(final Text text) {
-        this.origin = text;
-    }
-
-    @Override
-    public Boolean value() throws IOException {
-        return this.origin.asString().chars()
-            .allMatch(Character::isWhitespace);
+    public Md5DigestOf(final Input input, final int max) {
+        // @checkstyle MagicNumber (1 line)
+        super(input, max, "MD5");
     }
 }
