@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.net.URI;
+import java.io.IOException;
 import org.cactoos.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -63,11 +63,9 @@ public final class InputWithFallbackTest {
             "Can't read alternative source from URI",
             new TextOf(
                 new InputWithFallback(
-                    new StickyInput(
-                        new InputOf(
-                            URI.create("http://www.cactoos.org/path-is-absent")
-                        )
-                    ),
+                    () -> {
+                        throw new IOException("Always fails!");
+                    },
                     new InputOf("it works!")
                 )
             ),
