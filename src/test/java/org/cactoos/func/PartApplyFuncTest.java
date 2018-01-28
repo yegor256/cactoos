@@ -24,8 +24,12 @@
 package org.cactoos.func;
 
 import org.cactoos.Scalar;
+import org.cactoos.ScalarHasValue;
 import org.cactoos.Text;
 import org.cactoos.TextHasString;
+import org.cactoos.scalar.MaxOf;
+import org.cactoos.scalar.MinOf;
+import org.cactoos.scalar.SumOf;
 import org.cactoos.text.SubText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -61,6 +65,21 @@ public final class PartApplyFuncTest {
                 () -> "applyText"
             ).apply(() -> 5.5),
             new TextHasString("Text")
+        );
+    }
+
+    @Test
+    public void applyComplex() throws Exception {
+        MatcherAssert.assertThat(
+            new PartApplyFunc<Number, Text, Scalar<Boolean>>(
+                (nmb, txt) -> () -> txt.asString().length() > nmb.intValue(),
+                new SumOf(
+                    new MaxOf(2, 3).intValue(),
+                    new MinOf(-1, 1).intValue(),
+                    7
+                )
+            ).apply(() -> "PartApplyFuncTest"),
+            new ScalarHasValue<>(true)
         );
     }
 }
