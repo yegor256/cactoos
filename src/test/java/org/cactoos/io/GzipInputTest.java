@@ -24,6 +24,7 @@
 
 package org.cactoos.io;
 
+import java.io.EOFException;
 import java.util.zip.GZIPInputStream;
 import org.cactoos.InputHasContent;
 import org.hamcrest.MatcherAssert;
@@ -61,4 +62,10 @@ public final class GzipInputTest {
         );
     }
 
+    @Test(expected = EOFException.class)
+    public void readFromDeadGzipInput() throws Exception {
+        new LengthOf(
+            new GzipInput(new DeadInput())
+        ).value();
+    }
 }
