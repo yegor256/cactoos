@@ -41,13 +41,15 @@ import org.cactoos.iterable.Mapped;
  * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)}
  * works, but with an index provided for each item:</p>
  *
- * <pre> new And(
- *   new IterableOf("Mary", "John", "William", "Napkin"),
- *   new BiFuncOf<>(
- *     (text, index) -> System.out.printf("Name #%d: %s\n", index, text),
- *     true
- *   )
- * ).value();</pre>
+ * <pre>
+ * new UncheckedScalar<>(
+ *     new AndWithIndex(
+ *         new BiFuncOf<>((text, index) -> System.out.printf("| idx #%d: name: %s ", index, text), true),
+ *         new IterableOf<>("Mary", "John", "William", "Napkin")
+ *     )
+ * ).value();
+ * // will print "| idx #0: name: Mary | idx #1: name: John | idx #2: name: William | idx #3: name: Napkin " to console
+ * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make

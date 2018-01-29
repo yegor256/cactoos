@@ -31,6 +31,13 @@ import org.cactoos.Scalar;
 /**
  * Folds iterable via BiFunc
  *
+ * <pre>
+ * new Folded<Long>(
+ *   (first, last) -> first + last,
+ *   new IterableOf<>(() -> 1L, () -> 2L, () -> 3L, () -> 4L)
+ * ).value() // returns 10L
+ * </pre>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
