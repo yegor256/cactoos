@@ -21,65 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.matchers;
 
-import org.cactoos.func.UncheckedFunc;
+import org.cactoos.Text;
+import org.cactoos.text.UncheckedText;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsEqual;
 
 /**
- * Matcher for the value.
+ * Matcher for the content.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
  * @since 0.2
  */
-public final class FuncApplies<X, Y> extends TypeSafeMatcher<Func<X, Y>> {
+public final class TextHasString extends TypeSafeMatcher<Text> {
 
     /**
-     * Input of the function.
+     * Matcher of the text.
      */
-    private final X input;
-
-    /**
-     * Matcher of the result.
-     */
-    private final Matcher<Y> matcher;
+    private final Matcher<String> matcher;
 
     /**
      * Ctor.
-     * @param result The result expected
-     * @param inpt Input for the function
+     * @param text The text to match against
      */
-    public FuncApplies(final X inpt, final Y result) {
-        this(inpt, new IsEqual<>(result));
+    public TextHasString(final String text) {
+        this(new IsEqual<>(text));
     }
 
     /**
      * Ctor.
-     * @param inpt Input for the function
      * @param mtr Matcher of the text
      */
-    public FuncApplies(final X inpt, final Matcher<Y> mtr) {
+    public TextHasString(final Matcher<String> mtr) {
         super();
-        this.input = inpt;
         this.matcher = mtr;
     }
 
     @Override
-    public boolean matchesSafely(final Func<X, Y> func) {
-        return this.matcher.matches(
-            new UncheckedFunc<>(func).apply(this.input)
-        );
+    public boolean matchesSafely(final Text item) {
+        return this.matcher.matches(new UncheckedText(item).asString());
     }
 
     @Override
     public void describeTo(final Description description) {
-        description.appendText("Scalar with ");
+        description.appendText("Text with ");
         description.appendDescriptionOf(this.matcher);
     }
+
 }

@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import org.cactoos.TextHasString;
+import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.HexOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;

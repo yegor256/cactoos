@@ -25,8 +25,8 @@ package org.cactoos.iterator;
 
 import java.io.IOException;
 import java.util.Collections;
-import org.cactoos.ScalarHasValue;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 

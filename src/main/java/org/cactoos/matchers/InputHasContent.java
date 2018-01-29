@@ -21,34 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.matchers;
 
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.Input;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsEqual;
 
 /**
- * Matcher for the value.
+ * Matcher for the input.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of result
- * @since 0.2
+ * @since 0.11
  */
-public final class ScalarHasValue<T> extends TypeSafeMatcher<Scalar<T>> {
+public final class InputHasContent extends TypeSafeMatcher<Input> {
 
     /**
      * Matcher of the value.
      */
-    private final Matcher<T> matcher;
+    private final Matcher<String> matcher;
 
     /**
      * Ctor.
      * @param text The text to match against
      */
-    public ScalarHasValue(final T text) {
+    public InputHasContent(final String text) {
         this(new IsEqual<>(text));
     }
 
@@ -56,21 +57,23 @@ public final class ScalarHasValue<T> extends TypeSafeMatcher<Scalar<T>> {
      * Ctor.
      * @param mtr Matcher of the text
      */
-    public ScalarHasValue(final Matcher<T> mtr) {
+    public InputHasContent(final Matcher<String> mtr) {
         super();
         this.matcher = mtr;
     }
 
     @Override
-    public boolean matchesSafely(final Scalar<T> item) {
+    public boolean matchesSafely(final Input item) {
         return this.matcher.matches(
-            new UncheckedScalar<>(item).value()
+            new UncheckedText(
+                new TextOf(item)
+            ).asString()
         );
     }
 
     @Override
     public void describeTo(final Description description) {
-        description.appendText("Scalar with ");
+        description.appendText("Input with ");
         description.appendDescriptionOf(this.matcher);
     }
 }

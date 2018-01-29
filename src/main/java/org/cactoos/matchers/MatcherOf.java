@@ -21,38 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.matchers;
 
-import org.cactoos.matchers.TextHasString;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.cactoos.Func;
+import org.cactoos.Proc;
+import org.cactoos.func.FuncOf;
+import org.cactoos.func.UncheckedFunc;
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Test case for {@link SubText}.
- * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * Func as Matcher.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Type of object to match
+ * @since 0.12
  */
-public final class SubTextTest {
+public final class MatcherOf<T> extends TypeSafeMatcher<T> {
 
-    @Test
-    public void cutTextWithStartAndEnd() {
-        MatcherAssert.assertThat(
-            "Can't cut a text with start and end",
-            // @checkstyle MagicNumber (1 line)
-            new SubText("hello world", 2, 50),
-            new TextHasString("llo world")
-        );
+    /**
+     * The func.
+     */
+    private final Func<T, Boolean> func;
+
+    /**
+     * Ctor.
+     * @param proc The func
+     */
+    public MatcherOf(final Proc<T> proc) {
+        this(new FuncOf<>(proc));
     }
 
-    @Test
-    public void cutTextWithStart() {
-        MatcherAssert.assertThat(
-            "Can't cut a text with start",
-            new SubText("cut here", 2),
-            new TextHasString("t here")
-        );
+    /**
+     * Ctor.
+     * @param fnc The func
+     */
+    public MatcherOf(final Func<T, Boolean> fnc) {
+        super();
+        this.func = fnc;
     }
 
+    @Override
+    public boolean matchesSafely(final T item) {
+        return new UncheckedFunc<>(this.func).apply(item);
+    }
+
+    @Override
+    public void describeTo(final Description description) {
+        description.appendText(this.func.toString());
+    }
 }

@@ -21,54 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
-
-import org.cactoos.Func;
-import org.cactoos.Proc;
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Func as Matcher.
- *
- * <p>There is no thread-safety guarantee.
+ * Matchers.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Type of object to match
- * @since 0.12
+ * @since 0.14
  */
-public final class MatcherOf<T> extends TypeSafeMatcher<T> {
-
-    /**
-     * The func.
-     */
-    private final Func<T, Boolean> func;
-
-    /**
-     * Ctor.
-     * @param proc The func
-     */
-    public MatcherOf(final Proc<T> proc) {
-        this(new FuncOf<>(proc));
-    }
-
-    /**
-     * Ctor.
-     * @param fnc The func
-     */
-    public MatcherOf(final Func<T, Boolean> fnc) {
-        super();
-        this.func = fnc;
-    }
-
-    @Override
-    public boolean matchesSafely(final T item) {
-        return new UncheckedFunc<>(this.func).apply(item);
-    }
-
-    @Override
-    public void describeTo(final Description description) {
-        description.appendText(this.func.toString());
-    }
-}
+package org.cactoos.matchers;

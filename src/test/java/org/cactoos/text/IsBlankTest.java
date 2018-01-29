@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.ScalarHasValue;
+import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
