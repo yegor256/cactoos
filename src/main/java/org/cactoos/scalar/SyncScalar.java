@@ -34,7 +34,7 @@ import org.cactoos.Scalar;
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * <pre>
- * final List<Integer> list = new LinkedList<>();
+ * final List&lt;Integer&gt; list = new LinkedList<>();
  * final int threads = 100;
  * new RunsInThreads<>(
  *   new SyncScalar<>(() -> list.add(1)), threads

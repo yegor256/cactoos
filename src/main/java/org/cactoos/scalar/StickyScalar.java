@@ -42,7 +42,7 @@ import org.cactoos.func.StickyFunc;
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * <pre>
- * final Scalar<Integer> scalar = new StickyScalar<>(
+ * final Scalar&lt;Integer&gt; scalar = new StickyScalar<>(
  *   () -> {
  *     System.out.println("Will be printed only once");
  *     return new SecureRandom().nextInt();

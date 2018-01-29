@@ -29,6 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.ScalarHasValue;
 import org.cactoos.func.MatcherOf;
 import org.cactoos.io.InputOf;
+import org.cactoos.io.ResourceOf;
 import org.cactoos.iterator.Repeated;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
@@ -50,6 +51,7 @@ public final class PropertiesOfTest {
 
     @Test
     public void readsStringContent() {
+        new PropertiesOf(new ResourceOf(""));
         MatcherAssert.assertThat(
             "Can't read properties from an input string",
             new PropertiesOf(
