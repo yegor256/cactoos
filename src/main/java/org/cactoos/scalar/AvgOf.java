@@ -23,9 +23,12 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.LengthOf;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Average of numbers.
@@ -71,51 +74,12 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Integer... src) {
-        super(() -> {
-            long sum = 0L;
-            long total = 0L;
-            for (final int val : src) {
-                sum += (long) val;
-                ++total;
-            }
-            if (total == 0L) {
-                total = 1L;
-            }
-            return sum / total;
-        }, () -> {
-            int sum = 0;
-            int total = 0;
-            for (final int val : src) {
-                sum += val;
-                ++total;
-            }
-            if (total == 0) {
-                total = 1;
-            }
-            return sum / total;
-        }, () -> {
-            float sum = 0.0f;
-            float total = 0.0f;
-            for (final int val : src) {
-                sum += (float) val;
-                total += 1.0f;
-            }
-            if (total == 0.0f) {
-                total = 1.0f;
-            }
-            return sum / total;
-        }, () -> {
-            double sum = 0.0d;
-            double total = 0.0d;
-            for (final int val : src) {
-                sum += (double) val;
-                total += 1.0d;
-            }
-            if (total == 0.0d) {
-                total = 1.0d;
-            }
-            return sum / total;
-        });
+        this(
+            new Mapped<>(
+                number -> () -> number,
+                new IterableOf<>(src)
+            )
+        );
     }
 
     /**
@@ -123,51 +87,12 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Long... src) {
-        super(() -> {
-            long sum = 0L;
-            long total = 0L;
-            for (final long val : src) {
-                sum += val;
-                ++total;
-            }
-            if (total == 0L) {
-                total = 1L;
-            }
-            return sum / total;
-        }, () -> {
-            int sum = 0;
-            int total = 0;
-            for (final long val : src) {
-                sum += (int) val;
-                ++total;
-            }
-            if (total == 0) {
-                total = 1;
-            }
-            return sum / total;
-        }, () -> {
-            float sum = 0.0f;
-            float total = 0.0f;
-            for (final long val : src) {
-                sum += (float) val;
-                total += 1.0f;
-            }
-            if (total == 0.0f) {
-                total = 1.0f;
-            }
-            return sum / total;
-        }, () -> {
-            double sum = 0.0d;
-            double total = 0.0d;
-            for (final long val : src) {
-                sum += (double) val;
-                total += 1.0d;
-            }
-            if (total == 0.0d) {
-                total = 1.0d;
-            }
-            return sum / total;
-        });
+        this(
+            new Mapped<>(
+                number -> () -> number,
+                new IterableOf<>(src)
+            )
+        );
     }
 
     /**
@@ -175,51 +100,12 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Double... src) {
-        super(() -> {
-            long sum = 0L;
-            long total = 0L;
-            for (final double val : src) {
-                sum += (long) val;
-                ++total;
-            }
-            if (total == 0L) {
-                total = 1L;
-            }
-            return sum / total;
-        }, () -> {
-            int sum = 0;
-            int total = 0;
-            for (final double val : src) {
-                sum += (int) val;
-                ++total;
-            }
-            if (total == 0) {
-                total = 1;
-            }
-            return sum / total;
-        }, () -> {
-            float sum = 0.0f;
-            float total = 0.0f;
-            for (final double val : src) {
-                sum += (float) val;
-                total += 1.0f;
-            }
-            if (total == 0.0f) {
-                total = 1.0f;
-            }
-            return sum / total;
-        }, () -> {
-            double sum = 0.0d;
-            double total = 0.0d;
-            for (final double val : src) {
-                sum += val;
-                total += 1.0d;
-            }
-            if (total == 0.0d) {
-                total = 1.0d;
-            }
-            return sum / total;
-        });
+        this(
+            new Mapped<>(
+                number -> () -> number,
+                new IterableOf<>(src)
+            )
+        );
     }
 
     /**
@@ -227,51 +113,12 @@ public final class AvgOf extends NumberEnvelope {
      * @param src Numbers
      */
     public AvgOf(final Float... src) {
-        super(() -> {
-            long sum = 0L;
-            long total = 0L;
-            for (final float val : src) {
-                sum += (long) val;
-                ++total;
-            }
-            if (total == 0L) {
-                total = 1L;
-            }
-            return sum / total;
-        }, () -> {
-            int sum = 0;
-            int total = 0;
-            for (final float val : src) {
-                sum += (int) val;
-                ++total;
-            }
-            if (total == 0) {
-                total = 1;
-            }
-            return sum / total;
-        }, () -> {
-            float sum = 0.0f;
-            float total = 0.0f;
-            for (final float val : src) {
-                sum += val;
-                total += 1.0f;
-            }
-            if (total == 0.0f) {
-                total = 1.0f;
-            }
-            return sum / total;
-        }, () -> {
-            double sum = 0.0d;
-            double total = 0.0d;
-            for (final float val : src) {
-                sum += (double) val;
-                total += 1.0d;
-            }
-            if (total == 0.0d) {
-                total = 1.0d;
-            }
-            return sum / total;
-        });
+        this(
+            new Mapped<>(
+                number -> () -> number,
+                new IterableOf<>(src)
+            )
+        );
     }
 
     /**
@@ -289,59 +136,25 @@ public final class AvgOf extends NumberEnvelope {
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public AvgOf(final Iterable<Scalar<Number>> src) {
-        super(() -> {
-            final Iterator<Scalar<Number>> numbers = src.iterator();
-            long sum = 0L;
-            long total = 0L;
-            while (numbers.hasNext()) {
-                final Number next = numbers.next().value();
-                sum += next.longValue();
-                ++total;
-            }
-            if (total == 0L) {
-                total = 1L;
-            }
-            return sum / total;
-        }, () -> {
-            final Iterator<Scalar<Number>> numbers = src.iterator();
-            int sum = 0;
-            int total = 0;
-            while (numbers.hasNext()) {
-                final Number next = numbers.next().value();
-                sum += next.intValue();
-                ++total;
-            }
-            if (total == 0) {
-                total = 1;
-            }
-            return sum / total;
-        }, () -> {
-            final Iterator<Scalar<Number>> numbers = src.iterator();
-            float sum = 0.0f;
-            float total = 0.0f;
-            while (numbers.hasNext()) {
-                final Number next = numbers.next().value();
-                sum += next.floatValue();
-                total += 1.0f;
-            }
-            if (total == 0.0f) {
-                total = 1.0f;
-            }
-            return sum / total;
-        }, () -> {
-            final Iterator<Scalar<Number>> numbers = src.iterator();
-            double sum = 0.0d;
-            double total = 0.0d;
-            while (numbers.hasNext()) {
-                final Number next = numbers.next().value();
-                sum += next.doubleValue();
-                total += 1.0d;
-            }
-            if (total == 0.0d) {
-                total = 1.0d;
-            }
-            return sum / total;
-        });
+        super(
+            new Ternary<>(
+                new LengthOf(src).longValue(),
+                len -> len > 0,
+                len -> new Reduced<>(
+                    BigDecimal.ZERO,
+                    (sum, value) -> sum.add(value, MathContext.DECIMAL128),
+                    new Mapped<>(
+                        number -> BigDecimal.valueOf(
+                            number.value().doubleValue()
+                        ),
+                        src
+                    )
+                ).value().divide(
+                    BigDecimal.valueOf(len),
+                    MathContext.DECIMAL128
+                ).doubleValue(),
+                len -> 0.0
+            )
+        );
     }
-
 }
