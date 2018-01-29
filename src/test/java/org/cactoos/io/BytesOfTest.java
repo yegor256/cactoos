@@ -196,4 +196,19 @@ public final class BytesOfTest {
         );
     }
 
+    @Test
+    public void printsStackTraceFromArray() {
+        MatcherAssert.assertThat(
+            "Can't print exception stacktrace from array",
+            new TextOf(
+                new BytesOf(
+                    new IOException("").getStackTrace()
+                )
+            ),
+            new TextHasString(
+                Matchers.containsString("org.cactoos.io.BytesOfTest")
+            )
+        );
+    }
+
 }

@@ -292,4 +292,17 @@ public final class TextOfTest {
             Matchers.equalTo(content)
         );
     }
+
+    @Test
+    public void printsStackTraceFromArray() {
+        MatcherAssert.assertThat(
+            "Can't print exception stacktrace from array",
+            new TextOf(
+                new IOException("").getStackTrace()
+            ),
+            new TextHasString(
+                Matchers.containsString("org.cactoos.text.TextOfTest")
+            )
+        );
+    }
 }
