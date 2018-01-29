@@ -21,55 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.iterator;
 
-import java.io.File;
-import java.io.IOException;
-import org.cactoos.TextHasString;
-import org.cactoos.text.TextOf;
+import java.util.Arrays;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+// @todo #482:30min add multi-threaded tests which test that the lock syncs the
+//  access to the next method against next and hasNext calls and calls to the
+//  hasNext method against next calls.
 /**
- * Test case for {@link InputWithFallback}.
+ * Test for {@link SyncIterator}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle TodoCommentCheck (500 lines)
  */
-public final class InputWithFallbackTest {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class SyncIteratorTest {
 
     @Test
-    public void readsAlternativeInput() {
+    public void syncIteratorReturnsCorrectValuesWithExternalLock() {
+        final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
         MatcherAssert.assertThat(
-            "Can't read alternative source",
-            new TextOf(
-                new InputWithFallback(
-                    new InputOf(
-                        new File("/this-file-is-absent-for-sure.txt")
-                    ),
-                    new InputOf("hello, world!")
+            "Unexpected value found.",
+            new ListOf<>(
+                new SyncIterator<>(
+                    Arrays.asList("a", "b").iterator(), lock
                 )
-            ),
-            new TextHasString(Matchers.endsWith("world!"))
+            ).toArray(),
+            Matchers.equalTo(new Object[]{"a", "b"})
         );
     }
 
     @Test
-    public void readsAlternativeInputUri() {
+    public void syncIteratorReturnsCorrectValuesWithInternalLock() {
         MatcherAssert.assertThat(
-            "Can't read alternative source from URI",
-            new TextOf(
-                new InputWithFallback(
-                    () -> {
-                        throw new IOException("Always fails!");
-                    },
-                    new InputOf("it works!")
+            "Unexpected value found.",
+            new ListOf<>(
+                new SyncIterator<>(
+                    Arrays.asList("a", "b").iterator()
                 )
-            ),
-            new TextHasString(Matchers.endsWith("works!"))
+            ).toArray(),
+            Matchers.equalTo(new Object[]{"a", "b"})
         );
     }
 
