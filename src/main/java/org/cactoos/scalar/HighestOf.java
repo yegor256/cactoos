@@ -54,7 +54,7 @@ import org.cactoos.iterable.Mapped;
  * @param <T> Scalar type
  * @see UncheckedScalar
  * @see IoCheckedScalar
- * @since 1.0
+ * @since 0.29
  */
 public final class HighestOf<T extends Comparable<T>> implements Scalar<T> {
 

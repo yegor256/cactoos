@@ -64,7 +64,7 @@ import org.cactoos.Scalar;
  * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
  * @param <T> Scalar type
- * @since 1.0
+ * @since 0.29
  */
 public final class Folded<T> implements Scalar<T> {
 

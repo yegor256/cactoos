@@ -36,7 +36,7 @@ import org.junit.Test;
  *
  * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
- * @since 1.0
+ * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FoldedTest {
