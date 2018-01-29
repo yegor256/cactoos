@@ -33,6 +33,15 @@ import org.cactoos.Scalar;
  * it more convenient and get rid of the checked exception you can
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
+ * <pre>
+ * final List<Integer> list = new LinkedList<>();
+ * final int threads = 100;
+ * new RunsInThreads<>(
+ *   new SyncScalar<>(() -> list.add(1)), threads
+ * );
+ * // list.size() will be equal to threads value
+ * </pre>
+ *
  * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
  * @param <T> Type of result
