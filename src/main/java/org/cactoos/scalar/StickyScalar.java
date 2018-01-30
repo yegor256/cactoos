@@ -43,9 +43,9 @@ import org.cactoos.func.StickyFunc;
  *
  * <pre>
  * final Scalar&lt;Integer&gt; scalar = new StickyScalar<>(
- *   () -> {
- *     System.out.println("Will be printed only once");
- *     return new SecureRandom().nextInt();
+ *     () -> {
+ *         System.out.println("Will be printed only once");
+ *         return new SecureRandom().nextInt();
  *     }
  * ).value()
  * </pre>

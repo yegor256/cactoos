@@ -41,10 +41,9 @@ import org.cactoos.iterable.Mapped;
  *
  * <pre>
  * new And(
- *  new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
- *  new IterableOf<>("Mary", "John", "William", "Napkin")
- * ).value();
- * // will print 'Mary' 'John' 'William' 'Napkin' to console
+ *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
+ *    new IterableOf<>("Mary", "John", "William", "Napkin")
+ * ).value(); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
  * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked

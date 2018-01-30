@@ -38,10 +38,10 @@ import org.cactoos.Scalar;
  *
  * <pre>
  * new Ternary<>(
- *   5,
- *   input -> input > 3,
- *   input -> input = 8,
- *   input -> input = 2
+ *     5,
+ *     input -> input > 3,
+ *     input -> input = 8,
+ *     input -> input = 2
  * ).value() // will be equal to 8
  * </pre>
  *

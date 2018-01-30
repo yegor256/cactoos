@@ -37,9 +37,8 @@ import org.cactoos.Scalar;
  * final List&lt;Integer&gt; list = new LinkedList<>();
  * final int threads = 100;
  * new RunsInThreads<>(
- *   new SyncScalar<>(() -> list.add(1)), threads
- * );
- * // list.size() will be equal to threads value
+ *     new SyncScalar<>(() -> list.add(1)), threads
+ * ); // list.size() will be equal to threads value
  * </pre>
  *
  * @author Tim Hinkes (timmeey@timmeey.de)

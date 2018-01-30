@@ -32,15 +32,14 @@ import org.cactoos.func.RetryFunc;
  *
  * <pre>
  * new RetryScalar<>(
- *   () -> {
- *     if (new SecureRandom().nextDouble() > 0.3d) {
- *       throw new IllegalArgumentException("May happen");
- *     }
- *     return 0;
- *   },
- *   5
- * ).value()
- * // will try to run 5 times before throwing an exception
+ *     () -> {
+ *         if (new SecureRandom().nextDouble() > 0.3d) {
+ *         throw new IllegalArgumentException("May happen");
+ *       }
+ *       return 0;
+ *     },
+ *     5
+ * ).value() // will try to run 5 times before throwing an exception
  * </pre>
  *
  * <p>There is no thread-safety guarantee.
