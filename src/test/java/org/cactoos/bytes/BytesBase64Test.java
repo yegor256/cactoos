@@ -25,6 +25,7 @@
 package org.cactoos.bytes;
 
 import java.io.IOException;
+import java.util.Base64;
 import org.cactoos.io.BytesOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -35,21 +36,49 @@ import org.junit.Test;
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @since 0.20.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class BytesBase64Test {
 
-    /**
-     * Check bytes encodes using the Base64 encoding scheme.
-     * @throws IOException If fails.
-     */
     @Test
-    public void checkEncode() throws IOException {
+    public void checkEncodeBasic() throws IOException {
         MatcherAssert.assertThat(
-            "Can't encodes bytes using the Base64 encoding scheme",
+            "Can't encodes bytes using the Base64 basic encoding scheme",
             new BytesBase64(
                 new BytesOf(
                     "Hello!"
                 )
+            ).asBytes(),
+            Matchers.equalTo(
+                new BytesOf("SGVsbG8h").asBytes()
+            )
+        );
+    }
+
+    @Test
+    public void checkEncodeUrl() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't encodes bytes using the Base64 URL encoding scheme",
+            new BytesBase64(
+                new BytesOf(
+                    "Hello!"
+                ), Base64.getUrlEncoder()
+            ).asBytes(),
+            Matchers.equalTo(
+                new BytesOf("SGVsbG8h").asBytes()
+            )
+        );
+    }
+
+    @Test
+    public void checkEncodeMime() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't encodes bytes using the Base64 mime encoding scheme",
+            new BytesBase64(
+                new BytesOf(
+                    "Hello!"
+                ), Base64.getMimeEncoder()
             ).asBytes(),
             Matchers.equalTo(
                 new BytesOf("SGVsbG8h").asBytes()

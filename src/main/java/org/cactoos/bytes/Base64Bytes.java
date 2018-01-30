@@ -41,18 +41,33 @@ public final class Base64Bytes implements Bytes {
      * Origin bytes.
      */
     private final Bytes origin;
+    /**
+     * The decoder.
+     */
+    private final Base64.Decoder decoder;
 
     /**
-     * Ctor.
+     * Ctor uses a RFC4648 {@link java.util.Base64.Decoder}.
      *
      * @param origin Origin bytes
      */
     public Base64Bytes(final Bytes origin) {
+        this(origin, Base64.getDecoder());
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param origin Origin bytes.
+     * @param dec Decoder to use.
+     */
+    public Base64Bytes(final Bytes origin, final Base64.Decoder dec) {
         this.origin = origin;
+        this.decoder = dec;
     }
 
     @Override
     public byte[] asBytes() throws IOException {
-        return Base64.getDecoder().decode(this.origin.asBytes());
+        return this.decoder.decode(this.origin.asBytes());
     }
 }
