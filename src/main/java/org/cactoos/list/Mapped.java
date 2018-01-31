@@ -23,9 +23,9 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.Func;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Mapped list.
@@ -47,26 +47,17 @@ public final class Mapped<X, Y> extends ListEnvelope<Y> {
      * @since 0.21
      */
     public Mapped(final Func<X, Y> fnc, final Iterator<X> src) {
-        this(fnc, new ListOf<>(src));
+        this(fnc, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param src Source list
+     * @param src Source iterable
      * @param fnc Func
      */
     public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
-        this(fnc, new ListOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Source list
-     * @param fnc Func
-     */
-    public Mapped(final Func<X, Y> fnc, final Collection<X> src) {
         super(() -> new ListOf<Y>(
-            new org.cactoos.collection.Mapped<>(fnc, src)
+            new org.cactoos.iterable.Mapped<>(fnc, src)
         ));
     }
 
