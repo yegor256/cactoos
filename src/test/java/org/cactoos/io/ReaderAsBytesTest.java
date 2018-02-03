@@ -25,6 +25,8 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -51,6 +53,18 @@ public final class ReaderAsBytesTest {
                 )
             ).asString(),
             Matchers.equalTo(source)
+        );
+    }
+
+    @Test
+    public void readsAsBytesAndDeleteFile() throws IOException {
+        final Path file = Files.createTempFile("cactoos", "txt");
+        new ReaderAsBytes(new ReaderOf(file)).asBytes();
+        Files.delete(file);
+        MatcherAssert.assertThat(
+            "Can't delete file",
+            Files.exists(file),
+            Matchers.equalTo(false)
         );
     }
 
