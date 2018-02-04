@@ -83,7 +83,7 @@ public final class MappedTest {
     @Test
     public void string() {
         MatcherAssert.assertThat(
-            "Broken cast to string",
+            "Can't convert to string",
             new Mapped<Integer, Integer>(
                 x -> x * 2,
                 Arrays.asList(1, 2, 3)
