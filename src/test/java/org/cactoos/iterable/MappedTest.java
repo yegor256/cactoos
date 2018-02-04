@@ -24,6 +24,7 @@
 package org.cactoos.iterable;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
@@ -38,6 +39,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class MappedTest {
 
@@ -67,4 +69,15 @@ public final class MappedTest {
         );
     }
 
+    @Test
+    public void string() {
+        MatcherAssert.assertThat(
+            "Broken cast to string",
+            new org.cactoos.collection.Mapped<Integer, Integer>(
+                x -> x * 2,
+                Arrays.asList(1, 2, 3)
+            ).toString(),
+            Matchers.equalTo("2, 4, 6")
+        );
+    }
 }
