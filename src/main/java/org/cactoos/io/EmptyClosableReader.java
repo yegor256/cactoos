@@ -40,7 +40,7 @@ import java.io.Reader;
  * @version $Id$
  * @since 0.29
  */
-public final class EmptyClosableReader extends Reader {
+final class EmptyClosableReader extends Reader {
     /**
      * Closed reader.
      */
