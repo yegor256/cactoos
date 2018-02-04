@@ -23,7 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Arrays;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -74,28 +74,36 @@ public final class SumOfTest {
     @Test
     public void withCollectionLong() {
         MatcherAssert.assertThat(
-            new SumOf(Arrays.asList(1, 2, 3, 4)).longValue(),
+            new SumOf(
+                new IterableOf<>(1, 2, 3, 4)
+            ).longValue(),
             new IsEqual<>(10L)
         );
     }
     @Test
     public void withCollectionInt() {
         MatcherAssert.assertThat(
-            new SumOf(Arrays.asList(1L, 2L, 3L, 4L)).intValue(),
+            new SumOf(
+                new IterableOf<>(1L, 2L, 3L, 4L)
+            ).intValue(),
             new IsEqual<>(10)
         );
     }
     @Test
     public void withCollectionFloat() {
         MatcherAssert.assertThat(
-            new SumOf(Arrays.asList(1.0f, 2.0f, 3.0f, 4.0f)).floatValue(),
+            new SumOf(
+                new IterableOf<>(1.0f, 2.0f, 3.0f, 4.0f)
+            ).floatValue(),
             new IsEqual<>(10.0f)
         );
     }
     @Test
     public void withCollectionDouble() {
         MatcherAssert.assertThat(
-            new SumOf(Arrays.asList(1.0d, 2.0d, 3.0d, 4.0d)).doubleValue(),
+            new SumOf(
+                new IterableOf<>(1.0d, 2.0d, 3.0d, 4.0d)
+            ).doubleValue(),
             new IsEqual<>(10.0d)
         );
     }
