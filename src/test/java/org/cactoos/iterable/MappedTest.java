@@ -73,7 +73,7 @@ public final class MappedTest {
     public void string() {
         MatcherAssert.assertThat(
             "Broken cast to string",
-            new org.cactoos.collection.Mapped<Integer, Integer>(
+            new Mapped<Integer, Integer>(
                 x -> x * 2,
                 Arrays.asList(1, 2, 3)
             ).toString(),
