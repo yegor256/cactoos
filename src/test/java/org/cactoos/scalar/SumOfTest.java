@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.list.ListOf;
+import java.util.Arrays;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -40,50 +40,80 @@ import org.junit.Test;
 public final class SumOfTest {
 
     @Test
-    public void withListOfNumbers() throws Exception {
+    public void withListOfNumbersInt() {
         MatcherAssert.assertThat(
             new SumOf(1, 2, 3).intValue(),
-            Matchers.equalTo(6)
-        );
-        MatcherAssert.assertThat(
-            new SumOf(1.0d, 2.0d, 3.0d).doubleValue(),
-            Matchers.equalTo(6.0d)
-        );
-        MatcherAssert.assertThat(
-            new SumOf(1.0f, 2.0f, 3.0f).floatValue(),
-            Matchers.equalTo(6.0f)
-        );
-        MatcherAssert.assertThat(
-            new SumOf(1L, 2L, 3L).longValue(),
-            Matchers.equalTo(6L)
+            new IsEqual<>(6)
         );
     }
 
     @Test
-    public void withCollection() throws Exception {
+    public void withListOfNumbersDouble() {
         MatcherAssert.assertThat(
-            new SumOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
-            ).longValue(),
-            Matchers.equalTo(10L)
-        );
-        MatcherAssert.assertThat(
-            new SumOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
-            ).intValue(),
-            Matchers.equalTo(10)
-        );
-        MatcherAssert.assertThat(
-            new SumOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).floatValue(),
-            Matchers.equalTo(10.0f)
-        );
-        MatcherAssert.assertThat(
-            new SumOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).doubleValue(),
-            Matchers.equalTo(10.0d)
+            new SumOf(1.0d, 2.0d, 3.0d).doubleValue(),
+            new IsEqual<>(6.0d)
         );
     }
+
+    @Test
+    public void withListOfNumbersFloat() {
+        MatcherAssert.assertThat(
+            new SumOf(1.0f, 2.0f, 3.0f).floatValue(),
+            new IsEqual<>(6.0f)
+        );
+    }
+
+    @Test
+    public void withListOfNumbersLong() {
+        MatcherAssert.assertThat(
+            new SumOf(1L, 2L, 3L).longValue(),
+            new IsEqual<>(6L)
+        );
+    }
+
+    @Test
+    public void withCollectionLong() {
+        MatcherAssert.assertThat(
+            new SumOf(Arrays.asList(1, 2, 3, 4)).longValue(),
+            new IsEqual<>(10L)
+        );
+    }
+    @Test
+    public void withCollectionInt() {
+        MatcherAssert.assertThat(
+            new SumOf(Arrays.asList(1L, 2L, 3L, 4L)).intValue(),
+            new IsEqual<>(10)
+        );
+    }
+    @Test
+    public void withCollectionFloat() {
+        MatcherAssert.assertThat(
+            new SumOf(Arrays.asList(1.0f, 2.0f, 3.0f, 4.0f)).floatValue(),
+            new IsEqual<>(10.0f)
+        );
+    }
+    @Test
+    public void withCollectionDouble() {
+        MatcherAssert.assertThat(
+            new SumOf(Arrays.asList(1.0d, 2.0d, 3.0d, 4.0d)).doubleValue(),
+            new IsEqual<>(10.0d)
+        );
+    }
+
+    @Test
+    public void overflowIntFromLongValues() {
+        MatcherAssert.assertThat(
+            new SumOf((Integer.MAX_VALUE + 1L) * 2L, 10L).intValue(),
+            new IsEqual<>(2147483647)
+        );
+    }
+
+    @Test
+    public void overflowFloatFromLongValues() {
+        MatcherAssert.assertThat(
+            new SumOf((Integer.MAX_VALUE + 1L) * 2L, 10L).floatValue(),
+            new IsEqual<>(4294967300f)
+        );
+    }
+
 }
