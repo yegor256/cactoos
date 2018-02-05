@@ -37,6 +37,7 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class SumOfTest {
 
     @Test
@@ -113,6 +114,18 @@ public final class SumOfTest {
         MatcherAssert.assertThat(
             new SumOf((Integer.MAX_VALUE + 1L) * 2L, 10L).intValue(),
             new IsEqual<>(2147483647)
+        );
+    }
+
+    @Test
+    public void overflowIntFromLongValuesIncludingNegative() {
+        MatcherAssert.assertThat(
+            new SumOf(
+                (Integer.MAX_VALUE + 1L) * 2L,
+                10L,
+                -(Integer.MAX_VALUE + 1L) * 2L
+            ).intValue(),
+            new IsEqual<>(10)
         );
     }
 
