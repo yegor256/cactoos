@@ -25,6 +25,10 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.zip.GZIPInputStream;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -37,6 +41,7 @@ import org.junit.Test;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class GzipOutputTest {
 
     @Test
@@ -67,4 +72,17 @@ public final class GzipOutputTest {
         );
     }
 
+    @Test(expected = IOException.class)
+    public void writeToClosedGzipOutput() throws Exception {
+        final OutputStream stream = new FileOutputStream(
+            Files.createTempFile("cactoos", "txt").toFile()
+        );
+        stream.close();
+        new LengthOf(
+            new TeeInput(
+                "Hello!",
+                new GzipOutput(new OutputTo(stream))
+            )
+        ).value();
+    }
 }
