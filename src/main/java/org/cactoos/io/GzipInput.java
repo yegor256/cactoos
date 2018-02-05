@@ -30,7 +30,7 @@ import java.util.zip.GZIPInputStream;
 import org.cactoos.Input;
 
 /**
- * Input that reads from a Gzip content.
+ * Input that reads compressed data from the GZIP file format.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$

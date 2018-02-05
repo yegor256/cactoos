@@ -30,7 +30,7 @@ import java.util.zip.GZIPOutputStream;
 import org.cactoos.Output;
 
 /**
- * Output that writes to a Gzip content.
+ * Output that writes compressed data in the GZIP file format.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
