@@ -44,9 +44,8 @@ public final class SkippedTest {
         MatcherAssert.assertThat(
             "Can't skip elements in iterable",
             new Skipped<>(
-                2, new IterableOf<>(
-                "one", "two", "three", "four"
-            )
+                2,
+                new IterableOf<>("one", "two", "three", "four")
             ),
             Matchers.contains(
                 "three",
@@ -77,9 +76,8 @@ public final class SkippedTest {
         MatcherAssert.assertThat(
             "Can't skip elements in iterable",
             new Skipped<>(
-                2, new CollectionOf<>(
-                "one", "two", "three", "four"
-            )
+                2,
+                new CollectionOf<>("one", "two", "three", "four")
             ),
             Matchers.contains(
                 "three",
