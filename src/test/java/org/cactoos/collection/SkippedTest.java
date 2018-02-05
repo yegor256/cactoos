@@ -86,4 +86,42 @@ public final class SkippedTest {
         );
     }
 
+    @Test
+    public void skippedAllElements() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't skip all elements",
+            new Skipped<>(
+                2,
+                "one", "two"
+            ),
+            Matchers.empty()
+        );
+    }
+
+    @Test
+    public void skippedMoreThanExists() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't skip more than exists",
+            new Skipped<>(
+                Integer.MAX_VALUE,
+                "one", "two"
+            ),
+            Matchers.empty()
+        );
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void skippedNegativeSize() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't process negative skipped size",
+            new Skipped<>(
+                -1,
+                "one", "two", "three", "four"
+            ),
+            Matchers.contains(
+                "one", "two", "three", "four"
+            )
+        );
+    }
 }
