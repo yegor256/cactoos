@@ -81,9 +81,6 @@ The MIT License (MIT)
       <url>https://github.com/yegor256/cactoos</url>
     </site>
   </distributionManagement>
-  <prerequisites>
-    <maven>3.0.4</maven>
-  </prerequisites>
   <dependencies>
     <dependency>
       <groupId>org.hamcrest</groupId>
