@@ -25,9 +25,11 @@
 package org.cactoos.io;
 
 import java.io.EOFException;
+import java.io.IOException;
 import java.util.zip.GZIPInputStream;
-import org.cactoos.InputHasContent;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -40,7 +42,7 @@ import org.junit.Test;
 public final class GzipInputTest {
 
     @Test
-    public void readFromGzipInput() {
+    public void readFromGzipInput() throws IOException {
         final byte[] bytes = {
             (byte) GZIPInputStream.GZIP_MAGIC,
             // @checkstyle MagicNumberCheck (1 line)
@@ -53,8 +55,10 @@ public final class GzipInputTest {
         };
         MatcherAssert.assertThat(
             "Can't read from a gzip input",
-            new GzipInput(new InputOf(bytes)),
-            new InputHasContent("Hello!")
+            new TextOf(
+                new GzipInput(new InputOf(bytes))
+            ).asString(),
+            Matchers.equalTo("Hello!")
         );
     }
 
