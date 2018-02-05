@@ -41,7 +41,7 @@ public final class Skipped<T> extends CollectionEnvelope<T> {
     /**
      * Ctor.
      * @param skip How many to skip
-     * @param src Source collection
+     * @param src Source elements
      */
     @SafeVarargs
     public Skipped(final int skip, final T... src) {
@@ -51,7 +51,7 @@ public final class Skipped<T> extends CollectionEnvelope<T> {
     /**
      * Ctor.
      * @param skip How many to skip
-     * @param src Source collection
+     * @param src Source iterable
      */
     public Skipped(final int skip, final Iterable<T> src) {
         this(skip, new CollectionOf<T>(src));
