@@ -53,11 +53,7 @@ public final class GzipInputTest {
         };
         MatcherAssert.assertThat(
             "Can't read from a gzip input",
-            new GzipInput(
-                new InputOf(
-                    bytes
-                )
-            ),
+            new GzipInput(new InputOf(bytes)),
             new InputHasContent("Hello!")
         );
     }

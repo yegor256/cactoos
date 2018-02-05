@@ -60,9 +60,7 @@ public final class GzipOutputTest {
         new LengthOf(
             new TeeInput(
                 "Hello!",
-                new GzipOutput(
-                    new OutputTo(baos)
-                )
+                new GzipOutput(new OutputTo(baos))
             )
         ).value();
         MatcherAssert.assertThat(
