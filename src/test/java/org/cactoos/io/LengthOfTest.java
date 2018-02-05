@@ -86,8 +86,8 @@ public final class LengthOfTest {
 
     // @checkstyle RegexpMultilineCheck (5 lines)
     /**
-     * @todo #547:30m/DEV Fix length of for buffer of 0
-     *  I suppose to have en exception in that case
+     * @todo #547:30m/DEV Fix calculation of length for zero buffer
+     *  I suppose to have an exception in that case
      *  For now it runs forever
      */
     @Test
