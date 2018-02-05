@@ -58,7 +58,7 @@ public final class SkippedTest {
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipArray() throws Exception {
         MatcherAssert.assertThat(
-            "Can't skip elements in iterable",
+            "Can't skip elements in array",
             new Skipped<>(
                 2,
                 "one", "two", "three", "four"
@@ -74,7 +74,7 @@ public final class SkippedTest {
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipCollection() throws Exception {
         MatcherAssert.assertThat(
-            "Can't skip elements in iterable",
+            "Can't skip elements in collection",
             new Skipped<>(
                 2,
                 new CollectionOf<>("one", "two", "three", "four")
