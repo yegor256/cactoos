@@ -138,7 +138,7 @@ public final class ItemAt<T> implements Scalar<T> {
         final int position,
         final Func<Iterable<T>, T> fallback
     ) {
-        this((Scalar<Iterator<T>>) (source::iterator), position, fallback);
+        this(new StickyScalar<>(source::iterator), position, fallback);
     }
 
     /**
@@ -211,7 +211,7 @@ public final class ItemAt<T> implements Scalar<T> {
         final int position,
         final Func<Iterable<T>, T> fallback
     ) {
-        this((Scalar<Iterator<T>>) (() -> iterator), position, fallback);
+        this(new StickyScalar<>(() -> iterator), position, fallback);
     }
 
     /**
