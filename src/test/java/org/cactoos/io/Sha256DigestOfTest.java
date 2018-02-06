@@ -86,7 +86,7 @@ public final class Sha256DigestOfTest {
             ),
             new TextHasString(
                 // @checkstyle LineLengthCheck (1 lines)
-                "7eac7a6e680f020b240b5353c1038a630e03a75b2a011401eca312558b949654"
+                "c94451bd1476a3728669de11e22c645906d806e63a95c5797de1f3e84f126a3e"
             )
         );
     }

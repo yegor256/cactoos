@@ -83,7 +83,7 @@ public final class Sha1DigestOfTest {
                 )
             ),
             new TextHasString(
-                "c0792fe7892c705443bf68844559e077d230bccd"
+                "34f80bdab9b93af514004f127e440139aad63e2d"
             )
         );
     }
