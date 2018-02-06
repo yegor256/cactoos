@@ -80,7 +80,7 @@ public final class TextHasString extends TypeSafeMatcher<Text> {
 
     @Override
     public void describeTo(final Description description) {
-        description.appendText(this.PREFIX);
+        description.appendText(TextHasString.PREFIX);
         description.appendDescriptionOf(this.matcher);
     }
 
@@ -88,7 +88,7 @@ public final class TextHasString extends TypeSafeMatcher<Text> {
     public void describeMismatchSafely(
         final Text item,
         final Description description) {
-        description.appendText(this.PREFIX);
+        description.appendText(TextHasString.PREFIX);
         description.appendValue(this.result);
     }
 }
