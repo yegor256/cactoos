@@ -40,9 +40,19 @@ import org.hamcrest.core.IsEqual;
 public final class TextHasString extends TypeSafeMatcher<Text> {
 
     /**
+     * Prefix for description.
+     */
+    private static final String PREFIX = "Text with ";
+
+    /**
      * Matcher of the text.
      */
     private final Matcher<String> matcher;
+
+    /**
+     * Actual result for comparison.
+     */
+    private String result;
 
     /**
      * Ctor.
@@ -59,17 +69,26 @@ public final class TextHasString extends TypeSafeMatcher<Text> {
     public TextHasString(final Matcher<String> mtr) {
         super();
         this.matcher = mtr;
+        this.result = "";
     }
 
     @Override
     public boolean matchesSafely(final Text item) {
-        return this.matcher.matches(new UncheckedText(item).asString());
+        this.result = new UncheckedText(item).asString();
+        return this.matcher.matches(this.result);
     }
 
     @Override
     public void describeTo(final Description description) {
-        description.appendText("Text with ");
+        description.appendText(this.PREFIX);
         description.appendDescriptionOf(this.matcher);
     }
 
+    @Override
+    public void describeMismatchSafely(
+        final Text item,
+        final Description description) {
+        description.appendText(this.PREFIX);
+        description.appendValue(this.result);
+    }
 }

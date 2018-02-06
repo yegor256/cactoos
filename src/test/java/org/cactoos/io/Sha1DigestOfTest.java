@@ -77,13 +77,13 @@ public final class Sha1DigestOfTest {
                 new Sha1DigestOf(
                     new InputOf(
                         new ResourceOf(
-                            "org/cactoos/io/DigestEnvelope.class"
+                            "org/cactoos/digest-calculation.txt"
                         ).stream()
                     )
                 )
             ),
             new TextHasString(
-                "9d47e35afdcbf845aa9f05f15b4d936b97e55f0e"
+                "c0792fe7892c705443bf68844559e077d230bccd"
             )
         );
     }

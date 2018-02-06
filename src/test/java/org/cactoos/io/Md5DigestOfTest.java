@@ -77,13 +77,13 @@ public final class Md5DigestOfTest {
                 new Md5DigestOf(
                     new InputOf(
                         new ResourceOf(
-                            "org/cactoos/io/DigestEnvelope.class"
+                            "org/cactoos/digest-calculation.txt"
                         ).stream()
                     )
                 )
             ),
             new TextHasString(
-                "842a5e7012d76e1df96c3d92e5c661df"
+                "dbb9828164fa7d30c8a17c5cc8dadc2a"
             )
         );
     }

@@ -79,14 +79,14 @@ public final class Sha256DigestOfTest {
                 new Sha256DigestOf(
                     new InputOf(
                         new ResourceOf(
-                            "org/cactoos/io/DigestEnvelope.class"
+                            "org/cactoos/digest-calculation.txt"
                         ).stream()
                     )
                 )
             ),
             new TextHasString(
                 // @checkstyle LineLengthCheck (1 lines)
-                "a56c3be45f9be8dda0653e33ae7ef3abf2939f926eda801f329e0830b6e7cc22"
+                "7eac7a6e680f020b240b5353c1038a630e03a75b2a011401eca312558b949654"
             )
         );
     }
