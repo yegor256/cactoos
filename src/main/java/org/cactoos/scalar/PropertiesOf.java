@@ -38,7 +38,7 @@ import org.cactoos.map.MapOf;
 import org.cactoos.text.TextOf;
 
 /**
- * Map as {@link java.util.Properties}.
+ * Map as {@link Properties}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -53,7 +53,7 @@ public final class PropertiesOf implements Scalar<Properties> {
     /**
      * The underlying properties.
      */
-    private IoCheckedScalar<Properties> scalar;
+    private final IoCheckedScalar<Properties> scalar;
 
     /**
      * Ctor.
