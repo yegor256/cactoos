@@ -30,7 +30,7 @@ import org.cactoos.Input;
 /**
  * Thread-safe {@link Input}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>This class is thread-safe.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
