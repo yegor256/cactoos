@@ -36,6 +36,15 @@ import org.cactoos.Scalar;
  * it more convenient and get rid of the checked exception you can
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
+ * <pre>
+ * new Ternary<>(
+ *     5,
+ *     input -> input > 3,
+ *     input -> input = 8,
+ *     input -> input = 2
+ * ).value() // will be equal to 8
+ * </pre>
+ *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$
  * @param <T> Type of item.

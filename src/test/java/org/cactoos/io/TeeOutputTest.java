@@ -25,8 +25,8 @@ package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.TextHasString;
-import org.cactoos.func.MatcherOf;
+import org.cactoos.matchers.MatcherOf;
+import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;

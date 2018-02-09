@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.cactoos.FuncApplies;
+import org.cactoos.matchers.FuncApplies;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;

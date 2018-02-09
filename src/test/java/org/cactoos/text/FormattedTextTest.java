@@ -28,8 +28,8 @@ import java.util.Calendar;
 import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
-import org.cactoos.TextHasString;
 import org.cactoos.list.ListOf;
+import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 

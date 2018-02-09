@@ -269,6 +269,52 @@ public final class BytesOf implements Bytes {
 
     /**
      * Ctor.
+     * @param strace The stack trace
+     * @since 0.29
+     */
+    public BytesOf(final StackTraceElement... strace) {
+        this(strace, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Ctor.
+     * @param strace The stack trace
+     * @param charset Charset
+     * @since 0.29
+     */
+    public BytesOf(final StackTraceElement[] strace, final Charset charset) {
+        this(strace, charset.name());
+    }
+
+    /**
+     * Ctor.
+     * @param strace The stack trace
+     * @param charset Charset
+     * @since 0.29
+     */
+    public BytesOf(final StackTraceElement[] strace,
+        final CharSequence charset) {
+        this(
+            () -> {
+                try (
+                    final ByteArrayOutputStream baos =
+                        new ByteArrayOutputStream();
+                    final PrintStream stream = new PrintStream(
+                        baos, true, charset.toString()
+                    )
+                ) {
+                    for (final StackTraceElement element : strace) {
+                        stream.append(element.toString());
+                        stream.append("\n");
+                    }
+                    return baos.toByteArray();
+                }
+            }
+        );
+    }
+
+    /**
+     * Ctor.
      *
      * @param bytes Bytes to encapsulate
      */

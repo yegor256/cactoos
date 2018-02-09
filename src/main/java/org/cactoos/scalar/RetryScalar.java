@@ -30,6 +30,18 @@ import org.cactoos.func.RetryFunc;
 /**
  * Func that will try a few times before throwing an exception.
  *
+ * <pre>
+ * new RetryScalar<>(
+ *     () -> {
+ *         if (new SecureRandom().nextDouble() > 0.3d) {
+ *         throw new IllegalArgumentException("May happen");
+ *       }
+ *       return 0;
+ *     },
+ *     5
+ * ).value() // will try to run 5 times before throwing an exception
+ * </pre>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked

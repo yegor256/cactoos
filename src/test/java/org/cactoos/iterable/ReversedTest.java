@@ -23,7 +23,7 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.TextHasString;
+import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.JoinedText;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;

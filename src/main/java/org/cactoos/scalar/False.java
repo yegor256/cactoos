@@ -28,7 +28,7 @@ import org.cactoos.Scalar;
 /**
  * Logical false.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>This class is thread-safe.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
  * @version $Id$

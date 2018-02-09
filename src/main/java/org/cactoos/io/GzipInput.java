@@ -21,56 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
 
-import org.cactoos.scalar.UncheckedScalar;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsEqual;
+package org.cactoos.io;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
+import org.cactoos.Input;
 
 /**
- * Matcher for the value.
+ * Input that reads compressed data from the GZIP file format.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @param <T> Type of result
- * @since 0.2
+ * @since 0.29
  */
-public final class ScalarHasValue<T> extends TypeSafeMatcher<Scalar<T>> {
+public final class GzipInput implements Input {
 
     /**
-     * Matcher of the value.
+     * The input.
      */
-    private final Matcher<T> matcher;
+    private final Input origin;
+
+    /**
+     * The buffer size.
+     */
+    private final int size;
 
     /**
      * Ctor.
-     * @param text The text to match against
+     * @param input The input.
      */
-    public ScalarHasValue(final T text) {
-        this(new IsEqual<>(text));
+    public GzipInput(final Input input) {
+        // @checkstyle MagicNumberCheck (1 line)
+        this(input, 16 << 10);
     }
 
     /**
      * Ctor.
-     * @param mtr Matcher of the text
+     * @param input The input
+     * @param max Max length of the buffer
      */
-    public ScalarHasValue(final Matcher<T> mtr) {
-        super();
-        this.matcher = mtr;
+    public GzipInput(final Input input, final int max) {
+        this.origin = input;
+        this.size = max;
     }
 
     @Override
-    public boolean matchesSafely(final Scalar<T> item) {
-        return this.matcher.matches(
-            new UncheckedScalar<>(item).value()
+    public InputStream stream() throws IOException {
+        return new GZIPInputStream(
+            this.origin.stream(),
+            this.size
         );
-    }
-
-    @Override
-    public void describeTo(final Description description) {
-        description.appendText("Scalar with ");
-        description.appendDescriptionOf(this.matcher);
     }
 }
