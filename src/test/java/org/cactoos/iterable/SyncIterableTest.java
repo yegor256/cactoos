@@ -23,7 +23,7 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.RunsInThreads;
+import org.cactoos.matchers.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;

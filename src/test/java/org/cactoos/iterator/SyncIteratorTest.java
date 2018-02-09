@@ -21,62 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.ScalarHasValue;
+import java.util.Arrays;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
+// @todo #482:30min add multi-threaded tests which test that the lock syncs the
+//  access to the next method against next and hasNext calls and calls to the
+//  hasNext method against next calls.
 /**
- * Test case for {@link ItemAt}.
+ * Test for {@link SyncIterator}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle TodoCommentCheck (500 lines)
  */
-public final class ItemAtTest {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class SyncIteratorTest {
 
     @Test
-    public void firstElementTest() throws Exception {
+    public void syncIteratorReturnsCorrectValuesWithExternalLock() {
+        final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
         MatcherAssert.assertThat(
-            "Can't take the first item from the iterable",
-            new ItemAt<>(
-                // @checkstyle MagicNumber (1 line)
-                new IterableOf<>(1, 2, 3)
-            ),
-            new ScalarHasValue<>(1)
+            "Unexpected value found.",
+            new ListOf<>(
+                new SyncIterator<>(
+                    Arrays.asList("a", "b").iterator(), lock
+                )
+            ).toArray(),
+            Matchers.equalTo(new Object[]{"a", "b"})
         );
     }
 
     @Test
-    public void elementByPosTest() throws Exception {
+    public void syncIteratorReturnsCorrectValuesWithInternalLock() {
         MatcherAssert.assertThat(
-            "Can't take the item by position from the iterable",
-            new ItemAt<>(
-                // @checkstyle MagicNumber (1 line)
-                1, new IterableOf<>(1, 2, 3)
-            ),
-            new ScalarHasValue<>(2)
+            "Unexpected value found.",
+            new ListOf<>(
+                new SyncIterator<>(
+                    Arrays.asList("a", "b").iterator()
+                )
+            ).toArray(),
+            Matchers.equalTo(new Object[]{"a", "b"})
         );
     }
 
-    @Test(expected = IOException.class)
-    public void failForEmptyCollectionTest() throws Exception {
-        new ItemAt<>(Collections.emptyList()).value();
-    }
-
-    @Test
-    public void fallbackTest() throws Exception {
-        final String fallback = "fallback";
-        MatcherAssert.assertThat(
-            "Can't fallback to default value",
-            new ItemAt<>(
-                fallback, Collections.emptyList()
-            ),
-            new ScalarHasValue<>(fallback)
-        );
-    }
 }

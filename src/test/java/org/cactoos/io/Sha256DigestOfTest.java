@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import org.cactoos.TextHasString;
+import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.HexOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -79,14 +79,14 @@ public final class Sha256DigestOfTest {
                 new Sha256DigestOf(
                     new InputOf(
                         new ResourceOf(
-                            "org/cactoos/io/DigestEnvelope.class"
+                            "org/cactoos/digest-calculation.txt"
                         ).stream()
                     )
                 )
             ),
             new TextHasString(
                 // @checkstyle LineLengthCheck (1 lines)
-                "a56c3be45f9be8dda0653e33ae7ef3abf2939f926eda801f329e0830b6e7cc22"
+                "c94451bd1476a3728669de11e22c645906d806e63a95c5797de1f3e84f126a3e"
             )
         );
     }

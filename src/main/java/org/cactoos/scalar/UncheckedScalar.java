@@ -55,7 +55,7 @@ public final class UncheckedScalar<T> implements Scalar<T> {
     @Override
     public T value() {
         try {
-            return new IoCheckedScalar<>(this.origin::value).value();
+            return new IoCheckedScalar<>(this.origin).value();
         } catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }

@@ -30,8 +30,9 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.TextHasString;
-import org.cactoos.func.MatcherOf;
+import org.cactoos.matchers.MatcherOf;
+import org.cactoos.matchers.ScalarHasValue;
+import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -45,6 +46,7 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class WriterAsOutputStreamTest {
 
     @Test
@@ -111,4 +113,30 @@ public final class WriterAsOutputStreamTest {
         );
     }
 
+    @Test
+    public void writesToFileAndRemovesIt() throws Exception {
+        final Path temp = new TempFile().value();
+        final String content = "Hello, товарищ! How are you?";
+        new LengthOf(
+            new TeeInput(
+                new InputOf(content),
+                new OutputTo(
+                    new WriterAsOutputStream(
+                        new OutputStreamWriter(
+                            new FileOutputStream(temp.toFile()),
+                            StandardCharsets.UTF_8
+                        ),
+                        StandardCharsets.UTF_8,
+                        // @checkstyle MagicNumber (1 line)
+                        345
+                    )
+                )
+            )
+        ).value();
+        Files.delete(temp);
+        MatcherAssert.assertThat(
+            () -> Files.exists(temp),
+            new ScalarHasValue<>(new MatcherOf<Boolean>(value -> !value))
+        );
+    }
 }

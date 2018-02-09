@@ -25,6 +25,7 @@ package org.cactoos.iterable;
 
 import java.util.Iterator;
 import org.cactoos.Func;
+import org.cactoos.text.TextOf;
 
 /**
  * Mapped iterable.
@@ -69,4 +70,8 @@ public final class Mapped<X, Y> extends IterableEnvelope<Y> {
         ));
     }
 
+    @Override
+    public String toString() {
+        return new TextOf(this).toString();
+    }
 }

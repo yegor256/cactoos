@@ -21,54 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
-
-import org.cactoos.text.UncheckedText;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsEqual;
 
 /**
- * Matcher for the content.
+ * Matcher's tests.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.1
  */
-public final class TextHasString extends TypeSafeMatcher<Text> {
-
-    /**
-     * Matcher of the text.
-     */
-    private final Matcher<String> matcher;
-
-    /**
-     * Ctor.
-     * @param text The text to match against
-     */
-    public TextHasString(final String text) {
-        this(new IsEqual<>(text));
-    }
-
-    /**
-     * Ctor.
-     * @param mtr Matcher of the text
-     */
-    public TextHasString(final Matcher<String> mtr) {
-        super();
-        this.matcher = mtr;
-    }
-
-    @Override
-    public boolean matchesSafely(final Text item) {
-        return this.matcher.matches(new UncheckedText(item).asString());
-    }
-
-    @Override
-    public void describeTo(final Description description) {
-        description.appendText("Text with ");
-        description.appendDescriptionOf(this.matcher);
-    }
-
-}
+package org.cactoos.matchers;

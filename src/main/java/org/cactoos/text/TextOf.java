@@ -212,11 +212,60 @@ public final class TextOf implements Text {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      */
     public TextOf(final Throwable error) {
         this(new BytesOf(error));
+    }
+
+    /**
+     * Ctor.
+     * @param error The exception to serialize
+     * @param charset Charset
+     * @since 0.29
+     */
+    public TextOf(final Throwable error, final Charset charset) {
+        this(new BytesOf(error, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param error The exception to serialize
+     * @param charset Charset
+     * @since 0.29
+     */
+    public TextOf(final Throwable error, final CharSequence charset) {
+        this(new BytesOf(error, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param strace The stacktrace to serialize
+     * @since 0.29
+     */
+    public TextOf(final StackTraceElement... strace) {
+        this(new BytesOf(strace));
+    }
+
+    /**
+     * Ctor.
+     * @param strace The stacktrace to serialize
+     * @param charset Charset
+     * @since 0.29
+     */
+    public TextOf(final StackTraceElement[] strace, final Charset charset) {
+        this(new BytesOf(strace, charset));
+    }
+
+    /**
+     * Ctor.
+     * @param strace The stacktrace to serialize
+     * @param charset Charset
+     * @since 0.29
+     */
+    public TextOf(final StackTraceElement[] strace,
+        final CharSequence charset) {
+        this(new BytesOf(strace, charset));
     }
 
     /**

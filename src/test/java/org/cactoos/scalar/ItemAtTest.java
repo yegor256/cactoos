@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.scalar;
 
 import java.io.IOException;
 import java.util.Collections;
-import org.cactoos.ScalarHasValue;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -38,6 +38,47 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ItemAtTest {
+
+    @Test
+    public void firstElementIterableTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't take the first item from the iterable",
+            new ItemAt<>(
+                // @checkstyle MagicNumber (1 line)
+                new IterableOf<>(1, 2, 3)
+            ),
+            new ScalarHasValue<>(1)
+        );
+    }
+
+    @Test
+    public void elementByPosIterableTest() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't take the item by position from the iterable",
+            new ItemAt<>(
+                // @checkstyle MagicNumber (1 line)
+                1, new IterableOf<>(1, 2, 3)
+            ),
+            new ScalarHasValue<>(2)
+        );
+    }
+
+    @Test(expected = IOException.class)
+    public void failForEmptyIterableTest() throws Exception {
+        new ItemAt<>(Collections.emptyList()).value();
+    }
+
+    @Test
+    public void fallbackIterableTest() throws Exception {
+        final String fallback = "default";
+        MatcherAssert.assertThat(
+            "Can't fallback to default one",
+            new ItemAt<>(
+                fallback, Collections.emptyList()
+            ),
+            new ScalarHasValue<>(fallback)
+        );
+    }
 
     @Test
     public void firstElementTest() throws Exception {
