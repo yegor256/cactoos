@@ -30,7 +30,7 @@ import org.cactoos.Output;
 /**
  * Thread-safe {@link Output}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>Objects of this class are thread safe.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$

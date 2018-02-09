@@ -41,6 +41,8 @@ import org.cactoos.Scalar;
  * ); // list.size() will be equal to threads value
  * </pre>
  *
+ * <p>Objects of this class are thread-safe.</p>
+ *
  * @author Tim Hinkes (timmeey@timmeey.de)
  * @version $Id$
  * @param <T> Type of result
