@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import org.cactoos.TextHasString;
+import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.HexOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -77,13 +77,13 @@ public final class Md5DigestOfTest {
                 new Md5DigestOf(
                     new InputOf(
                         new ResourceOf(
-                            "org/cactoos/io/DigestEnvelope.class"
+                            "org/cactoos/digest-calculation.txt"
                         ).stream()
                     )
                 )
             ),
             new TextHasString(
-                "842a5e7012d76e1df96c3d92e5c661df"
+                "162665ab3d58424724f83f28e7a147d6"
             )
         );
     }

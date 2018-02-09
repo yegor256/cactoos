@@ -35,6 +35,11 @@ final class Iso {
 
     /**
      * Take it.
+     *
+     * The assert is here in order to fool our static analyzers. They don't
+     * like this method, since it doesn't touch "this" and has to be
+     * static because of that.
+     *
      * @return Formatter
      */
     public DateTimeFormatter get() {

@@ -28,9 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.TextHasString;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
+import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -290,6 +290,19 @@ public final class TextOfTest {
             "Can't read empty input stream",
             new TextOf(stream).asString(),
             Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void printsStackTraceFromArray() {
+        MatcherAssert.assertThat(
+            "Can't print exception stacktrace from array",
+            new TextOf(
+                new IOException("").getStackTrace()
+            ),
+            new TextHasString(
+                Matchers.containsString("org.cactoos.text.TextOfTest")
+            )
         );
     }
 }

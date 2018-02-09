@@ -21,65 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
 
-import org.cactoos.func.UncheckedFunc;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsEqual;
+package org.cactoos.io;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.zip.GZIPOutputStream;
+import org.cactoos.Output;
 
 /**
- * Matcher for the value.
+ * Output that writes compressed data in the GZIP file format.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.2
+ * @since 0.29
  */
-public final class FuncApplies<X, Y> extends TypeSafeMatcher<Func<X, Y>> {
+public final class GzipOutput implements Output {
 
     /**
-     * Input of the function.
+     * The output.
      */
-    private final X input;
+    private final Output origin;
 
     /**
-     * Matcher of the result.
+     * The buffer size.
      */
-    private final Matcher<Y> matcher;
+    private final int size;
 
     /**
      * Ctor.
-     * @param result The result expected
-     * @param inpt Input for the function
+     * @param output The output
      */
-    public FuncApplies(final X inpt, final Y result) {
-        this(inpt, new IsEqual<>(result));
+    public GzipOutput(final Output output) {
+        // @checkstyle MagicNumberCheck (1 line)
+        this(output, 16 << 10);
     }
 
     /**
      * Ctor.
-     * @param inpt Input for the function
-     * @param mtr Matcher of the text
+     * @param output The output
+     * @param max Max length of the buffer
      */
-    public FuncApplies(final X inpt, final Matcher<Y> mtr) {
-        super();
-        this.input = inpt;
-        this.matcher = mtr;
+    public GzipOutput(final Output output, final int max) {
+        this.origin = output;
+        this.size = max;
     }
 
     @Override
-    public boolean matchesSafely(final Func<X, Y> func) {
-        return this.matcher.matches(
-            new UncheckedFunc<>(func).apply(this.input)
+    public OutputStream stream() throws IOException {
+        return new GZIPOutputStream(
+            this.origin.stream(),
+            this.size
         );
-    }
-
-    @Override
-    public void describeTo(final Description description) {
-        description.appendText("Scalar with ");
-        description.appendDescriptionOf(this.matcher);
     }
 }

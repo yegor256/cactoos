@@ -41,6 +41,15 @@ import org.cactoos.func.StickyFunc;
  * it more convenient and get rid of the checked exception you can
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
+ * <pre>
+ * final Scalar&lt;Integer&gt; scalar = new StickyScalar<>(
+ *     () -> {
+ *         System.out.println("Will be printed only once");
+ *         return new SecureRandom().nextInt();
+ *     }
+ * ).value()
+ * </pre>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Tim Hinkes (timmeey@timmeey.de)

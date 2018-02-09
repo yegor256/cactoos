@@ -25,6 +25,8 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -54,4 +56,26 @@ public final class ReaderAsBytesTest {
         );
     }
 
+    @Test
+    public void readsAsBytesAndDeletesTempFile() throws Exception {
+        final Path file = new TempFile().value();
+        new ReaderAsBytes(
+            new ReaderOf(file)
+        ).asBytes();
+        Files.delete(file);
+        MatcherAssert.assertThat(
+            Files.exists(file),
+            Matchers.equalTo(false)
+        );
+    }
+
+    @Test
+    public void readsEmptyClosableReaderAsBytes() throws Exception {
+        final EmptyClosableReader reader = new EmptyClosableReader();
+        new ReaderAsBytes(reader).asBytes();
+        MatcherAssert.assertThat(
+            reader.isClosed(),
+            Matchers.equalTo(true)
+        );
+    }
 }

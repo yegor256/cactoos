@@ -25,7 +25,7 @@ package org.cactoos.iterator;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Text;
-import org.cactoos.TextHasString;
+import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.JoinedText;
 import org.hamcrest.MatcherAssert;

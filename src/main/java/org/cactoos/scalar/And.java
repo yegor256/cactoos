@@ -39,10 +39,12 @@ import org.cactoos.iterable.Mapped;
  * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)}
  * works:</p>
  *
- * <pre> new And(
- *   new IterableOf("Mary", "John", "William", "Napkin"),
- *   name -> System.out.printf("The name: %s\n", name)
- * ).value();</pre>
+ * <pre>
+ * new And(
+ *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
+ *    new IterableOf<>("Mary", "John", "William", "Napkin")
+ * ).value(); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
+ * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make

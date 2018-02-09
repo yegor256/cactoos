@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.TextHasString;
 import org.cactoos.iterable.LengthOf;
+import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;

@@ -171,6 +171,11 @@ final class WriterAsOutputStream extends OutputStream {
         }
     }
 
+    @Override
+    public void close() throws IOException {
+        this.writer.close();
+    }
+
     /**
      * Write a portion from the buffer.
      * @param buffer The buffer

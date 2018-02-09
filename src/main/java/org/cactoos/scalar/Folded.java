@@ -29,7 +29,14 @@ import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
 
 /**
- * Folds iterable via BiFunc
+ * Folds iterable via BiFunc.
+ *
+ * <pre>
+ * new Folded<>(
+ *     (first, last) -> first + last,
+ *     new IterableOf<>(() -> 1L, () -> 2L, () -> 3L, () -> 4L)
+ * ).value() // returns 10L
+ * </pre>
  *
  * <p>Here is how you can use it to
  * find one of items according to the specified {@link BiFunc}:</p>
