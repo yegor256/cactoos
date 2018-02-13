@@ -29,7 +29,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Constant}.
- * @author Elena Ihde-Simon (elena.ihde-simon@posteo.de)
+ * @author Aliceice (elena.ihde-simon@posteo.de)
  * @version $Id$
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)

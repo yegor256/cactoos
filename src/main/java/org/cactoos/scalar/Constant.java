@@ -39,7 +39,7 @@ import org.cactoos.Scalar;
  *
  * <p>Example:
  *   <pre>
- *     final Scalar&lt;String&gt constant = new Constant("Pre-Computed Value");
+ *     final Scalar&lt;String&gt; constant = new Constant&lg;&gt;("Value");
  *     System.out.print("Constant is always the same: ");
  *     System.out.println(constant.value() == constant.value());
  *   </pre>
@@ -47,7 +47,7 @@ import org.cactoos.Scalar;
  *
  * <p>This class is thread-safe.</p>
  *
- * @author Elena Ihde-Simon (elena.ihde-simon@posteo.de)
+ * @author Aliceice (elena.ihde-simon@posteo.de)
  * @version $Id$
  * @param <T> Type of result
  * @see StickyScalar
@@ -58,18 +58,18 @@ public final class Constant<T> implements Scalar<T> {
     /**
      * Pre-computed value.
      */
-    private final T value;
+    private final T val;
 
     /**
      * Ctor.
-     * @param val The pre-computed value.
+     * @param value The pre-computed constant.
      */
-    public Constant(final T val) {
-        this.value = val;
+    public Constant(final T value) {
+        this.val = value;
     }
 
     @Override
     public T value() {
-        return this.value;
+        return this.val;
     }
 }
