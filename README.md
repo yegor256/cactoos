@@ -30,7 +30,7 @@ but mostly through static methods. Cactoos is suggesting
 to do almost exactly the same, but through objects.
 
 **Principles**.
-These are the [design principles](http://www.elegantobjects.org/) behind Cactoos.
+These are the [design principles](http://www.elegantobjects.org#principles) behind Cactoos.
 
 **How to use**.
 The library has no dependencies. All you need is this
