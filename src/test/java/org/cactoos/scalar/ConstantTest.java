@@ -38,10 +38,11 @@ public final class ConstantTest {
 
     @Test
     public void returnsGivenValue() throws Exception {
+        final String value = "Hello World";
         MatcherAssert.assertThat(
             "Can't return given value",
-            new Constant<>("Hello World").value(),
-            Matchers.endsWith("World")
+            new Constant<>(value).value(),
+            Matchers.equalTo(value)
         );
     }
 
