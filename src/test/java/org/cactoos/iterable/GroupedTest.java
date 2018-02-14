@@ -23,6 +23,7 @@
  */
 package org.cactoos.iterable;
 
+import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.Func;
 import org.cactoos.list.ListOf;
@@ -39,6 +40,7 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class GroupedTest {
 
     @Test
@@ -68,4 +70,48 @@ public final class GroupedTest {
             new IsEqual<>(new ListOf<>(1, 3, 5, 7, 9).toArray())
         );
     }
+
+    @Test
+    public void groupValuesFromEmptyIterable() {
+        final List<Iterable<Integer>> grouped = new ListOf<>(
+            new Grouped<>(
+                new LinkedList<>(),
+                new IterableOf<Func<Integer, Boolean>>(
+                    value -> value % 2 == 0,
+                    value -> value % 2 != 0
+                )
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't group iterable.",
+            grouped.size(),
+            new IsEqual<>(2)
+        );
+        MatcherAssert.assertThat(
+            "Wrong content of first group.",
+            new ListOf<>(grouped.get(0)).toArray(),
+            new IsEqual<>(new Object[]{})
+        );
+        MatcherAssert.assertThat(
+            "Wrong content of second group.",
+            new ListOf<>(grouped.get(1)).toArray(),
+            new IsEqual<>(new Object[]{})
+        );
+    }
+
+    @Test
+    public void groupValuesWithoutGroupingFunctions() {
+        final List<Iterable<Integer>> grouped = new ListOf<>(
+            new Grouped<>(
+                new IterableOf<>(1, 2),
+                new LinkedList<>()
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't group iterable.",
+            grouped.size(),
+            new IsEqual<>(0)
+        );
+    }
+
 }

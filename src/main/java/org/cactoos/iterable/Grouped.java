@@ -44,8 +44,10 @@ public final class Grouped<X> extends IterableEnvelope<Iterable<X>> {
      * @param origin The iterable the grouping is based on.
      * @param funcs The iterable containing grouping functions.
      */
-    public Grouped(final Iterable<X> origin,
-        final Iterable<Func<X, Boolean>> funcs) {
+    public Grouped(
+        final Iterable<X> origin,
+        final Iterable<Func<X, Boolean>> funcs
+    ) {
         super(() -> new Mapped<>(func -> new Filtered<>(func, origin), funcs));
     }
 
