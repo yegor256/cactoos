@@ -26,7 +26,7 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import java.util.Iterator;
 import org.cactoos.Func;
-import org.cactoos.iterator.StickyIterator;
+import org.cactoos.iterator.IteratorOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public final class RepeatedFuncTest {
 
     @Test
     public void runsFuncMultipleTimes() throws Exception {
-        final Iterator<Integer> iter = new StickyIterator<>(1, 2, 5, 6);
+        final Iterator<Integer> iter = new IteratorOf<>(1, 2, 5, 6);
         final Func<Boolean, Integer> func = new RepeatedFunc<>(
             input -> {
                 return iter.next();

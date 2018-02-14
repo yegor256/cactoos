@@ -23,46 +23,59 @@
  */
 package org.cactoos.iterator;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.Text;
-import org.cactoos.matchers.TextHasString;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.JoinedText;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
 
 /**
- * Test case for {@link StickyIterator}.
+ * Iterator that returns the set of elements.
+ *
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @param <X> Type of item
+ * @since 0.30
  */
-public final class StickyTest {
+public final class IteratorOf<X> implements Iterator<X> {
 
-    @Test
-    public void ignoresChangesInIterable() throws Exception {
-        final AtomicInteger count = new AtomicInteger(2);
-        final Text text = new FormattedText(
-            "%s",
-            new JoinedText(
-                ", ",
-                () -> new Mapped<>(
-                    Object::toString, new StickyIterator<>(
-                        new Limited<>(
-                            2, new Endless<>(count::incrementAndGet)
-                        )
-                    )
-                )
-            )
-        );
-        MatcherAssert.assertThat(
-            "Can't ignore the changes in the underlying iterator",
-            text,
-            new TextHasString(text.asString())
-        );
+    /**
+     * The list of items to iterate.
+     */
+    private final X[] list;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
+
+    /**
+     * Ctor.
+     * @param items Items to iterate
+     */
+    @SafeVarargs
+    public IteratorOf(final X... items) {
+        this.list = items;
+        this.position = new AtomicInteger(0);
     }
 
+    @Override
+    public boolean hasNext() {
+        if (this.list == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid list of items"
+            );
+        }
+        return this.position.intValue() < this.list.length;
+    }
+
+    @Override
+    public X next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.list[this.position.getAndIncrement()];
+    }
 }
