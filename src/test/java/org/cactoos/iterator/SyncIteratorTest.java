@@ -100,7 +100,7 @@ public final class SyncIteratorTest {
             final List<Runnable> test = new ArrayList<>(list.size());
             test.add(first);
             test.add(second);
-            concurrent(test);
+            new Concurrent(test).launch();
             MatcherAssert.assertThat(
                 "Missing the list items(s) (next()).",
                 sync,
@@ -135,7 +135,7 @@ public final class SyncIteratorTest {
             test.add(first);
             test.add(second);
             test.add(third);
-            concurrent(test);
+            new Concurrent(test).launch();
             MatcherAssert.assertThat(
                 "Missing the list items(s) (next()).",
                 sync,
@@ -177,7 +177,7 @@ public final class SyncIteratorTest {
             final List<Runnable> test = new ArrayList<>(list.size());
             test.add(first);
             test.add(second);
-            concurrent(test);
+            new Concurrent(test).launch();
             MatcherAssert.assertThat(
                 "Missing hasNext() value(s).",
                 sync,
@@ -186,59 +186,101 @@ public final class SyncIteratorTest {
         }
     }
 
-    //@checkstyle IllegalCatchCheck (100 lines)
-    @SuppressWarnings({"PMD.ProhibitPlainJunitAssertionsRule",
-        "PMD.AvoidCatchingThrowable"})
-    private static void concurrent(
-        final List<? extends Runnable> runnables
-    ) throws InterruptedException {
-        final int threads = runnables.size();
-        final List<Throwable> exceptions =
-            Collections.synchronizedList(
-                new ArrayList<Throwable>(runnables.size())
+    /**
+     * Tests runnables for concurrency issues.
+     */
+    private final class Concurrent {
+
+        /**
+         * Runnables to run in different threads.
+         */
+        private final List<? extends Runnable> runnables;
+
+        /**
+         * Collected exceptions.
+         */
+        private final List<Throwable> exceptions;
+
+        /**
+         * Thread pool.
+         */
+        private final ExecutorService pool;
+
+        /**
+         * All executor threads are ready.
+         */
+        private final CountDownLatch ready;
+
+        /**
+         * Start countdown with first thread.
+         */
+        private final CountDownLatch init;
+
+        /**
+         * All threads ready.
+         */
+        private final CountDownLatch done;
+
+        Concurrent(final List<? extends Runnable> runnables) {
+            this.runnables = runnables;
+            this.exceptions =  Collections.synchronizedList(
+                new ArrayList<Throwable>(
+                    runnables.size()
+                )
             );
-        final ExecutorService pool = Executors.newFixedThreadPool(threads);
-        try {
-            final CountDownLatch ready = new CountDownLatch(threads);
-            final CountDownLatch init = new CountDownLatch(1);
-            final CountDownLatch done = new CountDownLatch(threads);
-            for (final Runnable runnable : runnables) {
-                pool.submit(
-                    () -> {
-                        ready.countDown();
-                        try {
-                            init.await();
-                            runnable.run();
-                        } catch (final Throwable ex) {
-                            exceptions.add(ex);
-                        } finally {
-                            done.countDown();
-                        }
-                    });
+            this.pool = Executors.newFixedThreadPool(runnables.size());
+            this.ready = new CountDownLatch(runnables.size());
+            this.init = new CountDownLatch(1);
+            this.done = new CountDownLatch(runnables.size());
+        }
+
+        //@checkstyle IllegalCatchCheck (100 lines)
+        @SuppressWarnings({"PMD.ProhibitPlainJunitAssertionsRule",
+            "PMD.AvoidCatchingThrowable"})
+        public void launch() throws InterruptedException {
+            try {
+                for (final Runnable runnable : this.runnables) {
+                    this.pool.submit(
+                        () -> {
+                            this.ready.countDown();
+                            try {
+                                this.init.await();
+                                runnable.run();
+                            } catch (final Throwable ex) {
+                                this.exceptions.add(ex);
+                            } finally {
+                                this.done.countDown();
+                            }
+                        });
+                }
+                TestCase.assertTrue(
+                    "Timeout initializing threads! Perform longer thread init.",
+                    this.ready.await(
+                        this.runnables.size() * 20,
+                        TimeUnit.MILLISECONDS
+                    )
+                );
+                this.init.countDown();
+                TestCase.assertTrue(
+                    String.format(
+                        "Timeout! More than %d seconds",
+                        10
+                    ),
+                    this.done.await(100, TimeUnit.SECONDS)
+                );
+            } finally {
+                this.pool.shutdownNow();
             }
             TestCase.assertTrue(
-                "Timeout initializing threads! Perform longer thread init.",
-                ready.await(runnables.size() * 20, TimeUnit.MILLISECONDS)
-            );
-            init.countDown();
-            TestCase.assertTrue(
                 String.format(
-                    "Timeout! More than %d seconds",
-                    10
+                    "%s failed with exception(s) %s",
+                    "Error",
+                    this.exceptions.toString()
                 ),
-                done.await(100, TimeUnit.SECONDS)
+                this.exceptions.isEmpty()
             );
-        } finally {
-            pool.shutdownNow();
         }
-        TestCase.assertTrue(
-            String.format(
-                "%s failed with exception(s) %s",
-                "Error",
-                exceptions.toString()
-            ),
-            exceptions.isEmpty()
-        );
+
     }
 
 }
