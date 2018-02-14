@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterator;
 
-import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -43,9 +42,9 @@ public final class SortedTest {
         MatcherAssert.assertThat(
             "Can't sort elements in iterator",
             () -> new Sorted<>(
-                new IterableOf<>(
+                new StickyIterator<>(
                     "one", "two", "three", "four"
-                ).iterator()
+                )
             ),
             Matchers.contains(
                 "four", "one", "three", "two"

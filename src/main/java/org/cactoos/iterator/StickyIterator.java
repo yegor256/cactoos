@@ -23,12 +23,9 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Iterator that returns the same set of elements always.
@@ -43,9 +40,14 @@ import org.cactoos.scalar.UncheckedScalar;
 public final class StickyIterator<X> implements Iterator<X> {
 
     /**
-     * The gate.
+     * The items to iterate.
      */
-    private final UncheckedScalar<Iterator<X>> gate;
+    private final X[] itms;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
 
     /**
      * Ctor.
@@ -53,34 +55,22 @@ public final class StickyIterator<X> implements Iterator<X> {
      */
     @SafeVarargs
     public StickyIterator(final X... items) {
-        this(new IterableOf<>(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param iterator The iterator
-     */
-    public StickyIterator(final Iterator<X> iterator) {
-        this.gate = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    while (iterator.hasNext()) {
-                        temp.add(iterator.next());
-                    }
-                    return temp.iterator();
-                }
-            )
-        );
+        this.itms = items;
+        this.position = new AtomicInteger(0);
     }
 
     @Override
     public boolean hasNext() {
-        return this.gate.value().hasNext();
+        return this.position.intValue() < this.itms.length;
     }
 
     @Override
     public X next() {
-        return this.gate.value().next();
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.itms[this.position.getAndIncrement()];
     }
 }

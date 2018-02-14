@@ -26,6 +26,7 @@ package org.cactoos.scalar;
 import java.io.IOException;
 import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterator.StickyIterator;
 import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -86,7 +87,7 @@ public final class ItemAtTest {
             "Can't take the first item from the iterator",
             new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
-                new IterableOf<>(1, 2, 3).iterator()
+                new StickyIterator<>(1, 2, 3)
             ),
             new ScalarHasValue<>(1)
         );
@@ -98,7 +99,7 @@ public final class ItemAtTest {
             "Can't take the item by position from the iterator",
             new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
-                new IterableOf<>(1, 2, 3).iterator(),
+                new StickyIterator<>(1, 2, 3),
                 1
             ),
             new ScalarHasValue<>(2)
@@ -114,7 +115,7 @@ public final class ItemAtTest {
     public void failForNegativePositionTest() throws Exception {
         new ItemAt<>(
             // @checkstyle MagicNumber (1 line)
-            new IterableOf<>(1, 2, 3).iterator(),
+            new StickyIterator<>(1, 2, 3),
             -1
         ).value();
     }
@@ -136,7 +137,7 @@ public final class ItemAtTest {
     public void failForPosMoreLengthTest() throws Exception {
         new ItemAt<>(
             // @checkstyle MagicNumberCheck (2 lines)
-            new IterableOf<>(1, 2, 3).iterator(),
+            new StickyIterator<>(1, 2, 3),
             3
         ).value();
     }

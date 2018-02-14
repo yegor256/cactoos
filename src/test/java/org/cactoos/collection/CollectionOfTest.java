@@ -23,7 +23,7 @@
  */
 package org.cactoos.collection;
 
-import org.cactoos.list.ListOf;
+import org.cactoos.iterator.StickyIterator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -59,7 +59,7 @@ public final class CollectionOfTest {
     public void buildsCollectionFromIterator() throws Exception {
         MatcherAssert.assertThat(
             "Can't build a collection from iterator",
-            new CollectionOf<Integer>(new ListOf<>(1, 2, 0, -1).iterator()),
+            new CollectionOf<>(new StickyIterator<>(1, 2, 0, -1)),
             Matchers.hasItem(-1)
         );
     }
