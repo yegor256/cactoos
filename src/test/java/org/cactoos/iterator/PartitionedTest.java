@@ -60,7 +60,7 @@ public final class PartitionedTest {
             "Can't generate a Partitioned of partition size 1.",
             new ArrayList<>(
                 new ListOf<>(
-                    new Partitioned<>(1, Arrays.asList(1, 2, 3).iterator())
+                    new Partitioned<>(1, new StickyIterator<>(1, 2, 3))
                 )
             ),
             Matchers.equalTo(
@@ -78,7 +78,7 @@ public final class PartitionedTest {
             "Can't generate a Partitioned of partition size 2.",
             new ArrayList<>(
                 new ListOf<>(
-                    new Partitioned<>(2, new ListOf<>(1, 2, 3, 4).iterator())
+                    new Partitioned<>(2, new StickyIterator<>(1, 2, 3, 4))
                 )
             ),
             Matchers.equalTo(
@@ -93,7 +93,7 @@ public final class PartitionedTest {
             "Can't generate a Partitioned of size 2 last partition smaller.",
             new ArrayList<>(
                 new ListOf<>(
-                    new Partitioned<>(2, new ListOf<>(1, 2, 3).iterator())
+                    new Partitioned<>(2, new StickyIterator<>(1, 2, 3))
                 )
             ),
             Matchers.equalTo(
@@ -107,20 +107,20 @@ public final class PartitionedTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void partitionedWithPartitionSizeSmallerOne() {
-        new Partitioned<>(0, new ListOf<>(1).iterator()).next();
+        new Partitioned<>(0, new StickyIterator<>(1)).next();
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void partitionedListsAreUnmodifiable() {
         new Partitioned<>(
-            2, new ListOf<>(1, 2).iterator()
+            2, new StickyIterator<>(1, 2)
         ).next().clear();
     }
 
     @Test(expected = NoSuchElementException.class)
     public void emptyPartitionedNextThrowsException() {
         new Partitioned<>(
-            2, Collections.emptyList().iterator()
+            2, new StickyIterator<>()
         ).next();
     }
 

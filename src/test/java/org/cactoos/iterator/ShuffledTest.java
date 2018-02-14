@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterator;
 
-import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -43,9 +42,9 @@ public final class ShuffledTest {
         MatcherAssert.assertThat(
             "Can't shuffle elements in iterator",
             () -> new Shuffled<>(
-                new IterableOf<>(
+                new StickyIterator<>(
                     "a", "b"
-                ).iterator()
+                )
             ),
             Matchers.containsInAnyOrder(
                 "a", "b"

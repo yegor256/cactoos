@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Collections;
 import java.util.Iterator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -46,8 +45,8 @@ public final class JoinedTest {
                 new IteratorNoNulls<>(
                     new Joined<Iterator<String>>(
                         new Mapped<>(
-                            input -> Collections.singleton(input).iterator(),
-                            Collections.singleton("x").iterator()
+                            input -> new StickyIterator<>(input),
+                            new StickyIterator<>("x")
                         )
                     )
                 )

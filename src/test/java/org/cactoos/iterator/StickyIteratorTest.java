@@ -24,44 +24,70 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link Skipped}.
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * Test case for {@link StickyIterator}.
+ *
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SkippedTest {
+public final class StickyIteratorTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipIterator() throws Exception {
+    public void emptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            "Can't skip elements in iterator",
-            () -> new Skipped<>(
-                2,
-                new StickyIterator<>(
-                    "one", "two", "three", "four"
-                )
-            ),
-            Matchers.contains(
-                "three",
-                "four"
-            )
+            "Can't create empty iterator",
+            new StickyIterator<>().hasNext(),
+            CoreMatchers.equalTo(false)
         );
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void errorSkippedMoreThanExists() throws Exception {
-        new Skipped<>(
-            2,
-            new StickyIterator<>(
-                "one", "two"
+    public void emptyIteratorThrowsException() {
+        new StickyIterator<>().next();
+    }
+
+    @Test
+    public void nonEmptyIteratorDoesNotHaveNext() {
+        final StickyIterator<Integer> iter = this.iteratorWithTakenElements();
+        MatcherAssert.assertThat(
+            "Can't create non empty iterator",
+            iter.hasNext(),
+            CoreMatchers.equalTo(false)
+        );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void nonEmptyIteratorThrowsException() {
+        final StickyIterator<Integer> iter = this.iteratorWithTakenElements();
+        iter.next();
+    }
+
+    @Test
+    public void convertPrimitivesToIterator() {
+        MatcherAssert.assertThat(
+            "Can't create an iterator of strings",
+            () -> new StickyIterator<>(
+                "a", "b"
+            ),
+            Matchers.contains(
+                "a", "b"
             )
-        ).next();
+        );
+    }
+
+    private StickyIterator<Integer> iteratorWithTakenElements() {
+        final StickyIterator<Integer> iter = new StickyIterator<>(
+            1, 2
+        );
+        iter.next();
+        iter.next();
+        return iter;
     }
 }

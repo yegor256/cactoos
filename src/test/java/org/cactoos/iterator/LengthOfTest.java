@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterator;
 
-import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -43,7 +42,7 @@ public final class LengthOfTest {
         MatcherAssert.assertThat(
             "Can't calculate length of iterator for integer",
             new LengthOf(
-                new ListOf<>(1, 2, 3, 4).iterator()
+                new StickyIterator<>(1, 2, 3, 4)
             ).intValue(),
             Matchers.equalTo(4)
         );
@@ -54,7 +53,7 @@ public final class LengthOfTest {
         MatcherAssert.assertThat(
             "Can't calculate length of iterator for double",
             new LengthOf(
-                new ListOf<>(1, 2, 3, 4).iterator()
+                new StickyIterator<>(1, 2, 3, 4)
             ).doubleValue(),
             Matchers.equalTo(4.0)
         );
@@ -65,7 +64,7 @@ public final class LengthOfTest {
         MatcherAssert.assertThat(
             "Can't calculate length of iterator for float",
             new LengthOf(
-                new ListOf<>(1, 2, 3, 4).iterator()
+                new StickyIterator<>(1, 2, 3, 4)
             ).floatValue(),
             Matchers.equalTo(4.0f)
         );
@@ -76,7 +75,7 @@ public final class LengthOfTest {
         MatcherAssert.assertThat(
             "Can't calculate length of empty iterator",
             new LengthOf(
-                new ListOf<>().iterator()
+                new StickyIterator<>()
             ).intValue(),
             Matchers.equalTo(0)
         );

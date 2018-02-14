@@ -23,10 +23,10 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import org.cactoos.Scalar;
+import org.cactoos.iterator.StickyIterator;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -47,7 +47,7 @@ public final class IterableOf<X> extends IterableEnvelope<X> {
      */
     @SafeVarargs
     public IterableOf(final X... items) {
-        this(() -> Arrays.asList(items).iterator());
+        this(() -> new StickyIterator<>(items));
     }
 
     /**
