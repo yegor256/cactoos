@@ -256,7 +256,7 @@ public final class SyncIteratorTest {
                 TestCase.assertTrue(
                     "Timeout initializing threads! Perform longer thread init.",
                     this.ready.await(
-                        this.runnables.size() * 20,
+                        this.runnables.size() * 50,
                         TimeUnit.MILLISECONDS
                     )
                 );
