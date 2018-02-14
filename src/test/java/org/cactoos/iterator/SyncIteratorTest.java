@@ -23,16 +23,21 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import junit.framework.TestCase;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-// @todo #482:30min add multi-threaded tests which test that the lock syncs the
-//  access to the next method against next and hasNext calls and calls to the
-//  hasNext method against next calls.
 /**
  * Test for {@link SyncIterator}.
  *
@@ -70,6 +75,169 @@ public final class SyncIteratorTest {
                 )
             ).toArray(),
             Matchers.equalTo(new Object[]{"a", "b"})
+        );
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    public void correctValuesForConcurrentNextNext()
+        throws InterruptedException {
+        for (int iter = 0; iter < 5000; iter += 1) {
+            final List<String> list = Arrays.asList("a", "b");
+            final SyncIterator<String> iterator = new SyncIterator<>(
+                list.iterator()
+            );
+            final List<Object> sync =
+                Collections.synchronizedList(
+                    new ArrayList<>(list.size())
+                );
+            final Runnable first = () -> {
+                sync.add(iterator.next());
+            };
+            final Runnable second = () -> {
+                sync.add(iterator.next());
+            };
+            final List<Runnable> test = new ArrayList<>(list.size());
+            test.add(first);
+            test.add(second);
+            concurrent(test);
+            MatcherAssert.assertThat(
+                "Missing the list items(s) (next()).",
+                sync,
+                Matchers.containsInAnyOrder("a", "b")
+            );
+        }
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    public void correctValuesForConcurrentNextHasNext()
+        throws InterruptedException {
+        for (int iter = 0; iter < 5000; iter += 1) {
+            final List<String> list = Arrays.asList("a", "b");
+            final SyncIterator<String> iterator = new SyncIterator<>(
+                list.iterator()
+            );
+            final List<Object> sync =
+                Collections.synchronizedList(
+                    new ArrayList<>(list.size())
+                );
+            final Runnable first = () -> {
+                sync.add(iterator.next());
+            };
+            final Runnable second = () -> {
+                sync.add(iterator.next());
+            };
+            final Runnable third = () -> {
+                sync.add(iterator.hasNext());
+            };
+            final List<Runnable> test = new ArrayList<>(list.size() + 1);
+            test.add(first);
+            test.add(second);
+            test.add(third);
+            concurrent(test);
+            MatcherAssert.assertThat(
+                "Missing the list items(s) (next()).",
+                sync,
+                Matchers.allOf(
+                    Matchers.hasItem("a"),
+                    Matchers.hasItem("b")
+                )
+            );
+            MatcherAssert.assertThat(
+                "Missing hasNext() value.",
+                sync,
+                Matchers.anyOf(
+                    Matchers.hasItem(true),
+                    Matchers.hasItem(false)
+                )
+            );
+        }
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    public void correctValuesForConcurrentHasNextHasNext()
+        throws InterruptedException {
+        for (int iter = 0; iter < 5000; iter += 1) {
+            final List<String> list = Arrays.asList("a", "b");
+            final SyncIterator<String> iterator = new SyncIterator<>(
+                list.iterator()
+            );
+            final List<Object> sync =
+                Collections.synchronizedList(
+                    new ArrayList<>(list.size())
+                );
+            final Runnable first = () -> {
+                sync.add(iterator.hasNext());
+            };
+            final Runnable second = () -> {
+                sync.add(iterator.hasNext());
+            };
+            final List<Runnable> test = new ArrayList<>(list.size());
+            test.add(first);
+            test.add(second);
+            concurrent(test);
+            MatcherAssert.assertThat(
+                "Missing hasNext() value(s).",
+                sync,
+                Matchers.contains(true, true)
+            );
+        }
+    }
+
+    //@checkstyle IllegalCatchCheck (100 lines)
+    @SuppressWarnings({"PMD.ProhibitPlainJunitAssertionsRule",
+        "PMD.AvoidCatchingThrowable"})
+    private static void concurrent(
+        final List<? extends Runnable> runnables
+    ) throws InterruptedException {
+        final int threads = runnables.size();
+        final List<Throwable> exceptions =
+            Collections.synchronizedList(
+                new ArrayList<Throwable>(runnables.size())
+            );
+        final ExecutorService pool = Executors.newFixedThreadPool(threads);
+        try {
+            final CountDownLatch ready = new CountDownLatch(threads);
+            final CountDownLatch init = new CountDownLatch(1);
+            final CountDownLatch done = new CountDownLatch(threads);
+            for (final Runnable runnable : runnables) {
+                pool.submit(
+                    () -> {
+                        ready.countDown();
+                        try {
+                            init.await();
+                            runnable.run();
+                        } catch (final Throwable ex) {
+                            exceptions.add(ex);
+                        } finally {
+                            done.countDown();
+                        }
+                    });
+            }
+            TestCase.assertTrue(
+                "Timeout initializing threads! Perform longer thread init.",
+                ready.await(runnables.size() * 20, TimeUnit.MILLISECONDS)
+            );
+            init.countDown();
+            TestCase.assertTrue(
+                String.format(
+                    "Timeout! More than %d seconds",
+                    10
+                ),
+                done.await(100, TimeUnit.SECONDS)
+            );
+        } finally {
+            pool.shutdownNow();
+        }
+        TestCase.assertTrue(
+            String.format(
+                "%s failed with exception(s) %s",
+                "Error",
+                exceptions.toString()
+            ),
+            exceptions.isEmpty()
         );
     }
 
