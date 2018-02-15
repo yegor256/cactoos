@@ -46,7 +46,7 @@ import org.cactoos.iterable.IterableOf;
  *
  * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.30
  */
 @SuppressWarnings(
     {
