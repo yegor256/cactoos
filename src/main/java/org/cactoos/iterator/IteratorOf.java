@@ -61,11 +61,6 @@ public final class IteratorOf<X> implements Iterator<X> {
 
     @Override
     public boolean hasNext() {
-        if (this.list == null) {
-            throw new IllegalArgumentException(
-                "NULL instead of a valid list of items"
-            );
-        }
         return this.position.intValue() < this.list.length;
     }
 

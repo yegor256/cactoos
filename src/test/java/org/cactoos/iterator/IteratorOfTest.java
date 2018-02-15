@@ -82,11 +82,6 @@ public final class IteratorOfTest {
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void nullArgumentThrowsException() {
-        new IteratorOf<>((Object[]) null).next();
-    }
-
     private IteratorOf<Integer> iteratorWithFetchedElements() {
         final IteratorOf<Integer> iterator = new IteratorOf<>(
             1, 2, 3
