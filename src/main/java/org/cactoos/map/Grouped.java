@@ -40,12 +40,12 @@ import java.util.stream.StreamSupport;
  *
  * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @param <T> Type of key
+ * @param <K> Type of key
  * @param <V> Type of value
- * @param <K> Type of entry objects of functions
- * @since 0.4
+ * @param <T> Type of entry objects of functions
+ * @since 0.30
  */
-public final class Grouped<T, V, K> extends MapEnvelope<T, List<V>> {
+public final class Grouped<K, V, T> extends MapEnvelope<K, List<V>> {
 
     /**
      * Ctor.
@@ -55,20 +55,20 @@ public final class Grouped<T, V, K> extends MapEnvelope<T, List<V>> {
      * @param values Function to get a value
      */
     public Grouped(
-        final Iterable<K> list,
-        final Function<K, T> keys,
-        final Function<K, V> values) {
+        final Iterable<T> list,
+        final Function<T, K> keys,
+        final Function<T, V> values
+    ) {
         super(() -> {
-            final Stream<K> stream = StreamSupport
-                .stream(list.spliterator(), false);
-            return stream
-                .collect(
-                    Collectors.groupingBy(
-                        keys,
-                    Collectors.mapping(
-                        values,
-                        Collectors.toList()
-                    )));
+            final Stream<T> stream = StreamSupport.stream(
+                list.spliterator(), false
+            );
+            return stream.collect(
+                Collectors.groupingBy(
+                    keys,
+                    Collectors.mapping(values, Collectors.toList())
+                )
+            );
         });
     }
 }
