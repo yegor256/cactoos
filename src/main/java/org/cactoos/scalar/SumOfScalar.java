@@ -83,9 +83,9 @@ public final class SumOfScalar implements Scalar<Integer> {
             new IterableOf<>(
                 new CollectionOf<>(this.scalars)
                     .stream()
-                    .map(UncheckedScalar::new)
-                    .map(UncheckedScalar::value)
-                    .collect(Collectors.toList())
+                    .map(
+                        scalar -> new UncheckedScalar<>(scalar).value()
+                    ).collect(Collectors.toList())
             )
         ).intValue();
     }
