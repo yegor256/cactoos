@@ -67,7 +67,7 @@ public final class SumOfLongScalar implements Scalar<Long> {
     /**
      * Ctor.
      * @param src Varargs of Scalar to sum up values from
-     * @since 0.22
+     * @since 0.30
      */
     @SafeVarargs
     public SumOfLongScalar(final Scalar<Long>... src) {

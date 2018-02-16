@@ -65,7 +65,7 @@ final class SumOfScalar implements Scalar<SumOf> {
     /**
      * Ctor.
      * @param src Varargs of Scalar to sum up values from
-     * @since 0.22
+     * @since 0.30
      */
     @SafeVarargs
     SumOfScalar(final Scalar<? extends Number>... src) {

@@ -67,7 +67,7 @@ public final class SumOfFloatScalar implements Scalar<Float> {
     /**
      * Ctor.
      * @param src Varargs of Scalar to sum up values from
-     * @since 0.22
+     * @since 0.30
      */
     @SafeVarargs
     public SumOfFloatScalar(final Scalar<Float>... src) {
