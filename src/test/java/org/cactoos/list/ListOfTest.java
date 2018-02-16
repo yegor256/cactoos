@@ -170,4 +170,13 @@ public final class ListOfTest {
         );
     }
 
+    @Test
+    public void hashCodesListContent() {
+        MatcherAssert.assertThat(
+            "Can't create hashcode.",
+            new ListOf<>(1, 2).hashCode(),
+            new IsEqual<>(new ListOf<>(1, 2).hashCode())
+        );
+    }
+
 }
