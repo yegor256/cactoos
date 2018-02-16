@@ -23,12 +23,14 @@
  */
 package org.cactoos.list;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -40,6 +42,11 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
+@SuppressWarnings(
+    {
+        "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"
+    }
+)
 public final class ListOfTest {
 
     @Test
@@ -124,6 +131,42 @@ public final class ListOfTest {
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list, again",
             list, Matchers.iterableWithSize(4)
+        );
+    }
+
+    @Test
+    public void equalsComparesContentBothListEnvelopes() {
+        MatcherAssert.assertThat(
+            "Can't compare using equals.",
+            new ListOf<>(1, 2),
+            new IsEqual<>(new ListOf<>(1, 2))
+        );
+    }
+
+    @Test
+    public void equalsComparesContentListEnvelopeWithNormalList() {
+        MatcherAssert.assertThat(
+            "Can't compare using equals.",
+            new ListOf<>(1, 2),
+            new IsEqual<>(Arrays.asList(1, 2))
+        );
+    }
+
+    @Test
+    public void equalsComparesEmptyLists() {
+        MatcherAssert.assertThat(
+            "Can't compare using equals.",
+            new ListOf<>(),
+            new IsEqual<>(new ListOf<>())
+        );
+    }
+
+    @Test
+    public void toStringUsesListContent() {
+        MatcherAssert.assertThat(
+            "Can't print content using toString.",
+            new ListOf<>(1, 2).toString(),
+            new IsEqual<>("[1, 2]")
         );
     }
 
