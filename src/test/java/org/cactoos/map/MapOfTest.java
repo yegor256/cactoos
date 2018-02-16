@@ -108,4 +108,15 @@ public final class MapOfTest {
         );
     }
 
+    @Test
+    public void string() {
+        MatcherAssert.assertThat(
+            "Can't convert to string",
+            new MapOf<Integer, Integer>(
+                new MapEntry<>(-1, 0),
+                new MapEntry<>(1, 2)
+            ).toString(),
+            Matchers.equalTo("-1=0, 1=2")
+        );
+    }
 }
