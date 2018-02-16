@@ -68,7 +68,7 @@ final class SumOfScalar implements Scalar<SumOf> {
      * @since 0.22
      */
     @SafeVarargs
-    public SumOfScalar(final Scalar<? extends Number>... src) {
+    SumOfScalar(final Scalar<? extends Number>... src) {
         this.scalars = src;
     }
 

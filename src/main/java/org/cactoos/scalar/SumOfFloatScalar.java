@@ -31,7 +31,7 @@ import org.cactoos.Scalar;
  * <p>Here is how you can use it to summarize float numbers:</p>
  *
  * <pre>
- * float sum = new SumOfFloatScalar(() -> 1f,() -> 2f, () -> 3f).value(); //equal to 6
+ * float sum = new SumOfFloatScalar(() -> 1f,() -> 2f, () -> 3f).value();
  * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked

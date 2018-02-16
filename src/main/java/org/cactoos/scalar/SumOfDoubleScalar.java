@@ -31,7 +31,7 @@ import org.cactoos.Scalar;
  * <p>Here is how you can use it to summarize double numbers:</p>
  *
  * <pre>
- * double sum = new SumOfDoubleScalar(() -> 1.1,() -> 2.1, () -> 3.1).value(); //equal to 6.3
+ * double sum = new SumOfDoubleScalar(() -> 1.1,() -> 2.1, () -> 3.1).value();
  * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked

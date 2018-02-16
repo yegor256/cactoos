@@ -31,7 +31,7 @@ import org.cactoos.Scalar;
  * <p>Here is how you can use it to summarize numbers:</p>
  *
  * <pre>
- * long sum = new SumOfLongScalar(() -> 1,() -> 2, () -> 3).value(); //equal to 6
+ * long sum = new SumOfLongScalar(() -> 1,() -> 2, () -> 3).value();
  * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked

@@ -24,10 +24,6 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
-import org.cactoos.collection.CollectionOf;
-import org.cactoos.iterable.IterableOf;
-
-import java.util.stream.Collectors;
 
 /**
  * Make a scalar which is sum of scalar's values.
