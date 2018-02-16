@@ -66,8 +66,10 @@ public abstract class IterableEnvelope<X> implements Iterable<X> {
 
     @Override
     public final Iterator<X> iterator() {
-        for (final X item : this.iterable.value()) {
-            this.list.add(item);
+        if (this.list.isEmpty()) {
+            for (final X item : this.iterable.value()) {
+                this.list.add(item);
+            }
         }
         return new UncheckedScalar<>(() -> this.list).value().iterator();
     }
