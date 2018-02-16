@@ -34,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import junit.framework.TestCase;
 import org.cactoos.list.ListOf;
+import org.cactoos.list.StickyList;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -97,10 +98,7 @@ public final class SyncIteratorTest {
             final Runnable second = () -> {
                 sync.add(iterator.next());
             };
-            final List<Runnable> test = new ArrayList<>(list.size());
-            test.add(first);
-            test.add(second);
-            new Concurrent(test).launch();
+            new Concurrent(first, second).launch();
             MatcherAssert.assertThat(
                 "Missing the list items(s) (next()).",
                 sync,
@@ -131,11 +129,7 @@ public final class SyncIteratorTest {
             final Runnable third = () -> {
                 sync.add(iterator.hasNext());
             };
-            final List<Runnable> test = new ArrayList<>(list.size() + 1);
-            test.add(first);
-            test.add(second);
-            test.add(third);
-            new Concurrent(test).launch();
+            new Concurrent(first, second, third).launch();
             MatcherAssert.assertThat(
                 "Missing the list items(s) (next()).",
                 sync,
@@ -174,10 +168,7 @@ public final class SyncIteratorTest {
             final Runnable second = () -> {
                 sync.add(iterator.hasNext());
             };
-            final List<Runnable> test = new ArrayList<>(list.size());
-            test.add(first);
-            test.add(second);
-            new Concurrent(test).launch();
+            new Concurrent(first, second).launch();
             MatcherAssert.assertThat(
                 "Missing hasNext() value(s).",
                 sync,
@@ -194,7 +185,7 @@ public final class SyncIteratorTest {
         /**
          * Runnables to run in different threads.
          */
-        private final List<? extends Runnable> runnables;
+        private final List<Runnable> runnables;
 
         /**
          * Collected exceptions.
@@ -221,17 +212,19 @@ public final class SyncIteratorTest {
          */
         private final CountDownLatch done;
 
-        Concurrent(final List<? extends Runnable> runnables) {
-            this.runnables = runnables;
+        Concurrent(final Runnable... runnables) {
+            this.runnables = new StickyList<Runnable>(
+                new ListOf<Runnable>(runnables)
+            );
             this.exceptions =  Collections.synchronizedList(
                 new ArrayList<Throwable>(
-                    runnables.size()
+                    runnables.length
                 )
             );
-            this.pool = Executors.newFixedThreadPool(runnables.size());
-            this.ready = new CountDownLatch(runnables.size());
+            this.pool = Executors.newFixedThreadPool(runnables.length);
+            this.ready = new CountDownLatch(runnables.length);
             this.init = new CountDownLatch(1);
-            this.done = new CountDownLatch(runnables.size());
+            this.done = new CountDownLatch(runnables.length);
         }
 
         //@checkstyle IllegalCatchCheck (100 lines)
