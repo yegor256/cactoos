@@ -23,13 +23,16 @@
  */
 package org.cactoos.scalar;
 
-import java.util.stream.Collectors;
 import org.cactoos.Scalar;
-import org.cactoos.collection.CollectionOf;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Make a scalar which is sum of scalar's values.
+ *
+ * <p>Here is how you can use it to summarize double numbers:</p>
+ *
+ * <pre>
+ * double sum = new SumOfDoubleScalar(() -> 1.1,() -> 2.1, () -> 3.1).value(); //equal to 6.3
+ * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -37,7 +40,6 @@ import org.cactoos.iterable.IterableOf;
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * <p>There is no thread-safety guarantee.
- * <p>Note this class is for internal usage only
  *
  * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
@@ -50,7 +52,7 @@ import org.cactoos.iterable.IterableOf;
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
     }
 )
-final class SumOfScalar implements Scalar<SumOf> {
+public final class SumOfDoubleScalar implements Scalar<Double> {
 
     /**
      * Serialization marker.
@@ -60,7 +62,7 @@ final class SumOfScalar implements Scalar<SumOf> {
     /**
      * Varargs of Scalar to sum up values from.
      */
-    private final Scalar<? extends Number>[] scalars;
+    private final Scalar<Double>[] scalars;
 
     /**
      * Ctor.
@@ -68,20 +70,12 @@ final class SumOfScalar implements Scalar<SumOf> {
      * @since 0.22
      */
     @SafeVarargs
-    public SumOfScalar(final Scalar<? extends Number>... src) {
+    public SumOfDoubleScalar(final Scalar<Double>... src) {
         this.scalars = src;
     }
 
     @Override
-    public SumOf value() {
-        return new SumOf(
-            new IterableOf<>(
-                new CollectionOf<>(this.scalars)
-                    .stream()
-                    .map(
-                        scalar -> new UncheckedScalar<>(scalar).value()
-                    ).collect(Collectors.toList())
-            )
-        );
+    public Double value() {
+        return new SumOfScalar(this.scalars).value().doubleValue();
     }
 }

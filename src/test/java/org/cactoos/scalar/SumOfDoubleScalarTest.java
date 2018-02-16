@@ -28,7 +28,7 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link SumOfScalar}.
+ * Test case for {@link SumOfDoubleScalar}.
  *
  * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
@@ -37,31 +37,30 @@ import org.junit.Test;
  * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class SumOfScalarTest {
+public final class SumOfDoubleScalarTest {
 
     @Test
     public void withListOfScalarsInt() {
         MatcherAssert.assertThat(
-            new SumOfScalar(() -> 1, () -> 2, () -> 3)
-                .value()
-                .intValue(),
-            new IsEqual<>(6)
+            new SumOfDoubleScalar(() -> 1.1, () -> 2.1, () -> 3.1)
+                .value(),
+            new IsEqual<>(6.3)
         );
     }
 
     @Test
     public void withEmptyList() {
         MatcherAssert.assertThat(
-            new SumOfScalar().value().intValue(),
-            new IsEqual<>(0)
+            new SumOfDoubleScalar().value(),
+            new IsEqual<>(0.0)
         );
     }
 
     @Test
     public void withListOfOneElement() {
         MatcherAssert.assertThat(
-            new SumOfScalar(() -> 5).value().intValue(),
-            new IsEqual<>(5)
+            new SumOfDoubleScalar(() -> 5.1).value(),
+            new IsEqual<>(5.1)
         );
     }
 }
