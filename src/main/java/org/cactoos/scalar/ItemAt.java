@@ -24,14 +24,16 @@
 package org.cactoos.scalar;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.text.FormattedText;
 
 /**
  * Element from position in {@link Iterator}
- * or fallback value if iterator hasn't this position.
+ * or fallback saved if iterator hasn't this position.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -48,7 +50,7 @@ public final class ItemAt<T> implements Scalar<T> {
     private final Scalar<Iterator<T>> src;
 
     /**
-     * Fallback value.
+     * Fallback saved.
      */
     private final Func<Iterable<T>, T> fbk;
 
@@ -56,6 +58,12 @@ public final class ItemAt<T> implements Scalar<T> {
      * Position.
      */
     private final int pos;
+
+    /**
+     * List that holds the value of the iterator
+     *  at the position specified in the constructor.
+     */
+    private final List<T> saved;
 
     /**
      * Ctor.
@@ -74,7 +82,7 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param fallback Fallback value
+     * @param fallback Fallback saved
      * @param source Iterable
      */
     public ItemAt(final T fallback, final Iterable<T> source) {
@@ -84,7 +92,7 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param fallback Fallback value
+     * @param fallback Fallback saved
      * @param source Iterable
      */
     public ItemAt(
@@ -131,7 +139,7 @@ public final class ItemAt<T> implements Scalar<T> {
      *
      * @param source Iterable
      * @param position Position
-     * @param fallback Fallback value
+     * @param fallback Fallback saved
      */
     public ItemAt(
         final Iterable<T> source,
@@ -159,7 +167,7 @@ public final class ItemAt<T> implements Scalar<T> {
      * Ctor.
      *
      * @param iterator Iterator
-     * @param fallback Fallback value
+     * @param fallback Fallback saved
      */
     public ItemAt(final Iterator<T> iterator, final T fallback) {
         this(iterator, itr -> fallback);
@@ -169,7 +177,7 @@ public final class ItemAt<T> implements Scalar<T> {
      * Ctor.
      *
      * @param iterator Iterator
-     * @param fallback Fallback value
+     * @param fallback Fallback saved
      */
     public ItemAt(
         final Iterator<T> iterator,
@@ -204,7 +212,7 @@ public final class ItemAt<T> implements Scalar<T> {
      *
      * @param iterator Iterator
      * @param position Position
-     * @param fallback Fallback value
+     * @param fallback Fallback saved
      */
     public ItemAt(
         final Iterator<T> iterator,
@@ -219,7 +227,7 @@ public final class ItemAt<T> implements Scalar<T> {
      *
      * @param iterator Iterator
      * @param position Position
-     * @param fallback Fallback value
+     * @param fallback Fallback saved
      */
     private ItemAt(
         final Scalar<Iterator<T>> iterator,
@@ -229,28 +237,36 @@ public final class ItemAt<T> implements Scalar<T> {
         this.pos = position;
         this.src = iterator;
         this.fbk = fallback;
+        this.saved = new ArrayList<>(1);
     }
 
     @Override
     public T value() throws Exception {
-        if (this.pos < 0) {
-            throw new IOException(
-                new FormattedText(
-                    "The position must be non-negative: %d",
-                    this.pos
-                ).asString()
-            );
-        }
-        final Iterator<T> iterator = this.src.value();
-        int cur;
-        for (cur = 0; cur < this.pos && iterator.hasNext(); ++cur) {
-            iterator.next();
-        }
         final T ret;
-        if (cur == this.pos && iterator.hasNext()) {
-            ret = iterator.next();
+        if (this.saved.isEmpty()) {
+            if (this.pos < 0) {
+                throw new IOException(
+                    new FormattedText(
+                        "The position must be non-negative: %d",
+                        this.pos
+                    ).asString()
+                );
+            }
+            final Iterator<T> iterator = this.src.value();
+            int cur;
+            for (cur = 0; cur < this.pos && iterator.hasNext(); ++cur) {
+                iterator.next();
+            }
+            if (cur == this.pos && iterator.hasNext()) {
+                this.saved.add(
+                    iterator.next()
+                );
+                ret = this.saved.get(0);
+            } else {
+                ret = this.fbk.apply(() -> iterator);
+            }
         } else {
-            ret = this.fbk.apply(() -> iterator);
+            ret = this.saved.get(0);
         }
         return ret;
     }
