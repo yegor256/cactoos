@@ -25,7 +25,11 @@ package org.cactoos.map;
 
 import java.util.Map;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.matchers.RunsInThreads;
+import org.cactoos.text.SubText;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -34,6 +38,7 @@ import org.junit.Test;
  * Test case for {@link SolidMap}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Stanislav Myachenkov (s.myachenkov@gmail.com)
  * @version $Id$
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -79,6 +84,73 @@ public final class SolidMapTest {
         MatcherAssert.assertThat(
             "Can't map only once",
             map.get(0), Matchers.equalTo(map.get(0))
+        );
+    }
+
+    @Test
+    @SuppressWarnings({"unchecked", "MismatchedQueryAndUpdateOfCollection"})
+    public void extendsExistingMapWithArrayOfEntries() {
+        final SolidMap<Integer, Integer> map = new SolidMap<>(
+            new MapEntry<>(0, 10),
+            new MapEntry<>(1, 11)
+        );
+        final SolidMap<Integer, Integer> toadd = new SolidMap<>(
+            new MapEntry<>(2, 12),
+            new MapEntry<>(3, 13)
+        );
+        final Map.Entry<Integer, Integer>[] array =
+            (Map.Entry<Integer, Integer>[]) new Map.Entry<?, ?>[toadd.size()];
+        toadd.entrySet().toArray(array);
+        MatcherAssert.assertThat(
+            "Does not extends existing map with array of entries",
+            new SolidMap<Integer, Integer>(map, array).size(),
+            Matchers.equalTo(map.size() + toadd.size())
+        );
+    }
+
+    @Test
+    public void mapsIterableWithKeyFuncAndValueFunc() {
+        MatcherAssert.assertThat(
+            "Functions are not applied to key and value",
+            new SolidMap<>(
+                key -> new SubText(new TextOf(key), 0, 1).asString(),
+                value -> new UpperText(new TextOf(value)).asString(),
+                new IterableOf<>("aa", "bb")
+            ),
+            Matchers.allOf(
+                Matchers.hasEntry(
+                    Matchers.equalTo("a"),
+                    Matchers.equalTo("AA")
+                ),
+                Matchers.hasEntry(
+                    Matchers.equalTo("b"),
+                    Matchers.equalTo("BB")
+                )
+            )
+        );
+    }
+
+    @Test
+    public void mapsIterableWithMapEntryFunc() {
+        MatcherAssert.assertThat(
+            "Function are not applied to entry",
+            new SolidMap<>(
+                entry -> new MapEntry<>(
+                    new SubText(new TextOf(entry), 0, 1).asString(),
+                    new UpperText(new TextOf(entry)).asString()
+                ),
+                new IterableOf<>("aa", "bb")
+            ),
+            Matchers.allOf(
+                Matchers.hasEntry(
+                    Matchers.equalTo("a"),
+                    Matchers.equalTo("AA")
+                ),
+                Matchers.hasEntry(
+                    Matchers.equalTo("b"),
+                    Matchers.equalTo("BB")
+                )
+            )
         );
     }
 }
