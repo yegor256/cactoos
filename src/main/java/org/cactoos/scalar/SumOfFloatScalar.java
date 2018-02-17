@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import org.cactoos.Scalar;
 
 /**
- * Make a scalar which is sum of scalar's values.
+ * Float Scalar which sums up the values of other Scalars of the same type
  *
  * <p>Here is how you can use it to summarize float numbers:</p>
  *
@@ -45,13 +45,6 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @since 0.30
  */
-@SuppressWarnings(
-    {
-        "PMD.CallSuperInConstructor",
-        "PMD.OnlyOneConstructorShouldDoInitialization",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-    }
-)
 public final class SumOfFloatScalar implements Scalar<Float> {
 
     /**

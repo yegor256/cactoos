@@ -36,7 +36,6 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class SumOfScalarTest {
 
     @Test

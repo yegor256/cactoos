@@ -43,13 +43,6 @@ import org.cactoos.iterable.IterableOf;
  * @version $Id$
  * @since 0.30
  */
-@SuppressWarnings(
-    {
-        "PMD.CallSuperInConstructor",
-        "PMD.OnlyOneConstructorShouldDoInitialization",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-    }
-)
 final class SumOfScalar implements Scalar<SumOf> {
 
     /**
