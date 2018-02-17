@@ -41,12 +41,12 @@ import org.junit.Test;
 public final class DirectoryTest {
 
     @Test
-    public void listsFilesInDirectory() throws IOException {
+    public void listsFilesAndFoldersInDirectory() throws IOException {
         final Path dir = Files.createTempDirectory("x1");
         dir.resolve("x/y").toFile().mkdirs();
         Files.write(dir.resolve("x/y/test"), "".getBytes());
         MatcherAssert.assertThat(
-            "Can't list files in a directory",
+            "Can't list files and folders in a directory",
             new Directory(dir),
             // @checkstyle MagicNumber (1 line)
             Matchers.iterableWithSize(4)
