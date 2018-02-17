@@ -125,14 +125,20 @@ public final class MapOfTest {
         MatcherAssert.assertThat(
             "Can't convert map op maps to string",
             new MapOf<Integer, Map<String, String>>(
-                new MapEntry<>(-1, new MapOf<>(
-                    new MapEntry<>("first", "second"),
-                    new MapEntry<>("4", "7")
-                )),
-                new MapEntry<>(1, new MapOf<>(
-                    new MapEntry<>("green", "red"),
-                    new MapEntry<>("2.7", "3.1")
-                ))
+                new MapEntry<Integer, Map<String, String>>(
+                    -1,
+                    new MapOf<String, String>(
+                        new MapEntry<String, String>("first", "second"),
+                        new MapEntry<String, String>("4", "7")
+                    )
+                ),
+                new MapEntry<Integer, Map<String, String>>(
+                    1,
+                    new MapOf<String, String>(
+                        new MapEntry<String, String>("green", "red"),
+                        new MapEntry<String, String>("2.7", "3.1")
+                    )
+                )
             ).toString(),
             Matchers.equalTo("{-1={4=7, first=second}, 1={green=red, 2.7=3.1}}")
         );

@@ -134,6 +134,10 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     @Override
     public final String toString() {
-        return "{"+new TextOf(this.entrySet()).toString()+"}";
+        return new StringBuilder()
+            .append('{')
+            .append(new TextOf(this.entrySet()).toString())
+            .append('}')
+            .toString();
     }
 }
