@@ -21,23 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
+package org.cactoos.io;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
+import org.cactoos.Input;
 
 /**
- * Logical false.
+ * Input that reads compressed data from the GZIP file format.
  *
- * <p>This class is thread-safe.
- *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.29
  */
-public final class False implements Scalar<Boolean> {
+public final class GzipInput implements Input {
+
+    /**
+     * The input.
+     */
+    private final Input origin;
+
+    /**
+     * The buffer size.
+     */
+    private final int size;
+
+    /**
+     * Ctor.
+     * @param input The input.
+     */
+    public GzipInput(final Input input) {
+        // @checkstyle MagicNumberCheck (1 line)
+        this(input, 16 << 10);
+    }
+
+    /**
+     * Ctor.
+     * @param input The input
+     * @param max Max length of the buffer
+     */
+    public GzipInput(final Input input, final int max) {
+        this.origin = input;
+        this.size = max;
+    }
 
     @Override
-    public Boolean value() {
-        return false;
+    public InputStream stream() throws IOException {
+        return new GZIPInputStream(
+            this.origin.stream(),
+            this.size
+        );
     }
 }

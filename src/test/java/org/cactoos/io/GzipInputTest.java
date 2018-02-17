@@ -21,52 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
 
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import org.cactoos.iterable.IterableNoNulls;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.matchers.ScalarHasValue;
-import org.cactoos.scalar.ItemAt;
+package org.cactoos.io;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.util.zip.GZIPInputStream;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link Cycled}.
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * Test case for {@link org.cactoos.io.GzipInput}.
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CycledTest {
+public final class GzipInputTest {
 
     @Test
-    public void repeatIteratorTest() throws Exception {
-        final String expected = "two";
+    public void readFromGzipInput() throws IOException {
+        final byte[] bytes = {
+            (byte) GZIPInputStream.GZIP_MAGIC,
+            // @checkstyle MagicNumberCheck (1 line)
+            (byte) (GZIPInputStream.GZIP_MAGIC >> 8), (byte) 0x08,
+            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+            (byte) 0x00, (byte) 0x00, (byte) 0xF3, (byte) 0x48, (byte) 0xCD,
+            (byte) 0xC9, (byte) 0xC9, (byte) 0x57, (byte) 0x04, (byte) 0x00,
+            (byte) 0x56, (byte) 0xCC, (byte) 0x2A, (byte) 0x9D, (byte) 0x06,
+            (byte) 0x00, (byte) 0x00, (byte) 0x00,
+        };
         MatcherAssert.assertThat(
-            "Can't repeat iterator",
-            new ItemAt<>(
-                new Cycled<>(
-                    new IterableNoNulls<>(
-                        new IterableOf<>(
-                            "one", expected, "three"
-                        )
-                    )
-                ),
-                // @checkstyle MagicNumberCheck (1 line)
-                7
-            ),
-            new ScalarHasValue<>(
-                expected
-            )
+            "Can't read from a gzip input",
+            new TextOf(
+                new GzipInput(new InputOf(bytes))
+            ).asString(),
+            Matchers.equalTo("Hello!")
         );
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void notCycledEmptyTest() throws Exception {
-        new Cycled<>(
-            Collections::emptyIterator
-        ).next();
+    @Test(expected = EOFException.class)
+    public void readFromDeadGzipInput() throws Exception {
+        new LengthOf(
+            new GzipInput(new DeadInput())
+        ).value();
     }
 }

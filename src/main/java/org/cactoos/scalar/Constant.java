@@ -26,18 +26,50 @@ package org.cactoos.scalar;
 import org.cactoos.Scalar;
 
 /**
- * Logical false.
+ * Constant value.
  *
- * <p>This class is thread-safe.
+ * <p>This {@link Scalar} represents a constant value which never changes.</p>
  *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * <p>Contrary to {@link StickyScalar} this constant is always
+ * pre-computed.</p>
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. Despite that this class does NOT throw a checked
+ * exception as it only returns a pre-computed value.</p>
+ *
+ * <p>Example:
+ *   <pre>
+ *     final Scalar&lt;String&gt; constant = new Constant&lg;&gt;("Value");
+ *     System.out.print("Constant is always the same: ");
+ *     System.out.println(constant.value() == constant.value());
+ *   </pre>
+ * </p>
+ *
+ * <p>This class is thread-safe.</p>
+ *
+ * @author Aliceice (elena.ihde-simon@posteo.de)
  * @version $Id$
- * @since 0.7
+ * @param <T> Type of result
+ * @see StickyScalar
+ * @since 0.30
  */
-public final class False implements Scalar<Boolean> {
+public final class Constant<T> implements Scalar<T> {
+
+    /**
+     * Pre-computed value.
+     */
+    private final T val;
+
+    /**
+     * Ctor.
+     * @param value The pre-computed constant.
+     */
+    public Constant(final T value) {
+        this.val = value;
+    }
 
     @Override
-    public Boolean value() {
-        return false;
+    public T value() {
+        return this.val;
     }
 }

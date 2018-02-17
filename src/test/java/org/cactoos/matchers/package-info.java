@@ -21,23 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
-
-import org.cactoos.Scalar;
 
 /**
- * Logical false.
+ * Matcher's tests.
  *
- * <p>This class is thread-safe.
- *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.1
  */
-public final class False implements Scalar<Boolean> {
-
-    @Override
-    public Boolean value() {
-        return false;
-    }
-}
+package org.cactoos.matchers;

@@ -21,52 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.scalar;
 
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import org.cactoos.iterable.IterableNoNulls;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.matchers.ScalarHasValue;
-import org.cactoos.scalar.ItemAt;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link Cycled}.
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * Test case for {@link Constant}.
+ * @author Aliceice (elena.ihde-simon@posteo.de)
  * @version $Id$
- * @since 0.8
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CycledTest {
+public final class ConstantTest {
 
     @Test
-    public void repeatIteratorTest() throws Exception {
-        final String expected = "two";
+    public void returnsGivenValue() throws Exception {
+        final String value = "Hello World";
         MatcherAssert.assertThat(
-            "Can't repeat iterator",
-            new ItemAt<>(
-                new Cycled<>(
-                    new IterableNoNulls<>(
-                        new IterableOf<>(
-                            "one", expected, "three"
-                        )
-                    )
-                ),
-                // @checkstyle MagicNumberCheck (1 line)
-                7
-            ),
-            new ScalarHasValue<>(
-                expected
-            )
+            "Can't return given value",
+            new Constant<>(value).value(),
+            Matchers.equalTo(value)
         );
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void notCycledEmptyTest() throws Exception {
-        new Cycled<>(
-            Collections::emptyIterator
-        ).next();
+    @Test
+    public void alwaysReturnsSameValue() throws Exception {
+        final Constant<String> constant = new Constant<>("Good Bye!");
+        MatcherAssert.assertThat(
+            "Can't return same value",
+            constant.value(),
+            Matchers.sameInstance(constant.value())
+        );
     }
 }

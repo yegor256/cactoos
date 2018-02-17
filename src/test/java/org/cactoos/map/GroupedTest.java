@@ -21,74 +21,68 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.map;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import org.cactoos.Text;
+import java.util.HashSet;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.text.TextOf;
-import org.cactoos.text.UpperText;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link Mapped}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link Grouped}.
+ *
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.14
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class MappedTest {
+public final class GroupedTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
+    public void groupedByNumber() throws Exception {
         MatcherAssert.assertThat(
-            "Can't behave as a collection",
-            new Mapped<Integer, Integer>(
-                i -> i + 1,
-                new IterableOf<>(-1, 1, 2)
+            "Can't behave as a map",
+            new Grouped<>(
+            // @checkstyle MagicNumberCheck (1 line)
+            new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
+                number -> number,
+                Object::toString
             ),
-            new BehavesAsCollection<>(0)
+            new BehavesAsMap<>(1, new ListOf<>("1", "1", "1"))
         );
     }
 
     @Test
-    public void transformsList() throws IOException {
+    public void emptyIterable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't transform an iterable",
-            new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
-                new IterableOf<>("hello", "world", "друг")
-            ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
+            "Can't build grouped by empty iterable",
+            new Grouped<>(
+                new IterableOf<Integer>(),
+                number -> number,
+                Object::toString
+            ).entrySet(),
+            new IsEqual<>(new HashSet<>())
         );
     }
 
     @Test
-    public void transformsEmptyList() {
+    public void groupedByOneHasEntries() throws Exception {
         MatcherAssert.assertThat(
-            "Can't transform an empty iterable",
-            new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
-                Collections.emptyList()
+            "Can't group int values",
+            new Grouped<>(
+                // @checkstyle MagicNumberCheck (1 line)
+                new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
+                number -> number,
+                Object::toString
             ),
-            Matchers.emptyIterable()
-        );
-    }
-
-    @Test
-    public void string() {
-        MatcherAssert.assertThat(
-            "Can't convert to string",
-            new Mapped<Integer, Integer>(
-                x -> x * 2,
-                Arrays.asList(1, 2, 3)
-            ).toString(),
-            Matchers.equalTo("2, 4, 6")
+            Matchers.hasEntry(
+                1,
+                new ListOf<>("1", "1", "1")
+            )
         );
     }
 }

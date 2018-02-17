@@ -21,62 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.matchers;
 
-import java.io.IOException;
-import java.util.Collections;
-import org.cactoos.matchers.ScalarHasValue;
+import org.cactoos.io.InputOf;
+import org.cactoos.io.Md5DigestOf;
+import org.cactoos.text.HexOf;
+import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.StringDescription;
+import org.hamcrest.core.StringContains;
 import org.junit.Test;
 
 /**
- * Test case for {@link ItemAt}.
+ * Test case for {@link TextHasString}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ItemAtTest {
+public final class TextHasStringTest {
 
     @Test
-    public void firstElementTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't take the first item from the iterable",
-            new ItemAt<>(
-                // @checkstyle MagicNumber (1 line)
-                new IterableOf<>(1, 2, 3)
-            ),
-            new ScalarHasValue<>(1)
+    public void hasClearDescriptionForFailedTest() throws Exception {
+        final HexOf hex = new HexOf(
+            new Md5DigestOf(
+                new InputOf("Hello World!")
+            )
         );
-    }
-
-    @Test
-    public void elementByPosTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't take the item by position from the iterable",
-            new ItemAt<>(
-                // @checkstyle MagicNumber (1 line)
-                1, new IterableOf<>(1, 2, 3)
-            ),
-            new ScalarHasValue<>(2)
+        final Description description = new StringDescription();
+        final TextHasString matcher = new TextHasString(
+            "ed076287532e86365e841e92bfc50d8c6"
         );
-    }
-
-    @Test(expected = IOException.class)
-    public void failForEmptyCollectionTest() throws Exception {
-        new ItemAt<>(Collections.emptyList()).value();
-    }
-
-    @Test
-    public void fallbackTest() throws Exception {
-        final String fallback = "fallback";
+        matcher.matchesSafely(hex);
+        matcher.describeMismatchSafely(hex, description);
         MatcherAssert.assertThat(
-            "Can't fallback to default value",
-            new ItemAt<>(
-                fallback, Collections.emptyList()
-            ),
-            new ScalarHasValue<>(fallback)
+            "Description is not clear ",
+            description.toString(),
+            new StringContains(
+                "Text with \"ed076287532e86365e841e92bfc50d8c\""
+            )
         );
     }
 }

@@ -21,23 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
+package org.cactoos.io;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.zip.GZIPOutputStream;
+import org.cactoos.Output;
 
 /**
- * Logical false.
+ * Output that writes compressed data in the GZIP file format.
  *
- * <p>This class is thread-safe.
- *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @version $Id$
- * @since 0.7
+ * @since 0.29
  */
-public final class False implements Scalar<Boolean> {
+public final class GzipOutput implements Output {
+
+    /**
+     * The output.
+     */
+    private final Output origin;
+
+    /**
+     * The buffer size.
+     */
+    private final int size;
+
+    /**
+     * Ctor.
+     * @param output The output
+     */
+    public GzipOutput(final Output output) {
+        // @checkstyle MagicNumberCheck (1 line)
+        this(output, 16 << 10);
+    }
+
+    /**
+     * Ctor.
+     * @param output The output
+     * @param max Max length of the buffer
+     */
+    public GzipOutput(final Output output, final int max) {
+        this.origin = output;
+        this.size = max;
+    }
 
     @Override
-    public Boolean value() {
-        return false;
+    public OutputStream stream() throws IOException {
+        return new GZIPOutputStream(
+            this.origin.stream(),
+            this.size
+        );
     }
 }

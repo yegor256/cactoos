@@ -21,66 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.collection;
 
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Iterator that returns the same set of elements always.
+ * Skipped collection.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Alexander Menshikov (sharplermc@gmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.8
+ * @param <T> Type of source item
+ * @since 0.29
  */
-public final class StickyIterator<X> implements Iterator<X> {
-
-    /**
-     * The gate.
-     */
-    private final UncheckedScalar<Iterator<X>> gate;
+public final class Skipped<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
-     * @param items Items to iterate
+     * @param skip How many to skip
+     * @param src Source elements
      */
     @SafeVarargs
-    public StickyIterator(final X... items) {
-        this(new IterableOf<>(items).iterator());
+    public Skipped(final int skip, final T... src) {
+        this(skip, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param iterator The iterator
+     * @param skip How many to skip
+     * @param src Source iterable
      */
-    public StickyIterator(final Iterator<X> iterator) {
-        this.gate = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    while (iterator.hasNext()) {
-                        temp.add(iterator.next());
-                    }
-                    return temp.iterator();
-                }
-            )
-        );
+    public Skipped(final int skip, final Iterable<T> src) {
+        this(skip, new CollectionOf<T>(src));
     }
 
-    @Override
-    public boolean hasNext() {
-        return this.gate.value().hasNext();
+    /**
+     * Ctor.
+     * @param skip How many to skip
+     * @param src Source collection
+     */
+    public Skipped(final int skip, final Collection<T> src) {
+        super(() -> new CollectionOf<T>(
+            new org.cactoos.iterable.Skipped<T>(skip, src)
+        ));
     }
 
-    @Override
-    public X next() {
-        return this.gate.value().next();
-    }
 }
