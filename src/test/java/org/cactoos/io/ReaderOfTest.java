@@ -48,28 +48,28 @@ public final class ReaderOfTest {
     public void readsCharVarArg() throws IOException {
         MatcherAssert.assertThat(
             "Can't read content",
-            new InputOf(new ReaderOf('a', 'b', 'c', 'ü', 'ж')),
-            new InputHasContent("abcüж")
+            new InputOf(new ReaderOf('a', 'b', 'c')),
+            new InputHasContent("abc")
         );
     }
 
     @Test
     public void readsCharArrayWithCharset() throws IOException {
-        final char[] input = new char[]{'a', 'b', 'c', 'ü', 'ж'};
+        final char[] input = new char[]{'a', 'b', 'c', };
         MatcherAssert.assertThat(
             "Can't read content",
             new InputOf(new ReaderOf(input, StandardCharsets.UTF_8)),
-            new InputHasContent("abcüж")
+            new InputHasContent("abc")
         );
     }
 
     @Test
     public void readsCharArrayWithCharsetByName() throws IOException {
-        final char[] input = new char[]{'a', 'b', 'c', 'ü', 'ж'};
+        final char[] input = new char[]{'a', 'b', 'c'};
         MatcherAssert.assertThat(
             "Can't read content",
             new InputOf(new ReaderOf(input, StandardCharsets.UTF_8.name())),
-            new InputHasContent("abcüж")
+            new InputHasContent("abc")
         );
     }
 
@@ -77,8 +77,8 @@ public final class ReaderOfTest {
     public void readsByteArray() throws IOException {
         MatcherAssert.assertThat(
             "Can't read content",
-            new InputOf(new ReaderOf("abcüж".getBytes(StandardCharsets.UTF_8))),
-            new InputHasContent("abcüж")
+            new InputOf(new ReaderOf("abc".getBytes(StandardCharsets.UTF_8))),
+            new InputHasContent("abc")
         );
     }
 
@@ -88,11 +88,11 @@ public final class ReaderOfTest {
             "Can't read content",
             new InputOf(
                 new ReaderOf(
-                    "abcüж".getBytes(StandardCharsets.UTF_8),
+                    "abc".getBytes(StandardCharsets.UTF_8),
                     StandardCharsets.UTF_8
                 )
             ),
-            new InputHasContent("abcüж")
+            new InputHasContent("abc")
         );
     }
 
@@ -102,11 +102,11 @@ public final class ReaderOfTest {
             "Can't read content",
             new InputOf(
                 new ReaderOf(
-                    "abcüж".getBytes(StandardCharsets.UTF_8),
+                    "abc".getBytes(StandardCharsets.UTF_8),
                     StandardCharsets.UTF_8.name()
                 )
             ),
-            new InputHasContent("abcüж")
+            new InputHasContent("abc")
         );
     }
 
@@ -296,7 +296,11 @@ public final class ReaderOfTest {
     public void readsInputStream() throws IOException {
         MatcherAssert.assertThat(
             "Can't read content",
-            new InputOf(new ReaderOf(new InputStreamOf("Hello, товарищ!"))),
+            new InputOf(
+                new ReaderOf(
+                    new InputStreamOf("Hello, товарищ!")
+                )
+            ),
             new InputHasContent("Hello, товарищ!")
         );
     }
