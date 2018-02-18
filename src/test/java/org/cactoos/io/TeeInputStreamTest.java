@@ -26,8 +26,8 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -35,6 +35,7 @@ import org.junit.Test;
 /**
  * Test case for {@link TeeInputStream}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Stanislav Myachenkov (s.myachenkov@gmail.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -48,14 +49,15 @@ public final class TeeInputStreamTest {
         final String content = "Hello, товарищ!";
         MatcherAssert.assertThat(
             "Can't copy InputStream to OutputStream byte by byte",
-            TeeInputStreamTest.asString(
-                new TeeInputStream(
-                    new ByteArrayInputStream(
-                        content.getBytes(StandardCharsets.UTF_8)
-                    ),
-                    baos
+            new TextOf(
+                new ReaderOf(
+                    new TeeInputStream(
+                        new ByteArrayInputStream(
+                            content.getBytes(StandardCharsets.UTF_8)
+                        ), baos
+                    )
                 )
-            ),
+            ).asString(),
             Matchers.allOf(
                 Matchers.equalTo(content),
                 Matchers.equalTo(
@@ -63,19 +65,6 @@ public final class TeeInputStreamTest {
                 )
             )
         );
-    }
-
-    private static String asString(final InputStream input) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        while (true) {
-            final int data = input.read();
-            if (data < 0) {
-                break;
-            }
-            baos.write(data);
-        }
-        input.close();
-        return new String(baos.toByteArray(), StandardCharsets.UTF_8);
     }
 
 }
