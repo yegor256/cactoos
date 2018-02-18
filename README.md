@@ -16,7 +16,7 @@
 
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
-until we release version 1.0 (<del>July</del> <del>August</del> December 2017).
+until we release version 1.0 (<del>July 2017</del> May 2018).
 
 Cactoos is a collection of object-oriented Java primitives.
 
@@ -32,7 +32,7 @@ to do almost exactly the same, but through objects.
 **Principles**.
 There are a few design principles behind Cactoos:
 
-  * No `null` ([why?](http://www.yegor256.com/2014/05/13/why-null-is-bad.html))
+  * No `null` ([why?](http://www.yegor256.com/2014/05/13/why-null-is-bad.html)) and no [NULL checking](https://github.com/yegor256/cactoos/issues/650)
   * No code in constructors ([why?](http://www.yegor256.com/2015/05/07/ctors-must-be-code-free.html))
   * No getters and setters ([why?](http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html))
   * No mutable objects ([why?](http://www.yegor256.com/2014/06/09/objects-should-be-immutable.html))

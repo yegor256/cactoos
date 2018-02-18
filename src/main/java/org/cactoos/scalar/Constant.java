@@ -21,36 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.scalar;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.cactoos.Scalar;
 
 /**
- * Test case for {@link Directory}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Constant value.
+ *
+ * <p>This {@link Scalar} represents a constant value which never changes.</p>
+ *
+ * <p>Contrary to {@link StickyScalar} this constant is always
+ * pre-computed.</p>
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. Despite that this class does NOT throw a checked
+ * exception as it only returns a pre-computed value.</p>
+ *
+ * <p>Example:
+ *   <pre>
+ *     final Scalar&lt;String&gt; constant = new Constant&lg;&gt;("Value");
+ *     System.out.print("Constant is always the same: ");
+ *     System.out.println(constant.value() == constant.value());
+ *   </pre>
+ * </p>
+ *
+ * <p>This class is thread-safe.</p>
+ *
+ * @author Aliceice (elena.ihde-simon@posteo.de)
  * @version $Id$
- * @since 0.12
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @param <T> Type of result
+ * @see StickyScalar
+ * @since 0.30
  */
-public final class DirectoryTest {
+public final class Constant<T> implements Scalar<T> {
 
-    @Test
-    public void listsFilesAndFoldersInDirectory() throws IOException {
-        final Path dir = Files.createTempDirectory("x1");
-        dir.resolve("x/y").toFile().mkdirs();
-        Files.write(dir.resolve("x/y/test"), "".getBytes());
-        MatcherAssert.assertThat(
-            "Can't list files and folders in a directory",
-            new Directory(dir),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.iterableWithSize(4)
-        );
+    /**
+     * Pre-computed value.
+     */
+    private final T val;
+
+    /**
+     * Ctor.
+     * @param value The pre-computed constant.
+     */
+    public Constant(final T value) {
+        this.val = value;
     }
 
+    @Override
+    public T value() {
+        return this.val;
+    }
 }
