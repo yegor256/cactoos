@@ -21,67 +21,68 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.map;
 
-import java.security.SecureRandom;
-import java.util.Iterator;
-import org.cactoos.Func;
-import org.cactoos.iterator.IteratorOf;
+import java.util.HashSet;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link RepeatedFunc}.
+ * Test case for {@link Grouped}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.13.1
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 line)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class RepeatedFuncTest {
+public final class GroupedTest {
 
     @Test
-    public void runsFuncMultipleTimes() throws Exception {
-        final Iterator<Integer> iter = new IteratorOf<>(1, 2, 5, 6);
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
-            input -> {
-                return iter.next();
-            },
-            3
-        );
+    public void groupedByNumber() throws Exception {
         MatcherAssert.assertThat(
-            func.apply(true),
-            Matchers.equalTo(5)
+            "Can't behave as a map",
+            new Grouped<>(
+            // @checkstyle MagicNumberCheck (1 line)
+            new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
+                number -> number,
+                Object::toString
+            ),
+            new BehavesAsMap<>(1, new ListOf<>("1", "1", "1"))
         );
     }
 
     @Test
-    public void repeatsNullsResults() throws Exception {
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
-            input -> {
-                return null;
-            },
-            2
-        );
+    public void emptyIterable() throws Exception {
         MatcherAssert.assertThat(
-            func.apply(true),
-            Matchers.equalTo(null)
+            "Can't build grouped by empty iterable",
+            new Grouped<>(
+                new IterableOf<Integer>(),
+                number -> number,
+                Object::toString
+            ).entrySet(),
+            new IsEqual<>(new HashSet<>())
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void doesntRepeatAny() throws Exception {
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
-            input -> {
-                return new SecureRandom().nextInt();
-            },
-            0
-        );
+    @Test
+    public void groupedByOneHasEntries() throws Exception {
         MatcherAssert.assertThat(
-            func.apply(true),
-            Matchers.equalTo(func.apply(true))
+            "Can't group int values",
+            new Grouped<>(
+                // @checkstyle MagicNumberCheck (1 line)
+                new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
+                number -> number,
+                Object::toString
+            ),
+            Matchers.hasEntry(
+                1,
+                new ListOf<>("1", "1", "1")
+            )
         );
     }
 }

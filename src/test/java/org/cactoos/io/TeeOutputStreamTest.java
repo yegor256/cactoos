@@ -26,8 +26,8 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -35,6 +35,7 @@ import org.junit.Test;
 /**
  * Test case for {@link TeeOutputStream}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Stanislav Myachenkov (s.myachenkov@gmail.com)
  * @version $Id$
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -49,14 +50,16 @@ public final class TeeOutputStreamTest {
         final String content = "Hello, товарищ!";
         MatcherAssert.assertThat(
             "Can't copy OutputStream to OutputStream byte by byte",
-            TeeOutputStreamTest.asString(
-                new TeeInputStream(
-                    new ByteArrayInputStream(
-                        content.getBytes(StandardCharsets.UTF_8)
-                    ),
-                    new TeeOutputStream(baos, copy)
+            new TextOf(
+                new ReaderOf(
+                    new TeeInputStream(
+                        new ByteArrayInputStream(
+                            content.getBytes(StandardCharsets.UTF_8)
+                        ),
+                        new TeeOutputStream(baos, copy)
+                    )
                 )
-            ),
+            ).asString(),
             Matchers.allOf(
                 Matchers.equalTo(content),
                 Matchers.equalTo(
@@ -67,19 +70,6 @@ public final class TeeOutputStreamTest {
                 )
             )
         );
-    }
-
-    private static String asString(final InputStream input) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        while (true) {
-            final int data = input.read();
-            if (data < 0) {
-                break;
-            }
-            baos.write(data);
-        }
-        input.close();
-        return new String(baos.toByteArray(), StandardCharsets.UTF_8);
     }
 
 }

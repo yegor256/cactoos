@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Files in a directory.
+ * Files and folders in a directory.
  *
  * <p>There is no thread-safety guarantee.
  *

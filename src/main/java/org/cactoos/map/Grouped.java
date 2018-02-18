@@ -21,46 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.map;
+
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
- * Reverse iterator.
+ * Iterable as {@link Map}.
+ *
+ * <p>This class groups objects from iterable by applying
+ * functions for keys and values</p>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @see Filtered
- * @since 0.9
+ * @param <K> Type of key
+ * @param <V> Type of value
+ * @param <T> Type of entry objects of functions
+ * @since 0.30
  */
-public final class Reversed<X> extends IterableEnvelope<X> {
+public final class Grouped<K, V, T> extends MapEnvelope<K, List<V>> {
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @since 0.23
+     *
+     * @param list Iterable which is used to retrieve data from
+     * @param keys Function to get a key
+     * @param values Function to get a value
      */
-    @SafeVarargs
-    public Reversed(final X... src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+    public Grouped(
+        final Iterable<T> list,
+        final Function<T, K> keys,
+        final Function<T, V> values
+    ) {
+        super(() -> {
+            final Stream<T> stream = StreamSupport.stream(
+                list.spliterator(), false
+            );
+            return stream.collect(
+                Collectors.groupingBy(
+                    keys,
+                    Collectors.mapping(values, Collectors.toList())
+                )
+            );
+        });
     }
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @since 0.23
-     */
-    public Reversed(final Iterable<X> src) {
-        this(new org.cactoos.collection.Reversed<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param reversed Reversed collection
-     */
-    public Reversed(final org.cactoos.collection.Reversed<X> reversed) {
-        super(() -> reversed);
-    }
-
 }
