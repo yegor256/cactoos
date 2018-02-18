@@ -55,20 +55,28 @@ public final class ReaderOfTest {
 
     @Test
     public void readsCharArrayWithCharset() throws IOException {
-        final char[] input = new char[]{'a', 'b', 'c', };
         MatcherAssert.assertThat(
             "Can't read content",
-            new InputOf(new ReaderOf(input, StandardCharsets.UTF_8)),
+            new InputOf(
+                new ReaderOf(
+                    new char[]{'a', 'b', 'c'},
+                    StandardCharsets.UTF_8
+                )
+            ),
             new InputHasContent("abc")
         );
     }
 
     @Test
     public void readsCharArrayWithCharsetByName() throws IOException {
-        final char[] input = new char[]{'a', 'b', 'c'};
         MatcherAssert.assertThat(
             "Can't read content",
-            new InputOf(new ReaderOf(input, StandardCharsets.UTF_8.name())),
+            new InputOf(
+                new ReaderOf(
+                    new char[]{'a', 'b', 'c'},
+                    StandardCharsets.UTF_8.name()
+                )
+            ),
             new InputHasContent("abc")
         );
     }
@@ -112,48 +120,48 @@ public final class ReaderOfTest {
 
     @Test
     public void readsPath() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final Path input = Files.createTempFile("cactoos-1", "txt-1");
         final String content = "Hello, товарищ!";
-        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+        Files.write(input, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "Can't read file content",
-            new InputOf(new ReaderOf(temp)),
+            new InputOf(new ReaderOf(input)),
             new InputHasContent(content)
         );
     }
 
     @Test
     public void readsFile() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final Path input = Files.createTempFile("cactoos-1", "txt-1");
         final String content = "Hello, товарищ!";
-        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+        Files.write(input, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "Can't read file content",
-            new InputOf(new ReaderOf(temp.toFile())),
+            new InputOf(new ReaderOf(input.toFile())),
             new InputHasContent(content)
         );
     }
 
     @Test
     public void readsUrl() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final Path input = Files.createTempFile("cactoos-1", "txt-1");
         final String content = "Hello, товарищ!";
-        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+        Files.write(input, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "Can't read file content",
-            new InputOf(new ReaderOf(temp.toUri().toURL())),
+            new InputOf(new ReaderOf(input.toUri().toURL())),
             new InputHasContent(content)
         );
     }
 
     @Test
     public void readsUri() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final Path input = Files.createTempFile("cactoos-1", "txt-1");
         final String content = "Hello, товарищ!";
-        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+        Files.write(input, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "Can't read file content",
-            new InputOf(new ReaderOf(temp.toUri())),
+            new InputOf(new ReaderOf(input.toUri())),
             new InputHasContent(content)
         );
     }
