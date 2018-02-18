@@ -28,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.matchers.InputHasContent;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -40,10 +41,77 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public final class ReaderOfTest {
 
     @Test
-    public void readsSimpleFileContent() throws IOException {
+    public void readsCharVarArg() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(new ReaderOf('a', 'b', 'c', 'ü', 'ж')),
+            new InputHasContent("abcüж")
+        );
+    }
+
+    @Test
+    public void readsCharArrayWithCharset() throws IOException {
+        final char[] input = new char[]{'a', 'b', 'c', 'ü', 'ж'};
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(new ReaderOf(input, StandardCharsets.UTF_8)),
+            new InputHasContent("abcüж")
+        );
+    }
+
+    @Test
+    public void readsCharArrayWithCharsetByName() throws IOException {
+        final char[] input = new char[]{'a', 'b', 'c', 'ü', 'ж'};
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(new ReaderOf(input, StandardCharsets.UTF_8.name())),
+            new InputHasContent("abcüж")
+        );
+    }
+
+    @Test
+    public void readsByteArray() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(new ReaderOf("abcüж".getBytes(StandardCharsets.UTF_8))),
+            new InputHasContent("abcüж")
+        );
+    }
+
+    @Test
+    public void readsByteArrayWithCharset() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    "abcüж".getBytes(StandardCharsets.UTF_8),
+                    StandardCharsets.UTF_8
+                )
+            ),
+            new InputHasContent("abcüж")
+        );
+    }
+
+    @Test
+    public void readsByteArrayWithCharsetByName() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    "abcüж".getBytes(StandardCharsets.UTF_8),
+                    StandardCharsets.UTF_8.name()
+                )
+            ),
+            new InputHasContent("abcüж")
+        );
+    }
+
+    @Test
+    public void readsPath() throws IOException {
         final Path temp = Files.createTempFile("cactoos-1", "txt-1");
         final String content = "Hello, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
@@ -54,4 +122,224 @@ public final class ReaderOfTest {
         );
     }
 
+    @Test
+    public void readsFile() throws IOException {
+        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final String content = "Hello, товарищ!";
+        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+        MatcherAssert.assertThat(
+            "Can't read file content",
+            new InputOf(new ReaderOf(temp.toFile())),
+            new InputHasContent(content)
+        );
+    }
+
+    @Test
+    public void readsUrl() throws IOException {
+        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final String content = "Hello, товарищ!";
+        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+        MatcherAssert.assertThat(
+            "Can't read file content",
+            new InputOf(new ReaderOf(temp.toUri().toURL())),
+            new InputHasContent(content)
+        );
+    }
+
+    @Test
+    public void readsUri() throws IOException {
+        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final String content = "Hello, товарищ!";
+        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+        MatcherAssert.assertThat(
+            "Can't read file content",
+            new InputOf(new ReaderOf(temp.toUri())),
+            new InputHasContent(content)
+        );
+    }
+
+    @Test
+    public void readsBytes() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(new ReaderOf(new BytesOf("Hello, товарищ!"))),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsText() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(new ReaderOf(new TextOf("Hello, товарищ!"))),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsTextWithCharset() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    new TextOf("Hello, товарищ!"),
+                    StandardCharsets.UTF_8
+                )
+            ),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsTextWithCharsetByName() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    new TextOf("Hello, товарищ!"),
+                    StandardCharsets.UTF_8.name()
+                )
+            ),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsCharSequence() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(new ReaderOf("Hello, товарищ!")),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsCharSequenceWithCharset() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    "Hello, товарищ!",
+                    StandardCharsets.UTF_8
+                )
+            ),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsCharSequenceWithCharsetByName() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    "Hello, товарищ!",
+                    StandardCharsets.UTF_8.name()
+                )
+            ),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsInput() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(new ReaderOf(new InputOf("Hello, товарищ!"))),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsInputWithCharset() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    new InputOf("Hello, товарищ!"),
+                    StandardCharsets.UTF_8
+                )
+            ),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsInputWithCharsetByName() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    new InputOf("Hello, товарищ!"),
+                    StandardCharsets.UTF_8.name()
+                )
+            ),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsInputWithCharsetDecoder() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    new InputOf("Hello, товарищ!"),
+                    StandardCharsets.UTF_8.newDecoder()
+                )
+            ),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsInputStream() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(new ReaderOf(new InputStreamOf("Hello, товарищ!"))),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsInputStreamWithCharset() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    new InputStreamOf("Hello, товарищ!"),
+                    StandardCharsets.UTF_8
+                )
+            ),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsInputStreamWithCharsetByName() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    new InputStreamOf("Hello, товарищ!"),
+                    StandardCharsets.UTF_8.name()
+                )
+            ),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
+
+    @Test
+    public void readsInputStreamWithCharsetDecoder() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't read content",
+            new InputOf(
+                new ReaderOf(
+                    new InputStreamOf("Hello, товарищ!"),
+                    StandardCharsets.UTF_8.newDecoder()
+                )
+            ),
+            new InputHasContent("Hello, товарищ!")
+        );
+    }
 }
