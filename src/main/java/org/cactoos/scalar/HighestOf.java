@@ -35,10 +35,12 @@ import org.cactoos.iterable.Mapped;
  *
  * <pre>
  * final String highest = new HighestOf&lt;String&gt;(
- *         () -&gt; "Apple", () -&gt; "Orange"
+ *         () -&gt; "Banana", () -&gt; "Apple", () -&gt; "Orange"
  *     ).value();
- * long sum = new MaxOf(1L, 2L, 3L).longValue();
- * int sum = new MaxOf(numbers.toArray(new Integer[numbers.size()])).intValue();
+ * // -&gt; highest == "Orange"
+ *
+ * final Character highestChar = new HighestOf&lt;&gt;('B', 'U', 'G').value();
+ * // -&gt; highestChar == 'U'
  * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
