@@ -23,17 +23,10 @@
  */
 package org.cactoos.iterator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.cactoos.list.ListOf;
-import org.cactoos.list.StickyList;
+import org.cactoos.matchers.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -80,199 +73,68 @@ public final class SyncIteratorTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void correctValuesForConcurrentNextNext()
-        throws InterruptedException {
+    public void correctValuesForConcurrentNextNext() {
         for (int iter = 0; iter < 5000; iter += 1) {
-            final List<String> list = Arrays.asList("a", "b");
-            final SyncIterator<String> iterator = new SyncIterator<>(
-                list.iterator()
-            );
-            final List<Object> sync =
-                Collections.synchronizedList(
-                    new ArrayList<>(list.size())
-                );
-            final Runnable first = () -> {
-                sync.add(iterator.next());
-            };
-            final Runnable second = () -> {
-                sync.add(iterator.next());
-            };
-            new Concurrent(first, second).launch();
             MatcherAssert.assertThat(
-                "Missing the list items(s) (next()).",
-                sync,
-                Matchers.containsInAnyOrder("a", "b")
-            );
-        }
-    }
-
-    @Test
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void correctValuesForConcurrentNextHasNext()
-        throws InterruptedException {
-        for (int iter = 0; iter < 5000; iter += 1) {
-            final List<String> list = Arrays.asList("a", "b");
-            final SyncIterator<String> iterator = new SyncIterator<>(
-                list.iterator()
-            );
-            final List<Object> sync =
-                Collections.synchronizedList(
-                    new ArrayList<>(list.size())
-                );
-            final Runnable first = () -> {
-                sync.add(iterator.next());
-            };
-            final Runnable second = () -> {
-                sync.add(iterator.next());
-            };
-            final Runnable third = () -> {
-                sync.add(iterator.hasNext());
-            };
-            new Concurrent(first, second, third).launch();
-            MatcherAssert.assertThat(
-                "Missing the list items(s) (next()).",
-                sync,
-                Matchers.allOf(
-                    Matchers.hasItem("a"),
-                    Matchers.hasItem("b")
-                )
-            );
-            MatcherAssert.assertThat(
-                "Missing hasNext() value.",
-                sync,
-                Matchers.anyOf(
-                    Matchers.hasItem(true),
-                    Matchers.hasItem(false)
-                )
-            );
-        }
-    }
-
-    @Test
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void correctValuesForConcurrentHasNextHasNext()
-        throws InterruptedException {
-        for (int iter = 0; iter < 5000; iter += 1) {
-            final List<String> list = Arrays.asList("a", "b");
-            final SyncIterator<String> iterator = new SyncIterator<>(
-                list.iterator()
-            );
-            final List<Object> sync =
-                Collections.synchronizedList(
-                    new ArrayList<>(list.size())
-                );
-            final Runnable first = () -> {
-                sync.add(iterator.hasNext());
-            };
-            final Runnable second = () -> {
-                sync.add(iterator.hasNext());
-            };
-            new Concurrent(first, second).launch();
-            MatcherAssert.assertThat(
-                "Missing hasNext() value(s).",
-                sync,
-                Matchers.contains(true, true)
-            );
-        }
-    }
-
-    /**
-     * Tests runnables for concurrency issues.
-     */
-    private final class Concurrent {
-
-        /**
-         * Runnables to run in different threads.
-         */
-        private final List<Runnable> runnables;
-
-        /**
-         * Collected exceptions.
-         */
-        private final List<Throwable> exceptions;
-
-        /**
-         * Thread pool.
-         */
-        private final ExecutorService pool;
-
-        /**
-         * All executor threads are ready.
-         */
-        private final CountDownLatch ready;
-
-        /**
-         * Start countdown with first thread.
-         */
-        private final CountDownLatch init;
-
-        /**
-         * All threads ready.
-         */
-        private final CountDownLatch done;
-
-        Concurrent(final Runnable... runnables) {
-            this.runnables = new StickyList<Runnable>(
-                new ListOf<Runnable>(runnables)
-            );
-            this.exceptions =  Collections.synchronizedList(
-                new ArrayList<Throwable>(
-                    runnables.length
-                )
-            );
-            this.pool = Executors.newFixedThreadPool(runnables.length);
-            this.ready = new CountDownLatch(runnables.length);
-            this.init = new CountDownLatch(1);
-            this.done = new CountDownLatch(runnables.length);
-        }
-
-        //@checkstyle IllegalCatchCheck (100 lines)
-        @SuppressWarnings({"PMD.ProhibitPlainJunitAssertionsRule",
-            "PMD.AvoidCatchingThrowable"})
-        public void launch() throws InterruptedException {
-            try {
-                for (final Runnable runnable : this.runnables) {
-                    this.pool.submit(
-                        () -> {
-                            this.ready.countDown();
-                            try {
-                                this.init.await();
-                                runnable.run();
-                            } catch (final Throwable ex) {
-                                this.exceptions.add(ex);
-                            } finally {
-                                this.done.countDown();
-                            }
-                        });
-                }
-                MatcherAssert.assertThat(
-                    "Timeout initializing threads! Perform longer thread init.",
-                    this.ready.await(
-                        this.runnables.size() * 50,
-                        TimeUnit.MILLISECONDS
-                    )
-                );
-                this.init.countDown();
-                MatcherAssert.assertThat(
-                    String.format(
-                        "Timeout! More than %d seconds",
-                        10
+                "",
+                map -> {
+                    MatcherAssert.assertThat(
+                        map.next(),
+                        Matchers.anyOf(
+                            Matchers.equalTo("a"),
+                            Matchers.equalTo("b")
+                        )
+                    );
+                    return true;
+                },
+                new RunsInThreads<>(
+                    new SyncIterator<>(
+                        Arrays.asList("a", "b").iterator()
                     ),
-                    this.done.await(100, TimeUnit.SECONDS)
-                );
-            } finally {
-                this.pool.shutdownNow();
-            }
-            MatcherAssert.assertThat(
-                String.format(
-                    "%s failed with exception(s) %s",
-                    "Error",
-                    this.exceptions.toString()
-                ),
-                this.exceptions.isEmpty()
+                    2
+                )
             );
         }
+    }
 
+    @Test
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    public void correctValuesForConcurrentNextHasNext() {
+        for (int iter = 0; iter < 5000; iter += 1) {
+            MatcherAssert.assertThat(
+                "",
+                map -> {
+                    MatcherAssert.assertThat(
+                        map.hasNext(),
+                        Matchers.anyOf(
+                            Matchers.equalTo(true),
+                            Matchers.equalTo(true)
+                        )
+                    );
+                    MatcherAssert.assertThat(
+                        map.next(),
+                        Matchers.anyOf(
+                            Matchers.equalTo("a"),
+                            Matchers.equalTo("b")
+                        )
+                    );
+                    MatcherAssert.assertThat(
+                        map.hasNext(),
+                        Matchers.anyOf(
+                            Matchers.equalTo(true),
+                            Matchers.equalTo(false)
+                        )
+                    );
+                    return true;
+                },
+                new RunsInThreads<>(
+                    new SyncIterator<>(
+                        Arrays.asList("a", "b").iterator()
+                    ),
+                    2
+                )
+            );
+        }
     }
 
 }
