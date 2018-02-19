@@ -28,6 +28,8 @@ import java.security.SecureRandom;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Scalar;
+import org.cactoos.func.FuncOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Repeated;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -152,4 +154,54 @@ public final class MapOfTest {
             Matchers.equalTo("{}")
         );
     }
+
+    @Test
+    public void createsMapFromMapAndMapEntries() {
+        MatcherAssert.assertThat(
+            "Can't create a map from map and map entries",
+            new MapOf<Integer, Integer>(
+                new MapOf<Integer, Integer>(
+                    new MapEntry<Integer, Integer>(0, 0)
+                ),
+                new MapEntry<Integer, Integer>(1, 1)
+            ),
+            Matchers.allOf(
+                Matchers.hasEntry(0, 0),
+                Matchers.hasEntry(1, 1)
+            )
+        );
+    }
+
+    @Test
+    public void createsMapFromFunctionsAndIterable() {
+        MatcherAssert.assertThat(
+            "Can't create a map from functions and iterable.",
+            new MapOf<Integer, Integer>(
+                new FuncOf<Integer, Integer>(0),
+                new FuncOf<Integer, Integer>(0),
+                new IterableOf<Integer>(0)
+            ),
+            Matchers.hasEntry(0, 0)
+        );
+    }
+
+    @Test
+    public void createsMapFromMapFunctionsAndIterable() {
+        MatcherAssert.assertThat(
+            "Can't create a map from map, functions and iterable.",
+            new MapOf<Integer, Integer>(
+                new FuncOf<Integer, Integer>(0),
+                new FuncOf<Integer, Integer>(0),
+                new MapOf<Integer, Integer>(
+                    new MapEntry<Integer, Integer>(1, 1)
+                ),
+                new IterableOf<>(0)
+            ),
+            Matchers.allOf(
+                Matchers.hasEntry(0, 0),
+                Matchers.hasEntry(1, 1)
+            )
+        );
+    }
+
 }
