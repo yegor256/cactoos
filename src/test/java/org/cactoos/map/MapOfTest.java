@@ -108,4 +108,48 @@ public final class MapOfTest {
         );
     }
 
+    @Test
+    public void integersToString() {
+        MatcherAssert.assertThat(
+            "Can't convert map of integers to string",
+            new MapOf<Integer, Integer>(
+                new MapEntry<>(-1, 0),
+                new MapEntry<>(1, 2)
+            ).toString(),
+            Matchers.equalTo("{-1=0, 1=2}")
+        );
+    }
+
+    @Test
+    public void mapsToString() {
+        MatcherAssert.assertThat(
+            "Can't convert map op maps to string",
+            new MapOf<Integer, Map<String, String>>(
+                new MapEntry<Integer, Map<String, String>>(
+                    -1,
+                    new MapOf<String, String>(
+                        new MapEntry<String, String>("first", "second"),
+                        new MapEntry<String, String>("4", "7")
+                    )
+                ),
+                new MapEntry<Integer, Map<String, String>>(
+                    1,
+                    new MapOf<String, String>(
+                        new MapEntry<String, String>("green", "red"),
+                        new MapEntry<String, String>("2.7", "3.1")
+                    )
+                )
+            ).toString(),
+            Matchers.equalTo("{-1={4=7, first=second}, 1={green=red, 2.7=3.1}}")
+        );
+    }
+
+    @Test
+    public void emptyToString() {
+        MatcherAssert.assertThat(
+            "Can't convert empty map to string",
+            new MapOf<Integer, Map<String, String>>().toString(),
+            Matchers.equalTo("{}")
+        );
+    }
 }
