@@ -32,7 +32,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import junit.framework.TestCase;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.StickyList;
 import org.hamcrest.MatcherAssert;
@@ -246,7 +245,7 @@ public final class SyncIteratorTest {
                             }
                         });
                 }
-                TestCase.assertTrue(
+                MatcherAssert.assertThat(
                     "Timeout initializing threads! Perform longer thread init.",
                     this.ready.await(
                         this.runnables.size() * 50,
@@ -254,7 +253,7 @@ public final class SyncIteratorTest {
                     )
                 );
                 this.init.countDown();
-                TestCase.assertTrue(
+                MatcherAssert.assertThat(
                     String.format(
                         "Timeout! More than %d seconds",
                         10
@@ -264,7 +263,7 @@ public final class SyncIteratorTest {
             } finally {
                 this.pool.shutdownNow();
             }
-            TestCase.assertTrue(
+            MatcherAssert.assertThat(
                 String.format(
                     "%s failed with exception(s) %s",
                     "Error",
