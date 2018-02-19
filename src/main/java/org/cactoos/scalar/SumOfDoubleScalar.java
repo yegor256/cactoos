@@ -21,46 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
+
+import org.cactoos.Scalar;
 
 /**
- * Reverse iterator.
+ * Double Scalar which sums up the values of other Scalars of the same type.
+ *
+ * <p>Here is how you can use it to summarize double numbers:</p>
+ *
+ * <pre>
+ * double sum = new SumOfDoubleScalar(() -> 1.1,() -> 2.1, () -> 3.1).value();
+ * </pre>
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @see Filtered
- * @since 0.9
+ * @since 0.30
  */
-public final class Reversed<X> extends IterableEnvelope<X> {
+public final class SumOfDoubleScalar implements Scalar<Double> {
+
+    /**
+     * Serialization marker.
+     */
+    private static final long serialVersionUID = 7775359972001208404L;
+
+    /**
+     * Varargs of Scalar to sum up values from.
+     */
+    private final Scalar<Double>[] scalars;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @since 0.23
+     * @param src Varargs of Scalar to sum up values from
+     * @since 0.30
      */
     @SafeVarargs
-    public Reversed(final X... src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+    public SumOfDoubleScalar(final Scalar<Double>... src) {
+        this.scalars = src;
     }
 
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @since 0.23
-     */
-    public Reversed(final Iterable<X> src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+    @Override
+    public Double value() {
+        return new SumOfScalar(this.scalars).value().doubleValue();
     }
-
-    /**
-     * Ctor.
-     * @param reversed Reversed collection
-     */
-    public Reversed(final org.cactoos.collection.Reversed<X> reversed) {
-        super(() -> reversed);
-    }
-
 }

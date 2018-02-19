@@ -28,8 +28,6 @@ import java.security.SecureRandom;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Scalar;
-import org.cactoos.func.FuncOf;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Repeated;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -111,52 +109,47 @@ public final class MapOfTest {
     }
 
     @Test
-    public void createsMapFromMapAndMapEntries() {
+    public void integersToString() {
         MatcherAssert.assertThat(
-            "Can't create a map from map and map entries",
+            "Can't convert map of integers to string",
             new MapOf<Integer, Integer>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<Integer, Integer>(0, 0)
-                ),
-                new MapEntry<Integer, Integer>(1, 1)
-            ),
-            Matchers.allOf(
-                Matchers.hasEntry(0, 0),
-                Matchers.hasEntry(1, 1)
-            )
+                new MapEntry<>(-1, 0),
+                new MapEntry<>(1, 2)
+            ).toString(),
+            Matchers.equalTo("{-1=0, 1=2}")
         );
     }
 
     @Test
-    public void createsMapFromFunctionsAndIterable() {
+    public void mapsToString() {
         MatcherAssert.assertThat(
-            "Can't create a map from functions and iterable.",
-            new MapOf<Integer, Integer>(
-                new FuncOf<Integer, Integer>(0),
-                new FuncOf<Integer, Integer>(0),
-                new IterableOf<Integer>(0)
-            ),
-            Matchers.hasEntry(0, 0)
+            "Can't convert map op maps to string",
+            new MapOf<Integer, Map<String, String>>(
+                new MapEntry<Integer, Map<String, String>>(
+                    -1,
+                    new MapOf<String, String>(
+                        new MapEntry<String, String>("first", "second"),
+                        new MapEntry<String, String>("4", "7")
+                    )
+                ),
+                new MapEntry<Integer, Map<String, String>>(
+                    1,
+                    new MapOf<String, String>(
+                        new MapEntry<String, String>("green", "red"),
+                        new MapEntry<String, String>("2.7", "3.1")
+                    )
+                )
+            ).toString(),
+            Matchers.equalTo("{-1={4=7, first=second}, 1={green=red, 2.7=3.1}}")
         );
     }
 
     @Test
-    public void createsMapFromMapFunctionsAndIterable() {
+    public void emptyToString() {
         MatcherAssert.assertThat(
-            "Can't create a map from map, functions and iterable.",
-            new MapOf<Integer, Integer>(
-                new FuncOf<Integer, Integer>(0),
-                new FuncOf<Integer, Integer>(0),
-                new MapOf<Integer, Integer>(
-                    new MapEntry<Integer, Integer>(1, 1)
-                ),
-                new IterableOf<>(0)
-            ),
-            Matchers.allOf(
-                Matchers.hasEntry(0, 0),
-                Matchers.hasEntry(1, 1)
-            )
+            "Can't convert empty map to string",
+            new MapOf<Integer, Map<String, String>>().toString(),
+            Matchers.equalTo("{}")
         );
     }
-
 }

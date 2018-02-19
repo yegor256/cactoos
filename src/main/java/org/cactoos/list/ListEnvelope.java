@@ -114,4 +114,19 @@ abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
     public final List<T> subList(final int start, final int end) {
         return this.list.value().subList(start, end);
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return this.list.value().equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.list.value().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.list.value().toString();
+    }
 }

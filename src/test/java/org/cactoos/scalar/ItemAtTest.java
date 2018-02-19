@@ -28,6 +28,7 @@ import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -37,6 +38,7 @@ import org.junit.Test;
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class ItemAtTest {
 
     @Test
@@ -139,5 +141,21 @@ public final class ItemAtTest {
             new IterableOf<>(1, 2, 3).iterator(),
             3
         ).value();
+    }
+
+    @Test
+    public void sameValueTest() throws Exception {
+        final ItemAt<Integer> item = new ItemAt<>(
+            // @checkstyle MagicNumberCheck (2 lines)
+            new IterableOf<>(1, 2, 3).iterator(),
+            1
+        );
+        MatcherAssert.assertThat(
+            "Not the same value",
+            item.value(),
+            Matchers.equalTo(
+                item.value()
+            )
+        );
     }
 }

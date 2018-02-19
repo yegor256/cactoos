@@ -21,36 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.scalar;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link Directory}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link SumOfFloatScalar}.
+ *
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class DirectoryTest {
+public final class SumOfFloatScalarTest {
 
     @Test
-    public void listsFilesAndFoldersInDirectory() throws IOException {
-        final Path dir = Files.createTempDirectory("x1");
-        dir.resolve("x/y").toFile().mkdirs();
-        Files.write(dir.resolve("x/y/test"), "".getBytes());
+    public void withListOfScalarsInt() {
         MatcherAssert.assertThat(
-            "Can't list files and folders in a directory",
-            new Directory(dir),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.iterableWithSize(4)
+            new SumOfFloatScalar(() -> 1f, () -> 2f, () -> 3f)
+                .value(),
+            new IsEqual<>(6f)
         );
     }
 
+    @Test
+    public void withEmptyList() {
+        MatcherAssert.assertThat(
+            new SumOfFloatScalar().value(),
+            new IsEqual<>(0f)
+        );
+    }
+
+    @Test
+    public void withListOfOneElement() {
+        MatcherAssert.assertThat(
+            new SumOfFloatScalar(() -> 5f).value(),
+            new IsEqual<>(5f)
+        );
+    }
 }
