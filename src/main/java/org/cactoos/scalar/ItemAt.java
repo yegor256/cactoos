@@ -109,17 +109,6 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param position Position
-     * @param source Iterable
-     * @since 0.21
-     */
-    public ItemAt(final int position, final Iterator<T> source) {
-        this(position, () -> source);
-    }
-
-    /**
-     * Ctor.
-     *
      * @param source Iterable
      * @param position Position
      * @param fallback Fallback value
@@ -130,79 +119,6 @@ public final class ItemAt<T> implements Scalar<T> {
         final Func<Iterable<T>, T> fallback
     ) {
         this(new StickyScalar<>(source::iterator), position, fallback);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param iterator Iterator
-     */
-    public ItemAt(final Iterator<T> iterator) {
-        this(
-            iterator,
-            itr -> {
-                throw new IOException("Iterator is empty");
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param iterator Iterator
-     * @param fallback Fallback value
-     */
-    public ItemAt(final Iterator<T> iterator, final T fallback) {
-        this(iterator, itr -> fallback);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param iterator Iterator
-     * @param fallback Fallback value
-     */
-    public ItemAt(
-        final Iterator<T> iterator,
-        final Func<Iterable<T>, T> fallback
-    ) {
-        this(iterator, 0, fallback);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param iterator Iterator
-     * @param position Position
-     */
-    public ItemAt(final Iterator<T> iterator, final int position) {
-        this(
-            iterator,
-            position,
-            itr -> {
-                throw new IOException(
-                    new FormattedText(
-                        "Iterator doesn't have an element at #%d position",
-                        position
-                    ).asString()
-                );
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param iterator Iterator
-     * @param position Position
-     * @param fallback Fallback value
-     */
-    public ItemAt(
-        final Iterator<T> iterator,
-        final int position,
-        final Func<Iterable<T>, T> fallback
-    ) {
-        this(new StickyScalar<>(() -> iterator), position, fallback);
     }
 
     /**
