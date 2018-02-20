@@ -61,14 +61,6 @@ public final class Shuffled<T> extends ListEnvelope<T> {
      * Ctor.
      * @param src The underlying collection
      */
-    public Shuffled(final Iterator<T> src) {
-        this(() -> src);
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying collection
-     */
     @SuppressWarnings("unchecked")
     public Shuffled(final Iterable<T> src) {
         this(new ListOf<>(src));
