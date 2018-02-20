@@ -24,8 +24,6 @@
 package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.cactoos.Func;
-import org.cactoos.Proc;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -54,7 +52,7 @@ public final class CallableOfTest {
     public void convertsRunnableIntoCallable() throws Exception {
         final AtomicBoolean flag = new AtomicBoolean(false);
         new CallableOf<>(
-            (Runnable) () -> { flag.set(true); }
+            () -> { flag.set(true); }
         ).call();
         MatcherAssert.assertThat(
             flag.get(),
@@ -62,11 +60,19 @@ public final class CallableOfTest {
         );
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
+    @Test(expected = Exception.class)
+    public void wrapsRuntimeErrorFromRunnable() throws Exception {
+        new CallableOf<>(
+            () -> { throw new RuntimeException(); }
+        ).call();
+    }
+
     @Test
     public void convertsProcIntoCallable() throws Exception {
         final AtomicBoolean flag = new AtomicBoolean(false);
         new CallableOf<>(
-            (Proc<AtomicBoolean>) (unused) -> { flag.set(true); }
+            unused -> { flag.set(true); }
         ).call();
         MatcherAssert.assertThat(
             flag.get(),
@@ -78,7 +84,7 @@ public final class CallableOfTest {
     public void convertsFuncWithInputIntoCallable() throws Exception {
         MatcherAssert.assertThat(
             new CallableOf<>(
-                (Func<Integer, Integer>) num -> num + 1,
+                num -> num + 1,
                 1
             ).call(),
             Matchers.equalTo(2)
