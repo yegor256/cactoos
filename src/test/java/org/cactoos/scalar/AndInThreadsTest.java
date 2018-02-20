@@ -171,27 +171,31 @@ public final class AndInThreadsTest {
 
     @Test
     public void testProcIterator() throws Exception {
-        final List<Integer> list = new ArrayList<>(2);
+        final List<Integer> list = Collections.synchronizedList(
+            new ArrayList<Integer>(2)
+        );
         new AndInThreads(
             new Proc.NoNulls<Integer>(list::add),
             Arrays.asList(1, 2).iterator()
         ).value();
         MatcherAssert.assertThat(
             list,
-            Matchers.contains(1, 2)
+            Matchers.containsInAnyOrder(1, 2)
         );
     }
 
     @Test
     public void testProcIterable() throws Exception {
-        final List<Integer> list = new ArrayList<>(2);
+        final List<Integer> list = Collections.synchronizedList(
+            new ArrayList<Integer>(2)
+        );
         new AndInThreads(
             new Proc.NoNulls<Integer>(list::add),
             Arrays.asList(1, 2)
         ).value();
         MatcherAssert.assertThat(
             list,
-            Matchers.contains(1, 2)
+            Matchers.containsInAnyOrder(1, 2)
         );
     }
 
@@ -231,7 +235,9 @@ public final class AndInThreadsTest {
 
     @Test
     public void testExecServiceProcValues() throws Exception {
-        final List<Integer> list = new ArrayList<>(2);
+        final List<Integer> list = Collections.synchronizedList(
+            new ArrayList<Integer>(2)
+        );
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(
             service,
@@ -240,13 +246,15 @@ public final class AndInThreadsTest {
         ).value();
         MatcherAssert.assertThat(
             list,
-            Matchers.contains(1, 2)
+            Matchers.containsInAnyOrder(1, 2)
         );
     }
 
     @Test
     public void testExecServiceProcIterator() throws Exception {
-        final List<Integer> list = new ArrayList<>(2);
+        final List<Integer> list = Collections.synchronizedList(
+            new ArrayList<Integer>(2)
+        );
         new AndInThreads(
             Executors.newSingleThreadExecutor(),
             new Proc.NoNulls<Integer>(list::add),
@@ -254,13 +262,15 @@ public final class AndInThreadsTest {
         ).value();
         MatcherAssert.assertThat(
             list,
-            Matchers.contains(1, 2)
+            Matchers.containsInAnyOrder(1, 2)
         );
     }
 
     @Test
     public void testExecServiceProcIterable() throws Exception {
-        final List<Integer> list = new ArrayList<>(2);
+        final List<Integer> list = Collections.synchronizedList(
+            new ArrayList<Integer>(2)
+        );
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(
             service,
@@ -269,7 +279,7 @@ public final class AndInThreadsTest {
         ).value();
         MatcherAssert.assertThat(
             list,
-            Matchers.contains(1, 2)
+            Matchers.containsInAnyOrder(1, 2)
         );
     }
 
