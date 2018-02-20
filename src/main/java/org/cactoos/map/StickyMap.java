@@ -147,15 +147,6 @@ public final class StickyMap<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list Entries for the entries
-     * @since 0.21
-     */
-    public StickyMap(final Iterator<Map.Entry<X, Y>> list) {
-        this(() -> list);
-    }
-
-    /**
-     * Ctor.
      * @param map Pre-existing map we want to extend
      * @param list Entries for the entries
      * @since 0.12

@@ -150,14 +150,6 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param entries List of the entries
      */
-    public MapOf(final Iterator<Map.Entry<X, Y>> entries) {
-        this(() -> entries);
-    }
-
-    /**
-     * Ctor.
-     * @param entries List of the entries
-     */
     public MapOf(final Iterable<Map.Entry<X, Y>> entries) {
         super(() -> {
             final Map<X, Y> temp = new HashMap<>(0);
