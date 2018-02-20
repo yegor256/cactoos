@@ -138,9 +138,10 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
         );
     }
 
+    // @checkstyle DesignForExtensionCheck (5 lines)
     @Override
     public String toString() {
-        return col.value().toString();
+        return this.col.value().toString();
     }
 
 }
