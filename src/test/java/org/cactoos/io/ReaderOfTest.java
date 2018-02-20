@@ -45,7 +45,7 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings("PMD.TooManyMethods")
 public final class ReaderOfTest {
 
     /**
@@ -147,7 +147,7 @@ public final class ReaderOfTest {
 
     @Test
     public void readsFile() throws IOException {
-        final Path input = Files.createTempFile("cactoos-1", "txt-1");
+        final Path input = Files.createTempFile("cactoos-2", "txt-2");
         Files.write(
             input,
             ReaderOfTest.CONTENT.getBytes(StandardCharsets.UTF_8)
@@ -160,7 +160,7 @@ public final class ReaderOfTest {
 
     @Test
     public void readsUrl() throws IOException {
-        final Path input = Files.createTempFile("cactoos-1", "txt-1");
+        final Path input = Files.createTempFile("cactoos-3", "txt-3");
         Files.write(
             input,
             ReaderOfTest.CONTENT.getBytes(StandardCharsets.UTF_8)
@@ -177,7 +177,7 @@ public final class ReaderOfTest {
 
     @Test
     public void readsUri() throws IOException {
-        final Path input = Files.createTempFile("cactoos-1", "txt-1");
+        final Path input = Files.createTempFile("cactoos-4", "txt-4");
         Files.write(
             input,
             ReaderOfTest.CONTENT.getBytes(StandardCharsets.UTF_8)
