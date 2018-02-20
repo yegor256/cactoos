@@ -66,20 +66,6 @@ public final class Sorted<T> extends ListEnvelope<T> {
      * a type casting exception in runtime.</p>
      *
      * @param src The underlying collection
-     * @since 0.21
-     */
-    public Sorted(final Iterator<T> src) {
-        this(() -> src);
-    }
-
-    /**
-     * Ctor.
-     *
-     * <p>If you're using this ctor you must be sure that type {@code T}
-     * implements {@link Comparable} interface. Otherwise, there will be
-     * a type casting exception in runtime.</p>
-     *
-     * @param src The underlying collection
      */
     @SuppressWarnings("unchecked")
     public Sorted(final Iterable<T> src) {

@@ -53,15 +53,6 @@ public final class SolidList<X> extends ListEnvelope<X> {
     /**
      * Ctor.
      * @param items The array
-     * @since 0.21
-     */
-    public SolidList(final Iterator<X> items) {
-        this(new IterableOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items The array
      */
     public SolidList(final Iterable<X> items) {
         this(new CollectionOf<>(items));

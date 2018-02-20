@@ -71,15 +71,6 @@ public final class SyncList<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
-     * @param items The array
-     * @since 0.21
-     */
-    public SyncList(final Iterator<X> items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
      * @param list The iterable
      */
     public SyncList(final Collection<X> list) {
