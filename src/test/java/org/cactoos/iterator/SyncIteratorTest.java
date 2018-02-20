@@ -26,13 +26,11 @@ package org.cactoos.iterator;
 import java.util.Arrays;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.cactoos.list.ListOf;
+import org.cactoos.matchers.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-// @todo #482:30min add multi-threaded tests which test that the lock syncs the
-//  access to the next method against next and hasNext calls and calls to the
-//  hasNext method against next calls.
 /**
  * Test for {@link SyncIterator}.
  *
@@ -71,6 +69,72 @@ public final class SyncIteratorTest {
             ).toArray(),
             Matchers.equalTo(new Object[]{"a", "b"})
         );
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    public void correctValuesForConcurrentNextNext() {
+        for (int iter = 0; iter < 5000; iter += 1) {
+            MatcherAssert.assertThat(
+                "",
+                map -> {
+                    MatcherAssert.assertThat(
+                        map.next(),
+                        Matchers.anyOf(
+                            Matchers.equalTo("a"),
+                            Matchers.equalTo("b")
+                        )
+                    );
+                    return true;
+                },
+                new RunsInThreads<>(
+                    new SyncIterator<>(
+                        Arrays.asList("a", "b").iterator()
+                    ),
+                    2
+                )
+            );
+        }
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+    public void correctValuesForConcurrentNextHasNext() {
+        for (int iter = 0; iter < 5000; iter += 1) {
+            MatcherAssert.assertThat(
+                "",
+                map -> {
+                    MatcherAssert.assertThat(
+                        map.hasNext(),
+                        Matchers.anyOf(
+                            Matchers.equalTo(true),
+                            Matchers.equalTo(true)
+                        )
+                    );
+                    MatcherAssert.assertThat(
+                        map.next(),
+                        Matchers.anyOf(
+                            Matchers.equalTo("a"),
+                            Matchers.equalTo("b")
+                        )
+                    );
+                    MatcherAssert.assertThat(
+                        map.hasNext(),
+                        Matchers.anyOf(
+                            Matchers.equalTo(true),
+                            Matchers.equalTo(false)
+                        )
+                    );
+                    return true;
+                },
+                new RunsInThreads<>(
+                    new SyncIterator<>(
+                        Arrays.asList("a", "b").iterator()
+                    ),
+                    2
+                )
+            );
+        }
     }
 
 }
