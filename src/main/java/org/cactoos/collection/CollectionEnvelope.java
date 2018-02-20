@@ -137,4 +137,10 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
             "#clear(): the collection is ready only"
         );
     }
+
+    @Override
+    public String toString() {
+        return col.value().toString();
+    }
+
 }
