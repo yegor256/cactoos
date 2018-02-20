@@ -60,11 +60,10 @@ public final class CallableOfTest {
         );
     }
 
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     @Test(expected = Exception.class)
     public void wrapsRuntimeErrorFromRunnable() throws Exception {
         new CallableOf<>(
-            () -> { throw new RuntimeException(); }
+            () -> { throw new IllegalStateException(); }
         ).call();
     }
 
