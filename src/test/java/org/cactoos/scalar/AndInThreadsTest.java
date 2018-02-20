@@ -146,7 +146,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testProc() throws Exception {
+    public void worksWithProc() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new AndInThreads(
             (Proc<Integer>) list::add,
@@ -159,7 +159,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testFunc() throws Exception {
+    public void worksWithFunc() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 input -> input > 0,
@@ -170,7 +170,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testProcIterator() throws Exception {
+    public void worksWithProcIterator() throws Exception {
         final List<Integer> list = Collections.synchronizedList(
             new ArrayList<Integer>(2)
         );
@@ -185,7 +185,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testProcIterable() throws Exception {
+    public void worksWithProcIterable() throws Exception {
         final List<Integer> list = Collections.synchronizedList(
             new ArrayList<Integer>(2)
         );
@@ -200,16 +200,12 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testIteratorScalarBoolean() throws Exception {
+    public void worksWithIteratorScalarBoolean() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 new ListOf<Scalar<Boolean>>(
-                    new Scalar.NoNulls<Boolean>(
-                        new Constant<Boolean>(true)
-                    ),
-                    new Scalar.NoNulls<Boolean>(
-                        new Constant<Boolean>(false)
-                    )
+                    new Constant<Boolean>(true),
+                    new Constant<Boolean>(false)
                 ).iterator()
             ).value(),
             Matchers.equalTo(false)
@@ -217,24 +213,20 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testIterableScalarBoolean() throws Exception {
+    public void worksWithIterableScalarBoolean() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 new ListOf<Scalar<Boolean>>(
-                    new Scalar.NoNulls<Boolean>(
-                        new Constant<Boolean>(true)
-                    ),
-                    new Scalar.NoNulls<Boolean>(
-                        new Constant<Boolean>(false)
-                    )
+                    new Constant<Boolean>(true),
+                    new Constant<Boolean>(true)
                 )
             ).value(),
-            Matchers.equalTo(false)
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    public void testExecServiceProcValues() throws Exception {
+    public void worksWithExecServiceProcValues() throws Exception {
         final List<Integer> list = Collections.synchronizedList(
             new ArrayList<Integer>(2)
         );
@@ -251,7 +243,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testExecServiceProcIterator() throws Exception {
+    public void worksWithExecServiceProcIterator() throws Exception {
         final List<Integer> list = Collections.synchronizedList(
             new ArrayList<Integer>(2)
         );
@@ -267,7 +259,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testExecServiceProcIterable() throws Exception {
+    public void worksWithExecServiceProcIterable() throws Exception {
         final List<Integer> list = Collections.synchronizedList(
             new ArrayList<Integer>(2)
         );
@@ -284,14 +276,24 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testExecServiceScalarBooleans() throws Exception {
+    public void worksWithExecServiceScalarBooleans() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
-                new Scalar.NoNulls<Boolean>(
-                    new Constant<Boolean>(true)
-                ),
-                new Scalar.NoNulls<Boolean>(
+                new Constant<Boolean>(false),
+                new Constant<Boolean>(false)
+            ).value(),
+            Matchers.equalTo(false)
+        );
+    }
+
+    @Test
+    public void worksWithExecServiceIterableScalarBoolean() throws Exception {
+        MatcherAssert.assertThat(
+            new AndInThreads(
+                Executors.newSingleThreadExecutor(),
+                new ListOf<Scalar<Boolean>>(
+                    new Constant<Boolean>(true),
                     new Constant<Boolean>(false)
                 )
             ).value(),
@@ -300,38 +302,26 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testExecServiceIterableScalarBoolean() throws Exception {
+    public void worksWithExecServiceIteratorScalarBoolean() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
                 new ListOf<Scalar<Boolean>>(
-                    new Scalar.NoNulls<Boolean>(
-                        new Constant<Boolean>(true)
-                    ),
-                    new Scalar.NoNulls<Boolean>(
-                        new Constant<Boolean>(false)
-                    )
-                )
+                    new Constant<Boolean>(true),
+                    new Constant<Boolean>(true)
+                ).iterator()
             ).value(),
-            Matchers.equalTo(false)
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    public void testExecServiceIteratorScalarBoolean() throws Exception {
+    public void worksWithEmptyIterableScalarBoolean() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
-                Executors.newSingleThreadExecutor(),
-                new ListOf<Scalar<Boolean>>(
-                    new Scalar.NoNulls<Boolean>(
-                        new Constant<Boolean>(true)
-                    ),
-                    new Scalar.NoNulls<Boolean>(
-                        new Constant<Boolean>(false)
-                    )
-                ).iterator()
+                new ListOf<Scalar<Boolean>>()
             ).value(),
-            Matchers.equalTo(false)
+            Matchers.equalTo(true)
         );
     }
 
