@@ -36,6 +36,11 @@ import org.junit.Test;
 
 /**
  * Test case for {@link TeeInput}. Part A.
+ *
+ * @todo #631 Split this test class on small ones based on source of the
+ * TeeInput. I expect a number of small test classes for each source of
+ * TeeInput (e.g. TeeInputFromUriTest, TeeInputFromPathTest etc.)
+ *
  * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
  * @since 1.0
