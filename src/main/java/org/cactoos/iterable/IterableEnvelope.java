@@ -23,7 +23,9 @@
  */
 package org.cactoos.iterable;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -33,6 +35,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
  * @param <X> Type of item
  * @since 0.24
@@ -47,16 +50,28 @@ public abstract class IterableEnvelope<X> implements Iterable<X> {
     private final UncheckedScalar<Iterable<X>> iterable;
 
     /**
+     * The list to get an iterator from.
+     */
+    private final List<X> list;
+
+    /**
      * Ctor.
      * @param scalar The source
      */
-    public IterableEnvelope(final Scalar<Iterable<X>> scalar) {
+    public IterableEnvelope(final Scalar<Iterable<X>> scalar)  {
         this.iterable = new UncheckedScalar<>(scalar);
+        // @checkstyle MagicNumberCheck (1 line)
+        this.list = new ArrayList<>(30);
     }
 
     @Override
     public final Iterator<X> iterator() {
-        return this.iterable.value().iterator();
+        if (this.list.isEmpty()) {
+            for (final X item : this.iterable.value()) {
+                this.list.add(item);
+            }
+        }
+        return new UncheckedScalar<>(() -> this.list).value().iterator();
     }
 
 }

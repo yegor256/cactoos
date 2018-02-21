@@ -60,11 +60,11 @@ public final class IterableOf<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     * @param list The list
+     * @param iterator The list
      * @since 0.21
      */
-    public IterableOf(final Iterator<X> list) {
-        this(() -> list);
+    public IterableOf(final Iterator<X> iterator) {
+        this(() -> iterator);
     }
 
     /**

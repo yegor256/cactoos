@@ -23,6 +23,7 @@
  */
 package org.cactoos.iterable;
 
+import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -32,6 +33,7 @@ import org.junit.Test;
  * Test case for {@link IterableOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @author Ix (ixmanuel@yahoo.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -75,5 +77,36 @@ public final class IterableOfTest {
         );
     }
 
+    @Test
+    public void doubleIterateWithIterator() {
+        final LengthOf length = new LengthOf(
+            new IterableOf<>(
+                new ListOf<>("a", "b", "c").iterator()
+            )
+        );
+        length.intValue();
+        MatcherAssert.assertThat(
+            "Can't get value from iterator twice",
+            length.intValue(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(3)
+        );
+    }
+
+    @Test
+    public void doubleIterateWithVarargs() {
+        final LengthOf length = new LengthOf(
+            new IterableOf<>(
+                "a", "b", "c"
+            )
+        );
+        length.intValue();
+        MatcherAssert.assertThat(
+            "Can't get value from varargs twice",
+            length.intValue(),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.equalTo(3)
+        );
+    }
 }
 
