@@ -65,6 +65,11 @@ public final class LengthOf extends NumberEnvelope {
     )
     public LengthOf(final Input input, final int max) {
         super(() -> {
+            if (max == 0) {
+                throw new IllegalArgumentException(
+                    "Cant use a buffer limited to zero size"
+                );
+            }
             try (final InputStream stream = input.stream()) {
                 final byte[] buf = new byte[max];
                 long length = 0L;
@@ -81,5 +86,4 @@ public final class LengthOf extends NumberEnvelope {
             }
         });
     }
-
 }
