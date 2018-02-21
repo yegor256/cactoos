@@ -37,7 +37,6 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 line)
  */
 public final class ProcOfTest {
 
@@ -54,7 +53,7 @@ public final class ProcOfTest {
             }
         ).exec("You can use any input in a Runnable.");
         MatcherAssert.assertThat(
-            "Wrong result with a Runnable.",
+            "Wrong result when created with a Runnable.",
             list,
             Matchers.contains(str)
         );
@@ -74,7 +73,7 @@ public final class ProcOfTest {
             }
         ).exec("You can use any input in a Callable");
         MatcherAssert.assertThat(
-            "Wrong result with a Callable.",
+            "Wrong result when created with a Callable.",
             list,
             Matchers.contains(str)
         );
@@ -91,7 +90,7 @@ public final class ProcOfTest {
             }
         ).exec(str);
         MatcherAssert.assertThat(
-            "Wrong result with a Func.",
+            "Wrong result when created with a Func.",
             list,
             Matchers.contains(str)
         );
