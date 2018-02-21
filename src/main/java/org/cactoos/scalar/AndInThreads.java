@@ -46,8 +46,8 @@ import org.cactoos.iterable.Mapped;
  * works:</p>
  *
  * <pre> new AndInThreads(
- *   new IterableOf("Mary", "John", "William", "Napkin"),
- *   name -> System.out.printf("The name: %s\n", name)
+ *   name -> System.out.println("The name: %s\n", name),
+ *   new IterableOf&lt;&gt;("Mary", "John", "William", "Napkin")
  * ).value();</pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
