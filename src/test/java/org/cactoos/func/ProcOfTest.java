@@ -53,7 +53,10 @@ public final class ProcOfTest {
             }
         ).exec("You can use any input in a Runnable.");
         MatcherAssert.assertThat(
-            "Wrong result when created with a Runnable.",
+            String.format(
+                "Wrong result when created with a Runnable. Expected %s",
+                str
+            ),
             list,
             Matchers.contains(str)
         );
@@ -73,7 +76,10 @@ public final class ProcOfTest {
             }
         ).exec("You can use any input in a Callable");
         MatcherAssert.assertThat(
-            "Wrong result when created with a Callable.",
+            String.format(
+                "Wrong result when created with a Callable. Expected %s",
+                str
+            ),
             list,
             Matchers.contains(str)
         );
@@ -90,7 +96,10 @@ public final class ProcOfTest {
             }
         ).exec(str);
         MatcherAssert.assertThat(
-            "Wrong result when created with a Func.",
+            String.format(
+                "Wrong result when created with a Func. Expected %s",
+                str
+            ),
             list,
             Matchers.contains(str)
         );
