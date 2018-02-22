@@ -25,7 +25,12 @@ package org.cactoos.map;
 
 import java.util.Map;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.matchers.MatcherOf;
 import org.cactoos.matchers.RunsInThreads;
+import org.cactoos.text.SubText;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -34,9 +39,11 @@ import org.junit.Test;
  * Test case for {@link SolidMap}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Stanislav Myachenkov (s.myachenkov@gmail.com)
  * @version $Id$
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class SolidMapTest {
@@ -79,6 +86,118 @@ public final class SolidMapTest {
         MatcherAssert.assertThat(
             "Can't map only once",
             map.get(0), Matchers.equalTo(map.get(0))
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void extendsExistingMapWithArrayOfEntries() {
+        final SolidMap<Integer, Integer> map = new SolidMap<>(
+            new MapEntry<>(0, 10),
+            new MapEntry<>(1, 11)
+        );
+        MatcherAssert.assertThat(
+            "Does not extends existing map with array of entries",
+            new SolidMap<>(
+                map,
+                new MapEntry<>(2, 12),
+                new MapEntry<>(3, 13)
+            ).size(),
+            Matchers.equalTo(4)
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void acceptsEmptyArray() {
+        MatcherAssert.assertThat(
+            "Accepts empty array of entries",
+            new SolidMap<>(
+                new SolidMap<>(
+                    new MapEntry<>(0, 10),
+                    new MapEntry<>(1, 11)
+                ),
+                (Map.Entry<Integer, Integer>[]) new Map.Entry<?, ?>[0]
+            ).size(),
+            Matchers.equalTo(2)
+        );
+    }
+
+    @Test
+    public void mapsIterableWithKeyFuncAndValueFunc() {
+        final SolidMap<String, String> map = new SolidMap<>(
+            key -> new SubText(new TextOf(key), 0, 1).asString(),
+            value -> new UpperText(new TextOf(value)).asString(),
+            new IterableOf<>("aa", "bb")
+        );
+        MatcherAssert.assertThat(
+            "Functions are not applied to key and value",
+            map,
+            Matchers.allOf(
+                Matchers.hasEntry(
+                    Matchers.equalTo("a"),
+                    Matchers.equalTo("AA")
+                ),
+                Matchers.hasEntry(
+                    Matchers.equalTo("b"),
+                    Matchers.equalTo("BB")
+                ),
+                new MatcherOf<>(m -> m.size() == 2)
+            )
+        );
+    }
+
+    @Test
+    public void mapsEmptyIterableWithKeyFuncAndValueFunc() {
+        final SolidMap<String, String> map = new SolidMap<>(
+            key -> new SubText(new TextOf(key), 0, 1).asString(),
+            value -> new UpperText(new TextOf(value)).asString(),
+            new IterableOf<String>()
+        );
+        MatcherAssert.assertThat(
+            "Empty Iterable cannot be accepted for key and value mapping",
+            map,
+            new MatcherOf<>(m -> m.size() == 0)
+        );
+    }
+
+    @Test
+    public void mapsIterableWithMapEntryFunc() {
+        MatcherAssert.assertThat(
+            "Function are not applied to entry",
+            new SolidMap<>(
+                entry -> new MapEntry<>(
+                    new SubText(new TextOf(entry), 0, 1).asString(),
+                    new UpperText(new TextOf(entry)).asString()
+                ),
+                new IterableOf<>("aa", "bb")
+            ),
+            Matchers.allOf(
+                Matchers.hasEntry(
+                    Matchers.equalTo("a"),
+                    Matchers.equalTo("AA")
+                ),
+                Matchers.hasEntry(
+                    Matchers.equalTo("b"),
+                    Matchers.equalTo("BB")
+                ),
+                new MatcherOf<>(m -> m.size() == 2)
+            )
+        );
+    }
+
+    @Test
+    public void mapsEmptyIterableWithMapEntryFunc() {
+        MatcherAssert.assertThat(
+            "Empty Iterable cannot be accepted for MapEntry mapping",
+            new SolidMap<>(
+                entry -> new MapEntry<>(
+                    new SubText(new TextOf(entry), 0, 1).asString(),
+                    new UpperText(new TextOf(entry)).asString()
+                ),
+                new IterableOf<String>()
+            ),
+            new MatcherOf<>(m -> m.size() == 0)
         );
     }
 }
