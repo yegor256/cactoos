@@ -23,23 +23,22 @@
  */
 package org.cactoos.io;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.stream.Collectors;
 import org.cactoos.Input;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link ReaderOf}.
- *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -49,303 +48,372 @@ import org.junit.Test;
 public final class ReaderOfTest {
 
     /**
-     * Test content for all the tests in this class.
+     * Temporary files generator.
      */
-    private static final String CONTENT =
-        "Hello, товарищ äÄ üÜ öÖ and ß";
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Test(expected = NullPointerException.class)
-    public void readsNull() {
-        this.assertThat(
-            new ReaderOf((Input) null),
-            ""
+    public void readsNull() throws IOException {
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf((Input) null)).asString(),
+            new IsEqual<>("")
         );
     }
 
     @Test
-    public void readsEmpty() {
-        this.assertThat(
-            new ReaderOf(""),
-            ""
+    public void readsEmpty() throws IOException {
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf("")).asString(),
+            new IsEqual<>("")
         );
     }
 
     @Test
-    public void readsCharVarArg() {
-        this.assertThat(
-            new ReaderOf('a', 'b', 'c'),
-            "abc"
+    public void readsCharVarArg() throws IOException {
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf('a', 'b', 'c')).asString(),
+            new IsEqual<>("abc")
         );
     }
 
     @Test
-    public void readsCharArrayWithCharset() {
-        this.assertThat(
-            new ReaderOf(
-                ReaderOfTest.CONTENT.toCharArray(),
-                StandardCharsets.UTF_8
-            ),
-            ReaderOfTest.CONTENT
+    public void readsCharArrayWithCharset() throws IOException {
+        final String message =
+            "char array on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    message.toCharArray(),
+                    StandardCharsets.UTF_8
+                )
+            ).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
-    public void readsCharArrayWithCharsetByName() {
-        this.assertThat(
-            new ReaderOf(
-                ReaderOfTest.CONTENT.toCharArray(),
-                StandardCharsets.UTF_8.name()
-            ),
-            ReaderOfTest.CONTENT
+    public void readsCharArrayWithCharsetByName() throws IOException {
+        final String message =
+            "char array with charset on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    message.toCharArray(),
+                    StandardCharsets.UTF_8.name()
+                )
+            ).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
-    public void readsByteArray() {
-        this.assertThat(
-            new ReaderOf(
-                ReaderOfTest.CONTENT.getBytes(StandardCharsets.UTF_8)
-            ),
-            ReaderOfTest.CONTENT
+    public void readsByteArray() throws IOException {
+        final String message =
+            "byte array on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    message.getBytes(StandardCharsets.UTF_8)
+                )
+            ).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
-    public void readsByteArrayWithCharset() {
-        this.assertThat(
-            new ReaderOf(
-                ReaderOfTest.CONTENT.getBytes(StandardCharsets.UTF_8),
-                StandardCharsets.UTF_8
-            ),
-            ReaderOfTest.CONTENT
+    public void readsByteArrayWithCharset() throws IOException {
+        final String message =
+            "byte array with charset on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    message.getBytes(StandardCharsets.UTF_8),
+                    StandardCharsets.UTF_8
+                )
+            ).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
-    public void readsByteArrayWithCharsetByName() {
-        this.assertThat(
-            new ReaderOf(
-                ReaderOfTest.CONTENT.getBytes(StandardCharsets.UTF_8),
-                StandardCharsets.UTF_8.name()
-            ),
-            ReaderOfTest.CONTENT
+    public void readsByteArrayWithCharsetByName() throws IOException {
+        final String message =
+            "bte array with charset by name on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    message.getBytes(StandardCharsets.UTF_8),
+                    StandardCharsets.UTF_8.name()
+                )
+            ).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
     public void readsPath() throws IOException {
-        final Path input = Files.createTempFile("cactoos-1", "txt-1");
+        final String message =
+            "path on äÄ üÜ öÖ ß жш";
+        final File input = this.folder.newFile();
         Files.write(
-            input,
-            ReaderOfTest.CONTENT.getBytes(StandardCharsets.UTF_8)
+            input.toPath(),
+            message.getBytes(StandardCharsets.UTF_8)
         );
-        this.assertThat(
-            new ReaderOf(input),
-            ReaderOfTest.CONTENT
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf(input)).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
     public void readsFile() throws IOException {
-        final Path input = Files.createTempFile("cactoos-2", "txt-2");
+        final String message =
+            "file on äÄ üÜ öÖ ß жш";
+        final File input = this.folder.newFile();
         Files.write(
-            input,
-            ReaderOfTest.CONTENT.getBytes(StandardCharsets.UTF_8)
+            input.toPath(),
+            message.getBytes(StandardCharsets.UTF_8)
         );
-        this.assertThat(
-            new ReaderOf(input.toFile()),
-            ReaderOfTest.CONTENT
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf(input)).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
     public void readsUrl() throws IOException {
-        final Path input = Files.createTempFile("cactoos-3", "txt-3");
+        final String message =
+            "URL on äÄ üÜ öÖ ß жш";
+        final File input = this.folder.newFile();
         Files.write(
-            input,
-            ReaderOfTest.CONTENT.getBytes(StandardCharsets.UTF_8)
+            input.toPath(),
+            message.getBytes(StandardCharsets.UTF_8)
         );
-        this.assertThat(
-            new ReaderOf(
-                input
-                    .toUri()
-                    .toURL()
-            ),
-            ReaderOfTest.CONTENT
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    input
+                        .toURI()
+                        .toURL()
+                )
+            ).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
     public void readsUri() throws IOException {
-        final Path input = Files.createTempFile("cactoos-4", "txt-4");
+        final String message =
+            "URI on äÄ üÜ öÖ ß жш";
+        final File input = this.folder.newFile();
         Files.write(
-            input,
-            ReaderOfTest.CONTENT.getBytes(StandardCharsets.UTF_8)
+            input.toPath(),
+            message.getBytes(StandardCharsets.UTF_8)
         );
-        this.assertThat(
-            new ReaderOf(input.toUri()),
-            ReaderOfTest.CONTENT
-        );
-    }
-
-    @Test
-    public void readsBytes() {
-        this.assertThat(
-            new ReaderOf(new BytesOf(ReaderOfTest.CONTENT)),
-            ReaderOfTest.CONTENT
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf(input.toURI())).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
-    public void readsText() {
-        this.assertThat(
-            new ReaderOf(new TextOf(ReaderOfTest.CONTENT)),
-            ReaderOfTest.CONTENT
+    public void readsBytes() throws IOException {
+        final String input =
+            "Bytes on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf(new BytesOf(input))).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsTextWithCharset() {
-        this.assertThat(
-            new ReaderOf(
-                new TextOf(ReaderOfTest.CONTENT),
-                StandardCharsets.UTF_8
-            ),
-            ReaderOfTest.CONTENT
+    public void readsText() throws IOException {
+        final String input =
+            "Text on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf(new TextOf(input))).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsTextWithCharsetByName() {
-        this.assertThat(
-            new ReaderOf(
-                new TextOf(ReaderOfTest.CONTENT),
-                StandardCharsets.UTF_8.name()
-            ),
-            ReaderOfTest.CONTENT
+    public void readsTextWithCharset() throws IOException {
+        final String input =
+            "Text with charset on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    new TextOf(input),
+                    StandardCharsets.UTF_8
+                )
+            ).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsCharSequence() {
-        this.assertThat(
-            new ReaderOf(ReaderOfTest.CONTENT),
-            ReaderOfTest.CONTENT
+    public void readsTextWithCharsetByName() throws IOException {
+        final String input =
+            "Text with charset by name on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    new TextOf(input),
+                    StandardCharsets.UTF_8.name()
+                )
+            ).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsCharSequenceWithCharset() {
-        this.assertThat(
-            new ReaderOf(
-                ReaderOfTest.CONTENT,
-                StandardCharsets.UTF_8
-            ),
-            ReaderOfTest.CONTENT
+    public void readsCharSequence() throws IOException {
+        final String input =
+            "char sequence on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf(input)).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsCharSequenceWithCharsetByName() {
-        this.assertThat(
-            new ReaderOf(
-                ReaderOfTest.CONTENT,
-                StandardCharsets.UTF_8.name()
-            ),
-            ReaderOfTest.CONTENT
+    public void readsCharSequenceWithCharset() throws IOException {
+        final String input =
+            "char sequence with charset on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    input,
+                    StandardCharsets.UTF_8
+                )
+            ).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsInput() {
-        this.assertThat(
-            new ReaderOf(new InputOf(ReaderOfTest.CONTENT)),
-            ReaderOfTest.CONTENT
+    public void readsCharSequenceWithCharsetByName() throws IOException {
+        final String input =
+            "char sequence with charset by name on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    input,
+                    StandardCharsets.UTF_8.name()
+                )
+            ).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsInputWithCharset() {
-        this.assertThat(
-            new ReaderOf(
-                new InputOf(ReaderOfTest.CONTENT),
-                StandardCharsets.UTF_8
-            ),
-            ReaderOfTest.CONTENT
+    public void readsInput() throws IOException {
+        final String input =
+            "Input on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf(new InputOf(input))).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsInputWithCharsetByName() {
-        this.assertThat(
-            new ReaderOf(
-                new InputOf(ReaderOfTest.CONTENT),
-                StandardCharsets.UTF_8.name()
-            ),
-            ReaderOfTest.CONTENT
+    public void readsInputWithCharset() throws IOException {
+        final String input =
+            "Input with charset on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    new InputOf(input),
+                    StandardCharsets.UTF_8
+                )
+            ).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsInputWithCharsetDecoder() {
-        this.assertThat(
-            new ReaderOf(
-                new InputOf(ReaderOfTest.CONTENT),
-                StandardCharsets.UTF_8.newDecoder()
-            ),
-            ReaderOfTest.CONTENT
+    public void readsInputWithCharsetByName() throws IOException {
+        final String input =
+            "Input with charset by name on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    new InputOf(input),
+                    StandardCharsets.UTF_8.name()
+                )
+            ).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsInputStream() {
-        this.assertThat(
-            new ReaderOf(
-                new InputStreamOf(ReaderOfTest.CONTENT)
-            ),
-            ReaderOfTest.CONTENT
+    public void readsInputWithCharsetDecoder() throws IOException {
+        final String input =
+            "Input with charset decoder on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    new InputOf(input),
+                    StandardCharsets.UTF_8.newDecoder()
+                )
+            ).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsInputStreamWithCharset() {
-        this.assertThat(
-            new ReaderOf(
-                new InputStreamOf(ReaderOfTest.CONTENT),
-                StandardCharsets.UTF_8
-            ),
-            ReaderOfTest.CONTENT
+    public void readsInputStream() throws IOException {
+        final String input =
+            "InputStream on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(new ReaderOf(new InputStreamOf(input))).asString(),
+            new IsEqual<>(input)
+        );
+    }
+
+    @Test
+    public void readsInputStreamWithCharset() throws IOException {
+        final String input =
+            "InputStream with charset on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    new InputStreamOf(input),
+                    StandardCharsets.UTF_8
+                )
+            ).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
     public void readsInputStreamWithCharsetByName() throws IOException {
-        this.assertThat(
-            new ReaderOf(
-                new InputStreamOf(ReaderOfTest.CONTENT),
-                StandardCharsets.UTF_8.name()
-            ),
-            ReaderOfTest.CONTENT
+        final String input =
+            "InputStream with charset by name on äÄ üÜ öÖ ß жш";
+        MatcherAssert.assertThat(
+            new TextOf(
+                new ReaderOf(
+                    new InputStreamOf(input),
+                    StandardCharsets.UTF_8.name()
+                )
+            ).asString(),
+            new IsEqual<>(input)
         );
     }
 
     @Test
-    public void readsInputStreamWithCharsetDecoder() {
-        this.assertThat(
-            new ReaderOf(
-                new InputStreamOf(ReaderOfTest.CONTENT),
-                StandardCharsets.UTF_8.newDecoder()
-            ),
-            ReaderOfTest.CONTENT
-        );
-    }
-
-    private void assertThat(final Reader actual, final String expected) {
+    public void readsInputStreamWithCharsetDecoder() throws IOException {
+        final String input =
+            "InputStream with charset decoder on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
-            new BufferedReader(actual)
-                .lines()
-                .collect(Collectors.joining()),
-            Matchers.is(expected)
+            new TextOf(
+                new ReaderOf(
+                    new InputStreamOf(input),
+                    StandardCharsets.UTF_8.newDecoder()
+                )
+            ).asString(),
+            new IsEqual<>(input)
         );
     }
 }
