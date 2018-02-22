@@ -70,7 +70,7 @@ public final class Md5DigestOfTest {
     }
 
     @Test
-    public void checksumFromFile() throws IOException {
+    public void checksumFromFile() throws Exception {
         MatcherAssert.assertThat(
             "Can't calculate the file's MD5 checksum",
             new HexOf(

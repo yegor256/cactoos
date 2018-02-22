@@ -23,7 +23,6 @@
  */
 package org.cactoos.collection;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import org.cactoos.Text;
@@ -57,7 +56,7 @@ public final class MappedTest {
     }
 
     @Test
-    public void transformsList() throws IOException {
+    public void transformsList() throws Exception {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
             new Mapped<String, Text>(

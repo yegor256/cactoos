@@ -25,7 +25,6 @@ package org.cactoos.io;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -44,7 +43,7 @@ import org.junit.Test;
 public final class TeeInputStreamTest {
 
     @Test
-    public void copiesContentByteByByte() throws IOException {
+    public void copiesContentByteByByte() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final String content = "Hello, товарищ!";
         MatcherAssert.assertThat(

@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
@@ -141,7 +140,7 @@ public final class PropertiesOf implements Scalar<Properties> {
     }
 
     @Override
-    public Properties value() throws IOException {
+    public Properties value() throws Exception {
         return this.scalar.value();
     }
 }

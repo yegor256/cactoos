@@ -72,7 +72,7 @@ public final class Sha256DigestOfTest {
     }
 
     @Test
-    public void checksumFromFile() throws IOException {
+    public void checksumFromFile() throws Exception {
         MatcherAssert.assertThat(
             "Can't calculate the file's SHA-256 checksum",
             new HexOf(

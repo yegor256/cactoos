@@ -28,10 +28,11 @@ import java.io.InputStream;
 import org.cactoos.Func;
 import org.cactoos.Input;
 import org.cactoos.func.IoCheckedFunc;
+import org.cactoos.scalar.IoCheckedScalar;
 
 /**
  * Input that returns an alternative input if the main one throws
- * {@link IOException}.
+ * {@link Exception}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -90,10 +91,10 @@ public final class InputWithFallback implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         InputStream stream;
         try {
-            stream = this.main.stream();
+            stream = new IoCheckedScalar<>(this.main::stream).value();
         } catch (final IOException ex) {
             stream = this.alternative.apply(ex).stream();
         }

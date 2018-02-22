@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
@@ -49,7 +48,7 @@ public final class SwappedCaseText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final String text = this.origin.asString();
         final char[] chars = text.toCharArray();
         for (int idx = 0; idx < chars.length; idx += 1) {

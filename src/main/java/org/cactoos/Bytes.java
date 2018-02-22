@@ -23,8 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
-
 /**
  * Bytes.
  *
@@ -40,9 +38,9 @@ public interface Bytes {
     /**
      * Convert it to the byte array.
      * @return The byte array
-     * @throws IOException If fails
+     * @throws Exception If fails
      */
-    byte[] asBytes() throws IOException;
+    byte[] asBytes() throws Exception;
 
     /**
      * Bytes check for no nulls.
@@ -64,7 +62,7 @@ public interface Bytes {
             this.origin = bytes;
         }
         @Override
-        public byte[] asBytes() throws IOException {
+        public byte[] asBytes() throws Exception {
             if (this.origin == null) {
                 throw new IllegalArgumentException(
                     "NULL instead of a valid bytes"

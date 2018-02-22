@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,7 +42,7 @@ import org.junit.Test;
 public final class ReaderAsBytesTest {
 
     @Test
-    public void readsString() throws IOException {
+    public void readsString() throws Exception {
         final String source = "hello, друг!";
         MatcherAssert.assertThat(
             "Can't read string through a reader",

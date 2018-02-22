@@ -37,17 +37,17 @@ import org.junit.Test;
 public final class OutputTest {
 
     @Test(expected = IOException.class)
-    public void failForNullOutput() throws IOException {
+    public void failForNullOutput() throws Exception {
         new Output.NoNulls(null).stream();
     }
 
     @Test(expected = IOException.class)
-    public void failForNullStream() throws IOException {
+    public void failForNullStream() throws Exception {
         new Output.NoNulls(() -> null).stream();
     }
 
     @Test
-    public void okForNoNullOutput() throws IOException {
+    public void okForNoNullOutput() throws Exception {
         new Output.NoNulls(new DeadOutput()).stream();
     }
 }

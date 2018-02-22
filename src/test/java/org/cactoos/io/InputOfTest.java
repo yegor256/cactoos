@@ -86,7 +86,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void closesInputStream() throws IOException {
+    public void closesInputStream() throws Exception {
         final AtomicBoolean closed = new AtomicBoolean();
         final InputStream input = new ByteArrayInputStream(
             "how are you?".getBytes()
@@ -117,7 +117,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsFileContent() throws IOException {
+    public void readsFileContent() throws Exception {
         MatcherAssert.assertThat(
             "Can't read bytes from a file-system URL",
             new BytesOf(
@@ -132,7 +132,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsRealUrl() throws IOException {
+    public void readsRealUrl() throws Exception {
         new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
             home -> MatcherAssert.assertThat(
                 "Can't fetch bytes from the URL",
@@ -150,7 +150,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringUrl() throws IOException {
+    public void readsStringUrl() throws Exception {
         MatcherAssert.assertThat(
             "Can't fetch bytes from the HTTPS URL",
             new TextOf(
@@ -168,7 +168,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringIntoBytes() throws IOException {
+    public void readsStringIntoBytes() throws Exception {
         MatcherAssert.assertThat(
             "Can't read bytes from Input",
             new String(
@@ -185,7 +185,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringBuilder() throws IOException {
+    public void readsStringBuilder() throws Exception {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
         MatcherAssert.assertThat(
@@ -206,7 +206,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringBuffer() throws IOException {
+    public void readsStringBuffer() throws Exception {
         final String starts = "The future ";
         final String ends = "is now!";
         MatcherAssert.assertThat(
@@ -227,7 +227,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsArrayOfChars() throws IOException {
+    public void readsArrayOfChars() throws Exception {
         MatcherAssert.assertThat(
             "Can't read array of chars.",
             new String(
@@ -246,7 +246,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsEncodedArrayOfChars() throws IOException {
+    public void readsEncodedArrayOfChars() throws Exception {
         MatcherAssert.assertThat(
             "Can't read array of encoded chars.",
             new String(
@@ -312,7 +312,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void makesDataAvailable() throws IOException {
+    public void makesDataAvailable() throws Exception {
         final String content = "Hello,חבר!";
         MatcherAssert.assertThat(
             "Can't show that data is available",

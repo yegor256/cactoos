@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
@@ -68,7 +67,7 @@ public final class BoolOf implements Scalar<Boolean> {
     }
 
     @Override
-    public Boolean value() throws IOException {
+    public Boolean value() throws Exception {
         return Boolean.valueOf(this.origin.asString());
     }
 }
