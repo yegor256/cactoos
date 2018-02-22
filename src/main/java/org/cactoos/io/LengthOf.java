@@ -67,7 +67,7 @@ public final class LengthOf extends NumberEnvelope {
         super(() -> {
             if (max == 0) {
                 throw new IllegalArgumentException(
-                    "Cant use a buffer limited to zero size"
+                    "Cannot use a buffer limited to zero size"
                 );
             }
             try (final InputStream stream = input.stream()) {
