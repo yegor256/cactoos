@@ -107,6 +107,7 @@ public final class AsyncFuncTest {
     public void runsInBackgroundWithThreadFactory() {
         final String name = "secret name for thread factory";
         final ThreadFactory factory = r -> new Thread(r, name);
+        final CountDownLatch latch = new CountDownLatch(1);
         MatcherAssert.assertThat(
             "Can't run in the background with specific thread factory",
             new AsyncFunc<>(
@@ -116,6 +117,7 @@ public final class AsyncFuncTest {
                             "Another thread factory was used"
                         );
                     }
+                    latch.countDown();
                 },
                 factory
             ),
@@ -124,7 +126,7 @@ public final class AsyncFuncTest {
                 new MatcherOf<Future<Void>>(
                     future -> {
                         future.get();
-                        return true;
+                        return latch.getCount() == 0;
                     }
                 )
             )
@@ -135,6 +137,7 @@ public final class AsyncFuncTest {
     public void runsInBackgroundWithExecutorService() {
         final String name = "secret name for thread executor";
         final ThreadFactory factory = r -> new Thread(r, name);
+        final CountDownLatch latch = new CountDownLatch(1);
         MatcherAssert.assertThat(
             "Can't run in the background with specific thread executor",
             new AsyncFunc<>(
@@ -144,6 +147,7 @@ public final class AsyncFuncTest {
                             "Another thread executor was used"
                         );
                     }
+                    latch.countDown();
                 },
                 Executors.newSingleThreadExecutor(factory)
             ),
@@ -152,7 +156,7 @@ public final class AsyncFuncTest {
                 new MatcherOf<Future<Void>>(
                     future -> {
                         future.get();
-                        return true;
+                        return latch.getCount() == 0;
                     }
                 )
             )
