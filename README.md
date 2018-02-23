@@ -16,6 +16,9 @@
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg)](https://codecov.io/github/yegor256/cactoos?branch=master)
 [![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.cactoos%3Acactoos)
 
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/yegor256/cactoos.svg)](http://isitmaintained.com/project/yegor256/cactoos "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/yegor256/cactoos.svg)](http://isitmaintained.com/project/yegor256/cactoos "Percentage of issues still open")
+
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
 until we release version 1.0 (<del>July 2017</del> May 2018).
