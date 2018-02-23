@@ -25,9 +25,9 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.IOException;
-import org.cactoos.matchers.TeeInputHasResult;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -38,6 +38,8 @@ import org.junit.rules.TemporaryFolder;
  * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
  * @since 1.0
+ * @todo #631 Create a new Matcher that will compare results of TeeInput as
+ * well as copied content to the original message.
  * @checkstyle JavadocMethodCheck (100 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)
  */
@@ -51,52 +53,58 @@ public final class TeeInputFromBytesTest {
 
     @Test
     public void copiesFromBytesToPath() throws IOException {
-        final String input =
+        final String message =
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        final TeeInput input = new TeeInput(
+            new BytesOf(message),
+            output.toPath()
+        );
         MatcherAssert.assertThat(
-            new TeeInput(
-                new BytesOf(input),
-                output.toPath()
-            ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new TextOf(input).asString(),
+            new IsEqual<>(message)
+        );
+        MatcherAssert.assertThat(
+            new TextOf(output).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
     public void copiesFromBytesToFile() throws IOException {
-        final String input =
+        final String message =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        final TeeInput input = new TeeInput(
+            new BytesOf(message),
+            output
+        );
         MatcherAssert.assertThat(
-            new TeeInput(
-                new BytesOf(input),
-                output
-            ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new TextOf(input).asString(),
+            new IsEqual<>(message)
+        );
+        MatcherAssert.assertThat(
+            new TextOf(output).asString(),
+            new IsEqual<>(message)
         );
     }
 
     @Test
     public void copiesFromBytesToOutput() throws IOException {
-        final String input =
+        final String message =
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        final TeeInput input = new TeeInput(
+            new BytesOf(message),
+            new OutputTo(output)
+        );
         MatcherAssert.assertThat(
-            new TeeInput(
-                new BytesOf(input),
-                new OutputTo(output)
-            ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new TextOf(input).asString(),
+            new IsEqual<>(message)
+        );
+        MatcherAssert.assertThat(
+            new TextOf(output).asString(),
+            new IsEqual<>(message)
         );
     }
 }
