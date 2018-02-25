@@ -41,19 +41,165 @@ import org.junit.Test;
  */
 public final class TeeOutputTest {
 
+    /**
+     * The CONTENT for copying of TeeOutput.
+     */
+    private static final String CONTENT = "Hello, товарищ!";
+
+    /**
+     * The TeeOutputTest.DESCRIPTION of failure test.
+     */
+    private static final String
+        DESCRIPTION = "Can't copy Output to Output and return Input";
+
     @Test
     public void copiesContent() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final ByteArrayOutputStream copy = new ByteArrayOutputStream();
-        final String content = "Hello, товарищ!";
         MatcherAssert.assertThat(
-            "Can't copy Output to Output and return Input",
+            TeeOutputTest.DESCRIPTION,
             new TextOf(
                 new TeeInput(
-                    new InputOf(content),
+                    new InputOf(TeeOutputTest.CONTENT),
                     new TeeOutput(
                         new OutputTo(baos),
                         new OutputTo(copy)
+                    )
+                )
+            ),
+            new TextHasString(
+                new MatcherOf<>(
+                    str -> {
+                        return new String(
+                            copy.toByteArray(), StandardCharsets.UTF_8
+                        ).equals(str);
+                    }
+                )
+            )
+        );
+    }
+
+    @Test
+    public void copiesWithWriter() {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream copy = new ByteArrayOutputStream();
+        MatcherAssert.assertThat(
+            TeeOutputTest.DESCRIPTION,
+            new TextOf(
+                new TeeInput(
+                    new InputOf(TeeOutputTest.CONTENT),
+                    new TeeOutput(
+                        new OutputTo(baos),
+                        new WriterTo(copy)
+                    )
+                )
+            ),
+            new TextHasString(
+                new MatcherOf<>(
+                    str -> {
+                        return new String(
+                            copy.toByteArray(), StandardCharsets.UTF_8
+                        ).equals(str);
+                    }
+                )
+            )
+        );
+    }
+
+    @Test
+    public void copiesWithWriterAndCharset() {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream copy = new ByteArrayOutputStream();
+        MatcherAssert.assertThat(
+            TeeOutputTest.DESCRIPTION,
+            new TextOf(
+                new TeeInput(
+                    new InputOf(TeeOutputTest.CONTENT),
+                    new TeeOutput(
+                        new OutputTo(baos),
+                        new WriterTo(copy),
+                        StandardCharsets.UTF_8
+                    )
+                )
+            ),
+            new TextHasString(
+                new MatcherOf<>(
+                    str -> {
+                        return new String(
+                            copy.toByteArray(), StandardCharsets.UTF_8
+                        ).equals(str);
+                    }
+                )
+            )
+        );
+    }
+
+    @Test
+    public void copiesWithPath() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final TempFile file = new TempFile();
+        MatcherAssert.assertThat(
+            TeeOutputTest.DESCRIPTION,
+            new TextOf(
+                new TeeInput(
+                    new InputOf(TeeOutputTest.CONTENT),
+                    new TeeOutput(
+                        new OutputTo(baos),
+                        file.value()
+                    )
+                )
+            ),
+            new TextHasString(
+                new MatcherOf<>(
+                    str -> {
+                        return new String(
+                            new TextOf(file.value()).asString()
+                        ).equals(str);
+                    }
+                )
+            )
+        );
+    }
+
+    @Test
+    public void copiesWithFile() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final TempFile file = new TempFile();
+        MatcherAssert.assertThat(
+            TeeOutputTest.DESCRIPTION,
+            new TextOf(
+                new TeeInput(
+                    new InputOf(TeeOutputTest.CONTENT),
+                    new TeeOutput(
+                        new OutputTo(baos),
+                        file.value().toFile()
+                    )
+                )
+            ),
+            new TextHasString(
+                new MatcherOf<>(
+                    str -> {
+                        return new String(
+                            new TextOf(file.value()).asString()
+                        ).equals(str);
+                    }
+                )
+            )
+        );
+    }
+
+    @Test
+    public void copiesWithOutputStream() {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream copy = new ByteArrayOutputStream();
+        MatcherAssert.assertThat(
+            TeeOutputTest.DESCRIPTION,
+            new TextOf(
+                new TeeInput(
+                    new InputOf(TeeOutputTest.CONTENT),
+                    new TeeOutput(
+                        new OutputTo(baos),
+                        copy
                     )
                 )
             ),
