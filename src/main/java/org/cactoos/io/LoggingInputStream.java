@@ -40,7 +40,7 @@ import java.util.logging.Logger;
  * @version $Id$
  * @since 0.29
  */
-@SuppressWarnings("PMD.LoggerIsNotStaticFinal")
+@SuppressWarnings({"PMD.LoggerIsNotStaticFinal", "PMD.MoreThanOneLogger"})
 public final class LoggingInputStream extends InputStream {
 
     /**
@@ -115,7 +115,7 @@ public final class LoggingInputStream extends InputStream {
         final int byts = this.origin.read(buf, offset, len);
         final Instant end = Instant.now();
         final long millis = Duration.between(start, end).toMillis();
-        final Level level = this.logger.getLevel();
+        final Level level = this.level();
         if (byts > 0) {
             this.bytes.getAndAdd(byts);
             this.time.getAndAdd(millis);
@@ -142,7 +142,7 @@ public final class LoggingInputStream extends InputStream {
     public long skip(final long num) throws IOException {
         final long skipped = this.origin.skip(num);
         this.logger.log(
-            this.logger.getLevel(),
+            this.level(),
             String.format(
                 "Skipped %d byte(s) from %s.",
                 skipped,
@@ -156,7 +156,7 @@ public final class LoggingInputStream extends InputStream {
     public int available() throws IOException {
         final int avail = this.origin.available();
         this.logger.log(
-            this.logger.getLevel(),
+            this.level(),
             String.format(
                 "There is(are) %d byte(s) available from %s.",
                 avail,
@@ -170,7 +170,7 @@ public final class LoggingInputStream extends InputStream {
     public void close() throws IOException {
         this.origin.close();
         this.logger.log(
-            this.logger.getLevel(),
+            this.level(),
             String.format(
                 "Closed input stream from %s.",
                 this.source
@@ -182,7 +182,7 @@ public final class LoggingInputStream extends InputStream {
     public void mark(final int limit) {
         this.origin.mark(limit);
         this.logger.log(
-            this.logger.getLevel(),
+            this.level(),
             String.format(
                 "Marked position %d from %s.",
                 limit,
@@ -195,7 +195,7 @@ public final class LoggingInputStream extends InputStream {
     public void reset() throws IOException {
         this.origin.reset();
         this.logger.log(
-            this.logger.getLevel(),
+            this.level(),
             String.format(
                 "Reset input stream from %s.",
                 this.source
@@ -213,12 +213,29 @@ public final class LoggingInputStream extends InputStream {
             msg = "Mark and reset NOT supported from %s";
         }
         this.logger.log(
-            this.logger.getLevel(),
+            this.level(),
             String.format(
                 msg,
                 this.source
             )
         );
         return supported;
+    }
+
+    /**
+     * Retrieve {@code logger} level.
+     *
+     * @return Level of {@code logger}.
+     */
+    private Level level() {
+        Level level = this.logger.getLevel();
+        if (level == null) {
+            Logger parent = this.logger;
+            while (level == null) {
+                parent = parent.getParent();
+                level = parent.getLevel();
+            }
+        }
+        return level;
     }
 }
