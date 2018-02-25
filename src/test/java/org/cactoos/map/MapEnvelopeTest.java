@@ -58,8 +58,8 @@ public final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "put method did not throw exception",
             new MapNoNulls<>(
-                new MapOf<>(
-                    new MapEntry<>(0, -1)
+                new MapOf<Integer, Integer>(
+                    new MapEntry<Integer, Integer>(0, -1)
                 )
             ),
             new MatcherOf<>(
@@ -78,7 +78,7 @@ public final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "remove method did not throw exception",
             new MapNoNulls<>(
-                new MapOf<>(
+                new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
             ),
@@ -98,7 +98,7 @@ public final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "putAll method did not throw exception",
             new MapNoNulls<>(
-                new MapOf<>(
+                new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
             ),
@@ -118,7 +118,7 @@ public final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "clear method did not throw exception",
             new MapNoNulls<>(
-                new MapOf<>(
+                new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
             ),
@@ -134,7 +134,7 @@ public final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "#isEmpty() returns false for empty map",
             new MapNoNulls<>(
-                new MapOf<>()
+                new MapOf<Integer, Integer>()
             ).isEmpty(),
             Matchers.is(true)
         );
@@ -145,7 +145,9 @@ public final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "#isEmpty() returns true for not empty map",
             new MapNoNulls<>(
-                new MapOf<>(new MapEntry<>(1, 0))
+                new MapOf<Integer, Integer>(
+                    new MapEntry<>(1, 0)
+                )
             ).isEmpty(),
             Matchers.is(false)
         );
@@ -156,7 +158,9 @@ public final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "contains key returns false with exist key",
             new MapNoNulls<>(
-                new MapOf<>(new MapEntry<>(1, 0))
+                new MapOf<Integer, Integer>(
+                    new MapEntry<>(1, 0)
+                )
             ).containsKey(1),
             Matchers.is(true)
         );
@@ -167,7 +171,9 @@ public final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "contains key returns true with absent key",
             new MapNoNulls<>(
-                new MapOf<>(new MapEntry<>(1, 0))
+                new MapOf<Integer, Integer>(
+                    new MapEntry<>(1, 0)
+                )
             ).containsKey(0),
             Matchers.is(false)
         );
@@ -178,7 +184,9 @@ public final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "contains value returns false with exist value",
             new MapNoNulls<>(
-                new MapOf<>(new MapEntry<>(1, 0))
+                new MapOf<Integer, Integer>(
+                    new MapEntry<>(1, 0)
+                )
             ).containsValue(0),
             Matchers.is(true)
         );
@@ -189,7 +197,9 @@ public final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "contains value returns true with absent value",
             new MapNoNulls<>(
-                new MapOf<>(new MapEntry<>(1, 0))
+                new MapOf<Integer, Integer>(
+                    new MapEntry<>(1, 0)
+                )
             ).containsValue(1),
             Matchers.is(false)
         );
