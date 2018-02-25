@@ -44,9 +44,9 @@ import org.cactoos.iterable.Mapped;
  * <pre>
  * new UncheckedScalar<>(
  *     new AndWithIndex(
+ *         new IterableOf<>("Mary", "John", "William", "Napkin"),
  *         new BiFuncOf<>((text, index) ->
- *             System.out.printf("| idx #%d: name: %s ", index, text), true),
- *         new IterableOf<>("Mary", "John", "William", "Napkin")
+ *             System.out.printf("| idx #%d: name: %s ", index, text), true)
  *     )
  * ).value();
  * // will print "| idx #0: name: Mary | idx #1: name: John |
