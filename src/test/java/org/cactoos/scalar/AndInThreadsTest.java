@@ -170,21 +170,6 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void worksWithProcIterator() throws Exception {
-        final List<Integer> list = Collections.synchronizedList(
-            new ArrayList<Integer>(2)
-        );
-        new AndInThreads(
-            new Proc.NoNulls<Integer>(list::add),
-            Arrays.asList(1, 2).iterator()
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            Matchers.containsInAnyOrder(1, 2)
-        );
-    }
-
-    @Test
     public void worksWithProcIterable() throws Exception {
         final List<Integer> list = Collections.synchronizedList(
             new ArrayList<Integer>(2)
@@ -196,19 +181,6 @@ public final class AndInThreadsTest {
         MatcherAssert.assertThat(
             list,
             Matchers.containsInAnyOrder(1, 2)
-        );
-    }
-
-    @Test
-    public void worksWithIteratorScalarBoolean() throws Exception {
-        MatcherAssert.assertThat(
-            new AndInThreads(
-                new ListOf<Scalar<Boolean>>(
-                    new Constant<Boolean>(true),
-                    new Constant<Boolean>(false)
-                ).iterator()
-            ).value(),
-            Matchers.equalTo(false)
         );
     }
 
@@ -235,22 +207,6 @@ public final class AndInThreadsTest {
             service,
             new Proc.NoNulls<Integer>(list::add),
             1, 2
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            Matchers.containsInAnyOrder(1, 2)
-        );
-    }
-
-    @Test
-    public void worksWithExecServiceProcIterator() throws Exception {
-        final List<Integer> list = Collections.synchronizedList(
-            new ArrayList<Integer>(2)
-        );
-        new AndInThreads(
-            Executors.newSingleThreadExecutor(),
-            new Proc.NoNulls<Integer>(list::add),
-            Arrays.asList(1, 2).iterator()
         ).value();
         MatcherAssert.assertThat(
             list,
@@ -298,20 +254,6 @@ public final class AndInThreadsTest {
                 )
             ).value(),
             Matchers.equalTo(false)
-        );
-    }
-
-    @Test
-    public void worksWithExecServiceIteratorScalarBoolean() throws Exception {
-        MatcherAssert.assertThat(
-            new AndInThreads(
-                Executors.newSingleThreadExecutor(),
-                new ListOf<Scalar<Boolean>>(
-                    new Constant<Boolean>(true),
-                    new Constant<Boolean>(true)
-                ).iterator()
-            ).value(),
-            Matchers.equalTo(true)
         );
     }
 
