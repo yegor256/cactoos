@@ -1,7 +1,9 @@
 <img src="http://cf.jare.io/?u=http%3A%2F%2Fwww.yegor256.com%2Fimages%2Fbooks%2Felegant-objects%2Fcactus.svg" height="100px" />
 
-[![Managed by Zerocracy](http://www.0crat.com/badge/C63314D6Z.svg)](http://www.0crat.com/p/C63314D6Z)
+[![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
+[![Managed by Zerocracy](https://www.0crat.com/badge/C63314D6Z.svg)](https://www.0crat.com/p/C63314D6Z)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/cactoos)](http://www.rultor.com/p/yegor256/cactoos)
+[![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Build Status](https://travis-ci.org/yegor256/cactoos.svg?branch=master)](https://travis-ci.org/yegor256/cactoos)
 [![Build status](https://ci.appveyor.com/api/projects/status/8vs8huy61og6jwif?svg=true)](https://ci.appveyor.com/project/yegor256/cactoos)
@@ -263,6 +265,7 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
   - [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
   - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
+  - [@llorllale](https://github.com/llorllale) as George Aristy
 
 
 ## License (MIT)
