@@ -216,4 +216,26 @@ public final class LoggingInputTest {
         );
     }
 
+    @Test
+    public void logIntoCreatedLogger() {
+        final FakeHandler handler = new FakeHandler();
+        final String logger = "my source";
+        Logger.getLogger(logger).addHandler(handler);
+        try {
+            new LengthOf(
+                new LoggingInput(
+                    new InputOf("Hi there"),
+                    logger
+                )
+            ).intValue();
+            MatcherAssert.assertThat(
+                "",
+                handler.toString(),
+                Matchers.containsString("Read 8 byte(s)")
+            );
+        } finally {
+            Logger.getGlobal().removeHandler(handler);
+        }
+    }
+
 }
