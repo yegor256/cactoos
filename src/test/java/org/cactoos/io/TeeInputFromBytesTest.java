@@ -38,8 +38,8 @@ import org.junit.rules.TemporaryFolder;
  * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
  * @since 1.0
- * @todo #631 Create a new Matcher that will compare results of TeeInput as
- * well as copied content to the original message.
+ * @todo #631:30min Create a new Matcher that will compare results of TeeInput
+ *  as well as copied content to the original message.
  * @checkstyle JavadocMethodCheck (100 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)
  */
