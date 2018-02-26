@@ -25,7 +25,6 @@ package org.cactoos.io;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -84,14 +83,7 @@ public final class LengthOfTest {
         );
     }
 
-    // @checkstyle RegexpMultilineCheck (5 lines)
-    /**
-     * @todo #547:30m/DEV Fix calculation of length for zero buffer
-     *  I suppose to have an exception in that case
-     *  For now it runs forever
-     */
-    @Test
-    @Ignore
+    @Test(expected = IllegalArgumentException.class)
     public void lengthOfZeroBuffer() {
         MatcherAssert.assertThat(
             "Can't calculate length with buffer of 0",
