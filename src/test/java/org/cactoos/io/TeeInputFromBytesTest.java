@@ -39,7 +39,8 @@ import org.junit.rules.TemporaryFolder;
  * @version $Id$
  * @since 1.0
  * @todo #631:30min Create a new Matcher that will compare results of TeeInput
- *  as well as copied content to the original message.
+ *  as well as copied content to the original message. Apply this new matcher
+ *  for this test and for {@link TeeInputFromByteArrayTest}.
  * @checkstyle JavadocMethodCheck (100 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)
  */
