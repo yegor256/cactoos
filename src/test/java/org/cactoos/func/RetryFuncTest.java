@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import java.security.SecureRandom;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -35,7 +36,9 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 line)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class RetryFuncTest {
 
     @Test
@@ -43,7 +46,6 @@ public final class RetryFuncTest {
         MatcherAssert.assertThat(
             new RetryFunc<>(
                 input -> {
-                    // @checkstyle MagicNumberCheck (1 line)
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");
                     }
@@ -55,4 +57,48 @@ public final class RetryFuncTest {
         );
     }
 
+    @Test
+    public void runsProcMultipleTimes() throws Exception {
+        MatcherAssert.assertThat(
+            new RetryFunc<>(
+                input -> {
+                    if (new SecureRandom().nextDouble() > 0.3d) {
+                        throw new IllegalArgumentException("May happen");
+                    }
+                },
+                Integer.MAX_VALUE
+            ).apply(true),
+            Matchers.nullValue()
+        );
+    }
+
+    @Test
+    public void runsProcDefaultMultipleTimes() throws Exception {
+        final AtomicBoolean fail = new AtomicBoolean(true);
+        MatcherAssert.assertThat(
+            new RetryFunc<>(
+                input -> {
+                    if (fail.getAndSet(false)) {
+                        throw new IllegalArgumentException("May happen");
+                    }
+                }
+            ).apply(true),
+            Matchers.nullValue()
+        );
+    }
+
+    @Test
+    public void runsProcConditionMultipleTimes() throws Exception {
+        MatcherAssert.assertThat(
+            new RetryFunc<>(
+                input -> {
+                    if (new SecureRandom().nextDouble() > 0.3d) {
+                        throw new IllegalArgumentException("May happen");
+                    }
+                },
+                count -> count == Integer.MAX_VALUE
+            ).apply(true),
+            Matchers.nullValue()
+        );
+    }
 }
