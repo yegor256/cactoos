@@ -41,7 +41,8 @@ import org.junit.Test;
  */
 @SuppressWarnings({
     "PMD.TooManyMethods",
-    "PMD.NonStaticInitializer"
+    "PMD.NonStaticInitializer",
+    "serial"
     })
 public final class MapNoNullsTest {
 
