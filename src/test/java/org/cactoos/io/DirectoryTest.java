@@ -23,12 +23,15 @@
  */
 package org.cactoos.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link Directory}.
@@ -40,17 +43,36 @@ import org.junit.Test;
  */
 public final class DirectoryTest {
 
+    /**
+     * Temporary folder.
+     */
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
     @Test
-    public void listsFilesInDirectory() throws IOException {
-        final Path dir = Files.createTempDirectory("x1");
+    public void listsFilesInDirectoryByPath() throws IOException {
+        final Path dir = this.folder.newFolder().toPath();
         dir.resolve("x/y").toFile().mkdirs();
         Files.write(dir.resolve("x/y/test"), "".getBytes());
         MatcherAssert.assertThat(
-            "Can't list files in a directory",
+            "Can't list files in a directory represented by a path",
             new Directory(dir),
             // @checkstyle MagicNumber (1 line)
             Matchers.iterableWithSize(4)
         );
     }
 
+    @Test
+    public void listsFilesInDirectoryByFile() throws Exception {
+        final File file = this.folder.newFolder();
+        final Path dir = file.toPath();
+        dir.resolve("parent/child").toFile().mkdirs();
+        Files.write(dir.resolve("parent/child/file"), "".getBytes());
+        MatcherAssert.assertThat(
+            "Can't list files in a directory represented by a file",
+            new Directory(file),
+            // @checkstyle MagicNumber (1 line)
+            Matchers.iterableWithSize(4)
+        );
+    }
 }
