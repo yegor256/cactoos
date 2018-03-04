@@ -21,55 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.scalar;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Iterator;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.cactoos.Scalar;
+import org.cactoos.collection.CollectionOf;
+import org.cactoos.iterable.IterableOf;
 
 /**
- * Files and folders in a directory.
+ * Make a scalar which is sum of scalar's values.
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * <p>There is no thread-safety guarantee.
+ * <p>Note this class is for internal usage only
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.21
+ * @since 0.30
  */
-public final class Directory implements Iterable<Path> {
+final class SumOfScalar implements Scalar<SumOf> {
 
     /**
-     * Path of the directory.
+     * Serialization marker.
      */
-    private final Path dir;
+    private static final long serialVersionUID = 7775359972001208404L;
 
     /**
-     * Ctor.
-     * @param file File as a path to directory.
+     * Varargs of Scalar to sum up values from.
      */
-    public Directory(final File file) {
-        this(file.toPath());
-    }
+    private final Scalar<? extends Number>[] scalars;
 
     /**
      * Ctor.
-     * @param path Path of the dir
+     * @param src Varargs of Scalar to sum up values from
+     * @since 0.30
      */
-    public Directory(final Path path) {
-        this.dir = path;
+    @SafeVarargs
+    SumOfScalar(final Scalar<? extends Number>... src) {
+        this.scalars = src;
     }
 
     @Override
-    public Iterator<Path> iterator() {
-        try (final Stream<Path> files = Files.walk(this.dir)) {
-            return files.collect(Collectors.toList()).iterator();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public SumOf value() {
+        return new SumOf(
+            new IterableOf<>(
+                new CollectionOf<>(this.scalars)
+                    .stream()
+                    .map(
+                        scalar -> new UncheckedScalar<>(scalar).value()
+                    ).collect(Collectors.toList())
+            )
+        );
     }
-
 }

@@ -21,73 +21,74 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.iterator;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.NoSuchElementException;
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link CallableOf}.
+ * Test case for {@link IteratorOf}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Marat Reymers (marat.maratori@gmail.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CallableOfTest {
+public final class IteratorOfTest {
 
     @Test
-    public void convertsFuncIntoCallable() throws Exception {
+    public void emptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            new CallableOf<>(
-                input -> 1
-            ).call(),
-            Matchers.equalTo(1)
+            "Can't create empty iterator",
+            new IteratorOf<>().hasNext(),
+            CoreMatchers.equalTo(false)
         );
     }
 
-    @Test
-    public void convertsRunnableIntoCallable() throws Exception {
-        final AtomicBoolean flag = new AtomicBoolean(false);
-        new CallableOf<>(
-            () -> { flag.set(true); }
-        ).call();
-        MatcherAssert.assertThat(
-            flag.get(),
-            Matchers.is(true)
-        );
-    }
-
-    @Test(expected = Exception.class)
-    public void wrapsRuntimeErrorFromRunnable() throws Exception {
-        new CallableOf<>(
-            () -> { throw new IllegalStateException(); }
-        ).call();
+    @Test(expected = NoSuchElementException.class)
+    public void emptyIteratorThrowsException() {
+        new IteratorOf<>().next();
     }
 
     @Test
-    public void convertsProcIntoCallable() throws Exception {
-        final AtomicBoolean flag = new AtomicBoolean(false);
-        new CallableOf<>(
-            unused -> { flag.set(true); }
-        ).call();
+    public void nonEmptyIteratorDoesNotHaveNext() {
+        final IteratorOf<Integer> iterator = this.iteratorWithFetchedElements();
         MatcherAssert.assertThat(
-            flag.get(),
-            Matchers.is(true)
+            "Can't create non empty iterator",
+            iterator.hasNext(),
+            CoreMatchers.equalTo(false)
         );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void nonEmptyIteratorThrowsException() {
+        final IteratorOf<Integer> iterator = this.iteratorWithFetchedElements();
+        iterator.next();
     }
 
     @Test
-    public void convertsFuncWithInputIntoCallable() throws Exception {
+    public void convertStringsToIterator() {
         MatcherAssert.assertThat(
-            new CallableOf<>(
-                num -> num + 1,
-                1
-            ).call(),
-            Matchers.equalTo(2)
+            "Can't create an iterator of strings",
+            () -> new IteratorOf<>(
+                "a", "b", "c"
+            ),
+            Matchers.contains(
+                "a", "b", "c"
+            )
         );
     }
 
+    private IteratorOf<Integer> iteratorWithFetchedElements() {
+        final IteratorOf<Integer> iterator = new IteratorOf<>(
+            1, 2, 3
+        );
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        return iterator;
+    }
 }

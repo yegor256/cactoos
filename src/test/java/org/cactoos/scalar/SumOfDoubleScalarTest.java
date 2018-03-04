@@ -21,67 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.scalar;
 
-import java.security.SecureRandom;
-import java.util.Iterator;
-import org.cactoos.Func;
-import org.cactoos.iterator.IteratorOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link RepeatedFunc}.
+ * Test case for {@link SumOfDoubleScalar}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.13.1
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 line)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class RepeatedFuncTest {
+public final class SumOfDoubleScalarTest {
 
     @Test
-    public void runsFuncMultipleTimes() throws Exception {
-        final Iterator<Integer> iter = new IteratorOf<>(1, 2, 5, 6);
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
-            input -> {
-                return iter.next();
-            },
-            3
-        );
+    public void withListOfScalarsInt() {
         MatcherAssert.assertThat(
-            func.apply(true),
-            Matchers.equalTo(5)
+            new SumOfDoubleScalar(() -> 1.1, () -> 2.1, () -> 3.1)
+                .value(),
+            new IsEqual<>(6.3)
         );
     }
 
     @Test
-    public void repeatsNullsResults() throws Exception {
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
-            input -> {
-                return null;
-            },
-            2
-        );
+    public void withEmptyList() {
         MatcherAssert.assertThat(
-            func.apply(true),
-            Matchers.equalTo(null)
+            new SumOfDoubleScalar().value(),
+            new IsEqual<>(0.0)
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void doesntRepeatAny() throws Exception {
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
-            input -> {
-                return new SecureRandom().nextInt();
-            },
-            0
-        );
+    @Test
+    public void withListOfOneElement() {
         MatcherAssert.assertThat(
-            func.apply(true),
-            Matchers.equalTo(func.apply(true))
+            new SumOfDoubleScalar(() -> 5.1).value(),
+            new IsEqual<>(5.1)
         );
     }
 }

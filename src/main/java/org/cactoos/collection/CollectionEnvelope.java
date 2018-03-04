@@ -137,4 +137,11 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
             "#clear(): the collection is ready only"
         );
     }
+
+    // @checkstyle DesignForExtensionCheck (5 lines)
+    @Override
+    public String toString() {
+        return this.col.value().toString();
+    }
+
 }

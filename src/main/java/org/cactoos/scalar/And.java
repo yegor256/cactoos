@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
@@ -95,30 +94,8 @@ public final class And implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      * @since 0.24
      */
-    public <X> And(final Proc<X> proc, final Iterator<X> src) {
-        this(new FuncOf<>(proc, true), src);
-    }
-
-    /**
-     * Ctor.
-     * @param src The iterable
-     * @param proc Proc to use
-     * @param <X> Type of items in the iterable
-     * @since 0.24
-     */
     public <X> And(final Proc<X> proc, final Iterable<X> src) {
         this(new FuncOf<>(proc, true), src);
-    }
-
-    /**
-     * Ctor.
-     * @param src The iterable
-     * @param func Func to map
-     * @param <X> Type of items in the iterable
-     * @since 0.24
-     */
-    public <X> And(final Func<X, Boolean> func, final Iterator<X> src) {
-        this(func, new IterableOf<>(src));
     }
 
     /**
@@ -142,15 +119,6 @@ public final class And implements Scalar<Boolean> {
      */
     @SafeVarargs
     public And(final Scalar<Boolean>... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The iterable
-     * @since 0.24
-     */
-    public And(final Iterator<Scalar<Boolean>> src) {
         this(new IterableOf<>(src));
     }
 

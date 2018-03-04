@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.text.TextOf;
 
 /**
  * Map envelope.
@@ -131,4 +132,12 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
         return this.map.value().entrySet();
     }
 
+    @Override
+    public final String toString() {
+        return new StringBuilder()
+            .append('{')
+            .append(new TextOf(this.entrySet()).toString())
+            .append('}')
+            .toString();
+    }
 }

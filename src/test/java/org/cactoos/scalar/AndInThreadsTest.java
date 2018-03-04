@@ -23,14 +23,19 @@
  */
 package org.cactoos.scalar;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 import org.cactoos.matchers.MatcherOf;
 import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
@@ -46,6 +51,7 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class AndInThreadsTest {
 
     @Test
@@ -140,7 +146,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testProc() throws Exception {
+    public void worksWithProc() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new AndInThreads(
             (Proc<Integer>) list::add,
@@ -153,13 +159,111 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void testFunc() throws Exception {
+    public void worksWithFunc() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 input -> input > 0,
                 1, -1, 0
             ).value(),
             Matchers.equalTo(false)
+        );
+    }
+
+    @Test
+    public void worksWithProcIterable() throws Exception {
+        final List<Integer> list = Collections.synchronizedList(
+            new ArrayList<Integer>(2)
+        );
+        new AndInThreads(
+            new Proc.NoNulls<Integer>(list::add),
+            Arrays.asList(1, 2)
+        ).value();
+        MatcherAssert.assertThat(
+            list,
+            Matchers.containsInAnyOrder(1, 2)
+        );
+    }
+
+    @Test
+    public void worksWithIterableScalarBoolean() throws Exception {
+        MatcherAssert.assertThat(
+            new AndInThreads(
+                new ListOf<Scalar<Boolean>>(
+                    new Constant<Boolean>(true),
+                    new Constant<Boolean>(true)
+                )
+            ).value(),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void worksWithExecServiceProcValues() throws Exception {
+        final List<Integer> list = Collections.synchronizedList(
+            new ArrayList<Integer>(2)
+        );
+        final ExecutorService service = Executors.newSingleThreadExecutor();
+        new AndInThreads(
+            service,
+            new Proc.NoNulls<Integer>(list::add),
+            1, 2
+        ).value();
+        MatcherAssert.assertThat(
+            list,
+            Matchers.containsInAnyOrder(1, 2)
+        );
+    }
+
+    @Test
+    public void worksWithExecServiceProcIterable() throws Exception {
+        final List<Integer> list = Collections.synchronizedList(
+            new ArrayList<Integer>(2)
+        );
+        final ExecutorService service = Executors.newSingleThreadExecutor();
+        new AndInThreads(
+            service,
+            new Proc.NoNulls<Integer>(list::add),
+            Arrays.asList(1, 2)
+        ).value();
+        MatcherAssert.assertThat(
+            list,
+            Matchers.containsInAnyOrder(1, 2)
+        );
+    }
+
+    @Test
+    public void worksWithExecServiceScalarBooleans() throws Exception {
+        MatcherAssert.assertThat(
+            new AndInThreads(
+                Executors.newSingleThreadExecutor(),
+                new Constant<Boolean>(false),
+                new Constant<Boolean>(false)
+            ).value(),
+            Matchers.equalTo(false)
+        );
+    }
+
+    @Test
+    public void worksWithExecServiceIterableScalarBoolean() throws Exception {
+        MatcherAssert.assertThat(
+            new AndInThreads(
+                Executors.newSingleThreadExecutor(),
+                new ListOf<Scalar<Boolean>>(
+                    new Constant<Boolean>(true),
+                    new Constant<Boolean>(false)
+                )
+            ).value(),
+            Matchers.equalTo(false)
+        );
+    }
+
+    @Test
+    public void worksWithEmptyIterableScalarBoolean() throws Exception {
+        MatcherAssert.assertThat(
+            new AndInThreads(
+                new ListOf<Scalar<Boolean>>()
+            ).value(),
+            Matchers.equalTo(true)
         );
     }
 

@@ -21,78 +21,68 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.map;
 
+import java.util.HashSet;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link LengthOf}.
+ * Test case for {@link Grouped}.
  *
  * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 line)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class LengthOfTest {
+public final class GroupedTest {
 
     @Test
-    public void lengthOfInputWithIntegerValue() {
+    public void groupedByNumber() throws Exception {
         MatcherAssert.assertThat(
-            "Can't calculate length of input with integer value",
-            new LengthOf(
-                new InputOf("Hello1")
-            ).intValue(),
-            Matchers.equalTo(6)
-        );
-    }
-
-    @Test
-    public void lengthOfInputWithDoubleValue() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of input with double value",
-            new LengthOf(
-                new InputOf("Hello2")
-            ).doubleValue(),
-            Matchers.equalTo(6.0)
+            "Can't behave as a map",
+            new Grouped<>(
+            // @checkstyle MagicNumberCheck (1 line)
+            new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
+                number -> number,
+                Object::toString
+            ),
+            new BehavesAsMap<>(1, new ListOf<>("1", "1", "1"))
         );
     }
 
     @Test
-    public void lengthOfInputWithFloatValue() {
+    public void emptyIterable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't calculate length of input with float value",
-            new LengthOf(
-                new InputOf("Hello3")
-            ).floatValue(),
-            Matchers.equalTo(6.0f)
+            "Can't build grouped by empty iterable",
+            new Grouped<>(
+                new IterableOf<Integer>(),
+                number -> number,
+                Object::toString
+            ).entrySet(),
+            new IsEqual<>(new HashSet<>())
         );
     }
 
     @Test
-    public void lengthOfInputWithCustomBuffer() {
+    public void groupedByOneHasEntries() throws Exception {
         MatcherAssert.assertThat(
-            "Can't calculate length with custom buffer",
-            new LengthOf(
-                new InputOf("test buffer1"),
-                1
-            ).intValue(),
-            Matchers.equalTo(12)
+            "Can't group int values",
+            new Grouped<>(
+                // @checkstyle MagicNumberCheck (1 line)
+                new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
+                number -> number,
+                Object::toString
+            ),
+            Matchers.hasEntry(
+                1,
+                new ListOf<>("1", "1", "1")
+            )
         );
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void lengthOfZeroBuffer() {
-        MatcherAssert.assertThat(
-            "Can't calculate length with buffer of 0",
-            new LengthOf(
-                new InputOf("test buffer2"),
-                0
-            ).intValue(),
-            Matchers.equalTo(12)
-        );
-    }
-
 }

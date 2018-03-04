@@ -23,94 +23,92 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
 
 /**
- * Folds iterable via BiFunc.
- *
- * <pre>
- * new Folded<>(
- *     (first, last) -> first + last,
- *     new IterableOf<>(() -> 1L, () -> 2L, () -> 3L, () -> 4L)
- * ).value() // returns 10L
- * </pre>
+ * Find the lowest item.
  *
  * <p>Here is how you can use it to
- * find one of items according to the specified {@link BiFunc}:</p>
+ * find lowest of {@link Comparable} items:</p>
  *
  * <pre>
- *  final String apple = new Folded&lt;&gt;(
- *          (first, last) -&gt; first,
- *          new IterableOf&lt;Scalar&lt;String&gt;&gt;(
- *              () -&gt; "Apple",
- *              () -&gt; "Banana",
- *              () -&gt; "Orange"
- *          )
- *      ).value();
- *  final String orange = new Folded&lt;&gt;(
- *          (first, last) -&gt; last,
- *          new IterableOf&lt;Scalar&lt;String&gt;&gt;(
- *              () -&gt; "Apple",
- *              () -&gt; "Banana",
- *              () -&gt; "Orange"
- *          )
- *      ).value();
- * </pre>
+ * final String lowest = new LowestOf&lt;String&gt;(
+ *         () -&gt; "Banana", () -&gt; "Apple", () -&gt; "Orange"
+ *     ).value();
+ * // -&gt; lowest == "Apple"
  *
- * <p>There is no thread-safety guarantee.
+ * final Character lowestChar = new LowestOf&lt;&gt;('B', 'U', 'G').value();
+ * // -&gt; lowestChar == 'B'
+ * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
  * it more convenient and get rid of the checked exception you can
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
- * @author Alexander Dyadyushenko (gookven@gmail.com)
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Fabricio Cabral (fabriciofx@gmail.com)
  * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
  * @param <T> Scalar type
+ * @see UncheckedScalar
+ * @see IoCheckedScalar
  * @since 0.29
  */
-public final class Folded<T> implements Scalar<T> {
+public final class LowestOf<T extends Comparable<T>> implements Scalar<T> {
 
     /**
-     * Items.
+     * Result.
      */
-    private final Iterable<Scalar<T>> items;
-
-    /**
-     * Folding function.
-     */
-    private final BiFunc<T, T, T> function;
+    private final Scalar<T> result;
 
     /**
      * Ctor.
-     * @param fold Folding function
+     * @param items The comparable items
+     */
+    @SafeVarargs
+    public LowestOf(final T... items) {
+        this(
+            new Mapped<>(
+                item -> () -> item,
+                items
+            )
+        );
+    }
+
+    /**
+     * Ctor.
      * @param scalars The scalars
      */
-    public Folded(
-        final BiFunc<T, T, T> fold,
-        final Iterable<Scalar<T>> scalars
-    ) {
-        this.items = scalars;
-        this.function = fold;
+    @SafeVarargs
+    public LowestOf(final Scalar<T>... scalars) {
+        this(new IterableOf<>(scalars));
+    }
+
+    /**
+     * Ctor.
+     * @param iterable The items
+     */
+    public LowestOf(final Iterable<Scalar<T>> iterable) {
+        this.result = new Folded<>(
+            (first, second) -> {
+                final T value;
+                if (first.compareTo(second) < 0) {
+                    value = first;
+                } else {
+                    value = second;
+                }
+                return value;
+            },
+            iterable
+        );
     }
 
     @Override
     public T value() throws Exception {
-        final Iterator<Scalar<T>> iter = this.items.iterator();
-        if (!iter.hasNext()) {
-            throw new NoSuchElementException(
-                "Can't find first element in an empty iterable"
-            );
-        }
-        T acc = iter.next().value();
-        while (iter.hasNext()) {
-            final T next = iter.next().value();
-            acc = this.function.apply(acc, next);
-        }
-        return acc;
+        return this.result.value();
     }
 }

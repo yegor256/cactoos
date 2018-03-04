@@ -43,19 +43,10 @@ import org.cactoos.text.FormattedText;
 public final class ItemAt<T> implements Scalar<T> {
 
     /**
-     * Source iterator.
+     * {@link StickyScalar} that holds the value of the iterator
+     *  at the position specified in the constructor.
      */
-    private final Scalar<Iterator<T>> src;
-
-    /**
-     * Fallback value.
-     */
-    private final Func<Iterable<T>, T> fbk;
-
-    /**
-     * Position.
-     */
-    private final int pos;
+    private final Scalar<T> saved;
 
     /**
      * Ctor.
@@ -226,32 +217,35 @@ public final class ItemAt<T> implements Scalar<T> {
         final int position,
         final Func<Iterable<T>, T> fallback
     ) {
-        this.pos = position;
-        this.src = iterator;
-        this.fbk = fallback;
+        this.saved = new StickyScalar<T>(
+            () -> {
+                final T ret;
+                if (position < 0) {
+                    throw new IOException(
+                        new FormattedText(
+                            "The position must be non-negative: %d",
+                            position
+                        ).asString()
+                    );
+                }
+                final Iterator<T> src = iterator.value();
+                int cur;
+                for (cur = 0; cur < position && src.hasNext(); ++cur) {
+                    src.next();
+                }
+                if (cur == position && src.hasNext()) {
+                    ret = src.next();
+                } else {
+                    ret = fallback.apply(() -> src);
+                }
+                return ret;
+            }
+        );
     }
 
     @Override
     public T value() throws Exception {
-        if (this.pos < 0) {
-            throw new IOException(
-                new FormattedText(
-                    "The position must be non-negative: %d",
-                    this.pos
-                ).asString()
-            );
-        }
-        final Iterator<T> iterator = this.src.value();
-        int cur;
-        for (cur = 0; cur < this.pos && iterator.hasNext(); ++cur) {
-            iterator.next();
-        }
-        final T ret;
-        if (cur == this.pos && iterator.hasNext()) {
-            ret = iterator.next();
-        } else {
-            ret = this.fbk.apply(() -> iterator);
-        }
-        return ret;
+        return this.saved.value();
     }
+
 }

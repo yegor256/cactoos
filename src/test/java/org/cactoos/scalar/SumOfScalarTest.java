@@ -21,48 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.scalar;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.Text;
-import org.cactoos.matchers.TextHasString;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.JoinedText;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyIterator}.
+ * Test case for {@link SumOfScalar}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class StickyTest {
+public final class SumOfScalarTest {
 
     @Test
-    public void ignoresChangesInIterable() throws Exception {
-        final AtomicInteger count = new AtomicInteger(2);
-        final Text text = new FormattedText(
-            "%s",
-            new JoinedText(
-                ", ",
-                () -> new Mapped<>(
-                    Object::toString, new StickyIterator<>(
-                        new Limited<>(
-                            2, new Endless<>(count::incrementAndGet)
-                        )
-                    )
-                )
-            )
-        );
+    public void withListOfScalarsInt() {
         MatcherAssert.assertThat(
-            "Can't ignore the changes in the underlying iterator",
-            text,
-            new TextHasString(text.asString())
+            new SumOfScalar(() -> 1, () -> 2, () -> 3)
+                .value()
+                .intValue(),
+            new IsEqual<>(6)
         );
     }
 
+    @Test
+    public void withEmptyList() {
+        MatcherAssert.assertThat(
+            new SumOfScalar().value().intValue(),
+            new IsEqual<>(0)
+        );
+    }
+
+    @Test
+    public void withListOfOneElement() {
+        MatcherAssert.assertThat(
+            new SumOfScalar(() -> 5).value().intValue(),
+            new IsEqual<>(5)
+        );
+    }
 }

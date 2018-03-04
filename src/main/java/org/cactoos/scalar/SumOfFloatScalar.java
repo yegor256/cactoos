@@ -21,66 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.scalar;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.Scalar;
 
 /**
- * Iterator that returns the same set of elements always.
+ * Float Scalar which sums up the values of other Scalars of the same type
+ *
+ * <p>Here is how you can use it to summarize float numbers:</p>
+ *
+ * <pre>
+ * float sum = new SumOfFloatScalar(() -> 1f,() -> 2f, () -> 3f).value();
+ * </pre>
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @since 0.8
+ * @since 0.30
  */
-public final class StickyIterator<X> implements Iterator<X> {
+public final class SumOfFloatScalar implements Scalar<Float> {
 
     /**
-     * The gate.
+     * Serialization marker.
      */
-    private final UncheckedScalar<Iterator<X>> gate;
+    private static final long serialVersionUID = 7775359972001208404L;
+
+    /**
+     * Varargs of Scalar to sum up values from.
+     */
+    private final Scalar<Float>[] scalars;
 
     /**
      * Ctor.
-     * @param items Items to iterate
+     * @param src Varargs of Scalar to sum up values from
+     * @since 0.30
      */
     @SafeVarargs
-    public StickyIterator(final X... items) {
-        this(new IterableOf<>(items).iterator());
-    }
-
-    /**
-     * Ctor.
-     * @param iterator The iterator
-     */
-    public StickyIterator(final Iterator<X> iterator) {
-        this.gate = new UncheckedScalar<>(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    while (iterator.hasNext()) {
-                        temp.add(iterator.next());
-                    }
-                    return temp.iterator();
-                }
-            )
-        );
+    public SumOfFloatScalar(final Scalar<Float>... src) {
+        this.scalars = src;
     }
 
     @Override
-    public boolean hasNext() {
-        return this.gate.value().hasNext();
-    }
-
-    @Override
-    public X next() {
-        return this.gate.value().next();
+    public Float value() {
+        return new SumOfScalar(this.scalars).value().floatValue();
     }
 }

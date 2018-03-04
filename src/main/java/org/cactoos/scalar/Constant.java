@@ -21,46 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
+
+import org.cactoos.Scalar;
 
 /**
- * Reverse iterator.
+ * Constant value.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>This {@link Scalar} represents a constant value which never changes.</p>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * <p>Contrary to {@link StickyScalar} this constant is always
+ * pre-computed.</p>
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. Despite that this class does NOT throw a checked
+ * exception as it only returns a pre-computed value.</p>
+ *
+ * <p>Example:
+ *   <pre>
+ *     final Scalar&lt;String&gt; constant = new Constant&lg;&gt;("Value");
+ *     System.out.print("Constant is always the same: ");
+ *     System.out.println(constant.value() == constant.value());
+ *   </pre>
+ * </p>
+ *
+ * <p>This class is thread-safe.</p>
+ *
+ * @author Aliceice (elena.ihde-simon@posteo.de)
  * @version $Id$
- * @param <X> Type of item
- * @see Filtered
- * @since 0.9
+ * @param <T> Type of result
+ * @see StickyScalar
+ * @since 0.30
  */
-public final class Reversed<X> extends IterableEnvelope<X> {
+public final class Constant<T> implements Scalar<T> {
+
+    /**
+     * Pre-computed value.
+     */
+    private final T val;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @since 0.23
+     * @param value The pre-computed constant.
      */
-    @SafeVarargs
-    public Reversed(final X... src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+    public Constant(final T value) {
+        this.val = value;
     }
 
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @since 0.23
-     */
-    public Reversed(final Iterable<X> src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+    @Override
+    public T value() {
+        return this.val;
     }
-
-    /**
-     * Ctor.
-     * @param reversed Reversed collection
-     */
-    public Reversed(final org.cactoos.collection.Reversed<X> reversed) {
-        super(() -> reversed);
-    }
-
 }

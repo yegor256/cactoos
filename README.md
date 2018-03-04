@@ -1,7 +1,9 @@
 <img src="http://cf.jare.io/?u=http%3A%2F%2Fwww.yegor256.com%2Fimages%2Fbooks%2Felegant-objects%2Fcactus.svg" height="100px" />
 
-[![Managed by Zerocracy](http://www.0crat.com/badge/C63314D6Z.svg)](http://www.0crat.com/p/C63314D6Z)
+[![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
+[![Managed by Zerocracy](https://www.0crat.com/badge/C63314D6Z.svg)](https://www.0crat.com/p/C63314D6Z)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/cactoos)](http://www.rultor.com/p/yegor256/cactoos)
+[![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Build Status](https://travis-ci.org/yegor256/cactoos.svg?branch=master)](https://travis-ci.org/yegor256/cactoos)
 [![Build status](https://ci.appveyor.com/api/projects/status/8vs8huy61og6jwif?svg=true)](https://ci.appveyor.com/project/yegor256/cactoos)
@@ -30,17 +32,7 @@ but mostly through static methods. Cactoos is suggesting
 to do almost exactly the same, but through objects.
 
 **Principles**.
-There are a few design principles behind Cactoos:
-
-  * No `null` ([why?](http://www.yegor256.com/2014/05/13/why-null-is-bad.html))
-  * No code in constructors ([why?](http://www.yegor256.com/2015/05/07/ctors-must-be-code-free.html))
-  * No getters and setters ([why?](http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html))
-  * No mutable objects ([why?](http://www.yegor256.com/2014/06/09/objects-should-be-immutable.html))
-  * No `static` methods, not even `private` ones ([why?](http://www.yegor256.com/2017/02/07/private-method-is-new-class.html))
-  * No `instanceof`, type casting, or reflection ([why?](http://www.yegor256.com/2015/04/02/class-casting-is-anti-pattern.html))
-  * No public methods without `@Override`
-  * No statements in test methods except `assertThat` ([why?](http://www.yegor256.com/2017/05/17/single-statement-unit-tests.html))
-  * Inheritance implementation **only** for *Decorating Envelopes* ([why?](http://www.yegor256.com/2017/01/31/decorating-envelopes.html) and why [don't use inheritance implementation for anything else](http://www.yegor256.com/2016/09/13/inheritance-is-procedural.html))
+These are the [design principles](http://www.elegantobjects.org#principles) behind Cactoos.
 
 **How to use**.
 The library has no dependencies. All you need is this
@@ -273,6 +265,7 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
   - [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
   - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
+  - [@llorllale](https://github.com/llorllale) as George Aristy
 
 
 ## License (MIT)

@@ -21,46 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Reverse iterator.
+ * Iterator that returns the set of elements.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of item
- * @see Filtered
- * @since 0.9
+ * @since 0.30
  */
-public final class Reversed<X> extends IterableEnvelope<X> {
+public final class IteratorOf<X> implements Iterator<X> {
+
+    /**
+     * The list of items to iterate.
+     */
+    private final X[] list;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @since 0.23
+     * @param items Items to iterate
      */
     @SafeVarargs
-    public Reversed(final X... src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+    public IteratorOf(final X... items) {
+        this.list = items;
+        this.position = new AtomicInteger(0);
     }
 
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @since 0.23
-     */
-    public Reversed(final Iterable<X> src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+    @Override
+    public boolean hasNext() {
+        return this.position.intValue() < this.list.length;
     }
 
-    /**
-     * Ctor.
-     * @param reversed Reversed collection
-     */
-    public Reversed(final org.cactoos.collection.Reversed<X> reversed) {
-        super(() -> reversed);
+    @Override
+    public X next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.list[this.position.getAndIncrement()];
     }
-
 }

@@ -64,4 +64,26 @@ public final class CollectionOfTest {
         );
     }
 
+    @Test
+    public void testToString() throws Exception {
+        MatcherAssert.assertThat(
+            "Wrong toString output. Expected \"[1, 2, 0, -1]\".",
+            new CollectionOf<Integer>(
+                new ListOf<>(1, 2, 0, -1)
+            ).toString(),
+            Matchers.equalTo("[1, 2, 0, -1]")
+        );
+    }
+
+    @Test
+    public void testToStringEmpty() throws Exception {
+        MatcherAssert.assertThat(
+            "Wrong toString output. Expected \"[]\".",
+            new CollectionOf<Integer>(
+                new ListOf<>()
+            ).toString(),
+            Matchers.equalTo("[]")
+        );
+    }
+
 }

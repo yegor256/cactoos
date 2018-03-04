@@ -21,46 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
+
+import org.cactoos.Scalar;
 
 /**
- * Reverse iterator.
+ * Long Scalar which sums up the values of other Scalars of the same type
+ *
+ * <p>Here is how you can use it to summarize numbers:</p>
+ *
+ * <pre>
+ * long sum = new SumOfLongScalar(() -> 1,() -> 2, () -> 3).value();
+ * </pre>
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Nikita Salomatin (nsalomatin@hotmail.com)
  * @version $Id$
- * @param <X> Type of item
- * @see Filtered
- * @since 0.9
+ * @since 0.30
  */
-public final class Reversed<X> extends IterableEnvelope<X> {
+public final class SumOfLongScalar implements Scalar<Long> {
+
+    /**
+     * Serialization marker.
+     */
+    private static final long serialVersionUID = 7775359972001208404L;
+
+    /**
+     * Varargs of Scalar to sum up values from.
+     */
+    private final Scalar<Long>[] scalars;
 
     /**
      * Ctor.
-     * @param src Source iterable
-     * @since 0.23
+     * @param src Varargs of Scalar to sum up values from
+     * @since 0.30
      */
     @SafeVarargs
-    public Reversed(final X... src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+    public SumOfLongScalar(final Scalar<Long>... src) {
+        this.scalars = src;
     }
 
-    /**
-     * Ctor.
-     * @param src Source iterable
-     * @since 0.23
-     */
-    public Reversed(final Iterable<X> src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+    @Override
+    public Long value() {
+        return new SumOfScalar(this.scalars).value().longValue();
     }
-
-    /**
-     * Ctor.
-     * @param reversed Reversed collection
-     */
-    public Reversed(final org.cactoos.collection.Reversed<X> reversed) {
-        super(() -> reversed);
-    }
-
 }

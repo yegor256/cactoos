@@ -21,58 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.scalar;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
- * Test case for {@link Directory}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link Constant}.
+ * @author Aliceice (elena.ihde-simon@posteo.de)
  * @version $Id$
- * @since 0.12
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class DirectoryTest {
-
-    /**
-     * Temporary folder.
-     */
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+public final class ConstantTest {
 
     @Test
-    public void listsFilesAndFoldersInDirectory() throws IOException {
-        final Path dir = this.folder.newFolder().toPath();
-        dir.resolve("x/y").toFile().mkdirs();
-        Files.write(dir.resolve("x/y/test"), "".getBytes());
+    public void returnsGivenValue() throws Exception {
+        final String value = "Hello World";
         MatcherAssert.assertThat(
-            "Can't list files in a directory represented by a path",
-            new Directory(dir),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.iterableWithSize(4)
+            "Can't return given value",
+            new Constant<>(value).value(),
+            Matchers.equalTo(value)
         );
     }
 
     @Test
-    public void listsFilesInDirectoryByFile() throws Exception {
-        final File file = this.folder.newFolder();
-        final Path dir = file.toPath();
-        dir.resolve("parent/child").toFile().mkdirs();
-        Files.write(dir.resolve("parent/child/file"), "".getBytes());
+    public void alwaysReturnsSameValue() throws Exception {
+        final Constant<String> constant = new Constant<>("Good Bye!");
         MatcherAssert.assertThat(
-            "Can't list files in a directory represented by a file",
-            new Directory(file),
-            // @checkstyle MagicNumber (1 line)
-            Matchers.iterableWithSize(4)
+            "Can't return same value",
+            constant.value(),
+            Matchers.sameInstance(constant.value())
         );
     }
 }
