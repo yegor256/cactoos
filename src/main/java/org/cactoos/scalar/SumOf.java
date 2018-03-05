@@ -24,8 +24,10 @@
 package org.cactoos.scalar;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Int total of numbers.
@@ -105,13 +107,14 @@ public final class SumOf extends NumberEnvelope {
      * @param src The iterable
      */
     public SumOf(final Iterable<Number> src) {
-        super(() -> {
-            BigDecimal sum = BigDecimal.ZERO;
-            for (final Number num : src) {
-                sum = sum.add(BigDecimal.valueOf(num.doubleValue()));
-            }
-            return sum.doubleValue();
-        });
+        super(() -> new Reduced<>(
+            BigDecimal.ZERO,
+            (sum, value) -> sum.add(value, MathContext.DECIMAL128),
+            new Mapped<>(
+                number -> BigDecimal.valueOf(number.doubleValue()),
+                src
+            )).value().doubleValue()
+        );
     }
 
 }
