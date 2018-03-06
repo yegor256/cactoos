@@ -35,8 +35,9 @@ import org.junit.Test;
  * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
  * @since 1.0
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public class SolidBiFuncTest {
+public final class SolidBiFuncTest {
     @Test
     public void testThatFuncIsSynchronized() {
         final int threads = 100;
