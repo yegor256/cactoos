@@ -23,6 +23,8 @@
  */
 package org.cactoos.func;
 
+import java.security.SecureRandom;
+import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.cactoos.matchers.RunsInThreads;
 import org.hamcrest.MatcherAssert;
@@ -42,7 +44,7 @@ public final class SolidBiFuncTest {
     public void testThatFuncIsSynchronized() {
         final int threads = 100;
         final int[] shared = new int[]{0};
-        final SolidBiFunc<Integer, Integer, Boolean> testable =
+        final BiFunc<Integer, Integer, Boolean> testable =
             new SolidBiFunc<>(
                 (first, second) -> {
                     shared[0] = shared[0] + 1;
@@ -50,31 +52,31 @@ public final class SolidBiFuncTest {
                 }
             );
         MatcherAssert.assertThat(
+            "SolidBiFunc can't work properly in concurrent threads.",
             func -> func.apply(true),
             new RunsInThreads<>(
                 (Func<Boolean, Boolean>) input -> testable.apply(1, 1),
                 threads
             )
         );
-        MatcherAssert.assertThat(shared[0], Matchers.is(1));
+        MatcherAssert.assertThat(
+            "Shared resource has been modified by multiple threads.",
+            shared[0],
+            Matchers.is(1)
+        );
     }
 
     @Test
     public void testThatFuncResultCacheIsLimited() throws Exception {
-        final int[] executions = new int[]{0, 0};
-        final SolidBiFunc<Integer, Integer, Boolean> func =
+        final BiFunc<Integer, Integer, Integer> func =
             new SolidBiFunc<>(
-                (index, second) -> {
-                    executions[index] = executions[index] + 1;
-                    return true;
-                },
+                (first, second) -> new SecureRandom().nextInt(),
                 1
             );
-        func.apply(0, 0);
-        func.apply(1, 1);
-        func.apply(1, 1);
-        func.apply(0, 0);
-        MatcherAssert.assertThat(executions[0], Matchers.is(2));
-        MatcherAssert.assertThat(executions[1], Matchers.is(1));
+        MatcherAssert.assertThat(
+            "Result of (0, 0) call wasn't invalidated.",
+            func.apply(0, 0) + func.apply(1, 1),
+            Matchers.not(func.apply(1, 1) + func.apply(0, 0))
+        );
     }
 }
