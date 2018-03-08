@@ -31,7 +31,6 @@ import java.io.StringReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.matchers.InputHasContent;
 import org.cactoos.matchers.MatcherOf;
@@ -39,7 +38,9 @@ import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
 
@@ -56,6 +57,12 @@ import org.takes.tk.TkHtml;
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class InputOfTest {
+
+    /**
+     * Temporary files generator.
+     */
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void readsAlternativeInputForFileCase() throws IOException {
@@ -75,12 +82,12 @@ public final class InputOfTest {
 
     @Test
     public void readsSimpleFileContent() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final File file = this.folder.newFile();
         final String content = "Hello, товарищ!";
-        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+        Files.write(file.toPath(), content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "Can't read file content",
-            new InputOf(temp),
+            new InputOf(file),
             new InputHasContent(content)
         );
     }

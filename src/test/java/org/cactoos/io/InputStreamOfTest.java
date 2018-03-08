@@ -23,15 +23,17 @@
  */
 package org.cactoos.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import org.cactoos.matchers.InputHasContent;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link InputStreamOf}.
@@ -44,14 +46,20 @@ import org.junit.Test;
  */
 public final class InputStreamOfTest {
 
+    /**
+     * Temporary files generator.
+     */
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
     @Test
     public void readsSimpleFileContent() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final File file = this.folder.newFile();
         final String content = "Hello, товарищ!";
-        Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
+        Files.write(file.toPath(), content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "Can't read file content",
-            new InputOf(new InputStreamOf(temp)),
+            new InputOf(new InputStreamOf(file)),
             new InputHasContent(content)
         );
     }

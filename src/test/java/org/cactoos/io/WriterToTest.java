@@ -23,14 +23,15 @@
  */
 package org.cactoos.io;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import org.cactoos.matchers.MatcherOf;
 import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link WriterTo}.
@@ -43,21 +44,27 @@ import org.junit.Test;
  */
 public final class WriterToTest {
 
+    /**
+     * Temporary files generator.
+     */
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
     @Test
     public void writesLargeContentToFile() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final File file = this.folder.newFile();
         MatcherAssert.assertThat(
             "Can't copy Input to Output and return Input",
             new TextOf(
                 new TeeInput(
                     new ResourceOf("org/cactoos/large-text.txt"),
-                    new WriterAsOutput(new WriterTo(temp))
+                    new WriterAsOutput(new WriterTo(file))
                 )
             ),
             new TextHasString(
                 new MatcherOf<>(
                     str -> {
-                        return new TextOf(temp).asString().equals(str);
+                        return new TextOf(file).asString().equals(str);
                     }
                 )
             )
