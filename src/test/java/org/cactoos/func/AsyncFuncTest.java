@@ -24,7 +24,9 @@
 package org.cactoos.func;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
 import org.cactoos.matchers.FuncApplies;
@@ -101,4 +103,63 @@ public final class AsyncFuncTest {
         );
     }
 
+    @Test
+    public void runsInBackgroundWithThreadFactory() {
+        final String name = "secret name for thread factory";
+        final ThreadFactory factory = r -> new Thread(r, name);
+        final CountDownLatch latch = new CountDownLatch(1);
+        MatcherAssert.assertThat(
+            "Can't run in the background with specific thread factory",
+            new AsyncFunc<>(
+                input -> {
+                    if (!input.equals(Thread.currentThread().getName())) {
+                        throw new IllegalStateException(
+                            "Another thread factory was used"
+                        );
+                    }
+                    latch.countDown();
+                },
+                factory
+            ),
+            new FuncApplies<>(
+                name,
+                new MatcherOf<Future<Void>>(
+                    future -> {
+                        future.get();
+                        return latch.getCount() == 0;
+                    }
+                )
+            )
+        );
+    }
+
+    @Test
+    public void runsInBackgroundWithExecutorService() {
+        final String name = "secret name for thread executor";
+        final ThreadFactory factory = r -> new Thread(r, name);
+        final CountDownLatch latch = new CountDownLatch(1);
+        MatcherAssert.assertThat(
+            "Can't run in the background with specific thread executor",
+            new AsyncFunc<>(
+                input -> {
+                    if (!input.equals(Thread.currentThread().getName())) {
+                        throw new IllegalStateException(
+                            "Another thread executor was used"
+                        );
+                    }
+                    latch.countDown();
+                },
+                Executors.newSingleThreadExecutor(factory)
+            ),
+            new FuncApplies<>(
+                name,
+                new MatcherOf<Future<Void>>(
+                    future -> {
+                        future.get();
+                        return latch.getCount() == 0;
+                    }
+                )
+            )
+        );
+    }
 }
