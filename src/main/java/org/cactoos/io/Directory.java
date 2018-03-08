@@ -49,10 +49,10 @@ public final class Directory implements Iterable<Path> {
 
     /**
      * Ctor.
-     * @param path Path of the dir
+     * @param file File as a path to directory.
      */
-    public Directory(final File path) {
-        this(path.toPath());
+    public Directory(final File file) {
+        this(file.toPath());
     }
 
     /**
