@@ -41,11 +41,11 @@ import org.junit.Test;
 public final class SyncFuncTest {
 
     @Test
-    public void worksInThreads() {
+    public void funcWorksInThreads() {
         final List<Integer> list = new LinkedList<>();
         final int threads = 100;
         MatcherAssert.assertThat(
-            "Can't work well in multiple threads",
+            "Sync func can't work well in multiple threads",
             func -> func.apply(true),
             new RunsInThreads<>(
                 new SyncFunc<Boolean, Boolean>(
@@ -59,4 +59,69 @@ public final class SyncFuncTest {
         MatcherAssert.assertThat(list.size(), Matchers.equalTo(threads));
     }
 
+    @Test
+    public void procWorksInThreads() {
+        final int threads = 100;
+        final int[] counter = new int[]{0};
+        MatcherAssert.assertThat(
+            "Sync func with proc can't work well in multiple threads",
+            func -> func.apply(1),
+            new RunsInThreads<>(
+                new FuncOf<>(
+                    new ProcOf<>(
+                        new SyncFunc<Integer, Boolean>(
+                            new ProcOf<>(
+                                input -> counter[0] = counter[0] + input
+                            )
+                        )
+                    ),
+                    true
+                ),
+                threads
+            )
+        );
+        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
+    }
+
+    @Test
+    public void callableWorksInThreads() {
+        final int threads = 100;
+        final int[] counter = new int[]{0};
+        MatcherAssert.assertThat(
+            "Sync func with callable can't work well in multiple threads",
+            func -> func.apply(1),
+            new RunsInThreads<>(
+                new SyncFunc<Integer, Boolean>(
+                    () -> {
+                        counter[0] = counter[0] + 1;
+                        return true;
+                    }
+                ),
+                threads
+            )
+        );
+        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
+    }
+
+    @Test
+    public void runnableWorksInThreads() {
+        final int threads = 100;
+        final int[] counter = new int[]{0};
+        MatcherAssert.assertThat(
+            "Sync func with runnable can't work well in multiple threads",
+            func -> func.apply(1),
+            new RunsInThreads<>(
+                new FuncOf<>(
+                    new ProcOf<>(
+                        new SyncFunc<Integer, Boolean>(
+                            () -> counter[0] = counter[0] + 1
+                        )
+                    ),
+                    true
+                ),
+                threads
+            )
+        );
+        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
+    }
 }
