@@ -23,12 +23,14 @@
  */
 package org.cactoos.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.matchers.InputHasContent;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -42,6 +44,7 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class InputStreamOfTest {
 
     @Test
@@ -86,4 +89,173 @@ public final class InputStreamOfTest {
         );
     }
 
+    @Test
+    public void readsFileContent() throws IOException {
+        final File file = File.createTempFile("readFileContent", "txt-2");
+        final String content = "Content in a file";
+        new LengthOf(
+            new TeeInput(content, file)
+        ).intValue();
+        MatcherAssert.assertThat(
+            "Can't read from file",
+            new TextOf(new InputStreamOf(file)).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsBytes() throws IOException {
+        final String content = "Bytes content";
+        MatcherAssert.assertThat(
+            "Can't read from bytes",
+            new TextOf(new InputStreamOf(new BytesOf(content))).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsBytesArray() throws IOException {
+        final String content = "Bytes array content";
+        final byte[] bytes = new BytesOf(content).asBytes();
+        MatcherAssert.assertThat(
+            "Can't read from byte array",
+            new TextOf(new InputStreamOf(bytes)).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsText() throws IOException {
+        final String content = "Text content";
+        MatcherAssert.assertThat(
+            "Can't read from text",
+            new TextOf(new InputStreamOf(new TextOf(content))).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsFromUri() throws IOException {
+        final String content = "Content for reading through URI";
+        final File file = File.createTempFile("readFromUri", "txt-3");
+        new LengthOf(
+            new TeeInput(content, file)
+        ).intValue();
+        MatcherAssert.assertThat(
+            "Can't read from URI",
+            new TextOf(new InputStreamOf(file.toURI())).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsFromUrl() throws IOException {
+        final String content = "Content for reading through URL";
+        final File file = File.createTempFile("readFromUrl", "txt-4");
+        new LengthOf(
+            new TeeInput(content, file)
+        ).intValue();
+        MatcherAssert.assertThat(
+            "Can't read from URL",
+            new TextOf(new InputStreamOf(file.toURI().toURL())).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsFromReaderWithMax() throws IOException {
+        final String content = "Reading with charset name and buffer size";
+        final int max = 3;
+        MatcherAssert.assertThat(
+            "Can't read from reader with charset name and buffer size",
+            new TextOf(
+                new InputStreamOf(
+                    new StringReader(content),
+                    StandardCharsets.UTF_8.name(),
+                    max
+                )
+            ).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsFromReaderWithCharsetWithMax() throws IOException {
+        final String content = "Reading with charset and buffer size";
+        MatcherAssert.assertThat(
+            "Can't read from reader with charset and buffer size",
+            new TextOf(
+                new InputStreamOf(
+                    new StringReader(content),
+                    StandardCharsets.UTF_8,
+                    1
+                )
+            ).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsFromReaderWithCharset() throws IOException {
+        final String content = "Content for reading with charset";
+        MatcherAssert.assertThat(
+            "Can't read from reader with charset name",
+            new TextOf(
+                new InputStreamOf(
+                    new StringReader(content),
+                    StandardCharsets.UTF_8.name()
+                )
+            ).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsFromTextWithCharset() throws IOException {
+        final File file = File.createTempFile("readTextWithCharset", "txt-5");
+        final String content = "Content for reading text with charset";
+        new LengthOf(
+            new TeeInput(content, file)
+        ).intValue();
+        MatcherAssert.assertThat(
+            "Can't read from text with charset",
+            new TextOf(
+                new InputStreamOf(
+                    new TextOf(file),
+                    StandardCharsets.UTF_8.name()
+                )
+            ).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsFromCharSequenceWithCharsetName() throws IOException {
+        final String content = "Simple content";
+        MatcherAssert.assertThat(
+            "Can't read from char sequence with charset name",
+            new TextOf(
+                new InputStreamOf(
+                    content,
+                    StandardCharsets.UTF_8.name()
+                )
+            ).asString(),
+            Matchers.equalTo(content)
+        );
+    }
+
+    @Test
+    public void readsFromCharSequenceWithCharset() throws IOException {
+        final String content = "Another simple content";
+        MatcherAssert.assertThat(
+            "Can't read from char sequence with charset",
+            new TextOf(
+                new InputStreamOf(
+                    content,
+                    StandardCharsets.UTF_8
+                )
+            ).asString(),
+            Matchers.equalTo(content)
+        );
+    }
 }
