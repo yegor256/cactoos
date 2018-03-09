@@ -23,11 +23,15 @@
  */
 package org.cactoos.io;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import org.cactoos.text.JoinedText;
+import org.cactoos.text.UncheckedText;
 
 /**
- * Fake logger.
+ * Fake handler logger.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -35,46 +39,37 @@ import java.util.logging.Logger;
  * @version $Id$
  * @since 0.29
  */
-@SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
-public final class FakeLogger extends Logger {
-
+public final class FakeHandler extends Handler {
+    /**
+     * Lines.
+     */
+    private final List<String> entries;
     /**
      * Ctor.
      */
-    public FakeLogger() {
-        this(Level.INFO);
+    FakeHandler() {
+        super();
+        this.entries = new LinkedList<>();
     }
-
-    /**
-     * Ctor.
-     * @param lvl Logging level
-     */
-    public FakeLogger(final Level lvl) {
-        this("FakeLogger", lvl);
+    @Override
+    public void publish(final LogRecord record) {
+        this.entries.add(record.getMessage());
     }
-
-    /**
-     * Ctor.
-     * @param name Logger name
-     */
-    public FakeLogger(final String name) {
-        this(name, Level.INFO);
+    @Override
+    public void close() {
+        // Intended empty.
     }
-
-    /**
-     * Ctor.
-     * @param name Logger name
-     * @param lvl Logging level
-     */
-    public FakeLogger(final String name, final Level lvl) {
-        super(name, null);
-        this.setUseParentHandlers(false);
-        this.addHandler(new FakeHandler());
-        this.setLevel(lvl);
+    @Override
+    public void flush() {
+        // Intended empty.
     }
-
     @Override
     public String toString() {
-        return this.getHandlers()[0].toString();
+        return new UncheckedText(
+            new JoinedText(
+                System.lineSeparator(),
+                this.entries
+            )
+        ).asString();
     }
 }

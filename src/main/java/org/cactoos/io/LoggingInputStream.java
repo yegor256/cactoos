@@ -30,6 +30,8 @@ import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Logged input stream.
@@ -40,7 +42,7 @@ import java.util.logging.Logger;
  * @version $Id$
  * @since 0.29
  */
-@SuppressWarnings("PMD.LoggerIsNotStaticFinal")
+@SuppressWarnings({"PMD.LoggerIsNotStaticFinal", "PMD.MoreThanOneLogger"})
 public final class LoggingInputStream extends InputStream {
 
     /**
@@ -69,6 +71,11 @@ public final class LoggingInputStream extends InputStream {
     private final AtomicLong time;
 
     /**
+     * Logger level.
+     */
+    private final UncheckedScalar<Level> level;
+
+    /**
      * Ctor.
      * @param input Source of data
      * @param src The name of source data
@@ -92,6 +99,21 @@ public final class LoggingInputStream extends InputStream {
         this.origin = input;
         this.source = src;
         this.logger = lgr;
+        this.level = new UncheckedScalar<>(
+            new StickyScalar<>(
+                () -> {
+                    Level lvl = lgr.getLevel();
+                    if (lvl == null) {
+                        Logger parent = lgr;
+                        while (lvl == null) {
+                            parent = parent.getParent();
+                            lvl = parent.getLevel();
+                        }
+                    }
+                    return lvl;
+                }
+            )
+        );
         this.bytes = new AtomicLong();
         this.time = new AtomicLong();
     }
@@ -115,7 +137,6 @@ public final class LoggingInputStream extends InputStream {
         final int byts = this.origin.read(buf, offset, len);
         final Instant end = Instant.now();
         final long millis = Duration.between(start, end).toMillis();
-        final Level level = this.logger.getLevel();
         if (byts > 0) {
             this.bytes.getAndAdd(byts);
             this.time.getAndAdd(millis);
@@ -127,11 +148,11 @@ public final class LoggingInputStream extends InputStream {
             this.time.get()
         );
         if (byts > 0) {
-            if (!level.equals(Level.INFO)) {
-                this.logger.log(level, msg);
+            if (!this.level.value().equals(Level.INFO)) {
+                this.logger.log(this.level.value(), msg);
             }
         } else {
-            if (level.equals(Level.INFO)) {
+            if (this.level.value().equals(Level.INFO)) {
                 this.logger.info(msg);
             }
         }
@@ -142,7 +163,7 @@ public final class LoggingInputStream extends InputStream {
     public long skip(final long num) throws IOException {
         final long skipped = this.origin.skip(num);
         this.logger.log(
-            this.logger.getLevel(),
+            this.level.value(),
             String.format(
                 "Skipped %d byte(s) from %s.",
                 skipped,
@@ -156,7 +177,7 @@ public final class LoggingInputStream extends InputStream {
     public int available() throws IOException {
         final int avail = this.origin.available();
         this.logger.log(
-            this.logger.getLevel(),
+            this.level.value(),
             String.format(
                 "There is(are) %d byte(s) available from %s.",
                 avail,
@@ -170,7 +191,7 @@ public final class LoggingInputStream extends InputStream {
     public void close() throws IOException {
         this.origin.close();
         this.logger.log(
-            this.logger.getLevel(),
+            this.level.value(),
             String.format(
                 "Closed input stream from %s.",
                 this.source
@@ -182,7 +203,7 @@ public final class LoggingInputStream extends InputStream {
     public void mark(final int limit) {
         this.origin.mark(limit);
         this.logger.log(
-            this.logger.getLevel(),
+            this.level.value(),
             String.format(
                 "Marked position %d from %s.",
                 limit,
@@ -195,7 +216,7 @@ public final class LoggingInputStream extends InputStream {
     public void reset() throws IOException {
         this.origin.reset();
         this.logger.log(
-            this.logger.getLevel(),
+            this.level.value(),
             String.format(
                 "Reset input stream from %s.",
                 this.source
@@ -213,7 +234,7 @@ public final class LoggingInputStream extends InputStream {
             msg = "Mark and reset NOT supported from %s";
         }
         this.logger.log(
-            this.logger.getLevel(),
+            this.level.value(),
             String.format(
                 msg,
                 this.source
