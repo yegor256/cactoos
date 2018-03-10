@@ -41,26 +41,15 @@ import org.junit.Test;
  */
 public final class TeeOutputTest {
 
-    /**
-     * The CONTENT for copying of TeeOutput.
-     */
-    private static final String CONTENT = "Hello, товарищ!";
-
-    /**
-     * The TeeOutputTest.DESCRIPTION of failure test.
-     */
-    private static final String
-        DESCRIPTION = "Can't copy Output to Output and return Input";
-
     @Test
     public void copiesContent() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final ByteArrayOutputStream copy = new ByteArrayOutputStream();
         MatcherAssert.assertThat(
-            TeeOutputTest.DESCRIPTION,
+            "Can't copy Output to Output and return Input",
             new TextOf(
                 new TeeInput(
-                    new InputOf(TeeOutputTest.CONTENT),
+                    new InputOf("Hello, товарищ!"),
                     new TeeOutput(
                         new OutputTo(baos),
                         new OutputTo(copy)
@@ -84,10 +73,10 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final ByteArrayOutputStream copy = new ByteArrayOutputStream();
         MatcherAssert.assertThat(
-            TeeOutputTest.DESCRIPTION,
+            "Can't copy Output with writer",
             new TextOf(
                 new TeeInput(
-                    new InputOf(TeeOutputTest.CONTENT),
+                    new InputOf("Hello, товарищ! writer"),
                     new TeeOutput(
                         new OutputTo(baos),
                         new WriterTo(copy)
@@ -111,10 +100,10 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final ByteArrayOutputStream copy = new ByteArrayOutputStream();
         MatcherAssert.assertThat(
-            TeeOutputTest.DESCRIPTION,
+            "Can't copy Output with writer and charset",
             new TextOf(
                 new TeeInput(
-                    new InputOf(TeeOutputTest.CONTENT),
+                    new InputOf("Hello, товарищ! writer and charset"),
                     new TeeOutput(
                         new OutputTo(baos),
                         new WriterTo(copy),
@@ -139,10 +128,10 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final TempFile file = new TempFile();
         MatcherAssert.assertThat(
-            TeeOutputTest.DESCRIPTION,
+            "Can't copy Output with path",
             new TextOf(
                 new TeeInput(
-                    new InputOf(TeeOutputTest.CONTENT),
+                    new InputOf("Hello, товарищ! with path"),
                     new TeeOutput(
                         new OutputTo(baos),
                         file.value()
@@ -166,10 +155,10 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final TempFile file = new TempFile();
         MatcherAssert.assertThat(
-            TeeOutputTest.DESCRIPTION,
+            "Can't copy Output with file",
             new TextOf(
                 new TeeInput(
-                    new InputOf(TeeOutputTest.CONTENT),
+                    new InputOf("Hello, товарищ! with file"),
                     new TeeOutput(
                         new OutputTo(baos),
                         file.value().toFile()
@@ -193,10 +182,10 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final ByteArrayOutputStream copy = new ByteArrayOutputStream();
         MatcherAssert.assertThat(
-            TeeOutputTest.DESCRIPTION,
+            "Can't copy Output with output stream",
             new TextOf(
                 new TeeInput(
-                    new InputOf(TeeOutputTest.CONTENT),
+                    new InputOf("Hello, товарищ! with output stream"),
                     new TeeOutput(
                         new OutputTo(baos),
                         copy
