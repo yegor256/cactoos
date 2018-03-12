@@ -26,6 +26,9 @@ package org.cactoos.matchers;
 import java.io.File;
 import org.cactoos.Text;
 import org.cactoos.io.TeeInput;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.Equals;
+import org.cactoos.scalar.UncheckedScalar;
 import org.cactoos.text.ComparableText;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
@@ -42,11 +45,6 @@ import org.hamcrest.TypeSafeMatcher;
  */
 public final class TeeInputHasResult extends TypeSafeMatcher<TeeInput> {
 
-    /**
-     * Format for matcher description.
-     */
-    private static final String DESCRIPTION =
-        "TeeInput with result \"%s\" and copied value \"%s\"";
     /**
      * Value that is expected to be returned from the given TeeInput.
      */
@@ -68,8 +66,7 @@ public final class TeeInputHasResult extends TypeSafeMatcher<TeeInput> {
      */
     public TeeInputHasResult(
         final String expected,
-        final File file
-    ) {
+        final File file) {
         this(
             new TextOf(expected),
             new TextOf(file)
@@ -110,8 +107,18 @@ public final class TeeInputHasResult extends TypeSafeMatcher<TeeInput> {
     public boolean matchesSafely(final TeeInput item) {
         this.actual = new ComparableText(new TextOf(item));
         return
-            this.expected.compareTo(this.actual) == 0
-                && this.expected.compareTo(this.copied) == 0;
+            new UncheckedScalar<>(
+                new And(
+                    new Equals<>(
+                        this.expected::asString,
+                        this.actual::asString
+                    ),
+                    new Equals<>(
+                        this.expected::asString,
+                        this.copied::asString
+                    )
+                )
+            ).value();
     }
 
     @Override
@@ -119,8 +126,7 @@ public final class TeeInputHasResult extends TypeSafeMatcher<TeeInput> {
         description.appendText(
             new UncheckedText(
                 new FormattedText(
-                    TeeInputHasResult.DESCRIPTION,
-                    new UncheckedText(this.expected).asString(),
+                    "TeeInput with result \"%1$s\" and copied value \"%1$s\"",
                     new UncheckedText(this.expected).asString()
                 )
             ).asString()
