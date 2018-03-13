@@ -75,8 +75,8 @@ public final class InheritanceLevel implements Scalar<Integer> {
      * @param cbase Base class
      */
     public InheritanceLevel(final Class<?> cderived, final Class<?> cbase) {
-        this.base = cderived;
-        this.derived = cbase;
+        this.derived = cderived;
+        this.base = cbase;
     }
 
     @Override
@@ -85,7 +85,7 @@ public final class InheritanceLevel implements Scalar<Integer> {
         if (this.base.equals(this.derived)) {
             level = InheritanceLevel.IDENTICAL;
         } else {
-            level = InheritanceLevel.calculateLevel(this.base, this.derived);
+            level = InheritanceLevel.calculateLevel(this.derived, this.base);
         }
         return level;
     }
