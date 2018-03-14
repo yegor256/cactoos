@@ -59,7 +59,11 @@ public final class NormalizedText implements Text {
 
     @Override
     public String asString() throws IOException {
-        return new TrimmedText(this.origin).asString().replaceAll("\\s+", " ");
+        return new ReplacedText(
+            new TrimmedText(this.origin),
+            "\\s+",
+            " "
+        ).asString();
     }
 
 }
