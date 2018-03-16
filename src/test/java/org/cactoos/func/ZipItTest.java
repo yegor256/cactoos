@@ -34,6 +34,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import org.hamcrest.MatcherAssert;
@@ -107,6 +108,10 @@ public class ZipItTest {
      * Constant <tt>path2/path22/two.txt</tt>.
      */
     private static final String PATH22_TWO_TXT = "path2/path22/two.txt";
+    /**
+     * Constant <tt>%s.zip</tt>.
+     */
+    private static final String ZIP_EXT = "%s.zip";
 
     @BeforeClass
     public static void createZipContent() throws Exception {
@@ -127,15 +132,15 @@ public class ZipItTest {
                 .withEmptyFiles()
                 .withDestination(ZipItTest.dstDir)
                 .apply(ZipItTest.srcDir);
+            final Function<String, String> addext =
+                name -> String.format(ZipItTest.ZIP_EXT, name);
             MatcherAssert.assertThat(
                 zip,
                 Matchers.notNullValue()
             );
             MatcherAssert.assertThat(
                 new File(
-                    ZipItTest.dstDir, String.format(
-                        "%s.zip", ZipItTest.srcDir.getName()
-                    )
+                    ZipItTest.dstDir, addext.apply(ZipItTest.srcDir.getName())
                 ),
                 Matchers.equalTo(zip)
             );
@@ -185,6 +190,8 @@ public class ZipItTest {
         File zip = null;
         try {
             zip = new ZipIt().apply(ZipItTest.srcDir);
+            final Function<String, String> addext =
+                name -> String.format(ZipItTest.ZIP_EXT, name);
             MatcherAssert.assertThat(
                 zip,
                 Matchers.notNullValue()
@@ -192,9 +199,7 @@ public class ZipItTest {
             MatcherAssert.assertThat(
                 new File(
                     ZipItTest.srcDir.getParentFile(),
-                    String.format(
-                        "%s.zip", ZipItTest.srcDir.getName()
-                    )
+                    addext.apply(ZipItTest.srcDir.getName())
                 ),
                 Matchers.equalTo(zip)
             );
