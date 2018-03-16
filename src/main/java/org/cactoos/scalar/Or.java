@@ -121,6 +121,15 @@ public final class Or implements Scalar<Boolean> {
         );
     }
 
+    public <X> Or(final X subject, final Func<X, Boolean>... conditions) {
+        this(
+            new Mapped<>(
+                item -> (Scalar<Boolean>) () -> item.apply(subject),
+                new IterableOf<>(conditions)
+            )
+        );
+    }
+
     /**
      * Ctor.
      * @param scalar The Scalar.
