@@ -50,16 +50,16 @@ public final class ZipIt implements Func<File, File> {
      * Linux like path separator. It work in all platforms, so it is treated as
      * <tt>legal dir marker</tt>.
      */
-    static final String DIR_MARKER = "/";
+    public static final String DIR_MARKER = "/";
     /**
      * No Linux like path separator. It is treated as <tt>illegal dir
      * marker</tt>.
      */
-    static final String ILLEGAL_DIR_MARKER = "\\";
+    public static final String NOT_DIR_MARKER = "\\";
     /**
      * Double back slash to resolve root paths on Windows platforms.
      */
-    static final Pattern BACK_SLASH = Pattern.compile("\\\\");
+    public static final Pattern BACK_SLASH = Pattern.compile("\\\\");
 
     /**
      * If {@code true}, then empty folders will be included to the zip.
@@ -82,11 +82,13 @@ public final class ZipIt implements Func<File, File> {
         ) {
             final List<String> entries = this.collectZipEntries(srcdir, srcdir);
             for (final String entry : entries) {
-                final File src = new File(srcdir + File.separator + entry);
+                final File src = ZipIt.createFile(srcdir, entry);
                 if (src.isDirectory()) {
-                    zip.putNextEntry(new ZipEntry(entry + DIR_MARKER));
+                    zip.putNextEntry(
+                        ZipIt.createZipEntry(entry + ZipIt.DIR_MARKER)
+                    );
                 } else {
-                    zip.putNextEntry(new ZipEntry(entry));
+                    zip.putNextEntry(ZipIt.createZipEntry(entry));
                     copyFile(src, zip);
                 }
                 zip.closeEntry();
@@ -127,6 +129,16 @@ public final class ZipIt implements Func<File, File> {
     public ZipIt withDestination(final File dest) {
         this.destination = dest;
         return this;
+    }
+
+    /**
+     * Create {@link ZipEntry} object base on given {@code name}.
+     *
+     * @param name Entry's name
+     * @return No {@literal null} {@link ZipEntry} instance
+     */
+    private static ZipEntry createZipEntry(final String name) {
+        return new ZipEntry(name);
     }
 
     /**
@@ -217,7 +229,9 @@ public final class ZipIt implements Func<File, File> {
         } else {
             for (final String filename : sub) {
                 entries.addAll(
-                    this.collectZipEntries(srcdir, new File(dir, filename))
+                    this.collectZipEntries(
+                        srcdir, ZipIt.createFile(dir, filename)
+                    )
                 );
             }
         }
@@ -237,4 +251,17 @@ public final class ZipIt implements Func<File, File> {
             file.length()
         );
     }
+
+    /**
+     * Create {@link File} object base on given {@code parent} and
+     * {@code child}.
+     *
+     * @param parent File's parent
+     * @param child Files's child
+     * @return No {@literal null} {@link File} instance
+     */
+    private static File createFile(final File parent, final String child) {
+        return new File(parent, child);
+    }
+
 }

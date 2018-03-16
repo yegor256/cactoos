@@ -36,7 +36,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import org.junit.Assert;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -61,11 +62,11 @@ public class ZipItTest {
 
     @BeforeClass
     public static void createZipContent() throws Exception {
-        srcDir = createTempDirectory();
-        dstDir = createTempDirectory();
-        srcDir.mkdirs();
-        dstDir.mkdirs();
-        createContent(srcDir);
+        ZipItTest.srcDir = createTempDirectory();
+        ZipItTest.dstDir = createTempDirectory();
+        ZipItTest.srcDir.mkdirs();
+        ZipItTest.dstDir.mkdirs();
+        createContent(ZipItTest.srcDir);
     }
 
     @Test
@@ -76,12 +77,19 @@ public class ZipItTest {
             zip = new ZipIt()
                 .withEmptyFolders()
                 .withEmptyFiles()
-                .withDestination(dstDir)
-                .apply(srcDir);
-            Assert.assertNotNull(zip);
-            Assert.assertEquals(
-                new File(dstDir, String.format("%s.zip", srcDir.getName())),
-                    zip
+                .withDestination(ZipItTest.dstDir)
+                .apply(ZipItTest.srcDir);
+            MatcherAssert.assertThat(
+                zip,
+                Matchers.notNullValue()
+            );
+            MatcherAssert.assertThat(
+                new File(
+                    ZipItTest.dstDir, String.format(
+                        "%s.zip", ZipItTest.srcDir.getName()
+                    )
+                ),
+                Matchers.equalTo(zip)
             );
             final String[] expected = {
                 "empty",
@@ -106,10 +114,16 @@ public class ZipItTest {
                 "two.txt",
             };
             final List<String> entries = getAllEntries(zip);
-            Assert.assertEquals(expected.length, entries.size());
+            MatcherAssert.assertThat(
+                expected.length,
+                Matchers.equalTo(entries.size())
+            );
             final String[] actual = entries.toArray(new String[entries.size()]);
             Arrays.sort(actual);
-            Assert.assertArrayEquals(expected, actual);
+            MatcherAssert.assertThat(
+                expected,
+                Matchers.equalTo(actual)
+            );
         } finally {
             if (zip != null) {
                 zip.delete();
@@ -122,17 +136,19 @@ public class ZipItTest {
         throws Exception {
         File zip = null;
         try {
-            zip = new ZipIt().apply(srcDir);
-            Assert.assertNotNull(zip);
-            Assert.assertEquals(
+            zip = new ZipIt().apply(ZipItTest.srcDir);
+            MatcherAssert.assertThat(
+                zip,
+                Matchers.notNullValue()
+            );
+            MatcherAssert.assertThat(
                 new File(
-                    srcDir.getParentFile(),
+                    ZipItTest.srcDir.getParentFile(),
                     String.format(
-                        "%s.zip",
-                        srcDir.getName()
+                        "%s.zip", ZipItTest.srcDir.getName()
                     )
                 ),
-                zip
+                Matchers.equalTo(zip)
             );
             final String[] expected = {
                 "one.txt",
@@ -147,10 +163,16 @@ public class ZipItTest {
                 "two.txt",
             };
             final List<String> entries = getAllEntries(zip);
-            Assert.assertEquals(expected.length, entries.size());
+            MatcherAssert.assertThat(
+                expected.length,
+                Matchers.equalTo(entries.size())
+            );
             final String[] actual = entries.toArray(new String[entries.size()]);
             Arrays.sort(actual);
-            Assert.assertArrayEquals(expected, actual);
+            MatcherAssert.assertThat(
+                expected,
+                Matchers.equalTo(actual)
+            );
         } finally {
             if (zip != null) {
                 zip.delete();
@@ -158,7 +180,7 @@ public class ZipItTest {
         }
     }
 
-    static void createContent(final File src) throws Exception {
+    private static void createContent(final File src) throws Exception {
         createDirContent(src);
         File file = new File(src, "path1");
         file.mkdirs();
@@ -208,7 +230,11 @@ public class ZipItTest {
         ZipEntry entry;
         final List<String> entries = new LinkedList<>();
         try (ZipInputStream in = new ZipInputStream(new FileInputStream(zip))) {
-            while ((entry = in.getNextEntry()) != null) {
+            while (true) {
+                entry = in.getNextEntry();
+                if (entry == null) {
+                    break;
+                }
                 entries.add(
                     removeDirectoryMarker(
                         replaceIncorrectFileSeparators(entry.getName())
@@ -222,7 +248,7 @@ public class ZipItTest {
     private static String removeDirectoryMarker(final String path) {
         String res = path;
         if (path.endsWith(ZipIt.DIR_MARKER)
-            || path.endsWith(ZipIt.ILLEGAL_DIR_MARKER)) {
+            || path.endsWith(ZipIt.NOT_DIR_MARKER)) {
             res = path.substring(0, path.length() - 1);
         }
         return res;

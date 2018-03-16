@@ -55,7 +55,7 @@ public final class UnzipIt implements Func<File, File> {
             ZipEntry entry = in.getNextEntry();
             while (entry != null) {
                 final String filename = entry.getName();
-                final File newfile = new File(dst, filename);
+                final File newfile = UnzipIt.createFile(dst, filename);
                 if (entry.isDirectory()) {
                     newfile.mkdirs();
                 } else {
@@ -111,4 +111,17 @@ public final class UnzipIt implements Func<File, File> {
             count += 1;
         }
     }
+
+    /**
+     * Create {@link File} object base on given {@code parent} and
+     * {@code child}.
+     *
+     * @param parent File's parent
+     * @param child Files's child
+     * @return No {@literal null} {@link File} instance
+     */
+    private static File createFile(final File parent, final String child) {
+        return new File(parent, child);
+    }
+
 }
