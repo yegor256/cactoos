@@ -29,6 +29,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -81,14 +83,16 @@ public final class ZipIt implements Func<File, File> {
             new ZipOutputStream(new FileOutputStream(pathtozip))
         ) {
             final List<String> entries = this.collectZipEntries(srcdir, srcdir);
+            final Function<String, ZipEntry> newzipentry = ZipEntry::new;
+            final BiFunction<File, String, File> newfile = File::new;
             for (final String entry : entries) {
-                final File src = ZipIt.createFile(srcdir, entry);
+                final File src = newfile.apply(srcdir, entry);
                 if (src.isDirectory()) {
                     zip.putNextEntry(
-                        ZipIt.createZipEntry(entry + ZipIt.DIR_MARKER)
+                        newzipentry.apply(entry + ZipIt.DIR_MARKER)
                     );
                 } else {
-                    zip.putNextEntry(ZipIt.createZipEntry(entry));
+                    zip.putNextEntry(newzipentry.apply(entry));
                     copyFile(src, zip);
                 }
                 zip.closeEntry();
@@ -129,16 +133,6 @@ public final class ZipIt implements Func<File, File> {
     public ZipIt withDestination(final File dest) {
         this.destination = dest;
         return this;
-    }
-
-    /**
-     * Create {@link ZipEntry} object base on given {@code name}.
-     *
-     * @param name Entry's name
-     * @return No {@literal null} {@link ZipEntry} instance
-     */
-    private static ZipEntry createZipEntry(final String name) {
-        return new ZipEntry(name);
     }
 
     /**
@@ -204,7 +198,12 @@ public final class ZipIt implements Func<File, File> {
     private void addFile(final List<String> entries,
         final File srcdir, final File file) {
         if (file.length() != 0 || this.emptyfiles) {
-            entries.add(createZipEntry(srcdir, file.toString()));
+            final BiFunction<File, String, String> newzipentry =
+                (src, fil) -> fil.substring(
+                    src.getAbsolutePath().length() + 1,
+                    fil.length()
+                );
+            entries.add(newzipentry.apply(srcdir, file.toString()));
         }
     }
 
@@ -224,44 +223,23 @@ public final class ZipIt implements Func<File, File> {
         }
         if (sub.length == 0) {
             if (this.emptyfolders) {
-                entries.add(createZipEntry(srcdir, dir.toString()));
+                final BiFunction<File, String, String> newzipentry =
+                    (src, file) -> file.substring(
+                        src.getAbsolutePath().length() + 1,
+                        file.length()
+                    );
+                entries.add(newzipentry.apply(srcdir, dir.toString()));
             }
         } else {
+            final BiFunction<File, String, File> newfile = File::new;
             for (final String filename : sub) {
                 entries.addAll(
                     this.collectZipEntries(
-                        srcdir, ZipIt.createFile(dir, filename)
+                        srcdir, newfile.apply(dir, filename)
                     )
                 );
             }
         }
-    }
-
-    /**
-     * Retrieves zip entry path based on given {@code srcdir} directory and
-     * {@code file}.
-     *
-     * @param srcdir Not {@literal null} source directory
-     * @param file Not {@literal null} file
-     * @return Not {@literal null} zip entry path
-     */
-    private static String createZipEntry(final File srcdir, final String file) {
-        return file.substring(
-            srcdir.getAbsolutePath().length() + 1,
-            file.length()
-        );
-    }
-
-    /**
-     * Create {@link File} object base on given {@code parent} and
-     * {@code child}.
-     *
-     * @param parent File's parent
-     * @param child Files's child
-     * @return No {@literal null} {@link File} instance
-     */
-    private static File createFile(final File parent, final String child) {
-        return new File(parent, child);
     }
 
 }
