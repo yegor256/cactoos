@@ -31,6 +31,7 @@ import org.cactoos.Text;
  * a Text.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.9
  */
