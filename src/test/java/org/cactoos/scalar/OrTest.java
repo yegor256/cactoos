@@ -38,6 +38,7 @@ import org.junit.Test;
  * Test case for {@link Or}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)

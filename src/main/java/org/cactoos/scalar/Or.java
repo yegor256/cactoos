@@ -42,6 +42,7 @@ import org.cactoos.iterable.Mapped;
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.8
  */
