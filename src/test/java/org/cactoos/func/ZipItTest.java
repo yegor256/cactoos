@@ -59,6 +59,54 @@ public class ZipItTest {
      * Destination directory (will be holding zip archive).
      */
     private static File dstDir;
+    /**
+     * Constant <tt>empty</tt>.
+     */
+    private static final String EMPTY = "empty";
+    /**
+     * Constant <tt>empty.txt</tt>.
+     */
+    private static final String EMPTY_TXT = "empty.txt";
+    /**
+     * Constant <tt>one.txt</tt>.
+     */
+    private static final String ONE_TXT = "one.txt";
+    /**
+     * Constant <tt>two.txt</tt>.
+     */
+    private static final String TWO_TXT = "two.txt";
+    /**
+     * Constant <tt>path1/one.txt</tt>.
+     */
+    private static final String PATH1_ONE_TXT = "path1/one.txt";
+    /**
+     * Constant <tt>path1/two.txt</tt>.
+     */
+    private static final String PATH1_TWO_TXT = "path1/two.txt";
+    /**
+     * Constant <tt>path2/one.txt</tt>.
+     */
+    private static final String PATH2_ONE_TXT = "path2/one.txt";
+    /**
+     * Constant <tt>path2/two.txt</tt>.
+     */
+    private static final String PATH2_TWO_TXT = "path2/two.txt";
+    /**
+     * Constant <tt>path1/path11/one.txt</tt>.
+     */
+    private static final String PATH11_ONE_TXT = "path1/path11/one.txt";
+    /**
+     * Constant <tt>path1/path11/two.txt</tt>.
+     */
+    private static final String PATH11_TWO_TXT = "path1/path11/two.txt";
+    /**
+     * Constant <tt>path2/path22/one.txt</tt>.
+     */
+    private static final String PATH22_ONE_TXT = "path2/path22/one.txt";
+    /**
+     * Constant <tt>path2/path22/two.txt</tt>.
+     */
+    private static final String PATH22_TWO_TXT = "path2/path22/two.txt";
 
     @BeforeClass
     public static void createZipContent() throws Exception {
@@ -92,26 +140,26 @@ public class ZipItTest {
                 Matchers.equalTo(zip)
             );
             final String[] expected = {
-                "empty",
-                "empty.txt",
-                "one.txt",
+                ZipItTest.EMPTY,
+                ZipItTest.EMPTY_TXT,
+                ZipItTest.ONE_TXT,
                 "path1/empty",
                 "path1/empty.txt",
-                "path1/one.txt",
+                ZipItTest.PATH1_ONE_TXT,
                 "path1/path11/empty",
                 "path1/path11/empty.txt",
-                "path1/path11/one.txt",
-                "path1/path11/two.txt",
-                "path1/two.txt",
+                ZipItTest.PATH11_ONE_TXT,
+                ZipItTest.PATH11_TWO_TXT,
+                ZipItTest.PATH1_TWO_TXT,
                 "path2/empty",
                 "path2/empty.txt",
-                "path2/one.txt",
+                ZipItTest.PATH2_ONE_TXT,
                 "path2/path22/empty",
                 "path2/path22/empty.txt",
-                "path2/path22/one.txt",
-                "path2/path22/two.txt",
-                "path2/two.txt",
-                "two.txt",
+                ZipItTest.PATH22_ONE_TXT,
+                ZipItTest.PATH22_TWO_TXT,
+                ZipItTest.PATH2_TWO_TXT,
+                ZipItTest.TWO_TXT,
             };
             final List<String> entries = getAllEntries(zip);
             MatcherAssert.assertThat(
@@ -151,16 +199,16 @@ public class ZipItTest {
                 Matchers.equalTo(zip)
             );
             final String[] expected = {
-                "one.txt",
-                "path1/one.txt",
-                "path1/path11/one.txt",
-                "path1/path11/two.txt",
-                "path1/two.txt",
-                "path2/one.txt",
-                "path2/path22/one.txt",
-                "path2/path22/two.txt",
-                "path2/two.txt",
-                "two.txt",
+                ZipItTest.ONE_TXT,
+                ZipItTest.PATH1_ONE_TXT,
+                ZipItTest.PATH11_ONE_TXT,
+                ZipItTest.PATH11_TWO_TXT,
+                ZipItTest.PATH1_TWO_TXT,
+                ZipItTest.PATH2_ONE_TXT,
+                ZipItTest.PATH22_ONE_TXT,
+                ZipItTest.PATH22_TWO_TXT,
+                ZipItTest.PATH2_TWO_TXT,
+                ZipItTest.TWO_TXT,
             };
             final List<String> entries = getAllEntries(zip);
             MatcherAssert.assertThat(
@@ -207,10 +255,10 @@ public class ZipItTest {
     }
 
     private static void createDirContent(final File parent) throws Exception {
-        new File(parent, "empty").mkdirs();
-        createFile(new File(parent, "empty.txt"), null);
-        createFile(new File(parent, "one.txt"), "one");
-        createFile(new File(parent, "two.txt"), "two");
+        new File(parent, ZipItTest.EMPTY).mkdirs();
+        createFile(new File(parent, ZipItTest.EMPTY_TXT), null);
+        createFile(new File(parent, ZipItTest.ONE_TXT), "one");
+        createFile(new File(parent, ZipItTest.TWO_TXT), "two");
     }
 
     private static void createFile(final File file, final String content)

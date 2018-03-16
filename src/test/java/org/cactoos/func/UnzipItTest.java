@@ -55,15 +55,38 @@ public class UnzipItTest {
      * Destination path (will be holding zip content).
      */
     private static File destination;
-
+    /**
+     * Constant <tt>empty</tt>.
+     */
+    private static final String EMPTY = "empty";
+    /**
+     * Constant <tt>path2</tt>.
+     */
+    private static final String PATH2 = "path2";
+    /**
+     * Constant <tt>empty.txt</tt>.
+     */
+    private static final String EMPTY_TXT = "empty.txt";
+    /**
+     * Constant <tt>one.txt</tt>.
+     */
+    private static final String ONE_TXT = "one.txt";
+    /**
+     * Constant <tt>two.txt</tt>.
+     */
+    private static final String TWO_TXT = "two.txt";
+    /**
+     * Constant <tt>path</tt>.
+     */
+    private static final String PATH1 = "path1";
     /**
      * Expected list of zip entries.
      */
     private static final String[] EXPECTED = {
-        "empty",
-        "empty.txt",
-        "one.txt",
-        "path1",
+        UnzipItTest.EMPTY,
+        UnzipItTest.EMPTY_TXT,
+        UnzipItTest.ONE_TXT,
+        UnzipItTest.PATH1,
         "path1/empty",
         "path1/empty.txt",
         "path1/one.txt",
@@ -73,7 +96,7 @@ public class UnzipItTest {
         "path1/path11/one.txt",
         "path1/path11/two.txt",
         "path1/two.txt",
-        "path2",
+        UnzipItTest.PATH2,
         "path2/empty",
         "path2/empty.txt",
         "path2/one.txt",
@@ -83,7 +106,7 @@ public class UnzipItTest {
         "path2/path22/one.txt",
         "path2/path22/two.txt",
         "path2/two.txt",
-        "two.txt",
+        UnzipItTest.TWO_TXT,
     };
 
     @BeforeClass
@@ -181,13 +204,13 @@ public class UnzipItTest {
 
     private static void createContent(final File src) throws Exception {
         createDirContent(src);
-        File file = new File(src, "path1");
+        File file = new File(src, UnzipItTest.PATH1);
         file.mkdirs();
         createDirContent(file);
         file = new File(file, "path11");
         file.mkdirs();
         createDirContent(file);
-        file = new File(src, "path2");
+        file = new File(src, UnzipItTest.PATH2);
         file.mkdirs();
         createDirContent(file);
         file = new File(file, "path22");
@@ -196,10 +219,10 @@ public class UnzipItTest {
     }
 
     private static void createDirContent(final File parent) throws Exception {
-        new File(parent, "empty").mkdirs();
-        createFile(new File(parent, "empty.txt"), null);
-        createFile(new File(parent, "one.txt"), "one");
-        createFile(new File(parent, "two.txt"), "two");
+        new File(parent, UnzipItTest.EMPTY).mkdirs();
+        createFile(new File(parent, UnzipItTest.EMPTY_TXT), null);
+        createFile(new File(parent, UnzipItTest.ONE_TXT), "one");
+        createFile(new File(parent, UnzipItTest.TWO_TXT), "two");
     }
 
     private static void createFile(final File file, final String content)
