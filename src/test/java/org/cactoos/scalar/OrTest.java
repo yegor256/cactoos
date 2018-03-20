@@ -144,4 +144,17 @@ public final class OrTest {
             new ScalarHasValue<>(false)
         );
     }
+
+    @Test
+    public void testWithMultipleFunctions() throws Exception {
+        MatcherAssert.assertThat(
+            new Or(
+                3,
+                input -> input > 0,
+                input -> input > 5,
+                input -> input > 4
+            ),
+            new ScalarHasValue<>(true)
+        );
+    }
 }
