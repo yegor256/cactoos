@@ -223,7 +223,7 @@ The MIT License (MIT)
             <executions>
               <execution>
                 <id>forbiddenapis</id>
-                <phase>validate</phase>
+                <phase>test-compile</phase>
                 <goals>
                   <goal>testCheck</goal>
                 </goals>
