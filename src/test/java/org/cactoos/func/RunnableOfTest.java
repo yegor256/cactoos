@@ -32,6 +32,7 @@ import org.junit.Test;
  * Test case for {@link RunnableOf}.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Stanislav Myachenkov (s.myachenkov@gmail.com)
  * @version $Id$
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -39,14 +40,56 @@ import org.junit.Test;
 public final class RunnableOfTest {
 
     @Test
-    public void convertsFuncIntoRunnable() throws Exception {
+    public void convertsFuncIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
         MatcherAssert.assertThat(
-            "Can't execute Runnable",
+            "Can't execute Runnable with Func",
             new RunnableOf<>(
                 input -> {
                     done.set(true);
                     return 1;
+                }
+            ),
+            new MatcherOf<Runnable>(
+                input -> {
+                    input.run();
+                    return done.get();
+                }
+            )
+        );
+    }
+
+    @Test
+    public void convertsProcIntoRunnable() {
+        final AtomicBoolean done = new AtomicBoolean();
+        MatcherAssert.assertThat(
+            "Can't execute Runnable with ProcOf",
+            new RunnableOf<>(
+                new ProcOf<>(
+                    input -> {
+                        done.set(true);
+                        return 1;
+                    }
+                )
+            ),
+            new MatcherOf<Runnable>(
+                input -> {
+                    input.run();
+                    return done.get();
+                }
+            )
+        );
+    }
+
+    @Test
+    public void convertsCallableIntoRunnable() {
+        final AtomicBoolean done = new AtomicBoolean();
+        MatcherAssert.assertThat(
+            "Can't execute Runnable with Callable",
+            new RunnableOf<>(
+                () -> {
+                    done.set(true);
+                    return null;
                 }
             ),
             new MatcherOf<Runnable>(
