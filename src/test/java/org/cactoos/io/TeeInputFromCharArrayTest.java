@@ -26,9 +26,9 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.matchers.TeeInputHasResult;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -52,190 +52,163 @@ public final class TeeInputFromCharArrayTest {
 
     @Test
     public void copiesFromCharArrayWithCharsetToFile() throws IOException {
-        final String message =
+        final String input =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    message.toCharArray(),
-                    output,
-                    StandardCharsets.UTF_8
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toCharArray(),
+                output,
+                StandardCharsets.UTF_8
+            ),
+            new TeeInputHasResult(
+                input,
+                new TextOf(output)
+            )
         );
     }
 
     @Test
     public void copiesFromCharArrayWithCharsetByNameToFile()
         throws IOException {
-        final String message =
+        final String input =
             "Hello, товарищ file #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    message.toCharArray(),
-                    output,
-                    StandardCharsets.UTF_8.name()
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toCharArray(),
+                output,
+                StandardCharsets.UTF_8.name()
+            ),
+            new TeeInputHasResult(
+                input,
+                new TextOf(output)
+            )
         );
     }
 
     @Test
     public void copiesFromCharArrayToOutput() throws IOException {
-        final String message =
+        final String input =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    message.toCharArray(),
-                    new OutputTo(output)
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toCharArray(),
+                new OutputTo(output)
+            ),
+            new TeeInputHasResult(
+                input,
+                new TextOf(output)
+            )
         );
     }
 
     @Test
     public void copiesFromCharArrayWithCharsetToOutput() throws IOException {
-        final String message =
+        final String input =
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    message.toCharArray(),
-                    new OutputTo(output),
-                    StandardCharsets.UTF_8
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toCharArray(),
+                new OutputTo(output),
+                StandardCharsets.UTF_8
+            ),
+            new TeeInputHasResult(
+                input,
+                new TextOf(output)
+            )
         );
     }
 
     @Test
     public void copiesFromCharArrayWithCharsetByNameToOutput()
         throws IOException {
-        final String message =
+        final String input =
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    message.toCharArray(),
-                    new OutputTo(output),
-                    StandardCharsets.UTF_8.name()
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toCharArray(),
+                new OutputTo(output),
+                StandardCharsets.UTF_8.name()
+            ),
+            new TeeInputHasResult(
+                input,
+                new TextOf(output)
+            )
         );
     }
 
     @Test
     public void copiesFromCharArrayToPath() throws IOException {
-        final String message =
+        final String input =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    message.toCharArray(),
-                    output.toPath()
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toCharArray(),
+                output.toPath()
+            ),
+            new TeeInputHasResult(
+                input,
+                new TextOf(output)
+            )
         );
     }
 
     @Test
     public void copiesFromCharArrayWithCharsetToPath() throws IOException {
-        final String message =
+        final String input =
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    message.toCharArray(),
-                    output.toPath(),
-                    StandardCharsets.UTF_8
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toCharArray(),
+                output.toPath(),
+                StandardCharsets.UTF_8
+            ),
+            new TeeInputHasResult(
+                input,
+                new TextOf(output)
+            )
         );
     }
 
     @Test
     public void copiesFromCharArrayWithCharsetByNameToPath()
         throws IOException {
-        final String message =
+        final String input =
             "Hello, товарищ path #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    message.toCharArray(),
-                    output.toPath(),
-                    StandardCharsets.UTF_8.name()
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toCharArray(),
+                output.toPath(),
+                StandardCharsets.UTF_8.name()
+            ),
+            new TeeInputHasResult(
+                input,
+                new TextOf(output)
+            )
         );
     }
 
     @Test
     public void copiesFromCharArrayToFile() throws IOException {
         final File output = this.folder.newFile();
-        final String message =
+        final String input =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    message.toCharArray(),
-                    output
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toCharArray(),
+                output
+            ),
+            new TeeInputHasResult(
+                input,
+                new TextOf(output)
+            )
         );
     }
 }

@@ -35,14 +35,15 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 /**
- * Test case for {@link TeeInput}. Cases for ctors which use file as an input.
+ * Test case for {@link TeeInput}. Cases for ctors which use
+ * {@link java.net.URI} as an input.
  * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
  * @since 1.0
  * @checkstyle JavadocMethodCheck (120 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (120 lines)
  */
-public final class TeeInputFromFileTest {
+public final class TeeInputFromUriTest {
 
     /**
      * Temporary files generator.
@@ -51,29 +52,7 @@ public final class TeeInputFromFileTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void copiesFromFileToFile() throws IOException {
-        final String message =
-            "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
-        final File input = this.folder.newFile();
-        Files.write(
-            input.toPath(),
-            message.getBytes(StandardCharsets.UTF_8)
-        );
-        final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
-            new TeeInput(
-                input,
-                output
-            ),
-            new TeeInputHasResult(
-                message,
-                new TextOf(output)
-            )
-        );
-    }
-
-    @Test
-    public void copiesFromFileToPath() throws IOException {
+    public void copiesFromUriToPath() throws IOException {
         final String message =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -84,8 +63,8 @@ public final class TeeInputFromFileTest {
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
             new TeeInput(
-                input,
-                output.toPath()
+                input.toURI(),
+                output
             ),
             new TeeInputHasResult(
                 message,
@@ -95,7 +74,29 @@ public final class TeeInputFromFileTest {
     }
 
     @Test
-    public void copiesFromFileToOutput() throws IOException {
+    public void copiesFromUriToFile() throws IOException {
+        final String message =
+            "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
+        final File input = this.folder.newFile();
+        Files.write(
+            input.toPath(),
+            message.getBytes(StandardCharsets.UTF_8)
+        );
+        final File output = this.folder.newFile();
+        MatcherAssert.assertThat(
+            new TeeInput(
+                input.toURI(),
+                output
+            ),
+            new TeeInputHasResult(
+                message,
+                new TextOf(output)
+            )
+        );
+    }
+
+    @Test
+    public void copiesFromUriToOutput() throws IOException {
         final String message =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -106,7 +107,7 @@ public final class TeeInputFromFileTest {
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
             new TeeInput(
-                input,
+                input.toURI(),
                 new OutputTo(output)
             ),
             new TeeInputHasResult(

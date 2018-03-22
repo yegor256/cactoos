@@ -28,9 +28,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.cactoos.matchers.TeeInputHasResult;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -63,17 +63,14 @@ public final class TeeInputFromPathTest {
         );
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    input.toPath(),
-                    output.toPath()
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toPath(),
+                output.toPath()
+            ),
+            new TeeInputHasResult(
+                message,
+                new TextOf(output)
+            )
         );
     }
 
@@ -88,17 +85,14 @@ public final class TeeInputFromPathTest {
         );
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    input.toPath(),
-                    output
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toPath(),
+                output
+            ),
+            new TeeInputHasResult(
+                message,
+                new TextOf(output)
+            )
         );
     }
 
@@ -113,17 +107,14 @@ public final class TeeInputFromPathTest {
         );
         final File output = this.folder.newFile();
         MatcherAssert.assertThat(
-            new TextOf(
-                new TeeInput(
-                    input.toPath(),
-                    new OutputTo(output)
-                )
-            ).asString(),
-            new IsEqual<>(message)
-        );
-        MatcherAssert.assertThat(
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new TeeInput(
+                input.toPath(),
+                new OutputTo(output)
+            ),
+            new TeeInputHasResult(
+                message,
+                new TextOf(output)
+            )
         );
     }
 }
