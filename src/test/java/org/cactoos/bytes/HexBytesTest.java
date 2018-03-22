@@ -81,7 +81,12 @@ public final class HexBytesTest {
     }
 
     @Test(expected = IOException.class)
+    public void invalidHexLength() throws IOException {
+        new HexBytes(new TextOf("ABF")).asBytes();
+    }
+
+    @Test(expected = IOException.class)
     public void invalidHex() throws IOException {
-        new HexBytes(new TextOf("D!")).asBytes();
+        new HexBytes(new TextOf("ABG!")).asBytes();
     }
 }

@@ -22,51 +22,54 @@
  * SOFTWARE.
  */
 
-package org.cactoos.bytes;
+package org.cactoos.iterator;
 
-import java.io.IOException;
-import org.cactoos.Bytes;
-import org.cactoos.Text;
-import org.cactoos.iterator.CheckedDigit;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Decodes origin {@link Text} using the hexadecimal encoding scheme.
+ * Wrap array of character into {@link Iterator}.
  *
  * @author Alexander Menshikov (sharplermc@gmail.com)
  * @version $Id$
  * @since 0.30
- * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class HexBytes implements Bytes {
+public final class IteratorChar implements Iterator<Character> {
+
     /**
-     * Origin hexadecimal text.
+     * The list of items to iterate.
      */
-    private final Text origin;
+    private final char[] list;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
 
     /**
      * Ctor.
      *
-     * @param origin Hexadecimal text.
+     * @param items Items to iterate.
      */
-    public HexBytes(final Text origin) {
-        this.origin = origin;
+    @SafeVarargs
+    public IteratorChar(final char... items) {
+        this.list = items;
+        this.position = new AtomicInteger(0);
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
-        final String hex = this.origin.asString();
-        if ((hex.length() & 1) == 1) {
-            throw new IOException("Length of hexadecimal text is odd");
+    public boolean hasNext() {
+        return this.position.intValue() < this.list.length;
+    }
+
+    @Override
+    public Character next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
         }
-        final CheckedDigit iter = new CheckedDigit(16, hex);
-        final byte[] result = new byte[hex.length() / 2];
-        int index = 0;
-        while (index < hex.length()) {
-            final int most = iter.checkedNext();
-            final int less = iter.checkedNext();
-            result[index >>> 1] = (byte) ((most << 4) + less);
-            index += 2;
-        }
-        return result;
+        return this.list[this.position.getAndIncrement()];
     }
 }
