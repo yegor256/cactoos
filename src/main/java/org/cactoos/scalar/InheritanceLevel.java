@@ -85,25 +85,22 @@ public final class InheritanceLevel implements Scalar<Integer> {
         if (this.base.equals(this.derived)) {
             level = InheritanceLevel.IDENTICAL;
         } else {
-            level = InheritanceLevel.calculateLevel(this.derived, this.base);
+            level = this.calculateLevel();
         }
         return level;
     }
 
     /**
      * Calculates inheritance level.
-     * @param cbase Base class
-     * @param cderived Derived class
      * @return Integer Level
      */
-    private static int calculateLevel(final Class<?> cderived,
-        final Class<?> cbase) {
+    private int calculateLevel() {
         int level = InheritanceLevel.NOT_RELATED;
-        Class<?> sclass = cderived.getSuperclass();
+        Class<?> sclass = this.derived.getSuperclass();
         int idx = 0;
         while (!sclass.equals(Object.class)) {
             idx += 1;
-            if (sclass.equals(cbase)) {
+            if (sclass.equals(this.base)) {
                 level = idx;
                 break;
             }
