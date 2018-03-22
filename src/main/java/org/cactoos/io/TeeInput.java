@@ -45,11 +45,6 @@ import org.cactoos.Text;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
- * @todo #720:30min Continue with adding tests for this class.
- *  Currently, only a set of ctors is covered by tests:
- *  ctors which use Bytes, byte array, char array, CharSequence,
- *  File, Input or Path as an input.
- *  All other ctors should be covered too.
  */
 public final class TeeInput implements Input {
 
