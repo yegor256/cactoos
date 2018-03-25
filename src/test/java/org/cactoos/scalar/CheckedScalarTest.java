@@ -23,11 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UncheckedIOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -41,10 +37,10 @@ import org.junit.Test;
 public final class CheckedScalarTest {
 
     @Test(expected = IOException.class)
-    public void throwsException() throws Exception {
+    public void throwsIoException() throws Exception {
         new CheckedScalar<>(
             () -> {
-                throw new InterruptedException("interrupt");
+                throw new Exception("exc");
             },
             IOException::new
         ).value();
@@ -54,36 +50,20 @@ public final class CheckedScalarTest {
     public void throwsRuntimeException() {
         new CheckedScalar<>(
             () -> {
-                throw new UncheckedIOException(new IOException("io"));
+                throw new InterruptedException("interrupt");
             },
             IllegalStateException::new
         ).value();
     }
 
-    @Test(expected = FileNotFoundException.class)
-    public void exceptionGoesOut() throws Exception {
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() throws Exception {
         new CheckedScalar<>(
             () -> {
-                throw new FileNotFoundException("file");
+                throw new IllegalStateException("file");
             },
             IOException::new
         ).value();
     }
 
-    @Test
-    public void runtimeExceptionGoesOut() {
-        try {
-            new CheckedScalar<>(
-                () -> {
-                    throw new IllegalStateException("illegal");
-                },
-                IllegalStateException::new
-            ).value();
-        } catch (final IllegalStateException exp) {
-            MatcherAssert.assertThat(
-                exp.getCause(),
-                Matchers.nullValue()
-            );
-        }
-    }
 }

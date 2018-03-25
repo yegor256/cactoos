@@ -43,7 +43,7 @@ public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
     /**
      * Function that wraps exception.
      */
-    private final Func<Exception, E> func;
+    private final Func<Exception, E> wrapped;
 
     /**
      * Original scalar.
@@ -57,42 +57,31 @@ public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
      */
     public CheckedScalar(final Scalar<T> scalar,
         final Func<Exception, E> func) {
-        this.func = func;
+        this.wrapped = func;
         this.origin = scalar;
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    @SuppressWarnings
+        (
+            {
+                "PMD.AvoidCatchingGenericException",
+                "PMD.AvoidRethrowingException",
+                "PMD.PreserveStackTrace"
+            }
+        )
     public T value() throws E {
         try {
             return this.origin.value();
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final RuntimeException ex) {
-            throw this.wrappedException(ex);
+            throw ex;
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
-            throw this.wrappedException(ex);
+            throw new UncheckedFunc<>(this.wrapped).apply(ex);
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception ex) {
-            throw this.wrappedException(ex);
+            throw new UncheckedFunc<>(this.wrapped).apply(ex);
         }
-    }
-
-    /**
-     * Wraps exception. Skips unnecessary boxing of exception.
-     * @param exp Exception
-     * @return E Wrapped exception
-     */
-    @SuppressWarnings("unchecked")
-    private E wrappedException(final Exception exp) {
-        E wrapped = new UncheckedFunc<>(this.func).apply(exp);
-        final int level = new InheritanceLevel(
-            exp.getClass(), wrapped.getClass()
-        ).value();
-        final int unrelated = 999;
-        if (level == 0 || level < unrelated) {
-            wrapped = (E) exp;
-        }
-        return wrapped;
     }
 }
