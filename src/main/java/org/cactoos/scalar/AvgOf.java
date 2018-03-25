@@ -140,7 +140,7 @@ public final class AvgOf extends NumberEnvelope {
             new Ternary<>(
                 new LengthOf(src).longValue(),
                 len -> len > 0,
-                len -> new Reduced<>(
+                len -> new Folded<>(
                     BigDecimal.ZERO,
                     (sum, value) -> sum.add(value, MathContext.DECIMAL128),
                     new Mapped<>(

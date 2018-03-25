@@ -93,7 +93,7 @@ public final class LowestOf<T extends Comparable<T>> implements Scalar<T> {
      * @param iterable The items
      */
     public LowestOf(final Iterable<Scalar<T>> iterable) {
-        this.result = new Folded<>(
+        this.result = new Reduced<>(
             (first, second) -> {
                 final T value;
                 if (first.compareTo(second) < 0) {
