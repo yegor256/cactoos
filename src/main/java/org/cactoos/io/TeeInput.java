@@ -45,9 +45,6 @@ import org.cactoos.Text;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
- * @todo #631:30min This class needs more test cases. Currently, only a set of
- *  ctors is covered by tests: ctors which use Bytes and byte array as an
- *  input. All other ctors should be covered too.
  */
 public final class TeeInput implements Input {
 
