@@ -29,7 +29,6 @@ import java.io.UncheckedIOException;
 import java.util.Iterator;
 import org.cactoos.Bytes;
 import org.cactoos.Text;
-import org.cactoos.iterator.IteratorChar;
 import org.cactoos.iterator.Mapped;
 import org.cactoos.text.FormattedText;
 
@@ -75,7 +74,7 @@ public final class HexBytes implements Bytes {
                 }
                 return result;
             },
-            new IteratorChar(hex.toCharArray())
+            hex.chars().mapToObj(c -> (char) c).iterator()
         );
         final byte[] result = new byte[hex.length() / 2];
         int index = 0;
