@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -68,7 +67,7 @@ public final class ComparableText implements Text, Comparable<Text> {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         return this.text.asString();
     }
 

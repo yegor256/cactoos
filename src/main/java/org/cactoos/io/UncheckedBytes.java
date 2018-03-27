@@ -28,6 +28,7 @@ import java.io.UncheckedIOException;
 import org.cactoos.Bytes;
 import org.cactoos.Func;
 import org.cactoos.func.UncheckedFunc;
+import org.cactoos.scalar.IoCheckedScalar;
 
 /**
  * Bytes that doesn't throw checked {@link Exception}.
@@ -79,7 +80,7 @@ public final class UncheckedBytes implements Bytes {
     public byte[] asBytes() {
         byte[] data;
         try {
-            data = this.bytes.asBytes();
+            data = new IoCheckedScalar<>(this.bytes::asBytes).value();
         } catch (final IOException ex) {
             data = new UncheckedFunc<>(this.fallback).apply(ex);
         }

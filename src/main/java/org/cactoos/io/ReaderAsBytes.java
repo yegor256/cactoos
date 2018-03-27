@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -125,7 +124,7 @@ final class ReaderAsBytes implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         final char[] buffer = new char[this.size];
         final StringBuilder builder = new StringBuilder(this.size);
         while (true) {

@@ -28,6 +28,7 @@ import java.io.UncheckedIOException;
 import org.cactoos.Func;
 import org.cactoos.Text;
 import org.cactoos.func.UncheckedFunc;
+import org.cactoos.scalar.IoCheckedScalar;
 
 /**
  * Text that doesn't throw checked {@link Exception}.
@@ -75,7 +76,7 @@ public final class UncheckedText implements Text {
     /**
      * Ctor.
      * @param txt Encapsulated text
-     * @param fbk Fallback func if {@link IOException} happens
+     * @param fbk Fallback func if {@link Exception} happens
      * @since 0.5
      */
     public UncheckedText(final Text txt, final Func<IOException, String> fbk) {
@@ -87,7 +88,7 @@ public final class UncheckedText implements Text {
     public String asString() {
         String txt;
         try {
-            txt = this.text.asString();
+            txt = new IoCheckedScalar<>(this.text::asString).value();
         } catch (final IOException ex) {
             txt = new UncheckedFunc<>(this.fallback).apply(ex);
         }

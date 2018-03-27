@@ -25,7 +25,6 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -187,7 +186,7 @@ public final class OutputTo implements Output {
     }
 
     @Override
-    public OutputStream stream() throws IOException {
+    public OutputStream stream() throws Exception {
         return this.origin.stream();
     }
 

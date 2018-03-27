@@ -24,7 +24,6 @@
 package org.cactoos.text;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -40,7 +39,6 @@ import org.cactoos.Text;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.IoCheckedScalar;
 
 /**
  * TextOf
@@ -361,8 +359,8 @@ public final class TextOf implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
-        return new IoCheckedScalar<>(this.origin).value();
+    public String asString() throws Exception {
+        return this.origin.value();
     }
 
     @Override

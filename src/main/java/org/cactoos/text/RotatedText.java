@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
@@ -55,7 +54,7 @@ public final class RotatedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         String text = this.origin.asString();
         final int length = text.length();
         if (length != 0 && this.move != 0 && this.move % length != 0) {

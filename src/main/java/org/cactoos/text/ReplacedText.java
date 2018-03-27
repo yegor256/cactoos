@@ -23,14 +23,12 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.IoCheckedFunc;
 import org.cactoos.scalar.IoCheckedScalar;
 
 /**
@@ -97,7 +95,7 @@ public final class ReplacedText implements Text {
      * @param text The text
      * @param pattern The regular expression
      * @param func Transforms the resulting matcher object into a replacement
-     *  string. Any exceptions will be wrapped in an {@link IOException}.
+     *  string.
      */
     public ReplacedText(
         final Text text,
@@ -109,17 +107,15 @@ public final class ReplacedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final StringBuffer buffer = new StringBuffer();
         final Matcher matcher = new IoCheckedScalar<>(this.regex)
             .value()
             .matcher(this.origin.asString());
-        final IoCheckedFunc<Matcher, String> safe =
-            new IoCheckedFunc<>(this.replacement);
         while (matcher.find()) {
             matcher.appendReplacement(
                 buffer,
-                safe.apply(matcher)
+                this.replacement.apply(matcher)
             );
         }
         matcher.appendTail(buffer);

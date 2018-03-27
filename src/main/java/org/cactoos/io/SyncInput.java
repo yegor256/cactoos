@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 
@@ -67,7 +66,7 @@ public final class SyncInput implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         synchronized (this.lock) {
             return this.origin.stream();
         }

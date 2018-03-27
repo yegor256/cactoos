@@ -72,7 +72,7 @@ public final class LoggingOutputTest {
     }
 
     @Test
-    public void logWriteOneByte() throws IOException {
+    public void logWriteOneByte() throws Exception {
         final Logger logger = new FakeLogger();
         try (
             final OutputStream out = new LoggingOutput(
@@ -91,7 +91,7 @@ public final class LoggingOutputTest {
     }
 
     @Test
-    public void logWriteText() throws IOException {
+    public void logWriteText() throws Exception {
         final Logger logger = new FakeLogger();
         try (
             final OutputStream out = new LoggingOutput(

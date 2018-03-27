@@ -86,7 +86,7 @@ public abstract class DigestEnvelope implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         try {
             final MessageDigest msg = MessageDigest.getInstance(this.algorithm);
             try (final InputStream stream = this.source.stream()) {
