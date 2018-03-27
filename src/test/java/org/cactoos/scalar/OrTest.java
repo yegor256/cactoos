@@ -147,8 +147,9 @@ public final class OrTest {
     }
 
     @Test
-    public void testWithMultipleFunctions() throws Exception {
+    public void testMultipleFuncConditionTrue() throws Exception {
         MatcherAssert.assertThat(
+            "Can't compare subject with true conditions",
             new Or(
                 3,
                 input -> input > 0,
@@ -156,6 +157,19 @@ public final class OrTest {
                 input -> input > 4
             ),
             new ScalarHasValue<>(true)
+        );
+    }
+
+    @Test
+    public void testMultipleFuncConditionFalse() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare subject with false conditions",
+            new Or(
+                "cactoos",
+                input -> input.contains("singleton"),
+                input -> input.contains("static")
+            ),
+            new ScalarHasValue<>(false)
         );
     }
 }
