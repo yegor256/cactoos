@@ -30,8 +30,7 @@ import org.cactoos.func.UncheckedFunc;
 /**
  * Scalar that throws exception specified by user.
  *
- *  <p>There is no thread-safety guarantee.
- *
+ * <p>There is no thread-safety guarantee.
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @param <T> Type of result
@@ -43,7 +42,7 @@ public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
     /**
      * Function that wraps exception.
      */
-    private final Func<Exception, E> wrapped;
+    private final Func<Exception, E> func;
 
     /**
      * Original scalar.
@@ -53,11 +52,11 @@ public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
     /**
      * Ctor.
      * @param scalar Encapsulated scalar
-     * @param func Func that wraps exception
+     * @param fnc Func that wraps exception
      */
     public CheckedScalar(final Scalar<T> scalar,
-        final Func<Exception, E> func) {
-        this.wrapped = func;
+        final Func<Exception, E> fnc) {
+        this.func = fnc;
         this.origin = scalar;
     }
 
@@ -78,10 +77,35 @@ public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
             throw ex;
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
-            throw new UncheckedFunc<>(this.wrapped).apply(ex);
+            throw this.wrappedException(ex);
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception ex) {
-            throw new UncheckedFunc<>(this.wrapped).apply(ex);
+            throw this.wrappedException(ex);
         }
+    }
+
+    /**
+     * Wraps exception.
+     * Skips unnecessary wrapping of exceptions of the same type.
+     * Allows wrapping of exceptions of the same type if the error message
+     * has been changed.
+     *
+     * @param exp Exception
+     * @return E Wrapped exception
+     */
+    @SuppressWarnings("unchecked")
+    private E wrappedException(final Exception exp) {
+        E wrapped = new UncheckedFunc<>(this.func).apply(exp);
+        final int level = new InheritanceLevel(
+            exp.getClass(), wrapped.getClass()
+        ).value();
+        final int unrelated = 999;
+        final String message = wrapped.getMessage()
+            .replaceFirst(String.format("%s: ", exp.getClass().getName()), "");
+        if ((level == 0 || level < unrelated)
+            && message.equals(exp.getMessage())) {
+            wrapped = (E) exp;
+        }
+        return wrapped;
     }
 }

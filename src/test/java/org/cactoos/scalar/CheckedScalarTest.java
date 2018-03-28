@@ -23,12 +23,14 @@
  */
 package org.cactoos.scalar;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link CheckedScalar}.
- *
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @since 0.30
@@ -36,34 +38,75 @@ import org.junit.Test;
  */
 public final class CheckedScalarTest {
 
-    @Test(expected = IOException.class)
-    public void throwsIoException() throws Exception {
-        new CheckedScalar<>(
-            () -> {
-                throw new Exception("exc");
-            },
-            IOException::new
-        ).value();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void throwsRuntimeException() {
-        new CheckedScalar<>(
-            () -> {
-                throw new InterruptedException("interrupt");
-            },
-            IllegalStateException::new
-        ).value();
-    }
-
     @Test(expected = IllegalStateException.class)
     public void runtimeExceptionGoesOut() throws Exception {
         new CheckedScalar<>(
             () -> {
-                throw new IllegalStateException("file");
+                throw new IllegalStateException("runtime");
             },
             IOException::new
         ).value();
     }
 
+    @Test(expected = IOException.class)
+    public void throwsIoException() throws Exception {
+        new CheckedScalar<>(
+            () -> {
+                throw new InterruptedException("interrupt");
+            },
+            IOException::new
+        ).value();
+    }
+
+    @Test
+    public void ioExceptionGoesOut() throws Exception {
+        try {
+            new CheckedScalar<>(
+                () -> {
+                    throw new IOException("io");
+                },
+                IOException::new
+            ).value();
+        } catch (final IOException exp) {
+            MatcherAssert.assertThat(
+                exp.getCause(),
+                Matchers.nullValue()
+            );
+        }
+    }
+
+    @Test
+    public void fileNotFoundExceptionGoesOut() throws Exception {
+        try {
+            new CheckedScalar<>(
+                () -> {
+                    throw new FileNotFoundException("file not found");
+                },
+                IOException::new
+            ).value();
+        } catch (final FileNotFoundException exp) {
+            MatcherAssert.assertThat(
+                exp.getCause(),
+                Matchers.nullValue()
+            );
+        }
+    }
+
+    @Test
+    public void throwsIoExceptionWithModifiedMessage() throws Exception {
+        final String message = "error msg";
+        try {
+            new CheckedScalar<>(
+                () -> {
+                    throw new IOException("io");
+                },
+                exp -> new IOException(message, exp)
+            ).value();
+        } catch (final IOException exp) {
+            MatcherAssert.assertThat(
+                exp.getMessage(),
+                Matchers.containsString(message)
+            );
+        }
+    }
 }
