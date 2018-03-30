@@ -51,12 +51,11 @@ public final class InheritanceLevelTest {
 
     @Test
     public void classesAreNotRelated() {
-        final int expected = 999;
         MatcherAssert.assertThat(
             new InheritanceLevel(
                 FileNotFoundException.class, RuntimeException.class
             ).value(),
-            Matchers.equalTo(expected)
+            Matchers.equalTo(Integer.MAX_VALUE)
         );
     }
 
