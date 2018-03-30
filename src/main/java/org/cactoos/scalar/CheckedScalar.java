@@ -99,10 +99,9 @@ public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
         final int level = new InheritanceLevel(
             exp.getClass(), wrapped.getClass()
         ).value();
-        final int unrelated = 999;
         final String message = wrapped.getMessage()
             .replaceFirst(String.format("%s: ", exp.getClass().getName()), "");
-        if ((level == 0 || level < unrelated)
+        if ((level == 0 || level < Integer.MAX_VALUE)
             && message.equals(exp.getMessage())) {
             wrapped = (E) exp;
         }
