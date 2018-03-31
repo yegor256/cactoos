@@ -123,6 +123,34 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     * @param subject The subject
+     * @param conditions Conditions to use
+     * @param <X> Type of items in the iterable
+     * @since 0.30
+     */
+    @SafeVarargs
+    public <X> Or(final X subject, final Func<X, Boolean>... conditions) {
+        this(subject, new IterableOf<>(conditions));
+    }
+
+    /**
+     * Ctor.
+     * @param subject The subject
+     * @param conditions Conditions to use
+     * @param <X> Type of items in the iterable
+     * @since 0.30
+     */
+    public <X> Or(final X subject,
+        final Iterable<Func<X, Boolean>> conditions) {
+        this(
+            new Mapped<>(
+                item -> (Scalar<Boolean>) () -> item.apply(subject), conditions
+            )
+        );
+    }
+
+    /**
+     * Ctor.
      * @param scalar The Scalar.
      */
     @SafeVarargs
