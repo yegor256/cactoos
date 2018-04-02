@@ -24,10 +24,13 @@
 package org.cactoos.collection;
 
 import java.io.IOException;
+import java.util.AbstractCollection;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterator.Endless;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
@@ -91,4 +94,25 @@ public final class MappedTest {
             Matchers.equalTo("2, 4, 6")
         );
     }
+
+    @Test
+    public void transformsEndlessCollection() {
+        MatcherAssert.assertThat(
+            new Mapped<>(
+                String::trim,
+                new AbstractCollection<String>() {
+                    @Override
+                    public Iterator<String> iterator() {
+                        return new Endless<>("something");
+                    }
+                    @Override
+                    public int size() {
+                        return 1;
+                    }
+                }
+            ).size(),
+            Matchers.equalTo(1)
+        );
+    }
+
 }
