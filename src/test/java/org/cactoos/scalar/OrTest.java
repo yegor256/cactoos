@@ -144,4 +144,17 @@ public final class OrTest {
             new ScalarHasValue<>(false)
         );
     }
+
+    @Test
+    public void testConditionsOnSubject() throws Exception {
+        MatcherAssert.assertThat(
+            new Or(
+                1,
+                input -> input == 0,
+                input -> input > 0,
+                input -> input < 0
+            ),
+            new ScalarHasValue<>(true)
+        );
+    }
 }
