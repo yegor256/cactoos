@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
@@ -59,6 +60,15 @@ public final class BytesOf implements Bytes {
      */
     public BytesOf(final Input input) {
         this(new InputAsBytes(input));
+    }
+
+    /**
+     * Ctor.
+     * @param input The input
+     * @since 0.29.2
+     */
+    public BytesOf(final InputStream input) {
+        this(new InputAsBytes(new InputOf(input)));
     }
 
     /**
