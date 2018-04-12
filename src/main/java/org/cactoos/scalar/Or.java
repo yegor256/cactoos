@@ -42,6 +42,7 @@ import org.cactoos.iterable.Mapped;
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.8
  */
@@ -117,6 +118,22 @@ public final class Or implements Scalar<Boolean> {
         this(
             new Mapped<>(
                 item -> (Scalar<Boolean>) () -> func.apply(item), src
+            )
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param subject The subject
+     * @param conditions Funcs to map
+     * @param <X> Type of items in the iterable
+     */
+    @SafeVarargs
+    public <X> Or(final X subject, final Func<X, Boolean>... conditions) {
+        this(
+            new Mapped<>(
+                item -> (Scalar<Boolean>) () -> item.apply(subject),
+                new IterableOf<>(conditions)
             )
         );
     }

@@ -38,6 +38,7 @@ import org.junit.Test;
  * Test case for {@link Or}.
  *
  * @author Vseslav Sekorin (vssekorin@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -140,6 +141,33 @@ public final class OrTest {
             new Or(
                 input -> input > 0,
                 -1, -2, 0
+            ),
+            new ScalarHasValue<>(false)
+        );
+    }
+
+    @Test
+    public void testMultipleFuncConditionTrue() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare subject with true conditions",
+            new Or(
+                3,
+                input -> input > 0,
+                input -> input > 5,
+                input -> input > 4
+            ),
+            new ScalarHasValue<>(true)
+        );
+    }
+
+    @Test
+    public void testMultipleFuncConditionFalse() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare subject with false conditions",
+            new Or(
+                "cactoos",
+                input -> input.contains("singleton"),
+                input -> input.contains("static")
             ),
             new ScalarHasValue<>(false)
         );
