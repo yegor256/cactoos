@@ -47,7 +47,7 @@ import org.takes.tk.TkHtml;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public final class HeadInputTest {
 
     @Test
@@ -118,14 +118,15 @@ public final class HeadInputTest {
 
     @Test
     public void readsEncodedStringWithCharsetFromReader() throws Exception {
-        final String source = "hello, друг!";
+        final String source = "hello, друг";
+        final String charset = "UTF-8";
         final int length = 6;
         MatcherAssert.assertThat(
-            "Can't read encoded string through a reader",
+            "Can't read encoded string with charset through a reader",
             new TextOf(
                 new HeadInput(
                     new StringReader(source),
-                    "UTF-8",
+                    charset,
                     length
                 )
             ).asString(),
@@ -135,11 +136,11 @@ public final class HeadInputTest {
 
     @Test
     public void readsMaxBufferFromReader() throws Exception {
-        final String source = "hello, друг!";
+        final String source = "hello, друг!!";
         final int length = 6;
         final int max = 20;
         MatcherAssert.assertThat(
-            "Can't read encoded string through a reader",
+            "Can't read max buffer string through a reader",
             new TextOf(
                 new HeadInput(
                     new StringReader(source),
@@ -153,11 +154,11 @@ public final class HeadInputTest {
 
     @Test
     public void readsMaxBufferEncodedFromReader() throws Exception {
-        final String source = "hello, друг!";
+        final String source = "hello,друг!";
         final int length = 6;
         final int max = 20;
         MatcherAssert.assertThat(
-            "Can't read encoded string through a reader",
+            "Can't read max buffer encoded through a reader",
             new TextOf(
                 new HeadInput(
                     new StringReader(source),
@@ -172,15 +173,16 @@ public final class HeadInputTest {
 
     @Test
     public void readsMaxBufferEncodedStringFromReader() throws Exception {
-        final String source = "hello, друг!";
+        final String source = "hello,друг";
+        final String charset = "UTF-8";
         final int length = 6;
         final int max = 20;
         MatcherAssert.assertThat(
-            "Can't read encoded string through a reader",
+            "Can't read max buffer encoded string through a reader",
             new TextOf(
                 new HeadInput(
                     new StringReader(source),
-                    "UTF-8",
+                    charset,
                     max,
                     length
                 )
@@ -211,7 +213,7 @@ public final class HeadInputTest {
     public void readsEncodedArrayOfChars() throws IOException {
         final int length = 2;
         MatcherAssert.assertThat(
-            "Can't read array of chars.",
+            "Can't read array with enum charset of chars.",
             new String(
                 new BytesOf(
                     new HeadInput(
@@ -228,13 +230,14 @@ public final class HeadInputTest {
     @Test
     public void readsEncodedStringArrayOfChars() throws IOException {
         final int length = 2;
+        final String charset = "UTF-8";
         MatcherAssert.assertThat(
-            "Can't read array of chars.",
+            "Can't read array with literal charset of chars.",
             new String(
                 new BytesOf(
                     new HeadInput(
                         new char[]{'H', 'o', 'l', 'd'},
-                        "UTF-8",
+                        charset,
                         length
                     )
                 ).asBytes()
@@ -245,7 +248,7 @@ public final class HeadInputTest {
 
     @Test
     public void readsCharSequence() throws Exception {
-        final int length = 3;
+        final int length = 4;
         final CharSequence charsequence = "Cactoos";
         MatcherAssert.assertThat(
             "Can't read charsequence of bytes",
@@ -254,16 +257,16 @@ public final class HeadInputTest {
                     new HeadInput(charsequence, length)
                 ).asBytes()
             ),
-            Matchers.equalTo("Cac")
+            Matchers.equalTo("Cact")
         );
     }
 
     @Test
     public void readsEncodedCharSequence() throws Exception {
-        final int length = 3;
-        final CharSequence charsequence = "Cactoos";
+        final int length = 9;
+        final CharSequence charsequence = "CactoosEnum";
         MatcherAssert.assertThat(
-            "Can't read charsequence of bytes",
+            "Can't read encoded charsequence of bytes",
             new String(
                 new BytesOf(
                     new HeadInput(
@@ -273,16 +276,16 @@ public final class HeadInputTest {
                     )
                 ).asBytes()
             ),
-            Matchers.equalTo("Cac")
+            Matchers.equalTo("CactoosEn")
         );
     }
 
     @Test
     public void readsEncodedStringCharSequence() throws Exception {
         final int length = 3;
-        final CharSequence charsequence = "Cactoos";
+        final CharSequence charsequence = "CactoosEncoded";
         MatcherAssert.assertThat(
-            "Can't read charsequence of bytes",
+            "Can't read encoded string charsequence of bytes",
             new String(
                 new BytesOf(
                     new HeadInput(
@@ -298,43 +301,44 @@ public final class HeadInputTest {
 
     @Test
     public void readsText() {
-        final int length = 4;
-        MatcherAssert.assertThat(
-            "Can't read string from text",
-            new TextOf(
-                new HeadInput(
-                    new TextOf("Cactoos"), length
-                )
-            ),
-            new TextHasString(Matchers.containsString("Cact"))
-        );
-    }
-
-    @Test
-    public void readsEncodedText() {
         final int length = 5;
         MatcherAssert.assertThat(
             "Can't read string from text",
             new TextOf(
                 new HeadInput(
-                    new TextOf("Cactoos"), StandardCharsets.UTF_8, length
+                    new TextOf("CactoosOOP"), length
                 )
             ),
-            new TextHasString(Matchers.containsString("Cact"))
+            new TextHasString(Matchers.containsString("Cacto"))
+        );
+    }
+
+    @Test
+    public void readsEncodedText() {
+        final int length = 2;
+        MatcherAssert.assertThat(
+            "Can't read string with enum charset from text",
+            new TextOf(
+                new HeadInput(
+                    new TextOf("CactoosLibrary"), StandardCharsets.UTF_8, length
+                )
+            ),
+            new TextHasString(Matchers.containsString("Ca"))
         );
     }
 
     @Test
     public void readsEncodedStringText() {
-        final int length = 4;
+        final int length = 8;
+        final String charset = "UTF-8";
         MatcherAssert.assertThat(
-            "Can't read string from text",
+            "Can't read string with literal charset from text",
             new TextOf(
                 new HeadInput(
-                    new TextOf("Cactoos"), "UTF-8", length
+                    new TextOf("CactoosText"), charset, length
                 )
             ),
-            new TextHasString(Matchers.containsString("Cact"))
+            new TextHasString(Matchers.containsString("CactoosT"))
         );
     }
 
@@ -353,25 +357,25 @@ public final class HeadInputTest {
 
     @Test
     public void readsSimpleFileContent() throws IOException {
-        final int length = 5;
+        final int length = 7;
         final Path temp = Files.createTempFile("cactoos-1", "txt-1");
         final String content = "Hello, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "Can't read file content",
             new HeadInput(temp, length),
-            new InputHasContent(content.split(",")[0])
+            new InputHasContent(content.substring(0, length))
         );
     }
 
     @Test
     public void readsFromInputStream() throws IOException {
         final int length = 3;
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
-        final String content = "Hello, товарищ!";
+        final Path temp = Files.createTempFile("cactoos-2", "txt-2");
+        final String content = "Hi, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
-            "Can't read file content",
+            "Can't read file content from inputstream",
             new HeadInput(new InputStreamOf(temp), length),
             new InputHasContent(content.substring(0, length))
         );
