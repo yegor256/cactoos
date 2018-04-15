@@ -33,7 +33,7 @@ import java.io.InputStream;
  *
  * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
- * @since 0.13
+ * @since 0.29.3
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class HeadInputStream extends InputStream {
