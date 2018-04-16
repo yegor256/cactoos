@@ -23,37 +23,34 @@
  */
 package org.cactoos.iterable;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * Skipped iterable.
- *
- * <p>There is no thread-safety guarantee.</p>
- *
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * Test Case for {@link TailOf}.
+ * @author Ashton Hogan (info@ashtonhogan.com)
  * @version $Id$
- * @param <T> Element type
  * @since 0.8
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Skipped<T> extends IterableEnvelope<T> {
+public final class TailOfTest {
 
-    /**
-     * Ctor.
-     * @param skip How many to skip
-     * @param src The underlying iterable
-     */
-    @SafeVarargs
-    public Skipped(final int skip, final T... src) {
-        this(skip, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param skip Count skip elements
-     * @param iterable Decorated iterable
-     */
-    public Skipped(final int skip, final Iterable<T> iterable) {
-        super(() -> () -> new org.cactoos.iterator.Skipped<>(
-            skip, iterable.iterator()
-        ));
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void skipIterable() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't skip elements in iterable",
+            new TailOf<>(
+                2, new IterableOf<>(
+                    "one", "two", "three", "four"
+                )
+            ),
+            Matchers.contains(
+                "one",
+                "two"
+            )
+        );
     }
 
 }

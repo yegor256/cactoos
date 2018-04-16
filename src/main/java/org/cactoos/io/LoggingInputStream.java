@@ -165,7 +165,7 @@ public final class LoggingInputStream extends InputStream {
         this.logger.log(
             this.level.value(),
             String.format(
-                "Skipped %d byte(s) from %s.",
+                "HeadOf %d byte(s) from %s.",
                 skipped,
                 this.source
             )

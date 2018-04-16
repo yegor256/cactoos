@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Skipped iterator.
+ * HeadOf iterator.
  *
  * <p>There is no thread-safety guarantee.</p>
  *

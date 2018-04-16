@@ -23,15 +23,15 @@
  */
 package org.cactoos.scalar;
 
+import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.Limited;
 import org.cactoos.iterable.RangeOf;
-import org.cactoos.iterable.Skipped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link Skipped}.
+ * Test case for {@link HeadOf}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.9
