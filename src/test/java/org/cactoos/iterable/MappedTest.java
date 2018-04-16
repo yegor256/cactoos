@@ -23,9 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
 import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
@@ -33,6 +30,9 @@ import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Collections;
 
 /**
  * Test case for {@link Mapped}.

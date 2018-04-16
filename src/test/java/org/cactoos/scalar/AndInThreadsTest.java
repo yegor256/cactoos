@@ -23,13 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
@@ -41,6 +34,13 @@ import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Test case for {@link AndInThreads}.
