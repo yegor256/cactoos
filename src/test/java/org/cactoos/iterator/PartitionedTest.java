@@ -88,6 +88,7 @@ public final class PartitionedTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void partitionedLastPartitionSmaller() {
         MatcherAssert.assertThat(
             "Can't generate a Partitioned of size 2 last partition smaller.",
