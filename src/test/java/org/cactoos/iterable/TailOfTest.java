@@ -31,7 +31,7 @@ import org.junit.Test;
  * Test Case for {@link TailOf}.
  * @author Ashton Hogan (info@ashtonhogan.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.29.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class TailOfTest {

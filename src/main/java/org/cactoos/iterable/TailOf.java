@@ -28,10 +28,10 @@ package org.cactoos.iterable;
  *
  * <p>There is no thread-safety guarantee.</p>
  *
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * @author Ashton Hogan (info@ashtonhogan.com)
  * @version $Id$
  * @param <T> Element type
- * @since 0.8
+ * @since 0.29.3
  */
 public final class TailOf<T> extends IterableEnvelope<T> {
 
