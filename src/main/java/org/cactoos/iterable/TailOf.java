@@ -52,7 +52,7 @@ public final class TailOf<T> extends IterableEnvelope<T> {
      */
     public TailOf(final int skip, final Iterable<T> iterable) {
         super(() -> () -> new org.cactoos.iterator.Skipped<>(
-            skip, new org.cactoos.iterator.Reversed<>(iterable.iterator())
+            skip, new Reversed<>(iterable).iterator()
         ));
     }
 
