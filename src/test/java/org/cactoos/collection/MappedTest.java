@@ -23,6 +23,10 @@
  */
 package org.cactoos.collection;
 
+import java.io.IOException;
+import java.util.AbstractCollection;
+import java.util.Collections;
+import java.util.Iterator;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Endless;
@@ -32,11 +36,6 @@ import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.AbstractCollection;
-import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * Test case for {@link Mapped}.

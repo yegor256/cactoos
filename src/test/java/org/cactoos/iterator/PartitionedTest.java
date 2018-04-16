@@ -23,14 +23,13 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.NoSuchElementException;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.NoSuchElementException;
 
 /**
  * Test case for {@link Partitioned}.
@@ -84,7 +83,7 @@ public final class PartitionedTest {
                 )
             ),
             Matchers.equalTo(
-                    new ListOf<>(new ListOf<>(1, 2), new ListOf<>(3, 4))
+                new ListOf<>(new ListOf<>(1, 2), new ListOf<>(3, 4))
             )
         );
     }
