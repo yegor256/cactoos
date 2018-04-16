@@ -86,7 +86,7 @@ public final class MappedTest {
             "Can't convert to string",
             new Mapped<Integer, Integer>(
                 x -> x * 2,
-                Arrays.asList(1, 2, 3)
+                new ListOf<>(1, 2, 3)
             ).toString(),
             Matchers.equalTo("2, 4, 6")
         );

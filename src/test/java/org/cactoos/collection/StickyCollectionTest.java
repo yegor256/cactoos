@@ -112,7 +112,7 @@ public final class StickyCollectionTest {
     @Test
     public void testContainsAll() {
         MatcherAssert.assertThat(
-            new StickyCollection<>(1, 2).containsAll(Arrays.asList(1, 2)),
+            new StickyCollection<>(1, 2).containsAll(new ListOf<>(1, 2)),
             Matchers.equalTo(true)
         );
     }

@@ -60,11 +60,11 @@ public final class PartitionedTest {
             "Can't generate a Partitioned of partition size 1.",
             new ArrayList<>(
                 new ListOf<>(
-                    new Partitioned<>(1, Arrays.asList(1, 2, 3).iterator())
+                    new Partitioned<>(1, new ListOf<>(1, 2, 3).iterator())
                 )
             ),
             Matchers.equalTo(
-                Arrays.asList(
+                new ListOf<>(
                     Collections.singletonList(1), Collections.singletonList(2),
                     Collections.singletonList(3)
                 )
@@ -82,7 +82,7 @@ public final class PartitionedTest {
                 )
             ),
             Matchers.equalTo(
-                Arrays.asList(Arrays.asList(1, 2), Arrays.asList(3, 4))
+                    new ListOf<>(new ListOf<>(1, 2), new ListOf<>(3, 4))
             )
         );
     }
@@ -97,8 +97,8 @@ public final class PartitionedTest {
                 )
             ),
             Matchers.equalTo(
-                Arrays.asList(
-                    Arrays.asList(1, 2),
+                new ListOf<>(
+                    new ListOf<>(1, 2),
                     Collections.singletonList(3)
                 )
             )

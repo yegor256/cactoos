@@ -176,7 +176,7 @@ public final class AndInThreadsTest {
         );
         new AndInThreads(
             new Proc.NoNulls<Integer>(list::add),
-            Arrays.asList(1, 2)
+                new ListOf<>(1, 2)
         ).value();
         MatcherAssert.assertThat(
             list,
@@ -223,7 +223,7 @@ public final class AndInThreadsTest {
         new AndInThreads(
             service,
             new Proc.NoNulls<Integer>(list::add),
-            Arrays.asList(1, 2)
+                new ListOf<>(1, 2)
         ).value();
         MatcherAssert.assertThat(
             list,
