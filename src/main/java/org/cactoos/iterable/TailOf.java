@@ -42,7 +42,7 @@ public final class TailOf<T> extends IterableEnvelope<T> {
      */
     @SafeVarargs
     public TailOf(final int skip, final T... src) {
-        this(skip, new Reversed<>(new IterableOf<>(src)));
+        this(skip, new IterableOf<>(src));
     }
 
     /**
@@ -51,9 +51,13 @@ public final class TailOf<T> extends IterableEnvelope<T> {
      * @param iterable Decorated iterable
      */
     public TailOf(final int skip, final Iterable<T> iterable) {
-        super(() -> () -> new org.cactoos.iterator.Skipped<>(
-            skip, new Reversed<>(iterable).iterator()
-        ));
+        super(() -> () -> new Reversed<>(
+            new IterableOf<>(
+                new org.cactoos.iterator.Skipped<>(
+                    skip, new Reversed<>(iterable).iterator()
+                )
+            )
+        ).iterator());
     }
 
 }
