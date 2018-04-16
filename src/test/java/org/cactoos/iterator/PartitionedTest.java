@@ -55,6 +55,7 @@ public final class PartitionedTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void partitionedOne() {
         MatcherAssert.assertThat(
             "Can't generate a Partitioned of partition size 1.",
@@ -73,6 +74,7 @@ public final class PartitionedTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void partitionedEqualSize() {
         MatcherAssert.assertThat(
             "Can't generate a Partitioned of partition size 2.",
