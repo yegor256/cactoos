@@ -68,9 +68,9 @@ public final class AndTest {
         MatcherAssert.assertThat(
             new And(
                 new IteratorOf<>(
-                    new True(),
-                    new True(),
-                    new True()
+                    true,
+                    true,
+                    true
                 )
             ).value(),
             Matchers.equalTo(true)
