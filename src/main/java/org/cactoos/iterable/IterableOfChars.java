@@ -23,13 +23,11 @@
  */
 package org.cactoos.iterable;
 
+import java.util.Iterator;
+import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.UncheckedScalar;
-
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Character array as iterable.
@@ -40,6 +38,8 @@ import java.util.List;
  * @version $Id$
  * @param <Character> Character type item
  * @since 0.12
+ * @checkstyle ClassTypeParameterNameCheck (500 lines)
+ * @checkstyle LineLengthCheck (500 lines)
  */
 public final class IterableOfChars<Character> extends IterableEnvelope<Character> {
 
