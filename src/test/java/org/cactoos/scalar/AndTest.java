@@ -46,6 +46,7 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
+ * @checkstyle TooManyMethods (500 lines)
  */
 public final class AndTest {
 
