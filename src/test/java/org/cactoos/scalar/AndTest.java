@@ -163,4 +163,41 @@ public final class AndTest {
         );
     }
 
+    @Test
+    public void testFuncVarargs() throws Exception {
+        MatcherAssert.assertThat(
+            new And(
+                input -> input > 0,
+                -1, -2, 0
+            ),
+            new ScalarHasValue<>(false)
+        );
+    }
+
+    @Test
+    public void testMultipleFuncConditionTrue() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare subject with true conditions",
+            new And(
+                3,
+                input -> input > 0,
+                input -> input > 1,
+                input -> input > 2
+            ),
+            new ScalarHasValue<>(true)
+        );
+    }
+
+    @Test
+    public void testMultipleFuncConditionFalse() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare subject with false conditions",
+            new And(
+                "cactoos",
+                input -> input.contains("singleton"),
+                input -> input.contains("static")
+            ),
+            new ScalarHasValue<>(false)
+        );
+    }
 }
