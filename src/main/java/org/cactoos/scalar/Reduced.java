@@ -74,7 +74,7 @@ public final class Reduced<X, T> implements Scalar<X> {
      */
     @SafeVarargs
     public Reduced(final X ipt, final BiFunc<X, T, X> fnc,
-                   final T... list) {
+        final T... list) {
         this(ipt, fnc, new IterableOf<T>(list));
     }
 
