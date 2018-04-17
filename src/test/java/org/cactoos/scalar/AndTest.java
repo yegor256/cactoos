@@ -45,6 +45,7 @@ import org.junit.Test;
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MagicNumber (500 line)
  */
 public final class AndTest {
 
