@@ -38,6 +38,21 @@ public final class TailOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void skipStrings() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't skip elements in iterable",
+            new TailOf<>(
+                2, "one", "two", "three", "four"
+            ),
+            Matchers.contains(
+                "one",
+                "two"
+            )
+        );
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't skip elements in iterable",
