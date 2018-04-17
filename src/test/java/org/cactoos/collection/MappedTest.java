@@ -44,6 +44,7 @@ import org.junit.Test;
  * @since 0.14
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class MappedTest {
 
