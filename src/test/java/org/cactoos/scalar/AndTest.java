@@ -47,7 +47,7 @@ import org.junit.Test;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
  */
-@SuppressWarnings({ "PMD.TooManyMethods" })
+@SuppressWarnings("PMD.TooManyMethods")
 public final class AndTest {
 
     @Test
