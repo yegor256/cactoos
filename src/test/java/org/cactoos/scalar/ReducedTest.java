@@ -55,4 +55,15 @@ public final class ReducedTest {
         );
     }
 
+    @Test
+    public void constructedFromVarargs() throws Exception {
+        MatcherAssert.assertThat(
+                "Can't reduce elements in iterable",
+                new Reduced<>(
+                        0L, (first, second) -> first + second,
+                        1, 2, 3, 4, 5
+                ).value(),
+                Matchers.equalTo(15L)
+        );
+    }
 }

@@ -25,6 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Iterable, which elements are "reduced" through the func.
@@ -63,6 +64,18 @@ public final class Reduced<X, T> implements Scalar<X> {
         this.iterable = list;
         this.input = ipt;
         this.func = fnc;
+    }
+
+    /**
+     * Secondary ctor.
+     * @param ipt Input
+     * @param fnc Func original
+     * @param list Array of items
+     */
+    @SafeVarargs
+    public Reduced(final X ipt, final BiFunc<X, T, X> fnc,
+                   final T... list) {
+        this(ipt, fnc, new IterableOf<T>(list));
     }
 
     @Override

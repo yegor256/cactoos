@@ -99,4 +99,22 @@ public final class FoldedTest {
             Matchers.equalTo(three)
         );
     }
+
+    @Test
+    public void constructedFromVarargs() throws Exception {
+
+        final String one = "Apple";
+        final String two = "Banana";
+        final String three = "Orange";
+        MatcherAssert.assertThat(
+                "Can't find the first",
+                new Folded<>(
+                        (first, last) -> first,
+                        one,
+                        two,
+                        three
+                ).value(),
+                Matchers.equalTo(one)
+        );
+    }
 }
