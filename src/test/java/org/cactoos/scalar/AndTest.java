@@ -64,20 +64,6 @@ public final class AndTest {
     }
 
     @Test
-    public void allTrueIterator() throws Exception {
-        MatcherAssert.assertThat(
-            new And(
-                new IteratorOf<>(
-                    true,
-                    true,
-                    true
-                )
-            ).value(),
-            Matchers.equalTo(true)
-        );
-    }
-
-    @Test
     public void oneFalse() throws Exception {
         MatcherAssert.assertThat(
             new And(
@@ -166,6 +152,19 @@ public final class AndTest {
         MatcherAssert.assertThat(
             list.size(),
             Matchers.equalTo(2)
+        );
+    }
+
+    @Test
+    public void testProcVarargs() throws Exception {
+        final List<Integer> list = new LinkedList<>();
+        new And(
+            (Proc<Integer>) list::add,
+            2, 3, 4
+        ).value();
+        MatcherAssert.assertThat(
+            list.size(),
+            Matchers.equalTo(3)
         );
     }
 
