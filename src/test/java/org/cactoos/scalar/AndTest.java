@@ -31,6 +31,7 @@ import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.iterator.IteratorOf;
 import org.cactoos.matchers.MatcherOf;
 import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
@@ -57,6 +58,20 @@ public final class AndTest {
                 new True(),
                 new True(),
                 new True()
+            ).value(),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void allTrueIterator() throws Exception {
+        MatcherAssert.assertThat(
+            new And(
+                new IteratorOf<>(
+                    new True(),
+                    new True(),
+                    new True()
+                )
             ).value(),
             Matchers.equalTo(true)
         );
