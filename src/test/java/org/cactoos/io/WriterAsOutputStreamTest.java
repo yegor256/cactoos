@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -35,7 +36,9 @@ import org.cactoos.matchers.ScalarHasValue;
 import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link WriterAsOutputStream}.
@@ -48,6 +51,12 @@ import org.junit.Test;
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class WriterAsOutputStreamTest {
+
+    /**
+     * Temporary files generator.
+     */
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void writesToByteArray() {
@@ -84,7 +93,7 @@ public final class WriterAsOutputStreamTest {
 
     @Test
     public void writesLargeContentToFile() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final File file = this.folder.newFile();
         MatcherAssert.assertThat(
             "Can't copy Input to Output and return Input",
             new TextOf(
@@ -93,7 +102,7 @@ public final class WriterAsOutputStreamTest {
                     new OutputTo(
                         new WriterAsOutputStream(
                             new OutputStreamWriter(
-                                new FileOutputStream(temp.toFile()),
+                                new FileOutputStream(file),
                                 StandardCharsets.UTF_8
                             ),
                             StandardCharsets.UTF_8,
@@ -106,7 +115,7 @@ public final class WriterAsOutputStreamTest {
             new TextHasString(
                 new MatcherOf<>(
                     str -> {
-                        return new TextOf(temp).asString().equals(str);
+                        return new TextOf(file).asString().equals(str);
                     }
                 )
             )
