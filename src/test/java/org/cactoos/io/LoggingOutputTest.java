@@ -26,13 +26,14 @@ package org.cactoos.io;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link LoggingOutput}.
@@ -50,6 +51,11 @@ import org.junit.Test;
     }
 )
 public final class LoggingOutputTest {
+    /**
+     * Temporary files and folders generator.
+     */
+    @Rule
+    public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void logWriteZero() throws IOException {
@@ -112,7 +118,7 @@ public final class LoggingOutputTest {
     @Test
     public void logWriteToLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
-        final Path temp = Files.createTempDirectory("ccts-1");
+        final Path temp = this.folder.newFolder("ccts-1").toPath();
         final Path path = temp.resolve("x/y/z/file.txt");
         new LengthOf(
             new TeeInput(
@@ -142,7 +148,7 @@ public final class LoggingOutputTest {
     @Test
     public void logAllWriteToLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger(Level.WARNING);
-        final Path temp = Files.createTempDirectory("ccts-2");
+        final Path temp = this.folder.newFolder("ccts-2").toPath();
         final Path path = temp.resolve("a/b/c/file.txt");
         new LengthOf(
             new TeeInput(
