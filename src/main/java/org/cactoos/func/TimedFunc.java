@@ -23,13 +23,15 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 
 /**
  * Function that gets interrupted after a certain time has passed.
- *
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @param <X> Type of input
@@ -41,7 +43,7 @@ public final class TimedFunc<X, Y> implements Func<X, Y> {
     /**
      * Origin function.
      */
-    private final Func<X, Y> origin;
+    private final Func<X, Future<Y>> func;
 
     /**
      * Milliseconds.
@@ -63,13 +65,28 @@ public final class TimedFunc<X, Y> implements Func<X, Y> {
      * @param milliseconds Milliseconds
      */
     public TimedFunc(final Func<X, Y> function, final long milliseconds) {
-        this.origin = function;
+        this(milliseconds, new AsyncFunc<>(function));
+    }
+
+    /**
+     * Ctor.
+     * @param async Async function
+     * @param milliseconds Milliseconds
+     */
+    public TimedFunc(final long milliseconds, final Func<X, Future<Y>> async) {
+        this.func = async;
         this.time = milliseconds;
     }
 
     @Override
     public Y apply(final X input) throws Exception {
-        return new AsyncFunc<>(this.origin).apply(input)
-            .get(this.time, TimeUnit.MILLISECONDS);
+        final Future<Y> future = this.func.apply(input);
+        try {
+            return future.get(this.time, TimeUnit.MILLISECONDS);
+        } catch (final InterruptedException | ExecutionException
+            | TimeoutException exp) {
+            future.cancel(true);
+            throw exp;
+        }
     }
 }

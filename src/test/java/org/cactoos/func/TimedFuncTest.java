@@ -23,6 +23,8 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 import org.cactoos.iterable.Endless;
 import org.cactoos.scalar.And;
@@ -32,7 +34,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link TimedFunc}.
- *
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @since 0.29.3
@@ -67,7 +68,33 @@ public final class TimedFuncTest {
     }
 
     @Test
-    public void functionGetsExecuted() throws Exception {
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public void futureTaskIsCancelled() {
+        final long period = 50L;
+        final long time = 2000L;
+        final Future<Boolean> future = Executors.newSingleThreadExecutor()
+            .submit(
+                () -> {
+                    Thread.sleep(time);
+                    return true;
+                }
+            );
+        try {
+            new TimedFunc<Boolean, Boolean>(
+                period,
+                input -> future
+            ).apply(true);
+                // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception exp) {
+            MatcherAssert.assertThat(
+                future.isCancelled(),
+                Matchers.equalTo(true)
+            );
+        }
+    }
+
+    @Test
+    public void functionIsExecuted() throws Exception {
         final long period = 3000L;
         MatcherAssert.assertThat(
             new TimedFunc<Boolean, Boolean>(
