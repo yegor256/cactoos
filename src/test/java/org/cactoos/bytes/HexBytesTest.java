@@ -25,6 +25,7 @@
 package org.cactoos.bytes;
 
 import java.io.IOException;
+import java.util.Arrays;
 import org.cactoos.io.BytesOf;
 import org.cactoos.matchers.MatcherOf;
 import org.cactoos.text.HexOf;
@@ -66,16 +67,7 @@ public final class HexBytesTest {
                 )
             ).asBytes(),
             new MatcherOf<>(
-                array -> {
-                    boolean result = true;
-                    for (int index = 0; index < array.length; ++index) {
-                        if (bytes[index] != array[index]) {
-                            result = false;
-                            break;
-                        }
-                    }
-                    return result;
-                }
+                (byte[] array) -> Arrays.equals(bytes, array)
             )
         );
     }
