@@ -61,31 +61,21 @@ public final class Zip implements Input {
         this.origin = origin;
     }
 
-    @Override public InputStream stream() throws IOException {
+    @Override
+    public InputStream stream() throws IOException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         try (final ZipOutputStream zip = new ZipOutputStream(out)) {
-            Path root = null;
             for (final Path path : this.origin) {
-                if (root == null) {
-                    root = path;
-                    continue;
-                }
                 final File file = path.toFile();
                 final ZipEntry entry = new ZipEntry(
-                    root.relativize(path).toFile().getPath()
+                    file.getPath()
                 );
                 zip.putNextEntry(entry);
                 if (file.isFile()) {
                     try (
                         final FileInputStream input = new FileInputStream(file)
                     ) {
-                        // @checkstyle MagicNumber (1 line)
-                        final byte[] buffer = new byte[1024];
-                        int len = input.read(buffer);
-                        while (len > 0) {
-                            zip.write(buffer, 0, len);
-                            len = input.read(buffer);
-                        }
+                        zip.write(new BytesOf(new InputOf(input)).asBytes());
                     }
                 }
                 zip.closeEntry();

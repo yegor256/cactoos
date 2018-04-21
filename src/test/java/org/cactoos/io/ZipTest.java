@@ -48,7 +48,7 @@ public final class ZipTest {
      * Temporary folder.
      */
     @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void zip() throws IOException {
@@ -70,7 +70,7 @@ public final class ZipTest {
                 "Can't list files in a directory represented by a path",
                 cnt,
                 // @checkstyle MagicNumber (1 line)
-                Matchers.equalTo(3)
+                Matchers.equalTo(4)
             );
         }
     }
