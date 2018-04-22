@@ -67,7 +67,7 @@ public final class Reduced<X, T> implements Scalar<X> {
     }
 
     /**
-     * Secondary ctor.
+     * Ctor.
      * @param ipt Input
      * @param fnc Func original
      * @param list Array of items

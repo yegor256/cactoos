@@ -100,7 +100,7 @@ public final class Folded<T> implements Scalar<T> {
     }
 
     /**
-     * Secondary vararg ctor.
+     * Ctor.
      * @param fold Folding function
      * @param values Values to be wrapped as scalars
      */
