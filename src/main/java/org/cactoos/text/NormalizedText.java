@@ -31,6 +31,7 @@ import org.cactoos.Text;
  * a Text.
  *
  * @author Fabricio Cabral (fabriciofx@gmail.com)
+ * @author Mehmet Yildirim (memoyil@gmail.com)
  * @version $Id$
  * @since 0.9
  */
@@ -59,7 +60,11 @@ public final class NormalizedText implements Text {
 
     @Override
     public String asString() throws IOException {
-        return new TrimmedText(this.origin).asString().replaceAll("\\s+", " ");
+        return new ReplacedText(
+            new TrimmedText(this.origin),
+            "\\s+",
+            " "
+        ).asString();
     }
 
 }
