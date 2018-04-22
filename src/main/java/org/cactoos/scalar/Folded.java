@@ -109,7 +109,7 @@ public final class Folded<T> implements Scalar<T> {
         final BiFunc<T, T, T> fold,
         final T... values
     ) {
-        this(fold, new Mapped<T, Scalar<T>>(Constant::new, values));
+        this(fold, new Mapped<>(Constant::new, values));
     }
 
     @Override
