@@ -40,14 +40,14 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings("PMD.TooManyMethods")
 public final class HeadInputStreamTest {
 
     @Test
     public void readsAmountOfSize() throws IOException {
         final int size = 5;
         final int length = 5;
-        final CharSequence charsequence = "CactoosEncoded";
+        final CharSequence charsequence = "CactoosAmountSize";
         final byte[] bytes = new byte[size];
         MatcherAssert.assertThat(
             new HeadInput(charsequence, size).stream().read(bytes, 0, length),
@@ -58,7 +58,7 @@ public final class HeadInputStreamTest {
     @Test
     public void readsAmountOfLength() throws IOException {
         final int size = 5;
-        final CharSequence charsequence = "CactoosEncoded";
+        final CharSequence charsequence = "CactoosAmount";
         final byte[] bytes = new byte[size];
         MatcherAssert.assertThat(
             new HeadInput(charsequence, size).stream().read(bytes, 0, 2),
@@ -69,7 +69,7 @@ public final class HeadInputStreamTest {
     @Test
     public void readsToBuffer() throws IOException {
         final int size = 5;
-        final CharSequence charsequence = "CactoosEncoded";
+        final CharSequence charsequence = "CactoosBuffer";
         final byte[] bytes = new byte[size];
         MatcherAssert.assertThat(
             new HeadInput(charsequence, size).stream().read(bytes),
@@ -81,7 +81,7 @@ public final class HeadInputStreamTest {
     public void readsOnlyOneData() throws IOException {
         final int size = 5;
         final int cbyte = 67;
-        final CharSequence charsequence = "CactoosEncoded";
+        final CharSequence charsequence = "CactoosOne";
         MatcherAssert.assertThat(
             new HeadInput(charsequence, size).stream().read(),
             Matchers.equalTo(cbyte)
@@ -92,7 +92,7 @@ public final class HeadInputStreamTest {
     @SuppressWarnings("PMD.CheckSkipResult")
     public void skipsDataAndReadsRest() throws IOException {
         final int size = 5;
-        final CharSequence charsequence = "CactoosEncoded";
+        final CharSequence charsequence = "CactoosSkip";
         final InputStream stream = new HeadInput(charsequence, size).stream();
         stream.skip(1);
         MatcherAssert.assertThat(
@@ -100,6 +100,21 @@ public final class HeadInputStreamTest {
                 new BytesOf(stream)
             ),
             new TextHasString(Matchers.containsString("actoo"))
+        );
+    }
+
+    @Test
+    @SuppressWarnings("PMD.CheckSkipResult")
+    public void readsOneResetAndReads() throws IOException {
+        final int size = 5;
+        final int cbyte = 67;
+        final CharSequence charsequence = "CactoosReset";
+        final InputStream stream = new HeadInput(charsequence, size).stream();
+        stream.read();
+        stream.reset();
+        MatcherAssert.assertThat(
+            stream.read(),
+            Matchers.equalTo(cbyte)
         );
     }
 }
