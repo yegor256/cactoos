@@ -24,6 +24,9 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import java.io.InputStream;
+import org.cactoos.matchers.TextHasString;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -82,6 +85,21 @@ public final class HeadInputStreamTest {
         MatcherAssert.assertThat(
             new HeadInput(charsequence, size).stream().read(),
             Matchers.equalTo(cbyte)
+        );
+    }
+
+    @Test
+    @SuppressWarnings("PMD.CheckSkipResult")
+    public void skipsDataAndReadsRest() throws IOException {
+        final int size = 5;
+        final CharSequence charsequence = "CactoosEncoded";
+        final InputStream stream = new HeadInput(charsequence, size).stream();
+        stream.skip(1);
+        MatcherAssert.assertThat(
+            new TextOf(
+                new BytesOf(stream)
+            ),
+            new TextHasString(Matchers.containsString("actoo"))
         );
     }
 }
