@@ -99,7 +99,7 @@ public final class HeadInputStream extends InputStream {
             if (offset > this.length && len > this.length) {
                 max = this.input.read(buf, this.length, this.length);
             } else if (len < this.length) {
-                max = this.input.read(buf, this.length, len);
+                max = this.input.read(buf, offset, len);
             } else if (len > this.length) {
                 max = this.input.read(buf, offset, this.length);
             } else {
