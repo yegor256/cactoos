@@ -21,68 +21,74 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.scalar;
 
 import org.cactoos.Func;
-import org.cactoos.scalar.ScalarWithFallback;
+import org.cactoos.Scalar;
 
 /**
- * Func with a fallback plan.
+ * Scalar with a fallback plan.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
- * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.2
+ * @param <T> Type of result
+ * @since 1.0
  */
-public final class FuncWithFallback<X, Y> implements Func<X, Y> {
+public final class ScalarWithFallback<T> implements Scalar<T> {
 
     /**
-     * The func.
+     * The origin scalar.
      */
-    private final Func<X, Y> func;
+    private final Scalar<T> origin;
 
     /**
      * The fallback.
      */
-    private final Func<Throwable, Y> fallback;
+    private final Func<Throwable, T> fallback;
 
     /**
      * The follow up.
      */
-    private final Func<Y, Y> follow;
+    private final Func<T, T> follow;
 
     /**
      * Ctor.
-     * @param fnc The func
+     * @param orig The origin scalar
      * @param fbk The fallback
      */
-    public FuncWithFallback(final Func<X, Y> fnc,
-        final Func<Throwable, Y> fbk) {
-        this(fnc, fbk, input -> input);
+    public ScalarWithFallback(final Scalar<T> orig,
+        final Func<Throwable, T> fbk) {
+        this(orig, fbk, input -> input);
     }
 
     /**
      * Ctor.
-     * @param fnc The func
+     * @param orig The origin scalar
      * @param fbk The fallback
-     * @param flw The follow up func
+     * @param flw The follow up function
      */
-    public FuncWithFallback(final Func<X, Y> fnc,
-        final Func<Throwable, Y> fbk, final Func<Y, Y> flw) {
-        this.func = fnc;
+    public ScalarWithFallback(final Scalar<T> orig,
+        final Func<Throwable, T> fbk, final Func<T, T> flw) {
+        this.origin = orig;
         this.fallback = fbk;
         this.follow = flw;
     }
 
     @Override
-    public Y apply(final X input) throws Exception {
-        return new ScalarWithFallback<>(
-            () -> this.func.apply(input),
-            this.fallback,
-            this.follow
-        ).value();
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
+    public T value() throws Exception {
+        T result;
+        try {
+            result = this.origin.value();
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            result = this.fallback.apply(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Throwable ex) {
+            result = this.fallback.apply(ex);
+        }
+        return this.follow.apply(result);
     }
 }
