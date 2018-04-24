@@ -87,6 +87,22 @@ public final class TailInputTest {
         );
     }
 
+    @Test
+    public void tailsOnStreamLongerThanBufferAndBytes() throws IOException {
+        final int size = 4;
+        final byte[] bytes = this.generate(size);
+        MatcherAssert.assertThat(
+            new BytesOf(
+                new TailInput(
+                    new InputOf(new BytesOf(bytes)), size - 1, size - 1
+                )
+            ).asBytes(),
+            Matchers.equalTo(
+                Arrays.copyOfRange(bytes, 1, bytes.length)
+            )
+        );
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void failsIfBufferSizeSmallerThanTailSize() throws IOException {
         final int size = 4;
