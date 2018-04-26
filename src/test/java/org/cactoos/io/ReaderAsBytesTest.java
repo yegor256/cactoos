@@ -30,7 +30,9 @@ import java.nio.file.Path;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link ReaderAsBytes}.
@@ -41,6 +43,11 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ReaderAsBytesTest {
+    /**
+     * Temporary files and folders generator.
+     */
+    @Rule
+    public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void readsString() throws IOException {
@@ -58,7 +65,7 @@ public final class ReaderAsBytesTest {
 
     @Test
     public void readsAsBytesAndDeletesTempFile() throws Exception {
-        final Path file = new TempFile().value();
+        final Path file = this.folder.newFile().toPath();
         new ReaderAsBytes(
             new ReaderOf(file)
         ).asBytes();
