@@ -99,7 +99,7 @@ public final class InputStreamOfTest {
 
     @Test
     public void readsFileContent() throws IOException {
-        final File file = File.createTempFile("readFileContent", "txt-2");
+        final File file = this.folder.newFile("readFileContent.txt-2");
         final String content = "Content in a file";
         new LengthOf(
             new TeeInput(content, file)
@@ -145,7 +145,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsFromUri() throws IOException {
         final String content = "Content for reading through URI";
-        final File file = File.createTempFile("readFromUri", "txt-3");
+        final File file = this.folder.newFile("readFromUri.txt-3");
         new LengthOf(
             new TeeInput(content, file)
         ).intValue();
@@ -159,7 +159,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsFromUrl() throws IOException {
         final String content = "Content for reading through URL";
-        final File file = File.createTempFile("readFromUrl", "txt-4");
+        final File file = this.folder.newFile("readFromUrl.txt-4");
         new LengthOf(
             new TeeInput(content, file)
         ).intValue();
@@ -220,7 +220,7 @@ public final class InputStreamOfTest {
 
     @Test
     public void readsFromTextWithCharset() throws IOException {
-        final File file = File.createTempFile("readTextWithCharset", "txt-5");
+        final File file = this.folder.newFile("readTextWithCharset.txt-5");
         final String content = "Content for reading text with charset";
         new LengthOf(
             new TeeInput(content, file)
