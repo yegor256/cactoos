@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import org.cactoos.Input;
+import org.cactoos.text.FormattedText;
 
 /**
  * Input showing only last N bytes of the stream.
@@ -61,7 +62,7 @@ public final class TailInput implements Input {
      */
     public TailInput(final Input inpt, final int bytes) {
         // @checkstyle MagicNumber (1 line)
-        this(inpt, bytes, 16 << 10);
+        this(inpt, bytes, 16384);
     }
 
     /**
@@ -80,10 +81,10 @@ public final class TailInput implements Input {
     public InputStream stream() throws IOException {
         if (this.max < this.count) {
             throw new IllegalArgumentException(
-                String.format(
+                new FormattedText(
                     "Can't tail %d bytes if buffer is set to %d",
                     this.count, this.max
-                )
+                ).asString()
             );
         }
         final byte[] buffer = new byte[this.max];
