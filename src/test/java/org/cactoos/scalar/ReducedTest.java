@@ -23,36 +23,80 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.iterable.Limited;
-import org.cactoos.iterable.RangeOf;
-import org.cactoos.iterable.Skipped;
+import java.util.Collections;
+import java.util.NoSuchElementException;
+import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link Skipped}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link Reduced}.
+ *
+ * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
- * @since 0.9
+ * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class ReducedTest {
 
+    @Test(expected = NoSuchElementException.class)
+    public void failsForEmptyIterable() throws Exception {
+        new Reduced<>(
+            (first, last) -> first,
+            Collections.emptyList()
+        ).value();
+    }
+
     @Test
-    public void skipIterable() throws Exception {
+    public void singleAtSingleIterable() throws Exception {
+        final Integer single = 10;
         MatcherAssert.assertThat(
-            "Can't reduce elements in iterable",
+            "Can't find the single",
             new Reduced<>(
-                0L, (first, second) -> first + second,
-                new Limited<>(
-                    10,
-                    new RangeOf<>(0L, Long.MAX_VALUE, value -> ++value)
-                )
+                (first, last) -> first,
+                new IterableOf<Scalar<Integer>>(() -> single)
             ).value(),
-            Matchers.equalTo(45L)
+            Matchers.equalTo(single)
         );
     }
 
+    @Test
+    public void firstAtIterable() throws Exception {
+        final String one = "Apple";
+        final String two = "Banana";
+        final String three = "Orange";
+        MatcherAssert.assertThat(
+            "Can't find the first",
+            new Reduced<>(
+                (first, last) -> first,
+                new IterableOf<Scalar<String>>(
+                    () -> one,
+                    () -> two,
+                    () -> three
+                )
+            ).value(),
+            Matchers.equalTo(one)
+        );
+    }
+
+    @Test
+    public void lastAtIterable() throws Exception {
+        final Character one = 'A';
+        final Character two = 'B';
+        final Character three = 'O';
+        MatcherAssert.assertThat(
+            "Can't find the last",
+            new Reduced<>(
+                (first, last) -> last,
+                new IterableOf<Scalar<Character>>(
+                    () -> one,
+                    () -> two,
+                    () -> three
+                )
+            ).value(),
+            Matchers.equalTo(three)
+        );
+    }
 }
