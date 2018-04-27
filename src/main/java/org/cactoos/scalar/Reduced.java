@@ -23,55 +23,94 @@
  */
 package org.cactoos.scalar;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
 
 /**
- * Iterable, which elements are "reduced" through the func.
+ * Reduces iterable via BiFunc.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * <pre>
+ * new Reduced<>(
+ *     (first, last) -> first + last,
+ *     new IterableOf<>(() -> 1L, () -> 2L, () -> 3L, () -> 4L)
+ * ).value() // returns 10L
+ * </pre>
+ *
+ * <p>Here is how you can use it to
+ * find one of items according to the specified {@link BiFunc}:</p>
+ *
+ * <pre>
+ *  final String apple = new Reduced&lt;&gt;(
+ *          (first, last) -&gt; first,
+ *          new IterableOf&lt;Scalar&lt;String&gt;&gt;(
+ *              () -&gt; "Apple",
+ *              () -&gt; "Banana",
+ *              () -&gt; "Orange"
+ *          )
+ *      ).value();
+ *  final String orange = new Reduced&lt;&gt;(
+ *          (first, last) -&gt; last,
+ *          new IterableOf&lt;Scalar&lt;String&gt;&gt;(
+ *              () -&gt; "Apple",
+ *              () -&gt; "Banana",
+ *              () -&gt; "Orange"
+ *          )
+ *      ).value();
+ * </pre>
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
+ *
+ * @author Alexander Dyadyushenko (gookven@gmail.com)
+ * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
- * @param <T> Type of element
- * @param <X> Type of input and output
- * @since 0.9
+ * @param <T> Scalar type
+ * @since 0.30
  */
-public final class Reduced<X, T> implements Scalar<X> {
+public final class Reduced<T> implements Scalar<T> {
 
     /**
-     * Original iterable.
+     * Items.
      */
-    private final Iterable<T> iterable;
+    private final Iterable<Scalar<T>> items;
 
     /**
-     * Input.
+     * Folding function.
      */
-    private final X input;
-
-    /**
-     * Func.
-     */
-    private final BiFunc<X, T, X> func;
+    private final BiFunc<T, T, T> function;
 
     /**
      * Ctor.
-     * @param ipt Input
-     * @param fnc Func original
-     * @param list List of items
+     * @param fnc Reducing function
+     * @param scalars The scalars
      */
-    public Reduced(final X ipt, final BiFunc<X, T, X> fnc,
-        final Iterable<T> list) {
-        this.iterable = list;
-        this.input = ipt;
-        this.func = fnc;
+    public Reduced(
+        final BiFunc<T, T, T> fnc,
+        final Iterable<Scalar<T>> scalars
+    ) {
+        this.items = scalars;
+        this.function = fnc;
     }
 
     @Override
-    public X value() throws Exception {
-        X memo = this.input;
-        for (final T item : this.iterable) {
-            memo = this.func.apply(memo, item);
+    public T value() throws Exception {
+        final Iterator<Scalar<T>> iter = this.items.iterator();
+        if (!iter.hasNext()) {
+            throw new NoSuchElementException(
+                "Can't find first element in an empty iterable"
+            );
         }
-        return memo;
+        T acc = iter.next().value();
+        while (iter.hasNext()) {
+            final T next = iter.next().value();
+            acc = this.function.apply(acc, next);
+        }
+        return acc;
     }
-
 }

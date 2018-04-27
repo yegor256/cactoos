@@ -23,80 +23,34 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Limited;
+import org.cactoos.iterable.RangeOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link Folded}.
- *
- * @author Eduard Balovnev (bedward70@mail.ru)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @since 0.29
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class FoldedTest {
 
-    @Test(expected = NoSuchElementException.class)
-    public void failsForEmptyIterable() throws Exception {
-        new Folded<>(
-            (first, last) -> first,
-            Collections.emptyList()
-        ).value();
-    }
-
     @Test
-    public void singleAtSingleIterable() throws Exception {
-        final Integer single = 10;
+    public void skipIterable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't find the single",
+            "Can't fold elements in iterable",
             new Folded<>(
-                (first, last) -> first,
-                new IterableOf<Scalar<Integer>>(() -> single)
-            ).value(),
-            Matchers.equalTo(single)
-        );
-    }
-
-    @Test
-    public void firstAtIterable() throws Exception {
-        final String one = "Apple";
-        final String two = "Banana";
-        final String three = "Orange";
-        MatcherAssert.assertThat(
-            "Can't find the first",
-            new Folded<>(
-                (first, last) -> first,
-                new IterableOf<Scalar<String>>(
-                    () -> one,
-                    () -> two,
-                    () -> three
+                0L, (first, second) -> first + second,
+                new Limited<>(
+                    10,
+                    new RangeOf<>(0L, Long.MAX_VALUE, value -> ++value)
                 )
             ).value(),
-            Matchers.equalTo(one)
-        );
-    }
-
-    @Test
-    public void lastAtIterable() throws Exception {
-        final Character one = 'A';
-        final Character two = 'B';
-        final Character three = 'O';
-        MatcherAssert.assertThat(
-            "Can't find the last",
-            new Folded<>(
-                (first, last) -> last,
-                new IterableOf<Scalar<Character>>(
-                    () -> one,
-                    () -> two,
-                    () -> three
-                )
-            ).value(),
-            Matchers.equalTo(three)
+            Matchers.equalTo(45L)
         );
     }
 }

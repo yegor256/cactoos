@@ -23,94 +23,55 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
 
 /**
- * Folds iterable via BiFunc.
+ * Iterable, which elements are "reduced" through the func.
  *
- * <pre>
- * new Folded<>(
- *     (first, last) -> first + last,
- *     new IterableOf<>(() -> 1L, () -> 2L, () -> 3L, () -> 4L)
- * ).value() // returns 10L
- * </pre>
- *
- * <p>Here is how you can use it to
- * find one of items according to the specified {@link BiFunc}:</p>
- *
- * <pre>
- *  final String apple = new Folded&lt;&gt;(
- *          (first, last) -&gt; first,
- *          new IterableOf&lt;Scalar&lt;String&gt;&gt;(
- *              () -&gt; "Apple",
- *              () -&gt; "Banana",
- *              () -&gt; "Orange"
- *          )
- *      ).value();
- *  final String orange = new Folded&lt;&gt;(
- *          (first, last) -&gt; last,
- *          new IterableOf&lt;Scalar&lt;String&gt;&gt;(
- *              () -&gt; "Apple",
- *              () -&gt; "Banana",
- *              () -&gt; "Orange"
- *          )
- *      ).value();
- * </pre>
- *
- * <p>There is no thread-safety guarantee.
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
- *
- * @author Alexander Dyadyushenko (gookven@gmail.com)
- * @author Eduard Balovnev (bedward70@mail.ru)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
- * @param <T> Scalar type
- * @since 0.29
+ * @param <T> Type of element
+ * @param <X> Type of input and output
+ * @since 0.30
  */
-public final class Folded<T> implements Scalar<T> {
+public final class Folded<X, T> implements Scalar<X> {
 
     /**
-     * Items.
+     * Original iterable.
      */
-    private final Iterable<Scalar<T>> items;
+    private final Iterable<T> iterable;
 
     /**
-     * Folding function.
+     * Input.
      */
-    private final BiFunc<T, T, T> function;
+    private final X input;
+
+    /**
+     * Func.
+     */
+    private final BiFunc<X, T, X> func;
 
     /**
      * Ctor.
-     * @param fold Folding function
-     * @param scalars The scalars
+     * @param ipt Input
+     * @param fnc Func original
+     * @param list List of items
      */
-    public Folded(
-        final BiFunc<T, T, T> fold,
-        final Iterable<Scalar<T>> scalars
-    ) {
-        this.items = scalars;
-        this.function = fold;
+    public Folded(final X ipt, final BiFunc<X, T, X> fnc,
+        final Iterable<T> list) {
+        this.iterable = list;
+        this.input = ipt;
+        this.func = fnc;
     }
 
     @Override
-    public T value() throws Exception {
-        final Iterator<Scalar<T>> iter = this.items.iterator();
-        if (!iter.hasNext()) {
-            throw new NoSuchElementException(
-                "Can't find first element in an empty iterable"
-            );
+    public X value() throws Exception {
+        X memo = this.input;
+        for (final T item : this.iterable) {
+            memo = this.func.apply(memo, item);
         }
-        T acc = iter.next().value();
-        while (iter.hasNext()) {
-            final T next = iter.next().value();
-            acc = this.function.apply(acc, next);
-        }
-        return acc;
+        return memo;
     }
+
 }
