@@ -33,7 +33,7 @@ import org.cactoos.Scalar;
  * @version $Id$
  * @param <T> Type of element
  * @param <X> Type of input and output
- * @since 0.9
+ * @since 0.30
  */
 public final class Folded<X, T> implements Scalar<X> {
 

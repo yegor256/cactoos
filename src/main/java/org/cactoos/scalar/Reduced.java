@@ -71,7 +71,7 @@ import org.cactoos.Scalar;
  * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
  * @param <T> Scalar type
- * @since 0.29
+ * @since 0.30
  */
 public final class Reduced<T> implements Scalar<T> {
 
