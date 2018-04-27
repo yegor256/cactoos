@@ -56,4 +56,16 @@ public final class JoinedTest {
         );
     }
 
+    @Test
+    public void callsNextDirectlyOnNonEmptyIterator() {
+        MatcherAssert.assertThat(
+            "Cannot call next method directly on non-empty iterator",
+            new Joined<Integer>(
+                Collections.singleton(1).iterator(),
+                Collections.singleton(2).iterator()
+            ).next(),
+            Matchers.equalTo(1)
+        );
+    }
+
 }

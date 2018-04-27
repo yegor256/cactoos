@@ -77,6 +77,7 @@ public final class Joined<T> implements Iterator<T> {
 
     @Override
     public T next() {
+        this.hasNext();
         return this.current.next();
     }
 }
