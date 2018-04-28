@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import org.cactoos.Func;
 import org.cactoos.Output;
-import org.cactoos.func.UncheckedFunc;
 import org.cactoos.scalar.CheckedScalar;
 
 /**
@@ -48,24 +47,14 @@ public final class CheckedOutput<E extends IOException> implements Output {
     /**
      * Function that wraps exception of {@link #origin} to the required type.
      */
-    private final UncheckedFunc<Exception, E> func;
-
-    /**
-     * Ctor.
-     * @param orig Origin output.
-     * @param fnc Function that wraps exception.
-     */
-    public CheckedOutput(final Output orig, final Func<Exception, E> fnc) {
-        this(orig, new UncheckedFunc<>(fnc));
-    }
+    private final Func<Exception, E> func;
 
     /**
      * Ctor.
      * @param orig Origin output.
      * @param fnc Function that wraps exceptions.
      */
-    public CheckedOutput(final Output orig,
-        final UncheckedFunc<Exception, E> fnc) {
+    public CheckedOutput(final Output orig, final Func<Exception, E> fnc) {
         this.origin = orig;
         this.func = fnc;
     }
