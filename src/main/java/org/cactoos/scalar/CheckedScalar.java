@@ -28,7 +28,8 @@ import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
 
 /**
- * Scalar that throws exception specified by user.
+ * Scalar that wraps an original checked exception thrown by the origin using
+ * the given wrapping function.
  *
  * <p>There is no thread-safety guarantee.
  * @author Vedran Vatavuk (123vgv@gmail.com)

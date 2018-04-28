@@ -59,7 +59,6 @@ public final class CheckedFunc<X, Y, E extends Exception> implements
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Y apply(final X input) throws E {
         return new CheckedScalar<>(
             () -> this.origin.apply(input),

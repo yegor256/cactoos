@@ -23,51 +23,57 @@
  */
 package org.cactoos.func;
 
-import org.cactoos.BiProc;
-import org.cactoos.Func;
-import org.cactoos.scalar.CheckedScalar;
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsNull;
+import org.junit.Test;
 
 /**
- * Procedure that accepts two arguments and throws exception of specified type.
+ * Test case for {@link CheckedProc}.
  *
  * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
- * @param <X> Type of the first input.
- * @param <Y> Type of the second input.
- * @param <E> Exception's type.
  * @since 1.0
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CheckedBiProc<X, Y, E extends Exception> implements
-    BiProc<X, Y> {
+public final class CheckedProcTest {
 
-    /**
-     * Original procedure.
-     */
-    private final BiProc<X, Y> origin;
-    /**
-     * Function that wraps exception of {@link #origin} to the required type.
-     */
-    private final Func<Exception, E> func;
-
-    /**
-     * Ctor.
-     * @param orig Origin procedure.
-     * @param fnc Function that wraps exceptions.
-     */
-    public CheckedBiProc(final BiProc<X, Y> orig,
-        final Func<Exception, E> fnc) {
-        this.origin = orig;
-        this.func = fnc;
-    }
-
-    @Override
-    public void exec(final X first, final Y second) throws E {
-        new CheckedScalar<>(
-            () -> {
-                this.origin.exec(first, second);
-                return (Void) null;
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionIsNotWrapped() throws Exception {
+        new CheckedProc<>(
+            arg -> {
+                throw new IllegalStateException("runtime1");
             },
-            this.func
-        ).value();
+            IOException::new
+        ).exec("arg1");
     }
+
+    @Test(expected = IOException.class)
+    public void checkedExceptionIsWrapped() throws Exception {
+        new CheckedProc<>(
+            arg -> {
+                throw new InterruptedException("runtime2");
+            },
+            IOException::new
+        ).exec("arg2");
+    }
+
+    @Test
+    public void extraWrappingIgnored() {
+        try {
+            new CheckedProc<>(
+                arg -> {
+                    throw new IOException("runtime3");
+                },
+                IOException::new
+            ).exec("arg3");
+        } catch (final IOException exp) {
+            MatcherAssert.assertThat(
+                "Extra wrapping of IOException has been added",
+                exp.getCause(),
+                new IsNull<>()
+            );
+        }
+    }
+
 }

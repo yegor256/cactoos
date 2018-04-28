@@ -62,7 +62,6 @@ public final class CheckedBiFunc<X, Y, Z, E extends Exception> implements
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Z apply(final X first, final Y second) throws E {
         return new CheckedScalar<>(
             () -> this.origin.apply(first, second),

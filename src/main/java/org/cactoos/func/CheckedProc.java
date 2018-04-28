@@ -59,7 +59,6 @@ public final class CheckedProc<X, E extends Exception> implements
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void exec(final X input) throws E {
         new CheckedScalar<>(
             () -> {
