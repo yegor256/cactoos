@@ -42,7 +42,7 @@ public final class IterableOfInts extends IterableEnvelope<Integer> {
     public IterableOfInts(final int... values) {
         super(() -> {
             final Collection<Integer> iterable =
-                new ArrayList<>(values.length - 1);
+                new ArrayList<>(values.length);
             for (final int value: values) {
                 iterable.add(value);
             }

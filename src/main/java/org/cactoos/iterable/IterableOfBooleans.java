@@ -36,8 +36,8 @@ import java.util.Collection;
  *  IteratorOfBytes and IteratorOfDoubles which will take array of their
  *  related primitive types (boolean, char, byte, double) and produce iterator
  *  of reference type (Boolean, Character, Byte, Double).
- *  Refactor appropriate IterableOf* classes to use those newly created
- *  iterators.
+ *  Refactor appropriate IterableOf* classes by using those newly created
+ *  iterators to avoid unnecessary copying elements to a new array.
  */
 public final class IterableOfBooleans extends IterableEnvelope<Boolean> {
 
@@ -48,7 +48,7 @@ public final class IterableOfBooleans extends IterableEnvelope<Boolean> {
     public IterableOfBooleans(final boolean... values) {
         super(() -> {
             final Collection<Boolean> iterable =
-                new ArrayList<>(values.length - 1);
+                new ArrayList<>(values.length);
             for (final boolean value: values) {
                 iterable.add(value);
             }

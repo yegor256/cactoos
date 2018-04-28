@@ -43,7 +43,7 @@ public final class IterableOfDoubles extends IterableEnvelope<Double> {
     public IterableOfDoubles(final double... values) {
         super(() -> {
             final Collection<Double> iterable =
-                new ArrayList<>(values.length - 1);
+                new ArrayList<>(values.length);
             for (final double value: values) {
                 iterable.add(value);
             }

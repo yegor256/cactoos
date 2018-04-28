@@ -42,7 +42,7 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
     public IterableOfChars(final char... chars) {
         super(() -> {
             final Collection<Character> iterable =
-                new ArrayList<>(chars.length - 1);
+                new ArrayList<>(chars.length);
             for (final char chr: chars) {
                 iterable.add(chr);
             }

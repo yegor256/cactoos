@@ -43,7 +43,7 @@ public final class IterableOfShorts extends IterableEnvelope<Short> {
     public IterableOfShorts(final short... values) {
         super(() -> {
             final Collection<Short> iterable =
-                new ArrayList<>(values.length - 1);
+                new ArrayList<>(values.length);
             for (final short value: values) {
                 iterable.add(value);
             }

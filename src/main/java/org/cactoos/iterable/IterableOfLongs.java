@@ -42,7 +42,7 @@ public final class IterableOfLongs extends IterableEnvelope<Long> {
     public IterableOfLongs(final long... values) {
         super(() -> {
             final Collection<Long> iterable =
-                new ArrayList<>(values.length - 1);
+                new ArrayList<>(values.length);
             for (final long value: values) {
                 iterable.add(value);
             }

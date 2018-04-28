@@ -42,7 +42,7 @@ public final class IterableOfBytes extends IterableEnvelope<Byte> {
     public IterableOfBytes(final byte... bytes) {
         super(() -> {
             final Collection<Byte> iterable =
-                new ArrayList<>(bytes.length - 1);
+                new ArrayList<>(bytes.length);
             for (final byte byt: bytes) {
                 iterable.add(byt);
             }

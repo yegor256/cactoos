@@ -36,8 +36,8 @@ import java.util.Collection;
  *  IteratorOfLongs and IteratorOfShorts which will take array of their
  *  related primitive types (float, int, long, short) and produce iterator
  *  of reference type (Float, Integer, Long, Short).
- *  Refactor appropriate IterableOf* classes to use those newly created
- *  iterators.
+ *  Refactor appropriate IterableOf* classes by using those newly created
+ *  iterators to avoid unnecessary copying elements to a new array.
  */
 public final class IterableOfFloats extends IterableEnvelope<Float> {
 
@@ -49,7 +49,7 @@ public final class IterableOfFloats extends IterableEnvelope<Float> {
     public IterableOfFloats(final float... values) {
         super(() -> {
             final Collection<Float> iterable =
-                new ArrayList<>(values.length - 1);
+                new ArrayList<>(values.length);
             for (final float value: values) {
                 iterable.add(value);
             }
