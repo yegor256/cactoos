@@ -32,6 +32,12 @@ import java.util.Collection;
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @since 1.0
+ * @todo #748:30min Introduce IteratorOfFloats, IteratorOfInts,
+ *  IteratorOfLongs and IteratorOfShorts which will take array of their
+ *  related primitive types (float, int, long, short) and produce iterator
+ *  of reference type (Float, Integer, Long, Short).
+ *  Refactor appropriate IterableOf* classes to use those newly created
+ *  iterators.
  */
 public final class IterableOfFloats extends IterableEnvelope<Float> {
 

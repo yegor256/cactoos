@@ -32,6 +32,12 @@ import java.util.Collection;
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @since 1.0
+ * @todo #748:30min Introduce IteratorOfBooleans, IteratorOfChars,
+ *  IteratorOfBytes and IteratorOfDoubles which will take array of their
+ *  related primitive types (boolean, char, byte, double) and produce iterator
+ *  of reference type (Boolean, Character, Byte, Double).
+ *  Refactor appropriate IterableOf* classes to use those newly created
+ *  iterators.
  */
 public final class IterableOfBooleans extends IterableEnvelope<Boolean> {
 
