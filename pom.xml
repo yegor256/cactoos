@@ -82,6 +82,11 @@ The MIT License (MIT)
     </site>
   </distributionManagement>
   <dependencies>
+    <!--
+      @todo #720:30min When https://github.com/teamed/qulice/issues/877 is
+       fixed upgrade qulice dependency to the one that contains the fix
+       and fix any issues in the project that result from this upgrade.
+    -->
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>

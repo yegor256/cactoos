@@ -24,12 +24,15 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.matchers.MatcherOf;
 import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link TeeOutput}.
@@ -40,6 +43,11 @@ import org.junit.Test;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class TeeOutputTest {
+    /**
+     * Temporary files generator.
+     */
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void copiesContent() {
@@ -126,7 +134,7 @@ public final class TeeOutputTest {
     @Test
     public void copiesWithPath() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final TempFile file = new TempFile();
+        final File file = this.folder.newFile();
         MatcherAssert.assertThat(
             "Can't copy Output with path",
             new TextOf(
@@ -134,7 +142,7 @@ public final class TeeOutputTest {
                     new InputOf("Hello, товарищ! with path"),
                     new TeeOutput(
                         new OutputTo(baos),
-                        file.value()
+                        file.toPath()
                     )
                 )
             ),
@@ -142,7 +150,7 @@ public final class TeeOutputTest {
                 new MatcherOf<>(
                     str -> {
                         return new String(
-                            new TextOf(file.value()).asString()
+                            new TextOf(file.toPath()).asString()
                         ).equals(str);
                     }
                 )
@@ -153,7 +161,7 @@ public final class TeeOutputTest {
     @Test
     public void copiesWithFile() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final TempFile file = new TempFile();
+        final File file = this.folder.newFile();
         MatcherAssert.assertThat(
             "Can't copy Output with file",
             new TextOf(
@@ -161,7 +169,7 @@ public final class TeeOutputTest {
                     new InputOf("Hello, товарищ! with file"),
                     new TeeOutput(
                         new OutputTo(baos),
-                        file.value().toFile()
+                        file
                     )
                 )
             ),
@@ -169,7 +177,7 @@ public final class TeeOutputTest {
                 new MatcherOf<>(
                     str -> {
                         return new String(
-                            new TextOf(file.value()).asString()
+                            new TextOf(file.toPath()).asString()
                         ).equals(str);
                     }
                 )

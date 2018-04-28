@@ -33,7 +33,9 @@ import org.cactoos.matchers.InputHasContent;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link InputStreamOf}.
@@ -46,10 +48,16 @@ import org.junit.Test;
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class InputStreamOfTest {
+    /**
+     * Temporary files and folders generator.
+     */
+    @Rule
+    public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void readsSimpleFileContent() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final Path temp = this.folder.newFile("cactoos-1.txt-1")
+            .toPath();
         final String content = "Hello, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
@@ -91,7 +99,7 @@ public final class InputStreamOfTest {
 
     @Test
     public void readsFileContent() throws IOException {
-        final File file = File.createTempFile("readFileContent", "txt-2");
+        final File file = this.folder.newFile("readFileContent.txt-2");
         final String content = "Content in a file";
         new LengthOf(
             new TeeInput(content, file)
@@ -137,7 +145,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsFromUri() throws IOException {
         final String content = "Content for reading through URI";
-        final File file = File.createTempFile("readFromUri", "txt-3");
+        final File file = this.folder.newFile("readFromUri.txt-3");
         new LengthOf(
             new TeeInput(content, file)
         ).intValue();
@@ -151,7 +159,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsFromUrl() throws IOException {
         final String content = "Content for reading through URL";
-        final File file = File.createTempFile("readFromUrl", "txt-4");
+        final File file = this.folder.newFile("readFromUrl.txt-4");
         new LengthOf(
             new TeeInput(content, file)
         ).intValue();
@@ -212,7 +220,7 @@ public final class InputStreamOfTest {
 
     @Test
     public void readsFromTextWithCharset() throws IOException {
-        final File file = File.createTempFile("readTextWithCharset", "txt-5");
+        final File file = this.folder.newFile("readTextWithCharset.txt-5");
         final String content = "Content for reading text with charset";
         new LengthOf(
             new TeeInput(content, file)

@@ -31,7 +31,9 @@ import java.io.OutputStream;
 import java.util.zip.GZIPInputStream;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link org.cactoos.io.GzipOutput}.
@@ -42,6 +44,11 @@ import org.junit.Test;
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class GzipOutputTest {
+    /**
+     * Temporary files and folders generator.
+     */
+    @Rule
+    public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void writeToGzipOutput() throws Exception {
@@ -72,7 +79,7 @@ public final class GzipOutputTest {
     @Test(expected = IOException.class)
     public void writeToClosedGzipOutput() throws Exception {
         final OutputStream stream = new FileOutputStream(
-            new TempFile("cactoos", "txt").value().toFile()
+            this.folder.newFile("cactoos.txt")
         );
         stream.close();
         new LengthOf(

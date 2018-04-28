@@ -21,54 +21,64 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+
+package org.cactoos.bytes;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.util.Arrays;
+import org.cactoos.io.BytesOf;
 import org.cactoos.matchers.MatcherOf;
-import org.cactoos.matchers.TextHasString;
+import org.cactoos.text.HexOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
- * Test case for {@link WriterTo}.
+ * Test case for {@link HexBytes}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Alexander Menshikov (sharplermc@gmail.com)
  * @version $Id$
- * @since 0.13
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @since 0.29
+ * @checkstyle MagicNumberCheck (500 line)
+ * @checkstyle JavadocMethodCheck (500 line)
  */
-public final class WriterToTest {
-    /**
-     * Temporary files and folders generator.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+public final class HexBytesTest {
 
     @Test
-    public void writesLargeContentToFile() throws IOException {
-        final Path temp = this.folder.newFile("cactoos-1.txt-1")
-            .toPath();
+    public void empytText() throws IOException {
         MatcherAssert.assertThat(
-            "Can't copy Input to Output and return Input",
-            new TextOf(
-                new TeeInput(
-                    new ResourceOf("org/cactoos/large-text.txt"),
-                    new WriterAsOutput(new WriterTo(temp))
+            "Can't represent an empty hexadecimal text",
+            new HexBytes(new TextOf("")).asBytes(),
+            new MatcherOf<>(array -> array.length == 0)
+        );
+    }
+
+    @Test
+    public void validHex() throws IOException {
+        final byte[] bytes = new byte[256];
+        for (int index = 0; index < 256; ++index) {
+            bytes[index] = (byte) (index + Byte.MIN_VALUE);
+        }
+        MatcherAssert.assertThat(
+            "Can't convert hexadecimal text to bytes",
+            new HexBytes(
+                new HexOf(
+                    new BytesOf(bytes)
                 )
-            ),
-            new TextHasString(
-                new MatcherOf<>(
-                    str -> {
-                        return new TextOf(temp).asString().equals(str);
-                    }
-                )
+            ).asBytes(),
+            new MatcherOf<>(
+                (byte[] array) -> Arrays.equals(bytes, array)
             )
         );
     }
 
+    @Test(expected = IOException.class)
+    public void invalidHexLength() throws IOException {
+        new HexBytes(new TextOf("ABF")).asBytes();
+    }
+
+    @Test(expected = IOException.class)
+    public void invalidHex() throws IOException {
+        new HexBytes(new TextOf("ABG!")).asBytes();
+    }
 }
