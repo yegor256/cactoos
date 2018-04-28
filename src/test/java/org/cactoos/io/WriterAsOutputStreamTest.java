@@ -35,7 +35,9 @@ import org.cactoos.matchers.ScalarHasValue;
 import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link WriterAsOutputStream}.
@@ -48,6 +50,11 @@ import org.junit.Test;
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class WriterAsOutputStreamTest {
+    /**
+     * Temporary files and folders generator.
+     */
+    @Rule
+    public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void writesToByteArray() {
@@ -84,7 +91,8 @@ public final class WriterAsOutputStreamTest {
 
     @Test
     public void writesLargeContentToFile() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final Path temp = this.folder.newFile("cactoos-1.txt-1")
+            .toPath();
         MatcherAssert.assertThat(
             "Can't copy Input to Output and return Input",
             new TextOf(
@@ -115,7 +123,7 @@ public final class WriterAsOutputStreamTest {
 
     @Test
     public void writesToFileAndRemovesIt() throws Exception {
-        final Path temp = new TempFile().value();
+        final Path temp = this.folder.newFile().toPath();
         final String content = "Hello, товарищ! How are you?";
         new LengthOf(
             new TeeInput(
