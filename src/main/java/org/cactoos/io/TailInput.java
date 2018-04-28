@@ -26,7 +26,6 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import org.cactoos.Input;
 import org.cactoos.text.FormattedText;
 
@@ -34,6 +33,7 @@ import org.cactoos.text.FormattedText;
  * Input showing only last N bytes of the stream.
  *
  * <p>There is no thread-safety guarantee.
+ *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.30
@@ -90,22 +90,15 @@ public final class TailInput implements Input {
         final byte[] buffer = new byte[this.max];
         final byte[] response = new byte[this.count];
         int num = 0;
-        final InputStream stream = this.input.stream();
-        while (true) {
-            final int read = stream.read(buffer);
-            if (read <= 0) {
-                break;
-            }
+        final InputStream strm = this.input.stream();
+        for (int read = strm.read(buffer); read > 0; read = strm.read(buffer)) {
             if (read < this.max && read < this.count) {
                 num = this.copy(buffer, response, num, read);
-                break;
-            }
-            System.arraycopy(
-                buffer, read - this.count, response, 0, this.count
-            );
-            num = Math.min(this.count, read);
-            if (read < this.max) {
-                break;
+            } else {
+                System.arraycopy(
+                    buffer, read - this.count, response, 0, this.count
+                );
+                num = Math.min(this.count, read);
             }
         }
         return new ByteArrayInputStream(response, 0, num);
@@ -125,8 +118,7 @@ public final class TailInput implements Input {
         final int result;
         if (num > 0) {
             System.arraycopy(
-                Arrays.copyOfRange(response, read, this.count),
-                0, response, 0, this.count - read
+                response, read, response, 0, this.count - read
             );
             System.arraycopy(buffer, 0, response, this.count - read, read);
             result = this.count;
