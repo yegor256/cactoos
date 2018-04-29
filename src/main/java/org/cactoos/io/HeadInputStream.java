@@ -75,19 +75,19 @@ public final class HeadInputStream extends InputStream {
 
     @Override
     public int read(final byte[] buf) throws IOException {
-        int max = -1;
+        int count = -1;
         if (this.bytesread < this.length) {
             final int predlength = this.bytesread + buf.length;
             if (predlength > this.length) {
-                max =  this.read(buf, 0, this.length);
+                count =  this.read(buf, 0, this.length);
             } else {
-                max =  this.read(buf, 0, buf.length);
+                count =  this.read(buf, 0, buf.length);
             }
         }
-        if (max != -1) {
-            this.bytesread += max;
+        if (count != -1) {
+            this.bytesread += count;
         }
-        return max;
+        return count;
     }
 
     @Override
