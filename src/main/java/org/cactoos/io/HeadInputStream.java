@@ -48,9 +48,9 @@ public final class HeadInputStream extends InputStream {
     private final int length;
 
     /**
-     * Bytesread.
+     * Read.
      */
-    private int bytesread;
+    private int read;
 
     /**
      * Ctor.
@@ -66,9 +66,9 @@ public final class HeadInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         int data = -1;
-        if (this.bytesread < this.length) {
+        if (this.read < this.length) {
             data = this.input.read();
-            this.bytesread += 1;
+            this.read += 1;
         }
         return data;
     }
@@ -76,8 +76,8 @@ public final class HeadInputStream extends InputStream {
     @Override
     public int read(final byte[] buf) throws IOException {
         int count = -1;
-        if (this.bytesread < this.length) {
-            final int predlength = this.bytesread + buf.length;
+        if (this.read < this.length) {
+            final int predlength = this.read + buf.length;
             if (predlength > this.length) {
                 count =  this.read(buf, 0, this.length);
             } else {
@@ -85,7 +85,7 @@ public final class HeadInputStream extends InputStream {
             }
         }
         if (count != -1) {
-            this.bytesread += count;
+            this.read += count;
         }
         return count;
     }
@@ -94,7 +94,7 @@ public final class HeadInputStream extends InputStream {
     public int read(final byte[] buf, final int offset,
         final int len) throws IOException {
         int max = -1;
-        if (this.bytesread < this.length) {
+        if (this.read < this.length) {
             if (offset > this.length && len > this.length) {
                 max = this.input.read(buf, this.length, this.length);
             } else if (len < this.length) {
@@ -106,14 +106,14 @@ public final class HeadInputStream extends InputStream {
             }
         }
         if (max != -1) {
-            this.bytesread += max;
+            this.read += max;
         }
         return max;
     }
 
     @Override
     public long skip(final long num) throws IOException {
-        this.bytesread += num;
+        this.read += num;
         return this.input.skip(num);
     }
 
