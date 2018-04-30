@@ -23,52 +23,57 @@
  */
 package org.cactoos.io;
 
+import java.io.EOFException;
 import java.io.IOException;
-import java.nio.file.Path;
-import org.cactoos.matchers.MatcherOf;
-import org.cactoos.matchers.TextHasString;
-import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
-import org.junit.Rule;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
- * Test case for {@link WriterTo}.
+ * Test case for {@link CheckedInput}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
- * @since 0.13
+ * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class WriterToTest {
-    /**
-     * Temporary files and folders generator.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+public final class CheckedInputTest {
 
-    @Test
-    public void writesLargeContentToFile() throws IOException {
-        final Path temp = this.folder.newFile("cactoos-1.txt-1")
-            .toPath();
-        MatcherAssert.assertThat(
-            "Can't copy Input to Output and return Input",
-            new TextOf(
-                new TeeInput(
-                    new ResourceOf("org/cactoos/large-text.txt"),
-                    new WriterAsOutput(new WriterTo(temp))
-                )
-            ),
-            new TextHasString(
-                new MatcherOf<>(
-                    str -> {
-                        return new TextOf(temp).asString().equals(str);
-                    }
-                )
-            )
-        );
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionIsNotWrapped() throws Exception {
+        new CheckedInput<>(
+            () -> {
+                throw new IllegalStateException("runtime1");
+            },
+            IOException::new
+        ).stream();
     }
 
+    @Test(expected = IOException.class)
+    public void checkedExceptionIsWrapped() throws Exception {
+        new CheckedInput<>(
+            () -> {
+                throw new EOFException("runtime2");
+            },
+            IOException::new
+        ).stream();
+    }
+
+    @Test
+    public void extraWrappingIgnored() {
+        try {
+            new CheckedInput<>(
+                () -> {
+                    throw new IOException("runtime3");
+                },
+                IOException::new
+            ).stream();
+        } catch (final IOException exp) {
+            MatcherAssert.assertThat(
+                "Extra wrapping of IOException has been added",
+                exp.getCause(),
+                new IsNull<>()
+            );
+        }
+    }
 }

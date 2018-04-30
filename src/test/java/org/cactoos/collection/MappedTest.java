@@ -25,12 +25,12 @@ package org.cactoos.collection;
 
 import java.io.IOException;
 import java.util.AbstractCollection;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Endless;
+import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
@@ -44,6 +44,7 @@ import org.junit.Test;
  * @since 0.14
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class MappedTest {
 
@@ -89,7 +90,7 @@ public final class MappedTest {
             "Can't convert to string",
             new Mapped<Integer, Integer>(
                 x -> x * 2,
-                Arrays.asList(1, 2, 3)
+                new ListOf<>(1, 2, 3)
             ).toString(),
             Matchers.equalTo("2, 4, 6")
         );

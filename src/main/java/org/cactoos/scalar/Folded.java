@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Folds iterable via BiFunc.
@@ -96,6 +97,19 @@ public final class Folded<T> implements Scalar<T> {
     ) {
         this.items = scalars;
         this.function = fold;
+    }
+
+    /**
+     * Ctor.
+     * @param fold Folding function
+     * @param values Values to be wrapped as scalars
+     */
+    @SafeVarargs
+    public Folded(
+        final BiFunc<T, T, T> fold,
+        final T... values
+    ) {
+        this(fold, new Mapped<>(Constant::new, values));
     }
 
     @Override

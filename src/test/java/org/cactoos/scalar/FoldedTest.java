@@ -99,4 +99,21 @@ public final class FoldedTest {
             Matchers.equalTo(three)
         );
     }
+
+    @Test
+    public void constructedFromVarargs() throws Exception {
+        final String one = "One";
+        final String two = "Two";
+        final String three = "Three";
+        MatcherAssert.assertThat(
+            "Can't concatenate the strings in vararg array",
+            new Folded<>(
+                (first, last) -> first + last,
+                one,
+                two,
+                three
+            ).value(),
+            Matchers.equalTo("OneTwoThree")
+        );
+    }
 }

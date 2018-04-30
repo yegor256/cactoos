@@ -27,13 +27,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.matchers.MatcherOf;
 import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link WriterAsOutput}.
@@ -45,10 +46,16 @@ import org.junit.Test;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class WriterAsOutputTest {
+    /**
+     * Temporary files and folders generator.
+     */
+    @Rule
+    public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void writesLargeContentToFile() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final Path temp = this.folder.newFile("cactoos-1.txt-1")
+            .toPath();
         MatcherAssert.assertThat(
             "Can't copy Input to Output and return Input",
             new TextOf(

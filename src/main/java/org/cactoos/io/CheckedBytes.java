@@ -21,70 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.io;
 
-import org.cactoos.BiFunc;
-import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
+import java.io.IOException;
+import org.cactoos.Bytes;
+import org.cactoos.Func;
+import org.cactoos.scalar.CheckedScalar;
 
 /**
- * Iterable, which elements are "reduced" through the func.
+ * Bytes that throws exception of specified type.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
- * @param <T> Type of element
- * @param <X> Type of input and output
- * @since 0.9
+ * @param <E> Exception's type.
+ * @since 0.31
  */
-public final class Reduced<X, T> implements Scalar<X> {
+public final class CheckedBytes<E extends IOException> implements Bytes {
 
     /**
-     * Original iterable.
+     * Original bytes.
      */
-    private final Iterable<T> iterable;
+    private final Bytes origin;
 
     /**
-     * Input.
+     * Function that wraps exception of {@link #origin} to the required type.
      */
-    private final X input;
-
-    /**
-     * Func.
-     */
-    private final BiFunc<X, T, X> func;
+    private final Func<Exception, E> func;
 
     /**
      * Ctor.
-     * @param ipt Input
-     * @param fnc Func original
-     * @param list List of items
+     * @param orig Origin bytes.
+     * @param fnc Function that wraps exceptions.
      */
-    public Reduced(final X ipt, final BiFunc<X, T, X> fnc,
-        final Iterable<T> list) {
-        this.iterable = list;
-        this.input = ipt;
+    public CheckedBytes(final Bytes orig, final Func<Exception, E> fnc) {
+        this.origin = orig;
         this.func = fnc;
     }
 
-    /**
-     * Ctor.
-     * @param ipt Input
-     * @param fnc Func original
-     * @param list Array of items
-     */
-    @SafeVarargs
-    public Reduced(final X ipt, final BiFunc<X, T, X> fnc,
-        final T... list) {
-        this(ipt, fnc, new IterableOf<>(list));
-    }
-
     @Override
-    public X value() throws Exception {
-        X memo = this.input;
-        for (final T item : this.iterable) {
-            memo = this.func.apply(memo, item);
-        }
-        return memo;
+    public byte[] asBytes() throws E {
+        return new CheckedScalar<>(
+            this.origin::asBytes,
+            this.func
+        ).value();
     }
-
 }
