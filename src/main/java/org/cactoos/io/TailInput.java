@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
+import org.cactoos.scalar.MinOf;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -98,7 +99,7 @@ public final class TailInput implements Input {
                 System.arraycopy(
                     buffer, read - this.count, response, 0, this.count
                 );
-                num = Math.min(this.count, read);
+                num = new MinOf(this.count, read).intValue();
             }
         }
         return new ByteArrayInputStream(response, 0, num);
