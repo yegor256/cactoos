@@ -23,8 +23,8 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Collections;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -46,14 +46,31 @@ public final class JoinedTest {
                 new IteratorNoNulls<>(
                     new Joined<Iterator<String>>(
                         new Mapped<>(
-                            input -> Collections.singleton(input).iterator(),
-                            Collections.singleton("x").iterator()
+                            input -> new IteratorOf<>(input),
+                            new IteratorOf<>("x")
                         )
                     )
                 )
             ).intValue(),
             Matchers.equalTo(1)
         );
+    }
+
+    @Test
+    public void callsNextDirectlyOnNonEmptyIterator() {
+        MatcherAssert.assertThat(
+            "Cannot call next method directly on non-empty iterator",
+            new Joined<Integer>(
+                new IteratorOf<>(1),
+                new IteratorOf<>(2)
+            ).next(),
+            Matchers.equalTo(1)
+        );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void throwsExceptionWhenCallNextOnEmptyIterator() {
+        new Joined<Integer>(new IteratorOf<>()).next();
     }
 
 }
