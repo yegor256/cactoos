@@ -63,25 +63,6 @@ public final class CheckedBiFuncTest {
     }
 
     @Test
-    public void checkedExceptionIsWrapped() {
-        try {
-            new CheckedBiFunc<>(
-                (first, second) -> {
-                    throw new InterruptedException("runtime2");
-                },
-                IOException::new
-            ).apply("first2", "second2");
-            Assert.fail("No IOException has been thrown");
-        } catch (final IOException exp) {
-            MatcherAssert.assertThat(
-                "IOException has unexpected message",
-                exp.getMessage(),
-                new IsEqual<>("java.lang.InterruptedException: runtime2")
-            );
-        }
-    }
-
-    @Test
     public void extraWrappingIgnored() {
         try {
             new CheckedBiFunc<>(
