@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -115,7 +114,7 @@ public final class StickyListTest {
     @Test
     public void testContainsAll() {
         MatcherAssert.assertThat(
-            new StickyList<>(1, 2).containsAll(Arrays.asList(1, 2)),
+            new StickyList<>(1, 2).containsAll(new ListOf<>(1, 2)),
             Matchers.equalTo(true)
         );
     }

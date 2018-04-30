@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Arrays;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.cactoos.list.ListOf;
 import org.cactoos.matchers.RunsInThreads;
@@ -51,7 +50,7 @@ public final class SyncIteratorTest {
             "Unexpected value found.",
             new ListOf<>(
                 new SyncIterator<>(
-                    Arrays.asList("a", "b").iterator(), lock
+                    new ListOf<>("a", "b").iterator(), lock
                 )
             ).toArray(),
             Matchers.equalTo(new Object[]{"a", "b"})
@@ -64,7 +63,7 @@ public final class SyncIteratorTest {
             "Unexpected value found.",
             new ListOf<>(
                 new SyncIterator<>(
-                    Arrays.asList("a", "b").iterator()
+                    new ListOf<>("a", "b").iterator()
                 )
             ).toArray(),
             Matchers.equalTo(new Object[]{"a", "b"})
@@ -89,7 +88,7 @@ public final class SyncIteratorTest {
                 },
                 new RunsInThreads<>(
                     new SyncIterator<>(
-                        Arrays.asList("a", "b").iterator()
+                        new ListOf<>("a", "b").iterator()
                     ),
                     2
                 )
@@ -129,7 +128,7 @@ public final class SyncIteratorTest {
                 },
                 new RunsInThreads<>(
                     new SyncIterator<>(
-                        Arrays.asList("a", "b").iterator()
+                        new ListOf<>("a", "b").iterator()
                     ),
                     2
                 )

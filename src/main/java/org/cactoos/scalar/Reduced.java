@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Reduces iterable via BiFunc.
@@ -96,6 +97,18 @@ public final class Reduced<T> implements Scalar<T> {
     ) {
         this.items = scalars;
         this.function = fnc;
+    }
+
+    /**
+     * Ctor.
+     * @param ipt Input
+     * @param fnc Func original
+     * @param list Array of items
+     */
+    @SafeVarargs
+    public Reduced(final X ipt, final BiFunc<X, T, X> fnc,
+        final T... list) {
+        this(ipt, fnc, new IterableOf<>(list));
     }
 
     @Override

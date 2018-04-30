@@ -25,6 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Iterable, which elements are "reduced" through the func.
@@ -63,6 +64,19 @@ public final class Folded<X, T> implements Scalar<X> {
         this.iterable = list;
         this.input = ipt;
         this.func = fnc;
+    }
+
+    /**
+     * Ctor.
+     * @param fold Folding function
+     * @param values Values to be wrapped as scalars
+     */
+    @SafeVarargs
+    public Folded(
+        final BiFunc<T, T, T> fold,
+        final T... values
+    ) {
+        this(fold, new Mapped<>(Constant::new, values));
     }
 
     @Override

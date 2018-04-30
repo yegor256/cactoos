@@ -39,7 +39,9 @@ import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
 
@@ -56,6 +58,11 @@ import org.takes.tk.TkHtml;
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class InputOfTest {
+    /**
+     * Temporary files and folders generator.
+     */
+    @Rule
+    public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void readsAlternativeInputForFileCase() throws IOException {
@@ -75,7 +82,8 @@ public final class InputOfTest {
 
     @Test
     public void readsSimpleFileContent() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final Path temp = this.folder.newFile("cactoos-1.txt-1")
+            .toPath();
         final String content = "Hello, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(

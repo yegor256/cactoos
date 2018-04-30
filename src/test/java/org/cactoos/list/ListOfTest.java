@@ -23,7 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -148,7 +147,7 @@ public final class ListOfTest {
         MatcherAssert.assertThat(
             "Can't compare using equals.",
             new ListOf<>(1, 2),
-            new IsEqual<>(Arrays.asList(1, 2))
+            new IsEqual<>(new ListOf<>(1, 2))
         );
     }
 

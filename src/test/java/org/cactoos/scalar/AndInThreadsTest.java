@@ -24,7 +24,6 @@
 package org.cactoos.scalar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -176,7 +175,7 @@ public final class AndInThreadsTest {
         );
         new AndInThreads(
             new Proc.NoNulls<Integer>(list::add),
-            Arrays.asList(1, 2)
+                new ListOf<>(1, 2)
         ).value();
         MatcherAssert.assertThat(
             list,
@@ -223,7 +222,7 @@ public final class AndInThreadsTest {
         new AndInThreads(
             service,
             new Proc.NoNulls<Integer>(list::add),
-            Arrays.asList(1, 2)
+                new ListOf<>(1, 2)
         ).value();
         MatcherAssert.assertThat(
             list,

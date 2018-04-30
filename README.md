@@ -269,6 +269,7 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
   - [@llorllale](https://github.com/llorllale) as George Aristy
   - [@driver733](https://github.com/driver733) as Mikhail Yakushin
+  - [@izrik](https://github.com/izrik) as Richard Sartor
 
 
 ## License (MIT)
