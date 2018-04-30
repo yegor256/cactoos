@@ -94,15 +94,27 @@ public final class TailInput implements Input {
         final InputStream strm = this.input.stream();
         for (int read = strm.read(buffer); read > 0; read = strm.read(buffer)) {
             if (read < this.max && read < this.count) {
-                num = this.copy(buffer, response, num, read);
+                num = this.copyPartial(buffer, response, num, read);
             } else {
-                System.arraycopy(
-                    buffer, read - this.count, response, 0, this.count
-                );
-                num = new MinOf(this.count, read).intValue();
+                num = this.copy(buffer, response, read);
             }
         }
         return new ByteArrayInputStream(response, 0, num);
+    }
+
+    /**
+     * Copy full buffer to response.
+     * @param buffer The buffer array
+     * @param response The response array
+     * @param read Number of bytes read in buffer
+     * @return Number of bytes in the response buffer
+     */
+    private int copy(final byte[] buffer, final byte[] response,
+        final int read) {
+        System.arraycopy(
+            buffer, read - this.count, response, 0, this.count
+        );
+        return new MinOf(this.count, read).intValue();
     }
 
     /**
@@ -114,8 +126,8 @@ public final class TailInput implements Input {
      * @return New count of bytes in the response array
      * @checkstyle ParameterNumberCheck (3 lines)
      */
-    private int copy(final byte[] buffer, final byte[] response, final int num,
-        final int read) {
+    private int copyPartial(final byte[] buffer, final byte[] response,
+        final int num, final int read) {
         final int result;
         if (num > 0) {
             System.arraycopy(
