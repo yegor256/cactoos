@@ -33,6 +33,12 @@ import org.cactoos.func.UncheckedFunc;
  *
  * <p>There is no thread-safety guarantee.
  *
+ * @author Vedran Vatavuk (123vgv@gmail.com)
+ * @version $Id$
+ * @param <T> Type of result
+ * @param <E> Type of exception
+ * @since 0.30
+ *
  * @todo #736:30min Create CheckedBiFunc, CheckedBiProc, CheckedFunc,
  * CheckedProc based on this class (see CheckedBytes for example). Pay
  * attention to a problem with testing these classes: CodeCov doesn't
@@ -40,12 +46,6 @@ import org.cactoos.func.UncheckedFunc;
  * throwing exceptions (see https://github.com/jacoco/jacoco/issues/370). So,
  * I would suggest to investigate into this problem at first, find solution
  * for that and then start with implementation of the classes.
- *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
- * @param <T> Type of result
- * @param <E> Type of exception
- * @since 0.30
  */
 public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
 
