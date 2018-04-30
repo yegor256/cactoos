@@ -24,7 +24,6 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
-import org.cactoos.scalar.ScalarWithFallback;
 
 /**
  * Func with a fallback plan.
@@ -78,11 +77,19 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Y apply(final X input) throws Exception {
-        return new ScalarWithFallback<>(
-            () -> this.func.apply(input),
-            this.fallback,
-            this.follow
-        ).value();
+        Y result;
+        try {
+            result = this.func.apply(input);
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            result = this.fallback.apply(ex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Throwable ex) {
+            result = this.fallback.apply(ex);
+        }
+        return this.follow.apply(result);
     }
+
 }

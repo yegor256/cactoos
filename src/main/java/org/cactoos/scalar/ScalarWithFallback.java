@@ -23,8 +23,14 @@
  */
 package org.cactoos.scalar;
 
+import java.util.Comparator;
+import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.func.FallbackFrom;
+import org.cactoos.iterator.Filtered;
+import org.cactoos.iterator.Sorted;
+import org.cactoos.map.MapOf;
 
 /**
  * Scalar with a fallback plan.
@@ -34,7 +40,7 @@ import org.cactoos.Scalar;
  * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
  * @param <T> Type of result
- * @since 1.0
+ * @since 0.31
  */
 public final class ScalarWithFallback<T> implements Scalar<T> {
 
@@ -46,7 +52,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     /**
      * The fallback.
      */
-    private final Func<Throwable, T> fallback;
+    private final Iterable<FallbackFrom<T>> fallbacks;
 
     /**
      * The follow up.
@@ -55,25 +61,16 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param orig The origin scalar
-     * @param fbk The fallback
+     * @param origin Original scalar.
+     * @param fbks Fallbacks.
+     * @param follow Follow up function.
      */
-    public ScalarWithFallback(final Scalar<T> orig,
-        final Func<Throwable, T> fbk) {
-        this(orig, fbk, input -> input);
-    }
-
-    /**
-     * Ctor.
-     * @param orig The origin scalar
-     * @param fbk The fallback
-     * @param flw The follow up function
-     */
-    public ScalarWithFallback(final Scalar<T> orig,
-        final Func<Throwable, T> fbk, final Func<T, T> flw) {
-        this.origin = orig;
-        this.fallback = fbk;
-        this.follow = flw;
+    public ScalarWithFallback(final Scalar<T> origin,
+        final Iterable<FallbackFrom<T>> fbks,
+        final Func<T, T> follow) {
+        this.origin = origin;
+        this.fallbacks = fbks;
+        this.follow = follow;
     }
 
     @Override
@@ -84,11 +81,44 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
             result = this.origin.value();
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
-            result = this.fallback.apply(ex);
+            result = this.fallback(ex.getClass()).apply(ex);
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Throwable ex) {
-            result = this.fallback.apply(ex);
+            result = this.fallback(ex.getClass()).apply(ex);
         }
         return this.follow.apply(result);
+    }
+
+    /**
+     * Finds the best fallback for the given exception type or throw an error
+     * if no fallback is found.
+     * @param exp Exception type.
+     * @return The most suitable fallback.
+     */
+    private FallbackFrom<T> fallback(final Class<? extends Throwable> exp) {
+        final Sorted<Map.Entry<FallbackFrom<T>, Integer>> candidates =
+            new Sorted<>(
+                Comparator.comparing(Map.Entry::getValue),
+                new Filtered<>(
+                    entry -> new Not(
+                        new Equals<>(
+                            entry::getValue,
+                            () -> Integer.MAX_VALUE
+                        )
+                    ).value(),
+                    new MapOf<>(
+                        fbk -> fbk,
+                        fbk -> fbk.support(exp),
+                        this.fallbacks
+                    ).entrySet().iterator()
+                )
+            );
+        if (candidates.hasNext()) {
+            return candidates.next().getKey();
+        } else {
+            throw new IllegalStateException(
+                "Couldn't find appropriate fallback"
+            );
+        }
     }
 }
