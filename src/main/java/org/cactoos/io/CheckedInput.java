@@ -35,7 +35,7 @@ import org.cactoos.scalar.CheckedScalar;
  * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
  * @param <E> Exception's type.
- * @since 1.0
+ * @since 0.31
  */
 public final class CheckedInput<E extends IOException> implements Input {
 
