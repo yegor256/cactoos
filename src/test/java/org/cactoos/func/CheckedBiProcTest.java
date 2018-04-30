@@ -25,11 +25,15 @@ package org.cactoos.func;
 
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * Test case for {@link CheckedBiProc}.
+ * Some of tests don't use {@code @Test(expected = ...} intentionally as such
+ * tests aren't included into test coverage statistic.
  *
  * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
@@ -38,24 +42,43 @@ import org.junit.Test;
  */
 public final class CheckedBiProcTest {
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void runtimeExceptionIsNotWrapped() throws Exception {
-        new CheckedBiProc<>(
-            (first, second) -> {
-                throw new IllegalStateException("runtime1");
-            },
-            IOException::new
-        ).exec("first1", "second1");
+        final String message = "runtime1";
+        try {
+            new CheckedBiProc<>(
+                (first, second) -> {
+                    throw new IllegalStateException(message);
+                },
+                IOException::new
+            ).exec("first1", "second1");
+            Assert.fail("No IllegalStateException has been thrown");
+        } catch (final IllegalStateException exp) {
+            MatcherAssert.assertThat(
+                "IllegalStateException has unexpected message",
+                exp.getMessage(),
+                new IsEqual<>(message)
+            );
+        }
     }
 
-    @Test(expected = IOException.class)
-    public void checkedExceptionIsWrapped() throws Exception {
-        new CheckedBiProc<>(
-            (first, second) -> {
-                throw new InterruptedException("runtime2");
-            },
-            IOException::new
-        ).exec("first2", "second2");
+    @Test
+    public void checkedExceptionIsWrapped() {
+        try {
+            new CheckedBiProc<>(
+                (first, second) -> {
+                    throw new InterruptedException("runtime2");
+                },
+                IOException::new
+            ).exec("first2", "second2");
+            Assert.fail("No IOException has been thrown");
+        } catch (final IOException exp) {
+            MatcherAssert.assertThat(
+                "IOException has unexpected message",
+                exp.getMessage(),
+                new IsEqual<>("java.lang.InterruptedException: runtime2")
+            );
+        }
     }
 
     @Test
