@@ -210,6 +210,30 @@ new And(
 ).value();
 ```
 
+## Dates and Times
+From our `org.cactoos.time` package.
+
+Our classes are divided in two groups: those that parse strings into date/time objects, and those that format those objects into strings.
+
+For example, this is the traditional way of parsing a string into an [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html):
+
+```java
+final OffsetDateTime date = OffsetDateTime.parse("2007-12-03T10:15:30+01:00");
+```
+
+Here is its object-oriented alternative (no static method calls!) using `OffsetDateTimeOf`, which is a `Scalar`:
+
+```java
+final OffsetDateTime date = new OffsetDateTimeOf("2007-12-03T10:15:30+01:00").value();
+```
+
+To format an `OffsetDateTime` into a `Text`:
+
+```java
+final OffsetDateTime date = ...;
+final OffsetDateTimeAsText text = new OffsetDateTimeAsText(date);
+```
+
 ## Our objects vs. their static methods
 
 Cactoos | Guava | Apache Commons | JDK 8
