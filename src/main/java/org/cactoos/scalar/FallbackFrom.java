@@ -21,12 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.scalar;
 
 import org.cactoos.Func;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.InheritanceLevel;
-import org.cactoos.scalar.MinOf;
 
 /**
  * Fallback from exception.
@@ -42,7 +40,7 @@ public final class FallbackFrom<T> implements Func<Throwable, T> {
     /**
      * The list of exceptions supported by this instance.
      */
-    private final Iterable<Class<Throwable>> exceptions;
+    private final Iterable<Class<? extends Throwable>> exceptions;
 
     /**
      * Function that converts exceptions to the required type.
@@ -55,7 +53,7 @@ public final class FallbackFrom<T> implements Func<Throwable, T> {
      * @param func Function that converts the given exception into required one.
      */
     public FallbackFrom(
-        final Iterable<Class<Throwable>> exps,
+        final Iterable<Class<? extends Throwable>> exps,
         final Func<Throwable, T> func) {
         this.exceptions = exps;
         this.func = func;
@@ -76,7 +74,7 @@ public final class FallbackFrom<T> implements Func<Throwable, T> {
     public Integer support(final Class<? extends Throwable> target) {
         return new MinOf(
             new Mapped<>(
-                supported -> new InheritanceLevel(supported, target).value(),
+                supported -> new InheritanceLevel(target, supported).value(),
                 this.exceptions
             )
         ).intValue();

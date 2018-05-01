@@ -27,7 +27,6 @@ import java.util.Comparator;
 import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.func.FallbackFrom;
 import org.cactoos.iterator.Filtered;
 import org.cactoos.iterator.Sorted;
 import org.cactoos.map.MapOf;
@@ -81,21 +80,23 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
             result = this.origin.value();
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
-            result = this.fallback(ex.getClass()).apply(ex);
+            result = this.fallback(ex);
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Throwable ex) {
-            result = this.fallback(ex.getClass()).apply(ex);
+            result = this.fallback(ex);
         }
         return this.follow.apply(result);
     }
 
     /**
-     * Finds the best fallback for the given exception type or throw an error
-     * if no fallback is found.
-     * @param exp Exception type.
-     * @return The most suitable fallback.
+     * Finds the best fallback for the given exception type and apply it to
+     * the exception or throw the original error if no fallback found.
+     * @param exp The original exception.
+     * @return Result of the most suitable fallback.
+     * @throws Exception The original exception if no fallback found.
      */
-    private FallbackFrom<T> fallback(final Class<? extends Throwable> exp) {
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
+    private T fallback(final Throwable exp) throws Exception {
         final Sorted<Map.Entry<FallbackFrom<T>, Integer>> candidates =
             new Sorted<>(
                 Comparator.comparing(Map.Entry::getValue),
@@ -108,16 +109,17 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
                     ).value(),
                     new MapOf<>(
                         fbk -> fbk,
-                        fbk -> fbk.support(exp),
+                        fbk -> fbk.support(exp.getClass()),
                         this.fallbacks
                     ).entrySet().iterator()
                 )
             );
         if (candidates.hasNext()) {
-            return candidates.next().getKey();
+            return candidates.next().getKey().apply(exp);
         } else {
-            throw new IllegalStateException(
-                "Couldn't find appropriate fallback"
+            throw new Exception(
+                "No fallback found - throw the original exception",
+                exp
             );
         }
     }
