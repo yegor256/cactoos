@@ -281,37 +281,6 @@ public final class HeadInput implements Input {
 
     /**
      * Ctor.
-     * @param error The exception to serialize
-     * @param length The length
-     */
-    public HeadInput(final Throwable error, final int length) {
-        this(new BytesOf(error), length);
-    }
-
-    /**
-     * Ctor.
-     * @param error The exception to serialize
-     * @param charset Charset
-     * @param length The length
-     */
-    public HeadInput(final Throwable error, final Charset charset,
-        final int length) {
-        this(new BytesOf(error, charset), length);
-    }
-
-    /**
-     * Ctor.
-     * @param error The exception to serialize
-     * @param charset Charset
-     * @param length The length
-     */
-    public HeadInput(final Throwable error, final CharSequence charset,
-        final int length) {
-        this(new BytesOf(error, charset), length);
-    }
-
-    /**
-     * Ctor.
      * @param bytes The bytes
      * @param length The length
      */
