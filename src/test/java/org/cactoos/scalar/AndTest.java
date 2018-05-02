@@ -31,6 +31,7 @@ import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.iterator.IteratorOf;
 import org.cactoos.matchers.MatcherOf;
 import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
@@ -45,7 +46,9 @@ import org.junit.Test;
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MagicNumber (500 line)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class AndTest {
 
     @Test
@@ -153,6 +156,19 @@ public final class AndTest {
     }
 
     @Test
+    public void testProcVarargs() throws Exception {
+        final List<Integer> list = new LinkedList<>();
+        new And(
+            (Proc<Integer>) list::add,
+            2, 3, 4
+        ).value();
+        MatcherAssert.assertThat(
+            list.size(),
+            Matchers.equalTo(3)
+        );
+    }
+
+    @Test
     public void testFunc() throws Exception {
         MatcherAssert.assertThat(
             new And(
@@ -163,4 +179,41 @@ public final class AndTest {
         );
     }
 
+    @Test
+    public void testFuncVarargs() throws Exception {
+        MatcherAssert.assertThat(
+            new And(
+                input -> input > 0,
+                -1, -2, 0
+            ),
+            new ScalarHasValue<>(false)
+        );
+    }
+
+    @Test
+    public void testMultipleFuncConditionTrue() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare subject with true conditions",
+            new And(
+                3,
+                input -> input > 0,
+                input -> input > 1,
+                input -> input > 2
+            ),
+            new ScalarHasValue<>(true)
+        );
+    }
+
+    @Test
+    public void testMultipleFuncConditionFalse() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare subject with false conditions",
+            new And(
+                "cactoos",
+                input -> input.contains("singleton"),
+                input -> input.contains("static")
+            ),
+            new ScalarHasValue<>(false)
+        );
+    }
 }
