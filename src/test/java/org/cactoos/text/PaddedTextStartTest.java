@@ -23,10 +23,8 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
 import org.cactoos.TextHasString;
-import org.cactoos.text.NotNullText;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
@@ -44,9 +42,10 @@ public final class PaddedTextStartTest {
         MatcherAssert.assertThat(
             "Shouldn't pad the text",
             new PaddedTextStart(
-              new NotNullText(
-                new StringAsText("x")
-              ), 1, '-'),
+                new NotNullText(new StringAsText("x")),
+                1,
+                '-'
+            ),
             new TextHasString("x")
         );
     }
@@ -56,9 +55,10 @@ public final class PaddedTextStartTest {
         MatcherAssert.assertThat(
             "Should pad chars at start",
             new PaddedTextStart(
-              new NotNullText(
-                new StringAsText("x")
-              ), 2, '-'),
+                new NotNullText(new StringAsText("x")),
+                2,
+                '-'
+            ),
             new TextHasString("-x")
         );
     }
@@ -68,9 +68,10 @@ public final class PaddedTextStartTest {
         MatcherAssert.assertThat(
             "Shouldn't consider negative min length",
             new PaddedTextStart(
-              new NotNullText(
-                new StringAsText("x")
-              ), -1, '-'),
+                new NotNullText(new StringAsText("x")),
+                -1,
+                '-'
+            ),
             new TextHasString("x")
         );
     }

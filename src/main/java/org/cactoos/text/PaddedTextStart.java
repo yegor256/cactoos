@@ -56,8 +56,10 @@ public final class PaddedTextStart implements Text {
      * Ctor.
      * @param text The text
      * @param length The minimum length of the resulting string
+     * @param symbol The padding symbol
      */
-    public PaddedTextStart(final NotNullText text, final int length, final char symbol) {
+    public PaddedTextStart(
+        final NotNullText text, final int length, final char symbol) {
         this.origin = text;
         this.symbol = symbol;
         this.length = length;
@@ -65,17 +67,14 @@ public final class PaddedTextStart implements Text {
 
     @Override
     public String asString() throws IOException {
-        final String originString = this.origin.asString();
-        if (originString.length() >= this.length) {
-          return originString;
+        final String original = this.origin.asString();
+        final int diff = this.length - original.length();
+        final StringBuilder builder = new StringBuilder();
+        for (int len = diff; len > 0; --len) {
+            builder.append(this.symbol);
         }
-
-        final StringBuilder sb = new StringBuilder(this.length);
-        for (int i = originString.length(); i < this.length; i++) {
-          sb.append(this.symbol);
-        }
-        sb.append(originString);
-        return sb.toString();
+        builder.append(original);
+        return builder.toString();
     }
 }
 
