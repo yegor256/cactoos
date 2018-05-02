@@ -117,4 +117,40 @@ public final class HeadInputStreamTest {
             Matchers.equalTo(cbyte)
         );
     }
+
+    @Test
+    public void returnAvailableBytesNumber() throws IOException {
+        final int size = 5;
+        final CharSequence charsequence = "CactoosAvailable";
+        MatcherAssert.assertThat(
+            new HeadInput(charsequence, size).stream().available(),
+            Matchers.equalTo(size)
+        );
+    }
+
+    @Test
+    public void marksPointAndReadAgain() throws IOException {
+        final int size = 5;
+        final int abyte = 97;
+        final CharSequence charsequence = "CactoosMark";
+        final InputStream stream = new HeadInput(charsequence, size).stream();
+        stream.read();
+        stream.mark(1);
+        stream.reset();
+        MatcherAssert.assertThat(
+            stream.read(),
+            Matchers.equalTo(abyte)
+        );
+    }
+
+    @Test
+    public void markSupportedReturnsBoolean() throws IOException {
+        final int size = 5;
+        final CharSequence charsequence = "CactoosMarkSupported";
+        final InputStream stream = new HeadInput(charsequence, size).stream();
+        MatcherAssert.assertThat(
+            stream.markSupported(),
+            Matchers.equalTo(true)
+        );
+    }
 }

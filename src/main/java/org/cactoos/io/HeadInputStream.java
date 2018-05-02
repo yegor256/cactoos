@@ -48,9 +48,9 @@ public final class HeadInputStream extends InputStream {
     private final int length;
 
     /**
-     * Read.
+     * Scan.
      */
-    private int read;
+    private int scan;
 
     /**
      * Ctor.
@@ -66,9 +66,9 @@ public final class HeadInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         int data = -1;
-        if (this.read < this.length) {
+        if (this.scan < this.length) {
             data = this.input.read();
-            this.read += 1;
+            this.scan += 1;
         }
         return data;
     }
@@ -76,8 +76,8 @@ public final class HeadInputStream extends InputStream {
     @Override
     public int read(final byte[] buf) throws IOException {
         int count = -1;
-        if (this.read < this.length) {
-            final int predlength = this.read + buf.length;
+        if (this.scan < this.length) {
+            final int predlength = this.scan + buf.length;
             if (predlength > this.length) {
                 count =  this.read(buf, 0, this.length);
             } else {
@@ -85,7 +85,7 @@ public final class HeadInputStream extends InputStream {
             }
         }
         if (count != -1) {
-            this.read += count;
+            this.scan += count;
         }
         return count;
     }
@@ -94,7 +94,7 @@ public final class HeadInputStream extends InputStream {
     public int read(final byte[] buf, final int offset,
         final int len) throws IOException {
         int max = -1;
-        if (this.read < this.length) {
+        if (this.scan < this.length) {
             if (offset > this.length && len > this.length) {
                 max = this.input.read(buf, this.length, this.length);
             } else if (len < this.length) {
@@ -106,20 +106,29 @@ public final class HeadInputStream extends InputStream {
             }
         }
         if (max != -1) {
-            this.read += max;
+            this.scan += max;
         }
         return max;
     }
 
     @Override
     public long skip(final long num) throws IOException {
-        this.read += num;
+        this.scan += num;
+        if (this.scan > this.length) {
+            this.scan = this.length;
+        }
         return this.input.skip(num);
     }
 
     @Override
     public int available() throws IOException {
-        return this.input.available();
+        final int available;
+        if (this.input.available() > this.length - this.scan) {
+            available = this.length - this.scan;
+        } else {
+            available = this.input.available();
+        }
+        return available;
     }
 
     @Override
