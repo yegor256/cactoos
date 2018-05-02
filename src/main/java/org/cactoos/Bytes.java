@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,7 @@ import java.io.IOException;
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @see org.cactoos.io.BytesOf
  * @since 0.1
  */
 public interface Bytes {
@@ -43,4 +44,39 @@ public interface Bytes {
      */
     byte[] asBytes() throws IOException;
 
+    /**
+     * Bytes check for no nulls.
+     *
+     * @author Fabricio Cabral (fabriciofx@gmail.com)
+     * @version $Id$
+     * @since 0.11
+     */
+    final class NoNulls implements Bytes {
+        /**
+         * The input.
+         */
+        private final Bytes origin;
+        /**
+         * Ctor.
+         * @param bytes The input
+         */
+        public NoNulls(final Bytes bytes) {
+            this.origin = bytes;
+        }
+        @Override
+        public byte[] asBytes() throws IOException {
+            if (this.origin == null) {
+                throw new IllegalArgumentException(
+                    "NULL instead of a valid bytes"
+                );
+            }
+            final byte[] bytes = this.origin.asBytes();
+            if (bytes == null) {
+                throw new IllegalStateException(
+                    "NULL instead of a valid byte array"
+                );
+            }
+            return bytes;
+        }
+    }
 }

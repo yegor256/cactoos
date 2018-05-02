@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +23,12 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.atomic.AtomicBoolean;
-import org.cactoos.func.FuncAsMatcher;
-import org.cactoos.text.BytesAsText;
-import org.cactoos.text.StringAsText;
-import org.cactoos.text.TextAsBytes;
+import org.cactoos.iterable.Endless;
+import org.cactoos.iterable.Limited;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -48,14 +45,49 @@ import org.junit.Test;
 public final class InputAsBytesTest {
 
     @Test
+    public void readsLargeInMemoryContent() throws IOException {
+        final int multiplier = 5_000;
+        final String body = "1234567890";
+        MatcherAssert.assertThat(
+            "Can't read large content from in-memory Input",
+            new InputAsBytes(
+                new InputOf(
+                    String.join(
+                        "",
+                        new Limited<>(
+                            multiplier, new Endless<>(body)
+                        )
+                    )
+                )
+            ).asBytes().length,
+            Matchers.equalTo(body.length() * multiplier)
+        );
+    }
+
+    @Test
+    // @checkstyle AnonInnerLengthCheck (100 lines)
+    public void readsLargeContent() throws IOException {
+        final int size = 100_000;
+        try (final InputStream slow = new SlowInputStream(size)) {
+            MatcherAssert.assertThat(
+                "Can't read large content from Input",
+                new InputAsBytes(
+                    new InputOf(slow)
+                ).asBytes().length,
+                Matchers.equalTo(size)
+            );
+        }
+    }
+
+    @Test
     public void readsInputIntoBytes() throws IOException {
         MatcherAssert.assertThat(
             "Can't read bytes from Input",
             new String(
                 new InputAsBytes(
-                    new BytesAsInput(
-                        new TextAsBytes(
-                            new StringAsText("Hello, друг!")
+                    new InputOf(
+                        new BytesOf(
+                            new TextOf("Hello, друг!")
                         )
                     )
                 ).asBytes(),
@@ -74,9 +106,9 @@ public final class InputAsBytesTest {
             "Can't read bytes from Input with a small reading buffer",
             new String(
                 new InputAsBytes(
-                    new BytesAsInput(
-                        new TextAsBytes(
-                            new StringAsText("Hello, товарищ!")
+                    new InputOf(
+                        new BytesOf(
+                            new TextOf("Hello, товарищ!")
                         )
                     ),
                     2
@@ -86,38 +118,6 @@ public final class InputAsBytesTest {
             Matchers.allOf(
                 Matchers.startsWith("Hello,"),
                 Matchers.endsWith("товарищ!")
-            )
-        );
-    }
-
-    @Test
-    public void closesInputStream() throws IOException {
-        final AtomicBoolean closed = new AtomicBoolean();
-        final InputStream input = new ByteArrayInputStream(
-            "how are you?".getBytes()
-        );
-        MatcherAssert.assertThat(
-            "Can't close InputStream correctly",
-            new BytesAsText(
-                new InputAsBytes(
-                    new InputStreamAsInput(
-                        new InputStream() {
-                            @Override
-                            public int read() throws IOException {
-                                return input.read();
-                            }
-                            @Override
-                            public void close() throws IOException {
-                                input.close();
-                                closed.set(true);
-                            }
-                        }
-                    )
-                ).asBytes(),
-                StandardCharsets.UTF_8
-            ).asString(),
-            new FuncAsMatcher<>(
-                text -> closed.get()
             )
         );
     }

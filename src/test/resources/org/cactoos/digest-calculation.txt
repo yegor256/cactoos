@@ -1,0 +1,1 @@
+That file is used for digest calculation with different algorithms, so please DO NOT CHANGE IT. If you DO, then make sure all tests of DigestInvelope are passed.

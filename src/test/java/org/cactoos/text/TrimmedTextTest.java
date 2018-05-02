@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.TextHasString;
+import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -40,7 +40,7 @@ public final class TrimmedTextTest {
     public void convertsText() {
         MatcherAssert.assertThat(
             "Can't trim a text",
-            new TrimmedText(new StringAsText("  Hello!   \t ")),
+            new TrimmedText(new TextOf("  Hello!   \t ")),
             new TextHasString("Hello!")
         );
     }
@@ -49,7 +49,7 @@ public final class TrimmedTextTest {
     public void trimmedBlankTextIsEmptyText() {
         MatcherAssert.assertThat(
             "Can't trim a blank text",
-            new TrimmedText(new StringAsText("  \t ")),
+            new TrimmedText(new TextOf("  \t ")),
             new TextHasString("")
         );
     }

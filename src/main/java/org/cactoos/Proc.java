@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +26,17 @@ package org.cactoos;
 /**
  * Procedure.
  *
+ * <p>If you don't want to have any checked exceptions being thrown
+ * out of your {@link Proc}, you can use
+ * {@link org.cactoos.func.UncheckedProc} decorator. Also
+ * you may try {@link org.cactoos.func.IoCheckedProc}.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @param <X> Type of input
+ * @see org.cactoos.func.FuncOf
  * @since 0.1
  */
 public interface Proc<X> {
@@ -42,4 +48,39 @@ public interface Proc<X> {
      */
     void exec(X input) throws Exception;
 
+    /**
+     * Proc check for no nulls.
+     *
+     * @author Fabricio Cabral (fabriciofx@gmail.com)
+     * @version $Id$
+     * @param <X> Type of input
+     * @since 0.11
+     */
+    final class NoNulls<X> implements Proc<X> {
+        /**
+         * The procedure.
+         */
+        private final Proc<X> origin;
+        /**
+         * Ctor.
+         * @param proc The procedure
+         */
+        public NoNulls(final Proc<X> proc) {
+            this.origin = proc;
+        }
+        @Override
+        public void exec(final X input) throws Exception {
+            if (this.origin == null) {
+                throw new IllegalArgumentException(
+                    "NULL instead of a valid procedure"
+                );
+            }
+            if (input == null) {
+                throw new IllegalArgumentException(
+                    "NULL instead of a valid input"
+                );
+            }
+            this.origin.exec(input);
+        }
+    }
 }

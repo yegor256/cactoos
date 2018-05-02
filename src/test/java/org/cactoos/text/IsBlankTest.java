@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.ScalarHasValue;
+import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -41,7 +41,7 @@ public final class IsBlankTest {
         MatcherAssert.assertThat(
             "Can't determine an empty text",
             new IsBlank(
-                new StringAsText("")
+                new TextOf("")
             ),
             new ScalarHasValue<>(Boolean.TRUE)
         );
@@ -52,7 +52,7 @@ public final class IsBlankTest {
         MatcherAssert.assertThat(
             "Can't determine an empty text with spaces",
             new IsBlank(
-                new StringAsText("  ")
+                new TextOf("  ")
             ),
             new ScalarHasValue<>(Boolean.TRUE)
         );
@@ -63,7 +63,7 @@ public final class IsBlankTest {
         MatcherAssert.assertThat(
             "Can't detect a nonempty text",
             new IsBlank(
-                new StringAsText("not empty")
+                new TextOf("not empty")
             ),
             new ScalarHasValue<>(Boolean.FALSE)
         );

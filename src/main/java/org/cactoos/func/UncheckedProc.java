@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ public final class UncheckedProc<X> implements Proc<X> {
 
     @Override
     public void exec(final X input) {
-        new UncheckedFunc<>(new ProcAsFunc<>(this.proc)).apply(input);
+        new UncheckedFunc<>(new FuncOf<>(this.proc)).apply(input);
     }
 
 }

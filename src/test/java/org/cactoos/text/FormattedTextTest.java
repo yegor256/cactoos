@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,13 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.IllegalFormatConversionException;
 import java.util.Locale;
-import org.cactoos.TextHasString;
+import java.util.UnknownFormatConversionException;
+import org.cactoos.list.ListOf;
+import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -32,6 +37,7 @@ import org.junit.Test;
  * Test case for {@link FormattedText}.
  *
  * @author Andriy Kryvtsun (kontiky@gmail.com)
+ * @author Ix (ixmanuel@yahoo.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -50,6 +56,48 @@ public final class FormattedTextTest {
     }
 
     @Test
+    public void formatsTextWithObjects() {
+        MatcherAssert.assertThat(
+            "Can't format a text with objects",
+            new FormattedText(
+                new TextOf("%d. Number as %s"),
+                new Integer(1),
+                new String("string")
+            ),
+            new TextHasString("1. Number as string")
+        );
+    }
+
+    @Test(expected = UnknownFormatConversionException.class)
+    public void failsForInvalidPattern() throws IOException {
+        new FormattedText(
+            new TextOf("%%. Formatted %$"),
+            new ListOf<>(1, "invalid")
+        ).asString();
+    }
+
+    @Test
+    public void formatsTextWithCollection() {
+        MatcherAssert.assertThat(
+            "Can't format a text with a collection",
+            new FormattedText(
+                new TextOf("%d. Formatted as %s"),
+                new ListOf<>(1, "txt")
+            ),
+            new TextHasString("1. Formatted as txt")
+        );
+    }
+
+    @Test(expected = IllegalFormatConversionException.class)
+    public void ensuresThatFormatterFails() throws IOException {
+        new FormattedText(
+            new TextOf("Local time: %d"),
+            Locale.ROOT,
+            Calendar.getInstance()
+        ).asString();
+    }
+
+    @Test
     public void formatsWithLocale() {
         MatcherAssert.assertThat(
             "Can't format a text with Locale",
@@ -58,6 +106,18 @@ public final class FormattedTextTest {
                 "%,d", Locale.GERMAN, 1234567890
             ),
             new TextHasString("1.234.567.890")
+        );
+    }
+
+    @Test
+    public void formatsWithText() {
+        MatcherAssert.assertThat(
+            "Can't format a string with text",
+            new FormattedText(
+                "Format with text: %s",
+                new TextOf("Cactoos")
+            ),
+            new TextHasString("Format with text: Cactoos")
         );
     }
 }

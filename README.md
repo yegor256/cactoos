@@ -1,18 +1,26 @@
 <img src="http://cf.jare.io/?u=http%3A%2F%2Fwww.yegor256.com%2Fimages%2Fbooks%2Felegant-objects%2Fcactus.svg" height="100px" />
 
+[![Donate via Zerocracy](https://www.0crat.com/contrib-badge/C63314D6Z.svg)](https://www.0crat.com/contrib/C63314D6Z)
+
+[![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
+[![Managed by Zerocracy](https://www.0crat.com/badge/C63314D6Z.svg)](https://www.0crat.com/p/C63314D6Z)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/cactoos)](http://www.rultor.com/p/yegor256/cactoos)
+[![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Build Status](https://travis-ci.org/yegor256/cactoos.svg?branch=master)](https://travis-ci.org/yegor256/cactoos)
 [![Build status](https://ci.appveyor.com/api/projects/status/8vs8huy61og6jwif?svg=true)](https://ci.appveyor.com/project/yegor256/cactoos)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/org.cactoos/cactoos/badge.svg?color=blue&prefix=v)](http://www.javadoc.io/doc/org.cactoos/cactoos)
+[![Javadoc](http://www.javadoc.io/badge/org.cactoos/cactoos.svg)](http://www.javadoc.io/doc/org.cactoos/cactoos)
 [![PDD status](http://www.0pdd.com/svg?name=yegor256/cactoos)](http://www.0pdd.com/p?name=yegor256/cactoos)
-[![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg)](https://codecov.io/github/yegor256/cactoos?branch=master)
 [![Maven Central](https://img.shields.io/maven-central/v/org.cactoos/cactoos.svg)](https://maven-badges.herokuapp.com/maven-central/org.cactoos/cactoos)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/cactoos/blob/master/LICENSE.txt)
 
+[![jpeek report](http://i.jpeek.org/org.cactoos/cactoos/badge.svg)](http://i.jpeek.org/org.cactoos/cactoos/)
+[![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg)](https://codecov.io/github/yegor256/cactoos?branch=master)
+[![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.cactoos%3Acactoos)
+
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
-until we release version 1.0 (July 2017).
+until we release version 1.0 (<del>July 2017</del> May 2018).
 
 Cactoos is a collection of object-oriented Java primitives.
 
@@ -26,17 +34,7 @@ but mostly through static methods. Cactoos is suggesting
 to do almost exactly the same, but through objects.
 
 **Principles**.
-There are a few design principles behind Cactoos:
-
-  * No `null` ([why?](http://www.yegor256.com/2014/05/13/why-null-is-bad.html))
-  * No code in constructors ([why?](http://www.yegor256.com/2015/05/07/ctors-must-be-code-free.html))
-  * No getters and setters ([why?](http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html))
-  * No mutable objects ([why?](http://www.yegor256.com/2014/06/09/objects-should-be-immutable.html))
-  * No `static` methods, not even `private` ones ([why?](http://www.yegor256.com/2017/02/07/private-method-is-new-class.html))
-  * No `instanceof`, type casting, or reflection ([why?](http://www.yegor256.com/2015/04/02/class-casting-is-anti-pattern.html))
-  * No implementation inheritance ([why?](http://www.yegor256.com/2016/09/13/inheritance-is-procedural.html))
-  * No public methods without `@Override`
-  * No statements in test methods except `assertThat` ([why?](http://www.yegor256.com/2017/05/17/single-statement-unit-tests.html))
+These are the [design principles](http://www.elegantobjects.org#principles) behind Cactoos.
 
 **How to use**.
 The library has no dependencies. All you need is this
@@ -51,42 +49,37 @@ The library has no dependencies. All you need is this
 
 Java version required: 1.8+.
 
+StackOverflow tag is [cactoos](https://stackoverflow.com/questions/tagged/cactoos).
+
 ## Input/Output
+
+More about it here:
+[Object-Oriented Declarative Input/Output in Cactoos](http://www.yegor256.com/2017/06/22/object-oriented-input-output-in-cactoos.html).
 
 To read a text file in UTF-8:
 
 ```java
-String text = new BytesAsText(
-  new InputAsBytes(
-    new FileAsInput(
-      new File("/code/a.txt")
-    )
-  )
+String text = new TextOf(
+  new File("/code/a.txt")
 ).asString();
 ```
 
 To write a text into a file:
 
 ```java
-new LengthOfInput(
+new LengthOf(
   new TeeInput(
-    new BytesAsInput(
-      new TextAsBytes(
-        new StringAsText("Hello, world!")
-      )
-    ),
-    new FileAsOutput(
-      new File("/code/a.txt")
-    )
+    "Hello, world!",
+    new File("/code/a.txt")
   )
-).asValue();
+).intValue();
 ```
 
 To read a binary file from classpath:
 
 ```java
-byte[] data = new InputAsBytes(
-  new ResourceAsInput("foo/img.jpg")
+byte[] data = new BytesOf(
+  new ResourceOf("foo/img.jpg")
 ).asBytes();
 ```
 
@@ -105,36 +98,26 @@ To manipulate with a text:
 
 ```java
 // To lower case
-new LowerText("Hello");
+new LowerText(
+	new TextOf("Hello")
+);
 // To upper case
-new UpperText("Hello");
+new UpperText(
+	new TextOf("Hello")
+);
 ```
 
 ## Iterables/Collections/Lists/Sets
 
+More about it here: [Lazy Loading and Caching via Sticky Cactoos Primitives](http://www.yegor256.com/2017/10/17/lazy-loading-caching-sticky-cactoos.html).
+
 To filter a collection:
 
 ```java
-Collection<String> filtered = new IterableAsCollection<>(
-  new FilteredIterable<>(
-    new ArrayAsIterable<>("hello", "world", "dude"),
-    new Func<String, Boolean>() {
-      @Override
-      public boolean apply(String i) {
-        return i.length() > 4;
-      }
-    }
-  )
-);
-```
-
-With Lambda:
-
-```java
-new IterableAsCollection<>(
-  new FilteredIterable<>(
-    new ArrayAsIterable<>("hello", "world", "dude"),
-    i -> i.length() > 4
+Collection<String> filtered = new ListOf<>(
+  new Filtered<>(
+    s -> s.length() > 4,
+    new IterableOf<>("hello", "world", "dude")
   )
 );
 ```
@@ -142,40 +125,37 @@ new IterableAsCollection<>(
 To iterate a collection:
 
 ```java
-new AllOf(
-  new TransformedIterable<>(
-    new ArrayAsIterable<>("how", "are", "you"),
-    new ProcAsFunc<>(
+new And(
+  new Mapped<>(
+    new FuncOf<>(
       input -> {
         System.out.printf("Item: %s\n", input);
       }
-    )
+    ),
+    new IterableOf<>("how", "are", "you")
   )
-).asValue();
+).value();
 ```
 
 Or even more compact:
 
 ```java
-new IterableAsBoolean(
-  new ArrayAsIterable<>("how", "are", "you"),
-  new ProcAsFunc<>(
-    input -> System.out.printf("Item: %s\n", i)
-  )
-).asValue();
+new And(
+  (String input) -> System.out.printf("Item: %s\n", input),
+  "how", "are", "you"
+).value();
 ```
 
 To sort a list of words in the file:
 
 ```java
-List<String> sorted = new SortedList<>(
-  new IterableAsList<>(
-    new TextAsLines(
-      new InputAsText(
-        new FileAsInput(
-          new File("/tmp/names.txt")
-        )
-      )
+List<String> sorted = new ListOf<>(
+  new Sorted<>(
+    new SplitText(
+      new TextOf(
+        new File("/tmp/names.txt")
+      ),
+      new TextOf("\\s+")
     )
   )
 );
@@ -184,9 +164,9 @@ List<String> sorted = new SortedList<>(
 To count elements in an iterable:
 
 ```java
-int total = new LengthOfIterable(
-  new ArrayAsIterable<>("how", "are", "you")
-).asValue();
+int total = new LengthOf(
+  "how", "are", "you"
+).intValue();
 ```
 
 ## Funcs and Procs
@@ -202,14 +182,12 @@ for (String name : names) {
 This is its object-oriented alternative (no streams!):
 
 ```java
-new IterableAsBoolean<>(
+new And(
   names,
-  new ProcAsFunc<>(
-    n -> {
-      System.out.printf("Hello, %s!\n", n);
-    }
-  )
-).asValue();
+  n -> {
+    System.out.printf("Hello, %s!\n", n);
+  }
+).value();
 ```
 
 This is an endless `while/do` loop:
@@ -223,14 +201,69 @@ while (!ready) {
 Here is its object-oriented alternative:
 
 ```java
-new IterableAsBoolean<>(
-  new EndlessIterable<>(ready),
-  r -> {
-    System.out.prinln("Still waiting...");
+new And(
+  new Endless<>(ready),
+  ready -> {
+    System.out.println("Still waiting...");
     return !ready;
   }
-).asValue();
+).value();
 ```
+
+## Dates and Times
+From our `org.cactoos.time` package.
+
+Our classes are divided in two groups: those that parse strings into date/time objects, and those that format those objects into strings.
+
+For example, this is the traditional way of parsing a string into an [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html):
+
+```java
+final OffsetDateTime date = OffsetDateTime.parse("2007-12-03T10:15:30+01:00");
+```
+
+Here is its object-oriented alternative (no static method calls!) using `OffsetDateTimeOf`, which is a `Scalar`:
+
+```java
+final OffsetDateTime date = new OffsetDateTimeOf("2007-12-03T10:15:30+01:00").value();
+```
+
+To format an `OffsetDateTime` into a `Text`:
+
+```java
+final OffsetDateTime date = ...;
+final OffsetDateTimeAsText text = new OffsetDateTimeAsText(date);
+```
+
+## Our objects vs. their static methods
+
+Cactoos | Guava | Apache Commons | JDK 8
+------ | ------ | ------ | ------
+`And` | `Iterables.all()` | - | -
+`Filtered` | `Iterables.filter()` | ? | -
+`FormattedText` | - | - | `String.format()`
+`IsBlank` | - | `StringUtils.isBlank()`| -
+`JoinedText` | - | - | `String.join()`
+`LengthOf` | - | - | `String#length()`
+`LowerText` | - | - | `String#toLowerCase()`
+`NormalizedText` | - | `StringUtils.normalize()` | -
+`Or` | `Iterables.any()` | - | -
+`RepeatedText` | - | `StringUtils.repeat()` | -
+`ReplacedText` | - | - | `String#replace()`
+`ReversedText` | - | - | `StringBuilder#reverse()`
+`RotatedText` | - | `StringUtils.rotate()`| -
+`SplitText` | - | - | `String#split()`
+`StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()`
+`SubText` | - | - | `String#substring()`
+`SwappedCaseText` | - | `StringUtils.swapCase()` | -
+`TextOf` | ? | `IOUtils.toString()` | -
+`TrimmedLeftText` | - | `StringUtils.stripStart()` | -
+`TrimmedRightText` | - | `StringUtils.stripEnd()` | -
+`TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
+`UpperText` | - | - | `String#toUpperCase()`
+
+## Questions
+
+Ask your questions related to cactoos library on [Stackoverflow](https://stackoverflow.com/questions/ask) with [cactoos](https://stackoverflow.com/tags/cactoos/info) tag.
 
 ## How to contribute?
 
@@ -255,11 +288,17 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
   - [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
   - [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
-
+  - [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
+  - [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
+  - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
+  - [@llorllale](https://github.com/llorllale) as George Aristy
+  - [@driver733](https://github.com/driver733) as Mikhail Yakushin
+  - [@izrik](https://github.com/izrik) as Richard Sartor
+  - [@Vatavuk](https://github.com/Vatavuk) as Vedran Grgo Vatavuk
 
 ## License (MIT)
 
-Copyright (c) 2017 Yegor Bugayenko
+Copyright (c) 2017-2018 Yegor Bugayenko
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

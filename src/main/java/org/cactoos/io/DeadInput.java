@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,8 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
-import org.cactoos.text.EmptyBytes;
 
 /**
  * Input with no data.
@@ -40,8 +38,8 @@ import org.cactoos.text.EmptyBytes;
 public final class DeadInput implements Input {
 
     @Override
-    public InputStream stream() throws IOException {
-        return new BytesAsInput(new EmptyBytes()).stream();
+    public InputStream stream() {
+        return new DeadInputStream();
     }
 
 }

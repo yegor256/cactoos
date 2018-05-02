@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,13 +32,15 @@ import org.cactoos.Input;
 /**
  * Input as Byte Array.
  *
+ * <p>This class is for internal use only. Use {@link BytesOf} instead.</p>
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public final class InputAsBytes implements Bytes {
+final class InputAsBytes implements Bytes {
 
     /**
      * The input.
@@ -54,7 +56,7 @@ public final class InputAsBytes implements Bytes {
      * Ctor.
      * @param input The input
      */
-    public InputAsBytes(final Input input) {
+    InputAsBytes(final Input input) {
         // @checkstyle MagicNumber (1 line)
         this(input, 16 << 10);
     }
@@ -64,7 +66,7 @@ public final class InputAsBytes implements Bytes {
      * @param input The input
      * @param max Max length of the buffer for reading
      */
-    public InputAsBytes(final Input input, final int max) {
+    InputAsBytes(final Input input, final int max) {
         this.source = input;
         this.size = max;
     }
@@ -73,12 +75,11 @@ public final class InputAsBytes implements Bytes {
     public byte[] asBytes() throws IOException {
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final InputStream stream = new TeeInput(
-                this.source,
-                new OutputStreamAsOutput(baos)
+                this.source, new OutputTo(baos)
             ).stream()) {
             final byte[] buf = new byte[this.size];
             while (true) {
-                if (stream.read(buf) != buf.length) {
+                if (stream.read(buf) < 0) {
                     break;
                 }
             }

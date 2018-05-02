@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ package org.cactoos;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import org.cactoos.io.FileAsOutput;
+import org.cactoos.io.OutputTo;
 import org.cactoos.io.TeeInput;
 
 /**
@@ -35,23 +35,24 @@ import org.cactoos.io.TeeInput;
  * together with {@link Input} in order to modify the content
  * of a text file:</p>
  *
- * <pre> new LengthOfInput(
+ * <pre> new LengthOf(
  *   new TeeInput(
- *     new TextAsInput(new StringAsText("Hello, world!")),
- *     new FileAsOutput(new File("/tmp/names.txt"))
+ *     new InputOf(new TextOf("Hello, world!")),
+ *     new OutputTo(new File("/tmp/names.txt"))
  *   )
  * ).asValue();</pre>
  *
- * <p>Here {@link FileAsOutput} implements {@link Output} and behaves like
+ * <p>Here {@link OutputTo} implements {@link Output} and behaves like
  * one, providing write-only access to the encapsulated
  * {@link java.io.File}. The {@link TeeInput} copies the content of the
- * input to the output. The {@link org.cactoos.io.LengthOfInput}
+ * input to the output. The {@link org.cactoos.io.LengthOf}
  * calculates the size of the copied data.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @see OutputTo
  * @since 0.1
  */
 public interface Output {
@@ -63,4 +64,35 @@ public interface Output {
      */
     OutputStream stream() throws IOException;
 
+    /**
+     * Output check for no nulls.
+     *
+     * @author Fabricio Cabral (fabriciofx@gmail.com)
+     * @version $Id$
+     * @since 0.10
+     */
+    final class NoNulls implements Output {
+        /**
+         * The output.
+         */
+        private final Output origin;
+        /**
+         * Ctor.
+         * @param output The output
+         */
+        public NoNulls(final Output output) {
+            this.origin = output;
+        }
+        @Override
+        public OutputStream stream() throws IOException {
+            if (this.origin == null) {
+                throw new IOException("NULL instead of a valid output");
+            }
+            final OutputStream stream = this.origin.stream();
+            if (stream == null) {
+                throw new IOException("NULL instead of a valid stream");
+            }
+            return stream;
+        }
+    }
 }
