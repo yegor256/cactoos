@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Yegor Bugayenko
+ * Copyright (c) 2017-2018 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,7 +59,7 @@ public final class PaddedTextStart implements Text {
      * @param symbol The padding symbol
      */
     public PaddedTextStart(
-        final NotNullText text, final int length, final char symbol) {
+        final Text text, final int length, final char symbol) {
         this.origin = text;
         this.symbol = symbol;
         this.length = length;
