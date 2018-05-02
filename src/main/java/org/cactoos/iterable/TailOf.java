@@ -21,52 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
-
-import java.util.Collection;
-import org.cactoos.iterable.HeadOf;
-import org.cactoos.iterable.IterableOf;
+package org.cactoos.iterable;
 
 /**
- * HeadOf collection.
+ * HeadOf iterable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
- * @author Alexander Menshikov (sharplermc@gmail.com)
+ * @author Ashton Hogan (info@ashtonhogan.com)
  * @version $Id$
- * @param <T> Type of source item
- * @since 0.29
+ * @param <T> Element type
+ * @since 0.29.3
  */
-public final class Skipped<T> extends CollectionEnvelope<T> {
+public final class TailOf<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
      * @param skip How many to skip
-     * @param src Source elements
+     * @param src The underlying iterable
      */
     @SafeVarargs
-    public Skipped(final int skip, final T... src) {
+    public TailOf(final int skip, final T... src) {
         this(skip, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param skip How many to skip
-     * @param src Source iterable
+     * @param skip Count skip elements
+     * @param iterable Decorated iterable
      */
-    public Skipped(final int skip, final Iterable<T> src) {
-        this(skip, new CollectionOf<T>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param skip How many to skip
-     * @param src Source collection
-     */
-    public Skipped(final int skip, final Collection<T> src) {
-        super(() -> new CollectionOf<T>(
-            new HeadOf<T>(skip, src)
-        ));
+    public TailOf(final int skip, final Iterable<T> iterable) {
+        super(() -> () -> new Reversed<>(
+            new IterableOf<>(
+                new org.cactoos.iterator.Skipped<>(
+                    skip, new Reversed<>(iterable).iterator()
+                )
+            )
+        ).iterator());
     }
 
 }

@@ -24,7 +24,7 @@
 package org.cactoos.iterable;
 
 /**
- * Skipped iterable.
+ * HeadOf iterable.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -33,7 +33,7 @@ package org.cactoos.iterable;
  * @param <T> Element type
  * @since 0.8
  */
-public final class Skipped<T> extends IterableEnvelope<T> {
+public final class HeadOf<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
@@ -41,7 +41,7 @@ public final class Skipped<T> extends IterableEnvelope<T> {
      * @param src The underlying iterable
      */
     @SafeVarargs
-    public Skipped(final int skip, final T... src) {
+    public HeadOf(final int skip, final T... src) {
         this(skip, new IterableOf<>(src));
     }
 
@@ -50,7 +50,7 @@ public final class Skipped<T> extends IterableEnvelope<T> {
      * @param skip Count skip elements
      * @param iterable Decorated iterable
      */
-    public Skipped(final int skip, final Iterable<T> iterable) {
+    public HeadOf(final int skip, final Iterable<T> iterable) {
         super(() -> () -> new org.cactoos.iterator.Skipped<>(
             skip, iterable.iterator()
         ));

@@ -21,52 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.iterable;
 
-import java.util.Collection;
-import org.cactoos.iterable.HeadOf;
-import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * HeadOf collection.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Alexander Menshikov (sharplermc@gmail.com)
+ * Test Case for {@link TailOf}.
+ * @author Ashton Hogan (info@ashtonhogan.com)
  * @version $Id$
- * @param <T> Type of source item
- * @since 0.29
+ * @since 0.29.3
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Skipped<T> extends CollectionEnvelope<T> {
+public final class TailOfTest {
 
-    /**
-     * Ctor.
-     * @param skip How many to skip
-     * @param src Source elements
-     */
-    @SafeVarargs
-    public Skipped(final int skip, final T... src) {
-        this(skip, new IterableOf<>(src));
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void skipStrings() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't skip elements in iterable",
+            new TailOf<>(
+                2, "one", "two", "three", "four"
+            ),
+            Matchers.contains(
+                "one",
+                "two"
+            )
+        );
     }
 
-    /**
-     * Ctor.
-     * @param skip How many to skip
-     * @param src Source iterable
-     */
-    public Skipped(final int skip, final Iterable<T> src) {
-        this(skip, new CollectionOf<T>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param skip How many to skip
-     * @param src Source collection
-     */
-    public Skipped(final int skip, final Collection<T> src) {
-        super(() -> new CollectionOf<T>(
-            new HeadOf<T>(skip, src)
-        ));
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void skipIterable() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't skip elements in iterable",
+            new TailOf<>(
+                2, new IterableOf<>(
+                    "one", "two", "three", "four"
+                )
+            ),
+            Matchers.contains(
+                "one",
+                "two"
+            )
+        );
     }
 
 }

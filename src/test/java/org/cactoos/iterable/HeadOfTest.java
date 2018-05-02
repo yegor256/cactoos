@@ -28,20 +28,20 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link Skipped}.
+ * Test Case for {@link HeadOf}.
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SkippedTest {
+public final class HeadOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't skip elements in iterable",
-            new Skipped<>(
+            new HeadOf<>(
                 2, new IterableOf<>(
                     "one", "two", "three", "four"
                 )

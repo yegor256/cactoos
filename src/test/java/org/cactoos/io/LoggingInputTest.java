@@ -157,7 +157,7 @@ public final class LoggingInputTest {
         MatcherAssert.assertThat(
             "Can't log skip from text file",
             logger.toString(),
-            Matchers.containsString("Skipped 100 byte(s) from text file.")
+            Matchers.containsString("HeadOf 100 byte(s) from text file.")
         );
     }
 
