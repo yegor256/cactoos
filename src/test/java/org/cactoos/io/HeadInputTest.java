@@ -23,9 +23,9 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -48,8 +48,8 @@ public final class HeadInputTest {
                     new InputOf("readsHeadOfLongerInput"),
                     5
                 )
-            ).asString(),
-            new IsEqual<>("reads")
+            ),
+            new TextHasString("reads")
         );
     }
 
@@ -63,8 +63,8 @@ public final class HeadInputTest {
                     new InputOf(input),
                     35
                 )
-            ).asString(),
-            new IsEqual<>(input)
+            ),
+            new TextHasString(input)
         );
     }
 }
