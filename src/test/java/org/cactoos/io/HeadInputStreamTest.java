@@ -23,10 +23,10 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
-import org.hamcrest.text.IsEmptyString;
 import org.junit.Test;
 
 /**
@@ -49,8 +49,8 @@ public final class HeadInputStreamTest {
         stream.skip(3L);
         MatcherAssert.assertThat(
             "Incorrect head of the input stream has been read",
-            new TextOf(stream).asString(),
-            new IsEqual<>("tS")
+            new TextOf(stream),
+            new TextHasString("tS")
         );
     }
 
@@ -63,8 +63,8 @@ public final class HeadInputStreamTest {
         stream.skip(7L);
         MatcherAssert.assertThat(
             "The result text wasn't empty",
-            new TextOf(stream).asString(),
-            new IsEmptyString()
+            new TextOf(stream),
+            new TextHasString("")
         );
     }
 
@@ -78,8 +78,8 @@ public final class HeadInputStreamTest {
         stream.reset();
         MatcherAssert.assertThat(
             "Reset didn't change the state",
-            new TextOf(stream).asString(),
-            new IsEqual<>("testR")
+            new TextOf(stream),
+            new TextHasString("testR")
         );
     }
 

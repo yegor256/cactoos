@@ -83,8 +83,9 @@ public final class HeadInputStream extends InputStream {
         } else {
             adjusted = skip;
         }
-        this.processed = this.processed + adjusted;
-        return this.origin.skip(adjusted);
+        final long skipped = this.origin.skip(adjusted);
+        this.processed = this.processed + skipped;
+        return skipped;
     }
 
     @Override
