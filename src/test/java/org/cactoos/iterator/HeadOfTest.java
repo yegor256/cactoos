@@ -23,57 +23,46 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Skipped iterator.
- *
- * <p>There is no thread-safety guarantee.</p>
- *
+ * Test Case for {@link HeadOf}.
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
- * @param <T> Element type
  * @since 0.8
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Skipped<T> implements Iterator<T> {
+public final class HeadOfTest {
 
-    /**
-     * Decorated iterator.
-     */
-    private final Iterator<T> origin;
-
-    /**
-     * Count skip elements.
-     */
-    private int omit;
-
-    /**
-     * Ctor.
-     * @param iterator Decorated iterator
-     * @param skip Count skip elements
-     */
-    public Skipped(final int skip, final Iterator<T> iterator) {
-        this.origin = iterator;
-        this.omit = skip;
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void headIterator() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't skip elements in iterator",
+            () -> new HeadOf<>(
+                2,
+                new IterableOf<>(
+                    "one", "two", "three", "four"
+                ).iterator()
+            ),
+            Matchers.contains(
+                "three",
+                "four"
+            )
+        );
     }
 
-    @Override
-    public boolean hasNext() {
-        while (this.omit > 0 && this.origin.hasNext()) {
-            this.origin.next();
-            --this.omit;
-        }
-        return this.origin.hasNext();
-    }
-
-    @Override
-    public T next() {
-        if (!this.hasNext()) {
-            throw new NoSuchElementException(
-                "The iterator doesn't have items any more"
-            );
-        }
-        return this.origin.next();
+    @Test(expected = NoSuchElementException.class)
+    public void errorSkippedMoreThanExists() throws Exception {
+        new HeadOf<>(
+            2,
+            new IterableOf<>(
+                "one", "two"
+            ).iterator()
+        ).next();
     }
 }

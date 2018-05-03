@@ -21,50 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.collection;
 
-import org.cactoos.iterable.HeadOf;
-import org.cactoos.iterable.Limited;
-import org.cactoos.iterable.RangeOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link HeadOf}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * Test case for {@link TailOf}.
+ *
+ * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
- * @since 0.9
+ * @since 0.30.1
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class ReducedTest {
+public final class TailOfTest {
 
     @Test
-    public void skipIterable() throws Exception {
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void tailCollection() throws Exception {
         MatcherAssert.assertThat(
-            "Can't reduce elements in iterable",
-            new Reduced<>(
-                0L, (first, second) -> first + second,
-                new Limited<>(
-                    10,
-                    new RangeOf<>(0L, Long.MAX_VALUE, value -> ++value)
-                )
-            ).value(),
-            Matchers.equalTo(45L)
-        );
-    }
-
-    @Test
-    public void constructedFromVarargs() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't reduce elements in vararg array",
-            new Reduced<>(
-                0L,
-                (first, second) -> first + second,
-                1, 2, 3, 4, 5
-            ).value(),
-            Matchers.equalTo(15L)
+            "Can't get tail portion of collection",
+            new TailOf<>(
+                2,
+                "one", "two", "three", "four"
+            ),
+            Matchers.contains(
+                "two",
+                "one"
+            )
         );
     }
 }

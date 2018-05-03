@@ -21,33 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.iterable;
 
-import java.util.NoSuchElementException;
-import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link Skipped}.
+ * Test Case for {@link HeadOf}.
  * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
  * @version $Id$
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SkippedTest {
+public final class HeadOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipIterator() throws Exception {
+    public void skipIterable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't skip elements in iterator",
-            () -> new Skipped<>(
-                2,
-                new IterableOf<>(
+            "Can't skip elements in iterable",
+            new HeadOf<>(
+                2, new IterableOf<>(
                     "one", "two", "three", "four"
-                ).iterator()
+                )
             ),
             Matchers.contains(
                 "three",
@@ -56,13 +53,4 @@ public final class SkippedTest {
         );
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void errorSkippedMoreThanExists() throws Exception {
-        new Skipped<>(
-            2,
-            new IterableOf<>(
-                "one", "two"
-            ).iterator()
-        ).next();
-    }
 }

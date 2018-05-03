@@ -21,51 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.iterator;
 
-import java.util.Collection;
+import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Skipped collection.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Alexander Menshikov (sharplermc@gmail.com)
+ * Test case for {@link TailOf}.
+ * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
- * @param <T> Type of source item
- * @since 0.29
+ * @since 0.30.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Skipped<T> extends CollectionEnvelope<T> {
+public final class TailOfTest {
 
-    /**
-     * Ctor.
-     * @param skip How many to skip
-     * @param src Source elements
-     */
-    @SafeVarargs
-    public Skipped(final int skip, final T... src) {
-        this(skip, new IterableOf<>(src));
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void tailIterator() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't get tail portion of iterator",
+            () -> new TailOf<>(
+                2,
+                new IterableOf<>(
+                    "one", "two", "three", "four"
+                ).iterator()
+            ),
+            Matchers.contains(
+                "two",
+                "one"
+            )
+        );
     }
 
-    /**
-     * Ctor.
-     * @param skip How many to skip
-     * @param src Source iterable
-     */
-    public Skipped(final int skip, final Iterable<T> src) {
-        this(skip, new CollectionOf<T>(src));
+    @Test(expected = NoSuchElementException.class)
+    public void errorSkippedMoreThanExists() throws Exception {
+        new TailOf<>(
+            2,
+            new IterableOf<>(
+                "one", "two"
+            ).iterator()
+        ).next();
     }
-
-    /**
-     * Ctor.
-     * @param skip How many to skip
-     * @param src Source collection
-     */
-    public Skipped(final int skip, final Collection<T> src) {
-        super(() -> new CollectionOf<T>(
-            new org.cactoos.iterable.Skipped<T>(skip, src)
-        ));
-    }
-
 }

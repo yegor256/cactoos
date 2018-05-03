@@ -30,20 +30,20 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link Skipped}.
+ * Test Case for {@link HeadOf}.
  * @author Alexander Menshikov (sharplermc@gmail.com)
  * @version $Id$
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SkippedTest {
+public final class HeadOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't skip elements in iterable",
-            new Skipped<>(
+            new HeadOf<>(
                 2,
                 new IterableOf<>("one", "two", "three", "four")
             ),
@@ -59,7 +59,7 @@ public final class SkippedTest {
     public void skipArray() throws Exception {
         MatcherAssert.assertThat(
             "Can't skip elements in array",
-            new Skipped<>(
+            new HeadOf<>(
                 2,
                 "one", "two", "three", "four"
             ),
@@ -75,7 +75,7 @@ public final class SkippedTest {
     public void skipCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't skip elements in collection",
-            new Skipped<>(
+            new HeadOf<>(
                 2,
                 new CollectionOf<>("one", "two", "three", "four")
             ),
@@ -90,7 +90,7 @@ public final class SkippedTest {
     public void skippedAllElements() throws Exception {
         MatcherAssert.assertThat(
             "Can't skip all elements",
-            new Skipped<>(
+            new HeadOf<>(
                 2,
                 "one", "two"
             ),
@@ -102,7 +102,7 @@ public final class SkippedTest {
     public void skippedMoreThanExists() throws Exception {
         MatcherAssert.assertThat(
             "Can't skip more than exists",
-            new Skipped<>(
+            new HeadOf<>(
                 Integer.MAX_VALUE,
                 "one", "two"
             ),
@@ -115,7 +115,7 @@ public final class SkippedTest {
     public void skippedNegativeSize() throws Exception {
         MatcherAssert.assertThat(
             "Can't process negative skipped size",
-            new Skipped<>(
+            new HeadOf<>(
                 -1,
                 "one", "two", "three", "four"
             ),
