@@ -37,23 +37,22 @@ public final class HeadOf<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param skip How many to skip
+     * @param num Number of head elements
      * @param src The underlying iterable
      */
     @SafeVarargs
-    public HeadOf(final int skip, final T... src) {
-        this(skip, new IterableOf<>(src));
+    public HeadOf(final int num, final T... src) {
+        this(num, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param skip Count skip elements
+     * @param num Number of head elements
      * @param iterable Decorated iterable
      */
-    public HeadOf(final int skip, final Iterable<T> iterable) {
+    public HeadOf(final int num, final Iterable<T> iterable) {
         super(() -> () -> new org.cactoos.iterator.HeadOf<>(
-            skip, iterable.iterator()
+            num, iterable.iterator()
         ));
     }
-
 }

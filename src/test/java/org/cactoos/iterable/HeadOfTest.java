@@ -38,7 +38,7 @@ public final class HeadOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipIterable() throws Exception {
+    public void headIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't skip elements in iterable",
             new HeadOf<>(
@@ -47,8 +47,8 @@ public final class HeadOfTest {
                 )
             ),
             Matchers.contains(
-                "three",
-                "four"
+                "one",
+                "two"
             )
         );
     }

@@ -44,27 +44,29 @@ public final class HeadOf<T> implements Iterator<T> {
     private final Iterator<T> origin;
 
     /**
-     * Count skip elements.
+     * Number of head elements.
      */
-    private int omit;
+    private final int head;
+
+    /**
+     * Current element index.
+     */
+    private int current;
 
     /**
      * Ctor.
      * @param iterator Decorated iterator
-     * @param skip Count skip elements
+     * @param num Num of head elements
      */
-    public HeadOf(final int skip, final Iterator<T> iterator) {
+    public HeadOf(final int num, final Iterator<T> iterator) {
         this.origin = iterator;
-        this.omit = skip;
+        this.head = num;
+        this.current = 0;
     }
 
     @Override
     public boolean hasNext() {
-        while (this.omit > 0 && this.origin.hasNext()) {
-            this.origin.next();
-            --this.omit;
-        }
-        return this.origin.hasNext();
+        return this.current < this.head && this.origin.hasNext();
     }
 
     @Override
@@ -74,6 +76,7 @@ public final class HeadOf<T> implements Iterator<T> {
                 "The iterator doesn't have items any more"
             );
         }
+        ++this.current;
         return this.origin.next();
     }
 }

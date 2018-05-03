@@ -40,31 +40,31 @@ public final class HeadOf<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
-     * @param skip How many to skip
+     * @param num Number of head elements
      * @param src Source elements
      */
     @SafeVarargs
-    public HeadOf(final int skip, final T... src) {
-        this(skip, new IterableOf<>(src));
+    public HeadOf(final int num, final T... src) {
+        this(num, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param skip How many to skip
+     * @param num Number of head elements
      * @param src Source iterable
      */
-    public HeadOf(final int skip, final Iterable<T> src) {
-        this(skip, new CollectionOf<T>(src));
+    public HeadOf(final int num, final Iterable<T> src) {
+        this(num, new CollectionOf<T>(src));
     }
 
     /**
      * Ctor.
-     * @param skip How many to skip
+     * @param num Number of head elements
      * @param src Source collection
      */
-    public HeadOf(final int skip, final Collection<T> src) {
+    public HeadOf(final int num, final Collection<T> src) {
         super(() -> new CollectionOf<T>(
-            new org.cactoos.iterable.HeadOf<T>(skip, src)
+            new org.cactoos.iterable.HeadOf<T>(num, src)
         ));
     }
 

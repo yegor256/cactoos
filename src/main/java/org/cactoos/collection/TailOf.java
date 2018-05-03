@@ -40,31 +40,31 @@ public final class TailOf<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
-     * @param skip How many to skip
+     * @param num Number of tail elements
      * @param src Source elements
      */
     @SafeVarargs
-    public TailOf(final int skip, final T... src) {
-        this(skip, new IterableOf<>(src));
+    public TailOf(final int num, final T... src) {
+        this(num, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param skip How many to skip
+     * @param num Number of tail elements
      * @param src Source iterable
      */
-    public TailOf(final int skip, final Iterable<T> src) {
-        this(skip, new CollectionOf<T>(src));
+    public TailOf(final int num, final Iterable<T> src) {
+        this(num, new CollectionOf<T>(src));
     }
 
     /**
      * Ctor.
-     * @param skip How many to skip
+     * @param num Number of tail elements
      * @param src Source collection
      */
-    public TailOf(final int skip, final Collection<T> src) {
+    public TailOf(final int num, final Collection<T> src) {
         super(() -> new CollectionOf<T>(
-            new org.cactoos.iterable.TailOf<T>(skip, src)
+            new org.cactoos.iterable.TailOf<T>(num, src)
         ));
     }
 }

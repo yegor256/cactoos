@@ -24,7 +24,6 @@
 
 package org.cactoos.collection;
 
-import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -35,92 +34,23 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class HeadOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipIterable() throws Exception {
+    public void headCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't skip elements in iterable",
             new HeadOf<>(
-                2,
-                new IterableOf<>("one", "two", "three", "four")
-            ),
-            Matchers.contains(
-                "three",
-                "four"
-            )
-        );
-    }
-
-    @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipArray() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't skip elements in array",
-            new HeadOf<>(
-                2,
+                3,
                 "one", "two", "three", "four"
             ),
             Matchers.contains(
-                "three",
-                "four"
-            )
-        );
-    }
-
-    @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipCollection() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't skip elements in collection",
-            new HeadOf<>(
-                2,
-                new CollectionOf<>("one", "two", "three", "four")
-            ),
-            Matchers.contains(
-                "three",
-                "four"
-            )
-        );
-    }
-
-    @Test
-    public void skippedAllElements() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't skip all elements",
-            new HeadOf<>(
-                2,
-                "one", "two"
-            ),
-            Matchers.empty()
-        );
-    }
-
-    @Test
-    public void skippedMoreThanExists() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't skip more than exists",
-            new HeadOf<>(
-                Integer.MAX_VALUE,
-                "one", "two"
-            ),
-            Matchers.empty()
-        );
-    }
-
-    @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skippedNegativeSize() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't process negative skipped size",
-            new HeadOf<>(
-                -1,
-                "one", "two", "three", "four"
-            ),
-            Matchers.contains(
-                "one", "two", "three", "four"
+                "one",
+                "two",
+                "three"
             )
         );
     }

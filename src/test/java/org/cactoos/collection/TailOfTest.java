@@ -47,8 +47,8 @@ public final class TailOfTest {
                 "one", "two", "three", "four"
             ),
             Matchers.contains(
-                "two",
-                "one"
+                "three",
+                "four"
             )
         );
     }

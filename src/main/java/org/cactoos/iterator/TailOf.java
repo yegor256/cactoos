@@ -39,31 +39,35 @@ import org.cactoos.collection.CollectionOf;
 public final class TailOf<T> implements Iterator<T> {
 
     /**
-     * Reversed iterator.
+     * Decorated iterator.
      */
-    private final Iterator<T> reversed;
+    private final Iterator<T> origin;
 
     /**
      * Ctor.
      * @param iterator Decorated iterator
-     * @param skip Count skip elements
+     * @param num Number of tail elements
      */
-    public TailOf(final int skip, final Iterator<T> iterator) {
-        this.reversed = new HeadOf<>(
-            skip,
-            new LinkedList<>(
-                new CollectionOf<>(iterator)
-            ).descendingIterator()
-        );
+    public TailOf(final int num, final Iterator<T> iterator) {
+        this.origin = new LinkedList<>(
+            new CollectionOf<>(
+                new HeadOf<>(
+                    num,
+                    new LinkedList<>(
+                        new CollectionOf<>(iterator)
+                    ).descendingIterator()
+                )
+            )
+        ).descendingIterator();
     }
 
     @Override
     public boolean hasNext() {
-        return this.reversed.hasNext();
+        return this.origin.hasNext();
     }
 
     @Override
     public T next() {
-        return this.reversed.next();
+        return this.origin.next();
     }
 }

@@ -33,6 +33,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.30.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class TailOfTest {
 
@@ -42,12 +43,13 @@ public final class TailOfTest {
         MatcherAssert.assertThat(
             "Can't get tail portion of iterable",
             new TailOf<>(
-                2,
+                3,
                 "one", "two", "three", "four"
             ),
             Matchers.contains(
                 "two",
-                "one"
+                "three",
+                "four"
             )
         );
     }

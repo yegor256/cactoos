@@ -35,6 +35,7 @@ import org.junit.Test;
  * @version $Id$
  * @since 0.30.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class TailOfTest {
 
@@ -50,16 +51,41 @@ public final class TailOfTest {
                 ).iterator()
             ),
             Matchers.contains(
-                "two",
-                "one"
+                "three",
+                "four"
             )
         );
     }
 
+    @Test
+    public void returnsIntactIterator() throws Exception {
+        MatcherAssert.assertThat(
+            new LengthOf(
+                new TailOf<>(
+                    3,
+                    new IterableOf<>(
+                        "one", "two"
+                    ).iterator()
+                )
+            ).intValue(),
+            Matchers.equalTo(2)
+        );
+    }
+
     @Test(expected = NoSuchElementException.class)
-    public void errorSkippedMoreThanExists() throws Exception {
+    public void returnsEmptyIterator() throws Exception {
         new TailOf<>(
-            2,
+            0,
+            new IterableOf<>(
+                "one", "two"
+            ).iterator()
+        ).next();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void emptyIteratorForNegativeSize() throws Exception {
+        new TailOf<>(
+            -1,
             new IterableOf<>(
                 "one", "two"
             ).iterator()

@@ -37,22 +37,22 @@ public final class TailOf<T> extends IterableEnvelope<T>  {
 
     /**
      * Ctor.
-     * @param skip How many to skip from the bootm
+     * @param num Number of tail elements
      * @param src The underlying iterable
      */
     @SafeVarargs
-    public TailOf(final int skip, final T... src) {
-        this(skip, new IterableOf<>(src));
+    public TailOf(final int num, final T... src) {
+        this(num, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param skip Count skip elements
+     * @param num Number of tail elements
      * @param iterable Decorated iterable
      */
-    public TailOf(final int skip, final Iterable<T> iterable) {
+    public TailOf(final int num, final Iterable<T> iterable) {
         super(() -> () -> new org.cactoos.iterator.TailOf<>(
-            skip, iterable.iterator()
+            num, iterable.iterator()
         ));
     }
 }
