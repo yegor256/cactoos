@@ -69,25 +69,17 @@ public final class Equality<T extends Bytes> implements Scalar<Integer> {
         final byte[] rght = this.right.asBytes();
         return new Ternary<>(
             () -> lft.length == rght.length,
-            () -> Equality.compare(lft, rght),
+            () -> {
+                int result = 0;
+                for (int idx = rght.length - 1; idx > 0; --idx) {
+                    result = lft[idx] - rght[idx];
+                    if (result != 0) {
+                        break;
+                    }
+                }
+                return Integer.signum(result);
+            },
             () -> Integer.signum(lft.length - rght.length)
         ).value();
-    }
-
-    /**
-     * Compare two byte arrays of the same size.
-     * @param lft Left array
-     * @param rght Right array
-     * @return Integer Comparison result
-     */
-    private static int compare(final byte[] lft, final byte[] rght) {
-        int result = 0;
-        for (int idx = rght.length - 1; idx > 0; --idx) {
-            result = lft[idx] - rght[idx];
-            if (result != 0) {
-                break;
-            }
-        }
-        return Integer.signum(result);
     }
 }
