@@ -143,4 +143,15 @@ public final class ScalarWithFallbackTest {
             new ScalarHasValue<>(expected)
         );
     }
+
+    @Test(expected = Exception.class)
+    public void noFallbackIsProvided() throws Exception {
+        new ScalarWithFallback<>(
+            () -> {
+                throw new IllegalFormatWidthException(1);
+            },
+            new IterableOf<>(),
+            input -> input
+        ).value();
+    }
 }
