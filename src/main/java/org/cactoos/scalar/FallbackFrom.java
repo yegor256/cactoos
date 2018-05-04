@@ -28,6 +28,7 @@ import org.cactoos.iterable.Mapped;
 
 /**
  * Fallback from exception.
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Roman Proshin (roman@proshin.org)
@@ -48,9 +49,9 @@ public final class FallbackFrom<T> implements Func<Throwable, T> {
     private final Func<Throwable, T> func;
 
     /**
-     * Ctow.
-     * @param exps Supported exceptions types.
-     * @param func Function that converts the given exception into required one.
+     * Ctor.
+     * @param exps Supported exceptions types
+     * @param func Function that converts the given exception into required one
      */
     public FallbackFrom(
         final Iterable<Class<? extends Throwable>> exps,
@@ -66,7 +67,7 @@ public final class FallbackFrom<T> implements Func<Throwable, T> {
 
     /**
      * Calculate level of support of the given exception type.
-     * @param target Exception type.
+     * @param target Exception type
      * @return Level of support between 0 (that is fully support) and
      *  {@link Integer#MAX_VALUE} (that is not supported)
      * @see InheritanceLevel

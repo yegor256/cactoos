@@ -24,9 +24,11 @@
 package org.cactoos.scalar;
 
 import java.io.IOException;
+import java.util.IllegalFormatException;
+import java.util.IllegalFormatWidthException;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -53,8 +55,8 @@ public final class ScalarWithFallbackTest {
                         Throwable::getMessage
                     )),
                 input -> input
-            ).value(),
-            new IsEqual<>(message)
+            ),
+            new ScalarHasValue<>(message)
         );
     }
 
@@ -71,8 +73,8 @@ public final class ScalarWithFallbackTest {
                         Throwable::getMessage
                     )),
                 input -> message
-            ).value(),
-            new IsEqual<>(message)
+            ),
+            new ScalarHasValue<>(message)
         );
     }
 
@@ -91,8 +93,8 @@ public final class ScalarWithFallbackTest {
                         exp -> message
                     )),
                 input -> input
-            ).value(),
-            new IsEqual<>(message)
+            ),
+            new ScalarHasValue<>(message)
         );
     }
 
@@ -113,8 +115,32 @@ public final class ScalarWithFallbackTest {
                         exp -> message
                     )),
                 input -> input
-            ).value(),
-            new IsEqual<>(message)
+            ),
+            new ScalarHasValue<>(message)
+        );
+    }
+
+    @Test
+    public void usesTheClosestFallback() throws Exception {
+        final String expected = "Fallback from IllegalFormatException";
+        MatcherAssert.assertThat(
+            "Can't find the closest fallback",
+            new ScalarWithFallback<>(
+                () -> {
+                    throw new IllegalFormatWidthException(1);
+                },
+                new IterableOf<>(
+                    new FallbackFrom<>(
+                        new IterableOf<>(IllegalArgumentException.class),
+                        exp -> "Fallback from IllegalArgumentException"
+                    ),
+                    new FallbackFrom<>(
+                        new IterableOf<>(IllegalFormatException.class),
+                        exp -> expected
+                    )),
+                input -> input
+            ),
+            new ScalarHasValue<>(expected)
         );
     }
 }

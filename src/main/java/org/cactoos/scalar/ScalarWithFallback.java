@@ -60,9 +60,9 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param origin Original scalar.
-     * @param fbks Fallbacks.
-     * @param follow Follow up function.
+     * @param origin Original scalar
+     * @param fbks Fallbacks
+     * @param follow Follow up function
      */
     public ScalarWithFallback(final Scalar<T> origin,
         final Iterable<FallbackFrom<T>> fbks,
@@ -91,9 +91,9 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     /**
      * Finds the best fallback for the given exception type and apply it to
      * the exception or throw the original error if no fallback found.
-     * @param exp The original exception.
-     * @return Result of the most suitable fallback.
-     * @throws Exception The original exception if no fallback found.
+     * @param exp The original exception
+     * @return Result of the most suitable fallback
+     * @throws Exception The original exception if no fallback found
      */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private T fallback(final Throwable exp) throws Exception {
