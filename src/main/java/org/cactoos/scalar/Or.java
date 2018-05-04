@@ -39,7 +39,6 @@ import org.cactoos.iterable.Mapped;
  * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)}
  * works:</p>
  *
- * <pre>
  * {@code
  * new Or(
  *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
@@ -47,12 +46,10 @@ import org.cactoos.iterable.Mapped;
  * ).value(); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
  *            // the result of this operation is always false
  * }
- * </pre>
  *
  * <p>This class could be also used for matching multiple boolean
  * expressions:</p>
  *
- * <pre>
  * {@code
  * new Or(
  *    new False(),
@@ -66,7 +63,6 @@ import org.cactoos.iterable.Mapped;
  *    new False()
  * ).value(); // the result is false
  * }
- * </pre>
  *
  * <p>There is no thread-safety guarantee.
  *

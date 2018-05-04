@@ -38,7 +38,6 @@ import org.cactoos.iterable.Mapped;
  * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)}
  * works:</p>
  *
- * <pre>
  * {@code
  * new And(
  *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
@@ -46,12 +45,10 @@ import org.cactoos.iterable.Mapped;
  * ).value(); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
  *            // the result of this operation is always true
  * }
- * </pre>
  *
  * <p>This class could be also used for matching multiple boolean
  * expressions:</p>
  *
- * <pre>
  * {@code
  * new And(
  *    new True(),
@@ -65,7 +62,6 @@ import org.cactoos.iterable.Mapped;
  *    new True()
  * ).value(); // the result is false
  * }
- * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
