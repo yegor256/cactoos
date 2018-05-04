@@ -29,11 +29,16 @@ import org.cactoos.Scalar;
 /**
  * Equality.
  *
+ * Returns:
+ *         the value {@code 0} if {@code x == y};
+ *         the value {@code -1} if {@code x < y};
+ *         the value {@code 1} if {@code x > y}
+ *
  * <p>There is no thread-safety guarantee.
  *
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
- * @param <T> Type of result
+ * @param <T> Type of input
  * @since 0.30.1
  */
 public final class Equality<T extends Bytes> implements Scalar<Integer> {
@@ -62,22 +67,27 @@ public final class Equality<T extends Bytes> implements Scalar<Integer> {
     public Integer value() throws Exception {
         final byte[] lft = this.left.asBytes();
         final byte[] rght = this.right.asBytes();
+        return new Ternary<>(
+            () -> lft.length == rght.length,
+            () -> Equality.compare(lft, rght),
+            () -> Integer.signum(lft.length - rght.length)
+        ).value();
+    }
+
+    /**
+     * Compare two byte arrays of the same size.
+     * @param lft Left array
+     * @param rght Right array
+     * @return Integer Comparison result
+     */
+    private static int compare(final byte[] lft, final byte[] rght) {
         int result = 0;
-        final int max = Math.max(lft.length, rght.length);
-        for (int idx = 0; idx < max; ++idx) {
-            if (idx >= lft.length) {
-                result = -1;
-                break;
-            }
-            if (idx >= rght.length) {
-                result = 1;
-                break;
-            }
+        for (int idx = rght.length - 1; idx > 0; --idx) {
             result = lft[idx] - rght[idx];
             if (result != 0) {
                 break;
             }
         }
-        return (int) Math.signum(result);
+        return Integer.signum(result);
     }
 }

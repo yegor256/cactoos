@@ -25,8 +25,8 @@ package org.cactoos.scalar;
 
 import java.nio.ByteBuffer;
 import org.cactoos.Bytes;
+import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -44,8 +44,8 @@ public final class EqualityTest {
         MatcherAssert.assertThat(
             new Equality<>(
                 new EqualityTest.Weight(0), new EqualityTest.Weight(500)
-            ).value(),
-            Matchers.equalTo(-1)
+            ),
+            new ScalarHasValue<>(-1)
         );
     }
 
@@ -54,8 +54,8 @@ public final class EqualityTest {
         MatcherAssert.assertThat(
             new Equality<>(
                 new EqualityTest.Weight(500), new EqualityTest.Weight(0)
-            ).value(),
-            Matchers.equalTo(1)
+            ),
+            new ScalarHasValue<>(1)
         );
     }
 
@@ -64,8 +64,8 @@ public final class EqualityTest {
         MatcherAssert.assertThat(
             new Equality<>(
                 new EqualityTest.Weight(400), new EqualityTest.Weight(500)
-            ).value(),
-            Matchers.equalTo(-1)
+            ),
+            new ScalarHasValue<>(-1)
         );
     }
 
@@ -74,8 +74,8 @@ public final class EqualityTest {
         MatcherAssert.assertThat(
             new Equality<>(
                 new EqualityTest.Weight(500), new EqualityTest.Weight(400)
-            ).value(),
-            Matchers.equalTo(1)
+            ),
+            new ScalarHasValue<>(1)
         );
     }
 
@@ -84,8 +84,8 @@ public final class EqualityTest {
         MatcherAssert.assertThat(
             new Equality<>(
                 new EqualityTest.Weight(500), new EqualityTest.Weight(500)
-            ).value(),
-            Matchers.equalTo(0)
+            ),
+            new ScalarHasValue<>(0)
         );
     }
 
@@ -112,7 +112,7 @@ public final class EqualityTest {
             return new UncheckedScalar<>(
                 new Ternary<>(
                     this.kilos == 0,
-                    new byte[]{},
+                    new byte[]{0, 0},
                     ByteBuffer.allocate(4).putInt(this.kilos).array()
                 )
             ).value();
