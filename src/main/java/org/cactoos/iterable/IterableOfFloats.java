@@ -21,63 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.iterable;
 
-import java.util.Collections;
-import java.util.Iterator;
-import org.cactoos.list.ListOf;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
- * A few Iterators joined together.
+ * Iterable of float values.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @since 1.0
+ * @todo #748:30min Introduce IteratorOfFloats, IteratorOfInts,
+ *  IteratorOfLongs and IteratorOfShorts which will take array of their
+ *  related primitive types (float, int, long, short) and produce iterator
+ *  of reference type (Float, Integer, Long, Short).
+ *  Refactor appropriate IterableOf* classes by using those newly created
+ *  iterators to avoid unnecessary copying elements to a new array.
  */
-public final class Joined<T> implements Iterator<T> {
-
-    /**
-     * Iterators.
-     */
-    private final Iterator<Iterator<T>> iters;
-
-    /**
-     * Current traversal iterator.
-     */
-    private Iterator<T> current;
+public final class IterableOfFloats extends IterableEnvelope<Float> {
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     * @param values Float values
      */
-    @SafeVarargs
-    public Joined(final Iterator<T>... items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public Joined(final Iterable<Iterator<T>> items) {
-        this.iters = items.iterator();
-        this.current = Collections.emptyIterator();
-    }
-
-    @Override
-    public boolean hasNext() {
-        while (!this.current.hasNext() && this.iters.hasNext()) {
-            this.current = this.iters.next();
-        }
-        return this.current.hasNext();
-    }
-
-    @Override
-    public T next() {
-        this.hasNext();
-        return this.current.next();
+    @SuppressWarnings("PMD.AvoidUsingShortType")
+    public IterableOfFloats(final float... values) {
+        super(() -> {
+            final Collection<Float> iterable =
+                new ArrayList<>(values.length);
+            for (final float value: values) {
+                iterable.add(value);
+            }
+            return iterable;
+        });
     }
 }

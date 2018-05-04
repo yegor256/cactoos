@@ -21,54 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.iterable;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import org.cactoos.matchers.MatcherOf;
-import org.cactoos.matchers.TextHasString;
-import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
-import org.junit.Rule;
+import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
- * Test case for {@link WriterTo}.
+ * Test case for {@link IterableOfBytes}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
- * @since 0.13
+ * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class WriterToTest {
-    /**
-     * Temporary files and folders generator.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+public final class IterableOfBytesTest {
 
     @Test
-    public void writesLargeContentToFile() throws IOException {
-        final Path temp = this.folder.newFile("cactoos-1.txt-1")
-            .toPath();
+    public void convertsBytesToIterable() {
+        final byte[] bytes = "txt".getBytes();
         MatcherAssert.assertThat(
-            "Can't copy Input to Output and return Input",
-            new TextOf(
-                new TeeInput(
-                    new ResourceOf("org/cactoos/large-text.txt"),
-                    new WriterAsOutput(new WriterTo(temp))
-                )
-            ),
-            new TextHasString(
-                new MatcherOf<>(
-                    str -> {
-                        return new TextOf(temp).asString().equals(str);
-                    }
-                )
-            )
+            new IterableOfBytes(bytes),
+            Matchers.contains(bytes[0], bytes[1], bytes[2])
         );
     }
-
 }

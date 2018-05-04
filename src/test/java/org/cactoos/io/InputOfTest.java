@@ -32,14 +32,22 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.concurrent.atomic.AtomicBoolean;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import org.cactoos.matchers.InputHasContent;
 import org.cactoos.matchers.MatcherOf;
 import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
 
@@ -56,6 +64,11 @@ import org.takes.tk.TkHtml;
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class InputOfTest {
+    /**
+     * Temporary files and folders generator.
+     */
+    @Rule
+    public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void readsAlternativeInputForFileCase() throws IOException {
@@ -75,7 +88,8 @@ public final class InputOfTest {
 
     @Test
     public void readsSimpleFileContent() throws IOException {
-        final Path temp = Files.createTempFile("cactoos-1", "txt-1");
+        final Path temp = this.folder.newFile("cactoos-1.txt-1")
+            .toPath();
         final String content = "Hello, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
@@ -317,6 +331,45 @@ public final class InputOfTest {
         MatcherAssert.assertThat(
             "Can't show that data is available",
             new InputOf(content).stream().available(),
+            Matchers.greaterThan(0)
+        );
+    }
+
+    @Test
+    // @checkstyle MethodBodyCommentsCheck (50 lines)
+    public void readsSecureUrlContent() throws Exception {
+        final TrustManager[] managers = {
+            new X509TrustManager() {
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+                @Override
+                public void checkClientTrusted(
+                    final X509Certificate[] cert, final String arg) {
+                    // nothing to do
+                }
+                @Override
+                public void checkServerTrusted(
+                    final X509Certificate[] cert, final String arg) {
+                    // nothing to do
+                }
+            },
+        };
+        final SSLContext context = SSLContext.getInstance("TLS");
+        context.init(null, managers, new SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(
+            context.getSocketFactory()
+        );
+        MatcherAssert.assertThat(
+            "Can't read bytes from HTTPS URL",
+            new BytesOf(
+                new InputOf(
+                    new URL(
+                        "https://www.yegor256.com/robots.txt"
+                    )
+                )
+            ).asBytes().length,
             Matchers.greaterThan(0)
         );
     }

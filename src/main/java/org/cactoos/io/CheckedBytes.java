@@ -21,63 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.io;
 
-import java.util.Collections;
-import java.util.Iterator;
-import org.cactoos.list.ListOf;
+import java.io.IOException;
+import org.cactoos.Bytes;
+import org.cactoos.Func;
+import org.cactoos.scalar.CheckedScalar;
 
 /**
- * A few Iterators joined together.
+ * Bytes that throws exception of specified type.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @param <E> Exception's type.
+ * @since 0.31
  */
-public final class Joined<T> implements Iterator<T> {
+public final class CheckedBytes<E extends IOException> implements Bytes {
 
     /**
-     * Iterators.
+     * Original bytes.
      */
-    private final Iterator<Iterator<T>> iters;
+    private final Bytes origin;
 
     /**
-     * Current traversal iterator.
+     * Function that wraps exception of {@link #origin} to the required type.
      */
-    private Iterator<T> current;
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    @SafeVarargs
-    public Joined(final Iterator<T>... items) {
-        this(new ListOf<>(items));
-    }
+    private final Func<Exception, E> func;
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     * @param orig Origin bytes.
+     * @param fnc Function that wraps exceptions.
      */
-    public Joined(final Iterable<Iterator<T>> items) {
-        this.iters = items.iterator();
-        this.current = Collections.emptyIterator();
+    public CheckedBytes(final Bytes orig, final Func<Exception, E> fnc) {
+        this.origin = orig;
+        this.func = fnc;
     }
 
     @Override
-    public boolean hasNext() {
-        while (!this.current.hasNext() && this.iters.hasNext()) {
-            this.current = this.iters.next();
-        }
-        return this.current.hasNext();
-    }
-
-    @Override
-    public T next() {
-        this.hasNext();
-        return this.current.next();
+    public byte[] asBytes() throws E {
+        return new CheckedScalar<>(
+            this.origin::asBytes,
+            this.func
+        ).value();
     }
 }

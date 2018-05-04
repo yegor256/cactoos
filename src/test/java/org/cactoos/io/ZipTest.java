@@ -21,13 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package org.cactoos.io;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.text.TextOf;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
@@ -35,54 +36,42 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 /**
- * Test case for {@link ReaderAsBytes}.
+ * Test case for {@link Zip}.
  *
- * @author Kirill (g4s8.public@gmail.com)
+ * @author Alexander Menshikov (sharplermc@gmail.com)
  * @version $Id$
- * @since 0.12
+ * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReaderAsBytesTest {
+public final class ZipTest {
     /**
-     * Temporary files and folders generator.
+     * Temporary folder.
      */
     @Rule
     public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void readsString() throws IOException {
-        final String source = "hello, друг!";
-        MatcherAssert.assertThat(
-            "Can't read string through a reader",
-            new TextOf(
-                new ReaderAsBytes(
-                    new StringReader(source)
-                )
-            ).asString(),
-            Matchers.equalTo(source)
-        );
-    }
-
-    @Test
-    public void readsAsBytesAndDeletesTempFile() throws Exception {
-        final Path file = this.folder.newFile().toPath();
-        new ReaderAsBytes(
-            new ReaderOf(file)
-        ).asBytes();
-        Files.delete(file);
-        MatcherAssert.assertThat(
-            Files.exists(file),
-            Matchers.equalTo(false)
-        );
-    }
-
-    @Test
-    public void readsEmptyClosableReaderAsBytes() throws Exception {
-        final EmptyClosableReader reader = new EmptyClosableReader();
-        new ReaderAsBytes(reader).asBytes();
-        MatcherAssert.assertThat(
-            reader.isClosed(),
-            Matchers.equalTo(true)
-        );
+    public void zip() throws IOException {
+        final Path dir = this.folder.newFolder().toPath();
+        dir.resolve("x/y").toFile().mkdirs();
+        Files.write(dir.resolve("x/y/test"), "".getBytes());
+        try (final ZipInputStream input = new ZipInputStream(
+            new Zip(
+                new Directory(dir)
+            ).stream()
+        )) {
+            int cnt = 0;
+            ZipEntry entry = input.getNextEntry();
+            while (entry != null) {
+                ++cnt;
+                entry = input.getNextEntry();
+            }
+            MatcherAssert.assertThat(
+                "Can't list files in a directory represented by a path",
+                cnt,
+                // @checkstyle MagicNumber (1 line)
+                Matchers.equalTo(4)
+            );
+        }
     }
 }

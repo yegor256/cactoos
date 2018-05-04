@@ -21,63 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.iterable;
 
-import java.util.Collections;
-import java.util.Iterator;
-import org.cactoos.list.ListOf;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
- * A few Iterators joined together.
+ * Iterable of boolean values.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
- * @param <T> Type of item
- * @since 0.1
+ * @since 1.0
+ * @todo #748:30min Introduce IteratorOfBooleans, IteratorOfChars,
+ *  IteratorOfBytes and IteratorOfDoubles which will take array of their
+ *  related primitive types (boolean, char, byte, double) and produce iterator
+ *  of reference type (Boolean, Character, Byte, Double).
+ *  Refactor appropriate IterableOf* classes by using those newly created
+ *  iterators to avoid unnecessary copying elements to a new array.
  */
-public final class Joined<T> implements Iterator<T> {
-
-    /**
-     * Iterators.
-     */
-    private final Iterator<Iterator<T>> iters;
-
-    /**
-     * Current traversal iterator.
-     */
-    private Iterator<T> current;
+public final class IterableOfBooleans extends IterableEnvelope<Boolean> {
 
     /**
      * Ctor.
-     * @param items Items to concatenate
+     * @param values Boolean values
      */
-    @SafeVarargs
-    public Joined(final Iterator<T>... items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items Items to concatenate
-     */
-    public Joined(final Iterable<Iterator<T>> items) {
-        this.iters = items.iterator();
-        this.current = Collections.emptyIterator();
-    }
-
-    @Override
-    public boolean hasNext() {
-        while (!this.current.hasNext() && this.iters.hasNext()) {
-            this.current = this.iters.next();
-        }
-        return this.current.hasNext();
-    }
-
-    @Override
-    public T next() {
-        this.hasNext();
-        return this.current.next();
+    public IterableOfBooleans(final boolean... values) {
+        super(() -> {
+            final Collection<Boolean> iterable =
+                new ArrayList<>(values.length);
+            for (final boolean value: values) {
+                iterable.add(value);
+            }
+            return iterable;
+        });
     }
 }

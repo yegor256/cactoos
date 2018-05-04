@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
@@ -86,7 +85,7 @@ public final class MappedTest {
             "Can't convert to string",
             new Mapped<Integer, Integer>(
                 x -> x * 2,
-                Arrays.asList(1, 2, 3)
+                new ListOf<>(1, 2, 3)
             ).toString(),
             Matchers.equalTo("2, 4, 6")
         );
