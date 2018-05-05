@@ -24,7 +24,6 @@
 package org.cactoos.scalar;
 
 import java.io.IOException;
-import org.cactoos.Func;
 import org.cactoos.Scalar;
 
 /**
@@ -59,23 +58,10 @@ public final class IoCheckedScalar<T> implements Scalar<T> {
     }
 
     @Override
-    @SuppressWarnings
-        (
-            {
-                "PMD.AvoidCatchingGenericException",
-                "PMD.AvoidRethrowingException"
-            }
-        )
     public T value() throws IOException {
-        return new CheckedScalar<T, IOException>(
+        return new CheckedScalar<>(
             this.origin,
-            new  Func<Exception, IOException>() {
-                @Override
-                public IOException apply(final Exception input) throws
-                Exception {
-                    return new IOException(input);
-                }
-            }
+            IOException::new
         ).value();
     }
 
