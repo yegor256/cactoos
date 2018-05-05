@@ -39,7 +39,7 @@ import org.cactoos.Scalar;
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @param <T> Type of input
- * @since 0.30.1
+ * @since 0.31
  */
 public final class Equality<T extends Bytes> implements Scalar<Integer> {
 
