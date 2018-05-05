@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.nio.ByteBuffer;
 import org.cactoos.Bytes;
 import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
@@ -43,7 +42,7 @@ public final class EqualityTest {
     public void notEqualLeft() throws Exception {
         MatcherAssert.assertThat(
             new Equality<>(
-                new EqualityTest.Weight(0), new EqualityTest.Weight(500)
+                new EqualityTest.Letters("A"), new EqualityTest.Letters("AB")
             ),
             new ScalarHasValue<>(-1)
         );
@@ -53,7 +52,7 @@ public final class EqualityTest {
     public void notEqualRight() throws Exception {
         MatcherAssert.assertThat(
             new Equality<>(
-                new EqualityTest.Weight(500), new EqualityTest.Weight(0)
+                new EqualityTest.Letters("AB"), new EqualityTest.Letters("A")
             ),
             new ScalarHasValue<>(1)
         );
@@ -63,7 +62,7 @@ public final class EqualityTest {
     public void notEqualLeftWithSameSize() throws Exception {
         MatcherAssert.assertThat(
             new Equality<>(
-                new EqualityTest.Weight(400), new EqualityTest.Weight(500)
+                new EqualityTest.Letters("A"), new EqualityTest.Letters("B")
             ),
             new ScalarHasValue<>(-1)
         );
@@ -73,7 +72,7 @@ public final class EqualityTest {
     public void notEqualRightWithSameSize() throws Exception {
         MatcherAssert.assertThat(
             new Equality<>(
-                new EqualityTest.Weight(500), new EqualityTest.Weight(400)
+                new EqualityTest.Letters("B"), new EqualityTest.Letters("A")
             ),
             new ScalarHasValue<>(1)
         );
@@ -83,7 +82,17 @@ public final class EqualityTest {
     public void equal() throws Exception {
         MatcherAssert.assertThat(
             new Equality<>(
-                new EqualityTest.Weight(500), new EqualityTest.Weight(500)
+                new EqualityTest.Letters("A"), new EqualityTest.Letters("A")
+            ),
+            new ScalarHasValue<>(0)
+        );
+    }
+
+    @Test
+    public void compareEmptyArrays() throws Exception {
+        MatcherAssert.assertThat(
+            new Equality<>(
+                new EqualityTest.Letters(""), new EqualityTest.Letters("")
             ),
             new ScalarHasValue<>(0)
         );
@@ -92,30 +101,24 @@ public final class EqualityTest {
     /**
      * Weight.
      */
-    private static final class Weight implements Bytes {
+    private static final class Letters implements Bytes {
 
         /**
-         * Kilos.
+         * Bytes.
          */
-        private final int kilos;
+        private final String text;
 
         /**
          * Ctor.
-         * @param kls Kilos
+         * @param txt Text
          */
-        Weight(final int kls) {
-            this.kilos = kls;
+        Letters(final String txt) {
+            this.text = txt;
         }
 
         @Override
         public byte[] asBytes() {
-            return new UncheckedScalar<>(
-                new Ternary<>(
-                    this.kilos == 0,
-                    new byte[]{0, 0},
-                    ByteBuffer.allocate(4).putInt(this.kilos).array()
-                )
-            ).value();
+            return this.text.getBytes();
         }
     }
 }

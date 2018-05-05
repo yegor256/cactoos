@@ -71,7 +71,7 @@ public final class Equality<T extends Bytes> implements Scalar<Integer> {
             () -> lft.length == rght.length,
             () -> {
                 int result = 0;
-                for (int idx = rght.length - 1; idx > 0; --idx) {
+                for (int idx = rght.length - 1; idx >= 0; --idx) {
                     result = lft[idx] - rght[idx];
                     if (result != 0) {
                         break;
