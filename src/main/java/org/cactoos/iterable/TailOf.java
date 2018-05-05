@@ -21,48 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
-
-import java.util.NoSuchElementException;
-import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+package org.cactoos.iterable;
 
 /**
- * Test Case for {@link Skipped}.
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * Tail portion of the iterable.
+ *
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
- * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Element type
+ * @since 0.31
  */
-public final class SkippedTest {
+public final class TailOf<T> extends IterableEnvelope<T>  {
 
-    @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipIterator() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't skip elements in iterator",
-            () -> new Skipped<>(
-                2,
-                new IterableOf<>(
-                    "one", "two", "three", "four"
-                ).iterator()
-            ),
-            Matchers.contains(
-                "three",
-                "four"
-            )
-        );
+    /**
+     * Ctor.
+     * @param num Number of tail elements
+     * @param src The underlying iterable
+     */
+    @SafeVarargs
+    public TailOf(final int num, final T... src) {
+        this(num, new IterableOf<>(src));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void errorSkippedMoreThanExists() throws Exception {
-        new Skipped<>(
-            2,
-            new IterableOf<>(
-                "one", "two"
-            ).iterator()
-        ).next();
+    /**
+     * Ctor.
+     * @param num Number of tail elements
+     * @param iterable Decorated iterable
+     */
+    public TailOf(final int num, final Iterable<T> iterable) {
+        super(() -> () -> new org.cactoos.iterator.TailOf<>(
+            num, iterable.iterator()
+        ));
     }
 }

@@ -21,13 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
-
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+package org.cactoos.iterable;
 
 /**
- * Skipped iterator.
+ * Head portion of the iterable.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -36,44 +33,26 @@ import java.util.NoSuchElementException;
  * @param <T> Element type
  * @since 0.8
  */
-public final class Skipped<T> implements Iterator<T> {
-
-    /**
-     * Decorated iterator.
-     */
-    private final Iterator<T> origin;
-
-    /**
-     * Count skip elements.
-     */
-    private int omit;
+public final class HeadOf<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param iterator Decorated iterator
-     * @param skip Count skip elements
+     * @param num Number of head elements
+     * @param src The underlying iterable
      */
-    public Skipped(final int skip, final Iterator<T> iterator) {
-        this.origin = iterator;
-        this.omit = skip;
+    @SafeVarargs
+    public HeadOf(final int num, final T... src) {
+        this(num, new IterableOf<>(src));
     }
 
-    @Override
-    public boolean hasNext() {
-        while (this.omit > 0 && this.origin.hasNext()) {
-            this.origin.next();
-            --this.omit;
-        }
-        return this.origin.hasNext();
-    }
-
-    @Override
-    public T next() {
-        if (!this.hasNext()) {
-            throw new NoSuchElementException(
-                "The iterator doesn't have items any more"
-            );
-        }
-        return this.origin.next();
+    /**
+     * Ctor.
+     * @param num Number of head elements
+     * @param iterable Decorated iterable
+     */
+    public HeadOf(final int num, final Iterable<T> iterable) {
+        super(() -> () -> new org.cactoos.iterator.HeadOf<>(
+            num, iterable.iterator()
+        ));
     }
 }

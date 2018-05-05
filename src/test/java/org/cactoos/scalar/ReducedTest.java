@@ -33,7 +33,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Reduced}.
- *
  * @author Eduard Balovnev (bedward70@mail.ru)
  * @version $Id$
  * @since 0.30

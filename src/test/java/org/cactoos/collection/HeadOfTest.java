@@ -21,39 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+
+package org.cactoos.collection;
+
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Skipped iterable.
- *
- * <p>There is no thread-safety guarantee.</p>
- *
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * Test Case for {@link HeadOf}.
+ * @author Alexander Menshikov (sharplermc@gmail.com)
  * @version $Id$
- * @param <T> Element type
- * @since 0.8
+ * @since 0.29
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class Skipped<T> extends IterableEnvelope<T> {
+public final class HeadOfTest {
 
-    /**
-     * Ctor.
-     * @param skip How many to skip
-     * @param src The underlying iterable
-     */
-    @SafeVarargs
-    public Skipped(final int skip, final T... src) {
-        this(skip, new IterableOf<>(src));
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void headCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't skip elements in iterable",
+            new HeadOf<>(
+                3,
+                "one", "two", "three", "four"
+            ),
+            Matchers.contains(
+                "one",
+                "two",
+                "three"
+            )
+        );
     }
-
-    /**
-     * Ctor.
-     * @param skip Count skip elements
-     * @param iterable Decorated iterable
-     */
-    public Skipped(final int skip, final Iterable<T> iterable) {
-        super(() -> () -> new org.cactoos.iterator.Skipped<>(
-            skip, iterable.iterator()
-        ));
-    }
-
 }

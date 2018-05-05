@@ -28,29 +28,29 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link Skipped}.
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
+ * Test case for {@link TailOf}.
+ * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
- * @since 0.8
+ * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SkippedTest {
+public final class TailOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipIterable() throws Exception {
+    public void tailIterable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't skip elements in iterable",
-            new Skipped<>(
-                2, new IterableOf<>(
-                    "one", "two", "three", "four"
-                )
+            "Can't get tail portion of iterable",
+            new TailOf<>(
+                3,
+                "one", "two", "three", "four"
             ),
             Matchers.contains(
+                "two",
                 "three",
                 "four"
             )
         );
     }
-
 }
