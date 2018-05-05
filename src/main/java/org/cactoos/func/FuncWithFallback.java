@@ -35,6 +35,11 @@ import org.cactoos.Func;
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.2
+ * @todo #759:30min Refactor FuncWithFallback applying a new
+ *  ScalarWithFallback: change implementation of this class so that it uses
+ *  ScalarWithFallback as base implementation. Refactored class should allow
+ *  the user to specify multiple fallbacks for different types of exceptions
+ *  (similar to ScalarWithFallback).
  */
 public final class FuncWithFallback<X, Y> implements Func<X, Y> {
 
