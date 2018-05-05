@@ -120,16 +120,19 @@ public final class LoggingOutputTest {
         final Logger logger = new FakeLogger();
         final Path temp = this.folder.newFolder("ccts-1").toPath();
         final Path path = temp.resolve("x/y/z/file.txt");
-        new LengthOf(
-            new TeeInput(
-                new ResourceOf("org/cactoos/large-text.txt"),
-                new LoggingOutput(
-                    new OutputTo(path),
-                    "text file",
-                    logger
+        try (OutputStream output = new LoggingOutput(
+            new OutputTo(path),
+            "text file",
+            logger
+        ).stream()
+        ) {
+            new LengthOf(
+                new TeeInput(
+                    new ResourceOf("org/cactoos/large-text.txt"),
+                    new OutputTo(output)
                 )
-            )
-        ).intValue();
+            ).intValue();
+        }
         MatcherAssert.assertThat(
             "Can't log write and close operations to text file",
             logger.toString(),
@@ -150,16 +153,19 @@ public final class LoggingOutputTest {
         final Logger logger = new FakeLogger(Level.WARNING);
         final Path temp = this.folder.newFolder("ccts-2").toPath();
         final Path path = temp.resolve("a/b/c/file.txt");
-        new LengthOf(
-            new TeeInput(
-                new ResourceOf("org/cactoos/large-text.txt"),
-                new LoggingOutput(
-                    new OutputTo(path),
-                    "text file",
-                    logger
+        try (final OutputStream output = new LoggingOutput(
+            new OutputTo(path),
+            "text file",
+            logger
+        ).stream()
+        ) {
+            new LengthOf(
+                new TeeInput(
+                    new ResourceOf("org/cactoos/large-text.txt"),
+                    new OutputTo(output)
                 )
-            )
-        ).intValue();
+            ).intValue();
+        }
         MatcherAssert.assertThat(
             "Can't log all write and close operations to text file",
             logger.toString(),

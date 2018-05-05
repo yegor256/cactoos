@@ -56,27 +56,26 @@ public final class WriterAsOutputTest {
     public void writesLargeContentToFile() throws IOException {
         final Path temp = this.folder.newFile("cactoos-1.txt-1")
             .toPath();
-        MatcherAssert.assertThat(
-            "Can't copy Input to Output and return Input",
-            new TextOf(
-                new TeeInput(
-                    new ResourceOf("org/cactoos/large-text.txt"),
-                    new WriterAsOutput(
-                        new OutputStreamWriter(
-                            new FileOutputStream(temp.toFile()),
-                            StandardCharsets.UTF_8
-                        )
+        try (final OutputStreamWriter writer = new OutputStreamWriter(
+            new FileOutputStream(temp.toFile()), StandardCharsets.UTF_8
+        )) {
+            MatcherAssert.assertThat(
+                "Can't copy Input to Output and return Input",
+                new TextOf(
+                    new TeeInput(
+                        new ResourceOf("org/cactoos/large-text.txt"),
+                        new WriterAsOutput(writer)
+                    )
+                ),
+                new TextHasString(
+                    new MatcherOf<>(
+                        str -> {
+                            return new TextOf(temp).asString().equals(str);
+                        }
                     )
                 )
-            ),
-            new TextHasString(
-                new MatcherOf<>(
-                    str -> {
-                        return new TextOf(temp).asString().equals(str);
-                    }
-                )
-            )
-        );
+            );
+        }
     }
 
 }
