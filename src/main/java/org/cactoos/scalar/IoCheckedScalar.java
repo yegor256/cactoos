@@ -58,26 +58,11 @@ public final class IoCheckedScalar<T> implements Scalar<T> {
     }
 
     @Override
-    @SuppressWarnings
-        (
-            {
-                "PMD.AvoidCatchingGenericException",
-                "PMD.AvoidRethrowingException"
-            }
-        )
     public T value() throws IOException {
-        try {
-            return this.origin.value();
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final IOException | RuntimeException ex) {
-            throw ex;
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IOException(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            throw new IOException(ex);
-        }
+        return new CheckedScalar<>(
+            this.origin,
+            IOException::new
+        ).value();
     }
 
 }
