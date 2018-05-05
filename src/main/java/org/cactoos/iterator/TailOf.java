@@ -34,7 +34,7 @@ import org.cactoos.collection.CollectionOf;
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @param <T> Element type
- * @since 0.30.1
+ * @since 0.31
  */
 public final class TailOf<T> implements Iterator<T> {
 
