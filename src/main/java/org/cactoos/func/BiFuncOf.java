@@ -28,6 +28,7 @@ import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 import org.cactoos.Func;
 import org.cactoos.Proc;
+import org.cactoos.Scalar;
 
 /**
  * Represents many possible inputs as {@link BiFunc}.
@@ -54,6 +55,14 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
      */
     public BiFuncOf(final Z result) {
         this((first, second) -> result);
+    }
+
+    /**
+     * Ctor.
+     * @param scalar The scalar
+     */
+    public BiFuncOf(final Scalar<Z> scalar) {
+        this((first, second) -> scalar.value());
     }
 
     /**
@@ -128,4 +137,5 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
     public Z apply(final X first, final Y second) throws Exception {
         return this.func.apply(first, second);
     }
+
 }
