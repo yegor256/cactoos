@@ -62,7 +62,7 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
      * @param scalar The scalar
      */
     public BiFuncOf(final Scalar<Z> scalar) {
-        this(new FuncOf<>(scalar));
+        this((first, second) -> scalar.value());
     }
 
     /**
