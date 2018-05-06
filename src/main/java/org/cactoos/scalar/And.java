@@ -40,7 +40,7 @@ import org.cactoos.iterable.Mapped;
  *
  * {@code
  * new And(
- *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
+ *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
  *    new IterableOf<>("Mary", "John", "William", "Napkin")
  * ).value(); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
  *            // the result of this operation is always true
