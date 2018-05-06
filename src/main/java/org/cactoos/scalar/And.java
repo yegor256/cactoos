@@ -32,6 +32,9 @@ import org.cactoos.iterable.Mapped;
 
 /**
  * Logical conjunction.
+ * This class performs short-circuit evaluation in which arguments are
+ * executed only if the preceding argument does not suffice to determine
+ * the value of the expression.
  *
  * <p>This class can be effectively used to iterate through
  * a collection, just like
