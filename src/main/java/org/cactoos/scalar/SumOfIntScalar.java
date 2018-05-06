@@ -48,11 +48,6 @@ import org.cactoos.Scalar;
 public final class SumOfIntScalar implements Scalar<Integer> {
 
     /**
-     * Serialization marker.
-     */
-    private static final long serialVersionUID = 7775359972001208404L;
-
-    /**
      * Varargs of Scalar to sum up values from.
      */
     private final Scalar<Integer>[] scalars;
