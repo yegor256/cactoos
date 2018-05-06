@@ -137,4 +137,5 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
     public Z apply(final X first, final Y second) throws Exception {
         return this.func.apply(first, second);
     }
+
 }
