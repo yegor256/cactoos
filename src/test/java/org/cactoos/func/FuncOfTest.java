@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -84,4 +85,12 @@ public final class FuncOfTest {
         );
     }
 
+    @Test
+    public void convertsScalarIntoFunc() throws Exception {
+        final Scalar<Boolean> scalar = () -> true;
+        MatcherAssert.assertThat(
+            new FuncOf<Boolean, Boolean>(scalar).apply(false),
+            Matchers.equalTo(true)
+        );
+    }
 }

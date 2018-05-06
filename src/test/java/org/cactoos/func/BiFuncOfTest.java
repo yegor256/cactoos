@@ -24,6 +24,7 @@
 package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -90,6 +91,15 @@ public final class BiFuncOfTest {
             new BiFuncOf<String, Integer, Boolean>(
                 true
             ).apply("hello, dude!", 1),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
+    public void convertsScalarIntoBiFunc() throws Exception {
+        final Scalar<Boolean> scalar = () -> true;
+        MatcherAssert.assertThat(
+            new BiFuncOf<Boolean, Boolean, Boolean>(scalar).apply(false, false),
             Matchers.equalTo(true)
         );
     }
