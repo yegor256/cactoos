@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -29,8 +29,6 @@ import java.util.Collection;
 /**
  * Iterable of boolean values.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @since 1.0
  * @todo #748:30min Introduce IteratorOfBooleans, IteratorOfChars,
  *  IteratorOfBytes and IteratorOfDoubles which will take array of their

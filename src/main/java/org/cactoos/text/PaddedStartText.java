@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,8 +31,6 @@ import org.cactoos.Text;
  *
  * <p>There is thread safe.
  *
- * @author Vivek Poddar (vivekimsit@gmail.com)
- * @version $Id$
  * @since 0.32
  */
 public final class PaddedStartText implements Text {

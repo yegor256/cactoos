@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -32,8 +32,6 @@ import org.cactoos.scalar.CheckedScalar;
 /**
  * Input that throws exception of specified type.
  *
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @param <E> Exception's type.
  * @since 0.31
  */

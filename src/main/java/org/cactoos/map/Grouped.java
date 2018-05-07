@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -38,8 +38,6 @@ import java.util.stream.StreamSupport;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Nikita Salomatin (nsalomatin@hotmail.com)
- * @version $Id$
  * @param <K> Type of key
  * @param <V> Type of value
  * @param <T> Type of entry objects of functions

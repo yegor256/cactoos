@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -29,8 +29,6 @@ import java.util.Collection;
 /**
  * Iterable of characters.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @since 1.0
  */
 public final class IterableOfChars extends IterableEnvelope<Character> {

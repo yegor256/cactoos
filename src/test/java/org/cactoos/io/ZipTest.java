@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -38,8 +38,6 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Test case for {@link Zip}.
  *
- * @author Alexander Menshikov (sharplermc@gmail.com)
- * @version $Id$
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */

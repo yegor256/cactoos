@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -38,8 +38,6 @@ import org.cactoos.text.TextOf;
  * it more convenient and get rid of the checked exception you can
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
- * @author Kirill (g4s8.public@gmail.com)
- * @version $Id$
  * @since 0.2
  */
 public final class BoolOf implements Scalar<Boolean> {

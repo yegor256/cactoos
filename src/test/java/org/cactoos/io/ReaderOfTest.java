@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -37,9 +37,6 @@ import org.junit.rules.TemporaryFolder;
 
 /**
  * Test case for {@link ReaderOf}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)

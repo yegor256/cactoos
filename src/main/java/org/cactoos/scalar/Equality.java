@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -36,8 +36,6 @@ import org.cactoos.Scalar;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @param <T> Type of input
  * @since 0.31
  */

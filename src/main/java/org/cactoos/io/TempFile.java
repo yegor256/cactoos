@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -47,8 +47,6 @@ import org.cactoos.text.TextOf;
  * The physical file is deleted from the filesystem when the temp file is
  * closed.
  *
- * @author George Aristy (george.aristy@gmail.com)
- * @version $Id$
  * @since 1.0
  */
 public final class TempFile implements Scalar<Path>, Closeable {

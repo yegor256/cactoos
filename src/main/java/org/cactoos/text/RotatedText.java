@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -28,8 +28,6 @@ import org.cactoos.Text;
 
 /**
  * Rotate (circular shift) a String of shift characters.
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.12
  */
 public final class RotatedText implements Text {

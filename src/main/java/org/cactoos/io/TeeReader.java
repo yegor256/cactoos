@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,8 +31,6 @@ import java.io.Writer;
  * Input to Output copying reader.
  *
  * <p>There is no thread-safety guarantee.
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.13
  */
 public final class TeeReader extends Reader {

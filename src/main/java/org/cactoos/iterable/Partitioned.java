@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -28,8 +28,6 @@ import java.util.List;
 /**
  * Iterable implementation for partitioning functionality.
  *
- * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
- * @version $Id$
  * @param <T> Partitions value type
  * @since 0.29
  */

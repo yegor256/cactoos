@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -41,8 +41,6 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Sergey Sharov (zefick@mail.ru)
- * @version $Id$
  * @since 0.27
  */
 public final class ComparableText implements Text, Comparable<Text> {

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,8 +31,6 @@ import org.cactoos.collection.CollectionOf;
  * Tail portion of the iterator.
  *
  * <p>There is no thread-safety guarantee.</p>
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @param <T> Element type
  * @since 0.31
  */
