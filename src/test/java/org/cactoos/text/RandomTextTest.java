@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.list.ListOf;
 import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -65,7 +64,7 @@ public final class RandomTextTest {
     public void generatesRandomTextOfSpecifiedChars() throws Exception {
         MatcherAssert.assertThat(
             "Generated text contains not allowed characters",
-            new RandomText(new ListOf<>('a'))
+            new RandomText('a')
                 .asString()
                 .replaceAll("a", "")
                 .length(),
@@ -77,7 +76,7 @@ public final class RandomTextTest {
     public void generatesRandomTextOfSpecifiedCharsAndLength() {
         MatcherAssert.assertThat(
             "Generated text doesn't match specification",
-            new RandomText(new ListOf<>('a'), 10),
+            new RandomText(10, 'a'),
             new TextHasString("aaaaaaaaaa")
         );
     }
