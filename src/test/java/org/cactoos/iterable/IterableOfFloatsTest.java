@@ -39,7 +39,7 @@ public final class IterableOfFloatsTest {
 
     @Test
     public void convertsFloatValuesToIterable() {
-        final float[] values = new float[]{1, 2, 3};
+        final float[] values = {1, 2, 3};
         MatcherAssert.assertThat(
             new IterableOfFloats(values),
             Matchers.contains(values[0], values[1], values[2])

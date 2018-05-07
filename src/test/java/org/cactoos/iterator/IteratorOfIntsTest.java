@@ -21,28 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
+import java.util.NoSuchElementException;
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableOfInts}.
+ * Tests for {@link IteratorOfInts}.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableOfIntsTest {
+public final class IteratorOfIntsTest {
+    @Test
+    public void emptyIteratorDoesNotHaveNext() {
+        MatcherAssert.assertThat(
+            "Can't create empty iterator",
+            new IteratorOfInts().hasNext(),
+            CoreMatchers.equalTo(false)
+        );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void emptyIteratorThrowsException() {
+        new IteratorOfInts().next();
+    }
 
     @Test
-    public void convertsIntegerValuesToIterable() {
-        final int[] values = {1, 2, 3};
+    public void nonEmptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            new IterableOfInts(values),
-            Matchers.contains(values[0], values[1], values[2])
+            "Can't create non empty iterator",
+            this.iteratorWithFetchedElements().hasNext(),
+            CoreMatchers.equalTo(false)
         );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void nonEmptyIteratorThrowsException() {
+        this.iteratorWithFetchedElements().next();
+    }
+
+    private IteratorOfInts iteratorWithFetchedElements() {
+        final IteratorOfInts iterator = new IteratorOfInts(
+            1, 2, 3
+        );
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        return iterator;
     }
 }
