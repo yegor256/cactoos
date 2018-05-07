@@ -32,7 +32,7 @@ import java.util.Collection;
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @since 1.0
- * @todo #748:30min Introduce  IteratorOfBytes and IteratorOfDoubles which will
+ * @todo #803:30min Introduce IteratorOfBytes and IteratorOfDoubles which will
  *  take array of their related primitive types (byte, double) and produce
  *  iterator of reference type (Byte, Double).
  *  Refactor appropriate IterableOf* classes by using those newly created
