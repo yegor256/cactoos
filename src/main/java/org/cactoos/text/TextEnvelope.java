@@ -23,11 +23,12 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
- * Text envelope for comparisons.
+ * Text decorator for comparisons between {@link Text} implementations against
+ * its {@link #asString()} value using {@link #equals(Object)} and
+ * {@link #hashCode()} methods.
  * @author Paulo Lobo (pauloeduardolobo@gmail.com)
  * @version $Id$
  * @since 0.31
@@ -37,40 +38,28 @@ public final class TextEnvelope implements Text {
     /**
      * Enveloped {@link Text}.
      */
-    private final Text origin;
+    private final UncheckedText origin;
 
     /**
      * Ctor.
-     * @param origin Text to be envelooped.
+     * @param origin Text to be enveloped.
      */
     public TextEnvelope(final Text origin) {
-        this.origin = origin;
+        this.origin = new UncheckedText(origin);
     }
 
     @Override
     public int hashCode() {
-        int result = 0;
-        try {
-            result = this.origin.asString().hashCode();
-        } catch (final IOException ioexc) {
-            result = -1;
-        }
-        return result;
+        return this.origin.asString().hashCode();
     }
 
     @Override
     public boolean equals(final Object obj) {
-        boolean result;
-        try {
-            result = this.origin.asString().equals(obj);
-        } catch (final IOException ioexc) {
-            result = false;
-        }
-        return result;
+        return this.origin.asString().equals(obj);
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() {
         return this.origin.asString();
     }
 }

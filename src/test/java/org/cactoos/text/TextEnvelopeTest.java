@@ -35,6 +35,19 @@ import org.junit.Test;
  */
 public final class TextEnvelopeTest {
     /**
+     * Test for {@link TextEnvelope#asString()} method. Must assert that
+     * the enveloped {@link TextOf} value is equal to {@link TextOf} value.
+     */
+    @Test
+    public void testAsString() {
+        final String equals = "asString";
+        MatcherAssert.assertThat(
+            "Enveloped value does not match its TextOf value",
+            new TextEnvelope(new TextOf(equals)).asString(),
+            Matchers.is(new UncheckedText(new TextOf(equals)).asString())
+        );
+    }
+    /**
      * Test for {@link TextEnvelope#equals(Object)} method. Must assert that
      * the enveloped {@link TextOf} value is equal to its string.
      */
