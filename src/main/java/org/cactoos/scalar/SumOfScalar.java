@@ -46,11 +46,6 @@ import org.cactoos.iterable.IterableOf;
 final class SumOfScalar implements Scalar<SumOf> {
 
     /**
-     * Serialization marker.
-     */
-    private static final long serialVersionUID = 7775359972001208404L;
-
-    /**
      * Varargs of Scalar to sum up values from.
      */
     private final Scalar<? extends Number>[] scalars;

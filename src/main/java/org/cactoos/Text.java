@@ -30,7 +30,7 @@ import java.io.IOException;
  *
  * <p>If you don't want to have any checked exceptions being thrown
  * out of your {@link Text}, you can use
- * {@link UncheckedText} decorator.</p>
+ * {@link org.cactoos.text.UncheckedText} decorator.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -62,6 +62,7 @@ public interface Text {
          * The origin text.
          */
         private final Text origin;
+
         /**
          * Ctor.
          * @param text The text
@@ -69,6 +70,7 @@ public interface Text {
         public NoNulls(final Text text) {
             this.origin = text;
         }
+
         @Override
         public String asString() throws IOException {
             if (this.origin == null) {
@@ -85,5 +87,4 @@ public interface Text {
             return string;
         }
     }
-
 }
