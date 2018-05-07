@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
@@ -72,7 +71,7 @@ public final class RandomText implements Text {
      * Ctor.
      * @param len Length of generated text.
      */
-    public RandomText(final int len) {
+    public RandomText(final Integer len) {
         this(
             new ListOf<>(
                 '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*',
@@ -92,6 +91,14 @@ public final class RandomText implements Text {
 
     /**
      * Ctor.
+     * @param chrs Array of characters allowed for generating.
+     */
+    public RandomText(final Character... chrs) {
+        this(new ListOf<>(chrs));
+    }
+
+    /**
+     * Ctor.
      * @param chrs List of characters allowed for generating.
      */
     public RandomText(final List<Character> chrs) {
@@ -103,17 +110,37 @@ public final class RandomText implements Text {
 
     /**
      * Ctor.
+     * @param len Length of generated text.
+     * @param chrs Array of characters allowed for generating.
+     */
+    public RandomText(final Integer len, final Character... chrs) {
+        this(new ListOf<>(chrs), len);
+    }
+
+    /**
+     * Ctor.
      * @param chrs List of characters allowed for generating.
      * @param len Length of generated text.
      */
     public RandomText(final List<Character> chrs, final int len) {
+        this(chrs, len, new SecureRandom());
+    }
+
+    /**
+     * Ctor.
+     * @param chrs List of characters allowed for generating.
+     * @param len Length of generated text.
+     * @param rnd Characters index randomizer.
+     */
+    public RandomText(final List<Character> chrs, final int len,
+        final Random rnd) {
         this.characters = chrs;
         this.length = len;
-        this.random = new SecureRandom();
+        this.random = rnd;
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() {
         final StringBuilder builder = new StringBuilder(this.length);
         final int bound = this.characters.size();
         for (int index = 0; index < this.length; index = index + 1) {
