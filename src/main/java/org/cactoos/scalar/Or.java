@@ -33,6 +33,39 @@ import org.cactoos.iterable.Mapped;
 
 /**
  * Logical disjunction.
+ * This class performs short-circuit evaluation in which arguments are
+ * executed only if the preceding argument does not suffice to determine
+ * the value of the expression.
+ *
+ * <p>This class can be effectively used to iterate through
+ * a collection, just like
+ * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)}
+ * works:</p>
+ *
+ * {@code
+ * new Or(
+ *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
+ *    new IterableOf<>("Mary", "John", "William", "Napkin")
+ * ).value(); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
+ *            // the result of this operation is always false
+ * }
+ *
+ * <p>This class could be also used for matching multiple boolean
+ * expressions:</p>
+ *
+ * {@code
+ * new Or(
+ *    new False(),
+ *    new True(),
+ *    new True()
+ * ).value(); // the result is true
+ *
+ * new Or(
+ *    new False(),
+ *    new False(),
+ *    new False()
+ * ).value(); // the result is false
+ * }
  *
  * <p>There is no thread-safety guarantee.
  *
