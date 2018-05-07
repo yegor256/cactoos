@@ -33,9 +33,9 @@ import org.cactoos.Text;
  *
  * @author Vivek Poddar (vivekimsit@gmail.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.32
  */
-public final class PaddedTextStart implements Text {
+public final class PaddedStartText implements Text {
 
     /**
      * The text.
@@ -58,7 +58,7 @@ public final class PaddedTextStart implements Text {
      * @param length The minimum length of the resulting string
      * @param symbol The padding symbol
      */
-    public PaddedTextStart(
+    public PaddedStartText(
         final Text text, final int length, final char symbol) {
         this.origin = text;
         this.symbol = symbol;

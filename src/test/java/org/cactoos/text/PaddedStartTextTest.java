@@ -28,20 +28,20 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test case for {@link PaddedTextStart}.
+ * Test case for {@link PaddedStartText}.
  *
  * @author Vivek Poddar (vivekimsit@gmail.com)
  * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class PaddedTextStartTest {
+public final class PaddedStartTextTest {
 
     @Test
     public void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
         MatcherAssert.assertThat(
             "Shouldn't pad the text",
-            new PaddedTextStart(
+            new PaddedStartText(
                 new TextOf("x"),
                 1,
                 '-'
@@ -54,7 +54,7 @@ public final class PaddedTextStartTest {
     public void somePaddingIfOrigTextIsShorterThanRequestedLength() {
         MatcherAssert.assertThat(
             "Should pad chars at start",
-            new PaddedTextStart(
+            new PaddedStartText(
                 new TextOf("x"),
                 2,
                 '-'
@@ -67,7 +67,7 @@ public final class PaddedTextStartTest {
     public void noPaddingIfRequestedLengthIsNegative()  {
         MatcherAssert.assertThat(
             "Shouldn't consider negative min length",
-            new PaddedTextStart(
+            new PaddedStartText(
                 new TextOf("x"),
                 -1,
                 '-'
