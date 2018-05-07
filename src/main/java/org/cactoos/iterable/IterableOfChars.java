@@ -23,8 +23,8 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.cactoos.iterator.IteratorOfChars;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable of characters.
@@ -40,13 +40,8 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
      * @param chars Characters
      */
     public IterableOfChars(final char... chars) {
-        super(() -> {
-            final Collection<Character> iterable =
-                new ArrayList<>(chars.length);
-            for (final char chr: chars) {
-                iterable.add(chr);
-            }
-            return iterable;
-        });
+        super(() -> ()
+            -> new UncheckedScalar<>(() -> new IteratorOfChars(chars)).value()
+        );
     }
 }

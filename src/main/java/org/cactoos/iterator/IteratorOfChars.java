@@ -21,37 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterable of bytes.
+ * Iterator that returns the set of chars.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 1.0
- * @todo #748:30min Introduce  IteratorOfBytes and IteratorOfDoubles which will
- *  take array of their related primitive types (byte, double) and produce
- *  iterator of reference type (Byte, Double).
- *  Refactor appropriate IterableOf* classes by using those newly created
- *  iterators to avoid unnecessary copying elements to a new array.
+ * @since 0.32
  */
-public final class IterableOfBytes extends IterableEnvelope<Byte> {
+public final class IteratorOfChars implements Iterator<Character> {
+    /**
+     * The list of items to iterate.
+     */
+    private final char[] list;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
 
     /**
      * Ctor.
-     * @param bytes Bytes
+     * @param items Items to iterate
      */
-    public IterableOfBytes(final byte... bytes) {
-        super(() -> {
-            final Collection<Byte> iterable =
-                new ArrayList<>(bytes.length);
-            for (final byte byt: bytes) {
-                iterable.add(byt);
-            }
-            return iterable;
-        });
+    public IteratorOfChars(final char... items) {
+        this.list = items;
+        this.position = new AtomicInteger(0);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return this.position.intValue() < this.list.length;
+    }
+
+    @Override
+    public Character next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.list[this.position.getAndIncrement()];
     }
 }
