@@ -30,18 +30,16 @@ import org.cactoos.Scalar;
  *
  *  <p>This class is thread safe.
  *
- *  <p>
- *  Result interpretation:
- *
- *   0 -> classes are identical. (ex. matching IOException with IOException)
- *   1 -> single level inheritance. (ex. matching FileNotFoundException with
- *        IOException)
- *   2 -> two inheritance levels. (ex. matching FileNotFoundException with
- *        Exception)
- *   ...
- *   Integer.MAX_VALUE -> classes are not related.
- *      (ex. matching FileNotFoundException with RuntimeException)
- *  </p>
+ *  <ul>Result interpretation:
+ *      <li>Integer.MIN_VALUE -> classes are not related. (ex. matching
+ *      FileNotFoundException with RuntimeException)</li>
+ *      <li>0 -> classes are identical. (ex. matching IOException with
+ *      IOException)</li>
+ *      <li>1 -> single level inheritance. (ex. matching
+ *      FileNotFoundException with IOException)</li>
+ *      <li>2 -> two inheritance levels. (ex. matching
+ *      FileNotFoundException with Exception)</li>
+ *  </ul>
  *
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
@@ -85,7 +83,7 @@ public final class InheritanceLevel implements Scalar<Integer> {
      * @return Integer Level
      */
     private int calculateLevel() {
-        int level = Integer.MAX_VALUE;
+        int level = Integer.MIN_VALUE;
         Class<?> sclass = this.derived.getSuperclass();
         int idx = 0;
         while (!sclass.equals(Object.class)) {

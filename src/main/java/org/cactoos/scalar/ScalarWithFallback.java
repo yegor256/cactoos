@@ -101,12 +101,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
             new Sorted<>(
                 Comparator.comparing(Map.Entry::getValue),
                 new Filtered<>(
-                    entry -> new Not(
-                        new Equals<>(
-                            entry::getValue,
-                            () -> Integer.MAX_VALUE
-                        )
-                    ).value(),
+                    entry -> entry.getValue() >= 0,
                     new MapOf<>(
                         fbk -> fbk,
                         fbk -> fbk.support(exp.getClass()),
