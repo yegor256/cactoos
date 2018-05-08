@@ -24,8 +24,8 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
-import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -42,9 +42,9 @@ public final class IteratorOfCharsTest {
     @Test
     public void emptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            "Can't create empty iterator",
+            "hasNext is true for empty iterator",
             new IteratorOfChars().hasNext(),
-            CoreMatchers.equalTo(false)
+            new IsEqual<>(false)
         );
     }
 
@@ -55,25 +55,25 @@ public final class IteratorOfCharsTest {
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
-        MatcherAssert.assertThat(
-            "Can't create non empty iterator",
-            this.iteratorWithFetchedElements().hasNext(),
-            CoreMatchers.equalTo(false)
-        );
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
-        this.iteratorWithFetchedElements().next();
-    }
-
-    private IteratorOfChars iteratorWithFetchedElements() {
         final IteratorOfChars iterator = new IteratorOfChars(
             'a', 'b', 'c'
         );
         iterator.next();
         iterator.next();
         iterator.next();
-        return iterator;
+        MatcherAssert.assertThat(
+            "hasNext is true for already traversed iterator",
+            iterator.hasNext(),
+            new IsEqual<>(false)
+        );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void nonEmptyIteratorThrowsException() {
+        final IteratorOfChars iterator = new IteratorOfChars(
+            'a'
+        );
+        iterator.next();
+        iterator.next();
     }
 }

@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import org.cactoos.iterator.IteratorOfChars;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable of characters.
@@ -40,8 +39,6 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
      * @param chars Characters
      */
     public IterableOfChars(final char... chars) {
-        super(() -> ()
-            -> new UncheckedScalar<>(() -> new IteratorOfChars(chars)).value()
-        );
+        super(() -> new IterableOf<>(new IteratorOfChars(chars)));
     }
 }

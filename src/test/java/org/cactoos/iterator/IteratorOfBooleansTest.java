@@ -24,8 +24,8 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
-import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -42,9 +42,9 @@ public final class IteratorOfBooleansTest {
     @Test
     public void emptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            "Can't create empty iterator",
+            "hasNext is true for empty iterator",
             new IteratorOfBooleans().hasNext(),
-            CoreMatchers.equalTo(false)
+            new IsEqual<>(false)
         );
     }
 
@@ -55,25 +55,20 @@ public final class IteratorOfBooleansTest {
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
+        final IteratorOfBooleans iterator = new IteratorOfBooleans(true, false);
+        iterator.next();
+        iterator.next();
         MatcherAssert.assertThat(
-            "Can't create non empty iterator",
-            this.iteratorWithFetchedElements().hasNext(),
-            CoreMatchers.equalTo(false)
+            "hasNext is true for already traversed iterator",
+            iterator.hasNext(),
+            new IsEqual<>(false)
         );
     }
 
     @Test(expected = NoSuchElementException.class)
     public void nonEmptyIteratorThrowsException() {
-        this.iteratorWithFetchedElements().next();
-    }
-
-    private IteratorOfBooleans iteratorWithFetchedElements() {
-        final IteratorOfBooleans iterator = new IteratorOfBooleans(
-            true, false, true
-        );
+        final IteratorOfBooleans iterator = new IteratorOfBooleans(true);
         iterator.next();
         iterator.next();
-        iterator.next();
-        return iterator;
     }
 }

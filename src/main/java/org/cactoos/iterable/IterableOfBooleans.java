@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import org.cactoos.iterator.IteratorOfBooleans;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable of boolean values.
@@ -40,9 +39,6 @@ public final class IterableOfBooleans extends IterableEnvelope<Boolean> {
      * @param values Boolean values
      */
     public IterableOfBooleans(final boolean... values) {
-        super(() -> ()
-            -> new UncheckedScalar<>(() -> new IteratorOfBooleans(values))
-                .value()
-        );
+        super(() -> new IterableOf<>(new IteratorOfBooleans(values)));
     }
 }
