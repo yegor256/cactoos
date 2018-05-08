@@ -43,7 +43,7 @@ import org.junit.Test;
 public final class RandomTextTest {
 
     @Test
-    public void generatesRandomTextOfRandomLength() throws Exception {
+    public void generatesRandomTextOfRandomLength() {
         MatcherAssert.assertThat(
             "Generated text is empty",
             new RandomText().asString().length(),
@@ -52,7 +52,7 @@ public final class RandomTextTest {
     }
 
     @Test
-    public void generatesRandomTextOfSpecifiedLength() throws Exception {
+    public void generatesRandomTextOfSpecifiedLength() {
         MatcherAssert.assertThat(
             "Generated text has incorrect length",
             new RandomText(512).asString().length(),
@@ -61,7 +61,7 @@ public final class RandomTextTest {
     }
 
     @Test
-    public void generatesRandomTextOfSpecifiedChars() throws Exception {
+    public void generatesRandomTextOfSpecifiedChars() {
         MatcherAssert.assertThat(
             "Generated text contains not allowed characters",
             new RandomText('a')
