@@ -1,4 +1,4 @@
-/*
+/**
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -21,78 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package org.cactoos.func;
 
-import java.util.concurrent.Callable;
-import org.cactoos.Func;
 import org.cactoos.Proc;
 
 /**
- * Represents many possible inputs as {@link Func}.
+ * Proc that is thread-safe.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>Objects of this class are thread safe.</p>
  *
+ * @author Alexander Menshikov (sharplermc@gmail.com)
+ * @version $Id$
  * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.12
+ * @since 0.32
  */
-public final class FuncOf<X, Y> implements Func<X, Y> {
+public final class SyncProc<X> implements Proc<X> {
+    /**
+     * Original proc.
+     */
+    private final Proc<X> origin;
 
     /**
-     * The func.
+     * Sync lock.
      */
-    private final Func<X, Y> func;
+    private final Object lock;
 
     /**
      * Ctor.
-     * @param result The result
+     * @param runnable Runnable original
      */
-    public FuncOf(final Y result) {
-        this(input -> result);
+    public SyncProc(final Runnable runnable) {
+        this(new ProcOf<>(runnable));
     }
 
     /**
      * Ctor.
-     * @param callable The callable
+     * @param origin Proc original
      */
-    public FuncOf(final Callable<Y> callable) {
-        this(input -> callable.call());
-    }
-
-    /**
-     * Ctor.
-     * @param runnable The runnable
-     * @param result Result to return
-     * @since 0.32
-     */
-    public FuncOf(final Runnable runnable, final Y result) {
-        this(input -> runnable.run(), result);
-    }
-
-    /**
-     * Ctor.
-     * @param proc The proc
-     * @param result Result to return
-     */
-    public FuncOf(final Proc<X> proc, final Y result) {
-        this(
-            input -> {
-                proc.exec(input);
-                return result;
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param fnc Func
-     */
-    private FuncOf(final Func<X, Y> fnc) {
-        this.func = fnc;
+    public SyncProc(final Proc<X> origin) {
+        this.origin = origin;
+        this.lock = new Object();
     }
 
     @Override
-    public Y apply(final X input) throws Exception {
-        return this.func.apply(input);
+    public void exec(final X input) throws Exception {
+        synchronized (this.lock) {
+            this.origin.exec(input);
+        }
     }
 }

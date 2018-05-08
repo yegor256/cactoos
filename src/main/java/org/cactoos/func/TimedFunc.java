@@ -51,10 +51,13 @@ public final class TimedFunc<X, Y> implements Func<X, Y> {
     /**
      * Ctor.
      * @param proc Proc
+     * @param result Result to return
      * @param milliseconds Milliseconds
+     * @since 0.32
      */
-    public TimedFunc(final Proc<X> proc, final long milliseconds) {
-        this(new FuncOf<>(proc), milliseconds);
+    public TimedFunc(final Proc<X> proc, final Y result,
+        final long milliseconds) {
+        this(new FuncOf<>(proc, result), milliseconds);
     }
 
     /**

@@ -50,7 +50,7 @@ public final class UncheckedProc<X> implements Proc<X> {
 
     @Override
     public void exec(final X input) {
-        new UncheckedFunc<>(new FuncOf<>(this.proc)).apply(input);
+        new UncheckedFunc<>(new FuncOf<>(this.proc, null)).apply(input);
     }
 
 }

@@ -1,4 +1,4 @@
-/*
+/**
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -21,41 +21,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package org.cactoos.func;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import org.cactoos.matchers.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link FuncOf}.
+ * Test case for {@link SyncProc}.
  *
- * @since 0.20
+ * @author Alexander Menshikov (sharplermc@gmail.com)
+ * @version $Id$
+ * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncOfTest {
-
+public final class SyncProcTest {
     @Test
-    public void convertsProcIntoFunc() throws Exception {
-        final AtomicBoolean done = new AtomicBoolean(false);
+    public void procWorksInThreads() {
+        final int threads = 100;
+        final int[] counter = new int[]{0};
         MatcherAssert.assertThat(
-            new FuncOf<String, Boolean>(
-                input -> done.set(true),
-                true
-            ).apply("hello world"),
-            Matchers.equalTo(done.get())
+            "Sync func with proc can't work well in multiple threads",
+            func -> func.apply(1),
+            new RunsInThreads<>(
+                new FuncOf<>(
+                    new SyncProc<Integer>(
+                        new ProcOf<>(
+                            input -> counter[0] = counter[0] + input
+                        )
+                    ),
+                    true
+                ),
+                threads
+            )
         );
+        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
     }
 
     @Test
-    public void convertsValueIntoFunc() throws Exception {
+    public void runnableWorksInThreads() {
+        final int threads = 100;
+        final int[] counter = new int[]{0};
         MatcherAssert.assertThat(
-            new FuncOf<String, Boolean>(
-                true
-            ).apply("hello, dude!"),
-            Matchers.equalTo(true)
+            "Sync func with runnable can't work well in multiple threads",
+            func -> func.apply(1),
+            new RunsInThreads<>(
+                new FuncOf<>(
+                    new SyncProc<Integer>(
+                        () -> counter[0] = counter[0] + 1
+                    ),
+                    true
+                ),
+                threads
+            )
         );
+        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
     }
-
 }

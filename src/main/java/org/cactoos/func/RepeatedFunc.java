@@ -49,11 +49,12 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
     /**
      * Ctor.
      * @param proc Proc
+     * @param result Result to return
      * @param max How many times
-     * @since 0.12
+     * @since 0.32
      */
-    public RepeatedFunc(final Proc<X> proc, final int max) {
-        this(new FuncOf<>(proc), max);
+    public RepeatedFunc(final Proc<X> proc, final Y result, final int max) {
+        this(new FuncOf<>(proc, result), max);
     }
 
     /**

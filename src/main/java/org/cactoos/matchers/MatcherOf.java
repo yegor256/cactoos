@@ -50,7 +50,7 @@ public final class MatcherOf<T> extends TypeSafeMatcher<T> {
      * @param proc The func
      */
     public MatcherOf(final Proc<T> proc) {
-        this(new FuncOf<>(proc));
+        this(new FuncOf<>(proc, true));
     }
 
     /**
