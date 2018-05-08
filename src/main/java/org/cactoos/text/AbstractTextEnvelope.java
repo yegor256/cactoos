@@ -23,43 +23,50 @@
  */
 package org.cactoos.text;
 
+import java.io.IOException;
+import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Text decorator for comparisons between {@link Text} implementations against
+ * Text envelope for comparisons between {@link Text} implementations against
  * its {@link #asString()} value using {@link #equals(Object)} and
  * {@link #hashCode()} methods.
  * @author Paulo Lobo (pauloeduardolobo@gmail.com)
  * @version $Id$
  * @since 0.31
+ * @todo #828:30min Refactor classes in text package to use
+ * {@link AbstractTextEnvelope} allowing comparison using hashCode and equals
+ * methods.
  */
-public final class TextEnvelope implements Text {
+public abstract class AbstractTextEnvelope implements Text {
 
     /**
-     * Enveloped {@link Text}.
+     * String value of the envelope.
      */
-    private final UncheckedText origin;
+    private final IoCheckedScalar<String> origin;
 
     /**
      * Ctor.
-     * @param origin Text to be enveloped.
+     * @param scalar Scalar representing the text value.
      */
-    public TextEnvelope(final Text origin) {
-        this.origin = new UncheckedText(origin);
+    public AbstractTextEnvelope(final Scalar<String> scalar) {
+        this.origin = new IoCheckedScalar<>(scalar);
     }
 
     @Override
-    public int hashCode() {
-        return this.origin.asString().hashCode();
+    public final String asString() throws IOException {
+        return this.origin.value();
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        return this.origin.asString().equals(obj);
+    public final int hashCode() {
+        return new UncheckedScalar<>(this.origin).value().hashCode();
     }
 
     @Override
-    public String asString() {
-        return this.origin.asString();
+    public final boolean equals(final Object obj) {
+        return new UncheckedScalar<>(this.origin).value().equals(obj);
     }
 }
