@@ -40,7 +40,7 @@ public final class IteratorOfInts implements Iterator<Integer> {
     /**
      * The list of items to iterate.
      */
-    private final int[] list;
+    private final int[] items;
 
     /**
      * Current position.
@@ -49,16 +49,16 @@ public final class IteratorOfInts implements Iterator<Integer> {
 
     /**
      * Ctor.
-     * @param items Items to iterate
+     * @param itms Items to iterate
      */
-    public IteratorOfInts(final int... items) {
-        this.list = items;
+    public IteratorOfInts(final int... itms) {
+        this.items = itms;
         this.position = new AtomicInteger(0);
     }
 
     @Override
     public boolean hasNext() {
-        return this.position.intValue() < this.list.length;
+        return this.position.intValue() < this.items.length;
     }
 
     @Override
@@ -68,6 +68,6 @@ public final class IteratorOfInts implements Iterator<Integer> {
                 "The iterator doesn't have any more items"
             );
         }
-        return this.list[this.position.getAndIncrement()];
+        return this.items[this.position.getAndIncrement()];
     }
 }

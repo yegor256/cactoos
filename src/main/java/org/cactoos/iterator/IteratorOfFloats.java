@@ -40,7 +40,7 @@ public final class IteratorOfFloats implements Iterator<Float> {
     /**
      * The list of items to iterate.
      */
-    private final float[] list;
+    private final float[] items;
 
     /**
      * Current position.
@@ -49,16 +49,16 @@ public final class IteratorOfFloats implements Iterator<Float> {
 
     /**
      * Ctor.
-     * @param items Items to iterate
+     * @param itms Items to iterate
      */
-    public IteratorOfFloats(final float... items) {
-        this.list = items;
+    public IteratorOfFloats(final float... itms) {
+        this.items = itms;
         this.position = new AtomicInteger(0);
     }
 
     @Override
     public boolean hasNext() {
-        return this.position.intValue() < this.list.length;
+        return this.position.intValue() < this.items.length;
     }
 
     @Override
@@ -68,6 +68,6 @@ public final class IteratorOfFloats implements Iterator<Float> {
                 "The iterator doesn't have any more items"
             );
         }
-        return this.list[this.position.getAndIncrement()];
+        return this.items[this.position.getAndIncrement()];
     }
 }

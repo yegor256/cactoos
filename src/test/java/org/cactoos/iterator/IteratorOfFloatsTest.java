@@ -24,8 +24,8 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
-import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -42,9 +42,9 @@ public final class IteratorOfFloatsTest {
     @Test
     public void emptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            "Can't create empty iterator",
+            "hasNext is true for empty iterator.",
             new IteratorOfFloats().hasNext(),
-            CoreMatchers.equalTo(false)
+            new IsEqual<>(false)
         );
     }
 
@@ -56,9 +56,9 @@ public final class IteratorOfFloatsTest {
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            "Can't create non empty iterator",
+            "hasNext is true for fully traversed iterator.",
             this.iteratorWithFetchedElements().hasNext(),
-            CoreMatchers.equalTo(false)
+            new IsEqual<>(false)
         );
     }
 
