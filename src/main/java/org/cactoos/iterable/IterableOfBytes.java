@@ -32,6 +32,11 @@ import java.util.Collection;
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @since 1.0
+ * @todo #803:30min Introduce IteratorOfBytes and IteratorOfDoubles which will
+ *  take array of their related primitive types (byte, double) and produce
+ *  iterator of reference type (Byte, Double).
+ *  Refactor appropriate IterableOf* classes by using those newly created
+ *  iterators to avoid unnecessary copying elements to a new array.
  */
 public final class IterableOfBytes extends IterableEnvelope<Byte> {
 

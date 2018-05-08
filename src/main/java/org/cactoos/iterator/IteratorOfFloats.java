@@ -21,27 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
-import org.cactoos.iterator.IteratorOfInts;
-import org.cactoos.scalar.UncheckedScalar;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterable of integer values.
+ * Iterator that returns the set of floats.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.32
  */
-public final class IterableOfInts extends IterableEnvelope<Integer> {
+public final class IteratorOfFloats implements Iterator<Float> {
+    /**
+     * The list of items to iterate.
+     */
+    private final float[] items;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
 
     /**
      * Ctor.
-     * @param values Integer values
+     * @param itms Items to iterate
      */
-    public IterableOfInts(final int... values) {
-        super(() -> ()
-            -> new UncheckedScalar<>(() -> new IteratorOfInts(values)).value()
-        );
+    public IteratorOfFloats(final float... itms) {
+        this.items = itms;
+        this.position = new AtomicInteger(0);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return this.position.intValue() < this.items.length;
+    }
+
+    @Override
+    public Float next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.items[this.position.getAndIncrement()];
     }
 }
