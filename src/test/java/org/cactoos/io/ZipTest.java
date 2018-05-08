@@ -24,7 +24,6 @@
 
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.ZipEntry;
@@ -51,7 +50,7 @@ public final class ZipTest {
     public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void zip() throws IOException {
+    public void zip() throws Exception {
         final Path dir = this.folder.newFolder().toPath();
         dir.resolve("x/y").toFile().mkdirs();
         Files.write(dir.resolve("x/y/test"), "".getBytes());

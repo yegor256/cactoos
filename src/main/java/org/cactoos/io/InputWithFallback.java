@@ -90,7 +90,7 @@ public final class InputWithFallback implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         InputStream stream;
         try {
             stream = this.main.stream();

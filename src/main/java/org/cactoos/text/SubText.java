@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.scalar.UncheckedScalar;
@@ -117,7 +116,7 @@ public final class SubText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         int begin = this.start.value();
         if (begin < 0) {
             begin = 0;

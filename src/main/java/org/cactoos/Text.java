@@ -23,8 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
-
 /**
  * Text.
  *
@@ -44,9 +42,9 @@ public interface Text {
     /**
      * Convert it to the string.
      * @return The string
-     * @throws IOException If fails
+     * @throws Exception If fails
      */
-    String asString() throws IOException;
+    String asString() throws Exception;
 
     /**
      * Text check for no nulls.
@@ -72,7 +70,7 @@ public interface Text {
         }
 
         @Override
-        public String asString() throws IOException {
+        public String asString() throws Exception {
             if (this.origin == null) {
                 throw new IllegalArgumentException(
                     "NULL instead of a valid text"

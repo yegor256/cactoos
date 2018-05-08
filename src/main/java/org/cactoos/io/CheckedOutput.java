@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import org.cactoos.Func;
 import org.cactoos.Output;
@@ -37,7 +36,7 @@ import org.cactoos.scalar.CheckedScalar;
  * @param <E> Exception's type.
  * @since 0.31
  */
-public final class CheckedOutput<E extends IOException> implements Output {
+public final class CheckedOutput<E extends Exception> implements Output {
 
     /**
      * Original output.

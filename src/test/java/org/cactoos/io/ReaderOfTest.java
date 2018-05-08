@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import org.cactoos.Input;
@@ -54,7 +53,7 @@ public final class ReaderOfTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test(expected = NullPointerException.class)
-    public void readsNull() throws IOException {
+    public void readsNull() throws Exception {
         MatcherAssert.assertThat(
             new TextOf(new ReaderOf((Input) null)).asString(),
             new IsEqual<>("")
@@ -62,7 +61,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsEmpty() throws IOException {
+    public void readsEmpty() throws Exception {
         MatcherAssert.assertThat(
             new TextOf(new ReaderOf("")).asString(),
             new IsEqual<>("")
@@ -70,7 +69,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharVarArg() throws IOException {
+    public void readsCharVarArg() throws Exception {
         MatcherAssert.assertThat(
             new TextOf(new ReaderOf('a', 'b', 'c')).asString(),
             new IsEqual<>("abc")
@@ -78,7 +77,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharArrayWithCharset() throws IOException {
+    public void readsCharArrayWithCharset() throws Exception {
         final String message =
             "char array on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -93,7 +92,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharArrayWithCharsetByName() throws IOException {
+    public void readsCharArrayWithCharsetByName() throws Exception {
         final String message =
             "char array with charset on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -108,7 +107,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsByteArray() throws IOException {
+    public void readsByteArray() throws Exception {
         final String message =
             "byte array on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -122,7 +121,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsByteArrayWithCharset() throws IOException {
+    public void readsByteArrayWithCharset() throws Exception {
         final String message =
             "byte array with charset on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -137,7 +136,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsByteArrayWithCharsetByName() throws IOException {
+    public void readsByteArrayWithCharsetByName() throws Exception {
         final String message =
             "bte array with charset by name on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -152,7 +151,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsPath() throws IOException {
+    public void readsPath() throws Exception {
         final String message =
             "path on äÄ üÜ öÖ ß жш";
         final File input = this.folder.newFile();
@@ -167,7 +166,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsFile() throws IOException {
+    public void readsFile() throws Exception {
         final String message =
             "file on äÄ üÜ öÖ ß жш";
         final File input = this.folder.newFile();
@@ -182,7 +181,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsUrl() throws IOException {
+    public void readsUrl() throws Exception {
         final String message =
             "URL on äÄ üÜ öÖ ß жш";
         final File input = this.folder.newFile();
@@ -203,7 +202,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsUri() throws IOException {
+    public void readsUri() throws Exception {
         final String message =
             "URI on äÄ üÜ öÖ ß жш";
         final File input = this.folder.newFile();
@@ -218,7 +217,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsBytes() throws IOException {
+    public void readsBytes() throws Exception {
         final String input =
             "Bytes on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -228,7 +227,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsText() throws IOException {
+    public void readsText() throws Exception {
         final String input =
             "Text on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -238,7 +237,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsTextWithCharset() throws IOException {
+    public void readsTextWithCharset() throws Exception {
         final String input =
             "Text with charset on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -253,7 +252,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsTextWithCharsetByName() throws IOException {
+    public void readsTextWithCharsetByName() throws Exception {
         final String input =
             "Text with charset by name on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -268,7 +267,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharSequence() throws IOException {
+    public void readsCharSequence() throws Exception {
         final String input =
             "char sequence on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -278,7 +277,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharSequenceWithCharset() throws IOException {
+    public void readsCharSequenceWithCharset() throws Exception {
         final String input =
             "char sequence with charset on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -293,7 +292,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharSequenceWithCharsetByName() throws IOException {
+    public void readsCharSequenceWithCharsetByName() throws Exception {
         final String input =
             "char sequence with charset by name on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -308,7 +307,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInput() throws IOException {
+    public void readsInput() throws Exception {
         final String input =
             "Input on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -318,7 +317,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputWithCharset() throws IOException {
+    public void readsInputWithCharset() throws Exception {
         final String input =
             "Input with charset on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -333,7 +332,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputWithCharsetByName() throws IOException {
+    public void readsInputWithCharsetByName() throws Exception {
         final String input =
             "Input with charset by name on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -348,7 +347,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputWithCharsetDecoder() throws IOException {
+    public void readsInputWithCharsetDecoder() throws Exception {
         final String input =
             "Input with charset decoder on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -363,7 +362,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputStream() throws IOException {
+    public void readsInputStream() throws Exception {
         final String input =
             "InputStream on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -373,7 +372,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputStreamWithCharset() throws IOException {
+    public void readsInputStreamWithCharset() throws Exception {
         final String input =
             "InputStream with charset on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -388,7 +387,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputStreamWithCharsetByName() throws IOException {
+    public void readsInputStreamWithCharsetByName() throws Exception {
         final String input =
             "InputStream with charset by name on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(
@@ -403,7 +402,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputStreamWithCharsetDecoder() throws IOException {
+    public void readsInputStreamWithCharsetDecoder() throws Exception {
         final String input =
             "InputStream with charset decoder on äÄ üÜ öÖ ß жш";
         MatcherAssert.assertThat(

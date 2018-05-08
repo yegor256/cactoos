@@ -45,7 +45,7 @@ import org.junit.Test;
 public final class HexBytesTest {
 
     @Test
-    public void empytText() throws IOException {
+    public void empytText() throws Exception {
         MatcherAssert.assertThat(
             "Can't represent an empty hexadecimal text",
             new HexBytes(new TextOf("")).asBytes(),
@@ -54,7 +54,7 @@ public final class HexBytesTest {
     }
 
     @Test
-    public void validHex() throws IOException {
+    public void validHex() throws Exception {
         final byte[] bytes = new byte[256];
         for (int index = 0; index < 256; ++index) {
             bytes[index] = (byte) (index + Byte.MIN_VALUE);
@@ -73,12 +73,12 @@ public final class HexBytesTest {
     }
 
     @Test(expected = IOException.class)
-    public void invalidHexLength() throws IOException {
+    public void invalidHexLength() throws Exception {
         new HexBytes(new TextOf("ABF")).asBytes();
     }
 
     @Test(expected = IOException.class)
-    public void invalidHex() throws IOException {
+    public void invalidHex() throws Exception {
         new HexBytes(new TextOf("ABG!")).asBytes();
     }
 }

@@ -56,7 +56,7 @@ public final class HexBytes implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         final String hex = this.origin.asString();
         if ((hex.length() & 1) == 1) {
             throw new IOException("Length of hexadecimal text is odd");

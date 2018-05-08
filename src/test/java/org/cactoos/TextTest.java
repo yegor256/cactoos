@@ -23,7 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
 import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -39,19 +38,19 @@ import org.junit.Test;
 public final class TextTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void failForNullArgument() throws IOException {
+    public void failForNullArgument() throws Exception {
         new Text.NoNulls(null).asString();
     }
 
     @Test(expected = IllegalStateException.class)
-    public void failForNullResult() throws IOException {
+    public void failForNullResult() throws Exception {
         new Text.NoNulls(
             () -> null
         ).asString();
     }
 
     @Test
-    public void okForNoNulls() throws Exception {
+    public void okForNoNulls() {
         final String message = "Hello";
         MatcherAssert.assertThat(
             "Can't work with null text",

@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import org.cactoos.Bytes;
 import org.cactoos.Func;
 import org.cactoos.scalar.CheckedScalar;
@@ -36,7 +35,7 @@ import org.cactoos.scalar.CheckedScalar;
  * @param <E> Exception's type.
  * @since 0.31
  */
-public final class CheckedBytes<E extends IOException> implements Bytes {
+public final class CheckedBytes<E extends Exception> implements Bytes {
 
     /**
      * Original bytes.

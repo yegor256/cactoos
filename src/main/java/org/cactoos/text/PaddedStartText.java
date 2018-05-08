@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
@@ -66,7 +65,7 @@ public final class PaddedStartText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final String original = this.origin.asString();
         final int diff = this.length - original.length();
         final StringBuilder builder = new StringBuilder();

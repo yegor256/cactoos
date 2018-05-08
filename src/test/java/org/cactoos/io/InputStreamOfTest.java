@@ -98,7 +98,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFileContent() throws IOException {
+    public void readsFileContent() throws Exception {
         final File file = this.folder.newFile("readFileContent.txt-2");
         final String content = "Content in a file";
         new LengthOf(
@@ -112,7 +112,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsBytes() throws IOException {
+    public void readsBytes() throws Exception {
         final String content = "Bytes content";
         MatcherAssert.assertThat(
             "Can't read from bytes",
@@ -122,7 +122,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsBytesArray() throws IOException {
+    public void readsBytesArray() throws Exception {
         final String content = "Bytes array content";
         final byte[] bytes = new BytesOf(content).asBytes();
         MatcherAssert.assertThat(
@@ -133,7 +133,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsText() throws IOException {
+    public void readsText() throws Exception {
         final String content = "Text content";
         MatcherAssert.assertThat(
             "Can't read from text",
@@ -143,7 +143,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromUri() throws IOException {
+    public void readsFromUri() throws Exception {
         final String content = "Content for reading through URI";
         final File file = this.folder.newFile("readFromUri.txt-3");
         new LengthOf(
@@ -157,7 +157,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromUrl() throws IOException {
+    public void readsFromUrl() throws Exception {
         final String content = "Content for reading through URL";
         final File file = this.folder.newFile("readFromUrl.txt-4");
         new LengthOf(
@@ -171,7 +171,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromReaderWithMax() throws IOException {
+    public void readsFromReaderWithMax() throws Exception {
         final String content = "Reading with charset name and buffer size";
         final int max = 3;
         MatcherAssert.assertThat(
@@ -188,7 +188,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromReaderWithCharsetWithMax() throws IOException {
+    public void readsFromReaderWithCharsetWithMax() throws Exception {
         final String content = "Reading with charset and buffer size";
         MatcherAssert.assertThat(
             "Can't read from reader with charset and buffer size",
@@ -204,7 +204,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromReaderWithCharset() throws IOException {
+    public void readsFromReaderWithCharset() throws Exception {
         final String content = "Content for reading with charset";
         MatcherAssert.assertThat(
             "Can't read from reader with charset name",
@@ -219,7 +219,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromTextWithCharset() throws IOException {
+    public void readsFromTextWithCharset() throws Exception {
         final File file = this.folder.newFile("readTextWithCharset.txt-5");
         final String content = "Content for reading text with charset";
         new LengthOf(
@@ -238,7 +238,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromCharSequenceWithCharsetName() throws IOException {
+    public void readsFromCharSequenceWithCharsetName() throws Exception {
         final String content = "Simple content";
         MatcherAssert.assertThat(
             "Can't read from char sequence with charset name",
@@ -253,7 +253,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromCharSequenceWithCharset() throws IOException {
+    public void readsFromCharSequenceWithCharset() throws Exception {
         final String content = "Another simple content";
         MatcherAssert.assertThat(
             "Can't read from char sequence with charset",

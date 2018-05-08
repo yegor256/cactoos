@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -146,7 +145,7 @@ public final class ReplacedTextTest {
     }
 
     @Test(expected = PatternSyntaxException.class)
-    public void invalidRegex() throws IOException {
+    public void invalidRegex() throws Exception {
         new ReplacedText(
             new TextOf("text"),
             "invalid_regex{0,",

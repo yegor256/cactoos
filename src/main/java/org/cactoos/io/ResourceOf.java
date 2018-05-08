@@ -188,7 +188,7 @@ public final class ResourceOf implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         InputStream input = this.loader.getResourceAsStream(
             this.path.asString()
         );

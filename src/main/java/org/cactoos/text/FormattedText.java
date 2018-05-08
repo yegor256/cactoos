@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
@@ -160,7 +159,7 @@ public final class FormattedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final StringBuilder out = new StringBuilder(0);
         try (final Formatter fmt = new Formatter(out, this.locale)) {
             fmt.format(

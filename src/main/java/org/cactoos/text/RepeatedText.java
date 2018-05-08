@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
@@ -67,7 +66,7 @@ public final class RepeatedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final StringBuilder out = new StringBuilder();
         for (int cnt = 0; cnt < this.count; ++cnt) {
             out.append(this.origin.asString());

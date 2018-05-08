@@ -60,9 +60,9 @@ public interface Output {
     /**
      * Get write access to it.
      * @return InputStream to read from
-     * @throws IOException If something goes wrong
+     * @throws Exception If something goes wrong
      */
-    OutputStream stream() throws IOException;
+    OutputStream stream() throws Exception;
 
     /**
      * Output check for no nulls.
@@ -84,7 +84,7 @@ public interface Output {
             this.origin = output;
         }
         @Override
-        public OutputStream stream() throws IOException {
+        public OutputStream stream() throws Exception {
             if (this.origin == null) {
                 throw new IOException("NULL instead of a valid output");
             }

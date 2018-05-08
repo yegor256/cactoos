@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 
@@ -57,7 +56,7 @@ public final class HeadInput implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         return new HeadInputStream(this.origin.stream(), this.length);
     }
 }

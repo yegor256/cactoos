@@ -25,7 +25,6 @@ package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.Reader;
@@ -342,7 +341,7 @@ public final class BytesOf implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         return this.origin.asBytes();
     }
 }

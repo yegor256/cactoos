@@ -23,7 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
 import org.cactoos.io.DeadInput;
 import org.junit.Test;
 
@@ -36,18 +35,18 @@ import org.junit.Test;
  */
 public final class InputTest {
 
-    @Test(expected = IOException.class)
-    public void failForNullInput() throws IOException {
+    @Test(expected = Exception.class)
+    public void failForNullInput() throws Exception {
         new Input.NoNulls(null).stream();
     }
 
-    @Test(expected = IOException.class)
-    public void failForNullStream() throws IOException {
+    @Test(expected = Exception.class)
+    public void failForNullStream() throws Exception {
         new Input.NoNulls(() -> null).stream();
     }
 
     @Test
-    public void okForNoNullInput() throws IOException {
+    public void okForNoNullInput() throws Exception {
         new Input.NoNulls(new DeadInput()).stream();
     }
 }

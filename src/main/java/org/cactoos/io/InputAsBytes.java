@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
@@ -72,7 +71,7 @@ final class InputAsBytes implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final InputStream stream = new TeeInput(
                 this.source, new OutputTo(baos)

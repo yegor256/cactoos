@@ -54,9 +54,9 @@ public interface Input {
     /**
      * Get read access to it.
      * @return InputStream to read from
-     * @throws IOException If something goes wrong
+     * @throws Exception If something goes wrong
      */
-    InputStream stream() throws IOException;
+    InputStream stream() throws Exception;
 
     /**
      * Input check for no nulls.
@@ -78,7 +78,7 @@ public interface Input {
             this.origin = input;
         }
         @Override
-        public InputStream stream() throws IOException {
+        public InputStream stream() throws Exception {
             if (this.origin == null) {
                 throw new IOException("NULL instead of a valid input");
             }
