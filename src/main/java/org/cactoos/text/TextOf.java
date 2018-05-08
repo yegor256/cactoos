@@ -48,7 +48,7 @@ import org.cactoos.iterable.Mapped;
  * @version $Id$
  * @since 0.12
  */
-public final class TextOf extends AbstractTextEnvelope {
+public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.

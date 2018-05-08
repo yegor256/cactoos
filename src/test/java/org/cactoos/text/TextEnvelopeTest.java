@@ -27,32 +27,32 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Tests for {@link AbstractTextEnvelope}.
+ * Tests for {@link TextEnvelope}.
  * @author Paulo Lobo (pauloeduardolobo@gmail.com)
  * @version $Id$
- * @since 0.31
+ * @since 0.32
  */
 public final class TextEnvelopeTest {
     /**
-     * Test for {@link AbstractTextEnvelope#asString()} method. Must assert that
+     * Test for {@link TextEnvelope#asString()} method. Must assert that
      * the enveloped {@link TextOf} value is equal to {@link TextOf} value.
      * @throws Exception Throws from asString.
      */
     @Test
     public void testAsString() throws Exception {
-        final String equals = "asString";
+        final String text = "asString";
         MatcherAssert.assertThat(
             "Envelope value does not match String value",
-            new TextEnvelopeDummy(equals).asString(),
-            Matchers.is(equals)
+            new TextEnvelopeDummy(text).asString(),
+            new IsEqual<>(text)
         );
     }
     /**
-     * Test for {@link AbstractTextEnvelope#equals(Object)} method. Must assert
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
      * that the envelope value is equal to its string value.
      */
     @Test
@@ -61,12 +61,12 @@ public final class TextEnvelopeTest {
         MatcherAssert.assertThat(
             "Envelope value does not match its represented String value",
             new TextEnvelopeDummy(equals),
-            Matchers.is(equals)
+            new IsEqual<>(equals)
         );
     }
     /**
-     * Test for {@link AbstractTextEnvelope#hashCode()} method. Must assert that
-     * the {@link AbstractTextEnvelope} hashCode is equals to the hashCode of
+     * Test for {@link TextEnvelope#hashCode()} method. Must assert that
+     * the {@link TextEnvelope} hashCode is equals to the hashCode of
      * the String it represents.
      */
     @Test
@@ -75,14 +75,14 @@ public final class TextEnvelopeTest {
         MatcherAssert.assertThat(
             "Enveloped hashCode does not match its represented String hashcode",
             new TextEnvelopeDummy(hash).hashCode(),
-            Matchers.is(hash.hashCode())
+            new IsEqual<>(hash.hashCode())
         );
     }
 
     /**
-     * Dummy class for {@link AbstractTextEnvelope} testing.
+     * Dummy class for {@link TextEnvelope} testing.
      */
-    private final class TextEnvelopeDummy extends AbstractTextEnvelope {
+    private final class TextEnvelopeDummy extends TextEnvelope {
 
         /**
          * Ctor.

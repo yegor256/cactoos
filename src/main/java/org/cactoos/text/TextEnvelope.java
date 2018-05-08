@@ -30,17 +30,18 @@ import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Text envelope for comparisons between {@link Text} implementations against
- * its {@link #asString()} value using {@link #equals(Object)} and
- * {@link #hashCode()} methods.
+ * Text envelope that provides {@link #equals(Object)} and {@link #hashCode()}
+ * methods.
  * @author Paulo Lobo (pauloeduardolobo@gmail.com)
  * @version $Id$
- * @since 0.31
- * @todo #828:30min Refactor classes in text package to use
- * {@link AbstractTextEnvelope} allowing comparison using hashCode and equals
+ * @since 0.32
+ * @todo #788:30min Refactor classes in text package to use
+ * {@link TextEnvelope} allowing comparison using hashCode and equals
  * methods.
+ * @checkstyle AbstractClassNameCheck (500 lines)
  */
-public abstract class AbstractTextEnvelope implements Text {
+@SuppressWarnings("PMD.AbstractNaming")
+public abstract class TextEnvelope implements Text {
 
     /**
      * String value of the envelope.
@@ -51,8 +52,16 @@ public abstract class AbstractTextEnvelope implements Text {
      * Ctor.
      * @param scalar Scalar representing the text value.
      */
-    public AbstractTextEnvelope(final Scalar<String> scalar) {
+    public TextEnvelope(final Scalar<String> scalar) {
         this.origin = new IoCheckedScalar<>(scalar);
+    }
+
+    /**
+     * Ctor.
+     * @param text Text representing the text value.
+     */
+    public TextEnvelope(final Text text) {
+        this(new IoCheckedScalar<>(() -> text.asString()));
     }
 
     @Override
