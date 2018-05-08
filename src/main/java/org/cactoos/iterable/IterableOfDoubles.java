@@ -37,7 +37,6 @@ public final class IterableOfDoubles extends IterableEnvelope<Double> {
      * Ctor.
      * @param values Double values
      */
-    @SuppressWarnings("PMD.AvoidUsingShortType")
     public IterableOfDoubles(final double... values) {
         super(() -> {
             final Collection<Double> iterable =

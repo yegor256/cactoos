@@ -37,7 +37,6 @@ public final class IterableOfFloats extends IterableEnvelope<Float> {
      * Ctor.
      * @param values Float values
      */
-    @SuppressWarnings("PMD.AvoidUsingShortType")
     public IterableOfFloats(final float... values) {
         super(() -> ()
             -> new UncheckedScalar<>(() -> new IteratorOfFloats(values)).value()
