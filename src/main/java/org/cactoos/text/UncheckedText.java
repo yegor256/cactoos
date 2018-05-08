@@ -23,12 +23,9 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import org.cactoos.Func;
 import org.cactoos.Text;
 import org.cactoos.func.UncheckedFunc;
-import org.cactoos.scalar.IoCheckedScalar;
 
 /**
  * Text that doesn't throw checked {@link Exception}.
@@ -49,7 +46,7 @@ public final class UncheckedText implements Text {
     /**
      * Fallback.
      */
-    private final Func<IOException, String> fallback;
+    private final Func<Exception, String> fallback;
 
     /**
      * Ctor.
@@ -64,11 +61,12 @@ public final class UncheckedText implements Text {
      * Ctor.
      * @param txt Encapsulated text
      */
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     public UncheckedText(final Text txt) {
         this(
             txt,
             error -> {
-                throw new UncheckedIOException(error);
+                throw new RuntimeException(error);
             }
         );
     }
@@ -79,17 +77,19 @@ public final class UncheckedText implements Text {
      * @param fbk Fallback func if {@link Exception} happens
      * @since 0.5
      */
-    public UncheckedText(final Text txt, final Func<IOException, String> fbk) {
+    public UncheckedText(final Text txt, final Func<Exception, String> fbk) {
         this.text = txt;
         this.fallback = fbk;
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public String asString() {
         String txt;
         try {
-            txt = new IoCheckedScalar<>(this.text::asString).value();
-        } catch (final IOException ex) {
+            txt = this.text.asString();
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
             txt = new UncheckedFunc<>(this.fallback).apply(ex);
         }
         return txt;
