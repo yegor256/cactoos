@@ -29,9 +29,7 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Iterator that returns the set of chars.
- *
- * <p>There is no thread-safety guarantee.</p>
+ * Tests for {@link IteratorOfChars}.
  *
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
