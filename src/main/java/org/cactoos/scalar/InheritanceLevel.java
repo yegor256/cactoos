@@ -28,18 +28,19 @@ import org.cactoos.Scalar;
 /**
  * Calculates number of superclasses between base and derived class.
  *
- *  <p>This class is thread safe.
+ * <p>This class is thread safe.
  *
- *  <ul>Result interpretation:
- *      <li>Integer.MIN_VALUE -> classes are not related. (ex. matching
- *      FileNotFoundException with RuntimeException)</li>
- *      <li>0 -> classes are identical. (ex. matching IOException with
- *      IOException)</li>
- *      <li>1 -> single level inheritance. (ex. matching
- *      FileNotFoundException with IOException)</li>
- *      <li>2 -> two inheritance levels. (ex. matching
- *      FileNotFoundException with Exception)</li>
- *  </ul>
+ * <p>Result interpretation:
+ * <ul>
+ *     <li>{@link Integer#MIN_VALUE} -&gt; classes are not related.
+ *     (ex. matching FileNotFoundException with RuntimeException);
+ *     <li>0 -&gt; classes are identical. (ex. matching IOException with
+ *     IOException);
+ *     <li>1 -&gt; single level inheritance. (ex. matching
+ *     FileNotFoundException with IOException);
+ *     <li>2 -&gt; two inheritance levels. (ex. matching
+ *     FileNotFoundException with Exception).
+ * </ul>
  *
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
