@@ -26,10 +26,13 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -67,4 +70,39 @@ public final class TeeInputStreamTest {
         );
     }
 
+    @Test
+    public void leftInputUnclosed() {
+        try (StringWriterMock write = new StringWriterMock()) {
+            new LengthOf(
+                new TeeInput(
+                    "foo",
+                    new OutputTo(write)
+                )
+            ).intValue();
+            MatcherAssert.assertThat(
+                "Can't use output after usage from TeeInput",
+                write.isClosed(),
+                new IsEqual<>(false)
+            );
+        }
+    }
+
+    /**
+     * Mock object around StringWriter for checking closing state.
+     */
+    private static final class StringWriterMock extends StringWriter {
+        /**
+         * Closing state.
+         */
+        private final AtomicBoolean closed = new AtomicBoolean(false);
+
+        @Override
+        public void close() {
+            this.closed.set(true);
+        }
+
+        public boolean isClosed() {
+            return this.closed.get();
+        }
+    }
 }

@@ -21,28 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
+import java.util.NoSuchElementException;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableOfInts}.
+ * Tests for {@link IteratorOfFloats}.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableOfIntsTest {
+public final class IteratorOfFloatsTest {
+    @Test
+    public void emptyIteratorDoesNotHaveNext() {
+        MatcherAssert.assertThat(
+            "hasNext is true for empty iterator.",
+            new IteratorOfFloats().hasNext(),
+            new IsEqual<>(false)
+        );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void emptyIteratorThrowsException() {
+        new IteratorOfFloats().next();
+    }
 
     @Test
-    public void convertsIntegerValuesToIterable() {
-        final int[] values = {1, 2, 3};
+    public void nonEmptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            new IterableOfInts(values),
-            Matchers.contains(values[0], values[1], values[2])
+            "hasNext is true for fully traversed iterator.",
+            this.iteratorWithFetchedElements().hasNext(),
+            new IsEqual<>(false)
         );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void nonEmptyIteratorThrowsException() {
+        this.iteratorWithFetchedElements().next();
+    }
+
+    private IteratorOfFloats iteratorWithFetchedElements() {
+        final IteratorOfFloats iterator = new IteratorOfFloats(
+            1.0f, 2.0f, 3.0f
+        );
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        return iterator;
     }
 }

@@ -87,22 +87,19 @@ public abstract class DigestEnvelope implements Bytes {
 
     @Override
     public byte[] asBytes() throws IOException {
-        try {
+        try (final InputStream stream = this.source.stream()) {
             final MessageDigest msg = MessageDigest.getInstance(this.algorithm);
-            try (final InputStream stream = this.source.stream()) {
-                final byte[] buf = new byte[this.size];
-                while (true) {
-                    final int len = stream.read(buf);
-                    if (len < 0) {
-                        break;
-                    }
-                    msg.update(buf, 0, len);
+            final byte[] buf = new byte[this.size];
+            while (true) {
+                final int len = stream.read(buf);
+                if (len < 0) {
+                    break;
                 }
-                return msg.digest();
+                msg.update(buf, 0, len);
             }
+            return msg.digest();
         } catch (final NoSuchAlgorithmException ex) {
             throw new IOException(ex);
         }
     }
-
 }

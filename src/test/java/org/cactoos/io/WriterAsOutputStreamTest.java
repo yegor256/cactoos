@@ -93,54 +93,56 @@ public final class WriterAsOutputStreamTest {
     public void writesLargeContentToFile() throws IOException {
         final Path temp = this.folder.newFile("cactoos-1.txt-1")
             .toPath();
-        MatcherAssert.assertThat(
-            "Can't copy Input to Output and return Input",
-            new TextOf(
-                new TeeInput(
-                    new ResourceOf("org/cactoos/large-text.txt"),
-                    new OutputTo(
-                        new WriterAsOutputStream(
-                            new OutputStreamWriter(
-                                new FileOutputStream(temp.toFile()),
-                                StandardCharsets.UTF_8
-                            ),
-                            StandardCharsets.UTF_8,
-                            // @checkstyle MagicNumber (1 line)
-                            345
+        try (final OutputStreamWriter writer = new OutputStreamWriter(
+            new FileOutputStream(temp.toFile()), StandardCharsets.UTF_8
+        )) {
+            MatcherAssert.assertThat(
+                "Can't copy Input to Output and return Input",
+                new TextOf(
+                    new TeeInput(
+                        new ResourceOf("org/cactoos/large-text.txt"),
+                        new OutputTo(
+                            new WriterAsOutputStream(
+                                writer,
+                                StandardCharsets.UTF_8,
+                                // @checkstyle MagicNumber (1 line)
+                                345
+                            )
                         )
                     )
+                ),
+                new TextHasString(
+                    new MatcherOf<>(
+                        str -> {
+                            return new TextOf(temp).asString().equals(str);
+                        }
+                    )
                 )
-            ),
-            new TextHasString(
-                new MatcherOf<>(
-                    str -> {
-                        return new TextOf(temp).asString().equals(str);
-                    }
-                )
-            )
-        );
+            );
+        }
     }
 
     @Test
     public void writesToFileAndRemovesIt() throws Exception {
         final Path temp = this.folder.newFile().toPath();
         final String content = "Hello, товарищ! How are you?";
-        new LengthOf(
-            new TeeInput(
-                new InputOf(content),
-                new OutputTo(
-                    new WriterAsOutputStream(
-                        new OutputStreamWriter(
-                            new FileOutputStream(temp.toFile()),
-                            StandardCharsets.UTF_8
-                        ),
-                        StandardCharsets.UTF_8,
-                        // @checkstyle MagicNumber (1 line)
-                        345
+        try (final OutputStreamWriter writer = new OutputStreamWriter(
+            new FileOutputStream(temp.toFile()), StandardCharsets.UTF_8
+        )) {
+            new LengthOf(
+                new TeeInput(
+                    new InputOf(content),
+                    new OutputTo(
+                        new WriterAsOutputStream(
+                            writer,
+                            StandardCharsets.UTF_8,
+                            // @checkstyle MagicNumber (1 line)
+                            345
+                        )
                     )
                 )
-            )
-        ).value();
+            ).value();
+        }
         Files.delete(temp);
         MatcherAssert.assertThat(
             () -> Files.exists(temp),

@@ -32,6 +32,11 @@ import java.util.Collection;
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @since 1.0
+ * @todo #802:30min Introduce IteratorOfLongs and IteratorOfShorts which will
+ *  take array of their related primitive types (long, short) and
+ *  produce iterator of reference type (Long, Short).
+ *  Refactor appropriate IterableOf* classes by using those newly created
+ *  iterators to avoid unnecessary copying elements to a new array.
  */
 public final class IterableOfLongs extends IterableEnvelope<Long> {
 
