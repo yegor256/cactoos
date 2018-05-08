@@ -21,23 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
-import org.cactoos.iterator.IteratorOfShorts;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterable of short values.
+ * {@link Iterator} that returns the {@code long}s as {@link Long}s.
  *
- * @since 1.0
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @since 0.34
  */
-public final class IterableOfShorts extends IterableEnvelope<Short> {
+public final class IteratorOfLongs implements Iterator<Long> {
+
+    /**
+     * The list of items to iterate.
+     */
+    private final long[] items;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
 
     /**
      * Ctor.
-     * @param values Short values
+     * @param itms Items to iterate
      */
-    @SuppressWarnings("PMD.AvoidUsingShortType")
-    public IterableOfShorts(final short... values) {
-        super(() -> () -> new IteratorOfShorts(values));
+    public IteratorOfLongs(final long... itms) {
+        this.items = itms;
+        this.position = new AtomicInteger(0);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return this.position.intValue() < this.items.length;
+    }
+
+    @Override
+    public Long next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.items[this.position.getAndIncrement()];
     }
 }
