@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import org.cactoos.iterator.IteratorOfFloats;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable of float values.
@@ -38,8 +37,6 @@ public final class IterableOfFloats extends IterableEnvelope<Float> {
      * @param values Float values
      */
     public IterableOfFloats(final float... values) {
-        super(() -> ()
-            -> new UncheckedScalar<>(() -> new IteratorOfFloats(values)).value()
-        );
+        super(() -> () -> new IteratorOfFloats(values));
     }
 }
