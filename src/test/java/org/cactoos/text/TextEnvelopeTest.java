@@ -23,55 +23,93 @@
  */
 package org.cactoos.text;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link TextEnvelope}.
+ * Tests for {@link AbstractTextEnvelope}.
  * @author Paulo Lobo (pauloeduardolobo@gmail.com)
  * @version $Id$
  * @since 0.31
  */
 public final class TextEnvelopeTest {
     /**
-     * Test for {@link TextEnvelope#asString()} method. Must assert that
+     * Test for {@link AbstractTextEnvelope#asString()} method. Must assert that
      * the enveloped {@link TextOf} value is equal to {@link TextOf} value.
+     * @throws Exception Throws from asString.
      */
     @Test
-    public void testAsString() {
+    public void testAsString() throws Exception {
         final String equals = "asString";
         MatcherAssert.assertThat(
-            "Enveloped value does not match its TextOf value",
-            new TextEnvelope(new TextOf(equals)).asString(),
-            Matchers.is(new UncheckedText(new TextOf(equals)).asString())
+            "Envelope value does not match String value",
+            new TextEnvelopeDummy(equals).asString(),
+            Matchers.is(equals)
         );
     }
     /**
-     * Test for {@link TextEnvelope#equals(Object)} method. Must assert that
-     * the enveloped {@link TextOf} value is equal to its string.
+     * Test for {@link AbstractTextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is equal to its string value.
      */
     @Test
     public void testEquals() {
         final String equals = "equals";
         MatcherAssert.assertThat(
-            "Enveloped value does not match its represented String value",
-            new TextEnvelope(new TextOf(equals)),
+            "Envelope value does not match its represented String value",
+            new TextEnvelopeDummy(equals),
             Matchers.is(equals)
         );
     }
     /**
-     * Test for {@link TextEnvelope#hashCode()} method. Must assert that the
-     * {@link TextEnvelope} hashCode is equals to the hashCode of the String
-     * it represents.
+     * Test for {@link AbstractTextEnvelope#hashCode()} method. Must assert that
+     * the {@link AbstractTextEnvelope} hashCode is equals to the hashCode of
+     * the String it represents.
      */
     @Test
     public void testHashCode() {
         final String hash = "hashCode";
         MatcherAssert.assertThat(
             "Enveloped hashCode does not match its represented String hashcode",
-            new TextEnvelope(new TextOf(hash)).hashCode(),
+            new TextEnvelopeDummy(hash).hashCode(),
             Matchers.is(hash.hashCode())
         );
+    }
+
+    /**
+     * Dummy class for {@link AbstractTextEnvelope} testing.
+     */
+    private final class TextEnvelopeDummy extends AbstractTextEnvelope {
+
+        /**
+         * Ctor.
+         *
+         * @param scalar Text to be enveloped.
+         */
+        TextEnvelopeDummy(final Scalar<String> scalar) {
+            super(scalar);
+        }
+        /**
+         * Ctor.
+         *
+         * @param input The String
+         */
+        TextEnvelopeDummy(final String input) {
+            this(input, StandardCharsets.UTF_8);
+        }
+
+        /**
+         * Ctor.
+         *
+         * @param input The String
+         * @param cset The Charset
+         */
+        TextEnvelopeDummy(final String input,
+            final Charset cset) {
+            this(() -> new String(input.getBytes(cset), cset));
+        }
     }
 }
