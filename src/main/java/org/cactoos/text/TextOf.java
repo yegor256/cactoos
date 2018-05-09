@@ -24,6 +24,7 @@
 package org.cactoos.text;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -35,9 +36,11 @@ import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
+import org.cactoos.Text;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.IoCheckedScalar;
 
 /**
  * TextOf
@@ -48,7 +51,12 @@ import org.cactoos.iterable.Mapped;
  * @version $Id$
  * @since 0.12
  */
-public final class TextOf extends TextEnvelope {
+public final class TextOf implements Text {
+
+    /**
+     * The origin.
+     */
+    private final Scalar<String> origin;
 
     /**
      * Ctor.
@@ -340,7 +348,7 @@ public final class TextOf extends TextEnvelope {
      * @since 0.21
      */
     public TextOf(final InputStream input) {
-        this(new InputOf(new InputStreamReader(input)));
+        this(new InputOf(new InputStreamReader(input, StandardCharsets.UTF_8)));
     }
 
     /**
@@ -349,11 +357,17 @@ public final class TextOf extends TextEnvelope {
      * @param scalar The Scalar of String
      */
     private TextOf(final Scalar<String> scalar) {
-        super(scalar);
+        this.origin = scalar;
+    }
+
+    @Override
+    public String asString() throws IOException {
+        return new IoCheckedScalar<>(this.origin).value();
     }
 
     @Override
     public String toString() {
         return new UncheckedText(this).asString();
     }
+
 }

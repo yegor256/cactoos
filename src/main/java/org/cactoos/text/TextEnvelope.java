@@ -50,18 +50,18 @@ public abstract class TextEnvelope implements Text {
 
     /**
      * Ctor.
-     * @param scalar Scalar representing the text value.
-     */
-    public TextEnvelope(final Scalar<String> scalar) {
-        this.origin = new IoCheckedScalar<>(scalar);
-    }
-
-    /**
-     * Ctor.
      * @param text Text representing the text value.
      */
     public TextEnvelope(final Text text) {
         this(new IoCheckedScalar<>(() -> text.asString()));
+    }
+
+    /**
+     * Ctor.
+     * @param scalar Scalar representing the text value.
+     */
+    public TextEnvelope(final Scalar<String> scalar) {
+        this.origin = new IoCheckedScalar<>(scalar);
     }
 
     @Override
