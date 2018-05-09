@@ -36,8 +36,8 @@ import org.cactoos.scalar.UncheckedScalar;
  * @version $Id$
  * @since 0.32
  * @todo #788:30min Refactor all classes in text package to extend from
- * TextEnvelope, allowing direct comparison with string objects using hashCode
- * and equals methods.
+ *  TextEnvelope, allowing direct comparison with string objects using hashCode
+ *  and equals methods.
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
 @SuppressWarnings("PMD.AbstractNaming")

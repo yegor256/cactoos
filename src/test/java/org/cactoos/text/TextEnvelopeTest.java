@@ -39,7 +39,7 @@ import org.junit.Test;
 public final class TextEnvelopeTest {
     /**
      * Test for {@link TextEnvelope#asString()} method. Must assert that
-     * the enveloped {@link TextOf} value is equal to {@link TextOf} value.
+     * the envelope asString value is equal to its string value.
      * @throws Exception Throws from asString.
      */
     @Test
