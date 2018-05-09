@@ -31,7 +31,7 @@ The MIT License (MIT)
   </parent>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.32-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>cactoos</name>
   <description>Object-oriented Java Primitives</description>
