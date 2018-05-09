@@ -21,49 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.iterator;
 
-import org.cactoos.Scalar;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Integer Scalar which sums up the values of other Scalars of the same type
+ * Iterator that returns the set of integers.
  *
- * <p>Here is how you can use it to summarize numbers:</p>
+ * <p>There is no thread-safety guarantee.</p>
  *
- * <pre>
- * int sum = new SumOfIntScalar(() -> 1,() -> 2, () -> 3).value(); //equal to 6
- * </pre>
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Nikita Salomatin (nsalomatin@hotmail.com)
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.30
+ * @since 0.32
  */
-public final class SumOfIntScalar implements Scalar<Integer> {
+public final class IteratorOfInts implements Iterator<Integer> {
+    /**
+     * The list of items to iterate.
+     */
+    private final int[] items;
 
     /**
-     * Varargs of Scalar to sum up values from.
+     * Current position.
      */
-    private final Scalar<Integer>[] scalars;
+    private final AtomicInteger position;
 
     /**
      * Ctor.
-     * @param src Varargs of Scalar to sum up values from
-     * @since 0.30
+     * @param itms Items to iterate
      */
-    @SafeVarargs
-    public SumOfIntScalar(final Scalar<Integer>... src) {
-        this.scalars = src;
+    public IteratorOfInts(final int... itms) {
+        this.items = itms;
+        this.position = new AtomicInteger(0);
     }
 
     @Override
-    public Integer value() {
-        return new SumOfScalar(this.scalars).value().intValue();
+    public boolean hasNext() {
+        return this.position.intValue() < this.items.length;
+    }
+
+    @Override
+    public Integer next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.items[this.position.getAndIncrement()];
     }
 }

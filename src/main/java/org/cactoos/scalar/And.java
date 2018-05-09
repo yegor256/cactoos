@@ -32,18 +32,39 @@ import org.cactoos.iterable.Mapped;
 
 /**
  * Logical conjunction.
+ * This class performs short-circuit evaluation in which arguments are
+ * executed only if the preceding argument does not suffice to determine
+ * the value of the expression.
  *
  * <p>This class can be effectively used to iterate through
  * a collection, just like
  * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)}
  * works:</p>
  *
- * <pre>
+ * {@code
  * new And(
- *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
+ *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
  *    new IterableOf<>("Mary", "John", "William", "Napkin")
  * ).value(); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
- * </pre>
+ *            // the result of this operation is always true
+ * }
+ *
+ * <p>This class could be also used for matching multiple boolean
+ * expressions:</p>
+ *
+ * {@code
+ * new And(
+ *    new True(),
+ *    new True(),
+ *    new True()
+ * ).value(); // the result is true
+ *
+ * new And(
+ *    new True(),
+ *    new False(),
+ *    new True()
+ * ).value(); // the result is false
+ * }
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make

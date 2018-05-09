@@ -21,28 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.text;
 
+import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableOfInts}.
+ * Test case for {@link PaddedStartText}.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
+ * @author Vivek Poddar (vivekimsit@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableOfIntsTest {
+public final class PaddedStartTextTest {
 
     @Test
-    public void convertsIntegerValuesToIterable() {
-        final int[] values = {1, 2, 3};
+    public void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
         MatcherAssert.assertThat(
-            new IterableOfInts(values),
-            Matchers.contains(values[0], values[1], values[2])
+            "Shouldn't pad the text",
+            new PaddedStartText(
+                new TextOf("x"),
+                1,
+                '-'
+            ),
+            new TextHasString("x")
+        );
+    }
+
+    @Test
+    public void somePaddingIfOrigTextIsShorterThanRequestedLength() {
+        MatcherAssert.assertThat(
+            "Should pad chars at start",
+            new PaddedStartText(
+                new TextOf("x"),
+                2,
+                '-'
+            ),
+            new TextHasString("-x")
+        );
+    }
+
+    @Test
+    public void noPaddingIfRequestedLengthIsNegative()  {
+        MatcherAssert.assertThat(
+            "Shouldn't consider negative min length",
+            new PaddedStartText(
+                new TextOf("x"),
+                -1,
+                '-'
+            ),
+            new TextHasString("x")
         );
     }
 }
+

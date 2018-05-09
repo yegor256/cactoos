@@ -340,7 +340,7 @@ public final class TextOf extends TextEnvelope {
      * @since 0.21
      */
     public TextOf(final InputStream input) {
-        this(new InputOf(new InputStreamReader(input)));
+        this(new InputOf(new InputStreamReader(input, StandardCharsets.UTF_8)));
     }
 
     /**

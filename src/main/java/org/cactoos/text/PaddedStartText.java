@@ -21,49 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.text;
 
-import org.cactoos.Scalar;
+import java.io.IOException;
+import org.cactoos.Text;
 
 /**
- * Integer Scalar which sums up the values of other Scalars of the same type
+ * Text padded at start to reach the given length.
  *
- * <p>Here is how you can use it to summarize numbers:</p>
+ * <p>There is thread safe.
  *
- * <pre>
- * int sum = new SumOfIntScalar(() -> 1,() -> 2, () -> 3).value(); //equal to 6
- * </pre>
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @author Nikita Salomatin (nsalomatin@hotmail.com)
+ * @author Vivek Poddar (vivekimsit@gmail.com)
  * @version $Id$
- * @since 0.30
+ * @since 0.32
  */
-public final class SumOfIntScalar implements Scalar<Integer> {
+public final class PaddedStartText implements Text {
 
     /**
-     * Varargs of Scalar to sum up values from.
+     * The text.
      */
-    private final Scalar<Integer>[] scalars;
+    private final Text origin;
+
+    /**
+     * The minimum length of the resulting string.
+     */
+    private final int length;
+
+    /**
+     * The character to be padded at the begining.
+     */
+    private final char symbol;
 
     /**
      * Ctor.
-     * @param src Varargs of Scalar to sum up values from
-     * @since 0.30
+     * @param text The text
+     * @param length The minimum length of the resulting string
+     * @param symbol The padding symbol
      */
-    @SafeVarargs
-    public SumOfIntScalar(final Scalar<Integer>... src) {
-        this.scalars = src;
+    public PaddedStartText(
+        final Text text, final int length, final char symbol) {
+        this.origin = text;
+        this.symbol = symbol;
+        this.length = length;
     }
 
     @Override
-    public Integer value() {
-        return new SumOfScalar(this.scalars).value().intValue();
+    public String asString() throws IOException {
+        final String original = this.origin.asString();
+        final int diff = this.length - original.length();
+        final StringBuilder builder = new StringBuilder();
+        for (int len = diff; len > 0; --len) {
+            builder.append(this.symbol);
+        }
+        builder.append(original);
+        return builder.toString();
     }
 }
+

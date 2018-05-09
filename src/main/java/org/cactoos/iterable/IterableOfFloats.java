@@ -23,8 +23,8 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.cactoos.iterator.IteratorOfFloats;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable of float values.
@@ -32,12 +32,6 @@ import java.util.Collection;
  * @author Vedran Vatavuk (123vgv@gmail.com)
  * @version $Id$
  * @since 1.0
- * @todo #748:30min Introduce IteratorOfFloats, IteratorOfInts,
- *  IteratorOfLongs and IteratorOfShorts which will take array of their
- *  related primitive types (float, int, long, short) and produce iterator
- *  of reference type (Float, Integer, Long, Short).
- *  Refactor appropriate IterableOf* classes by using those newly created
- *  iterators to avoid unnecessary copying elements to a new array.
  */
 public final class IterableOfFloats extends IterableEnvelope<Float> {
 
@@ -47,13 +41,8 @@ public final class IterableOfFloats extends IterableEnvelope<Float> {
      */
     @SuppressWarnings("PMD.AvoidUsingShortType")
     public IterableOfFloats(final float... values) {
-        super(() -> {
-            final Collection<Float> iterable =
-                new ArrayList<>(values.length);
-            for (final float value: values) {
-                iterable.add(value);
-            }
-            return iterable;
-        });
+        super(() -> ()
+            -> new UncheckedScalar<>(() -> new IteratorOfFloats(values)).value()
+        );
     }
 }

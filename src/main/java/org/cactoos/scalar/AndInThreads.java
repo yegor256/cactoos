@@ -39,15 +39,7 @@ import org.cactoos.iterable.Mapped;
 /**
  * Logical conjunction, in multiple threads.
  *
- * <p>This class can be effectively used to iterate through
- * a collection, just like
- * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)}
- * works:</p>
- *
- * <pre> new AndInThreads(
- *   name -> System.out.println("The name: %s\n", name),
- *   new IterableOf&lt;&gt;("Mary", "John", "William", "Napkin")
- * ).value();</pre>
+ * <p>The usage is same as for {@link And}</p>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make

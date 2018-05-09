@@ -21,28 +21,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.text;
 
+import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link IterableOfInts}.
+ * Test for {@link RandomText}.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Roman Proshin (roman@proshin.org)
  * @version $Id$
- * @since 1.0
+ * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class IterableOfIntsTest {
+public final class RandomTextTest {
 
     @Test
-    public void convertsIntegerValuesToIterable() {
-        final int[] values = {1, 2, 3};
+    public void generatesRandomTextOfRandomLength() {
         MatcherAssert.assertThat(
-            new IterableOfInts(values),
-            Matchers.contains(values[0], values[1], values[2])
+            "Generated text is empty",
+            new RandomText().asString().length(),
+            Matchers.greaterThan(0)
+        );
+    }
+
+    @Test
+    public void generatesRandomTextOfSpecifiedLength() {
+        MatcherAssert.assertThat(
+            "Generated text has incorrect length",
+            new RandomText(512).asString().length(),
+            new IsEqual<>(512)
+        );
+    }
+
+    @Test
+    public void generatesRandomTextOfSpecifiedChars() {
+        MatcherAssert.assertThat(
+            "Generated text contains not allowed characters",
+            new RandomText('a')
+                .asString()
+                .replaceAll("a", "")
+                .length(),
+            new IsEqual<>(0)
+        );
+    }
+
+    @Test
+    public void generatesRandomTextOfSpecifiedCharsAndLength() {
+        MatcherAssert.assertThat(
+            "Generated text doesn't match specification",
+            new RandomText(10, 'a'),
+            new TextHasString("aaaaaaaaaa")
         );
     }
 }

@@ -165,10 +165,9 @@ public final class FormattedText implements Text {
         try (final Formatter fmt = new Formatter(out, this.locale)) {
             fmt.format(
                 this.pattern.asString(),
-                this.args.toArray(new Object[this.args.size()])
+                this.args.toArray(new Object[0])
             );
         }
         return out.toString();
     }
-
 }
