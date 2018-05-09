@@ -104,7 +104,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
                     entry -> new Not(
                         new Equals<>(
                             entry::getValue,
-                            () -> Integer.MAX_VALUE
+                            () -> Integer.MIN_VALUE
                         )
                     ).value(),
                     new MapOf<>(
