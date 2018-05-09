@@ -57,11 +57,11 @@ public final class TextEnvelopeTest {
      */
     @Test
     public void testEquals() {
-        final String equals = "equals";
+        final String text = "equals";
         MatcherAssert.assertThat(
             "Envelope value does not match its represented String value",
-            new TextEnvelopeDummy(equals),
-            new IsEqual<>(equals)
+            new TextEnvelopeDummy(text),
+            new IsEqual<>(text)
         );
     }
     /**
