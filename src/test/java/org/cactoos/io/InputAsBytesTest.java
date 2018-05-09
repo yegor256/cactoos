@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.iterable.Endless;
-import org.cactoos.iterable.Limited;
+import org.cactoos.iterable.HeadOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -54,7 +54,7 @@ public final class InputAsBytesTest {
                 new InputOf(
                     String.join(
                         "",
-                        new Limited<>(
+                        new HeadOf<>(
                             multiplier, new Endless<>(body)
                         )
                     )
