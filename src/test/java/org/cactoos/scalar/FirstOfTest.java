@@ -32,11 +32,9 @@ import org.junit.Test;
 /**
  * Tests for {@link FirstOf}.
  *
- * <p>This class is thread-safe.
- *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.31
+ * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class FirstOfTest {

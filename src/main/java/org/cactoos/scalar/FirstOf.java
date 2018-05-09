@@ -33,12 +33,12 @@ import org.cactoos.iterable.IterableOf;
 /**
  * Find first element in a list that satisfies specified condition.
  *
- * <p>This class is thread-safe.
+ * <p>There is no thread-safety guarantee.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @param <T> Type of result
- * @since 0.31
+ * @since 0.32
  */
 public final class FirstOf<T> implements Scalar<T> {
 
@@ -78,7 +78,7 @@ public final class FirstOf<T> implements Scalar<T> {
                 new Filtered<>(this.condition, this.source)
             ).iterator().next(),
             new IterableOf<FallbackFrom<T>>(
-                new FallbackFrom<T>(
+                new FallbackFrom<>(
                     new IterableOf<Class<? extends Throwable>>(
                         NoSuchElementException.class
                     ),
