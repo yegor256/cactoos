@@ -36,10 +36,10 @@ import org.junit.Test;
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @since 0.31
- * @todo #814:30min Implement immutable ListIterator and Iterator that should
- *  be returned from ListEnvelope when calling `listIterator` and `iterator`
- *  methods. After those are implemented remove `@Ignore` from the tests below
- *  - all of them should pass after the change.
+ * @todo #814:30min Implement immutable ListIterator that should
+ *  be returned from ListEnvelope when calling `listIterator` method. After
+ *  it is implemented remove `@Ignore` from the tests below - all of them
+ *  should pass after the change.
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ListEnvelopeTest {
@@ -55,21 +55,6 @@ public final class ListEnvelopeTest {
             }
         ) { };
         final Iterator<String> iterator = list.listIterator();
-        iterator.next();
-        iterator.remove();
-    }
-
-    @Ignore
-    @Test(expected = UnsupportedOperationException.class)
-    public void returnsIteratorWithUnsupportedRemove() {
-        final ListEnvelope<String> list = new ListEnvelope<String>(
-            () -> {
-                final List<String> inner = new LinkedList<>();
-                inner.add("eleven");
-                return inner;
-            }
-        ) { };
-        final Iterator<String> iterator = list.iterator();
         iterator.next();
         iterator.remove();
     }
