@@ -23,6 +23,7 @@
  */
 package org.cactoos.scalar;
 
+import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
@@ -82,7 +83,7 @@ public final class And implements Scalar<Boolean> {
     /**
      * The iterator.
      */
-    private final Iterable<Scalar<Boolean>> iterable;
+    private final Iterable<Scalar<Boolean>> origin;
 
     /**
      * Ctor.
@@ -113,8 +114,19 @@ public final class And implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      * @since 0.24
      */
+    public <X> And(final Proc<X> proc, final Iterator<X> src) {
+        this(proc, new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     * @param proc Proc to use
+     * @param <X> Type of items in the iterable
+     * @since 0.24
+     */
     public <X> And(final Proc<X> proc, final Iterable<X> src) {
-        this(new FuncOf<>(proc, true), src);
+        this(new FuncOf<>(proc, false), src);
     }
 
     /**
@@ -123,6 +135,16 @@ public final class And implements Scalar<Boolean> {
      * @param func Func to map
      * @param <X> Type of items in the iterable
      * @since 0.24
+     */
+    public <X> And(final Func<X, Boolean> func, final Iterator<X> src) {
+        this(func, new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src The iterable
+     * @param func Func to map
+     * @param <X> Type of items in the iterable
      */
     public <X> And(final Func<X, Boolean> func, final Iterable<X> src) {
         this(
@@ -134,25 +156,50 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
+     * @param subject The subject
+     * @param conditions Funcs to map
+     * @param <X> Type of items in the iterable
      */
     @SafeVarargs
-    public And(final Scalar<Boolean>... src) {
-        this(new IterableOf<>(src));
+    public <X> And(final X subject, final Func<X, Boolean>... conditions) {
+        this(
+            new Mapped<>(
+                item -> (Scalar<Boolean>) () -> item.apply(subject),
+                new IterableOf<>(conditions)
+            )
+        );
     }
 
     /**
      * Ctor.
-     * @param src The iterable
+     * @param scalar The Scalar.
      */
-    public And(final Iterable<Scalar<Boolean>> src) {
-        this.iterable = src;
+    @SafeVarargs
+    public And(final Scalar<Boolean>... scalar) {
+        this(new IterableOf<>(scalar));
+    }
+
+    /**
+     * Ctor.
+     * @param iterator The iterator.
+     * @since 0.24
+     */
+    public And(final Iterator<Scalar<Boolean>> iterator) {
+        this(new IterableOf<>(iterator));
+    }
+
+    /**
+     * Ctor.
+     * @param iterable The iterable.
+     */
+    public And(final Iterable<Scalar<Boolean>> iterable) {
+        this.origin = iterable;
     }
 
     @Override
     public Boolean value() throws Exception {
         boolean result = true;
-        for (final Scalar<Boolean> item : this.iterable) {
+        for (final Scalar<Boolean> item : this.origin) {
             if (!item.value()) {
                 result = false;
                 break;
@@ -160,5 +207,4 @@ public final class And implements Scalar<Boolean> {
         }
         return result;
     }
-
 }

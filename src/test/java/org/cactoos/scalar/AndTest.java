@@ -23,26 +23,24 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Mapped;
+import org.cactoos.iterator.IteratorOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link And}.
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MagicNumber (500 line)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class AndTest {
 
     @Test
@@ -52,8 +50,8 @@ public final class AndTest {
                 new True(),
                 new True(),
                 new True()
-            ).value(),
-            Matchers.equalTo(true)
+            ),
+            new ScalarHasValue<>(true)
         );
     }
 
@@ -64,8 +62,8 @@ public final class AndTest {
                 new True(),
                 new False(),
                 new True()
-            ).value(),
-            Matchers.equalTo(false)
+            ),
+            new ScalarHasValue<>(false)
         );
     }
 
@@ -78,86 +76,115 @@ public final class AndTest {
                     new False(),
                     new False()
                 )
-            ).value(),
-            Matchers.equalTo(false)
+            ),
+            new ScalarHasValue<>(false)
         );
     }
 
     @Test
     public void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
-            new And(Collections.emptyList()).value(),
-            Matchers.equalTo(true)
+            new And(new IteratorOf<Scalar<Boolean>>()),
+            new ScalarHasValue<>(true)
         );
     }
 
     @Test
-    public void iteratesList() {
-        final List<String> list = new LinkedList<>();
-        MatcherAssert.assertThat(
-            "Can't iterate a list with a procedure",
-            new And(
-                new Mapped<String, Scalar<Boolean>>(
-                    new FuncOf<>(list::add, () -> true),
-                    new IterableOf<>("hello", "world")
-                )
-            ),
-            new ScalarHasValue<>(
-                Matchers.allOf(
-                    Matchers.equalTo(true),
-                    new MatcherOf<>(
-                        value -> list.size() == 2
-                    )
-                )
-            )
-        );
-    }
-
-    @Test
-    public void iteratesEmptyList() {
-        final List<String> list = new LinkedList<>();
-        MatcherAssert.assertThat(
-            "Can't iterate a list",
-            new And(
-                new Mapped<String, Scalar<Boolean>>(
-                    new FuncOf<>(list::add, () -> true), Collections.emptyList()
-                )
-            ),
-            new ScalarHasValue<>(
-                Matchers.allOf(
-                    Matchers.equalTo(true),
-                    new MatcherOf<>(
-                        value -> {
-                            return list.isEmpty();
-                        }
-                    )
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testProc() throws Exception {
+    public void testProcIterable() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new And(
             (Proc<Integer>) list::add,
-            1, 1
+            new IterableOf<>(1, 1)
         ).value();
         MatcherAssert.assertThat(
             list.size(),
-            Matchers.equalTo(2)
+            Matchers.equalTo(1)
         );
     }
 
     @Test
-    public void testFunc() throws Exception {
+    public void testProcIterator() throws Exception {
+        final List<Integer> list = new LinkedList<>();
+        new And(
+            (Proc<Integer>) list::add,
+            new IteratorOf<>(1, 1)
+        ).value();
         MatcherAssert.assertThat(
-            new And(
-                input -> input > 0,
-                1, -1, 0
-            ).value(),
-            Matchers.equalTo(false)
+            list.size(),
+            Matchers.equalTo(1)
         );
     }
 
+    @Test
+    public void testProcVarargs() throws Exception {
+        final List<Integer> list = new LinkedList<>();
+        new And(
+            (Proc<Integer>) list::add,
+            2, 3, 4
+        ).value();
+        MatcherAssert.assertThat(
+            list.size(),
+            Matchers.equalTo(3)
+        );
+    }
+
+    @Test
+    public void testFuncIterable() throws Exception {
+        MatcherAssert.assertThat(
+            new And(
+                input -> input > 0,
+                new IterableOf<>(1, -1, 0)
+            ),
+            new ScalarHasValue<>(false)
+        );
+    }
+
+    @Test
+    public void testFuncIterator() throws Exception {
+        MatcherAssert.assertThat(
+            new And(
+                input -> input > 0,
+                new IteratorOf<>(1, -1, 0)
+            ),
+            new ScalarHasValue<>(false)
+        );
+    }
+
+    @Test
+    public void testFuncVarargs() throws Exception {
+        MatcherAssert.assertThat(
+            new And(
+                input -> input > 0,
+                -1, -2, 0
+            ),
+            new ScalarHasValue<>(false)
+        );
+    }
+
+    @Test
+    public void testMultipleFuncConditionTrue() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare subject with true conditions",
+            new And(
+                3,
+                input -> input > 0,
+                input -> input > 5,
+                input -> input > 4
+            ),
+            new ScalarHasValue<>(false)
+        );
+    }
+
+    @Test
+    public void testMultipleFuncConditionFalse() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't compare subject with false conditions",
+            new And(
+                "cactoos",
+                input -> input.contains("singleton"),
+                input -> input.contains("static")
+            ),
+            new ScalarHasValue<>(false)
+        );
+    }
 }
