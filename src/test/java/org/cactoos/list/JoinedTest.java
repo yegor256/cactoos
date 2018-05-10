@@ -212,7 +212,7 @@ public final class JoinedTest {
                 0,
                 new ListOf<>(1, 2, 3)
             ),
-            Matchers.hasItems(0, 1, 2, 3)
+            Matchers.contains(0, 1, 2, 3)
         );
     }
 }
