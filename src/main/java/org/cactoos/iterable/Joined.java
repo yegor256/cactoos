@@ -57,6 +57,16 @@ public final class Joined<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     * @param item First item
+     * @param items Iterable
+     * @since 0.32
+     */
+    public Joined(final T item, final Iterable<T> items) {
+        super(() -> new Joined<T>(new IterableOf<T>(item), items));
+    }
+
+    /**
+     * Ctor.
      * @param items Items to concatenate
      */
     public Joined(final Iterable<Iterable<T>> items) {

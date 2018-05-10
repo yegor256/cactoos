@@ -84,4 +84,15 @@ public final class JoinedTest {
         );
     }
 
+    @Test
+    public void joinItemAndIterable() {
+        MatcherAssert.assertThat(
+            new Joined<>(
+                0,
+                new IterableOf<>(1, 2, 3)
+            ),
+            Matchers.contains(0, 1, 2, 3)
+        );
+    }
+
 }

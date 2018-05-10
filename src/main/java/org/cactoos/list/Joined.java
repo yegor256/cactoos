@@ -49,6 +49,16 @@ public final class Joined<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
+     * @param item First item
+     * @param items List
+     * @since 0.32
+     */
+    public Joined(final X item, final List<X> items) {
+        super(() -> new Joined<X>(new ListOf<X>(item), items));
+    }
+
+    /**
+     * Ctor.
      * @param src Source lists
      */
     public Joined(final Iterable<List<X>> src) {
