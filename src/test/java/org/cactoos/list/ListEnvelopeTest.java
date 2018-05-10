@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -33,8 +33,6 @@ import org.junit.Test;
 /**
  * Test case for {@link ListEnvelope}.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.31
  * @todo #814:30min Implement immutable ListIterator that should
  *  be returned from ListEnvelope when calling `listIterator` method. After
