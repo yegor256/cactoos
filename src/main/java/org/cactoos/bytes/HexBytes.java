@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -35,8 +35,6 @@ import org.cactoos.text.FormattedText;
 /**
  * Decodes origin {@link Text} using the hexadecimal encoding scheme.
  *
- * @author Alexander Menshikov (sharplermc@gmail.com)
- * @version $Id$
  * @since 0.30
  * @checkstyle MagicNumberCheck (500 lines)
  */

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -45,8 +45,6 @@ import org.cactoos.Scalar;
  * ).value() // will be equal to 8
  * </pre>
  *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
- * @version $Id$
  * @param <T> Type of item.
  * @since 0.8
  */

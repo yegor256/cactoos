@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -34,9 +34,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link SolidList}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)

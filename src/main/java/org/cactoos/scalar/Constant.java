@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -47,8 +47,6 @@ import org.cactoos.Scalar;
  *
  * <p>This class is thread-safe.</p>
  *
- * @author Aliceice (elena.ihde-simon@posteo.de)
- * @version $Id$
  * @param <T> Type of result
  * @see StickyScalar
  * @since 0.30

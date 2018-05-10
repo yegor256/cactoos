@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -34,8 +34,6 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
  * {@link org.cactoos.Bytes} as an input.
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @since 1.0
  * @checkstyle JavadocMethodCheck (100 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)

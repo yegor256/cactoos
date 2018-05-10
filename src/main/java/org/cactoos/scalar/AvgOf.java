@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -48,9 +48,6 @@ import org.cactoos.iterable.Mapped;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Vseslav Sekorin (vssekorin@gmail.com)
- * @version $Id$
  * @since 0.24
  * @checkstyle ExecutableStatementCountCheck (500 lines)
  * @checkstyle NPathComplexityCheck (500 lines)

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -33,8 +33,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link org.cactoos.bytes.BytesBase64}.
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
- * @version $Id$
  * @since 0.20.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */

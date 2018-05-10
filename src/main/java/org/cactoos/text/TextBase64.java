@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -32,8 +32,6 @@ import org.cactoos.io.BytesOf;
 /**
  * Encodes the origin text using the Base64 encoding scheme.
  *
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
- * @version $Id$
  * @since 0.20.2
  */
 public final class TextBase64 implements Text {

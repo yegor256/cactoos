@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -36,8 +36,6 @@ import java.io.Reader;
  *
  * <p>There is no thread-safety guarantee.</p>
  *
- * @author Alexey Kutepov (reximkut@gmail.com)
- * @version $Id$
  * @since 0.29
  */
 final class EmptyClosableReader extends Reader {

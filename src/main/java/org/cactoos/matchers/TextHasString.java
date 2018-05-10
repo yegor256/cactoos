@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -33,8 +33,6 @@ import org.hamcrest.core.IsEqual;
 /**
  * Matcher for the content.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.2
  */
 public final class TextHasString extends TypeSafeMatcher<Text> {

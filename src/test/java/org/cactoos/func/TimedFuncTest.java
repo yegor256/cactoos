@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -34,8 +34,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link TimedFunc}.
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @since 0.29.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -84,7 +82,7 @@ public final class TimedFuncTest {
                 period,
                 input -> future
             ).apply(true);
-                // @checkstyle IllegalCatchCheck (1 line)
+            // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception exp) {
             MatcherAssert.assertThat(
                 future.isCancelled(),
@@ -105,3 +103,4 @@ public final class TimedFuncTest {
         );
     }
 }
+

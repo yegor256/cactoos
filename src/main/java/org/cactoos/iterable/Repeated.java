@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,9 +31,6 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * <p>If you need to repeat endlessly, use {@link Endless}.</p>
  *
- * @author Kirill (g4s8.public@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @param <T> Element type
  * @since 0.1
  */

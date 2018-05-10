@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -32,8 +32,6 @@ import org.cactoos.scalar.UncheckedScalar;
 /**
  * Text envelope that provides {@link #equals(Object)} and {@link #hashCode()}
  * methods.
- * @author Paulo Lobo (pauloeduardolobo@gmail.com)
- * @version $Id$
  * @since 0.32
  * @todo #788:30min Refactor all classes in text package to extend from
  *  TextEnvelope, allowing direct comparison with string objects using hashCode

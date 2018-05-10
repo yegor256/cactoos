@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -34,9 +34,6 @@ import org.junit.Test;
 /**
  * Test case for {@link LowestOf}.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @author Eduard Balovnev (bedward70@mail.ru)
- * @version $Id$
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)

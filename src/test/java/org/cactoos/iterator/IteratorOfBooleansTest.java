@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -33,8 +33,6 @@ import org.junit.Test;
  *
  * <p>There is no thread-safety guarantee.</p>
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */

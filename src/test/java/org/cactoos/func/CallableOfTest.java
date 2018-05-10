@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,8 +31,6 @@ import org.junit.Test;
 /**
  * Test case for {@link CallableOf}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -52,7 +50,7 @@ public final class CallableOfTest {
     public void convertsRunnableIntoCallable() throws Exception {
         final AtomicBoolean flag = new AtomicBoolean(false);
         new CallableOf<>(
-            () -> { flag.set(true); }
+            () -> flag.set(true)
         ).call();
         MatcherAssert.assertThat(
             flag.get(),
@@ -63,7 +61,9 @@ public final class CallableOfTest {
     @Test(expected = Exception.class)
     public void wrapsRuntimeErrorFromRunnable() throws Exception {
         new CallableOf<>(
-            () -> { throw new IllegalStateException(); }
+            () -> {
+                throw new IllegalStateException();
+            }
         ).call();
     }
 
@@ -71,7 +71,9 @@ public final class CallableOfTest {
     public void convertsProcIntoCallable() throws Exception {
         final AtomicBoolean flag = new AtomicBoolean(false);
         new CallableOf<>(
-            unused -> { flag.set(true); }
+            unused -> {
+                flag.set(true);
+            }
         ).call();
         MatcherAssert.assertThat(
             flag.get(),

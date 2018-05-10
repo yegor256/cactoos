@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -42,8 +42,6 @@ import org.cactoos.Scalar;
  *     FileNotFoundException with Exception).
  * </ul>
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @since 0.30
  */
 public final class InheritanceLevel implements Scalar<Integer> {
