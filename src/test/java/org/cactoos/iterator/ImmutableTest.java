@@ -50,12 +50,22 @@ public final class ImmutableTest {
     }
 
     @Test
-    public void decoratesNextAndHasNext() {
+    public void decoratesNext() {
         final int value = new Random().nextInt();
-        final Iterator<Integer> iter = new IteratorOf<>(value);
-        final Iterator<Integer> immutable = new Immutable<>(iter);
-        MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(true));
+        final Iterator<Integer> immutable = new Immutable<>(
+            new IteratorOf<>(value)
+        );
         MatcherAssert.assertThat(immutable.next(), new IsEqual<>(value));
+    }
+
+    @Test
+    public void decoratesHasNext() {
+        final int value = new Random().nextInt();
+        final Iterator<Integer> immutable = new Immutable<>(
+            new IteratorOf<>(value)
+        );
+        MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(true));
+        immutable.next();
         MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(false));
     }
 }
