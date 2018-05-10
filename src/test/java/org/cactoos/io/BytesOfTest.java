@@ -31,7 +31,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
 import org.cactoos.iterable.Endless;
-import org.cactoos.iterable.Limited;
+import org.cactoos.iterable.HeadOf;
 import org.cactoos.matchers.MatcherOf;
 import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.JoinedText;
@@ -63,7 +63,7 @@ public final class BytesOfTest {
                 new InputOf(
                     new JoinedText(
                         "",
-                        new Limited<>(
+                        new HeadOf<>(
                             multiplier, new Endless<>(body)
                         )
                     )
