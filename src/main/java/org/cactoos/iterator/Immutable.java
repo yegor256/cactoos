@@ -33,7 +33,7 @@ import java.util.Iterator;
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
  * @param <T> Element type
- * @since 0.31
+ * @since 0.32
  */
 public final class Immutable<T> implements Iterator<T> {
 
@@ -43,8 +43,8 @@ public final class Immutable<T> implements Iterator<T> {
     private final Iterator<T> iterator;
 
     /**
-     * Constructor.
-     * @param iter Iterator to make immutable.
+     * Ctor.
+     * @param iter Iterator to make immutable
      */
     public Immutable(final Iterator<T> iter) {
         this.iterator = iter;
@@ -60,8 +60,4 @@ public final class Immutable<T> implements Iterator<T> {
         return this.iterator.next();
     }
 
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("#remove");
-    }
 }

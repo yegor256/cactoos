@@ -27,13 +27,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * Test Case for {@link Immutable}.
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.31
+ * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ImmutableTest {
@@ -44,5 +45,23 @@ public final class ImmutableTest {
         final Iterator<String> immutable = new Immutable<>(list.iterator());
         immutable.next();
         immutable.remove();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void decoratesNext() {
+        final Iterator<String> iter = Mockito.mock(Iterator.class);
+        final Iterator<String> immutable = new Immutable<>(iter);
+        immutable.next();
+        Mockito.verify(iter).next();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void decoratesHasNext() {
+        final Iterator<String> iter = Mockito.mock(Iterator.class);
+        final Iterator<String> immutable = new Immutable<>(iter);
+        immutable.hasNext();
+        Mockito.verify(iter).hasNext();
     }
 }

@@ -33,7 +33,7 @@ import org.junit.Test;
  *
  * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
  * @version $Id$
- * @since 0.31
+ * @since 0.32
  * @todo #813:30min IterableEnvelope appears to be read only but it returns
  *  mutable Iterator through which user can remove elements. Implement immutable
  *  Iterator for IterableEnvelope `iterator()` method.
