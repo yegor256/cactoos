@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -29,8 +29,6 @@ import org.cactoos.scalar.CheckedScalar;
 /**
  * Func that throws exception of specified type.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @param <X> Type of input
  * @param <Y> Type of output
  * @param <E> Exception's type

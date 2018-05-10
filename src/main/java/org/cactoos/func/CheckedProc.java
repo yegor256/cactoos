@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -30,8 +30,6 @@ import org.cactoos.scalar.CheckedScalar;
 /**
  * Proc that throws exception of specified type.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @param <X> Type of input
  * @param <E> Exception's type
  * @since 0.32
