@@ -26,6 +26,7 @@ package org.cactoos.list;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Joined list.
@@ -47,6 +48,18 @@ public final class Joined<X> extends ListEnvelope<X> {
     @SuppressWarnings("PMD.UseVarargs")
     public Joined(final List<X>... src) {
         this(new ListOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param item First item
+     * @param items List
+     * @since 0.32
+     */
+    public Joined(final X item, final List<X> items) {
+        super(() -> Stream.concat(Stream.of(item), items.stream())
+            .collect(Collectors.toList())
+        );
     }
 
     /**

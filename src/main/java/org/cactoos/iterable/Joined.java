@@ -26,6 +26,7 @@ package org.cactoos.iterable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import org.cactoos.iterator.IteratorOf;
 
 /**
  * A few Iterables joined together.
@@ -55,6 +56,21 @@ public final class Joined<T> extends IterableEnvelope<T> {
      */
     public Joined(final Iterator<Iterable<T>> items) {
         this(new IterableOf<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param item First item
+     * @param items Iterable
+     * @since 0.32
+     */
+    public Joined(final T item, final Iterable<T> items) {
+        super(() -> {
+            final Collection<Iterator<T>> iterators = new LinkedList<>();
+            iterators.add(new IteratorOf<T>(item));
+            iterators.add(items.iterator());
+            return () -> new org.cactoos.iterator.Joined<>(iterators);
+        });
     }
 
     /**
