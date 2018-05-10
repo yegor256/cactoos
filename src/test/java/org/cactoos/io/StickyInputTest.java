@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.cactoos.Input;
@@ -99,7 +98,7 @@ public final class StickyInputTest {
     }
 
     @Test
-    public void readsFileContentSlowly() throws IOException {
+    public void readsFileContentSlowly() throws Exception {
         final int size = 130_000;
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly",

@@ -24,7 +24,6 @@
 
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.Output;
@@ -66,7 +65,7 @@ public final class GzipOutput implements Output {
     }
 
     @Override
-    public OutputStream stream() throws IOException {
+    public OutputStream stream() throws Exception {
         return new GZIPOutputStream(
             this.origin.stream(),
             this.size

@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import org.hamcrest.MatcherAssert;
@@ -38,7 +37,7 @@ import org.junit.Test;
 public final class TailInputTest {
 
     @Test
-    public void tailsOnLongStream() throws IOException {
+    public void tailsOnLongStream() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
         MatcherAssert.assertThat(
@@ -50,7 +49,7 @@ public final class TailInputTest {
     }
 
     @Test
-    public void tailsOnExactStream() throws IOException {
+    public void tailsOnExactStream() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
         MatcherAssert.assertThat(
@@ -62,7 +61,7 @@ public final class TailInputTest {
     }
 
     @Test
-    public void tailsOnExactStreamAndBuffer() throws IOException {
+    public void tailsOnExactStreamAndBuffer() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
         MatcherAssert.assertThat(
@@ -74,7 +73,7 @@ public final class TailInputTest {
     }
 
     @Test
-    public void tailsOnShorterStream() throws IOException {
+    public void tailsOnShorterStream() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
         MatcherAssert.assertThat(
@@ -86,7 +85,7 @@ public final class TailInputTest {
     }
 
     @Test
-    public void tailsOnStreamLongerThanBufferAndBytes() throws IOException {
+    public void tailsOnStreamLongerThanBufferAndBytes() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
         MatcherAssert.assertThat(
@@ -102,7 +101,7 @@ public final class TailInputTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void failsIfBufferSizeSmallerThanTailSize() throws IOException {
+    public void failsIfBufferSizeSmallerThanTailSize() throws Exception {
         final int size = 4;
         new BytesOf(
             new TailInput(

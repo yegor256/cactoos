@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.iterable.Endless;
@@ -43,7 +42,7 @@ import org.junit.Test;
 public final class InputAsBytesTest {
 
     @Test
-    public void readsLargeInMemoryContent() throws IOException {
+    public void readsLargeInMemoryContent() throws Exception {
         final int multiplier = 5_000;
         final String body = "1234567890";
         MatcherAssert.assertThat(
@@ -64,7 +63,7 @@ public final class InputAsBytesTest {
 
     @Test
     // @checkstyle AnonInnerLengthCheck (100 lines)
-    public void readsLargeContent() throws IOException {
+    public void readsLargeContent() throws Exception {
         final int size = 100_000;
         try (final InputStream slow = new SlowInputStream(size)) {
             MatcherAssert.assertThat(
@@ -78,7 +77,7 @@ public final class InputAsBytesTest {
     }
 
     @Test
-    public void readsInputIntoBytes() throws IOException {
+    public void readsInputIntoBytes() throws Exception {
         MatcherAssert.assertThat(
             "Can't read bytes from Input",
             new String(
@@ -99,7 +98,7 @@ public final class InputAsBytesTest {
     }
 
     @Test
-    public void readsInputIntoBytesWithSmallBuffer() throws IOException {
+    public void readsInputIntoBytesWithSmallBuffer() throws Exception {
         MatcherAssert.assertThat(
             "Can't read bytes from Input with a small reading buffer",
             new String(

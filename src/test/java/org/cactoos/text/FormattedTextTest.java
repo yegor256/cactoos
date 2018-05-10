@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.IllegalFormatConversionException;
 import java.util.Locale;
@@ -66,7 +65,7 @@ public final class FormattedTextTest {
     }
 
     @Test(expected = UnknownFormatConversionException.class)
-    public void failsForInvalidPattern() throws IOException {
+    public void failsForInvalidPattern() throws Exception {
         new FormattedText(
             new TextOf("%%. Formatted %$"),
             new ListOf<>(1, "invalid")
@@ -86,7 +85,7 @@ public final class FormattedTextTest {
     }
 
     @Test(expected = IllegalFormatConversionException.class)
-    public void ensuresThatFormatterFails() throws IOException {
+    public void ensuresThatFormatterFails() throws Exception {
         new FormattedText(
             new TextOf("Local time: %d"),
             Locale.ROOT,

@@ -67,7 +67,7 @@ public final class InputOfTest {
     public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void readsAlternativeInputForFileCase() throws IOException {
+    public void readsAlternativeInputForFileCase() {
         MatcherAssert.assertThat(
             "Can't read alternative source from file not found",
             new TextOf(
@@ -96,7 +96,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void closesInputStream() throws IOException {
+    public void closesInputStream() throws Exception {
         final AtomicBoolean closed = new AtomicBoolean();
         final InputStream input = new ByteArrayInputStream(
             "how are you?".getBytes()
@@ -127,7 +127,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsFileContent() throws IOException {
+    public void readsFileContent() throws Exception {
         MatcherAssert.assertThat(
             "Can't read bytes from a file-system URL",
             new BytesOf(
@@ -178,7 +178,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringIntoBytes() throws IOException {
+    public void readsStringIntoBytes() throws Exception {
         MatcherAssert.assertThat(
             "Can't read bytes from Input",
             new String(
@@ -195,7 +195,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringBuilder() throws IOException {
+    public void readsStringBuilder() throws Exception {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
         MatcherAssert.assertThat(
@@ -216,7 +216,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringBuffer() throws IOException {
+    public void readsStringBuffer() throws Exception {
         final String starts = "The future ";
         final String ends = "is now!";
         MatcherAssert.assertThat(
@@ -237,7 +237,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsArrayOfChars() throws IOException {
+    public void readsArrayOfChars() throws Exception {
         MatcherAssert.assertThat(
             "Can't read array of chars.",
             new String(
@@ -256,7 +256,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsEncodedArrayOfChars() throws IOException {
+    public void readsEncodedArrayOfChars() throws Exception {
         MatcherAssert.assertThat(
             "Can't read array of encoded chars.",
             new String(
@@ -322,7 +322,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void makesDataAvailable() throws IOException {
+    public void makesDataAvailable() throws Exception {
         final String content = "Hello,חבר!";
         MatcherAssert.assertThat(
             "Can't show that data is available",

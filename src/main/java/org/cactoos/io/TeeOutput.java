@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -108,7 +107,7 @@ public final class TeeOutput implements Output {
     }
 
     @Override
-    public OutputStream stream() throws IOException {
+    public OutputStream stream() throws Exception {
         return new TeeOutputStream(
             this.target.stream(), this.copy.stream()
         );

@@ -24,6 +24,10 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import org.cactoos.Text;
+import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -43,4 +47,17 @@ public final class UncheckedBytesTest {
         ).asBytes();
     }
 
+    @Test
+    public void worksNormallyWhenNoExceptionIsThrown() throws Exception {
+        final Text source = new TextOf("hello, cactoos!");
+        MatcherAssert.assertThat(
+            "Cannot works normally when no exception is thrown",
+            new UncheckedBytes(
+                new BytesOf(source)
+            ).asBytes(),
+            Matchers.equalTo(
+                new BytesOf(source).asBytes()
+            )
+        );
+    }
 }

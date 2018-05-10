@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.util.StringJoiner;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
@@ -91,7 +90,7 @@ public final class JoinedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final StringJoiner joint = new StringJoiner(this.delimiter.asString());
         for (final Text text : this.texts) {
             joint.add(text.asString());

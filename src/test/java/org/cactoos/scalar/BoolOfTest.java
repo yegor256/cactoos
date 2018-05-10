@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -37,7 +36,7 @@ import org.junit.Test;
 public final class BoolOfTest {
 
     @Test
-    public void trueTest() throws IOException {
+    public void trueTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't parse 'true' string",
             new BoolOf("true").value(),
@@ -46,7 +45,7 @@ public final class BoolOfTest {
     }
 
     @Test
-    public void falseTest() throws IOException {
+    public void falseTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't parse 'false' string",
             new BoolOf("false").value(),
@@ -55,7 +54,7 @@ public final class BoolOfTest {
     }
 
     @Test
-    public void isFalseIfTextDoesNotRepresentABoolean() throws IOException {
+    public void isFalseIfTextDoesNotRepresentABoolean() throws Exception {
         MatcherAssert.assertThat(
             "Can't parse a non-boolean string",
             new BoolOf("abc").value(),

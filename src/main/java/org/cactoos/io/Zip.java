@@ -28,7 +28,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.zip.ZipEntry;
@@ -60,7 +59,7 @@ public final class Zip implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         try (final ZipOutputStream zip = new ZipOutputStream(out)) {
             for (final Path path : this.origin) {

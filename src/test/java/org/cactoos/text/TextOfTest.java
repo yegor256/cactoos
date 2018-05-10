@@ -46,7 +46,7 @@ import org.junit.Test;
 public final class TextOfTest {
 
     @Test
-    public void readsInputIntoText() throws IOException {
+    public void readsInputIntoText() throws Exception {
         MatcherAssert.assertThat(
             "Can't read text from Input",
             new SyncText(
@@ -63,7 +63,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsInputIntoTextWithDefaultCharset() throws IOException {
+    public void readsInputIntoTextWithDefaultCharset() throws Exception {
         MatcherAssert.assertThat(
             "Can't read text from Input with default charset",
             new TextOf(
@@ -77,7 +77,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsInputIntoTextWithSmallBuffer() throws IOException {
+    public void readsInputIntoTextWithSmallBuffer() throws Exception {
         MatcherAssert.assertThat(
             "Can't read text with a small reading buffer",
             new TextOf(
@@ -94,7 +94,7 @@ public final class TextOfTest {
 
     @Test
     public void readsInputIntoTextWithSmallBufferAndDefaultCharset()
-        throws IOException {
+        throws Exception {
         MatcherAssert.assertThat(
             "Can't read text with a small reading buffer and default charset",
             new TextOf(
@@ -142,7 +142,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsEncodedArrayOfCharsIntoText() throws IOException {
+    public void readsEncodedArrayOfCharsIntoText() throws Exception {
         MatcherAssert.assertThat(
             "Can't read array of encoded chars into text.",
             new TextOf(
@@ -169,7 +169,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsStringBuilder() throws IOException {
+    public void readsStringBuilder() throws Exception {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
         MatcherAssert.assertThat(
@@ -185,7 +185,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsStringBuffer() throws IOException {
+    public void readsStringBuffer() throws Exception {
         final String starts = "In our daily life, ";
         final String ends = "we can smile!";
         MatcherAssert.assertThat(

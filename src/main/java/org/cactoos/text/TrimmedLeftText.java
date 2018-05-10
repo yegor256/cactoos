@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
@@ -49,7 +48,7 @@ public final class TrimmedLeftText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final String text = this.origin.asString();
         int cursor = 0;
         while (cursor < text.length() && Character.isWhitespace(

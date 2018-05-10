@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
@@ -64,7 +63,7 @@ public final class SyncText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         synchronized (this.lock) {
             return this.origin.asString();
         }

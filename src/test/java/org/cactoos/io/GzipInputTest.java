@@ -25,7 +25,6 @@
 package org.cactoos.io;
 
 import java.io.EOFException;
-import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -40,7 +39,7 @@ import org.junit.Test;
 public final class GzipInputTest {
 
     @Test
-    public void readFromGzipInput() throws IOException {
+    public void readFromGzipInput() throws Exception {
         final byte[] bytes = {
             (byte) GZIPInputStream.GZIP_MAGIC,
             // @checkstyle MagicNumberCheck (1 line)

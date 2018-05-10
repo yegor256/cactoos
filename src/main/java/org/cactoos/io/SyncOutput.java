@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import org.cactoos.Output;
 
@@ -65,7 +64,7 @@ public final class SyncOutput implements Output {
     }
 
     @Override
-    public OutputStream stream() throws IOException {
+    public OutputStream stream() throws Exception {
         synchronized (this.lock) {
             return this.origin.stream();
         }

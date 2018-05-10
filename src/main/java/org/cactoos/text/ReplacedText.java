@@ -107,7 +107,7 @@ public final class ReplacedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final StringBuffer buffer = new StringBuffer();
         final Matcher matcher = new IoCheckedScalar<>(this.regex)
             .value()

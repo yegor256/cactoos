@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.HexOf;
 import org.hamcrest.MatcherAssert;
@@ -38,7 +37,7 @@ import org.junit.Test;
 public final class Sha1DigestOfTest {
 
     @Test
-    public void checksumOfEmptyString() throws IOException {
+    public void checksumOfEmptyString() {
         MatcherAssert.assertThat(
             "Can't calculate the empty string's SHA-1 checksum",
             new HexOf(
@@ -53,7 +52,7 @@ public final class Sha1DigestOfTest {
     }
 
     @Test
-    public void checksumOfString() throws IOException {
+    public void checksumOfString() {
         MatcherAssert.assertThat(
             "Can't calculate the string's SHA-1 checksum",
             new HexOf(
@@ -68,7 +67,7 @@ public final class Sha1DigestOfTest {
     }
 
     @Test
-    public void checksumFromFile() throws IOException {
+    public void checksumFromFile() throws Exception {
         MatcherAssert.assertThat(
             "Can't calculate the file's SHA-1 checksum",
             new HexOf(

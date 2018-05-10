@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 
@@ -65,7 +64,7 @@ final class SlowInput implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         return new SlowInputStream(this.origin.stream());
     }
 

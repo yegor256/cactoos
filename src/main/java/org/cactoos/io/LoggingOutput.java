@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 import org.cactoos.Output;
@@ -79,7 +78,7 @@ public final class LoggingOutput implements Output {
     }
 
     @Override
-    public OutputStream stream() throws IOException {
+    public OutputStream stream() throws Exception {
         return new LoggingOutputStream(
             this.origin.stream(),
             this.destination,

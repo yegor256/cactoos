@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 
@@ -50,7 +49,7 @@ public final class IsBlank implements Scalar<Boolean> {
     }
 
     @Override
-    public Boolean value() throws IOException {
+    public Boolean value() throws Exception {
         return this.origin.asString().chars()
             .allMatch(Character::isWhitespace);
     }

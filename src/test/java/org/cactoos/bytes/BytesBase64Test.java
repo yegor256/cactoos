@@ -24,7 +24,6 @@
 
 package org.cactoos.bytes;
 
-import java.io.IOException;
 import java.util.Base64;
 import org.cactoos.io.BytesOf;
 import org.hamcrest.MatcherAssert;
@@ -40,7 +39,7 @@ import org.junit.Test;
 public final class BytesBase64Test {
 
     @Test
-    public void checkEncodeBasic() throws IOException {
+    public void checkEncodeBasic() throws Exception {
         MatcherAssert.assertThat(
             "Can't encodes bytes using the Base64 basic encoding scheme",
             new BytesBase64(
@@ -55,7 +54,7 @@ public final class BytesBase64Test {
     }
 
     @Test
-    public void checkEncodeUrl() throws IOException {
+    public void checkEncodeUrl() throws Exception {
         MatcherAssert.assertThat(
             "Can't encodes bytes using the Base64 URL encoding scheme",
             new BytesBase64(
@@ -70,7 +69,7 @@ public final class BytesBase64Test {
     }
 
     @Test
-    public void checkEncodeMime() throws IOException {
+    public void checkEncodeMime() throws Exception {
         MatcherAssert.assertThat(
             "Can't encodes bytes using the Base64 mime encoding scheme",
             new BytesBase64(

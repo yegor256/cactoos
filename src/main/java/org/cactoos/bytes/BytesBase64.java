@@ -24,7 +24,6 @@
 
 package org.cactoos.bytes;
 
-import java.io.IOException;
 import java.util.Base64;
 import org.cactoos.Bytes;
 
@@ -65,7 +64,7 @@ public final class BytesBase64 implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         return this.encoder.encode(this.origin.asBytes());
     }
 

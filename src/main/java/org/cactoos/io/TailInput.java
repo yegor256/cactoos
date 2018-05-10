@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.scalar.MinOf;
@@ -77,7 +76,7 @@ public final class TailInput implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         if (this.max < this.count) {
             throw new IllegalArgumentException(
                 new FormattedText(

@@ -24,7 +24,6 @@
 
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 import org.cactoos.bytes.BytesBase64;
 import org.cactoos.io.BytesOf;
@@ -60,7 +59,7 @@ public final class TextBase64 implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         return new TextOf(
             new BytesBase64(
                 new BytesOf(this.origin)

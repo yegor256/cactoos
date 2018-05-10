@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.util.Locale;
 import org.cactoos.Text;
 
@@ -65,7 +64,7 @@ public final class LowerText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         return this.origin.asString().toLowerCase(this.locale);
     }
 
