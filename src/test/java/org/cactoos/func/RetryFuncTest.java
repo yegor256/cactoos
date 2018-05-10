@@ -64,10 +64,9 @@ public final class RetryFuncTest {
                         throw new IllegalArgumentException("May happen");
                     }
                 },
-                true,
                 Integer.MAX_VALUE
             ).apply(true),
-            Matchers.equalTo(true)
+            Matchers.nullValue()
         );
     }
 
@@ -80,10 +79,9 @@ public final class RetryFuncTest {
                     if (fail.getAndSet(false)) {
                         throw new IllegalArgumentException("May happen");
                     }
-                },
-                true
+                }
             ).apply(true),
-            Matchers.equalTo(true)
+            Matchers.nullValue()
         );
     }
 
@@ -96,10 +94,9 @@ public final class RetryFuncTest {
                         throw new IllegalArgumentException("May happen");
                     }
                 },
-                true,
                 count -> count == Integer.MAX_VALUE
             ).apply(true),
-            Matchers.equalTo(true)
+            Matchers.nullValue()
         );
     }
 }

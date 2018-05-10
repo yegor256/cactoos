@@ -41,7 +41,6 @@ import org.junit.Test;
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class AsyncFuncTest {
 
     @Test
@@ -70,8 +69,7 @@ public final class AsyncFuncTest {
             input -> {
                 final CountDownLatch latch = new CountDownLatch(1);
                 new AsyncFunc<>(
-                    (Proc<Boolean>) ipt -> latch.countDown(),
-                    true
+                    (Proc<Boolean>) ipt -> latch.countDown()
                 ).exec(input);
                 latch.await();
                 return true;
@@ -90,8 +88,7 @@ public final class AsyncFuncTest {
             new AsyncFunc<>(
                 input -> {
                     latch.countDown();
-                },
-                "done!"
+                }
             ),
             new FuncApplies<>(
                 true,
@@ -120,7 +117,6 @@ public final class AsyncFuncTest {
                     }
                     latch.countDown();
                 },
-                null,
                 factory
             ),
             new FuncApplies<>(
@@ -151,7 +147,6 @@ public final class AsyncFuncTest {
                     }
                     latch.countDown();
                 },
-                null,
                 Executors.newSingleThreadExecutor(factory)
             ),
             new FuncApplies<>(

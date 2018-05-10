@@ -61,7 +61,6 @@ public final class TimedFuncTest {
                     new Endless<>(() -> input)
                 ).value();
             },
-            true,
             period
         ).apply(true);
     }

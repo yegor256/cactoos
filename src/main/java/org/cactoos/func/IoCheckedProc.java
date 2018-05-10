@@ -52,7 +52,7 @@ public final class IoCheckedProc<X> implements Proc<X> {
 
     @Override
     public void exec(final X input) throws IOException {
-        new IoCheckedFunc<>(new FuncOf<>(this.proc, null)).apply(input);
+        new IoCheckedFunc<>(new FuncOf<>(this.proc)).apply(input);
     }
 
 }

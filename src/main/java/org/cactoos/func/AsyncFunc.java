@@ -61,11 +61,9 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
     /**
      * Ctor.
      * @param proc The proc
-     * @param result Result to return
-     * @since 0.32
      */
-    public AsyncFunc(final Proc<X> proc, final Y result) {
-        this(new FuncOf<>(proc, result));
+    public AsyncFunc(final Proc<X> proc) {
+        this(new FuncOf<>(proc));
     }
 
     /**
@@ -79,13 +77,10 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
     /**
      * Ctor.
      * @param proc The proc
-     * @param result Result to return
      * @param fct Factory
-     * @since 0.32
      */
-    public AsyncFunc(final Proc<X> proc, final Y result,
-        final ThreadFactory fct) {
-        this(new FuncOf<>(proc, result), fct);
+    public AsyncFunc(final Proc<X> proc, final ThreadFactory fct) {
+        this(new FuncOf<>(proc), fct);
     }
 
     /**
@@ -101,12 +96,10 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      * Ctor.
      * @param proc The proc
      * @param exec Executor Service
-     * @param result Result to return
-     * @since 0.32
+     * @since 0.17
      */
-    public AsyncFunc(final Proc<X> proc, final Y result,
-        final ExecutorService exec) {
-        this(new FuncOf<>(proc, result), exec);
+    public AsyncFunc(final Proc<X> proc, final ExecutorService exec) {
+        this(new FuncOf<>(proc), exec);
     }
 
     /**

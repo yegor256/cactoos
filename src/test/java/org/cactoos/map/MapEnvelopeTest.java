@@ -62,8 +62,7 @@ public final class MapEnvelopeTest {
             ),
             new MatcherOf<>(
                 new FuncOf<>(
-                    (map) -> map.put(2, 2),
-                    true
+                    (map) -> map.put(2, 2)
                 ))
         );
     }
@@ -83,8 +82,7 @@ public final class MapEnvelopeTest {
             ),
             new MatcherOf<>(
                 new FuncOf<>(
-                    (map) -> map.remove(0),
-                    true
+                    (map) -> map.remove(0)
                 ))
         );
     }
@@ -104,8 +102,7 @@ public final class MapEnvelopeTest {
             ),
             new MatcherOf<>(
                 new FuncOf<>(
-                    (map) -> map.putAll(new MapOf<Integer, Integer>()),
-                    true
+                    (map) -> map.putAll(new MapOf<Integer, Integer>())
                 ))
         );
     }
@@ -125,8 +122,7 @@ public final class MapEnvelopeTest {
             ),
             new MatcherOf<>(
                 new FuncOf<>(
-                    Map::clear,
-                    true
+                    Map::clear
                 ))
         );
     }

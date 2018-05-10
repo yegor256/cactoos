@@ -50,34 +50,30 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
     /**
      * Ctor.
      * @param proc Func original
-     * @param result Result to return
-     * @since 0.32
+     * @since 0.12
      */
-    public RetryFunc(final Proc<X> proc, final Y result) {
-        this(new FuncOf<>(proc, result));
+    public RetryFunc(final Proc<X> proc) {
+        this(new FuncOf<>(proc));
     }
 
     /**
      * Ctor.
      * @param proc Func original
-     * @param result Result to return
      * @param attempts Maximum number of attempts
-     * @since 0.32
+     * @since 0.12
      */
-    public RetryFunc(final Proc<X> proc, final Y result, final int attempts) {
-        this(new FuncOf<>(proc, result), attempts);
+    public RetryFunc(final Proc<X> proc, final int attempts) {
+        this(new FuncOf<>(proc), attempts);
     }
 
     /**
      * Ctor.
      * @param proc Func original
-     * @param result Result to return
      * @param ext Exit condition, returns TRUE if there is no more reason to try
-     * @since 0.32
+     * @since 0.12
      */
-    public RetryFunc(final Proc<X> proc, final Y result,
-        final Func<Integer, Boolean> ext) {
-        this(new FuncOf<>(proc, result), ext);
+    public RetryFunc(final Proc<X> proc, final Func<Integer, Boolean> ext) {
+        this(new FuncOf<>(proc), ext);
     }
 
     /**
