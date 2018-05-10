@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -34,8 +34,6 @@ import org.junit.Test;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
