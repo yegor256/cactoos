@@ -37,7 +37,7 @@ public final class IterableOfIntsTest {
 
     @Test
     public void convertsIntegerValuesToIterable() {
-        final int[] values = new int[]{1, 2, 3};
+        final int[] values = {1, 2, 3};
         MatcherAssert.assertThat(
             new IterableOfInts(values),
             Matchers.contains(values[0], values[1], values[2])

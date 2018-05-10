@@ -1,4 +1,4 @@
-/*
+/**
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -21,26 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
-import org.cactoos.iterator.IteratorOfFloats;
-import org.cactoos.scalar.UncheckedScalar;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterable of float values.
+ * Iterator that returns the set of chars.
  *
- * @since 1.0
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @version $Id$
+ * @since 0.32
  */
-public final class IterableOfFloats extends IterableEnvelope<Float> {
+public final class IteratorOfChars implements Iterator<Character> {
+    /**
+     * The list of items to iterate.
+     */
+    private final char[] list;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
 
     /**
      * Ctor.
-     * @param values Float values
+     * @param items Items to iterate
      */
-    @SuppressWarnings("PMD.AvoidUsingShortType")
-    public IterableOfFloats(final float... values) {
-        super(() -> ()
-            -> new UncheckedScalar<>(() -> new IteratorOfFloats(values)).value()
-        );
+    public IteratorOfChars(final char... items) {
+        this.list = items;
+        this.position = new AtomicInteger(0);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return this.position.intValue() < this.list.length;
+    }
+
+    @Override
+    public Character next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.list[this.position.getAndIncrement()];
     }
 }

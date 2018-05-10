@@ -23,8 +23,8 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.cactoos.iterator.IteratorOfInts;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable of integer values.
@@ -38,13 +38,8 @@ public final class IterableOfInts extends IterableEnvelope<Integer> {
      * @param values Integer values
      */
     public IterableOfInts(final int... values) {
-        super(() -> {
-            final Collection<Integer> iterable =
-                new ArrayList<>(values.length);
-            for (final int value: values) {
-                iterable.add(value);
-            }
-            return iterable;
-        });
+        super(() -> ()
+            -> new UncheckedScalar<>(() -> new IteratorOfInts(values)).value()
+        );
     }
 }

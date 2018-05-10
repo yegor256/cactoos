@@ -109,8 +109,7 @@ public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
         ).value();
         final String message = wrapped.getMessage()
             .replaceFirst(String.format("%s: ", exp.getClass().getName()), "");
-        if ((level == 0 || level < Integer.MAX_VALUE)
-            && message.equals(exp.getMessage())) {
+        if (level >= 0 && message.equals(exp.getMessage())) {
             wrapped = (E) exp;
         }
         return wrapped;

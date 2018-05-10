@@ -71,7 +71,7 @@ public final class FallbackFromTest {
                 new IterableOf<>(RuntimeException.class),
                 exp -> "RuntimeException fallback #2"
             ).support(ClassNotFoundException.class),
-            new IsEqual<>(Integer.MAX_VALUE)
+            new IsEqual<>(Integer.MIN_VALUE)
         );
     }
 }

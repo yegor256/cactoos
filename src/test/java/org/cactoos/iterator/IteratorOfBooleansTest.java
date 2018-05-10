@@ -1,4 +1,4 @@
-/*
+/**
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,61 +23,52 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
+import org.junit.Test;
 
 /**
- * Limited origin.
- *
- * <p>This is a decorator over an existing origin. Returns elements of the
- * original origin, until either the requested number of items have been
- * returned or the underlying origin has been exhausted.</p>
+ * Iterator that returns the set of booleans.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
- * @param <T> Element type
- * @since 0.6
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @version $Id$
+ * @since 0.32
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Limited<T> implements Iterator<T> {
-
-    /**
-     * Decorated origin.
-     */
-    private final Iterator<T> origin;
-
-    /**
-     * Number of elements to return.
-     */
-    private final int restrict;
-
-    /**
-     * Number of elements returned so far.
-     */
-    private int consumed;
-
-    /**
-     * Ctor.
-     *
-     * @param limit The requested number of elements
-     * @param iterator The underlying iterator
-     */
-    public Limited(final int limit, final Iterator<T> iterator) {
-        this.origin = iterator;
-        this.restrict = limit;
-        this.consumed = 0;
+public final class IteratorOfBooleansTest {
+    @Test
+    public void emptyIteratorDoesNotHaveNext() {
+        MatcherAssert.assertThat(
+            "hasNext is true for empty iterator",
+            new IteratorOfBooleans().hasNext(),
+            new IsEqual<>(false)
+        );
     }
 
-    @Override
-    public boolean hasNext() {
-        return this.consumed < this.restrict && this.origin.hasNext();
+    @Test(expected = NoSuchElementException.class)
+    public void emptyIteratorThrowsException() {
+        new IteratorOfBooleans().next();
     }
 
-    @Override
-    public T next() {
-        if (!this.hasNext()) {
-            throw new NoSuchElementException("No more elements.");
-        }
-        ++this.consumed;
-        return this.origin.next();
+    @Test
+    public void nonEmptyIteratorDoesNotHaveNext() {
+        final IteratorOfBooleans iterator = new IteratorOfBooleans(true, false);
+        iterator.next();
+        iterator.next();
+        MatcherAssert.assertThat(
+            "hasNext is true for already traversed iterator",
+            iterator.hasNext(),
+            new IsEqual<>(false)
+        );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void nonEmptyIteratorThrowsException() {
+        final IteratorOfBooleans iterator = new IteratorOfBooleans(true);
+        iterator.next();
+        iterator.next();
     }
 }

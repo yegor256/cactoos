@@ -1,4 +1,4 @@
-/*
+/**
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -21,51 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.iterator;
 
-import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link InheritanceLevel}.
+ * Tests for {@link IteratorOfInts}.
  *
- * @since 0.30
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
+ * @version $Id$
+ * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class InheritanceLevelTest {
-
+public final class IteratorOfIntsTest {
     @Test
-    public void twoInheritanceLevelsBetweenClasses() {
+    public void emptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            new InheritanceLevel(
-                FileNotFoundException.class,
-                Exception.class
-            ).value(),
-            new IsEqual<>(2)
+            "hasNext is true for empty iterator.",
+            new IteratorOfInts().hasNext(),
+            new IsEqual<>(false)
         );
     }
 
-    @Test
-    public void classesAreNotRelated() {
-        MatcherAssert.assertThat(
-            new InheritanceLevel(
-                FileNotFoundException.class,
-                RuntimeException.class
-            ).value(),
-            new IsEqual<>(Integer.MIN_VALUE)
-        );
+    @Test(expected = NoSuchElementException.class)
+    public void emptyIteratorThrowsException() {
+        new IteratorOfInts().next();
     }
 
     @Test
-    public void classesAreIdentical() {
+    public void nonEmptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            new InheritanceLevel(
-                FileNotFoundException.class,
-                FileNotFoundException.class
-            ).value(),
-            new IsEqual<>(0)
+            "hasNext is true for fully traversed iterator.",
+            this.iteratorWithFetchedElements().hasNext(),
+            new IsEqual<>(false)
         );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void nonEmptyIteratorThrowsException() {
+        this.iteratorWithFetchedElements().next();
+    }
+
+    private IteratorOfInts iteratorWithFetchedElements() {
+        final IteratorOfInts iterator = new IteratorOfInts(
+            1, 2, 3
+        );
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        return iterator;
     }
 }

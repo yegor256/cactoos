@@ -1,4 +1,4 @@
-/*
+/**
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -21,51 +21,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.text;
 
-import java.io.FileNotFoundException;
+import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Test case for {@link InheritanceLevel}.
+ * Test for {@link RandomText}.
  *
- * @since 0.30
+ * <p>There is no thread-safety guarantee.
+ *
+ * @author Roman Proshin (roman@proshin.org)
+ * @version $Id$
+ * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class InheritanceLevelTest {
+public final class RandomTextTest {
 
     @Test
-    public void twoInheritanceLevelsBetweenClasses() {
+    public void generatesRandomTextOfRandomLength() {
         MatcherAssert.assertThat(
-            new InheritanceLevel(
-                FileNotFoundException.class,
-                Exception.class
-            ).value(),
-            new IsEqual<>(2)
+            "Generated text is empty",
+            new RandomText().asString().length(),
+            Matchers.greaterThan(0)
         );
     }
 
     @Test
-    public void classesAreNotRelated() {
+    public void generatesRandomTextOfSpecifiedLength() {
         MatcherAssert.assertThat(
-            new InheritanceLevel(
-                FileNotFoundException.class,
-                RuntimeException.class
-            ).value(),
-            new IsEqual<>(Integer.MIN_VALUE)
+            "Generated text has incorrect length",
+            new RandomText(512).asString().length(),
+            new IsEqual<>(512)
         );
     }
 
     @Test
-    public void classesAreIdentical() {
+    public void generatesRandomTextOfSpecifiedChars() {
         MatcherAssert.assertThat(
-            new InheritanceLevel(
-                FileNotFoundException.class,
-                FileNotFoundException.class
-            ).value(),
+            "Generated text contains not allowed characters",
+            new RandomText('a')
+                .asString()
+                .replaceAll("a", "")
+                .length(),
             new IsEqual<>(0)
+        );
+    }
+
+    @Test
+    public void generatesRandomTextOfSpecifiedCharsAndLength() {
+        MatcherAssert.assertThat(
+            "Generated text doesn't match specification",
+            new RandomText(10, 'a'),
+            new TextHasString("aaaaaaaaaa")
         );
     }
 }

@@ -23,19 +23,12 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.cactoos.iterator.IteratorOfBooleans;
 
 /**
  * Iterable of boolean values.
  *
  * @since 1.0
- * @todo #748:30min Introduce IteratorOfBooleans, IteratorOfChars,
- *  IteratorOfBytes and IteratorOfDoubles which will take array of their
- *  related primitive types (boolean, char, byte, double) and produce iterator
- *  of reference type (Boolean, Character, Byte, Double).
- *  Refactor appropriate IterableOf* classes by using those newly created
- *  iterators to avoid unnecessary copying elements to a new array.
  */
 public final class IterableOfBooleans extends IterableEnvelope<Boolean> {
 
@@ -44,13 +37,6 @@ public final class IterableOfBooleans extends IterableEnvelope<Boolean> {
      * @param values Boolean values
      */
     public IterableOfBooleans(final boolean... values) {
-        super(() -> {
-            final Collection<Boolean> iterable =
-                new ArrayList<>(values.length);
-            for (final boolean value: values) {
-                iterable.add(value);
-            }
-            return iterable;
-        });
+        super(() -> new IterableOf<>(new IteratorOfBooleans(values)));
     }
 }
