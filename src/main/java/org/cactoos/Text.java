@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,8 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
-
 /**
  * Text.
  *
@@ -34,8 +32,6 @@ import java.io.IOException;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @see org.cactoos.text.TextOf
  * @since 0.1
  */
@@ -44,17 +40,15 @@ public interface Text {
     /**
      * Convert it to the string.
      * @return The string
-     * @throws IOException If fails
+     * @throws Exception If fails
      */
-    String asString() throws IOException;
+    String asString() throws Exception;
 
     /**
      * Text check for no nulls.
      *
      * <p>There is no thread-safety guarantee.
      *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
      * @since 0.11
      */
     final class NoNulls implements Text {
@@ -72,7 +66,7 @@ public interface Text {
         }
 
         @Override
-        public String asString() throws IOException {
+        public String asString() throws Exception {
             if (this.origin == null) {
                 throw new IllegalArgumentException(
                     "NULL instead of a valid text"

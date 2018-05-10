@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,7 +24,6 @@
 
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 import org.cactoos.bytes.Base64Bytes;
 import org.cactoos.io.BytesOf;
@@ -32,8 +31,6 @@ import org.cactoos.io.BytesOf;
 /**
  * Decodes the origin text using the Base64 encoding scheme.
  *
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
- * @version $Id$
  * @since 0.20.2
  */
 public final class Base64Text implements Text {
@@ -62,7 +59,7 @@ public final class Base64Text implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         return new TextOf(
             new Base64Bytes(
                 new BytesOf(this.origin)

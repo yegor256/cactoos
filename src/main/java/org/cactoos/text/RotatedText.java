@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,13 +23,10 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
  * Rotate (circular shift) a String of shift characters.
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.12
  */
 public final class RotatedText implements Text {
@@ -55,7 +52,7 @@ public final class RotatedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         String text = this.origin.asString();
         final int length = text.length();
         if (length != 0 && this.move != 0 && this.move % length != 0) {

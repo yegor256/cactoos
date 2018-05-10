@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
@@ -38,8 +37,6 @@ import org.cactoos.text.TextOf;
  * it more convenient and get rid of the checked exception you can
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
- * @author Kirill (g4s8.public@gmail.com)
- * @version $Id$
  * @since 0.2
  */
 public final class BoolOf implements Scalar<Boolean> {
@@ -68,7 +65,7 @@ public final class BoolOf implements Scalar<Boolean> {
     }
 
     @Override
-    public Boolean value() throws IOException {
+    public Boolean value() throws Exception {
         return Boolean.valueOf(this.origin.asString());
     }
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 import org.cactoos.Output;
@@ -33,8 +32,6 @@ import org.cactoos.Output;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.29
  */
 @SuppressWarnings("PMD.LoggerIsNotStaticFinal")
@@ -81,7 +78,7 @@ public final class LoggingOutput implements Output {
     }
 
     @Override
-    public OutputStream stream() throws IOException {
+    public OutputStream stream() throws Exception {
         return new LoggingOutputStream(
             this.origin.stream(),
             this.destination,

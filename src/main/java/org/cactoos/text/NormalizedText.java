@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,16 +23,12 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
  * Normalize (replace sequences of whitespace characters by a single space)
  * a Text.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.9
  */
 public final class NormalizedText implements Text {
@@ -59,7 +55,7 @@ public final class NormalizedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         return new ReplacedText(
             new TrimmedText(this.origin),
             "\\s+",

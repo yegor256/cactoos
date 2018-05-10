@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,15 +23,12 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 
 /**
  * Input that only shows the first N bytes of the original input.
  *
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @since 0.31
  */
 public final class HeadInput implements Input {
@@ -57,7 +54,7 @@ public final class HeadInput implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         return new HeadInputStream(this.origin.stream(), this.length);
     }
 }

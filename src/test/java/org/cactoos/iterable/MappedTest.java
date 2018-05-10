@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import java.io.IOException;
 import java.util.Collections;
 import org.cactoos.Text;
 import org.cactoos.list.ListOf;
@@ -35,8 +34,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Mapped}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
@@ -44,7 +41,7 @@ import org.junit.Test;
 public final class MappedTest {
 
     @Test
-    public void transformsList() throws IOException {
+    public void transformsList() throws Exception {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
             new Mapped<String, Text>(

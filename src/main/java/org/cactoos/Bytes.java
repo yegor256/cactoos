@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,15 +23,11 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
-
 /**
  * Bytes.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @see org.cactoos.io.BytesOf
  * @since 0.1
  */
@@ -40,15 +36,13 @@ public interface Bytes {
     /**
      * Convert it to the byte array.
      * @return The byte array
-     * @throws IOException If fails
+     * @throws Exception If fails
      */
-    byte[] asBytes() throws IOException;
+    byte[] asBytes() throws Exception;
 
     /**
      * Bytes check for no nulls.
      *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
      * @since 0.11
      */
     final class NoNulls implements Bytes {
@@ -64,7 +58,7 @@ public interface Bytes {
             this.origin = bytes;
         }
         @Override
-        public byte[] asBytes() throws IOException {
+        public byte[] asBytes() throws Exception {
             if (this.origin == null) {
                 throw new IllegalArgumentException(
                     "NULL instead of a valid bytes"

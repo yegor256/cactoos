@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,14 +23,12 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.cactoos.iterator.IteratorOfInts;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable of integer values.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @since 1.0
  */
 public final class IterableOfInts extends IterableEnvelope<Integer> {
@@ -40,13 +38,8 @@ public final class IterableOfInts extends IterableEnvelope<Integer> {
      * @param values Integer values
      */
     public IterableOfInts(final int... values) {
-        super(() -> {
-            final Collection<Integer> iterable =
-                new ArrayList<>(values.length);
-            for (final int value: values) {
-                iterable.add(value);
-            }
-            return iterable;
-        });
+        super(() -> ()
+            -> new UncheckedScalar<>(() -> new IteratorOfInts(values)).value()
+        );
     }
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,7 +24,6 @@
 
 package org.cactoos.bytes;
 
-import java.io.IOException;
 import java.util.Base64;
 import org.cactoos.io.BytesOf;
 import org.hamcrest.MatcherAssert;
@@ -34,8 +33,6 @@ import org.junit.Test;
 /**
  * Test case for {@link org.cactoos.bytes.Base64Bytes}.
  *
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
- * @version $Id$
  * @since 0.20.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -43,7 +40,7 @@ import org.junit.Test;
 public final class Base64BytesTest {
 
     @Test
-    public void checkDecodeBasicDecoder() throws IOException {
+    public void checkDecodeBasicDecoder() throws Exception {
         MatcherAssert.assertThat(
             "Can't decodes bytes using the Base64 encoding basic scheme.",
             new Base64Bytes(
@@ -58,7 +55,7 @@ public final class Base64BytesTest {
     }
 
     @Test
-    public void checkDecodeUrlDecoder() throws IOException {
+    public void checkDecodeUrlDecoder() throws Exception {
         MatcherAssert.assertThat(
             "Can't decodes bytes using the Base64 encoding url scheme",
             new Base64Bytes(
@@ -73,7 +70,7 @@ public final class Base64BytesTest {
     }
 
     @Test
-    public void checkDecodeMimeDecoder() throws IOException {
+    public void checkDecodeMimeDecoder() throws Exception {
         MatcherAssert.assertThat(
             "Can't decodes bytes using the Base64 encoding mime scheme",
             new Base64Bytes(

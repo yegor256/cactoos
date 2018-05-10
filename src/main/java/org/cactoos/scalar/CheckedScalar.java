@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -33,8 +33,6 @@ import org.cactoos.func.UncheckedFunc;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @param <T> Type of result
  * @param <E> Type of exception
  * @since 0.30
@@ -111,8 +109,7 @@ public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
         ).value();
         final String message = wrapped.getMessage()
             .replaceFirst(String.format("%s: ", exp.getClass().getName()), "");
-        if ((level == 0 || level < Integer.MAX_VALUE)
-            && message.equals(exp.getMessage())) {
+        if (level >= 0 && message.equals(exp.getMessage())) {
             wrapped = (E) exp;
         }
         return wrapped;

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,7 +24,6 @@
 
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.ZipEntry;
@@ -38,8 +37,6 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Test case for {@link Zip}.
  *
- * @author Alexander Menshikov (sharplermc@gmail.com)
- * @version $Id$
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -51,7 +48,7 @@ public final class ZipTest {
     public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void zip() throws IOException {
+    public void zip() throws Exception {
         final Path dir = this.folder.newFolder().toPath();
         dir.resolve("x/y").toFile().mkdirs();
         Files.write(dir.resolve("x/y/test"), "".getBytes());

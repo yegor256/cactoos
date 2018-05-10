@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -29,8 +29,6 @@ import org.cactoos.Func;
 /**
  * Composed function.
  *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
- * @version $Id$
  * @param <X> Type of input.
  * @param <Y> Intermediate type.
  * @param <Z> Type of output.

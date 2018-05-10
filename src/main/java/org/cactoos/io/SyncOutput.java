@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import org.cactoos.Output;
 
@@ -32,8 +31,6 @@ import org.cactoos.Output;
  *
  * <p>Objects of this class are thread safe.</p>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.18
  */
 public final class SyncOutput implements Output {
@@ -67,7 +64,7 @@ public final class SyncOutput implements Output {
     }
 
     @Override
-    public OutputStream stream() throws IOException {
+    public OutputStream stream() throws Exception {
         synchronized (this.lock) {
             return this.origin.stream();
         }

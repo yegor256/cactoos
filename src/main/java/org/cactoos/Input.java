@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -43,9 +43,6 @@ import java.io.InputStream;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @see org.cactoos.io.InputOf
  * @since 0.1
  */
@@ -54,15 +51,13 @@ public interface Input {
     /**
      * Get read access to it.
      * @return InputStream to read from
-     * @throws IOException If something goes wrong
+     * @throws Exception If something goes wrong
      */
-    InputStream stream() throws IOException;
+    InputStream stream() throws Exception;
 
     /**
      * Input check for no nulls.
      *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
      * @since 0.10
      */
     final class NoNulls implements Input {
@@ -78,7 +73,7 @@ public interface Input {
             this.origin = input;
         }
         @Override
-        public InputStream stream() throws IOException {
+        public InputStream stream() throws Exception {
             if (this.origin == null) {
                 throw new IOException("NULL instead of a valid input");
             }

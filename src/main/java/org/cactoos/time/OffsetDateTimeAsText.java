@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,8 +31,6 @@ import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Formatter for {@link java.time.OffsetDateTime} instances.
- * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
- * @version $Id$
  * @since 0.27
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")

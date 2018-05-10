@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -50,8 +50,6 @@ import org.cactoos.io.TeeInput;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @see OutputTo
  * @since 0.1
  */
@@ -60,15 +58,13 @@ public interface Output {
     /**
      * Get write access to it.
      * @return InputStream to read from
-     * @throws IOException If something goes wrong
+     * @throws Exception If something goes wrong
      */
-    OutputStream stream() throws IOException;
+    OutputStream stream() throws Exception;
 
     /**
      * Output check for no nulls.
      *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
      * @since 0.10
      */
     final class NoNulls implements Output {
@@ -84,7 +80,7 @@ public interface Output {
             this.origin = output;
         }
         @Override
-        public OutputStream stream() throws IOException {
+        public OutputStream stream() throws Exception {
             if (this.origin == null) {
                 throw new IOException("NULL instead of a valid output");
             }

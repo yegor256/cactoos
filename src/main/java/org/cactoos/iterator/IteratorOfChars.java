@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -21,54 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Limited iterable.
- *
- * <p>This is a view of an existing iterable containing the given number of its
- * first elements.</p>
+ * Iterator that returns the set of chars.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
- * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
- * @version $Id$
- * @param <T> Element type
- * @since 0.6
+ * @since 0.32
  */
-public final class Limited<T> extends IterableEnvelope<T> {
+public final class IteratorOfChars implements Iterator<Character> {
+    /**
+     * The list of items to iterate.
+     */
+    private final char[] list;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
 
     /**
      * Ctor.
-     * @param lmt The requested number of elements
-     * @param itr The underlying iterable
-     * @since 0.23
+     * @param items Items to iterate
      */
-    @SafeVarargs
-    public Limited(final int lmt, final T... itr) {
-        this(lmt, new IterableOf<>(itr));
+    public IteratorOfChars(final char... items) {
+        this.list = items;
+        this.position = new AtomicInteger(0);
     }
 
-    /**
-     * Ctor.
-     * @param lmt The requested number of elements
-     * @param itr The underlying iterable
-     */
-    public Limited(final int lmt, final Iterator<T> itr) {
-        this(lmt, new IterableOf<>(itr));
+    @Override
+    public boolean hasNext() {
+        return this.position.intValue() < this.list.length;
     }
 
-    /**
-     * Ctor.
-     * @param lmt The requested number of elements
-     * @param itr The underlying iterable
-     */
-    public Limited(final int lmt, final Iterable<T> itr) {
-        super(() -> () -> new org.cactoos.iterator.Limited<>(
-            lmt, itr.iterator()
-        ));
+    @Override
+    public Character next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.list[this.position.getAndIncrement()];
     }
-
 }

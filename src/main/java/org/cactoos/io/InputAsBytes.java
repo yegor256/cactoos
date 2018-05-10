@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
@@ -36,8 +35,6 @@ import org.cactoos.Input;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 final class InputAsBytes implements Bytes {
@@ -72,7 +69,7 @@ final class InputAsBytes implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final InputStream stream = new TeeInput(
                 this.source, new OutputTo(baos)

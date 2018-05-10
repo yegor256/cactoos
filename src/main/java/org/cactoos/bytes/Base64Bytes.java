@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,15 +24,12 @@
 
 package org.cactoos.bytes;
 
-import java.io.IOException;
 import java.util.Base64;
 import org.cactoos.Bytes;
 
 /**
  * Decodes all origin bytes using the Base64 encoding scheme.
  *
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
- * @version $Id$
  * @since 0.20.2
  */
 public final class Base64Bytes implements Bytes {
@@ -67,7 +64,7 @@ public final class Base64Bytes implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         return this.decoder.decode(this.origin.asBytes());
     }
 }

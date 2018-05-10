@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -30,8 +30,6 @@ import java.util.Comparator;
  *
  * <p>There is no thread-safety guarantee.</p>
  *
- * @author Dusan Rychnovsky (dusan.rychnovsky@gmail.com)
- * @version $Id$
  * @param <T> Element type
  * @since 0.7
  */

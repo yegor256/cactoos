@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -30,8 +30,6 @@ import org.junit.Test;
 /**
  * Test case for {@link IterableOfFloats}.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -39,7 +37,7 @@ public final class IterableOfFloatsTest {
 
     @Test
     public void convertsFloatValuesToIterable() {
-        final float[] values = new float[]{1, 2, 3};
+        final float[] values = {1, 2, 3};
         MatcherAssert.assertThat(
             new IterableOfFloats(values),
             Matchers.contains(values[0], values[1], values[2])

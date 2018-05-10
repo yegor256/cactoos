@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Bytes;
 import org.cactoos.Text;
 
@@ -32,8 +31,6 @@ import org.cactoos.Text;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.28
  */
 @SuppressWarnings("PMD.ConstructorShouldDoInitialization")
@@ -61,7 +58,7 @@ public final class HexOf implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final byte[] bts = this.bytes.asBytes();
         final char[] hex = new char[bts.length * 2];
         int chr = -1;

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,8 +36,6 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Test case for {@link ReaderAsBytes}.
  *
- * @author Kirill (g4s8.public@gmail.com)
- * @version $Id$
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -50,7 +47,7 @@ public final class ReaderAsBytesTest {
     public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void readsString() throws IOException {
+    public void readsString() throws Exception {
         final String source = "hello, друг!";
         MatcherAssert.assertThat(
             "Can't read string through a reader",

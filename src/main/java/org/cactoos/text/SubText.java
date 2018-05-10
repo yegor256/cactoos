@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.scalar.UncheckedScalar;
@@ -33,8 +32,6 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.11
  */
 public final class SubText implements Text {
@@ -117,7 +114,7 @@ public final class SubText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         int begin = this.start.value();
         if (begin < 0) {
             begin = 0;

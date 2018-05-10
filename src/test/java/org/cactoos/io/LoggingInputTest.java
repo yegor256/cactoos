@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -34,8 +34,6 @@ import org.junit.Test;
 /**
  * Test case for {@link LoggingInput}.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -146,7 +144,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logSkipFromLargeTextFile() throws IOException {
+    public void logSkipFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),
@@ -162,7 +160,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logAvailableFromLargeTextFile() throws IOException {
+    public void logAvailableFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),
@@ -179,7 +177,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logResetFromLargeTextFile() throws IOException {
+    public void logResetFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         final InputStream input = new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),
@@ -200,7 +198,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logMarkSupportedFromLargeTextFile() throws IOException {
+    public void logMarkSupportedFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),

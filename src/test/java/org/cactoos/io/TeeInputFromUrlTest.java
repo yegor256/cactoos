@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -37,8 +37,6 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
  * {@link java.net.URL} as an input.
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @since 1.0
  * @checkstyle JavadocMethodCheck (125 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (125 lines)

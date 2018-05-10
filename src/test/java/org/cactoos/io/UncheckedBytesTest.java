@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,13 +24,15 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import org.cactoos.Text;
+import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link UncheckedBytes}.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -45,4 +47,17 @@ public final class UncheckedBytesTest {
         ).asBytes();
     }
 
+    @Test
+    public void worksNormallyWhenNoExceptionIsThrown() throws Exception {
+        final Text source = new TextOf("hello, cactoos!");
+        MatcherAssert.assertThat(
+            "Cannot works normally when no exception is thrown",
+            new UncheckedBytes(
+                new BytesOf(source)
+            ).asBytes(),
+            Matchers.equalTo(
+                new BytesOf(source).asBytes()
+            )
+        );
+    }
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,14 +23,11 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
  * Swaps the case of a Text changing upper and title case to lower case,
  * and lower case to upper case.
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.13.3
  */
 public final class SwappedCaseText implements Text {
@@ -49,7 +46,7 @@ public final class SwappedCaseText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final String text = this.origin.asString();
         final char[] chars = text.toCharArray();
         for (int idx = 0; idx < chars.length; idx += 1) {

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -35,8 +35,6 @@ import org.cactoos.text.FormattedText;
 /**
  * Decodes origin {@link Text} using the hexadecimal encoding scheme.
  *
- * @author Alexander Menshikov (sharplermc@gmail.com)
- * @version $Id$
  * @since 0.30
  * @checkstyle MagicNumberCheck (500 lines)
  */
@@ -56,7 +54,7 @@ public final class HexBytes implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         final String hex = this.origin.asString();
         if ((hex.length() & 1) == 1) {
             throw new IOException("Length of hexadecimal text is odd");

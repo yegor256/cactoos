@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,7 +24,6 @@
 
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.Output;
@@ -32,8 +31,6 @@ import org.cactoos.Output;
 /**
  * Output that writes compressed data in the GZIP file format.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.29
  */
 public final class GzipOutput implements Output {
@@ -68,7 +65,7 @@ public final class GzipOutput implements Output {
     }
 
     @Override
-    public OutputStream stream() throws IOException {
+    public OutputStream stream() throws Exception {
         return new GZIPOutputStream(
             this.origin.stream(),
             this.size

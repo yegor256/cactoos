@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -35,8 +35,6 @@ import org.cactoos.func.IoCheckedFunc;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.9
  */
 public final class InputWithFallback implements Input {
@@ -90,7 +88,7 @@ public final class InputWithFallback implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         InputStream stream;
         try {
             stream = this.main.stream();

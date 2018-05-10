@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.HexOf;
 import org.hamcrest.MatcherAssert;
@@ -32,15 +31,13 @@ import org.junit.Test;
 /**
  * Test case for {@link Sha256DigestOf}.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class Sha256DigestOfTest {
 
     @Test
-    public void checksumOfEmptyString() throws IOException {
+    public void checksumOfEmptyString() {
         MatcherAssert.assertThat(
             "Can't calculate the empty string's SHA-256 checksum",
             new HexOf(
@@ -56,7 +53,7 @@ public final class Sha256DigestOfTest {
     }
 
     @Test
-    public void checksumOfString() throws IOException {
+    public void checksumOfString() {
         MatcherAssert.assertThat(
             "Can't calculate the string's SHA-256 checksum",
             new HexOf(
@@ -72,7 +69,7 @@ public final class Sha256DigestOfTest {
     }
 
     @Test
-    public void checksumFromFile() throws IOException {
+    public void checksumFromFile() throws Exception {
         MatcherAssert.assertThat(
             "Can't calculate the file's SHA-256 checksum",
             new HexOf(

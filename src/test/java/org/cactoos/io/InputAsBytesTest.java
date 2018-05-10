@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,11 +23,10 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.iterable.Endless;
-import org.cactoos.iterable.Limited;
+import org.cactoos.iterable.HeadOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -36,8 +35,6 @@ import org.junit.Test;
 /**
  * Test case for {@link InputAsBytes}.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
@@ -45,7 +42,7 @@ import org.junit.Test;
 public final class InputAsBytesTest {
 
     @Test
-    public void readsLargeInMemoryContent() throws IOException {
+    public void readsLargeInMemoryContent() throws Exception {
         final int multiplier = 5_000;
         final String body = "1234567890";
         MatcherAssert.assertThat(
@@ -54,7 +51,7 @@ public final class InputAsBytesTest {
                 new InputOf(
                     String.join(
                         "",
-                        new Limited<>(
+                        new HeadOf<>(
                             multiplier, new Endless<>(body)
                         )
                     )
@@ -66,7 +63,7 @@ public final class InputAsBytesTest {
 
     @Test
     // @checkstyle AnonInnerLengthCheck (100 lines)
-    public void readsLargeContent() throws IOException {
+    public void readsLargeContent() throws Exception {
         final int size = 100_000;
         try (final InputStream slow = new SlowInputStream(size)) {
             MatcherAssert.assertThat(
@@ -80,7 +77,7 @@ public final class InputAsBytesTest {
     }
 
     @Test
-    public void readsInputIntoBytes() throws IOException {
+    public void readsInputIntoBytes() throws Exception {
         MatcherAssert.assertThat(
             "Can't read bytes from Input",
             new String(
@@ -101,7 +98,7 @@ public final class InputAsBytesTest {
     }
 
     @Test
-    public void readsInputIntoBytesWithSmallBuffer() throws IOException {
+    public void readsInputIntoBytesWithSmallBuffer() throws Exception {
         MatcherAssert.assertThat(
             "Can't read bytes from Input with a small reading buffer",
             new String(

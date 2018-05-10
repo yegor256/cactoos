@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.IllegalFormatConversionException;
 import java.util.Locale;
@@ -36,9 +35,6 @@ import org.junit.Test;
 /**
  * Test case for {@link FormattedText}.
  *
- * @author Andriy Kryvtsun (kontiky@gmail.com)
- * @author Ix (ixmanuel@yahoo.com)
- * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -69,7 +65,7 @@ public final class FormattedTextTest {
     }
 
     @Test(expected = UnknownFormatConversionException.class)
-    public void failsForInvalidPattern() throws IOException {
+    public void failsForInvalidPattern() throws Exception {
         new FormattedText(
             new TextOf("%%. Formatted %$"),
             new ListOf<>(1, "invalid")
@@ -89,7 +85,7 @@ public final class FormattedTextTest {
     }
 
     @Test(expected = IllegalFormatConversionException.class)
-    public void ensuresThatFormatterFails() throws IOException {
+    public void ensuresThatFormatterFails() throws Exception {
         new FormattedText(
             new TextOf("Local time: %d"),
             Locale.ROOT,

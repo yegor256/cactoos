@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -25,7 +25,6 @@ package org.cactoos.io;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -37,9 +36,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link TeeInputStream}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Stanislav Myachenkov (s.myachenkov@gmail.com)
- * @version $Id$
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
@@ -47,7 +43,7 @@ import org.junit.Test;
 public final class TeeInputStreamTest {
 
     @Test
-    public void copiesContentByteByByte() throws IOException {
+    public void copiesContentByteByByte() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final String content = "Hello, товарищ!";
         MatcherAssert.assertThat(

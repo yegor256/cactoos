@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,31 +23,28 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
 import org.cactoos.io.DeadOutput;
 import org.junit.Test;
 
 /**
  * Test case for {@link Output.NoNulls}.
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class OutputTest {
 
-    @Test(expected = IOException.class)
-    public void failForNullOutput() throws IOException {
+    @Test(expected = Exception.class)
+    public void failForNullOutput() throws Exception {
         new Output.NoNulls(null).stream();
     }
 
-    @Test(expected = IOException.class)
-    public void failForNullStream() throws IOException {
+    @Test(expected = Exception.class)
+    public void failForNullStream() throws Exception {
         new Output.NoNulls(() -> null).stream();
     }
 
     @Test
-    public void okForNoNullOutput() throws IOException {
+    public void okForNoNullOutput() throws Exception {
         new Output.NoNulls(new DeadOutput()).stream();
     }
 }

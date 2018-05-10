@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -26,7 +26,6 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.URI;
@@ -45,10 +44,6 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.11.8
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
@@ -311,7 +306,7 @@ public final class InputOf implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         return this.origin.stream();
     }
 

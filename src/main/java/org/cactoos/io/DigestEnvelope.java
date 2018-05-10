@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -35,8 +35,6 @@ import org.cactoos.Input;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.29
  * @checkstyle AbstractClassNameCheck (500 lines)
  * @checkstyle DesignForExtensionCheck (500 lines)
@@ -86,7 +84,7 @@ public abstract class DigestEnvelope implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         try (final InputStream stream = this.source.stream()) {
             final MessageDigest msg = MessageDigest.getInstance(this.algorithm);
             final byte[] buf = new byte[this.size];

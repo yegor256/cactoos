@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -52,9 +52,6 @@ import org.cactoos.func.StickyFunc;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Tim Hinkes (timmeey@timmeey.de)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @param <T> Type of result
  * @see StickyFunc
  * @since 0.3

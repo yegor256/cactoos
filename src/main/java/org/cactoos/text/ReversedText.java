@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,14 +23,11 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
  * Reverse the Text.
  *
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.2
  */
 public final class ReversedText implements Text {
@@ -50,7 +47,7 @@ public final class ReversedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         return new StringBuilder(this.origin.asString()).reverse().toString();
     }
 

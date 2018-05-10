@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -50,9 +50,6 @@ import org.cactoos.iterable.Mapped;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @author Eduard Balovnev (bedward70@mail.ru)
- * @version $Id$
  * @param <T> Scalar type
  * @see UncheckedScalar
  * @see IoCheckedScalar

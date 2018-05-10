@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -34,8 +34,6 @@ import org.junit.Test;
 /**
  * Test case for {@link Partitioned}.
  *
- * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
- * @version $Id$
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)

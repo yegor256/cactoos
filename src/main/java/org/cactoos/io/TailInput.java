@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.scalar.MinOf;
@@ -35,8 +34,6 @@ import org.cactoos.text.FormattedText;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Krzysztof Krason (Krzysztof.Krason@gmail.com)
- * @version $Id$
  * @since 0.30
  */
 public final class TailInput implements Input {
@@ -79,7 +76,7 @@ public final class TailInput implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         if (this.max < this.count) {
             throw new IllegalArgumentException(
                 new FormattedText(

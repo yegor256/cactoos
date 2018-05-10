@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -34,8 +34,6 @@ import org.hamcrest.core.IsEqual;
 /**
  * Matcher for the input.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.11
  */
 public final class InputHasContent extends TypeSafeMatcher<Input> {

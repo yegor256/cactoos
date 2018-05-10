@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -39,8 +39,6 @@ import java.io.IOException;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @param <X> Type of input
  * @param <Y> Type of output
  * @see org.cactoos.func.StickyFunc
@@ -61,8 +59,6 @@ public interface Func<X, Y> {
     /**
      * Func check for no nulls.
      *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
      * @param <X> Type of input
      * @param <Y> Type of output
      * @since 0.10

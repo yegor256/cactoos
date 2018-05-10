@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -21,63 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.iterator;
 
-import java.util.Collection;
 import java.util.Iterator;
-import org.cactoos.iterable.IterableOf;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Limited collection.
+ * Iterator that returns the set of floats.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
- * @version $Id$
- * @param <X> Type of source item
- * @since 1.16
+ * @since 0.32
  */
-public final class Limited<X> extends CollectionEnvelope<X> {
+public final class IteratorOfFloats implements Iterator<Float> {
+    /**
+     * The list of items to iterate.
+     */
+    private final float[] items;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
 
     /**
      * Ctor.
-     * @param src Source collection
-     * @param lmt Requested number of elements
-     * @since 0.23
+     * @param itms Items to iterate
      */
-    @SafeVarargs
-    public Limited(final int lmt, final X... src) {
-        this(lmt, new IterableOf<>(src));
+    public IteratorOfFloats(final float... itms) {
+        this.items = itms;
+        this.position = new AtomicInteger(0);
     }
 
-    /**
-     * Ctor.
-     * @param src Source collection
-     * @param lmt Requested number of elements
-     * @since 0.23
-     */
-    public Limited(final int lmt, final Iterator<X> src) {
-        this(lmt, new IterableOf<>(src));
+    @Override
+    public boolean hasNext() {
+        return this.position.intValue() < this.items.length;
     }
 
-    /**
-     * Ctor.
-     * @param src Source collection
-     * @param lmt Requested number of elements
-     */
-    public Limited(final int lmt, final Iterable<X> src) {
-        this(lmt, new CollectionOf<>(src));
+    @Override
+    public Float next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.items[this.position.getAndIncrement()];
     }
-
-    /**
-     * Ctor.
-     * @param src Source collection
-     * @param lmt Requested number of elements
-     */
-    public Limited(final int lmt, final Collection<X> src) {
-        super(() -> new CollectionOf<X>(
-            new org.cactoos.iterable.Limited<>(lmt, src)
-        ));
-    }
-
 }

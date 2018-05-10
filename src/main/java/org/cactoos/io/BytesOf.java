@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -25,7 +25,6 @@ package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.Reader;
@@ -41,10 +40,6 @@ import org.cactoos.Text;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
- * @author Vseslav Sekorin (vssekorin@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.12
  */
 public final class BytesOf implements Bytes {
@@ -342,7 +337,7 @@ public final class BytesOf implements Bytes {
     }
 
     @Override
-    public byte[] asBytes() throws IOException {
+    public byte[] asBytes() throws Exception {
         return this.origin.asBytes();
     }
 }

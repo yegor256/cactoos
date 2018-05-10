@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -36,8 +35,6 @@ import org.cactoos.Output;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.16
  */
 public final class TeeOutput implements Output {
@@ -110,7 +107,7 @@ public final class TeeOutput implements Output {
     }
 
     @Override
-    public OutputStream stream() throws IOException {
+    public OutputStream stream() throws Exception {
         return new TeeOutputStream(
             this.target.stream(), this.copy.stream()
         );

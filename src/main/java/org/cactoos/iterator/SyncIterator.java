@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -39,8 +39,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * <p>Objects of this class are thread-safe.</p>
  *
- * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
- * @version $Id$
  * @param <T> The type of the iterator.
  * @since 1.0
  */

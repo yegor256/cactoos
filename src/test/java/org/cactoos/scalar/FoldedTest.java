@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.iterable.Limited;
+import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.RangeOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -31,8 +31,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Folded}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
@@ -45,7 +43,7 @@ public final class FoldedTest {
             "Can't fold elements in iterable",
             new Folded<>(
                 0L, (first, second) -> first + second,
-                new Limited<>(
+                new HeadOf<>(
                     10,
                     new RangeOf<>(0L, Long.MAX_VALUE, value -> ++value)
                 )

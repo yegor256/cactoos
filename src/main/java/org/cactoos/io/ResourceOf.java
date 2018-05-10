@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -40,8 +40,6 @@ import org.cactoos.text.TextOf;
  * if you want to load a text file from {@code /com/example/Test.txt},
  * you must provide this name: {@code "com/example/Test.txt"}.</p>
  *
- * @author Kirill (g4s8.public@gmail.com)
- * @version $Id$
  * @see ClassLoader#getResource(String)
  * @since 0.1
  */
@@ -188,7 +186,7 @@ public final class ResourceOf implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         InputStream input = this.loader.getResourceAsStream(
             this.path.asString()
         );

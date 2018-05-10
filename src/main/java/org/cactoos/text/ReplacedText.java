@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -36,8 +36,6 @@ import org.cactoos.scalar.IoCheckedScalar;
 /**
  * Replace the Text.
  *
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.2
  */
 public final class ReplacedText implements Text {
@@ -109,7 +107,7 @@ public final class ReplacedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final StringBuffer buffer = new StringBuffer();
         final Matcher matcher = new IoCheckedScalar<>(this.regex)
             .value()

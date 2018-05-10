@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -25,7 +25,6 @@
 package org.cactoos.io;
 
 import java.io.EOFException;
-import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -34,15 +33,13 @@ import org.junit.Test;
 
 /**
  * Test case for {@link org.cactoos.io.GzipInput}.
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class GzipInputTest {
 
     @Test
-    public void readFromGzipInput() throws IOException {
+    public void readFromGzipInput() throws Exception {
         final byte[] bytes = {
             (byte) GZIPInputStream.GZIP_MAGIC,
             // @checkstyle MagicNumberCheck (1 line)

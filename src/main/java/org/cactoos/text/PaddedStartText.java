@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
@@ -31,8 +30,6 @@ import org.cactoos.Text;
  *
  * <p>There is thread safe.
  *
- * @author Vivek Poddar (vivekimsit@gmail.com)
- * @version $Id$
  * @since 0.32
  */
 public final class PaddedStartText implements Text {
@@ -66,7 +63,7 @@ public final class PaddedStartText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final String original = this.origin.asString();
         final int diff = this.length - original.length();
         final StringBuilder builder = new StringBuilder();

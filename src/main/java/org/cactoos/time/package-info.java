@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -25,8 +25,6 @@
 /**
  * Time.
  *
- * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
- * @version $Id$
  * @since 1.0
  */
 package org.cactoos.time;

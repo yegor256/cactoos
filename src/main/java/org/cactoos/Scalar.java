@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -41,8 +41,6 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @param <T> Type of result
  * @see StickyScalar
  * @see UncheckedScalar
@@ -61,8 +59,6 @@ public interface Scalar<T> {
     /**
      * Scalar check for no nulls.
      *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
      * @param <T> Type of result
      * @since 0.11
      */

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,17 +23,13 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.func.SolidFunc;
 
 /**
  * Cached and synchronized version of a Scalar.
  *
  * <p>Objects of this class are thread safe.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @param <T> Type of result
  * @see StickyScalar
  * @see SyncScalar
@@ -42,22 +38,38 @@ import org.cactoos.func.SolidFunc;
 public final class SolidScalar<T> implements Scalar<T> {
 
     /**
-     * Func.
+     * Origin.
      */
-    private final Func<Boolean, T> func;
+    private final Scalar<T> origin;
+
+    /**
+     * Cache.
+     */
+    private volatile T cache;
+
+    /**
+     * Sync lock.
+     */
+    private final Object lock;
 
     /**
      * Ctor.
-     * @param scalar The Scalar to cache
+     * @param origin The Scalar to cache and sync
      */
-    public SolidScalar(final Scalar<T> scalar) {
-        this.func = new SolidFunc<>(
-            input -> scalar.value()
-        );
+    public SolidScalar(final Scalar<T> origin) {
+        this.origin = origin;
+        this.lock = new Object();
     }
 
     @Override
     public T value() throws Exception {
-        return this.func.apply(true);
+        if (this.cache == null) {
+            synchronized (this.lock) {
+                if (this.cache == null) {
+                    this.cache = this.origin.value();
+                }
+            }
+        }
+        return this.cache;
     }
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,7 +24,6 @@
 package org.cactoos.text;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -47,8 +46,6 @@ import org.cactoos.scalar.IoCheckedScalar;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
- * @version $Id$
  * @since 0.12
  */
 public final class TextOf implements Text {
@@ -361,7 +358,7 @@ public final class TextOf implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         return new IoCheckedScalar<>(this.origin).value();
     }
 

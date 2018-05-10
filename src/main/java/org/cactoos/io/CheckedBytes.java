@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import org.cactoos.Bytes;
 import org.cactoos.Func;
 import org.cactoos.scalar.CheckedScalar;
@@ -31,12 +30,10 @@ import org.cactoos.scalar.CheckedScalar;
 /**
  * Bytes that throws exception of specified type.
  *
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @param <E> Exception's type.
  * @since 0.31
  */
-public final class CheckedBytes<E extends IOException> implements Bytes {
+public final class CheckedBytes<E extends Exception> implements Bytes {
 
     /**
      * Original bytes.

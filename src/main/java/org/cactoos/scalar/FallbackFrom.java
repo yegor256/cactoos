@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,8 +31,6 @@ import org.cactoos.iterable.Mapped;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @param <T> Type of result
  * @since 0.31
  */
@@ -68,8 +66,8 @@ public final class FallbackFrom<T> implements Func<Throwable, T> {
     /**
      * Calculate level of support of the given exception type.
      * @param target Exception type
-     * @return Level of support between 0 (that is fully support) and
-     *  {@link Integer#MAX_VALUE} (that is not supported)
+     * @return Level of support: greater or equals to 0 if the target
+     *  is supported and {@link Integer#MIN_VALUE} otherwise
      * @see InheritanceLevel
      */
     public Integer support(final Class<? extends Throwable> target) {

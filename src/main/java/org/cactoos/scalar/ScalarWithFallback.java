@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -36,8 +36,6 @@ import org.cactoos.map.MapOf;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @param <T> Type of result
  * @since 0.31
  */
@@ -104,7 +102,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
                     entry -> new Not(
                         new Equals<>(
                             entry::getValue,
-                            () -> Integer.MAX_VALUE
+                            () -> Integer.MIN_VALUE
                         )
                     ).value(),
                     new MapOf<>(

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
@@ -36,8 +35,6 @@ import org.cactoos.list.ListOf;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 public final class FormattedText implements Text {
@@ -160,7 +157,7 @@ public final class FormattedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         final StringBuilder out = new StringBuilder(0);
         try (final Formatter fmt = new Formatter(out, this.locale)) {
             fmt.format(

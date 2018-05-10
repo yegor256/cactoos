@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,14 +23,11 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.cactoos.iterator.IteratorOfChars;
 
 /**
  * Iterable of characters.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @since 1.0
  */
 public final class IterableOfChars extends IterableEnvelope<Character> {
@@ -40,13 +37,6 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
      * @param chars Characters
      */
     public IterableOfChars(final char... chars) {
-        super(() -> {
-            final Collection<Character> iterable =
-                new ArrayList<>(chars.length);
-            for (final char chr: chars) {
-                iterable.add(chr);
-            }
-            return iterable;
-        });
+        super(() -> new IterableOf<>(new IteratorOfChars(chars)));
     }
 }

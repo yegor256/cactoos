@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -27,8 +27,6 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * The formatter.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.27
  */
 final class Iso {

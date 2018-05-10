@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -39,8 +39,6 @@ import org.cactoos.iterable.IterableOf;
  * <p>There is no thread-safety guarantee.
  * <p>Note this class is for internal usage only
  *
- * @author Nikita Salomatin (nsalomatin@hotmail.com)
- * @version $Id$
  * @since 0.30
  */
 final class SumOfScalar implements Scalar<SumOf> {

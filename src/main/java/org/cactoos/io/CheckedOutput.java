@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import org.cactoos.Func;
 import org.cactoos.Output;
@@ -32,12 +31,10 @@ import org.cactoos.scalar.CheckedScalar;
 /**
  * Output that throws exception of specified type.
  *
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @param <E> Exception's type.
  * @since 0.31
  */
-public final class CheckedOutput<E extends IOException> implements Output {
+public final class CheckedOutput<E extends Exception> implements Output {
 
     /**
      * Original output.

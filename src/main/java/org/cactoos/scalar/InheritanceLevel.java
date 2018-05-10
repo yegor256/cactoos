@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -28,23 +28,20 @@ import org.cactoos.Scalar;
 /**
  * Calculates number of superclasses between base and derived class.
  *
- *  <p>This class is thread safe.
+ * <p>This class is thread safe.
  *
- *  <p>
- *  Result interpretation:
+ * <p>Result interpretation:
+ * <ul>
+ *     <li>{@link Integer#MIN_VALUE} -&gt; classes are not related.
+ *     (ex. matching FileNotFoundException with RuntimeException);
+ *     <li>0 -&gt; classes are identical. (ex. matching IOException with
+ *     IOException);
+ *     <li>1 -&gt; single level inheritance. (ex. matching
+ *     FileNotFoundException with IOException);
+ *     <li>2 -&gt; two inheritance levels. (ex. matching
+ *     FileNotFoundException with Exception).
+ * </ul>
  *
- *   0 -> classes are identical. (ex. matching IOException with IOException)
- *   1 -> single level inheritance. (ex. matching FileNotFoundException with
- *        IOException)
- *   2 -> two inheritance levels. (ex. matching FileNotFoundException with
- *        Exception)
- *   ...
- *   Integer.MAX_VALUE -> classes are not related.
- *      (ex. matching FileNotFoundException with RuntimeException)
- *  </p>
- *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @since 0.30
  */
 public final class InheritanceLevel implements Scalar<Integer> {
@@ -85,7 +82,7 @@ public final class InheritanceLevel implements Scalar<Integer> {
      * @return Integer Level
      */
     private int calculateLevel() {
-        int level = Integer.MAX_VALUE;
+        int level = Integer.MIN_VALUE;
         Class<?> sclass = this.derived.getSuperclass();
         int idx = 0;
         while (!sclass.equals(Object.class)) {

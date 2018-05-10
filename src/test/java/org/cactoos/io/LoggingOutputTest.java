@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -38,8 +37,6 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Test case for {@link LoggingOutput}.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
@@ -58,7 +55,7 @@ public final class LoggingOutputTest {
     public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void logWriteZero() throws IOException {
+    public void logWriteZero() {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new TeeInput(
@@ -78,7 +75,7 @@ public final class LoggingOutputTest {
     }
 
     @Test
-    public void logWriteOneByte() throws IOException {
+    public void logWriteOneByte() throws Exception {
         final Logger logger = new FakeLogger();
         try (
             final OutputStream out = new LoggingOutput(
@@ -97,7 +94,7 @@ public final class LoggingOutputTest {
     }
 
     @Test
-    public void logWriteText() throws IOException {
+    public void logWriteText() throws Exception {
         final Logger logger = new FakeLogger();
         try (
             final OutputStream out = new LoggingOutput(

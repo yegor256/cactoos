@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -41,8 +40,6 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Sergey Sharov (zefick@mail.ru)
- * @version $Id$
  * @since 0.27
  */
 public final class ComparableText implements Text, Comparable<Text> {
@@ -68,7 +65,7 @@ public final class ComparableText implements Text, Comparable<Text> {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         return this.text.asString();
     }
 

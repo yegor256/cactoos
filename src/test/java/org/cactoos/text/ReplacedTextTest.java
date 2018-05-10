@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -34,8 +33,6 @@ import org.junit.Test;
 /**
  * Test case for {@link ReplacedText}.
  *
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -146,7 +143,7 @@ public final class ReplacedTextTest {
     }
 
     @Test(expected = PatternSyntaxException.class)
-    public void invalidRegex() throws IOException {
+    public void invalidRegex() throws Exception {
         new ReplacedText(
             new TextOf("text"),
             "invalid_regex{0,",

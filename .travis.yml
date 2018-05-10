@@ -5,11 +5,11 @@ cache:
     - $HOME/.m2
 script:
   - set -e
+  - pdd --file=/dev/null
   - mvn clean site -Psite --errors --batch-mode
   - mvn clean install -Pqulice --errors --batch-mode
 install:
   - gem install pdd
-  - gem install est
   - gem install xcop
 env:
   global:

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 
@@ -32,8 +31,6 @@ import org.cactoos.Text;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Andriy Kryvtsun (kontiky@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 public final class IsBlank implements Scalar<Boolean> {
@@ -52,7 +49,7 @@ public final class IsBlank implements Scalar<Boolean> {
     }
 
     @Override
-    public Boolean value() throws IOException {
+    public Boolean value() throws Exception {
         return this.origin.asString().chars()
             .allMatch(Character::isWhitespace);
     }

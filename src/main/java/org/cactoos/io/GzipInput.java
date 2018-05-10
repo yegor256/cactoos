@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -24,7 +24,6 @@
 
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 import org.cactoos.Input;
@@ -32,8 +31,6 @@ import org.cactoos.Input;
 /**
  * Input that reads compressed data from the GZIP file format.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.29
  */
 public final class GzipInput implements Input {
@@ -68,7 +65,7 @@ public final class GzipInput implements Input {
     }
 
     @Override
-    public InputStream stream() throws IOException {
+    public InputStream stream() throws Exception {
         return new GZIPInputStream(
             this.origin.stream(),
             this.size

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,8 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import org.cactoos.Bytes;
 import org.cactoos.Func;
 import org.cactoos.func.UncheckedFunc;
@@ -34,8 +32,6 @@ import org.cactoos.func.UncheckedFunc;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.3
  */
 public final class UncheckedBytes implements Bytes {
@@ -48,17 +44,18 @@ public final class UncheckedBytes implements Bytes {
     /**
      * Fallback.
      */
-    private final Func<IOException, byte[]> fallback;
+    private final Func<Exception, byte[]> fallback;
 
     /**
      * Ctor.
      * @param bts Encapsulated bytes
      */
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     public UncheckedBytes(final Bytes bts) {
         this(
             bts,
             error -> {
-                throw new UncheckedIOException(error);
+                throw new RuntimeException(error);
             }
         );
     }
@@ -70,17 +67,19 @@ public final class UncheckedBytes implements Bytes {
      * @since 0.5
      */
     public UncheckedBytes(final Bytes bts,
-        final Func<IOException, byte[]> fbk) {
+        final Func<Exception, byte[]> fbk) {
         this.bytes = bts;
         this.fallback = fbk;
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public byte[] asBytes() {
         byte[] data;
         try {
             data = this.bytes.asBytes();
-        } catch (final IOException ex) {
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
             data = new UncheckedFunc<>(this.fallback).apply(ex);
         }
         return data;

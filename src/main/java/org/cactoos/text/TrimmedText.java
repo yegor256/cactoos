@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
@@ -31,8 +30,6 @@ import org.cactoos.Text;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Vseslav Sekorin (vssekorin@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 public final class TrimmedText implements Text {
@@ -51,7 +48,7 @@ public final class TrimmedText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         return this.origin.asString().trim();
     }
 

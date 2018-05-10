@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -35,8 +35,6 @@ import org.cactoos.text.FormattedText;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ilia Rogozhin (ilia.rogozhin@gmail.com)
- * @version $Id$
  * @param <T> Scalar type
  * @since 0.7
  */

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Text;
 
 /**
@@ -31,8 +30,6 @@ import org.cactoos.Text;
  *
  * <p>Objects of this class are thread safe.</p>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.18
  */
 public final class SyncText implements Text {
@@ -66,7 +63,7 @@ public final class SyncText implements Text {
     }
 
     @Override
-    public String asString() throws IOException {
+    public String asString() throws Exception {
         synchronized (this.lock) {
             return this.origin.asString();
         }
