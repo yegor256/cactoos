@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -43,9 +43,6 @@ import java.io.InputStream;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @see org.cactoos.io.InputOf
  * @since 0.1
  */
@@ -61,8 +58,6 @@ public interface Input {
     /**
      * Input check for no nulls.
      *
-     * @author Fabricio Cabral (fabriciofx@gmail.com)
-     * @version $Id$
      * @since 0.10
      */
     final class NoNulls implements Input {

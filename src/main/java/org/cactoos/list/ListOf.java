@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -41,10 +41,6 @@ import org.cactoos.iterable.IterableOf;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Alexey Semenyuk (semenyukalexey88@gmail.com)
- * @author Kirill (g4s8.public@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @param <T> List type
  * @see StickyList
  * @since 0.1

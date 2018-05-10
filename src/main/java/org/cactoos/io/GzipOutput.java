@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -32,8 +32,6 @@ import org.cactoos.Output;
 /**
  * Output that writes compressed data in the GZIP file format.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @version $Id$
  * @since 0.29
  */
 public final class GzipOutput implements Output {

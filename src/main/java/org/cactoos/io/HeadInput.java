@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -30,8 +30,6 @@ import org.cactoos.Input;
 /**
  * Input that only shows the first N bytes of the original input.
  *
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @since 0.31
  */
 public final class HeadInput implements Input {

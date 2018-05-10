@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -30,8 +30,6 @@ import org.cactoos.BiFunc;
  *
  * <p>Objects of this class are thread safe.</p>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @param <X> Type of first input
  * @param <Y> Type of second input
  * @param <Z> Type of output

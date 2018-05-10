@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -32,8 +32,6 @@ import java.util.NoSuchElementException;
 /**
  * Iterator implementation for {@link Iterator} partitioning.
  *
- * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
- * @version $Id$
  * @param <T> Partitions value type
  * @since 0.29
  */

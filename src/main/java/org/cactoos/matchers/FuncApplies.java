@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -33,8 +33,6 @@ import org.hamcrest.core.IsEqual;
 /**
  * Matcher for the value.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.2

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,8 +31,6 @@ import org.cactoos.Text;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.12
  */
 public final class TrimmedRightText implements Text {

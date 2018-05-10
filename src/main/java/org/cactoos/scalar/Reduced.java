@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -68,9 +68,6 @@ import org.cactoos.iterable.Mapped;
  * it more convenient and get rid of the checked exception you can
  * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
  *
- * @author Alexander Dyadyushenko (gookven@gmail.com)
- * @author Eduard Balovnev (bedward70@mail.ru)
- * @version $Id$
  * @param <T> Scalar type
  * @since 0.30
  */

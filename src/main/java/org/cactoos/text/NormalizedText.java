@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -30,9 +30,6 @@ import org.cactoos.Text;
  * Normalize (replace sequences of whitespace characters by a single space)
  * a Text.
  *
- * @author Fabricio Cabral (fabriciofx@gmail.com)
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.9
  */
 public final class NormalizedText implements Text {

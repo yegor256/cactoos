@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,8 +31,6 @@ import org.cactoos.iterable.Mapped;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @param <T> Type of result
  * @since 0.31
  */

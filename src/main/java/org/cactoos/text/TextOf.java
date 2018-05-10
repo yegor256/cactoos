@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -47,8 +47,6 @@ import org.cactoos.scalar.IoCheckedScalar;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Ix (ixmanuel@yahoo.com)
- * @version $Id$
  * @since 0.12
  */
 public final class TextOf implements Text {

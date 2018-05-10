@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -25,8 +25,6 @@
 /**
  * Matcher's tests.
  *
- * @author Nikita Salomatin (nsalomatin@hotmail.com)
- * @version $Id$
  * @since 0.1
  */
 package org.cactoos.matchers;

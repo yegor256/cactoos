@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -30,8 +30,6 @@ import org.junit.Test;
 
 /**
  * Test case for {@link IoCheckedBiFunc}.
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */

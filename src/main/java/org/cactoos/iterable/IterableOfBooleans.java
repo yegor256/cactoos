@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -28,8 +28,6 @@ import org.cactoos.iterator.IteratorOfBooleans;
 /**
  * Iterable of boolean values.
  *
- * @author Vedran Vatavuk (123vgv@gmail.com)
- * @version $Id$
  * @since 1.0
  */
 public final class IterableOfBooleans extends IterableEnvelope<Boolean> {

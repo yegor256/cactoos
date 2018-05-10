@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,8 +31,6 @@ import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Parser for {@link ZonedDateTime} instances.
- * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
- * @version $Id$
  * @since 0.27
  */
 public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {

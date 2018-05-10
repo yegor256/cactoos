@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -32,8 +32,6 @@ import org.junit.Test;
 
 /**
  * Tests for {@link TextEnvelope}.
- * @author Paulo Lobo (pauloeduardolobo@gmail.com)
- * @version $Id$
  * @since 0.32
  */
 public final class TextEnvelopeTest {

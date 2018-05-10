@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -31,8 +31,6 @@ import org.hamcrest.TypeSafeMatcher;
 
 /**
  * Matcher for collection.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @param <K> Type of key
  * @param <V> Type of value
  * @since 0.24

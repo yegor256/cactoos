@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -36,8 +36,6 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Roman Proshin (roman@proshin.org)
- * @version $Id$
  * @since 0.32
  */
 public final class RandomText implements Text {

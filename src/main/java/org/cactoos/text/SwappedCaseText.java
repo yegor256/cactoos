@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -29,8 +29,6 @@ import org.cactoos.Text;
 /**
  * Swaps the case of a Text changing upper and title case to lower case,
  * and lower case to upper case.
- * @author Mehmet Yildirim (memoyil@gmail.com)
- * @version $Id$
  * @since 0.13.3
  */
 public final class SwappedCaseText implements Text {

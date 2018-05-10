@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -36,9 +36,6 @@ import org.cactoos.Bytes;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @author Ix (ixmanuel@yahoo.com)
- * @version $Id$
  * @since 0.12
  */
 final class ReaderAsBytes implements Bytes {

@@ -1,4 +1,4 @@
-/**
+/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2017-2018 Yegor Bugayenko
@@ -30,8 +30,6 @@ import org.cactoos.func.UncheckedFunc;
 
 /**
  * Iterable implementation to model range functionality.
- * @author Sven Diedrichsen (sven.diedrichsen@gmail.com)
- * @version $Id$
  * @param <T> Range value type
  * @since 1.0
  */

@@ -82,11 +82,6 @@ The MIT License (MIT)
     </site>
   </distributionManagement>
   <dependencies>
-    <!--
-      @todo #720:30min When https://github.com/teamed/qulice/issues/877 is
-       fixed upgrade qulice dependency to the one that contains the fix
-       and fix any issues in the project that result from this upgrade.
-    -->
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
@@ -138,7 +133,7 @@ The MIT License (MIT)
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.17.1</version>
+            <version>0.17.3</version>
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
