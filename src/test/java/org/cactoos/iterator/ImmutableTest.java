@@ -26,6 +26,10 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -47,21 +51,13 @@ public final class ImmutableTest {
         immutable.remove();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
-    public void decoratesNext() {
-        final Iterator<String> iter = Mockito.mock(Iterator.class);
-        final Iterator<String> immutable = new Immutable<>(iter);
-        immutable.next();
-        Mockito.verify(iter).next();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
-    public void decoratesHasNext() {
-        final Iterator<String> iter = Mockito.mock(Iterator.class);
-        final Iterator<String> immutable = new Immutable<>(iter);
-        immutable.hasNext();
-        Mockito.verify(iter).hasNext();
+    public void decoratesNextAndHasNext() {
+        final int value = new Random().nextInt();
+        final Iterator<Integer> iter = new IteratorOf<>(value);
+        final Iterator<Integer> immutable = new Immutable<>(iter);
+        MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(true));
+        MatcherAssert.assertThat(immutable.next(), new IsEqual<>(value));
+        MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(false));
     }
 }
