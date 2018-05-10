@@ -33,7 +33,7 @@ import org.junit.Test;
 /**
  * Test case for {@link ListEnvelope}.
  *
- * @since 0.31
+ * @since 0.32
  * @todo #814:30min Implement immutable ListIterator that should
  *  be returned from ListEnvelope when calling `listIterator` method. After
  *  it is implemented remove `@Ignore` from the tests below - all of them
