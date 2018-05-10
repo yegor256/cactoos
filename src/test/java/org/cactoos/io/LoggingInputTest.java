@@ -219,13 +219,14 @@ public final class LoggingInputTest {
     @Test
     public void logIntoCreatedLogger() {
         final FakeHandler handler = new FakeHandler();
-        final String logger = "my source";
-        Logger.getLogger(logger).addHandler(handler);
+        final String src = "my source";
+        final Logger logger = Logger.getLogger(src);
+        logger.addHandler(handler);
         try {
             new LengthOf(
                 new LoggingInput(
                     new InputOf("Hi there"),
-                    logger
+                    src
                 )
             ).intValue();
             MatcherAssert.assertThat(
@@ -234,7 +235,7 @@ public final class LoggingInputTest {
                 Matchers.containsString("Read 8 byte(s)")
             );
         } finally {
-            Logger.getGlobal().removeHandler(handler);
+            logger.removeHandler(handler);
         }
     }
 
