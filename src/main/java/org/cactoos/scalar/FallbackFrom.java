@@ -24,6 +24,7 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Func;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 
 /**
@@ -45,6 +46,17 @@ public final class FallbackFrom<T> implements Func<Throwable, T> {
      * Function that converts exceptions to the required type.
      */
     private final Func<Throwable, T> func;
+
+    /**
+     * Ctor.
+     * @param exp Supported exception type
+     * @param func Function that converts the given exception into required one
+     */
+    @SuppressWarnings("unchecked")
+    public FallbackFrom(final Class<? extends Throwable> exp,
+        final Func<Throwable, T> func) {
+        this(new IterableOf<>(exp), func);
+    }
 
     /**
      * Ctor.

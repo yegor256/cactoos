@@ -24,6 +24,9 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.FallbackFrom;
+import org.cactoos.scalar.ScalarWithFallback;
 
 /**
  * Func with a fallback plan.
@@ -33,11 +36,6 @@ import org.cactoos.Func;
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.2
- * @todo #759:30min Refactor FuncWithFallback applying a new
- *  ScalarWithFallback: change implementation of this class so that it uses
- *  ScalarWithFallback as base implementation. Refactored class should allow
- *  the user to specify multiple fallbacks for different types of exceptions
- *  (similar to ScalarWithFallback).
  */
 public final class FuncWithFallback<X, Y> implements Func<X, Y> {
 
@@ -47,9 +45,9 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
     private final Func<X, Y> func;
 
     /**
-     * The fallback.
+     * The fallbacks.
      */
-    private final Func<Throwable, Y> fallback;
+    private final Iterable<FallbackFrom<Y>> fallbacks;
 
     /**
      * The follow up.
@@ -61,9 +59,9 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
      * @param fnc The func
      * @param fbk The fallback
      */
-    public FuncWithFallback(final Func<X, Y> fnc,
-        final Func<Throwable, Y> fbk) {
-        this(fnc, fbk, input -> input);
+    @SuppressWarnings("unchecked")
+    public FuncWithFallback(final Func<X, Y> fnc, final FallbackFrom<Y> fbk) {
+        this(fnc, new IterableOf<>(fbk));
     }
 
     /**
@@ -72,27 +70,42 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
      * @param fbk The fallback
      * @param flw The follow up func
      */
+    @SuppressWarnings("unchecked")
+    public FuncWithFallback(final Func<X, Y> fnc, final FallbackFrom<Y> fbk,
+        final Func<Y, Y> flw) {
+        this(fnc, new IterableOf<>(fbk), flw);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbks The fallbacks
+     */
     public FuncWithFallback(final Func<X, Y> fnc,
-        final Func<Throwable, Y> fbk, final Func<Y, Y> flw) {
+        final Iterable<FallbackFrom<Y>> fbks) {
+        this(fnc, fbks, input -> input);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The func
+     * @param fbks The fallbacks
+     * @param flw The follow up func
+     */
+    public FuncWithFallback(final Func<X, Y> fnc,
+        final Iterable<FallbackFrom<Y>> fbks, final Func<Y, Y> flw) {
         this.func = fnc;
-        this.fallback = fbk;
+        this.fallbacks = fbks;
         this.follow = flw;
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
     public Y apply(final X input) throws Exception {
-        Y result;
-        try {
-            result = this.func.apply(input);
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            result = this.fallback.apply(ex);
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Throwable ex) {
-            result = this.fallback.apply(ex);
-        }
-        return this.follow.apply(result);
+        return new ScalarWithFallback<>(
+            () -> this.func.apply(input),
+            this.fallbacks,
+            this.follow
+        ).value();
     }
 
 }
