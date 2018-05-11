@@ -26,6 +26,7 @@ package org.cactoos.collection;
 import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.Scalar;
+import org.cactoos.iterator.Immutable;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -70,7 +71,7 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
 
     @Override
     public final Iterator<X> iterator() {
-        return this.col.value().iterator();
+        return new Immutable<>(this.col.value().iterator());
     }
 
     @Override
