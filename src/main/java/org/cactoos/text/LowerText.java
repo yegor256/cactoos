@@ -24,6 +24,7 @@
 package org.cactoos.text;
 
 import java.util.Locale;
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -33,17 +34,7 @@ import org.cactoos.Text;
  *
  * @since 0.1
  */
-public final class LowerText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * The locale.
-     */
-    private final Locale locale;
+public final class LowerText extends TextEnvelope {
 
     /**
      * Ctor.
@@ -59,13 +50,7 @@ public final class LowerText implements Text {
      * @param lang Locale
      */
     public LowerText(final Text text, final Locale lang) {
-        this.origin = text;
-        this.locale = lang;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        return this.origin.asString().toLowerCase(this.locale);
+        super((Scalar<String>) () -> text.asString().toLowerCase(lang));
     }
 
 }
