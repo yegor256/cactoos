@@ -65,13 +65,9 @@ public final class SyncFuncTest {
             "Sync func with proc can't work well in multiple threads",
             func -> func.apply(1),
             new RunsInThreads<>(
-                new FuncOf<>(
+                new SyncFunc<Integer, Boolean>(
                     new ProcOf<>(
-                        new SyncFunc<Integer, Boolean>(
-                            new ProcOf<>(
-                                input -> counter[0] = counter[0] + input
-                            )
-                        )
+                        input -> counter[0] = counter[0] + input
                     ),
                     true
                 ),
@@ -109,12 +105,8 @@ public final class SyncFuncTest {
             "Sync func with runnable can't work well in multiple threads",
             func -> func.apply(1),
             new RunsInThreads<>(
-                new FuncOf<>(
-                    new ProcOf<>(
-                        new SyncFunc<Integer, Boolean>(
-                            () -> counter[0] = counter[0] + 1
-                        )
-                    ),
+                new SyncFunc<Integer, Boolean>(
+                    () -> counter[0] = counter[0] + 1,
                     true
                 ),
                 threads

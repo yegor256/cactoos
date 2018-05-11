@@ -60,26 +60,14 @@ public final class BiFuncOfTest {
     }
 
     @Test
-    public void convertsProcWithNoResultIntoBiFunc() throws Exception {
-        final AtomicBoolean done = new AtomicBoolean(false);
-        MatcherAssert.assertThat(
-            new BiFuncOf<String, Integer, Boolean>(
-                input -> {
-                    done.set(true);
-                }
-            ).apply("hello you", 1),
-            Matchers.nullValue()
-        );
-    }
-
-    @Test
     public void convertsRunnableIntoBiFunc() throws Exception {
         final AtomicBoolean done = new AtomicBoolean(false);
         MatcherAssert.assertThat(
             new BiFuncOf<String, Integer, Boolean>(
-                () -> done.set(true)
+                () -> done.set(true),
+                true
             ).apply("hello, world", 1),
-            Matchers.nullValue()
+            Matchers.equalTo(true)
         );
     }
 

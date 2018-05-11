@@ -50,7 +50,8 @@ public final class CallableOfTest {
     public void convertsRunnableIntoCallable() throws Exception {
         final AtomicBoolean flag = new AtomicBoolean(false);
         new CallableOf<>(
-            () -> flag.set(true)
+            () -> flag.set(true),
+            true
         ).call();
         MatcherAssert.assertThat(
             flag.get(),
@@ -63,18 +64,23 @@ public final class CallableOfTest {
         new CallableOf<>(
             () -> {
                 throw new IllegalStateException();
-            }
+            },
+        true
         ).call();
     }
 
     @Test
     public void convertsProcIntoCallable() throws Exception {
         final AtomicBoolean flag = new AtomicBoolean(false);
-        new CallableOf<>(
-            unused -> {
-                flag.set(true);
-            }
-        ).call();
+        MatcherAssert.assertThat(
+            new CallableOf<>(
+                unused -> {
+                    flag.set(true);
+                },
+                true
+            ).call(),
+            Matchers.equalTo(true)
+        );
         MatcherAssert.assertThat(
             flag.get(),
             Matchers.is(true)

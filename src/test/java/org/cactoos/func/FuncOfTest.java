@@ -62,17 +62,6 @@ public final class FuncOfTest {
     }
 
     @Test
-    public void convertsRunnableIntoFunc() throws Exception {
-        final AtomicBoolean done = new AtomicBoolean(false);
-        MatcherAssert.assertThat(
-            new FuncOf<String, Boolean>(
-                () -> done.set(true)
-            ).apply("hello, world"),
-            Matchers.nullValue()
-        );
-    }
-
-    @Test
     public void convertsValueIntoFunc() throws Exception {
         MatcherAssert.assertThat(
             new FuncOf<String, Boolean>(

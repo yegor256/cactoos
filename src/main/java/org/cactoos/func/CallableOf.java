@@ -59,19 +59,21 @@ public final class CallableOf<X, T> implements Callable<T> {
     /**
      * Ctor.
      * @param runnable Encapsulated proc
-     * @since 0.12
+     * @param result Result to return
+     * @since 0.32
      */
-    public CallableOf(final Runnable runnable) {
-        this(new FuncOf<>(runnable));
+    public CallableOf(final Runnable runnable, final T result) {
+        this(new FuncOf<>(runnable, result));
     }
 
     /**
      * Ctor.
      * @param proc Encapsulated proc
-     * @since 0.12
+     * @param result Result to return
+     * @since 0.32
      */
-    public CallableOf(final Proc<X> proc) {
-        this(new FuncOf<>(proc));
+    public CallableOf(final Proc<X> proc, final T result) {
+        this(new FuncOf<>(proc, result));
     }
 
     /**

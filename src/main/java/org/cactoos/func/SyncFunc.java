@@ -51,10 +51,11 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
     /**
      * Ctor.
      * @param runnable Func original
-     * @since 0.12
+     * @param result Result to return
+     * @since 0.32
      */
-    public SyncFunc(final Runnable runnable) {
-        this(new FuncOf<>(runnable));
+    public SyncFunc(final Runnable runnable, final Y result) {
+        this(new FuncOf<>(runnable, result));
     }
 
     /**
@@ -69,10 +70,11 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
     /**
      * Ctor.
      * @param proc Func original
-     * @since 0.12
+     * @param result Result to return
+     * @since 0.32
      */
-    public SyncFunc(final Proc<X> proc) {
-        this(new FuncOf<>(proc));
+    public SyncFunc(final Proc<X> proc, final Y result) {
+        this(new FuncOf<>(proc, result));
     }
 
     /**

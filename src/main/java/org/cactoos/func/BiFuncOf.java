@@ -74,14 +74,6 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
     /**
      * Ctor.
      * @param proc The proc
-     */
-    public BiFuncOf(final Proc<X> proc) {
-        this(proc, null);
-    }
-
-    /**
-     * Ctor.
-     * @param proc The proc
      * @param result Result to return
      */
     public BiFuncOf(final Proc<X> proc, final Z result) {
@@ -118,9 +110,11 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
     /**
      * Ctor.
      * @param runnable The runnable
+     * @param result Result to return
+     * @since 0.32
      */
-    public BiFuncOf(final Runnable runnable) {
-        this(new CallableOf<>(runnable));
+    public BiFuncOf(final Runnable runnable, final Z result) {
+        this(new CallableOf<>(runnable, result));
     }
 
     /**
