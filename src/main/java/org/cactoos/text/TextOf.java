@@ -155,10 +155,10 @@ public final class TextOf extends TextEnvelope {
     /**
      * Ctor.
      * @param rdr Reader
-     * @param cset Charset
      * @param max Buffer size
+     * @param cset Charset
      */
-    public TextOf(final Reader rdr, final Charset cset, final int max) {
+    public TextOf(final Reader rdr, final int max, final Charset cset) {
         this(new BytesOf(rdr, cset, max));
     }
 
