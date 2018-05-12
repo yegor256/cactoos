@@ -23,11 +23,11 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test for {@link RandomText}.

@@ -25,9 +25,9 @@ package org.cactoos.scalar;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfInts;
-import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Tests for {@link FirstOf}.

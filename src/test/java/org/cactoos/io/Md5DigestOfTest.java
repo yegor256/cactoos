@@ -23,10 +23,10 @@
  */
 package org.cactoos.io;
 
-import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.HexOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link Md5DigestOf}.

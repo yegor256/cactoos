@@ -26,10 +26,10 @@ package org.cactoos.scalar;
 import java.io.IOException;
 import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test Case for {@link ItemAt}.

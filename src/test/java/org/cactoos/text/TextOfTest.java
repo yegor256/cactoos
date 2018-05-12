@@ -30,10 +30,10 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
-import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link TextOf}.

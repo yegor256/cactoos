@@ -29,11 +29,11 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
-import org.cactoos.matchers.FuncApplies;
-import org.cactoos.matchers.MatcherOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.FuncApplies;
+import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link AsyncFunc}.

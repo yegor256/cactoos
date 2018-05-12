@@ -26,10 +26,10 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
-import org.cactoos.matchers.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test case for {@link SolidBiFunc}.

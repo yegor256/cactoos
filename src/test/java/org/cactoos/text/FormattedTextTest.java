@@ -28,9 +28,9 @@ import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
 import org.cactoos.list.ListOf;
-import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link FormattedText}.

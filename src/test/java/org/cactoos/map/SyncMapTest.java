@@ -23,9 +23,9 @@
  */
 package org.cactoos.map;
 
-import org.cactoos.matchers.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test case for {@link StickyMap}.

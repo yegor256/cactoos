@@ -24,10 +24,10 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.cactoos.matchers.FuncApplies;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.FuncApplies;
 
 /**
  * Test case for {@link FuncWithFallback}.

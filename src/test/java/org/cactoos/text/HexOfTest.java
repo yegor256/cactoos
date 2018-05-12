@@ -25,9 +25,9 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import org.cactoos.io.BytesOf;
-import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link HexOf}.

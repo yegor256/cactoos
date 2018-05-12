@@ -23,9 +23,9 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link SwappedCaseText}.

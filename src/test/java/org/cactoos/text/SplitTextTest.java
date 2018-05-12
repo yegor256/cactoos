@@ -24,10 +24,10 @@
 package org.cactoos.text;
 
 import org.cactoos.iterable.LengthOf;
-import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link SplitText}.

@@ -24,9 +24,9 @@
 package org.cactoos.list;
 
 import java.util.Collections;
-import org.cactoos.matchers.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test case for {@link SyncList}.

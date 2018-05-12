@@ -24,11 +24,11 @@
 package org.cactoos.iterable;
 
 import java.util.Collections;
-import org.cactoos.matchers.ScalarHasValue;
 import org.cactoos.scalar.ItemAt;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test Case for {@link Cycled}.

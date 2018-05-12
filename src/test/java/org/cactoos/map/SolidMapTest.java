@@ -26,14 +26,14 @@ package org.cactoos.map;
 import java.util.Map;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.matchers.MatcherOf;
-import org.cactoos.matchers.RunsInThreads;
 import org.cactoos.text.SubText;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test case for {@link SolidMap}.

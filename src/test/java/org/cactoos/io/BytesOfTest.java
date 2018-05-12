@@ -32,13 +32,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
 import org.cactoos.iterable.Endless;
 import org.cactoos.iterable.HeadOf;
-import org.cactoos.matchers.MatcherOf;
-import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.JoinedText;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link BytesOf}.

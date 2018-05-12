@@ -26,11 +26,11 @@ package org.cactoos.scalar;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.func.BiFuncOf;
-import org.cactoos.matchers.MatcherOf;
-import org.cactoos.matchers.ScalarHasValue;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link AndWithIndex}.

@@ -23,9 +23,9 @@
  */
 package org.cactoos.collection;
 
-import org.cactoos.matchers.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test Case for {@link SyncCollection}.

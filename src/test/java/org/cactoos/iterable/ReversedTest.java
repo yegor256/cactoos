@@ -23,10 +23,10 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.JoinedText;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link Reversed}.

@@ -27,11 +27,11 @@ package org.cactoos.bytes;
 import java.io.IOException;
 import java.util.Arrays;
 import org.cactoos.io.BytesOf;
-import org.cactoos.matchers.MatcherOf;
 import org.cactoos.text.HexOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link HexBytes}.

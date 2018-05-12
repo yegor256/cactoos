@@ -25,13 +25,13 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import org.cactoos.matchers.MatcherOf;
-import org.cactoos.matchers.TextHasString;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link OutputStreamTo}.

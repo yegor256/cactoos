@@ -23,10 +23,10 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.matchers.RunsInThreads;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test Case for {@link SyncIterable}.

@@ -26,10 +26,10 @@ package org.cactoos.io;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.cactoos.matchers.MatcherOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Unit tests for {@link TempFile}.

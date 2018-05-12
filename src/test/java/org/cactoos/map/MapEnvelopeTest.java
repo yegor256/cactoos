@@ -25,12 +25,12 @@ package org.cactoos.map;
 
 import java.util.Map;
 import org.cactoos.func.FuncOf;
-import org.cactoos.matchers.MatcherOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link MapEnvelope}.

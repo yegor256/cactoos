@@ -25,9 +25,9 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test Case for {@link org.cactoos.text.Base64Text}.
