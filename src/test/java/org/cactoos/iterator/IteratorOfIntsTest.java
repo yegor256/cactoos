@@ -51,25 +51,20 @@ public final class IteratorOfIntsTest {
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
+        final IteratorOfInts iterator = new IteratorOfInts(1, 2);
+        iterator.next();
+        iterator.next();
         MatcherAssert.assertThat(
             "hasNext is true for fully traversed iterator.",
-            this.iteratorWithFetchedElements().hasNext(),
+            iterator.hasNext(),
             new IsEqual<>(false)
         );
     }
 
     @Test(expected = NoSuchElementException.class)
     public void nonEmptyIteratorThrowsException() {
-        this.iteratorWithFetchedElements().next();
-    }
-
-    private IteratorOfInts iteratorWithFetchedElements() {
-        final IteratorOfInts iterator = new IteratorOfInts(
-            1, 2, 3
-        );
+        final IteratorOfInts iterator = new IteratorOfInts(1);
         iterator.next();
         iterator.next();
-        iterator.next();
-        return iterator;
     }
 }

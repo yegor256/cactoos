@@ -51,25 +51,20 @@ public final class IteratorOfFloatsTest {
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
+        final IteratorOfFloats iterator = new IteratorOfFloats(1.0f, 2.0f);
+        iterator.next();
+        iterator.next();
         MatcherAssert.assertThat(
             "hasNext is true for fully traversed iterator.",
-            this.iteratorWithFetchedElements().hasNext(),
+            iterator.hasNext(),
             new IsEqual<>(false)
         );
     }
 
     @Test(expected = NoSuchElementException.class)
     public void nonEmptyIteratorThrowsException() {
-        this.iteratorWithFetchedElements().next();
-    }
-
-    private IteratorOfFloats iteratorWithFetchedElements() {
-        final IteratorOfFloats iterator = new IteratorOfFloats(
-            1.0f, 2.0f, 3.0f
-        );
+        final IteratorOfFloats iterator = new IteratorOfFloats(1.0f);
         iterator.next();
         iterator.next();
-        iterator.next();
-        return iterator;
     }
 }
