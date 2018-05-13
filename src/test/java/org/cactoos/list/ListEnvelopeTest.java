@@ -27,6 +27,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -34,6 +36,7 @@ import org.junit.Test;
  *
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class ListEnvelopeTest {
 
@@ -62,8 +65,7 @@ public final class ListEnvelopeTest {
             }
         ) {
         };
-        final ListIterator<String> iterator = list.listIterator();
-        iterator.next();
+        final ListIterator<String> iterator = list.listIterator(1);
         iterator.set("zero");
     }
 
@@ -80,5 +82,41 @@ public final class ListEnvelopeTest {
         final ListIterator<String> iterator = list.listIterator();
         iterator.next();
         iterator.add("twenty");
+    }
+
+    @Test
+    public void getsPreviousIndex() {
+        MatcherAssert.assertThat(
+            "List iterator returns incorrect previous index",
+            new ListOf<>(1).listIterator().previousIndex(),
+            new IsEqual<>(-1)
+        );
+    }
+
+    @Test
+    public void getsPrevious() {
+        MatcherAssert.assertThat(
+            "List iterator returns incorrect previous item",
+            new ListOf<>(3, 7).listIterator(1).previous(),
+            new IsEqual<>(3)
+        );
+    }
+
+    @Test
+    public void getsNextIndex() {
+        MatcherAssert.assertThat(
+            "List iterator returns incorrect next index",
+            new ListOf<>(1).listIterator().nextIndex(),
+            new IsEqual<>(0)
+        );
+    }
+
+    @Test
+    public void getsNext() {
+        MatcherAssert.assertThat(
+            "List iterator returns incorrect next item",
+            new ListOf<>(5, 11, 13).listIterator(1).next(),
+            new IsEqual<>(11)
+        );
     }
 }
