@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import org.cactoos.iterator.IteratorOfInts;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable of integer values.
@@ -38,8 +37,6 @@ public final class IterableOfInts extends IterableEnvelope<Integer> {
      * @param values Integer values
      */
     public IterableOfInts(final int... values) {
-        super(() -> ()
-            -> new UncheckedScalar<>(() -> new IteratorOfInts(values)).value()
-        );
+        super(() -> new IterableOf<>(new IteratorOfInts(values)));
     }
 }

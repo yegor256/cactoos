@@ -21,22 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
-import org.cactoos.iterator.IteratorOfBytes;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterable of bytes.
+ * Iterator tat returns a set of bytes.
  *
- * @since 1.0
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.34
  */
-public final class IterableOfBytes extends IterableEnvelope<Byte> {
+public final class IteratorOfBytes implements Iterator<Byte> {
+
+    /**
+     * The list of items to iterate.
+     */
+    private final byte[] items;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
 
     /**
      * Ctor.
-     * @param bytes Bytes
+     * @param itms Items to iterate
      */
-    public IterableOfBytes(final byte... bytes) {
-        super(() -> new IterableOf<>(new IteratorOfBytes(bytes)));
+    public IteratorOfBytes(final byte... itms) {
+        this.items = itms;
+        this.position = new AtomicInteger(0);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return this.position.intValue() < this.items.length;
+    }
+
+    @Override
+    public Byte next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.items[this.position.getAndIncrement()];
     }
 }

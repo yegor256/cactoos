@@ -23,8 +23,7 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.cactoos.iterator.IteratorOfDoubles;
 
 /**
  * Iterable of double values.
@@ -37,15 +36,7 @@ public final class IterableOfDoubles extends IterableEnvelope<Double> {
      * Ctor.
      * @param values Double values
      */
-    @SuppressWarnings("PMD.AvoidUsingShortType")
     public IterableOfDoubles(final double... values) {
-        super(() -> {
-            final Collection<Double> iterable =
-                new ArrayList<>(values.length);
-            for (final double value: values) {
-                iterable.add(value);
-            }
-            return iterable;
-        });
+        super(() -> new IterableOf<>(new IteratorOfDoubles(values)));
     }
 }
