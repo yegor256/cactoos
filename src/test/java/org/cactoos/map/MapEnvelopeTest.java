@@ -219,6 +219,19 @@ public final class MapEnvelopeTest {
     }
 
     @Test
+    public void mapNotEqualsToAnotherClass() {
+        final MapOf<String, String> map =
+            new MapOf<String, String>(new MapEntry<>("key1", "value1"));
+        MatcherAssert.assertThat(
+            "Map equals to an instance of another type",
+            map,
+            new IsNot<>(
+                new IsEqual<>("Totally different type")
+            )
+        );
+    }
+
+    @Test
     public void mapEqualsToMapWithSameEntries() {
         final MapEntry<String, String> entry =
             new MapEntry<>("key2", "value2");
