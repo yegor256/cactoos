@@ -210,7 +210,7 @@ public final class MapEnvelopeTest {
     @Test
     public void mapEqualsToItself() {
         final MapOf<String, String> map =
-            new MapOf<String, String>(new MapEntry<>("key1", "value1"));
+            new MapOf<String, String>(new MapEntry<>("key", "value"));
         MatcherAssert.assertThat(
             "Map doesn't equal to itself",
             map,
