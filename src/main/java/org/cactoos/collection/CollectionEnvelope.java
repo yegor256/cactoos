@@ -36,6 +36,8 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * @param <X> Element type
  * @since 0.23
+ * @todo #844:30min Implement methods equals and hashCode for this class. Class
+ *  {@link org.cactoos.map.MapEnvelope} can be used as an example.
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
 @SuppressWarnings(
