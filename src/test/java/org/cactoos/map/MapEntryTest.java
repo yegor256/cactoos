@@ -25,6 +25,7 @@ package org.cactoos.map;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -83,4 +84,12 @@ public final class MapEntryTest {
         );
     }
 
+    @Test
+    public void toStringMethod() {
+        MatcherAssert.assertThat(
+            "ToString method returns unexpected value",
+            new MapEntry<>("somekey", "somevalue").toString(),
+            new IsEqual<>("somekey=somevalue")
+        );
+    }
 }
