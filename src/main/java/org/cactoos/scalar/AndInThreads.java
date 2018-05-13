@@ -35,6 +35,7 @@ import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.text.FormattedText;
 
 /**
  * Logical conjunction, in multiple threads.
@@ -237,10 +238,10 @@ public final class AndInThreads implements Scalar<Boolean> {
             try {
                 if (!this.service.awaitTermination(1L, TimeUnit.MINUTES)) {
                     throw new IllegalStateException(
-                        String.format(
+                        new FormattedText(
                             "Can't terminate the service, result=%b",
                             result
-                        )
+                        ).asString()
                     );
                 }
             } catch (final InterruptedException ex) {
@@ -250,5 +251,4 @@ public final class AndInThreads implements Scalar<Boolean> {
         }
         return result;
     }
-
 }

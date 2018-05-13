@@ -28,6 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.collection.CollectionNoNulls;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
 
 /**
  * A decorator of {@link List} that tolerates no NULLs.
@@ -130,10 +132,13 @@ public final class ListNoNulls<T> implements List<T> {
         final T item = this.list.get(index);
         if (item == null) {
             throw new IllegalStateException(
-                String.format(
-                    "Item #%d of %s is NULL",
-                    index, this.list
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Item #%d of %s is NULL",
+                        index,
+                        this.list
+                    )
+                ).asString()
             );
         }
         return item;
@@ -143,19 +148,23 @@ public final class ListNoNulls<T> implements List<T> {
     public T set(final int index, final T item) {
         if (item == null) {
             throw new IllegalArgumentException(
-                String.format(
-                    "Item can't be NULL in #set(%d,T)",
-                    index
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Item can't be NULL in #set(%d,T)",
+                        index
+                    )
+                ).asString()
             );
         }
         final T result = this.list.set(index, item);
         if (result == null) {
             throw new IllegalStateException(
-                String.format(
-                    "Result of #set(%d,T) is NULL",
-                    index
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Result of #set(%d,T) is NULL",
+                        index
+                    )
+                ).asString()
             );
         }
         return result;
@@ -165,10 +174,12 @@ public final class ListNoNulls<T> implements List<T> {
     public void add(final int index, final T item) {
         if (item == null) {
             throw new IllegalArgumentException(
-                String.format(
-                    "Item can't be NULL in #add(%d,T)",
-                    index
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Item can't be NULL in #add(%d,T)",
+                        index
+                    )
+                ).asString()
             );
         }
         this.list.add(index, item);
@@ -179,10 +190,12 @@ public final class ListNoNulls<T> implements List<T> {
         final T result = this.list.remove(index);
         if (result == null) {
             throw new IllegalStateException(
-                String.format(
-                    "Result of #remove(%d) is NULL",
-                    index
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Result of #remove(%d) is NULL",
+                        index
+                    )
+                ).asString()
             );
         }
         return result;

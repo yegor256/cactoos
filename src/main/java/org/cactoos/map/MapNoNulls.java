@@ -27,6 +27,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.collection.CollectionNoNulls;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
 
 /**
  * A decorator of {@link Map} that tolerates no NULLs.
@@ -93,10 +95,12 @@ public class MapNoNulls<K, V> implements Map<K, V> {
         final V value = this.map.get(key);
         if (value == null) {
             throw new IllegalStateException(
-                String.format(
-                    "Value returned by #get(%s) is NULL",
-                    key
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Value returned by #get(%s) is NULL",
+                        key
+                    )
+                ).asString()
             );
         }
         return value;
@@ -106,25 +110,32 @@ public class MapNoNulls<K, V> implements Map<K, V> {
     public final V put(final K key, final V value) {
         if (key == null) {
             throw new IllegalStateException(
-                String.format(
-                    "Key at #put(K,%s) is NULL", value
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Key at #put(K,%s) is NULL",
+                        value
+                    )
+                ).asString()
             );
         }
         if (value == null) {
             throw new IllegalStateException(
-                String.format(
-                    "Value at #put(%s,V) is NULL", key
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Value at #put(%s,V) is NULL", key
+                    )
+                ).asString()
             );
         }
         final V result = this.map.put(key, value);
         if (result == null) {
             throw new IllegalStateException(
-                String.format(
-                    "Value returned by #put(%s,%s) is NULL",
-                    key, value
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Value returned by #put(%s,%s) is NULL",
+                        key, value
+                    )
+                ).asString()
             );
         }
         return result;
@@ -140,10 +151,12 @@ public class MapNoNulls<K, V> implements Map<K, V> {
         final V result = this.map.remove(key);
         if (result == null) {
             throw new IllegalStateException(
-                String.format(
-                    "Value returned by #remove(%s) is NULL",
-                    key
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Value returned by #remove(%s) is NULL",
+                        key
+                    )
+                ).asString()
             );
         }
         return result;
@@ -174,5 +187,4 @@ public class MapNoNulls<K, V> implements Map<K, V> {
     public final Set<Map.Entry<K, V>> entrySet() {
         return this.map.entrySet();
     }
-
 }
