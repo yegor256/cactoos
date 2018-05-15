@@ -97,8 +97,8 @@ public final class AndTest {
             new IterableOf<>(1, 1)
         ).value();
         MatcherAssert.assertThat(
-            list.size(),
-            Matchers.equalTo(1)
+            list,
+            Matchers.contains(1, 1)
         );
     }
 
@@ -110,8 +110,8 @@ public final class AndTest {
             new IteratorOf<>(1, 1)
         ).value();
         MatcherAssert.assertThat(
-            list.size(),
-            Matchers.equalTo(1)
+            list,
+            Matchers.contains(1, 1)
         );
     }
 
@@ -123,8 +123,8 @@ public final class AndTest {
             2, 3, 4
         ).value();
         MatcherAssert.assertThat(
-            list.size(),
-            Matchers.equalTo(3)
+            list,
+            Matchers.contains(2, 3, 4)
         );
     }
 

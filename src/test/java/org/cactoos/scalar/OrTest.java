@@ -104,8 +104,8 @@ public final class OrTest {
             new IterableOf<>(1, 2, 3, 4)
         ).value();
         MatcherAssert.assertThat(
-            list.size(),
-            Matchers.equalTo(4)
+            list,
+            Matchers.contains(1, 2, 3, 4)
         );
     }
 
@@ -117,8 +117,8 @@ public final class OrTest {
             new IteratorOf<>(1, 2, 3, 4)
         ).value();
         MatcherAssert.assertThat(
-            list.size(),
-            Matchers.equalTo(4)
+            list,
+            Matchers.contains(1, 2, 3, 4)
         );
     }
 
@@ -130,8 +130,8 @@ public final class OrTest {
             2, 3, 4
         ).value();
         MatcherAssert.assertThat(
-            list.size(),
-            Matchers.equalTo(3)
+            list,
+            Matchers.contains(2, 3, 4)
         );
     }
 

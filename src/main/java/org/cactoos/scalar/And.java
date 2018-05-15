@@ -126,7 +126,7 @@ public final class And implements Scalar<Boolean> {
      * @since 0.24
      */
     public <X> And(final Proc<X> proc, final Iterable<X> src) {
-        this(new FuncOf<>(proc, false), src);
+        this(new FuncOf<>(proc, true), src);
     }
 
     /**
