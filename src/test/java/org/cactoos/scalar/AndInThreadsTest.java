@@ -25,7 +25,6 @@ package org.cactoos.scalar;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -47,7 +46,7 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public final class AndInThreadsTest {
 
     @Test
@@ -57,8 +56,8 @@ public final class AndInThreadsTest {
                 new True(),
                 new True(),
                 new True()
-            ).value(),
-            Matchers.equalTo(true)
+            ),
+            new ScalarHasValue<>(true)
         );
     }
 
@@ -69,8 +68,8 @@ public final class AndInThreadsTest {
                 new True(),
                 new False(),
                 new True()
-            ).value(),
-            Matchers.equalTo(false)
+            ),
+            new ScalarHasValue<>(false)
         );
     }
 
@@ -83,22 +82,24 @@ public final class AndInThreadsTest {
                     new False(),
                     new False()
                 )
-            ).value(),
-            Matchers.equalTo(false)
+            ),
+            new ScalarHasValue<>(false)
         );
     }
 
     @Test
     public void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
-            new AndInThreads(Collections.emptyList()).value(),
-            Matchers.equalTo(true)
+            new AndInThreads(new IterableOf<Scalar<Boolean>>()),
+            new ScalarHasValue<>(true)
         );
     }
 
     @Test
     public void iteratesList() {
-        final List<String> list = new LinkedList<>();
+        final List<String> list = Collections.synchronizedList(
+            new ArrayList<String>(2)
+        );
         MatcherAssert.assertThat(
             "Can't iterate a list with a procedure",
             new AndInThreads(
@@ -107,25 +108,24 @@ public final class AndInThreadsTest {
                     new IterableOf<>("hello", "world")
                 )
             ),
-            new ScalarHasValue<>(
-                Matchers.allOf(
-                    Matchers.equalTo(true),
-                    new MatcherOf<>(
-                        value -> list.size() == 2
-                    )
-                )
-            )
+            new ScalarHasValue<>(true)
+        );
+        MatcherAssert.assertThat(
+            list,
+            Matchers.containsInAnyOrder("hello", "world")
         );
     }
 
     @Test
     public void iteratesEmptyList() {
-        final List<String> list = new LinkedList<>();
+        final List<String> list = Collections.synchronizedList(
+            new ArrayList<String>(2)
+        );
         MatcherAssert.assertThat(
             "Can't iterate a list",
             new AndInThreads(
                 new Mapped<String, Scalar<Boolean>>(
-                    new FuncOf<>(list::add, () -> true), Collections.emptyList()
+                    new FuncOf<>(list::add, () -> true), new IterableOf<>()
                 )
             ),
             new ScalarHasValue<>(
@@ -143,14 +143,16 @@ public final class AndInThreadsTest {
 
     @Test
     public void worksWithProc() throws Exception {
-        final List<Integer> list = new LinkedList<>();
+        final List<Integer> list = Collections.synchronizedList(
+            new ArrayList<Integer>(2)
+        );
         new AndInThreads(
             (Proc<Integer>) list::add,
             1, 1
         ).value();
         MatcherAssert.assertThat(
-            list.size(),
-            Matchers.equalTo(2)
+            list,
+            Matchers.contains(1, 1)
         );
     }
 
@@ -160,8 +162,8 @@ public final class AndInThreadsTest {
             new AndInThreads(
                 input -> input > 0,
                 1, -1, 0
-            ).value(),
-            Matchers.equalTo(false)
+            ),
+            new ScalarHasValue<>(false)
         );
     }
 
