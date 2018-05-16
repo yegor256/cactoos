@@ -30,13 +30,9 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.hamcrest.core.AllOf;
-import org.hamcrest.core.StringEndsWith;
-import org.hamcrest.core.StringStartsWith;
 import org.junit.Test;
 
 /**
@@ -97,20 +93,12 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsReaderIntoTextWithSmallBuffer() throws Exception {
+    public void readsReaderIntoTextWithSmallBuffer() {
+        final String text = "Hi there! with small buffer";
         MatcherAssert.assertThat(
             "Can't read text from Reader with a small reading buffer",
-            new TextOf(
-                new StringReader("Hi there! with small buffer"),
-                2,
-                StandardCharsets.UTF_8
-            ).asString(),
-            new AllOf<>(
-                new IterableOf<>(
-                    new StringStartsWith("Hi"),
-                    new StringEndsWith(" there! with small buffer")
-                )
-            )
+            new TextOf(new StringReader(text), 2, StandardCharsets.UTF_8),
+            new TextHasString(text)
         );
     }
 
