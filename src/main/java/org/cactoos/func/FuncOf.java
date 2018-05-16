@@ -26,6 +26,7 @@ package org.cactoos.func;
 import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
+import org.cactoos.Scalar;
 
 /**
  * Represents many possible inputs as {@link Func}.
@@ -93,6 +94,16 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
                 return result;
             }
         );
+    }
+
+    /**
+     * Ctor.
+     * @param scalar Origin scalar
+     */
+    public FuncOf(final Scalar<Y> scalar) {
+        this(input -> {
+            return scalar.value();
+        });
     }
 
     /**
