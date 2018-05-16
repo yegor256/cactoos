@@ -37,13 +37,12 @@ import org.cactoos.Scalar;
  * {@link Exception}. Despite that this class does NOT throw a checked
  * exception as it only returns a pre-computed value.</p>
  *
- * <p>Example:
- *   <pre>
- *     final Scalar&lt;String&gt; constant = new Constant&lg;&gt;("Value");
+ * <p>Example:</p>
+ * <pre>{@code
+ *     final Scalar<String> constant = new Constant<>("Value");
  *     System.out.print("Constant is always the same: ");
  *     System.out.println(constant.value() == constant.value());
- *   </pre>
- * </p>
+ * }</pre>
  *
  * <p>This class is thread-safe.</p>
  *

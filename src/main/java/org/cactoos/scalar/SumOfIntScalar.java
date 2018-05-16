@@ -30,9 +30,10 @@ import org.cactoos.Scalar;
  *
  * <p>Here is how you can use it to summarize numbers:</p>
  *
- * <pre>
- * int sum = new SumOfIntScalar(() -> 1,() -> 2, () -> 3).value(); //equal to 6
- * </pre>
+ * <pre>{@code
+ * int sum = new SumOfIntScalar(() -> 1,() -> 2, () -> 3).value();
+ * // sum equal to 6
+ * }</pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make

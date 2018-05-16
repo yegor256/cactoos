@@ -80,15 +80,13 @@ public final class ReplacedText implements Text {
      * {@link Matcher#find() matching} substring.
      * <p>
      * Example usage:
-     * <pre>
-     * {@code
-     *     final String result = new ReplacedText(
-     *          new TextOf("one two THREE four FIVE six"),
-     *          () -> Pattern.compile("[a-z]+"),
-     *          matcher -> String.valueOf(matcher.group().length())
-     *     ).asString();  //will return the string "3 3 THREE 4 FIVE 3"
-     * }
-     * </pre>
+     * <pre>{@code
+     * final String result = new ReplacedText(
+     *      new TextOf("one two THREE four FIVE six"),
+     *      () -> Pattern.compile("[a-z]+"),
+     *      matcher -> String.valueOf(matcher.group().length())
+     * ).asString();  //will return the string "3 3 THREE 4 FIVE 3"
+     * }</pre>
      * <p>
      * Note: a {@link PatternSyntaxException} will be thrown if the
      * regular expression's syntax is invalid.

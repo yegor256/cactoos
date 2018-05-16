@@ -29,14 +29,14 @@ import org.cactoos.scalar.UncheckedScalar;
 /**
  * Text implementing Comparable.<br>
  * Below the example how you can sort words in a string:
- * <pre>
- * Iterable&lt;Text> sorted = new Sorted<>(
- *   new Mapped<>(
- *     ComparableText::new,
- *     new SplitText("The quick brown fox jumps over the lazy dog", " ")
- *   )
+ * <pre>{@code
+ * Iterable<Text> sorted = new Sorted<>(
+ *     new Mapped<>(
+ *         ComparableText::new,
+ *         new SplitText("The quick brown fox jumps over the lazy dog", " ")
+ *     )
  * )
- * </pre>
+ * }</pre>
  *
  * <p>There is no thread-safety guarantee.
  *

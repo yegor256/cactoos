@@ -36,8 +36,8 @@ import org.cactoos.Input;
 
 /**
  * Zip files and directory.
- * <p>
- * <p>There is no thread-safety guarantee.
+ * <br>
+ * <br>There is no thread-safety guarantee.
  *
  * @since 0.29
  */

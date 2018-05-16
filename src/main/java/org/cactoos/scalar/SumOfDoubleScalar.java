@@ -30,9 +30,9 @@ import org.cactoos.Scalar;
  *
  * <p>Here is how you can use it to summarize double numbers:</p>
  *
- * <pre>
+ * <pre>{@code
  * double sum = new SumOfDoubleScalar(() -> 1.1,() -> 2.1, () -> 3.1).value();
- * </pre>
+ * }</pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
