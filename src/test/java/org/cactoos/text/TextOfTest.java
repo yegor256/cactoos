@@ -30,9 +30,13 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.matchers.TextHasString;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.StringEndsWith;
+import org.hamcrest.core.StringStartsWith;
 import org.junit.Test;
 
 /**
@@ -101,9 +105,11 @@ public final class TextOfTest {
                 2,
                 StandardCharsets.UTF_8
             ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith("Hi"),
-                Matchers.endsWith(" there! with small buffer")
+            new AllOf<>(
+                new IterableOf<>(
+                    new StringStartsWith("Hi"),
+                    new StringEndsWith(" there! with small buffer")
+                )
             )
         );
     }
