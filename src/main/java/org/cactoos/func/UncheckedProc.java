@@ -32,6 +32,8 @@ import org.cactoos.Proc;
  *
  * @param <X> Type of input
  * @since 0.2
+ * @todo #861:30min Avoid usage of null value in exec(X) which is against design principles.
+ * Please take a look on #551 and #843 for more details.
  */
 public final class UncheckedProc<X> implements Proc<X> {
 
@@ -50,7 +52,7 @@ public final class UncheckedProc<X> implements Proc<X> {
 
     @Override
     public void exec(final X input) {
-        new UncheckedFunc<>(new FuncOf<>(this.proc)).apply(input);
+        new UncheckedFunc<>(new FuncOf<>(this.proc, null)).apply(input);
     }
 
 }
