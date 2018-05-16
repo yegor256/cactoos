@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterator that returns the set of elements.
+ * {@link Iterator} that returns the elements.
  *
  * <p>There is no thread-safety guarantee.</p>
  *

@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterator that returns the set of booleans.
+ * {@link Iterator} that returns the {@code boolean}s as {@link Boolean}s.
  *
  * <p>There is no thread-safety guarantee.</p>
  *

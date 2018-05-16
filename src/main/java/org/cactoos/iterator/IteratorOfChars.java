@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterator that returns the set of chars.
+ * {@link Iterator} that returns the {@code char}s as {@link Character}s.
  *
  * <p>There is no thread-safety guarantee.</p>
  *

@@ -23,53 +23,50 @@
  */
 package org.cactoos.iterator;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Tests for {@link IteratorOfChars}.
+ * {@link Iterator} that returns the {@code long}s as {@link Long}s.
  *
- * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @since 0.34
  */
-public final class IteratorOfCharsTest {
-    @Test
-    public void emptyIteratorDoesNotHaveNext() {
-        MatcherAssert.assertThat(
-            "hasNext is true for empty iterator",
-            new IteratorOfChars().hasNext(),
-            new IsEqual<>(false)
-        );
+public final class IteratorOfLongs implements Iterator<Long> {
+
+    /**
+     * The list of items to iterate.
+     */
+    private final long[] items;
+
+    /**
+     * Current position.
+     */
+    private final AtomicInteger position;
+
+    /**
+     * Ctor.
+     * @param itms Items to iterate
+     */
+    public IteratorOfLongs(final long... itms) {
+        this.items = itms;
+        this.position = new AtomicInteger(0);
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void emptyIteratorThrowsException() {
-        new IteratorOfChars().next();
+    @Override
+    public boolean hasNext() {
+        return this.position.intValue() < this.items.length;
     }
 
-    @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
-        final IteratorOfChars iterator = new IteratorOfChars(
-            'a', 'b', 'c'
-        );
-        iterator.next();
-        iterator.next();
-        iterator.next();
-        MatcherAssert.assertThat(
-            "hasNext is true for already traversed iterator",
-            iterator.hasNext(),
-            new IsEqual<>(false)
-        );
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
-        final IteratorOfChars iterator = new IteratorOfChars(
-            'a'
-        );
-        iterator.next();
-        iterator.next();
+    @Override
+    public Long next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.items[this.position.getAndIncrement()];
     }
 }

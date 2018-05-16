@@ -23,8 +23,7 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.cactoos.iterator.IteratorOfShorts;
 
 /**
  * Iterable of short values.
@@ -39,13 +38,6 @@ public final class IterableOfShorts extends IterableEnvelope<Short> {
      */
     @SuppressWarnings("PMD.AvoidUsingShortType")
     public IterableOfShorts(final short... values) {
-        super(() -> {
-            final Collection<Short> iterable =
-                new ArrayList<>(values.length);
-            for (final short value: values) {
-                iterable.add(value);
-            }
-            return iterable;
-        });
+        super(() -> () -> new IteratorOfShorts(values));
     }
 }

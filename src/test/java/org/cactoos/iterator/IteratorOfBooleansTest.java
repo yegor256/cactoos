@@ -29,9 +29,7 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Iterator that returns the set of booleans.
- *
- * <p>There is no thread-safety guarantee.</p>
+ * Tests for {@link IteratorOfBooleans}.
  *
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)

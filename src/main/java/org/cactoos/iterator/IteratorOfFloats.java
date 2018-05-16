@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterator that returns the set of floats.
+ * {@link Iterator} that returns the {@code float}s as {@link Float}s.
  *
  * <p>There is no thread-safety guarantee.</p>
  *

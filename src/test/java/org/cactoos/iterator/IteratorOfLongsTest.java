@@ -29,36 +29,33 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Tests for {@link IteratorOfChars}.
+ * Tests for {@link IteratorOfLongs}.
  *
- * @since 0.32
+ * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorOfCharsTest {
+public final class IteratorOfLongsTest {
     @Test
     public void emptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            "hasNext is true for empty iterator",
-            new IteratorOfChars().hasNext(),
+            "hasNext is true for empty iterator.",
+            new IteratorOfLongs().hasNext(),
             new IsEqual<>(false)
         );
     }
 
     @Test(expected = NoSuchElementException.class)
     public void emptyIteratorThrowsException() {
-        new IteratorOfChars().next();
+        new IteratorOfLongs().next();
     }
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
-        final IteratorOfChars iterator = new IteratorOfChars(
-            'a', 'b', 'c'
-        );
-        iterator.next();
+        final IteratorOfLongs iterator = new IteratorOfLongs(1, 2);
         iterator.next();
         iterator.next();
         MatcherAssert.assertThat(
-            "hasNext is true for already traversed iterator",
+            "hasNext is true for fully traversed iterator.",
             iterator.hasNext(),
             new IsEqual<>(false)
         );
@@ -66,9 +63,7 @@ public final class IteratorOfCharsTest {
 
     @Test(expected = NoSuchElementException.class)
     public void nonEmptyIteratorThrowsException() {
-        final IteratorOfChars iterator = new IteratorOfChars(
-            'a'
-        );
+        final IteratorOfLongs iterator = new IteratorOfLongs(1);
         iterator.next();
         iterator.next();
     }
