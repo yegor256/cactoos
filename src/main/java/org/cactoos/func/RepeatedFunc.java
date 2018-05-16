@@ -33,6 +33,9 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.6
+ * @todo #861:30min Avoid usage of null value in ctor(Proc<X>, int) which is against design principles.
+ * Perhaps in creating RepeatedProc<X>?
+ * Please take a look on #551 and #843 for more details.
  */
 public final class RepeatedFunc<X, Y> implements Func<X, Y> {
 
@@ -53,7 +56,7 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
      * @since 0.12
      */
     public RepeatedFunc(final Proc<X> proc, final int max) {
-        this(new FuncOf<>(proc), max);
+        this(new FuncOf<>(proc, null), max);
     }
 
     /**

@@ -76,14 +76,6 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
     /**
      * Ctor.
      * @param proc The proc
-     */
-    public FuncOf(final Proc<X> proc) {
-        this(proc, null);
-    }
-
-    /**
-     * Ctor.
-     * @param proc The proc
      * @param result Result to return
      */
     public FuncOf(final Proc<X> proc, final Y result) {

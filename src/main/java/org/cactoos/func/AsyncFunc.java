@@ -45,6 +45,10 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.10
+ * @todo #861:30min Avoid usage of null value in ctor(Proc<X>, ExecutorService),
+ * ctor(Proc<X>, ThreadFactory) and ctor(Proc<X>) which is against design principles.
+ * Perhaps with a creation of AsyncProc or removal of this functionality?
+ * Please take a look on #551 and #843 for more details.
  */
 public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
 
@@ -63,7 +67,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      * @param proc The proc
      */
     public AsyncFunc(final Proc<X> proc) {
-        this(new FuncOf<>(proc));
+        this(new FuncOf<>(proc, null));
     }
 
     /**
@@ -80,7 +84,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      * @param fct Factory
      */
     public AsyncFunc(final Proc<X> proc, final ThreadFactory fct) {
-        this(new FuncOf<>(proc), fct);
+        this(new FuncOf<>(proc, null), fct);
     }
 
     /**
@@ -99,7 +103,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      * @since 0.17
      */
     public AsyncFunc(final Proc<X> proc, final ExecutorService exec) {
-        this(new FuncOf<>(proc), exec);
+        this(new FuncOf<>(proc, null), exec);
     }
 
     /**
