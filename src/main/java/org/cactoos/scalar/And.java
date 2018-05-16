@@ -109,10 +109,10 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
+     * @param src The iterator
      * @param proc Proc to use
-     * @param <X> Type of items in the iterable
-     * @since 0.24
+     * @param <X> Type of items in the iterator
+     * @since 0.34
      */
     public <X> And(final Proc<X> proc, final Iterator<X> src) {
         this(proc, new IterableOf<>(src));
@@ -131,10 +131,10 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
+     * @param src The iterator
      * @param func Func to map
-     * @param <X> Type of items in the iterable
-     * @since 0.24
+     * @param <X> Type of items in the iterator
+     * @since 0.34
      */
     public <X> And(final Func<X, Boolean> func, final Iterator<X> src) {
         this(func, new IterableOf<>(src));
@@ -145,6 +145,7 @@ public final class And implements Scalar<Boolean> {
      * @param src The iterable
      * @param func Func to map
      * @param <X> Type of items in the iterable
+     * @since 0.24
      */
     public <X> And(final Func<X, Boolean> func, final Iterable<X> src) {
         this(
@@ -159,6 +160,7 @@ public final class And implements Scalar<Boolean> {
      * @param subject The subject
      * @param conditions Funcs to map
      * @param <X> Type of items in the iterable
+     * @since 0.34
      */
     @SafeVarargs
     public <X> And(final X subject, final Func<X, Boolean>... conditions) {
@@ -182,7 +184,7 @@ public final class And implements Scalar<Boolean> {
     /**
      * Ctor.
      * @param iterator The iterator.
-     * @since 0.24
+     * @since 0.34
      */
     public And(final Iterator<Scalar<Boolean>> iterator) {
         this(new IterableOf<>(iterator));
