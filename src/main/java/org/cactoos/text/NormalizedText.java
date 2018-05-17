@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -31,12 +32,7 @@ import org.cactoos.Text;
  *
  * @since 0.9
  */
-public final class NormalizedText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
+public final class NormalizedText extends TextEnvelope {
 
     /**
      * Ctor.
@@ -51,17 +47,13 @@ public final class NormalizedText implements Text {
      * @param text A Text
      */
     public NormalizedText(final Text text) {
-        this.origin = text;
+        super(
+            (Scalar<String>) () -> new ReplacedText(
+                new TrimmedText(text),
+                "\\s+",
+                " "
+            ).asString()
+        );
     }
-
-    @Override
-    public String asString() throws Exception {
-        return new ReplacedText(
-            new TrimmedText(this.origin),
-            "\\s+",
-            " "
-        ).asString();
-    }
-
 }
 
