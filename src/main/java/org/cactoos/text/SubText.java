@@ -31,25 +31,9 @@ import org.cactoos.scalar.UncheckedScalar;
  * Extract a substring from a Text.
  *
  * <p>There is no thread-safety guarantee.
- *
  * @since 0.11
  */
-public final class SubText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * The start position in the text.
-     */
-    private final UncheckedScalar<Integer> start;
-
-    /**
-     * The end position in the text.
-     */
-    private final UncheckedScalar<Integer> end;
+public final class SubText extends TextEnvelope {
 
     /**
      * Ctor.
@@ -103,28 +87,24 @@ public final class SubText implements Text {
     /**
      * Ctor.
      * @param text The Text
-     * @param strt Start position in the text
-     * @param finish End position in the text
+     * @param start Start position in the text
+     * @param end End position in the text
      */
-    public SubText(final Text text, final UncheckedScalar<Integer> strt,
-        final UncheckedScalar<Integer> finish) {
-        this.origin = text;
-        this.start = strt;
-        this.end = finish;
+    @SuppressWarnings({"PMD.CallSuperInConstructor",
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
+    public SubText(final Text text, final UncheckedScalar<Integer> start,
+        final UncheckedScalar<Integer> end) {
+        super((Scalar<String>) () -> {
+            int begin = start.value();
+            if (begin < 0) {
+                begin = 0;
+            }
+            int finish = end.value();
+            final String origin = text.asString();
+            if (origin.length() < finish) {
+                finish = origin.length();
+            }
+            return origin.substring(begin, finish);
+        });
     }
-
-    @Override
-    public String asString() throws Exception {
-        int begin = this.start.value();
-        if (begin < 0) {
-            begin = 0;
-        }
-        int finish = this.end.value();
-        final String text = this.origin.asString();
-        if (text.length() < finish) {
-            finish = text.length();
-        }
-        return text.substring(begin, finish);
-    }
-
 }

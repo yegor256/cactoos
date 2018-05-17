@@ -38,22 +38,7 @@ import org.cactoos.scalar.IoCheckedScalar;
  *
  * @since 0.2
  */
-public final class ReplacedText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * The regular expression identifying the text to replace.
-     */
-    private final Scalar<Pattern> regex;
-
-    /**
-     * The new replacement text.
-     */
-    private final Func<Matcher, String> replacement;
+public final class ReplacedText extends TextEnvelope {
 
     /**
      * Ctor.
@@ -93,35 +78,29 @@ public final class ReplacedText implements Text {
      * Note: a {@link PatternSyntaxException} will be thrown if the
      * regular expression's syntax is invalid.
      * @param text The text
-     * @param pattern The regular expression
+     * @param regex The regular expression
      * @param func Transforms the resulting matcher object into a replacement
      *  string. Any exceptions will be wrapped in an {@link IOException}.
      */
     public ReplacedText(
         final Text text,
-        final Scalar<Pattern> pattern,
+        final Scalar<Pattern> regex,
         final Func<Matcher, String> func) {
-        this.origin = text;
-        this.regex = pattern;
-        this.replacement = func;
+        super((Scalar<String>) () -> {
+            final StringBuffer buffer = new StringBuffer();
+            final Matcher matcher = new IoCheckedScalar<>(regex)
+                .value()
+                .matcher(text.asString());
+            final IoCheckedFunc<Matcher, String> safe =
+                new IoCheckedFunc<>(func);
+            while (matcher.find()) {
+                matcher.appendReplacement(
+                    buffer,
+                    safe.apply(matcher)
+                );
+            }
+            matcher.appendTail(buffer);
+            return buffer.toString();
+        });
     }
-
-    @Override
-    public String asString() throws Exception {
-        final StringBuffer buffer = new StringBuffer();
-        final Matcher matcher = new IoCheckedScalar<>(this.regex)
-            .value()
-            .matcher(this.origin.asString());
-        final IoCheckedFunc<Matcher, String> safe =
-            new IoCheckedFunc<>(this.replacement);
-        while (matcher.find()) {
-            matcher.appendReplacement(
-                buffer,
-                safe.apply(matcher)
-            );
-        }
-        matcher.appendTail(buffer);
-        return buffer.toString();
-    }
-
 }

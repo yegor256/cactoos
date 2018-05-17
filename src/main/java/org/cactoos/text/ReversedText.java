@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -30,12 +31,7 @@ import org.cactoos.Text;
  *
  * @since 0.2
  */
-public final class ReversedText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
+public final class ReversedText extends TextEnvelope {
 
     /**
      * Ctor.
@@ -43,12 +39,9 @@ public final class ReversedText implements Text {
      * @param text The text
      */
     public ReversedText(final Text text) {
-        this.origin = text;
+        super((Scalar<String>) () -> new StringBuilder(
+            text.asString()
+            ).reverse().toString()
+        );
     }
-
-    @Override
-    public String asString() throws Exception {
-        return new StringBuilder(this.origin.asString()).reverse().toString();
-    }
-
 }

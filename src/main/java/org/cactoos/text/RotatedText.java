@@ -23,51 +23,39 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
  * Rotate (circular shift) a String of shift characters.
  * @since 0.12
  */
-public final class RotatedText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * The move.
-     */
-    private final int move;
+public final class RotatedText extends TextEnvelope {
 
     /**
      * Ctor.
      * @param text The text
      * @param shift The shift
      */
+    @SuppressWarnings({"PMD.CallSuperInConstructor",
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
     public RotatedText(final Text text, final int shift) {
-        this.origin = text;
-        this.move = shift;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        String text = this.origin.asString();
-        final int length = text.length();
-        if (length != 0 && this.move != 0 && this.move % length != 0) {
-            final StringBuilder builder = new StringBuilder(length);
-            int offset = -(this.move % length);
-            if (offset < 0) {
-                offset = text.length() + offset;
+        super((Scalar<String>) () -> {
+            String origin = text.asString();
+            final int length = origin.length();
+            if (length != 0 && shift != 0 && shift % length != 0) {
+                final StringBuilder builder = new StringBuilder(length);
+                int offset = -(shift % length);
+                if (offset < 0) {
+                    offset = origin.length() + offset;
+                }
+                origin = builder.append(
+                    origin.substring(offset)
+                ).append(
+                    origin.substring(0, offset)
+                ).toString();
             }
-            text = builder.append(
-                text.substring(offset)
-            ).append(
-                text.substring(0, offset)
-            ).toString();
-        }
-        return text;
+            return origin;
+        });
     }
-
 }

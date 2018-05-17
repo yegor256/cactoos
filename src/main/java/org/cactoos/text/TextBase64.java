@@ -24,6 +24,7 @@
 
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.bytes.BytesBase64;
 import org.cactoos.io.BytesOf;
@@ -33,12 +34,7 @@ import org.cactoos.io.BytesOf;
  *
  * @since 0.20.2
  */
-public final class TextBase64 implements Text {
-
-    /**
-     * Origin text.
-     */
-    private final Text origin;
+public final class TextBase64 extends TextEnvelope {
 
     /**
      * Ctor.
@@ -55,16 +51,10 @@ public final class TextBase64 implements Text {
      * @param origin Origin text
      */
     public TextBase64(final Text origin) {
-        this.origin = origin;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        return new TextOf(
+        super((Scalar<String>) () -> new TextOf(
             new BytesBase64(
-                new BytesOf(this.origin)
+                new BytesOf(origin)
             )
-        ).asString();
+        ).asString());
     }
-
 }

@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -30,34 +31,27 @@ import org.cactoos.Text;
  * and lower case to upper case.
  * @since 0.13.3
  */
-public final class SwappedCaseText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
+public final class SwappedCaseText extends TextEnvelope {
 
     /**
      * Ctor.
      * @param text The text
      */
+    @SuppressWarnings({"PMD.CallSuperInConstructor",
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
     public SwappedCaseText(final Text text) {
-        this.origin = text;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        final String text = this.origin.asString();
-        final char[] chars = text.toCharArray();
-        for (int idx = 0; idx < chars.length; idx += 1) {
-            final char chr = chars[idx];
-            if (Character.isUpperCase(chr)) {
-                chars[idx] = Character.toLowerCase(chr);
-            } else if (Character.isLowerCase(chr)) {
-                chars[idx] = Character.toUpperCase(chr);
+        super((Scalar<String>) () -> {
+            final String origin = text.asString();
+            final char[] chars = origin.toCharArray();
+            for (int idx = 0; idx < chars.length; idx += 1) {
+                final char chr = chars[idx];
+                if (Character.isUpperCase(chr)) {
+                    chars[idx] = Character.toLowerCase(chr);
+                } else if (Character.isLowerCase(chr)) {
+                    chars[idx] = Character.toUpperCase(chr);
+                }
             }
-        }
-        return new String(chars);
+            return new String(chars);
+        });
     }
-
 }
