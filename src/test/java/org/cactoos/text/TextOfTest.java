@@ -93,6 +93,16 @@ public final class TextOfTest {
     }
 
     @Test
+    public void readsReaderIntoTextWithSmallBuffer() {
+        final String text = "Hi there! with small buffer";
+        MatcherAssert.assertThat(
+            "Can't read text from Reader with a small reading buffer",
+            new TextOf(new StringReader(text), 2, StandardCharsets.UTF_8),
+            new TextHasString(text)
+        );
+    }
+
+    @Test
     public void readsInputIntoTextWithSmallBufferAndDefaultCharset()
         throws Exception {
         MatcherAssert.assertThat(

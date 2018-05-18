@@ -24,8 +24,10 @@
 package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.cactoos.scalar.Constant;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -71,4 +73,13 @@ public final class FuncOfTest {
         );
     }
 
+    @Test
+    public void convertsScalarIntoFunc() throws Exception {
+        final Constant<Integer> scalar = new Constant<>(1);
+        MatcherAssert.assertThat(
+            "Result of func doesn't equal to the original value",
+            new FuncOf<>(scalar).apply(new Object()),
+            new IsEqual<>(scalar.value())
+        );
+    }
 }
