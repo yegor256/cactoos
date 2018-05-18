@@ -56,6 +56,24 @@ public final class RepeatedFuncTest {
     }
 
     @Test
+    public void runsProcMultipleTimes() throws Exception {
+        final Iterator<Integer> iter = new IteratorOf<>(1, 2, 5, 6, 7);
+        final Func<Boolean, Void> func = new RepeatedFunc<>(
+            new ProcOf<>(
+                () -> {
+                    iter.next();
+                }
+            ),
+            3
+        );
+        func.apply(true);
+        MatcherAssert.assertThat(
+            iter.next(),
+            Matchers.equalTo(6)
+        );
+    }
+
+    @Test
     public void repeatsNullsResults() throws Exception {
         final Func<Boolean, Integer> func = new RepeatedFunc<>(
             input -> {
