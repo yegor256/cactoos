@@ -24,9 +24,12 @@
 package org.cactoos.map;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.Scalar;
+import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.SumOfIntScalar;
 import org.cactoos.scalar.UncheckedScalar;
 import org.cactoos.text.TextOf;
 
@@ -137,5 +140,53 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
             .append(new TextOf(this.entrySet()).toString())
             .append('}')
             .toString();
+    }
+
+    @Override
+    @SuppressWarnings("PMD.OnlyOneReturn")
+    public final boolean equals(final Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (getClass() != other.getClass()) {
+            return false;
+        }
+        final MapEnvelope<?, ?> that = (MapEnvelope<?, ?>) other;
+        final Iterator<Entry<X, Y>> these =
+            this.map.value().entrySet().iterator();
+        final Iterator<? extends Entry<?, ?>> those =
+            that.map.value().entrySet().iterator();
+        while (these.hasNext() && those.hasNext()) {
+            final Entry<X, Y> first = these.next();
+            final Entry<?, ?> second = those.next();
+            if (!first.getKey().equals(second.getKey())) {
+                return false;
+            }
+            if (!first.getValue().equals(second.getValue())) {
+                return false;
+            }
+        }
+        return !these.hasNext() && !those.hasNext();
+    }
+
+    // @checkstyle MagicNumberCheck (30 lines)
+    @Override
+    public final int hashCode() {
+        return new UncheckedScalar<>(
+            new Folded<>(
+                42,
+                (hash, entry) -> {
+                    final int keys = new SumOfIntScalar(
+                        () -> 37 * hash,
+                        () -> entry.getKey().hashCode()
+                    ).value();
+                    return new SumOfIntScalar(
+                        () -> 37 * keys,
+                        () -> entry.getValue().hashCode()
+                    ).value();
+                },
+                this.map.value().entrySet()
+            )
+        ).value();
     }
 }
