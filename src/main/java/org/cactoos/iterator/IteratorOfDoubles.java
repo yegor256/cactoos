@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterator tat returns a set of double values.
+ * Iterator that returns a set of double values.
  *
  * <p>There is no thread-safety guarantee.
  *

@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Iterator tat returns a set of bytes.
+ * Iterator that returns a set of bytes.
  *
  * <p>There is no thread-safety guarantee.
  *
