@@ -233,12 +233,14 @@ public final class MapEnvelopeTest {
 
     @Test
     public void mapEqualsToMapWithSameEntries() {
-        final MapEntry<String, String> entry =
-            new MapEntry<>("key2", "value2");
+        final String key = "key2";
+        final String value = "value2";
+        final MapEntry<String, String> input = new MapEntry<>(key, value);
+        final MapEntry<String, String> expected = new MapEntry<>(key, value);
         MatcherAssert.assertThat(
             "Map doesn't equal to another map with same entries",
-            new MapOf<String, String>(entry),
-            new IsEqual<>(new MapOf<String, String>(entry))
+            new MapOf<String, String>(input),
+            new IsEqual<>(new MapOf<String, String>(expected))
         );
     }
 
@@ -289,12 +291,14 @@ public final class MapEnvelopeTest {
 
     @Test
     public void hashCodeDependsOnItems() {
-        final MapEntry<String, String> entry =
-            new MapEntry<>("key9", "value9");
+        final String key = "key9";
+        final String value = "value9";
+        final MapEntry<String, String> input = new MapEntry<>(key, value);
+        final MapEntry<String, String> expected = new MapEntry<>(key, value);
         MatcherAssert.assertThat(
             "hashCode returns different results for same entries",
-            new MapOf<String, String>(entry).hashCode(),
-            new IsEqual<>(new MapOf<String, String>(entry).hashCode())
+            new MapOf<String, String>(input).hashCode(),
+            new IsEqual<>(new MapOf<String, String>(expected).hashCode())
         );
     }
 
