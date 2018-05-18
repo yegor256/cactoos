@@ -45,13 +45,13 @@ public final class PaddedStartText extends TextEnvelope {
         final Text text, final int length, final char symbol) {
         super((Scalar<String>) () -> {
             final String original = text.asString();
-            final int diff = length - original.length();
-            final StringBuilder builder = new StringBuilder();
-            for (int len = diff; len > 0; --len) {
-                builder.append(symbol);
-            }
-            builder.append(original);
-            return builder.toString();
+            return new JoinedText(
+                new TextOf(""),
+                new RepeatedText(
+                    new TextOf(symbol), length - original.length()
+                ),
+                text
+            ).asString();
         });
     }
 }
