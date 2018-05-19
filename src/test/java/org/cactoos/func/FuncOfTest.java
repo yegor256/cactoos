@@ -51,19 +51,6 @@ public final class FuncOfTest {
     }
 
     @Test
-    public void convertsProcWithNoResultIntoFunc() throws Exception {
-        final AtomicBoolean done = new AtomicBoolean(false);
-        MatcherAssert.assertThat(
-            new FuncOf<String, Boolean>(
-                input -> {
-                    done.set(true);
-                }
-            ).apply("hello you"),
-            Matchers.nullValue()
-        );
-    }
-
-    @Test
     public void convertsValueIntoFunc() throws Exception {
         MatcherAssert.assertThat(
             new FuncOf<String, Boolean>(

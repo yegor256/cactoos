@@ -36,10 +36,6 @@ import org.cactoos.Scalar;
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.12
- * @todo #551:30min Remove ctor FuncOf(Proc) by replacing with FuncOf(Proc, Y)
- *  FuncOf(Proc) force using of null value which is against design principles.
- *  It's affect a lot of classes other classes.
- *  Please take a look on #551 and #843 for more details.
  */
 public final class FuncOf<X, Y> implements Func<X, Y> {
 
@@ -72,14 +68,6 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
      */
     public FuncOf(final Runnable runnable, final Y result) {
         this(input -> runnable.run(), result);
-    }
-
-    /**
-     * Ctor.
-     * @param proc The proc
-     */
-    public FuncOf(final Proc<X> proc) {
-        this(proc, null);
     }
 
     /**
