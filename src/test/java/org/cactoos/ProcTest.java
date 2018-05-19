@@ -25,7 +25,7 @@ package org.cactoos;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -53,7 +53,7 @@ public final class ProcTest {
         MatcherAssert.assertThat(
             "Can't involve the \"Proc.exec(X input)\" method",
             counter.get(),
-            Matchers.equalTo(1)
+            new IsEqual<>(1)
         );
     }
 }

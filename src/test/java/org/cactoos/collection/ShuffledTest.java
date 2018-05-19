@@ -26,7 +26,8 @@ package org.cactoos.collection;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -50,7 +51,7 @@ public final class ShuffledTest {
         MatcherAssert.assertThat(
             "Can't shuffle elements in collection",
             new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
-            Matchers.hasItem(-1)
+            new IsCollectionContaining<>(new IsEqual<>(-1))
         );
     }
 
@@ -59,7 +60,7 @@ public final class ShuffledTest {
         MatcherAssert.assertThat(
             "Can't shuffle elements in array",
             new Shuffled<>(1, 2, 0, -1),
-            Matchers.hasItem(-1)
+            new IsCollectionContaining<>(new IsEqual<>(-1))
         );
     }
 
@@ -68,7 +69,7 @@ public final class ShuffledTest {
         MatcherAssert.assertThat(
             "Can't shuffle elements in iterable",
             new Shuffled<>(new IterableOf<>(1, 2, 0, -1)),
-            Matchers.hasItem(-1)
+            new IsCollectionContaining<>(new IsEqual<>(-1))
         );
     }
 

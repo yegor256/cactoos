@@ -1,0 +1,2 @@
+@defaultMessage Do not use static methods
+org.hamcrest.Matchers

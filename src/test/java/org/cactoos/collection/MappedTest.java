@@ -24,7 +24,6 @@
 package org.cactoos.collection;
 
 import java.util.AbstractCollection;
-import java.util.Collections;
 import java.util.Iterator;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
@@ -33,7 +32,9 @@ import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsCollectionWithSize;
+import org.hamcrest.collection.IsEmptyCollection;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -65,7 +66,7 @@ public final class MappedTest {
                 input -> new UpperText(new TextOf(input)),
                 new IterableOf<>("hello", "world", "друг")
             ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
+            new IsEqual<>("HELLO")
         );
     }
 
@@ -75,9 +76,9 @@ public final class MappedTest {
             "Can't transform an empty iterable",
             new Mapped<String, Text>(
                 input -> new UpperText(new TextOf(input)),
-                Collections.emptyList()
+                new ListOf<>()
             ),
-            Matchers.emptyIterable()
+            new IsEmptyCollection<>()
         );
     }
 
@@ -89,7 +90,7 @@ public final class MappedTest {
                 x -> x * 2,
                 new ListOf<>(1, 2, 3)
             ).toString(),
-            Matchers.equalTo("2, 4, 6")
+            new IsEqual<>("2, 4, 6")
         );
     }
 
@@ -108,8 +109,8 @@ public final class MappedTest {
                         return 1;
                     }
                 }
-            ).size(),
-            Matchers.equalTo(1)
+            ),
+            new IsCollectionWithSize<>(new IsEqual<>(1))
         );
     }
 

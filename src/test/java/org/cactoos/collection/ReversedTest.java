@@ -24,11 +24,12 @@
 package org.cactoos.collection;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsEmptyCollection;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -63,7 +64,7 @@ public final class ReversedTest {
                     "item", last
                 )
             ).iterator().next(),
-            Matchers.equalTo(last)
+            new IsEqual<>(last)
         );
     }
 
@@ -71,9 +72,9 @@ public final class ReversedTest {
     public void reverseEmptyList() throws Exception {
         MatcherAssert.assertThat(
             new Reversed<>(
-                Collections.emptyList()
+                new ListOf<>()
             ),
-            Matchers.emptyIterable()
+            new IsEmptyCollection<>()
         );
     }
 

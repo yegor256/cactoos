@@ -23,11 +23,13 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.LengthOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsEmptyCollection;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 
 /**
@@ -36,6 +38,7 @@ import org.junit.Test;
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class FilteredTest {
 
@@ -57,7 +60,7 @@ public final class FilteredTest {
                     new IterableOf<>("hello", "world", "друг")
                 )
             ).intValue(),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
@@ -66,9 +69,9 @@ public final class FilteredTest {
         MatcherAssert.assertThat(
             new Filtered<String>(
                 input -> input.length() > 4,
-                Collections.emptyList()
+                new ListOf<>()
             ),
-            Matchers.emptyIterable()
+            new IsEmptyCollection<>()
         );
     }
 
@@ -79,7 +82,7 @@ public final class FilteredTest {
                 input -> input.length() >= 4,
                 new IterableOf<>("some", "text", "yes")
             ).size(),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
@@ -89,8 +92,8 @@ public final class FilteredTest {
             new Filtered<String>(
                 input -> input.length() > 4,
                 new IterableOf<>("first", "second")
-            ).isEmpty(),
-            Matchers.equalTo(false)
+            ),
+            new IsNot<>(new IsEmptyCollection<>())
         );
     }
 
@@ -100,8 +103,8 @@ public final class FilteredTest {
             new Filtered<String>(
                 input -> input.length() > 16,
                 new IterableOf<>("third", "fourth")
-            ).isEmpty(),
-            Matchers.equalTo(true)
+            ),
+            new IsEmptyCollection<>()
         );
     }
 }

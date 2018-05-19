@@ -27,6 +27,7 @@ package org.cactoos.collection;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.Test;
 
 /**
@@ -93,7 +94,7 @@ public final class SkippedTest {
                 2,
                 "one", "two"
             ),
-            Matchers.empty()
+            new IsEmptyCollection<>()
         );
     }
 
@@ -105,7 +106,7 @@ public final class SkippedTest {
                 Integer.MAX_VALUE,
                 "one", "two"
             ),
-            Matchers.empty()
+            new IsEmptyCollection<>()
         );
     }
 
