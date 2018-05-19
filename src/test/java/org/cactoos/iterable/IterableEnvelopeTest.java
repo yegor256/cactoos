@@ -24,40 +24,29 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-import org.cactoos.Scalar;
-import org.cactoos.iterator.Immutable;
-import org.cactoos.scalar.UncheckedScalar;
+import java.util.LinkedList;
+import java.util.List;
+import org.junit.Test;
 
 /**
- * Iterable envelope.
+ * Test case for {@link IterableEnvelope}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @param <X> Type of item
- * @since 0.24
- * @checkstyle AbstractClassNameCheck (500 lines)
+ * @since 0.35
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AbstractNaming")
-public abstract class IterableEnvelope<X> implements Iterable<X> {
+public final class IterableEnvelopeTest {
 
-    /**
-     * The iterable.
-     */
-    private final UncheckedScalar<Iterable<X>> iterable;
-
-    /**
-     * Ctor.
-     * @param scalar The source
-     */
-    public IterableEnvelope(final Scalar<Iterable<X>> scalar) {
-        this.iterable = new UncheckedScalar<>(scalar);
+    @Test(expected = UnsupportedOperationException.class)
+    public void returnsIteratorWithUnsupportedRemove() {
+        final IterableEnvelope<String> list = new IterableEnvelope<String>(
+            () -> {
+                final List<String> inner = new LinkedList<>();
+                inner.add("eleven");
+                return inner;
+            }
+        ) { };
+        final Iterator<String> iterator = list.iterator();
+        iterator.next();
+        iterator.remove();
     }
-
-    @Override
-    public final Iterator<X> iterator() {
-        return new Immutable<>(
-            this.iterable.value().iterator()
-        );
-    }
-
 }

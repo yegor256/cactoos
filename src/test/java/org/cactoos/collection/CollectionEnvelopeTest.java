@@ -32,9 +32,6 @@ import org.junit.Test;
  * Test case for {@link CollectionEnvelope}.
  *
  * @since 0.32
- * @todo #813:30min IterableEnvelope appears to be read only but it returns
- *  mutable Iterator through which user can remove elements. Implement immutable
- *  Iterator for IterableEnvelope `iterator()` method.
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class CollectionEnvelopeTest {
