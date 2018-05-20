@@ -26,6 +26,10 @@ package org.cactoos.collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 
 /**
@@ -37,6 +41,7 @@ import org.junit.Test;
  *  Iterator for IterableEnvelope `iterator()` method.
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class CollectionEnvelopeTest {
     @Test(expected = UnsupportedOperationException.class)
     public void returnsIteratorWithUnsupportedRemove() {
@@ -50,5 +55,100 @@ public final class CollectionEnvelopeTest {
         final Iterator<String> iterator = list.iterator();
         iterator.next();
         iterator.remove();
+    }
+
+    @Test
+    public void notEqualToObjectOfAnotherType() {
+        MatcherAssert.assertThat(
+            "Collection is equal to object of different type",
+            new CollectionOf<>(),
+            new IsNot<>(new IsEqual<>("a"))
+        );
+    }
+
+    @Test
+    public void notEqualToCollectionOfDifferentSize() {
+        MatcherAssert.assertThat(
+            "Collection is equal to a collection of different size",
+            new CollectionOf<>(),
+            new IsNot<>(new IsEqual<>(new CollectionOf<>("b")))
+        );
+    }
+
+    @Test
+    public void notEqualToCollectionOfDifferentElements() {
+        MatcherAssert.assertThat(
+            "Collection is equal to a collection with different content",
+            new CollectionOf<>("a", "b"),
+            new IsNot<>(new IsEqual<>(new CollectionOf<>("a", "c")))
+        );
+    }
+
+    @Test
+    public void equalToCollectionWithIdenticalContent() {
+        MatcherAssert.assertThat(
+            "Collection is not equal to a collection with identical content",
+            new CollectionOf<>("val1", "val2"),
+            new IsEqual<>(new CollectionOf<>("val1", "val2"))
+        );
+    }
+
+    @Test
+    public void equalToListWithIdenticalContent() {
+        MatcherAssert.assertThat(
+            "Collection not equal to a list with identical content",
+            new CollectionOf<>("a"),
+            new IsEqual<>(new ListOf<>("a"))
+        );
+    }
+
+    @Test
+    public void equalToDerivedCollection() {
+        MatcherAssert.assertThat(
+            "Collection not equal to derived collection with identical content",
+            new CollectionOf<>("a"),
+            new IsEqual<>(new CollectionEnvelopeTest.CustomCollection("a"))
+        );
+    }
+
+    @Test
+    public void equalToEmptyCollection() {
+        MatcherAssert.assertThat(
+            "Empty collection not equal with empty collection",
+            new CollectionOf<>(),
+            new IsEqual<>(new CollectionOf<>())
+        );
+    }
+
+    @Test
+    public void hashCodeEqual() {
+        MatcherAssert.assertThat(
+            "HashCode returns different results for same entries",
+            new CollectionOf<>("a", "b").hashCode(),
+            new IsEqual<>(new CollectionOf<>("a", "b").hashCode())
+        );
+    }
+
+    @Test
+    public void differentHashCode() {
+        MatcherAssert.assertThat(
+            "HashCode returns identical results for different entries",
+            new CollectionOf<>("a", "b").hashCode(),
+            new IsNot<>(new IsEqual<>(new CollectionOf<>("b", "a").hashCode()))
+        );
+    }
+
+    /**
+     * Custom collection.
+     */
+    private static class CustomCollection extends CollectionEnvelope<String> {
+
+        /**
+         * Ctor.
+         * @param elements String elements
+         */
+        CustomCollection(final String... elements) {
+            super(() -> new CollectionOf<>(elements));
+        }
     }
 }
