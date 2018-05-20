@@ -23,57 +23,87 @@
  */
 package org.cactoos.list;
 
+import java.util.List;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.UncheckedScalar;
+
 /**
  * Iterator of the list.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <T> Items type
- * @since 0.34
+ * @since 0.35
  */
 public final class ListIterator<T> implements java.util.ListIterator<T> {
 
     /**
      * Original list iterator.
      */
-    private final java.util.ListIterator<T> origin;
+    private final UncheckedScalar<java.util.ListIterator<T>> origin;
+
+    /**
+     * Ctor.
+     * @param list List that will be called to get a list iterator.
+     */
+    public ListIterator(final List<T> list) {
+        this(list::listIterator);
+    }
+
+    /**
+     * Ctor.
+     * @param list List that will be called to get a list iterator.
+     * @param index Start index for a newly created list iterator.
+     */
+    public ListIterator(final List<T> list, final int index) {
+        this(() -> list.listIterator(index));
+    }
+
+    /**
+     * Ctor.
+     * @param iter Original list iterator.
+     */
+    public ListIterator(final java.util.ListIterator<T> iter) {
+        this(() -> iter);
+    }
 
     /**
      * Ctor.
      * @param orig Original list iterator.
      */
-    public ListIterator(final java.util.ListIterator<T> orig) {
-        this.origin = orig;
+    public ListIterator(final Scalar<java.util.ListIterator<T>> orig) {
+        this.origin = new UncheckedScalar<>(new StickyScalar<>(orig));
     }
 
     @Override
     public boolean hasNext() {
-        return this.origin.hasNext();
+        return this.origin.value().hasNext();
     }
 
     @Override
     public T next() {
-        return this.origin.next();
+        return this.origin.value().next();
     }
 
     @Override
     public boolean hasPrevious() {
-        return this.origin.hasPrevious();
+        return this.origin.value().hasPrevious();
     }
 
     @Override
     public T previous() {
-        return this.origin.previous();
+        return this.origin.value().previous();
     }
 
     @Override
     public int nextIndex() {
-        return this.origin.nextIndex();
+        return this.origin.value().nextIndex();
     }
 
     @Override
     public int previousIndex() {
-        return this.origin.previousIndex();
+        return this.origin.value().previousIndex();
     }
 
     @Override
