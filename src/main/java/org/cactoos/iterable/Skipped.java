@@ -23,21 +23,35 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.iterator.IteratorOfShorts;
-
 /**
- * Iterable of short values.
+ * Skipped iterable.
  *
- * @since 1.0
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @param <T> Element type
+ * @since 0.34
  */
-public final class IterableOfShorts extends IterableEnvelope<Short> {
+public final class Skipped<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param values Short values
+     * @param skip How many to skip
+     * @param src The underlying iterable
      */
-    @SuppressWarnings("PMD.AvoidUsingShortType")
-    public IterableOfShorts(final short... values) {
-        super(() -> () -> new IteratorOfShorts(values));
+    @SafeVarargs
+    public Skipped(final int skip, final T... src) {
+        this(new IterableOf<>(src), skip);
+    }
+
+    /**
+     * Ctor.
+     * @param iterable Decorated iterable
+     * @param skip Count skip elements
+     */
+    public Skipped(final Iterable<T> iterable, final int skip) {
+        super(() -> () -> new org.cactoos.iterator.Skipped<>(
+            iterable.iterator(),
+            skip
+        ));
     }
 }

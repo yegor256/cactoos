@@ -29,47 +29,48 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * Tests for {@link IteratorOfChars}.
+ * Tests for {@link IteratorOfBytes}.
  *
- * @since 0.32
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorOfCharsTest {
+public final class IteratorOfBytesTest {
     @Test
     public void emptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(
-            "hasNext is true for empty iterator",
-            new IteratorOfChars().hasNext(),
+            "hasNext is true for empty iterator.",
+            new IteratorOfBytes().hasNext(),
             new IsEqual<>(false)
         );
     }
 
     @Test(expected = NoSuchElementException.class)
     public void emptyIteratorThrowsException() {
-        new IteratorOfChars().next();
+        new IteratorOfBytes().next();
     }
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
-        final IteratorOfChars iterator = new IteratorOfChars(
-            'a', 'b', 'c'
-        );
-        iterator.next();
-        iterator.next();
-        iterator.next();
         MatcherAssert.assertThat(
-            "hasNext is true for already traversed iterator",
-            iterator.hasNext(),
+            "hasNext is true for fully traversed iterator.",
+            this.iteratorWithFetchedElements().hasNext(),
             new IsEqual<>(false)
         );
     }
 
     @Test(expected = NoSuchElementException.class)
     public void nonEmptyIteratorThrowsException() {
-        final IteratorOfChars iterator = new IteratorOfChars(
-            'a'
-        );
+        this.iteratorWithFetchedElements().next();
+    }
+
+    private IteratorOfBytes iteratorWithFetchedElements() {
+        final IteratorOfBytes iterator =
+            new IteratorOfBytes((byte) 1, (byte) 2, (byte) 3);
         iterator.next();
         iterator.next();
+        iterator.next();
+        return iterator;
     }
 }

@@ -33,12 +33,8 @@ import org.cactoos.scalar.UncheckedScalar;
  * Text envelope that provides {@link #equals(Object)} and {@link #hashCode()}
  * methods.
  * @since 0.32
- * @todo #788:30min Refactor all classes in text package to extend from
- *  TextEnvelope, allowing direct comparison with string objects using hashCode
- *  and equals methods.
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings("PMD.AbstractNaming")
 public abstract class TextEnvelope implements Text {
 
     /**
@@ -51,7 +47,7 @@ public abstract class TextEnvelope implements Text {
      * @param text Text representing the text value.
      */
     public TextEnvelope(final Text text) {
-        this(new IoCheckedScalar<>(() -> text.asString()));
+        this(new IoCheckedScalar<>(text::asString));
     }
 
     /**
@@ -65,6 +61,11 @@ public abstract class TextEnvelope implements Text {
     @Override
     public final String asString() throws IOException {
         return this.origin.value();
+    }
+
+    @Override
+    public final String toString() {
+        return new UncheckedText(this).asString();
     }
 
     @Override

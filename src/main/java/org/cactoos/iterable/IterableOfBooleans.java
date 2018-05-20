@@ -37,6 +37,6 @@ public final class IterableOfBooleans extends IterableEnvelope<Boolean> {
      * @param values Boolean values
      */
     public IterableOfBooleans(final boolean... values) {
-        super(() -> new IterableOf<>(new IteratorOfBooleans(values)));
+        super(() -> () -> new IteratorOfBooleans(values));
     }
 }

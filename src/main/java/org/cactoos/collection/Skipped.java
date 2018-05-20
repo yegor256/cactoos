@@ -21,23 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.collection;
 
-import org.cactoos.iterator.IteratorOfShorts;
+import java.util.Collection;
+import org.cactoos.iterable.IterableOf;
 
 /**
- * Iterable of short values.
+ * Skipped collection.
  *
- * @since 1.0
+ * <p>There is no thread-safety guarantee.
+ *
+ * @param <T> Type of source item
+ * @since 0.34
  */
-public final class IterableOfShorts extends IterableEnvelope<Short> {
+public final class Skipped<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
-     * @param values Short values
+     * @param skip How many to skip
+     * @param src Source elements
      */
-    @SuppressWarnings("PMD.AvoidUsingShortType")
-    public IterableOfShorts(final short... values) {
-        super(() -> () -> new IteratorOfShorts(values));
+    @SafeVarargs
+    public Skipped(final int skip, final T... src) {
+        this(new IterableOf<>(src), skip);
+    }
+
+    /**
+     * Ctor.
+     * @param src Source iterable
+     * @param skip How many to skip
+     */
+    public Skipped(final Iterable<T> src, final int skip) {
+        this(new CollectionOf<T>(src), skip);
+    }
+
+    /**
+     * Ctor.
+     * @param src Source collection
+     * @param skip How many to skip
+     */
+    public Skipped(final Collection<T> src, final int skip) {
+        super(() -> new CollectionOf<T>(
+            new org.cactoos.iterable.Skipped<T>(src, skip)
+        ));
     }
 }

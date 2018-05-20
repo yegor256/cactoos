@@ -23,18 +23,12 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.cactoos.iterator.IteratorOfLongs;
 
 /**
  * Iterable of long values.
  *
  * @since 1.0
- * @todo #802:30min Introduce IteratorOfLongs and IteratorOfShorts which will
- *  take array of their related primitive types (long, short) and
- *  produce iterator of reference type (Long, Short).
- *  Refactor appropriate IterableOf* classes by using those newly created
- *  iterators to avoid unnecessary copying elements to a new array.
  */
 public final class IterableOfLongs extends IterableEnvelope<Long> {
 
@@ -43,13 +37,6 @@ public final class IterableOfLongs extends IterableEnvelope<Long> {
      * @param values Long values
      */
     public IterableOfLongs(final long... values) {
-        super(() -> {
-            final Collection<Long> iterable =
-                new ArrayList<>(values.length);
-            for (final long value: values) {
-                iterable.add(value);
-            }
-            return iterable;
-        });
+        super(() -> () -> new IteratorOfLongs(values));
     }
 }

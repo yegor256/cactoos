@@ -32,34 +32,34 @@ import org.cactoos.iterable.Mapped;
 /**
  * Reduces iterable via BiFunc.
  *
- * <pre>
+ * <pre>{@code
  * new Reduced<>(
  *     (first, last) -> first + last,
  *     new IterableOf<>(() -> 1L, () -> 2L, () -> 3L, () -> 4L)
  * ).value() // returns 10L
- * </pre>
+ * }</pre>
  *
  * <p>Here is how you can use it to
  * find one of items according to the specified {@link BiFunc}:</p>
  *
- * <pre>
- *  final String apple = new Reduced&lt;&gt;(
- *          (first, last) -&gt; first,
- *          new IterableOf&lt;Scalar&lt;String&gt;&gt;(
- *              () -&gt; "Apple",
- *              () -&gt; "Banana",
- *              () -&gt; "Orange"
- *          )
- *      ).value();
- *  final String orange = new Reduced&lt;&gt;(
- *          (first, last) -&gt; last,
- *          new IterableOf&lt;Scalar&lt;String&gt;&gt;(
- *              () -&gt; "Apple",
- *              () -&gt; "Banana",
- *              () -&gt; "Orange"
- *          )
- *      ).value();
- * </pre>
+ * <pre>{@code
+ * final String apple = new Reduced<>(
+ *     (first, last) -> first,
+ *     new IterableOf<Scalar<String>>(
+ *         () -> "Apple",
+ *         () -> "Banana",
+ *         () -> "Orange"
+ *     )
+ * ).value();
+ * final String orange = new Reduced<>(
+ *     (first, last) -> last,
+ *     new IterableOf<Scalar<String>>(
+ *         () -> "Apple",
+ *         () -> "Banana",
+ *         () -> "Orange"
+ *     )
+ * ).value();
+ * }</pre>
  *
  * <p>There is no thread-safety guarantee.
  *

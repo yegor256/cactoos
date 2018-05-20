@@ -23,18 +23,12 @@
  */
 package org.cactoos.iterable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.cactoos.iterator.IteratorOfBytes;
 
 /**
  * Iterable of bytes.
  *
  * @since 1.0
- * @todo #803:30min Introduce IteratorOfBytes and IteratorOfDoubles which will
- *  take array of their related primitive types (byte, double) and produce
- *  iterator of reference type (Byte, Double).
- *  Refactor appropriate IterableOf* classes by using those newly created
- *  iterators to avoid unnecessary copying elements to a new array.
  */
 public final class IterableOfBytes extends IterableEnvelope<Byte> {
 
@@ -43,13 +37,6 @@ public final class IterableOfBytes extends IterableEnvelope<Byte> {
      * @param bytes Bytes
      */
     public IterableOfBytes(final byte... bytes) {
-        super(() -> {
-            final Collection<Byte> iterable =
-                new ArrayList<>(bytes.length);
-            for (final byte byt: bytes) {
-                iterable.add(byt);
-            }
-            return iterable;
-        });
+        super(() -> new IterableOf<>(new IteratorOfBytes(bytes)));
     }
 }

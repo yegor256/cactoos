@@ -35,11 +35,9 @@ import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
-import org.cactoos.Text;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.IoCheckedScalar;
 
 /**
  * TextOf
@@ -48,12 +46,7 @@ import org.cactoos.scalar.IoCheckedScalar;
  *
  * @since 0.12
  */
-public final class TextOf implements Text {
-
-    /**
-     * The origin.
-     */
-    private final Scalar<String> origin;
+public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
@@ -162,10 +155,10 @@ public final class TextOf implements Text {
     /**
      * Ctor.
      * @param rdr Reader
-     * @param cset Charset
      * @param max Buffer size
+     * @param cset Charset
      */
-    public TextOf(final Reader rdr, final Charset cset, final int max) {
+    public TextOf(final Reader rdr, final int max, final Charset cset) {
         this(new BytesOf(rdr, cset, max));
     }
 
@@ -354,17 +347,7 @@ public final class TextOf implements Text {
      * @param scalar The Scalar of String
      */
     private TextOf(final Scalar<String> scalar) {
-        this.origin = scalar;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        return new IoCheckedScalar<>(this.origin).value();
-    }
-
-    @Override
-    public String toString() {
-        return new UncheckedText(this).asString();
+        super(scalar);
     }
 
 }

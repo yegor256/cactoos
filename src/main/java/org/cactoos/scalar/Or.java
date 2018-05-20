@@ -179,11 +179,11 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param iterable The iterable.
+     * @param iterator The iterator.
      * @since 0.24
      */
-    public Or(final Iterator<Scalar<Boolean>> iterable) {
-        this(new IterableOf<>(iterable));
+    public Or(final Iterator<Scalar<Boolean>> iterator) {
+        this(new IterableOf<>(iterator));
     }
 
     /**
