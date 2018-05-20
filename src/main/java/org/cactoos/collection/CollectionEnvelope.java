@@ -39,10 +39,6 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * <p>There is no thread-safety guarantee.</p>
  * @param <X> Element type
- * @todo #844:30min Implement methods equals and hashCode for this class.
- * Implementation should rely on the items of the nested collection, but not
- * on default JVM impl. Class {@link org.cactoos.map.MapEnvelope} can be used
- * as an example.
  * @since 0.23
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
