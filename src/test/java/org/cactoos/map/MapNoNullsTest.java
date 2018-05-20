@@ -28,7 +28,9 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Test case for {@link MapNoNulls}.
@@ -37,12 +39,20 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings({
-    "PMD.TooManyMethods",
-    "PMD.NonStaticInitializer",
-    "serial"
-    })
+@SuppressWarnings(
+    {
+        "PMD.TooManyMethods",
+        "PMD.NonStaticInitializer",
+        "serial"
+    }
+)
 public final class MapNoNullsTest {
+
+    /**
+     * A rule for handling an exception.
+     */
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void getSize() {
@@ -355,5 +365,31 @@ public final class MapNoNullsTest {
                 Matchers.hasEntry(0, 0)
             )
         );
+    }
+
+    @Test
+    public void putThrowsErrorIfValueNull() {
+        this.exception.expect(IllegalStateException.class);
+        this.exception.expectMessage(
+            "Value at #put(1,V) is NULL"
+        );
+        new MapNoNulls<Integer, Integer>(
+            new HashMap<>()
+        ).put(1, null);
+    }
+
+    @Test
+    public void putThrowsErrorIfPreviousValueNull() {
+        this.exception.expect(IllegalStateException.class);
+        this.exception.expectMessage(
+            "Value returned by #put(1,2) is NULL"
+        );
+        new MapNoNulls<>(
+            new HashMap<Integer, Integer>() {
+                {
+                    put(1, null);
+                }
+            }
+        ).put(1, 2);
     }
 }
