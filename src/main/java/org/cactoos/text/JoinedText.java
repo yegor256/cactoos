@@ -35,7 +35,7 @@ import org.cactoos.iterable.Mapped;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.9
- * @todo #849:30min Continue refactoring all classes implementing Text to extend
+ * @todo #878:30min Continue refactoring all classes implementing Text to extend
  *  TextEnvelope - in most cases asString should be removed and implementation
  *  from TextEnvelope should be used.
  */

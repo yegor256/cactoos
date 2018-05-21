@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -32,22 +33,7 @@ import org.cactoos.Text;
  *
  * @since 0.32
  */
-public final class PaddedStartText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * The minimum length of the resulting string.
-     */
-    private final int length;
-
-    /**
-     * The character to be padded at the begining.
-     */
-    private final char symbol;
+public final class PaddedStartText extends TextEnvelope {
 
     /**
      * Ctor.
@@ -57,21 +43,16 @@ public final class PaddedStartText implements Text {
      */
     public PaddedStartText(
         final Text text, final int length, final char symbol) {
-        this.origin = text;
-        this.symbol = symbol;
-        this.length = length;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        final String original = this.origin.asString();
-        final int diff = this.length - original.length();
-        final StringBuilder builder = new StringBuilder();
-        for (int len = diff; len > 0; --len) {
-            builder.append(this.symbol);
-        }
-        builder.append(original);
-        return builder.toString();
+        super((Scalar<String>) () -> {
+            final String original = text.asString();
+            return new JoinedText(
+                new TextOf(""),
+                new RepeatedText(
+                    new TextOf(symbol), length - original.length()
+                ),
+                text
+            ).asString();
+        });
     }
 }
 
