@@ -56,7 +56,8 @@ import org.cactoos.iterable.Mapped;
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
  * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
+ * use the {@link UncheckedScalar} decorator. Or you may use
+ * {@link IoCheckedScalar} to wrap it in an IOException.</p>
  *
  * <p>There is no thread-safety guarantee.
  *

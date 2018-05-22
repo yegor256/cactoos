@@ -27,15 +27,15 @@ import java.io.IOException;
 import org.cactoos.Scalar;
 
 /**
- * Scalar that doesn't throw checked {@link Exception}, but throws
+ * Scalar that doesn't throw {@link Exception}, but throws
  * {@link IOException} instead.
  *
  * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
+ * {@link IOException}. This may not be convenient in many cases. To make
  * it more convenient and get rid of the checked exception you can
- * use {@link UncheckedScalar} or {@link IoCheckedScalar} decorators.</p>
+ * use the {@link UncheckedScalar} decorator.</p>
  *
  * @param <T> Type of result
  * @since 0.4
