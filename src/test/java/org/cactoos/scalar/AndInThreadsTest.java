@@ -30,12 +30,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
+import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -43,6 +46,9 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
 /**
  * Test case for {@link AndInThreads}.
  * @since 0.25
+ * @todo #829:30min Remove the use of the static method
+ *  `Collections.synchronizedList`. Replace by an object-oriented approach.
+ *  Create a class similar to `SyncCollection` but mutable.
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
@@ -112,7 +118,20 @@ public final class AndInThreadsTest {
         );
         MatcherAssert.assertThat(
             list,
-            Matchers.containsInAnyOrder("hello", "world")
+            new IsIterableContainingInAnyOrder<String>(
+                new CollectionOf<Matcher<? super String>>(
+                    new MatcherOf<>(
+                        text -> {
+                            return "hello".equals(text);
+                        }
+                    ),
+                    new MatcherOf<>(
+                        text -> {
+                            return "world".equals(text);
+                        }
+                    )
+                )
+            )
         );
     }
 
@@ -152,7 +171,20 @@ public final class AndInThreadsTest {
         ).value();
         MatcherAssert.assertThat(
             list,
-            Matchers.contains(1, 1)
+            new IsIterableContainingInAnyOrder<Integer>(
+                new CollectionOf<Matcher<? super Integer>>(
+                    new MatcherOf<>(
+                        value -> {
+                            return value.equals(1);
+                        }
+                    ),
+                    new MatcherOf<>(
+                        value -> {
+                            return value.equals(1);
+                        }
+                    )
+                )
+            )
         );
     }
 
@@ -178,7 +210,20 @@ public final class AndInThreadsTest {
         ).value();
         MatcherAssert.assertThat(
             list,
-            Matchers.containsInAnyOrder(1, 2)
+            new IsIterableContainingInAnyOrder<Integer>(
+                new CollectionOf<Matcher<? super Integer>>(
+                    new MatcherOf<>(
+                        value -> {
+                            return value.equals(1);
+                        }
+                    ),
+                    new MatcherOf<>(
+                        value -> {
+                            return value.equals(2);
+                        }
+                    )
+                )
+            )
         );
     }
 
@@ -208,7 +253,20 @@ public final class AndInThreadsTest {
         ).value();
         MatcherAssert.assertThat(
             list,
-            Matchers.containsInAnyOrder(1, 2)
+            new IsIterableContainingInAnyOrder<Integer>(
+                new CollectionOf<Matcher<? super Integer>>(
+                    new MatcherOf<>(
+                        value -> {
+                            return value.equals(1);
+                        }
+                    ),
+                    new MatcherOf<>(
+                        value -> {
+                            return value.equals(2);
+                        }
+                    )
+                )
+            )
         );
     }
 
@@ -225,7 +283,20 @@ public final class AndInThreadsTest {
         ).value();
         MatcherAssert.assertThat(
             list,
-            Matchers.containsInAnyOrder(1, 2)
+            new IsIterableContainingInAnyOrder<Integer>(
+                new CollectionOf<Matcher<? super Integer>>(
+                    new MatcherOf<>(
+                        value -> {
+                            return value.equals(1);
+                        }
+                    ),
+                    new MatcherOf<>(
+                        value -> {
+                            return value.equals(2);
+                        }
+                    )
+                )
+            )
         );
     }
 
