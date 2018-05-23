@@ -24,63 +24,47 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicLong;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
+import org.hamcrest.core.StringContains;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
- * A decorator of an {@link Iterator} that returns no NULL.
+ * Test cases for {@link IteratorNoNulls}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @param <X> Type of item
- * @since 0.27
+ * @since 0.35
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorNoNulls<X> implements Iterator<X> {
+public final class IteratorNoNullsTest {
 
     /**
-     * Iterator.
+     * A rule for handling an exception.
      */
-    private final Iterator<X> iterator;
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
 
-    /**
-     * Position.
-     */
-    private final AtomicLong pos;
+    @Test
+    public void nextThrowsErrorIfNull() {
+        this.exception.expect(IllegalStateException.class);
+        this.exception.expectMessage(
+            new StringContains(
+                "Item #0 of org.cactoos.iterator.IteratorNoNullsTest"
+            )
+        );
+        new IteratorNoNulls<>(
+            new Iterator<Integer>() {
+                @Override
+                public boolean hasNext() {
+                    return true;
+                }
 
-    /**
-     * Ctor.
-     * @param src Source iterable
-     */
-    public IteratorNoNulls(final Iterator<X> src) {
-        this.iterator = src;
-        this.pos = new AtomicLong();
-    }
-
-    @Override
-    public boolean hasNext() {
-        return this.iterator.hasNext();
-    }
-
-    @Override
-    public X next() {
-        final X next = this.iterator.next();
-        if (next == null) {
-            throw new IllegalStateException(
-                new UncheckedText(
-                    new FormattedText(
-                        "Item #%d of %s is NULL",
-                        this.pos.get(), this.iterator
-                    )
-                ).asString()
-            );
-        }
-        this.pos.incrementAndGet();
-        return next;
-    }
-
-    @Override
-    public void remove() {
-        this.iterator.remove();
+                @Override
+                public Integer next() {
+                    return null;
+                }
+            }
+        ).next();
     }
 }

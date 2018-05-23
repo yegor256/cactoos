@@ -30,6 +30,8 @@ import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Logged output stream.
@@ -123,12 +125,14 @@ public final class LoggingOutputStream extends OutputStream {
         if (!level.equals(Level.INFO)) {
             this.logger.log(
                 level,
-                String.format(
-                    "Written %d byte(s) to %s in %dms.",
-                    this.bytes.get(),
-                    this.destination,
-                    this.time.get()
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Written %d byte(s) to %s in %dms.",
+                        this.bytes.get(),
+                        this.destination,
+                        this.time.get()
+                    )
+                ).asString()
             );
         }
     }
@@ -140,20 +144,24 @@ public final class LoggingOutputStream extends OutputStream {
         if (level.equals(Level.INFO)) {
             this.logger.log(
                 level,
-                String.format(
-                    "Written %d byte(s) to %s in %dms.",
-                    this.bytes.get(),
-                    this.destination,
-                    this.time.get()
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Written %d byte(s) to %s in %dms.",
+                        this.bytes.get(),
+                        this.destination,
+                        this.time.get()
+                    )
+                ).asString()
             );
         }
         this.logger.log(
             level,
-            String.format(
-                "Closed output stream from %s.",
-                this.destination
-            )
+            new UncheckedText(
+                new FormattedText(
+                    "Closed output stream from %s.",
+                    this.destination
+                )
+            ).asString()
         );
     }
 
@@ -164,21 +172,24 @@ public final class LoggingOutputStream extends OutputStream {
         if (level.equals(Level.INFO)) {
             this.logger.log(
                 level,
-                String.format(
-                    "Written %d byte(s) to %s in %dms.",
-                    this.bytes.get(),
-                    this.destination,
-                    this.time.get()
-                )
+                new UncheckedText(
+                    new FormattedText(
+                        "Written %d byte(s) to %s in %dms.",
+                        this.bytes.get(),
+                        this.destination,
+                        this.time.get()
+                    )
+                ).asString()
             );
         }
         this.logger.log(
             level,
-            String.format(
-                "Flushed output stream from %s.",
-                this.destination
-            )
+            new UncheckedText(
+                new FormattedText(
+                    "Flushed output stream from %s.",
+                    this.destination
+                )
+            ).asString()
         );
     }
-
 }

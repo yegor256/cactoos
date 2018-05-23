@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.cactoos.text.FormattedText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -86,8 +87,10 @@ public final class TempFileTest {
 
     @Test
     public void createFileWithPrefix() throws Exception {
-        final String prefix =
-            String.format("randomPrefix%s", System.currentTimeMillis());
+        final String prefix = new FormattedText(
+            "randomPrefix%s",
+            System.currentTimeMillis()
+        ).asString();
         try (final TempFile file = new TempFile(prefix, "")) {
             MatcherAssert.assertThat(
                 "File not created with the given prefix",
@@ -99,9 +102,9 @@ public final class TempFileTest {
 
     @Test
     public void createFileWithSuffix() throws Exception {
-        final String suffix = String.format(
+        final String suffix = new FormattedText(
             "randomSuffix%s", System.currentTimeMillis()
-        );
+        ).asString();
         try (final TempFile file = new TempFile("", suffix)) {
             MatcherAssert.assertThat(
                 "File not created with the given suffix",

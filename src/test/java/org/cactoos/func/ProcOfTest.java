@@ -26,6 +26,7 @@ package org.cactoos.func;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import org.cactoos.text.FormattedText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -51,10 +52,10 @@ public final class ProcOfTest {
             }
         ).exec("You can use any input in a Runnable.");
         MatcherAssert.assertThat(
-            String.format(
+            new FormattedText(
                 "Wrong result when created with a Runnable. Expected %s",
                 str
-            ),
+            ).asString(),
             list,
             Matchers.contains(str)
         );
@@ -74,10 +75,10 @@ public final class ProcOfTest {
             }
         ).exec("You can use any input in a Callable");
         MatcherAssert.assertThat(
-            String.format(
+            new FormattedText(
                 "Wrong result when created with a Callable. Expected %s",
                 str
-            ),
+            ).asString(),
             list,
             Matchers.contains(str)
         );
@@ -94,13 +95,12 @@ public final class ProcOfTest {
             }
         ).exec(str);
         MatcherAssert.assertThat(
-            String.format(
+            new FormattedText(
                 "Wrong result when created with a Func. Expected %s",
                 str
-            ),
+            ).asString(),
             list,
             Matchers.contains(str)
         );
     }
-
 }

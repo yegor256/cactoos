@@ -32,6 +32,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Logged input stream.
@@ -139,19 +141,21 @@ public final class LoggingInputStream extends InputStream {
             this.bytes.getAndAdd(byts);
             this.time.getAndAdd(millis);
         }
-        final String msg = String.format(
-            "Read %d byte(s) from %s in %dms.",
-            this.bytes.get(),
-            this.source,
-            this.time.get()
+        final UncheckedText msg = new UncheckedText(
+            new FormattedText(
+                "Read %d byte(s) from %s in %dms.",
+                this.bytes.get(),
+                this.source,
+                this.time.get()
+            )
         );
         if (byts > 0) {
             if (!this.level.value().equals(Level.INFO)) {
-                this.logger.log(this.level.value(), msg);
+                this.logger.log(this.level.value(), msg.asString());
             }
         } else {
             if (this.level.value().equals(Level.INFO)) {
-                this.logger.info(msg);
+                this.logger.info(msg.asString());
             }
         }
         return byts;
@@ -162,11 +166,13 @@ public final class LoggingInputStream extends InputStream {
         final long skipped = this.origin.skip(num);
         this.logger.log(
             this.level.value(),
-            String.format(
-                "Skipped %d byte(s) from %s.",
-                skipped,
-                this.source
-            )
+            new UncheckedText(
+                new FormattedText(
+                    "Skipped %d byte(s) from %s.",
+                    skipped,
+                    this.source
+                )
+            ).asString()
         );
         return skipped;
     }
@@ -176,11 +182,13 @@ public final class LoggingInputStream extends InputStream {
         final int avail = this.origin.available();
         this.logger.log(
             this.level.value(),
-            String.format(
-                "There is(are) %d byte(s) available from %s.",
-                avail,
-                this.source
-            )
+            new UncheckedText(
+                new FormattedText(
+                    "There is(are) %d byte(s) available from %s.",
+                    avail,
+                    this.source
+                )
+            ).asString()
         );
         return avail;
     }
@@ -190,10 +198,12 @@ public final class LoggingInputStream extends InputStream {
         this.origin.close();
         this.logger.log(
             this.level.value(),
-            String.format(
-                "Closed input stream from %s.",
-                this.source
-            )
+            new UncheckedText(
+                new FormattedText(
+                    "Closed input stream from %s.",
+                    this.source
+                )
+            ).asString()
         );
     }
 
@@ -202,11 +212,13 @@ public final class LoggingInputStream extends InputStream {
         this.origin.mark(limit);
         this.logger.log(
             this.level.value(),
-            String.format(
-                "Marked position %d from %s.",
-                limit,
-                this.source
-            )
+            new UncheckedText(
+                new FormattedText(
+                    "Marked position %d from %s.",
+                    limit,
+                    this.source
+                )
+            ).asString()
         );
     }
 
@@ -215,10 +227,12 @@ public final class LoggingInputStream extends InputStream {
         this.origin.reset();
         this.logger.log(
             this.level.value(),
-            String.format(
-                "Reset input stream from %s.",
-                this.source
-            )
+            new UncheckedText(
+                new FormattedText(
+                    "Reset input stream from %s.",
+                    this.source
+                )
+            ).asString()
         );
     }
 
@@ -233,10 +247,12 @@ public final class LoggingInputStream extends InputStream {
         }
         this.logger.log(
             this.level.value(),
-            String.format(
-                msg,
-                this.source
-            )
+            new UncheckedText(
+                new FormattedText(
+                    msg,
+                    this.source
+                )
+            ).asString()
         );
         return supported;
     }
