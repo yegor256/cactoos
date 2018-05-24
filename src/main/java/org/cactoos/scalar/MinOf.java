@@ -29,12 +29,12 @@ import org.cactoos.Scalar;
 /**
  * Find the smaller among items.
  *
- * <p>Here is how you can use it to summarize numbers:</p>
+ * <p>Here is how you can use it to find the min of a set of numbers:</p>
  *
  * <pre>
- * int sum = new MinOf(1, 2, 3, 4).intValue();
- * long sum = new MinOf(1L, 2L, 3L).longValue();
- * int sum = new MinOf(numbers.toArray(new Integer[numbers.size()])).intValue();
+ * int min = new MinOf(1, 2, 3, 4).intValue();
+ * long min = new MinOf(1L, 2L, 3L).longValue();
+ * int min = new MinOf(numbers.toArray(new Integer[numbers.size()])).intValue();
  * </pre>
  *
  * <p>There is no thread-safety guarantee.

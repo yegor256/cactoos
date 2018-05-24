@@ -29,12 +29,12 @@ import org.cactoos.Scalar;
 /**
  * Find the greater among items.
  *
- * <p>Here is how you can use it to summarize numbers:</p>
+ * <p>Here is how you can use it to find the max of a set of numbers:</p>
  *
  * <pre>
- * int sum = new MaxOf(1, 2, 3, 4).intValue();
- * long sum = new MaxOf(1L, 2L, 3L).longValue();
- * int sum = new MaxOf(numbers.toArray(new Integer[numbers.size()])).intValue();
+ * int max = new MaxOf(1, 2, 3, 4).intValue();
+ * long max = new MaxOf(1L, 2L, 3L).longValue();
+ * int max = new MaxOf(numbers.toArray(new Integer[numbers.size()])).intValue();
  * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked

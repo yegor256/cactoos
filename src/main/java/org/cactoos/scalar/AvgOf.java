@@ -33,12 +33,12 @@ import org.cactoos.iterable.Mapped;
 /**
  * Average of numbers.
  *
- * <p>Here is how you can use it to fine mathematical average of numbers:</p>
+ * <p>Here is how you can use it to find the mathematical average of numbers:</p>
  *
  * <pre>
- * int sum = new AvgOf(1, 2, 3, 4).intValue();
- * long sum = new AvgOf(1L, 2L, 3L).longValue();
- * int sum = new AvgOf(numbers.toArray(new Integer[numbers.size()])).intValue();
+ * int avg = new AvgOf(1, 2, 3, 4).intValue();
+ * long avg = new AvgOf(1L, 2L, 3L).longValue();
+ * int avg = new AvgOf(numbers.toArray(new Integer[numbers.size()])).intValue();
  * </pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
