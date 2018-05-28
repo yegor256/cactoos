@@ -30,6 +30,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsCollectionWithSize;
+import org.hamcrest.collection.IsEmptyCollection;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -60,7 +63,7 @@ public final class StickyCollectionTest {
         MatcherAssert.assertThat(
             "Can't ignore the changes in the underlying iterable",
             list.size(),
-            Matchers.equalTo(list.size())
+            new IsEqual<>(list.size())
         );
     }
 
@@ -68,16 +71,16 @@ public final class StickyCollectionTest {
     public void decoratesArray() throws Exception {
         MatcherAssert.assertThat(
             "Can't decorate an array of numbers",
-            new StickyCollection<>(-1, 0).size(),
-            Matchers.equalTo(2)
+            new StickyCollection<>(-1, 0),
+            new IsCollectionWithSize<>(new IsEqual<>(2))
         );
     }
 
     @Test
     public void testEmpty() {
         MatcherAssert.assertThat(
-            new StickyCollection<>().isEmpty(),
-            Matchers.equalTo(true)
+            new StickyCollection<>(),
+            new IsEmptyCollection<>()
         );
     }
 
@@ -85,7 +88,7 @@ public final class StickyCollectionTest {
     public void testContains() {
         MatcherAssert.assertThat(
             new StickyCollection<>(1, 2).contains(1),
-            Matchers.equalTo(true)
+            new IsEqual<>(true)
         );
     }
 
@@ -110,7 +113,7 @@ public final class StickyCollectionTest {
     public void testContainsAll() {
         MatcherAssert.assertThat(
             new StickyCollection<>(1, 2).containsAll(new ListOf<>(1, 2)),
-            Matchers.equalTo(true)
+            new IsEqual<>(true)
         );
     }
 

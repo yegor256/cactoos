@@ -27,7 +27,10 @@ import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsCollectionWithSize;
+import org.hamcrest.collection.IsEmptyCollection;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 
 /**
@@ -36,6 +39,7 @@ import org.junit.Test;
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class JoinedTest {
@@ -60,8 +64,8 @@ public final class JoinedTest {
                 new IterableOf<>("hello", "world", "друг"),
                 new IterableOf<>("how", "are", "you"),
                 new IterableOf<>("what's", "up")
-            ).size(),
-            Matchers.equalTo(8)
+            ),
+            new IsCollectionWithSize<>(new IsEqual<>(8))
         );
     }
 
@@ -70,8 +74,8 @@ public final class JoinedTest {
         MatcherAssert.assertThat(
             new Joined<String>(
                 Collections.emptyList()
-            ).size(),
-            Matchers.equalTo(0)
+            ),
+            new IsCollectionWithSize<>(new IsEqual<>(0))
         );
     }
 
@@ -81,8 +85,8 @@ public final class JoinedTest {
             new Joined<String>(
                 new IterableOf<>("1", "2"),
                 new IterableOf<>("3", "4")
-            ).isEmpty(),
-            Matchers.equalTo(false)
+            ),
+            new IsNot<>(new IsEmptyCollection<>())
         );
     }
 
@@ -91,8 +95,8 @@ public final class JoinedTest {
         MatcherAssert.assertThat(
             new Joined<String>(
                 Collections.emptyList()
-            ).isEmpty(),
-            Matchers.equalTo(true)
+            ),
+            new IsEmptyCollection<>()
         );
     }
 

@@ -27,7 +27,7 @@ package org.cactoos.bytes;
 import java.util.Base64;
 import org.cactoos.io.BytesOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -47,7 +47,7 @@ public final class BytesBase64Test {
                     "Hello!"
                 )
             ).asBytes(),
-            Matchers.equalTo(
+            new IsEqual<>(
                 new BytesOf("SGVsbG8h").asBytes()
             )
         );
@@ -62,7 +62,7 @@ public final class BytesBase64Test {
                     "Hello!"
                 ), Base64.getUrlEncoder()
             ).asBytes(),
-            Matchers.equalTo(
+            new IsEqual<>(
                 new BytesOf("SGVsbG8h").asBytes()
             )
         );
@@ -77,7 +77,7 @@ public final class BytesBase64Test {
                     "Hello!"
                 ), Base64.getMimeEncoder()
             ).asBytes(),
-            Matchers.equalTo(
+            new IsEqual<>(
                 new BytesOf("SGVsbG8h").asBytes()
             )
         );
