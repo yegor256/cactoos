@@ -41,7 +41,7 @@ import org.junit.Test;
  *  Iterator for IterableEnvelope `iterator()` method.
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.TooManyMethods"})
 public final class CollectionEnvelopeTest {
     @Test(expected = UnsupportedOperationException.class)
     public void returnsIteratorWithUnsupportedRemove() {
@@ -117,6 +117,15 @@ public final class CollectionEnvelopeTest {
             "Empty collection not equal with empty collection",
             new CollectionOf<>(),
             new IsEqual<>(new CollectionOf<>())
+        );
+    }
+
+    @Test
+    public void notEqualToNull() {
+        MatcherAssert.assertThat(
+            "Empty collection equal to null",
+            new CollectionOf<>(),
+            new IsNot<>(new IsEqual<>(null))
         );
     }
 

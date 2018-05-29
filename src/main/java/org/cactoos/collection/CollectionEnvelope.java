@@ -30,7 +30,6 @@ import org.cactoos.iterator.Immutable;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.InheritanceLevel;
-import org.cactoos.scalar.Or;
 import org.cactoos.scalar.SumOfIntScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -151,14 +150,10 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
     public final boolean equals(final Object other) {
         return new UncheckedScalar<>(
             new And(
-                new Or(
-                    () -> new InheritanceLevel(
-                        other.getClass(), Collection.class
-                    ).value() > -1,
-                    () -> new InheritanceLevel(
-                        other.getClass(), CollectionEnvelope.class
-                    ).value() > -1
-                ),
+                () -> other != null,
+                () -> new InheritanceLevel(
+                    other.getClass(), CollectionEnvelope.class
+                ).value() > -1,
                 () -> {
                     final Collection<?> compared = (Collection<?>) other;
                     return this.size() == compared.size();
