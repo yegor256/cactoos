@@ -43,9 +43,9 @@ import org.cactoos.scalar.UncheckedScalar;
  *  that implements Collection class. It only compares classes derived from
  *  CollectionEnvelope.
  *  There are three approaches to solve this issue:
- *    1. add an instanceof (against our principles)
- *    2. build a new type that checks if a class implements/extends an interface
- *    3. modify InheritanceLevel to take into account (1)
+ *  1. add an instanceof (against our principles)
+ *  2. build a new type that checks if a class implements/extends an interface
+ *  3. modify InheritanceLevel to take into account (1)
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
 @SuppressWarnings(
