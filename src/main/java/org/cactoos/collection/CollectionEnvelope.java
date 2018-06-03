@@ -39,6 +39,13 @@ import org.cactoos.scalar.UncheckedScalar;
  * <p>There is no thread-safety guarantee.</p>
  * @param <X> Element type
  * @since 0.23
+ * @todo #881:30min CollectionEnvelope equals method does not compare objects
+ *  that implements Collection class. It only compares classes derived from
+ *  CollectionEnvelope.
+ *  There are three approaches to solve this issue:
+ *    1. add an instanceof (against our principles)
+ *    2. build a new type that checks if a class implements/extends an interface
+ *    3. modify InheritanceLevel to take into account (1)
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
 @SuppressWarnings(
