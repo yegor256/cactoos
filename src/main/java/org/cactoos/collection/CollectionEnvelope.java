@@ -27,19 +27,25 @@ import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.Scalar;
 import org.cactoos.iterator.Immutable;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.InheritanceLevel;
+import org.cactoos.scalar.SumOfIntScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Base collection.
  *
  * <p>There is no thread-safety guarantee.</p>
- *
  * @param <X> Element type
  * @since 0.23
- * @todo #844:30min Implement methods equals and hashCode for this class.
- *  Implementation should rely on the items of the nested collection, but not
- *  on default JVM impl. Class {@link org.cactoos.map.MapEnvelope} can be used
- *  as an example.
+ * @todo #881:30min CollectionEnvelope equals method does not compare objects
+ *  that implements Collection class. It only compares classes derived from
+ *  CollectionEnvelope.
+ *  There are three approaches to solve this issue:
+ *  1. add an instanceof (against our principles)
+ *  2. build a new type that checks if a class implements/extends an interface
+ *  3. modify InheritanceLevel to take into account (1)
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
 @SuppressWarnings(
@@ -147,4 +153,44 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
         return this.col.value().toString();
     }
 
+    @Override
+    public final boolean equals(final Object other) {
+        return new UncheckedScalar<>(
+            new And(
+                () -> other != null,
+                () -> new InheritanceLevel(
+                    other.getClass(), CollectionEnvelope.class
+                ).value() > -1,
+                () -> {
+                    final Collection<?> compared = (Collection<?>) other;
+                    return this.size() == compared.size();
+                },
+                () -> {
+                    final Iterable<?> compared = (Iterable<?>) other;
+                    final Iterator<?> iterator = compared.iterator();
+                    return new UncheckedScalar<>(
+                        new And(
+                            (X input) -> input.equals(iterator.next()),
+                            this
+                        )
+                    ).value();
+                }
+            )
+        ).value();
+    }
+
+    // @checkstyle MagicNumberCheck (30 lines)
+    @Override
+    public final int hashCode() {
+        return new UncheckedScalar<>(
+            new Folded<>(
+                42,
+                (hash, entry) -> new SumOfIntScalar(
+                    () -> 37 * hash,
+                    entry::hashCode
+                ).value(),
+                this
+            )
+        ).value();
+    }
 }

@@ -118,16 +118,6 @@ abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        return this.list.value().equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.list.value().hashCode();
-    }
-
-    @Override
     public String toString() {
         return this.list.value().toString();
     }
