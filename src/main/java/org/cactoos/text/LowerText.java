@@ -40,6 +40,14 @@ public final class LowerText extends TextEnvelope {
      * Ctor.
      * @param text The text
      */
+    public LowerText(final String text) {
+        this(new TextOf(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
     public LowerText(final Text text) {
         this(text, Locale.ENGLISH);
     }

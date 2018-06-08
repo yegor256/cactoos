@@ -49,6 +49,14 @@ public final class UpperText implements Text {
      * Ctor.
      * @param text The text
      */
+    public UpperText(final String text) {
+        this(new TextOf(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
     public UpperText(final Text text) {
         this(text, Locale.ENGLISH);
     }

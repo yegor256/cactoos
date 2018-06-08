@@ -43,4 +43,12 @@ public final class LowerTextTest {
         );
     }
 
+    @Test
+    public void convertsString() {
+        MatcherAssert.assertThat(
+            "Can't lower case a string",
+            new LowerText("WoRLd!"),
+            new TextHasString("world!")
+        );
+    }
 }

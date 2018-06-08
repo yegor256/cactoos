@@ -43,4 +43,12 @@ public final class UpperTextTest {
         );
     }
 
+    @Test
+    public void convertsString() {
+        MatcherAssert.assertThat(
+            "Can't upper case a string",
+            new UpperText("World!"),
+            new TextHasString("WORLD!")
+        );
+    }
 }
