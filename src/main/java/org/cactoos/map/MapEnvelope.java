@@ -150,7 +150,7 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
                 () -> this == other,
                 new And(
                     () -> this.getClass() == other.getClass(),
-                    () -> this.sizeEqual((MapEnvelope<?, ?>) other),
+                    () -> this.size() == ((MapEnvelope<?, ?>) other).size(),
                     () -> this.contentsEqual((MapEnvelope<?, ?>) other)
                 )
             )
@@ -176,16 +176,6 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
                 this.map.value().entrySet()
             )
         ).value();
-    }
-
-    /**
-     * Indicates whether an other {@code MapEnvelope} has the same number
-     * of entries as this one.
-     * @param other Another instance of {@code MapEnvelope} to compare with
-     * @return True if number of entries are the same, false otherwise
-     */
-    private boolean sizeEqual(final MapEnvelope<?, ?> other) {
-        return this.entrySet().size() == other.entrySet().size();
     }
 
     /**
