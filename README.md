@@ -20,7 +20,8 @@
 
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
-until we release version 1.0 (<del>July 2017</del> May 2018).
+until we release version 1.0. You can view our progress towards
+this release [here](https://github.com/yegor256/cactoos/milestone/1).
 
 Cactoos is a collection of object-oriented Java primitives.
 
