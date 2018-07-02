@@ -24,11 +24,12 @@
 package org.cactoos.map;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.Scalar;
+import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.Or;
 import org.cactoos.scalar.SumOfIntScalar;
 import org.cactoos.scalar.UncheckedScalar;
 import org.cactoos.text.TextOf;
@@ -143,30 +144,17 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     }
 
     @Override
-    @SuppressWarnings("PMD.OnlyOneReturn")
     public final boolean equals(final Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (getClass() != other.getClass()) {
-            return false;
-        }
-        final MapEnvelope<?, ?> that = (MapEnvelope<?, ?>) other;
-        final Iterator<Entry<X, Y>> these =
-            this.map.value().entrySet().iterator();
-        final Iterator<? extends Entry<?, ?>> those =
-            that.map.value().entrySet().iterator();
-        while (these.hasNext() && those.hasNext()) {
-            final Entry<X, Y> first = these.next();
-            final Entry<?, ?> second = those.next();
-            if (!first.getKey().equals(second.getKey())) {
-                return false;
-            }
-            if (!first.getValue().equals(second.getValue())) {
-                return false;
-            }
-        }
-        return !these.hasNext() && !those.hasNext();
+        return new UncheckedScalar<>(
+            new Or(
+                () -> this == other,
+                new And(
+                    () -> this.getClass() == other.getClass(),
+                    () -> this.sizeEqual((MapEnvelope<?, ?>) other),
+                    () -> this.contentsEqual((MapEnvelope<?, ?>) other)
+                )
+            )
+        ).value();
     }
 
     // @checkstyle MagicNumberCheck (30 lines)
@@ -186,6 +174,37 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
                     ).value();
                 },
                 this.map.value().entrySet()
+            )
+        ).value();
+    }
+
+    /**
+     * Indicates whether an other {@code MapEnvelope} has the same number
+     * of entries as this one.
+     * @param other Another instance of {@code MapEnvelope} to compare with
+     * @return True if number of entries are the same, false otherwise
+     */
+    private boolean sizeEqual(final MapEnvelope<?, ?> other) {
+        return this.entrySet().size() == other.entrySet().size();
+    }
+
+    /**
+     * Indicates whether contents of an other {@code MapEnvelope} is the same
+     * as contents of this one on entry-by-entry basis.
+     * @param other Another instance of {@code MapEnvelope} to compare with
+     * @return True if contents are equal false otherwise
+     */
+    private Boolean contentsEqual(final MapEnvelope<?, ?> other) {
+        return new UncheckedScalar<>(
+            new And(
+                (entry) -> {
+                    final X key = entry.getKey();
+                    final Y value = entry.getValue();
+                    return new And(
+                        () -> other.containsKey(key),
+                        () -> other.get(key).equals(value)
+                    ).value();
+                }, this.entrySet()
             )
         ).value();
     }
