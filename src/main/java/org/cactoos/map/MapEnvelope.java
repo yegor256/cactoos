@@ -149,9 +149,9 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
             new Or(
                 () -> this == other,
                 new And(
-                    () -> this.getClass() == other.getClass(),
-                    () -> this.size() == ((MapEnvelope<?, ?>) other).size(),
-                    () -> this.contentsEqual((MapEnvelope<?, ?>) other)
+                    () -> Map.class.isAssignableFrom(other.getClass()),
+                    () -> this.size() == ((Map<?, ?>) other).size(),
+                    () -> this.contentsEqual((Map<?, ?>) other)
                 )
             )
         ).value();
@@ -179,12 +179,12 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     }
 
     /**
-     * Indicates whether contents of an other {@code MapEnvelope} is the same
+     * Indicates whether contents of an other {@code Map} is the same
      * as contents of this one on entry-by-entry basis.
-     * @param other Another instance of {@code MapEnvelope} to compare with
+     * @param other Another instance of {@code Map} to compare with
      * @return True if contents are equal false otherwise
      */
-    private Boolean contentsEqual(final MapEnvelope<?, ?> other) {
+    private Boolean contentsEqual(final Map<?, ?> other) {
         return new UncheckedScalar<>(
             new And(
                 (entry) -> {
