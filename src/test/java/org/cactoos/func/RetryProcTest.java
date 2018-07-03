@@ -23,34 +23,28 @@
  */
 package org.cactoos.func;
 
-import java.security.SecureRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link RetryFunc}.
+ * Test case for {@link RetryProc}.
  *
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 line)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class RetryFuncTest {
+public final class RetryProcTest {
 
     @Test
-    public void runsFuncMultipleTimes() throws Exception {
+    public void runsProcDefaultMultipleTimes() throws Exception {
+        final AtomicInteger number = new AtomicInteger(0);
+        new RetryProc<>(AtomicInteger::incrementAndGet).exec(number);
         MatcherAssert.assertThat(
-            new RetryFunc<>(
-                input -> {
-                    if (new SecureRandom().nextDouble() > 0.3d) {
-                        throw new IllegalArgumentException("May happen");
-                    }
-                    return 0;
-                },
-                Integer.MAX_VALUE
-            ).apply(true),
-            Matchers.equalTo(0)
+            number.get(),
+            Matchers.equalTo(1)
         );
     }
 }

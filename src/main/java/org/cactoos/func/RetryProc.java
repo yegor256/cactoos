@@ -24,22 +24,22 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
- * Func that will try a few times before throwing an exception.
+ * Proc that will try a few times before throwing an exception.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of input
- * @param <Y> Type of output
- * @since 0.8
+ * @since 0.36
  */
-public final class RetryFunc<X, Y> implements Func<X, Y> {
+public final class RetryProc<X> implements Proc<X> {
 
     /**
-     * Original func.
+     * Original proc.
      */
-    private final Func<X, Y> func;
+    private final Proc<X> proc;
 
     /**
      * Exit condition.
@@ -48,42 +48,46 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
-     * @param fnc Func original
+     * @param prc Proc original
+     * @since 0.12
      */
-    public RetryFunc(final Func<X, Y> fnc) {
+    public RetryProc(final Proc<X> prc) {
         // @checkstyle MagicNumberCheck (1 line)
-        this(fnc, 3);
+        this(prc, 3);
     }
 
     /**
      * Ctor.
-     * @param fnc Func original
+     * @param prc Proc original
      * @param attempts Maximum number of attempts
+     * @since 0.12
      */
-    public RetryFunc(final Func<X, Y> fnc, final int attempts) {
-        this(fnc, attempt -> attempt >= attempts);
+    public RetryProc(final Proc<X> prc, final int attempts) {
+        this(prc, attempt -> attempt >= attempts);
     }
 
     /**
      * Ctor.
-     * @param fnc Func original
+     * @param prc Proc original
      * @param ext Exit condition, returns TRUE if there is no more reason to try
+     * @since 0.12
      */
-    public RetryFunc(final Func<X, Y> fnc, final Func<Integer, Boolean> ext) {
-        this.func = fnc;
+    public RetryProc(final Proc<X> prc, final Func<Integer, Boolean> ext) {
+        this.proc = prc;
         this.exit = ext;
     }
 
     @Override
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public Y apply(final X input) throws Exception {
+    public void exec(final X input) throws Exception {
         int attempt = 0;
         Exception error = new IllegalArgumentException(
             "An immediate exit, didn't have a chance to try at least once"
         );
         while (!this.exit.apply(attempt)) {
             try {
-                return this.func.apply(input);
+                this.proc.exec(input);
+                return;
             } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
                 error = ex;
@@ -96,5 +100,4 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
         }
         throw error;
     }
-
 }
