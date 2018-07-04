@@ -23,6 +23,7 @@
  */
 package org.cactoos.time;
 
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Locale;
@@ -40,7 +41,7 @@ import org.junit.Test;
 public final class OffsetDateTimeAsTextTest {
 
     @Test
-    public void offsetDateTimeFormattedAsIsoDateTime() {
+    public void offsetDateTimeFormattedAsIsoDateTime() throws IOException {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
@@ -52,7 +53,7 @@ public final class OffsetDateTimeAsTextTest {
     }
 
     @Test
-    public void offsetDateTimeFormattedWithFormatString() {
+    public void offsetDateTimeFormattedWithFormatString() throws IOException {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
@@ -64,7 +65,8 @@ public final class OffsetDateTimeAsTextTest {
     }
 
     @Test
-    public void offsetDateTimeFormattedWithFormatStringWithLocale() {
+    public void offsetDateTimeFormattedWithFormatStringWithLocale()
+        throws IOException {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
@@ -78,7 +80,7 @@ public final class OffsetDateTimeAsTextTest {
     }
 
     @Test
-    public void currentOffsetDateTimeAsText() {
+    public void currentOffsetDateTimeAsText() throws IOException {
         MatcherAssert.assertThat(
             "Can't format a OffsetDateTime with ISO format.",
             new OffsetDateTimeAsText(OffsetDateTime.now()).asString(),

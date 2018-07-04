@@ -23,6 +23,7 @@
  */
 package org.cactoos.time;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -41,7 +42,7 @@ import org.junit.Test;
 public final class LocalDateTimeAsTextTest {
 
     @Test
-    public void localDateTimeFormattedAsIsoDateTime() {
+    public void localDateTimeFormattedAsIsoDateTime() throws IOException {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
@@ -58,7 +59,7 @@ public final class LocalDateTimeAsTextTest {
     }
 
     @Test
-    public void localDateTimeFormattedWithFormatString() {
+    public void localDateTimeFormattedWithFormatString() throws IOException {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
@@ -70,7 +71,8 @@ public final class LocalDateTimeAsTextTest {
     }
 
     @Test
-    public void localDateTimeFormattedWithFormatStringWithLocale() {
+    public void localDateTimeFormattedWithFormatStringWithLocale()
+        throws IOException {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
@@ -84,7 +86,7 @@ public final class LocalDateTimeAsTextTest {
     }
 
     @Test
-    public void currentLocalDateTimeAsText() {
+    public void currentLocalDateTimeAsText() throws IOException {
         MatcherAssert.assertThat(
             "Can't format a LocalDateTime with ISO format.",
             new LocalDateTimeAsText(LocalDateTime.now()).asString(),
