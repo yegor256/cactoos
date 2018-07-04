@@ -26,20 +26,15 @@ package org.cactoos.time;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import org.cactoos.Text;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.Scalar;
+import org.cactoos.text.TextEnvelope;
 
 /**
  * Formatter for {@link java.time.OffsetDateTime} instances.
  * @since 0.27
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class OffsetDateTimeAsText implements Text {
-
-    /**
-     * Scalar carrying the formatted date.
-     */
-    private final UncheckedScalar<String> formatted;
+public final class OffsetDateTimeAsText extends TextEnvelope {
 
     /**
      * Formats date using ISO date time format.
@@ -78,14 +73,6 @@ public final class OffsetDateTimeAsText implements Text {
      */
     public OffsetDateTimeAsText(final OffsetDateTime date,
         final DateTimeFormatter formatter) {
-        this.formatted = new UncheckedScalar<>(
-            () -> formatter.format(date)
-        );
+        super((Scalar<String>) () -> formatter.format(date));
     }
-
-    @Override
-    public String asString() {
-        return this.formatted.value();
-    }
-
 }

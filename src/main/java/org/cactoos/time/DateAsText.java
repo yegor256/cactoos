@@ -29,19 +29,15 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
-import org.cactoos.Text;
+import org.cactoos.Scalar;
+import org.cactoos.text.TextEnvelope;
 
 /**
  * Formatter for {@link Date} instances.
  * @since 0.27
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class DateAsText implements Text {
-
-    /**
-     * Internal text carrying the formatted date.
-     */
-    private final ZonedDateTimeAsText text;
+public final class DateAsText extends TextEnvelope {
 
     /**
      * Formats current time using the ISO format.
@@ -124,16 +120,13 @@ public final class DateAsText implements Text {
      * @param formatter The formatter to use.
      */
     public DateAsText(final Date date, final DateTimeFormatter formatter) {
-        this.text = new ZonedDateTimeAsText(
-            ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")),
+        super((Scalar<String>) () -> new ZonedDateTimeAsText(
+            ZonedDateTime.ofInstant(
+                date.toInstant(),
+                ZoneId.of("UTC")
+            ),
             formatter
-        );
+        ).asString());
     }
-
-    @Override
-    public String asString() {
-        return this.text.asString();
-    }
-
 }
 

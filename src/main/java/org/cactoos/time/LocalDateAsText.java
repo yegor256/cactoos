@@ -29,20 +29,15 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import org.cactoos.Text;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.Scalar;
+import org.cactoos.text.TextEnvelope;
 
 /**
  * Formatter for {@link java.time.LocalDate} instances.
  * @since 0.27
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class LocalDateAsText implements Text {
-
-    /**
-     * Scalar carrying the formatted date.
-     */
-    private final UncheckedScalar<String> formatted;
+public final class LocalDateAsText extends TextEnvelope {
 
     /**
      * Formats date using ISO date time format.
@@ -80,16 +75,8 @@ public final class LocalDateAsText implements Text {
      */
     public LocalDateAsText(final LocalDate date,
         final DateTimeFormatter formatter) {
-        this.formatted = new UncheckedScalar<>(
-            () -> formatter.format(
-                ZonedDateTime.of(date, LocalTime.MIN, ZoneId.systemDefault())
-            )
-        );
+        super((Scalar<String>) () -> formatter.format(
+            ZonedDateTime.of(date, LocalTime.MIN, ZoneId.systemDefault())
+        ));
     }
-
-    @Override
-    public String asString() {
-        return this.formatted.value();
-    }
-
 }
