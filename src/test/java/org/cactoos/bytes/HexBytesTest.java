@@ -43,7 +43,7 @@ import org.llorllale.cactoos.matchers.MatcherOf;
 public final class HexBytesTest {
 
     @Test
-    public void empytText() throws Exception {
+    public void emptyText() throws Exception {
         MatcherAssert.assertThat(
             "Can't represent an empty hexadecimal text",
             new HexBytes(new TextOf("")).asBytes(),
