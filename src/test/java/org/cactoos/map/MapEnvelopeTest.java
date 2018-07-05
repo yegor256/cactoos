@@ -314,4 +314,20 @@ public final class MapEnvelopeTest {
             new MapEntry<>("key11", null);
         new MapOf<String, String>(first, second).hashCode();
     }
+
+    @Test
+    public void comparesClassesDerivedFromMapEnvelope() {
+        final MapEntry<String, String> entry =
+            new MapEntry<>("key12", "value12");
+        MatcherAssert.assertThat(
+            new MapOf<String, String>(
+                entry
+            ),
+            new IsEqual<>(
+                new StickyMap<String, String>(
+                    entry
+                )
+            )
+        );
+    }
 }
