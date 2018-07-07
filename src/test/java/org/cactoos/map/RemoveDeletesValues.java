@@ -26,8 +26,11 @@ package org.cactoos.map;
 import java.util.Map;
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.collection.IsMapContaining;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 
 /**
  * Check a remove method.
@@ -64,20 +67,28 @@ public final class RemoveDeletesValues<K, V> extends
     public boolean matchesSafely(final Map<K, V> map) {
         map.remove(this.key);
         MatcherAssert.assertThat(
+            "Contains the key/value after remove",
             map,
-            Matchers.not(Matchers.hasKey(this.key))
+            new IsNot<>(
+                new IsMapContaining<>(
+                    new IsEqual<>(this.key),
+                    new IsEqual<>(this.value)
+                )
+            )
         );
         MatcherAssert.assertThat(
-            map,
-            Matchers.not(Matchers.hasValue(this.value))
-        );
-        MatcherAssert.assertThat(
+            "Contains the key in #keySet() after remove",
             map.keySet(),
-            Matchers.not(Matchers.hasItem(this.key))
+            new IsNot<>(
+                new IsCollectionContaining<>(new IsEqual<>(this.key))
+            )
         );
         MatcherAssert.assertThat(
+            "Contains the value in #values() after remove",
             map.values(),
-            Matchers.not(Matchers.hasItem(this.value))
+            new IsNot<>(
+                new IsCollectionContaining<>(new IsEqual<>(this.value))
+            )
         );
         return true;
     }

@@ -31,7 +31,10 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Repeated;
 import org.cactoos.text.FormattedText;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsMapContaining;
+import org.hamcrest.core.IsAnything;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.StringEndsWith;
 import org.junit.Test;
 
 /**
@@ -72,7 +75,7 @@ public final class StickyMapTest {
         MatcherAssert.assertThat(
             "Can't ignore the changes in the underlying map",
             map.size(),
-            Matchers.equalTo(map.size())
+            new IsEqual<>(map.size())
         );
     }
 
@@ -84,7 +87,10 @@ public final class StickyMapTest {
                 new MapEntry<>("first", "Jeffrey"),
                 new MapEntry<>("last", "Lebowski")
             ),
-            Matchers.hasValue(Matchers.endsWith("ski"))
+            new IsMapContaining<>(
+                new IsAnything<>(),
+                new StringEndsWith("ski")
+            )
         );
     }
 
@@ -100,7 +106,10 @@ public final class StickyMapTest {
                 new MapEntry<>("year", "2017"),
                 new MapEntry<>("mileage", "12,000")
             ),
-            Matchers.hasValue(Matchers.endsWith(",000"))
+            new IsMapContaining<>(
+                new IsAnything<>(),
+                new StringEndsWith(",000")
+            )
         );
     }
 
@@ -118,7 +127,10 @@ public final class StickyMapTest {
                 ),
                 new IterableOf<>("yellow", "red", "blue")
             ),
-            Matchers.hasValue(Matchers.equalTo("BLUE"))
+            new IsMapContaining<>(
+                new IsAnything<>(),
+                new IsEqual<>("BLUE")
+            )
         );
     }
 
@@ -135,7 +147,10 @@ public final class StickyMapTest {
                 ),
                 new IterableOf<>("yellow!", "red!", "blue!")
             ),
-            Matchers.hasValue(Matchers.equalTo("BLUE!"))
+            new IsMapContaining<>(
+                new IsAnything<>(),
+                new IsEqual<>("BLUE!")
+            )
         );
     }
 }

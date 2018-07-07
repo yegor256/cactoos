@@ -26,7 +26,6 @@ package org.cactoos.map;
 import java.util.Map;
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 
 /**
@@ -63,10 +62,11 @@ public final class PutUpdatesValues<K, V> extends
     @Override
     public boolean matchesSafely(final Map<K, V> map) {
         map.put(this.key, this.value);
-        MatcherAssert.assertThat(map, Matchers.hasKey(this.key));
-        MatcherAssert.assertThat(map, Matchers.hasValue(this.value));
-        MatcherAssert.assertThat(map.keySet(), Matchers.hasItem(this.key));
-        MatcherAssert.assertThat(map.values(), Matchers.hasItem(this.value));
+        MatcherAssert.assertThat(
+            "Can't behave as a map after put",
+            map,
+            new BehavesAsMap<K, V>(this.key, this.value)
+        );
         return true;
     }
 

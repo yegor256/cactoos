@@ -26,7 +26,6 @@ package org.cactoos.map;
 import java.util.Map;
 import org.cactoos.func.FuncOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Rule;
@@ -142,7 +141,7 @@ public final class MapEnvelopeTest {
             new MapNoNulls<>(
                 new MapOf<Integer, Integer>()
             ).isEmpty(),
-            Matchers.is(true)
+            new IsEqual<>(true)
         );
     }
 
@@ -155,7 +154,7 @@ public final class MapEnvelopeTest {
                     new MapEntry<>(1, 0)
                 )
             ).isEmpty(),
-            Matchers.is(false)
+            new IsEqual<>(false)
         );
     }
 
@@ -168,7 +167,7 @@ public final class MapEnvelopeTest {
                     new MapEntry<>(1, 0)
                 )
             ).containsKey(1),
-            Matchers.is(true)
+            new IsEqual<>(true)
         );
     }
 
@@ -181,7 +180,7 @@ public final class MapEnvelopeTest {
                     new MapEntry<>(1, 0)
                 )
             ).containsKey(0),
-            Matchers.is(false)
+            new IsEqual<>(false)
         );
     }
 
@@ -194,7 +193,7 @@ public final class MapEnvelopeTest {
                     new MapEntry<>(1, 0)
                 )
             ).containsValue(0),
-            Matchers.is(true)
+            new IsEqual<>(true)
         );
     }
 
@@ -207,7 +206,7 @@ public final class MapEnvelopeTest {
                     new MapEntry<>(1, 0)
                 )
             ).containsValue(1),
-            Matchers.is(false)
+            new IsEqual<>(false)
         );
     }
 
