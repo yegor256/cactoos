@@ -52,19 +52,6 @@ public final class TimedFuncTest {
         ).apply(true);
     }
 
-    @Test(expected = TimeoutException.class)
-    public void procGetsInterrupted() throws Exception {
-        final long period = 100L;
-        new TimedFunc<Boolean, Boolean>(
-            input -> {
-                new And(
-                    new Endless<>(() -> input)
-                ).value();
-            },
-            period
-        ).apply(true);
-    }
-
     @Test
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void futureTaskIsCancelled() {
