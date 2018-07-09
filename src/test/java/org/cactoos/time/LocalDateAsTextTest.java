@@ -23,6 +23,7 @@
  */
 package org.cactoos.time;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -42,7 +43,7 @@ import org.junit.Test;
 public final class LocalDateAsTextTest {
 
     @Test
-    public void localDateFormattedAsIsoDateTime() {
+    public void localDateFormattedAsIsoDateTime() throws IOException {
         final LocalDate date = LocalDate.of(2017, 12, 13);
         MatcherAssert.assertThat(
             "Can't format a LocalDate with default/ISO format.",
@@ -58,7 +59,7 @@ public final class LocalDateAsTextTest {
     }
 
     @Test
-    public void localDateFormattedWithFormatString() {
+    public void localDateFormattedWithFormatString() throws IOException {
         final LocalDate date = LocalDate.of(2017, 12, 13);
         MatcherAssert.assertThat(
             "Can't format a LocalDate with format.",
@@ -68,7 +69,8 @@ public final class LocalDateAsTextTest {
     }
 
     @Test
-    public void localDateFormattedWithFormatStringWithLocale() {
+    public void localDateFormattedWithFormatStringWithLocale()
+        throws IOException {
         final LocalDate date = LocalDate.of(2017, 12, 13);
         MatcherAssert.assertThat(
             "Can't format a LocalDate with format using locale.",
@@ -80,12 +82,11 @@ public final class LocalDateAsTextTest {
     }
 
     @Test
-    public void currentLocalDateAsText() {
+    public void currentLocalDateAsText() throws IOException {
         MatcherAssert.assertThat(
             "Can't format a LocalDate with ISO format.",
             new LocalDateAsText(LocalDate.now()).asString(),
             Matchers.notNullValue()
         );
     }
-
 }

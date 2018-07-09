@@ -23,6 +23,7 @@
  */
 package org.cactoos.time;
 
+import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Locale;
@@ -40,7 +41,7 @@ import org.junit.Test;
 public final class ZonedDateTimeAsTextTest {
 
     @Test
-    public void zonedDateTimeFormattedAsIsoDateTime() {
+    public void zonedDateTimeFormattedAsIsoDateTime() throws IOException {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
@@ -52,7 +53,7 @@ public final class ZonedDateTimeAsTextTest {
     }
 
     @Test
-    public void zonedDateTimeFormattedWithFormatString() {
+    public void zonedDateTimeFormattedWithFormatString() throws IOException {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
@@ -64,7 +65,8 @@ public final class ZonedDateTimeAsTextTest {
     }
 
     @Test
-    public void zonedDateTimeFormattedWithFormatStringWithLocale() {
+    public void zonedDateTimeFormattedWithFormatStringWithLocale()
+        throws IOException {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
@@ -78,7 +80,7 @@ public final class ZonedDateTimeAsTextTest {
     }
 
     @Test
-    public void currentZonedDateTimeAsText() {
+    public void currentZonedDateTimeAsText() throws IOException {
         MatcherAssert.assertThat(
             "Can't format a ZonedDateTime with ISO format.",
             new ZonedDateTimeAsText(ZonedDateTime.now()).asString(),

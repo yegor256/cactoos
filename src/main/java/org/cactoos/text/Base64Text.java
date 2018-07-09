@@ -30,8 +30,10 @@ import org.cactoos.io.BytesOf;
 
 /**
  * Decodes the origin text using the Base64 encoding scheme.
- *
  * @since 0.20.2
+ * @todo #897:30min Continue refactoring all classes implementing Text to extend
+ *  TextEnvelope - asString() should be removed and implementation from
+ *  TextEnvelope should be used.
  */
 public final class Base64Text implements Text {
 
@@ -66,5 +68,4 @@ public final class Base64Text implements Text {
             )
         ).asString();
     }
-
 }
