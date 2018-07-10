@@ -49,7 +49,7 @@ public final class LocalDateAsText implements Text {
      * @param date The date to format.
      */
     public LocalDateAsText(final LocalDate date) {
-        this(date, new Iso().get());
+        this(date, new Iso().value());
     }
 
     /**

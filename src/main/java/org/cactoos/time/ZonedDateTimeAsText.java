@@ -46,7 +46,7 @@ public final class ZonedDateTimeAsText implements Text {
      * @param date The date to format.
      */
     public ZonedDateTimeAsText(final ZonedDateTime date) {
-        this(date, new Iso().get());
+        this(date, new Iso().value());
     }
 
     /**

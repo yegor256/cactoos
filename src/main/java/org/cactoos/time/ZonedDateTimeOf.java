@@ -44,7 +44,7 @@ public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
      * @param date The date to parse.
      */
     public ZonedDateTimeOf(final CharSequence date) {
-        this(date, new Iso().get());
+        this(date, new Iso().value());
     }
 
     /**

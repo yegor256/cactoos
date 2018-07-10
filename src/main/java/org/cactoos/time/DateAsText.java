@@ -57,7 +57,7 @@ public final class DateAsText implements Text {
     public DateAsText(final long milliseconds) {
         this(
             Date.from(Instant.ofEpochMilli(milliseconds)),
-            new Iso().get()
+            new Iso().value()
         );
     }
 
@@ -92,7 +92,7 @@ public final class DateAsText implements Text {
      * @param date The date to format.
      */
     public DateAsText(final Date date) {
-        this(date, new Iso().get());
+        this(date, new Iso().value());
     }
 
     /**

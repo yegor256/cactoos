@@ -46,7 +46,7 @@ public final class OffsetDateTimeAsText implements Text {
      * @param date The date to format.
      */
     public OffsetDateTimeAsText(final OffsetDateTime date) {
-        this(date, new Iso().get());
+        this(date, new Iso().value());
     }
 
     /**

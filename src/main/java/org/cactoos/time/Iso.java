@@ -24,24 +24,16 @@
 package org.cactoos.time;
 
 import java.time.format.DateTimeFormatter;
+import org.cactoos.Scalar;
 
 /**
  * The formatter.
  * @since 0.27
  */
-final class Iso {
+final class Iso implements Scalar<DateTimeFormatter> {
 
-    /**
-     * Take it.
-     *
-     * The assert is here in order to fool our static analyzers. They don't
-     * like this method, since it doesn't touch "this" and has to be
-     * static because of that.
-     *
-     * @return Formatter
-     */
-    public DateTimeFormatter get() {
-        assert this != null;
+    @Override
+    public DateTimeFormatter value() {
         return DateTimeFormatter.ISO_OFFSET_DATE_TIME;
     }
 
