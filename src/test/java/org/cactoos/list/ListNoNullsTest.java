@@ -101,4 +101,34 @@ public final class ListNoNullsTest {
             list
         ).remove(0);
     }
+
+    @Test
+    public void iteratorThrowsErrorWithRemoveOperation() {
+        this.exception.expect(UnsupportedOperationException.class);
+        final ArrayList<Integer> list = new ArrayList<>(1);
+        list.add(1);
+        new ListNoNulls<>(
+            list
+        ).removeIf(value -> value == 1);
+    }
+
+    @Test
+    public void iteratorThrowsErrorWithNullValues() {
+        this.exception.expect(IllegalStateException.class);
+        final ArrayList<Integer> list = new ArrayList<>(2);
+        list.add(1);
+        list.add(null);
+        new ListNoNulls<>(
+            list
+        ).forEach(value -> value = 2);
+    }
+
+    @Test
+    public void iteratorAvoidNullPointerException() {
+        final ArrayList<Integer> list = null;
+        new ListNoNulls<>(
+            list
+        ).iterator();
+    }
+
 }

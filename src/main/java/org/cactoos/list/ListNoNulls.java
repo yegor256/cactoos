@@ -24,6 +24,7 @@
 package org.cactoos.list;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -72,7 +73,15 @@ public final class ListNoNulls<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new CollectionNoNulls<>(this.list).iterator();
+        final Iterator<T> iterator;
+        if (this.list == null) {
+            iterator = Collections.emptyIterator();
+        } else {
+            iterator = new CollectionNoNulls<>(
+            Collections.unmodifiableList(this.list)
+            ).iterator();
+        }
+        return iterator;
     }
 
     @Override
