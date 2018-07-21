@@ -57,7 +57,7 @@ public interface Output {
 
     /**
      * Get write access to it.
-     * @return InputStream to read from
+     * @return OutputStream to write to
      * @throws Exception If something goes wrong
      */
     OutputStream stream() throws Exception;

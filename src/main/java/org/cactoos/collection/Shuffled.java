@@ -29,13 +29,12 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Sorted collection.
+ * Shuffled collection.
  *
- * <p>Pay attention that sorting will happen on each operation
- * with the collection. Every time you touch it, it will fetch the
- * entire collection from the encapsulated object and shuffle it. If you
- * want to avoid that "side-effect", decorate it with
- * {@link StickyCollection}.</p>
+ * <p>Pay attention that shuffling will happen every time you touch
+ * it: it will fetch all elements from the encapsulated collection and
+ * shuffle them again on each call to any of its methods. If you want to
+ * avoid that "side-effect", decorate it with {@link StickyCollection}.</p>
  *
  * <p>There is no thread-safety guarantee.</p>
  *
