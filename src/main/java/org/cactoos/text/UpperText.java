@@ -72,7 +72,7 @@ public final class UpperText implements Text {
     }
 
     @Override
-    public String asString() throws Exception {
+    public String asString() {
         return this.origin.asString().toUpperCase(this.locale);
     }
 

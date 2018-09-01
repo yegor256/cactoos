@@ -26,10 +26,6 @@ package org.cactoos;
 /**
  * Text.
  *
- * <p>If you don't want to have any checked exceptions being thrown
- * out of your {@link Text}, you can use
- * {@link org.cactoos.text.UncheckedText} decorator.</p>
- *
  * <p>There is no thread-safety guarantee.
  *
  * @see org.cactoos.text.TextOf
@@ -40,9 +36,8 @@ public interface Text {
     /**
      * Convert it to the string.
      * @return The string
-     * @throws Exception If fails
      */
-    String asString() throws Exception;
+    String asString();
 
     /**
      * Text check for no nulls.
@@ -66,7 +61,7 @@ public interface Text {
         }
 
         @Override
-        public String asString() throws Exception {
+        public String asString() {
             if (this.origin == null) {
                 throw new IllegalArgumentException(
                     "NULL instead of a valid text"

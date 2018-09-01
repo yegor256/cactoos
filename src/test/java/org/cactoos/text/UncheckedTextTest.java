@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.junit.Test;
 
 /**
@@ -38,7 +37,7 @@ public final class UncheckedTextTest {
     public void rethrowsCheckedToUncheckedException() {
         new UncheckedText(
             () -> {
-                throw new IOException("intended");
+                throw new IllegalStateException("intended");
             }
         ).asString();
     }

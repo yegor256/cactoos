@@ -48,7 +48,7 @@ public final class TrimmedLeftText implements Text {
     }
 
     @Override
-    public String asString() throws Exception {
+    public String asString() {
         final String text = this.origin.asString();
         int cursor = 0;
         while (cursor < text.length() && Character.isWhitespace(

@@ -23,7 +23,7 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Arrays;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
@@ -91,7 +91,7 @@ public final class ResourceOfTest {
         );
     }
 
-    @Test(expected = IOException.class)
+    @Test(expected = UncheckedIOException.class)
     public void throwsWhenResourceIsAbsent() throws Exception {
         new TextOf(
             new ResourceOf(

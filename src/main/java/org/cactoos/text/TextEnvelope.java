@@ -23,10 +23,8 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -40,14 +38,14 @@ public abstract class TextEnvelope implements Text {
     /**
      * String value of the envelope.
      */
-    private final IoCheckedScalar<String> origin;
+    private final UncheckedScalar<String> origin;
 
     /**
      * Ctor.
      * @param text Text representing the text value.
      */
     public TextEnvelope(final Text text) {
-        this(new IoCheckedScalar<>(text::asString));
+        this(new UncheckedScalar<>(text::asString));
     }
 
     /**
@@ -55,11 +53,11 @@ public abstract class TextEnvelope implements Text {
      * @param scalar Scalar representing the text value.
      */
     public TextEnvelope(final Scalar<String> scalar) {
-        this.origin = new IoCheckedScalar<>(scalar);
+        this.origin = new UncheckedScalar<>(scalar);
     }
 
     @Override
-    public final String asString() throws IOException {
+    public final String asString() {
         return this.origin.value();
     }
 
