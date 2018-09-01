@@ -58,6 +58,7 @@ public final class HexOf implements Text {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public String asString() {
         try {
             final byte[] bts = this.bytes.asBytes();
@@ -70,6 +71,7 @@ public final class HexOf implements Text {
                 hex[++chr] = HexOf.HEX_CHARS[value & 0x0f];
             }
             return new String(hex);
+            // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception ex) {
             throw new IllegalStateException(ex);
         }
