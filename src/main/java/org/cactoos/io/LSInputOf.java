@@ -28,7 +28,6 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Input;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.UncheckedText;
 import org.w3c.dom.ls.LSInput;
 
 /**
@@ -111,9 +110,7 @@ public final class LSInputOf implements LSInput {
 
     @Override
     public String getStringData() {
-        return new UncheckedText(
-            new TextOf(this.input)
-        ).asString();
+        return new TextOf(this.input).asString();
     }
 
     @Override

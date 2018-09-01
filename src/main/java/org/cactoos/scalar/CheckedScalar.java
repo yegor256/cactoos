@@ -27,7 +27,6 @@ import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Scalar that wraps an original checked exception thrown by the origin using
@@ -103,11 +102,9 @@ public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
         ).value();
         final String message = wrapped.getMessage()
             .replaceFirst(
-                new UncheckedText(
-                    new FormattedText(
-                        "%s: ",
-                        exp.getClass().getName()
-                    )
+                new FormattedText(
+                    "%s: ",
+                    exp.getClass().getName()
                 ).asString(),
                 ""
             );

@@ -27,7 +27,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.iterator.IteratorNoNulls;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * A decorator of {@link Collection} that tolerates no NULLs.
@@ -84,10 +83,8 @@ public final class CollectionNoNulls<X> implements Collection<X> {
         for (int idx = 0; idx < array.length; ++idx) {
             if (array[idx] == null) {
                 throw new IllegalStateException(
-                    new UncheckedText(
-                        new FormattedText(
-                            "Item #%d of #toArray() is NULL", idx
-                        )
+                    new FormattedText(
+                        "Item #%d of #toArray() is NULL", idx
                     ).asString()
                 );
             }
@@ -102,10 +99,8 @@ public final class CollectionNoNulls<X> implements Collection<X> {
         for (int idx = 0; idx < array.length; ++idx) {
             if (array[idx] == null) {
                 throw new IllegalStateException(
-                    new UncheckedText(
-                        new FormattedText(
-                            "Item #%d of #toArray(array) is NULL", idx
-                        )
+                    new FormattedText(
+                        "Item #%d of #toArray(array) is NULL", idx
                     ).asString()
                 );
             }

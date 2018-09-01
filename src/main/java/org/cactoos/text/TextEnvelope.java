@@ -63,7 +63,7 @@ public abstract class TextEnvelope implements Text {
 
     @Override
     public final String toString() {
-        return new UncheckedText(this).asString();
+        return this.asString();
     }
 
     @Override

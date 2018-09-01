@@ -36,12 +36,12 @@ import org.llorllale.cactoos.matchers.TextHasString;
 public final class TextTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void failForNullArgument() throws Exception {
+    public void failForNullArgument() {
         new Text.NoNulls(null).asString();
     }
 
     @Test(expected = IllegalStateException.class)
-    public void failForNullResult() throws Exception {
+    public void failForNullResult() {
         new Text.NoNulls(
             () -> null
         ).asString();
