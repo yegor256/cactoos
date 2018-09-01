@@ -26,7 +26,6 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicLong;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * A decorator of an {@link Iterator} that returns no NULL.
@@ -67,11 +66,9 @@ public final class IteratorNoNulls<X> implements Iterator<X> {
         final X next = this.iterator.next();
         if (next == null) {
             throw new IllegalStateException(
-                new UncheckedText(
-                    new FormattedText(
-                        "Item #%d of %s is NULL",
-                        this.pos.get(), this.iterator
-                    )
+                new FormattedText(
+                    "Item #%d of %s is NULL",
+                    this.pos.get(), this.iterator
                 ).asString()
             );
         }

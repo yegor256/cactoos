@@ -61,7 +61,7 @@ public final class Base64Text implements Text {
     }
 
     @Override
-    public String asString() throws Exception {
+    public String asString() {
         return new TextOf(
             new Base64Bytes(
                 new BytesOf(this.origin)

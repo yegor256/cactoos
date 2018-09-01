@@ -25,7 +25,6 @@ package org.cactoos.map;
 
 import java.util.Map;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * MapEntry as {@link java.util.AbstractMap.Entry}.
@@ -59,12 +58,10 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
 
     @Override
     public String toString() {
-        return new UncheckedText(
-            new FormattedText(
-                "%s=%s",
-                this.key,
-                this.value
-            )
+        return new FormattedText(
+            "%s=%s",
+            this.key,
+            this.value
         ).asString();
     }
 

@@ -48,7 +48,7 @@ public final class TrimmedText implements Text {
     }
 
     @Override
-    public String asString() throws Exception {
+    public String asString() {
         return this.origin.asString().trim();
     }
 

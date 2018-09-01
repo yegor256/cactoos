@@ -63,7 +63,7 @@ public final class SyncText implements Text {
     }
 
     @Override
-    public String asString() throws Exception {
+    public String asString() {
         synchronized (this.lock) {
             return this.origin.asString();
         }

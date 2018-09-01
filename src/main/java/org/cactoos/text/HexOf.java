@@ -58,17 +58,23 @@ public final class HexOf implements Text {
     }
 
     @Override
-    public String asString() throws Exception {
-        final byte[] bts = this.bytes.asBytes();
-        final char[] hex = new char[bts.length * 2];
-        int chr = -1;
-        for (int idx = 0; idx < bts.length; ++idx) {
-            // @checkstyle MagicNumber (3 line)
-            final int value = 0xff & bts[idx];
-            hex[++chr] = HexOf.HEX_CHARS[value >>> 4];
-            hex[++chr] = HexOf.HEX_CHARS[value & 0x0f];
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public String asString() {
+        try {
+            final byte[] bts = this.bytes.asBytes();
+            final char[] hex = new char[bts.length * 2];
+            int chr = -1;
+            for (int idx = 0; idx < bts.length; ++idx) {
+                // @checkstyle MagicNumber (3 line)
+                final int value = 0xff & bts[idx];
+                hex[++chr] = HexOf.HEX_CHARS[value >>> 4];
+                hex[++chr] = HexOf.HEX_CHARS[value & 0x0f];
+            }
+            return new String(hex);
+            // @checkstyle IllegalCatchCheck (1 line)
+        } catch (final Exception ex) {
+            throw new IllegalStateException(ex);
         }
-        return new String(hex);
     }
 
 }

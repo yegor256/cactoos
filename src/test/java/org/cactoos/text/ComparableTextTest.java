@@ -36,7 +36,7 @@ import org.junit.Test;
 public final class ComparableTextTest {
 
     @Test
-    public void comparesWithASubtext() throws Exception {
+    public void comparesWithASubtext() {
         MatcherAssert.assertThat(
             "Can't compare sub texts",
             new ComparableText(
@@ -53,19 +53,4 @@ public final class ComparableTextTest {
         );
     }
 
-    @Test
-    public void comparesToUncheckedText() {
-        final String txt = "foobar";
-        MatcherAssert.assertThat(
-            "These UncheckedText are not equal",
-            new ComparableText(
-                new UncheckedText(
-                    new TextOf(txt)
-                )
-            ).compareTo(
-                new ComparableText(new TextOf(txt))
-            ),
-            Matchers.equalTo(0)
-        );
-    }
 }

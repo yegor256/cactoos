@@ -87,7 +87,7 @@ public final class UncheckedText implements Text {
         try {
             txt = this.text.asString();
             // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
+        } catch (final RuntimeException ex) {
             txt = new UncheckedFunc<>(this.fallback).apply(ex);
         }
         return txt;

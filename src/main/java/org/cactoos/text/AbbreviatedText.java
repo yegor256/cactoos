@@ -97,7 +97,7 @@ public final class AbbreviatedText implements Text {
     }
 
     @Override
-    public String asString() throws Exception {
+    public String asString() {
         final Text abbreviated;
         if (this.origin.asString().length() <= this.width) {
             abbreviated = this.origin;
