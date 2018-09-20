@@ -30,7 +30,9 @@ import org.cactoos.text.SubText;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UpperText;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsMapContaining;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.RunsInThreads;
@@ -62,7 +64,11 @@ public final class SolidMapTest {
         MatcherAssert.assertThat(
             "Can't behave as a map in multiple threads",
             map -> {
-                MatcherAssert.assertThat(map, new BehavesAsMap<>(0, 1));
+                MatcherAssert.assertThat(
+                    "Can't behave as a map in thread",
+                    map,
+                    new BehavesAsMap<>(0, 1)
+                );
                 return true;
             },
             new RunsInThreads<>(
@@ -82,7 +88,7 @@ public final class SolidMapTest {
         );
         MatcherAssert.assertThat(
             "Can't map only once",
-            map.get(0), Matchers.equalTo(map.get(0))
+            map.get(0), new IsEqual<>(map.get(0))
         );
     }
 
@@ -100,7 +106,7 @@ public final class SolidMapTest {
                 new MapEntry<>(2, 12),
                 new MapEntry<>(3, 13)
             ).size(),
-            Matchers.equalTo(4)
+            new IsEqual<>(4)
         );
     }
 
@@ -109,18 +115,19 @@ public final class SolidMapTest {
     public void acceptsEmptyArray() {
         MatcherAssert.assertThat(
             "Accepts empty array of entries",
-            new SolidMap<>(
+            new SolidMap<Integer, Integer>(
                 new SolidMap<>(
                     new MapEntry<>(0, 10),
                     new MapEntry<>(1, 11)
                 ),
                 (Map.Entry<Integer, Integer>[]) new Map.Entry<?, ?>[0]
             ).size(),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void mapsIterableWithKeyFuncAndValueFunc() {
         final SolidMap<String, String> map = new SolidMap<>(
             key -> new SubText(new TextOf(key), 0, 1).asString(),
@@ -130,16 +137,18 @@ public final class SolidMapTest {
         MatcherAssert.assertThat(
             "Functions are not applied to key and value",
             map,
-            Matchers.allOf(
-                Matchers.hasEntry(
-                    Matchers.equalTo("a"),
-                    Matchers.equalTo("AA")
-                ),
-                Matchers.hasEntry(
-                    Matchers.equalTo("b"),
-                    Matchers.equalTo("BB")
-                ),
-                new MatcherOf<>(m -> m.size() == 2)
+            new AllOf<>(
+                new IterableOf<>(
+                    new IsMapContaining<>(
+                        new IsEqual<>("a"),
+                        new IsEqual<>("AA")
+                    ),
+                    new IsMapContaining<>(
+                        new IsEqual<>("b"),
+                        new IsEqual<>("BB")
+                    ),
+                    new MatcherOf<>(m -> m.size() == 2)
+                )
             )
         );
     }
@@ -159,6 +168,7 @@ public final class SolidMapTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void mapsIterableWithMapEntryFunc() {
         MatcherAssert.assertThat(
             "Function are not applied to entry",
@@ -169,16 +179,18 @@ public final class SolidMapTest {
                 ),
                 new IterableOf<>("aa", "bb")
             ),
-            Matchers.allOf(
-                Matchers.hasEntry(
-                    Matchers.equalTo("a"),
-                    Matchers.equalTo("AA")
-                ),
-                Matchers.hasEntry(
-                    Matchers.equalTo("b"),
-                    Matchers.equalTo("BB")
-                ),
-                new MatcherOf<>(m -> m.size() == 2)
+            new AllOf<>(
+                new IterableOf<>(
+                    new IsMapContaining<>(
+                        new IsEqual<>("a"),
+                        new IsEqual<>("AA")
+                    ),
+                    new IsMapContaining<>(
+                        new IsEqual<>("b"),
+                        new IsEqual<>("BB")
+                    ),
+                    new MatcherOf<>(m -> m.size() == 2)
+                )
             )
         );
     }

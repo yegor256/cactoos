@@ -26,8 +26,11 @@ package org.cactoos.map;
 import java.util.Map;
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.collection.IsMapContaining;
+import org.hamcrest.core.IsAnything;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
 
 /**
  * Matcher for collection.
@@ -61,10 +64,32 @@ public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>>  {
 
     @Override
     public boolean matchesSafely(final Map<K, V> map) {
-        MatcherAssert.assertThat(map, Matchers.hasKey(this.key));
-        MatcherAssert.assertThat(map, Matchers.hasValue(this.value));
-        MatcherAssert.assertThat(map.keySet(), Matchers.hasItem(this.key));
-        MatcherAssert.assertThat(map.values(), Matchers.hasItem(this.value));
+        MatcherAssert.assertThat(
+            "Doesn't contain the key",
+            map,
+            new IsMapContaining<>(
+                new IsEqual<>(this.key),
+                new IsAnything<>()
+            )
+        );
+        MatcherAssert.assertThat(
+            "Doesn't contain the value",
+            map,
+            new IsMapContaining<>(
+                new IsAnything<>(),
+                new IsEqual<>(this.value)
+            )
+        );
+        MatcherAssert.assertThat(
+            "Doesn't contain the key in #keySet()",
+            map.keySet(),
+            new IsCollectionContaining<>(new IsEqual<>(this.key))
+        );
+        MatcherAssert.assertThat(
+            "Doesn't contain the value in #values()",
+            map.values(),
+            new IsCollectionContaining<>(new IsEqual<>(this.value))
+        );
         return true;
     }
 

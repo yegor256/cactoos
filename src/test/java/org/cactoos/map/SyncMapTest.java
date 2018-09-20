@@ -53,7 +53,11 @@ public final class SyncMapTest {
         MatcherAssert.assertThat(
             "Can't behave as a map in multiple threads",
             map -> {
-                MatcherAssert.assertThat(map, new BehavesAsMap<>(0, 1));
+                MatcherAssert.assertThat(
+                    "Can't behave as a map in thread",
+                    map,
+                    new BehavesAsMap<>(0, 1)
+                );
                 return true;
             },
             new RunsInThreads<>(
