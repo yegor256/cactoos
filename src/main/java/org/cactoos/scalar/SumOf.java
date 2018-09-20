@@ -104,7 +104,7 @@ public final class SumOf extends NumberEnvelope {
      * Ctor.
      * @param src The iterable
      */
-    public SumOf(final Iterable<Number> src) {
+    public SumOf(final Iterable<? extends Number> src) {
         super(() -> new Folded<>(
             BigDecimal.ZERO,
             (sum, value) -> sum.add(value, MathContext.DECIMAL128),

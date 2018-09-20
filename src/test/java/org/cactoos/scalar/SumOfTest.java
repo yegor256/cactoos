@@ -23,6 +23,8 @@
  */
 package org.cactoos.scalar;
 
+import java.util.Collection;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
@@ -104,6 +106,15 @@ public final class SumOfTest {
                 new IterableOf<>(1.0d, 2.0d, 3.0d, 4.0d)
             ).doubleValue(),
             new IsEqual<>(10.0d)
+        );
+    }
+
+    @Test
+    public void withIterableOfInts() {
+        final Collection<Integer> ints = new CollectionOf<>(1, 2, 3, 4);
+        MatcherAssert.assertThat(
+            new SumOf(ints).intValue(),
+            new IsEqual<>(10)
         );
     }
 
