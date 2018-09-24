@@ -51,15 +51,32 @@ public final class TextEnvelopeTest {
     }
     /**
      * Test for {@link TextEnvelope#equals(Object)} method. Must assert
-     * that the envelope value is equal to its string value.
+     * that the envelope value is equal another text representing the same
+     * value.
      */
     @Test
     public void testEquals() {
         final String text = "equals";
         MatcherAssert.assertThat(
-            "Envelope value does not match its represented String value",
+            "Envelope does not match text representing the same value",
             new TextEnvelopeDummy(text),
-            new IsEqual<>(text)
+            new IsEqual<>(new TextOf(text))
+        );
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is equal another text representing the same
+     * value (in this case a {@link JoinedText}).
+     */
+    @Test
+    public void testEqualsOtherText() {
+        MatcherAssert.assertThat(
+            "Envelope does not match another text representing the same value",
+            new TextEnvelopeDummy("isequaltoanothertext"),
+            new IsEqual<>(
+                new JoinedText("", "is", "equal", "to", "another", "text")
+            )
         );
     }
     /**
