@@ -73,8 +73,23 @@ public abstract class TextEnvelope implements Text {
         return new UncheckedScalar<>(this.origin).value().hashCode();
     }
 
+    // @todo #942:30min Refactor TextEnvelope.equals(). Current implementation
+    //  of TextEnvelope.equals() uses some things that we must avoid, like more
+    //  than one return on method, instance of usage and typecasting. Refactor
+    //  this method so we can get rid of these smelly things.
+    //
     @Override
+    @SuppressWarnings("PMD.OnlyOneReturn")
     public final boolean equals(final Object obj) {
-        return new UncheckedScalar<>(this.origin).value().equals(obj);
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Text)) {
+            return false;
+        }
+        final Text that = (Text) obj;
+        return new UncheckedText(this).asString().equals(
+            new UncheckedText(that).asString()
+        );
     }
 }
