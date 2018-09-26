@@ -74,9 +74,9 @@ public abstract class TextEnvelope implements Text {
     }
 
     // @todo #942:30min Refactor TextEnvelope.equals(). Current implementation
-    // of TextEnvelope.equals() uses some things that we must avoid, like more
-    // than one return on method, instance of usage and typecasting. Refactor
-    // this method so we can get rid of these smelly things.
+    //  of TextEnvelope.equals() uses some things that we must avoid, like more
+    //  than one return on method, instance of usage and typecasting. Refactor
+    //  this method so we can get rid of these smelly things.
     //
     @Override
     @SuppressWarnings("PMD.OnlyOneReturn")
@@ -84,10 +84,10 @@ public abstract class TextEnvelope implements Text {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof TextEnvelope)) {
+        if (!(obj instanceof Text)) {
             return false;
         }
-        final TextEnvelope that = (TextEnvelope) obj;
+        final Text that = (Text) obj;
         return new UncheckedText(this).asString().equals(
             new UncheckedText(that).asString()
         );
