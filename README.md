@@ -41,11 +41,19 @@ These are the [design principles](http://www.elegantobjects.org#principles) behi
 The library has no dependencies. All you need is this
 (get the latest version [here](https://github.com/yegor256/cactoos/releases)):
 
+Maven:
 ```xml
 <dependency>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
 </dependency>
+```
+
+Gradle:
+```groovy
+dependencies {
+    compile 'org.cactoos:cactoos:<version>'
+}
 ```
 
 Java version required: 1.8+.
