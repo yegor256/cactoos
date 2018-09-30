@@ -20,7 +20,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
  */
 
 package org.cactoos.io.file;
@@ -63,7 +62,7 @@ public final class Hierarchy extends IterableEnvelope<File> {
      */
     @SafeVarargs
     public Hierarchy(final Scalar<File>... roots) {
-        this(new org.cactoos.iterable.Mapped<>(Scalar::value, roots));
+        this(new Mapped<>(Scalar::value, new ListOf<>(roots)));
     }
 
     /**
