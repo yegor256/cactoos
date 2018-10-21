@@ -25,7 +25,6 @@ package org.cactoos.func;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
@@ -36,18 +35,17 @@ import org.llorllale.cactoos.matchers.FuncApplies;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
- * Test case for {@link AsyncFunc}.
+ * Test case for {@link Async}.
  *
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class AsyncFuncTest {
-
+public final class AsyncTest {
     @Test
     public void runsInBackground() {
         MatcherAssert.assertThat(
             "Can't run in the background",
-            new AsyncFunc<>(
+            new Async<>(
                 input -> {
                     TimeUnit.DAYS.sleep(1L);
                     return "done!";
@@ -55,7 +53,7 @@ public final class AsyncFuncTest {
             ),
             new FuncApplies<>(
                 true,
-                new MatcherOf<Future<String>>(
+                new MatcherOf<>(
                     future -> !future.isDone()
                 )
             )
@@ -68,7 +66,7 @@ public final class AsyncFuncTest {
             "Can't run proc in the background",
             input -> {
                 final CountDownLatch latch = new CountDownLatch(1);
-                new AsyncFunc<>(
+                new Async<>(
                     (Proc<Boolean>) ipt -> latch.countDown()
                 ).exec(input);
                 latch.await();
@@ -85,14 +83,14 @@ public final class AsyncFuncTest {
         final CountDownLatch latch = new CountDownLatch(1);
         MatcherAssert.assertThat(
             "Can't run in the background without us touching the Future",
-            new AsyncFunc<>(
+            new Async<>(
                 input -> {
                     latch.countDown();
                 }
             ),
             new FuncApplies<>(
                 true,
-                new MatcherOf<Future<String>>(
+                new MatcherOf<>(
                     future -> {
                         return latch.await(1L, TimeUnit.SECONDS);
                     }
@@ -108,7 +106,7 @@ public final class AsyncFuncTest {
         final CountDownLatch latch = new CountDownLatch(1);
         MatcherAssert.assertThat(
             "Can't run in the background with specific thread factory",
-            new AsyncFunc<>(
+            new Async<>(
                 input -> {
                     if (!input.equals(Thread.currentThread().getName())) {
                         throw new IllegalStateException(
@@ -121,7 +119,7 @@ public final class AsyncFuncTest {
             ),
             new FuncApplies<>(
                 name,
-                new MatcherOf<Future<Void>>(
+                new MatcherOf<>(
                     future -> {
                         future.get();
                         return latch.getCount() == 0;
@@ -138,7 +136,7 @@ public final class AsyncFuncTest {
         final CountDownLatch latch = new CountDownLatch(1);
         MatcherAssert.assertThat(
             "Can't run in the background with specific thread executor",
-            new AsyncFunc<>(
+            new Async<>(
                 input -> {
                     if (!input.equals(Thread.currentThread().getName())) {
                         throw new IllegalStateException(
@@ -151,7 +149,7 @@ public final class AsyncFuncTest {
             ),
             new FuncApplies<>(
                 name,
-                new MatcherOf<Future<Void>>(
+                new MatcherOf<>(
                     future -> {
                         future.get();
                         return latch.getCount() == 0;

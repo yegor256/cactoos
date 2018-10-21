@@ -33,25 +33,25 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
- * Test Case for {@link SolidCollection}.
+ * Test Case for {@link Solid}.
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
-public final class SolidCollectionTest {
+public final class SolidTest {
 
     @Test
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a collection",
-            new SolidCollection<>(1, 2, 0, -1),
+            new Solid<>(1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
         );
     }
 
     @Test
     public void makesListFromMappedIterable() throws Exception {
-        final Collection<Integer> list = new SolidCollection<>(
+        final Collection<Integer> list = new Solid<>(
             new org.cactoos.list.Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(1, -1, 0, 1)
@@ -69,7 +69,7 @@ public final class SolidCollectionTest {
 
     @Test
     public void mapsToSameObjects() throws Exception {
-        final Iterable<Scalar<Integer>> list = new SolidCollection<>(
+        final Iterable<Scalar<Integer>> list = new Solid<>(
             new org.cactoos.list.Mapped<>(
                 i -> (Scalar<Integer>) () -> i,
                 new IterableOf<>(1, -1, 0, 1)
@@ -90,8 +90,7 @@ public final class SolidCollectionTest {
                 MatcherAssert.assertThat(list, new BehavesAsCollection<>(0));
                 return true;
             },
-            new RunsInThreads<>(new SolidCollection<>(1, 0, -1, -1, 2))
+            new RunsInThreads<>(new Solid<>(1, 0, -1, -1, 2))
         );
     }
-
 }

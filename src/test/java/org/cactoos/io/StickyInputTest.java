@@ -25,8 +25,7 @@ package org.cactoos.io;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.cactoos.Input;
-import org.cactoos.func.RepeatedFunc;
+import org.cactoos.func.Repeated;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -52,7 +51,7 @@ public final class StickyInputTest {
                 )
             ),
             new MatcherOf<>(
-                new RepeatedFunc<Input, Boolean>(
+                new Repeated<>(
                     input -> new BytesOf(
                         new TeeInput(input, new DeadOutput())
                     // @checkstyle MagicNumber (2 lines)

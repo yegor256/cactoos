@@ -32,18 +32,18 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link RepeatedFunc}.
+ * Test case for {@link Repeated}.
  *
  * @since 0.13.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 line)
  */
-public final class RepeatedFuncTest {
+public final class RepeatedTest {
 
     @Test
     public void runsFuncMultipleTimes() throws Exception {
         final Iterator<Integer> iter = new IteratorOf<>(1, 2, 5, 6);
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
+        final Func<Boolean, Integer> func = new Repeated<>(
             input -> {
                 return iter.next();
             },
@@ -58,7 +58,7 @@ public final class RepeatedFuncTest {
     @Test
     public void runsProcMultipleTimes() throws Exception {
         final Iterator<Integer> iter = new IteratorOf<>(1, 2, 5, 6, 7);
-        final Func<Boolean, Void> func = new RepeatedFunc<>(
+        final Func<Boolean, Void> func = new Repeated<>(
             new ProcOf<>(
                 () -> {
                     iter.next();
@@ -75,7 +75,7 @@ public final class RepeatedFuncTest {
 
     @Test
     public void repeatsNullsResults() throws Exception {
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
+        final Func<Boolean, Integer> func = new Repeated<>(
             input -> {
                 return null;
             },
@@ -89,7 +89,7 @@ public final class RepeatedFuncTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void doesntRepeatAny() throws Exception {
-        final Func<Boolean, Integer> func = new RepeatedFunc<>(
+        final Func<Boolean, Integer> func = new Repeated<>(
             input -> {
                 return new SecureRandom().nextInt();
             },

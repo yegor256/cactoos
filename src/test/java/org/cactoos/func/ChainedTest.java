@@ -33,25 +33,27 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ChainedFunc}.
+ * Test case for {@link Chained}.
  *
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
  */
-public final class ChainedFuncTest {
+public final class ChainedTest {
 
     @Test
     public void withoutIterable() throws Exception {
         MatcherAssert.assertThat(
             new LengthOf(
                 new Filtered<>(
-                    input -> input.endsWith("12"), new Mapped<>(
-                    new ChainedFunc<String, String, String>(
-                        input -> input.concat("1"),
-                        input -> input.concat("2")
-                    ), new IterableOf<>("public", "final", "class")
-                )
+                    input -> input.endsWith("12"),
+                    new Mapped<>(
+                        new Chained<>(
+                            input -> input.concat("1"),
+                            input -> input.concat("2")
+                        ),
+                        new IterableOf<>("public", "final", "class")
+                    )
                 )
             ).intValue(),
             Matchers.equalTo(3)
@@ -63,16 +65,18 @@ public final class ChainedFuncTest {
         MatcherAssert.assertThat(
             new LengthOf(
                 new Filtered<>(
-                    input -> !input.startsWith("st"), new Mapped<>(
-                    new ChainedFunc<>(
-                        input -> input.concat("1"),
-                        new IterableOf<Func<String, String>>(
-                            input -> input.concat("2"),
-                            input -> input.replaceAll("a", "b")
+                    input -> !input.startsWith("st"),
+                    new Mapped<>(
+                        new Chained<>(
+                            input -> input.concat("1"),
+                            new IterableOf<Func<String, String>>(
+                                input -> input.concat("2"),
+                                input -> input.replaceAll("a", "b")
+                            ),
+                            String::trim
                         ),
-                        String::trim
-                    ), new IterableOf<>("private", "static", "String")
-                )
+                        new IterableOf<>("private", "static", "String")
+                    )
                 )
             ).intValue(),
             Matchers.equalTo(2)

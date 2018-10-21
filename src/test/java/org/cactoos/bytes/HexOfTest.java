@@ -27,26 +27,25 @@ package org.cactoos.bytes;
 import java.io.IOException;
 import java.util.Arrays;
 import org.cactoos.io.BytesOf;
-import org.cactoos.text.HexOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
- * Test case for {@link HexBytes}.
+ * Test case for {@link HexOf}.
  *
  * @since 0.29
  * @checkstyle MagicNumberCheck (500 line)
  * @checkstyle JavadocMethodCheck (500 line)
  */
-public final class HexBytesTest {
+public final class HexOfTest {
 
     @Test
     public void emptyText() throws Exception {
         MatcherAssert.assertThat(
             "Can't represent an empty hexadecimal text",
-            new HexBytes(new TextOf("")).asBytes(),
+            new HexOf(new TextOf("")).asBytes(),
             new MatcherOf<>(array -> array.length == 0)
         );
     }
@@ -59,8 +58,8 @@ public final class HexBytesTest {
         }
         MatcherAssert.assertThat(
             "Can't convert hexadecimal text to bytes",
-            new HexBytes(
-                new HexOf(
+            new HexOf(
+                new org.cactoos.text.HexOf(
                     new BytesOf(bytes)
                 )
             ).asBytes(),
@@ -72,11 +71,11 @@ public final class HexBytesTest {
 
     @Test(expected = IOException.class)
     public void invalidHexLength() throws Exception {
-        new HexBytes(new TextOf("ABF")).asBytes();
+        new HexOf(new TextOf("ABF")).asBytes();
     }
 
     @Test(expected = IOException.class)
     public void invalidHex() throws Exception {
-        new HexBytes(new TextOf("ABG!")).asBytes();
+        new HexOf(new TextOf("ABG!")).asBytes();
     }
 }

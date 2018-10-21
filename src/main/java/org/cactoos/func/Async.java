@@ -34,7 +34,7 @@ import org.cactoos.Proc;
  * Func that runs in the background.
  *
  * <p>If you want your piece of code to be executed in the background,
- * use {@link AsyncFunc} as following:</p>
+ * use {@link Async} as following:</p>
  *
  * <pre> int length = new AsyncFunc(
  *   input -&gt; input.length()
@@ -51,7 +51,7 @@ import org.cactoos.Proc;
  *  Perhaps with a creation of AsyncProc or removal of this functionality?
  *  Please take a look on #551 and #843 for more details.
  */
-public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
+public final class Async<X, Y> implements Func<X, Future<Y>>, Proc<X> {
 
     /**
      * The func.
@@ -67,7 +67,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      * Ctor.
      * @param proc The proc
      */
-    public AsyncFunc(final Proc<X> proc) {
+    public Async(final Proc<X> proc) {
         this(new FuncOf<>(proc, null));
     }
 
@@ -75,7 +75,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      * Ctor.
      * @param fnc The func
      */
-    public AsyncFunc(final Func<X, Y> fnc) {
+    public Async(final Func<X, Y> fnc) {
         this(fnc, Executors.defaultThreadFactory());
     }
 
@@ -84,7 +84,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      * @param proc The proc
      * @param fct Factory
      */
-    public AsyncFunc(final Proc<X> proc, final ThreadFactory fct) {
+    public Async(final Proc<X> proc, final ThreadFactory fct) {
         this(new FuncOf<>(proc, null), fct);
     }
 
@@ -93,7 +93,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      * @param fnc The func
      * @param fct Factory
      */
-    public AsyncFunc(final Func<X, Y> fnc, final ThreadFactory fct) {
+    public Async(final Func<X, Y> fnc, final ThreadFactory fct) {
         this(fnc, Executors.newSingleThreadExecutor(fct));
     }
 
@@ -103,7 +103,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      * @param exec Executor Service
      * @since 0.17
      */
-    public AsyncFunc(final Proc<X> proc, final ExecutorService exec) {
+    public Async(final Proc<X> proc, final ExecutorService exec) {
         this(new FuncOf<>(proc, null), exec);
     }
 
@@ -112,7 +112,7 @@ public final class AsyncFunc<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      * @param fnc The func
      * @param exec Executor Service
      */
-    public AsyncFunc(final Func<X, Y> fnc, final ExecutorService exec) {
+    public Async(final Func<X, Y> fnc, final ExecutorService exec) {
         this.func = fnc;
         this.executor = exec;
     }

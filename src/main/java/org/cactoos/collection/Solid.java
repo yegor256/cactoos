@@ -23,35 +23,56 @@
  */
 package org.cactoos.collection;
 
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.RunsInThreads;
+import java.util.Collection;
+import java.util.Iterator;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.SolidScalar;
 
 /**
- * Test Case for {@link SyncCollection}.
- * @since 0.23
- * @checkstyle JavadocMethodCheck (500 lines)
+ * A {@link Collection} that is both synchronized and sticky.
+ *
+ * <p>Objects of this class are thread-safe.</p>
+ *
+ * @param <T> List type
+ * @see Sticky
+ * @since 0.24
  */
-public final class SyncCollectionTest {
+public final class Solid<T> extends CollectionEnvelope<T> {
 
-    @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't behave as a collection",
-            new SyncCollection<>(1, 2, 0, -1),
-            new BehavesAsCollection<>(-1)
-        );
+    /**
+     * Ctor.
+     * @param array An array of some elements
+     */
+    @SafeVarargs
+    public Solid(final T... array) {
+        this(new IterableOf<>(array));
     }
 
-    @Test
-    public void worksInThreads() {
-        MatcherAssert.assertThat(
-            "Can't behave as a collection in multiple threads",
-            list -> {
-                MatcherAssert.assertThat(list, new BehavesAsCollection<>(0));
-                return true;
-            },
-            new RunsInThreads<>(new SyncCollection<>(1, 0, -1, -1, 2))
+    /**
+     * Ctor.
+     * @param src An {@link Iterator}
+     */
+    public Solid(final Iterator<T> src) {
+        this(new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src An {@link Iterator}
+     */
+    public Solid(final Iterable<T> src) {
+        this(new CollectionOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src An {@link Iterable}
+     */
+    public Solid(final Collection<T> src) {
+        super(
+            new SolidScalar<Collection<T>>(
+                () -> new Synced<T>(new Sticky<>(src))
+            )
         );
     }
 

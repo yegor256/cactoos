@@ -53,7 +53,7 @@ public final class TimedFunc<X, Y> implements Func<X, Y> {
      * @param milliseconds Milliseconds
      */
     public TimedFunc(final Func<X, Y> function, final long milliseconds) {
-        this(milliseconds, new AsyncFunc<>(function));
+        this(milliseconds, new Async<>(function));
     }
 
     /**

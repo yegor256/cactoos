@@ -38,7 +38,7 @@ import org.cactoos.Proc;
  *  Perhaps in creating RepeatedProc?
  *  Please take a look on #551 and #843 for more details.
  */
-public final class RepeatedFunc<X, Y> implements Func<X, Y> {
+public final class Repeated<X, Y> implements Func<X, Y> {
 
     /**
      * Original func.
@@ -56,7 +56,7 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
      * @param max How many times
      * @since 0.12
      */
-    public RepeatedFunc(final Proc<X> proc, final int max) {
+    public Repeated(final Proc<X> proc, final int max) {
         this(new FuncOf<>(proc, null), max);
     }
 
@@ -69,7 +69,7 @@ public final class RepeatedFunc<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      * @param max How many times
      */
-    public RepeatedFunc(final Func<X, Y> fnc, final int max) {
+    public Repeated(final Func<X, Y> fnc, final int max) {
         this.func = fnc;
         this.times = max;
     }

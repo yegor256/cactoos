@@ -30,19 +30,19 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link RetryFunc}.
+ * Test case for {@link Retry}.
  *
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 line)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class RetryFuncTest {
+public final class RetryTest {
 
     @Test
     public void runsFuncMultipleTimes() throws Exception {
         MatcherAssert.assertThat(
-            new RetryFunc<>(
+            new Retry<>(
                 input -> {
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");
@@ -58,7 +58,7 @@ public final class RetryFuncTest {
     @Test
     public void runsProcMultipleTimes() throws Exception {
         MatcherAssert.assertThat(
-            new RetryFunc<>(
+            new Retry<>(
                 input -> {
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");
@@ -74,7 +74,7 @@ public final class RetryFuncTest {
     public void runsProcDefaultMultipleTimes() throws Exception {
         final AtomicBoolean fail = new AtomicBoolean(true);
         MatcherAssert.assertThat(
-            new RetryFunc<>(
+            new Retry<>(
                 input -> {
                     if (fail.getAndSet(false)) {
                         throw new IllegalArgumentException("May happen");
@@ -88,7 +88,7 @@ public final class RetryFuncTest {
     @Test
     public void runsProcConditionMultipleTimes() throws Exception {
         MatcherAssert.assertThat(
-            new RetryFunc<>(
+            new Retry<>(
                 input -> {
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");

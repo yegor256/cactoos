@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.func.RetryFunc;
+import org.cactoos.func.Retry;
 
 /**
  * Func that will try a few times before throwing an exception.
@@ -96,7 +96,7 @@ public final class RetryScalar<T> implements Scalar<T> {
 
     @Override
     public T value() throws Exception {
-        return new RetryFunc<>(
+        return new Retry<>(
             (Func<Boolean, T>) input -> this.origin.value(),
             this.func
         ).apply(true);

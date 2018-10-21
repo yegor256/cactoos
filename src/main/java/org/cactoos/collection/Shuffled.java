@@ -34,7 +34,7 @@ import java.util.List;
  * <p>Pay attention that shuffling will happen every time you touch
  * it: it will fetch all elements from the encapsulated collection and
  * shuffle them again on each call to any of its methods. If you want to
- * avoid that "side-effect", decorate it with {@link StickyCollection}.</p>
+ * avoid that "side-effect", decorate it with {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.</p>
  *

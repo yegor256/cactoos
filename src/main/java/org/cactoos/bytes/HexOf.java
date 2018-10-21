@@ -38,7 +38,7 @@ import org.cactoos.text.FormattedText;
  * @since 0.30
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class HexBytes implements Bytes {
+public final class HexOf implements Bytes {
     /**
      * Origin hexadecimal text.
      */
@@ -49,7 +49,7 @@ public final class HexBytes implements Bytes {
      *
      * @param origin Hexadecimal text.
      */
-    public HexBytes(final Text origin) {
+    public HexOf(final Text origin) {
         this.origin = origin;
     }
 

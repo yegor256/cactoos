@@ -23,60 +23,67 @@
  */
 package org.cactoos.collection;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 
 /**
- * Collection decorator that goes through the list only once.
+ * Iterable as {@link Collection}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>This class should be used very carefully. You must understand that
+ * it will fetch the entire content of the encapsulated {@link Iterable} on each
+ * method call. It doesn't cache the data anyhow. If you don't
+ * need this {@link Collection} to re-fresh
+ * its content on every call, by doing round-trips to
+ * the encapsulated iterable, use {@link Sticky}.</p>
  *
- * @param <E> Type of item
- * @since 0.16
+ * <p>Objects of this class are thread-safe.</p>
+ *
+ * @param <T> List type
+ * @see Sticky
+ * @since 0.24
  */
-public final class StickyCollection<E> extends CollectionEnvelope<E> {
+public final class Synced<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
-     * @param items The array
+     * @param array An array of some elements
      */
     @SafeVarargs
-    public StickyCollection(final E... items) {
-        this(new IterableOf<>(items));
+    public Synced(final T... array) {
+        this(new IterableOf<>(array));
     }
 
     /**
      * Ctor.
-     * @param items The array
-     * @since 0.21
+     * @param src An {@link Iterator}
      */
-    public StickyCollection(final Iterator<E> items) {
-        this(new IterableOf<>(items));
+    public Synced(final Iterator<T> src) {
+        this(new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param items The array
+     * @param src An {@link Iterable}
      */
-    public StickyCollection(final Iterable<E> items) {
-        this(new CollectionOf<>(items));
+    public Synced(final Iterable<T> src) {
+        this(new CollectionOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param list The iterable
+     * @param src An {@link Iterable}
      */
-    public StickyCollection(final Collection<E> list) {
+    public Synced(final Collection<T> src) {
         super(
-            new StickyScalar<>(
+            new SyncScalar<>(
                 () -> {
-                    final Collection<E> temp = new ArrayList<>(list.size());
-                    temp.addAll(list);
-                    return Collections.unmodifiableCollection(temp);
+                    final Collection<T> temp = new LinkedList<>();
+                    temp.addAll(src);
+                    return Collections.synchronizedCollection(temp);
                 }
             )
         );

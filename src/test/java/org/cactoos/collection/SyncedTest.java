@@ -21,22 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.collection;
+
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
- * Cactoos.
- *
- * <p>This is a collection of Java primitives designed in a rather
- * extreme object-objected manner. More details about our design
- * decisions you can find in this
- * <a href="https://github.com/yegor256/cactoos/blob/master/README.md">README</a>.
- * Feel free to contribute, if you find issues or have a need for
- * some other primitives.</p>
- *
- * @since 0.1
- * @see <a href="http://www.cactoos.org">Project site www.cactoos.org</a>
- * @see <a href="https://github.com/yegor256/cactoos">GitHub repository</a>
- * @todo #913:30min There is a new class naming convention in effect: avoid
- *  compound names for decorators. Continue renaming classes according to this
- *  table: https://github.com/yegor256/cactoos/issues/913#issuecomment-402332247.
+ * Test Case for {@link Synced}.
+ * @since 0.23
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-package org.cactoos;
+public final class SyncedTest {
+
+    @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection",
+            new Synced<>(1, 2, 0, -1),
+            new BehavesAsCollection<>(-1)
+        );
+    }
+
+    @Test
+    public void worksInThreads() {
+        MatcherAssert.assertThat(
+            "Can't behave as a collection in multiple threads",
+            list -> {
+                MatcherAssert.assertThat(list, new BehavesAsCollection<>(0));
+                return true;
+            },
+            new RunsInThreads<>(new Synced<>(1, 0, -1, -1, 2))
+        );
+    }
+}

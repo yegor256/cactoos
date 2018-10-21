@@ -21,59 +21,64 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.func;
 
-import java.util.Collection;
-import java.util.Iterator;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.SolidScalar;
+import java.util.Collections;
+import org.cactoos.Func;
 
 /**
- * A {@link Collection} that is both synchronized and sticky.
+ * Composed function.
  *
- * <p>Objects of this class are thread-safe.</p>
- *
- * @param <T> List type
- * @see StickyCollection
- * @since 0.24
+ * @param <X> Type of input.
+ * @param <Y> Intermediate type.
+ * @param <Z> Type of output.
+ * @since 0.7
  */
-public final class SolidCollection<T> extends CollectionEnvelope<T> {
+public final class Chained<X, Y, Z> implements Func<X, Z> {
+
+    /**
+     * Before function.
+     */
+    private final Func<X, Y> before;
+
+    /**
+     * Functions.
+     */
+    private final Iterable<Func<Y, Y>> funcs;
+
+    /**
+     * After function.
+     */
+    private final Func<Y, Z> after;
 
     /**
      * Ctor.
-     * @param array An array of some elements
+     * @param bfr Before function
+     * @param list Functions
+     * @param atr After function
      */
-    @SafeVarargs
-    public SolidCollection(final T... array) {
-        this(new IterableOf<>(array));
+    public Chained(final Func<X, Y> bfr, final Iterable<Func<Y, Y>> list,
+        final Func<Y, Z> atr) {
+        this.before = bfr;
+        this.funcs = list;
+        this.after = atr;
     }
 
     /**
      * Ctor.
-     * @param src An {@link Iterator}
+     * @param bfr Before function
+     * @param atr After function
      */
-    public SolidCollection(final Iterator<T> src) {
-        this(new IterableOf<>(src));
+    public Chained(final Func<X, Y> bfr, final Func<Y, Z> atr) {
+        this(bfr, Collections.emptyList(), atr);
     }
 
-    /**
-     * Ctor.
-     * @param src An {@link Iterator}
-     */
-    public SolidCollection(final Iterable<T> src) {
-        this(new CollectionOf<>(src));
+    @Override
+    public Z apply(final X input) throws Exception {
+        Y temp = this.before.apply(input);
+        for (final Func<Y, Y> func : this.funcs) {
+            temp = func.apply(temp);
+        }
+        return this.after.apply(temp);
     }
-
-    /**
-     * Ctor.
-     * @param src An {@link Iterable}
-     */
-    public SolidCollection(final Collection<T> src) {
-        super(
-            new SolidScalar<Collection<T>>(
-                () -> new SyncCollection<T>(new StickyCollection<>(src))
-            )
-        );
-    }
-
 }

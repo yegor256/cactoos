@@ -40,7 +40,7 @@ import org.cactoos.Proc;
  *  Perhaps in creating RetryProc?
  *  Please take a look on #551 and #843 for more details.
  */
-public final class RetryFunc<X, Y> implements Func<X, Y> {
+public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Original func.
@@ -57,7 +57,7 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
      * @param proc Func original
      * @since 0.12
      */
-    public RetryFunc(final Proc<X> proc) {
+    public Retry(final Proc<X> proc) {
         this(new FuncOf<>(proc, null));
     }
 
@@ -67,7 +67,7 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
      * @param attempts Maximum number of attempts
      * @since 0.12
      */
-    public RetryFunc(final Proc<X> proc, final int attempts) {
+    public Retry(final Proc<X> proc, final int attempts) {
         this(new FuncOf<>(proc, null), attempts);
     }
 
@@ -77,7 +77,7 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
      * @param ext Exit condition, returns TRUE if there is no more reason to try
      * @since 0.12
      */
-    public RetryFunc(final Proc<X> proc, final Func<Integer, Boolean> ext) {
+    public Retry(final Proc<X> proc, final Func<Integer, Boolean> ext) {
         this(new FuncOf<>(proc, null), ext);
     }
 
@@ -85,7 +85,7 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
      * Ctor.
      * @param fnc Func original
      */
-    public RetryFunc(final Func<X, Y> fnc) {
+    public Retry(final Func<X, Y> fnc) {
         // @checkstyle MagicNumberCheck (1 line)
         this(fnc, 3);
     }
@@ -95,7 +95,7 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      * @param attempts Maximum number of attempts
      */
-    public RetryFunc(final Func<X, Y> fnc, final int attempts) {
+    public Retry(final Func<X, Y> fnc, final int attempts) {
         this(fnc, attempt -> attempt >= attempts);
     }
 
@@ -104,7 +104,7 @@ public final class RetryFunc<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      * @param ext Exit condition, returns TRUE if there is no more reason to try
      */
-    public RetryFunc(final Func<X, Y> fnc, final Func<Integer, Boolean> ext) {
+    public Retry(final Func<X, Y> fnc, final Func<Integer, Boolean> ext) {
         this.func = fnc;
         this.exit = ext;
     }
