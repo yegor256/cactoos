@@ -28,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 
 /**
@@ -79,6 +80,38 @@ public final class TextEnvelopeTest {
             )
         );
     }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is not equal another object not being a
+     * instance of Text without failing
+     */
+    @Test
+    public void testDoesNotEqualsNonTextObject() {
+        MatcherAssert.assertThat(
+            "Envelope does not match another object which is not a string",
+            new TextEnvelopeDummy("is not equals to null"),
+            new IsNot<>(
+                new IsEqual<>(new Object())
+            )
+        );
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is not equal to null without failing
+     */
+    @Test
+    @SuppressWarnings("PMD.EqualsNull")
+    public void testDoesNotEqualsFalse() {
+        MatcherAssert.assertThat(
+            "Envelope does not equals null",
+            new TextEnvelopeDummy("is not equals to not Text object")
+                .equals(null),
+            new IsEqual<>(false)
+        );
+    }
+
     /**
      * Test for {@link TextEnvelope#hashCode()} method. Must assert that
      * the {@link TextEnvelope} hashCode is equals to the hashCode of

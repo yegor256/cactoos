@@ -26,7 +26,9 @@ package org.cactoos.text;
 import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.Or;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -73,23 +75,18 @@ public abstract class TextEnvelope implements Text {
         return new UncheckedScalar<>(this.origin).value().hashCode();
     }
 
-    // @todo #942:30min Refactor TextEnvelope.equals(). Current implementation
-    //  of TextEnvelope.equals() uses some things that we must avoid, like more
-    //  than one return on method, instance of usage and typecasting. Refactor
-    //  this method so we can get rid of these smelly things.
-    //
     @Override
-    @SuppressWarnings("PMD.OnlyOneReturn")
     public final boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Text)) {
-            return false;
-        }
-        final Text that = (Text) obj;
-        return new UncheckedText(this).asString().equals(
-            new UncheckedText(that).asString()
-        );
+        return new UncheckedScalar<>(
+            new Or(
+                () -> this == obj,
+                new And(
+                    () -> obj instanceof Text,
+                    () -> new UncheckedText(this)
+                        .asString()
+                        .equals(new UncheckedText((Text) obj).asString())
+                )
+            )
+        ).value();
     }
 }
