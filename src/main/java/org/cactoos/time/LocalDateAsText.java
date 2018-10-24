@@ -44,7 +44,7 @@ public final class LocalDateAsText extends TextEnvelope {
      * @param date The date to format.
      */
     public LocalDateAsText(final LocalDate date) {
-        this(date, new Iso().get());
+        this(date, new Iso().value());
     }
 
     /**

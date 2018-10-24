@@ -43,7 +43,7 @@ public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
      * @param date The date to parse.
      */
     public LocalDateTimeOf(final CharSequence date) {
-        this(date, new Iso().get());
+        this(date, new Iso().value());
     }
 
     /**
