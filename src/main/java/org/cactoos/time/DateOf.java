@@ -23,11 +23,15 @@
  */
 package org.cactoos.time;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import org.cactoos.Scalar;
+import org.cactoos.scalar.Ternary;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -64,13 +68,29 @@ public final class DateOf implements Scalar<Date> {
      * @param formatter The formatter to use.
      */
     public DateOf(final CharSequence date, final DateTimeFormatter formatter) {
+        this(formatter.parse(date));
+    }
+
+    /**
+     * Getting a date from a temporalAccesor.
+     * @param temporal The temporal accessor to use.
+     */
+    public DateOf(final TemporalAccessor temporal) {
         this.parsed = new UncheckedScalar<>(
-            () -> Date.from(
-                LocalDateTime.from(
-                    formatter.parse(date)
-                ).toInstant(ZoneOffset.UTC)
-            )
-        );
+            new Ternary<>(
+                () -> temporal.isSupported(ChronoField.HOUR_OF_DAY),
+                () -> Date.from(
+                    LocalDateTime
+                        .from(temporal)
+                        .toInstant(ZoneOffset.UTC)
+                ),
+                () -> Date.from(
+                    LocalDate
+                        .from(temporal)
+                        .atStartOfDay()
+                        .toInstant(ZoneOffset.UTC)
+                )
+        ));
     }
 
     @Override

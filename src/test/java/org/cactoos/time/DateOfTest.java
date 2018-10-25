@@ -91,4 +91,22 @@ public class DateOfTest {
         );
     }
 
+    @Test
+    public final void testParsingDateWithoutTime() {
+        MatcherAssert.assertThat(
+            "Can parse date without hour and minute",
+            new DateOf(
+                "2018-01-01",
+                "yyyy-MM-dd"
+            ).value(),
+            Matchers.is(
+                Date.from(
+                    LocalDateTime.of(
+                        2018, 1, 1, 0, 0, 0, 0
+                    ).toInstant(ZoneOffset.UTC)
+                )
+            )
+        );
+    }
+
 }
