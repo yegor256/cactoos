@@ -26,6 +26,7 @@ package org.cactoos.time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
@@ -79,10 +80,18 @@ public final class DateOf implements Scalar<Date> {
         this.parsed = new UncheckedScalar<>(
             new Ternary<>(
                 () -> temporal.isSupported(ChronoField.HOUR_OF_DAY),
-                () -> Date.from(
-                    LocalDateTime
-                        .from(temporal)
-                        .toInstant(ZoneOffset.UTC)
+                new Ternary<Date>(
+                    () -> temporal.isSupported(ChronoField.OFFSET_SECONDS),
+                    () -> Date.from(
+                        ZonedDateTime
+                            .from(temporal)
+                            .toInstant()
+                    ),
+                    () -> Date.from(
+                        LocalDateTime
+                            .from(temporal)
+                            .toInstant(ZoneOffset.UTC)
+                    )
                 ),
                 () -> Date.from(
                     LocalDate

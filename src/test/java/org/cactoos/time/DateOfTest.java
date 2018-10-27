@@ -56,6 +56,21 @@ public class DateOfTest {
     }
 
     @Test
+    public final void testParsingIsoFormattedStringWithTimeZoneToDate() {
+        MatcherAssert.assertThat(
+            "Can't parse a Date with default/ISO format.",
+            new DateOf("2017-12-13T14:15:16.000000017+01:00").value(),
+            Matchers.is(
+                Date.from(
+                    LocalDateTime.of(
+                        2017, 12, 13, 13, 15, 16, 17
+                    ).toInstant(ZoneOffset.UTC)
+                )
+            )
+        );
+    }
+
+    @Test
     public final void testParsingCustomFormattedStringToDate() {
         MatcherAssert.assertThat(
             "Can't parse a Date with custom format.",
@@ -108,5 +123,21 @@ public class DateOfTest {
             )
         );
     }
-
+    @Test
+    public final void testParsingDateWithoutTimeButWithTimezone() {
+        MatcherAssert.assertThat(
+            "Can parse date without hour and minute",
+            new DateOf(
+                "2018-01-01",
+                "yyyy-MM-dd"
+            ).value(),
+            Matchers.is(
+                Date.from(
+                    LocalDateTime.of(
+                        2018, 1, 1, 0, 0, 0, 0
+                    ).toInstant(ZoneOffset.UTC)
+                )
+            )
+        );
+    }
 }
