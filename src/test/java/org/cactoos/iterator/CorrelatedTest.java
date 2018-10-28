@@ -34,6 +34,7 @@ import org.junit.Test;
  * Test case for {@link Correlated}.
  *
  * @since 0.39
+ * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
