@@ -49,7 +49,7 @@ public final class CollectionOfTest {
     @Test
     public void buildsCollectionFromIterable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't build a collection from iterator",
+            "Can't build a collection from iterable",
             new CollectionOf<>(new ListOf<>(new IterableOf<>(1, 2, 0, -1))),
             new BehavesAsCollection<>(-1)
         );
