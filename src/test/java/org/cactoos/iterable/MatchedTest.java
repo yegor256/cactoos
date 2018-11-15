@@ -21,34 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.iterable;
 
-import java.util.NoSuchElementException;
-import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test case for {@link Correlated}.
+ * Test case for {@link Matched}.
  *
  * @since 0.39
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class CorrelatedTest {
+public final class MatchedTest {
 
     @Test
     public void iterator() {
         MatcherAssert.assertThat(
             "All elements have correlation function as `equal`",
-            new IterableOf<>(
-                new Correlated<>(
-                    new IteratorOf<>(1, 2, 3),
-                    new IteratorOf<>(1, 2, 3)
-                )
+            new Matched<>(
+                new IterableOf<>(1, 2, 3),
+                new IterableOf<>(1, 2, 3)
             ),
             Matchers.hasItems(1, 2, 3)
         );
@@ -58,27 +54,37 @@ public final class CorrelatedTest {
     public void endsWith() {
         MatcherAssert.assertThat(
             "All elements have correlation function as `endsWith`",
-            new IterableOf<>(
-                new Correlated<>(
-                    (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
-                    new IteratorOf<>("1st elem", "2nd elem", "3rd elem"),
-                    new IteratorOf<>("`A` elem", "`B` elem", "'C' elem")
-                )
+            new Matched<>(
+                (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
+                new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
+                new IterableOf<>("`A` elem", "`B` elem", "'C' elem")
             ),
             Matchers.iterableWithSize(3)
         );
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = IllegalStateException.class)
     public void noCorrelation() {
         new LengthOf(
-            new Correlated<>(
+            new Matched<>(
                 (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
-                new IteratorOf<>("1st elem", "2nd"),
-                new IteratorOf<>("`A` elem", "`B` elem")
+                new IterableOf<>("1st elem", "2nd"),
+                new IterableOf<>("`A` elem", "`B` elem")
             )
         ).intValue();
         Assert.fail("There is no 'endsWith'correlation between 2nd elements");
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void nonNullCorrelation() {
+        new LengthOf(
+            new Matched<>(
+                (fst, snd) -> fst != null && snd != null,
+                new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
+                new IterableOf<>("`A` elem", null, "'C' elem")
+            )
+        ).intValue();
+        Assert.fail("There is no 'non-null' correlation between 2nd elements");
     }
 
 }
