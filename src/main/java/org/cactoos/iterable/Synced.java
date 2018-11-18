@@ -33,7 +33,7 @@ import java.util.Iterator;
  * method call. It doesn't cache the data anyhow. If you don't
  * need this {@link Iterable} to re-fresh
  * its content on every call, by doing round-trips to
- * the encapsulated iterable, use {@link StickyIterable}.</p>
+ * the encapsulated iterable, use {@link Sticky}.</p>
  *
  * <p>Objects of this class are thread-safe.</p>
  *
