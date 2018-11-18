@@ -21,23 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.iterable;
 
-import java.io.InputStream;
-import org.cactoos.Input;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.SolidScalar;
 
 /**
- * Input that reads from {@code stdin}.
+ * An {@link Iterable} that is both synchronized and sticky.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>Objects of this class are thread-safe.</p>
  *
- * @since 0.6
+ * @param <X> Type of item
+ * @since 0.24
  */
-public final class StdinInput implements Input {
+public final class Solid<X> extends IterableEnvelope<X> {
 
-    @Override
-    public InputStream stream() {
-        return System.in;
+    /**
+     * Ctor.
+     * @param src The underlying iterable
+     */
+    @SafeVarargs
+    public Solid(final X... src) {
+        this(new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param iterable The iterable
+     */
+    public Solid(final Iterable<X> iterable) {
+        super(
+            new Scalar.NoNulls<Iterable<X>>(
+                new SolidScalar<Iterable<X>>(
+                    () -> new Synced<X>(new Sticky<>(iterable))
+                )
+            )
+        );
     }
 
 }

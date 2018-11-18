@@ -23,66 +23,45 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.LinkedList;
+import org.cactoos.scalar.StickyScalar;
 
 /**
- * Synchronized iterable.
+ * Iterable that returns the same set of elements, always.
  *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link Iterable} on each
- * method call. It doesn't cache the data anyhow. If you don't
- * need this {@link Iterable} to re-fresh
- * its content on every call, by doing round-trips to
- * the encapsulated iterable, use {@link StickyIterable}.</p>
- *
- * <p>Objects of this class are thread-safe.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of item
- * @since 0.24
+ * @since 0.1
  */
-public final class SyncIterable<X> implements Iterable<X> {
-
-    /**
-     * The iterable.
-     */
-    private final Iterable<X> origin;
-    /**
-     * Sync lock.
-     */
-    private final Object lock;
+public final class Sticky<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
      * @param src The underlying iterable
      */
     @SafeVarargs
-    public SyncIterable(final X... src) {
+    public Sticky(final X... src) {
         this(new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param iterable The iterable synchronize access to.
+     * @param iterable The iterable
      */
-    public SyncIterable(final Iterable<X> iterable) {
-        this(iterable, new Object());
-    }
-
-    /**
-     * Ctor.
-     * @param iterable The iterable synchronize access to.
-     * @param lck The lock to synchronize with.
-     */
-    public SyncIterable(final Iterable<X> iterable, final Object lck) {
-        this.origin = iterable;
-        this.lock = lck;
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        synchronized (this.lock) {
-            return this.origin.iterator();
-        }
+    public Sticky(final Iterable<X> iterable) {
+        super(
+            new StickyScalar<>(
+                () -> {
+                    final Collection<X> temp = new LinkedList<>();
+                    for (final X item : iterable) {
+                        temp.add(item);
+                    }
+                    return temp;
+                }
+            )
+        );
     }
 
 }

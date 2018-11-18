@@ -30,16 +30,16 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
- * Test Case for {@link SolidIterable}.
+ * Test Case for {@link Solid}.
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
-public final class SolidIterableTest {
+public final class SolidTest {
 
     @Test
     public void makesListFromMappedIterable() {
-        final Iterable<Integer> list = new SolidIterable<>(
+        final Iterable<Integer> list = new Solid<>(
             new org.cactoos.list.Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(1, -1, 0, 1)
@@ -57,7 +57,7 @@ public final class SolidIterableTest {
 
     @Test
     public void mapsToSameObjects() {
-        final Iterable<Scalar<Integer>> list = new SolidIterable<>(
+        final Iterable<Scalar<Integer>> list = new Solid<>(
             new org.cactoos.list.Mapped<>(
                 i -> (Scalar<Integer>) () -> i,
                 new IterableOf<>(1, -1, 0, 1)
@@ -87,7 +87,7 @@ public final class SolidIterableTest {
                 );
                 return true;
             },
-            new RunsInThreads<>(new SolidIterable<>(1, 0, -1, -1, 2))
+            new RunsInThreads<>(new Solid<>(1, 0, -1, -1, 2))
         );
     }
 

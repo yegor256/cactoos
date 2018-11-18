@@ -21,23 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.iterable;
 
-import java.io.OutputStream;
-import org.cactoos.Output;
+import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Output that writes to {@code stderr}.
+ * Test case for {@link Sticky}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.6
+ * @since 0.8
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StderrOutput implements Output {
+public final class StickyTest {
 
-    @Override
-    public OutputStream stream() {
-        return System.err;
+    @Test
+    public void ignoresChangesInIterable() throws Exception {
+        final AtomicInteger size = new AtomicInteger(2);
+        final Iterable<Integer> list = new Sticky<>(
+            new ListOf<>(
+                () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't ignore the changes in the underlying iterable",
+            new LengthOf(list).intValue(),
+            Matchers.equalTo(new LengthOf(list).intValue())
+        );
     }
 
 }

@@ -23,35 +23,32 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
-import org.cactoos.iterator.IteratorNoNulls;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
- * A decorator for {@link Iterable} that doesn't allow any NULL.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @param <X> Type of item
- * @since 0.27
+ * Test Case for {@link Synced}.
+ * @since 0.24
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumber (500 lines)
  */
-public final class IterableNoNulls<X> implements Iterable<X> {
+public final class SyncedTest {
 
-    /**
-     * Original iterable.
-     */
-    private final Iterable<X> origin;
-
-    /**
-     * Ctor.
-     * @param items The items
-     */
-    public IterableNoNulls(final Iterable<X> items) {
-        this.origin = items;
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return new IteratorNoNulls<>(this.origin.iterator());
+    @Test
+    public void worksInThreads() {
+        MatcherAssert.assertThat(
+            "Can't behave as an iterable in multiple threads",
+            list -> {
+                MatcherAssert.assertThat(
+                    list.iterator().next(),
+                    Matchers.equalTo(list.iterator().next())
+                );
+                return true;
+            },
+            new RunsInThreads<>(new Synced<>(1, 0, -1, -1, 2))
+        );
     }
 
 }

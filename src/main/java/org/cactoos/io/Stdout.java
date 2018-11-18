@@ -21,34 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.io;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.RunsInThreads;
+import java.io.OutputStream;
+import org.cactoos.Output;
 
 /**
- * Test Case for {@link SyncIterable}.
- * @since 0.24
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumber (500 lines)
+ * Output that writes to {@code stdout}.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.6
  */
-public final class SyncIterableTest {
+public final class Stdout implements Output {
 
-    @Test
-    public void worksInThreads() {
-        MatcherAssert.assertThat(
-            "Can't behave as an iterable in multiple threads",
-            list -> {
-                MatcherAssert.assertThat(
-                    list.iterator().next(),
-                    Matchers.equalTo(list.iterator().next())
-                );
-                return true;
-            },
-            new RunsInThreads<>(new SyncIterable<>(1, 0, -1, -1, 2))
-        );
+    @Override
+    public OutputStream stream() {
+        return System.out;
     }
 
 }

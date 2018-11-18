@@ -23,45 +23,35 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import org.cactoos.scalar.StickyScalar;
+import java.util.Iterator;
+import org.cactoos.iterator.IteratorNoNulls;
 
 /**
- * Iterable that returns the same set of elements, always.
+ * A decorator for {@link Iterable} that doesn't allow any NULL.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of item
- * @since 0.1
+ * @since 0.27
  */
-public final class StickyIterable<X> extends IterableEnvelope<X> {
+public final class NoNulls<X> implements Iterable<X> {
+
+    /**
+     * Original iterable.
+     */
+    private final Iterable<X> origin;
 
     /**
      * Ctor.
-     * @param src The underlying iterable
+     * @param items The items
      */
-    @SafeVarargs
-    public StickyIterable(final X... src) {
-        this(new IterableOf<>(src));
+    public NoNulls(final Iterable<X> items) {
+        this.origin = items;
     }
 
-    /**
-     * Ctor.
-     * @param iterable The iterable
-     */
-    public StickyIterable(final Iterable<X> iterable) {
-        super(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    for (final X item : iterable) {
-                        temp.add(item);
-                    }
-                    return temp;
-                }
-            )
-        );
+    @Override
+    public Iterator<X> iterator() {
+        return new IteratorNoNulls<>(this.origin.iterator());
     }
 
 }
