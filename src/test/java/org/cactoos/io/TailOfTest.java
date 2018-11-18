@@ -30,11 +30,11 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Tests for {@link TailInput}.
+ * Tests for {@link TailOf}.
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TailInputTest {
+public final class TailOfTest {
 
     @Test
     public void tailsOnLongStream() throws Exception {
@@ -42,7 +42,10 @@ public final class TailInputTest {
         final byte[] bytes = this.generate(size);
         MatcherAssert.assertThat(
             new BytesOf(
-                new TailInput(new InputOf(new BytesOf(bytes)), size - 1)
+                new TailOf(
+                    new InputOf(new BytesOf(bytes)),
+                    size - 1
+                )
             ).asBytes(),
             Matchers.equalTo(Arrays.copyOfRange(bytes, 1, bytes.length))
         );
@@ -54,7 +57,10 @@ public final class TailInputTest {
         final byte[] bytes = this.generate(size);
         MatcherAssert.assertThat(
             new BytesOf(
-                new TailInput(new InputOf(new BytesOf(bytes)), size)
+                new TailOf(
+                    new InputOf(new BytesOf(bytes)),
+                    size
+                )
             ).asBytes(),
             Matchers.equalTo(bytes)
         );
@@ -66,7 +72,11 @@ public final class TailInputTest {
         final byte[] bytes = this.generate(size);
         MatcherAssert.assertThat(
             new BytesOf(
-                new TailInput(new InputOf(new BytesOf(bytes)), size, size)
+                new TailOf(
+                    new InputOf(new BytesOf(bytes)),
+                    size,
+                    size
+                )
             ).asBytes(),
             Matchers.equalTo(bytes)
         );
@@ -78,7 +88,10 @@ public final class TailInputTest {
         final byte[] bytes = this.generate(size);
         MatcherAssert.assertThat(
             new BytesOf(
-                new TailInput(new InputOf(new BytesOf(bytes)), size + 1)
+                new TailOf(
+                    new InputOf(new BytesOf(bytes)),
+                    size + 1
+                )
             ).asBytes(),
             Matchers.equalTo(bytes)
         );
@@ -90,8 +103,10 @@ public final class TailInputTest {
         final byte[] bytes = this.generate(size);
         MatcherAssert.assertThat(
             new BytesOf(
-                new TailInput(
-                    new InputOf(new BytesOf(bytes)), size - 1, size - 1
+                new TailOf(
+                    new InputOf(new BytesOf(bytes)),
+                    size - 1,
+                    size - 1
                 )
             ).asBytes(),
             Matchers.equalTo(
@@ -104,8 +119,10 @@ public final class TailInputTest {
     public void failsIfBufferSizeSmallerThanTailSize() throws Exception {
         final int size = 4;
         new BytesOf(
-            new TailInput(
-                new InputOf(new BytesOf(this.generate(size))), size, size - 1
+            new TailOf(
+                new InputOf(new BytesOf(this.generate(size))),
+                size,
+                size - 1
             )
         ).asBytes();
     }

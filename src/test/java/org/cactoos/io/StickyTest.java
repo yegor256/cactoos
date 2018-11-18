@@ -34,18 +34,18 @@ import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link StickyInput}.
+ * Test case for {@link Sticky}.
  * @since 0.6
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class StickyInputTest {
+public final class StickyTest {
 
     @Test
     public void readsFileContent() {
         MatcherAssert.assertThat(
             "Can't read bytes from a file",
-            new StickyInput(
+            new Sticky(
                 new ResourceOf(
                     "org/cactoos/large-text.txt"
                 )
@@ -67,7 +67,7 @@ public final class StickyInputTest {
         MatcherAssert.assertThat(
             "Can't fetch text page from the URL",
             new TextOf(
-                new StickyInput(
+                new Sticky(
                     new InputOf(
                         new URL(
                             // @checkstyle LineLength (1 line)
@@ -88,7 +88,7 @@ public final class StickyInputTest {
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly and count length",
             new LengthOf(
-                new StickyInput(
+                new Sticky(
                     new SlowInput(size)
                 )
             ).longValue(),
@@ -102,7 +102,7 @@ public final class StickyInputTest {
         MatcherAssert.assertThat(
             "Can't read bytes from a large source slowly",
             new BytesOf(
-                new StickyInput(
+                new Sticky(
                     new SlowInput(size)
                 )
             ).asBytes().length,

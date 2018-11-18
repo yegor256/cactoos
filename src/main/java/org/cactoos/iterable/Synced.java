@@ -33,14 +33,14 @@ import java.util.Iterator;
  * method call. It doesn't cache the data anyhow. If you don't
  * need this {@link Iterable} to re-fresh
  * its content on every call, by doing round-trips to
- * the encapsulated iterable, use {@link StickyIterable}.</p>
+ * the encapsulated iterable, use {@link Sticky}.</p>
  *
  * <p>Objects of this class are thread-safe.</p>
  *
  * @param <X> Type of item
  * @since 0.24
  */
-public final class SyncIterable<X> implements Iterable<X> {
+public final class Synced<X> implements Iterable<X> {
 
     /**
      * The iterable.
@@ -56,7 +56,7 @@ public final class SyncIterable<X> implements Iterable<X> {
      * @param src The underlying iterable
      */
     @SafeVarargs
-    public SyncIterable(final X... src) {
+    public Synced(final X... src) {
         this(new IterableOf<>(src));
     }
 
@@ -64,7 +64,7 @@ public final class SyncIterable<X> implements Iterable<X> {
      * Ctor.
      * @param iterable The iterable synchronize access to.
      */
-    public SyncIterable(final Iterable<X> iterable) {
+    public Synced(final Iterable<X> iterable) {
         this(iterable, new Object());
     }
 
@@ -73,7 +73,7 @@ public final class SyncIterable<X> implements Iterable<X> {
      * @param iterable The iterable synchronize access to.
      * @param lck The lock to synchronize with.
      */
-    public SyncIterable(final Iterable<X> iterable, final Object lck) {
+    public Synced(final Iterable<X> iterable, final Object lck) {
         this.origin = iterable;
         this.lock = lck;
     }

@@ -23,26 +23,25 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.SolidScalar;
 
 /**
- * Iterable that returns the same set of elements, always.
+ * An {@link Iterable} that is both synchronized and sticky.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>Objects of this class are thread-safe.</p>
  *
  * @param <X> Type of item
- * @since 0.1
+ * @since 0.24
  */
-public final class StickyIterable<X> extends IterableEnvelope<X> {
+public final class Solid<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
      * @param src The underlying iterable
      */
     @SafeVarargs
-    public StickyIterable(final X... src) {
+    public Solid(final X... src) {
         this(new IterableOf<>(src));
     }
 
@@ -50,16 +49,12 @@ public final class StickyIterable<X> extends IterableEnvelope<X> {
      * Ctor.
      * @param iterable The iterable
      */
-    public StickyIterable(final Iterable<X> iterable) {
+    public Solid(final Iterable<X> iterable) {
         super(
-            new StickyScalar<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    for (final X item : iterable) {
-                        temp.add(item);
-                    }
-                    return temp;
-                }
+            new Scalar.NoNulls<Iterable<X>>(
+                new SolidScalar<Iterable<X>>(
+                    () -> new Synced<X>(new Sticky<>(iterable))
+                )
             )
         );
     }

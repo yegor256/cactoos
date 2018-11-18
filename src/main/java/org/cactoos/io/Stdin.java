@@ -23,52 +23,21 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import org.cactoos.Input;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.IoCheckedScalar;
-import org.cactoos.scalar.StickyScalar;
 
 /**
- * Input that reads only once.
- *
- * <p>Pay attention that this class is not thread-safe. It is highly
- * recommended to always decorate it with {@link SyncInput}.</p>
+ * Input that reads from {@code stdin}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.6
  */
-public final class StickyInput implements Input {
-
-    /**
-     * The cache.
-     */
-    private final Scalar<byte[]> cache;
-
-    /**
-     * Ctor.
-     * @param input The input
-     */
-    public StickyInput(final Input input) {
-        this.cache = new StickyScalar<>(
-            () -> {
-                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                new LengthOf(
-                    new TeeInput(input, new OutputTo(baos))
-                ).value();
-                return baos.toByteArray();
-            }
-        );
-    }
+public final class Stdin implements Input {
 
     @Override
-    public InputStream stream() throws Exception {
-        return new ByteArrayInputStream(
-            new IoCheckedScalar<>(this.cache).value()
-        );
+    public InputStream stream() {
+        return System.in;
     }
 
 }

@@ -21,41 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.io;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import org.cactoos.Input;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.SolidScalar;
+import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.StickyScalar;
 
 /**
- * An {@link Iterable} that is both synchronized and sticky.
+ * Input that reads only once.
  *
- * <p>Objects of this class are thread-safe.</p>
+ * <p>Pay attention that this class is not thread-safe. It is highly
+ * recommended to always decorate it with {@link SyncInput}.</p>
  *
- * @param <X> Type of item
- * @since 0.24
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.6
  */
-public final class SolidIterable<X> extends IterableEnvelope<X> {
+public final class Sticky implements Input {
+
+    /**
+     * The cache.
+     */
+    private final Scalar<byte[]> cache;
 
     /**
      * Ctor.
-     * @param src The underlying iterable
+     * @param input The input
      */
-    @SafeVarargs
-    public SolidIterable(final X... src) {
-        this(new IterableOf<>(src));
+    public Sticky(final Input input) {
+        this.cache = new StickyScalar<>(
+            () -> {
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                new LengthOf(
+                    new TeeInput(input, new OutputTo(baos))
+                ).value();
+                return baos.toByteArray();
+            }
+        );
     }
 
-    /**
-     * Ctor.
-     * @param iterable The iterable
-     */
-    public SolidIterable(final Iterable<X> iterable) {
-        super(
-            new Scalar.NoNulls<Iterable<X>>(
-                new SolidScalar<Iterable<X>>(
-                    () -> new SyncIterable<X>(new StickyIterable<>(iterable))
-                )
-            )
+    @Override
+    public InputStream stream() throws Exception {
+        return new ByteArrayInputStream(
+            new IoCheckedScalar<>(this.cache).value()
         );
     }
 

@@ -21,23 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.iterable;
 
-import java.io.OutputStream;
-import org.cactoos.Output;
+import java.util.Collection;
+import java.util.LinkedList;
+import org.cactoos.scalar.StickyScalar;
 
 /**
- * Output that writes to {@code stderr}.
+ * Iterable that returns the same set of elements, always.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.6
+ * @param <X> Type of item
+ * @since 0.1
  */
-public final class StderrOutput implements Output {
+public final class Sticky<X> extends IterableEnvelope<X> {
 
-    @Override
-    public OutputStream stream() {
-        return System.err;
+    /**
+     * Ctor.
+     * @param src The underlying iterable
+     */
+    @SafeVarargs
+    public Sticky(final X... src) {
+        this(new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param iterable The iterable
+     */
+    public Sticky(final Iterable<X> iterable) {
+        super(
+            new StickyScalar<>(
+                () -> {
+                    final Collection<X> temp = new LinkedList<>();
+                    for (final X item : iterable) {
+                        temp.add(item);
+                    }
+                    return temp;
+                }
+            )
+        );
     }
 
 }

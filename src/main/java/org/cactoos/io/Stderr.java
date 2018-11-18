@@ -27,17 +27,17 @@ import java.io.OutputStream;
 import org.cactoos.Output;
 
 /**
- * Output that writes to {@code stdout}.
+ * Output that writes to {@code stderr}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.6
  */
-public final class StdoutOutput implements Output {
+public final class Stderr implements Output {
 
     @Override
     public OutputStream stream() {
-        return System.out;
+        return System.err;
     }
 
 }

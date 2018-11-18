@@ -36,7 +36,7 @@ import org.cactoos.text.FormattedText;
  *
  * @since 0.30
  */
-public final class TailInput implements Input {
+public final class TailOf implements Input {
 
     /**
      * Input to decorate.
@@ -58,7 +58,7 @@ public final class TailInput implements Input {
      * @param inpt Input to decorate
      * @param bytes Number of last bytes to show from input
      */
-    public TailInput(final Input inpt, final int bytes) {
+    public TailOf(final Input inpt, final int bytes) {
         // @checkstyle MagicNumber (1 line)
         this(inpt, bytes, 16384);
     }
@@ -69,7 +69,7 @@ public final class TailInput implements Input {
      * @param bytes Number of last bytes to show from input
      * @param maximum Maximum number of bytes to read at once
      */
-    public TailInput(final Input inpt, final int bytes, final int maximum) {
+    public TailOf(final Input inpt, final int bytes, final int maximum) {
         this.input = inpt;
         this.count = bytes;
         this.max = maximum;
