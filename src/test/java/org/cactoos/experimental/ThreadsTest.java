@@ -23,12 +23,17 @@
  */
 package org.cactoos.experimental;
 
+import java.io.UncheckedIOException;
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import org.cactoos.iterable.LengthOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Mapped;
 import org.hamcrest.MatcherAssert;
@@ -64,7 +69,7 @@ public final class ThreadsTest {
             )
         );
         MatcherAssert.assertThat(
-            new Mapped<>(Future::get, futures),
+            new Mapped<>(f -> f.get(8, TimeUnit.SECONDS), futures),
             Matchers.hasItems("1st", "3rd", "2nd")
         );
     }
@@ -73,6 +78,7 @@ public final class ThreadsTest {
     public void cactoosWay() {
         MatcherAssert.assertThat(
             new Threads<String>(
+                () -> Duration.ofSeconds(8),
                 () -> {
                     TimeUnit.SECONDS.sleep(2);
                     return "1st";
@@ -88,5 +94,36 @@ public final class ThreadsTest {
             ),
             Matchers.hasItems("1st", "3rd", "2nd")
         );
+    }
+
+    @Test(timeout = 2000)
+    public void cactoosWayWithTimeoutPerTaskInSecond() throws Exception {
+        try {
+            new LengthOf(
+                new Threads<String>(
+                    () -> Duration.ofSeconds(1),
+                    () -> {
+                        TimeUnit.SECONDS.sleep(3);
+                        return "1st";
+                    },
+                    () -> "2nd",
+                    () -> "3rd"
+                )
+            ).value();
+        } catch (final UncheckedIOException exp) {
+            // @todo #962:30m new matcher org.llorllale.cactoos-matchers
+            //  is required in order to verify the exception hierarchy in
+            //  a laconic way without code mess below (with exception's catch).
+            Throwable rcause = exp.getCause();
+            final Collection<Throwable> visited = new ArrayList<>(5);
+            while (rcause.getCause() != null
+                && !visited.contains(rcause.getCause())) {
+                rcause = rcause.getCause();
+                visited.add(rcause);
+            }
+            MatcherAssert.assertThat(
+                rcause, Matchers.instanceOf(TimeoutException.class)
+            );
+        }
     }
 }

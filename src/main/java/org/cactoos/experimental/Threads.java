@@ -23,12 +23,14 @@
  */
 package org.cactoos.experimental;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.collection.Mapped;
@@ -52,29 +54,34 @@ public class Threads<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     * @param ttimeout The timeout per task.
      * @param tasks The tasks to be executed concurrently.
      */
     @SafeVarargs
-    public Threads(final Scalar<X>... tasks) {
-        this(new ListOf<>(tasks));
+    public Threads(final Scalar<Duration> ttimeout, final Scalar<X>... tasks) {
+        this(ttimeout, new ListOf<>(tasks));
     }
 
     /**
      * Ctor.
+     * @param ttimeout The timeout per task.
      * @param tasks The tasks to be executed concurrently.
      */
-    public Threads(final Collection<Scalar<X>> tasks) {
-        this(tasks, () -> Executors.newFixedThreadPool(5));
+    public Threads(final Scalar<Duration> ttimeout,
+        final Collection<Scalar<X>> tasks) {
+        this(tasks, ttimeout, () -> Executors.newFixedThreadPool(5));
     }
 
     /**
      * Ctor.
      * @param tasks The tasks to be executed concurrently.
+     * @param ttimeout The timeout per task.
      * @param extr The executor for concurrent execution.
      */
     public Threads(final Collection<Scalar<X>> tasks,
+        final Scalar<Duration> ttimeout,
         final Scalar<ExecutorService> extr) {
-        this(tasks, todo -> {
+        this(tasks, ttimeout, todo -> {
                 final ExecutorService exctor = new StickyScalar<>(extr).value();
                 final Collection<Future<X>> out = new ArrayList<>(todo.size());
                 for (final Scalar<X> task : todo) {
@@ -88,20 +95,24 @@ public class Threads<X> implements Iterable<X> {
     /**
      * Ctor.
      * @param tasks The tasks to be executed concurrently.
-     * @param fnc The function to execute tasks concurrently
+     * @param ttimeout The timeout per task.
+     * @param fnc The function to execute tasks concurrently.
+     * @todo #962:30m Move the Future.get to separate function - Timeouted.
      */
     public Threads(final Collection<Scalar<X>> tasks,
+        final Scalar<Duration> ttimeout,
         final Func<Collection<Scalar<X>>, Collection<Future<X>>> fnc) {
         this(
             new Mapped<Future<X>, X>(
-                Future::get, new UncheckedFunc<>(fnc).apply(tasks)
+                f -> f.get(ttimeout.value().toMillis(), TimeUnit.MILLISECONDS),
+                new UncheckedFunc<>(fnc).apply(tasks)
             )
         );
     }
 
     /**
      * Ctor.
-     * @param rslts
+     * @param rslts The results of concurrent execution.
      */
     private Threads(final Iterable<X> rslts) {
         this.rslts = rslts;
