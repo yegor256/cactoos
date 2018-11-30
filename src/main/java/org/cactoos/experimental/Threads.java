@@ -66,6 +66,8 @@ public class Threads<X> implements Iterable<X> {
      * Ctor.
      * @param ttimeout The timeout per task.
      * @param tasks The tasks to be executed concurrently.
+     * @todo #962:30m Add ability to shutdown the executor service in case if it
+     *  was initiated in scope of this instance.
      */
     public Threads(final Scalar<Duration> ttimeout,
         final Collection<Scalar<X>> tasks) {
@@ -97,7 +99,6 @@ public class Threads<X> implements Iterable<X> {
      * @param tasks The tasks to be executed concurrently.
      * @param ttimeout The timeout per task.
      * @param fnc The function to execute tasks concurrently.
-     * @todo #962:30m Move the Future.get to separate function - Timeouted.
      */
     public Threads(final Collection<Scalar<X>> tasks,
         final Scalar<Duration> ttimeout,
