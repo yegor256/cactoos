@@ -21,22 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.cactoos.experimental;
 
+import java.util.Iterator;
+import java.util.concurrent.Callable;
+import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
+
 /**
- * Allows to execute the tasks concurrently.
+ * Tasks.
  *
- * @param <X> The type of item.
  * @since 1.0.0
  */
-public interface Threads<X> {
+public final class TasksOf<X> implements Tasks<X> {
 
     /**
-     * Complete the tasks concurrently.
-     * @return The results of completed tasks.
-     * @throws ConcurrentExecutionException in case exception during concurrent
-     *  execution.
+     * Origin.
      */
-    Iterable<X> complete() throws ConcurrentExecutionException;
+    private final Iterable<Scalar<X>> tasks;
+
+    /**
+     * Ctor.
+     * @param tasks Origin.
+     */
+    @SafeVarargs
+    public TasksOf(final Scalar<X>... tasks){
+        this(new IterableOf<>(tasks));
+    }
+
+    @SafeVarargs
+    public TasksOf(final Callable<X>... tasks){
+        this(new Mapped<>(t -> (Scalar<X>) t::call, tasks));
+    }
+
+    public TasksOf(final Iterable<Scalar<X>> tasks){
+        this.tasks = tasks;
+    }
+
+    @Override
+    public Iterator<Scalar<X>> iterator() {
+        return this.tasks.iterator();
+    }
 }

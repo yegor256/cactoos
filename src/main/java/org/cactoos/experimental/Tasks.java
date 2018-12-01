@@ -24,19 +24,13 @@
 
 package org.cactoos.experimental;
 
+import org.cactoos.Scalar;
+
 /**
- * Allows to execute the tasks concurrently.
+ * The tasks to be executed concurrently.
  *
  * @param <X> The type of item.
  * @since 1.0.0
  */
-public interface Threads<X> {
-
-    /**
-     * Complete the tasks concurrently.
-     * @return The results of completed tasks.
-     * @throws ConcurrentExecutionException in case exception during concurrent
-     *  execution.
-     */
-    Iterable<X> complete() throws ConcurrentExecutionException;
+public interface Tasks<X> extends Iterable<Scalar<X>> {
 }

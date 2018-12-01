@@ -21,22 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.cactoos.experimental;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import org.cactoos.Scalar;
+
 /**
- * Allows to execute the tasks concurrently.
+ * Detect root cause of the particular exception.
  *
- * @param <X> The type of item.
  * @since 1.0.0
  */
-public interface Threads<X> {
+public final class RootCauseOf implements Scalar<Throwable> {
 
     /**
-     * Complete the tasks concurrently.
-     * @return The results of completed tasks.
-     * @throws ConcurrentExecutionException in case exception during concurrent
-     *  execution.
+     * The root cause exception.
      */
-    Iterable<X> complete() throws ConcurrentExecutionException;
+    private final Scalar<Throwable> cause;
+
+    /**
+     * Ctor.
+     * @param cause The root exception for hierarchical search.
+     */
+    public RootCauseOf(final Exception cause) {
+        this(() -> {
+            Throwable rcause = cause.getCause();
+            final Collection<Throwable> visited = new ArrayList<>(5);
+            while (rcause.getCause() != null
+                && !visited.contains(rcause.getCause())) {
+                rcause = rcause.getCause();
+                visited.add(rcause);
+            }
+            return rcause;
+        });
+    }
+
+    /**
+     * Ctor.
+     * @param cause The root cause exception.
+     */
+    private RootCauseOf(final Scalar<Throwable> cause) {
+        this.cause = cause;
+    }
+
+    @Override
+    public Throwable value() throws Exception {
+        return this.cause.value();
+    }
 }

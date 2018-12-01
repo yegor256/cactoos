@@ -21,22 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.cactoos.experimental;
 
 /**
- * Allows to execute the tasks concurrently.
+ * To be thrown in case of exception during concurrent execution.
  *
- * @param <X> The type of item.
  * @since 1.0.0
  */
-public interface Threads<X> {
+public final class ConcurrentExecutionException extends Exception {
 
     /**
-     * Complete the tasks concurrently.
-     * @return The results of completed tasks.
-     * @throws ConcurrentExecutionException in case exception during concurrent
-     *  execution.
+     * Serialization.
      */
-    Iterable<X> complete() throws ConcurrentExecutionException;
+    private static final long serialVersionUID = -460550512504540886L;
+
+    /**
+     * Ctor.
+     * @param exp The root cause.
+     */
+    public ConcurrentExecutionException(final Exception exp) {
+        super(exp);
+    }
 }

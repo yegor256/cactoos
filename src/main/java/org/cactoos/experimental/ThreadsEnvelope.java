@@ -21,22 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.cactoos.experimental;
 
 /**
- * Allows to execute the tasks concurrently.
+ * The envelope of {@link Threads}.
  *
  * @param <X> The type of item.
  * @since 1.0.0
  */
-public interface Threads<X> {
+public class ThreadsEnvelope<X> implements Threads<X> {
 
     /**
-     * Complete the tasks concurrently.
-     * @return The results of completed tasks.
-     * @throws ConcurrentExecutionException in case exception during concurrent
-     *  execution.
+     * Origin.
      */
-    Iterable<X> complete() throws ConcurrentExecutionException;
+    private final Threads<X> treads;
+
+    /**
+     * Ctor.
+     * @param threads Origin.
+     */
+    public ThreadsEnvelope(final Threads<X> threads) {
+        this.treads = threads;
+    }
+
+    @Override
+    public Iterable<X> complete() throws ConcurrentExecutionException {
+        return this.treads.complete();
+    }
 }

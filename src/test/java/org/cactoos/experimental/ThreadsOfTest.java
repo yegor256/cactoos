@@ -25,15 +25,14 @@ package org.cactoos.experimental;
 
 import java.io.UncheckedIOException;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import org.cactoos.iterable.LengthOf;
+import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Mapped;
 import org.hamcrest.MatcherAssert;
@@ -41,44 +40,48 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link Threads}.
+ * Test case for {@link ThreadsOf}.
  *
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ThreadsTest {
+public final class ThreadsOfTest {
 
     @Test(timeout = 10000)
     public void oldSchoolWay() throws InterruptedException {
         final ExecutorService extor = Executors.newFixedThreadPool(5);
-        final Collection<Future<String>> futures = extor.invokeAll(
-            new ListOf<Callable<String>>(
-                () -> {
-                    TimeUnit.SECONDS.sleep(2);
-                    return "1st";
-                },
-                () -> {
-                    TimeUnit.SECONDS.sleep(6);
-                    return "3rd";
-                },
-                () -> {
-                    TimeUnit.SECONDS.sleep(4);
-                    return "2nd";
-                }
-            )
-        );
-        MatcherAssert.assertThat(
-            new Mapped<>(f -> f.get(8, TimeUnit.SECONDS), futures),
-            Matchers.hasItems("1st", "3rd", "2nd")
-        );
+        try {
+            final Collection<Future<String>> futures = extor.invokeAll(
+                new ListOf<Callable<String>>(
+                    () -> {
+                        TimeUnit.SECONDS.sleep(2);
+                        return "1st";
+                    },
+                    () -> {
+                        TimeUnit.SECONDS.sleep(6);
+                        return "3rd";
+                    },
+                    () -> {
+                        TimeUnit.SECONDS.sleep(4);
+                        return "2nd";
+                    }
+                )
+            );
+            MatcherAssert.assertThat(
+                new Mapped<>(f -> f.get(8, TimeUnit.SECONDS), futures),
+                Matchers.hasItems("1st", "3rd", "2nd")
+            );
+        } finally {
+            extor.shutdown();
+        }
     }
 
     @Test(timeout = 10000)
-    public void cactoosWay() {
+    public void cactoosWay() throws ConcurrentExecutionException {
         MatcherAssert.assertThat(
-            new Threads<String>(
-                () -> Duration.ofSeconds(8),
+            new ThreadsOf<String>(
+                () -> Duration.ofSeconds(7),
                 () -> {
                     TimeUnit.SECONDS.sleep(2);
                     return "1st";
@@ -87,11 +90,11 @@ public final class ThreadsTest {
                     TimeUnit.SECONDS.sleep(6);
                     return "3rd";
                 },
-                () -> {
+                (Scalar<String>) () -> {
                     TimeUnit.SECONDS.sleep(4);
                     return "2nd";
                 }
-            ),
+            ).complete(),
             Matchers.hasItems("1st", "3rd", "2nd")
         );
     }
@@ -99,30 +102,22 @@ public final class ThreadsTest {
     @Test(timeout = 2000)
     public void cactoosWayWithTimeoutPerTaskInSecond() throws Exception {
         try {
-            new LengthOf(
-                new Threads<String>(
-                    () -> Duration.ofSeconds(1),
-                    () -> {
-                        TimeUnit.SECONDS.sleep(3);
-                        return "1st";
-                    },
-                    () -> "2nd",
-                    () -> "3rd"
-                )
-            ).value();
+            new ThreadsOf<String>(
+                () -> Duration.ofSeconds(1),
+                () -> {
+                    TimeUnit.SECONDS.sleep(3);
+                    return "1st";
+                },
+                () -> "2nd",
+                (Scalar<String>) () -> "3rd"
+            ).complete();
         } catch (final UncheckedIOException exp) {
             // @todo #962:30m new matcher org.llorllale.cactoos-matchers
             //  is required in order to verify the exception hierarchy in
             //  a laconic way without code mess below (with exception's catch).
-            Throwable rcause = exp.getCause();
-            final Collection<Throwable> visited = new ArrayList<>(5);
-            while (rcause.getCause() != null
-                && !visited.contains(rcause.getCause())) {
-                rcause = rcause.getCause();
-                visited.add(rcause);
-            }
             MatcherAssert.assertThat(
-                rcause, Matchers.instanceOf(TimeoutException.class)
+                new RootCauseOf(exp).value(),
+                Matchers.instanceOf(CancellationException.class)
             );
         }
     }

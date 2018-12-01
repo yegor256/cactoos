@@ -24,19 +24,45 @@
 
 package org.cactoos.experimental;
 
-/**
- * Allows to execute the tasks concurrently.
- *
- * @param <X> The type of item.
- * @since 1.0.0
- */
-public interface Threads<X> {
+import java.time.Duration;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
-    /**
-     * Complete the tasks concurrently.
-     * @return The results of completed tasks.
-     * @throws ConcurrentExecutionException in case exception during concurrent
-     *  execution.
-     */
-    Iterable<X> complete() throws ConcurrentExecutionException;
+/**
+ * Test case for {@link }.
+ *
+ * @since 1.0.0
+ * @checkstyle JavadocMethodCheck (500 lines)
+ */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class ClosableTest {
+
+    @Test(timeout = 10000)
+    public void complete() throws ConcurrentExecutionException {
+        MatcherAssert.assertThat(
+            new Closable<String>(
+                () -> Duration.ofSeconds(8),
+                new TasksOf<String>(
+                    () -> {
+                        TimeUnit.SECONDS.sleep(1);
+                        return "1st";
+                    },
+                    () -> {
+                        TimeUnit.SECONDS.sleep(7);
+                        return "3rd";
+                    },
+                    (Scalar<String>) () -> {
+                        TimeUnit.SECONDS.sleep(5);
+                        return "2nd";
+                    }
+                ),
+                () -> Executors.newFixedThreadPool(3)
+            ).complete(),
+            Matchers.hasItems("1st", "3rd", "2nd")
+        );
+    }
 }
