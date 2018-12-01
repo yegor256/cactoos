@@ -33,7 +33,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link }.
+ * Test case for {@link Closable}.
  *
  * @since 1.0.0
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -41,22 +41,22 @@ import org.junit.Test;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ClosableTest {
 
-    @Test(timeout = 10000)
+    @Test(timeout = 7000)
     public void complete() throws ConcurrentExecutionException {
         MatcherAssert.assertThat(
             new Closable<String>(
-                () -> Duration.ofSeconds(8),
+                () -> Duration.ofSeconds(5),
                 new TasksOf<String>(
                     () -> {
                         TimeUnit.SECONDS.sleep(1);
                         return "1st";
                     },
                     () -> {
-                        TimeUnit.SECONDS.sleep(7);
+                        TimeUnit.SECONDS.sleep(4);
                         return "3rd";
                     },
                     (Scalar<String>) () -> {
-                        TimeUnit.SECONDS.sleep(5);
+                        TimeUnit.SECONDS.sleep(2);
                         return "2nd";
                     }
                 ),
