@@ -41,6 +41,7 @@ import org.junit.Test;
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle IllegalThrowsCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class StatelessTest {

@@ -46,6 +46,7 @@ import org.junit.Test;
  *
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle IllegalThrowsCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MethodBodyCommentsCheck (500 lines)
  */
