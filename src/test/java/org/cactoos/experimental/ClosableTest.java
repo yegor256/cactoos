@@ -36,6 +36,7 @@ import org.junit.Test;
  * Test case for {@link Closable}.
  *
  * @since 1.0.0
+ * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")

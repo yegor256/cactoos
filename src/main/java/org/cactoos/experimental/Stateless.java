@@ -69,7 +69,9 @@ public final class Stateless<X> implements Threads<X> {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Iterable<X> complete() throws ConcurrentExecutionException {
+        // @checkstyle IllegalCatchCheck (50 lines)
         try {
             return new Mapped<Future<X>, X>(
                 Future::get,

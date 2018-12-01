@@ -26,55 +26,48 @@ package org.cactoos.experimental;
 
 import java.io.UncheckedIOException;
 import java.time.Duration;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import org.cactoos.Scalar;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.iterable.LengthOf;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * Test case for {@link Stateless}.
  *
  * @since 1.0.0
+ * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class StatelessTest {
 
-    @Test(timeout = 2000)
-    public void complete() throws Exception {
+    @Test(timeout = 2000, expected = CancellationException.class)
+    public void complete() throws Throwable {
         final ExecutorService executor = Executors.newFixedThreadPool(5);
         try {
-            new Stateless<String>(
-                () -> Duration.ofSeconds(1),
-                new TasksOf<String>(
-                    () -> {
-                        System.out.println("before 1st");
-                        TimeUnit.SECONDS.sleep(5);
-                        System.out.println("after 1st");
-                        return "1st";
-                    },
-                    () -> {
-                        System.out.println("before 2nd");
-                        return "2nd";
-                    },
-                    (Scalar<String>) () -> {
-                        System.out.println("before 3rd");
-                        return "3rd";
-                    }
-                ),
-                () -> Executors.newFixedThreadPool(5)
-            ).complete();
+            new LengthOf(
+                new Stateless<String>(
+                    () -> Duration.ofSeconds(1),
+                    new TasksOf<String>(
+                        () -> {
+                            TimeUnit.SECONDS.sleep(5);
+                            return "1st";
+                        },
+                        () -> "2nd",
+                        (Scalar<String>) () -> "3rd"
+                    ),
+                    () -> Executors.newFixedThreadPool(5)
+                ).complete()
+            ).value();
         } catch (final UncheckedIOException cause) {
-            MatcherAssert.assertThat(
-                new RootCauseOf(cause).value(),
-                Matchers.instanceOf(TimeoutException.class)
-            );
+            throw new RootCauseOf(cause).value();
         } finally {
             executor.shutdown();
         }
+        Assert.fail("The exception should be thrown");
     }
 }

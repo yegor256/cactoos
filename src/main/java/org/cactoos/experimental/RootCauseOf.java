@@ -41,27 +41,24 @@ public final class RootCauseOf implements Scalar<Throwable> {
 
     /**
      * Ctor.
-     * @param cause The root exception for hierarchical search.
+     * @param exp The root exception for hierarchical search.
      */
-    public RootCauseOf(final Exception cause) {
-        this(() -> {
-            Throwable rcause = cause.getCause();
-            final Collection<Throwable> visited = new ArrayList<>(5);
-            while (rcause.getCause() != null
-                && !visited.contains(rcause.getCause())) {
-                rcause = rcause.getCause();
-                visited.add(rcause);
+    public RootCauseOf(final Exception exp) {
+        this.cause = () -> {
+            Throwable rcause;
+            if (exp == null || exp.getCause() == null) {
+                rcause = exp;
+            } else {
+                rcause = exp.getCause();
+                final Collection<Throwable> visited = new ArrayList<>(5);
+                while (rcause.getCause() != null
+                    && !visited.contains(rcause.getCause())) {
+                    rcause = rcause.getCause();
+                    visited.add(rcause);
+                }
             }
             return rcause;
-        });
-    }
-
-    /**
-     * Ctor.
-     * @param cause The root cause exception.
-     */
-    private RootCauseOf(final Scalar<Throwable> cause) {
-        this.cause = cause;
+        };
     }
 
     @Override

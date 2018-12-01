@@ -32,6 +32,7 @@ import org.cactoos.iterable.Mapped;
 /**
  * Tasks.
  *
+ * @param <X> Type of tasks.
  * @since 1.0.0
  */
 public final class TasksOf<X> implements Tasks<X> {
@@ -46,16 +47,24 @@ public final class TasksOf<X> implements Tasks<X> {
      * @param tasks Origin.
      */
     @SafeVarargs
-    public TasksOf(final Scalar<X>... tasks){
+    public TasksOf(final Scalar<X>... tasks) {
         this(new IterableOf<>(tasks));
     }
 
+    /**
+     * Ctor.
+     * @param tasks Origin.
+     */
     @SafeVarargs
-    public TasksOf(final Callable<X>... tasks){
+    public TasksOf(final Callable<X>... tasks) {
         this(new Mapped<>(t -> (Scalar<X>) t::call, tasks));
     }
 
-    public TasksOf(final Iterable<Scalar<X>> tasks){
+    /**
+     * Ctor.
+     * @param tasks Origin.
+     */
+    public TasksOf(final Iterable<Scalar<X>> tasks) {
         this.tasks = tasks;
     }
 

@@ -45,7 +45,7 @@ public class ThreadsEnvelope<X> implements Threads<X> {
     }
 
     @Override
-    public Iterable<X> complete() throws ConcurrentExecutionException {
+    public final Iterable<X> complete() throws ConcurrentExecutionException {
         return this.treads.complete();
     }
 }

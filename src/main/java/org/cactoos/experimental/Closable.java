@@ -42,6 +42,10 @@ public final class Closable<X> extends ThreadsEnvelope<X> {
      * @param tasks The tasks to be executed concurrently.
      * @param exec The executor for concurrent execution.
      * @param timeout The timeout for execution of all tasks.
+     *  Also, the default timeout for graceful shutdown of executor service is
+     *  30 seconds. In case if doesn't satisfy your requirements kindly ask you
+     *  to use {@link Closable(Scalar, Tasks, Scalar, Scalar)}.
+     * @checkstyle MagicNumberCheck (5 lines)
      */
     public Closable(final Scalar<Duration> timeout, final Tasks<X> tasks,
         final Scalar<ExecutorService> exec) {
@@ -55,6 +59,7 @@ public final class Closable<X> extends ThreadsEnvelope<X> {
      * @param timeout The timeout for execution of all tasks.
      * @param graceful The timeout for the graceful shutdown of the executor
      *  service.
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     public Closable(final Scalar<Duration> timeout, final Tasks<X> tasks,
         final Scalar<ExecutorService> exctor, final Scalar<Duration> graceful) {
@@ -67,8 +72,8 @@ public final class Closable<X> extends ThreadsEnvelope<X> {
                     exc.shutdown();
                     final Duration gfl = new UncheckedScalar<>(graceful)
                         .value();
-                    if (!exc.awaitTermination(gfl.toMillis(),
-                        TimeUnit.MILLISECONDS)) {
+                    final long millis = gfl.toMillis();
+                    if (!exc.awaitTermination(millis, TimeUnit.MILLISECONDS)) {
                         exc.shutdownNow();
                     }
                 } catch (final InterruptedException exp) {

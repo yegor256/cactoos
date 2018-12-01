@@ -63,6 +63,8 @@ public class ThreadsOf<X> extends ThreadsEnvelope<X> {
      * Ctor.
      * @param timeout The timeout for execution of all tasks.
      * @param tasks The tasks to be executed concurrently.
+     *  The default thread pool for execution has size in 5 threads.
+     * @checkstyle MagicNumberCheck (5 lines)
      */
     public ThreadsOf(final Scalar<Duration> timeout, final Tasks<X> tasks) {
         super(new Closable<>(

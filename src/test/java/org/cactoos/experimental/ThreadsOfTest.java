@@ -33,10 +33,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.LengthOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Mapped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -45,7 +47,9 @@ import org.junit.Test;
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MethodBodyCommentsCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ThreadsOfTest {
 
     @Test(timeout = 10000)
@@ -99,26 +103,26 @@ public final class ThreadsOfTest {
         );
     }
 
-    @Test(timeout = 2000)
-    public void cactoosWayWithTimeoutPerTaskInSecond() throws Exception {
+    @Test(timeout = 2000, expected = CancellationException.class)
+    public void cactoosWayWithTimeout() throws Throwable {
         try {
-            new ThreadsOf<String>(
-                () -> Duration.ofSeconds(1),
-                () -> {
-                    TimeUnit.SECONDS.sleep(3);
-                    return "1st";
-                },
-                () -> "2nd",
-                (Scalar<String>) () -> "3rd"
-            ).complete();
+            new LengthOf(
+                new ThreadsOf<String>(
+                    () -> Duration.ofSeconds(1),
+                    () -> {
+                        TimeUnit.SECONDS.sleep(3);
+                        return "1st";
+                    },
+                    () -> "2nd",
+                    (Scalar<String>) () -> "3rd"
+                ).complete()
+            ).value();
         } catch (final UncheckedIOException exp) {
             // @todo #962:30m new matcher org.llorllale.cactoos-matchers
             //  is required in order to verify the exception hierarchy in
             //  a laconic way without code mess below (with exception's catch).
-            MatcherAssert.assertThat(
-                new RootCauseOf(exp).value(),
-                Matchers.instanceOf(CancellationException.class)
-            );
+            throw new RootCauseOf(exp).value();
         }
+        Assert.fail("The exception should be thrown");
     }
 }
