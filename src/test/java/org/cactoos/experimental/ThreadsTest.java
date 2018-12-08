@@ -37,7 +37,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link ThreadsTest}.
+ * Test case for {@link Threads}.
  *
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
