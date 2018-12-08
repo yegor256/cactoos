@@ -23,26 +23,59 @@
  */
 package org.cactoos.set;
 
+import java.util.Iterator;
+import java.util.Set;
 import org.cactoos.collection.BehavesAsCollection;
+import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.hamcrest.Matchers;
+import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Test case for {@link StickySet}.
+ * Matcher for set.
  *
+ * @param <T> Type of source sample
  * @since 0.49.2
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumber (500 line)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class StickySetTest {
+public final class BehavesAsSet<T> extends TypeSafeMatcher<Set<T>> {
 
-    @Test
-    public void behavesAsCollection() {
+    /**
+     * Sample sample.
+     */
+    private final T sample;
+
+    /**
+     * Ctor.
+     * @param item Sample sample
+     */
+    public BehavesAsSet(final T item) {
+        super();
+        this.sample = item;
+    }
+
+    @Override
+    public boolean matchesSafely(final Set<T> item) {
         MatcherAssert.assertThat(
-            "Can't behave as a set",
-            new StickySet<>(1, 2, 5),
-            new BehavesAsCollection<>(2)
+            "Does not contain duplicates",
+            this.occurrences(item.iterator()),
+            Matchers.equalTo(1)
         );
+        return new BehavesAsCollection<>(this.sample).matchesSafely(item);
+    }
+
+    @Override
+    public void describeTo(final Description description) {
+        description.appendText("not a valid set");
+    }
+
+    private int occurrences(final Iterator<T> iterator) {
+        int occurrences = 0;
+        while (iterator.hasNext()) {
+            if (this.sample.equals(iterator.next())) {
+                ++occurrences;
+            }
+        }
+        return occurrences;
     }
 }

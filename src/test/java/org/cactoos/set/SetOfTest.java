@@ -23,7 +23,6 @@
  */
 package org.cactoos.set;
 
-import org.cactoos.collection.BehavesAsCollection;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -31,18 +30,18 @@ import org.junit.Test;
  * Test case for {@link SetOf}.
  *
  * @since 0.49.2
-    * @checkstyle JavadocMethodCheck (500 lines)
-    * @checkstyle MagicNumber (500 line)
-    */
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumber (500 line)
+ */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SetOfTest {
 
     @Test
-    public void behavesAsCollection() {
+    public void behavesAsSet() {
         MatcherAssert.assertThat(
             "Can't behave as a set",
-            new SetOf<>(1, 2),
-            new BehavesAsCollection<>(2)
+            new SetOf<>(1, 2, 2),
+            new BehavesAsSet<>(2)
         );
     }
 }

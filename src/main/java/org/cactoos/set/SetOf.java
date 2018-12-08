@@ -34,15 +34,11 @@ import org.cactoos.iterable.IterableOf;
  *
  * <p>This class should be used very carefully. You must understand that
  * it will fetch the entire content of the encapsulated {@link Set} on each
- * method call. It doesn't cache the data anyhow. If you don't
- * need this {@link Set} to re-fresh its content on every call,
- * by doing round-trips to the encapsulated iterable, decorate it with
- * {@link StickySet}.</p>
+ * method call. It doesn't cache the data anyhow. </p>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @param <T> List type
- * @see StickySet
+ * @param <T> Set type
  * @since 0.49.2
  */
 public final class SetOf<T> extends SetEnvelope<T> {

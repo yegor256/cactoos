@@ -23,7 +23,7 @@
  */
 
 /**
- * Sets, tests.
+ * Sets.
  *
  * @since 0.49.2
  */
