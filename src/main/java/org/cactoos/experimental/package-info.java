@@ -23,8 +23,12 @@
  */
 
 /**
- * This package is experimental part of cactoos and might not be included into
- *  release 1.0.0.
+ * We are running experiments with the APIs provided in this package. We
+ * encourage you to try them out and submit any questions and feedback here.
+ *
+ * Be warned, however, that the stability of this package is not guaranteed.
+ * APIs may come, change, and go, between any release, for any reason
+ * whatsoever.
  *
  * @since 1.0.0
  */
