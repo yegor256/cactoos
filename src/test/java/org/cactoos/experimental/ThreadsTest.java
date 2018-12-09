@@ -48,11 +48,6 @@ public final class ThreadsTest {
     /**
      * Example of JDK8 way for handling of concurrent tasks.
      * This code base should be simplified.
-     * @todo #962:30min o.c.experimental Design the implementation of ThreadsOf.
-     *  The initial scope is including:
-     *  1) receive the ExecutorService;
-     *  2) receive the tasks to complete;
-     *  3) execute the tasks concurrently and return the values.
      */
     @Test(timeout = 10000)
     public void oldSchoolWay() {

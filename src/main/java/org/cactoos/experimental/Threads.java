@@ -29,6 +29,10 @@ package org.cactoos.experimental;
  * @param <X> The type of result objects.
  *
  * @since 1.0.0
+ * @todo #972:30min Add a new implementation which receive the tasks and able:
+ *  - create a new thread pool with predefined/specified size
+ *  - execute tasks concurrently
+ *  - shutdown the thread pool
  */
 public interface Threads<X> extends Iterable<X> {
 
