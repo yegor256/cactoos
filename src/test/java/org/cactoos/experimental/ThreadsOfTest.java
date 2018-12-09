@@ -25,6 +25,7 @@
 package org.cactoos.experimental;
 
 import java.time.Duration;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +33,8 @@ import org.cactoos.Proc;
 import org.cactoos.func.Repeated;
 import org.cactoos.func.TimedFunc;
 import org.cactoos.func.UncheckedFunc;
+import org.cactoos.iterable.LengthOf;
+import org.cactoos.scalar.UncheckedScalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
@@ -89,10 +92,10 @@ public final class ThreadsOfTest {
     }
 
     /**
-     * Execute test at least 10 times with timeout in 5 seconds each.
+     * Execute the test at least 10 times with timeout in 5 seconds each.
      * @param test The test to execute.
      */
-    private void repeatSeveralTimes(final Proc<Boolean> test) {
+    public void repeatSeveralTimes(final Proc<Boolean> test) {
         MatcherAssert.assertThat(
             new UncheckedFunc<>(
                 new Repeated<>(
@@ -108,5 +111,23 @@ public final class ThreadsOfTest {
             ).apply(true),
             new IsEqual<>(true)
         );
+    }
+
+    /**
+     * Execute 1 task within executor service and ensure that we'll get the
+     *  expected exception type.
+     */
+    @Test(expected = CompletionException.class)
+    public void executionIsFailed() {
+        new UncheckedScalar<>(
+            new LengthOf(
+                new ThreadsOf<String>(
+                    Executors::newSingleThreadExecutor,
+                    () -> {
+                        throw new IllegalStateException("Something went wrong");
+                    }
+                )
+            )
+        ).value();
     }
 }
