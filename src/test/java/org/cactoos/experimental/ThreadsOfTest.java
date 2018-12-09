@@ -25,11 +25,14 @@
 package org.cactoos.experimental;
 
 import java.time.Duration;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
+import org.cactoos.Scalar;
 import org.cactoos.func.Repeated;
 import org.cactoos.func.TimedFunc;
 import org.cactoos.func.UncheckedFunc;
@@ -38,6 +41,7 @@ import org.cactoos.scalar.UncheckedScalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -45,6 +49,7 @@ import org.junit.Test;
  *
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (200 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ThreadsOfTest {
@@ -118,7 +123,7 @@ public final class ThreadsOfTest {
      *  expected exception type.
      */
     @Test(expected = CompletionException.class)
-    public void executionIsFailed() {
+    public void executionIsFailedDueToException() {
         new UncheckedScalar<>(
             new LengthOf(
                 new ThreadsOf<String>(
@@ -130,4 +135,42 @@ public final class ThreadsOfTest {
             )
         ).value();
     }
+
+    /**
+     * Execute 1 task within executor service and ensure that thread was
+     *  interrupted.
+     * @checkstyle IllegalCatchCheck (50 lines)
+     */
+    @Test
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public void executionIsFailedDueToInterruption() {
+        try {
+            new LengthOf(
+                new ThreadsOf<String>(
+                    Executors::newSingleThreadExecutor,
+                    (Scalar<String>) () -> {
+                        throw new InterruptedException();
+                    }
+                )
+            ).value();
+            Assert.fail("The exception wasn't thrown");
+        } catch (final Exception exp) {
+            Throwable rcause;
+            if (exp == null || exp.getCause() == null) {
+                rcause = exp;
+            } else {
+                rcause = exp.getCause();
+                final Collection<Throwable> visited = new LinkedList<>();
+                while (rcause.getCause() != null
+                    && !visited.contains(rcause.getCause())) {
+                    rcause = rcause.getCause();
+                    visited.add(rcause);
+                }
+            }
+            MatcherAssert.assertThat(
+                rcause, Matchers.instanceOf(InterruptedException.class)
+            );
+        }
+    }
+
 }
