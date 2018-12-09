@@ -73,20 +73,6 @@ public final class FuncWithFallbackTest {
     }
 
     @Test
-    public void usesFollowUp() throws Exception {
-        final String expected = "follow up";
-        MatcherAssert.assertThat(
-            "Can't use the follow-up func",
-            new FuncWithFallback<>(
-                input -> "works fine",
-                new FallbackFrom<>(Exception.class, ex -> "won't happen"),
-                input -> expected
-            ),
-            new FuncApplies<>(1, expected)
-        );
-    }
-
-    @Test
     public void usesFallbackOfInterruptedException() throws Exception {
         final String expected = "Fallback from InterruptedException";
         MatcherAssert.assertThat(

@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import org.cactoos.Scalar;
 
 /**
- * Calculates number of superclasses between base and derived class.
+ * The number of superclasses between base and derived class.
  *
  * <p>This class is thread safe.
  *
