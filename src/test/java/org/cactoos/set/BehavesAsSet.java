@@ -28,15 +28,14 @@ import java.util.Set;
 import org.cactoos.collection.BehavesAsCollection;
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsEqual;
 
 /**
  * Matcher for set.
  *
  * @param <T> Type of source sample
  * @since 0.49.2
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class BehavesAsSet<T> extends TypeSafeMatcher<Set<T>> {
 
@@ -59,7 +58,7 @@ public final class BehavesAsSet<T> extends TypeSafeMatcher<Set<T>> {
         MatcherAssert.assertThat(
             "Does not contain duplicates",
             this.occurrences(item.iterator()),
-            Matchers.equalTo(1)
+            new IsEqual<>(1)
         );
         return new BehavesAsCollection<>(this.sample).matchesSafely(item);
     }
@@ -69,6 +68,11 @@ public final class BehavesAsSet<T> extends TypeSafeMatcher<Set<T>> {
         description.appendText("not a valid set");
     }
 
+    /**
+     * Occurrences of sample in iterator.
+     * @param iterator Set iterator
+     * @return Occurrences
+     */
     private int occurrences(final Iterator<T> iterator) {
         int occurrences = 0;
         while (iterator.hasNext()) {

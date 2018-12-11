@@ -30,12 +30,14 @@ import org.junit.Test;
  * Test case for {@link SetOf}.
  *
  * @since 0.49.2
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SetOfTest {
 
+    /**
+     * Ensures that SetOf behaves as set, which means no duplicates.
+     */
     @Test
     public void behavesAsSet() {
         MatcherAssert.assertThat(
