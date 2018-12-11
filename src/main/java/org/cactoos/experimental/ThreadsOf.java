@@ -47,6 +47,9 @@ import org.cactoos.scalar.StickyScalar;
  *  }</pre>.
  *  It will allows to avoid the throwing of CompletionException which is runtime
  *  exception.
+ * @todo #972:30min j.u.c.ExecutorService#invokeAll(java.util.Collection) should
+ *  be invoked with timeout. User should have the opportunity to pass the
+ *  timeout argument. We need a new decorator which supports the timeout
  */
 public final class ThreadsOf<X> implements Threads<X> {
 
@@ -102,10 +105,8 @@ public final class ThreadsOf<X> implements Threads<X> {
                     )
                 )
             ).iterator();
-        } catch (final InterruptedException exp) {
-            Thread.currentThread().interrupt();
-            throw new CompletionException(exp);
         } catch (final Exception exp) {
+            Thread.currentThread().interrupt();
             throw new CompletionException(exp);
         }
     }
