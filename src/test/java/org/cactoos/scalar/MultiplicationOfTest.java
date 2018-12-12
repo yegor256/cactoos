@@ -32,12 +32,14 @@ import org.junit.Test;
  * Test case for {@link MultiplicationOf}.
  *
  * @since 0.49.2
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class MultiplicationOfTest {
 
+    /**
+     * Ensures that multiplication of int numbers return proper value.
+     */
     @Test
     public void withListOfNumbersInt() {
         MatcherAssert.assertThat(
@@ -46,6 +48,9 @@ public final class MultiplicationOfTest {
         );
     }
 
+    /**
+     * Ensures that multiplication of double numbers return proper value.
+     */
     @Test
     public void withListOfNumbersDouble() {
         MatcherAssert.assertThat(
@@ -54,6 +59,9 @@ public final class MultiplicationOfTest {
         );
     }
 
+    /**
+     * Ensures that multiplication of float numbers return proper value.
+     */
     @Test
     public void withListOfNumbersFloat() {
         MatcherAssert.assertThat(
@@ -62,6 +70,9 @@ public final class MultiplicationOfTest {
         );
     }
 
+    /**
+     * Ensures that multiplication of long numbers return proper value.
+     */
     @Test
     public void withListOfNumbersLong() {
         MatcherAssert.assertThat(
@@ -70,18 +81,24 @@ public final class MultiplicationOfTest {
         );
     }
 
+    /**
+     * Ensures that multiplication of int numbers iterable return proper value.
+     */
     @Test
-    public void withCollectionInt() {
+    public void withIterableInt() {
         MatcherAssert.assertThat(
             new MultiplicationOf(
-                new IterableOf<>(3L, 3L)
+                new IterableOf<>(2L, 3L, 3L)
             ).intValue(),
-            new IsEqual<>(9)
+            new IsEqual<>(18)
         );
     }
 
+    /**
+     * Ensures that multiplication of long numbers iterable return proper value.
+     */
     @Test
-    public void withCollectionLong() {
+    public void withIterableLong() {
         MatcherAssert.assertThat(
             new MultiplicationOf(
                 new IterableOf<>(1, 2, 3)
@@ -90,8 +107,12 @@ public final class MultiplicationOfTest {
         );
     }
 
+    /**
+     * Ensures that multiplication of float numbers iterable
+     * return proper value.
+     */
     @Test
-    public void withCollectionFloat() {
+    public void withIterableFloat() {
         MatcherAssert.assertThat(
             new MultiplicationOf(
                 new IterableOf<>(0.5f, 2.0f, 10.0f)
@@ -100,8 +121,12 @@ public final class MultiplicationOfTest {
         );
     }
 
+    /**
+     * Ensures that multiplication of double numbers iterable
+     * return proper value.
+     */
     @Test
-    public void withCollectionDouble() {
+    public void withIterableDouble() {
         MatcherAssert.assertThat(
             new MultiplicationOf(
                 new IterableOf<>(1.5d, 2.0d, 5.0d)

@@ -31,11 +31,13 @@ import org.junit.Test;
  * Test case for {@link DivisionOf}.
  *
  * @since 0.49.2
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class DivisionOfTest {
 
+    /**
+     * Ensures that division of int numbers return proper value.
+     */
     @Test
     public void dividesIntNumbers() {
         MatcherAssert.assertThat(
@@ -44,6 +46,9 @@ public final class DivisionOfTest {
         );
     }
 
+    /**
+     * Ensures that division of long numbers return proper value.
+     */
     @Test
     public void dividesLongNumbers() {
         MatcherAssert.assertThat(
@@ -52,6 +57,9 @@ public final class DivisionOfTest {
         );
     }
 
+    /**
+     * Ensures that division of float numbers return proper value.
+     */
     @Test
     public void dividesFloatNumbers() {
         MatcherAssert.assertThat(
@@ -60,6 +68,9 @@ public final class DivisionOfTest {
         );
     }
 
+    /**
+     * Ensures that division of double numbers return proper value.
+     */
     @Test
     public void dividesDoubleNumbers() {
         MatcherAssert.assertThat(

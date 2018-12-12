@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
 
 /**
@@ -59,48 +60,33 @@ public final class MultiplicationOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     * @param src Numbers
+     * @param arg Required argument
+     * @param src The numbers
      */
-    public MultiplicationOf(final Integer... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    public MultiplicationOf(final Long... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    public MultiplicationOf(final Double... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    public MultiplicationOf(final Float... src) {
-        this(new IterableOf<>(src));
+    public MultiplicationOf(final Number arg, final Number... src) {
+        this(new Joined<>(arg, new IterableOf<>(src)));
     }
 
     /**
      * Ctor.
      * @param src The iterable
+     * @throws IllegalArgumentException if iterable is empty
      */
     public MultiplicationOf(final Iterable<? extends Number> src) {
-        super(() -> new Folded<>(
-            BigDecimal.ONE,
-            (mtn, value) -> mtn.multiply(value, MathContext.DECIMAL128),
-            new Mapped<>(
-                number -> BigDecimal.valueOf(number.doubleValue()),
-                src
-            )).value().doubleValue()
-        );
+        super(() -> {
+            if (!src.iterator().hasNext()) {
+                throw new IllegalArgumentException(
+                    "Zero arguments - can not multiply"
+                );
+            }
+            return new Folded<>(
+                BigDecimal.ONE,
+                (mtn, value) -> mtn.multiply(value, MathContext.DECIMAL128),
+                    new Mapped<>(
+                        number -> BigDecimal.valueOf(number.doubleValue()),
+                        src
+                    )
+                ).value().doubleValue();
+        });
     }
 }
