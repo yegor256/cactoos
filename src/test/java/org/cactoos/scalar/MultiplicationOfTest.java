@@ -134,4 +134,12 @@ public final class MultiplicationOfTest {
             new IsEqual<>(15.0d)
         );
     }
+
+    /**
+     * Ensures that empty iterable will not be multiplied.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectsEmptyIterable() {
+        new MultiplicationOf(new IterableOf<>()).doubleValue();
+    }
 }

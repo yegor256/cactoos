@@ -70,7 +70,6 @@ public final class MultiplicationOf extends NumberEnvelope {
     /**
      * Ctor.
      * @param src The iterable
-     * @throws IllegalArgumentException if iterable is empty
      */
     public MultiplicationOf(final Iterable<? extends Number> src) {
         super(() -> {
