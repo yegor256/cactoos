@@ -24,16 +24,20 @@
 
 package org.cactoos.experimental;
 
+import java.time.Duration;
 import java.util.Collection;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import org.cactoos.Proc;
+import org.cactoos.func.Repeated;
+import org.cactoos.func.TimedFunc;
+import org.cactoos.func.UncheckedFunc;
+import org.cactoos.iterable.LengthOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Mapped;
+import org.cactoos.scalar.UncheckedScalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -41,6 +45,7 @@ import org.junit.Test;
  *
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ThreadsTest {
@@ -87,5 +92,92 @@ public final class ThreadsTest {
                 extor.shutdownNow();
             }
         }
+    }
+
+    /**
+     * Execute the tasks concurrently using {@link Threads}.
+     */
+    @Test
+    public void cactoosWay() {
+        this.repeatAtLeastTenTimesWithTimeoutInFiveSeconds(
+            arg -> {
+                final ExecutorService extor = Executors.newFixedThreadPool(3);
+                try {
+                    MatcherAssert.assertThat(
+                        new Threads<String>(
+                            extor,
+                            () -> {
+                                TimeUnit.SECONDS.sleep(3);
+                                return "txt 1";
+                            },
+                            () -> {
+                                TimeUnit.SECONDS.sleep(3);
+                                return "txt 2";
+                            },
+                            () -> {
+                                TimeUnit.SECONDS.sleep(3);
+                                return "txt 3";
+                            }
+                        ),
+                        Matchers.containsInAnyOrder("txt 1", "txt 2", "txt 3")
+                    );
+                } finally {
+                    try {
+                        extor.shutdown();
+                        if (!extor.awaitTermination(1, TimeUnit.SECONDS)) {
+                            extor.shutdownNow();
+                        }
+                    } catch (final InterruptedException exp) {
+                        Thread.currentThread().interrupt();
+                        extor.shutdownNow();
+                    }
+                }
+            }
+        );
+    }
+
+    /**
+     * Execute the test at least 10 times with timeout in 5 seconds each.
+     * @param test The test to execute.
+     * @todo #972:30min Move this method to new object RepeatWithTimeout.
+     *  This object might be present in cactoos/src/test/java/o.c.experimental
+     *  in order to be used with concurrent unit tests.
+     */
+    public void repeatAtLeastTenTimesWithTimeoutInFiveSeconds(
+        final Proc<Boolean> test
+    ) {
+        MatcherAssert.assertThat(
+            new UncheckedFunc<>(
+                new Repeated<>(
+                    new TimedFunc<Boolean, Boolean>(
+                        input -> {
+                            test.exec(input);
+                            return true;
+                        },
+                        Duration.ofSeconds(5).toMillis()
+                    ),
+                    10
+                )
+            ).apply(true),
+            new IsEqual<>(true)
+        );
+    }
+
+    /**
+     * Execute 1 task within executor service and ensure that we'll get the
+     *  expected exception type.
+     */
+    @Test(expected = CompletionException.class)
+    public void executionIsFailedDueToException() {
+        new UncheckedScalar<>(
+            new LengthOf(
+                new Threads<String>(
+                    Executors.newSingleThreadExecutor(),
+                    () -> {
+                        throw new IllegalStateException("Something went wrong");
+                    }
+                )
+            )
+        ).value();
     }
 }

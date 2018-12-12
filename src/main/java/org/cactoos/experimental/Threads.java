@@ -23,17 +23,64 @@
  */
 package org.cactoos.experimental;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import org.cactoos.Func;
+import org.cactoos.Scalar;
+import org.cactoos.collection.Mapped;
+import org.cactoos.iterable.IterableEnvelope;
+import org.cactoos.iterable.IterableOf;
+
 /**
  * Allows to execute the tasks concurrently.
  *
- * @param <X> The type of result objects.
- *
+ * @param <T> The type of task result item.
  * @since 1.0.0
+ * @todo #972:30min j.u.c.ExecutorService#invokeAll(java.util.Collection) should
+ *  be invoked with timeout. User should have the opportunity to pass the
+ *  timeout argument. We need a new decorator which supports the timeout.
  * @todo #972:30min Add a new implementation which receive the tasks and able:
- *  - create a new thread pool with predefined/specified size
- *  - execute tasks concurrently
- *  - shutdown the thread pool
+ *  - create a new thread pool with predefined/specified size;
+ *  - execute tasks concurrently;
+ *  - shutdown the thread pool.
  */
-public interface Threads<X> extends Iterable<X> {
+public final class Threads<T> extends IterableEnvelope<T> {
 
+    /**
+     * Ctor.
+     * @param exc The executor.
+     * @param tasks The tasks to be executed concurrently.
+     */
+    @SafeVarargs
+    public Threads(final ExecutorService exc, final Scalar<T>... tasks) {
+        this(exc, new IterableOf<>(tasks));
+    }
+
+    /**
+     * Ctor.
+     * @param exc The executor.
+     * @param tasks The tasks to be executed concurrently.
+     * @checkstyle IllegalCatchCheck (20 lines)
+     */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public Threads(final ExecutorService exc, final Iterable<Scalar<T>> tasks) {
+        super(() -> {
+            try {
+                return new Mapped<>(
+                    Future::get,
+                    exc.invokeAll(
+                        new Mapped<>(
+                            (Func<Scalar<T>, Callable<T>>) task -> task::value,
+                            tasks
+                        )
+                    )
+                );
+            } catch (final Exception exp) {
+                Thread.currentThread().interrupt();
+                throw new CompletionException(exp);
+            }
+        });
+    }
 }
