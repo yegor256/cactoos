@@ -145,5 +145,4 @@ public final class SumOfTest {
             new IsEqual<>(4294967300f)
         );
     }
-
 }
