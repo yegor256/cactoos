@@ -73,7 +73,7 @@ public final class JoinedText extends TextEnvelope {
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
-    public JoinedText(final Text delimit, final Iterable<Text> txts) {
+    public JoinedText(final Text delimit, final Iterable<? extends Text> txts) {
         super((Scalar<String>) () -> {
             final StringJoiner joint =
                 new StringJoiner(delimit.asString());
