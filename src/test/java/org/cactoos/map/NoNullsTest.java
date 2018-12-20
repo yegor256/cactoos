@@ -35,7 +35,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
- * Test case for {@link MapNoNulls}.
+ * Test case for {@link NoNulls}.
  *
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -48,7 +48,7 @@ import org.junit.rules.ExpectedException;
         "serial"
     }
 )
-public final class MapNoNullsTest {
+public final class NoNullsTest {
 
     /**
      * A rule for handling an exception.
@@ -60,7 +60,7 @@ public final class MapNoNullsTest {
     public void getSize() {
         MatcherAssert.assertThat(
             "Can't calculate size",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1),
                     new MapEntry<>(1, 1)
@@ -74,7 +74,7 @@ public final class MapNoNullsTest {
     public void isEmptyTrue() {
         MatcherAssert.assertThat(
             "Can't get is empty true",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>()
             ).isEmpty(),
             new IsEqual<>(true)
@@ -85,7 +85,7 @@ public final class MapNoNullsTest {
     public void isEmptyFalse() {
         MatcherAssert.assertThat(
             "Can't get is empty false",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -98,7 +98,7 @@ public final class MapNoNullsTest {
     public void containsKeyTrue() {
         MatcherAssert.assertThat(
             "Can't get #containsKey() true",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -111,7 +111,7 @@ public final class MapNoNullsTest {
     public void containsKeyFalse() {
         MatcherAssert.assertThat(
             "Can't get #containsKey() false",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -124,7 +124,7 @@ public final class MapNoNullsTest {
     public void containsKeyException() {
         MatcherAssert.assertThat(
             "Could no throw an IllegalStateException for null key",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -137,7 +137,7 @@ public final class MapNoNullsTest {
     public void containsValueFalse() {
         MatcherAssert.assertThat(
             "Can't get #containsValue() false",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -150,7 +150,7 @@ public final class MapNoNullsTest {
     public void containsValueTrue() {
         MatcherAssert.assertThat(
             "Can't get #containsValue() true",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -163,7 +163,7 @@ public final class MapNoNullsTest {
     public void containsValueException() {
         MatcherAssert.assertThat(
             "Can't get #containsValue() exception",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -176,7 +176,7 @@ public final class MapNoNullsTest {
     public void getValue() {
         MatcherAssert.assertThat(
             "Can't call #get()",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -189,7 +189,7 @@ public final class MapNoNullsTest {
     public void getValueByNullKey() {
         MatcherAssert.assertThat(
             "Can't call #get() with key null",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -202,7 +202,7 @@ public final class MapNoNullsTest {
     public void getValueByNullValue() {
         MatcherAssert.assertThat(
             "Can't call #get() with null value",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, null)
                 )
@@ -215,7 +215,7 @@ public final class MapNoNullsTest {
     public void put() {
         MatcherAssert.assertThat(
             "Can't call #put()",
-            new MapNoNulls<Integer, Integer>(
+            new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
@@ -230,7 +230,7 @@ public final class MapNoNullsTest {
     public void putWithNullKey() {
         MatcherAssert.assertThat(
             "Can't call #put() with Null key",
-            new MapNoNulls<Integer, Integer>(
+            new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
@@ -245,7 +245,7 @@ public final class MapNoNullsTest {
     public void putWithNullValue() {
         MatcherAssert.assertThat(
             "Can't call #put() with Null value",
-            new MapNoNulls<Integer, Integer>(
+            new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
@@ -261,7 +261,7 @@ public final class MapNoNullsTest {
     public void putWithNoMapping() {
         MatcherAssert.assertThat(
             "Can't call #put() with no mapping",
-            new MapNoNulls<Integer, Integer>(
+            new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
@@ -276,7 +276,7 @@ public final class MapNoNullsTest {
     public void remove() {
         MatcherAssert.assertThat(
             "Can't call #remove()",
-            new MapNoNulls<Integer, Integer>(
+            new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
@@ -291,7 +291,7 @@ public final class MapNoNullsTest {
     public void removeWithNullKey() {
         MatcherAssert.assertThat(
             "Can't call #remove() with Null key",
-            new MapNoNulls<Integer, Integer>(
+            new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
@@ -307,7 +307,7 @@ public final class MapNoNullsTest {
     public void removeWithNoMapping() {
         MatcherAssert.assertThat(
             "Can't call #remove() with no mapping",
-            new MapNoNulls<Integer, Integer>(
+            new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
@@ -322,7 +322,7 @@ public final class MapNoNullsTest {
     public void putAll() {
         MatcherAssert.assertThat(
             "Can't call #putAll()",
-            new MapNoNulls<Integer, Integer>(
+            new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
@@ -337,7 +337,7 @@ public final class MapNoNullsTest {
     public void clear() {
         MatcherAssert.assertThat(
             "Can't call #clear()",
-            new MapNoNulls<Integer, Integer>(
+            new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
@@ -355,7 +355,7 @@ public final class MapNoNullsTest {
     public void entrySet() {
         MatcherAssert.assertThat(
             "Can't call #entrySet()",
-            new MapNoNulls<Integer, Integer>(
+            new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(1, 1);
@@ -378,7 +378,7 @@ public final class MapNoNullsTest {
         this.exception.expectMessage(
             "Value at #put(1,V) is NULL"
         );
-        new MapNoNulls<Integer, Integer>(
+        new NoNulls<Integer, Integer>(
             new HashMap<>()
         ).put(1, null);
     }
@@ -389,7 +389,7 @@ public final class MapNoNullsTest {
         this.exception.expectMessage(
             "Value returned by #put(1,2) is NULL"
         );
-        new MapNoNulls<>(
+        new NoNulls<>(
             new HashMap<Integer, Integer>() {
                 {
                     put(1, null);

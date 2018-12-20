@@ -34,19 +34,19 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyList}.
+ * Test case for {@link Sticky}.
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class StickyListTest {
+public final class StickyTest {
 
     @Test
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a list",
-            new StickyList<>(1, 0, -1, -1, 2),
+            new Sticky<>(1, 0, -1, -1, 2),
             new BehavesAsList<>(0)
         );
     }
@@ -54,7 +54,7 @@ public final class StickyListTest {
     @Test
     public void ignoresChangesInIterable() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
-        final List<Integer> list = new StickyList<>(
+        final List<Integer> list = new Sticky<>(
             new ListOf<Integer>(
                 () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
@@ -70,7 +70,7 @@ public final class StickyListTest {
     public void decoratesArray() throws Exception {
         MatcherAssert.assertThat(
             "Can't decorate an array of numbers",
-            new StickyList<>(-1, 0).size(),
+            new Sticky<>(-1, 0).size(),
             Matchers.equalTo(2)
         );
     }
@@ -78,7 +78,7 @@ public final class StickyListTest {
     @Test
     public void testEmpty() {
         MatcherAssert.assertThat(
-            new StickyList<>().isEmpty(),
+            new Sticky<>().isEmpty(),
             Matchers.equalTo(true)
         );
     }
@@ -86,7 +86,7 @@ public final class StickyListTest {
     @Test
     public void testContains() {
         MatcherAssert.assertThat(
-            new StickyList<>(1, 2).contains(1),
+            new Sticky<>(1, 2).contains(1),
             Matchers.equalTo(true)
         );
     }
@@ -94,7 +94,7 @@ public final class StickyListTest {
     @Test
     public void testToArray() {
         MatcherAssert.assertThat(
-            new StickyList<>(1, 2).toArray(),
+            new Sticky<>(1, 2).toArray(),
             Matchers.arrayContaining(1, 2)
         );
     }
@@ -103,7 +103,7 @@ public final class StickyListTest {
     public void testToArrayIntoArray() {
         final Integer[] arr = new Integer[2];
         MatcherAssert.assertThat(
-            new StickyList<>(1, 2).toArray(arr),
+            new Sticky<>(1, 2).toArray(arr),
             Matchers.arrayContaining(1, 2)
         );
     }
@@ -111,7 +111,7 @@ public final class StickyListTest {
     @Test
     public void testContainsAll() {
         MatcherAssert.assertThat(
-            new StickyList<>(1, 2).containsAll(new ListOf<>(1, 2)),
+            new Sticky<>(1, 2).containsAll(new ListOf<>(1, 2)),
             Matchers.equalTo(true)
         );
     }
@@ -119,7 +119,7 @@ public final class StickyListTest {
     @Test
     public void testIndexOf() {
         MatcherAssert.assertThat(
-            new StickyList<>(1, 2).indexOf(1),
+            new Sticky<>(1, 2).indexOf(1),
             Matchers.equalTo(0)
         );
     }
@@ -127,7 +127,7 @@ public final class StickyListTest {
     @Test
     public void testLastIndexOf() {
         MatcherAssert.assertThat(
-            new StickyList<>(1, 2, 2).lastIndexOf(2),
+            new Sticky<>(1, 2, 2).lastIndexOf(2),
             Matchers.equalTo(2)
         );
     }
@@ -135,14 +135,14 @@ public final class StickyListTest {
     @Test
     public void testGet() {
         MatcherAssert.assertThat(
-            new StickyList<>(1, 2).get(1),
+            new Sticky<>(1, 2).get(1),
             Matchers.equalTo(2)
         );
     }
 
     @Test
     public void testSubList() {
-        final List<Integer> list = new StickyList<>(
+        final List<Integer> list = new Sticky<>(
             1, 2, 0, -1
         ).subList(0, 2);
         MatcherAssert.assertThat(
@@ -153,52 +153,52 @@ public final class StickyListTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testAdd() throws Exception {
-        new StickyList<>(1, 2).add(1);
+        new Sticky<>(1, 2).add(1);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRemove() throws Exception {
-        new StickyList<>(1, 2).remove(1);
+        new Sticky<>(1, 2).remove(1);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testAddAll() throws Exception {
-        new StickyList<>(1, 2).addAll(new ArrayList<>(2));
+        new Sticky<>(1, 2).addAll(new ArrayList<>(2));
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRemoveAll() throws Exception {
-        new StickyList<>(1, 2).removeAll(new ArrayList<>(2));
+        new Sticky<>(1, 2).removeAll(new ArrayList<>(2));
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRetainAll() throws Exception {
-        new StickyList<>(1, 2).retainAll(new ArrayList<>(2));
+        new Sticky<>(1, 2).retainAll(new ArrayList<>(2));
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testClear() throws Exception {
-        new StickyList<>(1, 2).clear();
+        new Sticky<>(1, 2).clear();
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testSet() throws Exception {
-        new StickyList<>(1, 2).set(1, 1);
+        new Sticky<>(1, 2).set(1, 1);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testAddIndex() throws Exception {
-        new StickyList<>(1, 2).add(1, 1);
+        new Sticky<>(1, 2).add(1, 1);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRemoveIndex() throws Exception {
-        new StickyList<>(1, 2).remove(1);
+        new Sticky<>(1, 2).remove(1);
     }
 
     @Test
     public void makesListFromMappedIterable() throws Exception {
-        final List<Integer> list = new StickyList<>(
+        final List<Integer> list = new Sticky<>(
             new Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(1, -1, 0, 1)
@@ -216,7 +216,7 @@ public final class StickyListTest {
 
     @Test
     public void mapsToSameObjects() throws Exception {
-        final List<Scalar<Integer>> list = new StickyList<>(
+        final List<Scalar<Integer>> list = new Sticky<>(
             new Mapped<>(
                 i -> (Scalar<Integer>) () -> i,
                 new IterableOf<>(1, -1, 0, 1)

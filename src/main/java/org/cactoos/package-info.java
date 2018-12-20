@@ -35,8 +35,9 @@
  * @since 0.1
  * @see <a href="http://www.cactoos.org">Project site www.cactoos.org</a>
  * @see <a href="https://github.com/yegor256/cactoos">GitHub repository</a>
- * @todo #958:30min Continue applying the new class naming convention in effect:
+ * @todo #964:30min Continue applying the new class naming convention in effect:
  *  avoid compound names for decorators. Continue renaming classes according to
  *  this table: https://github.com/yegor256/cactoos/issues/913#issuecomment-402332247.
+ *  Remaining packages are scalar, set, text, and time.
  */
 package org.cactoos;

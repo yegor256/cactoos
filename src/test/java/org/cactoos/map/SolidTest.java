@@ -38,20 +38,20 @@ import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
- * Test case for {@link SolidMap}.
+ * Test case for {@link Solid}.
  *
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class SolidMapTest {
+public final class SolidTest {
 
     @Test
     public void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
-            new SolidMap<Integer, Integer>(
+            new Solid<Integer, Integer>(
                 new MapEntry<>(0, -1),
                 new MapEntry<>(1, 1)
             ),
@@ -72,7 +72,7 @@ public final class SolidMapTest {
                 return true;
             },
             new RunsInThreads<>(
-                new SolidMap<Integer, Integer>(
+                new Solid<Integer, Integer>(
                     new MapEntry<>(0, -1),
                     new MapEntry<>(1, 1)
                 )
@@ -82,7 +82,7 @@ public final class SolidMapTest {
 
     @Test
     public void mapsToSameObjects() throws Exception {
-        final Map<Integer, Scalar<Integer>> map = new SolidMap<>(
+        final Map<Integer, Scalar<Integer>> map = new Solid<>(
             input -> new MapEntry<>(input, () -> input),
             1, -1, 0, 1
         );
@@ -95,13 +95,13 @@ public final class SolidMapTest {
     @Test
     @SuppressWarnings("unchecked")
     public void extendsExistingMapWithArrayOfEntries() {
-        final SolidMap<Integer, Integer> map = new SolidMap<>(
+        final Solid<Integer, Integer> map = new Solid<>(
             new MapEntry<>(0, 10),
             new MapEntry<>(1, 11)
         );
         MatcherAssert.assertThat(
             "Does not extends existing map with array of entries",
-            new SolidMap<>(
+            new Solid<>(
                 map,
                 new MapEntry<>(2, 12),
                 new MapEntry<>(3, 13)
@@ -115,8 +115,8 @@ public final class SolidMapTest {
     public void acceptsEmptyArray() {
         MatcherAssert.assertThat(
             "Accepts empty array of entries",
-            new SolidMap<Integer, Integer>(
-                new SolidMap<>(
+            new Solid<Integer, Integer>(
+                new Solid<>(
                     new MapEntry<>(0, 10),
                     new MapEntry<>(1, 11)
                 ),
@@ -129,7 +129,7 @@ public final class SolidMapTest {
     @Test
     @SuppressWarnings("unchecked")
     public void mapsIterableWithKeyFuncAndValueFunc() {
-        final SolidMap<String, String> map = new SolidMap<>(
+        final Solid<String, String> map = new Solid<>(
             key -> new SubText(new TextOf(key), 0, 1).asString(),
             value -> new UpperText(new TextOf(value)).asString(),
             new IterableOf<>("aa", "bb")
@@ -155,7 +155,7 @@ public final class SolidMapTest {
 
     @Test
     public void mapsEmptyIterableWithKeyFuncAndValueFunc() {
-        final SolidMap<String, String> map = new SolidMap<>(
+        final Solid<String, String> map = new Solid<>(
             key -> new SubText(new TextOf(key), 0, 1).asString(),
             value -> new UpperText(new TextOf(value)).asString(),
             new IterableOf<String>()
@@ -172,7 +172,7 @@ public final class SolidMapTest {
     public void mapsIterableWithMapEntryFunc() {
         MatcherAssert.assertThat(
             "Function are not applied to entry",
-            new SolidMap<>(
+            new Solid<>(
                 entry -> new MapEntry<>(
                     new SubText(new TextOf(entry), 0, 1).asString(),
                     new UpperText(new TextOf(entry)).asString()
@@ -199,7 +199,7 @@ public final class SolidMapTest {
     public void mapsEmptyIterableWithMapEntryFunc() {
         MatcherAssert.assertThat(
             "Empty Iterable cannot be accepted for MapEntry mapping",
-            new SolidMap<>(
+            new Solid<>(
                 entry -> new MapEntry<>(
                     new SubText(new TextOf(entry), 0, 1).asString(),
                     new UpperText(new TextOf(entry)).asString()

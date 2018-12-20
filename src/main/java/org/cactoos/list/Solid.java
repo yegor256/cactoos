@@ -23,61 +23,58 @@
  */
 package org.cactoos.list;
 
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.SolidScalar;
 
 /**
- * Iterable as {@link List}.
+ * A {@link java.util.List} that is both synchronized and sticky.
  *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link List} on each
- * method call. It doesn't cache the data anyhow. If you don't
- * need this {@link List} to re-fresh its content on every call,
- * by doing round-trips to the encapsulated iterable, decorate it with
- * {@link Sticky}.</p>
+ * <p>Objects of this class are thread-safe.</p>
  *
- * <p>There is no thread-safety guarantee.
- *
- * @param <T> List type
- * @see Sticky
- * @since 0.1
+ * @param <X> Type of item
+ * @since 0.24
  */
-public final class ListOf<T> extends ListEnvelope<T> {
+public final class Solid<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
-     *
-     * @param array An array of some elements
+     * @param items The array
      */
     @SafeVarargs
-    public ListOf(final T... array) {
-        this(new IterableOf<>(array));
+    public Solid(final X... items) {
+        this(new IterableOf<>(items));
     }
 
     /**
      * Ctor.
-     * @param src An {@link Iterator}
+     * @param items The array
      * @since 0.21
      */
-    public ListOf(final Iterator<T> src) {
-        this(() -> src);
+    public Solid(final Iterator<X> items) {
+        this(new IterableOf<>(items));
     }
 
     /**
      * Ctor.
-     * @param src An {@link Iterable}
+     * @param items The array
      */
-    public ListOf(final Iterable<T> src) {
-        super(() -> {
-            final List<T> temp = new LinkedList<>();
-            for (final T item : src) {
-                temp.add(item);
-            }
-            return Collections.unmodifiableList(temp);
-        });
+    public Solid(final Iterable<X> items) {
+        this(new CollectionOf<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param list The iterable
+     */
+    public Solid(final Collection<X> list) {
+        super(
+            new SolidScalar<>(
+                () -> new Synced<>(new Sticky<>(list))
+            )
+        );
     }
 
 }

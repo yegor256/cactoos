@@ -37,12 +37,12 @@ import java.util.List;
  * with the collection. Every time you touch it, it will fetch the
  * entire list from the encapsulated object and sort it. If you
  * want to avoid that "side-effect", decorate it with
- * {@link StickyList}.</p>
+ * {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Element type
- * @see StickyList
+ * @see Sticky
  * @since 0.19
  */
 public final class Sorted<T> extends ListEnvelope<T> {

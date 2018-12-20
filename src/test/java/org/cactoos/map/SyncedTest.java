@@ -34,13 +34,13 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class SyncMapTest {
+public final class SyncedTest {
 
     @Test
     public void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
-            new SyncMap<Integer, Integer>(
+            new Synced<Integer, Integer>(
                 new MapEntry<>(0, -1),
                 new MapEntry<>(1, 1)
             ),
@@ -61,7 +61,7 @@ public final class SyncMapTest {
                 return true;
             },
             new RunsInThreads<>(
-                new SyncMap<Integer, Integer>(
+                new Synced<Integer, Integer>(
                     new MapEntry<>(0, -1),
                     new MapEntry<>(1, 1)
                 )

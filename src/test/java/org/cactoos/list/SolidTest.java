@@ -24,23 +24,27 @@
 package org.cactoos.list;
 
 import java.util.Collections;
+import java.util.List;
+import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
- * Test case for {@link SyncList}.
+ * Test case for {@link Solid}.
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumber (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class SyncListTest {
+public final class SolidTest {
 
     @Test
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a list",
-            new SyncList<>(1, 0, -1, -1, 2),
+            new Solid<>(1, 0, -1, -1, 2),
             new BehavesAsList<>(0)
         );
     }
@@ -49,14 +53,46 @@ public final class SyncListTest {
     public void worksInThreads() {
         MatcherAssert.assertThat(
             list -> !list.iterator().hasNext(),
-            new RunsInThreads<>(new SyncList<>(Collections.emptyList()))
+            new RunsInThreads<>(new Solid<>(Collections.emptyList()))
         );
         MatcherAssert.assertThat(
             list -> {
                 MatcherAssert.assertThat(list, new BehavesAsList<>(0));
                 return true;
             },
-            new RunsInThreads<>(new SyncList<>(1, 0, -1, -1, 2))
+            new RunsInThreads<>(new Solid<>(1, 0, -1, -1, 2))
+        );
+    }
+
+    @Test
+    public void makesListFromMappedIterable() throws Exception {
+        final List<Integer> list = new Solid<>(
+            new Mapped<>(
+                i -> i + 1,
+                new IterableOf<>(1, -1, 0, 1)
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list",
+            list, Matchers.iterableWithSize(4)
+        );
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list, again",
+            list, Matchers.iterableWithSize(4)
+        );
+    }
+
+    @Test
+    public void mapsToSameObjects() throws Exception {
+        final List<Scalar<Integer>> list = new Solid<>(
+            new Mapped<>(
+                i -> (Scalar<Integer>) () -> i,
+                new IterableOf<>(1, -1, 0, 1)
+            )
+        );
+        MatcherAssert.assertThat(
+            "Can't map only once",
+            list.get(0), Matchers.equalTo(list.get(0))
         );
     }
 

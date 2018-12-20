@@ -41,7 +41,7 @@ import org.cactoos.text.TextOf;
  *
  * @param <X> Type of key
  * @param <Y> Type of value
- * @see StickyMap
+ * @see Sticky
  * @since 0.24
  * @checkstyle AbstractClassNameCheck (500 lines)
  */

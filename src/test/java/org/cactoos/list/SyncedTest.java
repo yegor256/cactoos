@@ -23,57 +23,43 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
-import java.util.Iterator;
-import org.cactoos.collection.CollectionOf;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.SolidScalar;
+import java.util.Collections;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
- * A {@link java.util.List} that is both synchronized and sticky.
- *
- * <p>Objects of this class are thread-safe.</p>
- *
- * @param <X> Type of item
+ * Test case for {@link Synced}.
  * @since 0.24
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SolidList<X> extends ListEnvelope<X> {
+@SuppressWarnings("PMD.TooManyMethods")
+public final class SyncedTest {
 
-    /**
-     * Ctor.
-     * @param items The array
-     */
-    @SafeVarargs
-    public SolidList(final X... items) {
-        this(new IterableOf<>(items));
+    @Test
+    public void behavesAsCollection() throws Exception {
+        MatcherAssert.assertThat(
+            "Can't behave as a list",
+            new Synced<>(1, 0, -1, -1, 2),
+            new BehavesAsList<>(0)
+        );
     }
 
-    /**
-     * Ctor.
-     * @param items The array
-     * @since 0.21
-     */
-    public SolidList(final Iterator<X> items) {
-        this(new IterableOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items The array
-     */
-    public SolidList(final Iterable<X> items) {
-        this(new CollectionOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param list The iterable
-     */
-    public SolidList(final Collection<X> list) {
-        super(
-            new SolidScalar<>(
-                () -> new SyncList<>(new StickyList<>(list))
-            )
+    @Test
+    public void worksInThreads() {
+        MatcherAssert.assertThat(
+            list -> !list.iterator().hasNext(),
+            new RunsInThreads<>(new Synced<>(Collections.emptyList()))
+        );
+        MatcherAssert.assertThat(
+            list -> {
+                MatcherAssert.assertThat(
+                    list,
+                    new BehavesAsList<>(0)
+                );
+                return true;
+            },
+            new RunsInThreads<>(new Synced<>(1, 0, -1, -1, 2))
         );
     }
 

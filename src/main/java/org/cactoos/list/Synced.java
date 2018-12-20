@@ -29,26 +29,33 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.SyncScalar;
 
 /**
- * List decorator that goes through the list only once.
+ * Synchronized list.
  *
+ * <p>This class should be used very carefully. You must understand that
+ * it will fetch the entire content of the encapsulated {@link Iterable} on each
+ * method call. It doesn't cache the data anyhow. If you don't
+ * need this {@link java.util.List} to re-fresh
+ * its content on every call, by doing round-trips to
+ * the encapsulated iterable, use {@link Sticky}.</p>
+
  * <p>The list is read only.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>Objects of this class are thread-safe.</p>
  *
  * @param <X> Type of item
- * @since 0.8
+ * @since 0.24
  */
-public final class StickyList<X> extends ListEnvelope<X> {
+public final class Synced<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
      * @param items The array
      */
     @SafeVarargs
-    public StickyList(final X... items) {
+    public Synced(final X... items) {
         this(new IterableOf<>(items));
     }
 
@@ -56,7 +63,7 @@ public final class StickyList<X> extends ListEnvelope<X> {
      * Ctor.
      * @param items The array
      */
-    public StickyList(final Iterable<X> items) {
+    public Synced(final Iterable<X> items) {
         this(new ListOf<>(items));
     }
 
@@ -65,7 +72,7 @@ public final class StickyList<X> extends ListEnvelope<X> {
      * @param items The array
      * @since 0.21
      */
-    public StickyList(final Iterator<X> items) {
+    public Synced(final Iterator<X> items) {
         this(new ListOf<>(items));
     }
 
@@ -73,13 +80,13 @@ public final class StickyList<X> extends ListEnvelope<X> {
      * Ctor.
      * @param list The iterable
      */
-    public StickyList(final Collection<X> list) {
+    public Synced(final Collection<X> list) {
         super(
-            new StickyScalar<>(
+            new SyncScalar<>(
                 () -> {
                     final List<X> temp = new LinkedList<>();
                     temp.addAll(list);
-                    return Collections.unmodifiableList(temp);
+                    return Collections.synchronizedList(temp);
                 }
             )
         );

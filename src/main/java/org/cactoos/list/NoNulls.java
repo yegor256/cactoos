@@ -40,7 +40,7 @@ import org.cactoos.text.UncheckedText;
  * @since 0.27
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class ListNoNulls<T> implements List<T> {
+public final class NoNulls<T> implements List<T> {
 
     /**
      * Encapsulated list.
@@ -51,7 +51,7 @@ public final class ListNoNulls<T> implements List<T> {
      * Ctor.
      * @param src Source
      */
-    ListNoNulls(final List<T> src) {
+    NoNulls(final List<T> src) {
         this.list = src;
     }
 
@@ -233,6 +233,6 @@ public final class ListNoNulls<T> implements List<T> {
 
     @Override
     public List<T> subList(final int start, final int end) {
-        return new ListNoNulls<>(this.list.subList(start, end));
+        return new NoNulls<>(this.list.subList(start, end));
     }
 }

@@ -53,7 +53,7 @@ public final class MapOfTest {
     public void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1),
                     new MapEntry<>(1, 1)

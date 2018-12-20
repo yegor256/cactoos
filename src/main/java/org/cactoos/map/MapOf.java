@@ -39,13 +39,13 @@ import org.cactoos.iterable.Mapped;
  * method call. It doesn't cache the data anyhow.
  * If you don't need this {@link Map} to re-fresh its content on every call,
  * by doing round-trips to the encapsulated iterable, use
- * {@link StickyMap}.</p>
+ * {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of key
  * @param <Y> Type of value
- * @see StickyMap
+ * @see Sticky
  * @since 0.4
  */
 public final class MapOf<X, Y> extends MapEnvelope<X, Y> {

@@ -40,7 +40,7 @@ import org.cactoos.text.UncheckedText;
  * @since 0.27
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public class MapNoNulls<K, V> implements Map<K, V> {
+public class NoNulls<K, V> implements Map<K, V> {
 
     /**
      * The map.
@@ -51,7 +51,7 @@ public class MapNoNulls<K, V> implements Map<K, V> {
      * Ctor.
      * @param origin The scalar
      */
-    public MapNoNulls(final Map<K, V> origin) {
+    public NoNulls(final Map<K, V> origin) {
         this.map = origin;
     }
 
@@ -165,7 +165,7 @@ public class MapNoNulls<K, V> implements Map<K, V> {
     @Override
     @SuppressWarnings("unchecked")
     public final void putAll(final Map<? extends K, ? extends V> items) {
-        this.map.putAll(new MapNoNulls<>((Map<K, V>) items));
+        this.map.putAll(new NoNulls<>((Map<K, V>) items));
     }
 
     @Override

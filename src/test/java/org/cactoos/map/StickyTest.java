@@ -38,19 +38,19 @@ import org.hamcrest.core.StringEndsWith;
 import org.junit.Test;
 
 /**
- * Test case for {@link StickyMap}.
+ * Test case for {@link Sticky}.
  *
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class StickyMapTest {
+public final class StickyTest {
 
     @Test
     public void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
-            new StickyMap<Integer, Integer>(
+            new Sticky<Integer, Integer>(
                 new MapEntry<>(0, -1),
                 new MapEntry<>(1, 1)
             ),
@@ -61,7 +61,7 @@ public final class StickyMapTest {
     @Test
     public void ignoresChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new StickyMap<>(
+        final Map<Integer, Integer> map = new Sticky<>(
             new MapOf<>(
                 () -> new Repeated<>(
                     size.incrementAndGet(),
@@ -83,7 +83,7 @@ public final class StickyMapTest {
     public void decoratesEntries() throws Exception {
         MatcherAssert.assertThat(
             "Can't decorate a list of entries",
-            new StickyMap<String, String>(
+            new Sticky<String, String>(
                 new MapEntry<>("first", "Jeffrey"),
                 new MapEntry<>("last", "Lebowski")
             ),
@@ -98,8 +98,8 @@ public final class StickyMapTest {
     public void extendsExistingMap() throws Exception {
         MatcherAssert.assertThat(
             "Can't extend an existing map",
-            new StickyMap<String, String>(
-                new StickyMap<String, String>(
+            new Sticky<String, String>(
+                new Sticky<String, String>(
                     new MapEntry<>("make", "Mercedes-Benz"),
                     new MapEntry<>("cost", "$95,000")
                 ),
@@ -117,11 +117,11 @@ public final class StickyMapTest {
     public void extendsExistingMapWithFunc() throws Exception {
         MatcherAssert.assertThat(
             "Can't transform and decorate a list of entries",
-            new StickyMap<String, String>(
+            new Sticky<>(
                 color -> new MapEntry<>(
                     color, color.toUpperCase(Locale.ENGLISH)
                 ),
-                new StickyMap<String, String>(
+                new Sticky<String, String>(
                     new MapEntry<>("black", "BLACK"),
                     new MapEntry<>("white", "WHITE")
                 ),
@@ -138,10 +138,10 @@ public final class StickyMapTest {
     public void extendsExistingMapWithTwoFuncs() throws Exception {
         MatcherAssert.assertThat(
             "Can't transform and decorate a list of entries with two funcs",
-            new StickyMap<String, String>(
+            new Sticky<>(
                 color -> new FormattedText("[%s]", color).asString(),
                 String::toUpperCase,
-                new StickyMap<String, String>(
+                new Sticky<String, String>(
                     new MapEntry<>("black!", "Black!"),
                     new MapEntry<>("white!", "White!")
                 ),

@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
- * Test cases for {@link ListNoNulls}.
+ * Test cases for {@link NoNulls}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -37,7 +37,7 @@ import org.junit.rules.ExpectedException;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class ListNoNullsTest {
+public final class NoNullsTest {
 
     /**
      * A rule for handling an exception.
@@ -51,7 +51,7 @@ public final class ListNoNullsTest {
         this.exception.expectMessage(
             "Item #1 of [1, null, 3] is NULL"
         );
-        new ListNoNulls<>(
+        new NoNulls<>(
             new ListOf<>(1, null, 3)
         ).get(1);
     }
@@ -62,7 +62,7 @@ public final class ListNoNullsTest {
         this.exception.expectMessage(
             "Item can't be NULL in #set(2,T)"
         );
-        new ListNoNulls<>(
+        new NoNulls<>(
             new ListOf<>(1, null, 3)
         ).set(2, null);
     }
@@ -75,7 +75,7 @@ public final class ListNoNullsTest {
         );
         final ArrayList<Integer> list = new ArrayList<>(1);
         list.add(null);
-        new ListNoNulls<>(list).set(0, 2);
+        new NoNulls<>(list).set(0, 2);
     }
 
     @Test
@@ -84,7 +84,7 @@ public final class ListNoNullsTest {
         this.exception.expectMessage(
             "Item can't be NULL in #add(0,T)"
         );
-        new ListNoNulls<>(
+        new NoNulls<>(
             new ArrayList<>(1)
         ).add(0, null);
     }
@@ -97,7 +97,7 @@ public final class ListNoNullsTest {
         );
         final ArrayList<Integer> list = new ArrayList<>(1);
         list.add(null);
-        new ListNoNulls<>(
+        new NoNulls<>(
             list
         ).remove(0);
     }
