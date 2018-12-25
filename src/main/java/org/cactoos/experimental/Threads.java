@@ -23,14 +23,9 @@
  */
 package org.cactoos.experimental;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import org.cactoos.Func;
+import java.util.concurrent.Executors;
 import org.cactoos.Scalar;
-import org.cactoos.collection.Mapped;
-import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -41,12 +36,8 @@ import org.cactoos.iterable.IterableOf;
  * @todo #972:30min j.u.c.ExecutorService#invokeAll(java.util.Collection) should
  *  be invoked with timeout. User should have the opportunity to pass the
  *  timeout argument. We need a new decorator which supports the timeout.
- * @todo #972:30min Add a new implementation which receive the tasks and able:
- *  - create a new thread pool with predefined/specified size;
- *  - execute tasks concurrently;
- *  - shutdown the thread pool.
  */
-public final class Threads<T> extends IterableEnvelope<T> {
+public final class Threads<T> extends ThreadsEnvelope<T> {
 
     /**
      * Ctor.
@@ -62,25 +53,43 @@ public final class Threads<T> extends IterableEnvelope<T> {
      * Ctor.
      * @param exc The executor.
      * @param tasks The tasks to be executed concurrently.
-     * @checkstyle IllegalCatchCheck (20 lines)
      */
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public Threads(final ExecutorService exc, final Iterable<Scalar<T>> tasks) {
-        super(() -> {
-            try {
-                return new Mapped<>(
-                    Future::get,
-                    exc.invokeAll(
-                        new Mapped<>(
-                            (Func<Scalar<T>, Callable<T>>) task -> task::value,
-                            tasks
-                        )
-                    )
+        super(exc::invokeAll, tasks);
+    }
+
+    /**
+     * Ctor.
+     * @param threads The quantity of threads which will be used within the
+     *  {@link ExecutorService}.
+     * @param tasks The tasks to be executed concurrently.
+     * @see Executors#newFixedThreadPool(int)
+     */
+    @SafeVarargs
+    public Threads(final int threads, final Scalar<T>... tasks) {
+        this(threads, new IterableOf<>(tasks));
+    }
+
+    /**
+     * Ctor.
+     * @param threads The quantity of threads which will be used within the
+     *  {@link ExecutorService}.
+     * @param tasks The tasks to be executed concurrently.
+     * @checkstyle IndentationCheck (20 lines)
+     */
+    public Threads(final int threads, final Iterable<Scalar<T>> tasks) {
+        super(
+            todo -> {
+                final ExecutorService executor = Executors.newFixedThreadPool(
+                    threads
                 );
-            } catch (final Exception exp) {
-                Thread.currentThread().interrupt();
-                throw new CompletionException(exp);
-            }
-        });
+                try {
+                    return executor.invokeAll(todo);
+                } finally {
+                    executor.shutdown();
+                }
+            },
+            tasks
+        );
     }
 }

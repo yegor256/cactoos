@@ -91,7 +91,7 @@ The MIT License (MIT)
     <dependency>
       <groupId>org.llorllale</groupId>
       <artifactId>cactoos-matchers</artifactId>
-      <version>0.9.1</version>
+      <version>0.12</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

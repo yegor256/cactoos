@@ -36,14 +36,13 @@ import org.cactoos.Proc;
 import org.cactoos.func.Repeated;
 import org.cactoos.func.TimedFunc;
 import org.cactoos.func.UncheckedFunc;
-import org.cactoos.iterable.LengthOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Mapped;
-import org.cactoos.scalar.UncheckedScalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link Threads}.
@@ -93,14 +92,14 @@ public final class ThreadsTest {
                     extor.shutdownNow();
                 }
             } catch (final InterruptedException exp) {
-                Thread.currentThread().interrupt();
                 extor.shutdownNow();
             }
         }
     }
 
     /**
-     * Execute the tasks concurrently using {@link Threads}.
+     * Execute the tasks concurrently using {@link Threads} when
+     *  {@link ExecutorService} was initiated by someone else.
      */
     @Test
     public void cactoosWay() {
@@ -124,7 +123,7 @@ public final class ThreadsTest {
                                 return "txt 3";
                             }
                         ),
-                        Matchers.containsInAnyOrder("txt 1", "txt 2", "txt 3")
+                        new HasValues<>("txt 1", "txt 2", "txt 3")
                     );
                 } finally {
                     try {
@@ -133,7 +132,6 @@ public final class ThreadsTest {
                             extor.shutdownNow();
                         }
                     } catch (final InterruptedException exp) {
-                        Thread.currentThread().interrupt();
                         extor.shutdownNow();
                     }
                 }
@@ -174,15 +172,50 @@ public final class ThreadsTest {
      */
     @Test(expected = CompletionException.class)
     public void executionIsFailedDueToException() {
-        new UncheckedScalar<>(
-            new LengthOf(
-                new Threads<String>(
-                    Executors.newSingleThreadExecutor(),
-                    () -> {
-                        throw new IllegalStateException("Something went wrong");
-                    }
-                )
-            )
-        ).value();
+        new Threads<String>(
+            Executors.newSingleThreadExecutor(),
+            () -> {
+                throw new IllegalStateException("Something went wrong");
+            }
+        ).iterator().next();
     }
+
+    /**
+     * Execute the tasks concurrently using {@link Threads} when
+     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     */
+    @Test
+    public void cactoosWayWithInlineExecutorService() {
+        this.repeatAtLeastTenTimesWithTimeoutInFiveSeconds(
+            arg -> {
+                MatcherAssert.assertThat(
+                    new Threads<String>(
+                        5,
+                        () -> {
+                            TimeUnit.SECONDS.sleep(3);
+                            return "txt 1";
+                        },
+                        () -> {
+                            TimeUnit.SECONDS.sleep(3);
+                            return "txt 2";
+                        },
+                        () -> {
+                            TimeUnit.SECONDS.sleep(3);
+                            return "txt 3";
+                        },
+                        () -> {
+                            TimeUnit.SECONDS.sleep(3);
+                            return "txt 4";
+                        },
+                        () -> {
+                            TimeUnit.SECONDS.sleep(3);
+                            return "txt 5";
+                        }
+                    ),
+                    new HasValues<>("txt 1", "txt 2", "txt 3", "txt 4", "txt 5")
+                );
+            }
+        );
+    }
+
 }
