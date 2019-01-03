@@ -23,9 +23,16 @@
  */
 package org.cactoos.experimental;
 
+import java.util.Collection;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.collection.Mapped;
+import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -37,7 +44,7 @@ import org.cactoos.iterable.IterableOf;
  *  be invoked with timeout. User should have the opportunity to pass the
  *  timeout argument. We need a new decorator which supports the timeout.
  */
-public final class Threads<T> extends ThreadsEnvelope<T> {
+public final class Threads<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
@@ -55,7 +62,7 @@ public final class Threads<T> extends ThreadsEnvelope<T> {
      * @param tasks The tasks to be executed concurrently.
      */
     public Threads(final ExecutorService exc, final Iterable<Scalar<T>> tasks) {
-        super(exc::invokeAll, tasks);
+        this(exc::invokeAll, tasks);
     }
 
     /**
@@ -78,7 +85,7 @@ public final class Threads<T> extends ThreadsEnvelope<T> {
      * @checkstyle IndentationCheck (20 lines)
      */
     public Threads(final int threads, final Iterable<Scalar<T>> tasks) {
-        super(
+        this(
             todo -> {
                 final ExecutorService executor = Executors.newFixedThreadPool(
                     threads
@@ -91,5 +98,28 @@ public final class Threads<T> extends ThreadsEnvelope<T> {
             },
             tasks
         );
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The function to map each task into {@link Future}.
+     * @param tasks The tasks to be executed concurrently.
+     * @checkstyle IllegalCatchCheck (20 lines)
+     */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    private Threads(
+        final Func<Collection<Callable<T>>, Collection<Future<T>>> fnc,
+        final Iterable<Scalar<T>> tasks
+    ) {
+        super(() -> {
+            try {
+                return new Mapped<>(
+                    Future::get,
+                    fnc.apply(new Mapped<>(task -> task::value, tasks))
+                );
+            } catch (final Exception exp) {
+                throw new CompletionException(exp);
+            }
+        });
     }
 }
