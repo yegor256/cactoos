@@ -24,6 +24,7 @@
 package org.cactoos.iterable;
 
 import org.cactoos.Func;
+import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;

@@ -21,8 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
 
+package org.cactoos.scalar;
+
+import org.cactoos.io.InputOf;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -30,10 +34,11 @@ import org.junit.Test;
 /**
  * Test case for {@link LengthOf}.
  *
- * @since 0.12
+ * @since 0.1.0
+ * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 line)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class LengthOfTest {
 
     @Test
@@ -93,4 +98,91 @@ public final class LengthOfTest {
         );
     }
 
+    @Test
+    public void lengthOfWithIntegerValue() {
+        MatcherAssert.assertThat(
+            "Can't calculate length of iterable for integer",
+            new LengthOf(
+                new IterableOf<>(1, 2, 3, 4)
+            ).intValue(),
+            Matchers.equalTo(4)
+        );
+    }
+
+    @Test
+    public void lengthOfWithDoubleValue() {
+        MatcherAssert.assertThat(
+            "Can't calculate length of iterable for double",
+            new LengthOf(
+                new IterableOf<>(1, 2, 3, 4)
+            ).doubleValue(),
+            Matchers.equalTo(4.0)
+        );
+    }
+
+    @Test
+    public void lengthOfWithFloatValue() {
+        MatcherAssert.assertThat(
+            "Can't calculate length of iterable for float",
+            new LengthOf(
+                new IterableOf<>(1, 2, 3, 4)
+            ).floatValue(),
+            Matchers.equalTo(4.0f)
+        );
+    }
+
+    @Test
+    public void lengthOfEmptyIterable() {
+        MatcherAssert.assertThat(
+            "Can't calculate length of empty iterable",
+            new LengthOf(
+                new IterableOf<>()
+            ).intValue(),
+            Matchers.equalTo(0)
+        );
+    }
+
+    @Test
+    public void lengthOfWithIntegerValues() {
+        MatcherAssert.assertThat(
+            "Can't calculate length of iterator for integer",
+            new LengthOf(
+                new ListOf<>(1, 2, 3, 4).iterator()
+            ).intValue(),
+            Matchers.equalTo(4)
+        );
+    }
+
+    @Test
+    public void lengthOfWithDoubleNumber() {
+        MatcherAssert.assertThat(
+            "Can't calculate length of iterator for double",
+            new LengthOf(
+                new ListOf<>(1, 2, 3, 4).iterator()
+            ).doubleValue(),
+            Matchers.equalTo(4.0)
+        );
+    }
+
+    @Test
+    public void lengthOfWithFloatNumber() {
+        MatcherAssert.assertThat(
+            "Can't calculate length of iterator for float",
+            new LengthOf(
+                new ListOf<>(1, 2, 3, 4).iterator()
+            ).floatValue(),
+            Matchers.equalTo(4.0f)
+        );
+    }
+
+    @Test
+    public void lengthOfEmptyIterator() {
+        MatcherAssert.assertThat(
+            "Can't calculate length of empty iterator",
+            new LengthOf(
+                new ListOf<>().iterator()
+            ).intValue(),
+            Matchers.equalTo(0)
+        );
+    }
 }

@@ -26,6 +26,7 @@ package org.cactoos.io;
 
 import java.io.EOFException;
 import java.util.zip.GZIPInputStream;
+import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;

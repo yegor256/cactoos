@@ -29,6 +29,7 @@ import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.LengthOf;
 import org.cactoos.scalar.StickyScalar;
 
 /**

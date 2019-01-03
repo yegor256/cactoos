@@ -21,14 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+
+package org.cactoos.scalar;
 
 import java.io.InputStream;
+import java.util.Iterator;
 import org.cactoos.Input;
-import org.cactoos.scalar.NumberEnvelope;
+import org.cactoos.Scalar;
 
 /**
- * Length of {@link Input}.
+ * Length.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -39,7 +41,33 @@ public final class LengthOf extends NumberEnvelope {
     /**
      * Serialization marker.
      */
-    private static final long serialVersionUID = 512027185282287675L;
+    private static final long serialVersionUID = -7351954368806143451L;
+
+    /**
+     * Ctor.
+     * @param items The iterator
+     * @param <T> The type of items
+     */
+    public <T> LengthOf(final Iterator<T> items) {
+        this(() -> items);
+    }
+
+    /**
+     * Ctor.
+     * @param items The array
+     * @param <T> The type of items
+     */
+    public <T> LengthOf(final Iterable<T> items) {
+        this(() -> {
+            final Iterator<T> iterator = items.iterator();
+            int size = 0;
+            while (iterator.hasNext()) {
+                iterator.next();
+                ++size;
+            }
+            return (double) size;
+        });
+    }
 
     /**
      * Ctor.
@@ -62,7 +90,7 @@ public final class LengthOf extends NumberEnvelope {
         }
     )
     public LengthOf(final Input input, final int max) {
-        super(() -> {
+        this(() -> {
             if (max == 0) {
                 throw new IllegalArgumentException(
                     "Cannot use a buffer limited to zero size"
@@ -84,4 +112,13 @@ public final class LengthOf extends NumberEnvelope {
             }
         });
     }
+
+    /**
+     * Ctor.
+     * @param dnm Double number.
+     */
+    private LengthOf(final Scalar<Double> dnm) {
+        super(dnm);
+    }
+
 }
