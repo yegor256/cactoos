@@ -21,43 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.text;
 
-import org.cactoos.text.NoNulls;
-import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.cactoos.Text;
 
 /**
- * Test case for {@link Text}.
+ * Text check for no nulls.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TextTest {
+public final class NoNulls implements Text {
+    /**
+     * The origin text.
+     */
+    private final Text origin;
 
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullArgument() throws Exception {
-        new NoNulls(null).asString();
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public NoNulls(final Text text) {
+        this.origin = text;
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void failForNullResult() throws Exception {
-        new NoNulls(
-            () -> null
-        ).asString();
+    @Override
+    public String asString() throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid text"
+            );
+        }
+        final String string = this.origin.asString();
+        if (string == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid result string"
+            );
+        }
+        return string;
     }
-
-    @Test
-    public void okForNoNulls() {
-        final String message = "Hello";
-        MatcherAssert.assertThat(
-            "Can't work with null text",
-            new NoNulls(
-                new TextOf(message)
-            ),
-            new TextHasString(message)
-        );
-    }
-
 }

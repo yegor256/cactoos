@@ -23,7 +23,7 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.Scalar;
+import org.cactoos.scalar.NoNulls;
 import org.cactoos.scalar.SolidScalar;
 
 /**
@@ -51,9 +51,9 @@ public final class Solid<X> extends IterableEnvelope<X> {
      */
     public Solid(final Iterable<X> iterable) {
         super(
-            new Scalar.NoNulls<Iterable<X>>(
-                new SolidScalar<Iterable<X>>(
-                    () -> new Synced<X>(new Sticky<>(iterable))
+            new NoNulls<>(
+                new SolidScalar<>(
+                    () -> new Synced<>(new Sticky<>(iterable))
                 )
             )
         );

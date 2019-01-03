@@ -23,10 +23,11 @@
  */
 package org.cactoos;
 
+import org.cactoos.scalar.NoNulls;
 import org.junit.Test;
 
 /**
- * Test case for {@link Scalar.NoNulls}.
+ * Test case for {@link NoNulls}.
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -34,16 +35,16 @@ public final class ScalarTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failForNullArgument() throws Exception {
-        new Scalar.NoNulls<>(null).value();
+        new NoNulls<>(null).value();
     }
 
     @Test(expected = IllegalStateException.class)
     public void failForNullResult() throws Exception {
-        new Scalar.NoNulls<>(() -> null).value();
+        new NoNulls<>(() -> null).value();
     }
 
     @Test
     public void okForNoNulls() throws Exception {
-        new Scalar.NoNulls<>(() -> 1).value();
+        new NoNulls<>(() -> 1).value();
     }
 }

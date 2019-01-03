@@ -59,6 +59,9 @@ public interface Input {
      * Input check for no nulls.
      *
      * @since 0.10
+     * @todo #852:30min Move NoNulls implementations of Input, Output, and Bytes
+     *  to their own packages in order to provide the NoNulls classes API
+     *  consistency.
      */
     final class NoNulls implements Input {
         /**

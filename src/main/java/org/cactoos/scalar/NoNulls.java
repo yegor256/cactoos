@@ -21,43 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.scalar;
 
-import org.cactoos.text.NoNulls;
-import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.cactoos.Scalar;
 
 /**
- * Test case for {@link Text}.
+ * Scalar check for no nulls.
+ *
+ * @param <T> Type of result
  * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TextTest {
-
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullArgument() throws Exception {
-        new NoNulls(null).asString();
+public final class NoNulls<T> implements Scalar<T> {
+    /**
+     * The scalar.
+     */
+    private final Scalar<T> origin;
+    /**
+     * Ctor.
+     * @param sclr The scalar
+     */
+    public NoNulls(final Scalar<T> sclr) {
+        this.origin = sclr;
     }
-
-    @Test(expected = IllegalStateException.class)
-    public void failForNullResult() throws Exception {
-        new NoNulls(
-            () -> null
-        ).asString();
+    @Override
+    public T value() throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid scalar"
+            );
+        }
+        final T value = this.origin.value();
+        if (value == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid value"
+            );
+        }
+        return value;
     }
-
-    @Test
-    public void okForNoNulls() {
-        final String message = "Hello";
-        MatcherAssert.assertThat(
-            "Can't work with null text",
-            new NoNulls(
-                new TextOf(message)
-            ),
-            new TextHasString(message)
-        );
-    }
-
 }
