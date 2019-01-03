@@ -30,7 +30,7 @@ import org.cactoos.Input;
 import org.cactoos.Scalar;
 
 /**
- * Length of {@link Iterator}, {@link Iterable} or {@link Input}.
+ * Length.
  *
  * <p>There is no thread-safety guarantee.
  *
