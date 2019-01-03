@@ -103,7 +103,7 @@ public final class ThreadsTest {
      */
     @Test
     public void cactoosWay() {
-        this.repeatAtLeastTenTimesWithTimeoutInFiveSeconds(
+        this.repeatWithTimeout(
             arg -> {
                 final ExecutorService extor = Executors.newFixedThreadPool(3);
                 try {
@@ -140,33 +140,6 @@ public final class ThreadsTest {
     }
 
     /**
-     * Execute the test at least 10 times with timeout in 5 seconds each.
-     * @param test The test to execute.
-     * @todo #972:30min Move this method to new object RepeatWithTimeout.
-     *  This object might be present in cactoos/src/test/java/o.c.experimental
-     *  in order to be used with concurrent unit tests.
-     */
-    public void repeatAtLeastTenTimesWithTimeoutInFiveSeconds(
-        final Proc<Boolean> test
-    ) {
-        MatcherAssert.assertThat(
-            new UncheckedFunc<>(
-                new Repeated<>(
-                    new TimedFunc<Boolean, Boolean>(
-                        input -> {
-                            test.exec(input);
-                            return true;
-                        },
-                        Duration.ofSeconds(5).toMillis()
-                    ),
-                    10
-                )
-            ).apply(true),
-            new IsEqual<>(true)
-        );
-    }
-
-    /**
      * Execute 1 task within executor service and ensure that we'll get the
      *  expected exception type.
      */
@@ -186,7 +159,7 @@ public final class ThreadsTest {
      */
     @Test
     public void cactoosWayWithInlineExecutorService() {
-        this.repeatAtLeastTenTimesWithTimeoutInFiveSeconds(
+        this.repeatWithTimeout(
             arg -> {
                 MatcherAssert.assertThat(
                     new Threads<String>(
@@ -218,4 +191,25 @@ public final class ThreadsTest {
         );
     }
 
+    /**
+     * Execute the test at least 10 times with timeout in 5 seconds each.
+     * @param test The test to execute.
+     */
+    private void repeatWithTimeout(final Proc<?> test) {
+        MatcherAssert.assertThat(
+            new UncheckedFunc<>(
+                new Repeated<>(
+                    new TimedFunc<Boolean, Boolean>(
+                        input -> {
+                            test.exec(null);
+                            return true;
+                        },
+                        Duration.ofSeconds(5).toMillis()
+                    ),
+                    10
+                )
+            ).apply(true),
+            new IsEqual<>(true)
+        );
+    }
 }
