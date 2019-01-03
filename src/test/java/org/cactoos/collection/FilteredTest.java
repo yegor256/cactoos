@@ -24,8 +24,8 @@
 package org.cactoos.collection;
 
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.LengthOf;
 import org.cactoos.list.ListOf;
+import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
