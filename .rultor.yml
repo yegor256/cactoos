@@ -10,12 +10,14 @@ env:
 install: |
   sudo gem install --no-rdoc --no-ri pdd
   sudo gem install --no-rdoc --no-ri xcop
+  sudo pip install gitlint
 architect:
 - llorllale
 - yegor256
 merge:
   script: |
     pdd --file=/dev/null
+    git log --not master --pretty=%B | gitlint
     mvn clean install -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
 deploy:
