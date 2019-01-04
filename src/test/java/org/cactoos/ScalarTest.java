@@ -24,7 +24,9 @@
 package org.cactoos;
 
 import org.cactoos.scalar.NoNulls;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Test case for {@link NoNulls}.
@@ -33,13 +35,23 @@ import org.junit.Test;
  */
 public final class ScalarTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    /**
+     * A rule for handling an exception.
+     */
+    @Rule
+    public final ExpectedException cause = ExpectedException.none();
+
+    @Test
     public void failForNullArgument() throws Exception {
+        this.cause.expect(IllegalArgumentException.class);
+        this.cause.expectMessage("NULL instead of a valid scalar");
         new NoNulls<>(null).value();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void failForNullResult() throws Exception {
+        this.cause.expect(IllegalStateException.class);
+        this.cause.expectMessage("NULL instead of a valid value");
         new NoNulls<>(() -> null).value();
     }
 
