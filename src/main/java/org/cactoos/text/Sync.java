@@ -32,7 +32,7 @@ import org.cactoos.Text;
  *
  * @since 0.18
  */
-public final class SyncText implements Text {
+public final class Sync implements Text {
 
     /**
      * The text.
@@ -48,7 +48,7 @@ public final class SyncText implements Text {
      * Ctor.
      * @param text The text
      */
-    public SyncText(final Text text) {
+    public Sync(final Text text) {
         this(text, text);
     }
 
@@ -57,7 +57,7 @@ public final class SyncText implements Text {
      * @param text The text
      * @param lck The lock
      */
-    public SyncText(final Text text, final Object lck) {
+    public Sync(final Text text, final Object lck) {
         this.origin = text;
         this.lock = lck;
     }

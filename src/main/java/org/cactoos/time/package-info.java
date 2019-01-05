@@ -26,5 +26,9 @@
  * Time.
  *
  * @since 1.0
+ * @todo #980:30min Classes from package {@link org.cactoos.time} which are
+ *  ending with `AsText` are extending TextEnvelope. It means that they are
+ *  instances of {@link org.cactoos.Text}. They should be merged with
+ *  {@link org.cactoos.text.TextOf} as ctor(s).
  */
 package org.cactoos.time;

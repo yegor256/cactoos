@@ -28,12 +28,12 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link AbbreviatedText}.
+ * Test case for {@link Abbreviated}.
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class AbbreviatedTextTest {
+public final class AbbreviatedTest {
 
     @Test
     public void abbreviatesAnEmptyText() {
@@ -41,7 +41,7 @@ public final class AbbreviatedTextTest {
         MatcherAssert.assertThat(
             "Can't abbreviate an msg text",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText(msg, 8),
+            new Abbreviated(msg, 8),
             new TextHasString(msg)
         );
     }
@@ -51,7 +51,7 @@ public final class AbbreviatedTextTest {
         MatcherAssert.assertThat(
             "Can't abbreviate a text",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText("hello world", 8),
+            new Abbreviated("hello world", 8),
             new TextHasString("hello...")
         );
     }
@@ -61,7 +61,7 @@ public final class AbbreviatedTextTest {
         MatcherAssert.assertThat(
             "Can't abbreviate a text one char smaller",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText("oo programming", 10),
+            new Abbreviated("oo programming", 10),
             new TextHasString("oo prog...")
         );
     }
@@ -72,7 +72,7 @@ public final class AbbreviatedTextTest {
         MatcherAssert.assertThat(
             "Can't abbreviate a text with same length",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText(msg, 15),
+            new Abbreviated(msg, 15),
             new TextHasString(msg)
         );
     }
@@ -83,7 +83,7 @@ public final class AbbreviatedTextTest {
         MatcherAssert.assertThat(
             "Can't abbreviate a text one char bigger",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText(msg, 17),
+            new Abbreviated(msg, 17),
             new TextHasString(msg)
         );
     }
@@ -94,7 +94,7 @@ public final class AbbreviatedTextTest {
         MatcherAssert.assertThat(
             "Can't abbreviate a text two chars bigger",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText(msg, 15),
+            new Abbreviated(msg, 15),
             new TextHasString(msg)
         );
     }
@@ -105,7 +105,7 @@ public final class AbbreviatedTextTest {
         MatcherAssert.assertThat(
             "Can't abbreviate a text with width bigger than length",
             // @checkstyle MagicNumber (1 line)
-            new AbbreviatedText(msg, 50),
+            new Abbreviated(msg, 50),
             new TextHasString(msg)
         );
     }
@@ -115,7 +115,7 @@ public final class AbbreviatedTextTest {
         // @checkstyle LineLengthCheck (10 line)
         MatcherAssert.assertThat(
             "Can't abbreviate a text bigger than default max width",
-            new AbbreviatedText(
+            new Abbreviated(
                 "The quick brown fox jumps over the lazy black dog and after that returned to the cave"
             ),
             new TextHasString(
