@@ -34,7 +34,7 @@ import org.junit.rules.ExpectedException;
 /**
  * Test case for {@link Strict}.
  *
- * @since 0.49.2
+ * @since 1.0
  * @checkstyle MagicNumber (500 line)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
