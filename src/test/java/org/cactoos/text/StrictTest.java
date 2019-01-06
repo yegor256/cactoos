@@ -26,7 +26,10 @@ package org.cactoos.text;
 import java.util.regex.Pattern;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.StringContains;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Test case for {@link Strict}.
@@ -38,11 +41,19 @@ import org.junit.Test;
 public final class StrictTest {
 
     /**
+     * A rule for handling an exception.
+     */
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
+    /**
      * Ensures that Strict is failing on a negative predicate result.
      * @throws Exception If fails
      */
-    @Test(expected = Exception.class)
+    @Test
     public void failsIfPredicateIsNegative() throws Exception {
+        this.exception.expect(IllegalArgumentException.class);
+        this.exception.expectMessage(new StringContains("text"));
         new Strict(s -> false, new TextOf("text")).asString();
     }
 
@@ -64,8 +75,10 @@ public final class StrictTest {
      * Ensures that Strict is failing on a text not matching a pattern.
      * @throws Exception If fails
      */
-    @Test(expected = Exception.class)
+    @Test
     public void failsIfNotMatchedWithPattern() throws Exception {
+        this.exception.expect(IllegalArgumentException.class);
+        this.exception.expectMessage(new StringContains("text"));
         new Strict(
             Pattern.compile("^[a-zA-Z]+$"),
             new TextOf("text12")

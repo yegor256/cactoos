@@ -33,13 +33,12 @@ import org.cactoos.Text;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.49.2
+ * @since 1.0
  */
 public final class Strict extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param pattern The Pattern for validating encapsulated text
      * @param origin The Text
      */
@@ -49,21 +48,17 @@ public final class Strict extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param predicate The Func as a predicate
      * @param origin The Text
      */
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     public Strict(final Func<String, Boolean> predicate, final Text origin) {
         super((Scalar<String>) () -> {
             final String str = origin.asString();
             if (!predicate.apply(str)) {
-                throw new Exception(
-                    new UncheckedText(
-                        new FormattedText(
+                throw new IllegalArgumentException(
+                    new FormattedText(
                         "String '%s' does not match a given predicate",
-                            str
-                        )
+                        str
                     ).asString()
                 );
             }
