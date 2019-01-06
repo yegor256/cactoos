@@ -25,11 +25,11 @@ package org.cactoos.text;
 
 import java.util.regex.Pattern;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.StringContains;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link Strict}.
@@ -60,14 +60,13 @@ public final class StrictTest {
     /**
      * Ensures that Strict is returning unchanged string on a positive
      * predicate result.
-     * @throws Exception If fails
      */
     @Test
-    public void returnsUnchangedIfPredicateIsPositive() throws Exception {
+    public void returnsUnchangedIfPredicateIsPositive() {
         MatcherAssert.assertThat(
             "Given strings are not equal",
-            new Strict(s -> true, new TextOf("text")).asString(),
-            new IsEqual<>("text")
+            new Strict(s -> true, new TextOf("text")),
+            new TextIs("text")
         );
     }
 
@@ -78,7 +77,7 @@ public final class StrictTest {
     @Test
     public void failsIfNotMatchedWithPattern() throws Exception {
         this.exception.expect(IllegalArgumentException.class);
-        this.exception.expectMessage(new StringContains("text"));
+        this.exception.expectMessage("text");
         new Strict(
             Pattern.compile("^[a-zA-Z]+$"),
             new TextOf("text12")
@@ -88,17 +87,16 @@ public final class StrictTest {
     /**
      * Ensures that Strict is returning unchanged string
      * on a matched with pattern string.
-     * @throws Exception If fails
      */
     @Test
-    public void returnsUnchangedIfMatchedWithPattern() throws Exception {
+    public void returnsUnchangedIfMatchedWithPattern() {
         MatcherAssert.assertThat(
             "Given strings are not equal",
             new Strict(
                 Pattern.compile("^[a-zA-Z0-9]+$"),
                 new TextOf("text1")
-            ).asString(),
-            new IsEqual<>("text1")
+            ),
+            new TextIs("text1")
         );
     }
 }
