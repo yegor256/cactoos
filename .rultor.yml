@@ -10,6 +10,7 @@ env:
 install: |
   sudo gem install --no-rdoc --no-ri pdd
   sudo gem install --no-rdoc --no-ri xcop
+  sudo apt update
   sudo apt install -y python-pip
   sudo pip install gitlint
 architect:
