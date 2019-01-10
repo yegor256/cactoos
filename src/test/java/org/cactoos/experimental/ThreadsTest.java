@@ -24,23 +24,32 @@
 
 package org.cactoos.experimental;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import org.cactoos.Proc;
+import org.cactoos.func.Repeated;
+import org.cactoos.func.TimedFunc;
+import org.cactoos.func.UncheckedFunc;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Mapped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link Threads}.
  *
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ThreadsTest {
@@ -48,11 +57,6 @@ public final class ThreadsTest {
     /**
      * Example of JDK8 way for handling of concurrent tasks.
      * This code base should be simplified.
-     * @todo #962:30min o.c.experimental Design the implementation of ThreadsOf.
-     *  The initial scope is including:
-     *  1) receive the ExecutorService;
-     *  2) receive the tasks to complete;
-     *  3) execute the tasks concurrently and return the values.
      */
     @Test(timeout = 10000)
     public void oldSchoolWay() {
@@ -88,9 +92,124 @@ public final class ThreadsTest {
                     extor.shutdownNow();
                 }
             } catch (final InterruptedException exp) {
-                Thread.currentThread().interrupt();
                 extor.shutdownNow();
             }
         }
+    }
+
+    /**
+     * Execute the tasks concurrently using {@link Threads} when
+     *  {@link ExecutorService} was initiated by someone else.
+     */
+    @Test
+    public void cactoosWay() {
+        this.repeatWithTimeout(
+            arg -> {
+                final ExecutorService extor = Executors.newFixedThreadPool(3);
+                try {
+                    MatcherAssert.assertThat(
+                        new Threads<String>(
+                            extor,
+                            () -> {
+                                TimeUnit.SECONDS.sleep(3);
+                                return "txt 1";
+                            },
+                            () -> {
+                                TimeUnit.SECONDS.sleep(3);
+                                return "txt 2";
+                            },
+                            () -> {
+                                TimeUnit.SECONDS.sleep(3);
+                                return "txt 3";
+                            }
+                        ),
+                        new HasValues<>("txt 1", "txt 2", "txt 3")
+                    );
+                } finally {
+                    try {
+                        extor.shutdown();
+                        if (!extor.awaitTermination(1, TimeUnit.SECONDS)) {
+                            extor.shutdownNow();
+                        }
+                    } catch (final InterruptedException exp) {
+                        extor.shutdownNow();
+                    }
+                }
+            }
+        );
+    }
+
+    /**
+     * Execute 1 task within executor service and ensure that we'll get the
+     *  expected exception type.
+     */
+    @Test(expected = CompletionException.class)
+    public void executionIsFailedDueToException() {
+        new Threads<String>(
+            Executors.newSingleThreadExecutor(),
+            () -> {
+                throw new IllegalStateException("Something went wrong");
+            }
+        ).iterator().next();
+    }
+
+    /**
+     * Execute the tasks concurrently using {@link Threads} when
+     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     */
+    @Test
+    public void cactoosWayWithInlineExecutorService() {
+        this.repeatWithTimeout(
+            arg -> {
+                MatcherAssert.assertThat(
+                    new Threads<String>(
+                        5,
+                        () -> {
+                            TimeUnit.SECONDS.sleep(3);
+                            return "txt 1";
+                        },
+                        () -> {
+                            TimeUnit.SECONDS.sleep(3);
+                            return "txt 2";
+                        },
+                        () -> {
+                            TimeUnit.SECONDS.sleep(3);
+                            return "txt 3";
+                        },
+                        () -> {
+                            TimeUnit.SECONDS.sleep(3);
+                            return "txt 4";
+                        },
+                        () -> {
+                            TimeUnit.SECONDS.sleep(3);
+                            return "txt 5";
+                        }
+                    ),
+                    new HasValues<>("txt 1", "txt 2", "txt 3", "txt 4", "txt 5")
+                );
+            }
+        );
+    }
+
+    /**
+     * Execute the test at least 10 times with timeout in 5 seconds each.
+     * @param test The test to execute.
+     */
+    private void repeatWithTimeout(final Proc<?> test) {
+        MatcherAssert.assertThat(
+            new UncheckedFunc<>(
+                new Repeated<>(
+                    new TimedFunc<Boolean, Boolean>(
+                        input -> {
+                            test.exec(null);
+                            return true;
+                        },
+                        Duration.ofSeconds(5).toMillis()
+                    ),
+                    10
+                )
+            ).apply(true),
+            new IsEqual<>(true)
+        );
     }
 }
