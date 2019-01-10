@@ -23,11 +23,12 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collection;
-import java.util.Iterator;
 import org.cactoos.iterator.IteratorNoNulls;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
+
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * A decorator of {@link Collection} that tolerates no NULLs.
@@ -38,7 +39,7 @@ import org.cactoos.text.UncheckedText;
  * @since 0.27
  * @todo #852:30min Rename XxxNoNulls implementations of Collection and Iterator
  *  to NoNulls to avoid the compound names. They should be present in their own
- *  packages in order to provide the NoNulls classes API consistency.
+ *  classes in order to provide the NoNulls classes API consistency.
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class CollectionNoNulls<X> implements Collection<X> {
