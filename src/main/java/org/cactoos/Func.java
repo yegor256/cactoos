@@ -63,7 +63,7 @@ public interface Func<X, Y> {
      * @param <Y> Type of output
      * @since 0.10
      * @todo #852:30min Move NoNulls implementations of Func, BiFunc, Proc, and
-     *  BiProc to their own packages in order to provide the NoNulls classes API
+     *  BiProc to their own classes in order to provide the NoNulls classes API
      *  consistency.
      */
     final class NoNulls<X, Y> implements Func<X, Y> {
