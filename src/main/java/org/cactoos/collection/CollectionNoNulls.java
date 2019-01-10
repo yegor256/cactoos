@@ -26,7 +26,6 @@ package org.cactoos.collection;
 import org.cactoos.iterator.IteratorNoNulls;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
-
 import java.util.Collection;
 import java.util.Iterator;
 
