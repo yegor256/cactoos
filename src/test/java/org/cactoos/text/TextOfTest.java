@@ -49,7 +49,7 @@ public final class TextOfTest {
     public void readsInputIntoText() throws Exception {
         MatcherAssert.assertThat(
             "Can't read text from Input",
-            new Sync(
+            new Synced(
                 new TextOf(
                     new InputOf("привет, друг!"),
                     StandardCharsets.UTF_8
