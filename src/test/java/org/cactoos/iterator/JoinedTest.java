@@ -25,7 +25,6 @@ package org.cactoos.iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
@@ -35,8 +34,8 @@ import org.junit.Test;
 /**
  * Test case for {@link Joined}.
  *
- * @checkstyle JavadocMethodCheck (500 lines)
  * @since 0.14
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class JoinedTest {
 

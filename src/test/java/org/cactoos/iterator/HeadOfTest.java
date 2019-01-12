@@ -60,7 +60,7 @@ public final class HeadOfTest {
     public void returnsIntactIterator() throws Exception {
         MatcherAssert.assertThat(
             new LengthOf(
-                new IterableOf<> (
+                new IterableOf<>(
                     new HeadOf<>(
                         3,
                         new IterableOf<>(

@@ -26,7 +26,6 @@ package org.cactoos.iterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.NoSuchElementException;
-
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
@@ -37,9 +36,9 @@ import org.junit.Test;
 /**
  * Test case for {@link Partitioned}.
  *
+ * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
- * @since 0.29
  */
 public final class PartitionedTest {
 

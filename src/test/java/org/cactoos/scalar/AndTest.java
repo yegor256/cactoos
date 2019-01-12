@@ -28,7 +28,6 @@ import java.util.List;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterator.IteratorOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -94,7 +93,6 @@ public final class AndTest {
         );
     }
 
-
     @Test
     public void testProcVarargs() throws Exception {
         final List<Integer> list = new LinkedList<>();
@@ -118,8 +116,6 @@ public final class AndTest {
             new ScalarHasValue<>(false)
         );
     }
-
-
     @Test
     public void testFuncVarargs() throws Exception {
         MatcherAssert.assertThat(

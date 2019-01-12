@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
 import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 import org.cactoos.Func;

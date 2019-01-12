@@ -32,8 +32,8 @@ import org.junit.Test;
 /**
  * Test case for {@link Repeated}.
  *
- * @checkstyle JavadocMethodCheck (500 lines)
  * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class RepeatedTest {
 

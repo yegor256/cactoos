@@ -33,5 +33,3 @@
  *  for ListEnvelope children classes
  */
 package org.cactoos.list;
-
-
