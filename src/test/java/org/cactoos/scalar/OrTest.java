@@ -89,14 +89,6 @@ public final class OrTest {
     }
 
     @Test
-    public void emptyIterator() throws Exception {
-        MatcherAssert.assertThat(
-            new Or(new IteratorOf<Scalar<Boolean>>()),
-            new ScalarHasValue<>(false)
-        );
-    }
-
-    @Test
     public void testProcIterable() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new Or(
@@ -141,17 +133,6 @@ public final class OrTest {
             new Or(
                 input -> input > 0,
                 new IterableOf<>(-1, 1, 0)
-            ),
-            new ScalarHasValue<>(true)
-        );
-    }
-
-    @Test
-    public void testFuncIterator() throws Exception {
-        MatcherAssert.assertThat(
-            new Or(
-                input -> input > 0,
-                new IteratorOf<>(-1, 1, 0)
             ),
             new ScalarHasValue<>(true)
         );

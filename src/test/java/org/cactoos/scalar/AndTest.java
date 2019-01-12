@@ -82,14 +82,6 @@ public final class AndTest {
     }
 
     @Test
-    public void emptyIterator() throws Exception {
-        MatcherAssert.assertThat(
-            new And(new IteratorOf<Scalar<Boolean>>()),
-            new ScalarHasValue<>(true)
-        );
-    }
-
-    @Test
     public void testProcIterable() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new And(
@@ -102,18 +94,6 @@ public final class AndTest {
         );
     }
 
-    @Test
-    public void testProcIterator() throws Exception {
-        final List<Integer> list = new LinkedList<>();
-        new And(
-            (Proc<Integer>) list::add,
-            new IteratorOf<>(1, 1)
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            Matchers.contains(1, 1)
-        );
-    }
 
     @Test
     public void testProcVarargs() throws Exception {
@@ -139,16 +119,6 @@ public final class AndTest {
         );
     }
 
-    @Test
-    public void testFuncIterator() throws Exception {
-        MatcherAssert.assertThat(
-            new And(
-                input -> input > 0,
-                new IteratorOf<>(1, -1, 0)
-            ),
-            new ScalarHasValue<>(false)
-        );
-    }
 
     @Test
     public void testFuncVarargs() throws Exception {

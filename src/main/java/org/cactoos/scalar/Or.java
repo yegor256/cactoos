@@ -133,17 +133,6 @@ public final class Or implements Scalar<Boolean> {
      * @param src The iterable
      * @param func Func to map
      * @param <X> Type of items in the iterable
-     * @since 0.24
-     */
-    public <X> Or(final Func<X, Boolean> func, final Iterator<X> src) {
-        this(func, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The iterable
-     * @param func Func to map
-     * @param <X> Type of items in the iterable
      */
     public <X> Or(final Func<X, Boolean> func, final Iterable<X> src) {
         this(
@@ -176,15 +165,6 @@ public final class Or implements Scalar<Boolean> {
     @SafeVarargs
     public Or(final Scalar<Boolean>... scalar) {
         this(new IterableOf<>(scalar));
-    }
-
-    /**
-     * Ctor.
-     * @param iterator The iterator.
-     * @since 0.24
-     */
-    public Or(final Iterator<Scalar<Boolean>> iterator) {
-        this(new IterableOf<>(iterator));
     }
 
     /**

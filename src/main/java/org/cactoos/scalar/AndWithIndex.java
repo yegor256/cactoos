@@ -133,15 +133,6 @@ public final class AndWithIndex implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterator
-     * @since 0.24
-     */
-    public AndWithIndex(final Iterator<Func<Integer, Boolean>> src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
      * @param src The iterable
      */
     public AndWithIndex(final Iterable<Func<Integer, Boolean>> src) {

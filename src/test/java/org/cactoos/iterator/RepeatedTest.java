@@ -23,6 +23,7 @@
  */
 package org.cactoos.iterator;
 
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -31,8 +32,8 @@ import org.junit.Test;
 /**
  * Test case for {@link Repeated}.
  *
- * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.4
  */
 public final class RepeatedTest {
 
@@ -43,8 +44,10 @@ public final class RepeatedTest {
         MatcherAssert.assertThat(
             "Can't generate an iterable with fixed size",
             new LengthOf(
-                new Repeated<>(
-                    size, element
+                new IterableOf<>(
+                    new Repeated<>(
+                        size, element
+                    )
                 )
             ).intValue(),
             Matchers.equalTo(size)

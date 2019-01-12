@@ -60,11 +60,13 @@ public final class HeadOfTest {
     public void returnsIntactIterator() throws Exception {
         MatcherAssert.assertThat(
             new LengthOf(
-                new HeadOf<>(
-                    3,
-                    new IterableOf<>(
-                        "one", "two"
-                    ).iterator()
+                new IterableOf<> (
+                    new HeadOf<>(
+                        3,
+                        new IterableOf<>(
+                            "one", "two"
+                        ).iterator()
+                    )
                 )
             ).intValue(),
             Matchers.equalTo(2)

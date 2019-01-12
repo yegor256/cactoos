@@ -60,11 +60,13 @@ public final class TailOfTest {
     public void returnsIntactIterator() throws Exception {
         MatcherAssert.assertThat(
             new LengthOf(
-                new TailOf<>(
-                    3,
-                    new IterableOf<>(
-                        "one", "two"
-                    ).iterator()
+                new IterableOf<>(
+                    new TailOf<>(
+                        3,
+                        new IterableOf<>(
+                            "one", "two"
+                        ).iterator()
+                    )
                 )
             ).intValue(),
             Matchers.equalTo(2)
