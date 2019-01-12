@@ -26,5 +26,12 @@
  * Lists, tests.
  *
  * @since 0.14
+ * @todo #911:30min Continue remove ctors with Iterator parameters.
+ *  Need to remove ctors with Iterator parameters (and substitute
+ *  them with ctors with Iterable parameters) in list package.
+ *  This changes will make it necessary to correct the tests
+ *  for ListEnvelope children classes
  */
 package org.cactoos.list;
+
+
