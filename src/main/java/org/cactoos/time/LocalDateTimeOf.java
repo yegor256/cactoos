@@ -33,6 +33,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @since 0.27
  */
 public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
+    private static final long serialVersionUID = 8592139601760284937L;
     /**
      * The parsed date.
      */

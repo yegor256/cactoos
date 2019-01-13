@@ -41,6 +41,7 @@ import org.cactoos.text.UncheckedText;
  */
 public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
 
+    private static final long serialVersionUID = 8828642584935688685L;
     /**
      * Function that wraps exception.
      */

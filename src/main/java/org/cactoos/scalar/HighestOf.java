@@ -58,6 +58,7 @@ import org.cactoos.iterable.Mapped;
  */
 public final class HighestOf<T extends Comparable<T>> implements Scalar<T> {
 
+    private static final long serialVersionUID = -3547227188915899404L;
     /**
      * Result.
      */

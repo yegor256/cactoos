@@ -47,6 +47,7 @@ import org.cactoos.text.TextOf;
  */
 public final class PropertiesOf implements Scalar<Properties> {
 
+    private static final long serialVersionUID = -3324338867796015345L;
     /**
      * The underlying properties.
      */

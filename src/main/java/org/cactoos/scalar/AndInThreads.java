@@ -56,6 +56,7 @@ import org.cactoos.text.FormattedText;
  */
 public final class AndInThreads implements Scalar<Boolean> {
 
+    private static final long serialVersionUID = -2441733307904191408L;
     /**
      * The service.
      */

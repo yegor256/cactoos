@@ -37,6 +37,7 @@ import org.cactoos.Scalar;
  */
 public final class SolidScalar<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = -7401355531940909176L;
     /**
      * Origin.
      */

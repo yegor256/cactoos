@@ -41,6 +41,7 @@ import org.cactoos.Scalar;
  */
 public final class Equals<T extends Comparable<T>> implements Scalar<Boolean> {
 
+    private static final long serialVersionUID = -7530924366217018962L;
     /**
      * The first scalar.
      */

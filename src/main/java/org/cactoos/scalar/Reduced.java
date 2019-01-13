@@ -74,6 +74,7 @@ import org.cactoos.iterable.Mapped;
  */
 public final class Reduced<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = 7503459295879462493L;
     /**
      * Items.
      */

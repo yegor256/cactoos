@@ -42,6 +42,7 @@ import org.cactoos.text.TextOf;
  */
 public final class BoolOf implements Scalar<Boolean> {
 
+    private static final long serialVersionUID = -554166749686477820L;
     /**
      * Source text.
      */

@@ -23,7 +23,11 @@
  */
 package org.cactoos.scalar;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -94,5 +98,21 @@ public final class NumberOfTest {
     @Test(expected = RuntimeException.class)
     public void failsIfTextDoesNotRepresentADouble() throws IOException {
         new NumberOf("abfdsc").doubleValue();
+    }
+
+    @Test
+    public void serializes() throws IOException, ClassNotFoundException {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        new ObjectOutputStream(
+            out
+        ).writeObject(
+            new NumberOf("1234")
+        );
+        MatcherAssert.assertThat(
+            (NumberOf) new ObjectInputStream(
+                new ByteArrayInputStream(out.toByteArray())
+            ).readObject(),
+            Matchers.equalTo(1234)
+        );
     }
 }

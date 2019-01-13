@@ -42,6 +42,7 @@ import org.cactoos.Scalar;
  */
 public final class IoCheckedScalar<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = -4789269346443852640L;
     /**
      * Original scalar.
      */

@@ -36,6 +36,7 @@ import org.cactoos.iterable.IterableOf;
  */
 public final class Folded<X, T> implements Scalar<X> {
 
+    private static final long serialVersionUID = 8248271231724362891L;
     /**
      * Original iterable.
      */

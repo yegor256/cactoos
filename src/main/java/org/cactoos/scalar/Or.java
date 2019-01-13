@@ -79,6 +79,7 @@ import org.cactoos.iterable.Mapped;
  */
 public final class Or implements Scalar<Boolean> {
 
+    private static final long serialVersionUID = 1724930938560755347L;
     /**
      * The iterator.
      */

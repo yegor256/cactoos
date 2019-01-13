@@ -35,6 +35,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @since 0.27
  */
 public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
+    private static final long serialVersionUID = 7258334985164726580L;
     /**
      * The parsed date.
      */

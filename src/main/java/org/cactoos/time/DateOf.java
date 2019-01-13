@@ -36,6 +36,7 @@ import org.cactoos.scalar.UncheckedScalar;
  */
 public final class DateOf implements Scalar<Date> {
 
+    private static final long serialVersionUID = -435491459384038668L;
     /**
      * The parsed date.
      */

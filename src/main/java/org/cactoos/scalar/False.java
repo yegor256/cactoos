@@ -34,6 +34,8 @@ import org.cactoos.Scalar;
  */
 public final class False implements Scalar<Boolean> {
 
+    private static final long serialVersionUID = -2664432243848291578L;
+
     @Override
     public Boolean value() {
         return false;

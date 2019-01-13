@@ -41,6 +41,7 @@ import org.cactoos.map.MapOf;
  */
 public final class ScalarWithFallback<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = -3397993816703066227L;
     /**
      * The origin scalar.
      */

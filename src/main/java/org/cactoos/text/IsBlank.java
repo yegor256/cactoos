@@ -35,6 +35,7 @@ import org.cactoos.Text;
  */
 public final class IsBlank implements Scalar<Boolean> {
 
+    private static final long serialVersionUID = -303587862685229882L;
     /**
      * The text.
      */

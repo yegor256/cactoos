@@ -51,6 +51,7 @@ import org.cactoos.Scalar;
  */
 public final class Ternary<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = 3273631602484959369L;
     /**
      * The condition.
      */

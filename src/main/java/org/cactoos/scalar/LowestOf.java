@@ -58,6 +58,7 @@ import org.cactoos.iterable.Mapped;
  */
 public final class LowestOf<T extends Comparable<T>> implements Scalar<T> {
 
+    private static final long serialVersionUID = -2222625577885475646L;
     /**
      * Result.
      */

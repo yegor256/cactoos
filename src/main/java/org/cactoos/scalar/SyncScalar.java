@@ -49,6 +49,7 @@ import org.cactoos.Scalar;
  */
 public final class SyncScalar<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = 6213293404519312215L;
     /**
      * The scalar to cache.
      */

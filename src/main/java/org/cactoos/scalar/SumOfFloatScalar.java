@@ -44,6 +44,7 @@ import org.cactoos.Scalar;
  */
 public final class SumOfFloatScalar implements Scalar<Float> {
 
+    private static final long serialVersionUID = -2351997894084743784L;
     /**
      * Varargs of Scalar to sum up values from.
      */

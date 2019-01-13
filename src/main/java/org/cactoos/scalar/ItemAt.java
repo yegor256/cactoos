@@ -40,6 +40,7 @@ import org.cactoos.text.FormattedText;
  */
 public final class ItemAt<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = 7368435910244914095L;
     /**
      * {@link StickyScalar} that holds the value of the iterator
      *  at the position specified in the constructor.

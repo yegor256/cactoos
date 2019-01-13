@@ -40,6 +40,7 @@ import org.cactoos.iterable.IterableOf;
  */
 public final class FirstOf<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = -3392821074016910262L;
     /**
      * Condition for getting the element.
      */

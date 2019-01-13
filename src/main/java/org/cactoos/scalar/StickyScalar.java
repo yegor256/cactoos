@@ -59,6 +59,7 @@ import org.cactoos.func.StickyFunc;
  */
 public final class StickyScalar<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = 4016178182153587930L;
     /**
      * Func.
      */

@@ -44,6 +44,7 @@ import org.cactoos.Scalar;
  */
 public final class SumOfDoubleScalar implements Scalar<Double> {
 
+    private static final long serialVersionUID = 5665225232632637513L;
     /**
      * Varargs of Scalar to sum up values from.
      */

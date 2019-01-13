@@ -40,6 +40,7 @@ import org.cactoos.Scalar;
  */
 public final class Not implements Scalar<Boolean> {
 
+    private static final long serialVersionUID = 4973341605261222251L;
     /**
      * The origin scalar.
      */

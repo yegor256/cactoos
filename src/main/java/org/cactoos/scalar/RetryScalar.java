@@ -55,6 +55,7 @@ import org.cactoos.func.RetryFunc;
  */
 public final class RetryScalar<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = -1760023419280919562L;
     /**
      * Original scalar.
      */

@@ -34,6 +34,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @since 0.27
  */
 public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
+    private static final long serialVersionUID = 8182449320101445175L;
     /**
      * The parsed date.
      */

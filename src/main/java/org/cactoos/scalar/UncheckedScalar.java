@@ -37,6 +37,7 @@ import org.cactoos.Scalar;
  */
 public final class UncheckedScalar<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = -67090681677875830L;
     /**
      * Original origin.
      */

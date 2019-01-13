@@ -23,6 +23,7 @@
  */
 package org.cactoos;
 
+import java.io.Serializable;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
@@ -47,7 +48,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @see IoCheckedScalar
  * @since 0.1
  */
-public interface Scalar<T> {
+public interface Scalar<T> extends Serializable {
 
     /**
      * Convert it to the value.
@@ -63,6 +64,7 @@ public interface Scalar<T> {
      * @since 0.11
      */
     final class NoNulls<T> implements Scalar<T> {
+        private static final long serialVersionUID = -1222477011113790856L;
         /**
          * The scalar.
          */

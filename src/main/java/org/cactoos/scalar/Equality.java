@@ -41,6 +41,7 @@ import org.cactoos.Scalar;
  */
 public final class Equality<T extends Bytes> implements Scalar<Integer> {
 
+    private static final long serialVersionUID = -7471438709253520125L;
     /**
      * Left.
      */

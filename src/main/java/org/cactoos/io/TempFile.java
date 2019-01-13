@@ -50,6 +50,7 @@ import org.cactoos.text.TextOf;
  * @since 1.0
  */
 public final class TempFile implements Scalar<Path>, Closeable {
+    private static final long serialVersionUID = -3598132867953052765L;
     /**
      * Creates the temporary file, returning its path.
      */

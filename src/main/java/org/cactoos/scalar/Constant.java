@@ -52,6 +52,7 @@ import org.cactoos.Scalar;
  */
 public final class Constant<T> implements Scalar<T> {
 
+    private static final long serialVersionUID = -3683103754580310224L;
     /**
      * Pre-computed value.
      */

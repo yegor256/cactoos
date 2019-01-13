@@ -46,6 +46,7 @@ import org.cactoos.Scalar;
  */
 public final class InheritanceLevel implements Scalar<Integer> {
 
+    private static final long serialVersionUID = 5599786552966927799L;
     /**
      * Base class.
      */
