@@ -31,6 +31,9 @@ import org.cactoos.io.BytesOf;
 /**
  * Decodes the origin text using the Base64 encoding scheme.
  * @since 0.20.2
+ * @todo #980:30min Define new name for Base64Text and TextBase64 in order to
+ *  avoid compound names. These classes are using for decode/encode text using
+ *  the radix-64 representation.
  */
 public final class Base64Text extends TextEnvelope {
 

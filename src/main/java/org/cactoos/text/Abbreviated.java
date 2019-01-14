@@ -35,7 +35,7 @@ import org.cactoos.Text;
  *  TextEnvelope - asString() should be removed and implementation from
  *  TextEnvelope should be used.
  */
-public final class AbbreviatedText implements Text {
+public final class Abbreviated implements Text {
 
     /**
      * The default max line width.
@@ -64,7 +64,7 @@ public final class AbbreviatedText implements Text {
      *
      * @param text The Text
      */
-    public AbbreviatedText(final String text) {
+    public Abbreviated(final String text) {
         this(new TextOf(text));
     }
 
@@ -75,8 +75,8 @@ public final class AbbreviatedText implements Text {
      *
      * @param text The Text
      */
-    public AbbreviatedText(final Text text) {
-        this(text, AbbreviatedText.MAX_WIDTH);
+    public Abbreviated(final Text text) {
+        this(text, Abbreviated.MAX_WIDTH);
     }
 
     /**
@@ -85,7 +85,7 @@ public final class AbbreviatedText implements Text {
      * @param text A String
      * @param max Max width of the result string
      */
-    public AbbreviatedText(final String text, final int max) {
+    public Abbreviated(final String text, final int max) {
         this(new TextOf(text), max);
     }
 
@@ -94,7 +94,7 @@ public final class AbbreviatedText implements Text {
      * @param text The Text
      * @param max Max width of the result string
      */
-    public AbbreviatedText(final Text text, final int max) {
+    public Abbreviated(final Text text, final int max) {
         this.origin = text;
         this.width = max;
     }
@@ -110,7 +110,7 @@ public final class AbbreviatedText implements Text {
                 new SubText(
                     this.origin,
                     0,
-                    this.width - AbbreviatedText.ELLIPSES_WIDTH
+                    this.width - Abbreviated.ELLIPSES_WIDTH
                 ).asString()
             );
         }
