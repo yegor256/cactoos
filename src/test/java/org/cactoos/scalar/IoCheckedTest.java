@@ -34,7 +34,7 @@ import org.junit.Test;
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IoCheckedScalarTest {
+public final class IoCheckedTest {
 
     @Test
     public void rethrowsIoException() {
