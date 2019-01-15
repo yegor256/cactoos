@@ -43,6 +43,8 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @param <T> Type of output
  * @since 0.12
+ * @todo #861:30min Avoid usage of null value in ctor(Func) which is
+ *  against design principles.
  */
 public final class CallableOf<X, T> implements Callable<T> {
 
