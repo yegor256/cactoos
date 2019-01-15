@@ -24,7 +24,6 @@
 package org.cactoos.func;
 
 import java.security.SecureRandom;
-import java.util.concurrent.atomic.AtomicBoolean;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -56,47 +55,18 @@ public final class RetryTest {
     }
 
     @Test
-    public void runsProcMultipleTimes() throws Exception {
+    public void runsFuncConditionMultipleTimes() throws Exception {
         MatcherAssert.assertThat(
             new Retry<>(
                 input -> {
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");
                     }
-                },
-                Integer.MAX_VALUE
-            ).apply(true),
-            Matchers.nullValue()
-        );
-    }
-
-    @Test
-    public void runsProcDefaultMultipleTimes() throws Exception {
-        final AtomicBoolean fail = new AtomicBoolean(true);
-        MatcherAssert.assertThat(
-            new Retry<>(
-                input -> {
-                    if (fail.getAndSet(false)) {
-                        throw new IllegalArgumentException("May happen");
-                    }
-                }
-            ).apply(true),
-            Matchers.nullValue()
-        );
-    }
-
-    @Test
-    public void runsProcConditionMultipleTimes() throws Exception {
-        MatcherAssert.assertThat(
-            new Retry<>(
-                input -> {
-                    if (new SecureRandom().nextDouble() > 0.3d) {
-                        throw new IllegalArgumentException("May happen");
-                    }
+                    return true;
                 },
                 count -> count == Integer.MAX_VALUE
             ).apply(true),
-            Matchers.nullValue()
+            Matchers.equalTo(true)
         );
     }
 }
