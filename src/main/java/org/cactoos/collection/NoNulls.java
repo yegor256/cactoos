@@ -25,7 +25,6 @@ package org.cactoos.collection;
 
 import java.util.Collection;
 import java.util.Iterator;
-
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -135,22 +134,22 @@ public final class NoNulls<X> implements Collection<X> {
 
     @Override
     public boolean containsAll(final Collection<?> items) {
-        return this.col.containsAll(new NoNulls(items));
+        return this.col.containsAll(new NoNulls<>(items));
     }
 
     @Override
     public boolean addAll(final Collection<? extends X> items) {
-        return this.col.removeAll(new NoNulls(items));
+        return this.col.removeAll(new NoNulls<>(items));
     }
 
     @Override
     public boolean removeAll(final Collection<?> items) {
-        return this.col.removeAll(new NoNulls(items));
+        return this.col.removeAll(new NoNulls<>(items));
     }
 
     @Override
     public boolean retainAll(final Collection<?> items) {
-        return this.col.retainAll(new NoNulls(items));
+        return this.col.retainAll(new NoNulls<>(items));
     }
 
     @Override

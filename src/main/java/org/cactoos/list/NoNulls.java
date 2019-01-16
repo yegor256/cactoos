@@ -27,7 +27,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -98,18 +97,25 @@ public final class NoNulls<T> implements List<T> {
 
     @Override
     public boolean containsAll(final Collection<?> items) {
-        return new org.cactoos.collection.NoNulls<>(this.list).containsAll(items);
+        return new org.cactoos.collection.NoNulls<>(
+            this.list
+        ).containsAll(items);
     }
 
     @Override
     public boolean addAll(final Collection<? extends T> items) {
-        return new org.cactoos.collection.NoNulls<>(this.list).addAll(items);
+        return new org.cactoos.collection.NoNulls<>(
+            this.list
+        ).addAll(items);
     }
 
     @Override
     public boolean addAll(final int index,
         final Collection<? extends T> items) {
-        return this.list.addAll(index, new org.cactoos.collection.NoNulls<>(items));
+        return this.list.addAll(
+            index,
+            new org.cactoos.collection.NoNulls<>(items)
+        );
     }
 
     @Override
@@ -233,6 +239,6 @@ public final class NoNulls<T> implements List<T> {
 
     @Override
     public List<T> subList(final int start, final int end) {
-        return new NoNulls(this.list.subList(start, end));
+        return new NoNulls<>(this.list.subList(start, end));
     }
 }
