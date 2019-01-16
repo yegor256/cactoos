@@ -26,7 +26,7 @@ package org.cactoos.map;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import org.cactoos.collection.CollectionNoNulls;
+
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -165,7 +165,7 @@ public class NoNulls<K, V> implements Map<K, V> {
     @Override
     @SuppressWarnings("unchecked")
     public final void putAll(final Map<? extends K, ? extends V> items) {
-        this.map.putAll(new NoNulls<>((Map<K, V>) items));
+        this.map.putAll(new NoNulls((Map<K, V>) items));
     }
 
     @Override
@@ -180,7 +180,7 @@ public class NoNulls<K, V> implements Map<K, V> {
 
     @Override
     public final Collection<V> values() {
-        return new CollectionNoNulls<>(this.map.values());
+        return new org.cactoos.collection.NoNulls<>(this.map.values());
     }
 
     @Override

@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import org.cactoos.collection.CollectionNoNulls;
+
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -67,59 +67,59 @@ public final class NoNulls<T> implements List<T> {
 
     @Override
     public boolean contains(final Object item) {
-        return new CollectionNoNulls<>(this.list).contains(item);
+        return new org.cactoos.collection.NoNulls<>(this.list).contains(item);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new CollectionNoNulls<>(this.list).iterator();
+        return new org.cactoos.collection.NoNulls<>(this.list).iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return new CollectionNoNulls<>(this.list).toArray();
+        return new org.cactoos.collection.NoNulls<>(this.list).toArray();
     }
 
     @Override
     @SuppressWarnings("PMD.UseVarargs")
     public <X> X[] toArray(final X[] array) {
-        return new CollectionNoNulls<>(this.list).toArray(array);
+        return new org.cactoos.collection.NoNulls<>(this.list).toArray(array);
     }
 
     @Override
     public boolean add(final T item) {
-        return new CollectionNoNulls<>(this.list).add(item);
+        return new org.cactoos.collection.NoNulls<>(this.list).add(item);
     }
 
     @Override
     public boolean remove(final Object item) {
-        return new CollectionNoNulls<>(this.list).remove(item);
+        return new org.cactoos.collection.NoNulls<>(this.list).remove(item);
     }
 
     @Override
     public boolean containsAll(final Collection<?> items) {
-        return new CollectionNoNulls<>(this.list).containsAll(items);
+        return new org.cactoos.collection.NoNulls<>(this.list).containsAll(items);
     }
 
     @Override
     public boolean addAll(final Collection<? extends T> items) {
-        return new CollectionNoNulls<>(this.list).addAll(items);
+        return new org.cactoos.collection.NoNulls<>(this.list).addAll(items);
     }
 
     @Override
     public boolean addAll(final int index,
         final Collection<? extends T> items) {
-        return this.list.addAll(index, new CollectionNoNulls<>(items));
+        return this.list.addAll(index, new org.cactoos.collection.NoNulls<>(items));
     }
 
     @Override
     public boolean removeAll(final Collection<?> items) {
-        return new CollectionNoNulls<>(this.list).removeAll(items);
+        return new org.cactoos.collection.NoNulls<>(this.list).removeAll(items);
     }
 
     @Override
     public boolean retainAll(final Collection<?> items) {
-        return new CollectionNoNulls<>(this.list).retainAll(items);
+        return new org.cactoos.collection.NoNulls<>(this.list).retainAll(items);
     }
 
     @Override
@@ -233,6 +233,6 @@ public final class NoNulls<T> implements List<T> {
 
     @Override
     public List<T> subList(final int start, final int end) {
-        return new NoNulls<>(this.list.subList(start, end));
+        return new NoNulls(this.list.subList(start, end));
     }
 }

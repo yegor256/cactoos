@@ -21,22 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.iterator;
 
+import java.util.Iterator;
+import org.hamcrest.core.StringContains;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
- * Test cases for {@link CollectionNoNulls}.
+ * Test cases for {@link NoNulls}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.35
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class CollectionNoNullsTest {
+public final class NoNullsTest {
 
     /**
      * A rule for handling an exception.
@@ -45,24 +46,25 @@ public final class CollectionNoNullsTest {
     public final ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void throwsErrorIfNullInToArray() {
+    public void nextThrowsErrorIfNull() {
         this.exception.expect(IllegalStateException.class);
         this.exception.expectMessage(
-            "Item #1 of #toArray() is NULL"
+            new StringContains(
+                "Item #0 of org.cactoos.iterator.NoNullsTest"
+            )
         );
-        new CollectionNoNulls<>(
-            new CollectionOf<>(1, null, 3)
-        ).toArray();
-    }
+        new NoNulls<>(
+            new Iterator<Integer>() {
+                @Override
+                public boolean hasNext() {
+                    return true;
+                }
 
-    @Test
-    public void throwsErrorIfNullInToArrayWithArg() {
-        this.exception.expect(IllegalStateException.class);
-        this.exception.expectMessage(
-            "Item #1 of #toArray(array) is NULL"
-        );
-        new CollectionNoNulls<>(
-            new CollectionOf<>(1, null, 3)
-        ).toArray(new Object[3]);
+                @Override
+                public Integer next() {
+                    return null;
+                }
+            }
+        ).next();
     }
 }
