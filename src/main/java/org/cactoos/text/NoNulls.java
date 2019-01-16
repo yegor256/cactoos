@@ -21,42 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.text;
 
-import org.cactoos.scalar.NoNulls;
-import org.cactoos.scalar.SolidScalar;
+import org.cactoos.Text;
 
 /**
- * An {@link Iterable} that is both synchronized and sticky.
+ * Text check for no nulls.
  *
- * <p>Objects of this class are thread-safe.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @param <X> Type of item
- * @since 0.24
+ * @since 0.11
  */
-public final class Solid<X> extends IterableEnvelope<X> {
+public final class NoNulls implements Text {
+    /**
+     * The origin text.
+     */
+    private final Text origin;
 
     /**
      * Ctor.
-     * @param src The underlying iterable
+     * @param text The text
      */
-    @SafeVarargs
-    public Solid(final X... src) {
-        this(new IterableOf<>(src));
+    public NoNulls(final Text text) {
+        this.origin = text;
     }
 
-    /**
-     * Ctor.
-     * @param iterable The iterable
-     */
-    public Solid(final Iterable<X> iterable) {
-        super(
-            new NoNulls<>(
-                new SolidScalar<>(
-                    () -> new Synced<>(new Sticky<>(iterable))
-                )
-            )
-        );
+    @Override
+    public String asString() throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid text"
+            );
+        }
+        final String string = this.origin.asString();
+        if (string == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid result string"
+            );
+        }
+        return string;
     }
-
 }

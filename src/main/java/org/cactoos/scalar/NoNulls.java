@@ -21,42 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import org.cactoos.scalar.NoNulls;
-import org.cactoos.scalar.SolidScalar;
+import org.cactoos.Scalar;
 
 /**
- * An {@link Iterable} that is both synchronized and sticky.
+ * Scalar check for no nulls.
  *
- * <p>Objects of this class are thread-safe.</p>
- *
- * @param <X> Type of item
- * @since 0.24
+ * @param <T> Type of result
+ * @since 0.11
  */
-public final class Solid<X> extends IterableEnvelope<X> {
-
+public final class NoNulls<T> implements Scalar<T> {
+    /**
+     * The scalar.
+     */
+    private final Scalar<T> origin;
     /**
      * Ctor.
-     * @param src The underlying iterable
+     * @param sclr The scalar
      */
-    @SafeVarargs
-    public Solid(final X... src) {
-        this(new IterableOf<>(src));
+    public NoNulls(final Scalar<T> sclr) {
+        this.origin = sclr;
     }
-
-    /**
-     * Ctor.
-     * @param iterable The iterable
-     */
-    public Solid(final Iterable<X> iterable) {
-        super(
-            new NoNulls<>(
-                new SolidScalar<>(
-                    () -> new Synced<>(new Sticky<>(iterable))
-                )
-            )
-        );
+    @Override
+    public T value() throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid scalar"
+            );
+        }
+        final T value = this.origin.value();
+        if (value == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid value"
+            );
+        }
+        return value;
     }
-
 }
