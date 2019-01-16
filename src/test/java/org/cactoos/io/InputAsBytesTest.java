@@ -65,7 +65,7 @@ public final class InputAsBytesTest {
     // @checkstyle AnonInnerLengthCheck (100 lines)
     public void readsLargeContent() throws Exception {
         final int size = 100_000;
-        try (final InputStream slow = new SlowInputStream(size)) {
+        try (InputStream slow = new SlowInputStream(size)) {
             MatcherAssert.assertThat(
                 "Can't read large content from Input",
                 new InputAsBytes(

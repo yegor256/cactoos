@@ -54,10 +54,10 @@ public final class IoCheckedFuncTest {
     }
 
     @Test(expected = IOException.class)
-    public void rethrowsCheckedToIoException() throws Exception {
+    public void rethrowsCheckedToIoException() throws IOException {
         new IoCheckedFunc<>(
             i -> {
-                throw new Exception("intended to fail");
+                throw new  IOException("intended to fail");
             }
         ).apply(1);
     }

@@ -49,6 +49,7 @@ public final class TextEnvelopeTest {
             new IsEqual<>(text)
         );
     }
+
     /**
      * Test for {@link TextEnvelope#equals(Object)} method. Must assert
      * that the envelope value is equal to its string value.
@@ -62,6 +63,7 @@ public final class TextEnvelopeTest {
             new IsEqual<>(text)
         );
     }
+
     /**
      * Test for {@link TextEnvelope#hashCode()} method. Must assert that
      * the {@link TextEnvelope} hashCode is equals to the hashCode of
@@ -90,6 +92,7 @@ public final class TextEnvelopeTest {
         TextEnvelopeDummy(final Scalar<String> scalar) {
             super(scalar);
         }
+
         /**
          * Ctor.
          *

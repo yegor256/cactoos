@@ -47,6 +47,7 @@ public final class SyncIterator<T> implements Iterator<T> {
      * The original iterator.
      */
     private final Iterator<T> iterator;
+
     /**
      * The lock to use.
      */

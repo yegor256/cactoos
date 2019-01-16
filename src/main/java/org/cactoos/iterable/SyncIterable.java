@@ -46,6 +46,7 @@ public final class SyncIterable<X> implements Iterable<X> {
      * The iterable.
      */
     private final Iterable<X> origin;
+
     /**
      * Sync lock.
      */

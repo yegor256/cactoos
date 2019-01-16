@@ -89,10 +89,12 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
             public int size() {
                 return src.size();
             }
+
             @Override
             public boolean isEmpty() {
                 return src.isEmpty();
             }
+
             @Override
             public boolean contains(final Object item) {
                 return new CollectionOf<>(
@@ -101,12 +103,14 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
                     )
                 ).contains(item);
             }
+
             @Override
             public Iterator<Y> iterator() {
                 return new org.cactoos.iterator.Mapped<>(
                     fnc, src.iterator()
                 );
             }
+
             @Override
             public Object[] toArray() {
                 return new CollectionOf<>(
@@ -115,6 +119,7 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
                     )
                 ).toArray();
             }
+
             @Override
             @SuppressWarnings("PMD.UseVarargs")
             public <T> T[] toArray(final T[] array) {
@@ -131,12 +136,14 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
                     "Collection is read-only, can't #add()"
                 );
             }
+
             @Override
             public boolean remove(final Object item) {
                 throw new UnsupportedOperationException(
                     "Collection is read-only, can't #remove()"
                 );
             }
+
             @Override
             public boolean containsAll(final Collection<?> items) {
                 return new CollectionOf<>(
@@ -145,24 +152,28 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
                     )
                 ).containsAll(items);
             }
+
             @Override
             public boolean addAll(final Collection<? extends Y> items) {
                 throw new UnsupportedOperationException(
                     "Collection is read-only, can't #addAll()"
                 );
             }
+
             @Override
             public boolean removeAll(final Collection<?> items) {
                 throw new UnsupportedOperationException(
                     "Collection is read-only, can't #removeAll()"
                 );
             }
+
             @Override
             public boolean retainAll(final Collection<?> items) {
                 throw new UnsupportedOperationException(
                     "Collection is read-only, can't #retainAll()"
                 );
             }
+
             @Override
             public void clear() {
                 throw new UnsupportedOperationException(

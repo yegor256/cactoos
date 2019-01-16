@@ -70,8 +70,8 @@ final class InputAsBytes implements Bytes {
 
     @Override
     public byte[] asBytes() throws Exception {
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            final InputStream stream = new TeeInput(
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            InputStream stream = new TeeInput(
                 this.source, new OutputTo(baos)
             ).stream()) {
             final byte[] buf = new byte[this.size];

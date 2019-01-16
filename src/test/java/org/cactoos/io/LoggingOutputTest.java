@@ -78,7 +78,7 @@ public final class LoggingOutputTest {
     public void logWriteOneByte() throws Exception {
         final Logger logger = new FakeLogger();
         try (
-            final OutputStream out = new LoggingOutput(
+            OutputStream out = new LoggingOutput(
                 () -> new ByteArrayOutputStream(),
                 "memory",
                 logger
@@ -97,7 +97,7 @@ public final class LoggingOutputTest {
     public void logWriteText() throws Exception {
         final Logger logger = new FakeLogger();
         try (
-            final OutputStream out = new LoggingOutput(
+            OutputStream out = new LoggingOutput(
                 () -> new ByteArrayOutputStream(),
                 "memory",
                 logger
@@ -150,7 +150,7 @@ public final class LoggingOutputTest {
         final Logger logger = new FakeLogger(Level.WARNING);
         final Path temp = this.folder.newFolder("ccts-2").toPath();
         final Path path = temp.resolve("a/b/c/file.txt");
-        try (final OutputStream output = new LoggingOutput(
+        try (OutputStream output = new LoggingOutput(
             new OutputTo(path),
             "text file",
             logger

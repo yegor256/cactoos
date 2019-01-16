@@ -41,10 +41,12 @@ public final class Partitioned<T> implements Iterator<List<T>> {
      * Iterator to decorate.
      */
     private final Iterator<T> decorated;
+
     /**
      * Size of the partitions.
      */
     private final int size;
+
     /**
      * Ctor.
      *

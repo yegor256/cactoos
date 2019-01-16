@@ -138,6 +138,7 @@ public final class BytesOfTest {
                         public int read() throws IOException {
                             return input.read();
                         }
+
                         @Override
                         public void close() throws IOException {
                             input.close();

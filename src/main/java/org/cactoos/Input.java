@@ -65,6 +65,7 @@ public interface Input {
          * The input.
          */
         private final Input origin;
+
         /**
          * Ctor.
          * @param input The input
@@ -72,6 +73,7 @@ public interface Input {
         public NoNulls(final Input input) {
             this.origin = input;
         }
+
         @Override
         public InputStream stream() throws Exception {
             if (this.origin == null) {

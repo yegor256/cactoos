@@ -25,9 +25,9 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.zip.GZIPInputStream;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -61,7 +61,7 @@ public final class GzipOutputTest {
             (byte) 0x00, (byte) 0x00, (byte) 0x00,
         };
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (final OutputStream output = new GzipOutput(
+        try (OutputStream output = new GzipOutput(
             new OutputTo(baos)
         ).stream()
         ) {
@@ -81,8 +81,8 @@ public final class GzipOutputTest {
 
     @Test(expected = IOException.class)
     public void writeToClosedGzipOutput() throws Exception {
-        final OutputStream stream = new FileOutputStream(
-            this.folder.newFile("cactoos.txt")
+        final OutputStream stream = Files.newOutputStream(
+            this.folder.newFile("cactoos.txt").toPath()
         );
         stream.close();
         new LengthOf(

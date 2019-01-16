@@ -100,13 +100,14 @@ public final class Sorted<T> extends ListEnvelope<T> {
      * @param cmp The comparator
      */
     public Sorted(final Comparator<T> cmp, final Collection<T> src) {
-        super(() -> {
-            final List<T> items = new ArrayList<>(src.size());
-            items.addAll(src);
-            items.sort(cmp);
-            return Collections.unmodifiableList(items);
-        }
-);
+        super(
+            () -> {
+                final List<T> items = new ArrayList<>(src.size());
+                items.addAll(src);
+                items.sort(cmp);
+                return Collections.unmodifiableList(items);
+            }
+        );
     }
 
 }

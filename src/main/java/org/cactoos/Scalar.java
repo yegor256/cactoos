@@ -67,6 +67,7 @@ public interface Scalar<T> {
          * The scalar.
          */
         private final Scalar<T> origin;
+
         /**
          * Ctor.
          * @param sclr The scalar
@@ -74,6 +75,7 @@ public interface Scalar<T> {
         public NoNulls(final Scalar<T> sclr) {
             this.origin = sclr;
         }
+
         @Override
         public T value() throws Exception {
             if (this.origin == null) {
@@ -90,5 +92,4 @@ public interface Scalar<T> {
             return value;
         }
     }
-
 }

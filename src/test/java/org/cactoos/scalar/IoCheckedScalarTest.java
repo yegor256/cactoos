@@ -53,10 +53,10 @@ public final class IoCheckedScalarTest {
     }
 
     @Test(expected = IOException.class)
-    public void throwsException() throws Exception {
+    public void throwsException() throws IOException {
         new IoCheckedScalar<>(
             () -> {
-                throw new Exception("intended to fail");
+                throw new IOException("intended to fail");
             }
         ).value();
     }

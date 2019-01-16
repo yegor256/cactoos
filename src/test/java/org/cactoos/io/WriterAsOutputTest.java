@@ -23,10 +23,9 @@
  */
 package org.cactoos.io;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
+import java.io.Writer;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
@@ -52,11 +51,10 @@ public final class WriterAsOutputTest {
 
     @Test
     public void writesLargeContentToFile() throws IOException {
-        final Path temp = this.folder.newFile("cactoos-1.txt-1")
+        final Path temp = this.folder
+            .newFile("cactoos-1.txt-1")
             .toPath();
-        try (final OutputStreamWriter writer = new OutputStreamWriter(
-            new FileOutputStream(temp.toFile()), StandardCharsets.UTF_8
-        )) {
+        try (Writer writer = Files.newBufferedWriter(temp)) {
             MatcherAssert.assertThat(
                 "Can't copy Input to Output and return Input",
                 new TextOf(

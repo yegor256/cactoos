@@ -50,6 +50,7 @@ public interface Bytes {
          * The input.
          */
         private final Bytes origin;
+
         /**
          * Ctor.
          * @param bytes The input
@@ -57,6 +58,7 @@ public interface Bytes {
         public NoNulls(final Bytes bytes) {
             this.origin = bytes;
         }
+
         @Override
         public byte[] asBytes() throws Exception {
             if (this.origin == null) {

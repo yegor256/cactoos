@@ -57,6 +57,7 @@ public interface BiProc<X, Y> {
          * The proc.
          */
         private final BiProc<X, Y> origin;
+
         /**
          * Ctor.
          * @param proc The function
@@ -64,6 +65,7 @@ public interface BiProc<X, Y> {
         public NoNulls(final BiProc<X, Y> proc) {
             this.origin = proc;
         }
+
         @Override
         public void exec(final X first, final Y second) throws Exception {
             if (this.origin == null) {

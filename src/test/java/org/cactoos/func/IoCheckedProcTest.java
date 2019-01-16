@@ -53,10 +53,10 @@ public final class IoCheckedProcTest {
     }
 
     @Test(expected = IOException.class)
-    public void rethrowsCheckedToIoException() throws Exception {
+    public void rethrowsCheckedToIoException() throws IOException {
         new IoCheckedProc<>(
             i -> {
-                throw new Exception("intended to fail");
+                throw new IOException("intended to fail");
             }
         ).exec(1);
     }

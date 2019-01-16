@@ -29,7 +29,6 @@ import org.cactoos.Bytes;
 
 /**
  * Decodes all origin bytes using the Base64 encoding scheme.
- *
  * @since 0.20.2
  */
 public final class Base64Bytes implements Bytes {
@@ -38,6 +37,7 @@ public final class Base64Bytes implements Bytes {
      * Origin bytes.
      */
     private final Bytes origin;
+
     /**
      * The decoder.
      */

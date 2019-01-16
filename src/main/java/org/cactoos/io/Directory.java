@@ -63,7 +63,7 @@ public final class Directory implements Iterable<Path> {
 
     @Override
     public Iterator<Path> iterator() {
-        try (final Stream<Path> files = Files.walk(this.dir)) {
+        try (Stream<Path> files = Files.walk(this.dir)) {
             return files.collect(Collectors.toList()).iterator();
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);

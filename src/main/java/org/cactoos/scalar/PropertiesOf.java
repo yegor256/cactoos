@@ -76,7 +76,7 @@ public final class PropertiesOf implements Scalar<Properties> {
         this(
             () -> {
                 final Properties props = new Properties();
-                try (final InputStream stream = input.stream()) {
+                try (InputStream stream = input.stream()) {
                     props.load(stream);
                 }
                 return props;

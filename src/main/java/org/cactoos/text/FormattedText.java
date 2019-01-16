@@ -159,7 +159,7 @@ public final class FormattedText implements Text {
     @Override
     public String asString() throws Exception {
         final StringBuilder out = new StringBuilder(0);
-        try (final Formatter fmt = new Formatter(out, this.locale)) {
+        try (Formatter fmt = new Formatter(out, this.locale)) {
             fmt.format(
                 this.pattern.asString(),
                 this.args.toArray(new Object[0])

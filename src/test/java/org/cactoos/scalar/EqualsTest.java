@@ -40,8 +40,8 @@ public final class EqualsTest {
         MatcherAssert.assertThat(
             "Can't compare if two integers are equals",
             new Equals<>(
-                () -> new Integer(1),
-                () -> new Integer(1)
+                () -> 1,
+                () -> 1
             ).value(),
             Matchers.equalTo(true)
         );
@@ -52,8 +52,8 @@ public final class EqualsTest {
         MatcherAssert.assertThat(
             "Can't compare if two integers are not equals",
             new Equals<>(
-                () -> new Integer(1),
-                () -> new Integer(2)
+                () -> 1,
+                () -> 2
             ).value(),
             Matchers.equalTo(false)
         );

@@ -187,7 +187,7 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     private Boolean contentsEqual(final Map<?, ?> other) {
         return new UncheckedScalar<>(
             new And(
-                (entry) -> {
+                entry -> {
                     final X key = entry.getKey();
                     final Y value = entry.getValue();
                     return new And(

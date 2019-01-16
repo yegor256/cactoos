@@ -58,7 +58,6 @@ public interface Func<X, Y> {
 
     /**
      * Func check for no nulls.
-     *
      * @param <X> Type of input
      * @param <Y> Type of output
      * @since 0.10
@@ -68,6 +67,7 @@ public interface Func<X, Y> {
          * The function.
          */
         private final Func<X, Y> func;
+
         /**
          * Ctor.
          * @param fnc The function
@@ -75,6 +75,7 @@ public interface Func<X, Y> {
         public NoNulls(final Func<X, Y> fnc) {
             this.func = fnc;
         }
+
         @Override
         public Y apply(final X input) throws Exception {
             if (this.func == null) {

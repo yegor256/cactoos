@@ -62,6 +62,7 @@ public interface BiFunc<X, Y, Z> {
          * The function.
          */
         private final BiFunc<X, Y, Z> origin;
+
         /**
          * Ctor.
          * @param func The function
@@ -69,6 +70,7 @@ public interface BiFunc<X, Y, Z> {
         public NoNulls(final BiFunc<X, Y, Z> func) {
             this.origin = func;
         }
+
         @Override
         public Z apply(final X first, final Y second) throws Exception {
             if (this.origin == null) {

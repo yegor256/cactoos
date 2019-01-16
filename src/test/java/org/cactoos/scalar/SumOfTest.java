@@ -79,6 +79,7 @@ public final class SumOfTest {
             new IsEqual<>(10L)
         );
     }
+
     @Test
     public void withCollectionInt() {
         MatcherAssert.assertThat(
@@ -88,6 +89,7 @@ public final class SumOfTest {
             new IsEqual<>(10)
         );
     }
+
     @Test
     public void withCollectionFloat() {
         MatcherAssert.assertThat(
@@ -97,6 +99,7 @@ public final class SumOfTest {
             new IsEqual<>(10.0f)
         );
     }
+
     @Test
     public void withCollectionDouble() {
         MatcherAssert.assertThat(
@@ -111,7 +114,7 @@ public final class SumOfTest {
     public void overflowIntFromLongValues() {
         MatcherAssert.assertThat(
             new SumOf((Integer.MAX_VALUE + 1L) * 2L, 10L).intValue(),
-            new IsEqual<>(2147483647)
+            new IsEqual<>(2_147_483_647)
         );
     }
 
@@ -131,7 +134,7 @@ public final class SumOfTest {
     public void overflowFloatFromLongValues() {
         MatcherAssert.assertThat(
             new SumOf((Integer.MAX_VALUE + 1L) * 2L, 10L).floatValue(),
-            new IsEqual<>(4294967300f)
+            new IsEqual<>(4_294_967_300f)
         );
     }
 

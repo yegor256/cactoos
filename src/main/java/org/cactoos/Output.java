@@ -72,6 +72,7 @@ public interface Output {
          * The output.
          */
         private final Output origin;
+
         /**
          * Ctor.
          * @param output The output
@@ -79,6 +80,7 @@ public interface Output {
         public NoNulls(final Output output) {
             this.origin = output;
         }
+
         @Override
         public OutputStream stream() throws Exception {
             if (this.origin == null) {

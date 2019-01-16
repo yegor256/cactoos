@@ -104,6 +104,7 @@ public final class MappedTest {
                     public Iterator<String> iterator() {
                         return new Endless<>("something");
                     }
+
                     @Override
                     public int size() {
                         return 1;
