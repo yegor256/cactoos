@@ -23,27 +23,40 @@
  */
 package org.cactoos;
 
+import org.cactoos.scalar.NoNulls;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
- * Test case for {@link Scalar.NoNulls}.
+ * Test case for {@link NoNulls}.
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ScalarTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    /**
+     * A rule for handling an exception.
+     */
+    @Rule
+    public final ExpectedException cause = ExpectedException.none();
+
+    @Test
     public void failForNullArgument() throws Exception {
-        new Scalar.NoNulls<>(null).value();
+        this.cause.expect(IllegalArgumentException.class);
+        this.cause.expectMessage("NULL instead of a valid scalar");
+        new NoNulls<>(null).value();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void failForNullResult() throws Exception {
-        new Scalar.NoNulls<>(() -> null).value();
+        this.cause.expect(IllegalStateException.class);
+        this.cause.expectMessage("NULL instead of a valid value");
+        new NoNulls<>(() -> null).value();
     }
 
     @Test
     public void okForNoNulls() throws Exception {
-        new Scalar.NoNulls<>(() -> 1).value();
+        new NoNulls<>(() -> 1).value();
     }
 }

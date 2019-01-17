@@ -23,9 +23,12 @@
  */
 package org.cactoos;
 
+import org.cactoos.text.NoNulls;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -35,14 +38,24 @@ import org.llorllale.cactoos.matchers.TextHasString;
  */
 public final class TextTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    /**
+     * A rule for handling an exception.
+     */
+    @Rule
+    public final ExpectedException cause = ExpectedException.none();
+
+    @Test
     public void failForNullArgument() throws Exception {
-        new Text.NoNulls(null).asString();
+        this.cause.expect(IllegalArgumentException.class);
+        this.cause.expectMessage("NULL instead of a valid text");
+        new NoNulls(null).asString();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void failForNullResult() throws Exception {
-        new Text.NoNulls(
+        this.cause.expect(IllegalStateException.class);
+        this.cause.expectMessage("NULL instead of a valid result string");
+        new NoNulls(
             () -> null
         ).asString();
     }
@@ -52,7 +65,7 @@ public final class TextTest {
         final String message = "Hello";
         MatcherAssert.assertThat(
             "Can't work with null text",
-            new Text.NoNulls(
+            new NoNulls(
                 new TextOf(message)
             ),
             new TextHasString(message)

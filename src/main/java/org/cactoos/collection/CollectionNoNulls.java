@@ -36,6 +36,9 @@ import org.cactoos.text.UncheckedText;
  *
  * @param <X> Element type
  * @since 0.27
+ * @todo #852:30min Rename XxxNoNulls implementations of Collection and Iterator
+ *  to NoNulls to avoid the compound names. They should be present in their own
+ *  classes in order to provide the NoNulls classes API consistency.
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class CollectionNoNulls<X> implements Collection<X> {

@@ -21,14 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.scalar;
+
+import org.cactoos.Scalar;
 
 /**
- * Time.
+ * Scalar check for no nulls.
  *
- * @since 1.0
- * @todo #980:30min Classes from package {@link org.cactoos.time} which are
- *  ending with `AsText` are extending TextEnvelope. It means that they are
- *  instances of {@link org.cactoos.Text}. They should be merged with
- *  {@link org.cactoos.text.TextOf} as ctor(s).
+ * @param <T> Type of result
+ * @since 0.11
  */
-package org.cactoos.time;
+public final class NoNulls<T> implements Scalar<T> {
+    /**
+     * The scalar.
+     */
+    private final Scalar<T> origin;
+    /**
+     * Ctor.
+     * @param sclr The scalar
+     */
+    public NoNulls(final Scalar<T> sclr) {
+        this.origin = sclr;
+    }
+    @Override
+    public T value() throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid scalar"
+            );
+        }
+        final T value = this.origin.value();
+        if (value == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid value"
+            );
+        }
+        return value;
+    }
+}

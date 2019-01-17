@@ -21,14 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.text;
+
+import org.cactoos.Text;
 
 /**
- * Time.
+ * Text check for no nulls.
  *
- * @since 1.0
- * @todo #980:30min Classes from package {@link org.cactoos.time} which are
- *  ending with `AsText` are extending TextEnvelope. It means that they are
- *  instances of {@link org.cactoos.Text}. They should be merged with
- *  {@link org.cactoos.text.TextOf} as ctor(s).
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.11
  */
-package org.cactoos.time;
+public final class NoNulls implements Text {
+    /**
+     * The origin text.
+     */
+    private final Text origin;
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public NoNulls(final Text text) {
+        this.origin = text;
+    }
+
+    @Override
+    public String asString() throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid text"
+            );
+        }
+        final String string = this.origin.asString();
+        if (string == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid result string"
+            );
+        }
+        return string;
+    }
+}
