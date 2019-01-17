@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
@@ -35,6 +36,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @since 0.32
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
+@SuppressFBWarnings("EQ_CHECK_FOR_OPERAND_NOT_COMPATIBLE_WITH_THIS")
 public abstract class TextEnvelope implements Text {
 
     /**

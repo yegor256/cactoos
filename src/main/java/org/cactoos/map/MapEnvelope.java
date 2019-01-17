@@ -23,6 +23,7 @@
  */
 package org.cactoos.map;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -51,6 +52,7 @@ import org.cactoos.text.TextOf;
         "PMD.AbstractNaming"
     }
 )
+@SuppressFBWarnings("EQ_UNUSUAL")
 public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     /**

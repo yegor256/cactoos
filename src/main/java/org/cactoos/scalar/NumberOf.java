@@ -23,6 +23,7 @@
  */
 package org.cactoos.scalar;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
@@ -46,6 +47,7 @@ import org.cactoos.text.TextOf;
  *
  * @since 0.2
  */
+@SuppressFBWarnings("SE_BAD_FIELD")
 public final class NumberOf extends Number implements Scalar<Number> {
 
     /**

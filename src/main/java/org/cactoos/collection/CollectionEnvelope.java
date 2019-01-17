@@ -23,6 +23,7 @@
  */
 package org.cactoos.collection;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.Scalar;
@@ -54,6 +55,7 @@ import org.cactoos.scalar.UncheckedScalar;
         "PMD.AbstractNaming"
     }
 )
+@SuppressFBWarnings("EQ_UNUSUAL")
 public abstract class CollectionEnvelope<X> implements Collection<X> {
 
     /**

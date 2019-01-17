@@ -24,6 +24,7 @@
 
 package org.cactoos.iterator;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -35,6 +36,11 @@ import java.util.NoSuchElementException;
  * @param <T> Type of item
  * @since 0.8
  */
+@SuppressWarnings({
+    "OUT_OF_RANGE_ARRAY_INDEX",
+    "UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"
+})
+@SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
 public final class Cycled<T> implements Iterator<T> {
 
     /**

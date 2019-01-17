@@ -94,6 +94,22 @@ The MIT License (MIT)
       <version>0.9.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>annotations</artifactId>
+      <version>3.0.1</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>net.jcip</groupId>
+          <artifactId>jcip-annotations</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>jsr305</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
   <build>
     <pluginManagement>
@@ -138,7 +154,6 @@ The MIT License (MIT)
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
-                <exclude>findbugs:.*</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -152,7 +167,7 @@ The MIT License (MIT)
                 to Matchers should be replaced with their OO counterparts.
                 This todo should be updated with a new one until everything is
                 done. At the end the configuration property below should be
-                removed so that calls to forbidden APIs fail the build.  
+                removed so that calls to forbidden APIs fail the build.
                -->
               <failOnViolation>false</failOnViolation>
               <signaturesFiles>

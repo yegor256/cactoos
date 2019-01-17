@@ -23,6 +23,7 @@
  */
 package org.cactoos.map;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Map;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
@@ -36,6 +37,7 @@ import org.cactoos.text.UncheckedText;
  * @param <V> Value type
  * @since 0.9
  */
+@SuppressFBWarnings("INT_VACUOUS_BIT_OPERATION")
 public final class MapEntry<K, V> implements Map.Entry<K, V> {
     /**
      * The key.

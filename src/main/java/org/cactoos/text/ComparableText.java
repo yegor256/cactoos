@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.cactoos.Text;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -42,6 +43,7 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * @since 0.27
  */
+@SuppressFBWarnings("EQ_COMPARETO_USE_OBJECT_EQUALS")
 public final class ComparableText implements Text, Comparable<Text> {
 
     /**

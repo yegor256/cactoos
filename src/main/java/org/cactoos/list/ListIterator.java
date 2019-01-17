@@ -23,6 +23,7 @@
  */
 package org.cactoos.list;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.StickyScalar;
@@ -36,6 +37,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <T> Items type
  * @since 0.35
  */
+@SuppressFBWarnings("NM_SAME_SIMPLE_NAME_AS_INTERFACE")
 public final class ListIterator<T> implements java.util.ListIterator<T> {
 
     /**

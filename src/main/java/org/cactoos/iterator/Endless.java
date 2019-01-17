@@ -23,6 +23,7 @@
  */
 package org.cactoos.iterator;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Iterator;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
@@ -36,6 +37,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <T> Element type
  * @since 0.4
  */
+@SuppressFBWarnings("IT_NO_SUCH_ELEMENT")
 public final class Endless<T> implements Iterator<T> {
 
     /**
