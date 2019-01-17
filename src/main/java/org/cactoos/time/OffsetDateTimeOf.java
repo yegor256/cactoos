@@ -45,7 +45,7 @@ public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
      * @param date The date to parse.
      */
     public OffsetDateTimeOf(final CharSequence date) {
-        this(date, new Iso().get());
+        this(date, new Iso().value());
     }
 
     /**

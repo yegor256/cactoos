@@ -82,8 +82,7 @@ public final class FirstOf<T> implements Scalar<T> {
                     ),
                     t1 -> this.fallback.value()
                 )
-            ),
-            t -> t
+            )
         ).value();
     }
 }

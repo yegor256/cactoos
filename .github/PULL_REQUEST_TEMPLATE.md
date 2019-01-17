@@ -4,7 +4,8 @@ Many thanks for your contribution, we truly appreciate it. We will appreciate it
   - You made changes related to only one bug (create separate PRs for separate problems)
   - You are ready to defend your changes (there will be a code review)
   - You don't touch what you don't understand
-  - You ran the build locally and it passed
+  - You ran the build locally and it passed (see .travis.yml for all checks performed on PRs)
+  - Your commit messages comply with our rules (see .gitlint)
 
 This article will help you understand what we are looking for: http://www.yegor256.com/2015/02/09/serious-code-reviewer.html
 

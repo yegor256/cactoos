@@ -51,26 +51,8 @@ public final class ScalarWithFallbackTest {
                     new FallbackFrom<>(
                         new IterableOf<>(IOException.class),
                         Throwable::getMessage
-                    )),
-                input -> input
-            ),
-            new ScalarHasValue<>(message)
-        );
-    }
-
-    @Test
-    public void usesFollowUpFunc() throws Exception {
-        final String message = "There was follow up function";
-        MatcherAssert.assertThat(
-            "Can't use the follow up function if no exception",
-            new ScalarWithFallback<>(
-                () -> "Main function's result #2",
-                new IterableOf<>(
-                    new FallbackFrom<>(
-                        new IterableOf<>(IOException.class),
-                        Throwable::getMessage
-                    )),
-                input -> message
+                    )
+                )
             ),
             new ScalarHasValue<>(message)
         );
@@ -89,8 +71,8 @@ public final class ScalarWithFallbackTest {
                     new FallbackFrom<>(
                         new IterableOf<>(IOException.class),
                         exp -> message
-                    )),
-                input -> input
+                    )
+                )
             ),
             new ScalarHasValue<>(message)
         );
@@ -111,8 +93,8 @@ public final class ScalarWithFallbackTest {
                     new FallbackFrom<>(
                         new IterableOf<>(InterruptedException.class),
                         exp -> message
-                    )),
-                input -> input
+                    )
+                )
             ),
             new ScalarHasValue<>(message)
         );
@@ -135,8 +117,8 @@ public final class ScalarWithFallbackTest {
                     new FallbackFrom<>(
                         new IterableOf<>(IllegalFormatException.class),
                         exp -> expected
-                    )),
-                input -> input
+                    )
+                )
             ),
             new ScalarHasValue<>(expected)
         );
@@ -148,8 +130,7 @@ public final class ScalarWithFallbackTest {
             () -> {
                 throw new IllegalFormatWidthException(1);
             },
-            new IterableOf<>(),
-            input -> input
+            new IterableOf<>()
         ).value();
     }
 }

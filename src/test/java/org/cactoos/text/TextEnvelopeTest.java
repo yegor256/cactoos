@@ -28,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 
 /**
@@ -52,15 +53,63 @@ public final class TextEnvelopeTest {
 
     /**
      * Test for {@link TextEnvelope#equals(Object)} method. Must assert
-     * that the envelope value is equal to its string value.
+     * that the envelope value is equal another text representing the same
+     * value.
      */
     @Test
     public void testEquals() {
         final String text = "equals";
         MatcherAssert.assertThat(
-            "Envelope value does not match its represented String value",
+            "Envelope does not match text representing the same value",
             new TextEnvelopeDummy(text),
-            new IsEqual<>(text)
+            new IsEqual<>(new TextOf(text))
+        );
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is equal another text representing the same
+     * value (in this case a {@link JoinedText}).
+     */
+    @Test
+    public void testEqualsOtherText() {
+        MatcherAssert.assertThat(
+            "Envelope does not match another text representing the same value",
+            new TextEnvelopeDummy("isequaltoanothertext"),
+            new IsEqual<>(
+                new JoinedText("", "is", "equal", "to", "another", "text")
+            )
+        );
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is not equal another object not being a
+     * instance of Text without failing
+     */
+    @Test
+    public void testDoesNotEqualsNonTextObject() {
+        MatcherAssert.assertThat(
+            "Envelope does not match another object which is not a string",
+            new TextEnvelopeDummy("is not equals to null"),
+            new IsNot<>(
+                new IsEqual<>(new Object())
+            )
+        );
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is not equal to null without failing
+     */
+    @Test
+    @SuppressWarnings("PMD.EqualsNull")
+    public void testDoesNotEqualsFalse() {
+        MatcherAssert.assertThat(
+            "Envelope does not equals null",
+            new TextEnvelopeDummy("is not equals to not Text object")
+                .equals(null),
+            new IsEqual<>(false)
         );
     }
 

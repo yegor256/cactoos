@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.nio.charset.StandardCharsets;
+import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;

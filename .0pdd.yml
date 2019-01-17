@@ -7,3 +7,6 @@ errors:
 tags:
   - pdd
   - bug
+
+tickets:
+  - inherit-milestone

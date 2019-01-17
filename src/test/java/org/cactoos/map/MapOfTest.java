@@ -32,7 +32,12 @@ import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Repeated;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsMapContaining;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsAnything;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.StringStartsWith;
 import org.junit.Test;
 
 /**
@@ -48,7 +53,7 @@ public final class MapOfTest {
     public void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1),
                     new MapEntry<>(1, 1)
@@ -66,9 +71,9 @@ public final class MapOfTest {
                 new MapEntry<>(0, "hello, "),
                 new MapEntry<>(1, "world!")
             ),
-            Matchers.hasEntry(
-                Matchers.equalTo(0),
-                Matchers.startsWith("hello")
+            new IsMapContaining<>(
+                new IsEqual<>(0),
+                new StringStartsWith("hello")
             )
         );
     }
@@ -87,7 +92,7 @@ public final class MapOfTest {
         MatcherAssert.assertThat(
             "Can't sense the changes in the underlying map",
             map.size(),
-            Matchers.not(Matchers.equalTo(map.size()))
+            new IsNot<>(new IsEqual<>(map.size()))
         );
     }
 
@@ -104,7 +109,7 @@ public final class MapOfTest {
                     }
                 )
             ),
-            Matchers.hasKey(0)
+            new IsMapContaining<>(new IsEqual<>(0), new IsAnything<>())
         );
     }
 
@@ -116,7 +121,7 @@ public final class MapOfTest {
                 new MapEntry<>(-1, 0),
                 new MapEntry<>(1, 2)
             ).toString(),
-            Matchers.equalTo("{-1=0, 1=2}")
+            new IsEqual<>("{-1=0, 1=2}")
         );
     }
 
@@ -140,7 +145,7 @@ public final class MapOfTest {
                     )
                 )
             ).toString(),
-            Matchers.equalTo("{-1={4=7, first=second}, 1={green=red, 2.7=3.1}}")
+            new IsEqual<>("{-1={4=7, first=second}, 1={green=red, 2.7=3.1}}")
         );
     }
 
@@ -149,11 +154,12 @@ public final class MapOfTest {
         MatcherAssert.assertThat(
             "Can't convert empty map to string",
             new MapOf<Integer, Map<String, String>>().toString(),
-            Matchers.equalTo("{}")
+            new IsEqual<>("{}")
         );
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void createsMapFromMapAndMapEntries() {
         MatcherAssert.assertThat(
             "Can't create a map from map and map entries",
@@ -163,9 +169,11 @@ public final class MapOfTest {
                 ),
                 new MapEntry<Integer, Integer>(1, 1)
             ),
-            Matchers.allOf(
-                Matchers.hasEntry(0, 0),
-                Matchers.hasEntry(1, 1)
+            new AllOf<>(
+                new IterableOf<>(
+                    new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0)),
+                    new IsMapContaining<>(new IsEqual<>(1), new IsEqual<>(1))
+                )
             )
         );
     }
@@ -179,11 +187,12 @@ public final class MapOfTest {
                 new FuncOf<Integer, Integer>(0),
                 new IterableOf<Integer>(0)
             ),
-            Matchers.hasEntry(0, 0)
+            new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0))
         );
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void createsMapFromMapFunctionsAndIterable() {
         MatcherAssert.assertThat(
             "Can't create a map from map, functions and iterable.",
@@ -195,9 +204,11 @@ public final class MapOfTest {
                 ),
                 new IterableOf<>(0)
             ),
-            Matchers.allOf(
-                Matchers.hasEntry(0, 0),
-                Matchers.hasEntry(1, 1)
+            new AllOf<>(
+                new IterableOf<>(
+                    new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0)),
+                    new IsMapContaining<>(new IsEqual<>(1), new IsEqual<>(1))
+                )
             )
         );
     }

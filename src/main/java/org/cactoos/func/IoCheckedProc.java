@@ -34,9 +34,6 @@ import org.cactoos.Proc;
  *
  * @param <X> Type of input
  * @since 0.4
- * @todo #861:30min Avoid usage of null value in IoCheckedProc.exec(X) which is
- *  against design principles.
- *  Please take a look on #551 and #843 for more details.
  */
 public final class IoCheckedProc<X> implements Proc<X> {
 
@@ -55,7 +52,10 @@ public final class IoCheckedProc<X> implements Proc<X> {
 
     @Override
     public void exec(final X input) throws IOException {
-        new IoCheckedFunc<>(new FuncOf<>(this.proc, null)).apply(input);
+        new CheckedProc<>(
+            this.proc,
+            IOException::new
+        ).exec(input);
     }
 
 }

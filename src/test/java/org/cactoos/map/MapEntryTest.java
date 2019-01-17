@@ -24,7 +24,6 @@
 package org.cactoos.map;
 
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
@@ -43,7 +42,7 @@ public final class MapEntryTest {
         MatcherAssert.assertThat(
             "Can't get key in the map entry",
             new MapEntry<>(key, value).getKey(),
-            Matchers.equalTo(key)
+            new IsEqual<>(key)
         );
     }
 
@@ -54,7 +53,7 @@ public final class MapEntryTest {
         MatcherAssert.assertThat(
             "Can't get value in the map entry",
             new MapEntry<>(key, value).getValue(),
-            Matchers.equalTo(value)
+            new IsEqual<>(value)
         );
     }
 
@@ -70,7 +69,7 @@ public final class MapEntryTest {
         MatcherAssert.assertThat(
             "MapEntries are not equals",
             new MapEntry<>(key, value).equals(new MapEntry<>(key, value)),
-            Matchers.equalTo(true)
+            new IsEqual<>(true)
         );
     }
 
@@ -80,7 +79,7 @@ public final class MapEntryTest {
             "the hash code are not equals",
             new MapEntry<>("elegant", "objects").hashCode(),
             // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(32_739_498)
+            new IsEqual<>(32_739_498)
         );
     }
 

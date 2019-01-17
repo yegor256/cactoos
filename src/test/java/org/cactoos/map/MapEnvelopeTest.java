@@ -26,7 +26,6 @@ package org.cactoos.map;
 import java.util.Map;
 import org.cactoos.func.FuncOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Rule;
@@ -59,7 +58,7 @@ public final class MapEnvelopeTest {
         );
         MatcherAssert.assertThat(
             "put method did not throw exception",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<Integer, Integer>(0, -1)
                 )
@@ -80,7 +79,7 @@ public final class MapEnvelopeTest {
         );
         MatcherAssert.assertThat(
             "remove method did not throw exception",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -101,7 +100,7 @@ public final class MapEnvelopeTest {
         );
         MatcherAssert.assertThat(
             "putAll method did not throw exception",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -122,7 +121,7 @@ public final class MapEnvelopeTest {
         );
         MatcherAssert.assertThat(
             "clear method did not throw exception",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
@@ -139,10 +138,10 @@ public final class MapEnvelopeTest {
     public void mapIsEmptyTrue() {
         MatcherAssert.assertThat(
             "#isEmpty() returns false for empty map",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>()
             ).isEmpty(),
-            Matchers.is(true)
+            new IsEqual<>(true)
         );
     }
 
@@ -150,12 +149,12 @@ public final class MapEnvelopeTest {
     public void mapIsEmptyFalse() {
         MatcherAssert.assertThat(
             "#isEmpty() returns true for not empty map",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(1, 0)
                 )
             ).isEmpty(),
-            Matchers.is(false)
+            new IsEqual<>(false)
         );
     }
 
@@ -163,12 +162,12 @@ public final class MapEnvelopeTest {
     public void mapContainsKeyTrue() {
         MatcherAssert.assertThat(
             "contains key returns false with exist key",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(1, 0)
                 )
             ).containsKey(1),
-            Matchers.is(true)
+            new IsEqual<>(true)
         );
     }
 
@@ -176,12 +175,12 @@ public final class MapEnvelopeTest {
     public void mapContainsKeyFalse() {
         MatcherAssert.assertThat(
             "contains key returns true with absent key",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(1, 0)
                 )
             ).containsKey(0),
-            Matchers.is(false)
+            new IsEqual<>(false)
         );
     }
 
@@ -189,12 +188,12 @@ public final class MapEnvelopeTest {
     public void mapContainsValueTrue() {
         MatcherAssert.assertThat(
             "contains value returns false with exist value",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(1, 0)
                 )
             ).containsValue(0),
-            Matchers.is(true)
+            new IsEqual<>(true)
         );
     }
 
@@ -202,12 +201,12 @@ public final class MapEnvelopeTest {
     public void mapContainsValueFalse() {
         MatcherAssert.assertThat(
             "contains value returns true with absent value",
-            new MapNoNulls<>(
+            new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(1, 0)
                 )
             ).containsValue(1),
-            Matchers.is(false)
+            new IsEqual<>(false)
         );
     }
 

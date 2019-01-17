@@ -27,7 +27,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.Or;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -36,7 +38,10 @@ import org.cactoos.scalar.UncheckedScalar;
  * @since 0.32
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressFBWarnings("EQ_CHECK_FOR_OPERAND_NOT_COMPATIBLE_WITH_THIS")
+@SuppressFBWarnings({
+    "EQ_CHECK_FOR_OPERAND_NOT_COMPATIBLE_WITH_THIS",
+    "EQ_UNUSUAL"
+})
 public abstract class TextEnvelope implements Text {
 
     /**
@@ -77,6 +82,16 @@ public abstract class TextEnvelope implements Text {
 
     @Override
     public final boolean equals(final Object obj) {
-        return new UncheckedScalar<>(this.origin).value().equals(obj);
+        return new UncheckedScalar<>(
+            new Or(
+                () -> this == obj,
+                new And(
+                    () -> obj instanceof Text,
+                    () -> new UncheckedText(this)
+                        .asString()
+                        .equals(new UncheckedText((Text) obj).asString())
+                )
+            )
+        ).value();
     }
 }

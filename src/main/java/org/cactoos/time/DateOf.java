@@ -46,7 +46,7 @@ public final class DateOf implements Scalar<Date> {
      * @param date The date to parse.
      */
     public DateOf(final CharSequence date) {
-        this(date, new Iso().get());
+        this(date, new Iso().value());
     }
 
     /**

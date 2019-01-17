@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Rule;

@@ -41,11 +41,19 @@ These are the [design principles](http://www.elegantobjects.org#principles) behi
 The library has no dependencies. All you need is this
 (get the latest version [here](https://github.com/yegor256/cactoos/releases)):
 
+Maven:
 ```xml
 <dependency>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
 </dependency>
+```
+
+Gradle:
+```groovy
+dependencies {
+    compile 'org.cactoos:cactoos:<version>'
+}
 ```
 
 Java version required: 1.8+.
@@ -296,6 +304,7 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@driver733](https://github.com/driver733) as Mikhail Yakushin
   - [@izrik](https://github.com/izrik) as Richard Sartor
   - [@Vatavuk](https://github.com/Vatavuk) as Vedran Grgo Vatavuk
+  - [@dgroup](https://github.com/dgroup) as Yurii Dubinka
 
 ## License (MIT)
 

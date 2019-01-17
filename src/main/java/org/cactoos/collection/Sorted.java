@@ -37,7 +37,7 @@ import org.cactoos.list.ListOf;
  * with the collection. Every time you touch it, it will fetch the
  * entire collection from the encapsulated object and sort it. If you
  * want to avoid that "side-effect", decorate it with
- * {@link StickyCollection}.</p>
+ * {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.</p>
  *

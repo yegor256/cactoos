@@ -28,17 +28,12 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import org.cactoos.Func;
-import org.cactoos.Proc;
 
 /**
  * Function that gets interrupted after a certain time has passed.
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.29.3
- * @todo #861:30min Avoid usage of null value in ctor(Proc, long) which is
- *  against design principles.
- *  Perhaps in creating TimedProc?
- *  Please take a look on #551 and #843 for more details.
  */
 public final class TimedFunc<X, Y> implements Func<X, Y> {
 
@@ -54,20 +49,11 @@ public final class TimedFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
-     * @param proc Proc
-     * @param milliseconds Milliseconds
-     */
-    public TimedFunc(final Proc<X> proc, final long milliseconds) {
-        this(new FuncOf<>(proc, null), milliseconds);
-    }
-
-    /**
-     * Ctor.
      * @param function Origin function
      * @param milliseconds Milliseconds
      */
     public TimedFunc(final Func<X, Y> function, final long milliseconds) {
-        this(milliseconds, new AsyncFunc<>(function));
+        this(milliseconds, new Async<>(function));
     }
 
     /**

@@ -39,7 +39,7 @@ public final class ShuffledTest {
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a list",
-            new ListNoNulls<>(
+            new NoNulls<>(
                 new Shuffled<>(
                     new ListOf<>(1, 0, -1, -1, 2)
                 )

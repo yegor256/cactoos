@@ -36,12 +36,12 @@ import org.cactoos.iterable.IterableOf;
  * method call. It doesn't cache the data anyhow.
  * If you don't need this {@link Collection} to re-fresh
  * its content on every call, by doing round-trips to
- * the encapsulated iterable, use {@link StickyCollection}.</p>
+ * the encapsulated iterable, use {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <T> List type
- * @see StickyCollection
+ * @see Sticky
  * @since 0.1
  */
 public final class CollectionOf<T> extends CollectionEnvelope<T> {

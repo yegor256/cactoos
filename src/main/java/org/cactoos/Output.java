@@ -45,7 +45,7 @@ import org.cactoos.io.TeeInput;
  * <p>Here {@link OutputTo} implements {@link Output} and behaves like
  * one, providing write-only access to the encapsulated
  * {@link java.io.File}. The {@link TeeInput} copies the content of the
- * input to the output. The {@link org.cactoos.io.LengthOf}
+ * input to the output. The {@link org.cactoos.scalar.LengthOf}
  * calculates the size of the copied data.</p>
  *
  * <p>There is no thread-safety guarantee.

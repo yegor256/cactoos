@@ -25,8 +25,8 @@ package org.cactoos.iterator;
 
 import java.util.Collections;
 import java.util.NoSuchElementException;
-import org.cactoos.iterable.IterableNoNulls;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.NoNulls;
 import org.cactoos.scalar.ItemAt;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -46,7 +46,7 @@ public final class CycledTest {
             "Can't repeat iterator",
             new ItemAt<>(
                 new Cycled<>(
-                    new IterableNoNulls<>(
+                    new NoNulls<>(
                         new IterableOf<>(
                             "one", expected, "three"
                         )
