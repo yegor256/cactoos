@@ -65,4 +65,15 @@ public final class NoNullsTest {
             new CollectionOf<>(1, null, 3)
         ).toArray(new Object[3]);
     }
+
+    @Test
+    public void throwsErrorIfNullInContainsArg() {
+        this.exception.expect(IllegalArgumentException.class);
+        this.exception.expectMessage(
+            "Argument of #contains(T) is NULL"
+        );
+        new NoNulls<>(
+            new CollectionOf<>(1, 2, 3)
+        ).contains(null);
+    }
 }

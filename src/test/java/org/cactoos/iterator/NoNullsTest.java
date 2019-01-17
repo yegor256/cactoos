@@ -24,6 +24,7 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
+import org.cactoos.list.ListOf;
 import org.hamcrest.core.StringContains;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,5 +67,16 @@ public final class NoNullsTest {
                 }
             }
         ).next();
+    }
+
+    @Test
+    public void nthThrowsErrorIfNull() {
+        this.exception.expect(IllegalStateException.class);
+        final Iterator<String> itr = new NoNulls<>(
+            new ListOf<>("a", "b", null, "c").iterator()
+        );
+        while (itr.hasNext()) {
+            itr.next();
+        }
     }
 }
