@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
- * Test cases for {@link CollectionNoNulls}.
+ * Test cases for {@link NoNulls}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -36,7 +36,7 @@ import org.junit.rules.ExpectedException;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class CollectionNoNullsTest {
+public final class NoNullsTest {
 
     /**
      * A rule for handling an exception.
@@ -50,7 +50,7 @@ public final class CollectionNoNullsTest {
         this.exception.expectMessage(
             "Item #1 of #toArray() is NULL"
         );
-        new CollectionNoNulls<>(
+        new NoNulls<>(
             new CollectionOf<>(1, null, 3)
         ).toArray();
     }
@@ -61,8 +61,19 @@ public final class CollectionNoNullsTest {
         this.exception.expectMessage(
             "Item #1 of #toArray(array) is NULL"
         );
-        new CollectionNoNulls<>(
+        new NoNulls<>(
             new CollectionOf<>(1, null, 3)
         ).toArray(new Object[3]);
+    }
+
+    @Test
+    public void throwsErrorIfNullInContainsArg() {
+        this.exception.expect(IllegalArgumentException.class);
+        this.exception.expectMessage(
+            "Argument of #contains(T) is NULL"
+        );
+        new NoNulls<>(
+            new CollectionOf<>(1, 2, 3)
+        ).contains(null);
     }
 }
