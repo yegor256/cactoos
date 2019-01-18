@@ -56,10 +56,10 @@ public final class AppendTo implements Output {
 
     /**
      * Ctor.
-     * @param source File to which content will be appended.
+     * @param src File to which content will be appended.
      */
-    public AppendTo(final File source) {
-        this.source = source;
+    public AppendTo(final File src) {
+        this.source = src;
     }
 
     @Override

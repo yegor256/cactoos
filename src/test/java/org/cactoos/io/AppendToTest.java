@@ -91,4 +91,22 @@ public final class AppendToTest {
             new TextIs(new JoinedText("", first, second))
         );
     }
+
+    /**
+     * Ensures that AppendTo is appending unicode text to a given file.
+     * @throws Exception if fails
+     */
+    @Test
+    public void appendsUnicodeToFile() throws Exception {
+        final File source = this.folder.newFile();
+        final String first = "\\u0026\\u2022";
+        new OutputTo(source).stream().write(first.getBytes());
+        final String second = "\\u25E6";
+        new AppendTo(source).stream().write(second.getBytes());
+        MatcherAssert.assertThat(
+            "Does not contain expected unicode text",
+            new TextOf(source),
+            new TextIs(new JoinedText("", first, second))
+        );
+    }
 }
