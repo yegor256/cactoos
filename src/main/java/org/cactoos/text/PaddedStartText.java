@@ -47,7 +47,7 @@ public final class PaddedStartText extends TextEnvelope {
             final String original = text.asString();
             return new JoinedText(
                 new TextOf(""),
-                new RepeatedText(
+                new Repeated(
                     new TextOf(symbol), length - original.length()
                 ),
                 text

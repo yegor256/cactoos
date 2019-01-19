@@ -23,39 +23,34 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
-import org.cactoos.Text;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Repeat an text count times.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link Repeated}.
  * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class RepeatedText extends TextEnvelope {
+public final class RepeatedTest {
 
-    /**
-     * Ctor.
-     * @param text A String
-     * @param count How many times repeat the Text
-     */
-    public RepeatedText(final String text, final int count) {
-        this(new TextOf(text), count);
+    @Test
+    public void repeatsWordsText() {
+        MatcherAssert.assertThat(
+            "Can't repeats a text",
+            // @checkstyle MagicNumber (1 line)
+            new Repeated("hello", 2),
+            new TextHasString("hellohello")
+        );
     }
 
-    /**
-     * Ctor.
-     * @param text The Text
-     * @param count How many times repeat the Text
-     */
-    public RepeatedText(final Text text, final int count) {
-        super((Scalar<String>) () -> {
-            final StringBuilder out = new StringBuilder();
-            for (int cnt = 0; cnt < count; ++cnt) {
-                out.append(text.asString());
-            }
-            return out.toString();
-        });
+    @Test
+    public void repeatsCharText() {
+        MatcherAssert.assertThat(
+            "Can't repeats a char",
+            // @checkstyle MagicNumber (1 line)
+            new Repeated("A", 5),
+            new TextHasString("AAAAA")
+        );
     }
 }

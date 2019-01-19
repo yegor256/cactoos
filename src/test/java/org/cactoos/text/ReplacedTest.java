@@ -31,19 +31,19 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link ReplacedText}.
+ * Test case for {@link Replaced}.
  *
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class ReplacedTextTest {
+public final class ReplacedTest {
 
     @Test
     public void replaceText() {
         MatcherAssert.assertThat(
             "Can't replace a text",
-            new ReplacedText(
+            new Replaced(
                 new TextOf("Hello!"),
                 "ello", "i"
             ),
@@ -56,7 +56,7 @@ public final class ReplacedTextTest {
         final String text = "HelloAgain!";
         MatcherAssert.assertThat(
             "Replace a text abnormally",
-            new ReplacedText(
+            new Replaced(
                 new TextOf(text),
                 "xyz", "i"
             ),
@@ -68,7 +68,7 @@ public final class ReplacedTextTest {
     public void replacesAllOccurrences() {
         MatcherAssert.assertThat(
             "Can't replace a text with multiple needle occurrences",
-            new ReplacedText(
+            new Replaced(
                 new TextOf("one cat, two cats, three cats"),
                 "cat",
                 "dog"
@@ -81,7 +81,7 @@ public final class ReplacedTextTest {
     public void regexConstantReplace() {
         MatcherAssert.assertThat(
             "Cannot do simple replacement with regex",
-            new ReplacedText(
+            new Replaced(
                 new TextOf("one cow two cows in the yard"),
                 () -> Pattern.compile("cow"),
                 matcher -> "pig"
@@ -94,7 +94,7 @@ public final class ReplacedTextTest {
     public void regexDynamicReplace() {
         MatcherAssert.assertThat(
             "Cannot do dynamic string replacement",
-            new ReplacedText(
+            new Replaced(
                 new TextOf("one two THREE four FIVE six"),
                 () -> Pattern.compile("[a-z]+"),
                 matcher -> String.valueOf(matcher.group().length())
@@ -107,7 +107,7 @@ public final class ReplacedTextTest {
     public void emptyText() {
         MatcherAssert.assertThat(
             "Substitution in empty text with non-empty regex.",
-            new ReplacedText(
+            new Replaced(
                 new TextOf(""),
                 "123",
                 "WOW"
@@ -120,7 +120,7 @@ public final class ReplacedTextTest {
     public void emptyRegex() {
         MatcherAssert.assertThat(
             "Substitution in text with empty regex.",
-            new ReplacedText(
+            new Replaced(
                 new TextOf("abc"),
                 "",
                 "1"
@@ -133,7 +133,7 @@ public final class ReplacedTextTest {
     public void emptyTextAndEmptyRegex() {
         MatcherAssert.assertThat(
             "Substitution in empty text with empty regex.",
-            new ReplacedText(
+            new Replaced(
                 new TextOf(""),
                 "",
                 "1"
@@ -144,7 +144,7 @@ public final class ReplacedTextTest {
 
     @Test(expected = PatternSyntaxException.class)
     public void invalidRegex() throws Exception {
-        new ReplacedText(
+        new Replaced(
             new TextOf("text"),
             "invalid_regex{0,",
             "error"
@@ -155,7 +155,7 @@ public final class ReplacedTextTest {
     public void nonDefaultCharsetText() {
         MatcherAssert.assertThat(
             "Cannot do dynamic string replacement with non-default charset",
-            new ReplacedText(
+            new Replaced(
                 new TextOf("abc def GHI JKL", StandardCharsets.UTF_16LE),
                 () -> Pattern.compile("[A-Z]+"),
                 matcher -> String.valueOf(matcher.group().length())
@@ -168,7 +168,7 @@ public final class ReplacedTextTest {
     public void unicodeText() {
         MatcherAssert.assertThat(
             "Cannot do dynamic string replacement with unicode characters",
-            new ReplacedText(
+            new Replaced(
                 new TextOf("abc def GHI\u2300JKL"),
                 () -> Pattern.compile("[a-z]+|\u2300"),
                 matcher -> String.valueOf(matcher.group().length())

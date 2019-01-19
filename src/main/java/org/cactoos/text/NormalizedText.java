@@ -48,7 +48,7 @@ public final class NormalizedText extends TextEnvelope {
      */
     public NormalizedText(final Text text) {
         super(
-            (Scalar<String>) () -> new ReplacedText(
+            (Scalar<String>) () -> new Replaced(
                 new TrimmedText(text),
                 "\\s+",
                 " "

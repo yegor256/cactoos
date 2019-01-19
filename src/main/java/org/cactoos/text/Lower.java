@@ -21,14 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.text;
+
+import java.util.Locale;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
 
 /**
- * Text.
+ * Text in lower case.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.1
- * @todo #1005:30min Continue applying the new class naming convention:
- *  avoid compound names for decorators. Continue renaming classes implementing
- *  the {@link org.cactoos.Text}. More details you can find here
- *  https://github.com/yegor256/cactoos/issues/913#issuecomment-402332247.
  */
-package org.cactoos.text;
+public final class Lower extends TextEnvelope {
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public Lower(final String text) {
+        this(new TextOf(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public Lower(final Text text) {
+        this(text, Locale.ENGLISH);
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param lang Locale
+     */
+    public Lower(final Text text, final Locale lang) {
+        super((Scalar<String>) () -> text.asString().toLowerCase(lang));
+    }
+
+}

@@ -24,31 +24,58 @@
 package org.cactoos.text;
 
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link LowerText}.
- * @since 0.11
+ * Test for {@link Random}.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class LowerTextTest {
+public final class RandomTest {
 
     @Test
-    public void convertsText() {
+    public void generatesRandomTextOfRandomLength() {
         MatcherAssert.assertThat(
-            "Can't lower case a text",
-            new LowerText(new TextOf("HelLo!")),
-            new TextHasString("hello!")
+            "Generated text is empty",
+            new Random().asString().length(),
+            Matchers.greaterThan(0)
         );
     }
 
     @Test
-    public void convertsString() {
+    public void generatesRandomTextOfSpecifiedLength() {
         MatcherAssert.assertThat(
-            "Can't lower case a string",
-            new LowerText("WoRLd!"),
-            new TextHasString("world!")
+            "Generated text has incorrect length",
+            new Random(512).asString().length(),
+            new IsEqual<>(512)
+        );
+    }
+
+    @Test
+    public void generatesRandomTextOfSpecifiedChars() {
+        MatcherAssert.assertThat(
+            "Generated text contains not allowed characters",
+            new Random('a')
+                .asString()
+                .replaceAll("a", "")
+                .length(),
+            new IsEqual<>(0)
+        );
+    }
+
+    @Test
+    public void generatesRandomTextOfSpecifiedCharsAndLength() {
+        MatcherAssert.assertThat(
+            "Generated text doesn't match specification",
+            new Random(10, 'a'),
+            new TextHasString("aaaaaaaaaa")
         );
     }
 }
