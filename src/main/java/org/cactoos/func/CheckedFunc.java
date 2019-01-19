@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
-import org.cactoos.scalar.CheckedScalar;
+import org.cactoos.scalar.Checked;
 
 /**
  * Func that throws exception of specified type.
@@ -60,7 +60,7 @@ public final class CheckedFunc<X, Y, E extends Exception> implements
 
     @Override
     public Y apply(final X input) throws E {
-        return new CheckedScalar<>(
+        return new Checked<>(
             () -> this.origin.apply(input),
             this.func
         ).value();

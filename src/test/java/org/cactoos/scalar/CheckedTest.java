@@ -30,15 +30,15 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link CheckedScalar}.
+ * Test case for {@link Checked}.
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CheckedScalarTest {
+public final class CheckedTest {
 
     @Test(expected = IllegalStateException.class)
     public void runtimeExceptionGoesOut() throws Exception {
-        new CheckedScalar<>(
+        new Checked<>(
             () -> {
                 throw new IllegalStateException("runtime");
             },
@@ -48,7 +48,7 @@ public final class CheckedScalarTest {
 
     @Test(expected = IOException.class)
     public void throwsIoException() throws Exception {
-        new CheckedScalar<>(
+        new Checked<>(
             () -> {
                 throw new InterruptedException("interrupt");
             },
@@ -59,7 +59,7 @@ public final class CheckedScalarTest {
     @Test
     public void ioExceptionGoesOut() throws Exception {
         try {
-            new CheckedScalar<>(
+            new Checked<>(
                 () -> {
                     throw new IOException("io");
                 },
@@ -76,7 +76,7 @@ public final class CheckedScalarTest {
     @Test
     public void fileNotFoundExceptionGoesOut() throws Exception {
         try {
-            new CheckedScalar<>(
+            new Checked<>(
                 () -> {
                     throw new FileNotFoundException("file not found");
                 },
@@ -94,7 +94,7 @@ public final class CheckedScalarTest {
     public void throwsIoExceptionWithModifiedMessage() throws Exception {
         final String message = "error msg";
         try {
-            new CheckedScalar<>(
+            new Checked<>(
                 () -> {
                     throw new IOException("io");
                 },

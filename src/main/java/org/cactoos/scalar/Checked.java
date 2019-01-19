@@ -39,7 +39,7 @@ import org.cactoos.text.UncheckedText;
  * @param <E> Type of exception
  * @since 0.30
  */
-public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
+public final class Checked<T, E extends Exception> implements Scalar<T> {
 
     /**
      * Function that wraps exception.
@@ -56,7 +56,7 @@ public final class CheckedScalar<T, E extends Exception> implements Scalar<T> {
      * @param scalar Encapsulated scalar
      * @param fnc Func that wraps exception
      */
-    public CheckedScalar(final Scalar<T> scalar,
+    public Checked(final Scalar<T> scalar,
         final Func<Exception, E> fnc) {
         this.func = fnc;
         this.origin = scalar;
