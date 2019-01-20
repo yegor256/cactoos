@@ -69,9 +69,7 @@ public final class Zip implements Input {
                 );
                 zip.putNextEntry(entry);
                 if (file.isFile()) {
-                    try (
-                        FileInputStream input = new FileInputStream(file)
-                    ) {
+                    try (FileInputStream input = new FileInputStream(file)) {
                         zip.write(new BytesOf(new InputOf(input)).asBytes());
                     }
                 }

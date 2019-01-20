@@ -44,9 +44,8 @@ public final class HeadInputStreamTest {
             new InputOf("testSkippingLessThanTotal").stream(),
             5
         );
-        final long skipped = stream.skip(3L);
         MatcherAssert.assertThat(
-            skipped,
+            stream.skip(3L),
             new IsEqual<>(
                 3L
             )
@@ -64,9 +63,8 @@ public final class HeadInputStreamTest {
             new InputOf("testSkippingMoreThanTotal").stream(),
             5
         );
-        final long skipped = stream.skip(7L);
         MatcherAssert.assertThat(
-            skipped,
+            stream.skip(7L),
             new IsEqual<>(
                 5L
             )
@@ -84,9 +82,8 @@ public final class HeadInputStreamTest {
             new InputOf("testResetting").stream(),
             5
         );
-        final long skipped = stream.skip(7L);
         MatcherAssert.assertThat(
-            skipped,
+            stream.skip(7L),
             new IsEqual<>(
                 5L
             )
