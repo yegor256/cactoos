@@ -180,14 +180,10 @@ public final class BytesOfTest {
                     )
                 )
             ),
-            new TextHasString(
-                Matchers.allOf(
-                    Matchers.containsString("java.io.IOException"),
-                    Matchers.containsString("doesn't work at all"),
-                    Matchers.containsString(
-                        "\tat org.cactoos.io.BytesOfTest"
-                    )
-                )
+            Matchers.allOf(
+                new TextHasString("java.io.IOException"),
+                new TextHasString("doesn't work at all"),
+                new TextHasString("\tat org.cactoos.io.BytesOfTest")
             )
         );
     }
@@ -201,9 +197,7 @@ public final class BytesOfTest {
                     new IOException("").getStackTrace()
                 )
             ),
-            new TextHasString(
-                Matchers.containsString("org.cactoos.io.BytesOfTest")
-            )
+            new TextHasString("org.cactoos.io.BytesOfTest")
         );
     }
 
