@@ -48,7 +48,7 @@ import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.InputHasContent;
 import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.StartsWith;
+import org.llorllale.cactoos.matchers.MatchesRegex;
 import org.llorllale.cactoos.matchers.TextHasString;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
@@ -151,10 +151,7 @@ public final class InputOfTest {
                 new TextOf(
                     new InputOf(home)
                 ),
-                Matchers.allOf(
-                    new StartsWith("<html"),
-                    new EndsWith("html>")
-                )
+                new MatchesRegex("<html.*html>")
             )
         );
     }

@@ -180,10 +180,12 @@ public final class BytesOfTest {
                     )
                 )
             ),
-            Matchers.allOf(
-                new TextHasString("java.io.IOException"),
-                new TextHasString("doesn't work at all"),
-                new TextHasString("\tat org.cactoos.io.BytesOfTest")
+            new TextHasString(
+                new JoinedText(
+                    System.lineSeparator(),
+                    "java.io.IOException: It doesn't work at all",
+                    "\tat org.cactoos.io.BytesOfTest"
+                )
             )
         );
     }

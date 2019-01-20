@@ -225,10 +225,12 @@ public final class TextOfTest {
                     "It doesn't work at all"
                 )
             ),
-            Matchers.allOf(
-                new TextHasString("java.io.IOException"),
-                new TextHasString("doesn't work at all"),
-                new TextHasString("\tat org.cactoos.text.TextOfTest")
+            new TextHasString(
+                new JoinedText(
+                    System.lineSeparator(),
+                    "java.io.IOException: It doesn't work at all",
+                    "\tat org.cactoos.text.TextOfTest"
+                )
             )
         );
     }
