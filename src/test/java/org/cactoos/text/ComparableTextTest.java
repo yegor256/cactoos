@@ -73,6 +73,18 @@ public final class ComparableTextTest {
     }
 
     @Test
+    public void equalsToItself() {
+        final Text text = new TextOf("text");
+        MatcherAssert.assertThat(
+            "Does not equal to itself",
+            text,
+            new IsEqual<>(
+                text
+            )
+        );
+    }
+
+    @Test
     public void equalsAndHashCodeOfComparableOfTheSameText() {
         final Text text = new TextOf("my text");
         final Text actual = new ComparableText(text);
