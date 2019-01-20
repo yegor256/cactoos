@@ -23,8 +23,11 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Text;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 
 /**
@@ -66,6 +69,54 @@ public final class ComparableTextTest {
                 new ComparableText(new TextOf(txt))
             ),
             Matchers.equalTo(0)
+        );
+    }
+
+    @Test
+    public void equalsAndHashCodeOfComparableOfTheSameText() {
+        final Text text = new TextOf("my text");
+        final Text actual = new ComparableText(text);
+        final Text expected = new ComparableText(text);
+        MatcherAssert.assertThat(
+            "Does not equal to a comparable text made from the same Text",
+            actual,
+            new IsEqual<>(
+                expected
+            )
+        );
+        MatcherAssert.assertThat(
+            "Hash codes of the equal objects are not equal",
+            actual.hashCode(),
+            new IsEqual<>(
+                expected.hashCode()
+            )
+        );
+    }
+
+    @Test
+    public void equalsOfDifferentText() {
+        final Text text = new ComparableText(
+            new TextOf("my value")
+        );
+        MatcherAssert.assertThat(
+            "Is equal to the completely different object",
+            text,
+            new IsNot<>(
+                new IsEqual<>(
+                    new Object()
+                )
+            )
+        );
+        MatcherAssert.assertThat(
+            "Is equal to the different ComparableText",
+            text,
+            new IsNot<>(
+                new IsEqual<>(
+                    new ComparableText(
+                        new TextOf("different value")
+                    )
+                )
+            )
         );
     }
 }
