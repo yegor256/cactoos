@@ -121,8 +121,13 @@ public final class LoggingInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         final byte[] buf = new byte[1];
-        this.read(buf);
-        return Byte.toUnsignedInt(buf[0]);
+        final int size;
+        if (this.read(buf) == -1) {
+            size = -1;
+        } else {
+            size = Byte.toUnsignedInt(buf[0]);
+        }
+        return size;
     }
 
     @Override
