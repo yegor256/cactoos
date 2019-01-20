@@ -93,7 +93,7 @@ public final class WriterAsOutputStreamTest {
         final Path temp = this.folder
             .newFile("cactoos-1.txt-1")
             .toPath();
-        try (Writer writer = Files.newBufferedWriter(temp)) {
+        try (Writer writer = new WriterTo(temp)) {
             MatcherAssert.assertThat(
                 "Can't copy Input to Output and return Input",
                 new TextOf(
@@ -124,7 +124,7 @@ public final class WriterAsOutputStreamTest {
     public void writesToFileAndRemovesIt() throws Exception {
         final Path temp = this.folder.newFile().toPath();
         final String content = "Hello, товарищ! How are you?";
-        try (Writer writer = Files.newBufferedWriter(temp)) {
+        try (Writer writer = new WriterTo(temp)) {
             new LengthOf(
                 new TeeInput(
                     new InputOf(content),
