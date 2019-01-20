@@ -43,7 +43,7 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @param <T> Type of output
  * @since 0.12
- * @todo #861:30min Avoid usage of null value in ctor(Func) which is
+ * @todo #888:30min Avoid usage of null value in ctor(Func) which is
  *  against our design principles.
  *  Most likely, dropping this ctor will be enough.
  */
