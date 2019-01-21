@@ -45,7 +45,7 @@ public final class LoggingInputStreamTest {
             this.getClass().getSimpleName()
         );
         MatcherAssert.assertThat(
-            "read empty stream behavior is the same as of JDK",
+            "Read empty stream behavior is the same as of JDK",
             stream.read(),
             new IsEqual<>(
                 new ByteArrayInputStream(
