@@ -54,6 +54,25 @@ public final class HashCodeTest {
     }
 
     /**
+     * {@link HashCode} must assume an {@code initial} values of 17 and a
+     * {@code multiplier} value of 31 when these are not provided.
+     */
+    @Test
+    public void computeHashCodeWithDefaultValues() {
+        final int initial = 17;
+        final int multiplier = 31;
+        final Object[] attributes = {494, 43, "test", 190, 298f, "joshua"};
+        MatcherAssert.assertThat(
+            // @checkstyle LineLength (1 line)
+            "Value must be equal to Josh Block's implementation of hashCode() with initial=17 and multiplier=31",
+            new HashCode(attributes).value(),
+            new IsEqual<>(
+                joshBloch(initial, multiplier, attributes)
+            )
+        );
+    }
+
+    /**
      * Joshua Bloch's implementation of hashCode() as per Effective Java,
      * 2nd Edition, Item 9: "Always override hashCode when you override equals".
      * @param initial Initial value
