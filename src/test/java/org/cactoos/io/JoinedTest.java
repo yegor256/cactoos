@@ -55,7 +55,7 @@ public final class JoinedTest {
     }
 
     /**
-     * Must join inputs of the iterable in the given order
+     * Must join inputs of the iterable in the given order.
      */
     @Test
     public void fromIterable() {
