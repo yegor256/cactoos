@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -50,6 +51,26 @@ public final class JoinedTest {
                 )
             ),
             new TextHasString("firstsecondthird")
+        );
+    }
+
+    /**
+     * Must join inputs of the iterable in the given order
+     */
+    @Test
+    public void fromIterable() {
+        MatcherAssert.assertThat(
+            "Cannot join iterable of inputs",
+            new TextOf(
+                new Joined(
+                    new IterableOf<>(
+                        new InputOf("ab"),
+                        new InputOf("cde"),
+                        new InputOf("fghi")
+                    )
+                )
+            ),
+            new TextHasString("abcdefghi")
         );
     }
 }

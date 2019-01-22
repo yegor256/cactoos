@@ -42,13 +42,23 @@ public final class Joined implements Input {
 
     /**
      * Ctor.
+     * @param inputs Iterable of inputs
+     */
+    public Joined(final Iterable<Input> inputs) {
+        this.inputs = inputs;
+    }
+
+    /**
+     * Ctor.
      * @param first First input
      * @param rest The rest
      */
     public Joined(final Input first, final Input... rest) {
-        this.inputs = new org.cactoos.iterable.Joined<>(
-            first,
-            new IterableOf<>(rest)
+        this(
+            new org.cactoos.iterable.Joined<>(
+                first,
+                new IterableOf<>(rest)
+            )
         );
     }
 
