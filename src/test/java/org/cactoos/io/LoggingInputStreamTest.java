@@ -24,8 +24,11 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
 
 /**
@@ -35,6 +38,24 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class LoggingInputStreamTest {
+
+    @Test(expected = IOException.class)
+    public void reThrowsException() throws Exception {
+        final LoggingInputStream stream = new LoggingInputStream(
+            new InputStream() {
+                @Override
+                public int read() throws IOException {
+                    throw new IOException("some read exception");
+                }
+            },
+            this.getClass().getSimpleName()
+        );
+        MatcherAssert.assertThat(
+            "Exception will be thrown so the value is ignored",
+            stream.read(),
+            new IsNull<>()
+        );
+    }
 
     @Test
     public void readEmptyStream() throws Exception {
