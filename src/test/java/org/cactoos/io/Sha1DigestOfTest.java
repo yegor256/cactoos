@@ -72,10 +72,12 @@ public final class Sha1DigestOfTest {
             "Can't calculate the file's SHA-1 checksum",
             new HexOf(
                 new Sha1DigestOf(
-                    new InputOf(
-                        new ResourceOf(
-                            "org/cactoos/digest-calculation.txt"
-                        ).stream()
+                    new Sticky(
+                        new InputOf(
+                            new ResourceOf(
+                                "org/cactoos/digest-calculation.txt"
+                            ).stream()
+                        )
                     )
                 )
             ),
