@@ -30,6 +30,7 @@
  *  Need to remove ctors with Iterator parameters (and substitute
  *  them with ctors with Iterable parameters) in list package.
  *  This changes will make it necessary to correct the tests
- *  for ListEnvelope children classes
+ *  for ListEnvelope children classes. Also discussed in #906
+ *  and #677
  */
 package org.cactoos.list;
