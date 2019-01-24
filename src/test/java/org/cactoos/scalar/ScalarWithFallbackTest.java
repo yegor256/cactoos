@@ -59,6 +59,22 @@ public final class ScalarWithFallbackTest {
     }
 
     @Test
+    public void usesMainFuncInNonIterableCtor() {
+        final String message = "Main function's result";
+        MatcherAssert.assertThat(
+                "Scalar's main function value mismatch",
+                new ScalarWithFallback<>(
+                        () -> message,
+                        new FallbackFrom<>(
+                                new IterableOf<>(Exception.class),
+                                Throwable::getMessage
+                        )
+                ),
+                new ScalarHasValue<>(message)
+        );
+    }
+
+    @Test
     public void usesFallback() throws Exception {
         final String message = "Fallback from IOException";
         MatcherAssert.assertThat(
