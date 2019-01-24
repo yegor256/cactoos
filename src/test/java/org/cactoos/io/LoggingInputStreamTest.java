@@ -45,7 +45,7 @@ public final class LoggingInputStreamTest {
             new InputStream() {
                 @Override
                 public int read() throws IOException {
-                    throw new IOException("some read exception");
+                    throw new IOException("Some read exception");
                 }
             },
             this.getClass().getSimpleName()
