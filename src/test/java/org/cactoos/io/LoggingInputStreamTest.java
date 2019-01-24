@@ -30,6 +30,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link LoggingInputStream}.
@@ -39,8 +40,8 @@ import org.junit.Test;
  */
 public final class LoggingInputStreamTest {
 
-    @Test(expected = IOException.class)
-    public void reThrowsException() throws Exception {
+    @Test(expected = Exception.class)
+    public void reThrowsException() throws IOException {
         final LoggingInputStream stream = new LoggingInputStream(
             new InputStream() {
                 @Override
@@ -51,28 +52,28 @@ public final class LoggingInputStreamTest {
             this.getClass().getSimpleName()
         );
         MatcherAssert.assertThat(
-            "Exception will be thrown so the value is ignored",
+            "Read doesn't throw an the exception",
             stream.read(),
             new IsNull<>()
         );
     }
 
     @Test
-    public void readEmptyStream() throws Exception {
+    public void readEmptyStream() {
         final LoggingInputStream stream = new LoggingInputStream(
             new ByteArrayInputStream(
                 "".getBytes()
             ),
             this.getClass().getSimpleName()
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Read empty stream behavior is the same as of JDK",
-            stream.read(),
+            stream::read,
             new IsEqual<>(
                 new ByteArrayInputStream(
                     "".getBytes()
                 ).read()
             )
-        );
+        ).affirm();
     }
 }
