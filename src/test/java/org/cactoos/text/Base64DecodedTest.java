@@ -30,24 +30,25 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for  {@link org.cactoos.text.TextBase64}.
+ * Test Case for {@link Base64Decoded}.
+ *
  * @since 0.20.2
  */
-public final class TextBase64Test {
+public final class Base64DecodedTest {
 
     /**
-     * Check text encodes using the Base64 encoding scheme.
+     * Check text decodes using the Base64 encoding scheme.
      * @throws IOException If fails.
      */
     @Test
-    public void checkEncode() throws IOException {
+    public void checkDecode() throws IOException {
         MatcherAssert.assertThat(
-            "Can't encodes text using the Base64 encoding scheme",
-            new TextBase64(
-                "Hello!"
+            "Can't decodes text using the Base64 encoding scheme",
+            new Base64Decoded(
+                "SGVsbG8h"
             ),
             new TextHasString(
-                "SGVsbG8h"
+                "Hello!"
             )
         );
     }

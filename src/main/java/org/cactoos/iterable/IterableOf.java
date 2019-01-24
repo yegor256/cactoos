@@ -25,8 +25,12 @@ package org.cactoos.iterable;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterator.IteratorOf;
+import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -63,6 +67,57 @@ public final class IterableOf<X> extends IterableEnvelope<X> {
      */
     public IterableOf(final Iterator<X> list) {
         this(() -> list);
+    }
+
+    /**
+     * Paged iterable.
+     * <p>
+     * Elements will continue to be provided so long as {@code next} produces
+     * non-empty iterators.
+     * @param <I> Custom iterator
+     * @param first First bag of elements
+     * @param next Subsequent bags of elements
+     */
+    @SuppressWarnings(
+        {
+            "PMD.CallSuperInConstructor",
+            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
+        }
+    )
+    public <I extends Iterator<X>> IterableOf(
+        final Scalar<I> first, final Func<I, I> next
+    ) {
+        // @checkstyle AnonInnerLengthCheck (30 lines)
+        this(
+            () -> new Iterator<X>() {
+                private UncheckedScalar<I> current = new UncheckedScalar<>(
+                    new StickyScalar<>(first)
+                );
+                private final UncheckedFunc<I, I> subsequent =
+                    new UncheckedFunc<>(next);
+
+                @Override
+                public boolean hasNext() {
+                    if (!this.current.value().hasNext()) {
+                        final I next = this.subsequent.apply(
+                            this.current.value()
+                        );
+                        this.current = new UncheckedScalar<>(
+                            new StickyScalar<>(() -> next)
+                        );
+                    }
+                    return this.current.value().hasNext();
+                }
+
+                @Override
+                public X next() {
+                    if (this.hasNext()) {
+                        return this.current.value().next();
+                    }
+                    throw new NoSuchElementException();
+                }
+            }
+        );
     }
 
     /**

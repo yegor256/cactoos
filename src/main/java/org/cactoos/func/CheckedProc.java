@@ -25,7 +25,7 @@ package org.cactoos.func;
 
 import org.cactoos.Func;
 import org.cactoos.Proc;
-import org.cactoos.scalar.CheckedScalar;
+import org.cactoos.scalar.Checked;
 
 /**
  * Proc that throws exception of specified type.
@@ -58,7 +58,7 @@ public final class CheckedProc<X, E extends Exception> implements Proc<X> {
 
     @Override
     public void exec(final X input) throws E {
-        new CheckedScalar<>(
+        new Checked<>(
             () -> {
                 this.origin.exec(input);
                 return true;

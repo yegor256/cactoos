@@ -30,8 +30,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link OutputStreamTo}.
@@ -54,17 +53,15 @@ public final class OutputStreamToTest {
         MatcherAssert.assertThat(
             "Can't copy Input to Output and return Input",
             new TextOf(
-                new TeeInput(
-                    new ResourceOf("org/cactoos/large-text.txt"),
-                    new OutputTo(new OutputStreamTo(temp))
+                new Sticky(
+                    new TeeInput(
+                        new ResourceOf("org/cactoos/large-text.txt"),
+                        new OutputTo(new OutputStreamTo(temp))
+                    )
                 )
             ),
-            new TextHasString(
-                new MatcherOf<>(
-                    str -> {
-                        return new TextOf(temp).asString().equals(str);
-                    }
-                )
+            new TextIs(
+                new TextOf(temp)
             )
         );
     }

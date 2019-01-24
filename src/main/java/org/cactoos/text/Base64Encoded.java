@@ -24,32 +24,37 @@
 
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.bytes.BytesBase64;
+import org.cactoos.io.BytesOf;
 
 /**
- * Test Case for {@link org.cactoos.text.Base64Text}.
+ * Encodes the origin text using the Base64 encoding scheme.
  *
  * @since 0.20.2
  */
-public final class Base64TextTest {
+public final class Base64Encoded extends TextEnvelope {
 
     /**
-     * Check text decodes using the Base64 encoding scheme.
-     * @throws IOException If fails.
+     * Ctor.
+     *
+     * @param input The String
      */
-    @Test
-    public void checkDecode() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't decodes text using the Base64 encoding scheme",
-            new Base64Text(
-                "SGVsbG8h"
-            ),
-            new TextHasString(
-                "Hello!"
+    public Base64Encoded(final String input) {
+        this(new TextOf(input));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param origin Origin text
+     */
+    public Base64Encoded(final Text origin) {
+        super((Scalar<String>) () -> new TextOf(
+            new BytesBase64(
+                new BytesOf(origin)
             )
-        );
+        ).asString());
     }
 }
