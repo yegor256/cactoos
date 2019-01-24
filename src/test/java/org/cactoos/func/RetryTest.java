@@ -24,9 +24,9 @@
 package org.cactoos.func;
 
 import java.security.SecureRandom;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.FuncApplies;
 
 /**
  * Test case for {@link Retry}.
@@ -39,9 +39,10 @@ import org.junit.Test;
 public final class RetryTest {
 
     @Test
-    public void runsFuncMultipleTimes() throws Exception {
-        MatcherAssert.assertThat(
-            new Retry<>(
+    public void runsFuncMultipleTimes() {
+        new Assertion<>(
+            "Didn't run multiple times",
+            () -> new Retry<>(
                 input -> {
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");
@@ -49,15 +50,16 @@ public final class RetryTest {
                     return 0;
                 },
                 Integer.MAX_VALUE
-            ).apply(true),
-            Matchers.equalTo(0)
-        );
+            ),
+            new FuncApplies<>(true, 0)
+        ).affirm();
     }
 
     @Test
-    public void runsFuncConditionMultipleTimes() throws Exception {
-        MatcherAssert.assertThat(
-            new Retry<>(
+    public void runsFuncConditionMultipleTimes() {
+        new Assertion<>(
+            "Didn't check condition multiple times",
+            () -> new Retry<>(
                 input -> {
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");
@@ -65,8 +67,8 @@ public final class RetryTest {
                     return true;
                 },
                 count -> count == Integer.MAX_VALUE
-            ).apply(true),
-            Matchers.equalTo(true)
-        );
+            ),
+            new FuncApplies<>(true, true)
+        ).affirm();
     }
 }
