@@ -72,10 +72,12 @@ public final class Md5DigestOfTest {
             "Can't calculate the file's MD5 checksum",
             new HexOf(
                 new Md5DigestOf(
-                    new InputOf(
-                        new ResourceOf(
-                            "org/cactoos/digest-calculation.txt"
-                        ).stream()
+                    new Sticky(
+                        new InputOf(
+                            new ResourceOf(
+                                "org/cactoos/digest-calculation.txt"
+                            ).stream()
+                        )
                     )
                 )
             ),
