@@ -107,7 +107,7 @@ public final class JoinedTest {
             ).stream()
         ).readFully(result);
         new Assertion<>(
-            "fu",
+            "The merged stream does not equal to the expected sum of 2",
             () -> result,
             new IsEqual<>(
                 new HexOf(
