@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import java.util.Objects;
 import org.cactoos.Text;
+import org.cactoos.scalar.Equals;
 import org.cactoos.scalar.HashCode;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -73,18 +73,12 @@ public final class ComparableText implements Text, Comparable<Text> {
 
     @Override
     public boolean equals(final Object other) {
-        final boolean result;
-        if (this == other) {
-            result = true;
-        } else if (other == null || this.getClass() != other.getClass()) {
-            result = false;
-        } else {
-            result = Objects.equals(
-                this.text,
-                ((ComparableText) other).text
-            );
-        }
-        return result;
+        return new UncheckedScalar<>(
+            new Equals<>(
+                this.text::asString,
+                () -> ComparableText.class.cast(other).asString()
+            )
+        ).value();
     }
 
     @Override
