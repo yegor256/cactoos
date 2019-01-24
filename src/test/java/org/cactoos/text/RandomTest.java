@@ -23,10 +23,10 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -42,40 +42,40 @@ public final class RandomTest {
 
     @Test
     public void generatesRandomTextOfRandomLength() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Generated text is empty",
-            new Random().asString().length(),
+            () -> new Random().asString().length(),
             Matchers.greaterThan(0)
-        );
+        ).affirm();
     }
 
     @Test
     public void generatesRandomTextOfSpecifiedLength() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Generated text has incorrect length",
-            new Random(512).asString().length(),
+            () -> new Random(512).asString().length(),
             new IsEqual<>(512)
-        );
+        ).affirm();
     }
 
     @Test
     public void generatesRandomTextOfSpecifiedChars() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Generated text contains not allowed characters",
-            new Random('a')
+            () -> new Random('a')
                 .asString()
                 .replaceAll("a", "")
                 .length(),
             new IsEqual<>(0)
-        );
+        ).affirm();
     }
 
     @Test
     public void generatesRandomTextOfSpecifiedCharsAndLength() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Generated text doesn't match specification",
-            new Random(10, 'a'),
+            () -> new Random(10, 'a'),
             new TextHasString("aaaaaaaaaa")
-        );
+        ).affirm();
     }
 }

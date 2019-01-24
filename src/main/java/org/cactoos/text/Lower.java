@@ -55,10 +55,10 @@ public final class Lower extends TextEnvelope {
     /**
      * Ctor.
      * @param text The text
-     * @param lang Locale
+     * @param locale The locale
      */
-    public Lower(final Text text, final Locale lang) {
-        super((Scalar<String>) () -> text.asString().toLowerCase(lang));
+    public Lower(final Text text, final Locale locale) {
+        super((Scalar<String>) () -> text.asString().toLowerCase(locale));
     }
 
 }

@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -36,21 +36,21 @@ public final class RepeatedTest {
 
     @Test
     public void repeatsWordsText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't repeats a text",
             // @checkstyle MagicNumber (1 line)
-            new Repeated("hello", 2),
+            () -> new Repeated("hello", 2),
             new TextHasString("hellohello")
-        );
+        ).affirm();
     }
 
     @Test
     public void repeatsCharText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't repeats a char",
             // @checkstyle MagicNumber (1 line)
-            new Repeated("A", 5),
+            () -> new Repeated("A", 5),
             new TextHasString("AAAAA")
-        );
+        ).affirm();
     }
 }

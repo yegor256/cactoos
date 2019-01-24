@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -36,19 +36,19 @@ public final class LowerTest {
 
     @Test
     public void convertsText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't lower case a text",
-            new Lower(new TextOf("HelLo!")),
+            () -> new Lower(new TextOf("HelLo!")),
             new TextHasString("hello!")
-        );
+        ).affirm();
     }
 
     @Test
     public void convertsString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't lower case a string",
-            new Lower("WoRLd!"),
+            () -> new Lower("WoRLd!"),
             new TextHasString("world!")
-        );
+        ).affirm();
     }
 }
