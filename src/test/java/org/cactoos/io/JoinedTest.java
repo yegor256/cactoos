@@ -60,7 +60,7 @@ public final class JoinedTest {
     @Test
     public void fromIterable() {
         MatcherAssert.assertThat(
-            "Cannot join iterable of inputs",
+            "Can't join iterable of inputs",
             new TextOf(
                 new Joined(
                     new IterableOf<>(

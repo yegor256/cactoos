@@ -51,7 +51,7 @@ public final class Joined implements Input {
     /**
      * Ctor.
      * @param first First input
-     * @param rest The rest
+     * @param rest The other inputs
      */
     public Joined(final Input first, final Input... rest) {
         this(
