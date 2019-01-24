@@ -23,16 +23,20 @@
  */
 package org.cactoos.io;
 
+import java.io.DataInputStream;
 import java.io.IOException;
+import org.cactoos.bytes.HexOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Unit tests for {@link Joined}.
  * @since 0.36
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class JoinedTest {
     /**
@@ -40,10 +44,10 @@ public final class JoinedTest {
      * @throws IOException If an error occurs
      */
     @Test
-    public void joinsOk() throws IOException {
-        MatcherAssert.assertThat(
+    public void joinsOk() {
+        new Assertion<>(
             "Cannot properly join inputs",
-            new TextOf(
+            () -> new TextOf(
                 new Joined(
                     new InputOf("first"),
                     new InputOf("second"),
@@ -51,7 +55,7 @@ public final class JoinedTest {
                 )
             ),
             new TextHasString("firstsecondthird")
-        );
+        ).affirm();
     }
 
     /**
@@ -59,9 +63,9 @@ public final class JoinedTest {
      */
     @Test
     public void fromIterable() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't join iterable of inputs",
-            new TextOf(
+            () -> new TextOf(
                 new Joined(
                     new IterableOf<>(
                         new InputOf("ab"),
@@ -71,6 +75,45 @@ public final class JoinedTest {
                 )
             ),
             new TextHasString("abcdefghi")
-        );
+        ).affirm();
+    }
+
+    /**
+     * Must join inputs of the iterable bytes.
+     * @checkstyle MagicNumberCheck (20 lines)
+     * @throws Exception If an error occurs
+     */
+    @Test
+    public void fromIterableInputOfBytes() throws Exception {
+        final byte[] result = new byte[6];
+        new DataInputStream(
+            new Joined(
+                new IterableOf<>(
+                    new InputOf(
+                        new BytesOf(
+                            (byte) 202,
+                            (byte) 254,
+                            (byte) 186,
+                            (byte) 190
+                        )
+                    ),
+                    new InputOf(
+                        new BytesOf(
+                            (byte) 222,
+                            (byte) 173
+                        )
+                    )
+                )
+            ).stream()
+        ).readFully(result);
+        new Assertion<>(
+            "fu",
+            () -> result,
+            new IsEqual<>(
+                new HexOf(
+                    new TextOf("CAFEBABEDEAD")
+                ).asBytes()
+            )
+        ).affirm();
     }
 }
