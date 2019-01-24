@@ -25,6 +25,7 @@ package org.cactoos.text;
 
 import java.util.Objects;
 import org.cactoos.Text;
+import org.cactoos.scalar.HashCode;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -88,6 +89,6 @@ public final class ComparableText implements Text, Comparable<Text> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.text);
+        return new HashCode(this.text).value();
     }
 }
