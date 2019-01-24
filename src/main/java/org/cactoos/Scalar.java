@@ -56,39 +56,4 @@ public interface Scalar<T> {
      */
     T value() throws Exception;
 
-    /**
-     * Scalar check for no nulls.
-     *
-     * @param <T> Type of result
-     * @since 0.11
-     */
-    final class NoNulls<T> implements Scalar<T> {
-        /**
-         * The scalar.
-         */
-        private final Scalar<T> origin;
-        /**
-         * Ctor.
-         * @param sclr The scalar
-         */
-        public NoNulls(final Scalar<T> sclr) {
-            this.origin = sclr;
-        }
-        @Override
-        public T value() throws Exception {
-            if (this.origin == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid scalar"
-                );
-            }
-            final T value = this.origin.value();
-            if (value == null) {
-                throw new IllegalStateException(
-                    "NULL instead of a valid value"
-                );
-            }
-            return value;
-        }
-    }
-
 }

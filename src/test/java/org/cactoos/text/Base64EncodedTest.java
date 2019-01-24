@@ -21,46 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
 
-import java.io.OutputStream;
-import org.cactoos.Func;
-import org.cactoos.Output;
-import org.cactoos.scalar.Checked;
+package org.cactoos.text;
+
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Output that throws exception of specified type.
- *
- * @param <E> Exception's type.
- * @since 0.31
+ * Test case for  {@link Base64Encoded}.
+ * @since 0.20.2
  */
-public final class CheckedOutput<E extends Exception> implements Output {
+public final class Base64EncodedTest {
 
     /**
-     * Original output.
+     * Check text encodes using the Base64 encoding scheme.
+     * @throws IOException If fails.
      */
-    private final Output origin;
-
-    /**
-     * Function that wraps exception of {@link #origin} to the required type.
-     */
-    private final Func<Exception, E> func;
-
-    /**
-     * Ctor.
-     * @param orig Origin output.
-     * @param fnc Function that wraps exceptions.
-     */
-    public CheckedOutput(final Output orig, final Func<Exception, E> fnc) {
-        this.origin = orig;
-        this.func = fnc;
-    }
-
-    @Override
-    public OutputStream stream() throws E {
-        return new Checked<>(
-            this.origin::stream,
-            this.func
-        ).value();
+    @Test
+    public void checkEncode() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't encodes text using the Base64 encoding scheme",
+            new Base64Encoded(
+                "Hello!"
+            ),
+            new TextHasString(
+                "SGVsbG8h"
+            )
+        );
     }
 }

@@ -24,20 +24,21 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
+import org.cactoos.list.ListOf;
 import org.hamcrest.core.StringContains;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
- * Test cases for {@link IteratorNoNulls}.
+ * Test cases for {@link NoNulls}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.35
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorNoNullsTest {
+public final class NoNullsTest {
 
     /**
      * A rule for handling an exception.
@@ -50,10 +51,10 @@ public final class IteratorNoNullsTest {
         this.exception.expect(IllegalStateException.class);
         this.exception.expectMessage(
             new StringContains(
-                "Item #0 of org.cactoos.iterator.IteratorNoNullsTest"
+                "Item #0 of org.cactoos.iterator.NoNullsTest"
             )
         );
-        new IteratorNoNulls<>(
+        new NoNulls<>(
             new Iterator<Integer>() {
                 @Override
                 public boolean hasNext() {
@@ -66,5 +67,16 @@ public final class IteratorNoNullsTest {
                 }
             }
         ).next();
+    }
+
+    @Test
+    public void nthThrowsErrorIfNull() {
+        this.exception.expect(IllegalStateException.class);
+        final Iterator<String> itr = new NoNulls<>(
+            new ListOf<>("a", "b", null, "c").iterator()
+        );
+        while (itr.hasNext()) {
+            itr.next();
+        }
     }
 }

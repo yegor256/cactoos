@@ -21,46 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.scalar;
 
-import java.io.OutputStream;
-import org.cactoos.Func;
-import org.cactoos.Output;
-import org.cactoos.scalar.Checked;
+import org.cactoos.Scalar;
 
 /**
- * Output that throws exception of specified type.
+ * Scalar check for no nulls.
  *
- * @param <E> Exception's type.
- * @since 0.31
+ * @param <T> Type of result
+ * @since 0.11
  */
-public final class CheckedOutput<E extends Exception> implements Output {
-
+public final class NoNulls<T> implements Scalar<T> {
     /**
-     * Original output.
+     * The scalar.
      */
-    private final Output origin;
-
-    /**
-     * Function that wraps exception of {@link #origin} to the required type.
-     */
-    private final Func<Exception, E> func;
-
+    private final Scalar<T> origin;
     /**
      * Ctor.
-     * @param orig Origin output.
-     * @param fnc Function that wraps exceptions.
+     * @param sclr The scalar
      */
-    public CheckedOutput(final Output orig, final Func<Exception, E> fnc) {
-        this.origin = orig;
-        this.func = fnc;
+    public NoNulls(final Scalar<T> sclr) {
+        this.origin = sclr;
     }
-
     @Override
-    public OutputStream stream() throws E {
-        return new Checked<>(
-            this.origin::stream,
-            this.func
-        ).value();
+    public T value() throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid scalar"
+            );
+        }
+        final T value = this.origin.value();
+        if (value == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid value"
+            );
+        }
+        return value;
     }
 }

@@ -25,7 +25,6 @@ package org.cactoos.collection;
 
 import java.util.Collection;
 import java.util.Iterator;
-import org.cactoos.iterator.IteratorNoNulls;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -38,7 +37,7 @@ import org.cactoos.text.UncheckedText;
  * @since 0.27
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class CollectionNoNulls<X> implements Collection<X> {
+public final class NoNulls<X> implements Collection<X> {
 
     /**
      * Original collection.
@@ -49,7 +48,7 @@ public final class CollectionNoNulls<X> implements Collection<X> {
      * Ctor.
      * @param items Original one
      */
-    public CollectionNoNulls(final Collection<X> items) {
+    public NoNulls(final Collection<X> items) {
         this.col = items;
     }
 
@@ -65,7 +64,7 @@ public final class CollectionNoNulls<X> implements Collection<X> {
 
     @Override
     public Iterator<X> iterator() {
-        return new IteratorNoNulls<X>(this.col.iterator());
+        return new org.cactoos.iterator.NoNulls<X>(this.col.iterator());
     }
 
     @Override
@@ -135,22 +134,22 @@ public final class CollectionNoNulls<X> implements Collection<X> {
 
     @Override
     public boolean containsAll(final Collection<?> items) {
-        return this.col.containsAll(new CollectionNoNulls<>(items));
+        return this.col.containsAll(new NoNulls<>(items));
     }
 
     @Override
     public boolean addAll(final Collection<? extends X> items) {
-        return this.col.removeAll(new CollectionNoNulls<>(items));
+        return this.col.removeAll(new NoNulls<>(items));
     }
 
     @Override
     public boolean removeAll(final Collection<?> items) {
-        return this.col.removeAll(new CollectionNoNulls<>(items));
+        return this.col.removeAll(new NoNulls<>(items));
     }
 
     @Override
     public boolean retainAll(final Collection<?> items) {
-        return this.col.retainAll(new CollectionNoNulls<>(items));
+        return this.col.retainAll(new NoNulls<>(items));
     }
 
     @Override

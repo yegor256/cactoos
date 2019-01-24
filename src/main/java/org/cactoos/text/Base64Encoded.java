@@ -24,25 +24,24 @@
 
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.bytes.Base64Bytes;
+import org.cactoos.bytes.BytesBase64;
 import org.cactoos.io.BytesOf;
 
 /**
- * Decodes the origin text using the Base64 encoding scheme.
+ * Encodes the origin text using the Base64 encoding scheme.
+ *
  * @since 0.20.2
- * @todo #980:30min Define new name for Base64Text and TextBase64 in order to
- *  avoid compound names. These classes are using for decode/encode text using
- *  the radix-64 representation.
  */
-public final class Base64Text extends TextEnvelope {
+public final class Base64Encoded extends TextEnvelope {
 
     /**
      * Ctor.
      *
      * @param input The String
      */
-    public Base64Text(final String input) {
+    public Base64Encoded(final String input) {
         this(new TextOf(input));
     }
 
@@ -51,11 +50,11 @@ public final class Base64Text extends TextEnvelope {
      *
      * @param origin Origin text
      */
-    public Base64Text(final Text origin) {
-        super(new TextOf(
-            new Base64Bytes(
+    public Base64Encoded(final Text origin) {
+        super((Scalar<String>) () -> new TextOf(
+            new BytesBase64(
                 new BytesOf(origin)
             )
-        ));
+        ).asString());
     }
 }

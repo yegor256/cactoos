@@ -21,35 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.cactoos.Text;
 
 /**
- * Test Case for {@link org.cactoos.text.Base64Text}.
+ * Text check for no nulls.
  *
- * @since 0.20.2
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.11
  */
-public final class Base64TextTest {
+public final class NoNulls implements Text {
+    /**
+     * The origin text.
+     */
+    private final Text origin;
 
     /**
-     * Check text decodes using the Base64 encoding scheme.
-     * @throws IOException If fails.
+     * Ctor.
+     * @param text The text
      */
-    @Test
-    public void checkDecode() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't decodes text using the Base64 encoding scheme",
-            new Base64Text(
-                "SGVsbG8h"
-            ),
-            new TextHasString(
-                "Hello!"
-            )
-        );
+    public NoNulls(final Text text) {
+        this.origin = text;
+    }
+
+    @Override
+    public String asString() throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid text"
+            );
+        }
+        final String string = this.origin.asString();
+        if (string == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid result string"
+            );
+        }
+        return string;
     }
 }
