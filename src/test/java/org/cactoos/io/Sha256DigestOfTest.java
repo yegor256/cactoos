@@ -74,10 +74,12 @@ public final class Sha256DigestOfTest {
             "Can't calculate the file's SHA-256 checksum",
             new HexOf(
                 new Sha256DigestOf(
-                    new InputOf(
-                        new ResourceOf(
-                            "org/cactoos/digest-calculation.txt"
-                        ).stream()
+                    new Sticky(
+                        new InputOf(
+                            new ResourceOf(
+                                "org/cactoos/digest-calculation.txt"
+                            ).stream()
+                        )
                     )
                 )
             ),
