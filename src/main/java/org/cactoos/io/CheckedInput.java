@@ -26,7 +26,7 @@ package org.cactoos.io;
 import java.io.InputStream;
 import org.cactoos.Func;
 import org.cactoos.Input;
-import org.cactoos.scalar.CheckedScalar;
+import org.cactoos.scalar.Checked;
 
 /**
  * Input that throws exception of specified type.
@@ -58,7 +58,7 @@ public final class CheckedInput<E extends Exception> implements Input {
 
     @Override
     public InputStream stream() throws E {
-        return new CheckedScalar<>(
+        return new Checked<>(
             this.origin::stream,
             this.func
         ).value();

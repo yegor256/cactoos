@@ -31,8 +31,8 @@ import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link Sticky}.
@@ -77,9 +77,7 @@ public final class StickyTest {
                     )
                 )
             ),
-            new TextHasString(
-                Matchers.endsWith("est laborum.\n")
-            )
+            new EndsWith("est laborum.\n")
         );
     }
 

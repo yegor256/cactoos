@@ -43,26 +43,26 @@ public final class Skipped<T> extends CollectionEnvelope<T> {
      */
     @SafeVarargs
     public Skipped(final int skip, final T... src) {
-        this(new IterableOf<>(src), skip);
+        this(skip, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
+     * @param skip How many to skip
      * @param src Source iterable
-     * @param skip How many to skip
      */
-    public Skipped(final Iterable<T> src, final int skip) {
-        this(new CollectionOf<T>(src), skip);
+    public Skipped(final int skip, final Iterable<T> src) {
+        this(skip, new CollectionOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param src Source collection
      * @param skip How many to skip
+     * @param src Source collection
      */
-    public Skipped(final Collection<T> src, final int skip) {
-        super(() -> new CollectionOf<T>(
-            new org.cactoos.iterable.Skipped<T>(src, skip)
+    public Skipped(final int skip, final Collection<T> src) {
+        super(() -> new CollectionOf<>(
+            new org.cactoos.iterable.Skipped<>(skip, src)
         ));
     }
 }

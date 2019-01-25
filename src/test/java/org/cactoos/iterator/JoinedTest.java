@@ -42,7 +42,7 @@ public final class JoinedTest {
         MatcherAssert.assertThat(
             "Can't concatenate mapped iterators together",
             new LengthOf(
-                new IteratorNoNulls<>(
+                new NoNulls<>(
                     new Joined<Iterator<String>>(
                         new Mapped<>(
                             input -> new IteratorOf<>(input),

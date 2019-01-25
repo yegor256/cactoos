@@ -24,24 +24,22 @@
 
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.bytes.BytesBase64;
+import org.cactoos.bytes.Base64Bytes;
 import org.cactoos.io.BytesOf;
 
 /**
- * Encodes the origin text using the Base64 encoding scheme.
- *
+ * Decodes the origin text using the Base64 encoding scheme.
  * @since 0.20.2
  */
-public final class TextBase64 extends TextEnvelope {
+public final class Base64Decoded extends TextEnvelope {
 
     /**
      * Ctor.
      *
      * @param input The String
      */
-    public TextBase64(final String input) {
+    public Base64Decoded(final String input) {
         this(new TextOf(input));
     }
 
@@ -50,11 +48,11 @@ public final class TextBase64 extends TextEnvelope {
      *
      * @param origin Origin text
      */
-    public TextBase64(final Text origin) {
-        super((Scalar<String>) () -> new TextOf(
-            new BytesBase64(
+    public Base64Decoded(final Text origin) {
+        super(new TextOf(
+            new Base64Bytes(
                 new BytesOf(origin)
             )
-        ).asString());
+        ));
     }
 }

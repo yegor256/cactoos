@@ -36,7 +36,7 @@ import org.cactoos.text.UncheckedText;
  * @param <X> Type of item
  * @since 0.27
  */
-public final class IteratorNoNulls<X> implements Iterator<X> {
+public final class NoNulls<X> implements Iterator<X> {
 
     /**
      * Iterator.
@@ -52,7 +52,7 @@ public final class IteratorNoNulls<X> implements Iterator<X> {
      * Ctor.
      * @param src Source iterable
      */
-    public IteratorNoNulls(final Iterator<X> src) {
+    public NoNulls(final Iterator<X> src) {
         this.iterator = src;
         this.pos = new AtomicLong();
     }

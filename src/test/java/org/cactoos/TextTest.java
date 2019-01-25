@@ -34,6 +34,9 @@ import org.llorllale.cactoos.matchers.TextHasString;
 /**
  * Test case for {@link Text}.
  * @since 0.11
+ * @todo #1023:30min Replace all occurrences of @Rule ExpectedException
+ *  tests that use it should be refactored to use Throws class
+ *  introduced in cactoos-matchers 0.13.
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class TextTest {

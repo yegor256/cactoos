@@ -45,8 +45,10 @@ import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.InputHasContent;
 import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.MatchesRegex;
 import org.llorllale.cactoos.matchers.TextHasString;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
@@ -78,7 +80,7 @@ public final class InputOfTest {
                     new InputOf(new TextOf("Alternative text!"))
                 )
             ),
-            new TextHasString(Matchers.endsWith("text!"))
+            new EndsWith("text!")
         );
     }
 
@@ -150,12 +152,7 @@ public final class InputOfTest {
                 new TextOf(
                     new InputOf(home)
                 ),
-                new TextHasString(
-                    Matchers.allOf(
-                        Matchers.startsWith("<html"),
-                        Matchers.endsWith("html>")
-                    )
-                )
+                new MatchesRegex("<html.*html>")
             )
         );
     }
@@ -174,7 +171,7 @@ public final class InputOfTest {
                     )
                 )
             ),
-            new TextHasString(Matchers.containsString("Lorem ipsum"))
+            new TextHasString("Lorem ipsum")
         );
     }
 

@@ -40,15 +40,15 @@ public final class Skipped<T> extends IterableEnvelope<T> {
      */
     @SafeVarargs
     public Skipped(final int skip, final T... src) {
-        this(new IterableOf<>(src), skip);
+        this(skip, new IterableOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param iterable Decorated iterable
      * @param skip Count skip elements
+     * @param iterable Decorated iterable
      */
-    public Skipped(final Iterable<T> iterable, final int skip) {
+    public Skipped(final int skip, final Iterable<T> iterable) {
         super(() -> () -> new org.cactoos.iterator.Skipped<>(
             iterable.iterator(),
             skip

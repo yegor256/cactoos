@@ -33,7 +33,9 @@ import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link TextOf}.
@@ -95,11 +97,15 @@ public final class TextOfTest {
     @Test
     public void readsReaderIntoTextWithSmallBuffer() {
         final String text = "Hi there! with small buffer";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read text from Reader with a small reading buffer",
-            new TextOf(new StringReader(text), 2, StandardCharsets.UTF_8),
-            new TextHasString(text)
-        );
+            () -> new TextOf(text),
+            new TextIs(
+                new TextOf(
+                    new StringReader(text), 2, StandardCharsets.UTF_8
+                )
+            )
+        ).affirm();
     }
 
     @Test
@@ -220,12 +226,10 @@ public final class TextOfTest {
                 )
             ),
             new TextHasString(
-                Matchers.allOf(
-                    Matchers.containsString("java.io.IOException"),
-                    Matchers.containsString("doesn't work at all"),
-                    Matchers.containsString(
-                        "\tat org.cactoos.text.TextOfTest"
-                    )
+                new JoinedText(
+                    System.lineSeparator(),
+                    "java.io.IOException: It doesn't work at all",
+                    "\tat org.cactoos.text.TextOfTest"
                 )
             )
         );
@@ -306,9 +310,7 @@ public final class TextOfTest {
             new TextOf(
                 new IOException("").getStackTrace()
             ),
-            new TextHasString(
-                Matchers.containsString("org.cactoos.text.TextOfTest")
-            )
+            new TextHasString("org.cactoos.text.TextOfTest")
         );
     }
 }

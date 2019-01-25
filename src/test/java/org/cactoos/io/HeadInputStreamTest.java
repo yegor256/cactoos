@@ -27,7 +27,9 @@ import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test cases for {@link HeadInputStream}.
@@ -35,6 +37,7 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class HeadInputStreamTest {
 
@@ -44,17 +47,20 @@ public final class HeadInputStreamTest {
             new InputOf("testSkippingLessThanTotal").stream(),
             5
         );
-        MatcherAssert.assertThat(
-            stream.skip(3L),
+        new Assertion<>(
+            "Wrong number of bytes skipped",
+            () -> stream.skip(3L),
             new IsEqual<>(
                 3L
             )
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
             "Incorrect head of the input stream has been read",
-            new TextOf(stream),
+            () -> new TextOf(
+                new Sticky(() -> stream)
+            ),
             new TextHasString("tS")
-        );
+        ).affirm();
     }
 
     @Test
@@ -63,17 +69,19 @@ public final class HeadInputStreamTest {
             new InputOf("testSkippingMoreThanTotal").stream(),
             5
         );
-        MatcherAssert.assertThat(
-            stream.skip(7L),
+        new Assertion<>(
+            "Wrong number of bytes skipped",
+            () -> stream.skip(7L),
             new IsEqual<>(
-                5L
+                0L
             )
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        final String input = new TextOf(stream).asString();
+        new Assertion<>(
             "The result text wasn't empty",
-            new TextOf(stream),
-            new TextHasString("")
-        );
+            () -> new TextOf(input),
+            new TextIs("")
+        ).affirm();
     }
 
     @Test
@@ -89,11 +97,13 @@ public final class HeadInputStreamTest {
             )
         );
         stream.reset();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Reset didn't change the state",
-            new TextOf(stream),
+            () -> new TextOf(
+                new Sticky(() -> stream)
+            ),
             new TextHasString("testR")
-        );
+        ).affirm();
     }
 
     @Test
