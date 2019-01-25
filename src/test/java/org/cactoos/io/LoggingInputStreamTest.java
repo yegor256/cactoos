@@ -67,7 +67,7 @@ public final class LoggingInputStreamTest {
             this.getClass().getSimpleName()
         );
         new Assertion<>(
-            "Read empty stream behavior is the same as of JDK",
+            "Can't read correctly an logged empty stream",
             stream::read,
             new IsEqual<>(
                 new ByteArrayInputStream(
