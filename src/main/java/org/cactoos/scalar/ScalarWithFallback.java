@@ -64,8 +64,14 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
         this.fallbacks = fbks;
     }
 
+    /**
+     * Ctor.
+     * @param origin Original scalar
+     * @param fbk Fallback
+     */
     @SuppressWarnings("unchecked")
-    public ScalarWithFallback(final Scalar<T> origin, final FallbackFrom<T> fbk) {
+    public ScalarWithFallback(final Scalar<T> origin, final FallbackFrom<T> fbk
+    ) {
         this(origin, new IterableOf<>(fbk));
     }
 
