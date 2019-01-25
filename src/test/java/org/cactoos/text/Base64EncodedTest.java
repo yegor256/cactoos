@@ -24,38 +24,31 @@
 
 package org.cactoos.text;
 
-import org.cactoos.Text;
-import org.cactoos.bytes.Base64Bytes;
-import org.cactoos.io.BytesOf;
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Decodes the origin text using the Base64 encoding scheme.
+ * Test case for  {@link Base64Encoded}.
  * @since 0.20.2
- * @todo #980:30min Define new name for Base64Text and TextBase64 in order to
- *  avoid compound names. These classes are using for decode/encode text using
- *  the radix-64 representation.
  */
-public final class Base64Text extends TextEnvelope {
+public final class Base64EncodedTest {
 
     /**
-     * Ctor.
-     *
-     * @param input The String
+     * Check text encodes using the Base64 encoding scheme.
+     * @throws IOException If fails.
      */
-    public Base64Text(final String input) {
-        this(new TextOf(input));
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param origin Origin text
-     */
-    public Base64Text(final Text origin) {
-        super(new TextOf(
-            new Base64Bytes(
-                new BytesOf(origin)
+    @Test
+    public void checkEncode() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't encodes text using the Base64 encoding scheme",
+            new Base64Encoded(
+                "Hello!"
+            ),
+            new TextHasString(
+                "SGVsbG8h"
             )
-        ));
+        );
     }
 }

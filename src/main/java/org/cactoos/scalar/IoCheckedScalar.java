@@ -57,7 +57,7 @@ public final class IoCheckedScalar<T> implements Scalar<T> {
 
     @Override
     public T value() throws IOException {
-        return new CheckedScalar<>(
+        return new Checked<>(
             this.origin,
             IOException::new
         ).value();

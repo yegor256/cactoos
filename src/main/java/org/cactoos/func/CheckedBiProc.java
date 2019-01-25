@@ -25,7 +25,7 @@ package org.cactoos.func;
 
 import org.cactoos.BiProc;
 import org.cactoos.Func;
-import org.cactoos.scalar.CheckedScalar;
+import org.cactoos.scalar.Checked;
 
 /**
  * BiProc that throws exception of specified type.
@@ -61,7 +61,7 @@ public final class CheckedBiProc<X, Y, E extends Exception> implements
 
     @Override
     public void exec(final X first, final Y second) throws E {
-        new CheckedScalar<>(
+        new Checked<>(
             () -> {
                 this.origin.exec(first, second);
                 return true;

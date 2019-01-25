@@ -23,16 +23,24 @@
  */
 package org.cactoos.iterable;
 
+import java.util.Iterator;
+import org.cactoos.iterator.IteratorOf;
+import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
+import org.cactoos.scalar.Ternary;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsIterableContainingInOrder;
+import org.hamcrest.collection.IsIterableWithSize;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
  * Test case for {@link IterableOf}.
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
 public final class IterableOfTest {
 
@@ -73,5 +81,69 @@ public final class IterableOfTest {
         );
     }
 
-}
+    // @todo #971:30min Implement equals() and hashCode() on IterableEnvelope.
+    //  Then, refactor this test so that only
+    //  `new IsEqual<>(new Joined<>(first, second, third))` is required as a
+    //  matcher.
+    @Test
+    @SuppressWarnings({"unchecked", "PMD.AvoidDuplicateLiterals"})
+    public void containAllPagedContentInOrder() throws Exception {
+        final Iterable<String> first = new IterableOf<>("one", "two");
+        final Iterable<String> second = new IterableOf<>("three", "four");
+        final Iterable<String> third = new IterableOf<>("five");
+        final Iterable<Iterable<String>> service = new IterableOf<>(
+            first, second, third
+        );
+        final Iterator<Iterable<String>> pages = service.iterator();
+        MatcherAssert.assertThat(
+            "Must have all page values",
+            new IterableOf<>(
+                () -> pages.next().iterator(),
+                page -> new Ternary<>(
+                    () -> pages.hasNext(),
+                    () -> pages.next().iterator(),
+                    () -> new IteratorOf<String>()
+                ).value()
+            ),
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>("one"),
+                    new IsEqual<>("two"),
+                    new IsEqual<>("three"),
+                    new IsEqual<>("four"),
+                    new IsEqual<>("five")
+                )
+            )
+        );
+    }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    public void reportTotalPagedLength() throws Exception {
+        final Iterable<String> first = new IterableOf<>("A", "five");
+        final Iterable<String> second = new IterableOf<>("word", "long");
+        final Iterable<String> third = new IterableOf<>("sentence");
+        final Iterable<Iterable<String>> service = new IterableOf<>(
+            first, second, third
+        );
+        final Iterator<Iterable<String>> pages = service.iterator();
+        MatcherAssert.assertThat(
+            "Length must be equal to total number of elements",
+            new IterableOf<>(
+                () -> pages.next().iterator(),
+                page -> new Ternary<>(
+                    () -> pages.hasNext(),
+                    () -> pages.next().iterator(),
+                    () -> new IteratorOf<String>()
+                ).value()
+            ),
+            new IsIterableWithSize<>(
+                new IsEqual<>(
+                    new LengthOf(
+                        new Joined<>(first, second, third)
+                    ).intValue()
+                )
+            )
+        );
+    }
+}
