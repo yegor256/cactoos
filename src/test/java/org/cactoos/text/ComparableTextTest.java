@@ -53,9 +53,7 @@ public final class ComparableTextTest {
                     new SubText("from here to there", 5)
                 )
             ),
-            new IsEqual<>(
-                0
-            )
+            new IsEqual<>(0)
         ).affirm();
     }
 
@@ -71,9 +69,7 @@ public final class ComparableTextTest {
             ).compareTo(
                 new ComparableText(new TextOf(txt))
             ),
-            new IsEqual<>(
-                0
-            )
+            new IsEqual<>(0)
         ).affirm();
     }
 
@@ -83,9 +79,7 @@ public final class ComparableTextTest {
         new Assertion<>(
             "Does not equal to itself",
             () -> text,
-            new TextIs(
-                text
-            )
+            new TextIs(text)
         ).affirm();
     }
 
@@ -97,9 +91,7 @@ public final class ComparableTextTest {
         new Assertion<>(
             "Does not equal to a comparable text made from the same Text",
             () -> actual,
-            new IsEqual<>(
-                expected
-            )
+            new IsEqual<>(expected)
         ).affirm();
         new Assertion<>(
             "Hash codes of the equal objects are not equal",
