@@ -29,12 +29,12 @@ import org.cactoos.text.FormattedText;
 import org.cactoos.text.JoinedText;
 import org.cactoos.text.RandomText;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link AppendTo}.
@@ -52,26 +52,23 @@ public final class AppendToTest {
     public final TemporaryFolder folder = new TemporaryFolder();
 
     /**
-     * A rule for handling an exception.
-     */
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
-
-    /**
      * Ensures that AppendTo is failing on a negative predicate result.
      * @throws Exception if fails
      */
     @Test
     public void failsIfFileDoesNotExist() throws Exception {
         final File source = new File(new RandomText(5).asString());
-        this.exception.expect(IOException.class);
-        this.exception.expectMessage(
-            new FormattedText(
+        new Assertion<>(
+            "Doesn't throw exception with proper message",
+            () -> () -> new AppendTo(source).stream(),
+            new Throws<>(
+                new FormattedText(
                 "Can not append to %s file. It does not exist",
-                source.getAbsolutePath()
-            ).asString()
-        );
-        new AppendTo(source).stream();
+                    source.getAbsolutePath()
+                ).asString(),
+                IOException.class
+            )
+        ).affirm();
     }
 
     /**
@@ -85,11 +82,11 @@ public final class AppendToTest {
         new OutputTo(source).stream().write(first.getBytes());
         final String second = "efgh";
         new AppendTo(source).stream().write(second.getBytes());
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Does not contain expected text",
-            new TextOf(source),
+            () -> new TextOf(source),
             new TextIs(new JoinedText("", first, second))
-        );
+        ).affirm();
     }
 
     /**
@@ -103,10 +100,10 @@ public final class AppendToTest {
         new OutputTo(source).stream().write(first.getBytes());
         final String second = "\\u25E6";
         new AppendTo(source).stream().write(second.getBytes());
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Does not contain expected unicode text",
-            new TextOf(source),
+            () -> new TextOf(source),
             new TextIs(new JoinedText("", first, second))
-        );
+        ).affirm();
     }
 }
