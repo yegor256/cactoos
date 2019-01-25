@@ -42,10 +42,10 @@ public final class Joined implements Input {
 
     /**
      * Ctor.
-     * @param inputs Iterable of inputs
+     * @param ipts Iterable of inputs
      */
-    public Joined(final Iterable<Input> inputs) {
-        this.inputs = inputs;
+    public Joined(final Iterable<Input> ipts) {
+        this.inputs = ipts;
     }
 
     /**
