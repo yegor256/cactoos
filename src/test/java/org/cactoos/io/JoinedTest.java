@@ -23,15 +23,11 @@
  */
 package org.cactoos.io;
 
-import java.io.DataInputStream;
 import java.io.IOException;
-import org.cactoos.bytes.HexOf;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.text.TextOf;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Unit tests for {@link Joined}.
@@ -47,14 +43,12 @@ public final class JoinedTest {
     public void joinsOk() {
         new Assertion<>(
             "Cannot properly join inputs",
-            () -> new TextOf(
-                new Joined(
-                    new InputOf("first"),
-                    new InputOf("second"),
-                    new InputOf("third")
-                )
+            () -> new Joined(
+                new InputOf("first"),
+                new InputOf("second"),
+                new InputOf("third")
             ),
-            new TextHasString("firstsecondthird")
+            new InputHasContent("firstsecondthird")
         ).affirm();
     }
 
@@ -65,55 +59,14 @@ public final class JoinedTest {
     public void fromIterable() {
         new Assertion<>(
             "Can't join iterable of inputs",
-            () -> new TextOf(
-                new Joined(
-                    new IterableOf<>(
-                        new InputOf("ab"),
-                        new InputOf("cde"),
-                        new InputOf("fghi")
-                    )
+            () -> new Joined(
+                new IterableOf<>(
+                    new InputOf("ab"),
+                    new InputOf("cde"),
+                    new InputOf("fghi")
                 )
             ),
-            new TextHasString("abcdefghi")
-        ).affirm();
-    }
-
-    /**
-     * Must join inputs of the iterable bytes.
-     * @checkstyle MagicNumberCheck (20 lines)
-     * @throws Exception If an error occurs
-     */
-    @Test
-    public void fromIterableInputOfBytes() throws Exception {
-        final byte[] result = new byte[6];
-        new DataInputStream(
-            new Joined(
-                new IterableOf<>(
-                    new InputOf(
-                        new BytesOf(
-                            (byte) 202,
-                            (byte) 254,
-                            (byte) 186,
-                            (byte) 190
-                        )
-                    ),
-                    new InputOf(
-                        new BytesOf(
-                            (byte) 222,
-                            (byte) 173
-                        )
-                    )
-                )
-            ).stream()
-        ).readFully(result);
-        new Assertion<>(
-            "The merged stream does not equal to the expected sum of 2",
-            () -> result,
-            new IsEqual<>(
-                new HexOf(
-                    new TextOf("CAFEBABEDEAD")
-                ).asBytes()
-            )
+            new InputHasContent("abcdefghi")
         ).affirm();
     }
 }
