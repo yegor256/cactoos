@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
 
 /**
@@ -41,11 +41,11 @@ public final class AfterTest {
      */
     @Test
     public void returnsEmptyIfThereIsNoBoundary() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Given string is not empty",
-            new After("Cactoos with description", "after"),
+            () -> new After("Cactoos with description", "after"),
             new TextIs("")
-        );
+        ).affirm();
     }
 
     /**
@@ -54,11 +54,11 @@ public final class AfterTest {
      */
     @Test
     public void returnsEmptyIfStringIsBoundary() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Given string is not empty",
-            new After("Boundary", "Boundary"),
+            () -> new After("Boundary", "Boundary"),
             new TextIs("")
-        );
+        ).affirm();
     }
 
     /**
@@ -67,10 +67,10 @@ public final class AfterTest {
      */
     @Test
     public void returnsAfterBoundaryString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Given strings are not equal",
-            new After("Anti-pattern", "Anti-"),
+            () -> new After("Anti-pattern", "Anti-"),
             new TextIs("pattern")
-        );
+        ).affirm();
     }
 }

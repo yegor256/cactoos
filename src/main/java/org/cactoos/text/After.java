@@ -31,6 +31,9 @@ import org.cactoos.Scalar;
  * <p>There is no thread-safety guarantee.
  *
  * @since 1.0
+ * @todo #981:30min Update qulice version and remove
+ *  constructor suppress warnings which existence of is
+ *  not needed, but is a bug in currently used version
  */
 public final class After extends TextEnvelope {
 
