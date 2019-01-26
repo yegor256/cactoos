@@ -40,7 +40,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link AppendTo}.
  *
  * @since 1.0
- * @checkstyle MagicNumber (500 line)
  * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)
  */
 public final class AppendToTest {
@@ -57,13 +56,14 @@ public final class AppendToTest {
      */
     @Test
     public void failsIfFileDoesNotExist() throws Exception {
+        // @checkstyle MagicNumber (1 line)
         final File source = new File(new RandomText(5).asString());
         new Assertion<>(
-            "Doesn't throw exception with proper message",
+            "Can't throw exception with proper message",
             () -> () -> new AppendTo(source).stream(),
             new Throws<>(
                 new FormattedText(
-                "Can not append to %s file. It does not exist",
+                "Can't append to %s file. It does not exist",
                     source.getAbsolutePath()
                 ).asString(),
                 IOException.class
@@ -101,7 +101,7 @@ public final class AppendToTest {
         final String second = "\\u25E6";
         new AppendTo(source).stream().write(second.getBytes());
         new Assertion<>(
-            "Does not contain expected unicode text",
+            "Can't find expected unicode text content",
             () -> new TextOf(source),
             new TextIs(new JoinedText("", first, second))
         ).affirm();

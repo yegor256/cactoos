@@ -67,7 +67,7 @@ public final class AppendTo implements Output {
         if (!this.source.exists()) {
             throw new IOException(
                 new FormattedText(
-                    "Can not append to %s file. It does not exist",
+                    "Can't append to %s file. It does not exist",
                     this.source.getAbsolutePath()
                 ).asString()
             );
