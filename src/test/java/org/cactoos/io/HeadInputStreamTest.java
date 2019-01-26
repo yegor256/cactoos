@@ -48,7 +48,7 @@ public final class HeadInputStreamTest {
             5
         );
         new Assertion<>(
-            "Wrong number of bytes skipped",
+            "The number of bytes skipped was different than requested",
             () -> stream.skip(3L),
             new IsEqual<>(
                 3L
@@ -73,7 +73,7 @@ public final class HeadInputStreamTest {
             "Wrong number of bytes skipped",
             () -> stream.skip(7L),
             new IsEqual<>(
-                0L
+                5L
             )
         ).affirm();
         final String input = new TextOf(stream).asString();
