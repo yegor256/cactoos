@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
@@ -44,7 +43,6 @@ import org.cactoos.text.UncheckedText;
  * @since 0.29
  */
 @SuppressWarnings({"PMD.LoggerIsNotStaticFinal", "PMD.MoreThanOneLogger"})
-@SuppressFBWarnings("RR_NOT_CHECKED")
 public final class LoggingInputStream extends InputStream {
 
     /**
