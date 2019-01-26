@@ -24,6 +24,7 @@
 package org.cactoos.list;
 
 import java.util.List;
+import java.util.ListIterator;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
@@ -36,18 +37,18 @@ import org.cactoos.scalar.UncheckedScalar;
  * @param <T> Items type
  * @since 0.35
  */
-public final class ListIterator<T> implements java.util.ListIterator<T> {
+public final class ListIteratorOf<T> implements ListIterator<T> {
 
     /**
      * Original list iterator.
      */
-    private final UncheckedScalar<java.util.ListIterator<T>> origin;
+    private final UncheckedScalar<ListIterator<T>> origin;
 
     /**
      * Ctor.
      * @param list List that will be called to get a list iterator.
      */
-    public ListIterator(final List<T> list) {
+    public ListIteratorOf(final List<T> list) {
         this(list::listIterator);
     }
 
@@ -56,7 +57,7 @@ public final class ListIterator<T> implements java.util.ListIterator<T> {
      * @param list List that will be called to get a list iterator.
      * @param index Start index for a newly created list iterator.
      */
-    public ListIterator(final List<T> list, final int index) {
+    public ListIteratorOf(final List<T> list, final int index) {
         this(() -> list.listIterator(index));
     }
 
@@ -64,7 +65,7 @@ public final class ListIterator<T> implements java.util.ListIterator<T> {
      * Ctor.
      * @param iter Original list iterator.
      */
-    public ListIterator(final java.util.ListIterator<T> iter) {
+    public ListIteratorOf(final ListIterator<T> iter) {
         this(() -> iter);
     }
 
@@ -72,7 +73,7 @@ public final class ListIterator<T> implements java.util.ListIterator<T> {
      * Ctor.
      * @param orig Original list iterator.
      */
-    public ListIterator(final Scalar<java.util.ListIterator<T>> orig) {
+    public ListIteratorOf(final Scalar<ListIterator<T>> orig) {
         this.origin = new UncheckedScalar<>(new StickyScalar<>(orig));
     }
 

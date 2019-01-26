@@ -100,14 +100,14 @@ abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
 
     @Override
     public final ListIterator<T> listIterator() {
-        return new org.cactoos.list.ListIterator<>(
+        return new ListIteratorOf<>(
             this.list.value().listIterator()
         );
     }
 
     @Override
     public final ListIterator<T> listIterator(final int index) {
-        return new org.cactoos.list.ListIterator<>(
+        return new ListIteratorOf<>(
             this.list.value().listIterator(index)
         );
     }

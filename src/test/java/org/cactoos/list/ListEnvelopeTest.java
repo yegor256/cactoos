@@ -88,7 +88,7 @@ public final class ListEnvelopeTest {
     public void getsPreviousIndex() {
         MatcherAssert.assertThat(
             "List iterator returns incorrect previous index",
-            new org.cactoos.list.ListIterator<>(
+            new ListIteratorOf<>(
                 new ListOf<>(1)
             ).previousIndex(),
             new IsEqual<>(-1)
@@ -99,7 +99,7 @@ public final class ListEnvelopeTest {
     public void getsPrevious() {
         MatcherAssert.assertThat(
             "List iterator returns incorrect previous item",
-            new org.cactoos.list.ListIterator<>(
+            new ListIteratorOf<>(
                 new ListOf<>(3, 7),
                 1
             ).previous(),
@@ -111,7 +111,7 @@ public final class ListEnvelopeTest {
     public void getsNextIndex() {
         MatcherAssert.assertThat(
             "List iterator returns incorrect next index",
-            new org.cactoos.list.ListIterator<>(
+            new ListIteratorOf<>(
                 new ListOf<>(1)
             ).nextIndex(),
             new IsEqual<>(0)
@@ -122,7 +122,7 @@ public final class ListEnvelopeTest {
     public void getsNext() {
         MatcherAssert.assertThat(
             "List iterator returns incorrect next item",
-            new org.cactoos.list.ListIterator<>(
+            new ListIteratorOf<>(
                 new ListOf<>(5, 11, 13),
                 1
             ).next(),
