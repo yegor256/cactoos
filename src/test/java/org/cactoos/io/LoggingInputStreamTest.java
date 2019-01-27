@@ -37,6 +37,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  *
  * @since 0.39
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class LoggingInputStreamTest {
 
@@ -67,13 +68,37 @@ public final class LoggingInputStreamTest {
             this.getClass().getSimpleName()
         );
         new Assertion<>(
-            "Can't read correctly an logged empty stream",
+            "Empty stream did not return -1",
             stream::read,
-            new IsEqual<>(
-                new ByteArrayInputStream(
-                    "".getBytes()
-                ).read()
-            )
+            new IsEqual<>(-1)
+        ).affirm();
+    }
+
+    @Test
+    public void readByteByByte() {
+        final LoggingInputStream stream = new LoggingInputStream(
+            new ByteArrayInputStream(
+                new byte[] {
+                    (byte) 20,
+                    (byte) 10,
+                }
+            ),
+            this.getClass().getSimpleName()
+        );
+        new Assertion<>(
+            "First byte is not 20",
+            stream::read,
+            new IsEqual<>(20)
+        ).affirm();
+        new Assertion<>(
+            "Second byte is not 10",
+            stream::read,
+            new IsEqual<>(10)
+        ).affirm();
+        new Assertion<>(
+            "End of stream is not -1",
+            stream::read,
+            new IsEqual<>(-1)
         ).affirm();
     }
 }
