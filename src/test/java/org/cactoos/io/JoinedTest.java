@@ -24,14 +24,15 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.iterable.IterableOf;
 import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Unit tests for {@link Joined}.
  * @since 0.36
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class JoinedTest {
     /**
@@ -39,17 +40,33 @@ public final class JoinedTest {
      * @throws IOException If an error occurs
      */
     @Test
-    public void joinsOk() throws IOException {
-        MatcherAssert.assertThat(
+    public void joinsOk() {
+        new Assertion<>(
             "Cannot properly join inputs",
-            new TextOf(
-                new Joined(
-                    new InputOf("first"),
-                    new InputOf("second"),
-                    new InputOf("third")
+            () -> new Joined(
+                new InputOf("first"),
+                new InputOf("second"),
+                new InputOf("third")
+            ),
+            new InputHasContent("firstsecondthird")
+        ).affirm();
+    }
+
+    /**
+     * Must join inputs of the iterable in the given order.
+     */
+    @Test
+    public void fromIterable() {
+        new Assertion<>(
+            "Can't join iterable of inputs",
+            () -> new Joined(
+                new IterableOf<>(
+                    new InputOf("ab"),
+                    new InputOf("cde"),
+                    new InputOf("fghi")
                 )
             ),
-            new TextHasString("firstsecondthird")
-        );
+            new InputHasContent("abcdefghi")
+        ).affirm();
     }
 }
