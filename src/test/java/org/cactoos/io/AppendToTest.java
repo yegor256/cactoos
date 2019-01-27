@@ -25,15 +25,15 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.JoinedText;
 import org.cactoos.text.RandomText;
-import org.cactoos.text.TextOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.InputHasContent;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -84,8 +84,8 @@ public final class AppendToTest {
         new AppendTo(source).stream().write(second.getBytes());
         new Assertion<>(
             "Does not contain expected text",
-            () -> new TextOf(source),
-            new TextIs(new JoinedText("", first, second))
+            () -> new InputOf(source),
+            new InputHasContent(new JoinedText("", first, second))
         ).affirm();
     }
 
@@ -96,14 +96,18 @@ public final class AppendToTest {
     @Test
     public void appendsUnicodeToFile() throws Exception {
         final File source = this.folder.newFile();
-        final String first = "\\u0026\\u2022";
-        new OutputTo(source).stream().write(first.getBytes());
-        final String second = "\\u25E6";
-        new AppendTo(source).stream().write(second.getBytes());
+        final String first = "Hello, товарищ output #3 äÄ ";
+        new OutputTo(source)
+            .stream()
+            .write(first.getBytes(StandardCharsets.UTF_8));
+        final String second = "#4 äÄ üÜ öÖ and ß";
+        new AppendTo(source)
+            .stream()
+            .write(second.getBytes(StandardCharsets.UTF_8));
         new Assertion<>(
             "Can't find expected unicode text content",
-            () -> new TextOf(source),
-            new TextIs(new JoinedText("", first, second))
+            () -> new InputOf(source),
+            new InputHasContent(new JoinedText("", first, second))
         ).affirm();
     }
 }
