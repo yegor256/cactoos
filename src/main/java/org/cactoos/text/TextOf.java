@@ -32,12 +32,20 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.time.Iso;
 
 /**
  * TextOf
@@ -339,6 +347,56 @@ public final class TextOf extends TextEnvelope {
      */
     public TextOf(final InputStream input) {
         this(new InputOf(new InputStreamReader(input, StandardCharsets.UTF_8)));
+    }
+
+    /**
+     * Formats date using ISO date time format.
+     * @param date The date to format.
+     * @since 1.0
+     */
+    public TextOf(final LocalDate date) {
+        this(date, new Iso().value());
+    }
+
+    /**
+     * Formats date using provided date time format string using default locale.
+     * @param date The date to format.
+     * @param format The format to use.
+     * @since 1.0
+     */
+    public TextOf(final LocalDate date, final String format) {
+        this(date, format, Locale.getDefault(Locale.Category.FORMAT));
+    }
+
+    /**
+     * Formats the date using the provided format string using the provided
+     * locale.
+     * @param date The date to format.
+     * @param format The format string to use.
+     * @param locale The locale to use.
+     * @since 1.0
+     */
+    public TextOf(final LocalDate date, final String format,
+        final Locale locale) {
+        this(date, DateTimeFormatter.ofPattern(format, locale));
+    }
+
+    /**
+     * Formats the date using the provided formatter.
+     * @param date The date to format.
+     * @param formatter The formatter to use.
+     * @since 1.0
+     */
+    public TextOf(final LocalDate date, final DateTimeFormatter formatter) {
+        this(
+            new StickyScalar<>(
+                () -> formatter.format(
+                    ZonedDateTime.of(
+                        date, LocalTime.MIN, ZoneId.systemDefault()
+                    )
+                )
+            )
+        );
     }
 
     /**
