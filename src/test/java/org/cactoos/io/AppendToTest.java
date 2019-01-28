@@ -24,9 +24,8 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.text.FormattedText;
+import java.nio.file.NoSuchFileException;
 import org.cactoos.text.JoinedText;
 import org.cactoos.text.RandomText;
 import org.junit.Rule;
@@ -52,21 +51,20 @@ public final class AppendToTest {
 
     /**
      * Ensures that AppendTo is failing on a negative predicate result.
-     * @throws Exception if fails
      */
     @Test
-    public void failsIfFileDoesNotExist() throws Exception {
-        // @checkstyle MagicNumber (1 line)
-        final File source = new File(new RandomText(5).asString());
+    public void failsIfFileDoesNotExist() {
+        final File source = new File(
+            new RandomText(
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
+            ).asString()
+        );
         new Assertion<>(
             "Can't throw exception with proper message",
             () -> () -> new AppendTo(source).stream(),
             new Throws<>(
-                new FormattedText(
-                "Can't append to %s file. It does not exist",
-                    source.getAbsolutePath()
-                ).asString(),
-                IOException.class
+                source.getPath(),
+                NoSuchFileException.class
             )
         ).affirm();
     }

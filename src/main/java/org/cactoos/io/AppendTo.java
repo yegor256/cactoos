@@ -24,13 +24,11 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import org.cactoos.Output;
-import org.cactoos.text.FormattedText;
 
 /**
  * Output that appends content to a given file.
@@ -64,14 +62,6 @@ public final class AppendTo implements Output {
 
     @Override
     public OutputStream stream() throws Exception {
-        if (!this.source.exists()) {
-            throw new IOException(
-                new FormattedText(
-                    "Can't append to %s file. It does not exist",
-                    this.source.getAbsolutePath()
-                ).asString()
-            );
-        }
         return Files.newOutputStream(
             this.source.toPath(), StandardOpenOption.APPEND
         );
