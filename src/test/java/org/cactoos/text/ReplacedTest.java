@@ -145,17 +145,18 @@ public final class ReplacedTest {
 
     @Test
     public void invalidRegex() {
+        final String regex = "invalid_regex{0,";
         new Assertion<>(
             "Doesn't throw proper exception",
             () -> () -> new Replaced(
                 new TextOf("text"),
-            "invalid_regex{0,",
-            "error"
+                regex,
+                "error"
             ).asString(),
             new Throws<>(
                 new PatternSyntaxException(
                     "Unclosed counted closure",
-                    "invalid_regex{0,",
+                    regex,
                     // @checkstyle MagicNumberCheck (1 line)
                     16
                 ).getMessage(),

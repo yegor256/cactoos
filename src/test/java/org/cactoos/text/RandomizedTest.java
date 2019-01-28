@@ -30,7 +30,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test for {@link Random}.
+ * Test for {@link Randomized}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -38,13 +38,13 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class RandomTest {
+public final class RandomizedTest {
 
     @Test
     public void generatesRandomTextOfRandomLength() {
         new Assertion<>(
             "Generated text is empty",
-            () -> new Random().asString().length(),
+            () -> new Randomized().asString().length(),
             Matchers.greaterThan(0)
         ).affirm();
     }
@@ -53,7 +53,7 @@ public final class RandomTest {
     public void generatesRandomTextOfSpecifiedLength() {
         new Assertion<>(
             "Generated text has incorrect length",
-            () -> new Random(512).asString().length(),
+            () -> new Randomized(512).asString().length(),
             new IsEqual<>(512)
         ).affirm();
     }
@@ -62,7 +62,7 @@ public final class RandomTest {
     public void generatesRandomTextOfSpecifiedChars() {
         new Assertion<>(
             "Generated text contains not allowed characters",
-            () -> new Random('a')
+            () -> new Randomized('a')
                 .asString()
                 .replaceAll("a", "")
                 .length(),
@@ -74,7 +74,7 @@ public final class RandomTest {
     public void generatesRandomTextOfSpecifiedCharsAndLength() {
         new Assertion<>(
             "Generated text doesn't match specification",
-            () -> new Random(10, 'a'),
+            () -> new Randomized(10, 'a'),
             new TextHasString("aaaaaaaaaa")
         ).affirm();
     }

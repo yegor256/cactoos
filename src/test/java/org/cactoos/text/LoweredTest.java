@@ -28,17 +28,17 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link Lower}.
+ * Test case for {@link Lowered}.
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LowerTest {
+public final class LoweredTest {
 
     @Test
     public void convertsText() {
         new Assertion<>(
             "Can't lower case a text",
-            () -> new Lower(new TextOf("HelLo!")),
+            () -> new Lowered(new TextOf("HelLo!")),
             new TextHasString("hello!")
         ).affirm();
     }
@@ -47,7 +47,7 @@ public final class LowerTest {
     public void convertsString() {
         new Assertion<>(
             "Can't lower case a string",
-            () -> new Lower("WoRLd!"),
+            () -> new Lowered("WoRLd!"),
             new TextHasString("world!")
         ).affirm();
     }

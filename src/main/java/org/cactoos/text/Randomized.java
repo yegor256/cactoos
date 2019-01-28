@@ -25,19 +25,20 @@ package org.cactoos.text;
 
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Random;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Random text.
+ * Randomized text.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.32
  */
-public final class Random implements Text {
+public final class Randomized implements Text {
 
     /**
      * Max length of generated text (if no length is specified).
@@ -57,15 +58,15 @@ public final class Random implements Text {
     /**
      * Characters index randomizer.
      */
-    private final java.util.Random indices;
+    private final Random indices;
 
     /**
      * Ctor.
      */
-    public Random() {
+    public Randomized() {
         this(
             () -> new SecureRandom().nextInt(
-                Random.MAX_RANDOM_LENGTH - 1
+                Randomized.MAX_RANDOM_LENGTH - 1
             ) + 1
         );
     }
@@ -74,7 +75,7 @@ public final class Random implements Text {
      * Ctor.
      * @param len Length of generated text.
      */
-    public Random(final Integer len) {
+    public Randomized(final Integer len) {
         this(() -> len);
     }
 
@@ -82,7 +83,7 @@ public final class Random implements Text {
      * Ctor.
      * @param len Length of generated text.
      */
-    public Random(final Scalar<Integer> len) {
+    public Randomized(final Scalar<Integer> len) {
         this(
             new ListOf<>(
                 '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*',
@@ -104,7 +105,7 @@ public final class Random implements Text {
      * Ctor.
      * @param chrs Array of characters allowed for generating.
      */
-    public Random(final Character... chrs) {
+    public Randomized(final Character... chrs) {
         this(new ListOf<>(chrs));
     }
 
@@ -112,11 +113,11 @@ public final class Random implements Text {
      * Ctor.
      * @param chrs List of characters allowed for generating.
      */
-    public Random(final List<Character> chrs) {
+    public Randomized(final List<Character> chrs) {
         this(
             chrs,
             () -> new SecureRandom().nextInt(
-                Random.MAX_RANDOM_LENGTH - 1
+                Randomized.MAX_RANDOM_LENGTH - 1
             ) + 1
         );
     }
@@ -126,7 +127,7 @@ public final class Random implements Text {
      * @param len Length of generated text.
      * @param chrs Array of characters allowed for generating.
      */
-    public Random(final Integer len, final Character... chrs) {
+    public Randomized(final Integer len, final Character... chrs) {
         this(() -> len, chrs);
     }
 
@@ -135,7 +136,7 @@ public final class Random implements Text {
      * @param len Length of generated text.
      * @param chrs Array of characters allowed for generating.
      */
-    public Random(final Scalar<Integer> len, final Character... chrs) {
+    public Randomized(final Scalar<Integer> len, final Character... chrs) {
         this(new ListOf<>(chrs), len);
     }
 
@@ -144,7 +145,7 @@ public final class Random implements Text {
      * @param chrs List of characters allowed for generating.
      * @param len Length of generated text.
      */
-    public Random(final List<Character> chrs, final Scalar<Integer> len) {
+    public Randomized(final List<Character> chrs, final Scalar<Integer> len) {
         this(chrs, len, new SecureRandom());
     }
 
@@ -154,8 +155,8 @@ public final class Random implements Text {
      * @param len Length of generated text.
      * @param rnd Characters index randomizer.
      */
-    public Random(final List<Character> chrs, final Scalar<Integer> len,
-        final java.util.Random rnd) {
+    public Randomized(final List<Character> chrs, final Scalar<Integer> len,
+        final Random rnd) {
         this.characters = chrs;
         this.length = len;
         this.indices = rnd;

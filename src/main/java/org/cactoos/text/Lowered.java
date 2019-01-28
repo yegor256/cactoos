@@ -34,13 +34,13 @@ import org.cactoos.Text;
  *
  * @since 0.1
  */
-public final class Lower extends TextEnvelope {
+public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
      * @param text The text
      */
-    public Lower(final String text) {
+    public Lowered(final String text) {
         this(new TextOf(text));
     }
 
@@ -48,7 +48,7 @@ public final class Lower extends TextEnvelope {
      * Ctor.
      * @param text The text
      */
-    public Lower(final Text text) {
+    public Lowered(final Text text) {
         this(text, Locale.ENGLISH);
     }
 
@@ -57,7 +57,7 @@ public final class Lower extends TextEnvelope {
      * @param text The text
      * @param locale The locale
      */
-    public Lower(final Text text, final Locale locale) {
+    public Lowered(final Text text, final Locale locale) {
         super((Scalar<String>) () -> text.asString().toLowerCase(locale));
     }
 
