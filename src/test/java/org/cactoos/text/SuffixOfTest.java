@@ -28,12 +28,12 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * Test case for {@link After}.
+ * Test case for {@link SuffixOf}.
  *
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class AfterTest {
+public final class SuffixOfTest {
 
     /**
      * Ensures that After is returning empty string if
@@ -43,7 +43,7 @@ public final class AfterTest {
     public void returnsEmptyIfThereIsNoBoundary() {
         new Assertion<>(
             "Given string is not empty",
-            () -> new After("Cactoos with description", "after"),
+            () -> new SuffixOf("Cactoos with description", "after"),
             new TextIs("")
         ).affirm();
     }
@@ -56,7 +56,7 @@ public final class AfterTest {
     public void returnsEmptyIfStringIsBoundary() {
         new Assertion<>(
             "Given string is not empty",
-            () -> new After("Boundary", "Boundary"),
+            () -> new SuffixOf("Boundary", "Boundary"),
             new TextIs("")
         ).affirm();
     }
@@ -69,7 +69,7 @@ public final class AfterTest {
     public void returnsAfterBoundaryString() {
         new Assertion<>(
             "Given strings are not equal",
-            () -> new After("Anti-pattern", "Anti-"),
+            () -> new SuffixOf("Anti-pattern", "Anti-"),
             new TextIs("pattern")
         ).affirm();
     }

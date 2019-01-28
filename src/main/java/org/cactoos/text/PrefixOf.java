@@ -26,34 +26,31 @@ package org.cactoos.text;
 import org.cactoos.Scalar;
 
 /**
- * Returns a text that is after given boundary.
+ * Returns a text that is before given boundary.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 1.0
- * @todo #981:30min Update qulice version(min. 0.18.10) and remove
- *  constructor suppress warnings which existence of is
- *  not needed, but is a bug in currently used version
  */
-public final class After extends TextEnvelope {
+public final class PrefixOf extends TextEnvelope {
 
     /**
      * Ctor.
      * @param text Text representing the text value
-     * @param boundary String after which text will be split
+     * @param boundary String to which text will be split
      */
     @SuppressWarnings({"PMD.CallSuperInConstructor",
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
-    public After(final String text, final String boundary) {
+    public PrefixOf(final String text, final String boundary) {
         super((Scalar<String>) () -> {
-            final String after;
+            final String prefix;
             final int idx = text.indexOf(boundary);
             if (idx >= 0) {
-                after = text.substring(idx + boundary.length());
+                prefix = text.substring(0, idx);
             } else {
-                after = "";
+                prefix = text;
             }
-            return after;
+            return prefix;
         });
     }
 }

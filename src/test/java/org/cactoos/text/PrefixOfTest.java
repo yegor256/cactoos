@@ -28,12 +28,12 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * Test case for {@link Before}.
+ * Test case for {@link PrefixOf}.
  *
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class BeforeTest {
+public final class PrefixOfTest {
 
     /**
      * Ensures that Before is returning given string if
@@ -43,7 +43,7 @@ public final class BeforeTest {
     public void returnsInputIfThereIsNoBoundary() {
         new Assertion<>(
             "Given strings are not equal",
-            () -> new Before("Cactoos", "bnd"),
+            () -> new PrefixOf("Cactoos", "bnd"),
             new TextIs("Cactoos")
         ).affirm();
     }
@@ -56,7 +56,7 @@ public final class BeforeTest {
     public void returnsEmptyIfStringIsBoundary() {
         new Assertion<>(
             "Given string is not empty",
-            () -> new Before("Boundary", "Boundary"),
+            () -> new PrefixOf("Boundary", "Boundary"),
             new TextIs("")
         ).affirm();
     }
@@ -69,7 +69,7 @@ public final class BeforeTest {
     public void returnsBeforeBoundaryString() {
         new Assertion<>(
             "Given strings are not equal",
-            () -> new Before("Anti-pattern", "-pattern"),
+            () -> new PrefixOf("Anti-pattern", "-pattern"),
             new TextIs("Anti")
         ).affirm();
     }

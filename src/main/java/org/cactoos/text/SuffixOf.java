@@ -26,31 +26,31 @@ package org.cactoos.text;
 import org.cactoos.Scalar;
 
 /**
- * Returns a text that is before given boundary.
+ * Returns a text that is after given boundary.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 1.0
  */
-public final class Before extends TextEnvelope {
+public final class SuffixOf extends TextEnvelope {
 
     /**
      * Ctor.
      * @param text Text representing the text value
-     * @param boundary String to which text will be split
+     * @param boundary String after which text will be split
      */
     @SuppressWarnings({"PMD.CallSuperInConstructor",
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
-    public Before(final String text, final String boundary) {
+    public SuffixOf(final String text, final String boundary) {
         super((Scalar<String>) () -> {
-            final String before;
+            final String suffix;
             final int idx = text.indexOf(boundary);
             if (idx >= 0) {
-                before = text.substring(0, idx);
+                suffix = text.substring(idx + boundary.length());
             } else {
-                before = text;
+                suffix = "";
             }
-            return before;
+            return suffix;
         });
     }
 }
