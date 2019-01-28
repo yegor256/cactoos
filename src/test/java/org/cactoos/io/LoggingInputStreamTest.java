@@ -27,7 +27,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
@@ -87,13 +86,19 @@ public final class LoggingInputStreamTest {
             this.getClass().getSimpleName()
         );
         new Assertion<>(
-            "Byte sequence does not match the source",
+            "First byte was not 20",
             stream::read,
-            Matchers.allOf(
-                new IsEqual<>(20),
-                new IsEqual<>(10),
-                new IsEqual<>(-1)
-            )
+            new IsEqual<>(20)
+        ).affirm();
+        new Assertion<>(
+            "Second byte was not 10",
+            stream::read,
+            new IsEqual<>(10)
+        ).affirm();
+        new Assertion<>(
+            "When stream is exhausted it didn't return -1",
+            stream::read,
+            new IsEqual<>(-1)
         ).affirm();
     }
 }
