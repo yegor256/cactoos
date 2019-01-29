@@ -42,9 +42,7 @@ public final class TempFolderTest {
         new Assertion<>(
             "Can not create new directory",
             () -> {
-                final File dir = new TempFolder(
-                    new RandomText('a', 'b', 'c').asString()
-                ).value().toFile();
+                final File dir = new TempFolder().value().toFile();
                 return dir.exists() && dir.isDirectory();
             },
             new IsTrue()

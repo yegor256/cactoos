@@ -30,9 +30,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.Scalar;
+import org.cactoos.Text;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.scalar.StickyScalar;
 import org.cactoos.text.JoinedText;
+import org.cactoos.text.RandomText;
+import org.cactoos.text.TextOf;
 
 /**
  * A temporary folder.
@@ -50,11 +53,38 @@ public final class TempFolder implements Scalar<Path>, Closeable {
 
     /**
      * Ctor.
+     * Creates new folder in temporary directory
+     * with a random name.
+     * @since 1.0
+     */
+    public TempFolder() {
+        this(
+            new JoinedText(
+                new TextOf(""),
+                new TextOf("tmp"),
+                // @checkstyle MagicNumber (1 line)
+                new RandomText(5, 'a', 'b', 'c')
+            )
+        );
+    }
+
+    /**
+     * Ctor.
      * Creates new folder in temporary directory.
      * @param path Relative path to new directory.
      * @since 1.0
      */
     public TempFolder(final String path) {
+        this(new TextOf(path));
+    }
+
+    /**
+     * Ctor.
+     * Creates new folder in temporary directory.
+     * @param path Relative path to new directory.
+     * @since 1.0
+     */
+    public TempFolder(final Text path) {
         this(
             new StickyScalar<>(
                 () -> Files.createDirectory(
@@ -62,7 +92,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
                         new JoinedText(
                             File.separator,
                             System.getProperty("java.io.tmpdir"),
-                            path
+                            path.asString()
                         ).asString()
                     )
                 )
