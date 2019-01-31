@@ -23,6 +23,8 @@
  */
 package org.cactoos.collection;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +33,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link CollectionEnvelope}.
@@ -141,6 +144,18 @@ public final class CollectionEnvelopeTest {
             "HashCode returns identical results for different entries",
             new CollectionOf<>("a", "b").hashCode(),
             new IsNot<>(new IsEqual<>(new CollectionOf<>("b", "a").hashCode()))
+        );
+    }
+
+    @Test
+    public void collectionEnvelopeShouldBeEqualToCollection() {
+        final CollectionEnvelope<String> envelope = new CollectionOf<>("a");
+        final Collection<String> collection = new ArrayList<>(1);
+        collection.add("a");
+        new Assertion<>(
+            "Envelope and collection should be equal",
+            () -> envelope,
+            new IsEqual<>(collection)
         );
     }
 
