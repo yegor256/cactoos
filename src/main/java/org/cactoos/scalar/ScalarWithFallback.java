@@ -70,7 +70,9 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
      * @param fbk Fallback
      */
     @SuppressWarnings("unchecked")
-    public ScalarWithFallback(final Scalar<T> origin, final FallbackFrom<T> fbk
+    public ScalarWithFallback(
+        final Scalar<T> origin,
+        final FallbackFrom<T> fbk
     ) {
         this(origin, new IterableOf<>(fbk));
     }
