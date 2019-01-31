@@ -31,6 +31,7 @@ import org.hamcrest.core.IsNot;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
@@ -312,5 +313,18 @@ public final class MapEnvelopeTest {
         final MapEntry<String, String> second =
             new MapEntry<>("key11", null);
         new MapOf<String, String>(first, second).hashCode();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void mapEnvelopeShouldCompareDerivedClasses() {
+        final MapEntry<Integer, String> entry = new MapEntry<>(1, "one");
+        final MapEnvelope<Integer, String> base = new MapOf<>(entry);
+        final Solid<Integer, String> derived = new Solid<>(entry);
+        new Assertion<>(
+            "Base and derived MapEnvelope of same content should be equal.",
+            () -> base,
+            new IsEqual<>(derived)
+        );
     }
 }
