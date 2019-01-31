@@ -121,7 +121,7 @@ public final class ScalarWithFallbackTest {
             "Can't find the closest fallback",
             new ScalarWithFallback<>(
                 () -> {
-                    throw new IllegalStateException("wat is raw");
+                    throw new IllegalStateException();
                 },
                 new IterableOf<>(
                     new FallbackFrom<>(
