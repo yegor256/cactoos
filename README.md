@@ -248,7 +248,9 @@ final OffsetDateTimeAsText text = new OffsetDateTimeAsText(date);
 Cactoos | Guava | Apache Commons | JDK 8
 ------ | ------ | ------ | ------
 `And` | `Iterables.all()` | - | -
-`Filtered` | `Iterables.filter()` | ? | -
+`Filtered` | `Iterables.filter()` | ? | `Stream.filter`
+`Joined` | ? | ? | `Stream.flatMap`
+`Mapped` | ? | ? | `Stream.map`
 `FormattedText` | - | - | `String.format()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
 `JoinedText` | - | - | `String.join()`
