@@ -32,8 +32,8 @@ import org.cactoos.Text;
  *
  * @since 0.29
  * @todo #897:30min All classes implementing Text need to be refactored
- *  to extend TextEnvelope - asString() should be removed and implementation from
- *  TextEnvelope should be used.
+ *  to extend TextEnvelope - asString() should be removed and implementation
+ *  from TextEnvelope should be used.
  */
 public final class Abbreviated implements Text {
 
