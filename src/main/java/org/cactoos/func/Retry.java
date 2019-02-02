@@ -24,7 +24,6 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
-import org.cactoos.Proc;
 
 /**
  * Func that will try a few times before throwing an exception.
@@ -34,11 +33,6 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.8
- * @todo #861:30min Avoid usage of null value in ctor(Proc),
- *  ctor(Proc, int), ctor(Proc, Func(Integer, Boolean)) which is against
- *  design principles.
- *  Perhaps in creating RetryProc?
- *  Please take a look on #551 and #843 for more details.
  */
 public final class Retry<X, Y> implements Func<X, Y> {
 
@@ -51,35 +45,6 @@ public final class Retry<X, Y> implements Func<X, Y> {
      * Exit condition.
      */
     private final Func<Integer, Boolean> exit;
-
-    /**
-     * Ctor.
-     * @param proc Func original
-     * @since 0.12
-     */
-    public Retry(final Proc<X> proc) {
-        this(new FuncOf<>(proc, null));
-    }
-
-    /**
-     * Ctor.
-     * @param proc Func original
-     * @param attempts Maximum number of attempts
-     * @since 0.12
-     */
-    public Retry(final Proc<X> proc, final int attempts) {
-        this(new FuncOf<>(proc, null), attempts);
-    }
-
-    /**
-     * Ctor.
-     * @param proc Func original
-     * @param ext Exit condition, returns TRUE if there is no more reason to try
-     * @since 0.12
-     */
-    public Retry(final Proc<X> proc, final Func<Integer, Boolean> ext) {
-        this(new FuncOf<>(proc, null), ext);
-    }
 
     /**
      * Ctor.

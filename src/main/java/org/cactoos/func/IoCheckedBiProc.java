@@ -35,6 +35,11 @@ import org.cactoos.BiProc;
  * @param <X> Type of input
  * @param <Y> Type of input
  * @since 0.22
+ * @todo #886:30min Avoid usage of null value in exec(first, second),
+ *  which is against our design principles.
+ *  This look like a duplication of functionality from IoCheckedBiFunc.
+ *  Perhaphs, we do not need this class?
+ *  Please take a look on #918 for more details.
  */
 public final class IoCheckedBiProc<X, Y> implements BiProc<X, Y> {
 
