@@ -89,7 +89,7 @@ public final class ScalarWithFallbackTest {
                 )
             ),
             new IsEqual<>(message)
-        );
+        ).affirm();
     }
 
     @Test
@@ -111,7 +111,7 @@ public final class ScalarWithFallbackTest {
                 )
             ),
             new IsEqual<>(message)
-        );
+        ).affirm();
     }
 
     @Test
@@ -135,7 +135,7 @@ public final class ScalarWithFallbackTest {
                 )
             ),
             new IsEqual<>(expected)
-        );
+        ).affirm();
     }
 
     @Test(expected = Exception.class)
