@@ -25,6 +25,7 @@ package org.cactoos.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -148,6 +149,17 @@ public final class CollectionEnvelopeTest {
     }
 
     @Test
+    public void emptyCollectionEnvelopeShouldBeEqualToEmptyCollection() {
+        final CollectionEnvelope<String> envelope = new CollectionOf<>();
+        final Collection<String> collection = Collections.emptyList();
+        new Assertion<>(
+            "Empty envelope and collection should be equal",
+            () -> envelope,
+            new IsEqual<>(collection)
+        ).affirm();
+    }
+
+    @Test
     public void collectionEnvelopeShouldBeEqualToCollection() {
         final CollectionEnvelope<String> envelope = new CollectionOf<>("a");
         final Collection<String> collection = new ArrayList<>(1);
@@ -156,7 +168,7 @@ public final class CollectionEnvelopeTest {
             "Envelope and collection should be equal",
             () -> envelope,
             new IsEqual<>(collection)
-        );
+        ).affirm();
     }
 
     /**
