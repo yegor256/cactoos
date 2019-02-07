@@ -131,6 +131,33 @@ Collection<String> filtered = new ListOf<>(
 );
 ```
 
+To flatten one iterable:
+```java
+new Joined<>(
+  new Mapped<>(
+    iter -> new IterableOf<>(
+      new CollectionOf<>(iter).toArray(new Integer[]{})
+    ),
+    new IterableOf<>(new IterableOf<>(1, 2, 3, 4, 5, 6))
+  )
+);    // Iterable<Integer>
+```
+
+To flatten and join several iterables:
+```java
+new Joined<>(
+  new Mapped<>(
+    iter -> new IterableOf<>(
+      new CollectionOf<>(iter).toArray(new Integer[]{})
+    ),
+    new Joined<>(
+      new IterableOf<>(new IterableOf<>(1, 2, 3)),
+      new IterableOf<>(new IterableOf<>(4, 5, 6))
+    )
+  )
+);    // Iterable<Integer>
+```
+
 To iterate a collection:
 
 ```java
