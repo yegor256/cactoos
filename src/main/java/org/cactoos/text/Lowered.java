@@ -23,39 +23,42 @@
  */
 package org.cactoos.text;
 
+import java.util.Locale;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
- * Repeat an text count times.
+ * Text in lower case.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.9
+ * @since 0.1
  */
-public final class RepeatedText extends TextEnvelope {
+public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param text A String
-     * @param count How many times repeat the Text
+     * @param text The text
      */
-    public RepeatedText(final String text, final int count) {
-        this(new TextOf(text), count);
+    public Lowered(final String text) {
+        this(new TextOf(text));
     }
 
     /**
      * Ctor.
-     * @param text The Text
-     * @param count How many times repeat the Text
+     * @param text The text
      */
-    public RepeatedText(final Text text, final int count) {
-        super((Scalar<String>) () -> {
-            final StringBuilder out = new StringBuilder();
-            for (int cnt = 0; cnt < count; ++cnt) {
-                out.append(text.asString());
-            }
-            return out.toString();
-        });
+    public Lowered(final Text text) {
+        this(text, Locale.ENGLISH);
     }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param locale The locale
+     */
+    public Lowered(final Text text, final Locale locale) {
+        super((Scalar<String>) () -> text.asString().toLowerCase(locale));
+    }
+
 }

@@ -23,32 +23,34 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link LowerText}.
- * @since 0.11
+ * Test case for {@link Repeated}.
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LowerTextTest {
+public final class RepeatedTest {
 
     @Test
-    public void convertsText() {
-        MatcherAssert.assertThat(
-            "Can't lower case a text",
-            new LowerText(new TextOf("HelLo!")),
-            new TextHasString("hello!")
-        );
+    public void repeatsWordsText() {
+        new Assertion<>(
+            "Can't repeats a text",
+            // @checkstyle MagicNumber (1 line)
+            () -> new Repeated("hello", 2),
+            new TextHasString("hellohello")
+        ).affirm();
     }
 
     @Test
-    public void convertsString() {
-        MatcherAssert.assertThat(
-            "Can't lower case a string",
-            new LowerText("WoRLd!"),
-            new TextHasString("world!")
-        );
+    public void repeatsCharText() {
+        new Assertion<>(
+            "Can't repeats a char",
+            // @checkstyle MagicNumber (1 line)
+            () -> new Repeated("A", 5),
+            new TextHasString("AAAAA")
+        ).affirm();
     }
 }

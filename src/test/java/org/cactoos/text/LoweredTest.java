@@ -23,42 +23,32 @@
  */
 package org.cactoos.text;
 
-import java.util.Locale;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Text in lower case.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.1
+ * Test case for {@link Lowered}.
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LowerText extends TextEnvelope {
+public final class LoweredTest {
 
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public LowerText(final String text) {
-        this(new TextOf(text));
+    @Test
+    public void convertsText() {
+        new Assertion<>(
+            "Can't lower case a text",
+            () -> new Lowered(new TextOf("HelLo!")),
+            new TextHasString("hello!")
+        ).affirm();
     }
 
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public LowerText(final Text text) {
-        this(text, Locale.ENGLISH);
+    @Test
+    public void convertsString() {
+        new Assertion<>(
+            "Can't lower case a string",
+            () -> new Lowered("WoRLd!"),
+            new TextHasString("world!")
+        ).affirm();
     }
-
-    /**
-     * Ctor.
-     * @param text The text
-     * @param lang Locale
-     */
-    public LowerText(final Text text, final Locale lang) {
-        super((Scalar<String>) () -> text.asString().toLowerCase(lang));
-    }
-
 }

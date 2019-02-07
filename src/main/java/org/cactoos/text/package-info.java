@@ -26,7 +26,7 @@
  * Text.
  *
  * @since 0.1
- * @todo #980:30min Continue applying the new class naming convention in effect:
+ * @todo #1005:30min Continue applying the new class naming convention:
  *  avoid compound names for decorators. Continue renaming classes implementing
  *  the {@link org.cactoos.Text}. More details you can find here
  *  https://github.com/yegor256/cactoos/issues/913#issuecomment-402332247.
