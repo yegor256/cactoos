@@ -28,12 +28,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Locale;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsBlank;
 import org.llorllale.cactoos.matchers.TextHasString;
 import org.llorllale.cactoos.matchers.TextIs;
 
@@ -311,6 +318,53 @@ public final class TextOfTest {
                 new IOException("").getStackTrace()
             ),
             new TextHasString("org.cactoos.text.TextOfTest")
+        );
+    }
+
+    @Test
+    public void readsLocalDateFormattedWithFormatString() {
+        final LocalDate date = LocalDate.of(2017, 12, 13);
+        new Assertion<>(
+            "Can't format a LocalDate with format.",
+            () -> new TextOf(date, "yyyy-MM-dd HH:mm:ss"),
+            new TextIs("2017-12-13 00:00:00")
+        ).affirm();
+    }
+
+    @Test
+    public void readsLocalDateFormattedWithFormatStringWithLocale() {
+        final LocalDate date = LocalDate.of(2017, 12, 13);
+        new Assertion<>(
+            "Can't format a LocalDate with format using locale.",
+            () -> new TextOf(
+                date, "yyyy MMM dd. HH.mm.ss", Locale.FRENCH
+            ),
+            new TextIs("2017 déc. 13. 00.00.00")
+        ).affirm();
+    }
+
+    @Test
+    public void readsLocalDateFormattedAsIsoDateTime() throws IOException {
+        final LocalDate date = LocalDate.of(2017, 12, 13);
+        new Assertion<>(
+            "Can't format a LocalDate with default/ISO format.",
+            () -> new TextOf(date),
+            new TextIs(
+                MessageFormat.format(
+                "2017-12-13T00:00:00{0}",
+                date.atTime(LocalTime.MIN).atZone(ZoneId.systemDefault())
+                    .getOffset().toString()
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void readsCurrentLocalDateAsText() throws IOException {
+        new Assertion<>(
+            "Can't format a LocalDate with ISO format.",
+            () -> new TextOf(LocalDate.now()).asString(),
+            new IsNot<>(new IsBlank())
         );
     }
 }

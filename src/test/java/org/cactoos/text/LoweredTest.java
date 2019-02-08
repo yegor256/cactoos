@@ -21,15 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.text;
+
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Input/Output, tests.
- *
- * @since 0.1
- * @todo #1005:30min Remove Sticky decorators from tests when:
- *  new cactoos-matchers will be released and updated as dependency.
- *  Right now, Assertion<>().affirm() is calling test twice.
- *  That is the reason why many tests in this package
- *  needs to be decorated with Sticky.
+ * Test case for {@link Lowered}.
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-package org.cactoos.io;
+public final class LoweredTest {
+
+    @Test
+    public void convertsText() {
+        new Assertion<>(
+            "Can't lower case a text",
+            () -> new Lowered(new TextOf("HelLo!")),
+            new TextHasString("hello!")
+        ).affirm();
+    }
+
+    @Test
+    public void convertsString() {
+        new Assertion<>(
+            "Can't lower case a string",
+            () -> new Lowered("WoRLd!"),
+            new TextHasString("world!")
+        ).affirm();
+    }
+}

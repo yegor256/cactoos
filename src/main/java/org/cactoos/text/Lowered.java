@@ -23,34 +23,42 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import java.util.Locale;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
 
 /**
- * Test case for {@link RepeatedText}.
- * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
+ * Text in lower case.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.1
  */
-public final class RepeatedTextTest {
+public final class Lowered extends TextEnvelope {
 
-    @Test
-    public void repeatsWordsText() {
-        MatcherAssert.assertThat(
-            "Can't repeats a text",
-            // @checkstyle MagicNumber (1 line)
-            new RepeatedText("hello", 2),
-            new TextHasString("hellohello")
-        );
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public Lowered(final String text) {
+        this(new TextOf(text));
     }
 
-    @Test
-    public void repeatsCharText() {
-        MatcherAssert.assertThat(
-            "Can't repeats a char",
-            // @checkstyle MagicNumber (1 line)
-            new RepeatedText("A", 5),
-            new TextHasString("AAAAA")
-        );
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public Lowered(final Text text) {
+        this(text, Locale.ENGLISH);
     }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param locale The locale
+     */
+    public Lowered(final Text text, final Locale locale) {
+        super((Scalar<String>) () -> text.asString().toLowerCase(locale));
+    }
+
 }

@@ -42,31 +42,21 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * @since 0.27
  */
-public final class ComparableText implements Text, Comparable<Text> {
-
-    /**
-     * The origin.
-     */
-    private final Text text;
+public final class ComparableText extends TextEnvelope
+    implements Comparable<Text> {
 
     /**
      * Ctor.
      * @param text The text
      */
     public ComparableText(final Text text) {
-        this.text = text;
+        super(text);
     }
 
     @Override
     public int compareTo(final Text other) {
         return new UncheckedScalar<>(
-            () -> this.text.asString().compareTo(other.asString())
+            () -> this.asString().compareTo(other.asString())
         ).value();
     }
-
-    @Override
-    public String asString() throws Exception {
-        return this.text.asString();
-    }
-
 }

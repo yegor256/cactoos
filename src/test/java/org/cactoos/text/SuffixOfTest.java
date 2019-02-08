@@ -21,52 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.text;
 
-import java.io.IOException;
-import org.cactoos.iterable.IterableOf;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * Unit tests for {@link Joined}.
- * @since 0.36
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * Test case for {@link SuffixOf}.
+ *
+ * @since 1.0
  */
-public final class JoinedTest {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class SuffixOfTest {
+
     /**
-     * Must join inputs in the given order.
-     * @throws IOException If an error occurs
+     * Ensures that After is returning empty string if
+     * there is no given boundary.
      */
     @Test
-    public void joinsOk() {
+    public void returnsEmptyIfThereIsNoBoundary() {
         new Assertion<>(
-            "Cannot properly join inputs",
-            () -> new Joined(
-                new InputOf("first"),
-                new InputOf("second"),
-                new InputOf("third")
-            ),
-            new InputHasContent("firstsecondthird")
+            "Given string is not empty",
+            () -> new SuffixOf("Cactoos with description", "after"),
+            new TextIs("")
         ).affirm();
     }
 
     /**
-     * Must join inputs of the iterable in the given order.
+     * Ensures that After is returning empty string if
+     * given boundary is equal to given string.
      */
     @Test
-    public void fromIterable() {
+    public void returnsEmptyIfStringIsBoundary() {
         new Assertion<>(
-            "Can't join iterable of inputs",
-            () -> new Joined(
-                new IterableOf<>(
-                    new InputOf("ab"),
-                    new InputOf("cde"),
-                    new InputOf("fghi")
-                )
-            ),
-            new InputHasContent("abcdefghi")
+            "Given string is not empty",
+            () -> new SuffixOf("Boundary", "Boundary"),
+            new TextIs("")
+        ).affirm();
+    }
+
+    /**
+     * Ensures that After is returning string
+     * after given boundary.
+     */
+    @Test
+    public void returnsAfterBoundaryString() {
+        new Assertion<>(
+            "Given strings are not equal",
+            () -> new SuffixOf("Anti-pattern", "Anti-"),
+            new TextIs("pattern")
         ).affirm();
     }
 }

@@ -24,38 +24,33 @@
 package org.cactoos.text;
 
 import org.cactoos.Scalar;
-import org.cactoos.Text;
 
 /**
- * Repeat an text count times.
+ * Returns a text that is after given boundary.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.9
+ * @since 1.0
  */
-public final class RepeatedText extends TextEnvelope {
+public final class SuffixOf extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param text A String
-     * @param count How many times repeat the Text
+     * @param text Text representing the text value
+     * @param boundary String after which text will be split
      */
-    public RepeatedText(final String text, final int count) {
-        this(new TextOf(text), count);
-    }
-
-    /**
-     * Ctor.
-     * @param text The Text
-     * @param count How many times repeat the Text
-     */
-    public RepeatedText(final Text text, final int count) {
+    @SuppressWarnings({"PMD.CallSuperInConstructor",
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
+    public SuffixOf(final String text, final String boundary) {
         super((Scalar<String>) () -> {
-            final StringBuilder out = new StringBuilder();
-            for (int cnt = 0; cnt < count; ++cnt) {
-                out.append(text.asString());
+            final String suffix;
+            final int idx = text.indexOf(boundary);
+            if (idx >= 0) {
+                suffix = text.substring(idx + boundary.length());
+            } else {
+                suffix = "";
             }
-            return out.toString();
+            return suffix;
         });
     }
 }

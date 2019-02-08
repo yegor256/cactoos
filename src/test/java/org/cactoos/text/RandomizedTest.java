@@ -23,14 +23,14 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test for {@link RandomText}.
+ * Test for {@link Randomized}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -38,44 +38,44 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class RandomTextTest {
+public final class RandomizedTest {
 
     @Test
     public void generatesRandomTextOfRandomLength() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Generated text is empty",
-            new RandomText().asString().length(),
+            () -> new Randomized().asString().length(),
             Matchers.greaterThan(0)
-        );
+        ).affirm();
     }
 
     @Test
     public void generatesRandomTextOfSpecifiedLength() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Generated text has incorrect length",
-            new RandomText(512).asString().length(),
+            () -> new Randomized(512).asString().length(),
             new IsEqual<>(512)
-        );
+        ).affirm();
     }
 
     @Test
     public void generatesRandomTextOfSpecifiedChars() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Generated text contains not allowed characters",
-            new RandomText('a')
+            () -> new Randomized('a')
                 .asString()
                 .replaceAll("a", "")
                 .length(),
             new IsEqual<>(0)
-        );
+        ).affirm();
     }
 
     @Test
     public void generatesRandomTextOfSpecifiedCharsAndLength() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Generated text doesn't match specification",
-            new RandomText(10, 'a'),
+            () -> new Randomized(10, 'a'),
             new TextHasString("aaaaaaaaaa")
-        );
+        ).affirm();
     }
 }

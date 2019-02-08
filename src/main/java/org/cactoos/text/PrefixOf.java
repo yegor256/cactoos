@@ -21,15 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.text;
+
+import org.cactoos.Scalar;
 
 /**
- * Input/Output, tests.
+ * Returns a text that is before given boundary.
  *
- * @since 0.1
- * @todo #1005:30min Remove Sticky decorators from tests when:
- *  new cactoos-matchers will be released and updated as dependency.
- *  Right now, Assertion<>().affirm() is calling test twice.
- *  That is the reason why many tests in this package
- *  needs to be decorated with Sticky.
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 1.0
  */
-package org.cactoos.io;
+public final class PrefixOf extends TextEnvelope {
+
+    /**
+     * Ctor.
+     * @param text Text representing the text value
+     * @param boundary String to which text will be split
+     */
+    @SuppressWarnings({"PMD.CallSuperInConstructor",
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
+    public PrefixOf(final String text, final String boundary) {
+        super((Scalar<String>) () -> {
+            final String prefix;
+            final int idx = text.indexOf(boundary);
+            if (idx >= 0) {
+                prefix = text.substring(0, idx);
+            } else {
+                prefix = text;
+            }
+            return prefix;
+        });
+    }
+}

@@ -30,7 +30,7 @@ import org.cactoos.Scalar;
  * The formatter.
  * @since 0.27
  */
-final class Iso implements Scalar<DateTimeFormatter> {
+public final class Iso implements Scalar<DateTimeFormatter> {
 
     @Override
     public DateTimeFormatter value() {

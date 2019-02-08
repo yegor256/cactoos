@@ -38,7 +38,7 @@ import org.cactoos.scalar.IoCheckedScalar;
  *
  * @since 0.2
  */
-public final class ReplacedText extends TextEnvelope {
+public final class Replaced extends TextEnvelope {
 
     /**
      * Ctor.
@@ -49,7 +49,7 @@ public final class ReplacedText extends TextEnvelope {
      * @param find The regular expression
      * @param replace The replacement string
      */
-    public ReplacedText(
+    public Replaced(
         final Text text,
         final String find,
         final String replace) {
@@ -66,7 +66,7 @@ public final class ReplacedText extends TextEnvelope {
      * <p>
      * Example usage:
      * <pre>{@code
-     * final String result = new ReplacedText(
+     * final String result = new Replaced(
      *      new TextOf("one two THREE four FIVE six"),
      *      () -> Pattern.compile("[a-z]+"),
      *      matcher -> String.valueOf(matcher.group().length())
@@ -80,7 +80,7 @@ public final class ReplacedText extends TextEnvelope {
      * @param func Transforms the resulting matcher object into a replacement
      *  string. Any exceptions will be wrapped in an {@link IOException}.
      */
-    public ReplacedText(
+    public Replaced(
         final Text text,
         final Scalar<Pattern> regex,
         final Func<Matcher, String> func) {

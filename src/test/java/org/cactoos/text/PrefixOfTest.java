@@ -23,42 +23,54 @@
  */
 package org.cactoos.text;
 
-import java.util.Locale;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * Text in lower case.
+ * Test case for {@link PrefixOf}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.1
+ * @since 1.0
  */
-public final class LowerText extends TextEnvelope {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class PrefixOfTest {
 
     /**
-     * Ctor.
-     * @param text The text
+     * Ensures that Before is returning given string if
+     * there is no given boundary.
      */
-    public LowerText(final String text) {
-        this(new TextOf(text));
+    @Test
+    public void returnsInputIfThereIsNoBoundary() {
+        new Assertion<>(
+            "Given strings are not equal",
+            () -> new PrefixOf("Cactoos", "bnd"),
+            new TextIs("Cactoos")
+        ).affirm();
     }
 
     /**
-     * Ctor.
-     * @param text The text
+     * Ensures that Before is returning empty string if
+     * given boundary is equal to given string.
      */
-    public LowerText(final Text text) {
-        this(text, Locale.ENGLISH);
+    @Test
+    public void returnsEmptyIfStringIsBoundary() {
+        new Assertion<>(
+            "Given string is not empty",
+            () -> new PrefixOf("Boundary", "Boundary"),
+            new TextIs("")
+        ).affirm();
     }
 
     /**
-     * Ctor.
-     * @param text The text
-     * @param lang Locale
+     * Ensures that Before is returning string
+     * before given boundary.
      */
-    public LowerText(final Text text, final Locale lang) {
-        super((Scalar<String>) () -> text.asString().toLowerCase(lang));
+    @Test
+    public void returnsBeforeBoundaryString() {
+        new Assertion<>(
+            "Given strings are not equal",
+            () -> new PrefixOf("Anti-pattern", "-pattern"),
+            new TextIs("Anti")
+        ).affirm();
     }
-
 }

@@ -21,15 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.text;
+
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Input/Output, tests.
- *
- * @since 0.1
- * @todo #1005:30min Remove Sticky decorators from tests when:
- *  new cactoos-matchers will be released and updated as dependency.
- *  Right now, Assertion<>().affirm() is calling test twice.
- *  That is the reason why many tests in this package
- *  needs to be decorated with Sticky.
+ * Test case for {@link Repeated}.
+ * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-package org.cactoos.io;
+public final class RepeatedTest {
+
+    @Test
+    public void repeatsWordsText() {
+        new Assertion<>(
+            "Can't repeats a text",
+            // @checkstyle MagicNumber (1 line)
+            () -> new Repeated("hello", 2),
+            new TextHasString("hellohello")
+        ).affirm();
+    }
+
+    @Test
+    public void repeatsCharText() {
+        new Assertion<>(
+            "Can't repeats a char",
+            // @checkstyle MagicNumber (1 line)
+            () -> new Repeated("A", 5),
+            new TextHasString("AAAAA")
+        ).affirm();
+    }
+}
