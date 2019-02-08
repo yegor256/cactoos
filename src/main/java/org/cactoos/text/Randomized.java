@@ -32,13 +32,13 @@ import org.cactoos.list.ListOf;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Random text.
+ * Randomized text.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.32
  */
-public final class RandomText implements Text {
+public final class Randomized implements Text {
 
     /**
      * Max length of generated text (if no length is specified).
@@ -58,15 +58,15 @@ public final class RandomText implements Text {
     /**
      * Characters index randomizer.
      */
-    private final Random random;
+    private final Random indices;
 
     /**
      * Ctor.
      */
-    public RandomText() {
+    public Randomized() {
         this(
             () -> new SecureRandom().nextInt(
-                RandomText.MAX_RANDOM_LENGTH - 1
+                Randomized.MAX_RANDOM_LENGTH - 1
             ) + 1
         );
     }
@@ -75,7 +75,7 @@ public final class RandomText implements Text {
      * Ctor.
      * @param len Length of generated text.
      */
-    public RandomText(final Integer len) {
+    public Randomized(final Integer len) {
         this(() -> len);
     }
 
@@ -83,7 +83,7 @@ public final class RandomText implements Text {
      * Ctor.
      * @param len Length of generated text.
      */
-    public RandomText(final Scalar<Integer> len) {
+    public Randomized(final Scalar<Integer> len) {
         this(
             new ListOf<>(
                 '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*',
@@ -105,7 +105,7 @@ public final class RandomText implements Text {
      * Ctor.
      * @param chrs Array of characters allowed for generating.
      */
-    public RandomText(final Character... chrs) {
+    public Randomized(final Character... chrs) {
         this(new ListOf<>(chrs));
     }
 
@@ -113,11 +113,11 @@ public final class RandomText implements Text {
      * Ctor.
      * @param chrs List of characters allowed for generating.
      */
-    public RandomText(final List<Character> chrs) {
+    public Randomized(final List<Character> chrs) {
         this(
             chrs,
             () -> new SecureRandom().nextInt(
-                RandomText.MAX_RANDOM_LENGTH - 1
+                Randomized.MAX_RANDOM_LENGTH - 1
             ) + 1
         );
     }
@@ -127,7 +127,7 @@ public final class RandomText implements Text {
      * @param len Length of generated text.
      * @param chrs Array of characters allowed for generating.
      */
-    public RandomText(final Integer len, final Character... chrs) {
+    public Randomized(final Integer len, final Character... chrs) {
         this(() -> len, chrs);
     }
 
@@ -136,7 +136,7 @@ public final class RandomText implements Text {
      * @param len Length of generated text.
      * @param chrs Array of characters allowed for generating.
      */
-    public RandomText(final Scalar<Integer> len, final Character... chrs) {
+    public Randomized(final Scalar<Integer> len, final Character... chrs) {
         this(new ListOf<>(chrs), len);
     }
 
@@ -145,7 +145,7 @@ public final class RandomText implements Text {
      * @param chrs List of characters allowed for generating.
      * @param len Length of generated text.
      */
-    public RandomText(final List<Character> chrs, final Scalar<Integer> len) {
+    public Randomized(final List<Character> chrs, final Scalar<Integer> len) {
         this(chrs, len, new SecureRandom());
     }
 
@@ -155,11 +155,11 @@ public final class RandomText implements Text {
      * @param len Length of generated text.
      * @param rnd Characters index randomizer.
      */
-    public RandomText(final List<Character> chrs, final Scalar<Integer> len,
+    public Randomized(final List<Character> chrs, final Scalar<Integer> len,
         final Random rnd) {
         this.characters = chrs;
         this.length = len;
-        this.random = rnd;
+        this.indices = rnd;
     }
 
     @Override
@@ -168,7 +168,7 @@ public final class RandomText implements Text {
         final StringBuilder builder = new StringBuilder(len);
         final int bound = this.characters.size();
         for (int index = 0; index < len; index = index + 1) {
-            builder.append(this.characters.get(this.random.nextInt(bound)));
+            builder.append(this.characters.get(this.indices.nextInt(bound)));
         }
         return builder.toString();
     }

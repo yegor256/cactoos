@@ -21,54 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.text;
 
-import java.security.SecureRandom;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.FuncApplies;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * Test case for {@link Retry}.
+ * Test case for {@link SuffixOf}.
  *
- * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 line)
+ * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class RetryTest {
+public final class SuffixOfTest {
 
+    /**
+     * Ensures that After is returning empty string if
+     * there is no given boundary.
+     */
     @Test
-    public void runsFuncMultipleTimes() {
+    public void returnsEmptyIfThereIsNoBoundary() {
         new Assertion<>(
-            "Didn't run multiple times",
-            () -> new Retry<>(
-                input -> {
-                    if (new SecureRandom().nextDouble() > 0.3d) {
-                        throw new IllegalArgumentException("May happen");
-                    }
-                    return 0;
-                },
-                Integer.MAX_VALUE
-            ),
-            new FuncApplies<>(true, 0)
+            "Given string is not empty",
+            () -> new SuffixOf("Cactoos with description", "after"),
+            new TextIs("")
         ).affirm();
     }
 
+    /**
+     * Ensures that After is returning empty string if
+     * given boundary is equal to given string.
+     */
     @Test
-    public void runsFuncConditionMultipleTimes() {
+    public void returnsEmptyIfStringIsBoundary() {
         new Assertion<>(
-            "Didn't check condition multiple times",
-            () -> new Retry<>(
-                input -> {
-                    if (new SecureRandom().nextDouble() > 0.3d) {
-                        throw new IllegalArgumentException("May happen");
-                    }
-                    return true;
-                },
-                count -> count == Integer.MAX_VALUE
-            ),
-            new FuncApplies<>(true, true)
+            "Given string is not empty",
+            () -> new SuffixOf("Boundary", "Boundary"),
+            new TextIs("")
+        ).affirm();
+    }
+
+    /**
+     * Ensures that After is returning string
+     * after given boundary.
+     */
+    @Test
+    public void returnsAfterBoundaryString() {
+        new Assertion<>(
+            "Given strings are not equal",
+            () -> new SuffixOf("Anti-pattern", "Anti-"),
+            new TextIs("pattern")
         ).affirm();
     }
 }
