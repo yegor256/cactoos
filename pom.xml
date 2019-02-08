@@ -44,7 +44,7 @@ The MIT License (MIT)
   <licenses>
     <license>
       <name>MIT</name>
-      <url>https://www.cactoos.org/LICENSE.txt</url>
+      <url>https://raw.githubusercontent.com/yegor256/cactoos/master/LICENSE.txt</url>
       <distribution>site</distribution>
     </license>
   </licenses>
