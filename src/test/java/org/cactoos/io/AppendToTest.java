@@ -27,7 +27,7 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.NoSuchFileException;
 import org.cactoos.text.JoinedText;
-import org.cactoos.text.RandomText;
+import org.cactoos.text.Randomized;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -55,7 +55,7 @@ public final class AppendToTest {
     @Test
     public void failsIfFileDoesNotExist() {
         final File source = new File(
-            new RandomText(
+            new Randomized(
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
             ).asString()
         );
