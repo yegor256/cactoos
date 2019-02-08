@@ -29,31 +29,18 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link JoinedText}.
+ * Test case for {@link Normalized}.
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class JoinedTextTest {
+public final class NormalizedTest {
 
     @Test
-    public void joinsStrings() throws IOException {
+    public void normalizesText() throws IOException {
         MatcherAssert.assertThat(
-            "Can't join strings",
-            new JoinedText(" ", "hello", "world"),
+            "Can't normalize a text",
+            new Normalized(" \t hello  \t\tworld   \t"),
             new TextHasString("hello world")
-        );
-    }
-
-    @Test
-    public void joinsTexts() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't join texts",
-            new JoinedText(
-                new TextOf(" "),
-                new TextOf("foo"),
-                new TextOf("bar")
-            ),
-            new TextHasString("foo bar")
         );
     }
 

@@ -23,37 +23,38 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
-import org.cactoos.Text;
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Normalize (replace sequences of whitespace characters by a single space)
- * a Text.
- *
+ * Test case for {@link Joined}.
  * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NormalizedText extends TextEnvelope {
+public final class JoinedTest {
 
-    /**
-     * Ctor.
-     * @param text A Text
-     */
-    public NormalizedText(final String text) {
-        this(new TextOf(text));
-    }
-
-    /**
-     * Ctor.
-     * @param text A Text
-     */
-    public NormalizedText(final Text text) {
-        super(
-            (Scalar<String>) () -> new Replaced(
-                new TrimmedText(text),
-                "\\s+",
-                " "
-            ).asString()
+    @Test
+    public void joinsStrings() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't join strings",
+            new Joined(" ", "hello", "world"),
+            new TextHasString("hello world")
         );
     }
-}
 
+    @Test
+    public void joinsTexts() throws IOException {
+        MatcherAssert.assertThat(
+            "Can't join texts",
+            new Joined(
+                new TextOf(" "),
+                new TextOf("foo"),
+                new TextOf("bar")
+            ),
+            new TextHasString("foo bar")
+        );
+    }
+
+}

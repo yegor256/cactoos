@@ -23,7 +23,7 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.text.JoinedText;
+import org.cactoos.text.Joined;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
@@ -39,7 +39,7 @@ public final class ReversedTest {
     public void reversesIterable() {
         MatcherAssert.assertThat(
             "Can't reverse an iterable",
-            new JoinedText(
+            new Joined(
                 " ",
                 new Reversed<>(
                     new IterableOf<>(

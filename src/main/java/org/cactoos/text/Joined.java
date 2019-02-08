@@ -36,14 +36,14 @@ import org.cactoos.iterable.Mapped;
  *
  * @since 0.9
  */
-public final class JoinedText extends TextEnvelope {
+public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
      * @param delimit Delimit among strings
      * @param strs Strings to be joined
      */
-    public JoinedText(final String delimit, final String... strs) {
+    public Joined(final String delimit, final String... strs) {
         this(delimit, new IterableOf<>(strs));
     }
 
@@ -52,7 +52,7 @@ public final class JoinedText extends TextEnvelope {
      * @param delimit Delimit among strings
      * @param strs Strings to be joined
      */
-    public JoinedText(final String delimit, final Iterable<String> strs) {
+    public Joined(final String delimit, final Iterable<String> strs) {
         this(
             new TextOf(delimit),
             new Mapped<>(TextOf::new, strs)
@@ -64,7 +64,7 @@ public final class JoinedText extends TextEnvelope {
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
-    public JoinedText(final Text delimit, final Text... txts) {
+    public Joined(final Text delimit, final Text... txts) {
         this(delimit, new IterableOf<>(txts));
     }
 
@@ -73,7 +73,7 @@ public final class JoinedText extends TextEnvelope {
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
-    public JoinedText(final Text delimit, final Iterable<? extends Text> txts) {
+    public Joined(final Text delimit, final Iterable<? extends Text> txts) {
         super((Scalar<String>) () -> {
             final StringJoiner joint =
                 new StringJoiner(delimit.asString());

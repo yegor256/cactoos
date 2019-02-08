@@ -23,33 +23,37 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
- * Text without control characters (char &lt;= 32) from both ends.
+ * Normalize (replace sequences of whitespace characters by a single space)
+ * a Text.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.1
+ * @since 0.9
  */
-public final class TrimmedText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
+public final class Normalized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param text The text
+     * @param text A Text
      */
-    public TrimmedText(final Text text) {
-        this.origin = text;
+    public Normalized(final String text) {
+        this(new TextOf(text));
     }
 
-    @Override
-    public String asString() throws Exception {
-        return this.origin.asString().trim();
+    /**
+     * Ctor.
+     * @param text A Text
+     */
+    public Normalized(final Text text) {
+        super(
+            (Scalar<String>) () -> new Replaced(
+                new Trimmed(text),
+                "\\s+",
+                " "
+            ).asString()
+        );
     }
-
 }
+

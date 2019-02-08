@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
 import org.cactoos.iterable.Endless;
 import org.cactoos.iterable.HeadOf;
-import org.cactoos.text.JoinedText;
+import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -57,7 +57,7 @@ public final class BytesOfTest {
             "Can't read large content from in-memory Input",
             new BytesOf(
                 new InputOf(
-                    new JoinedText(
+                    new Joined(
                         "",
                         new HeadOf<>(
                             multiplier, new Endless<>(body)
@@ -181,7 +181,7 @@ public final class BytesOfTest {
                 )
             ),
             new TextHasString(
-                new JoinedText(
+                new Joined(
                     System.lineSeparator(),
                     "java.io.IOException: It doesn't work at all",
                     "\tat org.cactoos.io.BytesOfTest"

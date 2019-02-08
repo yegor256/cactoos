@@ -27,7 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
-import org.cactoos.text.JoinedText;
+import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
 
 /**
@@ -64,7 +64,7 @@ public final class FakeHandler extends Handler {
     @Override
     public String toString() {
         return new UncheckedText(
-            new JoinedText(
+            new Joined(
                 System.lineSeparator(),
                 this.entries
             )

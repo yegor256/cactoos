@@ -68,7 +68,7 @@ public final class TextEnvelopeTest {
     /**
      * Test for {@link TextEnvelope#equals(Object)} method. Must assert
      * that the envelope value is equal another text representing the same
-     * value (in this case a {@link JoinedText}).
+     * value (in this case a {@link Joined}).
      */
     @Test
     public void testEqualsOtherText() {
@@ -76,7 +76,7 @@ public final class TextEnvelopeTest {
             "Envelope does not match another text representing the same value",
             new TextEnvelopeDummy("isequaltoanothertext"),
             new IsEqual<>(
-                new JoinedText("", "is", "equal", "to", "another", "text")
+                new Joined("", "is", "equal", "to", "another", "text")
             )
         );
     }

@@ -23,25 +23,32 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link NormalizedText}.
- * @since 0.9
+ * Test case for {@link Trimmed}.
+ * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NormalizedTextTest {
+public final class TrimmedTest {
 
     @Test
-    public void normalizesText() throws IOException {
+    public void convertsText() {
         MatcherAssert.assertThat(
-            "Can't normalize a text",
-            new NormalizedText(" \t hello  \t\tworld   \t"),
-            new TextHasString("hello world")
+            "Can't trim a text",
+            new Trimmed(new TextOf("  Hello!   \t ")),
+            new TextHasString("Hello!")
         );
     }
 
+    @Test
+    public void trimmedBlankTextIsEmptyText() {
+        MatcherAssert.assertThat(
+            "Can't trim a blank text",
+            new Trimmed(new TextOf("  \t ")),
+            new TextHasString("")
+        );
+    }
 }

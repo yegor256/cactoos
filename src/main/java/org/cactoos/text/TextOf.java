@@ -330,7 +330,7 @@ public final class TextOf extends TextEnvelope {
      */
     public TextOf(final Iterable<?> iterable) {
         this(
-            () -> new JoinedText(
+            () -> new Joined(
                 ", ",
                 new Mapped<>(
                     Object::toString,

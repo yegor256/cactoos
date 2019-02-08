@@ -45,7 +45,7 @@ public final class PaddedStartText extends TextEnvelope {
         final Text text, final int length, final char symbol) {
         super((Scalar<String>) () -> {
             final String original = text.asString();
-            return new JoinedText(
+            return new Joined(
                 new TextOf(""),
                 new Repeated(
                     new TextOf(symbol), length - original.length()
