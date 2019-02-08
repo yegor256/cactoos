@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import java.io.File;
-import org.cactoos.text.RandomText;
+import org.cactoos.text.Randomized;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
@@ -52,7 +52,7 @@ public final class TempFolderTest {
     @Test
     public void deletesDirectory() throws Exception {
         final TempFolder dir = new TempFolder(
-            new RandomText('d', 'e', 'g').asString()
+            new Randomized('d', 'e', 'g').asString()
         );
         dir.close();
         new Assertion<>(

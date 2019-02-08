@@ -34,7 +34,7 @@ import org.cactoos.Text;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.scalar.StickyScalar;
 import org.cactoos.text.JoinedText;
-import org.cactoos.text.RandomText;
+import org.cactoos.text.Randomized;
 import org.cactoos.text.TextOf;
 
 /**
@@ -62,7 +62,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
             new JoinedText(
                 new TextOf(""),
                 new TextOf("tmp"),
-                new RandomText(
+                new Randomized(
                     // @checkstyle MagicNumber (1 line)
                     5,
                     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
