@@ -23,10 +23,11 @@
  */
 package org.cactoos;
 
+import org.cactoos.bytes.NoNulls;
 import org.junit.Test;
 
 /**
- * Test case for {@link Bytes.NoNulls}.
+ * Test case for {@link NoNulls}.
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -34,16 +35,16 @@ public final class BytesTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void failForNullArgument() throws Exception {
-        new Bytes.NoNulls(null).asBytes();
+        new NoNulls(null).asBytes();
     }
 
     @Test(expected = IllegalStateException.class)
     public void failForNullResult() throws Exception {
-        new Bytes.NoNulls(() -> null).asBytes();
+        new NoNulls(() -> null).asBytes();
     }
 
     @Test
     public void okForNoNulls() throws Exception {
-        new Bytes.NoNulls(() -> new byte[1]).asBytes();
+        new NoNulls(() -> new byte[1]).asBytes();
     }
 }

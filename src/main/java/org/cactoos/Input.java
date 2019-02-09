@@ -23,7 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -55,36 +54,4 @@ public interface Input {
      */
     InputStream stream() throws Exception;
 
-    /**
-     * Input check for no nulls.
-     *
-     * @since 0.10
-     * @todo #852:30min Move NoNulls implementations of Input, Output, and Bytes
-     *  to their own classes in order to provide the NoNulls classes API
-     *  consistency.
-     */
-    final class NoNulls implements Input {
-        /**
-         * The input.
-         */
-        private final Input origin;
-        /**
-         * Ctor.
-         * @param input The input
-         */
-        public NoNulls(final Input input) {
-            this.origin = input;
-        }
-        @Override
-        public InputStream stream() throws Exception {
-            if (this.origin == null) {
-                throw new IOException("NULL instead of a valid input");
-            }
-            final InputStream stream = this.origin.stream();
-            if (stream == null) {
-                throw new IOException("NULL instead of a valid stream");
-            }
-            return stream;
-        }
-    }
 }

@@ -21,44 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
 
-import java.io.OutputStream;
-import org.cactoos.io.OutputTo;
-import org.cactoos.io.TeeInput;
+package org.cactoos.bytes;
+
+import org.cactoos.Bytes;
 
 /**
- * Output.
+ * Bytes check for no nulls.
  *
- * <p>Here is for example how {@link Output} can be used
- * together with {@link Input} in order to modify the content
- * of a text file:</p>
- *
- * <pre> new LengthOf(
- *   new TeeInput(
- *     new InputOf(new TextOf("Hello, world!")),
- *     new OutputTo(new File("/tmp/names.txt"))
- *   )
- * ).asValue();</pre>
- *
- * <p>Here {@link OutputTo} implements {@link Output} and behaves like
- * one, providing write-only access to the encapsulated
- * {@link java.io.File}. The {@link TeeInput} copies the content of the
- * input to the output. The {@link org.cactoos.scalar.LengthOf}
- * calculates the size of the copied data.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @see OutputTo
- * @since 0.1
+ * @since 0.11
  */
-public interface Output {
-
+public final class NoNulls implements Bytes {
     /**
-     * Get write access to it.
-     * @return OutputStream to write to
-     * @throws Exception If something goes wrong
+     * The input.
      */
-    OutputStream stream() throws Exception;
-
+    private final Bytes origin;
+    /**
+     * Ctor.
+     * @param bytes The input
+     */
+    public NoNulls(final Bytes bytes) {
+        this.origin = bytes;
+    }
+    @Override
+    public byte[] asBytes() throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid bytes"
+            );
+        }
+        final byte[] bytes = this.origin.asBytes();
+        if (bytes == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid byte array"
+            );
+        }
+        return bytes;
+    }
 }

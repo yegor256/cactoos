@@ -23,11 +23,12 @@
  */
 package org.cactoos;
 
+import org.cactoos.input.NoNulls;
 import org.cactoos.io.DeadInput;
 import org.junit.Test;
 
 /**
- * Test case for {@link Input.NoNulls}.
+ * Test case for {@link NoNulls}.
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -35,16 +36,16 @@ public final class InputTest {
 
     @Test(expected = Exception.class)
     public void failForNullInput() throws Exception {
-        new Input.NoNulls(null).stream();
+        new NoNulls(null).stream();
     }
 
     @Test(expected = Exception.class)
     public void failForNullStream() throws Exception {
-        new Input.NoNulls(() -> null).stream();
+        new NoNulls(() -> null).stream();
     }
 
     @Test
     public void okForNoNullInput() throws Exception {
-        new Input.NoNulls(new DeadInput()).stream();
+        new NoNulls(new DeadInput()).stream();
     }
 }

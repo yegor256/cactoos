@@ -21,44 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
 
+package org.cactoos.output;
+
+import java.io.IOException;
 import java.io.OutputStream;
-import org.cactoos.io.OutputTo;
-import org.cactoos.io.TeeInput;
+import org.cactoos.Output;
 
 /**
- * Output.
+ * Output check for no nulls.
  *
- * <p>Here is for example how {@link Output} can be used
- * together with {@link Input} in order to modify the content
- * of a text file:</p>
- *
- * <pre> new LengthOf(
- *   new TeeInput(
- *     new InputOf(new TextOf("Hello, world!")),
- *     new OutputTo(new File("/tmp/names.txt"))
- *   )
- * ).asValue();</pre>
- *
- * <p>Here {@link OutputTo} implements {@link Output} and behaves like
- * one, providing write-only access to the encapsulated
- * {@link java.io.File}. The {@link TeeInput} copies the content of the
- * input to the output. The {@link org.cactoos.scalar.LengthOf}
- * calculates the size of the copied data.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @see OutputTo
- * @since 0.1
+ * @since 0.10
  */
-public interface Output {
-
+public final class NoNulls implements Output {
     /**
-     * Get write access to it.
-     * @return OutputStream to write to
-     * @throws Exception If something goes wrong
+     * The output.
      */
-    OutputStream stream() throws Exception;
-
+    private final Output origin;
+    /**
+     * Ctor.
+     * @param output The output
+     */
+    public NoNulls(final Output output) {
+        this.origin = output;
+    }
+    @Override
+    public OutputStream stream() throws Exception {
+        if (this.origin == null) {
+            throw new IOException("NULL instead of a valid output");
+        }
+        final OutputStream stream = this.origin.stream();
+        if (stream == null) {
+            throw new IOException("NULL instead of a valid stream");
+        }
+        return stream;
+    }
 }
