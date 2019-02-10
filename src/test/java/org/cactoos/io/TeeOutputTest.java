@@ -32,6 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.InputHasContent;
 import org.llorllale.cactoos.matchers.TextIs;
 
 /**
@@ -52,18 +53,14 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output to Output and return Input",
-            () -> new TextOf(
-                new Sticky(
-                    new TeeInput(
-                        new InputOf("Hello, товарищ!"),
-                            new TeeOutput(
-                            new OutputTo(baos),
-                            new OutputTo(new ByteArrayOutputStream())
-                        )
+            () -> new TeeInput(
+                new InputOf("Hello, товарищ!"),
+                    new TeeOutput(
+                        new OutputTo(baos),
+                        new OutputTo(new ByteArrayOutputStream())
                     )
-                )
             ),
-            new TextIs(
+            new InputHasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
         ).affirm();
@@ -74,18 +71,14 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output with writer",
-            () -> new TextOf(
-                new Sticky(
-                    new TeeInput(
-                        new InputOf("Hello, товарищ! writer"),
-                        new TeeOutput(
-                            new OutputTo(baos),
-                            new WriterTo(new ByteArrayOutputStream())
-                        )
-                    )
+            () -> new TeeInput(
+                new InputOf("Hello, товарищ! writer"),
+                new TeeOutput(
+                    new OutputTo(baos),
+                    new WriterTo(new ByteArrayOutputStream())
                 )
             ),
-            new TextIs(
+            new InputHasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
         ).affirm();
@@ -96,21 +89,17 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output with writer and charset",
-            () -> new TextOf(
-                new Sticky(
-                    new TeeInput(
-                        new InputOf(
-                            "Hello, товарищ! writer and charset"
-                        ),
-                        new TeeOutput(
-                            new OutputTo(baos),
-                            new WriterTo(new ByteArrayOutputStream()),
-                            StandardCharsets.UTF_8
-                        )
-                    )
+            () -> new TeeInput(
+                new InputOf(
+                    "Hello, товарищ! writer and charset"
+                ),
+                new TeeOutput(
+                    new OutputTo(baos),
+                    new WriterTo(new ByteArrayOutputStream()),
+                    StandardCharsets.UTF_8
                 )
             ),
-            new TextIs(
+            new InputHasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
         ).affirm();
@@ -163,20 +152,16 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output with output stream",
-            () -> new TextOf(
-                new Sticky(
-                    new TeeInput(
-                        new InputOf(
-                            "Hello, товарищ! with output stream"
-                        ),
-                        new TeeOutput(
-                            new OutputTo(baos),
-                            new ByteArrayOutputStream()
-                        )
-                    )
+            () -> new TeeInput(
+                new InputOf(
+                    "Hello, товарищ! with output stream"
+                ),
+                new TeeOutput(
+                    new OutputTo(baos),
+                    new ByteArrayOutputStream()
                 )
             ),
-            new TextIs(
+            new InputHasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
         ).affirm();

@@ -61,7 +61,7 @@ public final class AppendToTest {
         );
         new Assertion<>(
             "Can't throw exception with proper message",
-            () -> () -> new AppendTo(source).stream(),
+            () -> new AppendTo(source).stream(),
             new Throws<>(
                 source.getPath(),
                 NoSuchFileException.class

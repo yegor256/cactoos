@@ -28,7 +28,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.InputHasContent;
 import org.llorllale.cactoos.matchers.TextIs;
 
 /**
@@ -50,10 +50,8 @@ public final class HeadInputStreamTest {
         stream.skip(3L);
         new Assertion<>(
             "Incorrect head of the input stream has been read",
-            () -> new TextOf(
-                new Sticky(() -> stream)
-            ),
-            new TextHasString("tS")
+            () -> new InputOf(stream),
+            new InputHasContent("tS")
         ).affirm();
     }
 
@@ -82,10 +80,8 @@ public final class HeadInputStreamTest {
         stream.reset();
         new Assertion<>(
             "Reset didn't change the state",
-            () -> new TextOf(
-                new Sticky(() -> stream)
-            ),
-            new TextHasString("testR")
+            () -> new InputOf(stream),
+            new InputHasContent("testR")
         ).affirm();
     }
 

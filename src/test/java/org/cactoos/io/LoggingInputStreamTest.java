@@ -53,7 +53,7 @@ public final class LoggingInputStreamTest {
         );
         new Assertion<>(
             "Read doesn't throw an the exception.",
-            () -> stream::read,
+            () -> stream.read(),
             new Throws<>(message, IOException.class)
         ).affirm();
     }

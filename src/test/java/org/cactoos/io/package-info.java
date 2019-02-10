@@ -26,10 +26,5 @@
  * Input/Output, tests.
  *
  * @since 0.1
- * @todo #1005:30min Remove Sticky decorators from tests when:
- *  new cactoos-matchers will be released and updated as dependency.
- *  Right now, Assertion<>().affirm() is calling test twice.
- *  That is the reason why many tests in this package
- *  needs to be decorated with Sticky.
  */
 package org.cactoos.io;

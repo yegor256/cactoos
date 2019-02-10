@@ -37,9 +37,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.InputHasContent;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
-import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link WriterAsOutputStream}.
@@ -62,24 +62,20 @@ public final class WriterAsOutputStreamTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Input to Writer",
-            () -> new TextOf(
-                new Sticky(
-                    new TeeInput(
-                        new InputOf(content),
-                        new OutputTo(
-                            new WriterAsOutputStream(
-                                new OutputStreamWriter(
-                                    baos, StandardCharsets.UTF_8
-                                ),
-                                StandardCharsets.UTF_8,
-                                // @checkstyle MagicNumber (1 line)
-                                13
-                            )
-                        )
+            () -> new TeeInput(
+                new InputOf(content),
+                new OutputTo(
+                    new WriterAsOutputStream(
+                        new OutputStreamWriter(
+                            baos, StandardCharsets.UTF_8
+                        ),
+                        StandardCharsets.UTF_8,
+                        // @checkstyle MagicNumber (1 line)
+                        13
                     )
                 )
             ),
-            new TextIs(
+            new InputHasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
         ).affirm();
@@ -94,22 +90,18 @@ public final class WriterAsOutputStreamTest {
         )) {
             new Assertion<>(
                 "Can't copy Input to Output and return Input",
-                () -> new TextOf(
-                    new Sticky(
-                        new TeeInput(
-                            new ResourceOf("org/cactoos/large-text.txt"),
-                            new OutputTo(
-                                new WriterAsOutputStream(
-                                    writer,
-                                    StandardCharsets.UTF_8,
-                                    // @checkstyle MagicNumber (1 line)
-                                    345
-                                )
-                            )
+                () -> new TeeInput(
+                    new ResourceOf("org/cactoos/large-text.txt"),
+                    new OutputTo(
+                        new WriterAsOutputStream(
+                            writer,
+                            StandardCharsets.UTF_8,
+                            // @checkstyle MagicNumber (1 line)
+                            345
                         )
                     )
                 ),
-                new TextIs(
+                new InputHasContent(
                     new TextOf(temp)
                 )
             ).affirm();

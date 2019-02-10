@@ -148,7 +148,7 @@ public final class ReplacedTest {
         final String regex = "invalid_regex{0,";
         new Assertion<>(
             "Doesn't throw proper exception",
-            () -> () -> new Replaced(
+            () -> new Replaced(
                 new TextOf("text"),
                 regex,
                 "error"

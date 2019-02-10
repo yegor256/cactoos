@@ -33,7 +33,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link WriterAsOutput}.
@@ -58,15 +58,11 @@ public final class WriterAsOutputTest {
         )) {
             new Assertion<>(
                 "Can't copy Input to Output and return Input",
-                () -> new TextOf(
-                    new Sticky(
-                        new TeeInput(
-                            new ResourceOf("org/cactoos/large-text.txt"),
-                            new WriterAsOutput(writer)
-                        )
-                    )
+                () -> new TeeInput(
+                    new ResourceOf("org/cactoos/large-text.txt"),
+                    new WriterAsOutput(writer)
                 ),
-                new TextIs(
+                new InputHasContent(
                     new TextOf(temp)
                 )
             ).affirm();
