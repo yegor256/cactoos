@@ -138,7 +138,16 @@ The MIT License (MIT)
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
-                <exclude>findbugs:.*</exclude>
+                <exclude>findbugs:org.cactoos.text.TextEnvelopeTest</exclude>
+                <exclude>findbugs:org.cactoos.text.ComparableText</exclude>
+                <exclude>findbugs:org.cactoos.collection.CollectionEnvelope</exclude>
+                <exclude>findbugs:org.cactoos.map.MapEnvelope</exclude>
+                <exclude>findbugs:org.cactoos.text.TextEnvelope</exclude>
+                <exclude>findbugs:org.cactoos.map.MapEntry</exclude>
+                <exclude>findbugs:org.cactoos.scalar.NumberOf</exclude>
+                <exclude>findbugs:org.cactoos.text.TextEnvelopeTest</exclude>
+                <exclude>findbugs:org.cactoos.iterator.Cycled</exclude>
+                <exclude>findbugs:org.cactoos.iterator.Endless</exclude>
               </excludes>
             </configuration>
           </plugin>
