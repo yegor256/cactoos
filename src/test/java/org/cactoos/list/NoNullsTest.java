@@ -23,10 +23,11 @@
  */
 package org.cactoos.list;
 
-import java.util.ArrayList;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import java.util.ArrayList;
 
 /**
  * Test cases for {@link NoNulls}.
@@ -101,4 +102,49 @@ public final class NoNullsTest {
             list
         ).remove(0);
     }
+
+    @Test
+    public void getThrowsErrorIfListIteratorHasNullValue() {
+        this.exception.expect(IllegalStateException.class);
+        this.exception.expectMessage(
+                "Item #0 of #listIterator() is NULL"
+        );
+        new ListIteratorNoNulls<>(
+                new ListOf<>(null, 2, 3).listIterator()
+        ).next();
+    }
+
+    @Test
+    public void addThrowsErrorForImmutableListIterator(){
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage(
+                "Iterator is read-only and doesn't allow adding items"
+        );
+        new ListIteratorNoNulls<>(
+                new ListOf<>(1, 2, 3).listIterator()
+        ).add(4);
+    }
+
+    @Test
+    public void removeThrowsErrorForImmutableListIterator(){
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage(
+                "Iterator is read-only and doesn't allow removing items"
+        );
+        new ListIteratorNoNulls<>(
+                new ListOf<>(1, 2, 3).listIterator()
+        ).remove();
+    }
+
+    @Test
+    public void setThrowsErrorForImmutableListIterator(){
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage(
+                "Iterator is read-only and doesn't allow rewriting items"
+        );
+        new ListIteratorNoNulls<>(
+                new ListOf<>(1, 2, 3).listIterator()
+        ).set(4);
+    }
+
 }
