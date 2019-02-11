@@ -23,12 +23,13 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * A decorator of {@link List} that tolerates no NULLs.
@@ -229,12 +230,12 @@ public final class NoNulls<T> implements List<T> {
 
     @Override
     public ListIterator<T> listIterator() {
-        return this.list.listIterator();
+        return new ListIteratorNoNulls<>(this.list.listIterator());
     }
 
     @Override
     public ListIterator<T> listIterator(final int index) {
-        return this.list.listIterator(index);
+        return new ListIteratorNoNulls<>(this.list.listIterator(index));
     }
 
     @Override
