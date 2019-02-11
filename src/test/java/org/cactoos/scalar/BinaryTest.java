@@ -45,7 +45,7 @@ public final class BinaryTest {
         final AtomicInteger counter = new AtomicInteger(0);
         final Binary binary = new Binary(
             new True(),
-            (Runnable) counter::incrementAndGet
+            counter::incrementAndGet
         );
         new Assertion<>(
             "Binary has to return true",
@@ -65,7 +65,7 @@ public final class BinaryTest {
         final AtomicInteger counter = new AtomicInteger(0);
         final Binary binary = new Binary(
             new False(),
-            (Runnable) counter::incrementAndGet
+            counter::incrementAndGet
         );
         new Assertion<>(
             "Binary has to return false",

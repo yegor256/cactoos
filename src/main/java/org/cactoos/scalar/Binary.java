@@ -23,7 +23,9 @@
  */
 package org.cactoos.scalar;
 
+import org.cactoos.Proc;
 import org.cactoos.Scalar;
+import org.cactoos.func.ProcOf;
 
 /**
  * Binary operation.
@@ -54,9 +56,9 @@ public final class Binary implements Scalar<Boolean> {
     private final Scalar<Boolean> condition;
 
     /**
-     * Scalar executed when condition is true.
+     * Proc executed when condition is true.
      */
-    private final Scalar<?> consequent;
+    private final Proc<Boolean> consequent;
 
     /**
      * Ctor.
@@ -66,10 +68,8 @@ public final class Binary implements Scalar<Boolean> {
      */
     public Binary(final Scalar<Boolean> condition, final Runnable runnable) {
         this(
-            condition, () -> {
-                runnable.run();
-                return 0;
-            }
+            condition,
+            new ProcOf<>(runnable)
         );
     }
 
@@ -77,9 +77,12 @@ public final class Binary implements Scalar<Boolean> {
      * Ctor.
      *
      * @param condition Boolean function
-     * @param consequent Scalar executed when condition is true
+     * @param consequent Proc executed when condition is true
      */
-    public Binary(final Scalar<Boolean> condition, final Scalar<?> consequent) {
+    public Binary(
+        final Scalar<Boolean> condition,
+        final Proc<Boolean> consequent
+    ) {
         this.condition = condition;
         this.consequent = consequent;
     }
@@ -88,7 +91,7 @@ public final class Binary implements Scalar<Boolean> {
     public Boolean value() throws Exception {
         final Boolean result = this.condition.value();
         if (result) {
-            this.consequent.value();
+            this.consequent.exec(true);
         }
         return result;
     }
