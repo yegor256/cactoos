@@ -117,7 +117,7 @@ public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
         return this.list.value().subList(start, end);
     }
 
-    // @checkstyle DesignForExtensionCheck (2 lines)
+    //@checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public String toString() {
         return this.list.value().toString();
