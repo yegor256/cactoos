@@ -37,6 +37,12 @@ import org.junit.rules.ExpectedException;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
+@SuppressWarnings(
+    {
+        "PMD.AvoidDuplicateLiterals",
+        "PMD.TooManyMethods"
+    }
+)
 public final class NoNullsTest {
 
     /**
@@ -103,67 +109,6 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void getThrowsErrorIfListIteratorNextValueIsNull() {
-        this.exception.expect(IllegalStateException.class);
-        this.exception.expectMessage(
-            "Next item #2 of #listiterator() is NULL"
-        );
-        final ListIterator<Integer> listiterator = new ListIteratorNoNulls<>(
-            new ListOf<Integer>(1, 2, null).listIterator()
-        );
-        listiterator.next();
-        listiterator.next();
-        listiterator.next();
-    }
-
-    @Test
-    public void getThrowsErrorIfListIteratorPreviousValueIsNull() {
-        this.exception.expect(IllegalStateException.class);
-        this.exception.expectMessage(
-            "Previous item #0 of #listiterator() is NULL"
-        );
-        final ListIterator<Integer> listiterator =
-            new ListOf<>(null, 2, 3).listIterator();
-        listiterator.next();
-        new ListIteratorNoNulls<>(
-            listiterator
-        ).previous();
-    }
-
-    @Test
-    public void addThrowsErrorForImmutableListIterator() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "Iterator is read-only and doesn't allow adding items"
-        );
-        new ListIteratorNoNulls<>(
-            new ListOf<>(1, 2, 3).listIterator()
-        ).add(4);
-    }
-
-    @Test
-    public void removeThrowsErrorForImmutableListIterator() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "Iterator is read-only and doesn't allow removing items"
-        );
-        new ListIteratorNoNulls<>(
-            new ListOf<>(1, 2, 3).listIterator()
-        ).remove();
-    }
-
-    @Test
-    public void setThrowsErrorForImmutableListIterator() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "Iterator is read-only and doesn't allow rewriting items"
-        );
-        new ListIteratorNoNulls<>(
-            new ListOf<>(1, 2, 3).listIterator()
-        ).set(4);
-    }
-
-    @Test
     public void nextTrowsErrorIfListIteratorValueNull() {
         this.exception.expect(IllegalStateException.class);
         this.exception.expectMessage(
@@ -222,47 +167,102 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void getPreviousIndex() {
+    public void containsNoNulls() {
         MatcherAssert.assertThat(
-            "List iterator returns incorrect previous index",
-            new ListIteratorNoNulls<>(
-                new ListOf<>(1).listIterator()
-            ).previousIndex(),
-            new IsEqual<>(-1)
-        );
-    }
-
-    @Test
-    public void getNextIndex() {
-        MatcherAssert.assertThat(
-            "List iterator returns incorrect next index",
-            new ListIteratorNoNulls<>(
-                new ListOf<>(1).listIterator()
-            ).nextIndex(),
-            new IsEqual<>(0)
-        );
-    }
-
-    @Test
-    public void listIteratorNoNullsHasNext() {
-        MatcherAssert.assertThat(
-            "List iterator returns incorrect next value",
-            new ListIteratorNoNulls<>(
-                new ListOf<>(1).listIterator()
-            ).hasNext(),
+            "List iterator does not contains",
+            new NoNulls<>(
+                new ListOf<>(1)
+            ).contains(1),
             new IsEqual<>(true)
         );
     }
 
     @Test
-    public void listIteratorNoNullsHasPrevious() {
+    public void addItemNoNulls() {
+        this.exception.expect(IllegalStateException.class);
+        this.exception.expectMessage(
+            "Item of #add(T) is NULL"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, 2, 3)
+        ).add(null);
+    }
+
+    @Test
+    public void addAllItemNoNulls() {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage(
+            "#removeAll(): the collection is read-only"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, 2, 3)
+        ).addAll(new ListOf<>());
+    }
+
+    @Test
+    public void removeAllItemNoNulls() {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage(
+            "#removeAll(): the collection is read-only"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, 2, 3)
+        ).removeAll(new ListOf<>(1, 2, 3));
+    }
+
+    @Test
+    public void retainAllItemNoNulls() {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage(
+            "#retainAll(): the collection is read-only"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, 2, 3)
+        ).retainAll(new ListOf<>(1));
+    }
+
+    @Test
+    public void clearNoNulls() {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage(
+            "#clear(): the collection is read-only"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, 2, 3)
+        ).clear();
+    }
+
+    @Test
+    public void sizeNoNulls() {
         MatcherAssert.assertThat(
-            "List iterator returns incorrect previous value",
-            new ListIteratorNoNulls<>(
-                new ListOf<>(1).listIterator()
-            ).hasPrevious(),
+            "List iterator returns incorrect size",
+            new NoNulls<>(
+                new ListOf<>(1)
+            ).size(),
+            new IsEqual<>(1)
+        );
+    }
+
+    @Test
+    public void isEmptyNoNulls() {
+        MatcherAssert.assertThat(
+            "List iterator returns is empty",
+            new NoNulls<>(
+                new ListOf<>(1)
+            ).isEmpty(),
             new IsEqual<>(false)
         );
+    }
+
+    @Test
+    public void removeThrowsErrorForNoNulls() {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage(
+            "#remove()"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, 2, 3)
+        ).remove(Integer.valueOf("1"));
     }
 
 }
