@@ -265,4 +265,70 @@ public final class NoNullsTest {
         ).remove(Integer.valueOf("1"));
     }
 
+    @Test
+    public void iteratorNoNulls() {
+        MatcherAssert.assertThat(
+            "List iterator returns incorrect value",
+            new NoNulls<>(
+                new ListOf<>(1)
+            ).iterator().next(),
+            new IsEqual<>(1)
+        );
+    }
+
+    @Test
+    public void toArrayNoNulls() {
+        MatcherAssert.assertThat(
+            "Array returns incorrect length",
+            new NoNulls<>(
+                new ListOf<>(1)
+            ).toArray().length,
+            new IsEqual<>(1)
+        );
+    }
+
+    @Test
+    public void arrayToArrayNoNulls() {
+        MatcherAssert.assertThat(
+            "Array returns incorrect length",
+            new NoNulls<>(
+                new ListOf<>(1)
+            ).toArray(new ListOf<>(1).toArray()).length,
+            new IsEqual<>(1)
+        );
+    }
+
+    @Test
+    public void containsAllNoNulls() {
+        MatcherAssert.assertThat(
+            "Array does not contain all",
+            new NoNulls<>(
+                new ListOf<>(1)
+            ).containsAll(new ListOf<>(1)),
+            new IsEqual<>(true)
+        );
+    }
+
+    @Test
+    public void addAllNoNulls() {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage(
+            "#removeAll(): the collection is read-only"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, 2, 3)
+        ).addAll(new ListOf<>(1, 2, 3));
+    }
+
+    @Test
+    public void addAllIndexNoNulls() {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage(
+            "#addAll()"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, 2, 3)
+        ).addAll(3, new ListOf<>(1, 2, 3));
+    }
+
 }
