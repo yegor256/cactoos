@@ -101,18 +101,21 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void getThrowsErrorIfListIteratorNextValueIsNullValue() {
+    public void getThrowsErrorIfListIteratorNextValueIsNull() {
         this.exception.expect(IllegalStateException.class);
         this.exception.expectMessage(
-            "Next item #0 of #listiterator() is NULL"
+            "Next item #2 of #listiterator() is NULL"
         );
-        new ListIteratorNoNulls<>(
-            new ListOf<>(null, 2, 3).listIterator()
-        ).next();
+        final ListIterator<Integer> listiterator = new ListIteratorNoNulls<>(
+            new ListOf<Integer>(1, 2, null).listIterator()
+        );
+        listiterator.next();
+        listiterator.next();
+        listiterator.next();
     }
 
     @Test
-    public void getThrowsErrorIfListIteratorPreviousValueIsNullValue() {
+    public void getThrowsErrorIfListIteratorPreviousValueIsNull() {
         this.exception.expect(IllegalStateException.class);
         this.exception.expectMessage(
             "Previous item #0 of #listiterator() is NULL"
@@ -156,6 +159,64 @@ public final class NoNullsTest {
         new ListIteratorNoNulls<>(
             new ListOf<>(1, 2, 3).listIterator()
         ).set(4);
+    }
+
+    @Test
+    public void nextTrowsErrorIfListIteratorValueNull() {
+        this.exception.expect(IllegalStateException.class);
+        this.exception.expectMessage(
+            "Next item #1 of #listiterator() is NULL"
+        );
+        final ListIterator<Integer> listiterator = new NoNulls<>(
+            new ListOf<Integer>(1, null, 3)
+        ).listIterator();
+        listiterator.next();
+        listiterator.next();
+    }
+
+    @Test
+    public void nextIndexThrowsErrorIfListIteratorValueNull() {
+        this.exception.expect(IllegalStateException.class);
+        this.exception.expectMessage(
+            "Next item #0 of #listiterator() is NULL"
+        );
+        final ListIterator<Integer> listiterator = new NoNulls<>(
+            new ListOf<Integer>(1, 2, null)
+        ).listIterator(2);
+        listiterator.next();
+    }
+
+    @Test
+    public void getThrowsErrorIfSubListValueNull() {
+        this.exception.expect(IllegalStateException.class);
+        this.exception.expectMessage(
+            "Item #0 of [null] is NULL"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, null, 3)
+        ).subList(1, 2).get(0);
+    }
+
+    @Test
+    public void getThrowsErrorIfLastIndexOfArgumentNull() {
+        this.exception.expect(IllegalArgumentException.class);
+        this.exception.expectMessage(
+            "Item can't be NULL in #lastIndexOf(T)"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, null, 3)
+        ).lastIndexOf(null);
+    }
+
+    @Test
+    public void getThrowsErrorIfIndexOfArgumentNull() {
+        this.exception.expect(IllegalArgumentException.class);
+        this.exception.expectMessage(
+            "Item can't be NULL in #indexOf(T)"
+        );
+        new NoNulls<>(
+            new ListOf<>(1, null, 3)
+        ).indexOf(null);
     }
 
 }

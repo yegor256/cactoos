@@ -88,8 +88,8 @@ public final class ListIteratorNoNulls<T> implements ListIterator<T> {
 
     @Override
     public T previous() {
-        final T next = this.listiterator.previous();
-        if (next == null) {
+        final T previous = this.listiterator.previous();
+        if (previous == null) {
             throw new IllegalStateException(
                 new UncheckedText(
                     new FormattedText(
@@ -100,7 +100,7 @@ public final class ListIteratorNoNulls<T> implements ListIterator<T> {
             );
         }
         this.pos.decrementAndGet();
-        return next;
+        return previous;
     }
 
     @Override
