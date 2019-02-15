@@ -25,6 +25,8 @@ package org.cactoos.list;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -217,6 +219,50 @@ public final class NoNullsTest {
         new NoNulls<>(
             new ListOf<>(1, null, 3)
         ).indexOf(null);
+    }
+
+    @Test
+    public void getPreviousIndex() {
+        MatcherAssert.assertThat(
+            "List iterator returns incorrect previous index",
+            new ListIteratorNoNulls<>(
+                new ListOf<>(1).listIterator()
+            ).previousIndex(),
+            new IsEqual<>(-1)
+        );
+    }
+
+    @Test
+    public void getNextIndex() {
+        MatcherAssert.assertThat(
+            "List iterator returns incorrect next index",
+            new ListIteratorNoNulls<>(
+                new ListOf<>(1).listIterator()
+            ).nextIndex(),
+            new IsEqual<>(0)
+        );
+    }
+
+    @Test
+    public void listIteratorNoNullsHasNext() {
+        MatcherAssert.assertThat(
+            "List iterator returns incorrect next value",
+            new ListIteratorNoNulls<>(
+                new ListOf<>(1).listIterator()
+            ).hasNext(),
+            new IsEqual<>(true)
+        );
+    }
+
+    @Test
+    public void listIteratorNoNullsHasPrevious() {
+        MatcherAssert.assertThat(
+            "List iterator returns incorrect previous value",
+            new ListIteratorNoNulls<>(
+                new ListOf<>(1).listIterator()
+            ).hasPrevious(),
+            new IsEqual<>(false)
+        );
     }
 
 }
