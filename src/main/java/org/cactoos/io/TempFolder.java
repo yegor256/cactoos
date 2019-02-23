@@ -33,7 +33,7 @@ import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.cactoos.scalar.StickyScalar;
-import org.cactoos.text.JoinedText;
+import org.cactoos.text.Joined;
 import org.cactoos.text.Randomized;
 import org.cactoos.text.TextOf;
 
@@ -59,7 +59,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
      */
     public TempFolder() {
         this(
-            new JoinedText(
+            new Joined(
                 new TextOf(""),
                 new TextOf("tmp"),
                 new Randomized(
@@ -98,7 +98,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
             new StickyScalar<>(
                 () -> Files.createDirectory(
                     Paths.get(
-                        new JoinedText(
+                        new Joined(
                             File.separator,
                             System.getProperty("java.io.tmpdir"),
                             path.asString()
