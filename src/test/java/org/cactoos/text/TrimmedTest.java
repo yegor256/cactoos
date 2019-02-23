@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -36,19 +36,19 @@ public final class TrimmedTest {
 
     @Test
     public void convertsText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't trim a text",
-            new Trimmed(new TextOf("  Hello!   \t ")),
+            () -> new Trimmed(new TextOf("  Hello!   \t ")),
             new TextHasString("Hello!")
-        );
+        ).affirm();
     }
 
     @Test
     public void trimmedBlankTextIsEmptyText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't trim a blank text",
-            new Trimmed(new TextOf("  \t ")),
+            () -> new Trimmed(new TextOf("  \t ")),
             new TextHasString("")
-        );
+        ).affirm();
     }
 }

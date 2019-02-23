@@ -23,9 +23,8 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -36,25 +35,25 @@ import org.llorllale.cactoos.matchers.TextHasString;
 public final class JoinedTest {
 
     @Test
-    public void joinsStrings() throws IOException {
-        MatcherAssert.assertThat(
+    public void joinsStrings() {
+        new Assertion<>(
             "Can't join strings",
-            new Joined(" ", "hello", "world"),
+            () -> new Joined(" ", "hello", "world"),
             new TextHasString("hello world")
-        );
+        ).affirm();
     }
 
     @Test
-    public void joinsTexts() throws IOException {
-        MatcherAssert.assertThat(
+    public void joinsTexts() {
+        new Assertion<>(
             "Can't join texts",
-            new Joined(
+            () -> new Joined(
                 new TextOf(" "),
                 new TextOf("foo"),
                 new TextOf("bar")
             ),
             new TextHasString("foo bar")
-        );
+        ).affirm();
     }
 
 }

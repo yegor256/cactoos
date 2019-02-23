@@ -23,9 +23,8 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -36,12 +35,12 @@ import org.llorllale.cactoos.matchers.TextHasString;
 public final class NormalizedTest {
 
     @Test
-    public void normalizesText() throws IOException {
-        MatcherAssert.assertThat(
+    public void normalizesText() {
+        new Assertion<>(
             "Can't normalize a text",
-            new Normalized(" \t hello  \t\tworld   \t"),
+            () -> new Normalized(" \t hello  \t\tworld   \t"),
             new TextHasString("hello world")
-        );
+        ).affirm();
     }
 
 }
