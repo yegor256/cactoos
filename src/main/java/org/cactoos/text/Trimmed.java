@@ -23,38 +23,33 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.cactoos.Text;
 
 /**
- * Test case for {@link JoinedText}.
- * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
+ * Text without control characters (char &lt;= 32) from both ends.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.1
  */
-public final class JoinedTextTest {
+public final class Trimmed implements Text {
 
-    @Test
-    public void joinsStrings() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't join strings",
-            new JoinedText(" ", "hello", "world"),
-            new TextHasString("hello world")
-        );
+    /**
+     * The text.
+     */
+    private final Text origin;
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public Trimmed(final Text text) {
+        this.origin = text;
     }
 
-    @Test
-    public void joinsTexts() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't join texts",
-            new JoinedText(
-                new TextOf(" "),
-                new TextOf("foo"),
-                new TextOf("bar")
-            ),
-            new TextHasString("foo bar")
-        );
+    @Override
+    public String asString() throws Exception {
+        return this.origin.asString().trim();
     }
 
 }

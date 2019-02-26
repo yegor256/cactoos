@@ -23,25 +23,37 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
 
 /**
- * Test case for {@link NormalizedText}.
+ * Normalize (replace sequences of whitespace characters by a single space)
+ * a Text.
+ *
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NormalizedTextTest {
+public final class Normalized extends TextEnvelope {
 
-    @Test
-    public void normalizesText() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't normalize a text",
-            new NormalizedText(" \t hello  \t\tworld   \t"),
-            new TextHasString("hello world")
-        );
+    /**
+     * Ctor.
+     * @param text A Text
+     */
+    public Normalized(final String text) {
+        this(new TextOf(text));
     }
 
+    /**
+     * Ctor.
+     * @param text A Text
+     */
+    public Normalized(final Text text) {
+        super(
+            (Scalar<String>) () -> new Replaced(
+                new Trimmed(text),
+                "\\s+",
+                " "
+            ).asString()
+        );
+    }
 }
+

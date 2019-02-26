@@ -23,32 +23,37 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link TrimmedText}.
- * @since 0.1
+ * Test case for {@link Joined}.
+ * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TrimmedTextTest {
+public final class JoinedTest {
 
     @Test
-    public void convertsText() {
-        MatcherAssert.assertThat(
-            "Can't trim a text",
-            new TrimmedText(new TextOf("  Hello!   \t ")),
-            new TextHasString("Hello!")
-        );
+    public void joinsStrings() {
+        new Assertion<>(
+            "Can't join strings",
+            () -> new Joined(" ", "hello", "world"),
+            new TextHasString("hello world")
+        ).affirm();
     }
 
     @Test
-    public void trimmedBlankTextIsEmptyText() {
-        MatcherAssert.assertThat(
-            "Can't trim a blank text",
-            new TrimmedText(new TextOf("  \t ")),
-            new TextHasString("")
-        );
+    public void joinsTexts() {
+        new Assertion<>(
+            "Can't join texts",
+            () -> new Joined(
+                new TextOf(" "),
+                new TextOf("foo"),
+                new TextOf("bar")
+            ),
+            new TextHasString("foo bar")
+        ).affirm();
     }
+
 }

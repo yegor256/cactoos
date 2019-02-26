@@ -23,33 +23,32 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Text;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Text without control characters (char &lt;= 32) from both ends.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link Trimmed}.
  * @since 0.1
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TrimmedText implements Text {
+public final class TrimmedTest {
 
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public TrimmedText(final Text text) {
-        this.origin = text;
+    @Test
+    public void convertsText() {
+        new Assertion<>(
+            "Can't trim a text",
+            () -> new Trimmed(new TextOf("  Hello!   \t ")),
+            new TextHasString("Hello!")
+        ).affirm();
     }
 
-    @Override
-    public String asString() throws Exception {
-        return this.origin.asString().trim();
+    @Test
+    public void trimmedBlankTextIsEmptyText() {
+        new Assertion<>(
+            "Can't trim a blank text",
+            () -> new Trimmed(new TextOf("  \t ")),
+            new TextHasString("")
+        ).affirm();
     }
-
 }

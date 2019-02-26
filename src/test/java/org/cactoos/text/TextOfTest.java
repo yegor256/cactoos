@@ -233,7 +233,7 @@ public final class TextOfTest {
                 )
             ),
             new TextHasString(
-                new JoinedText(
+                new Joined(
                     System.lineSeparator(),
                     "java.io.IOException: It doesn't work at all",
                     "\tat org.cactoos.text.TextOfTest"
