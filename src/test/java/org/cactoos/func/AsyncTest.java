@@ -27,10 +27,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-import org.cactoos.Proc;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.FuncApplies;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
@@ -39,13 +38,14 @@ import org.llorllale.cactoos.matchers.MatcherOf;
  *
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class AsyncTest {
     @Test
     public void runsInBackground() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't run in the background",
-            new Async<>(
+            () -> new Async<>(
                 input -> {
                     TimeUnit.DAYS.sleep(1L);
                     return "done!";
@@ -57,36 +57,34 @@ public final class AsyncTest {
                     future -> !future.isDone()
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void runsAsProcInBackground() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't run proc in the background",
-            input -> {
+            () -> input -> {
                 final CountDownLatch latch = new CountDownLatch(1);
                 new Async<>(
-                    (Proc<Boolean>) ipt -> latch.countDown()
+                    new FuncOf<>(ipt -> latch.countDown(), true)
                 ).exec(input);
                 latch.await();
                 return true;
             },
             new FuncApplies<>(
-                true, Matchers.equalTo(true)
+                true, new IsEqual<>(true)
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void runsInBackgroundWithoutFuture() {
         final CountDownLatch latch = new CountDownLatch(1);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't run in the background without us touching the Future",
-            new Async<>(
-                input -> {
-                    latch.countDown();
-                }
+            () -> new Async<>(
+                new FuncOf<>(input -> latch.countDown(), true)
             ),
             new FuncApplies<>(
                 true,
@@ -96,7 +94,7 @@ public final class AsyncTest {
                     }
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -104,17 +102,20 @@ public final class AsyncTest {
         final String name = "secret name for thread factory";
         final ThreadFactory factory = r -> new Thread(r, name);
         final CountDownLatch latch = new CountDownLatch(1);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't run in the background with specific thread factory",
-            new Async<>(
-                input -> {
-                    if (!input.equals(Thread.currentThread().getName())) {
-                        throw new IllegalStateException(
-                            "Another thread factory was used"
-                        );
-                    }
-                    latch.countDown();
-                },
+            () -> new Async<>(
+                new FuncOf<>(
+                    input -> {
+                        if (!input.equals(Thread.currentThread().getName())) {
+                            throw new IllegalStateException(
+                                "Another thread factory was used"
+                            );
+                        }
+                        latch.countDown();
+                    },
+                    true
+                ),
                 factory
             ),
             new FuncApplies<>(
@@ -126,7 +127,7 @@ public final class AsyncTest {
                     }
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -134,17 +135,20 @@ public final class AsyncTest {
         final String name = "secret name for thread executor";
         final ThreadFactory factory = r -> new Thread(r, name);
         final CountDownLatch latch = new CountDownLatch(1);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't run in the background with specific thread executor",
-            new Async<>(
-                input -> {
-                    if (!input.equals(Thread.currentThread().getName())) {
-                        throw new IllegalStateException(
-                            "Another thread executor was used"
-                        );
-                    }
-                    latch.countDown();
-                },
+            () -> new Async<>(
+                new FuncOf<>(
+                    input -> {
+                        if (!input.equals(Thread.currentThread().getName())) {
+                            throw new IllegalStateException(
+                                "Another thread executor was used"
+                            );
+                        }
+                        latch.countDown();
+                    },
+                    true
+                ),
                 Executors.newSingleThreadExecutor(factory)
             ),
             new FuncApplies<>(
@@ -156,6 +160,6 @@ public final class AsyncTest {
                     }
                 )
             )
-        );
+        ).affirm();
     }
 }
