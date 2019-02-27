@@ -29,7 +29,6 @@ import org.cactoos.Scalar;
 import org.cactoos.iterator.Immutable;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.InheritanceLevel;
 import org.cactoos.scalar.SumOfIntScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -158,9 +157,7 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
         return new UncheckedScalar<>(
             new And(
                 () -> other != null,
-                () -> new InheritanceLevel(
-                    other.getClass(), CollectionEnvelope.class
-                ).value() > -1,
+                () -> Collection.class.isAssignableFrom(other.getClass()),
                 () -> {
                     final Collection<?> compared = (Collection<?>) other;
                     return this.size() == compared.size();
