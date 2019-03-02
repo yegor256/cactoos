@@ -26,9 +26,9 @@ package org.cactoos.time;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Tests for {@link OffsetDateTimeOf}.
@@ -41,33 +41,33 @@ public class OffsetDateTimeOfTest {
 
     @Test
     public final void testParsingIsoFormattedStringToOffsetDateTime() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't parse a OffsetDateTime with default/ISO format.",
-            new OffsetDateTimeOf("2017-12-13T14:15:16.000000017+01:00").value(),
-            Matchers.is(
+            () -> new OffsetDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
+            new ScalarHasValue<>(
                 OffsetDateTime.of(
                     2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public final void testParsingFormattedStringWithOffsetToOffsetDateTime() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't parse a OffsetDateTime with custom format.",
-            new OffsetDateTimeOf(
+            () -> new OffsetDateTimeOf(
                 "2017-12-13 14:15:16",
                 "yyyy-MM-dd HH:mm:ss",
                 ZoneOffset.ofHours(1)
-            ).value(),
-            Matchers.is(
+            ),
+            new ScalarHasValue<>(
                 OffsetDateTime.of(
                     LocalDateTime.of(2017, 12, 13, 14, 15, 16),
                     ZoneOffset.ofHours(1)
                 )
             )
-        );
+        ).affirm();
     }
 
 }
