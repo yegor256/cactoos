@@ -45,7 +45,7 @@ import org.cactoos.scalar.UncheckedScalar;
         "PMD.AbstractNaming"
     }
 )
-abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
+public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
     List<T> {
 
     /**
@@ -57,7 +57,7 @@ abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
      * Ctor.
      * @param src Source
      */
-    ListEnvelope(final Scalar<List<T>> src) {
+    public ListEnvelope(final Scalar<List<T>> src) {
         super(src::value);
         this.list = new UncheckedScalar<>(src);
     }
@@ -117,6 +117,7 @@ abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
         return this.list.value().subList(start, end);
     }
 
+    //@checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public String toString() {
         return this.list.value().toString();
