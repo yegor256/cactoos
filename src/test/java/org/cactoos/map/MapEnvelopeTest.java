@@ -23,6 +23,7 @@
  */
 package org.cactoos.map;
 
+import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.func.FuncOf;
 import org.hamcrest.MatcherAssert;
@@ -31,6 +32,7 @@ import org.hamcrest.core.IsNot;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
@@ -312,5 +314,47 @@ public final class MapEnvelopeTest {
         final MapEntry<String, String> second =
             new MapEntry<>("key11", null);
         new MapOf<String, String>(first, second).hashCode();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void emptyMapEnvelopeShouldBeEqualToEmptyDerivedMap() {
+        final MapEnvelope<Integer, String> base = new MapOf<>();
+        final DerivedMapEnvelope<Integer, String> derived =
+            new DerivedMapEnvelope<>(new HashMap<>());
+        new Assertion<>(
+            "EmpBase and derived MapEnvelope which are empty should be equal.",
+            () -> base,
+            new IsEqual<>(derived)
+        ).affirm();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void mapEnvelopeShouldCompareDerivedClasses() {
+        final int key = 1;
+        final String value = "one";
+        final MapEntry<Integer, String> entry = new MapEntry<>(key, value);
+        final MapEnvelope<Integer, String> base = new MapOf<>(entry);
+        final Map<Integer, String> hashmap = new HashMap<>();
+        hashmap.put(key, value);
+        final DerivedMapEnvelope<Integer, String> derived =
+            new DerivedMapEnvelope<>(hashmap);
+        new Assertion<>(
+            "Base and derived MapEnvelope of same content should be equal.",
+            () -> base,
+            new IsEqual<>(derived)
+        ).affirm();
+    }
+
+    /**
+     * Class derived from MapEnvelope to use in some tests.
+     * @param <K> - key type
+     * @param <V> - value type
+     */
+    private static class DerivedMapEnvelope<K, V> extends MapEnvelope<K, V> {
+        DerivedMapEnvelope(final Map<K, V> content) {
+            super(() -> content);
+        }
     }
 }
