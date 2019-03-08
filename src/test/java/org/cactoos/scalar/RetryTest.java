@@ -24,6 +24,13 @@
 package org.cactoos.scalar;
 
 import java.security.SecureRandom;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -54,4 +61,53 @@ public final class RetryTest {
         ).affirm();
     }
 
+    @Test
+    public void runsScalarTwiceWithDefaults() throws Exception {
+        // @checkstyle MagicNumberCheck (1 line)
+        final AtomicInteger tries = new AtomicInteger(0);
+        MatcherAssert.assertThat(
+            new RetryScalar<>(
+                () -> {
+                    // @checkstyle MagicNumberCheck (1 line)
+                    if (tries.getAndIncrement() <= 1) {
+                        throw new IllegalArgumentException("Not enough tries");
+                    }
+                    return 0;
+                }
+            ).value(),
+            Matchers.equalTo(0)
+        );
+    }
+
+    @Test
+    public void runsScalarMultipleTimesWithWait() throws Exception {
+        // @checkstyle MagicNumberCheck (3 line)
+        final int times = 3;
+        final long wait = 500;
+        final AtomicInteger tries = new AtomicInteger(0);
+        final List<Instant> executions = new ArrayList<>(times);
+        final RetryScalar<Integer> scalar = new RetryScalar<>(
+            () -> {
+                if (tries.getAndIncrement() < times) {
+                    executions.add(Instant.now());
+                    throw new IllegalArgumentException("Not done yet");
+                }
+                return 0;
+            },
+            Integer.MAX_VALUE,
+            Duration.ofMillis(wait)
+        );
+        final Integer result = scalar.value();
+        MatcherAssert.assertThat(executions.size(), Matchers.equalTo(times));
+        for (int position = 0; position < executions.size() - 1; position =
+            position + 1) {
+            MatcherAssert.assertThat(
+                executions.get(position).plusMillis(wait),
+                Matchers.lessThanOrEqualTo(executions.get(position + 1))
+            );
+        }
+        MatcherAssert.assertThat(executions.size(), Matchers.equalTo(times));
+        // @checkstyle MagicNumberCheck (1 line)
+        MatcherAssert.assertThat(result, Matchers.equalTo(0));
+    }
 }

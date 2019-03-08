@@ -23,8 +23,10 @@
  */
 package org.cactoos.scalar;
 
+import java.time.Duration;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.func.Retry;
 
 /**
  * Func that will try a few times before throwing an exception.
@@ -65,21 +67,45 @@ public final class Retry<T> implements Scalar<T> {
     private final Func<Integer, Boolean> func;
 
     /**
+     * Wait between executions.
+     */
+    private final Duration wait;
+
+    /**
      * Ctor.
      * @param scalar Scalar original
      */
     public Retry(final Scalar<T> scalar) {
-        // @checkstyle MagicNumberCheck (1 line)
-        this(scalar, 3);
+        this(scalar, Duration.ZERO);
     }
 
+    /**
+     * Ctor.
+     * @param scalar Scalar original
+     * @param wait The executions of the function
+     */
+    public Retry(final Scalar<T> scalar, final Duration wait) {
+        // @checkstyle MagicNumberCheck (1 line)
+        this(scalar, 3, wait);
+    }
     /**
      * Ctor.
      * @param scalar Scalar original
      * @param attempts Maximum number of attempts
      */
     public Retry(final Scalar<T> scalar, final int attempts) {
-        this(scalar, attempt -> attempt >= attempts);
+        this(scalar, attempts, Duration.ZERO);
+    }
+
+    /**
+     * Ctor.
+     * @param scalar Scalar original
+     * @param attempts Maximum number of attempts
+     * @param wait The executions of the function
+     */
+    public Retry(final Scalar<T> scalar, final int attempts,
+        final Duration wait) {
+        this(scalar, attempt -> attempt >= attempts, wait);
     }
 
     /**
@@ -89,15 +115,28 @@ public final class Retry<T> implements Scalar<T> {
      */
     public Retry(final Scalar<T> scalar,
         final Func<Integer, Boolean> exit) {
+        this(scalar, exit, Duration.ZERO);
+    }
+
+    /**
+     * Ctor.
+     * @param scalar Func original
+     * @param exit Exit condition, returns TRUE if there is no reason to try
+     * @param wait The executions of the function
+     */
+    public Retry(final Scalar<T> scalar,
+        final Func<Integer, Boolean> exit, final Duration wait) {
         this.origin = scalar;
         this.func = exit;
+        this.wait = wait;
     }
 
     @Override
     public T value() throws Exception {
         return new org.cactoos.func.Retry<>(
             (Func<Boolean, T>) input -> this.origin.value(),
-            this.func
+            this.func,
+            this.wait
         ).apply(true);
     }
 }

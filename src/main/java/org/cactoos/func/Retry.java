@@ -23,6 +23,7 @@
  */
 package org.cactoos.func;
 
+import java.time.Duration;
 import org.cactoos.Func;
 
 /**
@@ -47,6 +48,11 @@ public final class Retry<X, Y> implements Func<X, Y> {
     private final Func<Integer, Boolean> exit;
 
     /**
+     * Wait between executions.
+     */
+    private final Duration wait;
+
+    /**
      * Ctor.
      * @param fnc Func original
      */
@@ -61,17 +67,43 @@ public final class Retry<X, Y> implements Func<X, Y> {
      * @param attempts Maximum number of attempts
      */
     public Retry(final Func<X, Y> fnc, final int attempts) {
-        this(fnc, attempt -> attempt >= attempts);
+        this(fnc, attempts, Duration.ZERO);
     }
 
     /**
      * Ctor.
+     *
+     * @param fnc Func original
+     * @param attempts Maximum number of attempts
+     * @param wait The executions of the function
+     */
+    public Retry(final Func<X, Y> fnc, final int attempts,
+        final Duration wait) {
+        this(fnc, attempt -> attempt >= attempts, wait);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param fnc Func original
      * @param ext Exit condition, returns TRUE if there is no more reason to try
      */
     public Retry(final Func<X, Y> fnc, final Func<Integer, Boolean> ext) {
+        this(fnc, ext, Duration.ZERO);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param fnc Func original
+     * @param ext Exit condition, returns TRUE if there is no more reason to try
+     * @param wait The executions of the function
+     */
+    public Retry(final Func<X, Y> fnc, final Func<Integer, Boolean> ext,
+        final Duration wait) {
         this.func = fnc;
         this.exit = ext;
+        this.wait = wait;
     }
 
     @Override
@@ -91,6 +123,9 @@ public final class Retry<X, Y> implements Func<X, Y> {
                 // @checkstyle IllegalCatchCheck (1 line)
             } catch (final Exception ex) {
                 error = ex;
+            }
+            if (!this.wait.isZero() && !this.wait.isNegative()) {
+                Thread.sleep(this.wait.toMillis());
             }
             ++attempt;
         }
