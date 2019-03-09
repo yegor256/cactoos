@@ -28,18 +28,18 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link SwappedCaseText}.
+ * Test case for {@link SwappedCase}.
  *
  * @since 0.13.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SwappedCaseTextTest {
+public final class SwappedCaseTest {
 
     @Test
     public void swapText() {
         MatcherAssert.assertThat(
             "Can't swap a text",
-            new SwappedCaseText(
+            new SwappedCase(
                 new TextOf("HellO!")
             ),
             new TextHasString("hELLo!")
@@ -50,7 +50,7 @@ public final class SwappedCaseTextTest {
     public void swapEmptyText() {
         MatcherAssert.assertThat(
             "Empty swapped text should be the same as original",
-            new SwappedCaseText(
+            new SwappedCase(
                 new TextOf("")
             ),
             new TextHasString("")

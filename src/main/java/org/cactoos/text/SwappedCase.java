@@ -31,7 +31,7 @@ import org.cactoos.Text;
  * and lower case to upper case.
  * @since 0.13.3
  */
-public final class SwappedCaseText extends TextEnvelope {
+public final class SwappedCase extends TextEnvelope {
 
     /**
      * Ctor.
@@ -39,7 +39,7 @@ public final class SwappedCaseText extends TextEnvelope {
      */
     @SuppressWarnings({"PMD.CallSuperInConstructor",
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
-    public SwappedCaseText(final Text text) {
+    public SwappedCase(final Text text) {
         super((Scalar<String>) () -> {
             final String origin = text.asString();
             final char[] chars = origin.toCharArray();
