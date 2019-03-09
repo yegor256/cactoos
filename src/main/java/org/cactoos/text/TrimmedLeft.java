@@ -32,7 +32,7 @@ import org.cactoos.Text;
  *
  * @since 0.12
  */
-public final class TrimmedLeftText implements Text {
+public final class TrimmedLeft implements Text {
 
     /**
      * The text.
@@ -43,7 +43,7 @@ public final class TrimmedLeftText implements Text {
      * Ctor.
      * @param text The text
      */
-    public TrimmedLeftText(final Text text) {
+    public TrimmedLeft(final Text text) {
         this.origin = text;
     }
 

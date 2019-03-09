@@ -28,17 +28,17 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link TrimmedLeftText}.
+ * Test case for {@link TrimmedLeft}.
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TrimmedLeftTextTest {
+public final class TrimmedLeftTest {
 
     @Test
     public void convertsText() {
         MatcherAssert.assertThat(
             "Can't left trim a text",
-            new TrimmedLeftText(new TextOf("  Hello!   \t ")),
+            new TrimmedLeft(new TextOf("  Hello!   \t ")),
             new TextHasString("Hello!   \t ")
         );
     }
@@ -47,7 +47,7 @@ public final class TrimmedLeftTextTest {
     public void trimmedBlankTextIsEmptyText() {
         MatcherAssert.assertThat(
             "Can't trim a blank text",
-            new TrimmedLeftText(new TextOf("  \t ")),
+            new TrimmedLeft(new TextOf("  \t ")),
             new TextHasString("")
         );
     }
