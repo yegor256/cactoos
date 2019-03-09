@@ -23,57 +23,25 @@
  */
 package org.cactoos.text;
 
-import java.util.Locale;
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
- * Text in upper case.
+ * Reverse the Text.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.1
+ * @since 0.2
  */
-public final class UpperText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * The locale.
-     */
-    private final Locale locale;
+public final class Reversed extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
-    public UpperText(final String text) {
-        this(new TextOf(text));
+    public Reversed(final Text text) {
+        super((Scalar<String>) () -> new StringBuilder(
+            text.asString()
+            ).reverse().toString()
+        );
     }
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public UpperText(final Text text) {
-        this(text, Locale.ENGLISH);
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     * @param lang Locale
-     */
-    public UpperText(final Text text, final Locale lang) {
-        this.origin = text;
-        this.locale = lang;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        return this.origin.asString().toUpperCase(this.locale);
-    }
-
 }

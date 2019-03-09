@@ -28,27 +28,32 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link UpperText}.
- * @since 0.1
+ * Test case for {@link Reversed}.
+ *
+ * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class UpperTextTest {
+public final class ReversedTest {
 
     @Test
-    public void convertsText() {
+    public void reverseText() {
         MatcherAssert.assertThat(
-            "Can't upper case a text",
-            new UpperText(new TextOf("Hello!")),
-            new TextHasString("HELLO!")
+            "Can't reverse a text",
+            new Reversed(
+                new TextOf("Hello!")
+            ),
+            new TextHasString("!olleH")
         );
     }
 
     @Test
-    public void convertsString() {
+    public void reversedEmptyTextIsEmptyText() {
         MatcherAssert.assertThat(
-            "Can't upper case a string",
-            new UpperText("World!"),
-            new TextHasString("WORLD!")
+            "Can't reverse empty text",
+            new Reversed(
+                new TextOf("")
+            ),
+            new TextHasString("")
         );
     }
 }
