@@ -50,7 +50,7 @@ public final class ComparableTextTest {
             ).compareTo(
                 // @checkstyle MagicNumberCheck (2 lines)
                 new ComparableText(
-                    new SubText("from here to there", 5)
+                    new Sub("from here to there", 5)
                 )
             ),
             new IsEqual<>(0)

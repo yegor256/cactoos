@@ -28,18 +28,18 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link SubText}.
+ * Test case for {@link Sub}.
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SubTextTest {
+public final class SubTest {
 
     @Test
     public void cutTextWithStartAndEnd() {
         MatcherAssert.assertThat(
             "Can't cut a text with start and end",
             // @checkstyle MagicNumber (1 line)
-            new SubText("hello world", 2, 50),
+            new Sub("hello world", 2, 50),
             new TextHasString("llo world")
         );
     }
@@ -48,7 +48,7 @@ public final class SubTextTest {
     public void cutTextWithStart() {
         MatcherAssert.assertThat(
             "Can't cut a text with start",
-            new SubText("cut here", 2),
+            new Sub("cut here", 2),
             new TextHasString("t here")
         );
     }
