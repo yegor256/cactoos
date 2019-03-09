@@ -33,7 +33,7 @@ import org.cactoos.Text;
  *
  * @since 0.32
  */
-public final class PaddedStartText extends TextEnvelope {
+public final class PaddedStart extends TextEnvelope {
 
     /**
      * Ctor.
@@ -41,7 +41,7 @@ public final class PaddedStartText extends TextEnvelope {
      * @param length The minimum length of the resulting string
      * @param symbol The padding symbol
      */
-    public PaddedStartText(
+    public PaddedStart(
         final Text text, final int length, final char symbol) {
         super((Scalar<String>) () -> {
             final String original = text.asString();

@@ -28,18 +28,18 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link PaddedStartText}.
+ * Test case for {@link PaddedStart}.
  *
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class PaddedStartTextTest {
+public final class PaddedStartTest {
 
     @Test
     public void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
         MatcherAssert.assertThat(
             "Shouldn't pad the text",
-            new PaddedStartText(
+            new PaddedStart(
                 new TextOf("x"),
                 1,
                 '-'
@@ -52,7 +52,7 @@ public final class PaddedStartTextTest {
     public void somePaddingIfOrigTextIsShorterThanRequestedLength() {
         MatcherAssert.assertThat(
             "Should pad chars at start",
-            new PaddedStartText(
+            new PaddedStart(
                 new TextOf("x"),
                 2,
                 '-'
@@ -65,7 +65,7 @@ public final class PaddedStartTextTest {
     public void noPaddingIfRequestedLengthIsNegative()  {
         MatcherAssert.assertThat(
             "Shouldn't consider negative min length",
-            new PaddedStartText(
+            new PaddedStart(
                 new TextOf("x"),
                 -1,
                 '-'
