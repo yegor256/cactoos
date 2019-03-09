@@ -33,7 +33,7 @@ import org.cactoos.iterable.Mapped;
  *
  * @since 0.9
  */
-public final class SplitText implements Iterable<Text> {
+public final class Split implements Iterable<Text> {
 
     /**
      * The origin string.
@@ -51,7 +51,7 @@ public final class SplitText implements Iterable<Text> {
      * @param text The text
      * @param rgx The regex
      */
-    public SplitText(final String text, final String rgx) {
+    public Split(final String text, final String rgx) {
         this(
             new UncheckedText(new TextOf(text)),
             new UncheckedText(new TextOf(rgx))
@@ -63,7 +63,7 @@ public final class SplitText implements Iterable<Text> {
      * @param text The text
      * @param rgx The regex
      */
-    public SplitText(final String text, final Text rgx) {
+    public Split(final String text, final Text rgx) {
         this(new UncheckedText(text), new UncheckedText(rgx));
     }
 
@@ -72,7 +72,7 @@ public final class SplitText implements Iterable<Text> {
      * @param text The text
      * @param rgx The regex
      */
-    public SplitText(final Text text, final String rgx) {
+    public Split(final Text text, final String rgx) {
         this(new UncheckedText(text), new UncheckedText(rgx));
     }
 
@@ -81,7 +81,7 @@ public final class SplitText implements Iterable<Text> {
      * @param text The text
      * @param rgx The regex
      */
-    public SplitText(final Text text, final Text rgx) {
+    public Split(final Text text, final Text rgx) {
         this(new UncheckedText(text), new UncheckedText(rgx));
     }
 
@@ -90,7 +90,7 @@ public final class SplitText implements Iterable<Text> {
      * @param text The text
      * @param rgx The regex
      */
-    public SplitText(final UncheckedText text, final UncheckedText rgx) {
+    public Split(final UncheckedText text, final UncheckedText rgx) {
         this.origin = text;
         this.regex = rgx;
     }

@@ -30,11 +30,11 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link SplitText}.
+ * Test case for {@link Split}.
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SplitTextTest {
+public final class SplitTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -42,7 +42,7 @@ public final class SplitTextTest {
         MatcherAssert.assertThat(
             "Can't split a text. Incorrect length",
             new LengthOf(
-                new SplitText("Hello world!", "\\s+")
+                new Split("Hello world!", "\\s+")
             ).intValue(),
             Matchers.equalTo(2)
         );
@@ -52,7 +52,7 @@ public final class SplitTextTest {
     public void splitTextItem() throws Exception {
         MatcherAssert.assertThat(
             "Can't split a text. Incorrect item",
-            new SplitText("Hello world! [2]", "\\s+").iterator().next(),
+            new Split("Hello world! [2]", "\\s+").iterator().next(),
             new TextHasString("Hello")
         );
     }
@@ -61,7 +61,7 @@ public final class SplitTextTest {
     public void splitStringWithTextRegex() throws Exception {
         MatcherAssert.assertThat(
             "Can't split an string with text regex",
-            new SplitText(
+            new Split(
                 "Cactoos OOP!",
                 new TextOf("\\s")
             ).iterator().next(),
@@ -73,7 +73,7 @@ public final class SplitTextTest {
     public void splitTextWithStringRegex() throws Exception {
         MatcherAssert.assertThat(
             "Can't split an text with string regex",
-            new SplitText(
+            new Split(
                 new TextOf("Cact4Primitives!"),
                 "\\d+"
             ).iterator().next(),
@@ -85,7 +85,7 @@ public final class SplitTextTest {
     public void splitTextWithTextRegex() throws Exception {
         MatcherAssert.assertThat(
             "Can't split an text with text regex",
-            new SplitText(
+            new Split(
                 new TextOf("Split#OOP!"),
                 "\\W+"
             ).iterator().next(),
