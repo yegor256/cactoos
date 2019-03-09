@@ -28,18 +28,18 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link RotatedText}.
+ * Test case for {@link Rotated}.
  *
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class RotatedTextTest {
+public final class RotatedTest {
 
     @Test
     public void rotateRightText() {
         MatcherAssert.assertThat(
             "Can't rotate text to right",
-            new RotatedText(
+            new Rotated(
                 new TextOf("Hello!"), 2
             ),
             new TextHasString("o!Hell")
@@ -50,7 +50,7 @@ public final class RotatedTextTest {
     public void rotateLeftText() {
         MatcherAssert.assertThat(
             "Can't rotate text to left",
-            new RotatedText(
+            new Rotated(
                 new TextOf("Hi!"), -1
             ),
             new TextHasString("i!H")
@@ -62,7 +62,7 @@ public final class RotatedTextTest {
         final String nonrotate = "Cactoos!";
         MatcherAssert.assertThat(
             "Rotate text shift zero",
-            new RotatedText(
+            new Rotated(
                 new TextOf(nonrotate), 0
             ),
             new TextHasString(nonrotate)
@@ -74,7 +74,7 @@ public final class RotatedTextTest {
         final String nonrotate = "Rotate";
         MatcherAssert.assertThat(
             "Rotate text shift mod zero",
-            new RotatedText(
+            new Rotated(
                 new TextOf(nonrotate), nonrotate.length()
             ),
             new TextHasString(nonrotate)
@@ -85,7 +85,7 @@ public final class RotatedTextTest {
     public void noRotateWhenEmpty() {
         MatcherAssert.assertThat(
             "Rotate text when empty",
-            new RotatedText(
+            new Rotated(
                 new TextOf(""), 2
             ),
             new TextHasString("")

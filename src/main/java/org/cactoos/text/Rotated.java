@@ -30,7 +30,7 @@ import org.cactoos.Text;
  * Rotate (circular shift) a String of shift characters.
  * @since 0.12
  */
-public final class RotatedText extends TextEnvelope {
+public final class Rotated extends TextEnvelope {
 
     /**
      * Ctor.
@@ -39,7 +39,7 @@ public final class RotatedText extends TextEnvelope {
      */
     @SuppressWarnings({"PMD.CallSuperInConstructor",
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
-    public RotatedText(final Text text, final int shift) {
+    public Rotated(final Text text, final int shift) {
         super((Scalar<String>) () -> {
             String origin = text.asString();
             final int length = origin.length();
