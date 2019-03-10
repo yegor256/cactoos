@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -36,19 +36,19 @@ public final class UpperTest {
 
     @Test
     public void convertsText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't upper case a text",
-            new Upper(new TextOf("Hello!")),
+            () -> new Upper(new TextOf("Hello!")),
             new TextHasString("HELLO!")
-        );
+        ).affirm();
     }
 
     @Test
     public void convertsString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't upper case a string",
-            new Upper("World!"),
+            () -> new Upper("World!"),
             new TextHasString("WORLD!")
-        );
+        ).affirm();
     }
 }

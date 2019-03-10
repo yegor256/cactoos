@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -37,23 +37,23 @@ public final class ReversedTest {
 
     @Test
     public void reverseText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't reverse a text",
-            new Reversed(
+            () -> new Reversed(
                 new TextOf("Hello!")
             ),
             new TextHasString("!olleH")
-        );
+        ).affirm();
     }
 
     @Test
     public void reversedEmptyTextIsEmptyText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't reverse empty text",
-            new Reversed(
+            () -> new Reversed(
                 new TextOf("")
             ),
             new TextHasString("")
-        );
+        ).affirm();
     }
 }

@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -37,24 +37,24 @@ public final class SwappedCaseTest {
 
     @Test
     public void swapText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't swap a text",
-            new SwappedCase(
+            () -> new SwappedCase(
                 new TextOf("HellO!")
             ),
             new TextHasString("hELLo!")
-        );
+        ).affirm();
     }
 
     @Test
     public void swapEmptyText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Empty swapped text should be the same as original",
-            new SwappedCase(
+            () -> new SwappedCase(
                 new TextOf("")
             ),
             new TextHasString("")
-        );
+        ).affirm();
     }
 
 }

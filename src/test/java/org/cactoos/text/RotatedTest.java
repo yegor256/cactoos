@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -37,58 +37,58 @@ public final class RotatedTest {
 
     @Test
     public void rotateRightText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't rotate text to right",
-            new Rotated(
+            () -> new Rotated(
                 new TextOf("Hello!"), 2
             ),
             new TextHasString("o!Hell")
-        );
+        ).affirm();
     }
 
     @Test
     public void rotateLeftText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't rotate text to left",
-            new Rotated(
+            () -> new Rotated(
                 new TextOf("Hi!"), -1
             ),
             new TextHasString("i!H")
-        );
+        ).affirm();
     }
 
     @Test
     public void noRotateWhenShiftZero() {
         final String nonrotate = "Cactoos!";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Rotate text shift zero",
-            new Rotated(
+            () -> new Rotated(
                 new TextOf(nonrotate), 0
             ),
             new TextHasString(nonrotate)
-        );
+        ).affirm();
     }
 
     @Test
     public void noRotateWhenShiftModZero() {
         final String nonrotate = "Rotate";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Rotate text shift mod zero",
-            new Rotated(
+            () -> new Rotated(
                 new TextOf(nonrotate), nonrotate.length()
             ),
             new TextHasString(nonrotate)
-        );
+        ).affirm();
     }
 
     @Test
     public void noRotateWhenEmpty() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Rotate text when empty",
-            new Rotated(
+            () -> new Rotated(
                 new TextOf(""), 2
             ),
             new TextHasString("")
-        );
+        ).affirm();
     }
 }

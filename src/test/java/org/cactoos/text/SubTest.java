@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -36,21 +36,21 @@ public final class SubTest {
 
     @Test
     public void cutTextWithStartAndEnd() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't cut a text with start and end",
             // @checkstyle MagicNumber (1 line)
-            new Sub("hello world", 2, 50),
+            () -> new Sub("hello world", 2, 50),
             new TextHasString("llo world")
-        );
+        ).affirm();
     }
 
     @Test
     public void cutTextWithStart() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't cut a text with start",
-            new Sub("cut here", 2),
+            () -> new Sub("cut here", 2),
             new TextHasString("t here")
-        );
+        ).affirm();
     }
 
 }
