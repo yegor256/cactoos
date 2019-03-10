@@ -90,7 +90,7 @@ public final class BinaryTest {
         );
         new Assertion<>(
             "Binary has to throw exception",
-            () -> binary,
+            binary,
             new Throws<>(msg, IllegalArgumentException.class)
         ).affirm();
     }
