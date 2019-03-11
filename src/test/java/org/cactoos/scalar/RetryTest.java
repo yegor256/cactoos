@@ -26,6 +26,7 @@ package org.cactoos.scalar;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -74,6 +75,28 @@ public final class RetryTest {
                     }
                     return 0;
                 }
+            ).value(),
+            Matchers.equalTo(0)
+        );
+    }
+
+    @Test
+    public void runsScalarMultipleTimesIgnoreNegativeDuration()
+    throws Exception {
+        // @checkstyle MagicNumberCheck (2 line)
+        final int times = 2;
+        final AtomicInteger tries = new AtomicInteger(0);
+        MatcherAssert.assertThat(
+            new RetryScalar<>(
+                () -> {
+                    if (tries.getAndIncrement() < times) {
+                        throw new IllegalArgumentException("Not yet");
+                    }
+                    return 0;
+                },
+                Integer.MAX_VALUE,
+                // @checkstyle MagicNumberCheck (1 line)
+                Duration.of(-5, ChronoUnit.DAYS)
             ).value(),
             Matchers.equalTo(0)
         );
