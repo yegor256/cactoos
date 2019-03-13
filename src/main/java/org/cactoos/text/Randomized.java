@@ -29,7 +29,7 @@ import java.util.Random;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.list.ListOf;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Randomized text.
@@ -164,7 +164,7 @@ public final class Randomized implements Text {
 
     @Override
     public String asString() {
-        final int len = new UncheckedScalar<>(this.length).value();
+        final int len = new Unchecked<>(this.length).value();
         final StringBuilder builder = new StringBuilder(len);
         final int bound = this.characters.size();
         for (int index = 0; index < len; index = index + 1) {

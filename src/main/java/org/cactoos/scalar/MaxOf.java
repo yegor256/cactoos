@@ -40,13 +40,13 @@ import org.cactoos.Scalar;
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
  * it more convenient and get rid of the checked exception you can
- * use the {@link UncheckedScalar} decorator. Or you may use
- * {@link IoCheckedScalar} to wrap it in an IOException.</p>
+ * use the {@link Unchecked} decorator. Or you may use
+ * {@link IoChecked} to wrap it in an IOException.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @see UncheckedScalar
- * @see IoCheckedScalar
+ * @see Unchecked
+ * @see IoChecked
  * @since 0.24
  */
 @SuppressWarnings(

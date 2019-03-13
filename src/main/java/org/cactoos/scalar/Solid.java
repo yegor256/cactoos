@@ -26,41 +26,50 @@ package org.cactoos.scalar;
 import org.cactoos.Scalar;
 
 /**
- * Float Scalar which sums up the values of other Scalars of the same type
+ * Cached and synchronized version of a Scalar.
  *
- * <p>Here is how you can use it to summarize float numbers:</p>
+ * <p>Objects of this class are thread safe.
  *
- * <pre>{@code
- * float sum = new SumOfFloatScalar(() -> 1f,() -> 2f, () -> 3f).value();
- * }</pre>
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. Despite that this class does NOT throw a checked
- * exception.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.30
+ * @param <T> Type of result
+ * @see Sticky
+ * @see Synced
+ * @since 0.24
  */
-public final class SumOfFloatScalar implements Scalar<Float> {
+public final class Solid<T> implements Scalar<T> {
 
     /**
-     * Varargs of Scalar to sum up values from.
+     * Origin.
      */
-    private final Scalar<Float>[] scalars;
+    private final Scalar<T> origin;
+
+    /**
+     * Cache.
+     */
+    private volatile T cache;
+
+    /**
+     * Sync lock.
+     */
+    private final Object lock;
 
     /**
      * Ctor.
-     * @param src Varargs of Scalar to sum up values from
-     * @since 0.30
+     * @param origin The Scalar to cache and sync
      */
-    @SafeVarargs
-    public SumOfFloatScalar(final Scalar<Float>... src) {
-        this.scalars = src;
+    public Solid(final Scalar<T> origin) {
+        this.origin = origin;
+        this.lock = new Object();
     }
 
     @Override
-    public Float value() {
-        return new SumOfScalar(this.scalars).value().floatValue();
+    public T value() throws Exception {
+        if (this.cache == null) {
+            synchronized (this.lock) {
+                if (this.cache == null) {
+                    this.cache = this.origin.value();
+                }
+            }
+        }
+        return this.cache;
     }
 }

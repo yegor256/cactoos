@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.SyncScalar;
 
 /**
  * Synchronized list.
@@ -82,7 +81,7 @@ public final class Synced<X> extends ListEnvelope<X> {
      */
     public Synced(final Collection<X> list) {
         super(
-            new SyncScalar<>(
+            new org.cactoos.scalar.Synced<>(
                 () -> {
                     final List<X> temp = new LinkedList<>();
                     temp.addAll(list);

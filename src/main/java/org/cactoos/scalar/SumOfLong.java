@@ -26,12 +26,12 @@ package org.cactoos.scalar;
 import org.cactoos.Scalar;
 
 /**
- * Double Scalar which sums up the values of other Scalars of the same type.
+ * Long Scalar which sums up the values of other Scalars of the same type
  *
- * <p>Here is how you can use it to summarize double numbers:</p>
+ * <p>Here is how you can use it to summarize numbers:</p>
  *
  * <pre>{@code
- * double sum = new SumOfDoubleScalar(() -> 1.1,() -> 2.1, () -> 3.1).value();
+ * long sum = new SumOfLongScalar(() -> 1,() -> 2, () -> 3).value();
  * }</pre>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
@@ -42,12 +42,12 @@ import org.cactoos.Scalar;
  *
  * @since 0.30
  */
-public final class SumOfDoubleScalar implements Scalar<Double> {
+public final class SumOfLong implements Scalar<Long> {
 
     /**
      * Varargs of Scalar to sum up values from.
      */
-    private final Scalar<Double>[] scalars;
+    private final Scalar<Long>[] scalars;
 
     /**
      * Ctor.
@@ -55,12 +55,12 @@ public final class SumOfDoubleScalar implements Scalar<Double> {
      * @since 0.30
      */
     @SafeVarargs
-    public SumOfDoubleScalar(final Scalar<Double>... src) {
+    public SumOfLong(final Scalar<Long>... src) {
         this.scalars = src;
     }
 
     @Override
-    public Double value() {
-        return new SumOfScalar(this.scalars).value().doubleValue();
+    public Long value() {
+        return new SumOfScalar(this.scalars).value().longValue();
     }
 }

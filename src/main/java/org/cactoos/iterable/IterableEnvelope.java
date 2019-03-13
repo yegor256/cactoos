@@ -26,7 +26,7 @@ package org.cactoos.iterable;
 import java.util.Iterator;
 import org.cactoos.Scalar;
 import org.cactoos.iterator.Immutable;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterable envelope.
@@ -43,14 +43,14 @@ public abstract class IterableEnvelope<X> implements Iterable<X> {
     /**
      * The iterable.
      */
-    private final UncheckedScalar<Iterable<X>> iterable;
+    private final Unchecked<Iterable<X>> iterable;
 
     /**
      * Ctor.
      * @param scalar The source
      */
     public IterableEnvelope(final Scalar<Iterable<X>> scalar) {
-        this.iterable = new UncheckedScalar<>(scalar);
+        this.iterable = new Unchecked<>(scalar);
     }
 
     @Override

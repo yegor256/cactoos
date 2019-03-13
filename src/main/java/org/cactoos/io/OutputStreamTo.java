@@ -33,8 +33,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Output;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * An {@link OutputStream} that encapsulates other destination for the data.
@@ -48,7 +48,7 @@ public final class OutputStreamTo extends OutputStream {
     /**
      * The target.
      */
-    private final UncheckedScalar<OutputStream> target;
+    private final Unchecked<OutputStream> target;
 
     /**
      * Ctor.
@@ -144,8 +144,8 @@ public final class OutputStreamTo extends OutputStream {
      */
     private OutputStreamTo(final Scalar<OutputStream> tgt) {
         super();
-        this.target = new UncheckedScalar<>(
-            new StickyScalar<>(tgt)
+        this.target = new Unchecked<>(
+            new Sticky<>(tgt)
         );
     }
 

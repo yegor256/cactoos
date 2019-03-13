@@ -23,45 +23,35 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
+import java.security.SecureRandom;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
- * Integer Scalar which sums up the values of other Scalars of the same type
+ * Test case for {@link Retry}.
  *
- * <p>Here is how you can use it to summarize numbers:</p>
- *
- * <pre>{@code
- * int sum = new SumOfIntScalar(() -> 1,() -> 2, () -> 3).value();
- * // sum equal to 6
- * }</pre>
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. Despite that this class does NOT throw a checked
- * exception.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.30
+ * @since 0.9
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SumOfIntScalar implements Scalar<Integer> {
+public final class RetryTest {
 
-    /**
-     * Varargs of Scalar to sum up values from.
-     */
-    private final Scalar<Integer>[] scalars;
-
-    /**
-     * Ctor.
-     * @param src Varargs of Scalar to sum up values from
-     * @since 0.30
-     */
-    @SafeVarargs
-    public SumOfIntScalar(final Scalar<Integer>... src) {
-        this.scalars = src;
+    @Test
+    public void runsScalarMultipleTimes() throws Exception {
+        new Assertion<>(
+            "must retry in case of failure",
+            () -> new Retry<>(
+                () -> {
+                    // @checkstyle MagicNumberCheck (1 line)
+                    if (new SecureRandom().nextDouble() > 0.3d) {
+                        throw new IllegalArgumentException("May happen");
+                    }
+                    return 0;
+                },
+                Integer.MAX_VALUE
+            ),
+            new ScalarHasValue<>(0)
+        ).affirm();
     }
 
-    @Override
-    public Integer value() {
-        return new SumOfScalar(this.scalars).value().intValue();
-    }
 }

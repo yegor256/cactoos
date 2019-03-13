@@ -28,7 +28,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.StickyScalar;
 
 /**
  * Collection decorator that goes through the list only once.
@@ -72,7 +71,7 @@ public final class Sticky<E> extends CollectionEnvelope<E> {
      */
     public Sticky(final Collection<E> list) {
         super(
-            new StickyScalar<>(
+            new org.cactoos.scalar.Sticky<>(
                 () -> {
                     final Collection<E> temp = new ArrayList<>(list.size());
                     temp.addAll(list);

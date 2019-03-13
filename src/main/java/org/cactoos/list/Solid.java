@@ -27,7 +27,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.SolidScalar;
 
 /**
  * A {@link java.util.List} that is both synchronized and sticky.
@@ -71,7 +70,7 @@ public final class Solid<X> extends ListEnvelope<X> {
      */
     public Solid(final Collection<X> list) {
         super(
-            new SolidScalar<>(
+            new org.cactoos.scalar.Solid<>(
                 () -> new Synced<>(new Sticky<>(list))
             )
         );

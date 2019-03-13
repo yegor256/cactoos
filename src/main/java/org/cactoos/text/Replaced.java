@@ -31,7 +31,7 @@ import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.func.IoCheckedFunc;
-import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.IoChecked;
 
 /**
  * Replace the Text.
@@ -86,7 +86,7 @@ public final class Replaced extends TextEnvelope {
         final Func<Matcher, String> func) {
         super((Scalar<String>) () -> {
             final StringBuffer buffer = new StringBuffer();
-            final Matcher matcher = new IoCheckedScalar<>(regex)
+            final Matcher matcher = new IoChecked<>(regex)
                 .value()
                 .matcher(text.asString());
             final IoCheckedFunc<Matcher, String> safe =

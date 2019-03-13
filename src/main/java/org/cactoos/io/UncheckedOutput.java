@@ -25,7 +25,7 @@ package org.cactoos.io;
 
 import java.io.OutputStream;
 import org.cactoos.Output;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Input that doesn't throw checked {@link Exception}.
@@ -51,7 +51,7 @@ public final class UncheckedOutput implements Output {
 
     @Override
     public OutputStream stream() {
-        return new UncheckedScalar<>(this.output::stream).value();
+        return new Unchecked<>(this.output::stream).value();
     }
 
 }

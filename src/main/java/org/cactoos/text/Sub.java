@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Extract a substring from a Text.
@@ -81,7 +81,7 @@ public final class Sub extends TextEnvelope {
      */
     public Sub(final Text text, final Scalar<Integer> strt,
         final Scalar<Integer> finish) {
-        this(text, new UncheckedScalar<>(strt), new UncheckedScalar<>(finish));
+        this(text, new Unchecked<>(strt), new Unchecked<>(finish));
     }
 
     /**
@@ -92,8 +92,8 @@ public final class Sub extends TextEnvelope {
      */
     @SuppressWarnings({"PMD.CallSuperInConstructor",
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
-    public Sub(final Text text, final UncheckedScalar<Integer> start,
-        final UncheckedScalar<Integer> end) {
+    public Sub(final Text text, final Unchecked<Integer> start,
+        final Unchecked<Integer> end) {
         super((Scalar<String>) () -> {
             int begin = start.value();
             if (begin < 0) {

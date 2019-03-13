@@ -41,8 +41,8 @@ import org.cactoos.text.TextOf;
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
  * it more convenient and get rid of the checked exception you can
- * use the {@link UncheckedScalar} decorator. Or you may use
- * {@link IoCheckedScalar} to wrap it in an IOException.</p>
+ * use the {@link Unchecked} decorator. Or you may use
+ * {@link IoChecked} to wrap it in an IOException.</p>
  *
  * @since 0.2
  */
@@ -89,16 +89,16 @@ public final class NumberOf extends Number implements Scalar<Number> {
      */
     public NumberOf(final Text text) {
         super();
-        this.lnum = new StickyScalar<>(
+        this.lnum = new Sticky<>(
             () -> Long.parseLong(text.asString())
         );
-        this.inum = new StickyScalar<>(
+        this.inum = new Sticky<>(
             () -> Integer.parseInt(text.asString())
         );
-        this.fnum = new StickyScalar<>(
+        this.fnum = new Sticky<>(
             () -> Float.parseFloat(text.asString())
         );
-        this.dnum = new StickyScalar<>(
+        this.dnum = new Sticky<>(
             () -> Double.parseDouble(text.asString())
         );
     }
@@ -110,21 +110,21 @@ public final class NumberOf extends Number implements Scalar<Number> {
 
     @Override
     public int intValue() {
-        return new UncheckedScalar<>(this.inum).value();
+        return new Unchecked<>(this.inum).value();
     }
 
     @Override
     public long longValue() {
-        return new UncheckedScalar<>(this.lnum).value();
+        return new Unchecked<>(this.lnum).value();
     }
 
     @Override
     public float floatValue() {
-        return new UncheckedScalar<>(this.fnum).value();
+        return new Unchecked<>(this.fnum).value();
     }
 
     @Override
     public double doubleValue() {
-        return new UncheckedScalar<>(this.dnum).value();
+        return new Unchecked<>(this.dnum).value();
     }
 }

@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Func that doesn't throw checked {@link Exception}.
@@ -52,7 +52,7 @@ public final class UncheckedFunc<X, Y> implements Func<X, Y> {
 
     @Override
     public Y apply(final X input) {
-        return new UncheckedScalar<>(
+        return new Unchecked<>(
             () -> this.func.apply(input)
         ).value();
     }

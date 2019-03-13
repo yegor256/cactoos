@@ -26,9 +26,5 @@
  * Scalars.
  *
  * @since 0.12
- * @todo #1007:30min Continue applying the new class naming convention:
- *  avoid compound names for decorators. Continue renaming classes implementing
- *  the {@link org.cactoos.Scalar}. More details you can find here
- *  https://github.com/yegor256/cactoos/issues/913#issuecomment-402332247.
  */
 package org.cactoos.scalar;

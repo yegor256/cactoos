@@ -23,41 +23,44 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.cactoos.Scalar;
 
 /**
- * Test case for {@link SumOfDoubleScalar}.
+ * Double Scalar which sums up the values of other Scalars of the same type.
+ *
+ * <p>Here is how you can use it to summarize double numbers:</p>
+ *
+ * <pre>{@code
+ * double sum = new SumOfDoubleScalar(() -> 1.1,() -> 2.1, () -> 3.1).value();
+ * }</pre>
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. Despite that this class does NOT throw a checked
+ * exception.</p>
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SumOfDoubleScalarTest {
+public final class SumOfDouble implements Scalar<Double> {
 
-    @Test
-    public void withListOfScalarsInt() {
-        MatcherAssert.assertThat(
-            new SumOfDoubleScalar(() -> 1.1, () -> 2.1, () -> 3.1)
-                .value(),
-            new IsEqual<>(6.3)
-        );
+    /**
+     * Varargs of Scalar to sum up values from.
+     */
+    private final Scalar<Double>[] scalars;
+
+    /**
+     * Ctor.
+     * @param src Varargs of Scalar to sum up values from
+     * @since 0.30
+     */
+    @SafeVarargs
+    public SumOfDouble(final Scalar<Double>... src) {
+        this.scalars = src;
     }
 
-    @Test
-    public void withEmptyList() {
-        MatcherAssert.assertThat(
-            new SumOfDoubleScalar().value(),
-            new IsEqual<>(0.0)
-        );
-    }
-
-    @Test
-    public void withListOfOneElement() {
-        MatcherAssert.assertThat(
-            new SumOfDoubleScalar(() -> 5.1).value(),
-            new IsEqual<>(5.1)
-        );
+    @Override
+    public Double value() {
+        return new SumOfScalar(this.scalars).value().doubleValue();
     }
 }

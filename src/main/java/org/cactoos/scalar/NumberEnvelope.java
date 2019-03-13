@@ -93,22 +93,22 @@ public abstract class NumberEnvelope extends Number implements Scalar<Double> {
 
     @Override
     public final int intValue() {
-        return new UncheckedScalar<>(this.inum).value();
+        return new Unchecked<>(this.inum).value();
     }
 
     @Override
     public final long longValue() {
-        return new UncheckedScalar<>(this.lnum).value();
+        return new Unchecked<>(this.lnum).value();
     }
 
     @Override
     public final float floatValue() {
-        return new UncheckedScalar<>(this.fnum).value();
+        return new Unchecked<>(this.fnum).value();
     }
 
     @Override
     public final double doubleValue() {
-        return new UncheckedScalar<>(this.dnum).value();
+        return new Unchecked<>(this.dnum).value();
     }
 
     @Override

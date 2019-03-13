@@ -64,7 +64,7 @@ final class SumOfScalar implements Scalar<SumOf> {
                 new CollectionOf<>(this.scalars)
                     .stream()
                     .map(
-                        scalar -> new UncheckedScalar<>(scalar).value()
+                        scalar -> new Unchecked<>(scalar).value()
                     ).collect(Collectors.toList())
             )
         );

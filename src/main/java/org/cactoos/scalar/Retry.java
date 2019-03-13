@@ -23,12 +23,23 @@
  */
 package org.cactoos.scalar;
 
+import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.Text;
-import org.cactoos.text.TextOf;
 
 /**
- * Text as {@link Boolean}.
+ * Func that will try a few times before throwing an exception.
+ *
+ * <pre>{@code
+ * new RetryScalar<>(
+ *     () -> {
+ *         if (new SecureRandom().nextDouble() > 0.3d) {
+ *             throw new IllegalArgumentException("May happen");
+ *         }
+ *         return 0;
+ *     },
+ *     5
+ * ).value() // will try to run 5 times before throwing an exception
+ * }</pre>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -38,35 +49,55 @@ import org.cactoos.text.TextOf;
  * use the {@link Unchecked} decorator. Or you may use
  * {@link IoChecked} to wrap it in an IOException.</p>
  *
- * @since 0.2
+ * @param <T> Type of output
+ * @since 0.9
  */
-public final class BoolOf implements Scalar<Boolean> {
+public final class Retry<T> implements Scalar<T> {
 
     /**
-     * Source text.
+     * Original scalar.
      */
-    private final Text origin;
+    private final Scalar<T> origin;
+
+    /**
+     * Exit condition.
+     */
+    private final Func<Integer, Boolean> func;
 
     /**
      * Ctor.
-     *
-     * @param txt True or false string
+     * @param scalar Scalar original
      */
-    public BoolOf(final String txt) {
-        this(new TextOf(txt));
+    public Retry(final Scalar<T> scalar) {
+        // @checkstyle MagicNumberCheck (1 line)
+        this(scalar, 3);
     }
 
     /**
      * Ctor.
-     *
-     * @param text True or false text
+     * @param scalar Scalar original
+     * @param attempts Maximum number of attempts
      */
-    public BoolOf(final Text text) {
-        this.origin = text;
+    public Retry(final Scalar<T> scalar, final int attempts) {
+        this(scalar, attempt -> attempt >= attempts);
+    }
+
+    /**
+     * Ctor.
+     * @param scalar Func original
+     * @param exit Exit condition, returns TRUE if there is no reason to try
+     */
+    public Retry(final Scalar<T> scalar,
+        final Func<Integer, Boolean> exit) {
+        this.origin = scalar;
+        this.func = exit;
     }
 
     @Override
-    public Boolean value() throws Exception {
-        return Boolean.valueOf(this.origin.asString());
+    public T value() throws Exception {
+        return new org.cactoos.func.Retry<>(
+            (Func<Boolean, T>) input -> this.origin.value(),
+            this.func
+        ).apply(true);
     }
 }

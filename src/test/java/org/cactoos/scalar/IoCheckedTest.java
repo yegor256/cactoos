@@ -23,44 +23,51 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
+import java.io.IOException;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Long Scalar which sums up the values of other Scalars of the same type
+ * Test case for {@link IoChecked}.
  *
- * <p>Here is how you can use it to summarize numbers:</p>
- *
- * <pre>{@code
- * long sum = new SumOfLongScalar(() -> 1,() -> 2, () -> 3).value();
- * }</pre>
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. Despite that this class does NOT throw a checked
- * exception.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.30
+ * @since 0.4
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SumOfLongScalar implements Scalar<Long> {
+public final class IoCheckedTest {
 
-    /**
-     * Varargs of Scalar to sum up values from.
-     */
-    private final Scalar<Long>[] scalars;
-
-    /**
-     * Ctor.
-     * @param src Varargs of Scalar to sum up values from
-     * @since 0.30
-     */
-    @SafeVarargs
-    public SumOfLongScalar(final Scalar<Long>... src) {
-        this.scalars = src;
+    @Test
+    public void rethrowsIoException() {
+        final IOException exception = new IOException("intended");
+        try {
+            new IoChecked<>(
+                () -> {
+                    throw exception;
+                }
+            ).value();
+        } catch (final IOException ex) {
+            MatcherAssert.assertThat(
+                ex, Matchers.is(exception)
+            );
+        }
     }
 
-    @Override
-    public Long value() {
-        return new SumOfScalar(this.scalars).value().longValue();
+    @Test(expected = IOException.class)
+    public void throwsException() throws Exception {
+        new IoChecked<>(
+            () -> {
+                throw new Exception("intended to fail");
+            }
+        ).value();
     }
+
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() throws IOException {
+        new IoChecked<>(
+            () -> {
+                throw new IllegalStateException("intended to fail here");
+            }
+        ).value();
+    }
+
 }

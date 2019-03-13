@@ -23,28 +23,28 @@
  */
 package org.cactoos;
 
-import org.cactoos.scalar.IoCheckedScalar;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.IoChecked;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Scalar.
  *
  * <p>If you don't want to have any checked exceptions being thrown
  * out of your {@link Scalar}, you can use
- * {@link UncheckedScalar} decorator. Also
- * you may try {@link IoCheckedScalar}.</p>
+ * {@link Unchecked} decorator. Also
+ * you may try {@link IoChecked}.</p>
  *
  * <p>If you want to cache the result of the {@link Scalar} and
  * make sure it doesn't calculate anything twice, you can use
- * {@link StickyScalar} decorator.</p>
+ * {@link Sticky} decorator.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <T> Type of result
- * @see StickyScalar
- * @see UncheckedScalar
- * @see IoCheckedScalar
+ * @see Sticky
+ * @see Unchecked
+ * @see IoChecked
  * @since 0.1
  */
 public interface Scalar<T> {

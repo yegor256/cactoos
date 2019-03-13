@@ -23,8 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import org.cactoos.Scalar;
 
 /**
@@ -32,31 +30,32 @@ import org.cactoos.Scalar;
  *
  * <p>There is no thread-safety guarantee.
  *
+ * @deprecated Use {@link Unchecked} instead
  * @param <T> Type of result
  * @since 0.3
+ * @todo #1081:30min Remove once the dependency cactoos-matchers has been
+ *  updated to latest version of cactoos and use {@link Unchecked} instead
+ *  of {@link UncheckedScalar}.
  */
+@Deprecated
 public final class UncheckedScalar<T> implements Scalar<T> {
 
     /**
-     * Original origin.
+     * Unchecked origin.
      */
-    private final Scalar<T> origin;
+    private final Unchecked<T> origin;
 
     /**
      * Ctor.
      * @param scalar Encapsulated origin
      */
     public UncheckedScalar(final Scalar<T> scalar) {
-        this.origin = scalar;
+        this.origin = new Unchecked<>(scalar);
     }
 
     @Override
     public T value() {
-        try {
-            return new IoCheckedScalar<>(this.origin).value();
-        } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
-        }
+        return this.origin.value();
     }
 
 }

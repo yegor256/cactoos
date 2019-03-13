@@ -31,8 +31,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.scalar.IoCheckedScalar;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.IoChecked;
+import org.cactoos.scalar.Sticky;
 import org.cactoos.text.Joined;
 import org.cactoos.text.Randomized;
 import org.cactoos.text.TextOf;
@@ -95,7 +95,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
      */
     public TempFolder(final Text path) {
         this(
-            new StickyScalar<>(
+            new Sticky<>(
                 () -> Files.createDirectory(
                     Paths.get(
                         new Joined(
@@ -125,6 +125,6 @@ public final class TempFolder implements Scalar<Path>, Closeable {
 
     @Override
     public void close() throws IOException {
-        Files.delete(new IoCheckedScalar<>(this).value());
+        Files.delete(new IoChecked<>(this).value());
     }
 }

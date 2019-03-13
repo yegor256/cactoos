@@ -27,8 +27,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Sorted iterator.
@@ -43,7 +43,7 @@ public final class Sorted<T> implements Iterator<T> {
     /**
      * Sorted one.
      */
-    private final UncheckedScalar<Iterator<T>> scalar;
+    private final Unchecked<Iterator<T>> scalar;
 
     /**
      * Ctor.
@@ -65,8 +65,8 @@ public final class Sorted<T> implements Iterator<T> {
      * @param comparator The comparator
      */
     public Sorted(final Comparator<T> comparator, final Iterator<T> iterator) {
-        this.scalar = new UncheckedScalar<>(
-            new StickyScalar<>(
+        this.scalar = new Unchecked<>(
+            new Sticky<>(
                 () -> {
                     final List<T> items = new LinkedList<>();
                     while (iterator.hasNext()) {

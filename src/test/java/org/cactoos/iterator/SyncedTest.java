@@ -31,7 +31,7 @@ import org.junit.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
- * Test for {@link SyncIterator}.
+ * Test for {@link Synced}.
  *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -39,7 +39,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @checkstyle TodoCommentCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class SyncIteratorTest {
+public final class SyncedTest {
 
     @Test
     public void syncIteratorReturnsCorrectValuesWithExternalLock() {
@@ -47,7 +47,7 @@ public final class SyncIteratorTest {
         MatcherAssert.assertThat(
             "Unexpected value found.",
             new ListOf<>(
-                new SyncIterator<>(
+                new Synced<>(
                     new ListOf<>("a", "b").iterator(), lock
                 )
             ).toArray(),
@@ -60,7 +60,7 @@ public final class SyncIteratorTest {
         MatcherAssert.assertThat(
             "Unexpected value found.",
             new ListOf<>(
-                new SyncIterator<>(
+                new Synced<>(
                     new ListOf<>("a", "b").iterator()
                 )
             ).toArray(),
@@ -85,7 +85,7 @@ public final class SyncIteratorTest {
                     return true;
                 },
                 new RunsInThreads<>(
-                    new SyncIterator<>(
+                    new Synced<>(
                         new ListOf<>("a", "b").iterator()
                     ),
                     2
@@ -125,7 +125,7 @@ public final class SyncIteratorTest {
                     return true;
                 },
                 new RunsInThreads<>(
-                    new SyncIterator<>(
+                    new Synced<>(
                         new ListOf<>("a", "b").iterator()
                     ),
                     2

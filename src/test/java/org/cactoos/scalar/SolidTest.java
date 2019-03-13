@@ -23,41 +23,54 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
+import java.security.SecureRandom;
+import org.cactoos.Scalar;
+import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.RunsInThreads;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
- * Test case for {@link SumOfLongScalar}.
+ * Test case for {@link Solid}.
  *
- * @since 0.30
+ * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class SumOfLongScalarTest {
+public final class SolidTest {
 
     @Test
-    public void withListOfScalarsInt() {
-        MatcherAssert.assertThat(
-            new SumOfLongScalar(() -> 1L, () -> 2L, () -> 3L)
-                .value(),
-            new IsEqual<>(6L)
+    public void cachesScalarResults() throws Exception {
+        final Scalar<Integer> scalar = new Solid<>(
+            () -> new SecureRandom().nextInt()
         );
+        new Assertion<>(
+            "must compute value only once",
+            () -> scalar.value() + scalar.value(),
+            new IsEqual<>(scalar.value() + scalar.value())
+        ).affirm();
     }
 
     @Test
-    public void withEmptyList() {
-        MatcherAssert.assertThat(
-            new SumOfLongScalar().value(),
-            new IsEqual<>(0L)
-        );
+    public void worksInThreads() {
+        new Assertion<>(
+            "must work well in multiple threads",
+            () -> scalar -> {
+                new Assertion<>(
+                    "must compute value once",
+                    () -> scalar,
+                    new ScalarHasValue<>(scalar.value())
+                ).affirm();
+                return true;
+            },
+            new RunsInThreads<>(
+                new Unchecked<>(
+                    new Solid<>(() -> new ListOf<>(1, 2))
+                )
+            )
+        ).affirm();
     }
 
-    @Test
-    public void withListOfOneElement() {
-        MatcherAssert.assertThat(
-            new SumOfLongScalar(() -> 5L).value(),
-            new IsEqual<>(5L)
-        );
-    }
 }

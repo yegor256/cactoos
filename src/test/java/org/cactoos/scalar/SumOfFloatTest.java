@@ -23,50 +23,43 @@
  */
 package org.cactoos.scalar;
 
-import java.security.SecureRandom;
-import org.cactoos.Scalar;
-import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.llorllale.cactoos.matchers.RunsInThreads;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
- * Test case for {@link SolidScalar}.
+ * Test case for {@link SumOfFloat}.
  *
- * @since 0.24
+ * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SolidScalarTest {
+public final class SumOfFloatTest {
 
     @Test
-    public void cachesScalarResults() throws Exception {
-        final Scalar<Integer> scalar = new SolidScalar<>(
-            () -> new SecureRandom().nextInt()
-        );
-        MatcherAssert.assertThat(
-            scalar.value() + scalar.value(),
-            Matchers.equalTo(scalar.value() + scalar.value())
-        );
+    public void withListOfScalarsInt() {
+        new Assertion<>(
+            "must sum scalars",
+            () -> new SumOfFloat(() -> 1f, () -> 2f, () -> 3f),
+            new ScalarHasValue<>(6f)
+        ).affirm();
     }
 
     @Test
-    public void worksInThreads() {
-        MatcherAssert.assertThat(
-            "Can't work well in multiple threads",
-            scalar -> {
-                MatcherAssert.assertThat(
-                    scalar.value(),
-                    Matchers.equalTo(scalar.value())
-                );
-                return true;
-            },
-            new RunsInThreads<>(
-                new UncheckedScalar<>(
-                    new SolidScalar<>(() -> new ListOf<>(1, 2))
-                )
-            )
-        );
+    public void withEmptyList() {
+        new Assertion<>(
+            "must sum empty list to 0",
+            () -> new SumOfFloat(),
+            new ScalarHasValue<>(0f)
+        ).affirm();
     }
 
+    @Test
+    public void withListOfOneElement() {
+        new Assertion<>(
+            "must sum singleton list",
+            () -> new SumOfFloat(() -> 5f),
+            new ScalarHasValue<>(5f)
+        ).affirm();
+    }
 }

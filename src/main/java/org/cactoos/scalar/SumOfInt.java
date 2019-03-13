@@ -23,59 +23,45 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.func.StickyFunc;
 
 /**
- * Cached version of a Scalar.
+ * Integer Scalar which sums up the values of other Scalars of the same type
  *
- * <p>This {@link Scalar} decorator technically is an in-memory
- * cache.</p>
- *
- * <p>Pay attention that this class is not thread-safe. It is highly
- * recommended to always decorate it with {@link SyncScalar}.</p>
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use the {@link UncheckedScalar} decorator. Or you may use
- * {@link IoCheckedScalar} to wrap it in an IOException.</p>
+ * <p>Here is how you can use it to summarize numbers:</p>
  *
  * <pre>{@code
- * final Scalar<Integer> scalar = new StickyScalar<>(
- *     () -> {
- *         System.out.println("Will be printed only once");
- *         return new SecureRandom().nextInt();
- *     }
- * ).value()
+ * int sum = new SumOfIntScalar(() -> 1,() -> 2, () -> 3).value();
+ * // sum equal to 6
  * }</pre>
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. Despite that this class does NOT throw a checked
+ * exception.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @param <T> Type of result
- * @see StickyFunc
- * @since 0.3
+ * @since 0.30
  */
-public final class StickyScalar<T> implements Scalar<T> {
+public final class SumOfInt implements Scalar<Integer> {
 
     /**
-     * Func.
+     * Varargs of Scalar to sum up values from.
      */
-    private final Func<Boolean, T> func;
+    private final Scalar<Integer>[] scalars;
 
     /**
      * Ctor.
-     * @param scalar The Scalar to cache
+     * @param src Varargs of Scalar to sum up values from
+     * @since 0.30
      */
-    public StickyScalar(final Scalar<T> scalar) {
-        this.func = new StickyFunc<>(
-            input -> scalar.value()
-        );
+    @SafeVarargs
+    public SumOfInt(final Scalar<Integer>... src) {
+        this.scalars = src;
     }
 
     @Override
-    public T value() throws Exception {
-        return this.func.apply(true);
+    public Integer value() {
+        return new SumOfScalar(this.scalars).value().intValue();
     }
 }

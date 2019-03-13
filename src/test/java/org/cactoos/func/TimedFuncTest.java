@@ -33,7 +33,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test case for {@link TimedFunc}.
+ * Test case for {@link Timed}.
  * @since 0.29.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -42,7 +42,7 @@ public final class TimedFuncTest {
     @Test(expected = TimeoutException.class)
     public void functionGetsInterrupted() throws Exception {
         final long period = 100L;
-        new TimedFunc<Boolean, Boolean>(
+        new Timed<Boolean, Boolean>(
             input -> {
                 return new And(
                     new Endless<>(() -> input)
@@ -65,7 +65,7 @@ public final class TimedFuncTest {
                 }
             );
         try {
-            new TimedFunc<Boolean, Boolean>(
+            new Timed<Boolean, Boolean>(
                 period,
                 input -> future
             ).apply(true);
@@ -82,7 +82,7 @@ public final class TimedFuncTest {
     public void functionIsExecuted() throws Exception {
         final long period = 3000L;
         MatcherAssert.assertThat(
-            new TimedFunc<Boolean, Boolean>(
+            new Timed<Boolean, Boolean>(
                 input -> true,
                 period
             ).apply(true),

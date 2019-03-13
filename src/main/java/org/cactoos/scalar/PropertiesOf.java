@@ -50,7 +50,7 @@ public final class PropertiesOf implements Scalar<Properties> {
     /**
      * The underlying properties.
      */
-    private final IoCheckedScalar<Properties> scalar;
+    private final IoChecked<Properties> scalar;
 
     /**
      * Ctor.
@@ -134,7 +134,7 @@ public final class PropertiesOf implements Scalar<Properties> {
      * @param sclr The underlying properties
      */
     private PropertiesOf(final Scalar<Properties> sclr) {
-        this.scalar = new IoCheckedScalar<>(sclr);
+        this.scalar = new IoChecked<>(sclr);
     }
 
     @Override

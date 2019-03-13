@@ -25,27 +25,28 @@ package org.cactoos.scalar;
 
 import java.security.SecureRandom;
 import org.cactoos.Scalar;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link StickyScalar}.
+ * Test case for {@link Sticky}.
  *
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyScalarTest {
+public final class StickyTest {
 
     @Test
     public void cachesScalarResults() throws Exception {
-        final Scalar<Integer> scalar = new StickyScalar<>(
+        final Scalar<Integer> scalar = new Sticky<>(
             () -> new SecureRandom().nextInt()
         );
-        MatcherAssert.assertThat(
-            scalar.value() + scalar.value(),
-            Matchers.equalTo(scalar.value() + scalar.value())
-        );
+        new Assertion<>(
+            "must compute value only once",
+            () -> scalar.value() + scalar.value(),
+            new IsEqual<>(scalar.value() + scalar.value())
+        ).affirm();
     }
 
 }

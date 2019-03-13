@@ -26,7 +26,7 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Repeat an element.
@@ -41,7 +41,7 @@ public final class Repeated<T> implements Iterator<T> {
     /**
      * The element to repeat.
      */
-    private final UncheckedScalar<T> elm;
+    private final Unchecked<T> elm;
 
     /**
      * How many more repeats will happen.
@@ -63,7 +63,7 @@ public final class Repeated<T> implements Iterator<T> {
      * @param scalar Scalar to repeat
      */
     public Repeated(final int max, final Scalar<T> scalar) {
-        this(max, new UncheckedScalar<T>(scalar));
+        this(max, new Unchecked<T>(scalar));
     }
 
     /**
@@ -71,7 +71,7 @@ public final class Repeated<T> implements Iterator<T> {
      * @param max How many times to repeat
      * @param scalar Scalar to repeat
      */
-    public Repeated(final int max, final UncheckedScalar<T> scalar) {
+    public Repeated(final int max, final Unchecked<T> scalar) {
         this.elm = scalar;
         this.repeat = max;
     }

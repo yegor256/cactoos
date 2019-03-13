@@ -25,7 +25,7 @@ package org.cactoos.iterator;
 
 import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterator that never ends.
@@ -41,7 +41,7 @@ public final class Endless<T> implements Iterator<T> {
     /**
      * The element to repeat.
      */
-    private final UncheckedScalar<T> origin;
+    private final Unchecked<T> origin;
 
     /**
      * Ctor.
@@ -56,14 +56,14 @@ public final class Endless<T> implements Iterator<T> {
      * @param scalar Scalar to repeat
      */
     public Endless(final Scalar<T> scalar) {
-        this(new UncheckedScalar<>(scalar));
+        this(new Unchecked<>(scalar));
     }
 
     /**
      * Ctor.
      * @param scalar Scalar to repeat
      */
-    public Endless(final UncheckedScalar<T> scalar) {
+    public Endless(final Unchecked<T> scalar) {
         this.origin = scalar;
     }
 

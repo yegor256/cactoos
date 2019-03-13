@@ -44,7 +44,7 @@ import org.cactoos.Scalar;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.Sticky;
 import org.cactoos.time.Iso;
 
 /**
@@ -389,7 +389,7 @@ public final class TextOf extends TextEnvelope {
      */
     public TextOf(final LocalDate date, final DateTimeFormatter formatter) {
         this(
-            new StickyScalar<>(
+            new Sticky<>(
                 () -> formatter.format(
                     ZonedDateTime.of(
                         date, LocalTime.MIN, ZoneId.systemDefault()

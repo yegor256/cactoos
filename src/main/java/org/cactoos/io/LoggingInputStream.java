@@ -30,8 +30,8 @@ import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -73,7 +73,7 @@ public final class LoggingInputStream extends InputStream {
     /**
      * Logger level.
      */
-    private final UncheckedScalar<Level> level;
+    private final Unchecked<Level> level;
 
     /**
      * Ctor.
@@ -99,8 +99,8 @@ public final class LoggingInputStream extends InputStream {
         this.origin = input;
         this.source = src;
         this.logger = lgr;
-        this.level = new UncheckedScalar<>(
-            new StickyScalar<>(
+        this.level = new Unchecked<>(
+            new Sticky<>(
                 () -> {
                     Level lvl = lgr.getLevel();
                     if (lvl == null) {

@@ -23,82 +23,64 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.func.Retry;
 
 /**
- * Func that will try a few times before throwing an exception.
- *
- * <pre>{@code
- * new RetryScalar<>(
- *     () -> {
- *         if (new SecureRandom().nextDouble() > 0.3d) {
- *             throw new IllegalArgumentException("May happen");
- *         }
- *         return 0;
- *     },
- *     5
- * ).value() // will try to run 5 times before throwing an exception
- * }</pre>
- *
- * <p>There is no thread-safety guarantee.
+ * Scalar that is thread-safe.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
  * it more convenient and get rid of the checked exception you can
- * use the {@link UncheckedScalar} decorator. Or you may use
- * {@link IoCheckedScalar} to wrap it in an IOException.</p>
+ * use the {@link Unchecked} decorator. Or you may use
+ * {@link IoChecked} to wrap it in an IOException.</p>
  *
- * @param <T> Type of output
- * @since 0.9
+ * <pre>{@code
+ * final List<Integer> list = new LinkedList<>();
+ * final int threads = 100;
+ * new RunsInThreads<>(
+ *     new SyncScalar<>(() -> list.add(1)), threads
+ * ); // list.size() will be equal to threads value
+ * }</pre>
+ *
+ * <p>Objects of this class are thread-safe.</p>
+ *
+ * @param <T> Type of result
+ * @since 0.3
  */
-public final class RetryScalar<T> implements Scalar<T> {
+public final class Synced<T> implements Scalar<T> {
 
     /**
-     * Original scalar.
+     * The scalar to cache.
      */
     private final Scalar<T> origin;
 
     /**
-     * Exit condition.
+     * Sync lock.
      */
-    private final Func<Integer, Boolean> func;
+    private final Object mutex;
 
     /**
      * Ctor.
-     * @param scalar Scalar original
+     * @param src The Scalar to cache
      */
-    public RetryScalar(final Scalar<T> scalar) {
-        // @checkstyle MagicNumberCheck (1 line)
-        this(scalar, 3);
+    public Synced(final Scalar<T> src) {
+        this(src, src);
     }
 
     /**
      * Ctor.
-     * @param scalar Scalar original
-     * @param attempts Maximum number of attempts
+     * @param scalar The Scalar to cache
+     * @param lock Sync lock
      */
-    public RetryScalar(final Scalar<T> scalar, final int attempts) {
-        this(scalar, attempt -> attempt >= attempts);
-    }
-
-    /**
-     * Ctor.
-     * @param scalar Func original
-     * @param exit Exit condition, returns TRUE if there is no reason to try
-     */
-    public RetryScalar(final Scalar<T> scalar,
-        final Func<Integer, Boolean> exit) {
+    public Synced(final Scalar<T> scalar, final Object lock) {
         this.origin = scalar;
-        this.func = exit;
+        this.mutex = lock;
     }
 
     @Override
     public T value() throws Exception {
-        return new Retry<>(
-            (Func<Boolean, T>) input -> this.origin.value(),
-            this.func
-        ).apply(true);
+        synchronized (this.mutex) {
+            return this.origin.value();
+        }
     }
 }

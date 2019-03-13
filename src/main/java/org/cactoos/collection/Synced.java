@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.SyncScalar;
 
 /**
  * Iterable as {@link Collection}.
@@ -79,7 +78,7 @@ public final class Synced<T> extends CollectionEnvelope<T> {
      */
     public Synced(final Collection<T> src) {
         super(
-            new SyncScalar<>(
+            new org.cactoos.scalar.Synced<>(
                 () -> {
                     final Collection<T> temp = new LinkedList<>();
                     temp.addAll(src);

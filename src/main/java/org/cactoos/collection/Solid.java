@@ -26,7 +26,6 @@ package org.cactoos.collection;
 import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.SolidScalar;
 
 /**
  * A {@link Collection} that is both synchronized and sticky.
@@ -70,7 +69,7 @@ public final class Solid<T> extends CollectionEnvelope<T> {
      */
     public Solid(final Collection<T> src) {
         super(
-            new SolidScalar<Collection<T>>(
+            new org.cactoos.scalar.Solid<Collection<T>>(
                 () -> new Synced<T>(new Sticky<>(src))
             )
         );

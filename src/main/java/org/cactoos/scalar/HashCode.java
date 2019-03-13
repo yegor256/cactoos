@@ -60,7 +60,7 @@ public final class HashCode implements Scalar<Integer> {
     /**
      * Hash code.
      */
-    private final UncheckedScalar<Integer> origin;
+    private final Unchecked<Integer> origin;
 
     /**
      * Ctor.
@@ -97,7 +97,7 @@ public final class HashCode implements Scalar<Integer> {
      * @param hash Hashcode
      */
     private HashCode(final Scalar<Integer> hash) {
-        this.origin = new UncheckedScalar<>(hash);
+        this.origin = new Unchecked<>(hash);
     }
 
     @Override

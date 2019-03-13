@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.StickyScalar;
 
 /**
  * List decorator that goes through the list only once.
@@ -75,7 +74,7 @@ public final class Sticky<X> extends ListEnvelope<X> {
      */
     public Sticky(final Collection<X> list) {
         super(
-            new StickyScalar<>(
+            new org.cactoos.scalar.Sticky<>(
                 () -> {
                     final List<X> temp = new LinkedList<>();
                     temp.addAll(list);

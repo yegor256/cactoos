@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.Scalar;
 import org.cactoos.collection.CollectionEnvelope;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * List envelope.
@@ -51,7 +51,7 @@ abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
     /**
      * Encapsulated list.
      */
-    private final UncheckedScalar<List<T>> list;
+    private final Unchecked<List<T>> list;
 
     /**
      * Ctor.
@@ -59,7 +59,7 @@ abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
      */
     ListEnvelope(final Scalar<List<T>> src) {
         super(src::value);
-        this.list = new UncheckedScalar<>(src);
+        this.list = new Unchecked<>(src);
     }
 
     @Override

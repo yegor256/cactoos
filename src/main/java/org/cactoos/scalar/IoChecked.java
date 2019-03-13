@@ -21,40 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.scalar;
 
-import org.cactoos.BiFunc;
-import org.cactoos.scalar.Unchecked;
+import java.io.IOException;
+import org.cactoos.Scalar;
 
 /**
- * BiFunc that doesn't throw checked {@link Exception}.
+ * Scalar that doesn't throw {@link Exception}, but throws
+ * {@link IOException} instead.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @param <X> Type of input
- * @param <Y> Type of input
- * @param <Z> Type of output
- * @since 0.13
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link IOException}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use the {@link Unchecked} decorator.</p>
+ *
+ * @param <T> Type of result
+ * @since 0.4
  */
-public final class UncheckedBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
+public final class IoChecked<T> implements Scalar<T> {
 
     /**
-     * Original func.
+     * Original scalar.
      */
-    private final BiFunc<X, Y, Z> func;
+    private final Scalar<T> origin;
 
     /**
      * Ctor.
-     * @param fnc Encapsulated func
+     * @param scalar Encapsulated scalar
      */
-    public UncheckedBiFunc(final BiFunc<X, Y, Z> fnc) {
-        this.func = fnc;
+    public IoChecked(final Scalar<T> scalar) {
+        this.origin = scalar;
     }
 
     @Override
-    public Z apply(final X first, final Y second) {
-        return new Unchecked<>(
-            () -> this.func.apply(first, second)
+    public T value() throws IOException {
+        return new Checked<>(
+            this.origin,
+            IOException::new
         ).value();
     }
+
 }

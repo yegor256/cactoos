@@ -34,7 +34,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
 import org.cactoos.func.Repeated;
-import org.cactoos.func.TimedFunc;
+import org.cactoos.func.Timed;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Mapped;
@@ -199,7 +199,7 @@ public final class ThreadsTest {
         MatcherAssert.assertThat(
             new UncheckedFunc<>(
                 new Repeated<>(
-                    new TimedFunc<Boolean, Boolean>(
+                    new Timed<Boolean, Boolean>(
                         input -> {
                             test.exec(null);
                             return true;

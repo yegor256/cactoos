@@ -30,8 +30,8 @@ import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterator.IteratorOf;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Array as iterable.
@@ -90,8 +90,8 @@ public final class IterableOf<X> extends IterableEnvelope<X> {
         // @checkstyle AnonInnerLengthCheck (30 lines)
         this(
             () -> new Iterator<X>() {
-                private UncheckedScalar<I> current = new UncheckedScalar<>(
-                    new StickyScalar<>(first)
+                private Unchecked<I> current = new Unchecked<>(
+                    new Sticky<>(first)
                 );
                 private final UncheckedFunc<I, I> subsequent =
                     new UncheckedFunc<>(next);
@@ -102,8 +102,8 @@ public final class IterableOf<X> extends IterableEnvelope<X> {
                         final I next = this.subsequent.apply(
                             this.current.value()
                         );
-                        this.current = new UncheckedScalar<>(
-                            new StickyScalar<>(() -> next)
+                        this.current = new Unchecked<>(
+                            new Sticky<>(() -> next)
                         );
                     }
                     return this.current.value().hasNext();
@@ -125,7 +125,7 @@ public final class IterableOf<X> extends IterableEnvelope<X> {
      * @param sclr The encapsulated iterator of x
      */
     private IterableOf(final Scalar<Iterator<X>> sclr) {
-        super(() -> () -> new UncheckedScalar<>(sclr).value());
+        super(() -> () -> new Unchecked<>(sclr).value());
     }
 
 }

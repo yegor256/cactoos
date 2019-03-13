@@ -23,51 +23,38 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import java.util.LinkedList;
+import java.util.List;
+import org.cactoos.Scalar;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
- * Test case for {@link IoCheckedScalar}.
+ * Test case for {@link Synced}.
  *
- * @since 0.4
+ * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IoCheckedScalarTest {
+public final class SyncedTest {
 
     @Test
-    public void rethrowsIoException() {
-        final IOException exception = new IOException("intended");
-        try {
-            new IoCheckedScalar<>(
-                () -> {
-                    throw exception;
-                }
-            ).value();
-        } catch (final IOException ex) {
-            MatcherAssert.assertThat(
-                ex, Matchers.is(exception)
-            );
-        }
-    }
-
-    @Test(expected = IOException.class)
-    public void throwsException() throws Exception {
-        new IoCheckedScalar<>(
-            () -> {
-                throw new Exception("intended to fail");
-            }
-        ).value();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionGoesOut() throws IOException {
-        new IoCheckedScalar<>(
-            () -> {
-                throw new IllegalStateException("intended to fail here");
-            }
-        ).value();
+    public void worksInThreads() {
+        final List<Integer> list = new LinkedList<>();
+        final int threads = 100;
+        new Assertion<>(
+            "must work well in multiple threads",
+            () -> Scalar::value,
+            new RunsInThreads<>(
+                new Synced<>(() -> list.add(1)), threads
+            )
+        ).affirm();
+        new Assertion<>(
+            "must have correct size",
+            list::size,
+            new IsEqual<>(threads)
+        ).affirm();
     }
 
 }

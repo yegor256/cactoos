@@ -30,7 +30,7 @@ import org.cactoos.Scalar;
  *
  * <p>This {@link Scalar} represents a constant value which never changes.</p>
  *
- * <p>Contrary to {@link StickyScalar} this constant is always
+ * <p>Contrary to {@link Sticky} this constant is always
  * pre-computed.</p>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
@@ -47,7 +47,7 @@ import org.cactoos.Scalar;
  * <p>This class is thread-safe.</p>
  *
  * @param <T> Type of result
- * @see StickyScalar
+ * @see Sticky
  * @since 0.30
  */
 public final class Constant<T> implements Scalar<T> {

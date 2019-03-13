@@ -28,7 +28,6 @@ import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.SolidScalar;
 
 /**
  * A {@link Map} that is both synchronized and sticky.
@@ -158,7 +157,7 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
      */
     public Solid(final Map<X, Y> map) {
         super(
-            new SolidScalar<Map<X, Y>>(
+            new org.cactoos.scalar.Solid<Map<X, Y>>(
                 () -> new Synced<>(new Sticky<X, Y>(map))
             )
         );

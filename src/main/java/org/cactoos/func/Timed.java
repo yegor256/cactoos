@@ -35,7 +35,7 @@ import org.cactoos.Func;
  * @param <Y> Type of output
  * @since 0.29.3
  */
-public final class TimedFunc<X, Y> implements Func<X, Y> {
+public final class Timed<X, Y> implements Func<X, Y> {
 
     /**
      * Origin function.
@@ -52,7 +52,7 @@ public final class TimedFunc<X, Y> implements Func<X, Y> {
      * @param function Origin function
      * @param milliseconds Milliseconds
      */
-    public TimedFunc(final Func<X, Y> function, final long milliseconds) {
+    public Timed(final Func<X, Y> function, final long milliseconds) {
         this(milliseconds, new Async<>(function));
     }
 
@@ -61,7 +61,7 @@ public final class TimedFunc<X, Y> implements Func<X, Y> {
      * @param async Async function
      * @param milliseconds Milliseconds
      */
-    public TimedFunc(final long milliseconds, final Func<X, Future<Y>> async) {
+    public Timed(final long milliseconds, final Func<X, Future<Y>> async) {
         this.func = async;
         this.time = milliseconds;
     }

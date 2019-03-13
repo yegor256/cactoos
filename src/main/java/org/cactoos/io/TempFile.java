@@ -30,8 +30,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.scalar.IoCheckedScalar;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.IoChecked;
+import org.cactoos.scalar.Sticky;
 import org.cactoos.text.TextOf;
 
 /**
@@ -114,7 +114,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
         final Text prefix,
         final Text suffix) {
         this(
-            new StickyScalar<>(
+            new Sticky<>(
                 () -> Files.createTempFile(
                     dir.value(),
                     prefix.asString(),
@@ -145,7 +145,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
      */
     @Override
     public void close() throws IOException {
-        Files.delete(new IoCheckedScalar<>(this).value());
+        Files.delete(new IoChecked<>(this).value());
     }
 
 }

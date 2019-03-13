@@ -26,8 +26,8 @@ package org.cactoos.list;
 import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterator of the list.
@@ -42,7 +42,7 @@ public final class ListIteratorOf<T> implements ListIterator<T> {
     /**
      * Original list iterator.
      */
-    private final UncheckedScalar<ListIterator<T>> origin;
+    private final Unchecked<ListIterator<T>> origin;
 
     /**
      * Ctor.
@@ -74,7 +74,7 @@ public final class ListIteratorOf<T> implements ListIterator<T> {
      * @param orig Original list iterator.
      */
     public ListIteratorOf(final Scalar<ListIterator<T>> orig) {
-        this.origin = new UncheckedScalar<>(new StickyScalar<>(orig));
+        this.origin = new Unchecked<>(new Sticky<>(orig));
     }
 
     @Override

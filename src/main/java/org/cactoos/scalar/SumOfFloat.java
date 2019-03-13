@@ -23,41 +23,44 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.cactoos.Scalar;
 
 /**
- * Test case for {@link SumOfIntScalar}.
+ * Float Scalar which sums up the values of other Scalars of the same type
+ *
+ * <p>Here is how you can use it to summarize float numbers:</p>
+ *
+ * <pre>{@code
+ * float sum = new SumOfFloatScalar(() -> 1f,() -> 2f, () -> 3f).value();
+ * }</pre>
+ *
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link Exception}. Despite that this class does NOT throw a checked
+ * exception.</p>
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SumOfIntScalarTest {
+public final class SumOfFloat implements Scalar<Float> {
 
-    @Test
-    public void withListOfScalarsInt() {
-        MatcherAssert.assertThat(
-            new SumOfIntScalar(() -> 1, () -> 2, () -> 3)
-                .value(),
-            new IsEqual<>(6)
-        );
+    /**
+     * Varargs of Scalar to sum up values from.
+     */
+    private final Scalar<Float>[] scalars;
+
+    /**
+     * Ctor.
+     * @param src Varargs of Scalar to sum up values from
+     * @since 0.30
+     */
+    @SafeVarargs
+    public SumOfFloat(final Scalar<Float>... src) {
+        this.scalars = src;
     }
 
-    @Test
-    public void withEmptyList() {
-        MatcherAssert.assertThat(
-            new SumOfIntScalar().value(),
-            new IsEqual<>(0)
-        );
-    }
-
-    @Test
-    public void withListOfOneElement() {
-        MatcherAssert.assertThat(
-            new SumOfIntScalar(() -> 5).value(),
-            new IsEqual<>(5)
-        );
+    @Override
+    public Float value() {
+        return new SumOfScalar(this.scalars).value().floatValue();
     }
 }

@@ -30,7 +30,6 @@ import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.StickyScalar;
 
 /**
  * Map decorator that goes through the map only once.
@@ -169,7 +168,7 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      */
     public Sticky(final Map<X, Y> map) {
         super(
-            new StickyScalar<>(
+            new org.cactoos.scalar.Sticky<>(
                 () -> {
                     final Map<X, Y> temp = new HashMap<>(0);
                     temp.putAll(map);

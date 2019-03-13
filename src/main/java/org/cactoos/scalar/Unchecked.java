@@ -24,43 +24,39 @@
 package org.cactoos.scalar;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import org.cactoos.Scalar;
 
 /**
- * Scalar that doesn't throw {@link Exception}, but throws
- * {@link IOException} instead.
+ * Scalar that doesn't throw checked {@link Exception}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link IOException}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use the {@link UncheckedScalar} decorator.</p>
- *
  * @param <T> Type of result
- * @since 0.4
+ * @since 0.3
  */
-public final class IoCheckedScalar<T> implements Scalar<T> {
+public final class Unchecked<T> implements Scalar<T> {
 
     /**
-     * Original scalar.
+     * Original origin.
      */
     private final Scalar<T> origin;
 
     /**
      * Ctor.
-     * @param scalar Encapsulated scalar
+     * @param scalar Encapsulated origin
      */
-    public IoCheckedScalar(final Scalar<T> scalar) {
+    public Unchecked(final Scalar<T> scalar) {
         this.origin = scalar;
     }
 
     @Override
-    public T value() throws IOException {
-        return new Checked<>(
-            this.origin,
-            IOException::new
-        ).value();
+    public T value() {
+        try {
+            return new IoChecked<>(this.origin).value();
+        } catch (final IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
     }
 
 }

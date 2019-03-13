@@ -29,8 +29,8 @@ import org.cactoos.Scalar;
 import org.cactoos.iterator.Immutable;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.SumOfIntScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.SumOfInt;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Base collection.
@@ -51,14 +51,14 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
     /**
      * Shuffled one.
      */
-    private final UncheckedScalar<Collection<X>> col;
+    private final Unchecked<Collection<X>> col;
 
     /**
      * Ctor.
      * @param slr The scalar
      */
     public CollectionEnvelope(final Scalar<Collection<X>> slr) {
-        this.col = new UncheckedScalar<>(slr);
+        this.col = new Unchecked<>(slr);
     }
 
     @Override
@@ -147,7 +147,7 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
 
     @Override
     public final boolean equals(final Object other) {
-        return new UncheckedScalar<>(
+        return new Unchecked<>(
             new And(
                 () -> other != null,
                 () -> Collection.class.isAssignableFrom(other.getClass()),
@@ -158,7 +158,7 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
                 () -> {
                     final Iterable<?> compared = (Iterable<?>) other;
                     final Iterator<?> iterator = compared.iterator();
-                    return new UncheckedScalar<>(
+                    return new Unchecked<>(
                         new And(
                             (X input) -> input.equals(iterator.next()),
                             this
@@ -172,10 +172,10 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
     // @checkstyle MagicNumberCheck (30 lines)
     @Override
     public final int hashCode() {
-        return new UncheckedScalar<>(
+        return new Unchecked<>(
             new Folded<>(
                 42,
-                (hash, entry) -> new SumOfIntScalar(
+                (hash, entry) -> new SumOfInt(
                     () -> 37 * hash,
                     entry::hashCode
                 ).value(),

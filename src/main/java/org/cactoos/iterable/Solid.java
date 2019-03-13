@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import org.cactoos.scalar.NoNulls;
-import org.cactoos.scalar.SolidScalar;
 
 /**
  * An {@link Iterable} that is both synchronized and sticky.
@@ -52,7 +51,7 @@ public final class Solid<X> extends IterableEnvelope<X> {
     public Solid(final Iterable<X> iterable) {
         super(
             new NoNulls<>(
-                new SolidScalar<>(
+                new org.cactoos.scalar.Solid<>(
                     () -> new Synced<>(new Sticky<>(iterable))
                 )
             )

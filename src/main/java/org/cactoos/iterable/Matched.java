@@ -29,7 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -47,7 +47,7 @@ public final class Matched<X> implements Iterable<X> {
     /**
      * The matched iterator.
      */
-    private final UncheckedScalar<Iterator<X>> mtr;
+    private final Unchecked<Iterator<X>> mtr;
 
     /**
      * Ctor.
@@ -111,7 +111,7 @@ public final class Matched<X> implements Iterable<X> {
      * @param mtr The matched iterator.
      */
     private Matched(final Scalar<Iterator<X>> mtr) {
-        this.mtr = new UncheckedScalar<>(mtr);
+        this.mtr = new Unchecked<>(mtr);
     }
 
     @Override

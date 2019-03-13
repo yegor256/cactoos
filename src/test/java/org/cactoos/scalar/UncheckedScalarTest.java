@@ -28,13 +28,14 @@ import java.io.UncheckedIOException;
 import org.junit.Test;
 
 /**
- * Test case for {@link UncheckedScalar}.
+ * Test case for {@link Unchecked}.
  *
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class UncheckedScalarTest {
 
+    @SuppressWarnings("deprecation")
     @Test(expected = UncheckedIOException.class)
     public void rethrowsCheckedToUncheckedException() {
         new UncheckedScalar<>(

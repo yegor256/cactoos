@@ -24,7 +24,7 @@
 package org.cactoos.text;
 
 import org.cactoos.Text;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Text implementing Comparable.<br>
@@ -55,7 +55,7 @@ public final class ComparableText extends TextEnvelope
 
     @Override
     public int compareTo(final Text other) {
-        return new UncheckedScalar<>(
+        return new Unchecked<>(
             () -> this.asString().compareTo(other.asString())
         ).value();
     }

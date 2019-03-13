@@ -34,8 +34,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.Output;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * A {@link Writer} that encapsulates other destination for the data.
@@ -49,7 +49,7 @@ public final class WriterTo extends Writer {
     /**
      * The target.
      */
-    private final UncheckedScalar<Writer> target;
+    private final Unchecked<Writer> target;
 
     /**
      * Ctor.
@@ -117,8 +117,8 @@ public final class WriterTo extends Writer {
      */
     private WriterTo(final Scalar<Writer> tgt) {
         super();
-        this.target = new UncheckedScalar<>(
-            new StickyScalar<>(tgt)
+        this.target = new Unchecked<>(
+            new Sticky<>(tgt)
         );
     }
 

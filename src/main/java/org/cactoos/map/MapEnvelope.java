@@ -30,8 +30,8 @@ import org.cactoos.Scalar;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
-import org.cactoos.scalar.SumOfIntScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.SumOfInt;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.TextOf;
 
 /**
@@ -56,14 +56,14 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     /**
      * The map.
      */
-    private final UncheckedScalar<Map<X, Y>> map;
+    private final Unchecked<Map<X, Y>> map;
 
     /**
      * Ctor.
      * @param scalar The scalar
      */
     public MapEnvelope(final Scalar<Map<X, Y>> scalar) {
-        this.map = new UncheckedScalar<>(scalar);
+        this.map = new Unchecked<>(scalar);
     }
 
     @Override
@@ -145,7 +145,7 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     @Override
     public final boolean equals(final Object other) {
-        return new UncheckedScalar<>(
+        return new Unchecked<>(
             new Or(
                 () -> this == other,
                 new And(
@@ -160,15 +160,15 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     // @checkstyle MagicNumberCheck (30 lines)
     @Override
     public final int hashCode() {
-        return new UncheckedScalar<>(
+        return new Unchecked<>(
             new Folded<>(
                 42,
                 (hash, entry) -> {
-                    final int keys = new SumOfIntScalar(
+                    final int keys = new SumOfInt(
                         () -> 37 * hash,
                         () -> entry.getKey().hashCode()
                     ).value();
-                    return new SumOfIntScalar(
+                    return new SumOfInt(
                         () -> 37 * keys,
                         () -> entry.getValue().hashCode()
                     ).value();
@@ -185,7 +185,7 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
      * @return True if contents are equal false otherwise
      */
     private Boolean contentsEqual(final Map<?, ?> other) {
-        return new UncheckedScalar<>(
+        return new Unchecked<>(
             new And(
                 (entry) -> {
                     final X key = entry.getKey();

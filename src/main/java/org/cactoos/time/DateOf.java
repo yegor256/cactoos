@@ -28,7 +28,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Parser for {@link Date} instances.
@@ -39,7 +39,7 @@ public final class DateOf implements Scalar<Date> {
     /**
      * The parsed date.
      */
-    private final UncheckedScalar<Date> parsed;
+    private final Unchecked<Date> parsed;
 
     /**
      * Parses the provided date as ISO formatted.
@@ -64,7 +64,7 @@ public final class DateOf implements Scalar<Date> {
      * @param formatter The formatter to use.
      */
     public DateOf(final CharSequence date, final DateTimeFormatter formatter) {
-        this.parsed = new UncheckedScalar<>(
+        this.parsed = new Unchecked<>(
             () -> Date.from(
                 LocalDateTime.from(
                     formatter.parse(date)

@@ -41,7 +41,7 @@ import org.cactoos.text.FormattedText;
 public final class ItemAt<T> implements Scalar<T> {
 
     /**
-     * {@link StickyScalar} that holds the value of the iterator
+     * {@link Sticky} that holds the value of the iterator
      *  at the position specified in the constructor.
      */
     private final Scalar<T> saved;
@@ -127,7 +127,7 @@ public final class ItemAt<T> implements Scalar<T> {
         final int position,
         final Func<Iterable<T>, T> fallback
     ) {
-        this(new StickyScalar<>(source::iterator), position, fallback);
+        this(new Sticky<>(source::iterator), position, fallback);
     }
 
     /**
@@ -200,7 +200,7 @@ public final class ItemAt<T> implements Scalar<T> {
         final int position,
         final Func<Iterable<T>, T> fallback
     ) {
-        this(new StickyScalar<>(() -> iterator), position, fallback);
+        this(new Sticky<>(() -> iterator), position, fallback);
     }
 
     /**
@@ -215,7 +215,7 @@ public final class ItemAt<T> implements Scalar<T> {
         final int position,
         final Func<Iterable<T>, T> fallback
     ) {
-        this.saved = new StickyScalar<T>(
+        this.saved = new Sticky<T>(
             () -> {
                 final T ret;
                 if (position < 0) {

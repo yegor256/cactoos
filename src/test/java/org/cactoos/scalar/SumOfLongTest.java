@@ -23,53 +23,43 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
- * Cached and synchronized version of a Scalar.
+ * Test case for {@link SumOfLong}.
  *
- * <p>Objects of this class are thread safe.
- *
- * @param <T> Type of result
- * @see StickyScalar
- * @see SyncScalar
- * @since 0.24
+ * @since 0.30
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SolidScalar<T> implements Scalar<T> {
+public final class SumOfLongTest {
 
-    /**
-     * Origin.
-     */
-    private final Scalar<T> origin;
-
-    /**
-     * Cache.
-     */
-    private volatile T cache;
-
-    /**
-     * Sync lock.
-     */
-    private final Object lock;
-
-    /**
-     * Ctor.
-     * @param origin The Scalar to cache and sync
-     */
-    public SolidScalar(final Scalar<T> origin) {
-        this.origin = origin;
-        this.lock = new Object();
+    @Test
+    public void withListOfScalarsInt() {
+        new Assertion<>(
+            "must sum scalars",
+            () -> new SumOfLong(() -> 1L, () -> 2L, () -> 3L),
+            new ScalarHasValue<>(6L)
+        ).affirm();
     }
 
-    @Override
-    public T value() throws Exception {
-        if (this.cache == null) {
-            synchronized (this.lock) {
-                if (this.cache == null) {
-                    this.cache = this.origin.value();
-                }
-            }
-        }
-        return this.cache;
+    @Test
+    public void withEmptyList() {
+        new Assertion<>(
+            "must sum empty list to 0",
+            () -> new SumOfLong(),
+            new ScalarHasValue<>(0L)
+        ).affirm();
+    }
+
+    @Test
+    public void withListOfOneElement() {
+        new Assertion<>(
+            "must sum singleton list",
+            () -> new SumOfLong(() -> 5L),
+            new ScalarHasValue<>(5L)
+        ).affirm();
     }
 }

@@ -33,8 +33,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * {@link ReentrantReadWriteLock}.
  *
  * <p>The {@link ReadWriteLock} is used to synchronize read calls to
- * {@link SyncIterator#hasNext()} against write calls to
- * {@link SyncIterator#next()} and write calls to any other read or write
+ * {@link Synced#hasNext()} against write calls to
+ * {@link Synced#next()} and write calls to any other read or write
  * calls.</p>
  *
  * <p>Objects of this class are thread-safe.</p>
@@ -42,7 +42,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @param <T> The type of the iterator.
  * @since 1.0
  */
-public final class SyncIterator<T> implements Iterator<T> {
+public final class Synced<T> implements Iterator<T> {
     /**
      * The original iterator.
      */
@@ -56,7 +56,7 @@ public final class SyncIterator<T> implements Iterator<T> {
      * Ctor.
      * @param iterator The iterator to synchronize access to.
      */
-    public SyncIterator(final Iterator<T> iterator) {
+    public Synced(final Iterator<T> iterator) {
         this(iterator, new ReentrantReadWriteLock());
     }
 
@@ -65,7 +65,7 @@ public final class SyncIterator<T> implements Iterator<T> {
      * @param iterator The iterator to synchronize access to.
      * @param lock The lock to use for synchronization.
      */
-    public SyncIterator(final Iterator<T> iterator, final ReadWriteLock lock) {
+    public Synced(final Iterator<T> iterator, final ReadWriteLock lock) {
         this.iterator = iterator;
         this.lock = lock;
     }

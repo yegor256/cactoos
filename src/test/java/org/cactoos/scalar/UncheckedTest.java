@@ -23,41 +23,25 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import org.junit.Test;
 
 /**
- * Test case for {@link SumOfFloatScalar}.
+ * Test case for {@link Unchecked}.
  *
- * @since 0.30
+ * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SumOfFloatScalarTest {
+public final class UncheckedTest {
 
-    @Test
-    public void withListOfScalarsInt() {
-        MatcherAssert.assertThat(
-            new SumOfFloatScalar(() -> 1f, () -> 2f, () -> 3f)
-                .value(),
-            new IsEqual<>(6f)
-        );
+    @Test(expected = UncheckedIOException.class)
+    public void rethrowsCheckedToUncheckedException() {
+        new Unchecked<>(
+            () -> {
+                throw new IOException("intended");
+            }
+        ).value();
     }
 
-    @Test
-    public void withEmptyList() {
-        MatcherAssert.assertThat(
-            new SumOfFloatScalar().value(),
-            new IsEqual<>(0f)
-        );
-    }
-
-    @Test
-    public void withListOfOneElement() {
-        MatcherAssert.assertThat(
-            new SumOfFloatScalar(() -> 5f).value(),
-            new IsEqual<>(5f)
-        );
-    }
 }
