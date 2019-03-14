@@ -229,12 +229,12 @@ public final class NoNulls<T> implements List<T> {
 
     @Override
     public ListIterator<T> listIterator() {
-        return this.list.listIterator();
+        return new ListIteratorNoNulls<>(this.list.listIterator());
     }
 
     @Override
     public ListIterator<T> listIterator(final int index) {
-        return this.list.listIterator(index);
+        return new ListIteratorNoNulls<>(this.list.listIterator(index));
     }
 
     @Override
