@@ -23,25 +23,32 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
-import org.cactoos.Text;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Reverse the Text.
- *
- * @since 0.2
+ * Test case for {@link TrimmedLeft}.
+ * @since 0.12
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReversedText extends TextEnvelope {
+public final class TrimmedLeftTest {
 
-    /**
-     * Ctor.
-     *
-     * @param text The text
-     */
-    public ReversedText(final Text text) {
-        super((Scalar<String>) () -> new StringBuilder(
-            text.asString()
-            ).reverse().toString()
-        );
+    @Test
+    public void convertsText() {
+        new Assertion<>(
+            "Can't left trim a text",
+            () -> new TrimmedLeft(new TextOf("  Hello!   \t ")),
+            new TextHasString("Hello!   \t ")
+        ).affirm();
+    }
+
+    @Test
+    public void trimmedBlankTextIsEmptyText() {
+        new Assertion<>(
+            "Can't trim a blank text",
+            () -> new TrimmedLeft(new TextOf("  \t ")),
+            new TextHasString("")
+        ).affirm();
     }
 }

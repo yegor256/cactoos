@@ -23,32 +23,55 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link TrimmedLeftText}.
- * @since 0.12
+ * Test case for {@link PaddedStart}.
+ *
+ * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TrimmedLeftTextTest {
+public final class PaddedStartTest {
 
     @Test
-    public void convertsText() {
-        MatcherAssert.assertThat(
-            "Can't left trim a text",
-            new TrimmedLeftText(new TextOf("  Hello!   \t ")),
-            new TextHasString("Hello!   \t ")
-        );
+    public void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
+        new Assertion<>(
+            "Shouldn't pad the text",
+            () -> new PaddedStart(
+                new TextOf("x"),
+                1,
+                '-'
+            ),
+            new TextHasString("x")
+        ).affirm();
     }
 
     @Test
-    public void trimmedBlankTextIsEmptyText() {
-        MatcherAssert.assertThat(
-            "Can't trim a blank text",
-            new TrimmedLeftText(new TextOf("  \t ")),
-            new TextHasString("")
-        );
+    public void somePaddingIfOrigTextIsShorterThanRequestedLength() {
+        new Assertion<>(
+            "Should pad chars at start",
+            () -> new PaddedStart(
+                new TextOf("x"),
+                2,
+                '-'
+            ),
+            new TextHasString("-x")
+        ).affirm();
+    }
+
+    @Test
+    public void noPaddingIfRequestedLengthIsNegative()  {
+        new Assertion<>(
+            "Shouldn't consider negative min length",
+            () -> new PaddedStart(
+                new TextOf("x"),
+                -1,
+                '-'
+            ),
+            new TextHasString("x")
+        ).affirm();
     }
 }
+

@@ -23,37 +23,36 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
 
 /**
- * Test case for {@link ReversedText}.
+ * Text padded at start to reach the given length.
  *
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * <p>There is thread safe.
+ *
+ * @since 0.32
  */
-public final class ReversedTextTest {
+public final class PaddedStart extends TextEnvelope {
 
-    @Test
-    public void reverseText() {
-        MatcherAssert.assertThat(
-            "Can't reverse a text",
-            new ReversedText(
-                new TextOf("Hello!")
-            ),
-            new TextHasString("!olleH")
-        );
-    }
-
-    @Test
-    public void reversedEmptyTextIsEmptyText() {
-        MatcherAssert.assertThat(
-            "Can't reverse empty text",
-            new ReversedText(
-                new TextOf("")
-            ),
-            new TextHasString("")
-        );
+    /**
+     * Ctor.
+     * @param text The text
+     * @param length The minimum length of the resulting string
+     * @param symbol The padding symbol
+     */
+    public PaddedStart(
+        final Text text, final int length, final char symbol) {
+        super((Scalar<String>) () -> {
+            final String original = text.asString();
+            return new Joined(
+                new TextOf(""),
+                new Repeated(
+                    new TextOf(symbol), length - original.length()
+                ),
+                text
+            ).asString();
+        });
     }
 }
+

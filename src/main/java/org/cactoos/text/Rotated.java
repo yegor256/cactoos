@@ -23,32 +23,39 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
 
 /**
- * Test case for {@link TrimmedRightText}.
+ * Rotate (circular shift) a String of shift characters.
  * @since 0.12
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TrimmedRightTextTest {
+public final class Rotated extends TextEnvelope {
 
-    @Test
-    public void convertsText() {
-        MatcherAssert.assertThat(
-            "Can't right trim a text",
-            new TrimmedRightText(new TextOf("  Hello!   \t ")),
-            new TextHasString("  Hello!")
-        );
-    }
-
-    @Test
-    public void trimmedBlankTextIsEmptyText() {
-        MatcherAssert.assertThat(
-            "Can't trim a blank text",
-            new TrimmedRightText(new TextOf("  \t ")),
-            new TextHasString("")
-        );
+    /**
+     * Ctor.
+     * @param text The text
+     * @param shift The shift
+     */
+    @SuppressWarnings({"PMD.CallSuperInConstructor",
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
+    public Rotated(final Text text, final int shift) {
+        super((Scalar<String>) () -> {
+            String origin = text.asString();
+            final int length = origin.length();
+            if (length != 0 && shift != 0 && shift % length != 0) {
+                final StringBuilder builder = new StringBuilder(length);
+                int offset = -(shift % length);
+                if (offset < 0) {
+                    offset = origin.length() + offset;
+                }
+                origin = builder.append(
+                    origin.substring(offset)
+                ).append(
+                    origin.substring(0, offset)
+                ).toString();
+            }
+            return origin;
+        });
     }
 }

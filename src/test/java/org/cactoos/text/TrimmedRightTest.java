@@ -23,57 +23,32 @@
  */
 package org.cactoos.text;
 
-import java.util.Locale;
-import org.cactoos.Text;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Text in upper case.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.1
+ * Test case for {@link TrimmedRight}.
+ * @since 0.12
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class UpperText implements Text {
+public final class TrimmedRightTest {
 
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * The locale.
-     */
-    private final Locale locale;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public UpperText(final String text) {
-        this(new TextOf(text));
+    @Test
+    public void convertsText() {
+        new Assertion<>(
+            "Can't right trim a text",
+            () -> new TrimmedRight(new TextOf("  Hello!   \t ")),
+            new TextHasString("  Hello!")
+        ).affirm();
     }
 
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public UpperText(final Text text) {
-        this(text, Locale.ENGLISH);
+    @Test
+    public void trimmedBlankTextIsEmptyText() {
+        new Assertion<>(
+            "Can't trim a blank text",
+            () -> new TrimmedRight(new TextOf("  \t ")),
+            new TextHasString("")
+        ).affirm();
     }
-
-    /**
-     * Ctor.
-     * @param text The text
-     * @param lang Locale
-     */
-    public UpperText(final Text text, final Locale lang) {
-        this.origin = text;
-        this.locale = lang;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        return this.origin.asString().toUpperCase(this.locale);
-    }
-
 }

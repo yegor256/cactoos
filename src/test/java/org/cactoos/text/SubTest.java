@@ -23,55 +23,34 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link PaddedStartText}.
- *
- * @since 0.1
+ * Test case for {@link Sub}.
+ * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class PaddedStartTextTest {
+public final class SubTest {
 
     @Test
-    public void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
-        MatcherAssert.assertThat(
-            "Shouldn't pad the text",
-            new PaddedStartText(
-                new TextOf("x"),
-                1,
-                '-'
-            ),
-            new TextHasString("x")
-        );
+    public void cutTextWithStartAndEnd() {
+        new Assertion<>(
+            "Can't cut a text with start and end",
+            // @checkstyle MagicNumber (1 line)
+            () -> new Sub("hello world", 2, 50),
+            new TextHasString("llo world")
+        ).affirm();
     }
 
     @Test
-    public void somePaddingIfOrigTextIsShorterThanRequestedLength() {
-        MatcherAssert.assertThat(
-            "Should pad chars at start",
-            new PaddedStartText(
-                new TextOf("x"),
-                2,
-                '-'
-            ),
-            new TextHasString("-x")
-        );
+    public void cutTextWithStart() {
+        new Assertion<>(
+            "Can't cut a text with start",
+            () -> new Sub("cut here", 2),
+            new TextHasString("t here")
+        ).affirm();
     }
 
-    @Test
-    public void noPaddingIfRequestedLengthIsNegative()  {
-        MatcherAssert.assertThat(
-            "Shouldn't consider negative min length",
-            new PaddedStartText(
-                new TextOf("x"),
-                -1,
-                '-'
-            ),
-            new TextHasString("x")
-        );
-    }
 }
-

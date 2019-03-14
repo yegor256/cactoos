@@ -107,7 +107,7 @@ public final class Abbreviated implements Text {
         } else {
             abbreviated = new FormattedText(
                 "%s...",
-                new SubText(
+                new Sub(
                     this.origin,
                     0,
                     this.width - Abbreviated.ELLIPSES_WIDTH

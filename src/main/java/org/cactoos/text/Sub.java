@@ -33,14 +33,14 @@ import org.cactoos.scalar.UncheckedScalar;
  * <p>There is no thread-safety guarantee.
  * @since 0.11
  */
-public final class SubText extends TextEnvelope {
+public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
      * @param text The String
      * @param strt Start position in the text
      */
-    public SubText(final String text, final int strt) {
+    public Sub(final String text, final int strt) {
         this(new TextOf(text), strt);
     }
 
@@ -50,7 +50,7 @@ public final class SubText extends TextEnvelope {
      * @param strt Start position in the text
      * @param finish End position in the text
      */
-    public SubText(final String text, final int strt, final int finish) {
+    public Sub(final String text, final int strt, final int finish) {
         this(new TextOf(text), strt, finish);
     }
 
@@ -59,7 +59,7 @@ public final class SubText extends TextEnvelope {
      * @param text The Text
      * @param strt Start position in the text
      */
-    public SubText(final Text text, final int strt) {
+    public Sub(final Text text, final int strt) {
         this(text, () -> strt, () -> text.asString().length());
     }
 
@@ -69,7 +69,7 @@ public final class SubText extends TextEnvelope {
      * @param strt Start position in the text
      * @param finish End position in the text
      */
-    public SubText(final Text text, final int strt, final int finish) {
+    public Sub(final Text text, final int strt, final int finish) {
         this(text, () -> strt, () -> finish);
     }
 
@@ -79,7 +79,7 @@ public final class SubText extends TextEnvelope {
      * @param strt Start position in the text
      * @param finish End position in the text
      */
-    public SubText(final Text text, final Scalar<Integer> strt,
+    public Sub(final Text text, final Scalar<Integer> strt,
         final Scalar<Integer> finish) {
         this(text, new UncheckedScalar<>(strt), new UncheckedScalar<>(finish));
     }
@@ -92,7 +92,7 @@ public final class SubText extends TextEnvelope {
      */
     @SuppressWarnings({"PMD.CallSuperInConstructor",
         "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
-    public SubText(final Text text, final UncheckedScalar<Integer> start,
+    public Sub(final Text text, final UncheckedScalar<Integer> start,
         final UncheckedScalar<Integer> end) {
         super((Scalar<String>) () -> {
             int begin = start.value();

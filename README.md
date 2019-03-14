@@ -107,11 +107,11 @@ To manipulate with a text:
 
 ```java
 // To lower case
-new LowerText(
+new Lowered(
 	new TextOf("Hello")
 );
 // To upper case
-new UpperText(
+new Upper(
 	new TextOf("Hello")
 );
 ```
@@ -187,7 +187,7 @@ To sort a list of words in the file:
 ```java
 List<String> sorted = new ListOf<>(
   new Sorted<>(
-    new SplitText(
+    new Split(
       new TextOf(
         new File("/tmp/names.txt")
       ),
@@ -278,24 +278,24 @@ Cactoos | Guava | Apache Commons | JDK 8
 `Filtered` | `Iterables.filter()` | ? | -
 `FormattedText` | - | - | `String.format()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
-`JoinedText` | - | - | `String.join()`
+`Joined` | - | - | `String.join()`
 `LengthOf` | - | - | `String#length()`
-`LowerText` | - | - | `String#toLowerCase()`
-`NormalizedText` | - | `StringUtils.normalize()` | -
+`Lowered` | - | - | `String#toLowerCase()`
+`Normalized` | - | `StringUtils.normalize()` | -
 `Or` | `Iterables.any()` | - | -
-`RepeatedText` | - | `StringUtils.repeat()` | -
-`ReplacedText` | - | - | `String#replace()`
-`ReversedText` | - | - | `StringBuilder#reverse()`
-`RotatedText` | - | `StringUtils.rotate()`| -
-`SplitText` | - | - | `String#split()`
+`Repeated` | - | `StringUtils.repeat()` | -
+`Replaced` | - | - | `String#replace()`
+`Reversed` | - | - | `StringBuilder#reverse()`
+`Rotated` | - | `StringUtils.rotate()`| -
+`Split` | - | - | `String#split()`
 `StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()`
-`SubText` | - | - | `String#substring()`
-`SwappedCaseText` | - | `StringUtils.swapCase()` | -
+`Sub` | - | - | `String#substring()`
+`SwappedCase` | - | `StringUtils.swapCase()` | -
 `TextOf` | ? | `IOUtils.toString()` | -
-`TrimmedLeftText` | - | `StringUtils.stripStart()` | -
-`TrimmedRightText` | - | `StringUtils.stripEnd()` | -
-`TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
-`UpperText` | - | - | `String#toUpperCase()`
+`TrimmedLeft` | - | `StringUtils.stripStart()` | -
+`TrimmedRight` | - | `StringUtils.stripEnd()` | -
+`Trimmed` | - | `StringUtils.stripAll()` | `String#trim()`
+`Upper` | - | - | `String#toUpperCase()`
 
 ## Questions
 

@@ -23,35 +23,38 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
- * Swaps the case of a Text changing upper and title case to lower case,
- * and lower case to upper case.
- * @since 0.13.3
+ * Text without control characters (char &lt;= 32) only from right.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.12
  */
-public final class SwappedCaseText extends TextEnvelope {
+public final class TrimmedRight implements Text {
+
+    /**
+     * The text.
+     */
+    private final Text origin;
 
     /**
      * Ctor.
      * @param text The text
      */
-    @SuppressWarnings({"PMD.CallSuperInConstructor",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
-    public SwappedCaseText(final Text text) {
-        super((Scalar<String>) () -> {
-            final String origin = text.asString();
-            final char[] chars = origin.toCharArray();
-            for (int idx = 0; idx < chars.length; idx += 1) {
-                final char chr = chars[idx];
-                if (Character.isUpperCase(chr)) {
-                    chars[idx] = Character.toLowerCase(chr);
-                } else if (Character.isLowerCase(chr)) {
-                    chars[idx] = Character.toUpperCase(chr);
-                }
-            }
-            return new String(chars);
-        });
+    public TrimmedRight(final Text text) {
+        this.origin = text;
     }
+
+    @Override
+    public String asString() throws Exception {
+        final String text = this.origin.asString();
+        int cursor = text.length() - 1;
+        while (cursor >= 0 && Character.isWhitespace(text.charAt(cursor))) {
+            cursor = cursor - 1;
+        }
+        return text.substring(0, cursor + 1);
+    }
+
 }

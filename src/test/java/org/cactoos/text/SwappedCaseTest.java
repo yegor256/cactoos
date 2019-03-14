@@ -23,32 +23,38 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test case for {@link UpperText}.
- * @since 0.1
+ * Test case for {@link SwappedCase}.
+ *
+ * @since 0.13.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class UpperTextTest {
+public final class SwappedCaseTest {
 
     @Test
-    public void convertsText() {
-        MatcherAssert.assertThat(
-            "Can't upper case a text",
-            new UpperText(new TextOf("Hello!")),
-            new TextHasString("HELLO!")
-        );
+    public void swapText() {
+        new Assertion<>(
+            "Can't swap a text",
+            () -> new SwappedCase(
+                new TextOf("HellO!")
+            ),
+            new TextHasString("hELLo!")
+        ).affirm();
     }
 
     @Test
-    public void convertsString() {
-        MatcherAssert.assertThat(
-            "Can't upper case a string",
-            new UpperText("World!"),
-            new TextHasString("WORLD!")
-        );
+    public void swapEmptyText() {
+        new Assertion<>(
+            "Empty swapped text should be the same as original",
+            () -> new SwappedCase(
+                new TextOf("")
+            ),
+            new TextHasString("")
+        ).affirm();
     }
+
 }

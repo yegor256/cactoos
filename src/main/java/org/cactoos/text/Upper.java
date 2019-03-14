@@ -23,85 +23,57 @@
  */
 package org.cactoos.text;
 
-import java.util.Iterator;
+import java.util.Locale;
 import org.cactoos.Text;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Mapped;
 
 /**
- * Split the Text.
+ * Text in upper case.
  *
- * @since 0.9
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.1
  */
-public final class SplitText implements Iterable<Text> {
+public final class Upper implements Text {
 
     /**
-     * The origin string.
+     * The text.
      */
-    private final UncheckedText origin;
+    private final Text origin;
 
     /**
-     * The regex.
+     * The locale.
      */
-    private final UncheckedText regex;
+    private final Locale locale;
 
     /**
      * Ctor.
-     *
      * @param text The text
-     * @param rgx The regex
      */
-    public SplitText(final String text, final String rgx) {
-        this(
-            new UncheckedText(new TextOf(text)),
-            new UncheckedText(new TextOf(rgx))
-        );
+    public Upper(final String text) {
+        this(new TextOf(text));
     }
 
     /**
      * Ctor.
      * @param text The text
-     * @param rgx The regex
      */
-    public SplitText(final String text, final Text rgx) {
-        this(new UncheckedText(text), new UncheckedText(rgx));
+    public Upper(final Text text) {
+        this(text, Locale.ENGLISH);
     }
 
     /**
      * Ctor.
      * @param text The text
-     * @param rgx The regex
+     * @param lang Locale
      */
-    public SplitText(final Text text, final String rgx) {
-        this(new UncheckedText(text), new UncheckedText(rgx));
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     * @param rgx The regex
-     */
-    public SplitText(final Text text, final Text rgx) {
-        this(new UncheckedText(text), new UncheckedText(rgx));
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     * @param rgx The regex
-     */
-    public SplitText(final UncheckedText text, final UncheckedText rgx) {
+    public Upper(final Text text, final Locale lang) {
         this.origin = text;
-        this.regex = rgx;
+        this.locale = lang;
     }
 
     @Override
-    public Iterator<Text> iterator() {
-        return new Mapped<String, Text>(
-            TextOf::new,
-            new IterableOf<>(
-                this.origin.asString().split(this.regex.asString())
-            )
-        ).iterator();
+    public String asString() throws Exception {
+        return this.origin.asString().toUpperCase(this.locale);
     }
+
 }

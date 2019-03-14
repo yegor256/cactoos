@@ -23,34 +23,40 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.cactoos.Text;
 
 /**
- * Test case for {@link SubText}.
- * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
+ * Text without control characters (char &lt;= 32) only from left.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.12
  */
-public final class SubTextTest {
+public final class TrimmedLeft implements Text {
 
-    @Test
-    public void cutTextWithStartAndEnd() {
-        MatcherAssert.assertThat(
-            "Can't cut a text with start and end",
-            // @checkstyle MagicNumber (1 line)
-            new SubText("hello world", 2, 50),
-            new TextHasString("llo world")
-        );
+    /**
+     * The text.
+     */
+    private final Text origin;
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public TrimmedLeft(final Text text) {
+        this.origin = text;
     }
 
-    @Test
-    public void cutTextWithStart() {
-        MatcherAssert.assertThat(
-            "Can't cut a text with start",
-            new SubText("cut here", 2),
-            new TextHasString("t here")
-        );
+    @Override
+    public String asString() throws Exception {
+        final String text = this.origin.asString();
+        int cursor = 0;
+        while (cursor < text.length() && Character.isWhitespace(
+            text.charAt(cursor)
+            )) {
+            cursor = cursor + 1;
+        }
+        return text.substring(cursor);
     }
 
 }

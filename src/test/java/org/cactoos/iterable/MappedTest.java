@@ -27,7 +27,7 @@ import java.util.Collections;
 import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.UpperText;
+import org.cactoos.text.Upper;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -45,7 +45,7 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
             new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
+                input -> new Upper(new TextOf(input)),
                 new IterableOf<>(
                     "hello", "world", "друг"
                 )
@@ -59,7 +59,7 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an empty iterable",
             new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
+                input -> new Upper(new TextOf(input)),
                 Collections.emptyList()
             ),
             Matchers.emptyIterable()

@@ -23,38 +23,25 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
- * Text without control characters (char &lt;= 32) only from right.
+ * Reverse the Text.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.12
+ * @since 0.2
  */
-public final class TrimmedRightText implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
+public final class Reversed extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
-    public TrimmedRightText(final Text text) {
-        this.origin = text;
+    public Reversed(final Text text) {
+        super((Scalar<String>) () -> new StringBuilder(
+            text.asString()
+            ).reverse().toString()
+        );
     }
-
-    @Override
-    public String asString() throws Exception {
-        final String text = this.origin.asString();
-        int cursor = text.length() - 1;
-        while (cursor >= 0 && Character.isWhitespace(text.charAt(cursor))) {
-            cursor = cursor - 1;
-        }
-        return text.substring(0, cursor + 1);
-    }
-
 }

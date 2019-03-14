@@ -26,9 +26,9 @@ package org.cactoos.map;
 import java.util.Map;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.text.SubText;
+import org.cactoos.text.Sub;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.UpperText;
+import org.cactoos.text.Upper;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.AllOf;
@@ -130,8 +130,8 @@ public final class SolidTest {
     @SuppressWarnings("unchecked")
     public void mapsIterableWithKeyFuncAndValueFunc() {
         final Solid<String, String> map = new Solid<>(
-            key -> new SubText(new TextOf(key), 0, 1).asString(),
-            value -> new UpperText(new TextOf(value)).asString(),
+            key -> new Sub(new TextOf(key), 0, 1).asString(),
+            value -> new Upper(new TextOf(value)).asString(),
             new IterableOf<>("aa", "bb")
         );
         MatcherAssert.assertThat(
@@ -156,8 +156,8 @@ public final class SolidTest {
     @Test
     public void mapsEmptyIterableWithKeyFuncAndValueFunc() {
         final Solid<String, String> map = new Solid<>(
-            key -> new SubText(new TextOf(key), 0, 1).asString(),
-            value -> new UpperText(new TextOf(value)).asString(),
+            key -> new Sub(new TextOf(key), 0, 1).asString(),
+            value -> new Upper(new TextOf(value)).asString(),
             new IterableOf<String>()
         );
         MatcherAssert.assertThat(
@@ -174,8 +174,8 @@ public final class SolidTest {
             "Function are not applied to entry",
             new Solid<>(
                 entry -> new MapEntry<>(
-                    new SubText(new TextOf(entry), 0, 1).asString(),
-                    new UpperText(new TextOf(entry)).asString()
+                    new Sub(new TextOf(entry), 0, 1).asString(),
+                    new Upper(new TextOf(entry)).asString()
                 ),
                 new IterableOf<>("aa", "bb")
             ),
@@ -201,8 +201,8 @@ public final class SolidTest {
             "Empty Iterable cannot be accepted for MapEntry mapping",
             new Solid<>(
                 entry -> new MapEntry<>(
-                    new SubText(new TextOf(entry), 0, 1).asString(),
-                    new UpperText(new TextOf(entry)).asString()
+                    new Sub(new TextOf(entry), 0, 1).asString(),
+                    new Upper(new TextOf(entry)).asString()
                 ),
                 new IterableOf<String>()
             ),

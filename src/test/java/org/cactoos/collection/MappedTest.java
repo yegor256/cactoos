@@ -30,7 +30,7 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Endless;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.UpperText;
+import org.cactoos.text.Upper;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.collection.IsEmptyCollection;
@@ -63,7 +63,7 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
             new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
+                input -> new Upper(new TextOf(input)),
                 new IterableOf<>("hello", "world", "друг")
             ).iterator().next().asString(),
             new IsEqual<>("HELLO")
@@ -75,7 +75,7 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an empty iterable",
             new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
+                input -> new Upper(new TextOf(input)),
                 new ListOf<>()
             ),
             new IsEmptyCollection<>()
