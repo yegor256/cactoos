@@ -28,9 +28,9 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Tests for {@link ZonedDateTimeOf}.
@@ -43,52 +43,52 @@ public class ZonedDateTimeOfTest {
 
     @Test
     public final void testParsingIsoFormattedStringToZonedDateTime() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't parse a ZonedDateTime with default/ISO format.",
-            new ZonedDateTimeOf("2017-12-13T14:15:16.000000017+01:00").value(),
-            Matchers.equalTo(
+            () -> new ZonedDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
+            new ScalarHasValue<>(
                 ZonedDateTime.of(
                     2017, 12, 13, 14, 15, 16, 17,
                     ZoneId.ofOffset("", ZoneOffset.ofHours(1))
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public final void testParsingFormattedStringWithZoneToZonedDateTime() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't parse a ZonedDateTime with custom format and zone.",
-            new ZonedDateTimeOf(
+            () -> new ZonedDateTimeOf(
                 "2017-12-13 14:15:16",
                 "yyyy-MM-dd HH:mm:ss",
                 ZoneId.of("Europe/Berlin")
-            ).value(),
-            Matchers.is(
+            ),
+            new ScalarHasValue<>(
                 ZonedDateTime.of(
                     LocalDateTime.of(2017, 12, 13, 14, 15, 16),
                     ZoneId.of("Europe/Berlin")
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public final void testParsingFormattedStringWithFormatterToZonedDateTime() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't parse a ZonedDateTime with custom format and zone.",
-            new ZonedDateTimeOf(
+            () -> new ZonedDateTimeOf(
                 "2017-12-13 14:15:16",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     .withZone(ZoneId.of("Europe/Berlin"))
-            ).value(),
-            Matchers.is(
+            ),
+            new ScalarHasValue<>(
                 ZonedDateTime.of(
                     LocalDateTime.of(2017, 12, 13, 14, 15, 16),
                     ZoneId.of("Europe/Berlin")
                 )
             )
-        );
+        ).affirm();
     }
 
 }

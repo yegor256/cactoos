@@ -28,9 +28,11 @@ import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Tests for LocalDateTimeAsText.
@@ -46,16 +48,16 @@ public final class LocalDateTimeAsTextTest {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a LocalDateTime with default/ISO format.",
-            new LocalDateTimeAsText(date).asString(),
-            Matchers.is(
+            () -> new LocalDateTimeAsText(date),
+            new TextIs(
                 MessageFormat.format(
                     "2017-12-13T14:15:16.000000017{0}",
                     date.atZone(ZoneId.systemDefault()).getOffset().toString()
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -63,11 +65,11 @@ public final class LocalDateTimeAsTextTest {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a LocalDateTime with format.",
-            new LocalDateTimeAsText(date, "yyyy-MM-dd HH:mm:ss").asString(),
-            Matchers.is("2017-12-13 14:15:16")
-        );
+            () -> new LocalDateTimeAsText(date, "yyyy-MM-dd HH:mm:ss"),
+            new TextIs("2017-12-13 14:15:16")
+        ).affirm();
     }
 
     @Test
@@ -76,22 +78,22 @@ public final class LocalDateTimeAsTextTest {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a LocalDateTime with format using locale.",
-            new LocalDateTimeAsText(
+            () -> new LocalDateTimeAsText(
                 date, "yyyy MMM dd. HH.mm.ss", Locale.FRENCH
-            ).asString(),
-            Matchers.is("2017 déc. 13. 14.15.16")
-        );
+            ),
+            new TextIs("2017 déc. 13. 14.15.16")
+        ).affirm();
     }
 
     @Test
     public void currentLocalDateTimeAsText() throws IOException {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a LocalDateTime with ISO format.",
-            new LocalDateTimeAsText(LocalDateTime.now()).asString(),
-            Matchers.notNullValue()
-        );
+            () -> new LocalDateTimeAsText(LocalDateTime.now()).asString(),
+            new IsNot<>(new IsNull<>())
+        ).affirm();
     }
 
 }

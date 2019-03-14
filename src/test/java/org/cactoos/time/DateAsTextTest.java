@@ -27,9 +27,11 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Tests for DateAsText.
@@ -42,11 +44,11 @@ public final class DateAsTextTest {
 
     @Test
     public void formatsCurrentTime() throws IOException {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format current time",
-            new DateAsText().asString(),
-            Matchers.notNullValue()
-        );
+            new DateAsText()::asString,
+            new IsNot<>(new IsNull<>())
+        ).affirm();
     }
 
     @Test
@@ -55,11 +57,11 @@ public final class DateAsTextTest {
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
         calendar.set(Calendar.MILLISECOND, 17);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a java.util.Date with ISO format.",
-            new DateAsText(calendar.getTime()).asString(),
-            Matchers.is("2017-12-13T14:15:16.017Z")
-        );
+            () -> new DateAsText(calendar.getTime()),
+            new TextIs("2017-12-13T14:15:16.017Z")
+        ).affirm();
     }
 
     @Test
@@ -67,13 +69,13 @@ public final class DateAsTextTest {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a java.util.Date with custom format.",
-            new DateAsText(
+            () -> new DateAsText(
                 calendar.getTime(), "yyyy MM dd hh:mm:ss"
-            ).asString(),
-            Matchers.is("2017 12 13 02:15:16")
-        );
+            ),
+            new TextIs("2017 12 13 02:15:16")
+        ).affirm();
     }
 
     @Test
@@ -82,13 +84,13 @@ public final class DateAsTextTest {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a java.util.Date with custom format.",
-            new DateAsText(
+            () -> new DateAsText(
                 calendar.getTime(), "yyyy MMM dd hh:mm:ss", Locale.ITALIAN
-            ).asString(),
-            Matchers.is("2017 dic 13 02:15:16")
-        );
+            ),
+            new TextIs("2017 dic 13 02:15:16")
+        ).affirm();
     }
 
     @Test
@@ -97,11 +99,11 @@ public final class DateAsTextTest {
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
         calendar.set(Calendar.MILLISECOND, 17);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a java.util.Date with ISO format.",
-            new DateAsText(calendar.getTime().getTime()).asString(),
-            Matchers.is("2017-12-13T14:15:16.017Z")
-        );
+            () -> new DateAsText(calendar.getTime().getTime()),
+            new TextIs("2017-12-13T14:15:16.017Z")
+        ).affirm();
     }
 
     @Test
@@ -109,14 +111,14 @@ public final class DateAsTextTest {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a java.util.Date with custom format.",
-            new DateAsText(
+            () -> new DateAsText(
                 calendar.getTime().getTime(),
                 "yyyy MM dd hh:mm:ss"
-            ).asString(),
-            Matchers.is("2017 12 13 02:15:16")
-        );
+            ),
+            new TextIs("2017 12 13 02:15:16")
+        ).affirm();
     }
 
     @Test
@@ -125,15 +127,15 @@ public final class DateAsTextTest {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a java.util.Date with custom format.",
-            new DateAsText(
+            () -> new DateAsText(
                 calendar.getTime().getTime(),
                 "yyyy MMMM dd hh:mm:ss",
                 Locale.US
-            ).asString(),
-            Matchers.is("2017 December 13 02:15:16")
-        );
+            ),
+            new TextIs("2017 December 13 02:15:16")
+        ).affirm();
     }
 
 }

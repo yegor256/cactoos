@@ -27,9 +27,11 @@ import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Locale;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Tests for ZonedDateTimeAsText.
@@ -45,11 +47,11 @@ public final class ZonedDateTimeAsTextTest {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a ZonedDateTime with default/ISO format.",
-            new ZonedDateTimeAsText(date).asString(),
-            Matchers.is("2017-12-13T14:15:16.000000017+01:00")
-        );
+            () -> new ZonedDateTimeAsText(date),
+            new TextIs("2017-12-13T14:15:16.000000017+01:00")
+        ).affirm();
     }
 
     @Test
@@ -57,11 +59,11 @@ public final class ZonedDateTimeAsTextTest {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a ZonedDateTime with format.",
-            new ZonedDateTimeAsText(date, "yyyy-MM-dd HH:mm:ss").asString(),
-            Matchers.is("2017-12-13 14:15:16")
-        );
+            () -> new ZonedDateTimeAsText(date, "yyyy-MM-dd HH:mm:ss"),
+            new TextIs("2017-12-13 14:15:16")
+        ).affirm();
     }
 
     @Test
@@ -70,22 +72,22 @@ public final class ZonedDateTimeAsTextTest {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a ZonedDateTime with format using locale.",
-            new ZonedDateTimeAsText(
+            () -> new ZonedDateTimeAsText(
                 date, "yyyy MMM dd. HH.mm.ss", Locale.FRENCH
-            ).asString(),
-            Matchers.is("2017 déc. 13. 14.15.16")
-        );
+            ),
+            new TextIs("2017 déc. 13. 14.15.16")
+        ).affirm();
     }
 
     @Test
     public void currentZonedDateTimeAsText() throws IOException {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a ZonedDateTime with ISO format.",
-            new ZonedDateTimeAsText(ZonedDateTime.now()).asString(),
-            Matchers.notNullValue()
-        );
+            () -> new ZonedDateTimeAsText(ZonedDateTime.now()).asString(),
+            new IsNot<>(new IsNull<>())
+        ).affirm();
     }
 
 }

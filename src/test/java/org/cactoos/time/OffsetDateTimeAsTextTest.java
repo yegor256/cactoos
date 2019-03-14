@@ -27,9 +27,11 @@ import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Locale;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Tests for OffsetDateTimeAsText.
@@ -45,11 +47,11 @@ public final class OffsetDateTimeAsTextTest {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a OffsetDateTime with default/ISO format.",
-            new OffsetDateTimeAsText(date).asString(),
-            Matchers.is("2017-12-13T14:15:16.000000017+01:00")
-        );
+            () -> new OffsetDateTimeAsText(date),
+            new TextIs("2017-12-13T14:15:16.000000017+01:00")
+        ).affirm();
     }
 
     @Test
@@ -57,11 +59,11 @@ public final class OffsetDateTimeAsTextTest {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a OffsetDateTime with format.",
-            new OffsetDateTimeAsText(date, "yyyy-MM-dd HH:mm:ss").asString(),
-            Matchers.is("2017-12-13 14:15:16")
-        );
+            () -> new OffsetDateTimeAsText(date, "yyyy-MM-dd HH:mm:ss"),
+            new TextIs("2017-12-13 14:15:16")
+        ).affirm();
     }
 
     @Test
@@ -70,22 +72,22 @@ public final class OffsetDateTimeAsTextTest {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a OffsetDateTime with format using locale.",
-            new OffsetDateTimeAsText(
+            () -> new OffsetDateTimeAsText(
                 date, "yyyy MMM dd. HH.mm.ss", Locale.FRENCH
-            ).asString(),
-            Matchers.is("2017 déc. 13. 14.15.16")
-        );
+            ),
+            new TextIs("2017 déc. 13. 14.15.16")
+        ).affirm();
     }
 
     @Test
     public void currentOffsetDateTimeAsText() throws IOException {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a OffsetDateTime with ISO format.",
-            new OffsetDateTimeAsText(OffsetDateTime.now()).asString(),
-            Matchers.notNullValue()
-        );
+            () -> new OffsetDateTimeAsText(OffsetDateTime.now()).asString(),
+            new IsNot<>(new IsNull<>())
+        ).affirm();
     }
 
 }
