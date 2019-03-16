@@ -30,7 +30,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -66,8 +65,9 @@ public final class RetryTest {
     public void runsScalarTwiceWithDefaults() throws Exception {
         // @checkstyle MagicNumberCheck (1 line)
         final AtomicInteger tries = new AtomicInteger(0);
-        MatcherAssert.assertThat(
-            new RetryScalar<>(
+        new Assertion<>(
+            "Should run twice with defaults",
+            () -> new RetryScalar<>(
                 () -> {
                     // @checkstyle MagicNumberCheck (1 line)
                     if (tries.getAndIncrement() <= 1) {
@@ -77,17 +77,18 @@ public final class RetryTest {
                 }
             ).value(),
             Matchers.equalTo(0)
-        );
+        ).affirm();
     }
 
     @Test
-    public void runsScalarMultipleTimesIgnoreNegativeDuration()
+    public void runsScalarMultipleTimesIgnoringNegativeDuration()
     throws Exception {
         // @checkstyle MagicNumberCheck (2 line)
         final int times = 2;
         final AtomicInteger tries = new AtomicInteger(0);
-        MatcherAssert.assertThat(
-            new RetryScalar<>(
+        new Assertion<>(
+            "Should ignore negative duration",
+            () -> new RetryScalar<>(
                 () -> {
                     if (tries.getAndIncrement() < times) {
                         throw new IllegalArgumentException("Not yet");
@@ -99,17 +100,18 @@ public final class RetryTest {
                 Duration.of(-5, ChronoUnit.DAYS)
             ).value(),
             Matchers.equalTo(0)
-        );
+        ).affirm();
     }
 
     @Test
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public void runsScalarMultipleTimesWithWait() throws Exception {
         // @checkstyle MagicNumberCheck (3 line)
         final int times = 3;
         final long wait = 500;
         final AtomicInteger tries = new AtomicInteger(0);
         final List<Instant> executions = new ArrayList<>(times);
-        final RetryScalar<Integer> scalar = new RetryScalar<>(
+        new RetryScalar<>(
             () -> {
                 if (tries.getAndIncrement() < times) {
                     executions.add(Instant.now());
@@ -119,18 +121,15 @@ public final class RetryTest {
             },
             Integer.MAX_VALUE,
             Duration.ofMillis(wait)
-        );
-        final Integer result = scalar.value();
-        MatcherAssert.assertThat(executions.size(), Matchers.equalTo(times));
+        ).value();
         for (int position = 0; position < executions.size() - 1; position =
             position + 1) {
-            MatcherAssert.assertThat(
-                executions.get(position).plusMillis(wait),
-                Matchers.lessThanOrEqualTo(executions.get(position + 1))
-            );
+            final int actual = position;
+            new Assertion<>(
+                "Should wait the given time between attempts",
+                () -> executions.get(actual).plusMillis(wait),
+                Matchers.lessThanOrEqualTo(executions.get(actual + 1))
+            ).affirm();
         }
-        MatcherAssert.assertThat(executions.size(), Matchers.equalTo(times));
-        // @checkstyle MagicNumberCheck (1 line)
-        MatcherAssert.assertThat(result, Matchers.equalTo(0));
     }
 }
