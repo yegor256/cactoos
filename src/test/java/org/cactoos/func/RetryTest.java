@@ -34,6 +34,9 @@ import org.llorllale.cactoos.matchers.FuncApplies;
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 line)
+ * @todo #909:30min add a test to where an interrupt exception is thrown so
+ *  that the catch and error assignment is verified. The exception should be
+ *  thrown when Thread.sleep is called in Retry.java:129
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class RetryTest {

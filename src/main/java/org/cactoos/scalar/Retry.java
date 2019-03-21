@@ -26,7 +26,6 @@ package org.cactoos.scalar;
 import java.time.Duration;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.func.Retry;
 
 /**
  * Func that will try a few times before throwing an exception.

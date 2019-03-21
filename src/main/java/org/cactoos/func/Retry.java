@@ -125,7 +125,12 @@ public final class Retry<X, Y> implements Func<X, Y> {
                 error = ex;
             }
             if (!this.wait.isZero() && !this.wait.isNegative()) {
-                Thread.sleep(this.wait.toMillis());
+                try {
+                    Thread.sleep(this.wait.toMillis());
+                } catch (final InterruptedException ex) {
+                    error = ex;
+                    break;
+                }
             }
             ++attempt;
         }

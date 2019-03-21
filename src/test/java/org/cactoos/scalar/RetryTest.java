@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -67,7 +68,7 @@ public final class RetryTest {
         final AtomicInteger tries = new AtomicInteger(0);
         new Assertion<>(
             "Should run twice with defaults",
-            () -> new RetryScalar<>(
+            () -> new Retry<>(
                 () -> {
                     // @checkstyle MagicNumberCheck (1 line)
                     if (tries.getAndIncrement() <= 1) {
@@ -76,7 +77,7 @@ public final class RetryTest {
                     return 0;
                 }
             ).value(),
-            Matchers.equalTo(0)
+           new IsEqual<>(0)
         ).affirm();
     }
 
@@ -88,7 +89,7 @@ public final class RetryTest {
         final AtomicInteger tries = new AtomicInteger(0);
         new Assertion<>(
             "Should ignore negative duration",
-            () -> new RetryScalar<>(
+            () -> new Retry<>(
                 () -> {
                     if (tries.getAndIncrement() < times) {
                         throw new IllegalArgumentException("Not yet");
@@ -99,7 +100,7 @@ public final class RetryTest {
                 // @checkstyle MagicNumberCheck (1 line)
                 Duration.of(-5, ChronoUnit.DAYS)
             ).value(),
-            Matchers.equalTo(0)
+            new IsEqual<>(0)
         ).affirm();
     }
 
@@ -111,7 +112,7 @@ public final class RetryTest {
         final long wait = 500;
         final AtomicInteger tries = new AtomicInteger(0);
         final List<Instant> executions = new ArrayList<>(times);
-        new RetryScalar<>(
+        new Retry<>(
             () -> {
                 if (tries.getAndIncrement() < times) {
                     executions.add(Instant.now());
