@@ -29,6 +29,7 @@ import org.cactoos.Scalar;
 import org.cactoos.iterator.Immutable;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.Or;
 import org.cactoos.scalar.SumOfInt;
 import org.cactoos.scalar.Unchecked;
 
@@ -148,23 +149,26 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
     @Override
     public final boolean equals(final Object other) {
         return new Unchecked<>(
-            new And(
-                () -> other != null,
-                () -> Collection.class.isAssignableFrom(other.getClass()),
-                () -> {
-                    final Collection<?> compared = (Collection<?>) other;
-                    return this.size() == compared.size();
-                },
-                () -> {
-                    final Iterable<?> compared = (Iterable<?>) other;
-                    final Iterator<?> iterator = compared.iterator();
-                    return new Unchecked<>(
-                        new And(
-                            (X input) -> input.equals(iterator.next()),
-                            this
-                        )
-                    ).value();
-                }
+            new Or(
+                () -> other == this,
+                new And(
+                    () -> other != null,
+                    () -> Collection.class.isAssignableFrom(other.getClass()),
+                    () -> {
+                        final Collection<?> compared = (Collection<?>) other;
+                        return this.size() == compared.size();
+                    },
+                    () -> {
+                        final Iterable<?> compared = (Iterable<?>) other;
+                        final Iterator<?> iterator = compared.iterator();
+                        return new Unchecked<>(
+                            new And(
+                                (X input) -> input.equals(iterator.next()),
+                                this
+                            )
+                        ).value();
+                    }
+                )
             )
         ).value();
     }

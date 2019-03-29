@@ -86,6 +86,16 @@ public final class CollectionEnvelopeTest {
     }
 
     @Test
+    public void equalToItself() {
+        final CollectionOf<String> col = new CollectionOf<>("val1", "val2");
+        new Assertion<>(
+            "Collection is not equal to itself",
+            () -> col,
+            new IsEqual<>(col)
+        ).affirm();
+    }
+
+    @Test
     public void equalToCollectionWithIdenticalContent() {
         MatcherAssert.assertThat(
             "Collection is not equal to a collection with identical content",
