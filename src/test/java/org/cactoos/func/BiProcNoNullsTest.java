@@ -21,47 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link BiFunc.NoNulls}.
+ * Test case for {@link BiProcNoNulls}.
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class BiFuncTest {
+public final class BiProcNoNullsTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void failForNullFunc() throws Exception {
-        new BiFunc.NoNulls<>(null).apply(new Object(), new Object());
+    public void failForNullProc() throws Exception {
+        new BiProcNoNulls<>(null).exec(new Object(), new Object());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void failForNullFirstArg() throws Exception {
-        new BiFunc.NoNulls<>(
-            (first, second) -> first
-        ).apply(null, new Object());
+        new BiProcNoNulls<>(
+            (first, second) -> { }
+        ).exec(null, new Object());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void failForNullSecondArg() throws Exception {
-        new BiFunc.NoNulls<>(
-            (first, second) -> first
-        ).apply(new Object(), null);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void failForNullResult() throws Exception {
-        new BiFunc.NoNulls<>(
-            (first, second) -> null
-        ).apply(new Object(), new Object());
+        new BiProcNoNulls<>(
+            (first, second) -> { }
+        ).exec(new Object(), null);
     }
 
     @Test
     public void okForNoNulls() throws Exception {
-        new BiFunc.NoNulls<>(
-            (first, second) -> first
-        ).apply(new Object(), new Object());
+        final AtomicInteger counter = new AtomicInteger();
+        new BiProcNoNulls<>(
+            (AtomicInteger ctr, Object second) -> {
+                ctr.incrementAndGet();
+            }
+        ).exec(counter, new Object());
+        new Assertion<>(
+            "Can't invoke the \"BiProc.exec\" method",
+            counter::get,
+            new IsEqual<>(1)
+        ).affirm();
     }
 }

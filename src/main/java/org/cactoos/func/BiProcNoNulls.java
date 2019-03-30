@@ -21,28 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import org.cactoos.BiProc;
 
 /**
- * Procedure.
- *
- * <p>If you don't want to have any checked exceptions being thrown
- * out of your {@link Proc}, you can use
- * {@link org.cactoos.func.UncheckedProc} decorator. Also
- * you may try {@link org.cactoos.func.IoCheckedProc}.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
+ * BiProc check for no nulls.
  * @param <X> Type of input
- * @see org.cactoos.func.FuncOf
- * @since 0.1
+ * @param <Y> Type of input
+ * @since 0.20
  */
-public interface Proc<X> {
-
+public final class BiProcNoNulls<X, Y> implements BiProc<X, Y> {
     /**
-     * Execute it.
-     * @param input The argument
-     * @throws Exception If fails
+     * The proc.
      */
-    void exec(X input) throws Exception;
+    private final BiProc<X, Y> origin;
+    /**
+     * Ctor.
+     * @param proc The function
+     */
+    public BiProcNoNulls(final BiProc<X, Y> proc) {
+        this.origin = proc;
+    }
+    @Override
+    public void exec(final X first, final Y second) throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid function"
+            );
+        }
+        if (first == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid first argument"
+            );
+        }
+        if (second == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid second argument"
+            );
+        }
+        this.origin.exec(first, second);
+    }
 }

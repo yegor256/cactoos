@@ -21,29 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import org.cactoos.BiFunc;
 
 /**
- * Proc that accepts two arguments.
- *
- * <p>If you don't want to have any checked exceptions being thrown
- * out of your {@link BiProc}, you can use
- * {@link org.cactoos.func.UncheckedBiProc} decorator. Also
- * you may try {@link org.cactoos.func.IoCheckedBiProc}.</p>
- *
- * <p>There is no thread-safety guarantee.
+ * BiFunc check for no nulls.
  *
  * @param <X> Type of input
  * @param <Y> Type of input
- * @since 0.20
+ * @param <Z> Type of output
+ * @since 0.11
  */
-public interface BiProc<X, Y> {
-
+public final class BiFuncNoNulls<X, Y, Z> implements BiFunc<X, Y, Z> {
     /**
-     * Execute it.
-     * @param first The first argument
-     * @param second The second argument
-     * @throws Exception If fails
+     * The function.
      */
-    void exec(X first, Y second) throws Exception;
+    private final BiFunc<X, Y, Z> origin;
+    /**
+     * Ctor.
+     * @param func The function
+     */
+    public BiFuncNoNulls(final BiFunc<X, Y, Z> func) {
+        this.origin = func;
+    }
+    @Override
+    public Z apply(final X first, final Y second) throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid function"
+            );
+        }
+        if (first == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid first argument"
+            );
+        }
+        if (second == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid second argument"
+            );
+        }
+        final Z result = this.origin.apply(first, second);
+        if (result == null) {
+            throw new IllegalStateException(
+                "NULL instead of a valid result"
+            );
+        }
+        return result;
+    }
 }

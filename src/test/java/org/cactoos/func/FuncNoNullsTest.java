@@ -21,28 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import java.io.IOException;
+import org.junit.Test;
 
 /**
- * Procedure.
- *
- * <p>If you don't want to have any checked exceptions being thrown
- * out of your {@link Proc}, you can use
- * {@link org.cactoos.func.UncheckedProc} decorator. Also
- * you may try {@link org.cactoos.func.IoCheckedProc}.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @param <X> Type of input
- * @see org.cactoos.func.FuncOf
- * @since 0.1
+ * Test case for {@link FuncNoNulls}.
+ * @since 0.10
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public interface Proc<X> {
+public final class FuncNoNullsTest {
 
-    /**
-     * Execute it.
-     * @param input The argument
-     * @throws Exception If fails
-     */
-    void exec(X input) throws Exception;
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullFunc() throws Exception {
+        new FuncNoNulls<>(null).apply(new Object());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullInput() throws Exception {
+        new FuncNoNulls<>(input -> input).apply(null);
+    }
+
+    @Test
+    public void okForNoNulls() throws Exception {
+        new FuncNoNulls<>(input -> input).apply(new Object());
+    }
+
+    @Test(expected = IOException.class)
+    public void failForNullResult() throws Exception {
+        new FuncNoNulls<>(input -> null).apply(new Object());
+    }
+
 }

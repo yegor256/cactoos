@@ -21,36 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
 
 import java.io.IOException;
-import org.junit.Test;
+import org.cactoos.Func;
 
 /**
- * Test case for {@link Func.NoNulls}.
+ * Func check for no nulls.
+ *
+ * @param <X> Type of input
+ * @param <Y> Type of output
  * @since 0.10
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncTest {
-
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullFunc() throws Exception {
-        new Func.NoNulls<>(null).apply(new Object());
+public final class FuncNoNulls<X, Y> implements Func<X, Y> {
+    /**
+     * The function.
+     */
+    private final Func<X, Y> func;
+    /**
+     * Ctor.
+     * @param fnc The function
+     */
+    public FuncNoNulls(final Func<X, Y> fnc) {
+        this.func = fnc;
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullInput() throws Exception {
-        new Func.NoNulls<>(input -> input).apply(null);
+    @Override
+    public Y apply(final X input) throws Exception {
+        if (this.func == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid function"
+            );
+        }
+        if (input == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid input"
+            );
+        }
+        final Y result = this.func.apply(input);
+        if (result == null) {
+            throw new IOException("NULL instead of a valid result");
+        }
+        return result;
     }
-
-    @Test
-    public void okForNoNulls() throws Exception {
-        new Func.NoNulls<>(input -> input).apply(new Object());
-    }
-
-    @Test(expected = IOException.class)
-    public void failForNullResult() throws Exception {
-        new Func.NoNulls<>(input -> null).apply(new Object());
-    }
-
 }

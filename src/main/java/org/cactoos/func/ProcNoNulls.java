@@ -21,39 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.cactoos.Proc;
 
 /**
- * Test case for {@link Proc.NoNulls}.
+ * Proc check for no nulls.
+ *
+ * @param <X> Type of input
  * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ProcTest {
-
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullProc() throws Exception {
-        new Proc.NoNulls<>(null).exec(new Object());
+public final class ProcNoNulls<X> implements Proc<X> {
+    /**
+     * The procedure.
+     */
+    private final Proc<X> origin;
+    /**
+     * Ctor.
+     * @param proc The procedure
+     */
+    public ProcNoNulls(final Proc<X> proc) {
+        this.origin = proc;
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullInput() throws Exception {
-        new Proc.NoNulls<>(input -> { }).exec(null);
-    }
-
-    @Test
-    public void okForNoNulls() throws Exception {
-        final AtomicInteger counter = new AtomicInteger();
-        new Proc.NoNulls<>(AtomicInteger::incrementAndGet)
-            .exec(counter);
-        MatcherAssert.assertThat(
-            "Can't involve the \"Proc.exec(X input)\" method",
-            counter.get(),
-            new IsEqual<>(1)
-        );
+    @Override
+    public void exec(final X input) throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid procedure"
+            );
+        }
+        if (input == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid input"
+            );
+        }
+        this.origin.exec(input);
     }
 }

@@ -21,28 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.core.IsEqual;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Procedure.
- *
- * <p>If you don't want to have any checked exceptions being thrown
- * out of your {@link Proc}, you can use
- * {@link org.cactoos.func.UncheckedProc} decorator. Also
- * you may try {@link org.cactoos.func.IoCheckedProc}.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @param <X> Type of input
- * @see org.cactoos.func.FuncOf
- * @since 0.1
+ * Test case for {@link ProcNoNulls}.
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public interface Proc<X> {
+public final class ProcNoNullsTest {
 
-    /**
-     * Execute it.
-     * @param input The argument
-     * @throws Exception If fails
-     */
-    void exec(X input) throws Exception;
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullProc() throws Exception {
+        new ProcNoNulls<>(null).exec(new Object());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullInput() throws Exception {
+        new ProcNoNulls<>(input -> { }).exec(null);
+    }
+
+    @Test
+    public void okForNoNulls() throws Exception {
+        final AtomicInteger counter = new AtomicInteger();
+        new ProcNoNulls<>(AtomicInteger::incrementAndGet)
+            .exec(counter);
+        new Assertion<>(
+            "Can't involve the \"Proc.exec(X input)\" method",
+            counter::get,
+            new IsEqual<>(1)
+        ).affirm();
+    }
 }

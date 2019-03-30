@@ -32,6 +32,7 @@ import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.func.FuncOf;
+import org.cactoos.func.ProcNoNulls;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
@@ -205,7 +206,7 @@ public final class AndInThreadsTest {
             new ArrayList<Integer>(2)
         );
         new AndInThreads(
-            new Proc.NoNulls<Integer>(list::add),
+            new ProcNoNulls<Integer>(list::add),
                 new ListOf<>(1, 2)
         ).value();
         MatcherAssert.assertThat(
@@ -248,7 +249,7 @@ public final class AndInThreadsTest {
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(
             service,
-            new Proc.NoNulls<Integer>(list::add),
+            new ProcNoNulls<Integer>(list::add),
             1, 2
         ).value();
         MatcherAssert.assertThat(
@@ -278,7 +279,7 @@ public final class AndInThreadsTest {
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(
             service,
-            new Proc.NoNulls<Integer>(list::add),
+            new ProcNoNulls<Integer>(list::add),
                 new ListOf<>(1, 2)
         ).value();
         MatcherAssert.assertThat(
