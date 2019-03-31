@@ -65,7 +65,7 @@ public final class Synced<X> implements Iterable<X> {
      * @param iterable The iterable synchronize access to.
      */
     public Synced(final Iterable<X> iterable) {
-        this(iterable, new Object());
+        this(new Object(), iterable);
     }
 
     /**
@@ -73,7 +73,7 @@ public final class Synced<X> implements Iterable<X> {
      * @param iterable The iterable synchronize access to.
      * @param lck The lock to synchronize with.
      */
-    public Synced(final Iterable<X> iterable, final Object lck) {
+    public Synced(final Object lck, final Iterable<X> iterable) {
         this.origin = iterable;
         this.lock = lck;
     }
