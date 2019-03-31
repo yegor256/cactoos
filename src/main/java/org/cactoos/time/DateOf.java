@@ -26,6 +26,8 @@ package org.cactoos.time;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.Date;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Unchecked;
@@ -66,8 +68,12 @@ public final class DateOf implements Scalar<Date> {
     public DateOf(final CharSequence date, final DateTimeFormatter formatter) {
         this.parsed = new Unchecked<>(
             () -> Date.from(
-                LocalDateTime.from(
-                    formatter.parse(date)
+                LocalDateTime.parse(
+                    date,
+                    new DateTimeFormatterBuilder()
+                        .append(formatter)
+                        .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                        .toFormatter()
                 ).toInstant(ZoneOffset.UTC)
             )
         );

@@ -43,7 +43,7 @@ public class DateOfTest {
     @Test
     public final void testParsingIsoFormattedStringToDate() {
         new Assertion<>(
-            "Can't parse a Date with default/ISO format.",
+            "must parse a Date with default/ISO format.",
             () -> new DateOf("2017-12-13T14:15:16.000000017Z"),
             new ScalarHasValue<>(
                 Date.from(
@@ -58,7 +58,7 @@ public class DateOfTest {
     @Test
     public final void testParsingCustomFormattedStringToDate() {
         new Assertion<>(
-            "Can't parse a Date with custom format.",
+            "must parse a Date with custom format.",
             () -> new DateOf(
                 "2017-12-13 14:15:16.000000017",
                 "yyyy-MM-dd HH:mm:ss.n"
@@ -74,9 +74,27 @@ public class DateOfTest {
     }
 
     @Test
+    public final void testParsingCustomFormattedStringWithoutTimeToDate() {
+        new Assertion<>(
+            "must parse a Date with custom format.",
+            () -> new DateOf(
+                "2018-01-01",
+                "yyyy-MM-dd"
+            ),
+            new ScalarHasValue<>(
+                Date.from(
+                    LocalDateTime.of(
+                        2018, 01, 01, 0, 0, 0, 0
+                    ).toInstant(ZoneOffset.UTC)
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
     public final void testParsingCustomFormatterStringToDate() {
         new Assertion<>(
-            "Can't parse a Date with custom format.",
+            "must parse a Date with custom format.",
             () -> new DateOf(
                 "2017-12-13 14:15:16.000000017",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
