@@ -51,15 +51,6 @@ public final class Matched<X> implements Iterable<X> {
 
     /**
      * Ctor.
-     * @param fst The first iterator of duplex iterator.
-     * @param snd The second part of duplex iterator.
-     */
-    public Matched(final Iterator<X> fst, final Iterator<X> snd) {
-        this(Object::equals, new IterableOf<>(fst), new IterableOf<>(snd));
-    }
-
-    /**
-     * Ctor.
      * @param fst The first part of duplex iterator.
      * @param snd The second part of duplex iterator.
      */

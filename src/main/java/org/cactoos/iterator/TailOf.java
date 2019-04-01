@@ -26,6 +26,7 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import org.cactoos.collection.CollectionOf;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Tail portion of the iterator.
@@ -49,11 +50,13 @@ public final class TailOf<T> implements Iterator<T> {
     public TailOf(final int num, final Iterator<T> iterator) {
         this.origin = new LinkedList<>(
             new CollectionOf<>(
-                new HeadOf<>(
-                    num,
-                    new LinkedList<>(
-                        new CollectionOf<>(iterator)
-                    ).descendingIterator()
+                new IterableOf<>(
+                    new HeadOf<>(
+                        num,
+                        new LinkedList<>(
+                            new CollectionOf<>(new IterableOf<>(iterator))
+                        ).descendingIterator()
+                    )
                 )
             )
         ).descendingIterator();

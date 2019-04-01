@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -54,20 +53,6 @@ public final class Sorted<T> extends ListEnvelope<T> {
     @SafeVarargs
     public Sorted(final T... src) {
         this(new ListOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     *
-     * <p>If you're using this ctor you must be sure that type {@code T}
-     * implements {@link Comparable} interface. Otherwise, there will be
-     * a type casting exception in runtime.</p>
-     *
-     * @param src The underlying collection
-     * @since 0.21
-     */
-    public Sorted(final Iterator<T> src) {
-        this(() -> src);
     }
 
     /**

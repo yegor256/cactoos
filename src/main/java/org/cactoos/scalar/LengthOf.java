@@ -45,15 +45,6 @@ public final class LengthOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     * @param items The iterator
-     * @param <T> The type of items
-     */
-    public <T> LengthOf(final Iterator<T> items) {
-        this(() -> items);
-    }
-
-    /**
-     * Ctor.
      * @param items The array
      * @param <T> The type of items
      */

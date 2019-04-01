@@ -23,7 +23,6 @@
  */
 package org.cactoos.map;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.cactoos.Func;
@@ -133,14 +132,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      */
     public Synced(final Iterable<Map.Entry<X, Y>> list) {
         this(new MapOf<>(list));
-    }
-
-    /**
-     * Ctor.
-     * @param list Entries for the entries
-     */
-    public Synced(final Iterator<Map.Entry<X, Y>> list) {
-        this(() -> list);
     }
 
     /**

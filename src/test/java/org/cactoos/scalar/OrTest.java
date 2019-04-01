@@ -28,7 +28,6 @@ import java.util.List;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterator.IteratorOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -91,7 +90,7 @@ public final class OrTest {
     @Test
     public void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
-            new Or(new IteratorOf<Scalar<Boolean>>()),
+            new Or(new IterableOf<Scalar<Boolean>>()),
             new ScalarHasValue<>(false)
         );
     }
@@ -114,7 +113,7 @@ public final class OrTest {
         final List<Integer> list = new LinkedList<>();
         new Or(
             (Proc<Integer>) list::add,
-            new IteratorOf<>(1, 2, 3, 4)
+            new IterableOf<>(1, 2, 3, 4)
         ).value();
         MatcherAssert.assertThat(
             list,
@@ -151,7 +150,7 @@ public final class OrTest {
         MatcherAssert.assertThat(
             new Or(
                 input -> input > 0,
-                new IteratorOf<>(-1, 1, 0)
+                new IterableOf<>(-1, 1, 0)
             ),
             new ScalarHasValue<>(true)
         );

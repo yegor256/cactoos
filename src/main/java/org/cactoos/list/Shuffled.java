@@ -25,7 +25,6 @@ package org.cactoos.list;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,14 +52,6 @@ public final class Shuffled<T> extends ListEnvelope<T> {
     @SafeVarargs
     public Shuffled(final T... src) {
         this(new ListOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying collection
-     */
-    public Shuffled(final Iterator<T> src) {
-        this(() -> src);
     }
 
     /**

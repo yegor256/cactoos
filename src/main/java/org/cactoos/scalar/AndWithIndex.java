@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
 import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 import org.cactoos.Func;
@@ -128,15 +127,6 @@ public final class AndWithIndex implements Scalar<Boolean> {
      */
     @SafeVarargs
     public AndWithIndex(final Func<Integer, Boolean>... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The iterator
-     * @since 0.24
-     */
-    public AndWithIndex(final Iterator<Func<Integer, Boolean>> src) {
         this(new IterableOf<>(src));
     }
 

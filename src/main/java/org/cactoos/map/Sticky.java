@@ -25,7 +25,6 @@ package org.cactoos.map;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
@@ -140,15 +139,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      */
     public Sticky(final Iterable<Map.Entry<X, Y>> list) {
         this(new MapOf<>(list));
-    }
-
-    /**
-     * Ctor.
-     * @param list Entries for the entries
-     * @since 0.21
-     */
-    public Sticky(final Iterator<Map.Entry<X, Y>> list) {
-        this(() -> list);
     }
 
     /**

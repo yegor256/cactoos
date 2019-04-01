@@ -24,8 +24,6 @@
 
 package org.cactoos.iterable;
 
-import java.util.Iterator;
-
 /**
  * Cycled Iterable.
  *
@@ -43,15 +41,6 @@ public final class Cycled<T> extends IterableEnvelope<T> {
      */
     @SafeVarargs
     public Cycled(final T... itr) {
-        this(new IterableOf<T>(itr));
-    }
-
-    /**
-     * Ctor.
-     * @param itr Iterable
-     * @since 0.21
-     */
-    public Cycled(final Iterator<T> itr) {
         this(new IterableOf<T>(itr));
     }
 

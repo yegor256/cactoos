@@ -23,8 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
-
 /**
  * Shuffled iterable.
  *
@@ -42,15 +40,6 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
      */
     @SafeVarargs
     public Shuffled(final T... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying iterable
-     * @since 0.23
-     */
-    public Shuffled(final Iterator<T> src) {
         this(new IterableOf<>(src));
     }
 

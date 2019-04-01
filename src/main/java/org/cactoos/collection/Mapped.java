@@ -62,16 +62,6 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
      * Ctor.
      * @param src Source collection
      * @param fnc Func
-     * @since 0.23
-     */
-    public Mapped(final Func<X, Y> fnc, final Iterator<X> src) {
-        this(fnc, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Source collection
-     * @param fnc Func
      */
     public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
         this(fnc, new CollectionOf<>(src));
@@ -96,8 +86,8 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
             @Override
             public boolean contains(final Object item) {
                 return new CollectionOf<>(
-                    new org.cactoos.iterator.Mapped<>(
-                        fnc, src.iterator()
+                    new org.cactoos.iterable.Mapped<>(
+                        fnc, src
                     )
                 ).contains(item);
             }
@@ -110,8 +100,8 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
             @Override
             public Object[] toArray() {
                 return new CollectionOf<>(
-                    new org.cactoos.iterator.Mapped<>(
-                        fnc, src.iterator()
+                    new org.cactoos.iterable.Mapped<>(
+                        fnc, src
                     )
                 ).toArray();
             }
@@ -119,8 +109,8 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
             @SuppressWarnings("PMD.UseVarargs")
             public <T> T[] toArray(final T[] array) {
                 return new CollectionOf<>(
-                    new org.cactoos.iterator.Mapped<>(
-                        fnc, src.iterator()
+                    new org.cactoos.iterable.Mapped<>(
+                        fnc, src
                     )
                 ).toArray(array);
             }
@@ -140,8 +130,8 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
             @Override
             public boolean containsAll(final Collection<?> items) {
                 return new CollectionOf<>(
-                    new org.cactoos.iterator.Mapped<>(
-                        fnc, src.iterator()
+                    new org.cactoos.iterable.Mapped<>(
+                        fnc, src
                     )
                 ).containsAll(items);
             }

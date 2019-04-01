@@ -23,6 +23,7 @@
  */
 package org.cactoos.iterator;
 
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -43,8 +44,10 @@ public final class RepeatedTest {
         MatcherAssert.assertThat(
             "Can't generate an iterable with fixed size",
             new LengthOf(
-                new Repeated<>(
-                    size, element
+                new IterableOf<>(
+                    new Repeated<>(
+                        size, element
+                    )
                 )
             ).intValue(),
             Matchers.equalTo(size)

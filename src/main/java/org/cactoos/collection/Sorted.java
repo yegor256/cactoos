@@ -26,7 +26,6 @@ package org.cactoos.collection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import org.cactoos.list.ListOf;
 
@@ -79,16 +78,6 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
      */
     @SafeVarargs
     public Sorted(final Comparator<T> cmp, final T... src) {
-        this(cmp, new CollectionOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying collection
-     * @param cmp The comparator
-     * @since 0.23
-     */
-    public Sorted(final Comparator<T> cmp, final Iterator<T> src) {
         this(cmp, new CollectionOf<>(src));
     }
 

@@ -45,9 +45,9 @@ public final class TailOfTest {
             "Can't get tail portion of iterator",
             () -> new TailOf<>(
                 2,
-                new IterableOf<>(
+                new IteratorOf<>(
                     "one", "two", "three", "four"
-                ).iterator()
+                )
             ),
             Matchers.contains(
                 "three",
@@ -60,11 +60,13 @@ public final class TailOfTest {
     public void returnsIntactIterator() throws Exception {
         MatcherAssert.assertThat(
             new LengthOf(
-                new TailOf<>(
-                    3,
-                    new IterableOf<>(
-                        "one", "two"
-                    ).iterator()
+                new IterableOf<>(
+                    new TailOf<>(
+                        3,
+                        new IteratorOf<>(
+                            "one", "two"
+                        )
+                    )
                 )
             ).intValue(),
             Matchers.equalTo(2)
@@ -75,9 +77,9 @@ public final class TailOfTest {
     public void returnsEmptyIterator() throws Exception {
         new TailOf<>(
             0,
-            new IterableOf<>(
+            new IteratorOf<>(
                 "one", "two"
-            ).iterator()
+            )
         ).next();
     }
 
@@ -85,9 +87,9 @@ public final class TailOfTest {
     public void emptyIteratorForNegativeSize() throws Exception {
         new TailOf<>(
             -1,
-            new IterableOf<>(
+            new IteratorOf<>(
                 "one", "two"
-            ).iterator()
+            )
         ).next();
     }
 }
