@@ -22,35 +22,35 @@
  * SOFTWARE.
  */
 
-package org.cactoos.output;
+package org.cactoos.io;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import org.cactoos.Output;
+import java.io.InputStream;
+import org.cactoos.Input;
 
 /**
- * Output check for no nulls.
+ * Input check for no nulls.
  *
  * @since 0.10
  */
-public final class NoNulls implements Output {
+public final class InputNoNulls implements Input {
     /**
-     * The output.
+     * The input.
      */
-    private final Output origin;
+    private final Input origin;
     /**
      * Ctor.
-     * @param output The output
+     * @param input The input
      */
-    public NoNulls(final Output output) {
-        this.origin = output;
+    public InputNoNulls(final Input input) {
+        this.origin = input;
     }
     @Override
-    public OutputStream stream() throws Exception {
+    public InputStream stream() throws Exception {
         if (this.origin == null) {
-            throw new IOException("NULL instead of a valid output");
+            throw new IOException("NULL instead of a valid input");
         }
-        final OutputStream stream = this.origin.stream();
+        final InputStream stream = this.origin.stream();
         if (stream == null) {
             throw new IOException("NULL instead of a valid stream");
         }

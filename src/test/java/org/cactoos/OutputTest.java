@@ -24,11 +24,11 @@
 package org.cactoos;
 
 import org.cactoos.io.DeadOutput;
-import org.cactoos.output.NoNulls;
+import org.cactoos.io.OutputNoNulls;
 import org.junit.Test;
 
 /**
- * Test case for {@link NoNulls}.
+ * Test case for {@link OutputNoNulls}.
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -36,16 +36,16 @@ public final class OutputTest {
 
     @Test(expected = Exception.class)
     public void failForNullOutput() throws Exception {
-        new NoNulls(null).stream();
+        new OutputNoNulls(null).stream();
     }
 
     @Test(expected = Exception.class)
     public void failForNullStream() throws Exception {
-        new NoNulls(() -> null).stream();
+        new OutputNoNulls(() -> null).stream();
     }
 
     @Test
     public void okForNoNullOutput() throws Exception {
-        new NoNulls(new DeadOutput()).stream();
+        new OutputNoNulls(new DeadOutput()).stream();
     }
 }
