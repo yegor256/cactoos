@@ -21,10 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.io;
 
-import org.cactoos.io.DeadInput;
-import org.cactoos.io.InputNoNulls;
 import org.junit.Test;
 
 /**
@@ -32,7 +30,7 @@ import org.junit.Test;
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class InputTest {
+public final class InputNoNullsTest {
 
     @Test(expected = Exception.class)
     public void failForNullInput() throws Exception {
