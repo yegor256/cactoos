@@ -37,6 +37,9 @@ import org.cactoos.text.FormattedText;
  *
  * @param <T> Scalar type
  * @since 0.7
+ * @todo #930:30min To be consistent with other objects working on iterables
+ *  such as HeadOf, TailOf, etc, the constructor of ItemAt should always take
+ *  the iterable/iterator as a last parameter.
  */
 public final class ItemAt<T> implements Scalar<T> {
 

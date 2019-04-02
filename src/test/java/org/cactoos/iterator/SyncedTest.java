@@ -25,9 +25,10 @@ package org.cactoos.iterator;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -44,53 +45,54 @@ public final class SyncedTest {
     @Test
     public void syncIteratorReturnsCorrectValuesWithExternalLock() {
         final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Unexpected value found.",
             new ListOf<>(
                 new Synced<>(
-                    new ListOf<>("a", "b").iterator(), lock
+                    lock, new IteratorOf<>("a", "b")
                 )
-            ).toArray(),
-            Matchers.equalTo(new Object[]{"a", "b"})
-        );
+            )::toArray,
+            new IsEqual<>(new Object[]{"a", "b"})
+        ).affirm();
     }
 
     @Test
     public void syncIteratorReturnsCorrectValuesWithInternalLock() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Unexpected value found.",
             new ListOf<>(
                 new Synced<>(
-                    new ListOf<>("a", "b").iterator()
+                    new IteratorOf<>("a", "b")
                 )
-            ).toArray(),
-            Matchers.equalTo(new Object[]{"a", "b"})
-        );
+            )::toArray,
+            new IsEqual<>(new Object[]{"a", "b"})
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public void correctValuesForConcurrentNextNext() {
         for (int iter = 0; iter < 5000; iter += 1) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "",
-                map -> {
-                    MatcherAssert.assertThat(
-                        map.next(),
+                () -> map -> {
+                    new Assertion<>(
+                        "",
+                        map::next,
                         Matchers.anyOf(
-                            Matchers.equalTo("a"),
-                            Matchers.equalTo("b")
+                            new IsEqual<>("a"),
+                            new IsEqual<>("b")
                         )
-                    );
+                    ).affirm();
                     return true;
                 },
                 new RunsInThreads<>(
                     new Synced<>(
-                        new ListOf<>("a", "b").iterator()
+                        new IteratorOf<>("a", "b")
                     ),
                     2
                 )
-            );
+            ).affirm();
         }
     }
 
@@ -98,40 +100,42 @@ public final class SyncedTest {
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public void correctValuesForConcurrentNextHasNext() {
         for (int iter = 0; iter < 5000; iter += 1) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "",
-                map -> {
-                    MatcherAssert.assertThat(
-                        map.hasNext(),
+                () -> map -> {
+                    new Assertion<>(
+                        "",
+                        map::hasNext,
                         Matchers.anyOf(
-                            Matchers.equalTo(true),
-                            Matchers.equalTo(true)
+                            new IsEqual<>(true),
+                            new IsEqual<>(true)
                         )
-                    );
-                    MatcherAssert.assertThat(
-                        map.next(),
+                    ).affirm();
+                    new Assertion<>(
+                        "",
+                        map::next,
                         Matchers.anyOf(
-                            Matchers.equalTo("a"),
-                            Matchers.equalTo("b")
+                            new IsEqual<>("a"),
+                            new IsEqual<>("b")
                         )
-                    );
-                    MatcherAssert.assertThat(
-                        map.hasNext(),
+                    ).affirm();
+                    new Assertion<>(
+                        "",
+                        map::hasNext,
                         Matchers.anyOf(
-                            Matchers.equalTo(true),
-                            Matchers.equalTo(false)
+                            new IsEqual<>(true),
+                            new IsEqual<>(false)
                         )
-                    );
+                    ).affirm();
                     return true;
                 },
                 new RunsInThreads<>(
                     new Synced<>(
-                        new ListOf<>("a", "b").iterator()
+                        new IteratorOf<>("a", "b")
                     ),
                     2
                 )
-            );
+            ).affirm();
         }
     }
-
 }

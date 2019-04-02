@@ -57,7 +57,7 @@ public final class Synced<T> implements Iterator<T> {
      * @param iterator The iterator to synchronize access to.
      */
     public Synced(final Iterator<T> iterator) {
-        this(iterator, new ReentrantReadWriteLock());
+        this(new ReentrantReadWriteLock(), iterator);
     }
 
     /**
@@ -65,7 +65,7 @@ public final class Synced<T> implements Iterator<T> {
      * @param iterator The iterator to synchronize access to.
      * @param lock The lock to use for synchronization.
      */
-    public Synced(final Iterator<T> iterator, final ReadWriteLock lock) {
+    public Synced(final ReadWriteLock lock, final Iterator<T> iterator) {
         this.iterator = iterator;
         this.lock = lock;
     }
