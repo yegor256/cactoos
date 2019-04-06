@@ -176,8 +176,8 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
                             entry.getValue(),
                             o -> o != null,
                             o -> o.hashCode(),
-                            o -> 0)
-                        .value()
+                            o -> 0
+                        ).value()
                     ).value();
                 },
                 this.map.value().entrySet()
@@ -199,7 +199,10 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
                     final Y value = entry.getValue();
                     return new And(
                         () -> other.containsKey(key),
-                        () -> new EqualsNullable(other.get(key), (value)).value()
+                        () -> new EqualsNullable(
+                            other.get(key),
+                            value
+                        ).value()
                     ).value();
                 }, this.entrySet()
             )
