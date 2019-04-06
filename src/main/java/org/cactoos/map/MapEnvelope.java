@@ -23,15 +23,10 @@
  */
 package org.cactoos.map;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
 import org.cactoos.Scalar;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.Or;
-import org.cactoos.scalar.SumOfInt;
-import org.cactoos.scalar.Unchecked;
+import org.cactoos.scalar.*;
 import org.cactoos.text.TextOf;
 
 /**
@@ -170,7 +165,12 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
                     ).value();
                     return new SumOfInt(
                         () -> 37 * keys,
-                        () -> entry.getValue().hashCode()
+                        () -> new Ternary<>(
+                                entry.getValue(),
+                                o -> o != null,
+                                o -> o.hashCode(),
+                                o -> 0)
+                                .value()
                     ).value();
                 },
                 this.map.value().entrySet()
@@ -192,7 +192,7 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
                     final Y value = entry.getValue();
                     return new And(
                         () -> other.containsKey(key),
-                        () -> other.get(key).equals(value)
+                        () -> new EqualsNullable(other.get(key), (value)).value()
                     ).value();
                 }, this.entrySet()
             )
