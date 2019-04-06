@@ -54,7 +54,7 @@ public class EqualsNullableTest {
     public void notEquals() throws Exception {
         MatcherAssert.assertThat(
             "Must return false for non equal objects",
-            new EqualsNullable(1, 2).value()
+            !new EqualsNullable(1, 2).value()
         );
     }
 }
