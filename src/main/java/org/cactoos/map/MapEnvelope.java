@@ -23,10 +23,18 @@
  */
 package org.cactoos.map;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 import org.cactoos.Scalar;
-import org.cactoos.scalar.*;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.EqualsNullable;
+import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.Or;
+import org.cactoos.scalar.SumOfInt;
+import org.cactoos.scalar.Ternary;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.TextOf;
 
 /**
