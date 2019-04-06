@@ -43,21 +43,13 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @param <T> Type of output
  * @since 0.12
- * @todo #888:30min Avoid usage of null value in ctor(Func) which is
- *  against our design principles.
- *  Most likely, dropping this ctor will be enough.
  */
 public final class CallableOf<X, T> implements Callable<T> {
 
     /**
-     * Original func.
+     * Original callable.
      */
-    private final Func<X, T> func;
-
-    /**
-     * The input.
-     */
-    private final X input;
+    private final Callable<T> callable;
 
     /**
      * Ctor.
@@ -66,39 +58,44 @@ public final class CallableOf<X, T> implements Callable<T> {
      * @since 0.32
      */
     public CallableOf(final Runnable runnable, final T result) {
-        this(new FuncOf<>(runnable, result));
+        this(() -> {
+            runnable.run();
+            return result;
+        });
     }
 
     /**
      * Ctor.
      * @param proc Encapsulated proc
+     * @param ipt Input
      * @param result Result to return
-     * @since 0.32
+     * @since 0.41
      */
-    public CallableOf(final Proc<X> proc, final T result) {
-        this(new FuncOf<>(proc, result));
-    }
-
-    /**
-     * Ctor.
-     * @param fnc Encapsulated func
-     */
-    public CallableOf(final Func<X, T> fnc) {
-        this(fnc, null);
+    public CallableOf(final Proc<X> proc, final X ipt, final T result) {
+        this(new FuncOf<>(proc, result), ipt);
     }
 
     /**
      * Ctor.
      * @param fnc Encapsulated func
      * @param ipt Input
+     * @since 0.41
      */
     public CallableOf(final Func<X, T> fnc, final X ipt) {
-        this.func = fnc;
-        this.input = ipt;
+        this(() -> fnc.apply(ipt));
+    }
+
+    /**
+     * Ctor.
+     * @param cal Encapsulated callable
+     * @since 0.41
+     */
+    public CallableOf(final Callable<T> cal) {
+        this.callable = cal;
     }
 
     @Override
     public T call() throws Exception {
-        return this.func.apply(this.input);
+        return this.callable.call();
     }
 }

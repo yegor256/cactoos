@@ -24,9 +24,9 @@
 package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link CallableOf}.
@@ -34,17 +34,8 @@ import org.junit.Test;
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class CallableOfTest {
-
-    @Test
-    public void convertsFuncIntoCallable() throws Exception {
-        MatcherAssert.assertThat(
-            new CallableOf<>(
-                input -> 1
-            ).call(),
-            Matchers.equalTo(1)
-        );
-    }
 
     @Test
     public void convertsRunnableIntoCallable() throws Exception {
@@ -53,49 +44,44 @@ public final class CallableOfTest {
             () -> flag.set(true),
             true
         ).call();
-        MatcherAssert.assertThat(
-            flag.get(),
-            Matchers.is(true)
-        );
-    }
-
-    @Test(expected = Exception.class)
-    public void wrapsRuntimeErrorFromRunnable() throws Exception {
-        new CallableOf<>(
-            () -> {
-                throw new IllegalStateException();
-            },
-        true
-        ).call();
+        new Assertion<>(
+            "must have been set by callable",
+            flag::get,
+            new IsEqual<>(true)
+        ).affirm();
     }
 
     @Test
     public void convertsProcIntoCallable() throws Exception {
         final AtomicBoolean flag = new AtomicBoolean(false);
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "must return predefined result",
             new CallableOf<>(
-                unused -> {
-                    flag.set(true);
+                bool -> {
+                    flag.set(bool);
                 },
-                true
-            ).call(),
-            Matchers.equalTo(true)
-        );
-        MatcherAssert.assertThat(
-            flag.get(),
-            Matchers.is(true)
-        );
+                true,
+                false
+            )::call,
+            new IsEqual<>(false)
+        ).affirm();
+        new Assertion<>(
+            "must have been set by callable",
+            flag::get,
+            new IsEqual<>(true)
+        ).affirm();
     }
 
     @Test
-    public void convertsFuncWithInputIntoCallable() throws Exception {
-        MatcherAssert.assertThat(
+    public void convertsFuncIntoCallable() throws Exception {
+        new Assertion<>(
+            "must return the application of func",
             new CallableOf<>(
                 num -> num + 1,
                 1
-            ).call(),
-            Matchers.equalTo(2)
-        );
+            )::call,
+            new IsEqual<>(2)
+        ).affirm();
     }
 
 }
