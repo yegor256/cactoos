@@ -31,7 +31,7 @@ import org.cactoos.collection.CollectionEnvelope;
 import org.cactoos.scalar.Unchecked;
 
 /**
- * List envelope.
+ * {@link List} envelope that doesn't allow mutations.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -45,7 +45,7 @@ import org.cactoos.scalar.Unchecked;
         "PMD.AbstractNaming"
     }
 )
-abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
+public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
     List<T> {
 
     /**
@@ -57,7 +57,7 @@ abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
      * Ctor.
      * @param src Source
      */
-    ListEnvelope(final Scalar<List<T>> src) {
+    public ListEnvelope(final Scalar<List<T>> src) {
         super(src::value);
         this.list = new Unchecked<>(src);
     }
@@ -114,11 +114,8 @@ abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
 
     @Override
     public final List<T> subList(final int start, final int end) {
-        return this.list.value().subList(start, end);
-    }
-
-    @Override
-    public String toString() {
-        return this.list.value().toString();
+        return new ListEnvelope<T>(
+            () -> this.list.value().subList(start, end)
+        ) { };
     }
 }

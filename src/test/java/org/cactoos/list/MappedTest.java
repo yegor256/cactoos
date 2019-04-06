@@ -84,7 +84,7 @@ public final class MappedTest {
                 x -> x * 2,
                 new ListOf<>(1, 2, 3)
             ).toString(),
-            Matchers.equalTo("2, 4, 6")
+            Matchers.equalTo("[2, 4, 6]")
         );
     }
 }

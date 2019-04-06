@@ -30,7 +30,7 @@ import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
 /**
- * Iterator of the list.
+ * Iterator of the list that doesn't allow mutations.
  *
  * <p>There is no thread-safety guarantee.
  *

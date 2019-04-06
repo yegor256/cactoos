@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import org.cactoos.Func;
-import org.cactoos.text.TextOf;
 
 /**
  * Mapped list.
@@ -46,10 +45,5 @@ public final class Mapped<X, Y> extends ListEnvelope<Y> {
         super(() -> new ListOf<Y>(
             new org.cactoos.iterable.Mapped<>(fnc, src)
         ));
-    }
-
-    @Override
-    public String toString() {
-        return new TextOf(this).toString();
     }
 }
