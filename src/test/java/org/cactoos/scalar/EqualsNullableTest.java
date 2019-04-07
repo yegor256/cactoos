@@ -62,4 +62,22 @@ public final class EqualsNullableTest {
             new IsTrue()
         ).affirm();
     }
+
+    @Test
+    public void equalsObjectAndScalar() throws Exception {
+        new Assertion<>(
+            "Must return true for object and scalar with the same value",
+            new EqualsNullable(1, () -> 1),
+            new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    public void equalsScalarAndObject() throws Exception {
+        new Assertion<>(
+            "Must return true for scalar and object with the same value",
+            new EqualsNullable(() -> 1, 1),
+            new IsTrue()
+        ).affirm();
+    }
 }
