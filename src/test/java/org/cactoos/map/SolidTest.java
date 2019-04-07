@@ -52,8 +52,7 @@ public final class SolidTest {
         MatcherAssert.assertThat(
             "Can't behave as a map",
             new Solid<Integer, Integer>(
-                new MapEntry<>(0, -1),
-                new MapEntry<>(1, 1)
+                new MapEntry<>(0, 1)
             ),
             new BehavesAsMap<>(0, 1)
         );
@@ -73,8 +72,7 @@ public final class SolidTest {
             },
             new RunsInThreads<>(
                 new Solid<Integer, Integer>(
-                    new MapEntry<>(0, -1),
-                    new MapEntry<>(1, 1)
+                    new MapEntry<>(0, 1)
                 )
             )
         );
