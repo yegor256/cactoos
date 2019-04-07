@@ -31,7 +31,12 @@ import org.cactoos.Scalar;
  * <p>There is no thread-safety guarantee.
  * @since 1.0
  */
-@SuppressWarnings({"PMD.SuspiciousEqualsMethodName", "PMD.CompareObjectsWithEquals"})
+@SuppressWarnings(
+    {
+        "PMD.SuspiciousEqualsMethodName",
+        "PMD.CompareObjectsWithEquals"
+    }
+)
 public final class EqualsNullable implements Scalar<Boolean> {
     /**
      * The first object for comparison.
