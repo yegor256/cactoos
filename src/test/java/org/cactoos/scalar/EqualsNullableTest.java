@@ -33,32 +33,33 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.SuspiciousEqualsMethodName")
 public final class EqualsNullableTest {
 
     @Test
     public void nullEqualsNull() throws Exception {
         new Assertion<>(
-                "Must return true for both null objects",
-                new EqualsNullable(() -> null, () -> null),
-                new IsTrue()
+            "Must return true for both null objects",
+            new EqualsNullable(() -> null, () -> null),
+            new IsTrue()
         ).affirm();
     }
 
     @Test
     public void equals() throws Exception {
         new Assertion<>(
-                "Must return true for equal objects",
-                new EqualsNullable(1, 1),
-                new IsTrue()
+            "Must return true for equal objects",
+            new EqualsNullable(1, 1),
+            new IsTrue()
         ).affirm();
     }
 
     @Test
     public void notEquals() throws Exception {
         new Assertion<>(
-                "Must return false for non equal objects",
-                () -> !new EqualsNullable(1, 2).value(),
-                new IsTrue()
+            "Must return false for non equal objects",
+            () -> !new EqualsNullable(1, 2).value(),
+            new IsTrue()
         ).affirm();
     }
 }

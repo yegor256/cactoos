@@ -31,7 +31,7 @@ import org.cactoos.Scalar;
  * <p>There is no thread-safety guarantee.
  * @since 1.0
  */
-@SuppressWarnings("PMD.SuspiciousEqualsMethodName")
+@SuppressWarnings({"PMD.SuspiciousEqualsMethodName", "PMD.CompareObjectsWithEquals"})
 public final class EqualsNullable implements Scalar<Boolean> {
     /**
      * The first object for comparison.
@@ -70,20 +70,21 @@ public final class EqualsNullable implements Scalar<Boolean> {
     }
 
     /**
-     * Accepts 2 scalars to get get values from
+     * Accepts 2 scalars to get get values from.
      * @param first Scalar to get value to compare
      * @param second Scalar to get value to compare with
      */
-    public EqualsNullable(final Scalar<Object> first, final Scalar<Object> second) {
+    public EqualsNullable(final Scalar<Object> first,
+        final Scalar<Object> second) {
         this.first = first;
         this.second = second;
     }
 
     @Override
     public Boolean value() throws Exception {
-        final Object firstValue = first.value();
-        final Object secondValue = second.value();
-        return firstValue == secondValue
-            || firstValue != null && firstValue.equals(secondValue);
+        final Object source = this.first.value();
+        final Object compared = this.second.value();
+        return source == compared
+            || source != null && source.equals(compared);
     }
 }

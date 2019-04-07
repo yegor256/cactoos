@@ -33,7 +33,6 @@ import org.cactoos.scalar.EqualsNullable;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
 import org.cactoos.scalar.SumOfInt;
-import org.cactoos.scalar.Ternary;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.TextOf;
 
