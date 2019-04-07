@@ -23,12 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link EqualsNullable}.
@@ -42,7 +39,7 @@ public final class EqualsNullableTest {
     public void nullEqualsNull() throws Exception {
         new Assertion<>(
                 "Must return true for both null objects",
-                new EqualsNullable(null, null),
+                new EqualsNullable(() -> null, () -> null),
                 new IsTrue()
         ).affirm();
     }
