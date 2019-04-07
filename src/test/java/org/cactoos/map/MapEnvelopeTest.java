@@ -250,7 +250,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void equalNotFailsOnNull() {
+    public void equalsDoesNotFailOnNulls() {
         final MapEntry<String, String> first =
             new MapEntry<>("key3", "value3");
         final MapEntry<String, String> second =
@@ -308,7 +308,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void hashCodeNotFailsOnNull() {
+    public void hashCodeDoesNotFailOnNulls() {
         final MapEntry<String, String> first =
             new MapEntry<>("key10", "value10");
         final MapEntry<String, String> second =

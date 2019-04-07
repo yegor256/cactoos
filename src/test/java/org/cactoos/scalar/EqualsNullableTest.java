@@ -24,37 +24,44 @@
 package org.cactoos.scalar;
 
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link EqualsNullable}.
  *
- * @checkstyle JavadocMethodCheck (500 lines)
  * @since 1.0
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public class EqualsNullableTest {
+public final class EqualsNullableTest {
 
     @Test
     public void nullEqualsNull() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
                 "Must return true for both null objects",
-                new EqualsNullable(null, null).value()
-        );
+                new EqualsNullable(null, null),
+                new IsTrue()
+        ).affirm();
     }
 
     @Test
     public void equals() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
                 "Must return true for equal objects",
-                new EqualsNullable(1, 1).value()
-        );
+                new EqualsNullable(1, 1),
+                new IsTrue()
+        ).affirm();
     }
 
     @Test
     public void notEquals() throws Exception {
-        MatcherAssert.assertThat(
-            "Must return false for non equal objects",
-            !new EqualsNullable(1, 2).value()
-        );
+        new Assertion<>(
+                "Must return false for non equal objects",
+                () -> !new EqualsNullable(1, 2).value(),
+                new IsTrue()
+        ).affirm();
     }
 }

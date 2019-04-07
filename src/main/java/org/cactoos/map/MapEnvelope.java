@@ -25,6 +25,7 @@ package org.cactoos.map;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.And;
@@ -46,11 +47,13 @@ import org.cactoos.text.TextOf;
  * @see Sticky
  * @since 0.24
  * @checkstyle AbstractClassNameCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings(
     {
         "PMD.TooManyMethods",
-        "PMD.AbstractNaming"
+        "PMD.AbstractNaming",
+        "unchecked"
     }
 )
 public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
@@ -172,12 +175,7 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
                     ).value();
                     return new SumOfInt(
                         () -> 37 * keys,
-                        () -> new Ternary<>(
-                            entry.getValue(),
-                            o -> o != null,
-                            o -> o.hashCode(),
-                            o -> 0
-                        ).value()
+                        () -> Objects.hashCode(entry.getValue())
                     ).value();
                 },
                 this.map.value().entrySet()
@@ -200,7 +198,7 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
                     return new And(
                         () -> other.containsKey(key),
                         () -> new EqualsNullable(
-                            other.get(key),
+                            () -> other.get(key),
                             value
                         ).value()
                     ).value();
