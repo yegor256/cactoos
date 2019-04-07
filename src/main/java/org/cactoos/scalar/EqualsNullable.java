@@ -27,34 +27,66 @@ import org.cactoos.Scalar;
 
 /**
  * Checks 2 objects for equality.
- * Nullable values are enabled.
- *
- * <p>This class implements {@link Scalar}, which throws first checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use the {@link Unchecked} decorator. Or you may use
- * {@link IoChecked} to wrap it in an IOException.</p>
- *
+ * Null values are accepted.
  * <p>There is no thread-safety guarantee.
  * @since 1.0
  */
+@SuppressWarnings("PMD.SuspiciousEqualsMethodName")
 public final class EqualsNullable implements Scalar<Boolean> {
-    private final Object first;
-    private final Object second;
+    /**
+     * The first object for comparison.
+     */
+    private final Scalar<Object> first;
+    /**
+     * The second object for comparison.
+     */
+    private final Scalar<Object> second;
 
     /**
-     * Default constructor
-     * @param first object to compare
-     * @param second object to compare with
+     * Accepts 2 objects to compare.
+     * @param first Object to compare
+     * @param second Object to compare with
      */
     public EqualsNullable(final Object first, final Object second) {
+        this.first = () -> first;
+        this.second = () -> second;
+    }
+
+    /**
+     * Accepts scalar to get value from and object to compare with.
+     * @param first Scalar to get value to compare
+     * @param second Object to compare with
+     */
+    public EqualsNullable(final Scalar<Object> first, final Object second) {
+        this.first = first;
+        this.second = () -> second;
+    }
+
+    /**
+     * Accepts object to compare with and scalar to get value from.
+     * @param first Object to compare
+     * @param second Scalar to get value to compare
+     */
+    public EqualsNullable(final Object first, final Scalar<Object> second) {
+        this.first = () -> first;
+        this.second = second;
+    }
+
+    /**
+     * Accepts 2 scalars to get get values from
+     * @param first Scalar to get value to compare
+     * @param second Scalar to get value to compare with
+     */
+    public EqualsNullable(final Scalar<Object> first, final Scalar<Object> second) {
         this.first = first;
         this.second = second;
     }
 
     @Override
-    public Boolean value() {
-        return (this.first == this.second) ||
-            (this.first != null && this.first.equals(this.second));
+    public Boolean value() throws Exception {
+        final Object firstValue = first.value();
+        final Object secondValue = second.value();
+        return firstValue == secondValue
+            || firstValue != null && firstValue.equals(secondValue);
     }
 }
