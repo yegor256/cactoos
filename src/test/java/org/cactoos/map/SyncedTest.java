@@ -41,9 +41,10 @@ public final class SyncedTest {
         MatcherAssert.assertThat(
             "Can't behave as a map",
             new Synced<Integer, Integer>(
-                new MapEntry<>(0, 1)
+                new MapEntry<>(0, -1),
+                new MapEntry<>(1, 1)
             ),
-            new BehavesAsMap<>(0, 1)
+            new BehavesAsMap<>(1, 1)
         );
     }
 
@@ -55,13 +56,14 @@ public final class SyncedTest {
                 MatcherAssert.assertThat(
                     "Can't behave as a map in thread",
                     map,
-                    new BehavesAsMap<>(0, 1)
+                    new BehavesAsMap<>(1, 1)
                 );
                 return true;
             },
             new RunsInThreads<>(
                 new Synced<Integer, Integer>(
-                    new MapEntry<>(0, 1)
+                    new MapEntry<>(0, -1),
+                    new MapEntry<>(1, 1)
                 )
             )
         );
