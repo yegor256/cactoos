@@ -25,13 +25,11 @@ package org.cactoos.iterable;
 
 import java.util.Iterator;
 import org.cactoos.iterator.IteratorOf;
-import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.scalar.Ternary;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.collection.IsIterableWithSize;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -81,10 +79,6 @@ public final class IterableOfTest {
         );
     }
 
-    // @todo #971:30min Implement equals() and hashCode() on IterableEnvelope.
-    //  Then, refactor this test so that only
-    //  `new IsEqual<>(new Joined<>(first, second, third))` is required as a
-    //  matcher.
     @Test
     @SuppressWarnings({"unchecked", "PMD.AvoidDuplicateLiterals"})
     public void containAllPagedContentInOrder() throws Exception {
@@ -105,15 +99,7 @@ public final class IterableOfTest {
                     () -> new IteratorOf<String>()
                 ).value()
             ),
-            new IsIterableContainingInOrder<>(
-                new ListOf<>(
-                    new IsEqual<>("one"),
-                    new IsEqual<>("two"),
-                    new IsEqual<>("three"),
-                    new IsEqual<>("four"),
-                    new IsEqual<>("five")
-                )
-            )
+            new IsEqual<>(new Joined<>(first, second, third))
         );
     }
 

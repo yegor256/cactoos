@@ -146,6 +146,7 @@ The MIT License (MIT)
                 <exclude>findbugs:org.cactoos.map.MapEntry</exclude>
                 <exclude>findbugs:org.cactoos.scalar.NumberOf</exclude>
                 <exclude>findbugs:org.cactoos.text.TextEnvelopeTest</exclude>
+                <exclude>findbugs:org.cactoos.iterable.IterableEnvelope</exclude>
                 <exclude>findbugs:org.cactoos.iterator.Cycled</exclude>
                 <exclude>findbugs:org.cactoos.iterator.Endless</exclude>
               </excludes>
