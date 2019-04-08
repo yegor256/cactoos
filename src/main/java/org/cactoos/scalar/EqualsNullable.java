@@ -31,12 +31,6 @@ import org.cactoos.Scalar;
  * <p>There is no thread-safety guarantee.
  * @since 1.0
  */
-@SuppressWarnings(
-    {
-        "PMD.SuspiciousEqualsMethodName",
-        "PMD.CompareObjectsWithEquals"
-    }
-)
 public final class EqualsNullable implements Scalar<Boolean> {
     /**
      * The first object for comparison.
@@ -86,6 +80,7 @@ public final class EqualsNullable implements Scalar<Boolean> {
     }
 
     @Override
+    @SuppressWarnings("PMD.CompareObjectsWithEquals")
     public Boolean value() throws Exception {
         final Object source = this.first.value();
         final Object compared = this.second.value();

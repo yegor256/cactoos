@@ -51,8 +51,7 @@ import org.cactoos.text.TextOf;
 @SuppressWarnings(
     {
         "PMD.TooManyMethods",
-        "PMD.AbstractNaming",
-        "unchecked"
+        "PMD.AbstractNaming"
     }
 )
 public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
@@ -167,16 +166,11 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
         return new Unchecked<>(
             new Folded<>(
                 42,
-                (hash, entry) -> {
-                    final int keys = new SumOfInt(
-                        () -> 37 * hash,
-                        () -> entry.getKey().hashCode()
-                    ).value();
-                    return new SumOfInt(
-                        () -> 37 * keys,
-                        () -> Objects.hashCode(entry.getValue())
-                    ).value();
-                },
+                (hash, entry) -> new SumOfInt(
+                    () -> 37 * hash,
+                    () -> entry.getKey().hashCode(),
+                    () -> Objects.hashCode(entry.getValue())
+                ).value(),
                 this.map.value().entrySet()
             )
         ).value();
@@ -192,13 +186,11 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
         return new Unchecked<>(
             new And(
                 (entry) -> {
-                    final X key = entry.getKey();
-                    final Y value = entry.getValue();
                     return new And(
-                        () -> other.containsKey(key),
+                        () -> other.containsKey(entry.getKey()),
                         () -> new EqualsNullable(
-                            () -> other.get(key),
-                            value
+                            () -> other.get(entry.getKey()),
+                            entry.getValue()
                         ).value()
                     ).value();
                 }, this.entrySet()
