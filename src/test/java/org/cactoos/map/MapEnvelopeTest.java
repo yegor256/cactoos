@@ -249,14 +249,14 @@ public final class MapEnvelopeTest {
         );
     }
 
-    @Test(expected = NullPointerException.class)
-    public void equalFailsOnNull() {
+    @Test
+    public void equalsDoesNotFailOnNulls() {
         final MapEntry<String, String> first =
             new MapEntry<>("key3", "value3");
         final MapEntry<String, String> second =
             new MapEntry<>("key4", null);
         MatcherAssert.assertThat(
-            "Map allows null values, but shouldn't",
+            "Map must allow null values",
             new MapOf<String, String>(first, second),
             new IsEqual<>(new MapOf<String, String>(first, second))
         );
@@ -307,8 +307,8 @@ public final class MapEnvelopeTest {
         );
     }
 
-    @Test(expected = NullPointerException.class)
-    public void hashCodeFailsOnNull() {
+    @Test
+    public void hashCodeDoesNotFailOnNulls() {
         final MapEntry<String, String> first =
             new MapEntry<>("key10", "value10");
         final MapEntry<String, String> second =

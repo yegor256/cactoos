@@ -25,9 +25,11 @@ package org.cactoos.map;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.And;
+import org.cactoos.scalar.EqualsNullable;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
 import org.cactoos.scalar.SumOfInt;
@@ -44,6 +46,7 @@ import org.cactoos.text.TextOf;
  * @see Sticky
  * @since 0.24
  * @checkstyle AbstractClassNameCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings(
     {
@@ -163,16 +166,11 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
         return new Unchecked<>(
             new Folded<>(
                 42,
-                (hash, entry) -> {
-                    final int keys = new SumOfInt(
-                        () -> 37 * hash,
-                        () -> entry.getKey().hashCode()
-                    ).value();
-                    return new SumOfInt(
-                        () -> 37 * keys,
-                        () -> entry.getValue().hashCode()
-                    ).value();
-                },
+                (hash, entry) -> new SumOfInt(
+                    () -> 37 * hash,
+                    () -> entry.getKey().hashCode(),
+                    () -> Objects.hashCode(entry.getValue())
+                ).value(),
                 this.map.value().entrySet()
             )
         ).value();
@@ -188,11 +186,12 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
         return new Unchecked<>(
             new And(
                 (entry) -> {
-                    final X key = entry.getKey();
-                    final Y value = entry.getValue();
                     return new And(
-                        () -> other.containsKey(key),
-                        () -> other.get(key).equals(value)
+                        () -> other.containsKey(entry.getKey()),
+                        () -> new EqualsNullable(
+                            () -> other.get(entry.getKey()),
+                            entry.getValue()
+                        ).value()
                     ).value();
                 }, this.entrySet()
             )
