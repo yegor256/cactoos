@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import java.util.Collection;
-import java.util.Iterator;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
 
@@ -44,15 +43,6 @@ public final class Solid<X> extends ListEnvelope<X> {
      */
     @SafeVarargs
     public Solid(final X... items) {
-        this(new IterableOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items The array
-     * @since 0.21
-     */
-    public Solid(final Iterator<X> items) {
         this(new IterableOf<>(items));
     }
 

@@ -23,7 +23,6 @@
  */
 package org.cactoos.map;
 
-import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
@@ -131,14 +130,6 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
      */
     public Solid(final Iterable<Map.Entry<X, Y>> list) {
         this(new MapOf<>(list));
-    }
-
-    /**
-     * Ctor.
-     * @param list Entries for the entries
-     */
-    public Solid(final Iterator<Map.Entry<X, Y>> list) {
-        this(() -> list);
     }
 
     /**

@@ -25,7 +25,6 @@ package org.cactoos.list;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
@@ -63,15 +62,6 @@ public final class Synced<X> extends ListEnvelope<X> {
      * @param items The array
      */
     public Synced(final Iterable<X> items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items The array
-     * @since 0.21
-     */
-    public Synced(final Iterator<X> items) {
         this(new ListOf<>(items));
     }
 

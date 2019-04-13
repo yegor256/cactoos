@@ -25,6 +25,7 @@ package org.cactoos.iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -42,11 +43,13 @@ public final class JoinedTest {
         MatcherAssert.assertThat(
             "Can't concatenate mapped iterators together",
             new LengthOf(
-                new NoNulls<>(
-                    new Joined<Iterator<String>>(
-                        new Mapped<>(
-                            input -> new IteratorOf<>(input),
-                            new IteratorOf<>("x")
+                new org.cactoos.iterable.NoNulls<>(
+                    new IterableOf<>(
+                        new Joined<Iterator<String>>(
+                            new Mapped<>(
+                                input -> new IteratorOf<>(input),
+                                new IteratorOf<>("x")
+                            )
                         )
                     )
                 )

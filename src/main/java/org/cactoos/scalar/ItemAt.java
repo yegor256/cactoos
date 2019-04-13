@@ -110,17 +110,6 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param position Position
-     * @param source Iterable
-     * @since 0.21
-     */
-    public ItemAt(final int position, final Iterator<T> source) {
-        this(position, () -> source);
-    }
-
-    /**
-     * Ctor.
-     *
      * @param source Iterable
      * @param position Position
      * @param fallback Fallback value
@@ -136,25 +125,11 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param iterator Iterator
-     */
-    public ItemAt(final Iterator<T> iterator) {
-        this(
-            iterator,
-            itr -> {
-                throw new IOException("Iterator is empty");
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param iterator Iterator
+     * @param iterable Iterable
      * @param fallback Fallback value
      */
-    public ItemAt(final Iterator<T> iterator, final T fallback) {
-        this(iterator, itr -> fallback);
+    public ItemAt(final Iterable<T> iterable, final T fallback) {
+        this(iterable, itr -> fallback);
     }
 
     /**
@@ -173,12 +148,12 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param iterator Iterator
+     * @param iterable Iterable
      * @param position Position
      */
-    public ItemAt(final Iterator<T> iterator, final int position) {
+    public ItemAt(final Iterable<T> iterable, final int position) {
         this(
-            iterator,
+            iterable.iterator(),
             position,
             itr -> {
                 throw new IOException(
@@ -197,6 +172,10 @@ public final class ItemAt<T> implements Scalar<T> {
      * @param iterator Iterator
      * @param position Position
      * @param fallback Fallback value
+     * @todo #911:30min Remove iterator constructor
+     *  from org.cactoos.scalar.ItemAt.
+     *  We need to avoid the usage of Iterators
+     *  and replace all of their occurrences in ctors with Iterables.
      */
     public ItemAt(
         final Iterator<T> iterator,

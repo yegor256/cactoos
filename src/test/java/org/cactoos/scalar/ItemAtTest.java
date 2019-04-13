@@ -26,6 +26,7 @@ package org.cactoos.scalar;
 import java.io.IOException;
 import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -86,7 +87,7 @@ public final class ItemAtTest {
             "Can't take the first item from the iterator",
             new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
-                new IterableOf<>(1, 2, 3).iterator()
+                new IterableOf<>(1, 2, 3)
             ),
             new ScalarHasValue<>(1)
         );
@@ -98,7 +99,7 @@ public final class ItemAtTest {
             "Can't take the item by position from the iterator",
             new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
-                new IterableOf<>(1, 2, 3).iterator(),
+                new IterableOf<>(1, 2, 3),
                 1
             ),
             new ScalarHasValue<>(2)
@@ -107,14 +108,14 @@ public final class ItemAtTest {
 
     @Test(expected = IOException.class)
     public void failForEmptyCollectionTest() throws Exception {
-        new ItemAt<>(Collections.emptyIterator()).value();
+        new ItemAt<>(new ListOf<>()).value();
     }
 
     @Test(expected = IOException.class)
     public void failForNegativePositionTest() throws Exception {
         new ItemAt<>(
             // @checkstyle MagicNumber (1 line)
-            new IterableOf<>(1, 2, 3).iterator(),
+            new IterableOf<>(1, 2, 3),
             -1
         ).value();
     }
@@ -125,7 +126,7 @@ public final class ItemAtTest {
         MatcherAssert.assertThat(
             "Can't fallback to default value",
             new ItemAt<>(
-                Collections.emptyIterator(),
+                new ListOf<>(),
                 fallback
             ),
             new ScalarHasValue<>(fallback)
@@ -136,7 +137,7 @@ public final class ItemAtTest {
     public void failForPosMoreLengthTest() throws Exception {
         new ItemAt<>(
             // @checkstyle MagicNumberCheck (2 lines)
-            new IterableOf<>(1, 2, 3).iterator(),
+            new IterableOf<>(1, 2, 3),
             3
         ).value();
     }
@@ -145,7 +146,7 @@ public final class ItemAtTest {
     public void sameValueTest() throws Exception {
         final ItemAt<Integer> item = new ItemAt<>(
             // @checkstyle MagicNumberCheck (2 lines)
-            new IterableOf<>(1, 2, 3).iterator(),
+            new IterableOf<>(1, 2, 3),
             1
         );
         MatcherAssert.assertThat(

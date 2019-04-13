@@ -45,9 +45,9 @@ public final class HeadOfTest {
             "Can't skip elements in iterator",
             () -> new HeadOf<>(
                 2,
-                new IterableOf<>(
+                new IteratorOf<>(
                     "one", "two", "three", "four"
-                ).iterator()
+                )
             ),
             Matchers.contains(
                 "one",
@@ -60,11 +60,13 @@ public final class HeadOfTest {
     public void returnsIntactIterator() throws Exception {
         MatcherAssert.assertThat(
             new LengthOf(
-                new HeadOf<>(
-                    3,
-                    new IterableOf<>(
-                        "one", "two"
-                    ).iterator()
+                new IterableOf<>(
+                    new HeadOf<>(
+                        3,
+                        new IteratorOf<>(
+                            "one", "two"
+                        )
+                    )
                 )
             ).intValue(),
             Matchers.equalTo(2)
@@ -75,9 +77,9 @@ public final class HeadOfTest {
     public void returnsEmptyIterator() throws Exception {
         new HeadOf<>(
             0,
-            new IterableOf<>(
+            new IteratorOf<>(
                 "one", "two"
-            ).iterator()
+            )
         ).next();
     }
 
@@ -85,9 +87,9 @@ public final class HeadOfTest {
     public void emptyIteratorForNegativeSize() throws Exception {
         new HeadOf<>(
             -1,
-            new IterableOf<>(
+            new IteratorOf<>(
                 "one", "two"
-            ).iterator()
+            )
         ).next();
     }
 }

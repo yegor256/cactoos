@@ -26,7 +26,6 @@ package org.cactoos.collection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -45,15 +44,6 @@ public final class Sticky<E> extends CollectionEnvelope<E> {
      */
     @SafeVarargs
     public Sticky(final E... items) {
-        this(new IterableOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param items The array
-     * @since 0.21
-     */
-    public Sticky(final Iterator<E> items) {
         this(new IterableOf<>(items));
     }
 

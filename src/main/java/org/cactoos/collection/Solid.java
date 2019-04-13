@@ -51,14 +51,6 @@ public final class Solid<T> extends CollectionEnvelope<T> {
      * Ctor.
      * @param src An {@link Iterator}
      */
-    public Solid(final Iterator<T> src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src An {@link Iterator}
-     */
     public Solid(final Iterable<T> src) {
         this(new CollectionOf<>(src));
     }

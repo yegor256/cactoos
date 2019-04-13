@@ -26,6 +26,7 @@ package org.cactoos.iterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.NoSuchElementException;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
@@ -46,7 +47,9 @@ public final class PartitionedTest {
         MatcherAssert.assertThat(
             "Can't generate an empty Partitioned.",
             new LengthOf(
-                new Partitioned<>(1, Collections.emptyIterator())
+                new IterableOf<>(
+                    new Partitioned<>(1, Collections.emptyIterator())
+                )
             ).intValue(),
             Matchers.equalTo(0)
         );

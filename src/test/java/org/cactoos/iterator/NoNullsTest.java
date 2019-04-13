@@ -24,8 +24,11 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import org.cactoos.list.ListOf;
-import org.hamcrest.core.StringContains;
+import org.cactoos.iterable.IterableOf;
+import org.hamcrest.Matcher;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.StringEndsWith;
+import org.hamcrest.core.StringStartsWith;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -50,8 +53,15 @@ public final class NoNullsTest {
     public void nextThrowsErrorIfNull() {
         this.exception.expect(IllegalStateException.class);
         this.exception.expectMessage(
-            new StringContains(
-                "Item #0 of org.cactoos.iterator.NoNullsTest"
+            new AllOf<>(
+                new IterableOf<Matcher<? super String>>(
+                    new StringStartsWith(
+                        "Item #0 of org.cactoos.iterator"
+                    ),
+                    new StringEndsWith(
+                        "is NULL"
+                    )
+                )
             )
         );
         new NoNulls<>(
@@ -73,7 +83,7 @@ public final class NoNullsTest {
     public void nthThrowsErrorIfNull() {
         this.exception.expect(IllegalStateException.class);
         final Iterator<String> itr = new NoNulls<>(
-            new ListOf<>("a", "b", null, "c").iterator()
+            new IteratorOf<>("a", "b", null, "c")
         );
         while (itr.hasNext()) {
             itr.next();

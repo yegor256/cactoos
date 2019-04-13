@@ -24,7 +24,6 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
 
@@ -54,15 +53,6 @@ public final class CollectionOf<T> extends CollectionEnvelope<T> {
     @SafeVarargs
     public CollectionOf(final T... array) {
         this(new IterableOf<>(array));
-    }
-
-    /**
-     * Ctor.
-     * @param src An {@link Iterator}
-     * @since 0.21
-     */
-    public CollectionOf(final Iterator<T> src) {
-        this(new IterableOf<>(src));
     }
 
     /**

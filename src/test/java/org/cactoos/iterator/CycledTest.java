@@ -45,10 +45,12 @@ public final class CycledTest {
         MatcherAssert.assertThat(
             "Can't repeat iterator",
             new ItemAt<>(
-                new Cycled<>(
-                    new NoNulls<>(
-                        new IterableOf<>(
-                            "one", expected, "three"
+                new IterableOf<>(
+                    new Cycled<>(
+                        new NoNulls<>(
+                            new IterableOf<>(
+                                "one", expected, "three"
+                            )
                         )
                     )
                 ),
