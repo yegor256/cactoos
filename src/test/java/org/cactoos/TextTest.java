@@ -26,41 +26,40 @@ package org.cactoos;
 import org.cactoos.text.NoNulls;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Text}.
  * @since 0.11
- * @todo #1023:30min Replace all occurrences of @Rule ExpectedException
- *  tests that use it should be refactored to use Throws class
- *  introduced in cactoos-matchers 0.13.
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class TextTest {
 
-    /**
-     * A rule for handling an exception.
-     */
-    @Rule
-    public final ExpectedException cause = ExpectedException.none();
-
     @Test
-    public void failForNullArgument() throws Exception {
-        this.cause.expect(IllegalArgumentException.class);
-        this.cause.expectMessage("NULL instead of a valid text");
-        new NoNulls(null).asString();
+    public void failForNullArgument() {
+        new Assertion<>(
+            "Must fail for null argument",
+            () -> new NoNulls(null).asString(),
+            new Throws<>(
+                "NULL instead of a valid text",
+                IllegalArgumentException.class
+            )
+        ).affirm();
     }
 
     @Test
-    public void failForNullResult() throws Exception {
-        this.cause.expect(IllegalStateException.class);
-        this.cause.expectMessage("NULL instead of a valid result string");
-        new NoNulls(
-            () -> null
-        ).asString();
+    public void failForNullResult() {
+        new Assertion<>(
+            "Must fail for null result",
+            () -> new NoNulls(() -> null).asString(),
+            new Throws<>(
+                "NULL instead of a valid result string",
+                IllegalStateException.class
+            )
+        ).affirm();
     }
 
     @Test

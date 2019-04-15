@@ -24,14 +24,11 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import org.cactoos.iterable.IterableOf;
-import org.hamcrest.Matcher;
-import org.hamcrest.core.AllOf;
-import org.hamcrest.core.StringEndsWith;
-import org.hamcrest.core.StringStartsWith;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test cases for {@link NoNulls}.
@@ -51,34 +48,39 @@ public final class NoNullsTest {
 
     @Test
     public void nextThrowsErrorIfNull() {
-        this.exception.expect(IllegalStateException.class);
-        this.exception.expectMessage(
-            new AllOf<>(
-                new IterableOf<Matcher<? super String>>(
-                    new StringStartsWith(
-                        "Item #0 of org.cactoos.iterator"
-                    ),
-                    new StringEndsWith(
-                        "is NULL"
-                    )
-                )
-            )
-        );
-        new NoNulls<>(
-            new Iterator<Integer>() {
-                @Override
-                public boolean hasNext() {
-                    return true;
-                }
+        new Assertion<>(
+            "Must throw exception",
+            () -> new NoNulls<>(
+                new Iterator<Integer>() {
+                    @Override
+                    public boolean hasNext() {
+                        return true;
+                    }
 
-                @Override
-                public Integer next() {
-                    return null;
+                    @Override
+                    public Integer next() {
+                        return null;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "Iterator@NoNullsTest";
+                    }
                 }
-            }
-        ).next();
+            ).next(),
+            new Throws<>(
+                "Item #0 of Iterator@NoNullsTest is NULL",
+                IllegalStateException.class
+            )
+        ).affirm();
     }
 
+    /*
+    * @todo #1039:15min Currently it's impossible to match error messages
+    *  by a pattern or partially. Replace {@link Rule} with {@link Throws} after
+    *  <a href="https://github.com/llorllale/cactoos-matchers/issues/108">llorllale/cactoos-matchers#108</a>
+    *  is fixed
+    */
     @Test
     public void nthThrowsErrorIfNull() {
         this.exception.expect(IllegalStateException.class);

@@ -23,9 +23,9 @@
  */
 package org.cactoos.collection;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test cases for {@link NoNulls}.
@@ -38,42 +38,45 @@ import org.junit.rules.ExpectedException;
  */
 public final class NoNullsTest {
 
-    /**
-     * A rule for handling an exception.
-     */
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
-
     @Test
     public void throwsErrorIfNullInToArray() {
-        this.exception.expect(IllegalStateException.class);
-        this.exception.expectMessage(
-            "Item #1 of #toArray() is NULL"
-        );
-        new NoNulls<>(
-            new CollectionOf<>(1, null, 3)
-        ).toArray();
+        new Assertion<>(
+            "Must throw exception",
+            () -> new NoNulls<>(
+                new CollectionOf<>(1, null, 3)
+            ).toArray(),
+            new Throws<>(
+                "Item #1 of #toArray() is NULL",
+                IllegalStateException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void throwsErrorIfNullInToArrayWithArg() {
-        this.exception.expect(IllegalStateException.class);
-        this.exception.expectMessage(
-            "Item #1 of #toArray(array) is NULL"
-        );
-        new NoNulls<>(
-            new CollectionOf<>(1, null, 3)
-        ).toArray(new Object[3]);
+        new Assertion<>(
+            "Must throw exception for the item#1",
+            () -> new NoNulls<>(
+                new CollectionOf<>(1, null, 3)
+            ).toArray(new Object[3]),
+            new Throws<>(
+                "Item #1 of #toArray(array) is NULL",
+                IllegalStateException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void throwsErrorIfNullInContainsArg() {
-        this.exception.expect(IllegalArgumentException.class);
-        this.exception.expectMessage(
-            "Argument of #contains(T) is NULL"
-        );
-        new NoNulls<>(
-            new CollectionOf<>(1, 2, 3)
-        ).contains(null);
+        new Assertion<>(
+            "Must throw exception for #contains(null)",
+            () -> new NoNulls<>(
+                new CollectionOf<>(1, 2, 3)
+            ).contains(null),
+            new Throws<>(
+                "Argument of #contains(T) is NULL",
+                IllegalArgumentException.class
+            )
+        ).affirm();
     }
 }

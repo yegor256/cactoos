@@ -25,15 +25,12 @@ package org.cactoos.map;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.cactoos.func.FuncOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link MapEnvelope}.
@@ -46,94 +43,74 @@ import org.llorllale.cactoos.matchers.MatcherOf;
 @SuppressWarnings("PMD.TooManyMethods")
 public final class MapEnvelopeTest {
 
-    /**
-     * A rule for handling an exception.
-     */
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
-
     @Test
     public void putThrowsException() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "#put() is not supported, it's a read-only map"
-        );
-        MatcherAssert.assertThat(
-            "put method did not throw exception",
-            new NoNulls<>(
+        new Assertion<>(
+            "put method must throw exception",
+            () -> new NoNulls<>(
                 new MapOf<Integer, Integer>(
-                    new MapEntry<Integer, Integer>(0, -1)
+                    new MapEntry<>(0, -1)
                 )
-            ),
-            new MatcherOf<>(
-                new FuncOf<>(
-                    (map) -> map.put(2, 2),
-                    true
-                ))
-        );
+            ).put(2, 2),
+            new Throws<>(
+                "#put() is not supported, it's a read-only map",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void removeThrowsException() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "#remove() is not supported, it's a read-only map"
-        );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "remove method did not throw exception",
-            new NoNulls<>(
+            () -> new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
-            ),
-            new MatcherOf<>(
-                new FuncOf<>(
-                    (map) -> map.remove(0),
-                    true
-                ))
-        );
+            ).remove(0),
+            new Throws<>(
+                "#remove() is not supported, it's a read-only map",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void putAllThrowsException() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "#putAll() is not supported, it's a read-only map"
-        );
-        MatcherAssert.assertThat(
-            "putAll method did not throw exception",
-            new NoNulls<>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<>(0, -1)
-                )
-            ),
-            new MatcherOf<>(
-                new FuncOf<>(
-                    (map) -> map.putAll(new MapOf<Integer, Integer>()),
-                    true
-                ))
-        );
+        new Assertion<>(
+            "putAll method must throw exception",
+            () -> {
+                new NoNulls<>(
+                    new MapOf<Integer, Integer>(
+                        new MapEntry<>(0, -1)
+                    )
+                ).putAll(new MapOf<Integer, Integer>());
+                return 0;
+            },
+            new Throws<>(
+                "#putAll() is not supported, it's a read-only map",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void clearThrowsException() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "#clear() is not supported, it's a read-only map"
-        );
-        MatcherAssert.assertThat(
-            "clear method did not throw exception",
-            new NoNulls<>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<>(0, -1)
-                )
-            ),
-            new MatcherOf<>(
-                new FuncOf<>(
-                    Map::clear,
-                    true
-                ))
-        );
+        new Assertion<>(
+            "clear method must throw exception",
+            () -> {
+                new NoNulls<>(
+                    new MapOf<Integer, Integer>(
+                        new MapEntry<>(0, -1)
+                    )
+                ).clear();
+                return 0;
+            },
+            new Throws<>(
+                "#clear() is not supported, it's a read-only map",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 
     @Test
