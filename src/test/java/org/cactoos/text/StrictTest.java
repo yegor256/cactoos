@@ -25,11 +25,10 @@ package org.cactoos.text;
 
 import java.util.regex.Pattern;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.StringContains;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Strict}.
@@ -41,20 +40,19 @@ import org.llorllale.cactoos.matchers.TextIs;
 public final class StrictTest {
 
     /**
-     * A rule for handling an exception.
-     */
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
-
-    /**
      * Ensures that Strict is failing on a negative predicate result.
      * @throws Exception If fails
      */
     @Test
-    public void failsIfPredicateIsNegative() throws Exception {
-        this.exception.expect(IllegalArgumentException.class);
-        this.exception.expectMessage(new StringContains("text"));
-        new Strict(s -> false, new TextOf("text")).asString();
+    public void failsIfPredicateIsNegative() {
+        new Assertion<>(
+            "Must throw IllegalArgumentException",
+            () -> new Strict(s -> false, new TextOf("text")).asString(),
+            new Throws<>(
+                "String 'text' does not match a given predicate",
+                IllegalArgumentException.class
+            )
+        ).affirm();
     }
 
     /**
@@ -75,13 +73,18 @@ public final class StrictTest {
      * @throws Exception If fails
      */
     @Test
-    public void failsIfNotMatchedWithPattern() throws Exception {
-        this.exception.expect(IllegalArgumentException.class);
-        this.exception.expectMessage("text");
-        new Strict(
-            Pattern.compile("^[a-zA-Z]+$"),
-            new TextOf("text12")
-        ).asString();
+    public void failsIfNotMatchedWithPattern() {
+        new Assertion<>(
+            "Must throw IllegalArgumentException",
+            () -> new Strict(
+                Pattern.compile("^[a-zA-Z]+$"),
+                new TextOf("text12")
+            ).asString(),
+            new Throws<>(
+                "String 'text12' does not match a given predicate",
+                IllegalArgumentException.class
+            )
+        ).affirm();
     }
 
     /**
