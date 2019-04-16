@@ -47,11 +47,11 @@ public final class IoCheckedBiProcTest {
     public void rethrowsIoException() {
         final IOException exception = new IOException("intended");
         try {
-            new IoCheckedBiFunc<>(
+            new IoCheckedBiProc<>(
                 (fst, scd) -> {
                     throw exception;
                 }
-            ).apply(1, 2);
+            ).exec(1, 2);
         } catch (final IOException ex) {
             new Assertion<>(
                 "Must re-throw IOException",
@@ -63,10 +63,10 @@ public final class IoCheckedBiProcTest {
 
     @Test(expected = IllegalStateException.class)
     public void runtimeExceptionGoesOut() throws IOException {
-        new IoCheckedBiFunc<>(
+        new IoCheckedBiProc<>(
             (fst, scd) -> {
                 throw new IllegalStateException("intended to fail here");
             }
-        ).apply(1, 2);
+        ).exec(1, 2);
     }
 }
