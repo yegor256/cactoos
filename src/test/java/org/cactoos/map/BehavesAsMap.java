@@ -28,6 +28,7 @@ import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.collection.IsMapContaining;
+import org.hamcrest.core.IsCollectionContaining;
 import org.hamcrest.core.IsEqual;
 
 /**
@@ -69,6 +70,16 @@ public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>>  {
                 new IsEqual<>(this.key),
                 new IsEqual<>(this.value)
             )
+        );
+        MatcherAssert.assertThat(
+            "Doesn't contain the key in #keySet()",
+            map.keySet(),
+            new IsCollectionContaining<>(new IsEqual<>(this.key))
+        );
+        MatcherAssert.assertThat(
+            "Doesn't contain the value in #values()",
+            map.values(),
+            new IsCollectionContaining<>(new IsEqual<>(this.value))
         );
         return true;
     }
