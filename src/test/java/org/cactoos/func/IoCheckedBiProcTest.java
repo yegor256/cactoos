@@ -23,12 +23,12 @@
  */
 package org.cactoos.func;
 
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
-
-import java.io.IOException;
 
 /**
  * Test case for {@link IoCheckedBiFunc}.
@@ -37,13 +37,25 @@ import java.io.IOException;
  */
 public final class IoCheckedBiProcTest {
     @Test
+    public void executesWrappedProc() throws Exception {
+        final AtomicInteger counter = new AtomicInteger();
+        new IoCheckedBiProc<>(
+            (first, second) -> counter.incrementAndGet()
+        ).exec(true, true);
+        new Assertion<>(
+            "Must execute wrapped proc",
+            counter::get,
+            new IsEqual<>(1)
+        ).affirm();
+    }
+
+    @Test
     public void wrapsExceptions() {
-        IoCheckedBiProc<Object, Object> proc = new IoCheckedBiProc<>(
+        final IoCheckedBiProc<Object, Object> proc = new IoCheckedBiProc<>(
             (first, second) -> {
                 throw new Exception();
             }
         );
-
         new Assertion<>(
             "Must wrap with IOException",
             () -> {
@@ -77,12 +89,12 @@ public final class IoCheckedBiProcTest {
 
     @Test
     public void runtimeExceptionGoesOut() {
-        IoCheckedBiProc<Object, Object> proc = new IoCheckedBiProc<>(
+        final String msg = "intended to fail here";
+        final IoCheckedBiProc<Object, Object> proc = new IoCheckedBiProc<>(
             (fst, scd) -> {
-                throw new IllegalStateException("intended to fail here");
+                throw new IllegalStateException(msg);
             }
         );
-
         new Assertion<>(
             "Must re-throw runtime exceptions",
             () -> {
@@ -90,7 +102,7 @@ public final class IoCheckedBiProcTest {
                 return true;
             },
             new Throws<>(
-                "intended to fail here",
+                msg,
                 IllegalStateException.class
             )
         ).affirm();
