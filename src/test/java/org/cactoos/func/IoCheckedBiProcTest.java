@@ -23,10 +23,12 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
+
+import java.io.IOException;
 
 /**
  * Test case for {@link IoCheckedBiFunc}.
@@ -34,13 +36,25 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class IoCheckedBiProcTest {
-    @Test(expected = IOException.class)
-    public void wrapsExceptions() throws IOException {
-        new IoCheckedBiProc<>(
+    @Test
+    public void wrapsExceptions() {
+        IoCheckedBiProc<Object, Object> proc = new IoCheckedBiProc<>(
             (first, second) -> {
                 throw new Exception();
             }
-        ).exec(true, true);
+        );
+
+        new Assertion<>(
+            "Must wrap with IOException",
+            () -> {
+                proc.exec(true, true);
+                return true;
+            },
+            new Throws<>(
+                "java.lang.Exception",
+                IOException.class
+            )
+        ).affirm();
     }
 
     @Test
@@ -61,12 +75,24 @@ public final class IoCheckedBiProcTest {
         }
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionGoesOut() throws IOException {
-        new IoCheckedBiProc<>(
+    @Test
+    public void runtimeExceptionGoesOut() {
+        IoCheckedBiProc<Object, Object> proc = new IoCheckedBiProc<>(
             (fst, scd) -> {
                 throw new IllegalStateException("intended to fail here");
             }
-        ).exec(1, 2);
+        );
+
+        new Assertion<>(
+            "Must re-throw runtime exceptions",
+            () -> {
+                proc.exec(true, true);
+                return true;
+            },
+            new Throws<>(
+                "intended to fail here",
+                IllegalStateException.class
+            )
+        ).affirm();
     }
 }
