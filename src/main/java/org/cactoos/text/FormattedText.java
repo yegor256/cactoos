@@ -36,6 +36,10 @@ import org.cactoos.list.ListOf;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.1
+ * @todo #1063:30min All classes implementing Text need to be refactored
+ *  to extend TextEnvelope - asString() should be removed and implementation
+ *  from TextEnvelope should be used. This to-do should be moved to another
+ *  class which need to be refactored.
  */
 public final class FormattedText implements Text {
 
