@@ -54,7 +54,7 @@ public final class StickyTest {
                 new MapEntry<>(0, -1),
                 new MapEntry<>(1, 1)
             ),
-            new BehavesAsMap<>(0, 1)
+            new BehavesAsMap<>(1, 1)
         );
     }
 

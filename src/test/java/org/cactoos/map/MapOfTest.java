@@ -59,7 +59,7 @@ public final class MapOfTest {
                     new MapEntry<>(1, 1)
                 )
             ),
-            new BehavesAsMap<>(0, 1)
+            new BehavesAsMap<>(1, 1)
         );
     }
 
