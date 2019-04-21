@@ -25,7 +25,6 @@ package org.cactoos;
 
 import org.cactoos.text.NoNulls;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
@@ -65,13 +64,13 @@ public final class TextTest {
     @Test
     public void okForNoNulls() {
         final String message = "Hello";
-        MatcherAssert.assertThat(
-            "Can't work with null text",
-            new NoNulls(
+        new Assertion<>(
+            "Must work with NoNulls",
+            () -> new NoNulls(
                 new TextOf(message)
             ),
             new TextHasString(message)
-        );
+        ).affirm();
     }
 
 }
