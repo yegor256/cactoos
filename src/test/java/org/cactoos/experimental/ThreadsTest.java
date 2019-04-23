@@ -24,25 +24,17 @@
 
 package org.cactoos.experimental;
 
-import java.time.Duration;
-import java.util.Collection;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
 import org.cactoos.func.Repeated;
-import org.cactoos.func.Timed;
 import org.cactoos.func.UncheckedFunc;
-import org.cactoos.list.ListOf;
-import org.cactoos.list.Mapped;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Threads}.
@@ -50,88 +42,44 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @todo #1112:30min Continue speeding up the `mvn test` goal until it
+ *  executes in less than 10 seconds, or as fast as reasonably possible.
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ThreadsTest {
-
-    /**
-     * Example of JDK8 way for handling of concurrent tasks.
-     * This code base should be simplified.
-     */
-    @Test(timeout = 10000)
-    public void oldSchoolWay() {
-        final ExecutorService extor = Executors.newFixedThreadPool(5);
-        try {
-            final Collection<Future<String>> futures = extor.invokeAll(
-                new ListOf<Callable<String>>(
-                    () -> {
-                        TimeUnit.SECONDS.sleep(2);
-                        return "1st";
-                    },
-                    () -> {
-                        TimeUnit.SECONDS.sleep(6);
-                        return "3rd";
-                    },
-                    () -> {
-                        TimeUnit.SECONDS.sleep(4);
-                        return "2nd";
-                    }
-                )
-            );
-            MatcherAssert.assertThat(
-                new Mapped<>(Future::get, futures),
-                Matchers.hasItems("1st", "3rd", "2nd")
-            );
-        } catch (final InterruptedException exp) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException(exp);
-        } finally {
-            try {
-                extor.shutdown();
-                if (!extor.awaitTermination(2, TimeUnit.SECONDS)) {
-                    extor.shutdownNow();
-                }
-            } catch (final InterruptedException exp) {
-                extor.shutdownNow();
-            }
-        }
-    }
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
      *  {@link ExecutorService} was initiated by someone else.
      */
     @Test
-    public void cactoosWay() {
-        this.repeatWithTimeout(
+    public void containsResults() {
+        this.repeat(
             arg -> {
                 final ExecutorService extor = Executors.newFixedThreadPool(3);
                 try {
-                    MatcherAssert.assertThat(
-                        new Threads<String>(
+                    new Assertion<>(
+                        "contains results from callables",
+                        () -> new Threads<String>(
                             extor,
                             () -> {
-                                TimeUnit.SECONDS.sleep(3);
+                                this.sleep();
                                 return "txt 1";
                             },
                             () -> {
-                                TimeUnit.SECONDS.sleep(3);
+                                this.sleep();
                                 return "txt 2";
                             },
                             () -> {
-                                TimeUnit.SECONDS.sleep(3);
+                                this.sleep();
                                 return "txt 3";
                             }
                         ),
                         new HasValues<>("txt 1", "txt 2", "txt 3")
-                    );
+                    ).affirm();
                 } finally {
-                    try {
-                        extor.shutdown();
-                        if (!extor.awaitTermination(1, TimeUnit.SECONDS)) {
-                            extor.shutdownNow();
-                        }
-                    } catch (final InterruptedException exp) {
+                    extor.shutdown();
+                    if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
                         extor.shutdownNow();
                     }
                 }
@@ -143,14 +91,21 @@ public final class ThreadsTest {
      * Execute 1 task within executor service and ensure that we'll get the
      *  expected exception type.
      */
-    @Test(expected = CompletionException.class)
-    public void executionIsFailedDueToException() {
-        new Threads<String>(
-            Executors.newSingleThreadExecutor(),
-            () -> {
-                throw new IllegalStateException("Something went wrong");
-            }
-        ).iterator().next();
+    @Test
+    public void failsDueToException() {
+        new Assertion<>(
+            "wraps error into CompletionException",
+            () -> new Threads<String>(
+                Executors.newSingleThreadExecutor(),
+                () -> {
+                    throw new IllegalStateException("Something went wrong");
+                }
+            ).iterator().next(),
+            new Throws<>(
+                "java.lang.IllegalStateException: Something went wrong",
+                CompletionException.class
+            )
+        ).affirm();
     }
 
     /**
@@ -158,58 +113,55 @@ public final class ThreadsTest {
      *  {@link ExecutorService} was initiated by {@link Threads} itself.
      */
     @Test
-    public void cactoosWayWithInlineExecutorService() {
-        this.repeatWithTimeout(
-            arg -> {
-                MatcherAssert.assertThat(
-                    new Threads<String>(
-                        5,
-                        () -> {
-                            TimeUnit.SECONDS.sleep(3);
-                            return "txt 1";
-                        },
-                        () -> {
-                            TimeUnit.SECONDS.sleep(3);
-                            return "txt 2";
-                        },
-                        () -> {
-                            TimeUnit.SECONDS.sleep(3);
-                            return "txt 3";
-                        },
-                        () -> {
-                            TimeUnit.SECONDS.sleep(3);
-                            return "txt 4";
-                        },
-                        () -> {
-                            TimeUnit.SECONDS.sleep(3);
-                            return "txt 5";
-                        }
-                    ),
-                    new HasValues<>("txt 1", "txt 2", "txt 3", "txt 4", "txt 5")
-                );
-            }
+    public void containsValuesWithInlineExecutorService() {
+        this.repeat(
+            arg -> new Assertion<>(
+                // @checkstyle LineLength (1 line)
+                "contains results from the callables when using the inline executor service",
+                () -> new Threads<String>(
+                    3,
+                    () -> {
+                        this.sleep();
+                        return "txt 1";
+                    },
+                    () -> {
+                        this.sleep();
+                        return "txt 2";
+                    },
+                    () -> {
+                        this.sleep();
+                        return "txt 3";
+                    }
+                ),
+                new HasValues<>("txt 1", "txt 2", "txt 3")
+            ).affirm()
         );
     }
 
     /**
-     * Execute the test at least 10 times with timeout in 5 seconds each.
+     * Repeat the test several times.
      * @param test The test to execute.
      */
-    private void repeatWithTimeout(final Proc<?> test) {
-        MatcherAssert.assertThat(
-            new UncheckedFunc<>(
-                new Repeated<>(
-                    new Timed<Boolean, Boolean>(
-                        input -> {
-                            test.exec(null);
-                            return true;
-                        },
-                        Duration.ofSeconds(5).toMillis()
-                    ),
-                    10
-                )
-            ).apply(true),
-            new IsEqual<>(true)
-        );
+    private void repeat(final Proc<?> test) {
+        new UncheckedFunc<>(
+            new Repeated<>(
+                arg -> {
+                    test.exec(null);
+                    return null;
+                },
+                5
+            )
+        ).apply(Boolean.TRUE);
+    }
+
+    /**
+     * Sleep.
+     */
+    private void sleep() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(100L);
+        } catch (final InterruptedException iex) {
+            throw new IllegalStateException(iex);
+        }
     }
 }
