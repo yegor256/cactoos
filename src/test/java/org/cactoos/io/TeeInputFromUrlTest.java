@@ -28,10 +28,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TeeInputHasResult;
 
 /**
@@ -59,8 +59,9 @@ public final class TeeInputFromUrlTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
-            new TeeInput(
+        new Assertion<>(
+            "Must copy from URL to path.",
+            () -> new TeeInput(
                 input
                     .toURI()
                     .toURL(),
@@ -70,7 +71,7 @@ public final class TeeInputFromUrlTest {
                 message,
                 new TextOf(output)
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -83,8 +84,9 @@ public final class TeeInputFromUrlTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
-            new TeeInput(
+        new Assertion<>(
+            "Must copy from URL to file.",
+            () -> new TeeInput(
                 input
                     .toURI()
                     .toURL(),
@@ -94,7 +96,7 @@ public final class TeeInputFromUrlTest {
                 message,
                 new TextOf(output)
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -107,8 +109,9 @@ public final class TeeInputFromUrlTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
-            new TeeInput(
+        new Assertion<>(
+            "Must copy from URL to output.",
+            () -> new TeeInput(
                 input
                     .toURI()
                     .toURL(),
@@ -118,6 +121,6 @@ public final class TeeInputFromUrlTest {
                 message,
                 new TextOf(output)
             )
-        );
+        ).affirm();
     }
 }
