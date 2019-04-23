@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -31,11 +32,8 @@ import org.cactoos.Text;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
- * @todo #897:30min All classes implementing Text need to be refactored
- *  to extend TextEnvelope - asString() should be removed and implementation
- *  from TextEnvelope should be used.
  */
-public final class Abbreviated implements Text {
+public final class Abbreviated extends TextEnvelope {
 
     /**
      * The default max line width.
@@ -46,16 +44,6 @@ public final class Abbreviated implements Text {
      * The ellipses width.
      */
     private static final int ELLIPSES_WIDTH = 3;
-
-    /**
-     * The origin Text.
-     */
-    private final Text origin;
-
-    /**
-     * The max width of the resulting string.
-     */
-    private final int width;
 
     /**
      * Ctor.
@@ -94,26 +82,26 @@ public final class Abbreviated implements Text {
      * @param text The Text
      * @param max Max width of the result string
      */
+    @SuppressWarnings({
+        "PMD.CallSuperInConstructor",
+        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
+        })
     public Abbreviated(final Text text, final int max) {
-        this.origin = text;
-        this.width = max;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        final Text abbreviated;
-        if (this.origin.asString().length() <= this.width) {
-            abbreviated = this.origin;
-        } else {
-            abbreviated = new FormattedText(
-                "%s...",
-                new Sub(
-                    this.origin,
-                    0,
-                    this.width - Abbreviated.ELLIPSES_WIDTH
-                ).asString()
-            );
-        }
-        return abbreviated.asString();
+        super((Scalar<String>) () -> {
+            final Text abbreviated;
+            if (text.asString().length() <= max) {
+                abbreviated = text;
+            } else {
+                abbreviated = new FormattedText(
+                    "%s...",
+                    new Sub(
+                        text,
+                        0,
+                        max - Abbreviated.ELLIPSES_WIDTH
+                    ).asString()
+                );
+            }
+            return abbreviated.asString();
+        });
     }
 }
