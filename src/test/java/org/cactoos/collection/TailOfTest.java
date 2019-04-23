@@ -23,9 +23,12 @@
  */
 package org.cactoos.collection;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.iterable.IterableOf;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link TailOf}.
@@ -37,17 +40,19 @@ public final class TailOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void tailCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void tailCollection() {
+        new Assertion<>(
             "Can't get tail portion of collection",
-            new TailOf<>(
+            () -> new TailOf<>(
                 2,
                 "one", "two", "three", "four"
             ),
-            Matchers.contains(
-                "three",
-                "four"
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super TailOf<String>>>(
+                    new IsCollectionContaining<>(new IsEqual<>("three")),
+                    new IsCollectionContaining<>(new IsEqual<>("four"))
+                )
             )
-        );
+        ).affirm();
     }
 }

@@ -23,8 +23,8 @@
  */
 package org.cactoos.collection;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -35,23 +35,27 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 public final class SyncedTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void behavesAsCollection() {
+        new Assertion<>(
             "Can't behave as a collection",
-            new Synced<>(1, 2, 0, -1),
+            () -> new Synced<>(1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
-        );
+        ).affirm();
     }
 
     @Test
     public void worksInThreads() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a collection in multiple threads",
-            list -> {
-                MatcherAssert.assertThat(list, new BehavesAsCollection<>(0));
+            () -> list -> {
+                new Assertion<>(
+                    "Must contain 0",
+                    () -> list,
+                    new BehavesAsCollection<>(0)
+                ).affirm();
                 return true;
             },
             new RunsInThreads<>(new Synced<>(1, 0, -1, -1, 2))
-        );
+        ).affirm();
     }
 }

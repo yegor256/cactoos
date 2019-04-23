@@ -24,9 +24,12 @@
 
 package org.cactoos.collection;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.iterable.IterableOf;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link HeadOf}.
@@ -38,18 +41,20 @@ public final class HeadOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void headCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void headCollection() {
+        new Assertion<>(
             "Can't skip elements in iterable",
-            new HeadOf<>(
+            () -> new HeadOf<>(
                 3,
                 "one", "two", "three", "four"
             ),
-            Matchers.contains(
-                "one",
-                "two",
-                "three"
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super HeadOf<String>>>(
+                    new IsCollectionContaining<>(new IsEqual<>("one")),
+                    new IsCollectionContaining<>(new IsEqual<>("two")),
+                    new IsCollectionContaining<>(new IsEqual<>("three"))
+                )
             )
-        );
+        ).affirm();
     }
 }

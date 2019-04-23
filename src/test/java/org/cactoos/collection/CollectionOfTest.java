@@ -25,9 +25,9 @@ package org.cactoos.collection;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link CollectionOf}.
@@ -38,39 +38,45 @@ import org.junit.Test;
 public final class CollectionOfTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void behavesAsCollection() {
+        new Assertion<>(
             "Can't behave as a collection",
-            new CollectionOf<>(1, 2, 0, -1),
+            () -> new CollectionOf<>(1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
-        );
+        ).affirm();
     }
 
     @Test
-    public void buildsCollectionFromIterable() throws Exception {
-        MatcherAssert.assertThat(
+    public void buildsCollectionFromIterable() {
+        new Assertion<>(
             "Can't build a collection from iterable",
-            new CollectionOf<>(new ListOf<>(new IterableOf<>(1, 2, 0, -1))),
+            () -> new CollectionOf<>(
+                new ListOf<>(
+                    new IterableOf<>(1, 2, 0, -1)
+                )
+            ),
             new BehavesAsCollection<>(-1)
-        );
+        ).affirm();
     }
 
     @Test
-    public void testToString() throws Exception {
-        MatcherAssert.assertThat(
+    public void testToString() {
+        new Assertion<>(
             "Wrong toString output. Expected \"[1, 2, 0, -1]\".",
-            new CollectionOf<>(new ListOf<>(1, 2, 0, -1)).toString(),
+            () -> new CollectionOf<>(
+                new ListOf<>(1, 2, 0, -1)
+            ).toString(),
             new IsEqual<>("[1, 2, 0, -1]")
-        );
+        ).affirm();
     }
 
     @Test
-    public void testToStringEmpty() throws Exception {
-        MatcherAssert.assertThat(
+    public void testToStringEmpty() {
+        new Assertion<>(
             "Wrong toString output. Expected \"[]\".",
-            new CollectionOf<>(new ListOf<>()).toString(),
+            () -> new CollectionOf<>(new ListOf<>()).toString(),
             new IsEqual<>("[]")
-        );
+        ).affirm();
     }
 
 }

@@ -26,10 +26,10 @@ package org.cactoos.collection;
 import java.util.Collection;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -37,60 +37,67 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class SolidTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void behavesAsCollection() {
+        new Assertion<>(
             "Can't behave as a collection",
-            new Solid<>(1, 2, 0, -1),
+            () -> new Solid<>(1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
-        );
+        ).affirm();
     }
 
     @Test
-    public void makesListFromMappedIterable() throws Exception {
+    public void makesListFromMappedIterable() {
         final Collection<Integer> list = new Solid<>(
             new org.cactoos.list.Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(1, -1, 0, 1)
             )
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't turn a mapped iterable into a list",
-            list, new IsCollectionWithSize<>(new IsEqual<>(4))
-        );
-        MatcherAssert.assertThat(
+            () -> list,
+            new IsCollectionWithSize<>(new IsEqual<>(4))
+        ).affirm();
+        new Assertion<>(
             "Can't turn a mapped iterable into a list, again",
-            list, new IsCollectionWithSize<>(new IsEqual<>(4))
-        );
+            () -> list,
+            new IsCollectionWithSize<>(new IsEqual<>(4))
+        ).affirm();
     }
 
     @Test
-    public void mapsToSameObjects() throws Exception {
+    public void mapsToSameObjects() {
         final Iterable<Scalar<Integer>> list = new Solid<>(
             new org.cactoos.list.Mapped<>(
                 i -> (Scalar<Integer>) () -> i,
                 new IterableOf<>(1, -1, 0, 1)
             )
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't map only once",
-            list.iterator().next(),
+            () -> list.iterator().next(),
             new IsEqual<>(list.iterator().next())
-        );
+        ).affirm();
     }
 
     @Test
     public void worksInThreads() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a collection in multiple threads",
-            list -> {
-                MatcherAssert.assertThat(list, new BehavesAsCollection<>(0));
+            () -> list -> {
+                new Assertion<>(
+                    "Must behave as collection",
+                    () -> list,
+                    new BehavesAsCollection<>(0)
+                ).affirm();
                 return true;
             },
             new RunsInThreads<>(new Solid<>(1, 0, -1, -1, 2))
-        );
+        ).affirm();
     }
 }

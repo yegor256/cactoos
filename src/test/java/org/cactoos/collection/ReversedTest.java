@@ -26,11 +26,12 @@ package org.cactoos.collection;
 import java.util.ArrayList;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsArrayContaining;
 import org.hamcrest.collection.IsEmptyCollection;
+import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link org.cactoos.collection.Reversed}.
@@ -38,85 +39,91 @@ import org.junit.Test;
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class ReversedTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void behavesAsCollection() {
+        new Assertion<>(
             "Can't behave as a collection",
-            new NoNulls<>(
+            () -> new NoNulls<>(
                 new Reversed<>(
                     new IterableOf<Integer>(0, -1, 2)
                 )
             ),
             new BehavesAsCollection<>(0)
-        );
+        ).affirm();
     }
 
     @Test
-    public void reverseList() throws Exception {
+    public void reverseList() {
         final String last = "last";
-        MatcherAssert.assertThat(
-            new Reversed<>(
+        new Assertion<>(
+            "Must reverse list",
+            () -> new Reversed<>(
                 new IterableOf<>(
                     "item", last
                 )
             ).iterator().next(),
             new IsEqual<>(last)
-        );
+        ).affirm();
     }
 
     @Test
-    public void reverseEmptyList() throws Exception {
-        MatcherAssert.assertThat(
-            new Reversed<>(
+    public void reverseEmptyList() {
+        new Assertion<>(
+            "Must reverse empty list",
+            () -> new Reversed<>(
                 new ListOf<>()
             ),
             new IsEmptyCollection<>()
-        );
+        ).affirm();
     }
 
     @Test
-    public void size() throws Exception {
-        MatcherAssert.assertThat(
-            new Reversed<>(
+    public void size() {
+        new Assertion<>(
+            "Size must be the same",
+            () -> new Reversed<>(
                 new IterableOf<>(
                     "0", "1", "2"
                 )
             ).size(),
-            Matchers.equalTo(3)
-        );
+            new IsEqual<>(3)
+        ).affirm();
     }
 
     @Test
-    public void isEmpty() throws Exception {
-        MatcherAssert.assertThat(
-            new Reversed<>(
+    public void isEmpty() {
+        new Assertion<>(
+            "Must be not empty",
+            () -> new Reversed<>(
                 new IterableOf<>(
                     6, 16
                 )
             ).isEmpty(),
-            Matchers.equalTo(false)
-        );
+            new IsEqual<>(false)
+        ).affirm();
     }
 
     @Test
-    public void contains() throws Exception {
+    public void contains() {
         final String word = "objects";
-        MatcherAssert.assertThat(
-            new Reversed<>(
+        new Assertion<>(
+            "Must contain element",
+            () -> new Reversed<>(
                 new IterableOf<>(
                     "hello", "elegant", word
                 )
             ).contains(word),
-            Matchers.equalTo(true)
-        );
+            new IsEqual<>(true)
+        ).affirm();
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testAdd() throws Exception {
+    public void testAdd() {
         new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
@@ -125,7 +132,7 @@ public final class ReversedTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRemove() throws Exception {
+    public void testRemove() {
         new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
@@ -134,7 +141,7 @@ public final class ReversedTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testAddAll() throws Exception {
+    public void testAddAll() {
         new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
@@ -143,7 +150,7 @@ public final class ReversedTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRemoveAll() throws Exception {
+    public void testRemoveAll() {
         new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
@@ -152,7 +159,7 @@ public final class ReversedTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRetainAll() throws Exception {
+    public void testRetainAll() {
         new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
@@ -161,7 +168,7 @@ public final class ReversedTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testClear() throws Exception {
+    public void testClear() {
         new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
@@ -170,40 +177,58 @@ public final class ReversedTest {
     }
 
     @Test
-    public void toArray() throws Exception {
-        MatcherAssert.assertThat(
-            new Reversed<>(
+    public void toArray() {
+        new Assertion<>(
+            "Array must contain element",
+            () -> new Reversed<>(
                 new IterableOf<>(
                     1, 2, 3, 4
                 )
             ).toArray(),
-            Matchers.arrayContaining(4, 3, 2, 1)
-        );
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super Object[]>>(
+                    new IsArrayContaining<>(new IsEqual<>(4)),
+                    new IsArrayContaining<>(new IsEqual<>(3)),
+                    new IsArrayContaining<>(new IsEqual<>(2)),
+                    new IsArrayContaining<>(new IsEqual<>(1))
+                )
+            )
+        ).affirm();
     }
 
     @Test
-    public void toArrayWithArray() throws Exception {
-        MatcherAssert.assertThat(
-            new Reversed<>(
+    public void toArrayWithArray() {
+        new Assertion<>(
+            "Array for Reversed must contain elements",
+            () -> new Reversed<>(
                 new IterableOf<>(
                     1, 2, 3, 4, 5
                 )
             ).toArray(new Integer[]{5, 6}),
-            Matchers.arrayContaining(5, 4, 3, 2, 1)
-        );
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super Integer[]>>(
+                    new IsArrayContaining<>(new IsEqual<>(5)),
+                    new IsArrayContaining<>(new IsEqual<>(4)),
+                    new IsArrayContaining<>(new IsEqual<>(3)),
+                    new IsArrayContaining<>(new IsEqual<>(2)),
+                    new IsArrayContaining<>(new IsEqual<>(1))
+                )
+            )
+        ).affirm();
     }
 
     @Test
-    public void containsAll() throws Exception {
+    public void containsAll() {
         final String first = "first";
         final String second = "second";
-        MatcherAssert.assertThat(
-            new Reversed<>(
+        new Assertion<>(
+            "Must contains all elements",
+            () -> new Reversed<>(
                 new IterableOf<>(
                     first, second, "third"
                 )
             ).containsAll(new ListOf<>(first, second)),
-            Matchers.equalTo(true)
-        );
+            new IsEqual<>(true)
+        ).affirm();
     }
 }

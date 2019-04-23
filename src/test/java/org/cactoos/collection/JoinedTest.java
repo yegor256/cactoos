@@ -26,15 +26,15 @@ package org.cactoos.collection;
 import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link Limited}.
+ * Test case for {@link Joined}.
  *
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
@@ -45,63 +45,67 @@ import org.junit.Test;
 public final class JoinedTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void behavesAsCollection() {
+        new Assertion<>(
             "Can't behave as a collection",
-            new Joined<Integer>(
+            () -> new Joined<Integer>(
                 new IterableOf<>(1, -1, 2, 0),
                 new IterableOf<>(1, -1, 2, 0),
                 new IterableOf<>(1, -1, 2, 0)
             ),
             new BehavesAsCollection<>(-1)
-        );
+        ).affirm();
     }
 
     @Test
     public void size() {
-        MatcherAssert.assertThat(
-            new Joined<String>(
+        new Assertion<>(
+            "Must have correct size",
+            () -> new Joined<String>(
                 new IterableOf<>("hello", "world", "друг"),
                 new IterableOf<>("how", "are", "you"),
                 new IterableOf<>("what's", "up")
             ),
             new IsCollectionWithSize<>(new IsEqual<>(8))
-        );
+        ).affirm();
     }
 
     @Test
     public void sizeEmptyReturnZero() {
-        MatcherAssert.assertThat(
-            new Joined<String>(
+        new Assertion<>(
+            "Size must be 0",
+            () -> new Joined<String>(
                 Collections.emptyList()
             ),
             new IsCollectionWithSize<>(new IsEqual<>(0))
-        );
+        ).affirm();
     }
 
     @Test
-    public void withItemsNotEmpty() throws Exception {
-        MatcherAssert.assertThat(
-            new Joined<String>(
+    public void withItemsNotEmpty() {
+        new Assertion<>(
+            "Must be not empty",
+            () -> new Joined<String>(
                 new IterableOf<>("1", "2"),
                 new IterableOf<>("3", "4")
             ),
             new IsNot<>(new IsEmptyCollection<>())
-        );
+        ).affirm();
     }
 
     @Test
-    public void withoutItemsIsEmpty() throws Exception {
-        MatcherAssert.assertThat(
-            new Joined<String>(
+    public void withoutItemsIsEmpty() {
+        new Assertion<>(
+            "Must be empty",
+            () -> new Joined<String>(
                 Collections.emptyList()
             ),
             new IsEmptyCollection<>()
-        );
+        ).affirm();
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testAdd() throws Exception {
+    public void testAdd() {
         new Joined<Integer>(
             new IterableOf<>(1, 2),
             new IterableOf<>(3, 4),
@@ -110,7 +114,7 @@ public final class JoinedTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRemove() throws Exception {
+    public void testRemove() {
         new Joined<String>(
             new IterableOf<>("w", "a"),
             new IterableOf<>("b", "c")
@@ -118,7 +122,7 @@ public final class JoinedTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testAddAll() throws Exception {
+    public void testAddAll() {
         new Joined<Integer>(
             new IterableOf<>(111),
             new IterableOf<>(222),
@@ -127,7 +131,7 @@ public final class JoinedTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRemoveAll() throws Exception {
+    public void testRemoveAll() {
         new Joined<Integer>(
             new IterableOf<>(111, 222),
             new IterableOf<>(444)
@@ -135,7 +139,7 @@ public final class JoinedTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRetainAll() throws Exception {
+    public void testRetainAll() {
         new Joined<Integer>(
             new IterableOf<>(22),
             new IterableOf<>(11)
@@ -143,7 +147,7 @@ public final class JoinedTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testClear() throws Exception {
+    public void testClear() {
         new Joined<Integer>(
             new IterableOf<>(10),
             new IterableOf<>(20)

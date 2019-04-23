@@ -25,103 +25,117 @@
 package org.cactoos.collection;
 
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsEmptyCollection;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link Skipped}.
  *
  * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class SkippedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipIterable() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't skip elements in iterable",
-            new Skipped<>(
+            () -> new Skipped<>(
                 2,
                 new IterableOf<>("one", "two", "three", "four")
             ),
-            Matchers.contains(
-                "three",
-                "four"
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super Skipped<String>>>(
+                    new IsCollectionContaining<>(new IsEqual<>("three")),
+                    new IsCollectionContaining<>(new IsEqual<>("four"))
+                )
             )
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipArray() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't skip elements in array",
-            new Skipped<>(
+            () -> new Skipped<>(
                 2,
                 "one", "two", "three", "four"
             ),
-            Matchers.contains(
-                "three",
-                "four"
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super Skipped<String>>>(
+                    new IsCollectionContaining<>(new IsEqual<>("three")),
+                    new IsCollectionContaining<>(new IsEqual<>("four"))
+                )
             )
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipCollection() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't skip elements in collection",
-            new Skipped<>(
+            () -> new Skipped<>(
                 2,
                 new CollectionOf<>("one", "two", "three", "four")
             ),
-            Matchers.contains(
-                "three",
-                "four"
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super Skipped<String>>>(
+                    new IsCollectionContaining<>(new IsEqual<>("three")),
+                    new IsCollectionContaining<>(new IsEqual<>("four"))
+                )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void skippedAllElements() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't skip all elements",
-            new Skipped<>(
+            () -> new Skipped<>(
                 2,
                 "one", "two"
             ),
             new IsEmptyCollection<>()
-        );
+        ).affirm();
     }
 
     @Test
     public void skippedMoreThanExists() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't skip more than exists",
-            new Skipped<>(
+            () -> new Skipped<>(
                 Integer.MAX_VALUE,
                 "one", "two"
             ),
             new IsEmptyCollection<>()
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skippedNegativeSize() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't process negative skipped size",
-            new Skipped<>(
+            () -> new Skipped<>(
                 -1,
                 "one", "two", "three", "four"
             ),
-            Matchers.contains(
-                "one", "two", "three", "four"
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super Skipped<String>>>(
+                    new IsCollectionContaining<>(new IsEqual<>("one")),
+                    new IsCollectionContaining<>(new IsEqual<>("two")),
+                    new IsCollectionContaining<>(new IsEqual<>("three")),
+                    new IsCollectionContaining<>(new IsEqual<>("four"))
+                )
             )
-        );
+        ).affirm();
     }
 }
