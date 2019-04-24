@@ -53,13 +53,11 @@ public final class GzipOutputTest {
     public void writeToGzipOutput() throws Exception {
         final byte[] bytes = {
             (byte) GZIPInputStream.GZIP_MAGIC,
-            // @checkstyle MagicNumberCheck (1 line)
-            (byte) (GZIPInputStream.GZIP_MAGIC >> 8), (byte) 0x08,
-            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-            (byte) 0x00, (byte) 0x00, (byte) 0xF3, (byte) 0x48, (byte) 0xCD,
-            (byte) 0xC9, (byte) 0xC9, (byte) 0x57, (byte) 0x04, (byte) 0x00,
-            (byte) 0x56, (byte) 0xCC, (byte) 0x2A, (byte) 0x9D, (byte) 0x06,
-            (byte) 0x00, (byte) 0x00, (byte) 0x00,
+            -117, 8, 0, 0, 0,
+            0, 0, 0, 0, -13,
+            72, -51, -55, -55, 87,
+            4, 0, 86, -52, 42,
+            -99, 6, 0, 0, 0,
         };
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (final OutputStream output = new GzipOutput(
