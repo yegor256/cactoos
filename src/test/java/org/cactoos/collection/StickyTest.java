@@ -27,123 +27,141 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsArrayContaining;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.collection.IsEmptyCollection;
+import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Sticky}.
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class StickyTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void behavesAsCollection() {
+        new Assertion<>(
             "Can't behave as a collection",
-            new Sticky<>(new ListOf<>(1, 2, 0, -1)),
+            () -> new Sticky<>(new ListOf<>(1, 2, 0, -1)),
             new BehavesAsCollection<>(0)
-        );
+        ).affirm();
     }
 
     @Test
-    public void ignoresChangesInIterable() throws Exception {
+    public void ignoresChangesInIterable() {
         final AtomicInteger size = new AtomicInteger(2);
         final Collection<Integer> list = new Sticky<>(
             new ListOf<>(
                 () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't ignore the changes in the underlying iterable",
-            list.size(),
+            () -> list.size(),
             new IsEqual<>(list.size())
-        );
+        ).affirm();
     }
 
     @Test
-    public void decoratesArray() throws Exception {
-        MatcherAssert.assertThat(
+    public void decoratesArray() {
+        new Assertion<>(
             "Can't decorate an array of numbers",
-            new Sticky<>(-1, 0),
+            () -> new Sticky<>(-1, 0),
             new IsCollectionWithSize<>(new IsEqual<>(2))
-        );
+        ).affirm();
     }
 
     @Test
     public void testEmpty() {
-        MatcherAssert.assertThat(
-            new Sticky<>(),
+        new Assertion<>(
+            "Must be empty",
+            () -> new Sticky<>(),
             new IsEmptyCollection<>()
-        );
+        ).affirm();
     }
 
     @Test
     public void testContains() {
-        MatcherAssert.assertThat(
-            new Sticky<>(1, 2).contains(1),
+        new Assertion<>(
+            "Must contain element",
+            () -> new Sticky<>(1, 2).contains(1),
             new IsEqual<>(true)
-        );
+        ).affirm();
     }
 
     @Test
     public void testToArray() {
-        MatcherAssert.assertThat(
-            new Sticky<>(1, 2).toArray(),
-            Matchers.arrayContaining(1, 2)
-        );
+        new Assertion<>(
+            "Array must contain elements",
+            () -> new Sticky<>(1, 2).toArray(),
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super Object[]>>(
+                    new IsArrayContaining<>(new IsEqual<>(1)),
+                    new IsArrayContaining<>(new IsEqual<>(2))
+                )
+            )
+        ).affirm();
     }
 
     @Test
     public void testToArrayIntoArray() {
         final Integer[] arr = new Integer[2];
-        MatcherAssert.assertThat(
-            new Sticky<>(1, 2).toArray(arr),
-            Matchers.arrayContaining(1, 2)
-        );
+        new Assertion<>(
+            "Array from Sticky must contain elements",
+            () -> new Sticky<>(1, 2).toArray(arr),
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super Integer[]>>(
+                    new IsArrayContaining<>(new IsEqual<>(1)),
+                    new IsArrayContaining<>(new IsEqual<>(2))
+                )
+            )
+        ).affirm();
     }
 
     @Test
     public void testContainsAll() {
-        MatcherAssert.assertThat(
-            new Sticky<>(1, 2).containsAll(new ListOf<>(1, 2)),
+        new Assertion<>(
+            "Must contains all",
+            () -> new Sticky<>(1, 2).containsAll(new ListOf<>(1, 2)),
             new IsEqual<>(true)
-        );
+        ).affirm();
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testAdd() throws Exception {
+    public void testAdd() {
         new Sticky<>(1, 2).add(1);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRemove() throws Exception {
+    public void testRemove() {
         new Sticky<>(1, 2).remove(1);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testAddAll() throws Exception {
+    public void testAddAll() {
         new Sticky<>(1, 2).addAll(new ArrayList<>(2));
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRemoveAll() throws Exception {
+    public void testRemoveAll() {
         new Sticky<>(1, 2).removeAll(new ArrayList<>(2));
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testRetainAll() throws Exception {
+    public void testRetainAll() {
         new Sticky<>(1, 2).retainAll(new ArrayList<>(2));
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testClear() throws Exception {
+    public void testClear() {
         new Sticky<>(1, 2).clear();
     }
 }

@@ -162,7 +162,7 @@ The MIT License (MIT)
                 <signaturesFile>./src/test/resources/forbidden-apis.txt</signaturesFile>
               </signaturesFiles>
               <!--
-               @todo #951:30min In the continuation of #588, all the calls
+               @todo #1082:30min In the continuation of #588, all the calls
                 to Matchers should be replaced with their OO counterparts.
                 This todo should be updated with a new one until everything is
                 done. The newly covered classes should be added to the include
@@ -174,6 +174,7 @@ The MIT License (MIT)
                 <include>org/cactoos/bytes/*.class</include>
                 <include>org/cactoos/map/*.class</include>
                 <include>org/cactoos/time/*.class</include>
+                <include>org/cactoos/collection/*.class</include>
               </includes>
             </configuration>
             <executions>

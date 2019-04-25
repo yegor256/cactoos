@@ -31,11 +31,11 @@ import org.cactoos.iterator.Endless;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Mapped}.
@@ -47,57 +47,58 @@ import org.junit.Test;
 public final class MappedTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void behavesAsCollection() {
+        new Assertion<>(
             "Can't behave as a collection",
-            new Mapped<Integer, Integer>(
+            () -> new Mapped<Integer, Integer>(
                 i -> i + 1,
                 new IterableOf<>(-1, 1, 2)
             ),
             new BehavesAsCollection<>(0)
-        );
+        ).affirm();
     }
 
     @Test
-    public void transformsList() throws Exception {
-        MatcherAssert.assertThat(
+    public void transformsList() {
+        new Assertion<>(
             "Can't transform an iterable",
-            new Mapped<String, Text>(
+            () -> new Mapped<String, Text>(
                 input -> new Upper(new TextOf(input)),
                 new IterableOf<>("hello", "world", "друг")
             ).iterator().next().asString(),
             new IsEqual<>("HELLO")
-        );
+        ).affirm();
     }
 
     @Test
     public void transformsEmptyList() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't transform an empty iterable",
-            new Mapped<String, Text>(
+            () -> new Mapped<String, Text>(
                 input -> new Upper(new TextOf(input)),
                 new ListOf<>()
             ),
             new IsEmptyCollection<>()
-        );
+        ).affirm();
     }
 
     @Test
     public void string() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert to string",
-            new Mapped<Integer, Integer>(
+            () -> new Mapped<Integer, Integer>(
                 x -> x * 2,
                 new ListOf<>(1, 2, 3)
             ).toString(),
             new IsEqual<>("2, 4, 6")
-        );
+        ).affirm();
     }
 
     @Test
     public void transformsEndlessCollection() {
-        MatcherAssert.assertThat(
-            new Mapped<>(
+        new Assertion<>(
+            "Size must be 1",
+            () -> new Mapped<>(
                 String::trim,
                 new AbstractCollection<String>() {
                     @Override
@@ -111,7 +112,7 @@ public final class MappedTest {
                 }
             ),
             new IsCollectionWithSize<>(new IsEqual<>(1))
-        );
+        ).affirm();
     }
 
 }

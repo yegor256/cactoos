@@ -26,13 +26,13 @@ package org.cactoos.collection;
 import java.util.Collection;
 import org.cactoos.list.ListOf;
 import org.hamcrest.Description;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsCollectionContaining;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
@@ -40,6 +40,7 @@ import org.llorllale.cactoos.matchers.MatcherOf;
  * @param <E> Type of source item
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class BehavesAsCollection<E> extends
     TypeSafeMatcher<Collection<E>>  {
@@ -61,28 +62,54 @@ public final class BehavesAsCollection<E> extends
     @Override
     @SuppressWarnings({ "unchecked", "PMD.ClassCastExceptionWithToArray" })
     public boolean matchesSafely(final Collection<E> col) {
-        MatcherAssert.assertThat(
-            col, new IsCollectionContaining<>(new IsEqual<>(this.sample))
-        );
-        MatcherAssert.assertThat(
-            col, new IsNot<>(new IsEmptyCollection<>())
-        );
-        MatcherAssert.assertThat(
-            col, new IsCollectionWithSize<>(new MatcherOf<>(s -> s > 0))
-        );
-        MatcherAssert.assertThat(
-            new ListOf<>((E[]) col.toArray()),
-            new IsCollectionContaining<>(new IsEqual<>(this.sample))
-        );
+        new Assertion<>(
+            "Must contain item",
+            () -> col,
+            new IsCollectionContaining<>(
+                new IsEqual<>(
+                    this.sample
+                )
+            )
+        ).affirm();
+        new Assertion<>(
+            "Must not be empty",
+            () -> col,
+            new IsNot<>(
+                new IsEmptyCollection<>()
+            )
+        ).affirm();
+        new Assertion<>(
+            "Size must be more than 0",
+            () -> col,
+            new IsCollectionWithSize<>(
+                new MatcherOf<>(s -> s > 0)
+            )
+        ).affirm();
+        new Assertion<>(
+            "Array must contain item",
+            () -> new ListOf<>(
+                (E[]) col.toArray()
+            ),
+            new IsCollectionContaining<>(
+                new IsEqual<>(this.sample)
+            )
+        ).affirm();
         final E[] array = (E[]) new Object[col.size()];
         col.toArray(array);
-        MatcherAssert.assertThat(
-            new ListOf<>(array),
-            new IsCollectionContaining<>(new IsEqual<>(this.sample))
-        );
-        MatcherAssert.assertThat(
-            col.containsAll(new ListOf<>(this.sample)), new IsEqual<>(true)
-        );
+        new Assertion<>(
+            "Array from collection must contain item",
+            () -> new ListOf<>(array),
+            new IsCollectionContaining<>(
+                new IsEqual<>(this.sample)
+            )
+        ).affirm();
+        new Assertion<>(
+            "Must contain list with the item",
+            () -> col.containsAll(
+                new ListOf<>(this.sample)
+            ),
+            new IsEqual<>(true)
+        ).affirm();
         return true;
     }
 

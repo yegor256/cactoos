@@ -25,10 +25,10 @@ package org.cactoos.collection;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsCollectionContaining;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link Shuffled}.
@@ -38,39 +38,39 @@ import org.junit.Test;
 public final class ShuffledTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void behavesAsCollection() {
+        new Assertion<>(
             "Can't behave as a collection",
-            new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
+            () -> new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
             new BehavesAsCollection<>(0)
-        );
+        ).affirm();
     }
 
     @Test
-    public void shufflesCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void shufflesCollection() {
+        new Assertion<>(
             "Can't shuffle elements in collection",
-            new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
+            () -> new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
             new IsCollectionContaining<>(new IsEqual<>(-1))
-        );
+        ).affirm();
     }
 
     @Test
-    public void shufflesArray() throws Exception {
-        MatcherAssert.assertThat(
+    public void shufflesArray() {
+        new Assertion<>(
             "Can't shuffle elements in array",
-            new Shuffled<>(1, 2, 0, -1),
+            () -> new Shuffled<>(1, 2, 0, -1),
             new IsCollectionContaining<>(new IsEqual<>(-1))
-        );
+        ).affirm();
     }
 
     @Test
-    public void shufflesIterable() throws Exception {
-        MatcherAssert.assertThat(
+    public void shufflesIterable() {
+        new Assertion<>(
             "Can't shuffle elements in iterable",
-            new Shuffled<>(new IterableOf<>(1, 2, 0, -1)),
+            () -> new Shuffled<>(new IterableOf<>(1, 2, 0, -1)),
             new IsCollectionContaining<>(new IsEqual<>(-1))
-        );
+        ).affirm();
     }
 
 }

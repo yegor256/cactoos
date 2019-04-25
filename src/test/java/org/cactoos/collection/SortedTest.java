@@ -23,41 +23,50 @@
  */
 package org.cactoos.collection;
 
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link Sorted}.
  * @since 0.19
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class SortedTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void behavesAsCollection() {
+        new Assertion<>(
             "Can't behave as a collection",
-            new Sorted<>(new ListOf<Integer>(1, 2, 0, -1)),
+            () -> new Sorted<>(new ListOf<Integer>(1, 2, 0, -1)),
             new BehavesAsCollection<>(0)
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sortsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    public void sortsCollection() {
+        new Assertion<>(
             "Can't sort elements in collection",
-            new Sorted<>(
+            () -> new Sorted<>(
                 new ListOf<>(
                     "one", "two", "three", "four"
                 )
             ),
-            Matchers.contains(
-                "four", "one", "three", "two"
+            new AllOf<>(
+                new IterableOf<org.hamcrest.Matcher<? super Sorted<String>>>(
+                    new IsCollectionContaining<>(new IsEqual<>("four")),
+                    new IsCollectionContaining<>(new IsEqual<>("one")),
+                    new IsCollectionContaining<>(new IsEqual<>("three")),
+                    new IsCollectionContaining<>(new IsEqual<>("two"))
+                )
             )
-        );
+        ).affirm();
     }
 
 }
