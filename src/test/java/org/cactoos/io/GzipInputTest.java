@@ -24,40 +24,47 @@
 
 package org.cactoos.io;
 
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
-import java.util.zip.GZIPInputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link org.cactoos.io.GzipInput}.
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class GzipInputTest {
 
     @Test
     public void readFromGzipInput() throws Exception {
-        final byte[] bytes = {
-            (byte) GZIPInputStream.GZIP_MAGIC,
-            // @checkstyle MagicNumberCheck (1 line)
-            (byte) (GZIPInputStream.GZIP_MAGIC >> 8), (byte) 0x08,
-            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-            (byte) 0x00, (byte) 0x00, (byte) 0xF3, (byte) 0x48, (byte) 0xCD,
-            (byte) 0xC9, (byte) 0xC9, (byte) 0x57, (byte) 0x04, (byte) 0x00,
-            (byte) 0x56, (byte) 0xCC, (byte) 0x2A, (byte) 0x9D, (byte) 0x06,
-            (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        };
-        MatcherAssert.assertThat(
+        final String content = "Hello!";
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (
+            Writer writer = new BufferedWriter(
+                new OutputStreamWriter(
+                    new GZIPOutputStream(out)
+                )
+            )
+        ) {
+            writer.write(content);
+        }
+        final byte[] bytes = out.toByteArray();
+        new Assertion<>(
             "Can't read from a gzip input",
-            new TextOf(
+            () -> new TextOf(
                 new GzipInput(new InputOf(bytes))
             ).asString(),
-            Matchers.equalTo("Hello!")
-        );
+            new IsEqual<>(content)
+        ).affirm();
     }
 
     @Test(expected = EOFException.class)
