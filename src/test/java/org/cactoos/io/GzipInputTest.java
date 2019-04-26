@@ -24,38 +24,47 @@
 
 package org.cactoos.io;
 
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
-import java.util.zip.GZIPInputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link org.cactoos.io.GzipInput}.
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class GzipInputTest {
 
     @Test
     public void readFromGzipInput() throws Exception {
-        final byte[] bytes = {
-            (byte) GZIPInputStream.GZIP_MAGIC,
-            -117, 8, 0, 0, 0,
-            0, 0, 0, 0, -13,
-            72, -51, -55, -55, 87,
-            4, 0, 86, -52, 42,
-            -99, 6, 0, 0, 0,
-        };
-        MatcherAssert.assertThat(
+        final String content = "Hello!";
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (
+            Writer writer = new BufferedWriter(
+                new OutputStreamWriter(
+                    new GZIPOutputStream(out)
+                )
+            )
+        ) {
+            writer.write(content);
+        }
+        final byte[] bytes = out.toByteArray();
+        new Assertion<>(
             "Can't read from a gzip input",
-            new TextOf(
+            () -> new TextOf(
                 new GzipInput(new InputOf(bytes))
             ).asString(),
-            Matchers.equalTo("Hello!")
-        );
+            new IsEqual<>(content)
+        ).affirm();
     }
 
     @Test(expected = EOFException.class)
