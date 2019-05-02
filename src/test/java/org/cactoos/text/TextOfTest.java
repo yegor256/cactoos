@@ -473,52 +473,6 @@ public final class TextOfTest {
     }
 
     @Test
-    public void millisFormattedUsingIsoFormatter() {
-        final Calendar calendar =
-            Calendar.getInstance(TimeZone.getDefault());
-        calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
-        calendar.set(Calendar.MILLISECOND, 17);
-        final ZoneOffset offset = calendar.getTimeZone().toZoneId()
-            .getRules().getOffset(calendar.toInstant());
-        new Assertion<>(
-            "Can't format a java.util.Date with ISO format.",
-            () -> new TextOf(calendar.getTime().getTime()),
-            new TextIs("2017-12-13T14:15:16.017" + offset)
-        ).affirm();
-    }
-
-    @Test
-    public void millisFormattedUsingCustomFormat() {
-        final Calendar calendar =
-            Calendar.getInstance(TimeZone.getDefault());
-        calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
-        new Assertion<>(
-            "Can't format a java.util.Date with custom format.",
-            () -> new TextOf(
-                calendar.getTime().getTime(),
-                "yyyy MM dd hh:mm:ss"
-            ),
-            new TextIs("2017 12 13 02:15:16")
-        ).affirm();
-    }
-
-    @Test
-    public void millisFormattedUsingCustomFormatDifferentLocale() {
-        final Calendar calendar =
-            Calendar.getInstance(TimeZone.getDefault());
-        calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
-        new Assertion<>(
-            "Can't format a java.util.Date with custom format.",
-            () -> new TextOf(
-                calendar.getTime().getTime(),
-                "yyyy MMMM dd hh:mm:ss",
-                Locale.US
-            ),
-            new TextIs("2017 December 13 02:15:16")
-        ).affirm();
-    }
-
-    @Test
     public void offsetDateTimeFormattedAsIsoDateTime() {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)

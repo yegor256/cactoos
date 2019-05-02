@@ -32,7 +32,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -451,49 +450,6 @@ public final class TextOf extends TextEnvelope {
         final Locale locale
     ) {
         this(date, DateTimeFormatter.ofPattern(format, locale));
-    }
-
-    /**
-     * Formats the milliseconds using the ISO format.
-     * @param milliseconds Milliseconds to format.
-     * @todo #1046:30min Add a class that will create a date from millis
-     *  Create a class which will accept epoch millis and create a Date from it.
-     *  Update ctors in TextOf that accept milliseconds to use this class.
-     */
-    public TextOf(final Long milliseconds) {
-        this(
-            Date.from(Instant.ofEpochMilli(milliseconds)),
-            new Iso().value()
-        );
-    }
-
-    /**
-     * Formats the milliseconds using the format and the default locale.
-     * @param milliseconds Milliseconds to format.
-     * @param format The format to use.
-     */
-    public TextOf(final long milliseconds, final String format) {
-        this(
-            Date.from(Instant.ofEpochMilli(milliseconds)), format,
-            Locale.getDefault(Locale.Category.FORMAT)
-        );
-    }
-
-    /**
-     * Formats the milliseconds as date using the format and the locale.
-     * @param milliseconds Milliseconds to format as date.
-     * @param format The format to use.
-     * @param locale The locale to use for the format.
-     */
-    public TextOf(
-        final long milliseconds,
-        final String format,
-        final Locale locale
-    ) {
-        this(
-            Date.from(Instant.ofEpochMilli(milliseconds)),
-            DateTimeFormatter.ofPattern(format, locale)
-        );
     }
 
     /**
