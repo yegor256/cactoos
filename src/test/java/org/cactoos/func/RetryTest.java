@@ -24,9 +24,11 @@
 package org.cactoos.func;
 
 import java.security.SecureRandom;
+import java.time.Duration;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.FuncApplies;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Retry}.
@@ -34,9 +36,6 @@ import org.llorllale.cactoos.matchers.FuncApplies;
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 line)
- * @todo #909:30min add a test to where an interrupt exception is thrown so
- *  that the catch and error assignment is verified. The exception should be
- *  thrown when Thread.sleep is called in Retry.java:129
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class RetryTest {
@@ -72,6 +71,31 @@ public final class RetryTest {
                 count -> count == Integer.MAX_VALUE
             ),
             new FuncApplies<>(true, true)
+        ).affirm();
+    }
+
+    @Test
+    public void processInterruptExceptionOnWait() {
+        final Thread main = Thread.currentThread();
+        new Thread(
+            () -> {
+                while (true) {
+                    if (Thread.State.TIMED_WAITING == main.getState()) {
+                        main.interrupt();
+                        return;
+                    }
+                }
+            }).start();
+        new Assertion<>(
+            "Must be interrupted on wait",
+            () -> new Retry<>(
+                input -> {
+                    throw new IllegalArgumentException("Happens");
+                },
+                attempts -> false,
+                Duration.ofMillis(Long.MAX_VALUE)
+            ).apply(true),
+            new Throws<>("sleep interrupted", InterruptedException.class)
         ).affirm();
     }
 }
