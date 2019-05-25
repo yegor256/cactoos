@@ -23,19 +23,15 @@
  */
 package org.cactoos.collection;
 
-import java.util.AbstractCollection;
-import java.util.Iterator;
-import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterator.Endless;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
-import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link Mapped}.
@@ -49,8 +45,8 @@ public final class MappedTest {
     @Test
     public void behavesAsCollection() {
         new Assertion<>(
-            "Can't behave as a collection",
-            () -> new Mapped<Integer, Integer>(
+            "Behave as a collection",
+            () -> new Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(-1, 1, 2)
             ),
@@ -59,23 +55,35 @@ public final class MappedTest {
     }
 
     @Test
+    public void transformsArray() {
+        new Assertion<>(
+            "Transforms an array",
+            () -> new Mapped<>(
+                input -> new Upper(new TextOf(input)),
+                "a", "b", "c"
+            ).iterator().next(),
+            new TextIs("A")
+        ).affirm();
+    }
+
+    @Test
     public void transformsList() {
         new Assertion<>(
-            "Can't transform an iterable",
-            () -> new Mapped<String, Text>(
+            "Transforms an iterable",
+            () -> new Mapped<>(
                 input -> new Upper(new TextOf(input)),
                 new IterableOf<>("hello", "world", "друг")
-            ).iterator().next().asString(),
-            new IsEqual<>("HELLO")
+            ).iterator().next(),
+            new TextIs("HELLO")
         ).affirm();
     }
 
     @Test
     public void transformsEmptyList() {
         new Assertion<>(
-            "Can't transform an empty iterable",
-            () -> new Mapped<String, Text>(
-                input -> new Upper(new TextOf(input)),
+            "Transforms an empty iterable",
+            () -> new Mapped<>(
+                (String input) -> new Upper(new TextOf(input)),
                 new ListOf<>()
             ),
             new IsEmptyCollection<>()
@@ -85,34 +93,12 @@ public final class MappedTest {
     @Test
     public void string() {
         new Assertion<>(
-            "Can't convert to string",
-            () -> new Mapped<Integer, Integer>(
+            "Converts to string",
+            () -> new Mapped<>(
                 x -> x * 2,
                 new ListOf<>(1, 2, 3)
             ).toString(),
-            new IsEqual<>("2, 4, 6")
+            new IsEqual<>("[2, 4, 6]")
         ).affirm();
     }
-
-    @Test
-    public void transformsEndlessCollection() {
-        new Assertion<>(
-            "Size must be 1",
-            () -> new Mapped<>(
-                String::trim,
-                new AbstractCollection<String>() {
-                    @Override
-                    public Iterator<String> iterator() {
-                        return new Endless<>("something");
-                    }
-                    @Override
-                    public int size() {
-                        return 1;
-                    }
-                }
-            ),
-            new IsCollectionWithSize<>(new IsEqual<>(1))
-        ).affirm();
-    }
-
 }
