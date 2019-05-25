@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -32,33 +33,28 @@ import org.cactoos.Text;
  *
  * @since 0.11
  */
-public final class NoNulls implements Text {
-    /**
-     * The origin text.
-     */
-    private final Text origin;
-
+public final class NoNulls extends TextEnvelope {
     /**
      * Ctor.
      * @param text The text
      */
     public NoNulls(final Text text) {
-        this.origin = text;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        if (this.origin == null) {
-            throw new IllegalArgumentException(
-                "NULL instead of a valid text"
-            );
-        }
-        final String string = this.origin.asString();
-        if (string == null) {
-            throw new IllegalStateException(
-                "NULL instead of a valid result string"
-            );
-        }
-        return string;
+        super(new Scalar<String>() {
+            @Override
+            public String value() throws Exception {
+                if (text == null) {
+                    throw new IllegalArgumentException(
+                        "NULL instead of a valid text"
+                    );
+                }
+                final String string = text.asString();
+                if (string == null) {
+                    throw new IllegalStateException(
+                        "NULL instead of a valid result string"
+                    );
+                }
+                return string;
+            }
+        });
     }
 }

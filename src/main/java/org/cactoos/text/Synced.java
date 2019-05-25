@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -32,18 +33,7 @@ import org.cactoos.Text;
  *
  * @since 0.18
  */
-public final class Synced implements Text {
-
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * The lock.
-     */
-    private final Object lock;
-
+public final class Synced extends TextEnvelope {
     /**
      * Ctor.
      * @param text The text
@@ -58,15 +48,13 @@ public final class Synced implements Text {
      * @param lck The lock
      */
     public Synced(final Text text, final Object lck) {
-        this.origin = text;
-        this.lock = lck;
+        super(new Scalar<String>() {
+            @Override
+            public String value() throws Exception {
+                synchronized (lck) {
+                    return text.asString();
+                }
+            }
+        });
     }
-
-    @Override
-    public String asString() throws Exception {
-        synchronized (this.lock) {
-            return this.origin.asString();
-        }
-    }
-
 }

@@ -24,9 +24,9 @@
 package org.cactoos.text;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Formatter;
 import java.util.Locale;
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 
@@ -36,27 +36,8 @@ import org.cactoos.list.ListOf;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.1
- * @todo #1063:30min All classes implementing Text need to be refactored
- *  to extend TextEnvelope - asString() should be removed and implementation
- *  from TextEnvelope should be used. This to-do should be moved to another
- *  class which need to be refactored.
  */
-public final class FormattedText implements Text {
-
-    /**
-     * Pattern.
-     */
-    private final Text pattern;
-
-    /**
-     * Arguments.
-     */
-    private final Collection<Object> args;
-
-    /**
-     * Format locale.
-     */
-    private final Locale locale;
+public final class FormattedText extends TextEnvelope {
 
     /**
      * New formatted string with default locale.
@@ -148,27 +129,25 @@ public final class FormattedText implements Text {
      *
      * @param ptn Pattern
      * @param locale Format locale
-     * @param arguments Arguments
+     * @param args Arguments
      */
     public FormattedText(
         final Text ptn,
         final Locale locale,
-        final Collection<Object> arguments
+        final Collection<Object> args
     ) {
-        this.pattern = ptn;
-        this.locale = locale;
-        this.args = Collections.unmodifiableCollection(arguments);
-    }
-
-    @Override
-    public String asString() throws Exception {
-        final StringBuilder out = new StringBuilder(0);
-        try (final Formatter fmt = new Formatter(out, this.locale)) {
-            fmt.format(
-                this.pattern.asString(),
-                this.args.toArray(new Object[0])
-            );
-        }
-        return out.toString();
+        super(new Scalar<String>() {
+            @Override
+            public String value() throws Exception {
+                final StringBuilder out = new StringBuilder(0);
+                try (final Formatter fmt = new Formatter(out, locale)) {
+                    fmt.format(
+                        ptn.asString(),
+                        args.toArray()
+                    );
+                }
+                return out.toString();
+            }
+        });
     }
 }
