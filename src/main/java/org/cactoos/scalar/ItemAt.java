@@ -27,24 +27,22 @@ import java.io.IOException;
 import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.func.FuncOf;
 import org.cactoos.text.FormattedText;
 
 /**
- * Element from position in {@link Iterator}
- * or fallback value if iterator hasn't this position.
+ * Element from position in {@link Iterable}
+ * or fallback value if iterable doesn't have this position.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <T> Scalar type
  * @since 0.7
- * @todo #930:30min To be consistent with other objects working on iterables
- *  such as HeadOf, TailOf, etc, the constructor of ItemAt should always take
- *  the iterable/iterator as a last parameter.
  */
 public final class ItemAt<T> implements Scalar<T> {
 
     /**
-     * {@link Sticky} that holds the value of the iterator
+     * {@link Sticky} that holds the value of the {@link Scalar}
      *  at the position specified in the constructor.
      */
     private final Scalar<T> saved;
@@ -52,14 +50,14 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param source Iterable
+     * @param iterable Iterable
      */
-    public ItemAt(final Iterable<T> source) {
+    public ItemAt(final Iterable<T> iterable) {
         this(
-            source,
             itr -> {
                 throw new IOException("The iterable is empty");
-            }
+            },
+            iterable
         );
     }
 
@@ -67,34 +65,33 @@ public final class ItemAt<T> implements Scalar<T> {
      * Ctor.
      *
      * @param fallback Fallback value
-     * @param source Iterable
+     * @param iterable Iterable
      */
-    public ItemAt(final T fallback, final Iterable<T> source) {
-        this(source, itr -> fallback);
+    public ItemAt(final Scalar<T> fallback, final Iterable<T> iterable) {
+        this(new FuncOf<>(fallback), iterable);
     }
 
     /**
      * Ctor.
      *
      * @param fallback Fallback value
-     * @param source Iterable
+     * @param iterable Iterable
      */
     public ItemAt(
-        final Iterable<T> source,
-        final Func<Iterable<T>, T> fallback
+        final Func<Iterable<T>, T> fallback,
+        final Iterable<T> iterable
     ) {
-        this(source, 0, fallback);
+        this(0, fallback, iterable);
     }
 
     /**
      * Ctor.
      *
      * @param position Position
-     * @param source Iterable
+     * @param iterable Iterable
      */
-    public ItemAt(final int position, final Iterable<T> source) {
+    public ItemAt(final int position, final Iterable<T> iterable) {
         this(
-            source,
             position,
             itr -> {
                 throw new IOException(
@@ -103,46 +100,24 @@ public final class ItemAt<T> implements Scalar<T> {
                         position
                     ).asString()
                 );
-            }
+            },
+            iterable
         );
     }
 
     /**
      * Ctor.
      *
-     * @param source Iterable
      * @param position Position
      * @param fallback Fallback value
-     */
-    public ItemAt(
-        final Iterable<T> source,
-        final int position,
-        final Func<Iterable<T>, T> fallback
-    ) {
-        this(new Sticky<>(source::iterator), position, fallback);
-    }
-
-    /**
-     * Ctor.
-     *
      * @param iterable Iterable
-     * @param fallback Fallback value
-     */
-    public ItemAt(final Iterable<T> iterable, final T fallback) {
-        this(iterable, itr -> fallback);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param iterator Iterator
-     * @param fallback Fallback value
      */
     public ItemAt(
-        final Iterator<T> iterator,
-        final Func<Iterable<T>, T> fallback
+        final int position,
+        final T fallback,
+        final Iterable<T> iterable
     ) {
-        this(iterator, 0, fallback);
+        this(position, new FuncOf<>(fallback), iterable);
     }
 
     /**
@@ -150,52 +125,12 @@ public final class ItemAt<T> implements Scalar<T> {
      *
      * @param iterable Iterable
      * @param position Position
-     */
-    public ItemAt(final Iterable<T> iterable, final int position) {
-        this(
-            iterable.iterator(),
-            position,
-            itr -> {
-                throw new IOException(
-                    new FormattedText(
-                        "Iterator doesn't have an element at #%d position",
-                        position
-                    ).asString()
-                );
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param iterator Iterator
-     * @param position Position
      * @param fallback Fallback value
-     * @todo #911:30min Remove iterator constructor
-     *  from org.cactoos.scalar.ItemAt.
-     *  We need to avoid the usage of Iterators
-     *  and replace all of their occurrences in ctors with Iterables.
      */
     public ItemAt(
-        final Iterator<T> iterator,
         final int position,
-        final Func<Iterable<T>, T> fallback
-    ) {
-        this(new Sticky<>(() -> iterator), position, fallback);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param iterator Iterator
-     * @param position Position
-     * @param fallback Fallback value
-     */
-    private ItemAt(
-        final Scalar<Iterator<T>> iterator,
-        final int position,
-        final Func<Iterable<T>, T> fallback
+        final Func<Iterable<T>, T> fallback,
+        final Iterable<T> iterable
     ) {
         this.saved = new Sticky<T>(
             () -> {
@@ -208,7 +143,7 @@ public final class ItemAt<T> implements Scalar<T> {
                         ).asString()
                     );
                 }
-                final Iterator<T> src = iterator.value();
+                final Iterator<T> src = iterable.iterator();
                 int cur;
                 for (cur = 0; cur < position && src.hasNext(); ++cur) {
                     src.next();

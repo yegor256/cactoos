@@ -29,6 +29,7 @@ import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -39,11 +40,11 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
 public final class CycledTest {
 
     @Test
-    public void repeatIterableTest() throws Exception {
+    public void repeatIterableTest() {
         final String expected = "two";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't repeat iterable",
-            new ItemAt<>(
+            () -> new ItemAt<>(
                 // @checkstyle MagicNumberCheck (1 line)<
                 7, new Cycled<>(
                     new IterableOf<>(
@@ -54,7 +55,7 @@ public final class CycledTest {
             new ScalarHasValue<>(
                 expected
             )
-        );
+        ).affirm();
     }
 
     @Test

@@ -24,137 +24,172 @@
 package org.cactoos.scalar;
 
 import java.io.IOException;
-import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link ItemAt}.
+ *
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
 public final class ItemAtTest {
 
     @Test
-    public void firstElementIterableTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't take the first item from the iterable",
-            new ItemAt<>(
+    public void firstElementIterableTest() {
+        new Assertion<>(
+            "must take the first item from the iterable",
+            () -> new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
                 new IterableOf<>(1, 2, 3)
             ),
             new ScalarHasValue<>(1)
-        );
+        ).affirm();
     }
 
     @Test
-    public void elementByPosIterableTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't take the item by position from the iterable",
-            new ItemAt<>(
+    public void elementByPosIterableTest() {
+        new Assertion<>(
+            "must take the item by position from the iterable",
+            () -> new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
                 1, new IterableOf<>(1, 2, 3)
             ),
             new ScalarHasValue<>(2)
-        );
-    }
-
-    @Test(expected = IOException.class)
-    public void failForEmptyIterableTest() throws Exception {
-        new ItemAt<>(Collections.emptyList()).value();
+        ).affirm();
     }
 
     @Test
-    public void fallbackIterableTest() throws Exception {
+    public void failForEmptyIterableTest() {
+        new Assertion<>(
+            "Must fail for empty iterable",
+            () -> new ItemAt<>(new IterableOf<>()).value(),
+            new Throws<>("The iterable is empty", IOException.class)
+        ).affirm();
+    }
+
+    @Test
+    public void fallbackIterableTest() {
         final String fallback = "default";
-        MatcherAssert.assertThat(
-            "Can't fallback to default one",
-            new ItemAt<>(
-                fallback, Collections.emptyList()
+        new Assertion<>(
+            "must fallback to default one",
+            () -> new ItemAt<>(
+                () -> fallback,
+                new IterableOf<>()
             ),
             new ScalarHasValue<>(fallback)
-        );
+        ).affirm();
     }
 
     @Test
-    public void firstElementTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't take the first item from the iterator",
-            new ItemAt<>(
+    public void elementByPosFallbackIterableTest() {
+        final int fallback = 5;
+        new Assertion<>(
+            "must fallback to default one",
+            () -> new ItemAt<>(
+                1, fallback, new IterableOf<>()
+            ),
+            new ScalarHasValue<>(fallback)
+        ).affirm();
+    }
+
+    @Test
+    public void elementByPosNoFallbackIterableTest() {
+        new Assertion<>(
+            "must take the item by position from the iterable",
+            () -> new ItemAt<>(
+                // @checkstyle MagicNumber (1 line)
+                1, 5, new IterableOf<>(0, 1)
+            ),
+            new ScalarHasValue<>(1)
+        ).affirm();
+    }
+
+    @Test
+    public void firstElementTest() {
+        new Assertion<>(
+            "must take the first item from the iterator",
+            () -> new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
                 new IterableOf<>(1, 2, 3)
             ),
             new ScalarHasValue<>(1)
-        );
+        ).affirm();
     }
 
     @Test
-    public void elementByPosTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't take the item by position from the iterator",
-            new ItemAt<>(
+    public void elementByPosTest() {
+        new Assertion<>(
+            "must take the item by position from the iterator",
+            () -> new ItemAt<>(
+                1,
                 // @checkstyle MagicNumber (1 line)
-                new IterableOf<>(1, 2, 3),
-                1
+                new IterableOf<>(1, 2, 3)
             ),
             new ScalarHasValue<>(2)
-        );
-    }
-
-    @Test(expected = IOException.class)
-    public void failForEmptyCollectionTest() throws Exception {
-        new ItemAt<>(new ListOf<>()).value();
-    }
-
-    @Test(expected = IOException.class)
-    public void failForNegativePositionTest() throws Exception {
-        new ItemAt<>(
-            // @checkstyle MagicNumber (1 line)
-            new IterableOf<>(1, 2, 3),
-            -1
-        ).value();
+        ).affirm();
     }
 
     @Test
-    public void fallbackTest() throws Exception {
-        final String fallback = "fallback";
-        MatcherAssert.assertThat(
-            "Can't fallback to default value",
-            new ItemAt<>(
-                new ListOf<>(),
-                fallback
-            ),
-            new ScalarHasValue<>(fallback)
-        );
+    public void failForNegativePositionTest() {
+        new Assertion<>(
+            "Must fail for negative position",
+            () -> new ItemAt<>(
+                -1,
+                // @checkstyle MagicNumber (1 line)
+                new IterableOf<>(1, 2, 3)
+            ).value(),
+            new Throws<>(
+                "The position must be non-negative: -1",
+                IOException.class
+            )
+        ).affirm();
     }
 
-    @Test(expected = IOException.class)
-    public void failForPosMoreLengthTest() throws Exception {
-        new ItemAt<>(
-            // @checkstyle MagicNumberCheck (2 lines)
-            new IterableOf<>(1, 2, 3),
-            3
-        ).value();
+    @Test
+    public void fallbackTest() {
+        final int fallback = 5;
+        new Assertion<>(
+            "Can't fallback to default value",
+            () -> new ItemAt<>(
+                () -> fallback,
+                new IterableOf<>()
+            ),
+            new ScalarHasValue<>(fallback)
+        ).affirm();
+    }
+
+    @Test
+    public void failForPosMoreLengthTest() {
+        new Assertion<>(
+            "Must fail for greater than length position",
+            () -> new ItemAt<>(
+                // @checkstyle MagicNumberCheck (2 lines)
+                3,
+                new IterableOf<>(1, 2, 3)
+            ).value(),
+            new Throws<>(
+                "The iterable doesn't have the position #3",
+                IOException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void sameValueTest() throws Exception {
         final ItemAt<Integer> item = new ItemAt<>(
-            // @checkstyle MagicNumberCheck (2 lines)
-            new IterableOf<>(1, 2, 3),
-            1
+            1,
+            // @checkstyle MagicNumberCheck (1 lines)
+            new IterableOf<>(1, 2, 3)
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Not the same value",
-            item.value(),
-            Matchers.equalTo(
-                item.value()
-            )
-        );
+            () -> item,
+            new ScalarHasValue<>(item.value())
+        ).affirm();
     }
 }

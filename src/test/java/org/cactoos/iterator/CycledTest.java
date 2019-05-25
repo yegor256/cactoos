@@ -28,8 +28,8 @@ import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.NoNulls;
 import org.cactoos.scalar.ItemAt;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -42,9 +42,11 @@ public final class CycledTest {
     @Test
     public void repeatIteratorTest() throws Exception {
         final String expected = "two";
-        MatcherAssert.assertThat(
-            "Can't repeat iterator",
-            new ItemAt<>(
+        new Assertion<>(
+            "must repeat iterator",
+            () -> new ItemAt<>(
+                // @checkstyle MagicNumberCheck (1 line)
+                7,
                 new IterableOf<>(
                     new Cycled<>(
                         new NoNulls<>(
@@ -53,14 +55,12 @@ public final class CycledTest {
                             )
                         )
                     )
-                ),
-                // @checkstyle MagicNumberCheck (1 line)
-                7
+                )
             ),
             new ScalarHasValue<>(
                 expected
             )
-        );
+        ).affirm();
     }
 
     @Test(expected = NoSuchElementException.class)
