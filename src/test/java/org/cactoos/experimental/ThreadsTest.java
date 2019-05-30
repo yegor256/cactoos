@@ -42,8 +42,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @todo #1112:30min Continue speeding up the `mvn test` goal until it
- *  executes in less than 10 seconds, or as fast as reasonably possible.
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ThreadsTest {
