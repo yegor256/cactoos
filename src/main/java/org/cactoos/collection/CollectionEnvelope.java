@@ -39,9 +39,6 @@ import org.cactoos.scalar.Unchecked;
  * <p>There is no thread-safety guarantee.</p>
  * @param <X> Element type
  * @since 0.23
- * @todo #996:30min Make the toString() method final and simplify the
- *  implementation of Mapped that redefine sit so that it can rely on
- *  the implementation of toString already present here.
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
 @SuppressWarnings(
