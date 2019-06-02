@@ -40,18 +40,6 @@ import org.llorllale.cactoos.matchers.Throws;
 public final class ItemAtTest {
 
     @Test
-    public void firstElementIterableTest() {
-        new Assertion<>(
-            "must take the first item from the iterable",
-            () -> new ItemAt<>(
-                // @checkstyle MagicNumber (1 line)
-                new IterableOf<>(1, 2, 3)
-            ),
-            new ScalarHasValue<>(1)
-        ).affirm();
-    }
-
-    @Test
     public void elementByPosIterableTest() {
         new Assertion<>(
             "must take the item by position from the iterable",
@@ -60,28 +48,6 @@ public final class ItemAtTest {
                 1, new IterableOf<>(1, 2, 3)
             ),
             new ScalarHasValue<>(2)
-        ).affirm();
-    }
-
-    @Test
-    public void failForEmptyIterableTest() {
-        new Assertion<>(
-            "Must fail for empty iterable",
-            () -> new ItemAt<>(new IterableOf<>()).value(),
-            new Throws<>("The iterable is empty", IOException.class)
-        ).affirm();
-    }
-
-    @Test
-    public void fallbackIterableTest() {
-        final String fallback = "default";
-        new Assertion<>(
-            "must fallback to default one",
-            () -> new ItemAt<>(
-                () -> fallback,
-                new IterableOf<>()
-            ),
-            new ScalarHasValue<>(fallback)
         ).affirm();
     }
 
@@ -104,18 +70,6 @@ public final class ItemAtTest {
             () -> new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
                 1, 5, new IterableOf<>(0, 1)
-            ),
-            new ScalarHasValue<>(1)
-        ).affirm();
-    }
-
-    @Test
-    public void firstElementTest() {
-        new Assertion<>(
-            "must take the first item from the iterator",
-            () -> new ItemAt<>(
-                // @checkstyle MagicNumber (1 line)
-                new IterableOf<>(1, 2, 3)
             ),
             new ScalarHasValue<>(1)
         ).affirm();
@@ -147,19 +101,6 @@ public final class ItemAtTest {
                 "The position must be non-negative: -1",
                 IOException.class
             )
-        ).affirm();
-    }
-
-    @Test
-    public void fallbackTest() {
-        final int fallback = 5;
-        new Assertion<>(
-            "Can't fallback to default value",
-            () -> new ItemAt<>(
-                () -> fallback,
-                new IterableOf<>()
-            ),
-            new ScalarHasValue<>(fallback)
         ).affirm();
     }
 

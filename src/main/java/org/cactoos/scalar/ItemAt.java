@@ -50,43 +50,6 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param iterable Iterable
-     */
-    public ItemAt(final Iterable<T> iterable) {
-        this(
-            itr -> {
-                throw new IOException("The iterable is empty");
-            },
-            iterable
-        );
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param fallback Fallback value
-     * @param iterable Iterable
-     */
-    public ItemAt(final Scalar<T> fallback, final Iterable<T> iterable) {
-        this(new FuncOf<>(fallback), iterable);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param fallback Fallback value
-     * @param iterable Iterable
-     */
-    public ItemAt(
-        final Func<Iterable<T>, T> fallback,
-        final Iterable<T> iterable
-    ) {
-        this(0, fallback, iterable);
-    }
-
-    /**
-     * Ctor.
-     *
      * @param position Position
      * @param iterable Iterable
      */
