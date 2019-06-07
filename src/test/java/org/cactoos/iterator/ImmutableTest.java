@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import org.cactoos.text.Randomized;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -65,5 +66,27 @@ public final class ImmutableTest {
         MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(true));
         immutable.next();
         MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(false));
+    }
+
+    @Test
+    public void delegatesToString() {
+        final String string = new Randomized().asString();
+        final Iterator<Object> iterator = new Iterator<Object>() {
+            public Object next() {
+                return new Object();
+            }
+
+            public boolean hasNext() {
+                return false;
+            }
+
+            public String toString() {
+                return string;
+            }
+        };
+        final Iterator<Object> immutable = new Immutable<>(iterator);
+        MatcherAssert.assertThat(
+            immutable.toString(), new IsEqual<>(iterator.toString())
+        );
     }
 }
