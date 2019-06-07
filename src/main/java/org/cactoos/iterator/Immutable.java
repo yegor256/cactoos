@@ -58,4 +58,8 @@ public final class Immutable<T> implements Iterator<T> {
         return this.iterator.next();
     }
 
+    @Override
+    public String toString() {
+        return this.iterator.toString();
+    }
 }
