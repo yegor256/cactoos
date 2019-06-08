@@ -32,7 +32,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TeeInputHasResult;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -61,7 +60,7 @@ public final class TeeInputFromUriTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from URI to path.",
-            () -> new TeeInput(
+            new TeeInput(
                 input.toURI(),
                 output
             ),
@@ -84,7 +83,7 @@ public final class TeeInputFromUriTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from URI to file.",
-            () -> new TeeInput(
+            new TeeInput(
                 input.toURI(),
                 output
             ),
@@ -107,7 +106,7 @@ public final class TeeInputFromUriTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from URI to output.",
-            () -> new TeeInput(
+            new TeeInput(
                 input.toURI(),
                 new OutputTo(output)
             ),

@@ -39,7 +39,7 @@ public final class SwappedCaseTest {
     public void swapText() {
         new Assertion<>(
             "Can't swap a text",
-            () -> new SwappedCase(
+            new SwappedCase(
                 new TextOf("HellO!")
             ),
             new TextHasString("hELLo!")
@@ -50,7 +50,7 @@ public final class SwappedCaseTest {
     public void swapEmptyText() {
         new Assertion<>(
             "Empty swapped text should be the same as original",
-            () -> new SwappedCase(
+            new SwappedCase(
                 new TextOf("")
             ),
             new TextHasString("")

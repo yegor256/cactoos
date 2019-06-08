@@ -44,7 +44,7 @@ public final class ReplacedTest {
     public void replaceText() {
         new Assertion<>(
             "Can't replace a text",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf("Hello!"),
                 "ello", "i"
             ),
@@ -57,7 +57,7 @@ public final class ReplacedTest {
         final String text = "HelloAgain!";
         new Assertion<>(
             "Replace a text abnormally",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf(text),
                 "xyz", "i"
             ),
@@ -69,7 +69,7 @@ public final class ReplacedTest {
     public void replacesAllOccurrences() {
         new Assertion<>(
             "Can't replace a text with multiple needle occurrences",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf("one cat, two cats, three cats"),
                 "cat",
                 "dog"
@@ -82,7 +82,7 @@ public final class ReplacedTest {
     public void regexConstantReplace() {
         new Assertion<>(
             "Cannot do simple replacement with regex",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf("one cow two cows in the yard"),
                 () -> Pattern.compile("cow"),
                 matcher -> "pig"
@@ -95,7 +95,7 @@ public final class ReplacedTest {
     public void regexDynamicReplace() {
         new Assertion<>(
             "Cannot do dynamic string replacement",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf("one two THREE four FIVE six"),
                 () -> Pattern.compile("[a-z]+"),
                 matcher -> String.valueOf(matcher.group().length())
@@ -108,7 +108,7 @@ public final class ReplacedTest {
     public void emptyText() {
         new Assertion<>(
             "Substitution in empty text with non-empty regex.",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf(""),
                 "123",
                 "WOW"
@@ -121,7 +121,7 @@ public final class ReplacedTest {
     public void emptyRegex() {
         new Assertion<>(
             "Substitution in text with empty regex.",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf("abc"),
                 "",
                 "1"
@@ -134,7 +134,7 @@ public final class ReplacedTest {
     public void emptyTextAndEmptyRegex() {
         new Assertion<>(
             "Substitution in empty text with empty regex.",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf(""),
                 "",
                 "1"
@@ -148,11 +148,11 @@ public final class ReplacedTest {
         final String regex = "invalid_regex{0,";
         new Assertion<>(
             "Doesn't throw proper exception",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf("text"),
                 regex,
                 "error"
-            ).asString(),
+            )::asString,
             new Throws<>(
                 new PatternSyntaxException(
                     "Unclosed counted closure",
@@ -169,7 +169,7 @@ public final class ReplacedTest {
     public void nonDefaultCharsetText() {
         new Assertion<>(
             "Cannot do dynamic string replacement with non-default charset",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf("abc def GHI JKL", StandardCharsets.UTF_16LE),
                 () -> Pattern.compile("[A-Z]+"),
                 matcher -> String.valueOf(matcher.group().length())
@@ -182,7 +182,7 @@ public final class ReplacedTest {
     public void unicodeText() {
         new Assertion<>(
             "Cannot do dynamic string replacement with unicode characters",
-            () -> new Replaced(
+            new Replaced(
                 new TextOf("abc def GHI\u2300JKL"),
                 () -> Pattern.compile("[a-z]+|\u2300"),
                 matcher -> String.valueOf(matcher.group().length())

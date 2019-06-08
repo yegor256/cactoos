@@ -57,7 +57,7 @@ public final class IterableEnvelopeTest {
     public void notEqualsToObjectOfAnotherType() {
         new Assertion<>(
             "Must not equal to object of another type",
-            IterableOf::new,
+            new IterableOf<>(),
             new IsNot<>(new IsEqual<>(new Object()))
         ).affirm();
     }
@@ -68,7 +68,7 @@ public final class IterableEnvelopeTest {
         final IterableOf<Integer> second = new IterableOf<>(1, 3);
         new Assertion<>(
             "Must not equal to Iterable with different elements",
-            () -> first,
+            first,
             new IsNot<>(new IsEqual<>(second))
         ).affirm();
     }
@@ -78,8 +78,8 @@ public final class IterableEnvelopeTest {
         final IterableOf<Integer> iterable = new IterableOf<>(1, 2);
         new Assertion<>(
             "Must be equal to itself",
-            () -> iterable,
-           new IsEqual<>(iterable)
+            iterable,
+            new IsEqual<>(iterable)
         ).affirm();
     }
 
@@ -88,7 +88,7 @@ public final class IterableEnvelopeTest {
         final IterableOf<Integer> iterable = new IterableOf<>(1, 2);
         new Assertion<>(
             "Must be equal to Iterable with the same elements",
-            () -> iterable,
+            iterable,
             new IsEqual<>(new IterableOf<>(1, 2))
         ).affirm();
     }
@@ -98,7 +98,7 @@ public final class IterableEnvelopeTest {
         final IterableOf<Integer> iterable = new IterableOf<>();
         new Assertion<>(
             "Empty Iterable must be equal to empty Iterable",
-            () -> iterable,
+            iterable,
             new IsEqual<>(new IterableOf<>())
         ).affirm();
     }
@@ -109,7 +109,7 @@ public final class IterableEnvelopeTest {
         final IterableOf<Integer> second = new IterableOf<>(2, 1);
         new Assertion<>(
             "Must have different hashCode for Iterables with different content",
-            first::hashCode,
+            first.hashCode(),
             new IsNot<>(new IsEqual<>(second.hashCode()))
         ).affirm();
     }
@@ -119,7 +119,7 @@ public final class IterableEnvelopeTest {
         final IterableOf<Integer> iterable = new IterableOf<>(1, 2);
         new Assertion<>(
             "Must have equal hashCode for Iterables with equal content",
-            iterable::hashCode,
+            iterable.hashCode(),
             new IsEqual<>(new IterableOf<>(1, 2).hashCode())
         ).affirm();
     }

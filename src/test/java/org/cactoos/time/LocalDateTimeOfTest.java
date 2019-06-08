@@ -42,7 +42,7 @@ public class LocalDateTimeOfTest {
     public final void testParsingIsoFormattedStringToLocalDateTime() {
         new Assertion<>(
             "Can't parse a LocalDateTime with default/ISO format.",
-            () -> new LocalDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
+            new LocalDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
             new ScalarHasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
         ).affirm();
     }
@@ -51,7 +51,7 @@ public class LocalDateTimeOfTest {
     public final void testParsingFormattedStringWithFormatToLocalDateTime() {
         new Assertion<>(
             "Can't parse a LocalDateTime with custom format.",
-            () -> new LocalDateTimeOf(
+            new LocalDateTimeOf(
                 "2017-12-13 14:15:16.000000017",
                 "yyyy-MM-dd HH:mm:ss.n"
             ),
@@ -63,7 +63,7 @@ public class LocalDateTimeOfTest {
     public final void testParsingFormattedStringWithFormatterToLocalDateTime() {
         new Assertion<>(
             "Can't parse a LocalDateTime with custom formatter.",
-            () -> new LocalDateTimeOf(
+            new LocalDateTimeOf(
                 "2017-12-13 14:15:16.000000017",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
             ),

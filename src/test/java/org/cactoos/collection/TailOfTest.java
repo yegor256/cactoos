@@ -43,7 +43,7 @@ public final class TailOfTest {
     public void tailCollection() {
         new Assertion<>(
             "Can't get tail portion of collection",
-            () -> new TailOf<>(
+            new TailOf<>(
                 2,
                 "one", "two", "three", "four"
             ),

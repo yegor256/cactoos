@@ -44,7 +44,7 @@ public final class StickyTest {
         );
         new Assertion<>(
             "must compute value only once",
-            () -> scalar.value() + scalar.value(),
+            scalar.value() + scalar.value(),
             new IsEqual<>(scalar.value() + scalar.value())
         ).affirm();
     }

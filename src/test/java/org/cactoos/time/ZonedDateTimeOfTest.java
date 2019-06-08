@@ -45,7 +45,7 @@ public class ZonedDateTimeOfTest {
     public final void testParsingIsoFormattedStringToZonedDateTime() {
         new Assertion<>(
             "Can't parse a ZonedDateTime with default/ISO format.",
-            () -> new ZonedDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
+            new ZonedDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
             new ScalarHasValue<>(
                 ZonedDateTime.of(
                     2017, 12, 13, 14, 15, 16, 17,
@@ -59,7 +59,7 @@ public class ZonedDateTimeOfTest {
     public final void testParsingFormattedStringWithZoneToZonedDateTime() {
         new Assertion<>(
             "Can't parse a ZonedDateTime with custom format and zone.",
-            () -> new ZonedDateTimeOf(
+            new ZonedDateTimeOf(
                 "2017-12-13 14:15:16",
                 "yyyy-MM-dd HH:mm:ss",
                 ZoneId.of("Europe/Berlin")
@@ -77,7 +77,7 @@ public class ZonedDateTimeOfTest {
     public final void testParsingFormattedStringWithFormatterToZonedDateTime() {
         new Assertion<>(
             "Can't parse a ZonedDateTime with custom format and zone.",
-            () -> new ZonedDateTimeOf(
+            new ZonedDateTimeOf(
                 "2017-12-13 14:15:16",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     .withZone(ZoneId.of("Europe/Berlin"))

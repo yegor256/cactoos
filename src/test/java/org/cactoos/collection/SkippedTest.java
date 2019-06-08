@@ -46,7 +46,7 @@ public final class SkippedTest {
     public void skipIterable() {
         new Assertion<>(
             "Can't skip elements in iterable",
-            () -> new Skipped<>(
+            new Skipped<>(
                 2,
                 new IterableOf<>("one", "two", "three", "four")
             ),
@@ -64,7 +64,7 @@ public final class SkippedTest {
     public void skipArray() {
         new Assertion<>(
             "Can't skip elements in array",
-            () -> new Skipped<>(
+            new Skipped<>(
                 2,
                 "one", "two", "three", "four"
             ),
@@ -82,7 +82,7 @@ public final class SkippedTest {
     public void skipCollection() {
         new Assertion<>(
             "Can't skip elements in collection",
-            () -> new Skipped<>(
+            new Skipped<>(
                 2,
                 new CollectionOf<>("one", "two", "three", "four")
             ),
@@ -99,7 +99,7 @@ public final class SkippedTest {
     public void skippedAllElements() {
         new Assertion<>(
             "Can't skip all elements",
-            () -> new Skipped<>(
+            new Skipped<>(
                 2,
                 "one", "two"
             ),
@@ -111,7 +111,7 @@ public final class SkippedTest {
     public void skippedMoreThanExists() {
         new Assertion<>(
             "Can't skip more than exists",
-            () -> new Skipped<>(
+            new Skipped<>(
                 Integer.MAX_VALUE,
                 "one", "two"
             ),
@@ -124,7 +124,7 @@ public final class SkippedTest {
     public void skippedNegativeSize() {
         new Assertion<>(
             "Can't process negative skipped size",
-            () -> new Skipped<>(
+            new Skipped<>(
                 -1,
                 "one", "two", "three", "four"
             ),

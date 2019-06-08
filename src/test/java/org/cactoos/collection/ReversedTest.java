@@ -48,7 +48,7 @@ public final class ReversedTest {
     public void behavesAsCollection() {
         new Assertion<>(
             "Can't behave as a collection",
-            () -> new NoNulls<>(
+            new NoNulls<>(
                 new Reversed<>(
                     new IterableOf<Integer>(0, -1, 2)
                 )
@@ -62,7 +62,7 @@ public final class ReversedTest {
         final String last = "last";
         new Assertion<>(
             "Must reverse list",
-            () -> new Reversed<>(
+            new Reversed<>(
                 new IterableOf<>(
                     "item", last
                 )
@@ -75,7 +75,7 @@ public final class ReversedTest {
     public void reverseEmptyList() {
         new Assertion<>(
             "Must reverse empty list",
-            () -> new Reversed<>(
+            new Reversed<>(
                 new ListOf<>()
             ),
             new IsEmptyCollection<>()
@@ -86,7 +86,7 @@ public final class ReversedTest {
     public void size() {
         new Assertion<>(
             "Size must be the same",
-            () -> new Reversed<>(
+            new Reversed<>(
                 new IterableOf<>(
                     "0", "1", "2"
                 )
@@ -99,7 +99,7 @@ public final class ReversedTest {
     public void isEmpty() {
         new Assertion<>(
             "Must be not empty",
-            () -> new Reversed<>(
+            new Reversed<>(
                 new IterableOf<>(
                     6, 16
                 )
@@ -113,7 +113,7 @@ public final class ReversedTest {
         final String word = "objects";
         new Assertion<>(
             "Must contain element",
-            () -> new Reversed<>(
+            new Reversed<>(
                 new IterableOf<>(
                     "hello", "elegant", word
                 )
@@ -180,7 +180,7 @@ public final class ReversedTest {
     public void toArray() {
         new Assertion<>(
             "Array must contain element",
-            () -> new Reversed<>(
+            new Reversed<>(
                 new IterableOf<>(
                     1, 2, 3, 4
                 )
@@ -200,7 +200,7 @@ public final class ReversedTest {
     public void toArrayWithArray() {
         new Assertion<>(
             "Array for Reversed must contain elements",
-            () -> new Reversed<>(
+            new Reversed<>(
                 new IterableOf<>(
                     1, 2, 3, 4, 5
                 )
@@ -223,7 +223,7 @@ public final class ReversedTest {
         final String second = "second";
         new Assertion<>(
             "Must contains all elements",
-            () -> new Reversed<>(
+            new Reversed<>(
                 new IterableOf<>(
                     first, second, "third"
                 )

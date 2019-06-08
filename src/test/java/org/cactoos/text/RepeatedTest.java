@@ -39,7 +39,7 @@ public final class RepeatedTest {
         new Assertion<>(
             "Can't repeats a text",
             // @checkstyle MagicNumber (1 line)
-            () -> new Repeated("hello", 2),
+            new Repeated("hello", 2),
             new TextHasString("hellohello")
         ).affirm();
     }
@@ -49,7 +49,7 @@ public final class RepeatedTest {
         new Assertion<>(
             "Can't repeats a char",
             // @checkstyle MagicNumber (1 line)
-            () -> new Repeated("A", 5),
+            new Repeated("A", 5),
             new TextHasString("AAAAA")
         ).affirm();
     }

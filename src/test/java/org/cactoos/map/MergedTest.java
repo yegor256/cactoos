@@ -39,7 +39,7 @@ public final class MergedTest {
     public void behavesAsMap() {
         new Assertion<>(
             "Must behave as a map",
-            () -> new Merged<Integer, Integer>(
+            new Merged<Integer, Integer>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1),
                     new MapEntry<>(1, 1)
@@ -53,7 +53,7 @@ public final class MergedTest {
     public void createsMapFromMaps() {
         new Assertion<>(
             "Must merge a few maps",
-            () -> new Merged<Integer, Integer>(
+            new Merged<Integer, Integer>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, 0)
                 ),
@@ -74,7 +74,7 @@ public final class MergedTest {
     public void overridesValues() {
         new Assertion<>(
             "Must override values",
-            () -> new Merged<Integer, Integer>(
+            new Merged<Integer, Integer>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 ),
@@ -94,7 +94,7 @@ public final class MergedTest {
     public void mergesEmptyMaps() {
         new Assertion<>(
             "Must merge empty maps",
-            () -> new Merged<Integer, Integer>(
+            new Merged<Integer, Integer>(
                 new MapOf<Integer, Integer>(),
                 new MapOf<Integer, Integer>()
             ),

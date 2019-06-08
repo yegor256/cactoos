@@ -38,7 +38,7 @@ public final class LoweredTest {
     public void convertsText() {
         new Assertion<>(
             "Can't lower case a text",
-            () -> new Lowered(new TextOf("HelLo!")),
+            new Lowered(new TextOf("HelLo!")),
             new TextHasString("hello!")
         ).affirm();
     }
@@ -47,7 +47,7 @@ public final class LoweredTest {
     public void convertsString() {
         new Assertion<>(
             "Can't lower case a string",
-            () -> new Lowered("WoRLd!"),
+            new Lowered("WoRLd!"),
             new TextHasString("world!")
         ).affirm();
     }

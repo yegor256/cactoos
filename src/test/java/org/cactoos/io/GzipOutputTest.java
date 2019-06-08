@@ -80,7 +80,7 @@ public final class GzipOutputTest {
         }
         new Assertion<>(
             "Can't write to a gzip output",
-            () -> baos.toByteArray(),
+            baos.toByteArray(),
             new IsEqual<>(expected.toByteArray())
         ).affirm();
     }

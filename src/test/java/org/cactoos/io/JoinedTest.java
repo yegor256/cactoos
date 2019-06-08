@@ -43,7 +43,7 @@ public final class JoinedTest {
     public void joinsOk() {
         new Assertion<>(
             "Cannot properly join inputs",
-            () -> new Joined(
+            new Joined(
                 new InputOf("first"),
                 new InputOf("second"),
                 new InputOf("third")
@@ -59,7 +59,7 @@ public final class JoinedTest {
     public void fromIterable() {
         new Assertion<>(
             "Can't join iterable of inputs",
-            () -> new Joined(
+            new Joined(
                 new IterableOf<>(
                     new InputOf("ab"),
                     new InputOf("cde"),

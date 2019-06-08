@@ -45,7 +45,7 @@ public final class AsyncTest {
     public void runsInBackground() {
         new Assertion<>(
             "Can't run in the background",
-            () -> new Async<>(
+            new Async<>(
                 input -> {
                     TimeUnit.DAYS.sleep(1L);
                     return "done!";
@@ -64,7 +64,7 @@ public final class AsyncTest {
     public void runsAsProcInBackground() {
         new Assertion<>(
             "Can't run proc in the background",
-            () -> input -> {
+            input -> {
                 final CountDownLatch latch = new CountDownLatch(1);
                 new Async<>(
                     new FuncOf<>(ipt -> latch.countDown(), true)
@@ -83,7 +83,7 @@ public final class AsyncTest {
         final CountDownLatch latch = new CountDownLatch(1);
         new Assertion<>(
             "Can't run in the background without us touching the Future",
-            () -> new Async<>(
+            new Async<>(
                 new FuncOf<>(input -> latch.countDown(), true)
             ),
             new FuncApplies<>(
@@ -104,7 +104,7 @@ public final class AsyncTest {
         final CountDownLatch latch = new CountDownLatch(1);
         new Assertion<>(
             "Can't run in the background with specific thread factory",
-            () -> new Async<>(
+            new Async<>(
                 new FuncOf<>(
                     input -> {
                         if (!input.equals(Thread.currentThread().getName())) {
@@ -137,7 +137,7 @@ public final class AsyncTest {
         final CountDownLatch latch = new CountDownLatch(1);
         new Assertion<>(
             "Can't run in the background with specific thread executor",
-            () -> new Async<>(
+            new Async<>(
                 new FuncOf<>(
                     input -> {
                         if (!input.equals(Thread.currentThread().getName())) {

@@ -40,7 +40,7 @@ public final class ScalarEnvelopeTest {
     public void envelopeDelegatesCalls() {
         new Assertion<>(
             "must delegate calls to apply",
-            () -> new Static(1),
+            new Static(1),
             new ScalarHasValue<>(1)
         ).affirm();
     }

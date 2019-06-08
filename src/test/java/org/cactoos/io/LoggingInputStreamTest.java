@@ -59,7 +59,7 @@ public final class LoggingInputStreamTest {
     }
 
     @Test
-    public void readEmptyStream() {
+    public void readEmptyStream() throws IOException {
         final LoggingInputStream stream = new LoggingInputStream(
             new ByteArrayInputStream(
                 "".getBytes()
@@ -68,14 +68,14 @@ public final class LoggingInputStreamTest {
         );
         new Assertion<>(
             "Empty stream did not return -1",
-            stream::read,
+            stream.read(),
             // @checkstyle MagicNumberCheck (1 line)
             new IsEqual<>(-1)
         ).affirm();
     }
 
     @Test
-    public void readByteByByte() {
+    public void readByteByByte() throws IOException {
         final LoggingInputStream stream = new LoggingInputStream(
             new ByteArrayInputStream(
                 new byte[] {
@@ -88,19 +88,19 @@ public final class LoggingInputStreamTest {
         );
         new Assertion<>(
             "First byte was not 20",
-            stream::read,
+            stream.read(),
             // @checkstyle MagicNumberCheck (1 line)
             new IsEqual<>(20)
         ).affirm();
         new Assertion<>(
             "Second byte was not 10",
-            stream::read,
+            stream.read(),
             // @checkstyle MagicNumberCheck (1 line)
             new IsEqual<>(10)
         ).affirm();
         new Assertion<>(
             "When stream is exhausted it didn't return -1",
-            stream::read,
+            stream.read(),
             // @checkstyle MagicNumberCheck (1 line)
             new IsEqual<>(-1)
         ).affirm();

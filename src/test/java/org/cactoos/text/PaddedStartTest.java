@@ -39,7 +39,7 @@ public final class PaddedStartTest {
     public void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
         new Assertion<>(
             "Shouldn't pad the text",
-            () -> new PaddedStart(
+            new PaddedStart(
                 new TextOf("x"),
                 1,
                 '-'
@@ -52,7 +52,7 @@ public final class PaddedStartTest {
     public void somePaddingIfOrigTextIsShorterThanRequestedLength() {
         new Assertion<>(
             "Should pad chars at start",
-            () -> new PaddedStart(
+            new PaddedStart(
                 new TextOf("x"),
                 2,
                 '-'
@@ -65,7 +65,7 @@ public final class PaddedStartTest {
     public void noPaddingIfRequestedLengthIsNegative()  {
         new Assertion<>(
             "Shouldn't consider negative min length",
-            () -> new PaddedStart(
+            new PaddedStart(
                 new TextOf("x"),
                 -1,
                 '-'

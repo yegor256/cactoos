@@ -42,7 +42,7 @@ public final class SkippedTest {
     public void skipIterator() {
         new Assertion<>(
             "Can't skip elements in iterator",
-            () -> new IterableOf<>(
+            new IterableOf<>(
                 new Skipped<>(
                     2,
                     new IteratorOf<>(

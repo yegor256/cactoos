@@ -53,7 +53,7 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output to Output and return Input",
-            () -> new TeeInput(
+            new TeeInput(
                 new InputOf("Hello, товарищ!"),
                     new TeeOutput(
                         new OutputTo(baos),
@@ -71,7 +71,7 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output with writer",
-            () -> new TeeInput(
+            new TeeInput(
                 new InputOf("Hello, товарищ! writer"),
                 new TeeOutput(
                     new OutputTo(baos),
@@ -89,7 +89,7 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output with writer and charset",
-            () -> new TeeInput(
+            new TeeInput(
                 new InputOf(
                     "Hello, товарищ! writer and charset"
                 ),
@@ -152,7 +152,7 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output with output stream",
-            () -> new TeeInput(
+            new TeeInput(
                 new InputOf(
                     "Hello, товарищ! with output stream"
                 ),

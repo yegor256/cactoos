@@ -45,7 +45,7 @@ public final class SolidTest {
     public void behavesAsCollection() {
         new Assertion<>(
             "Can't behave as a collection",
-            () -> new Solid<>(1, 2, 0, -1),
+            new Solid<>(1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
         ).affirm();
     }
@@ -60,12 +60,12 @@ public final class SolidTest {
         );
         new Assertion<>(
             "Can't turn a mapped iterable into a list",
-            () -> list,
+            list,
             new IsCollectionWithSize<>(new IsEqual<>(4))
         ).affirm();
         new Assertion<>(
             "Can't turn a mapped iterable into a list, again",
-            () -> list,
+            list,
             new IsCollectionWithSize<>(new IsEqual<>(4))
         ).affirm();
     }
@@ -80,7 +80,7 @@ public final class SolidTest {
         );
         new Assertion<>(
             "Can't map only once",
-            () -> list.iterator().next(),
+            list.iterator().next(),
             new IsEqual<>(list.iterator().next())
         ).affirm();
     }
@@ -89,10 +89,10 @@ public final class SolidTest {
     public void worksInThreads() {
         new Assertion<>(
             "Can't behave as a collection in multiple threads",
-            () -> list -> {
+            list -> {
                 new Assertion<>(
                     "Must behave as collection",
-                    () -> list,
+                    list,
                     new BehavesAsCollection<>(0)
                 ).affirm();
                 return true;

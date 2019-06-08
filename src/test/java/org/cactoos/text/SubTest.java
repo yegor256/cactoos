@@ -39,7 +39,7 @@ public final class SubTest {
         new Assertion<>(
             "Can't cut a text with start and end",
             // @checkstyle MagicNumber (1 line)
-            () -> new Sub("hello world", 2, 50),
+            new Sub("hello world", 2, 50),
             new TextHasString("llo world")
         ).affirm();
     }
@@ -48,7 +48,7 @@ public final class SubTest {
     public void cutTextWithStart() {
         new Assertion<>(
             "Can't cut a text with start",
-            () -> new Sub("cut here", 2),
+            new Sub("cut here", 2),
             new TextHasString("t here")
         ).affirm();
     }

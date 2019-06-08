@@ -115,7 +115,7 @@ public final class TextOfTest {
         final String text = "Hi there! with small buffer";
         new Assertion<>(
             "Can't read text from Reader with a small reading buffer",
-            () -> new TextOf(text),
+            new TextOf(text),
             new TextIs(
                 new TextOf(
                     new StringReader(text), 2, StandardCharsets.UTF_8
@@ -335,7 +335,7 @@ public final class TextOfTest {
         final LocalDate date = LocalDate.of(2017, 12, 13);
         new Assertion<>(
             "Can't format a LocalDate with format.",
-            () -> new TextOf(date, "yyyy-MM-dd HH:mm:ss"),
+            new TextOf(date, "yyyy-MM-dd HH:mm:ss"),
             new TextIs("2017-12-13 00:00:00")
         ).affirm();
     }
@@ -345,7 +345,7 @@ public final class TextOfTest {
         final LocalDate date = LocalDate.of(2017, 12, 13);
         new Assertion<>(
             "Can't format a LocalDate with format using locale.",
-            () -> new TextOf(
+            new TextOf(
                 date, "yyyy MMM dd. HH.mm.ss", Locale.FRENCH
             ),
             new TextIs("2017 déc. 13. 00.00.00")
@@ -357,7 +357,7 @@ public final class TextOfTest {
         final LocalDate date = LocalDate.of(2017, 12, 13);
         new Assertion<>(
             "Can't format a LocalDate with default/ISO format.",
-            () -> new TextOf(date),
+            new TextOf(date),
             new TextIs(
                 MessageFormat.format(
                 "2017-12-13T00:00:00{0}",
@@ -372,7 +372,7 @@ public final class TextOfTest {
     public void readsCurrentLocalDateAsText() throws IOException {
         new Assertion<>(
             "Can't format a LocalDate with ISO format.",
-            () -> new TextOf(LocalDate.now()).asString(),
+            new TextOf(LocalDate.now()).asString(),
             new IsNot<>(new IsBlank())
         );
     }
@@ -384,7 +384,7 @@ public final class TextOfTest {
         );
         new Assertion<>(
             "Can't format a LocalDateTime with default/ISO format.",
-            () -> new TextOf(date),
+            new TextOf(date),
             new TextIs(
                 MessageFormat.format(
                     "2017-12-13T14:15:16.000000017{0}",
@@ -401,7 +401,7 @@ public final class TextOfTest {
         );
         new Assertion<>(
             "Can't format a LocalDateTime with format.",
-            () -> new TextOf(date, "yyyy-MM-dd HH:mm:ss"),
+            new TextOf(date, "yyyy-MM-dd HH:mm:ss"),
             new TextIs("2017-12-13 14:15:16")
         ).affirm();
     }
@@ -413,7 +413,7 @@ public final class TextOfTest {
         );
         new Assertion<>(
             "Can't format a LocalDateTime with format using locale.",
-            () -> new TextOf(
+            new TextOf(
                 date, "yyyy MMM dd. HH.mm.ss", Locale.FRENCH
             ),
             new TextIs("2017 déc. 13. 14.15.16")
@@ -421,10 +421,10 @@ public final class TextOfTest {
     }
 
     @Test
-    public void currentLocalDateTimeAsText() {
+    public void currentLocalDateTimeAsText() throws IOException {
         new Assertion<>(
             "Can't format a LocalDateTime with ISO format.",
-            () -> new TextOf(LocalDateTime.now()).asString(),
+            new TextOf(LocalDateTime.now()).asString(),
             new IsNot<>(new IsNull<>())
         ).affirm();
     }
@@ -439,7 +439,7 @@ public final class TextOfTest {
             .getRules().getOffset(calendar.toInstant());
         new Assertion<>(
             "Can't format a java.util.Date with ISO format.",
-            () -> new TextOf(calendar.getTime()),
+            new TextOf(calendar.getTime()),
             new TextIs("2017-12-13T14:15:16.017" + offset)
         ).affirm();
     }
@@ -451,7 +451,7 @@ public final class TextOfTest {
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
         new Assertion<>(
             "Can't format a java.util.Date with custom format.",
-            () -> new TextOf(
+            new TextOf(
                 calendar.getTime(), "yyyy MM dd hh:mm:ss"
             ),
             new TextIs("2017 12 13 02:15:16")
@@ -465,7 +465,7 @@ public final class TextOfTest {
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
         new Assertion<>(
             "Can't format a java.util.Date with custom format.",
-            () -> new TextOf(
+            new TextOf(
                 calendar.getTime(), "yyyy MMM dd hh:mm:ss", Locale.ITALIAN
             ),
             new TextIs("2017 dic 13 02:15:16")
@@ -479,7 +479,7 @@ public final class TextOfTest {
         );
         new Assertion<>(
             "Can't format a OffsetDateTime with default/ISO format.",
-            () -> new TextOf(date),
+            new TextOf(date),
             new TextIs("2017-12-13T14:15:16.000000017+01:00")
         ).affirm();
     }
@@ -491,7 +491,7 @@ public final class TextOfTest {
         );
         new Assertion<>(
             "Can't format a OffsetDateTime with format.",
-            () -> new TextOf(date, "yyyy-MM-dd HH:mm:ss"),
+            new TextOf(date, "yyyy-MM-dd HH:mm:ss"),
             new TextIs("2017-12-13 14:15:16")
         ).affirm();
     }
@@ -503,7 +503,7 @@ public final class TextOfTest {
         );
         new Assertion<>(
             "Can't format a OffsetDateTime with format using locale.",
-            () -> new TextOf(
+            new TextOf(
                 date, "yyyy MMM dd. HH.mm.ss", Locale.FRENCH
             ),
             new TextIs("2017 déc. 13. 14.15.16")
@@ -511,10 +511,10 @@ public final class TextOfTest {
     }
 
     @Test
-    public void currentOffsetDateTimeAsText() {
+    public void currentOffsetDateTimeAsText() throws IOException {
         new Assertion<>(
             "Can't format a OffsetDateTime with ISO format.",
-            () -> new TextOf(OffsetDateTime.now()).asString(),
+            new TextOf(OffsetDateTime.now()).asString(),
             new IsNot<>(new IsNull<>())
         ).affirm();
     }
@@ -526,7 +526,7 @@ public final class TextOfTest {
         );
         new Assertion<>(
             "Can't format a ZonedDateTime with default/ISO format.",
-            () -> new TextOf(date),
+            new TextOf(date),
             new TextIs("2017-12-13T14:15:16.000000017+01:00")
         ).affirm();
     }
@@ -538,7 +538,7 @@ public final class TextOfTest {
         );
         new Assertion<>(
             "Can't format a ZonedDateTime with format.",
-            () -> new TextOf(date, "yyyy-MM-dd HH:mm:ss"),
+            new TextOf(date, "yyyy-MM-dd HH:mm:ss"),
             new TextIs("2017-12-13 14:15:16")
         ).affirm();
     }
@@ -550,7 +550,7 @@ public final class TextOfTest {
         );
         new Assertion<>(
             "Can't format a ZonedDateTime with format using locale.",
-            () -> new TextOf(
+            new TextOf(
                 date, "yyyy MMM dd. HH.mm.ss", Locale.FRENCH
             ),
             new TextIs("2017 déc. 13. 14.15.16")
@@ -558,10 +558,10 @@ public final class TextOfTest {
     }
 
     @Test
-    public void currentZonedDateTimeAsText() {
+    public void currentZonedDateTimeAsText() throws IOException {
         new Assertion<>(
             "Can't format a ZonedDateTime with ISO format.",
-            () -> new TextOf(ZonedDateTime.now()).asString(),
+            new TextOf(ZonedDateTime.now()).asString(),
             new IsNot<>(new IsNull<>())
         ).affirm();
     }

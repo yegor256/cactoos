@@ -132,7 +132,7 @@ public final class ListEnvelopeTest {
             "List iterator returns incorrect previous index",
             new ListIteratorOf<>(
                 new ListOf<>(1)
-            )::previousIndex,
+            ).previousIndex(),
             new IsEqual<>(-1)
         ).affirm();
     }
@@ -144,7 +144,7 @@ public final class ListEnvelopeTest {
             new ListIteratorOf<>(
                 new ListOf<>(3, 7),
                 1
-            )::previous,
+            ).previous(),
             new IsEqual<>(3)
         ).affirm();
     }
@@ -155,7 +155,7 @@ public final class ListEnvelopeTest {
             "List iterator returns incorrect next index",
             new ListIteratorOf<>(
                 new ListOf<>(1)
-            )::nextIndex,
+            ).nextIndex(),
             new IsEqual<>(0)
         ).affirm();
     }
@@ -167,7 +167,7 @@ public final class ListEnvelopeTest {
             new ListIteratorOf<>(
                 new ListOf<>(5, 11, 13),
                 1
-            )::next,
+            ).next(),
             new IsEqual<>(11)
         ).affirm();
     }

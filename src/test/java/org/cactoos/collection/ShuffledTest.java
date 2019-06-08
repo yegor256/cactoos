@@ -41,7 +41,7 @@ public final class ShuffledTest {
     public void behavesAsCollection() {
         new Assertion<>(
             "Can't behave as a collection",
-            () -> new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
+            new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
             new BehavesAsCollection<>(0)
         ).affirm();
     }
@@ -50,7 +50,7 @@ public final class ShuffledTest {
     public void shufflesCollection() {
         new Assertion<>(
             "Can't shuffle elements in collection",
-            () -> new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
+            new Shuffled<>(new ListOf<Integer>(1, 2, 0, -1)),
             new IsCollectionContaining<>(new IsEqual<>(-1))
         ).affirm();
     }
@@ -59,7 +59,7 @@ public final class ShuffledTest {
     public void shufflesArray() {
         new Assertion<>(
             "Can't shuffle elements in array",
-            () -> new Shuffled<>(1, 2, 0, -1),
+            new Shuffled<>(1, 2, 0, -1),
             new IsCollectionContaining<>(new IsEqual<>(-1))
         ).affirm();
     }
@@ -68,7 +68,7 @@ public final class ShuffledTest {
     public void shufflesIterable() {
         new Assertion<>(
             "Can't shuffle elements in iterable",
-            () -> new Shuffled<>(new IterableOf<>(1, 2, 0, -1)),
+            new Shuffled<>(new IterableOf<>(1, 2, 0, -1)),
             new IsCollectionContaining<>(new IsEqual<>(-1))
         ).affirm();
     }

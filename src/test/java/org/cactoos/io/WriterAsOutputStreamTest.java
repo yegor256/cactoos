@@ -32,14 +32,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsNot;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
-import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link WriterAsOutputStream}.
@@ -62,7 +61,7 @@ public final class WriterAsOutputStreamTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Input to Writer",
-            () -> new TeeInput(
+            new TeeInput(
                 new InputOf(content),
                 new OutputTo(
                     new WriterAsOutputStream(
@@ -90,7 +89,7 @@ public final class WriterAsOutputStreamTest {
         )) {
             new Assertion<>(
                 "Can't copy Input to Output and return Input",
-                () -> new TeeInput(
+                new TeeInput(
                     new ResourceOf("org/cactoos/large-text.txt"),
                     new OutputTo(
                         new WriterAsOutputStream(
@@ -130,9 +129,10 @@ public final class WriterAsOutputStreamTest {
             ).value();
         }
         Files.delete(temp);
-        MatcherAssert.assertThat(
-            () -> Files.exists(temp),
-            new ScalarHasValue<>(new MatcherOf<Boolean>(value -> !value))
-        );
+        new Assertion<>(
+            "file must not exist anymore",
+            Files.exists(temp),
+            new IsNot<>(new IsTrue())
+        ).affirm();
     }
 }

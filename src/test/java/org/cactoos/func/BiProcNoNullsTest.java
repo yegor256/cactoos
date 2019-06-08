@@ -64,7 +64,7 @@ public final class BiProcNoNullsTest {
         ).exec(counter, new Object());
         new Assertion<>(
             "Can't invoke the \"BiProc.exec\" method",
-            counter::get,
+            counter.get(),
             new IsEqual<>(1)
         ).affirm();
     }

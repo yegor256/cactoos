@@ -46,7 +46,7 @@ public final class CallableOfTest {
         ).call();
         new Assertion<>(
             "must have been set by callable",
-            flag::get,
+            flag.get(),
             new IsEqual<>(true)
         ).affirm();
     }
@@ -62,12 +62,12 @@ public final class CallableOfTest {
                 },
                 true,
                 false
-            )::call,
+            ).call(),
             new IsEqual<>(false)
         ).affirm();
         new Assertion<>(
             "must have been set by callable",
-            flag::get,
+            flag.get(),
             new IsEqual<>(true)
         ).affirm();
     }
@@ -79,7 +79,7 @@ public final class CallableOfTest {
             new CallableOf<>(
                 num -> num + 1,
                 1
-            )::call,
+            ).call(),
             new IsEqual<>(2)
         ).affirm();
     }

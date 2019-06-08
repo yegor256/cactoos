@@ -43,7 +43,7 @@ public final class FuncEnvelopeTest {
     public void envelopeDelegatesCalls() {
         new Assertion<>(
             "must delegate calls to apply",
-            () -> new Append(" stuff"),
+            new Append(" stuff"),
             new FuncApplies<>(2, new TextIs("2 stuff"))
         ).affirm();
     }

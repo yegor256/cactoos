@@ -40,7 +40,7 @@ public final class SumOfDoubleTest {
     public void withListOfScalarsInt() {
         new Assertion<>(
             "must sum scalars",
-            () -> new SumOfDouble(() -> 1.1, () -> 2.1, () -> 3.1),
+            new SumOfDouble(() -> 1.1, () -> 2.1, () -> 3.1),
             new ScalarHasValue<>(6.3)
         ).affirm();
     }
@@ -49,7 +49,7 @@ public final class SumOfDoubleTest {
     public void withEmptyList() {
         new Assertion<>(
             "must sum empty list to 0",
-            () -> new SumOfDouble(),
+            new SumOfDouble(),
             new ScalarHasValue<>(0.0)
         ).affirm();
     }
@@ -58,7 +58,7 @@ public final class SumOfDoubleTest {
     public void withListOfOneElement() {
         new Assertion<>(
             "must sum singleton list",
-            () ->  new SumOfDouble(() -> 5.1),
+            new SumOfDouble(() -> 5.1),
             new ScalarHasValue<>(5.1)
         ).affirm();
     }

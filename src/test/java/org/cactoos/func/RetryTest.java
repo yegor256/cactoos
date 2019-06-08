@@ -44,7 +44,7 @@ public final class RetryTest {
     public void runsFuncMultipleTimes() {
         new Assertion<>(
             "Didn't run multiple times",
-            () -> new Retry<>(
+            new Retry<>(
                 input -> {
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");
@@ -61,7 +61,7 @@ public final class RetryTest {
     public void runsFuncConditionMultipleTimes() {
         new Assertion<>(
             "Didn't check condition multiple times",
-            () -> new Retry<>(
+            new Retry<>(
                 input -> {
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");

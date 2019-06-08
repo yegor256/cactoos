@@ -41,7 +41,7 @@ public final class CollectionOfTest {
     public void behavesAsCollection() {
         new Assertion<>(
             "Can't behave as a collection",
-            () -> new CollectionOf<>(1, 2, 0, -1),
+            new CollectionOf<>(1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
         ).affirm();
     }
@@ -50,7 +50,7 @@ public final class CollectionOfTest {
     public void buildsCollectionFromIterable() {
         new Assertion<>(
             "Can't build a collection from iterable",
-            () -> new CollectionOf<>(
+            new CollectionOf<>(
                 new ListOf<>(
                     new IterableOf<>(1, 2, 0, -1)
                 )
@@ -63,7 +63,7 @@ public final class CollectionOfTest {
     public void testToString() {
         new Assertion<>(
             "Wrong toString output. Expected \"[1, 2, 0, -1]\".",
-            () -> new CollectionOf<>(
+            new CollectionOf<>(
                 new ListOf<>(1, 2, 0, -1)
             ).toString(),
             new IsEqual<>("[1, 2, 0, -1]")
@@ -74,7 +74,7 @@ public final class CollectionOfTest {
     public void testToStringEmpty() {
         new Assertion<>(
             "Wrong toString output. Expected \"[]\".",
-            () -> new CollectionOf<>(new ListOf<>()).toString(),
+            new CollectionOf<>(new ListOf<>()).toString(),
             new IsEqual<>("[]")
         ).affirm();
     }

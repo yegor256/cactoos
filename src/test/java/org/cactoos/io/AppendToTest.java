@@ -82,7 +82,7 @@ public final class AppendToTest {
         new AppendTo(source).stream().write(second.getBytes());
         new Assertion<>(
             "Does not contain expected text",
-            () -> new InputOf(source),
+            new InputOf(source),
             new InputHasContent(new Joined("", first, second))
         ).affirm();
     }
@@ -104,7 +104,7 @@ public final class AppendToTest {
             .write(second.getBytes(StandardCharsets.UTF_8));
         new Assertion<>(
             "Can't find expected unicode text content",
-            () -> new InputOf(source),
+            new InputOf(source),
             new InputHasContent(new Joined("", first, second))
         ).affirm();
     }

@@ -48,7 +48,7 @@ public final class JoinedTest {
     public void behavesAsCollection() {
         new Assertion<>(
             "Can't behave as a collection",
-            () -> new Joined<Integer>(
+            new Joined<Integer>(
                 new IterableOf<>(1, -1, 2, 0),
                 new IterableOf<>(1, -1, 2, 0),
                 new IterableOf<>(1, -1, 2, 0)
@@ -61,7 +61,7 @@ public final class JoinedTest {
     public void size() {
         new Assertion<>(
             "Must have correct size",
-            () -> new Joined<String>(
+            new Joined<String>(
                 new IterableOf<>("hello", "world", "друг"),
                 new IterableOf<>("how", "are", "you"),
                 new IterableOf<>("what's", "up")
@@ -74,7 +74,7 @@ public final class JoinedTest {
     public void sizeEmptyReturnZero() {
         new Assertion<>(
             "Size must be 0",
-            () -> new Joined<String>(
+            new Joined<String>(
                 Collections.emptyList()
             ),
             new IsCollectionWithSize<>(new IsEqual<>(0))
@@ -85,7 +85,7 @@ public final class JoinedTest {
     public void withItemsNotEmpty() {
         new Assertion<>(
             "Must be not empty",
-            () -> new Joined<String>(
+            new Joined<String>(
                 new IterableOf<>("1", "2"),
                 new IterableOf<>("3", "4")
             ),
@@ -97,7 +97,7 @@ public final class JoinedTest {
     public void withoutItemsIsEmpty() {
         new Assertion<>(
             "Must be empty",
-            () -> new Joined<String>(
+            new Joined<String>(
                 Collections.emptyList()
             ),
             new IsEmptyCollection<>()

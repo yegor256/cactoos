@@ -58,7 +58,7 @@ public final class WriterAsOutputTest {
         )) {
             new Assertion<>(
                 "Can't copy Input to Output and return Input",
-                () -> new TeeInput(
+                new TeeInput(
                     new ResourceOf("org/cactoos/large-text.txt"),
                     new WriterAsOutput(writer)
                 ),

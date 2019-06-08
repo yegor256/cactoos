@@ -43,7 +43,7 @@ public final class ItemAtTest {
     public void elementByPosIterableTest() {
         new Assertion<>(
             "must take the item by position from the iterable",
-            () -> new ItemAt<>(
+            new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
                 1, new IterableOf<>(1, 2, 3)
             ),
@@ -56,7 +56,7 @@ public final class ItemAtTest {
         final int fallback = 5;
         new Assertion<>(
             "must fallback to default one",
-            () -> new ItemAt<>(
+            new ItemAt<>(
                 1, fallback, new IterableOf<>()
             ),
             new ScalarHasValue<>(fallback)
@@ -67,7 +67,7 @@ public final class ItemAtTest {
     public void elementByPosNoFallbackIterableTest() {
         new Assertion<>(
             "must take the item by position from the iterable",
-            () -> new ItemAt<>(
+            new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
                 1, 5, new IterableOf<>(0, 1)
             ),
@@ -79,7 +79,7 @@ public final class ItemAtTest {
     public void elementByPosTest() {
         new Assertion<>(
             "must take the item by position from the iterator",
-            () -> new ItemAt<>(
+            new ItemAt<>(
                 1,
                 // @checkstyle MagicNumber (1 line)
                 new IterableOf<>(1, 2, 3)
@@ -129,7 +129,7 @@ public final class ItemAtTest {
         );
         new Assertion<>(
             "Not the same value",
-            () -> item,
+            item,
             new ScalarHasValue<>(item.value())
         ).affirm();
     }

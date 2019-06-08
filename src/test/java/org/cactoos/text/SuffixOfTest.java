@@ -43,7 +43,7 @@ public final class SuffixOfTest {
     public void returnsEmptyIfThereIsNoBoundary() {
         new Assertion<>(
             "Given string is not empty",
-            () -> new SuffixOf("Cactoos with description", "after"),
+            new SuffixOf("Cactoos with description", "after"),
             new TextIs("")
         ).affirm();
     }
@@ -56,7 +56,7 @@ public final class SuffixOfTest {
     public void returnsEmptyIfStringIsBoundary() {
         new Assertion<>(
             "Given string is not empty",
-            () -> new SuffixOf("Boundary", "Boundary"),
+            new SuffixOf("Boundary", "Boundary"),
             new TextIs("")
         ).affirm();
     }
@@ -69,7 +69,7 @@ public final class SuffixOfTest {
     public void returnsAfterBoundaryString() {
         new Assertion<>(
             "Given strings are not equal",
-            () -> new SuffixOf("Anti-pattern", "Anti-"),
+            new SuffixOf("Anti-pattern", "Anti-"),
             new TextIs("pattern")
         ).affirm();
     }

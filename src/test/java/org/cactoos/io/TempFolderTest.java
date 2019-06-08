@@ -38,15 +38,15 @@ import org.llorllale.cactoos.matchers.IsTrue;
 public final class TempFolderTest {
 
     @Test
-    public void createsDirectory() {
-        new Assertion<>(
-            "Can not create new directory",
-            () -> {
-                final File dir = new TempFolder().value().toFile();
-                return dir.exists() && dir.isDirectory();
-            },
-            new IsTrue()
-        ).affirm();
+    public void createsDirectory() throws Exception {
+        try (final TempFolder folder = new TempFolder()) {
+            final File dir = folder.value().toFile();
+            new Assertion<>(
+                "must create new directory",
+                dir.exists() && dir.isDirectory(),
+                new IsTrue()
+            ).affirm();
+        }
     }
 
     @Test
@@ -57,7 +57,7 @@ public final class TempFolderTest {
         dir.close();
         new Assertion<>(
             "Can't delete folder while closing",
-            () -> !dir.value().toFile().exists(),
+            !dir.value().toFile().exists(),
             new IsTrue()
         ).affirm();
     }

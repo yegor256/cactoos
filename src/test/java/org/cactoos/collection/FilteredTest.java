@@ -45,7 +45,7 @@ public final class FilteredTest {
     public void behavesAsCollection() {
         new Assertion<>(
             "Can't behave as a collection",
-            () -> new Filtered<Integer>(i -> i < 2, 1, 2, 0, -1),
+            new Filtered<Integer>(i -> i < 2, 1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
         ).affirm();
     }
@@ -54,7 +54,7 @@ public final class FilteredTest {
     public void filterEmptyList() {
         new Assertion<>(
             "Filter must work on empty collection",
-            () -> new Filtered<String>(
+            new Filtered<String>(
                 input -> input.length() > 4,
                 new ListOf<>()
             ),
@@ -66,7 +66,7 @@ public final class FilteredTest {
     public void size() {
         new Assertion<>(
             "Size must be equal to number of items matching the filter",
-            () -> new Filtered<String>(
+            new Filtered<String>(
                 input -> input.length() >= 4,
                 new IterableOf<>("some", "text", "yes")
             ).size(),
@@ -78,7 +78,7 @@ public final class FilteredTest {
     public void withItemsNotEmpty() {
         new Assertion<>(
             "Must not be empty with items",
-            () -> new Filtered<String>(
+            new Filtered<String>(
                 input -> input.length() > 4,
                 new IterableOf<>("first", "second")
             ),
@@ -90,7 +90,7 @@ public final class FilteredTest {
     public void withoutItemsIsEmpty() {
         new Assertion<>(
             "Must be empty without items",
-            () -> new Filtered<String>(
+            new Filtered<String>(
                 input -> input.length() > 16,
                 new IterableOf<>("third", "fourth")
             ),

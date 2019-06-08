@@ -38,7 +38,7 @@ public final class SyncedTest {
     public void behavesAsCollection() {
         new Assertion<>(
             "Can't behave as a collection",
-            () -> new Synced<>(1, 2, 0, -1),
+            new Synced<>(1, 2, 0, -1),
             new BehavesAsCollection<>(-1)
         ).affirm();
     }
@@ -47,10 +47,10 @@ public final class SyncedTest {
     public void worksInThreads() {
         new Assertion<>(
             "Can't behave as a collection in multiple threads",
-            () -> list -> {
+            list -> {
                 new Assertion<>(
                     "Must contain 0",
-                    () -> list,
+                    list,
                     new BehavesAsCollection<>(0)
                 ).affirm();
                 return true;

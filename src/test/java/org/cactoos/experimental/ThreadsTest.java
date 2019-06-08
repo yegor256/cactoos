@@ -58,7 +58,7 @@ public final class ThreadsTest {
                 try {
                     new Assertion<>(
                         "contains results from callables",
-                        () -> new Threads<String>(
+                        new Threads<String>(
                             extor,
                             () -> {
                                 this.sleep();
@@ -116,7 +116,7 @@ public final class ThreadsTest {
             arg -> new Assertion<>(
                 // @checkstyle LineLength (1 line)
                 "contains results from the callables when using the inline executor service",
-                () -> new Threads<String>(
+                new Threads<String>(
                     3,
                     () -> {
                         this.sleep();

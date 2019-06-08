@@ -64,7 +64,7 @@ public final class BehavesAsCollection<E> extends
     public boolean matchesSafely(final Collection<E> col) {
         new Assertion<>(
             "Must contain item",
-            () -> col,
+            col,
             new IsCollectionContaining<>(
                 new IsEqual<>(
                     this.sample
@@ -73,21 +73,21 @@ public final class BehavesAsCollection<E> extends
         ).affirm();
         new Assertion<>(
             "Must not be empty",
-            () -> col,
+            col,
             new IsNot<>(
                 new IsEmptyCollection<>()
             )
         ).affirm();
         new Assertion<>(
             "Size must be more than 0",
-            () -> col,
+            col,
             new IsCollectionWithSize<>(
                 new MatcherOf<>(s -> s > 0)
             )
         ).affirm();
         new Assertion<>(
             "Array must contain item",
-            () -> new ListOf<>(
+            new ListOf<>(
                 (E[]) col.toArray()
             ),
             new IsCollectionContaining<>(
@@ -98,14 +98,14 @@ public final class BehavesAsCollection<E> extends
         col.toArray(array);
         new Assertion<>(
             "Array from collection must contain item",
-            () -> new ListOf<>(array),
+            new ListOf<>(array),
             new IsCollectionContaining<>(
                 new IsEqual<>(this.sample)
             )
         ).affirm();
         new Assertion<>(
             "Must contain list with the item",
-            () -> col.containsAll(
+            col.containsAll(
                 new ListOf<>(this.sample)
             ),
             new IsEqual<>(true)

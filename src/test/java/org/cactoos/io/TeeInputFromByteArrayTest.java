@@ -29,7 +29,6 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.llorllale.cactoos.matchers.TeeInputHasResult;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use byte array as an

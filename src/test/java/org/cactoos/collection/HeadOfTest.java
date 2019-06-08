@@ -44,7 +44,7 @@ public final class HeadOfTest {
     public void headCollection() {
         new Assertion<>(
             "Can't skip elements in iterable",
-            () -> new HeadOf<>(
+            new HeadOf<>(
                 3,
                 "one", "two", "three", "four"
             ),

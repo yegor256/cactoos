@@ -39,7 +39,7 @@ public final class ReversedTest {
     public void reverseText() {
         new Assertion<>(
             "Can't reverse a text",
-            () -> new Reversed(
+            new Reversed(
                 new TextOf("Hello!")
             ),
             new TextHasString("!olleH")
@@ -50,7 +50,7 @@ public final class ReversedTest {
     public void reversedEmptyTextIsEmptyText() {
         new Assertion<>(
             "Can't reverse empty text",
-            () -> new Reversed(
+            new Reversed(
                 new TextOf("")
             ),
             new TextHasString("")

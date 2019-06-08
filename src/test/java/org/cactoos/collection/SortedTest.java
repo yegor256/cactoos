@@ -43,7 +43,7 @@ public final class SortedTest {
     public void behavesAsCollection() {
         new Assertion<>(
             "Can't behave as a collection",
-            () -> new Sorted<>(new ListOf<Integer>(1, 2, 0, -1)),
+            new Sorted<>(new ListOf<Integer>(1, 2, 0, -1)),
             new BehavesAsCollection<>(0)
         ).affirm();
     }
@@ -53,7 +53,7 @@ public final class SortedTest {
     public void sortsCollection() {
         new Assertion<>(
             "Can't sort elements in collection",
-            () -> new Sorted<>(
+            new Sorted<>(
                 new ListOf<>(
                     "one", "two", "three", "four"
                 )

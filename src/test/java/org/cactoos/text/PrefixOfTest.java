@@ -43,7 +43,7 @@ public final class PrefixOfTest {
     public void returnsInputIfThereIsNoBoundary() {
         new Assertion<>(
             "Given strings are not equal",
-            () -> new PrefixOf("Cactoos", "bnd"),
+            new PrefixOf("Cactoos", "bnd"),
             new TextIs("Cactoos")
         ).affirm();
     }
@@ -56,7 +56,7 @@ public final class PrefixOfTest {
     public void returnsEmptyIfStringIsBoundary() {
         new Assertion<>(
             "Given string is not empty",
-            () -> new PrefixOf("Boundary", "Boundary"),
+            new PrefixOf("Boundary", "Boundary"),
             new TextIs("")
         ).affirm();
     }
@@ -69,7 +69,7 @@ public final class PrefixOfTest {
     public void returnsBeforeBoundaryString() {
         new Assertion<>(
             "Given strings are not equal",
-            () -> new PrefixOf("Anti-pattern", "-pattern"),
+            new PrefixOf("Anti-pattern", "-pattern"),
             new TextIs("Anti")
         ).affirm();
     }

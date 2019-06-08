@@ -44,7 +44,7 @@ public final class RandomizedTest {
     public void generatesRandomTextOfRandomLength() {
         new Assertion<>(
             "Generated text is empty",
-            () -> new Randomized().asString().length(),
+            new Randomized().asString().length(),
             Matchers.greaterThan(0)
         ).affirm();
     }
@@ -53,7 +53,7 @@ public final class RandomizedTest {
     public void generatesRandomTextOfSpecifiedLength() {
         new Assertion<>(
             "Generated text has incorrect length",
-            () -> new Randomized(512).asString().length(),
+            new Randomized(512).asString().length(),
             new IsEqual<>(512)
         ).affirm();
     }
@@ -62,7 +62,7 @@ public final class RandomizedTest {
     public void generatesRandomTextOfSpecifiedChars() {
         new Assertion<>(
             "Generated text contains not allowed characters",
-            () -> new Randomized('a')
+            new Randomized('a')
                 .asString()
                 .replaceAll("a", "")
                 .length(),
@@ -74,7 +74,7 @@ public final class RandomizedTest {
     public void generatesRandomTextOfSpecifiedCharsAndLength() {
         new Assertion<>(
             "Generated text doesn't match specification",
-            () -> new Randomized(10, 'a'),
+            new Randomized(10, 'a'),
             new TextHasString("aaaaaaaaaa")
         ).affirm();
     }

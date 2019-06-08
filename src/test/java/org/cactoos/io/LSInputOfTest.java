@@ -40,7 +40,7 @@ public final class LSInputOfTest {
     public void readsSimpleInput() {
         new Assertion<>(
             "Can't read simple input",
-            () -> new LSInputOf(
+            new LSInputOf(
                 new InputOf("hello, world!")
             ).getStringData(),
             Matchers.endsWith("world!")
@@ -52,7 +52,7 @@ public final class LSInputOfTest {
         final int size = 400_000;
         new Assertion<>(
             "Can't read bigger input",
-            () -> new LSInputOf(
+            new LSInputOf(
                 new InputOf(
                     new SlowInputStream(size)
                 )
@@ -66,7 +66,7 @@ public final class LSInputOfTest {
         final int size = 300_000;
         new Assertion<>(
             "Can't count bytes in a bigger input",
-            () -> new LSInputOf(
+            new LSInputOf(
                 new InputOf(
                     new SlowInputStream(size)
                 )

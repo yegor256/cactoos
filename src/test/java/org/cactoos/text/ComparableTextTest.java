@@ -43,7 +43,7 @@ public final class ComparableTextTest {
     public void comparesWithASubtext() {
         new Assertion<>(
             "Can't compare sub texts",
-            () -> new ComparableText(
+            new ComparableText(
                 new TextOf(
                     "here to there"
                 )
@@ -62,7 +62,7 @@ public final class ComparableTextTest {
         final String txt = "foobar";
         new Assertion<>(
             "These UncheckedText are not equal",
-            () -> new ComparableText(
+            new ComparableText(
                 new UncheckedText(
                     new TextOf(txt)
                 )
@@ -78,7 +78,7 @@ public final class ComparableTextTest {
         final Text text = new TextOf("text");
         new Assertion<>(
             "Does not equal to itself",
-            () -> text,
+            text,
             new TextIs(text)
         ).affirm();
     }
@@ -90,12 +90,12 @@ public final class ComparableTextTest {
         final Text expected = new ComparableText(text);
         new Assertion<>(
             "Does not equal to a comparable text made from the same Text",
-            () -> actual,
+            actual,
             new IsEqual<>(expected)
         ).affirm();
         new Assertion<>(
             "Hash codes of the equal objects are not equal",
-            actual::hashCode,
+            actual.hashCode(),
             new IsEqual<>(
                 expected.hashCode()
             )
@@ -109,7 +109,7 @@ public final class ComparableTextTest {
         );
         new Assertion<>(
             "Is equal to the completely different object",
-            () -> text,
+            text,
             new IsNot<>(
                 new IsEqual<>(
                     "The string is ignored"
@@ -118,7 +118,7 @@ public final class ComparableTextTest {
         ).affirm();
         new Assertion<>(
             "Is equal to the completely different text",
-            () -> text,
+            text,
             new IsNot<>(
                 new TextIs(
                     "The text is ignored"
@@ -127,7 +127,7 @@ public final class ComparableTextTest {
         ).affirm();
         new Assertion<>(
             "Is equal to the different ComparableText",
-            () -> text,
+            text,
             new IsNot<>(
                 new IsEqual<>(
                     new ComparableText(
@@ -138,7 +138,7 @@ public final class ComparableTextTest {
         ).affirm();
         new Assertion<>(
             "The string is equal to the different ComparableText",
-            () -> text,
+            text,
             new IsNot<>(
                 new TextIs(
                     new ComparableText(

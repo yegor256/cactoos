@@ -52,7 +52,7 @@ public final class WriterToTest {
             .toPath();
         new Assertion<>(
             "Can't copy Input to Output and return Input",
-            () -> new TeeInput(
+            new TeeInput(
                 new ResourceOf("org/cactoos/large-text.txt"),
                 new WriterAsOutput(new WriterTo(temp))
             ),

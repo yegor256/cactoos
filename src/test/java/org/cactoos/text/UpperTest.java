@@ -38,7 +38,7 @@ public final class UpperTest {
     public void convertsText() {
         new Assertion<>(
             "Can't upper case a text",
-            () -> new Upper(new TextOf("Hello!")),
+            new Upper(new TextOf("Hello!")),
             new TextHasString("HELLO!")
         ).affirm();
     }
@@ -47,7 +47,7 @@ public final class UpperTest {
     public void convertsString() {
         new Assertion<>(
             "Can't upper case a string",
-            () -> new Upper("World!"),
+            new Upper("World!"),
             new TextHasString("WORLD!")
         ).affirm();
     }

@@ -50,7 +50,7 @@ public final class HeadInputStreamTest {
         stream.skip(3L);
         new Assertion<>(
             "Incorrect head of the input stream has been read",
-            () -> new InputOf(stream),
+            new InputOf(stream),
             new InputHasContent("tS")
         ).affirm();
     }
@@ -65,7 +65,7 @@ public final class HeadInputStreamTest {
         final String input = new TextOf(stream).asString();
         new Assertion<>(
             "The result text wasn't empty",
-            () -> new TextOf(input),
+            new TextOf(input),
             new TextIs("")
         ).affirm();
     }
@@ -80,7 +80,7 @@ public final class HeadInputStreamTest {
         stream.reset();
         new Assertion<>(
             "Reset didn't change the state",
-            () -> new InputOf(stream),
+            new InputOf(stream),
             new InputHasContent("testR")
         ).affirm();
     }

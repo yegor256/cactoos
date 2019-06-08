@@ -61,7 +61,7 @@ public final class CollectionEnvelopeTest {
     public void notEqualToObjectOfAnotherType() {
         new Assertion<>(
             "Collection is equal to object of different type",
-            () -> new CollectionOf<>(),
+            new CollectionOf<>(),
             new IsNot<>(new IsEqual<>("a"))
         ).affirm();
     }
@@ -70,7 +70,7 @@ public final class CollectionEnvelopeTest {
     public void notEqualToCollectionOfDifferentSize() {
         new Assertion<>(
             "Collection is equal to a collection of different size",
-            () -> new CollectionOf<>(),
+            new CollectionOf<>(),
             new IsNot<>(new IsEqual<>(new CollectionOf<>("b")))
         ).affirm();
     }
@@ -79,7 +79,7 @@ public final class CollectionEnvelopeTest {
     public void notEqualToCollectionOfDifferentElements() {
         new Assertion<>(
             "Collection is equal to a collection with different content",
-            () -> new CollectionOf<>("a", "b"),
+            new CollectionOf<>("a", "b"),
             new IsNot<>(new IsEqual<>(new CollectionOf<>("a", "c")))
         ).affirm();
     }
@@ -89,7 +89,7 @@ public final class CollectionEnvelopeTest {
         final CollectionOf<String> col = new CollectionOf<>("val1", "val2");
         new Assertion<>(
             "Collection is not equal to itself",
-            () -> col,
+            col,
             new IsEqual<>(col)
         ).affirm();
     }
@@ -98,7 +98,7 @@ public final class CollectionEnvelopeTest {
     public void equalToCollectionWithIdenticalContent() {
         new Assertion<>(
             "Collection is not equal to a collection with identical content",
-            () -> new CollectionOf<>("val1", "val2"),
+            new CollectionOf<>("val1", "val2"),
             new IsEqual<>(new CollectionOf<>("val1", "val2"))
         ).affirm();
     }
@@ -107,7 +107,7 @@ public final class CollectionEnvelopeTest {
     public void equalToListWithIdenticalContent() {
         new Assertion<>(
             "Collection not equal to a list with identical content",
-            () -> new CollectionOf<>("a"),
+            new CollectionOf<>("a"),
             new IsEqual<>(new ListOf<>("a"))
         ).affirm();
     }
@@ -116,7 +116,7 @@ public final class CollectionEnvelopeTest {
     public void equalToDerivedCollection() {
         new Assertion<>(
             "Collection not equal to derived collection with identical content",
-            () -> new CollectionOf<>("a"),
+            new CollectionOf<>("a"),
             new IsEqual<>(new CollectionEnvelopeTest.CustomCollection("a"))
         ).affirm();
     }
@@ -125,7 +125,7 @@ public final class CollectionEnvelopeTest {
     public void equalToEmptyCollection() {
         new Assertion<>(
             "Empty collection not equal with empty collection",
-            () -> new CollectionOf<>(),
+            new CollectionOf<>(),
             new IsEqual<>(new CollectionOf<>())
         ).affirm();
     }
@@ -134,7 +134,7 @@ public final class CollectionEnvelopeTest {
     public void notEqualToNull() {
         new Assertion<>(
             "Empty collection equal to null",
-            () -> new CollectionOf<>(),
+            new CollectionOf<>(),
             new IsNot<>(new IsEqual<>(null))
         ).affirm();
     }
@@ -143,7 +143,7 @@ public final class CollectionEnvelopeTest {
     public void hashCodeEqual() {
         new Assertion<>(
             "HashCode returns different results for same entries",
-            () -> new CollectionOf<>("a", "b").hashCode(),
+            new CollectionOf<>("a", "b").hashCode(),
             new IsEqual<>(new CollectionOf<>("a", "b").hashCode())
         ).affirm();
     }
@@ -152,7 +152,7 @@ public final class CollectionEnvelopeTest {
     public void differentHashCode() {
         new Assertion<>(
             "HashCode returns identical results for different entries",
-            () -> new CollectionOf<>("a", "b").hashCode(),
+            new CollectionOf<>("a", "b").hashCode(),
             new IsNot<>(new IsEqual<>(new CollectionOf<>("b", "a").hashCode()))
         ).affirm();
     }
@@ -163,7 +163,7 @@ public final class CollectionEnvelopeTest {
         final Collection<String> collection = Collections.emptyList();
         new Assertion<>(
             "Empty envelope and collection should be equal",
-            () -> envelope,
+            envelope,
             new IsEqual<>(collection)
         ).affirm();
     }
@@ -175,7 +175,7 @@ public final class CollectionEnvelopeTest {
         collection.add("a");
         new Assertion<>(
             "Envelope and collection should be equal",
-            () -> envelope,
+            envelope,
             new IsEqual<>(collection)
         ).affirm();
     }

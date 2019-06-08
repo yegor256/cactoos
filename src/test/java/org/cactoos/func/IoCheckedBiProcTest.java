@@ -44,7 +44,7 @@ public final class IoCheckedBiProcTest {
         ).exec(true, true);
         new Assertion<>(
             "Must execute wrapped proc",
-            counter::get,
+            counter.get(),
             new IsEqual<>(1)
         ).affirm();
     }
@@ -81,7 +81,7 @@ public final class IoCheckedBiProcTest {
         } catch (final IOException ex) {
             new Assertion<>(
                 "Must re-throw IOException",
-                () -> ex,
+                ex,
                 new IsEqual<>(exception)
             ).affirm();
         }

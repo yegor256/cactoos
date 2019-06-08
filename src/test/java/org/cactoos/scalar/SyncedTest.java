@@ -45,14 +45,14 @@ public final class SyncedTest {
         final int threads = 100;
         new Assertion<>(
             "must work well in multiple threads",
-            () -> Scalar::value,
+            Scalar::value,
             new RunsInThreads<>(
                 new Synced<>(() -> list.add(1)), threads
             )
         ).affirm();
         new Assertion<>(
             "must have correct size",
-            list::size,
+            list.size(),
             new IsEqual<>(threads)
         ).affirm();
     }

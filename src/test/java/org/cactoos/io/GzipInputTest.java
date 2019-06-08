@@ -60,7 +60,7 @@ public final class GzipInputTest {
         final byte[] bytes = out.toByteArray();
         new Assertion<>(
             "Can't read from a gzip input",
-            () -> new TextOf(
+            new TextOf(
                 new GzipInput(new InputOf(bytes))
             ).asString(),
             new IsEqual<>(content)

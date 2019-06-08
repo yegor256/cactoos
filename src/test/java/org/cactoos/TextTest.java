@@ -66,7 +66,7 @@ public final class TextTest {
         final String message = "Hello";
         new Assertion<>(
             "Must work with NoNulls",
-            () -> new NoNulls(
+            new NoNulls(
                 new TextOf(message)
             ),
             new TextHasString(message)

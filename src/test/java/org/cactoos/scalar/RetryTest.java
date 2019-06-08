@@ -48,7 +48,7 @@ public final class RetryTest {
     public void runsScalarMultipleTimes() throws Exception {
         new Assertion<>(
             "must retry in case of failure",
-            () -> new Retry<>(
+            new Retry<>(
                 () -> {
                     // @checkstyle MagicNumberCheck (1 line)
                     if (new SecureRandom().nextDouble() > 0.3d) {
@@ -68,7 +68,7 @@ public final class RetryTest {
         final AtomicInteger tries = new AtomicInteger(0);
         new Assertion<>(
             "Should run twice with defaults",
-            () -> new Retry<>(
+            new Retry<>(
                 () -> {
                     // @checkstyle MagicNumberCheck (1 line)
                     if (tries.getAndIncrement() <= 1) {
@@ -89,7 +89,7 @@ public final class RetryTest {
         final AtomicInteger tries = new AtomicInteger(0);
         new Assertion<>(
             "Should ignore negative duration",
-            () -> new Retry<>(
+            new Retry<>(
                 () -> {
                     if (tries.getAndIncrement() < times) {
                         throw new IllegalArgumentException("Not yet");
@@ -128,7 +128,7 @@ public final class RetryTest {
             final int actual = position;
             new Assertion<>(
                 "Should wait the given time between attempts",
-                () -> executions.get(actual).plusMillis(wait),
+                executions.get(actual).plusMillis(wait),
                 Matchers.lessThanOrEqualTo(executions.get(actual + 1))
             ).affirm();
         }

@@ -301,7 +301,7 @@ public final class MapEnvelopeTest {
             new DerivedMapEnvelope<>(new HashMap<>());
         new Assertion<>(
             "EmpBase and derived MapEnvelope which are empty should be equal.",
-            () -> base,
+            base,
             new IsEqual<>(derived)
         ).affirm();
     }
@@ -319,7 +319,7 @@ public final class MapEnvelopeTest {
             new DerivedMapEnvelope<>(hashmap);
         new Assertion<>(
             "Base and derived MapEnvelope of same content should be equal.",
-            () -> base,
+            base,
             new IsEqual<>(derived)
         ).affirm();
     }

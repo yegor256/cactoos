@@ -44,7 +44,7 @@ public final class CycledTest {
         final String expected = "two";
         new Assertion<>(
             "must repeat iterator",
-            () -> new ItemAt<>(
+            new ItemAt<>(
                 // @checkstyle MagicNumberCheck (1 line)
                 7,
                 new IterableOf<>(

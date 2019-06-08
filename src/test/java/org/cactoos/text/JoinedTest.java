@@ -38,7 +38,7 @@ public final class JoinedTest {
     public void joinsStrings() {
         new Assertion<>(
             "Can't join strings",
-            () -> new Joined(" ", "hello", "world"),
+            new Joined(" ", "hello", "world"),
             new TextHasString("hello world")
         ).affirm();
     }
@@ -47,7 +47,7 @@ public final class JoinedTest {
     public void joinsTexts() {
         new Assertion<>(
             "Can't join texts",
-            () -> new Joined(
+            new Joined(
                 new TextOf(" "),
                 new TextOf("foo"),
                 new TextOf("bar")

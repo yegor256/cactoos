@@ -41,7 +41,7 @@ public final class SplitTest {
     public void splitTextLength() throws Exception {
         new Assertion<>(
             "Can't split a text. Incorrect length",
-            () -> new LengthOf(
+            new LengthOf(
                 new Split("Hello world!", "\\s+")
             ).intValue(),
             Matchers.equalTo(2)
@@ -52,7 +52,7 @@ public final class SplitTest {
     public void splitTextItem() throws Exception {
         new Assertion<>(
             "Can't split a text. Incorrect item",
-            () -> new Split("Hello world! [2]", "\\s+").iterator().next(),
+            new Split("Hello world! [2]", "\\s+").iterator().next(),
             new TextHasString("Hello")
         ).affirm();
     }
@@ -61,7 +61,7 @@ public final class SplitTest {
     public void splitStringWithTextRegex() throws Exception {
         new Assertion<>(
             "Can't split an string with text regex",
-            () -> new Split(
+            new Split(
                 "Cactoos OOP!",
                 new TextOf("\\s")
             ).iterator().next(),
@@ -73,7 +73,7 @@ public final class SplitTest {
     public void splitTextWithStringRegex() throws Exception {
         new Assertion<>(
             "Can't split an text with string regex",
-            () -> new Split(
+            new Split(
                 new TextOf("Cact4Primitives!"),
                 "\\d+"
             ).iterator().next(),
@@ -85,7 +85,7 @@ public final class SplitTest {
     public void splitTextWithTextRegex() throws Exception {
         new Assertion<>(
             "Can't split an text with text regex",
-            () -> new Split(
+            new Split(
                 new TextOf("Split#OOP!"),
                 "\\W+"
             ).iterator().next(),

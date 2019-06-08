@@ -31,7 +31,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TeeInputHasResult;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -56,7 +55,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader to file.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output
             ),
@@ -74,7 +73,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with size to file.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output,
                 input.length()
@@ -93,7 +92,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset to file.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output,
                 StandardCharsets.UTF_8
@@ -112,7 +111,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset and size to file.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output,
                 StandardCharsets.UTF_8,
@@ -132,7 +131,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset by name to file.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output,
                 StandardCharsets.UTF_8.name()
@@ -152,7 +151,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset by name and size to file.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output,
                 StandardCharsets.UTF_8.name(),
@@ -172,7 +171,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader to path.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output.toPath()
             ),
@@ -190,7 +189,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with size to path",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output.toPath(),
                 input.length()
@@ -209,7 +208,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset to path.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output.toPath(),
                 StandardCharsets.UTF_8
@@ -228,7 +227,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset and size to path.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output.toPath(),
                 StandardCharsets.UTF_8,
@@ -248,7 +247,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset by name to path.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output.toPath(),
                 StandardCharsets.UTF_8.name()
@@ -268,7 +267,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset by name and size to path.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 output.toPath(),
                 StandardCharsets.UTF_8.name(),
@@ -288,7 +287,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader to output.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output)
             ),
@@ -306,7 +305,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with size to output.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output),
                 input.length()
@@ -325,7 +324,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset to output.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output),
                 StandardCharsets.UTF_8
@@ -345,7 +344,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset and size to output.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output),
                 StandardCharsets.UTF_8,
@@ -365,7 +364,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset by name to output.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output),
                 StandardCharsets.UTF_8.name()
@@ -385,7 +384,7 @@ public final class TeeInputFromReaderTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy from reader with charset by name and size to output.",
-            () -> new TeeInput(
+            new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output),
                 StandardCharsets.UTF_8.name(),

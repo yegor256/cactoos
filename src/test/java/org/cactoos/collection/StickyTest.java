@@ -50,7 +50,7 @@ public final class StickyTest {
     public void behavesAsCollection() {
         new Assertion<>(
             "Can't behave as a collection",
-            () -> new Sticky<>(new ListOf<>(1, 2, 0, -1)),
+            new Sticky<>(new ListOf<>(1, 2, 0, -1)),
             new BehavesAsCollection<>(0)
         ).affirm();
     }
@@ -60,12 +60,12 @@ public final class StickyTest {
         final AtomicInteger size = new AtomicInteger(2);
         final Collection<Integer> list = new Sticky<>(
             new ListOf<>(
-                () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
+                Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
         );
         new Assertion<>(
             "Can't ignore the changes in the underlying iterable",
-            () -> list.size(),
+            list.size(),
             new IsEqual<>(list.size())
         ).affirm();
     }
@@ -74,7 +74,7 @@ public final class StickyTest {
     public void decoratesArray() {
         new Assertion<>(
             "Can't decorate an array of numbers",
-            () -> new Sticky<>(-1, 0),
+            new Sticky<>(-1, 0),
             new IsCollectionWithSize<>(new IsEqual<>(2))
         ).affirm();
     }
@@ -83,7 +83,7 @@ public final class StickyTest {
     public void testEmpty() {
         new Assertion<>(
             "Must be empty",
-            () -> new Sticky<>(),
+            new Sticky<>(),
             new IsEmptyCollection<>()
         ).affirm();
     }
@@ -92,7 +92,7 @@ public final class StickyTest {
     public void testContains() {
         new Assertion<>(
             "Must contain element",
-            () -> new Sticky<>(1, 2).contains(1),
+            new Sticky<>(1, 2).contains(1),
             new IsEqual<>(true)
         ).affirm();
     }
@@ -101,7 +101,7 @@ public final class StickyTest {
     public void testToArray() {
         new Assertion<>(
             "Array must contain elements",
-            () -> new Sticky<>(1, 2).toArray(),
+            new Sticky<>(1, 2).toArray(),
             new AllOf<>(
                 new IterableOf<org.hamcrest.Matcher<? super Object[]>>(
                     new IsArrayContaining<>(new IsEqual<>(1)),
@@ -116,7 +116,7 @@ public final class StickyTest {
         final Integer[] arr = new Integer[2];
         new Assertion<>(
             "Array from Sticky must contain elements",
-            () -> new Sticky<>(1, 2).toArray(arr),
+            new Sticky<>(1, 2).toArray(arr),
             new AllOf<>(
                 new IterableOf<org.hamcrest.Matcher<? super Integer[]>>(
                     new IsArrayContaining<>(new IsEqual<>(1)),
@@ -130,7 +130,7 @@ public final class StickyTest {
     public void testContainsAll() {
         new Assertion<>(
             "Must contains all",
-            () -> new Sticky<>(1, 2).containsAll(new ListOf<>(1, 2)),
+            new Sticky<>(1, 2).containsAll(new ListOf<>(1, 2)),
             new IsEqual<>(true)
         ).affirm();
     }

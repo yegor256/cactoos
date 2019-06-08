@@ -38,7 +38,7 @@ public final class TrimmedLeftTest {
     public void convertsText() {
         new Assertion<>(
             "Can't left trim a text",
-            () -> new TrimmedLeft(new TextOf("  Hello!   \t ")),
+            new TrimmedLeft(new TextOf("  Hello!   \t ")),
             new TextHasString("Hello!   \t ")
         ).affirm();
     }
@@ -47,7 +47,7 @@ public final class TrimmedLeftTest {
     public void trimmedBlankTextIsEmptyText() {
         new Assertion<>(
             "Can't trim a blank text",
-            () -> new TrimmedLeft(new TextOf("  \t ")),
+            new TrimmedLeft(new TextOf("  \t ")),
             new TextHasString("")
         ).affirm();
     }

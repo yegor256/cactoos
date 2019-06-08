@@ -48,7 +48,7 @@ public final class SolidTest {
         );
         new Assertion<>(
             "must compute value only once",
-            () -> scalar.value() + scalar.value(),
+            scalar.value() + scalar.value(),
             new IsEqual<>(scalar.value() + scalar.value())
         ).affirm();
     }
@@ -57,10 +57,10 @@ public final class SolidTest {
     public void worksInThreads() {
         new Assertion<>(
             "must work well in multiple threads",
-            () -> scalar -> {
+            scalar -> {
                 new Assertion<>(
                     "must compute value once",
-                    () -> scalar,
+                    scalar,
                     new ScalarHasValue<>(scalar.value())
                 ).affirm();
                 return true;

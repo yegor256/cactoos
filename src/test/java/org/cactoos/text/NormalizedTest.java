@@ -38,7 +38,7 @@ public final class NormalizedTest {
     public void normalizesText() {
         new Assertion<>(
             "Can't normalize a text",
-            () -> new Normalized(" \t hello  \t\tworld   \t"),
+            new Normalized(" \t hello  \t\tworld   \t"),
             new TextHasString("hello world")
         ).affirm();
     }

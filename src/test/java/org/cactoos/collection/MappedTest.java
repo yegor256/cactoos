@@ -46,7 +46,7 @@ public final class MappedTest {
     public void behavesAsCollection() {
         new Assertion<>(
             "Behave as a collection",
-            () -> new Mapped<>(
+            new Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(-1, 1, 2)
             ),
@@ -58,7 +58,7 @@ public final class MappedTest {
     public void transformsArray() {
         new Assertion<>(
             "Transforms an array",
-            () -> new Mapped<>(
+            new Mapped<>(
                 input -> new Upper(new TextOf(input)),
                 "a", "b", "c"
             ).iterator().next(),
@@ -70,7 +70,7 @@ public final class MappedTest {
     public void transformsList() {
         new Assertion<>(
             "Transforms an iterable",
-            () -> new Mapped<>(
+            new Mapped<>(
                 input -> new Upper(new TextOf(input)),
                 new IterableOf<>("hello", "world", "друг")
             ).iterator().next(),
@@ -82,7 +82,7 @@ public final class MappedTest {
     public void transformsEmptyList() {
         new Assertion<>(
             "Transforms an empty iterable",
-            () -> new Mapped<>(
+            new Mapped<>(
                 (String input) -> new Upper(new TextOf(input)),
                 new ListOf<>()
             ),
@@ -94,7 +94,7 @@ public final class MappedTest {
     public void string() {
         new Assertion<>(
             "Converts to string",
-            () -> new Mapped<>(
+            new Mapped<>(
                 x -> x * 2,
                 new ListOf<>(1, 2, 3)
             ).toString(),

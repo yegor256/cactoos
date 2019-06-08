@@ -59,7 +59,7 @@ public final class SyncedTest {
                 new Synced<>(
                     lock, new IteratorOf<>("a", "b")
                 )
-            )::toArray,
+            ).toArray(),
             new IsEqual<>(new Object[]{"a", "b"})
         ).affirm();
     }
@@ -72,7 +72,7 @@ public final class SyncedTest {
                 new Synced<>(
                     new IteratorOf<>("a", "b")
                 )
-            )::toArray,
+            ).toArray(),
             new IsEqual<>(new Object[]{"a", "b"})
         ).affirm();
     }
@@ -83,10 +83,10 @@ public final class SyncedTest {
         for (int iter = 0; iter < 5000; iter += 1) {
             new Assertion<>(
                 "",
-                () -> map -> {
+                map -> {
                     new Assertion<>(
                         "",
-                        map::next,
+                        map.next(),
                         Matchers.anyOf(
                             new IsEqual<>("a"),
                             new IsEqual<>("b")
@@ -110,10 +110,10 @@ public final class SyncedTest {
         for (int iter = 0; iter < 5000; iter += 1) {
             new Assertion<>(
                 "",
-                () -> map -> {
+                map -> {
                     new Assertion<>(
                         "",
-                        map::hasNext,
+                        map.hasNext(),
                         Matchers.anyOf(
                             new IsEqual<>(true),
                             new IsEqual<>(true)
@@ -121,7 +121,7 @@ public final class SyncedTest {
                     ).affirm();
                     new Assertion<>(
                         "",
-                        map::next,
+                        map.next(),
                         Matchers.anyOf(
                             new IsEqual<>("a"),
                             new IsEqual<>("b")
@@ -129,7 +129,7 @@ public final class SyncedTest {
                     ).affirm();
                     new Assertion<>(
                         "",
-                        map::hasNext,
+                        map.hasNext(),
                         Matchers.anyOf(
                             new IsEqual<>(true),
                             new IsEqual<>(false)

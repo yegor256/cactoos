@@ -39,7 +39,7 @@ public final class RotatedTest {
     public void rotateRightText() {
         new Assertion<>(
             "Can't rotate text to right",
-            () -> new Rotated(
+            new Rotated(
                 new TextOf("Hello!"), 2
             ),
             new TextHasString("o!Hell")
@@ -50,7 +50,7 @@ public final class RotatedTest {
     public void rotateLeftText() {
         new Assertion<>(
             "Can't rotate text to left",
-            () -> new Rotated(
+            new Rotated(
                 new TextOf("Hi!"), -1
             ),
             new TextHasString("i!H")
@@ -62,7 +62,7 @@ public final class RotatedTest {
         final String nonrotate = "Cactoos!";
         new Assertion<>(
             "Rotate text shift zero",
-            () -> new Rotated(
+            new Rotated(
                 new TextOf(nonrotate), 0
             ),
             new TextHasString(nonrotate)
@@ -74,7 +74,7 @@ public final class RotatedTest {
         final String nonrotate = "Rotate";
         new Assertion<>(
             "Rotate text shift mod zero",
-            () -> new Rotated(
+            new Rotated(
                 new TextOf(nonrotate), nonrotate.length()
             ),
             new TextHasString(nonrotate)
@@ -85,7 +85,7 @@ public final class RotatedTest {
     public void noRotateWhenEmpty() {
         new Assertion<>(
             "Rotate text when empty",
-            () -> new Rotated(
+            new Rotated(
                 new TextOf(""), 2
             ),
             new TextHasString("")

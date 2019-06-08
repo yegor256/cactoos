@@ -52,7 +52,7 @@ public final class ProcNoNullsTest {
             .exec(counter);
         new Assertion<>(
             "Can't involve the \"Proc.exec(X input)\" method",
-            counter::get,
+            counter.get(),
             new IsEqual<>(1)
         ).affirm();
     }
