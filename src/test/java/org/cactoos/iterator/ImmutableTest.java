@@ -28,15 +28,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import org.cactoos.text.Randomized;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test Case for {@link Immutable}.
  *
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ImmutableTest {
     @Test(expected = UnsupportedOperationException.class)
@@ -69,7 +73,7 @@ public final class ImmutableTest {
     }
 
     @Test
-    public void delegatesToString() {
+    public void decoratesToString() {
         final String string = new Randomized().asString();
         final Iterator<Object> iterator = new Iterator<Object>() {
             public Object next() {
@@ -85,8 +89,10 @@ public final class ImmutableTest {
             }
         };
         final Iterator<Object> immutable = new Immutable<>(iterator);
-        MatcherAssert.assertThat(
-            immutable.toString(), new IsEqual<>(iterator.toString())
-        );
+        new Assertion<>(
+            "must delegate toString to decorated iterator",
+            () -> new TextOf(immutable.toString()),
+            new TextIs(iterator.toString())
+        ).affirm();
     }
 }
