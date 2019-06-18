@@ -91,7 +91,7 @@ public final class ImmutableTest {
         final Iterator<Object> immutable = new Immutable<>(iterator);
         new Assertion<>(
             "must delegate toString to decorated iterator",
-            () -> new TextOf(immutable.toString()),
+            new TextOf(immutable.toString()),
             new TextIs(iterator.toString())
         ).affirm();
     }
