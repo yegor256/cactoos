@@ -6,13 +6,11 @@ cache:
 script:
   - set -e
   - pdd --file=/dev/null
-  - git log --since="2019-02-01" --no-merges --pretty=%B | gitlint
   - mvn clean site -Psite --errors --batch-mode
   - mvn clean install -Pqulice --errors --batch-mode
 install:
   - gem install pdd -v 0.20.5
   - gem install xcop -v 0.6
-  - pip install --user gitlint
 env:
   global:
     - MAVEN_OPTS="-Xmx256m"

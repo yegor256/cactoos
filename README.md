@@ -311,6 +311,9 @@ Make sure your branch builds without any warnings/issues:
 mvn clean install -Pqulice
 ```
 
+We also lint the git commit log. We highly recommend you install [this](https://github.com/llorllale/go-gitlint)
+tool and set up a `commit-msg` git hooks per the instructions.
+
 Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static code analyze tool with
 [checks list](http://checkstyle.sourceforge.net/checks.html) in GitHub precommits.
 
