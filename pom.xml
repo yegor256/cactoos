@@ -308,7 +308,7 @@ The MIT License (MIT)
                   <goal>wget</goal>
                 </goals>
                 <configuration>
-                  <url>https://github.com/llorllale/go-gitlint/releases/download/0.8.0/go-gitlint_0.8.0_${os.detected.name}_${os.detected.arch}.tar.gz</url>
+                  <url>https://github.com/llorllale/go-gitlint/releases/download/1.0.0/go-gitlint_1.0.0_${os.detected.name}_${os.detected.arch}.tar.gz</url>
                   <unpack>true</unpack>
                   <outputDirectory>${project.build.directory}</outputDirectory>
                 </configuration>
