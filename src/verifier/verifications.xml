@@ -26,6 +26,8 @@ The MIT License (MIT)
   <files>
     <file>
       <location>LICENSE.txt</location>
+      <!--@todo #985:30min This verification is not working.
+      In the LICENSE.txt date is already 2017 to 2019 years-->
       <contains>2017-2018</contains>
     </file>
   </files>
