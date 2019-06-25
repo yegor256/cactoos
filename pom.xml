@@ -136,6 +136,12 @@ The MIT License (MIT)
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-verifier-plugin</artifactId>
+      </plugin>
+    </plugins>
     <extensions>
       <extension>
         <groupId>kr.motd.maven</groupId>
