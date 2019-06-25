@@ -79,7 +79,7 @@ public final class TeeInputStreamTest {
             MatcherAssert.assertThat(
                 "Can't use output after usage from TeeInput",
                 write.isClosed(),
-                new IsEqual<>(false)
+                new IsEqual<>(true)
             );
         }
     }

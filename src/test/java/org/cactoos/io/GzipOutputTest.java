@@ -67,12 +67,17 @@ public final class GzipOutputTest {
             writer.write(content);
         }
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new LengthOf(
-            new TeeInput(
-                content,
-                new GzipOutput(new OutputTo(baos))
-            )
-        ).value();
+        try (final OutputStream output = new GzipOutput(
+            new OutputTo(baos)
+        ).stream()
+        ) {
+            new LengthOf(
+                new TeeInput(
+                    content,
+                    new OutputTo(output)
+                )
+            ).value();
+        }
         new Assertion<>(
             "Can't write to a gzip output",
             baos.toByteArray(),
