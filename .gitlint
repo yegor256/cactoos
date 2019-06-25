@@ -1,3 +1,3 @@
 --subject-regex=^\(#[0-9]+\) [^\s].{13,50}
 --subject-maxlen=72
---since=2019-06-15
+--since=2019-06-25
