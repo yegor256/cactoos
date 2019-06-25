@@ -94,7 +94,7 @@ public final class TeeInputStream extends InputStream {
     @Override
     public void close() throws IOException {
         this.input.close();
-        this.output.flush();
+        this.output.close();
     }
 
     @Override
