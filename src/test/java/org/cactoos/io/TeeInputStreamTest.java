@@ -32,7 +32,6 @@ import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -77,9 +76,9 @@ public final class TeeInputStreamTest {
                 )
             ).intValue();
             MatcherAssert.assertThat(
-                "Can't use output after usage from TeeInput",
+                "Can''t use output after usage from TeeInput",
                 write.isClosed(),
-                new IsEqual<>(false)
+                Matchers.equalTo(false)
             );
         }
     }
