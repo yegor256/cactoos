@@ -23,11 +23,11 @@
  */
 package org.cactoos.io;
 
-import java.io.EOFException;
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link CheckedBytes}.
@@ -37,24 +37,32 @@ import org.junit.Test;
  */
 public final class CheckedBytesTest {
 
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionIsNotWrapped() throws Exception {
-        new CheckedBytes<>(
-            () -> {
-                throw new IllegalStateException("runtime1");
-            },
-            IOException::new
-        ).asBytes();
+    @Test
+    public void runtimeExceptionIsNotWrapped() {
+        new Assertion<>(
+            "must not wrap runtime exception",
+            new CheckedBytes<>(
+                () -> {
+                    throw new IllegalStateException("runtime1");
+                },
+                IOException::new
+            )::asBytes,
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
-    @Test(expected = IOException.class)
-    public void checkedExceptionIsWrapped() throws Exception {
-        new CheckedBytes<>(
-            () -> {
-                throw new EOFException("runtime2");
-            },
-            IOException::new
-        ).asBytes();
+    @Test
+    public void checkedExceptionIsWrapped() {
+        new Assertion<>(
+            "must wrap checked exception",
+            new CheckedBytes<>(
+                () -> {
+                    throw new Exception("runtime2");
+                },
+                IOException::new
+            )::asBytes,
+            new Throws<>(IOException.class)
+        ).affirm();
     }
 
     @Test
@@ -67,11 +75,11 @@ public final class CheckedBytesTest {
                 IOException::new
             ).asBytes();
         } catch (final IOException exp) {
-            MatcherAssert.assertThat(
-                "Extra wrapping of IOException has been added",
+            new Assertion<>(
+                "must not add extra wrapping of IOException",
                 exp.getCause(),
                 new IsNull<>()
-            );
+            ).affirm();
         }
     }
 }

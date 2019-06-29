@@ -23,8 +23,8 @@
  */
 package org.cactoos.io;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
@@ -38,11 +38,11 @@ public final class DeadInputTest {
 
     @Test
     public void readsEmptyContent() {
-        MatcherAssert.assertThat(
-            "Can't read empty content",
+        new Assertion<>(
+            "must read empty content",
             new DeadInput(),
             new InputHasContent("")
-        );
+        ).affirm();
     }
 
 }
