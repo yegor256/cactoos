@@ -58,7 +58,7 @@ public final class Reversed<X> extends IterableEnvelope<X> {
      * @param reversed Reversed collection
      */
     public Reversed(final org.cactoos.collection.Reversed<X> reversed) {
-        super(() -> reversed);
+        super(reversed);
     }
 
 }

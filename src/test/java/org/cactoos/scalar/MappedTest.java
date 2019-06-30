@@ -21,25 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
+
+import org.cactoos.Text;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.Upper;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * Endless iterable.
+ * Test case for {@link Mapped}.
  *
- * <p>If you need to repeat certain amount of time,
- * use {@link Repeated}.</p>
- *
- * @param <T> Element type
- * @since 0.4
+ * @since 0.43
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Endless<T> extends IterableEnvelope<T> {
-
-    /**
-     * Ctor.
-     * @param item The item to repeat
-     */
-    public Endless(final T item) {
-        super(new IterableOf<>(() -> new org.cactoos.iterator.Endless<>(item)));
+public final class MappedTest {
+    @Test
+    public void transformsScalar() throws Exception {
+        new Assertion<>(
+            "must transform scalar",
+            new Mapped<String, Text>(
+                input -> new Upper(new TextOf(input)),
+                () -> "hello"
+            ),
+            new ScalarHasValue<>(new TextIs("HELLO"))
+        ).affirm();
     }
-
 }

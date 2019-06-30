@@ -37,6 +37,6 @@ public final class IterableOfFloats extends IterableEnvelope<Float> {
      * @param values Float values
      */
     public IterableOfFloats(final float... values) {
-        super(() -> () -> new IteratorOfFloats(values));
+        super(new IterableOf<>(() -> new IteratorOfFloats(values)));
     }
 }

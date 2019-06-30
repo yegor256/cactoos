@@ -38,6 +38,11 @@ import org.cactoos.scalar.Unchecked;
  * @param <T> Element type
  * @since 0.23
  * @checkstyle AbstractClassNameCheck (500 lines)
+ * @todo #947:30min ListEnvelope should only delegates all the methods
+ *  of List to the wrapped List. See IterableEnvelope for an example.
+ *  If needed ListOf should have some methods that were previously here
+ *  and implement List instead of extending ListEnvelope.
+ *  Again see IterableOf for an example.
  */
 @SuppressWarnings(
     {

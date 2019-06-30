@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import org.cactoos.Func;
-import org.cactoos.text.TextOf;
 
 /**
  * Mapped iterable.
@@ -53,13 +52,10 @@ public final class Mapped<X, Y> extends IterableEnvelope<Y> {
      * @param src Source iterable
      */
     public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
-        super(() -> () -> new org.cactoos.iterator.Mapped<>(
-            fnc, src.iterator()
-        ));
-    }
-
-    @Override
-    public String toString() {
-        return new TextOf(this).toString();
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.Mapped<>(fnc, src.iterator())
+            )
+        );
     }
 }

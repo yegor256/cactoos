@@ -21,25 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
+
+import java.io.IOException;
+import org.cactoos.Func;
+import org.cactoos.Scalar;
 
 /**
- * Endless iterable.
+ * {@link Scalar} that apply a {@link Func} to the result
+ * of another {@link Scalar}.
  *
- * <p>If you need to repeat certain amount of time,
- * use {@link Repeated}.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @param <T> Element type
- * @since 0.4
+ * <p>This class implements {@link Scalar}, which throws a checked
+ * {@link IOException}. This may not be convenient in many cases. To make
+ * it more convenient and get rid of the checked exception you can
+ * use the {@link Unchecked} decorator.</p>
+ *
+ * @param <T> Type of wrapped scalar result
+ * @param <U> Type of result
+ * @since 1.0.0
  */
-public final class Endless<T> extends IterableEnvelope<T> {
+public final class Mapped<T, U> implements Scalar<U> {
+
+    /**
+     * Original scalar.
+     */
+    private final Scalar<T> origin;
+
+    /**
+     * Func.
+     */
+    private final Func<T, U> func;
 
     /**
      * Ctor.
-     * @param item The item to repeat
+     * @param mapping Fun to apply
+     * @param scalar Encapsulated scalar
      */
-    public Endless(final T item) {
-        super(new IterableOf<>(() -> new org.cactoos.iterator.Endless<>(item)));
+    public Mapped(final Func<T, U> mapping, final Scalar<T> scalar) {
+        this.origin = scalar;
+        this.func = mapping;
+    }
+
+    @Override
+    public U value() throws Exception {
+        return this.func.apply(this.origin.value());
     }
 
 }

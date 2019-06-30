@@ -37,6 +37,6 @@ public final class IterableOfDoubles extends IterableEnvelope<Double> {
      * @param values Double values
      */
     public IterableOfDoubles(final double... values) {
-        super(() -> new IterableOf<>(new IteratorOfDoubles(values)));
+        super(new IterableOf<>(() -> new IteratorOfDoubles(values)));
     }
 }

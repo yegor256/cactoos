@@ -49,8 +49,12 @@ public final class TailOf<T> extends IterableEnvelope<T>  {
      * @param iterable Decorated iterable
      */
     public TailOf(final int num, final Iterable<T> iterable) {
-        super(() -> () -> new org.cactoos.iterator.TailOf<>(
-            num, iterable.iterator()
-        ));
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.TailOf<>(
+                    num, iterable.iterator()
+                )
+            )
+        );
     }
 }

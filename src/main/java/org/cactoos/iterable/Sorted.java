@@ -74,8 +74,10 @@ public final class Sorted<T> extends IterableEnvelope<T> {
      * @param cmp The comparator
      */
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
-        super(() -> () -> new org.cactoos.iterator.Sorted<>(
-            cmp, src.iterator()
-        ));
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.Sorted<>(cmp, src.iterator())
+            )
+        );
     }
 }

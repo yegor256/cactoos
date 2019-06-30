@@ -24,13 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-import org.cactoos.Scalar;
-import org.cactoos.iterator.Immutable;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.Or;
-import org.cactoos.scalar.SumOfInt;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterable envelope.
@@ -39,66 +32,39 @@ import org.cactoos.scalar.Unchecked;
  *
  * @param <X> Type of item
  * @since 0.24
- * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings("PMD.AbstractNaming")
 public abstract class IterableEnvelope<X> implements Iterable<X> {
 
     /**
-     * The iterable.
+     * The wrapped iterable.
      */
-    private final Unchecked<Iterable<X>> iterable;
+    private final Iterable<X> wrapped;
 
     /**
      * Ctor.
-     * @param scalar The source
+     * @param iterable The wrapped iterable
      */
-    public IterableEnvelope(final Scalar<Iterable<X>> scalar) {
-        this.iterable = new Unchecked<>(scalar);
+    public IterableEnvelope(final Iterable<X> iterable) {
+        this.wrapped = iterable;
     }
 
     @Override
     public final Iterator<X> iterator() {
-        return new Immutable<>(
-            this.iterable.value().iterator()
-        );
+        return this.wrapped.iterator();
     }
 
     @Override
     public final boolean equals(final Object other) {
-        return new Unchecked<>(
-            new Or(
-                () -> other == this,
-                new And(
-                    () -> other != null,
-                    () -> Iterable.class.isAssignableFrom(other.getClass()),
-                    () -> {
-                        final Iterable<?> compared = (Iterable<?>) other;
-                        final Iterator<?> iterator = compared.iterator();
-                        return new Unchecked<>(
-                            new And(
-                                (X input) -> input.equals(iterator.next()),
-                                this
-                            )
-                        ).value();
-                    }
-                )
-            )
-        ).value();
+        return this.wrapped.equals(other);
     }
 
-    // @checkstyle MagicNumberCheck (30 lines)
     @Override
     public final int hashCode() {
-        return new Unchecked<>(
-            new Folded<>(
-                42,
-                (hash, entry) -> new SumOfInt(
-                    () -> 37 * hash,
-                    entry::hashCode
-                ).value(),
-                this
-            )
-        ).value();
+        return this.wrapped.hashCode();
+    }
+
+    @Override
+    public final String toString() {
+        return this.wrapped.toString();
     }
 }

@@ -49,9 +49,14 @@ public final class Partitioned<T> extends IterableEnvelope<List<T>> {
      * @param iterable The source {@link Iterable}.
      */
     public Partitioned(final int size, final Iterable<T> iterable) {
-        super(() -> () -> new org.cactoos.iterator.Partitioned<>(
-            size, iterable.iterator()
-        ));
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.Partitioned<>(
+                    size,
+                    iterable.iterator()
+                )
+            )
+        );
     }
 
 }

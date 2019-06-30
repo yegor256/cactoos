@@ -111,15 +111,19 @@ public final class Threads<T> extends IterableEnvelope<T> {
         final Func<Collection<Callable<T>>, Collection<Future<T>>> fnc,
         final Iterable<Scalar<T>> tasks
     ) {
-        super(() -> {
-            try {
-                return new Mapped<>(
-                    Future::get,
-                    fnc.apply(new Mapped<>(task -> task::value, tasks))
-                );
-            } catch (final Exception exp) {
-                throw new CompletionException(exp);
-            }
-        });
+        super(
+            new IterableOf<>(
+                () -> {
+                    try {
+                        return new Mapped<>(
+                            Future::get,
+                            fnc.apply(new Mapped<>(task -> task::value, tasks))
+                        ).iterator();
+                    } catch (final Exception exp) {
+                        throw new CompletionException(exp);
+                    }
+                }
+            )
+        );
     }
 }

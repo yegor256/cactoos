@@ -38,6 +38,6 @@ public final class IterableOfShorts extends IterableEnvelope<Short> {
      */
     @SuppressWarnings("PMD.AvoidUsingShortType")
     public IterableOfShorts(final short... values) {
-        super(() -> () -> new IteratorOfShorts(values));
+        super(new IterableOf<>(() -> new IteratorOfShorts(values)));
     }
 }

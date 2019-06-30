@@ -60,9 +60,11 @@ public final class Repeated<T> extends IterableEnvelope<T> {
      * @param item The element to repeat
      */
     public Repeated(final int total, final Unchecked<T> item) {
-        super(() -> () -> new org.cactoos.iterator.Repeated<>(
-            total, item
-        ));
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.Repeated<>(total, item)
+            )
+        );
     }
 
 }

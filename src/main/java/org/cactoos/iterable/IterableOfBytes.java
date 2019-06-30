@@ -37,6 +37,6 @@ public final class IterableOfBytes extends IterableEnvelope<Byte> {
      * @param bytes Bytes
      */
     public IterableOfBytes(final byte... bytes) {
-        super(() -> new IterableOf<>(new IteratorOfBytes(bytes)));
+        super(new IterableOf<>(() -> new IteratorOfBytes(bytes)));
     }
 }

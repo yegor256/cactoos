@@ -37,6 +37,6 @@ public final class IterableOfLongs extends IterableEnvelope<Long> {
      * @param values Long values
      */
     public IterableOfLongs(final long... values) {
-        super(() -> () -> new IteratorOfLongs(values));
+        super(new IterableOf<>(() -> new IteratorOfLongs(values)));
     }
 }

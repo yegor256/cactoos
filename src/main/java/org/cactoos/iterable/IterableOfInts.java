@@ -37,6 +37,6 @@ public final class IterableOfInts extends IterableEnvelope<Integer> {
      * @param values Integer values
      */
     public IterableOfInts(final int... values) {
-        super(() -> () -> new IteratorOfInts(values));
+        super(new IterableOf<>(() -> new IteratorOfInts(values)));
     }
 }

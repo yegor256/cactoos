@@ -25,6 +25,7 @@ package org.cactoos.iterable;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import org.cactoos.scalar.Mapped;
 
 /**
  * Iterable that returns the same set of elements, always.
@@ -51,14 +52,19 @@ public final class Sticky<X> extends IterableEnvelope<X> {
      */
     public Sticky(final Iterable<X> iterable) {
         super(
-            new org.cactoos.scalar.Sticky<>(
-                () -> {
-                    final Collection<X> temp = new LinkedList<>();
-                    for (final X item : iterable) {
-                        temp.add(item);
-                    }
-                    return temp;
-                }
+            new IterableOf<>(
+                new Mapped<>(
+                    Iterable::iterator,
+                    new org.cactoos.scalar.Sticky<Iterable<X>>(
+                        () -> {
+                            final Collection<X> temp = new LinkedList<>();
+                            for (final X item : iterable) {
+                                temp.add(item);
+                            }
+                            return temp;
+                        }
+                    )
+                )
             )
         );
     }

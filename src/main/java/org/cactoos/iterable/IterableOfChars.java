@@ -37,6 +37,6 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
      * @param chars Characters
      */
     public IterableOfChars(final char... chars) {
-        super(() -> new IterableOf<>(new IteratorOfChars(chars)));
+        super(new IterableOf<>(() -> new IteratorOfChars(chars)));
     }
 }

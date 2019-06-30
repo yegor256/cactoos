@@ -49,7 +49,7 @@ public final class Cycled<T> extends IterableEnvelope<T> {
      * @param itr Iterable
      */
     public Cycled(final Iterable<T> itr) {
-        super(() -> () -> new org.cactoos.iterator.Cycled<>(itr));
+        super(new IterableOf<>(() -> new org.cactoos.iterator.Cycled<>(itr)));
     }
 
 }

@@ -30,8 +30,14 @@ import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterator.IteratorOf;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.Or;
 import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.SumOfInt;
 import org.cactoos.scalar.Unchecked;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Array as iterable.
@@ -40,8 +46,15 @@ import org.cactoos.scalar.Unchecked;
  *
  * @param <X> Type of item
  * @since 0.12
+ * @checkstyle ClassDataAbstractionCouplingCheck (550 lines)
  */
-public final class IterableOf<X> extends IterableEnvelope<X> {
+@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
+public final class IterableOf<X> implements Iterable<X> {
+
+    /**
+     * The encapsulated iterator.
+     */
+    private final Scalar<Iterator<X>> itr;
 
     /**
      * Ctor.
@@ -77,13 +90,11 @@ public final class IterableOf<X> extends IterableEnvelope<X> {
      * @param <I> Custom iterator
      * @param first First bag of elements
      * @param next Subsequent bags of elements
+     * @todo #947:30min Move this constructor in its own class with its own
+     *  tests and meaningful name (maybe Paged?). Then remove the
+     *  ClassDataAbstractionCouplingCheck suppression for IterableOf.
      */
-    @SuppressWarnings(
-        {
-            "PMD.CallSuperInConstructor",
-            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-        }
-    )
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public <I extends Iterator<X>> IterableOf(
         final Scalar<I> first, final Func<I, I> next
     ) {
@@ -124,8 +135,55 @@ public final class IterableOf<X> extends IterableEnvelope<X> {
      * Ctor.
      * @param sclr The encapsulated iterator of x
      */
-    private IterableOf(final Scalar<Iterator<X>> sclr) {
-        super(() -> () -> new Unchecked<>(sclr).value());
+    public IterableOf(final Scalar<Iterator<X>> sclr) {
+        this.itr = sclr;
     }
 
+    @Override
+    public Iterator<X> iterator() {
+        return new Unchecked<>(this.itr).value();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return new Unchecked<>(
+            new Or(
+                () -> other == this,
+                new And(
+                    () -> other != null,
+                    () -> Iterable.class.isAssignableFrom(other.getClass()),
+                    () -> {
+                        final Iterable<?> compared = (Iterable<?>) other;
+                        final Iterator<?> iterator = compared.iterator();
+                        return new Unchecked<>(
+                            new And(
+                                (X input) -> input.equals(iterator.next()),
+                                this
+                            )
+                        ).value();
+                    }
+                )
+            )
+        ).value();
+    }
+
+    // @checkstyle MagicNumberCheck (30 lines)
+    @Override
+    public int hashCode() {
+        return new Unchecked<>(
+            new Folded<>(
+                42,
+                (hash, entry) -> new SumOfInt(
+                    () -> 37 * hash,
+                    entry::hashCode
+                ).value(),
+                this
+            )
+        ).value();
+    }
+
+    @Override
+    public String toString() {
+        return new UncheckedText(new TextOf(this)).asString();
+    }
 }

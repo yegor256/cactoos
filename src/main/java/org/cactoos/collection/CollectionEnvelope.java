@@ -40,6 +40,11 @@ import org.cactoos.scalar.Unchecked;
  * @param <X> Element type
  * @since 0.23
  * @checkstyle AbstractClassNameCheck (500 lines)
+ * @todo #947:30min CollectionEnvelope should extends IterableEnvelope and
+ *  only delegates all the methods of Collection to the wrapped Collection.
+ *  See IterableEnvelope for an example. If needed CollectionOf should have
+ *  some methods that were previously here and implement Collection instead
+ *  of extending CollectionEnvelope. Again see IterableOf for an example.
  */
 @SuppressWarnings(
     {
