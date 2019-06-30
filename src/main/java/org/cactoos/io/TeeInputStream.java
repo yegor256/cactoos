@@ -29,7 +29,9 @@ import java.io.OutputStream;
 
 /**
  * Stream that copies input to output.
- * <b>WARNING:</b> This class closes output after close.
+ * <b>WARNING:</b>
+ * This class closes {@link TeeInputStream#output}
+ * after {@link TeeInputStream#close()}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -92,13 +94,6 @@ public final class TeeInputStream extends InputStream {
         return this.input.available();
     }
 
-    // @checkstyle NoJavadocForOverriddenMethodsCheck (8 lines)
-    /**
-     * Closes this stream.
-     * <b>WARNING:</b> This class closes {@link #output} after close.
-     * @throws IOException throws when {@link #input} or {@link #output}
-     *  throws {@link java.io.IOException}
-     */
     @Override
     public void close() throws IOException {
         this.input.close();
