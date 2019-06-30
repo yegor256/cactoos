@@ -149,4 +149,115 @@ public final class MaxOfTest {
         );
     }
 
+    @Test
+    public void withNegativeIntegerCollection() {
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1, -2, -3, -4).toArray(new Integer[4])
+            ).intValue(),
+            Matchers.equalTo(-1)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1, -2, -3, -4).toArray(new Integer[4])
+            ).longValue(),
+            Matchers.equalTo(-1L)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1, -2, -3, -4).toArray(new Integer[4])
+            ).doubleValue(),
+            Matchers.equalTo(-1.0d)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1, -2, -3, -4).toArray(new Integer[4])
+            ).floatValue(),
+            Matchers.equalTo(-1.0f)
+        );
+    }
+
+    @Test
+    public void withNegativeLongCollection() {
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1L, -2L, -3L, -4L).toArray(new Long[4])
+            ).intValue(),
+            Matchers.equalTo(-1)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1L, -2L, -3L, -4L).toArray(new Long[4])
+            ).longValue(),
+            Matchers.equalTo(-1L)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1L, -2L, -3L, -4L).toArray(new Long[4])
+            ).doubleValue(),
+            Matchers.equalTo(-1.0d)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1L, -2L, -3L, -4L).toArray(new Long[4])
+            ).floatValue(),
+            Matchers.equalTo(-1.0f)
+        );
+    }
+
+    @Test
+    public void withNegativeDoubleCollection() {
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1.0d, -2.0d, -3.0d, -4.0d).toArray(new Double[4])
+            ).intValue(),
+            Matchers.equalTo(-1)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1.0d, -2.0d, -3.0d, -4.0d).toArray(new Double[4])
+            ).longValue(),
+            Matchers.equalTo(-1L)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1.0d, -2.0d, -3.0d, -4.0d).toArray(new Double[4])
+            ).doubleValue(),
+            Matchers.equalTo(-1.0d)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1.0d, -2.0d, -3.0d, -4.0d).toArray(new Double[4])
+            ).floatValue(),
+            Matchers.equalTo(-1.0f)
+        );
+    }
+
+    @Test
+    public void withNegativeFloatCollection() {
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1.0f, -2.0f, -3.0f, -4.0f).toArray(new Float[4])
+            ).intValue(),
+            Matchers.equalTo(-1)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1.0f, -2.0f, -3.0f, -4.0f).toArray(new Float[4])
+            ).longValue(),
+            Matchers.equalTo(-1L)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1.0f, -2.0f, -3.0f, -4.0f).toArray(new Float[4])
+            ).doubleValue(),
+            Matchers.equalTo(-1.0d)
+        );
+        MatcherAssert.assertThat(
+            new MaxOf(
+                new ListOf<>(-1.0f, -2.0f, -3.0f, -4.0f).toArray(new Float[4])
+            ).floatValue(),
+            Matchers.equalTo(-1.0f)
+        );
+    }
 }
