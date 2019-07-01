@@ -68,7 +68,7 @@ public final class TeeInputStreamTest {
     }
 
     @Test
-    public void leftInputUnclosed() {
+    public void leftInputClosed() {
         try (StringWriterMock write = new StringWriterMock()) {
             new LengthOf(
                 new TeeInput(
