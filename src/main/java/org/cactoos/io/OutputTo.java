@@ -64,7 +64,7 @@ public final class OutputTo implements Output {
         this(
             () -> {
                 if (mkdirs) {
-                    file.getParentFile().mkdirs();
+                    file.getAbsoluteFile().getParentFile().mkdirs();
                 }
                 return new FileOutputStream(file);
             }
