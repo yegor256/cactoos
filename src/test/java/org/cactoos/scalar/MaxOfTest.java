@@ -23,10 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link MaxOf}.
@@ -39,225 +38,193 @@ public final class MaxOfTest {
 
     @Test
     public void withIntegerCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
-            ).intValue(),
-            Matchers.equalTo(4)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
-            ).longValue(),
-            Matchers.equalTo(4L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
-            ).doubleValue(),
-            Matchers.equalTo(4.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
-            ).floatValue(),
-            Matchers.equalTo(4.0f)
-        );
+        new Assertion<>(
+            "must maximum integer of positive integers",
+            () -> new MaxOf(1, 2, 3, 4).intValue(),
+            new ScalarHasValue<>(4)
+        ).affirm();
+        new Assertion<>(
+            "must maximum long of positive integers",
+            () -> new MaxOf(1, 2, 3, 4).longValue(),
+            new ScalarHasValue<>(4L)
+        ).affirm();
+        new Assertion<>(
+            "must maximum double of positive integers",
+            () -> new MaxOf(1, 2, 3, 4).doubleValue(),
+            new ScalarHasValue<>(4.0d)
+        ).affirm();
+        new Assertion<>(
+            "must maximum float of positive integers",
+            () -> new MaxOf(1, 2, 3, 4).floatValue(),
+            new ScalarHasValue<>(4.0f)
+        ).affirm();
     }
 
     @Test
     public void withLongCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
-            ).intValue(),
-            Matchers.equalTo(4)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
-            ).longValue(),
-            Matchers.equalTo(4L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
-            ).doubleValue(),
-            Matchers.equalTo(4.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
-            ).floatValue(),
-            Matchers.equalTo(4.0f)
-        );
+        new Assertion<>(
+            "must maximum integer of positive longs",
+            () -> new MaxOf(1L, 2L, 3L, 4L).intValue(),
+            new ScalarHasValue<>(4)
+        ).affirm();
+        new Assertion<>(
+            "must maximum long of positive longs",
+            () -> new MaxOf(1L, 2L, 3L, 4L).longValue(),
+            new ScalarHasValue<>(4L)
+        ).affirm();
+        new Assertion<>(
+            "must maximum double of positive longs",
+            () -> new MaxOf(1L, 2L, 3L, 4L).doubleValue(),
+            new ScalarHasValue<>(4.0d)
+        ).affirm();
+        new Assertion<>(
+            "must maximum float of positive longs",
+            () -> new MaxOf(1L, 2L, 3L, 4L).floatValue(),
+            new ScalarHasValue<>(4.0f)
+        ).affirm();
     }
 
     @Test
     public void withDoubleCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).intValue(),
-            Matchers.equalTo(4)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).longValue(),
-            Matchers.equalTo(4L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).doubleValue(),
-            Matchers.equalTo(4.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).floatValue(),
-            Matchers.equalTo(4.0f)
-        );
+        new Assertion<>(
+            "must maximum integer of positive doubles",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).intValue(),
+            new ScalarHasValue<>(4)
+        ).affirm();
+        new Assertion<>(
+            "must maximum long of positive doubles",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).longValue(),
+            new ScalarHasValue<>(4L)
+        ).affirm();
+        new Assertion<>(
+            "must maximum double of positive doubles",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).doubleValue(),
+            new ScalarHasValue<>(4.0d)
+        ).affirm();
+        new Assertion<>(
+            "must maximum float of positive doubles",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).floatValue(),
+            new ScalarHasValue<>(4.0f)
+        ).affirm();
     }
 
     @Test
     public void withFloatCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).intValue(),
-            Matchers.equalTo(4)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).longValue(),
-            Matchers.equalTo(4L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).doubleValue(),
-            Matchers.equalTo(4.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).floatValue(),
-            Matchers.equalTo(4.0f)
-        );
+        new Assertion<>(
+            "must maximum integer of positive floats",
+            () -> new MaxOf(1.0f, 2.0f, 3.0f, 4.0f).intValue(),
+            new ScalarHasValue<>(4)
+        ).affirm();
+        new Assertion<>(
+            "must maximum long of positive floats",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).longValue(),
+            new ScalarHasValue<>(4L)
+        ).affirm();
+        new Assertion<>(
+            "must maximum double of positive floats",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).doubleValue(),
+            new ScalarHasValue<>(4.0d)
+        ).affirm();
+        new Assertion<>(
+            "must maximum float of positive floats",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).floatValue(),
+            new ScalarHasValue<>(4.0f)
+        ).affirm();
     }
 
     @Test
     public void withNegativeIntegerCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1, -2, -3, -4).toArray(new Integer[4])
-            ).intValue(),
-            Matchers.equalTo(-1)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1, -2, -3, -4).toArray(new Integer[4])
-            ).longValue(),
-            Matchers.equalTo(-1L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1, -2, -3, -4).toArray(new Integer[4])
-            ).doubleValue(),
-            Matchers.equalTo(-1.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1, -2, -3, -4).toArray(new Integer[4])
-            ).floatValue(),
-            Matchers.equalTo(-1.0f)
-        );
+        new Assertion<>(
+            "must maximum integer of negative integers",
+            () -> new MaxOf(-1, -2, -3, -4).intValue(),
+            new ScalarHasValue<>(-1)
+        ).affirm();
+        new Assertion<>(
+            "must maximum long of negative integers",
+            () -> new MaxOf(-1, -2, -3, -4).longValue(),
+            new ScalarHasValue<>(-1L)
+        ).affirm();
+        new Assertion<>(
+            "must maximum double of negative integers",
+            () -> new MaxOf(-1, -2, -3, -4).doubleValue(),
+            new ScalarHasValue<>(-1.0d)
+        ).affirm();
+        new Assertion<>(
+            "must maximum float of negative integers",
+            () -> new MaxOf(-1, -2, -3, -4).floatValue(),
+            new ScalarHasValue<>(-1.0f)
+        ).affirm();
     }
 
     @Test
     public void withNegativeLongCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1L, -2L, -3L, -4L).toArray(new Long[4])
-            ).intValue(),
-            Matchers.equalTo(-1)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1L, -2L, -3L, -4L).toArray(new Long[4])
-            ).longValue(),
-            Matchers.equalTo(-1L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1L, -2L, -3L, -4L).toArray(new Long[4])
-            ).doubleValue(),
-            Matchers.equalTo(-1.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1L, -2L, -3L, -4L).toArray(new Long[4])
-            ).floatValue(),
-            Matchers.equalTo(-1.0f)
-        );
+        new Assertion<>(
+            "must maximum integer of negative longs",
+            () -> new MaxOf(-1L, -2L, -3L, -4L).intValue(),
+            new ScalarHasValue<>(-1)
+        ).affirm();
+        new Assertion<>(
+            "must maximum long of negative longs",
+            () -> new MaxOf(-1L, -2L, -3L, -4L).longValue(),
+            new ScalarHasValue<>(-1L)
+        ).affirm();
+        new Assertion<>(
+            "must maximum double of negative longs",
+            () -> new MaxOf(-1L, -2L, -3L, -4L).doubleValue(),
+            new ScalarHasValue<>(-1.0d)
+        ).affirm();
+        new Assertion<>(
+            "must maximum float of negative longs",
+            () -> new MaxOf(-1L, -2L, -3L, -4L).floatValue(),
+            new ScalarHasValue<>(-1.0f)
+        ).affirm();
     }
 
     @Test
     public void withNegativeDoubleCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1.0d, -2.0d, -3.0d, -4.0d).toArray(new Double[4])
-            ).intValue(),
-            Matchers.equalTo(-1)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1.0d, -2.0d, -3.0d, -4.0d).toArray(new Double[4])
-            ).longValue(),
-            Matchers.equalTo(-1L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1.0d, -2.0d, -3.0d, -4.0d).toArray(new Double[4])
-            ).doubleValue(),
-            Matchers.equalTo(-1.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1.0d, -2.0d, -3.0d, -4.0d).toArray(new Double[4])
-            ).floatValue(),
-            Matchers.equalTo(-1.0f)
-        );
+        new Assertion<>(
+            "must maximum integer of negative doubles",
+            () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).intValue(),
+            new ScalarHasValue<>(-1)
+        ).affirm();
+        new Assertion<>(
+            "must maximum long of negative doubles",
+            () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).longValue(),
+            new ScalarHasValue<>(-1L)
+        ).affirm();
+        new Assertion<>(
+            "must maximum double of negative doubles",
+            () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).doubleValue(),
+            new ScalarHasValue<>(-1.0d)
+        ).affirm();
+        new Assertion<>(
+            "must maximum float of negative doubles",
+            () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).floatValue(),
+            new ScalarHasValue<>(-1.0f)
+        ).affirm();
     }
 
     @Test
     public void withNegativeFloatCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1.0f, -2.0f, -3.0f, -4.0f).toArray(new Float[4])
-            ).intValue(),
-            Matchers.equalTo(-1)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1.0f, -2.0f, -3.0f, -4.0f).toArray(new Float[4])
-            ).longValue(),
-            Matchers.equalTo(-1L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1.0f, -2.0f, -3.0f, -4.0f).toArray(new Float[4])
-            ).doubleValue(),
-            Matchers.equalTo(-1.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(-1.0f, -2.0f, -3.0f, -4.0f).toArray(new Float[4])
-            ).floatValue(),
-            Matchers.equalTo(-1.0f)
-        );
+        new Assertion<>(
+            "must maximum integer of negative floats",
+            () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).intValue(),
+            new ScalarHasValue<>(-1)
+        ).affirm();
+        new Assertion<>(
+            "must maximum long of negative floats",
+            () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).longValue(),
+            new ScalarHasValue<>(-1L)
+        ).affirm();
+        new Assertion<>(
+            "must maximum double of negative floats",
+            () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).doubleValue(),
+            new ScalarHasValue<>(-1.0d)
+        ).affirm();
+        new Assertion<>(
+            "must maximum float of negative floats",
+            () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).floatValue(),
+            new ScalarHasValue<>(-1.0f)
+        ).affirm();
     }
 }
