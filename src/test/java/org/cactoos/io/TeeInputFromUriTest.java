@@ -27,11 +27,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import org.cactoos.text.TextOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -64,10 +64,7 @@ public final class TeeInputFromUriTest {
                 input.toURI(),
                 output
             ),
-            new TeeInputHasResult(
-                message,
-                new TextOf(output)
-            )
+            new InputHasContent(message)
         ).affirm();
     }
 
@@ -87,10 +84,7 @@ public final class TeeInputFromUriTest {
                 input.toURI(),
                 output
             ),
-            new TeeInputHasResult(
-                message,
-                new TextOf(output)
-            )
+            new InputHasContent(message)
         ).affirm();
     }
 
@@ -110,10 +104,7 @@ public final class TeeInputFromUriTest {
                 input.toURI(),
                 new OutputTo(output)
             ),
-            new TeeInputHasResult(
-                message,
-                new TextOf(output)
-            )
+            new InputHasContent(message)
         ).affirm();
     }
 }

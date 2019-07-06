@@ -28,11 +28,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use {@link Path} as
@@ -64,10 +64,7 @@ public final class TeeInputFromPathTest {
                 input.toPath(),
                 output.toPath()
             ),
-            new TeeInputHasResult(
-                message,
-                new TextOf(output)
-            )
+            new InputHasContent(message)
         );
     }
 
@@ -86,10 +83,7 @@ public final class TeeInputFromPathTest {
                 input.toPath(),
                 output
             ),
-            new TeeInputHasResult(
-                message,
-                new TextOf(output)
-            )
+            new InputHasContent(message)
         );
     }
 
@@ -108,10 +102,7 @@ public final class TeeInputFromPathTest {
                 input.toPath(),
                 new OutputTo(output)
             ),
-            new TeeInputHasResult(
-                message,
-                new TextOf(output)
-            )
+            new InputHasContent(message)
         );
     }
 }
