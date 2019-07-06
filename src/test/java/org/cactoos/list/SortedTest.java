@@ -25,7 +25,7 @@ package org.cactoos.list;
 
 import java.util.Comparator;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -56,8 +56,8 @@ public final class SortedTest {
                     "one", "two", "three", "four"
                 )
             ),
-            Matchers.contains(
-                "four", "one", "three", "two"
+            new IsEqual<>(
+                new ListOf<>("four", "one", "three", "two")
             )
         );
     }
@@ -70,7 +70,7 @@ public final class SortedTest {
                 Comparator.reverseOrder(),
                 "alpha", "beta", "gamma", "delta"
             ).get(1),
-            Matchers.equalTo("delta")
+            new IsEqual<>("delta")
         );
     }
 

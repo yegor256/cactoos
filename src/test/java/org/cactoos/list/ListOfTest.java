@@ -28,14 +28,16 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link ListOf}.
  *
  * @since 0.1
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
@@ -61,7 +63,7 @@ public final class ListOfTest {
         MatcherAssert.assertThat(
             "Can't convert an iterable to a list",
             new ListOf<>(-1, num, 0, 1).get(1),
-            Matchers.equalTo(num)
+            new IsEqual<>(num)
         );
     }
 
@@ -73,7 +75,7 @@ public final class ListOfTest {
             new ListOf<>(
                 Collections.nCopies(size, 0)
             ),
-            Matchers.hasSize(size)
+            new HasSize(size)
         );
     }
 
@@ -82,9 +84,9 @@ public final class ListOfTest {
         MatcherAssert.assertThat(
             "Can't convert an empty iterable to an empty list",
             new ListOf<>(
-                Collections.emptyList()
-            ).size(),
-            Matchers.equalTo(0)
+                new IterableOf<>()
+            ),
+            new HasSize(0)
         );
     }
 
@@ -109,7 +111,7 @@ public final class ListOfTest {
         MatcherAssert.assertThat(
             "Can't sense the changes in the underlying iterable",
             list.size(),
-            Matchers.not(Matchers.equalTo(list.size()))
+            new IsNot<>(new IsEqual<>(list.size()))
         );
     }
 
@@ -123,11 +125,13 @@ public final class ListOfTest {
         );
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list",
-            list, Matchers.iterableWithSize(4)
+            list,
+            new HasSize(4)
         );
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list, again",
-            list, Matchers.iterableWithSize(4)
+            list,
+            new HasSize(4)
         );
     }
 

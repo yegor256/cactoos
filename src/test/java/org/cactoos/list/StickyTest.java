@@ -30,12 +30,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.HasSize;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link Sticky}.
  * @since 0.8
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
@@ -62,7 +65,7 @@ public final class StickyTest {
         MatcherAssert.assertThat(
             "Can't ignore the changes in the underlying iterable",
             list.size(),
-            Matchers.equalTo(list.size())
+            new IsEqual<>(list.size())
         );
     }
 
@@ -71,7 +74,7 @@ public final class StickyTest {
         MatcherAssert.assertThat(
             "Can't decorate an array of numbers",
             new Sticky<>(-1, 0).size(),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
@@ -79,7 +82,7 @@ public final class StickyTest {
     public void testEmpty() {
         MatcherAssert.assertThat(
             new Sticky<>().isEmpty(),
-            Matchers.equalTo(true)
+            new IsTrue()
         );
     }
 
@@ -87,7 +90,7 @@ public final class StickyTest {
     public void testContains() {
         MatcherAssert.assertThat(
             new Sticky<>(1, 2).contains(1),
-            Matchers.equalTo(true)
+            new IsTrue()
         );
     }
 
@@ -95,7 +98,7 @@ public final class StickyTest {
     public void testToArray() {
         MatcherAssert.assertThat(
             new Sticky<>(1, 2).toArray(),
-            Matchers.arrayContaining(1, 2)
+            new IsEqual<>(new int[] {1, 2 })
         );
     }
 
@@ -104,7 +107,7 @@ public final class StickyTest {
         final Integer[] arr = new Integer[2];
         MatcherAssert.assertThat(
             new Sticky<>(1, 2).toArray(arr),
-            Matchers.arrayContaining(1, 2)
+            new IsEqual<>(new int[] {1, 2 })
         );
     }
 
@@ -112,7 +115,7 @@ public final class StickyTest {
     public void testContainsAll() {
         MatcherAssert.assertThat(
             new Sticky<>(1, 2).containsAll(new ListOf<>(1, 2)),
-            Matchers.equalTo(true)
+            new IsTrue()
         );
     }
 
@@ -120,7 +123,7 @@ public final class StickyTest {
     public void testIndexOf() {
         MatcherAssert.assertThat(
             new Sticky<>(1, 2).indexOf(1),
-            Matchers.equalTo(0)
+            new IsEqual<>(0)
         );
     }
 
@@ -128,7 +131,7 @@ public final class StickyTest {
     public void testLastIndexOf() {
         MatcherAssert.assertThat(
             new Sticky<>(1, 2, 2).lastIndexOf(2),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
@@ -136,7 +139,7 @@ public final class StickyTest {
     public void testGet() {
         MatcherAssert.assertThat(
             new Sticky<>(1, 2).get(1),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
@@ -147,7 +150,7 @@ public final class StickyTest {
         ).subList(0, 2);
         MatcherAssert.assertThat(
             list.size(),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
@@ -206,11 +209,13 @@ public final class StickyTest {
         );
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list",
-            list, Matchers.iterableWithSize(4)
+            list,
+            new HasSize(4)
         );
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list, again",
-            list, Matchers.iterableWithSize(4)
+            list,
+            new HasSize(4)
         );
     }
 
@@ -224,7 +229,8 @@ public final class StickyTest {
         );
         MatcherAssert.assertThat(
             "Can't map only once",
-            list.get(0), Matchers.equalTo(list.get(0))
+            list.get(0),
+            new IsEqual<>(list.get(0))
         );
     }
 
