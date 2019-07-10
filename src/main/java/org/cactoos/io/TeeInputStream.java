@@ -29,6 +29,9 @@ import java.io.OutputStream;
 
 /**
  * Stream that copies input to output.
+ * <b>WARNING:</b>
+ * This class closes {@link TeeInputStream#output}
+ * after {@link TeeInputStream#close()}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -94,7 +97,7 @@ public final class TeeInputStream extends InputStream {
     @Override
     public void close() throws IOException {
         this.input.close();
-        this.output.flush();
+        this.output.close();
     }
 
     @Override

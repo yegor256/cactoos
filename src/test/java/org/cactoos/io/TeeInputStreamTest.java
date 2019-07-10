@@ -68,7 +68,7 @@ public final class TeeInputStreamTest {
     }
 
     @Test
-    public void leftInputUnclosed() {
+    public void leftInputClosed() {
         try (StringWriterMock write = new StringWriterMock()) {
             new LengthOf(
                 new TeeInput(
@@ -79,7 +79,7 @@ public final class TeeInputStreamTest {
             MatcherAssert.assertThat(
                 "Can't use output after usage from TeeInput",
                 write.isClosed(),
-                new IsEqual<>(false)
+                new IsEqual<>(true)
             );
         }
     }
