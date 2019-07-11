@@ -34,6 +34,7 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class MaxOfTest {
 
     @Test
