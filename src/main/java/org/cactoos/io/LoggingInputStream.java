@@ -23,6 +23,11 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
@@ -30,10 +35,6 @@ import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.cactoos.scalar.Sticky;
-import org.cactoos.scalar.Unchecked;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Logged input stream.

@@ -23,8 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
 import org.cactoos.Scalar;
+
+import java.util.Iterator;
 
 /**
  * Find the greater among items.

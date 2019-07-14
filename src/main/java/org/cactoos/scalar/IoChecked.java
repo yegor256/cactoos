@@ -23,8 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
 import org.cactoos.Scalar;
+
+import java.io.IOException;
 
 /**
  * Scalar that doesn't throw {@link Exception}, but throws

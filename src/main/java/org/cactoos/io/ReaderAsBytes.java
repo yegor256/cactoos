@@ -23,10 +23,11 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.Bytes;
+
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.Bytes;
 
 /**
  * Reader as {@link Bytes}.

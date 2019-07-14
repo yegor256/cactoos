@@ -23,12 +23,13 @@
  */
 package org.cactoos.scalar;
 
-import java.util.NoSuchElementException;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.IterableOf;
+
+import java.util.NoSuchElementException;
 
 /**
  * Find first element in a list that satisfies specified condition.

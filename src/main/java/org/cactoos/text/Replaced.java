@@ -23,15 +23,16 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.func.IoCheckedFunc;
 import org.cactoos.scalar.IoChecked;
+
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Replace the Text.

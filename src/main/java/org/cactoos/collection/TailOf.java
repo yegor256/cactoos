@@ -23,8 +23,9 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collection;
 import org.cactoos.iterable.IterableOf;
+
+import java.util.Collection;
 
 /**
  * Tail portion of the collection.

@@ -23,13 +23,14 @@
  */
 package org.cactoos.map;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Iterable as {@link Map}.

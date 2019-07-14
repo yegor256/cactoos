@@ -23,12 +23,13 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
-import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.text.FormattedText;
+
+import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Element from position in {@link Iterable}

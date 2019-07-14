@@ -23,11 +23,12 @@
  */
 package org.cactoos.map;
 
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * A decorator of {@link Map} that tolerates no NULLs.

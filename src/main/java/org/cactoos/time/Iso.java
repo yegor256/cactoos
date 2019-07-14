@@ -23,8 +23,9 @@
  */
 package org.cactoos.time;
 
-import java.time.format.DateTimeFormatter;
 import org.cactoos.Scalar;
+
+import java.time.format.DateTimeFormatter;
 
 /**
  * The formatter.

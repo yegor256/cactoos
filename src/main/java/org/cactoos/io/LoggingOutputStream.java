@@ -23,6 +23,9 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.Duration;
@@ -30,8 +33,6 @@ import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * Logged output stream.

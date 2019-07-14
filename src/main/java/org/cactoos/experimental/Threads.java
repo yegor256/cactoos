@@ -23,17 +23,14 @@
  */
 package org.cactoos.experimental;
 
-import java.util.Collection;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.collection.Mapped;
 import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
+
+import java.util.Collection;
+import java.util.concurrent.*;
 
 /**
  * Allows to execute the tasks concurrently.

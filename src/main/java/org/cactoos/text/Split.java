@@ -23,10 +23,11 @@
  */
 package org.cactoos.text;
 
-import java.util.Iterator;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+
+import java.util.Iterator;
 
 /**
  * Split the Text.

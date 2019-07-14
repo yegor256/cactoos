@@ -23,11 +23,12 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.iterable.IterableOf;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * List decorator that goes through the list only once.

@@ -23,10 +23,11 @@
  */
 package org.cactoos.collection;
 
+import org.cactoos.iterable.IterableOf;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Iterable as {@link Collection}.

@@ -23,6 +23,11 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.Output;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -31,10 +36,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import org.cactoos.Output;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.Sticky;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * An {@link OutputStream} that encapsulates other destination for the data.

@@ -23,11 +23,12 @@
  */
 package org.cactoos.time;
 
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Unchecked;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * Parser for {@link ZonedDateTime} instances.

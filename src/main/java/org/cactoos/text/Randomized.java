@@ -23,13 +23,14 @@
  */
 package org.cactoos.text;
 
-import java.security.SecureRandom;
-import java.util.List;
-import java.util.Random;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.Unchecked;
+
+import java.security.SecureRandom;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Randomized text.

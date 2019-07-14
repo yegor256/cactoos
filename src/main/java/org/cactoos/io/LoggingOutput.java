@@ -23,9 +23,10 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.Output;
+
 import java.io.OutputStream;
 import java.util.logging.Logger;
-import org.cactoos.Output;
 
 /**
  * Logged output.

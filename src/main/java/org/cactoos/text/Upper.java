@@ -23,8 +23,9 @@
  */
 package org.cactoos.text;
 
-import java.util.Locale;
 import org.cactoos.Text;
+
+import java.util.Locale;
 
 /**
  * Text in upper case.

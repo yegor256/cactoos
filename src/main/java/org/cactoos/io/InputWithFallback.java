@@ -23,11 +23,12 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
-import java.io.InputStream;
 import org.cactoos.Func;
 import org.cactoos.Input;
 import org.cactoos.func.IoCheckedFunc;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Input that returns an alternative input if the main one throws

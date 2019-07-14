@@ -23,12 +23,13 @@
  */
 package org.cactoos.time;
 
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Unchecked;
+
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * Parser for {@link OffsetDateTime} instances.

@@ -23,6 +23,15 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Bytes;
+import org.cactoos.Input;
+import org.cactoos.Scalar;
+import org.cactoos.io.BytesOf;
+import org.cactoos.io.InputOf;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.time.Iso;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -32,23 +41,10 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
-import org.cactoos.Bytes;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
-import org.cactoos.io.BytesOf;
-import org.cactoos.io.InputOf;
-import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.Sticky;
-import org.cactoos.time.Iso;
 
 /**
  * TextOf

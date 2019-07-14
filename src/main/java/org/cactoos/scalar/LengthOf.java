@@ -24,10 +24,11 @@
 
 package org.cactoos.scalar;
 
-import java.io.InputStream;
-import java.util.Iterator;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
+
+import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * Length.

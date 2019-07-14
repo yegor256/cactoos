@@ -23,9 +23,10 @@
  */
 package org.cactoos;
 
-import java.io.OutputStream;
 import org.cactoos.io.OutputTo;
 import org.cactoos.io.TeeInput;
+
+import java.io.OutputStream;
 
 /**
  * Output.

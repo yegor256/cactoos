@@ -23,11 +23,12 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.Func;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import org.cactoos.Func;
 
 /**
  * Function that gets interrupted after a certain time has passed.

@@ -23,12 +23,13 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.Output;
+
 import java.io.File;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import org.cactoos.Output;
 
 /**
  * Output that appends content to a given file.

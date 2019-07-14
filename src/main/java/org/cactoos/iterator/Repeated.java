@@ -23,10 +23,11 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Unchecked;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Repeat an element.

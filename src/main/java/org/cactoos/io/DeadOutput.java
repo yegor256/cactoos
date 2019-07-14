@@ -23,8 +23,9 @@
  */
 package org.cactoos.io;
 
-import java.io.OutputStream;
 import org.cactoos.Output;
+
+import java.io.OutputStream;
 
 /**
  * Output that accepts anything.

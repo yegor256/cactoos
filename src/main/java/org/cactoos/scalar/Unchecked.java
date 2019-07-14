@@ -23,9 +23,10 @@
  */
 package org.cactoos.scalar;
 
+import org.cactoos.Scalar;
+
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import org.cactoos.Scalar;
 
 /**
  * Scalar that doesn't throw checked {@link Exception}.

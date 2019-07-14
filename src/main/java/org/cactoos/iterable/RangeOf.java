@@ -23,10 +23,11 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import org.cactoos.Func;
 import org.cactoos.func.UncheckedFunc;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Iterable implementation to model range functionality.

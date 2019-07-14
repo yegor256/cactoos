@@ -23,13 +23,14 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.Or;
 import org.cactoos.scalar.Unchecked;
+
+import java.io.IOException;
 
 /**
  * Text envelope that provides {@link #equals(Object)} and {@link #hashCode()}

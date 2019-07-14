@@ -23,8 +23,9 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
 import org.cactoos.Func;
+
+import java.io.IOException;
 
 /**
  * Func check for no nulls.

@@ -23,10 +23,11 @@
  */
 package org.cactoos.map;
 
-import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+
+import java.util.Map;
 
 /**
  * A {@link Map} that is both synchronized and sticky.

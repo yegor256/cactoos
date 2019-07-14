@@ -23,10 +23,11 @@
  */
 package org.cactoos.time;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Unchecked;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Parser for {@link LocalDateTime} instances.

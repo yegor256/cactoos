@@ -23,8 +23,9 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
 import org.cactoos.Proc;
+
+import java.io.IOException;
 
 /**
  * Proc that doesn't throw checked {@link Exception}, but

@@ -23,13 +23,14 @@
  */
 package org.cactoos.func;
 
-import java.sql.SQLException;
-import java.sql.SQLRecoverableException;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.FallbackFrom;
 import org.cactoos.scalar.InheritanceLevel;
 import org.cactoos.scalar.ScalarWithFallback;
+
+import java.sql.SQLException;
+import java.sql.SQLRecoverableException;
 
 /**
  * Func with fallbacks that enable it to recover from errors.

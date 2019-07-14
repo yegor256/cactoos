@@ -23,8 +23,9 @@
  */
 package org.cactoos.io;
 
-import java.io.InputStream;
 import org.cactoos.Input;
+
+import java.io.InputStream;
 
 /**
  * Input that only shows the first N bytes of the original input.

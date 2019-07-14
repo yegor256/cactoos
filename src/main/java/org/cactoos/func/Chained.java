@@ -23,8 +23,9 @@
  */
 package org.cactoos.func;
 
-import java.util.Collections;
 import org.cactoos.Func;
+
+import java.util.Collections;
 
 /**
  * Composed function.

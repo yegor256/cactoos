@@ -23,11 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.BiFunc;
-import org.cactoos.BiProc;
-import org.cactoos.Func;
-import org.cactoos.Proc;
-import org.cactoos.Scalar;
+import org.cactoos.*;
 import org.cactoos.func.BiFuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;

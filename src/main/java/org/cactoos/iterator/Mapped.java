@@ -23,9 +23,10 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.func.UncheckedFunc;
+
+import java.util.Iterator;
 
 /**
  * Mapped iterator.

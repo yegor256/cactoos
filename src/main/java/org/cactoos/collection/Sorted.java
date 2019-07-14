@@ -23,11 +23,12 @@
  */
 package org.cactoos.collection;
 
+import org.cactoos.list.ListOf;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import org.cactoos.list.ListOf;
 
 /**
  * Sorted collection.

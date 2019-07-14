@@ -23,14 +23,15 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
-import java.io.InputStream;
 import org.cactoos.Func;
 import org.cactoos.Input;
 import org.cactoos.Text;
 import org.cactoos.func.IoCheckedFunc;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Classpath resource.

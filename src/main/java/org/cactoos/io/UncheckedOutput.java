@@ -23,9 +23,10 @@
  */
 package org.cactoos.io;
 
-import java.io.OutputStream;
 import org.cactoos.Output;
 import org.cactoos.scalar.Unchecked;
+
+import java.io.OutputStream;
 
 /**
  * Input that doesn't throw checked {@link Exception}.

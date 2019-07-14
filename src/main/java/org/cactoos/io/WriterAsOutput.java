@@ -23,12 +23,13 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.Output;
+
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.Output;
 
 /**
  * Writer as {@link Output}.

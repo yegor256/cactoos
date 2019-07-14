@@ -23,8 +23,9 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
 import org.cactoos.BiProc;
+
+import java.io.IOException;
 
 /**
  * BiProc that doesn't throw checked {@link Exception}, but throws

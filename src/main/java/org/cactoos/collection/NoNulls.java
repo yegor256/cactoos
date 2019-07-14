@@ -23,10 +23,11 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collection;
-import java.util.Iterator;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
+
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * A decorator of {@link Collection} that tolerates no NULLs.

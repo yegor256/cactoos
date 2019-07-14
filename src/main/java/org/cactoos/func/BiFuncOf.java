@@ -23,12 +23,9 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.*;
+
 import java.util.concurrent.Callable;
-import org.cactoos.BiFunc;
-import org.cactoos.BiProc;
-import org.cactoos.Func;
-import org.cactoos.Proc;
-import org.cactoos.Scalar;
 
 /**
  * Represents many possible inputs as {@link BiFunc}.

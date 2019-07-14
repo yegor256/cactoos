@@ -24,9 +24,10 @@
 
 package org.cactoos.io;
 
+import org.cactoos.Output;
+
 import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
-import org.cactoos.Output;
 
 /**
  * Output that writes compressed data in the GZIP file format.

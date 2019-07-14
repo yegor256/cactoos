@@ -23,11 +23,12 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.Mapped;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Reduces iterable via BiFunc.

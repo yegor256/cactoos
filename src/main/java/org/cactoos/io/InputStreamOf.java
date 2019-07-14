@@ -23,6 +23,13 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.Bytes;
+import org.cactoos.Input;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,12 +39,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import org.cactoos.Bytes;
-import org.cactoos.Input;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
-import org.cactoos.scalar.Sticky;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * An {@link InputStream} that encapsulates other sources of data.

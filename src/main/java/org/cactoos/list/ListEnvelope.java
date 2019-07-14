@@ -23,12 +23,13 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.ListIterator;
 import org.cactoos.Scalar;
 import org.cactoos.collection.CollectionEnvelope;
 import org.cactoos.scalar.Unchecked;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * {@link List} envelope that doesn't allow mutations.

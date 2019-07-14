@@ -24,9 +24,10 @@
 
 package org.cactoos.io;
 
+import org.cactoos.Input;
+
 import java.io.IOException;
 import java.io.InputStream;
-import org.cactoos.Input;
 
 /**
  * Input check for no nulls.

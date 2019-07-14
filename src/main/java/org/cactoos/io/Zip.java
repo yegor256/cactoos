@@ -24,15 +24,12 @@
 
 package org.cactoos.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import org.cactoos.Input;
+
+import java.io.*;
 import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import org.cactoos.Input;
 
 /**
  * Zip files and directory.

@@ -23,13 +23,14 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Comparator;
-import java.util.Map;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncWithFallback;
 import org.cactoos.iterator.Filtered;
 import org.cactoos.iterator.Sorted;
 import org.cactoos.map.MapOf;
+
+import java.util.Comparator;
+import java.util.Map;
 
 /**
  * Scalar with fallbacks that enable it to recover from errors.

@@ -23,10 +23,11 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 /**
  * Input as Byte Array.

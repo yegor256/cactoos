@@ -23,10 +23,11 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicLong;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
+
+import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * A decorator of an {@link Iterator} that returns no NULL.

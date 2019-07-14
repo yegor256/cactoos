@@ -23,11 +23,12 @@
  */
 package org.cactoos.func;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import org.cactoos.BiFunc;
 import org.cactoos.map.MapEntry;
 import org.cactoos.scalar.Sticky;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Func that accepts two arguments and caches previously calculated values

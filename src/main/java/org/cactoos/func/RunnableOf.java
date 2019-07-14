@@ -23,9 +23,10 @@
  */
 package org.cactoos.func;
 
-import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
+
+import java.util.concurrent.Callable;
 
 /**
  * Func as Runnable.

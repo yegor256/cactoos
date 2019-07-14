@@ -23,12 +23,13 @@
  */
 package org.cactoos.scalar;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 /**
  * Multiplication result of numbers.

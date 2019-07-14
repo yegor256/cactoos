@@ -23,12 +23,13 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.Output;
+
 import java.io.File;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import org.cactoos.Output;
 
 /**
  * Output to Output copying pipe.

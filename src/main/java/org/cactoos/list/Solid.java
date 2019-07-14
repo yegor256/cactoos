@@ -23,9 +23,10 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
+
+import java.util.Collection;
 
 /**
  * A {@link java.util.List} that is both synchronized and sticky.

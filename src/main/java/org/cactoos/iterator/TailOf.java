@@ -23,10 +23,11 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
+
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Tail portion of the iterator.

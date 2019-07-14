@@ -23,6 +23,8 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.Output;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -30,7 +32,6 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.file.Path;
-import org.cactoos.Output;
 
 /**
  * An {@link Output} that encapsulates other destination for the data.

@@ -23,10 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
-import java.util.Properties;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
@@ -36,6 +32,11 @@ import org.cactoos.iterable.Mapped;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.cactoos.text.TextOf;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * Map as {@link Properties}.

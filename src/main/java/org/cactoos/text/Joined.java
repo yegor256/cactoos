@@ -23,11 +23,12 @@
  */
 package org.cactoos.text;
 
-import java.util.StringJoiner;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+
+import java.util.StringJoiner;
 
 /**
  * Join a Text.

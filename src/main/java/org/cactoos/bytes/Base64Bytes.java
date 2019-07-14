@@ -24,8 +24,9 @@
 
 package org.cactoos.bytes;
 
-import java.util.Base64;
 import org.cactoos.Bytes;
+
+import java.util.Base64;
 
 /**
  * Decodes all origin bytes using the Base64 encoding scheme.

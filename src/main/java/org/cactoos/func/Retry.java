@@ -23,8 +23,9 @@
  */
 package org.cactoos.func;
 
-import java.time.Duration;
 import org.cactoos.Func;
+
+import java.time.Duration;
 
 /**
  * Func that will try a few times before throwing an exception.

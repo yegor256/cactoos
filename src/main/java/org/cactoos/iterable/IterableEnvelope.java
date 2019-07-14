@@ -23,14 +23,11 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
 import org.cactoos.Scalar;
 import org.cactoos.iterator.Immutable;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.Or;
-import org.cactoos.scalar.SumOfInt;
-import org.cactoos.scalar.Unchecked;
+import org.cactoos.scalar.*;
+
+import java.util.Iterator;
 
 /**
  * Iterable envelope.

@@ -23,11 +23,12 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.scalar.MinOf;
 import org.cactoos.text.FormattedText;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 /**
  * Input showing only last N bytes of the stream.

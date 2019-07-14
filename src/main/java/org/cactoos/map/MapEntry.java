@@ -23,9 +23,10 @@
  */
 package org.cactoos.map;
 
-import java.util.Map;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
+
+import java.util.Map;
 
 /**
  * MapEntry as {@link java.util.AbstractMap.Entry}.

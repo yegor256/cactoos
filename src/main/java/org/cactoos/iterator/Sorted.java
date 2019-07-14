@@ -23,12 +23,13 @@
  */
 package org.cactoos.iterator;
 
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
+
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.scalar.Sticky;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * Sorted iterator.

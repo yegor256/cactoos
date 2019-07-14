@@ -23,9 +23,10 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.Proc;
+
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import org.cactoos.Proc;
 
 /**
  * Proc that doesn't throw checked {@link Exception}.

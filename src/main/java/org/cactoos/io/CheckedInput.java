@@ -23,10 +23,11 @@
  */
 package org.cactoos.io;
 
-import java.io.InputStream;
 import org.cactoos.Func;
 import org.cactoos.Input;
 import org.cactoos.scalar.Checked;
+
+import java.io.InputStream;
 
 /**
  * Input that throws exception of specified type.

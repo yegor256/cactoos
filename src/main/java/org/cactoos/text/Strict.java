@@ -23,10 +23,11 @@
  */
 package org.cactoos.text;
 
-import java.util.regex.Pattern;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+
+import java.util.regex.Pattern;
 
 /**
  * Validates encapsulated text using predicate

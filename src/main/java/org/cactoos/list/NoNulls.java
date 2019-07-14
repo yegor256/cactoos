@@ -23,12 +23,13 @@
  */
 package org.cactoos.list;
 
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.UncheckedText;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import org.cactoos.text.FormattedText;
-import org.cactoos.text.UncheckedText;
 
 /**
  * A decorator of {@link List} that tolerates no NULLs.

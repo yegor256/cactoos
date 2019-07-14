@@ -23,10 +23,11 @@
  */
 package org.cactoos.func;
 
-import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
+
+import java.util.concurrent.Callable;
 
 /**
  * Represents many possible inputs as {@link Func}.

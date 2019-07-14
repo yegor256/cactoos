@@ -23,15 +23,16 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Array as iterable.

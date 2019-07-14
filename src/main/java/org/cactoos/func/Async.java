@@ -23,12 +23,13 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.Func;
+import org.cactoos.Proc;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
-import org.cactoos.Func;
-import org.cactoos.Proc;
 
 /**
  * Func that runs in the background.

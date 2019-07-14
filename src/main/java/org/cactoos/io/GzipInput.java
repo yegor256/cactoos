@@ -24,9 +24,10 @@
 
 package org.cactoos.io;
 
+import org.cactoos.Input;
+
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
-import org.cactoos.Input;
 
 /**
  * Input that reads compressed data from the GZIP file format.

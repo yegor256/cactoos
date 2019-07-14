@@ -23,11 +23,12 @@
  */
 package org.cactoos.list;
 
-import java.util.List;
-import java.util.ListIterator;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
+
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Iterator of the list that doesn't allow mutations.

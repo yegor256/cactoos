@@ -23,9 +23,10 @@
  */
 package org.cactoos.map;
 
+import org.cactoos.list.ListOf;
+
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.cactoos.list.ListOf;
 
 /**
  * This class can be used to merge a few {@link Map}.

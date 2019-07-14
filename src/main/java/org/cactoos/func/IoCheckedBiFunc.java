@@ -23,9 +23,10 @@
  */
 package org.cactoos.func;
 
-import java.io.IOException;
 import org.cactoos.BiFunc;
 import org.cactoos.scalar.IoChecked;
+
+import java.io.IOException;
 
 /**
  * Func that doesn't throw checked {@link Exception}, but throws

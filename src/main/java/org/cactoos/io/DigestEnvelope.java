@@ -23,12 +23,13 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.Bytes;
+import org.cactoos.Input;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import org.cactoos.Bytes;
-import org.cactoos.Input;
 
 /**
  * Digest Envelope.

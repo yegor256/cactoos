@@ -23,13 +23,14 @@
  */
 package org.cactoos.io;
 
-import java.io.InputStream;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import org.cactoos.Input;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UncheckedText;
 import org.w3c.dom.ls.LSInput;
+
+import java.io.InputStream;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Input as LSInput.

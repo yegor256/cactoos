@@ -23,9 +23,10 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Objects;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+
+import java.util.Objects;
 
 /**
  * Object HashCode.

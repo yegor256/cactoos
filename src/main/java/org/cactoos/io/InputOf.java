@@ -23,21 +23,18 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.Reader;
-import java.net.URI;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.Unchecked;
+
+import java.io.*;
+import java.net.URI;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
 
 /**
  * An {@link Input} that encapsulates other sources of data.

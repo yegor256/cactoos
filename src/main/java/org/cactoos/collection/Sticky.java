@@ -23,10 +23,11 @@
  */
 package org.cactoos.collection;
 
+import org.cactoos.iterable.IterableOf;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Collection decorator that goes through the list only once.

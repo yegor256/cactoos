@@ -23,9 +23,10 @@
  */
 package org.cactoos.scalar;
 
+import org.cactoos.Scalar;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
-import org.cactoos.Scalar;
 
 /**
  * Division result of two numbers.

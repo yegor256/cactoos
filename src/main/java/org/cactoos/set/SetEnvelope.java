@@ -23,9 +23,10 @@
  */
 package org.cactoos.set;
 
-import java.util.Set;
 import org.cactoos.Scalar;
 import org.cactoos.collection.CollectionEnvelope;
+
+import java.util.Set;
 
 /**
  * Set envelope.

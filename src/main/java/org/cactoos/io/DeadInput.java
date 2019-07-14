@@ -23,8 +23,9 @@
  */
 package org.cactoos.io;
 
-import java.io.InputStream;
 import org.cactoos.Input;
+
+import java.io.InputStream;
 
 /**
  * Input with no data.

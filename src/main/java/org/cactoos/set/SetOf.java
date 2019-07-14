@@ -23,11 +23,12 @@
  */
 package org.cactoos.set;
 
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.And;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.And;
 
 /**
  * Iterable as {@link Set}.

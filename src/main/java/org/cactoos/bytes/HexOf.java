@@ -24,13 +24,14 @@
 
 package org.cactoos.bytes;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.Iterator;
 import org.cactoos.Bytes;
 import org.cactoos.Text;
 import org.cactoos.iterator.Mapped;
 import org.cactoos.text.FormattedText;
+
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.Iterator;
 
 /**
  * Decodes origin {@link Text} using the hexadecimal encoding scheme.

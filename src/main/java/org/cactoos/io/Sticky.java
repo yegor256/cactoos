@@ -23,13 +23,14 @@
  */
 package org.cactoos.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.LengthOf;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 /**
  * Input that reads only once.

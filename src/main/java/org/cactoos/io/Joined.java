@@ -23,12 +23,13 @@
  */
 package org.cactoos.io;
 
-import java.io.InputStream;
-import java.io.SequenceInputStream;
 import org.cactoos.Input;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.Reduced;
+
+import java.io.InputStream;
+import java.io.SequenceInputStream;
 
 /**
  * Concatenation of several inputs.
