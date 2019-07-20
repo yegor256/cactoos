@@ -27,11 +27,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link Directory}.
@@ -52,12 +52,12 @@ public final class DirectoryTest {
         final Path dir = this.folder.newFolder().toPath();
         dir.resolve("x/y").toFile().mkdirs();
         Files.write(dir.resolve("x/y/test"), "".getBytes());
-        MatcherAssert.assertThat(
-            "Can't list files in a directory represented by a path",
+        new Assertion<>(
+            "must list files in a directory represented by a path",
             new Directory(dir),
             // @checkstyle MagicNumber (1 line)
-            Matchers.iterableWithSize(4)
-        );
+            new HasSize(4)
+        ).affirm();
     }
 
     @Test
@@ -66,11 +66,11 @@ public final class DirectoryTest {
         final Path dir = file.toPath();
         dir.resolve("parent/child").toFile().mkdirs();
         Files.write(dir.resolve("parent/child/file"), "".getBytes());
-        MatcherAssert.assertThat(
-            "Can't list files in a directory represented by a file",
+        new Assertion<>(
+            "must list files in a directory represented by a file",
             new Directory(file),
             // @checkstyle MagicNumber (1 line)
-            Matchers.iterableWithSize(4)
-        );
+            new HasSize(4)
+        ).affirm();
     }
 }

@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -91,10 +90,10 @@ public final class HeadInputStreamTest {
             new InputOf("testAvailableLessThanTotal").stream(),
             5
         );
-        MatcherAssert.assertThat(
-            "Count of available bytes is incorrect",
+        new Assertion<>(
+            "must count available bytes",
             stream.available(),
             new IsEqual<>(5)
-        );
+        ).affirm();
     }
 }

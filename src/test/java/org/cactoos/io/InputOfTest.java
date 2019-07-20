@@ -39,16 +39,19 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.InputHasContent;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.MatchesRegex;
+import org.llorllale.cactoos.matchers.StartsWith;
 import org.llorllale.cactoos.matchers.TextHasString;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
@@ -59,8 +62,9 @@ import org.takes.tk.TkHtml;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessiveImports", "unchecked" })
 public final class InputOfTest {
     /**
      * Temporary files and folders generator.
@@ -70,8 +74,8 @@ public final class InputOfTest {
 
     @Test
     public void readsAlternativeInputForFileCase() {
-        MatcherAssert.assertThat(
-            "Can't read alternative source from file not found",
+        new Assertion<>(
+            "must read alternative source from file not found",
             new TextOf(
                 new InputWithFallback(
                     new InputOf(
@@ -81,7 +85,7 @@ public final class InputOfTest {
                 )
             ),
             new EndsWith("text!")
-        );
+        ).affirm();
     }
 
     @Test
@@ -90,11 +94,11 @@ public final class InputOfTest {
             .toPath();
         final String content = "Hello, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
-        MatcherAssert.assertThat(
-            "Can't read file content",
+        new Assertion<>(
+            "must read file content",
             new InputOf(temp),
             new InputHasContent(content)
-        );
+        ).affirm();
     }
 
     @Test
@@ -103,8 +107,8 @@ public final class InputOfTest {
         final InputStream input = new ByteArrayInputStream(
             "how are you?".getBytes()
         );
-        MatcherAssert.assertThat(
-            "Can't close InputStream correctly",
+        new Assertion<>(
+            "must close InputStream correctly",
             new TextOf(
                 new InputOf(
                     new InputStream() {
@@ -125,13 +129,13 @@ public final class InputOfTest {
                     return closed.get();
                 }
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsFileContent() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from a file-system URL",
+        new Assertion<>(
+            "must read bytes from a file-system URL",
             new BytesOf(
                 new InputOf(
                     this.getClass().getResource(
@@ -139,27 +143,27 @@ public final class InputOfTest {
                     )
                 )
             ).asBytes().length,
-            Matchers.greaterThan(0)
-        );
+            new MatcherOf<>(len -> len > 0)
+        ).affirm();
     }
 
     @Test
     public void readsRealUrl() throws IOException {
         new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
-            home -> MatcherAssert.assertThat(
-                "Can't fetch bytes from the URL",
+            home -> new Assertion<>(
+                "must fetch bytes from the URL",
                 new TextOf(
                     new InputOf(home)
                 ),
                 new MatchesRegex("<html.*html>")
-            )
+            ).affirm()
         );
     }
 
     @Test
     public void readsStringUrl() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't fetch bytes from the HTTPS URL",
+        new Assertion<>(
+            "must fetch bytes from the HTTPS URL",
             new TextOf(
                 new BytesOf(
                     new InputOf(
@@ -171,92 +175,100 @@ public final class InputOfTest {
                 )
             ),
             new TextHasString("Lorem ipsum")
-        );
+        ).affirm();
     }
 
     @Test
     public void readsStringIntoBytes() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from Input",
-            new String(
+        new Assertion<>(
+            "must read bytes from Input",
+            new TextOf(
                 new BytesOf(
                     new InputOf("Hello, друг!")
-                ).asBytes(),
+                ),
                 StandardCharsets.UTF_8
             ),
-            Matchers.allOf(
-                Matchers.startsWith("Hello, "),
-                Matchers.endsWith("друг!")
+            new AllOf<>(
+                new IterableOf<>(
+                    new StartsWith("Hello, "),
+                    new EndsWith("друг!")
+                )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsStringBuilder() throws Exception {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
-        MatcherAssert.assertThat(
-            "Can't receive a string builder",
-            new String(
+        new Assertion<>(
+            "must receive a string builder",
+            new TextOf(
                 new BytesOf(
                     new InputOf(
                         new StringBuilder(starts)
                             .append(ends)
                     )
-                ).asBytes()
+                )
             ),
-            Matchers.allOf(
-                Matchers.startsWith(starts),
-                Matchers.endsWith(ends)
+            new AllOf<>(
+                new IterableOf<>(
+                    new StartsWith(starts),
+                    new EndsWith(ends)
+                )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsStringBuffer() throws Exception {
         final String starts = "The future ";
         final String ends = "is now!";
-        MatcherAssert.assertThat(
-            "Can't receive a string buffer",
-            new String(
+        new Assertion<>(
+            "must receive a string buffer",
+            new TextOf(
                 new BytesOf(
                     new InputOf(
                         new StringBuffer(starts)
                             .append(ends)
                     )
-                ).asBytes()
+                )
             ),
-            Matchers.allOf(
-                Matchers.startsWith(starts),
-                Matchers.endsWith(ends)
+            new AllOf<>(
+                new IterableOf<>(
+                    new StartsWith(starts),
+                    new EndsWith(ends)
+                )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsArrayOfChars() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read array of chars.",
-            new String(
+        new Assertion<>(
+            "must read array of chars.",
+            new TextOf(
                 new BytesOf(
                     new InputOf(
                         'H', 'o', 'l', 'd', ' ',
                         'i', 'n', 'f', 'i', 'n', 'i', 't', 'y'
                     )
-                ).asBytes()
+                )
             ),
-            Matchers.allOf(
-                Matchers.startsWith("Hold "),
-                Matchers.endsWith("infinity")
+            new AllOf<>(
+                new IterableOf<>(
+                    new StartsWith("Hold "),
+                    new EndsWith("infinity")
+                )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsEncodedArrayOfChars() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read array of encoded chars.",
-            new String(
+        new Assertion<>(
+            "must read array of encoded chars.",
+            new TextOf(
                 new BytesOf(
                     new InputOf(
                         new char[]{
@@ -265,35 +277,37 @@ public final class InputOfTest {
                         },
                         StandardCharsets.UTF_8
                     )
-                ).asBytes(),
+                ),
                 StandardCharsets.UTF_8
             ),
-            Matchers.allOf(
-                Matchers.startsWith("O que sera"),
-                Matchers.endsWith(" que sera")
+            new AllOf<>(
+                new IterableOf<>(
+                    new StartsWith("O que sera"),
+                    new EndsWith(" que sera")
+                )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsStringFromReader() throws Exception {
         final String source = "hello, source!";
-        MatcherAssert.assertThat(
-            "Can't read string through a reader",
+        new Assertion<>(
+            "must read string through a reader",
             new TextOf(
                 new InputOf(
                     new StringReader(source)
                 )
             ).asString(),
-            Matchers.equalTo(source)
-        );
+            new IsEqual<>(source)
+        ).affirm();
     }
 
     @Test
     public void readsEncodedStringFromReader() throws Exception {
         final String source = "hello, друг!";
-        MatcherAssert.assertThat(
-            "Can't read encoded string through a reader",
+        new Assertion<>(
+            "must read encoded string through a reader",
             new TextOf(
                 new InputAsBytes(
                     new InputOf(
@@ -302,30 +316,30 @@ public final class InputOfTest {
                     )
                 )
             ).asString(),
-            Matchers.equalTo(source)
-        );
+            new IsEqual<>(source)
+        ).affirm();
     }
 
     @Test
     public void readsAnArrayOfBytes() throws Exception {
         final byte[] bytes = new byte[] {(byte) 0xCA, (byte) 0xFE};
-        MatcherAssert.assertThat(
-            "Can't read array of bytes",
-                new InputAsBytes(
-                    new SyncInput(new InputOf(bytes))
+        new Assertion<>(
+            "must read array of bytes",
+            new InputAsBytes(
+                new SyncInput(new InputOf(bytes))
             ).asBytes(),
-            Matchers.equalTo(bytes)
-        );
+            new IsEqual<>(bytes)
+        ).affirm();
     }
 
     @Test
     public void makesDataAvailable() throws Exception {
         final String content = "Hello,חבר!";
-        MatcherAssert.assertThat(
-            "Can't show that data is available",
+        new Assertion<>(
+            "must show that data is available",
             new InputOf(content).stream().available(),
-            Matchers.greaterThan(0)
-        );
+            new MatcherOf<>(avl -> avl > 0)
+        ).affirm();
     }
 
     @Test
@@ -354,7 +368,7 @@ public final class InputOfTest {
         HttpsURLConnection.setDefaultSSLSocketFactory(
             context.getSocketFactory()
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read bytes from HTTPS URL",
             new BytesOf(
                 new InputOf(
@@ -363,8 +377,8 @@ public final class InputOfTest {
                     )
                 )
             ).asBytes().length,
-            Matchers.greaterThan(0)
-        );
+            new MatcherOf<>(len -> len > 0)
+        ).affirm();
     }
 
 }

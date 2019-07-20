@@ -24,8 +24,8 @@
 package org.cactoos.io;
 
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -39,8 +39,8 @@ public final class HeadInputTest {
 
     @Test
     public void readsHeadOfLongerInput() throws Exception {
-        MatcherAssert.assertThat(
-            "HeadInput couldn't limit a number of read bytes",
+        new Assertion<>(
+            "must limit exactly the number of read bytes",
             new TextOf(
                 new HeadInput(
                     new InputOf("readsHeadOfLongerInput"),
@@ -48,14 +48,14 @@ public final class HeadInputTest {
                 )
             ),
             new TextHasString("reads")
-        );
+        ).affirm();
     }
 
     @Test
     public void readsHeadOfShorterInput() throws Exception {
         final String input = "readsHeadOfShorterInput";
-        MatcherAssert.assertThat(
-            "HeadInput incorrectly limited a number of read bytes",
+        new Assertion<>(
+            "must limit to at most the number of available bytes",
             new TextOf(
                 new HeadInput(
                     new InputOf(input),
@@ -63,6 +63,6 @@ public final class HeadInputTest {
                 )
             ),
             new TextHasString(input)
-        );
+        ).affirm();
     }
 }
