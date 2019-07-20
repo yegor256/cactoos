@@ -28,8 +28,9 @@ import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -74,11 +75,13 @@ public final class SolidTest {
         );
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list",
-            list, Matchers.iterableWithSize(4)
+            list,
+            new HasSize(4)
         );
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list, again",
-            list, Matchers.iterableWithSize(4)
+            list,
+            new HasSize(4)
         );
     }
 
@@ -92,7 +95,8 @@ public final class SolidTest {
         );
         MatcherAssert.assertThat(
             "Can't map only once",
-            list.get(0), Matchers.equalTo(list.get(0))
+            list.get(0),
+            new IsEqual<>(list.get(0))
         );
     }
 

@@ -24,8 +24,9 @@
 package org.cactoos.list;
 
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link org.cactoos.collection.Joined}.
@@ -56,7 +57,7 @@ public final class JoinedTest {
                 new ListOf<>(1, 2),
                 new ListOf<>(3, 4)
             ).size(),
-            Matchers.equalTo(4)
+            new IsEqual<>(4)
         );
     }
 
@@ -66,7 +67,7 @@ public final class JoinedTest {
             new Joined<Integer>(
                 new ListOf<Integer>(5, 6)
             ).isEmpty(),
-            Matchers.equalTo(false)
+            new IsEqual<>(false)
         );
     }
 
@@ -78,7 +79,7 @@ public final class JoinedTest {
                 new ListOf<>(7, 8),
                 new ListOf<>(9, element)
             ).contains(element),
-            Matchers.equalTo(true)
+            new IsTrue()
         );
     }
 
@@ -90,7 +91,7 @@ public final class JoinedTest {
                 new ListOf<>(element, "first"),
                 new ListOf<>("second", "third")
             ).iterator().next(),
-            Matchers.equalTo(element)
+            new IsEqual<>(element)
         );
     }
 
@@ -101,7 +102,7 @@ public final class JoinedTest {
                 new ListOf<>(11, 12),
                 new ListOf<>(13, 14)
             ).toArray(),
-            Matchers.equalTo(new ListOf<>(11, 12, 13, 14).toArray())
+            new IsEqual<>(new ListOf<>(11, 12, 13, 14).toArray())
         );
     }
 
@@ -124,7 +125,7 @@ public final class JoinedTest {
                 new ListOf<>(first, "item3"),
                 new ListOf<>(second, "item4")
             ).containsAll(new ListOf<>(first, second)),
-            Matchers.equalTo(true)
+            new IsEqual<>(true)
         );
     }
 
@@ -167,7 +168,7 @@ public final class JoinedTest {
                 new ListOf<>("element1"),
                 new ListOf<>(element, "element3")
             ).get(1),
-            Matchers.equalTo(element)
+            new IsEqual<>(element)
         );
     }
 
@@ -199,7 +200,7 @@ public final class JoinedTest {
                 new ListOf<>("elem1", element),
                 new ListOf<>("elem3", "elem4")
             ).subList(1, 3).iterator().next(),
-            Matchers.equalTo(element)
+            new IsEqual<>(element)
         );
     }
 
@@ -210,7 +211,7 @@ public final class JoinedTest {
                 0,
                 new ListOf<>(1, 2, 3)
             ),
-            Matchers.contains(0, 1, 2, 3)
+            new IsEqual<>(new ListOf<>(0, 1, 2, 3))
         );
     }
 }

@@ -24,8 +24,8 @@
 package org.cactoos.list;
 
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test Case for {@link Shuffled}.
@@ -55,7 +55,7 @@ public final class ShuffledTest {
             new Shuffled<>(
                 new ListOf<>(1, 0, -1, -1, 2)
             ),
-            Matchers.hasItem(-1)
+            new HasValues<>(-1)
         );
     }
 }
