@@ -23,12 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import java.util.NoSuchElementException;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.Filtered;
-import org.cactoos.iterable.HeadOf;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Find first element in a list that satisfies specified condition.
@@ -71,9 +68,9 @@ public final class FirstOf<T> implements Scalar<T> {
     @Override
     public T value() throws Exception {
         return new ItemAt<>(
-                0,
-                this.fallback.value(),
-                new Filtered<>(this.condition, this.source)
+            0,
+            this.fallback.value(),
+            new Filtered<>(this.condition, this.source)
         ).value();
     }
 }
