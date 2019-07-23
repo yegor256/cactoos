@@ -280,7 +280,7 @@ The MIT License (MIT)
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.1</version>
             <configuration>
               <tags>
                 <tag>
@@ -292,6 +292,17 @@ The MIT License (MIT)
                   <placement>X</placement>
                 </tag>
               </tags>
+              <reportOutputDirectory>${project.basedir}/target</reportOutputDirectory>
+              <destDir>javadoc</destDir>
+              <show>private</show>
+              <detectLinks>false</detectLinks>
+              <detectOfflineLinks>true</detectOfflineLinks>
+              <linksource>true</linksource>
+              <detectJavaApiLink>true</detectJavaApiLink>
+              <links>
+                <link>http://hamcrest.org/JavaHamcrest/javadoc/1.3/</link>
+                <link>https://junit.org/junit4/javadoc/latest/</link>
+              </links>
             </configuration>
             <executions>
               <execution>
@@ -347,7 +358,7 @@ The MIT License (MIT)
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
-            <version>3.4.0.905</version>
+            <version>3.6.0.1398</version>
             <executions>
               <execution>
                 <phase>package</phase>
