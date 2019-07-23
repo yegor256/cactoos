@@ -191,7 +191,7 @@ The MIT License (MIT)
                 done. The newly covered classes should be added to the include
                 configuration property below. At the end, the configuration
                 property below should be completely removed so that calls
-                to forbidden APIs always fail the build for every classes.  
+                to forbidden APIs always fail the build for every classes.
                -->
               <includes>
                 <include>org/cactoos/bytes/*.class</include>
