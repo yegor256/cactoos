@@ -38,14 +38,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle TodoCommentCheck (500 lines)
- * @todo #1115:30min Continue speeding up the `mvn test` goal until it
- *  executes in less than 10 seconds, or as fast as reasonably possible.
- *  A good solution would be reducing the number of tries to at most 10
- *  in the two tests below with the for loop. After some manual testing
- *  to evaluate actual overlaps of threads (see code details in
- *  https://www.yegor256.com/2018/03/27/how-to-test-thread-safety.html),
- *  it seems most of the tries results in 0 overlapping thread. This is
- *  why so much tries are needed in the for loop for the tests to be sound.
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SyncedTest {
