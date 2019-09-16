@@ -23,6 +23,7 @@
  */
 package org.cactoos.collection;
 
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
@@ -77,6 +78,17 @@ public final class NoNullsTest {
                 "Argument of #contains(T) is NULL",
                 IllegalArgumentException.class
             )
+        ).affirm();
+    }
+
+    @Test
+    public void testSuccessNotNullArg() {
+        new Assertion<>(
+            "Must contain not null argument",
+            new NoNulls<>(
+                new CollectionOf<>(1)
+                    ).size(),
+            new IsEqual<>(1)
         ).affirm();
     }
 }
