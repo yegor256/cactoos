@@ -24,9 +24,7 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -39,12 +37,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class NoNullsTest {
-
-    /**
-     * A rule for handling an exception.
-     */
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void nextThrowsErrorIfNull() {
@@ -75,20 +67,20 @@ public final class NoNullsTest {
         ).affirm();
     }
 
-    /*
-    * @todo #1039:15min Currently it's impossible to match error messages
-    *  by a pattern or partially. Replace {@link Rule} with {@link Throws} after
-    *  <a href="https://github.com/llorllale/cactoos-matchers/issues/108">llorllale/cactoos-matchers#108</a>
-    *  is fixed
-    */
     @Test
     public void nthThrowsErrorIfNull() {
-        this.exception.expect(IllegalStateException.class);
-        final Iterator<String> itr = new NoNulls<>(
-            new IteratorOf<>("a", "b", null, "c")
-        );
-        while (itr.hasNext()) {
-            itr.next();
-        }
+        new Assertion<>(
+            "nth throws error if null",
+            () -> {
+                final Iterator<String> itr = new NoNulls<>(
+                    new IteratorOf<>("a", "b", null, "c")
+                );
+                while (itr.hasNext()) {
+                    itr.next();
+                }
+                return null;
+            },
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 }
