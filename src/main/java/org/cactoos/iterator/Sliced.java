@@ -24,7 +24,6 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Creates an iterator returning an interval(slice) of the original iterator
@@ -64,11 +63,6 @@ public final class Sliced<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        if (!this.hasNext()) {
-            throw new NoSuchElementException(
-                "The iterator doesn't have items any more"
-            );
-        }
         return this.iterator.next();
     }
 }

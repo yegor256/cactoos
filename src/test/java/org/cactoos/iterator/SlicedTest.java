@@ -68,4 +68,21 @@ public final class SlicedTest {
             )
         );
     }
+
+    @Test
+    public void sliceTheWholeTail() throws Exception {
+        MatcherAssert.assertThat(
+            "Should return the whole tail elements of the iterator",
+            () -> new Sliced<>(
+                5,
+                100,
+                new IteratorOf<>(
+                    1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+                )
+            ),
+            Matchers.contains(
+                6, 7, 8, 9, 0
+            )
+        );
+    }
 }
