@@ -42,16 +42,16 @@ public final class Sliced<T> implements Iterator<T> {
 
     /**
      * Constructor.
+     * @param start Starting index
+     * @param count Maximum number of elements for resulted iterator
      * @param iterator Decorated iterator
-     * @param index Starting index
-     * @param limit Maximum number of elements for resulted iterator
      */
-    public Sliced(final Iterator<T> iterator, final int index,
-        final int limit) {
+    public Sliced(final int start, final int count,
+        final Iterator<T> iterator) {
         this.iterator = new HeadOf<>(
-            limit,
+            count,
             new Skipped<>(
-                index,
+                start,
                 iterator
             )
         );

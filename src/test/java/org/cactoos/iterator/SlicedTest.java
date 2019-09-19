@@ -40,11 +40,11 @@ public final class SlicedTest {
         MatcherAssert.assertThat(
             "Should return the slice iterator in the middle",
             () -> new Sliced<>(
+                3,
+                2,
                 new IteratorOf<>(
                     1, 2, 3, 4, 5, 6, 7, 8, 9, 0
-                ),
-                3,
-                2
+                )
             ),
             Matchers.contains(
                 4, 5
@@ -55,13 +55,13 @@ public final class SlicedTest {
     @Test
     public void sliceTheHead() throws Exception {
         MatcherAssert.assertThat(
-            "Shoud return the head elements of the iterator",
+            "Should return the head elements of the iterator",
             () -> new Sliced<>(
+                0,
+                5,
                 new IteratorOf<>(
                     1, 2, 3, 4, 5, 6, 7, 8, 9, 0
-                ),
-                0,
-                5
+                )
             ),
             Matchers.contains(
                 1, 2, 3, 4, 5

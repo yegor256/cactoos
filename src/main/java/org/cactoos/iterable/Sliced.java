@@ -35,29 +35,29 @@ public final class Sliced<T> extends IterableEnvelope<T>  {
 
     /**
      * Ctor.
-     * @param index Starting index
-     * @param limit Maximum number of elements for resulted iterator
-     * @param src The underlying iterable
+     * @param start Starting index
+     * @param count Maximum number of elements for resulted iterator
+     * @param items Varargs items
      */
     @SafeVarargs
-    public Sliced(final int index, final int limit, final T... src) {
-        this(index, limit, new IterableOf<>(src));
+    public Sliced(final int start, final int count, final T... items) {
+        this(start, count, new IterableOf<>(items));
     }
 
     /**
      * Ctor.
-     * @param index Starting index
-     * @param limit Maximum number of elements for resulted iterator
+     * @param start Starting index
+     * @param count Maximum number of elements for resulted iterator
      * @param iterable Decorated iterable
      */
-    public Sliced(final int index, final int limit,
+    public Sliced(final int start, final int count,
         final Iterable<T> iterable) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Sliced<>(
-                    iterable.iterator(),
-                    index,
-                    limit
+                    start,
+                    count,
+                    iterable.iterator()
                 )
             )
         );

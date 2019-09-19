@@ -38,34 +38,36 @@ public final class Sliced<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
-     * @param index Starting index
-     * @param limit Maximum number of elements for resulted iterator
-     * @param src Source elements
+     * @param start Starting index
+     * @param count Maximum number of elements for resulted iterator
+     * @param items Items
      */
     @SafeVarargs
-    public Sliced(final int index, final int limit, final T... src) {
-        this(index, limit, new IterableOf<>(src));
+    public Sliced(final int start, final int count, final T... items) {
+        this(start, count, new IterableOf<>(items));
     }
 
     /**
      * Ctor.
-     * @param index Starting index
-     * @param limit Maximum number of elements for resulted iterator
-     * @param src Source iterable
+     * @param start Starting index
+     * @param count Maximum number of elements for resulted iterator
+     * @param iterable Source iterable
      */
-    public Sliced(final int index, final int limit, final Iterable<T> src) {
-        this(index, limit, new CollectionOf<T>(src));
+    public Sliced(final int start, final int count,
+        final Iterable<T> iterable) {
+        this(start, count, new CollectionOf<T>(iterable));
     }
 
     /**
      * Ctor.
-     * @param index Starting index
-     * @param limit Maximum number of elements for resulted iterator
-     * @param src Source collection
+     * @param start Starting index
+     * @param count Maximum number of elements for resulted iterator
+     * @param collection Source collection
      */
-    public Sliced(final int index, final int limit, final Collection<T> src) {
+    public Sliced(final int start, final int count,
+        final Collection<T> collection) {
         super(() -> new CollectionOf<T>(
-            new org.cactoos.iterable.Sliced<T>(index, limit, src)
+            new org.cactoos.iterable.Sliced<T>(start, count, collection)
         ));
     }
 }
