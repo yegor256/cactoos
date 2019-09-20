@@ -78,7 +78,7 @@ public final class NoNullsTest {
                 while (itr.hasNext()) {
                     itr.next();
                 }
-                return null;
+                return new Object();
             },
             new Throws<>(IllegalStateException.class)
         ).affirm();
