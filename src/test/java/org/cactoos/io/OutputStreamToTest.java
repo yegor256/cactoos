@@ -26,10 +26,10 @@ package org.cactoos.io;
 import java.io.IOException;
 import java.nio.file.Path;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
 
 /**
@@ -50,8 +50,8 @@ public final class OutputStreamToTest {
     public void writesLargeContentToFile() throws IOException {
         final Path temp = this.folder.newFile("cactoos-1.txt-1")
             .toPath();
-        MatcherAssert.assertThat(
-            "Can't copy Input to Output and return Input",
+        new Assertion<>(
+            "Must copy Input to Output and return Input",
             new TextOf(
                 new Sticky(
                     new TeeInput(
@@ -63,7 +63,7 @@ public final class OutputStreamToTest {
             new TextIs(
                 new TextOf(temp)
             )
-        );
+        ).affirm();
     }
 
 }

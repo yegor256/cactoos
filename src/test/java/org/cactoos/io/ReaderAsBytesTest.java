@@ -24,20 +24,20 @@
 package org.cactoos.io;
 
 import java.io.StringReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link ReaderAsBytes}.
  *
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ReaderAsBytesTest {
     /**
@@ -49,37 +49,25 @@ public final class ReaderAsBytesTest {
     @Test
     public void readsString() throws Exception {
         final String source = "hello, друг!";
-        MatcherAssert.assertThat(
-            "Can't read string through a reader",
+        new Assertion<>(
+            "Must read string through a reader",
             new TextOf(
                 new ReaderAsBytes(
                     new StringReader(source)
                 )
-            ).asString(),
-            Matchers.equalTo(source)
-        );
+            ),
+            new TextIs(source)
+        ).affirm();
     }
 
     @Test
-    public void readsAsBytesAndDeletesTempFile() throws Exception {
-        final Path file = this.folder.newFile().toPath();
-        new ReaderAsBytes(
-            new ReaderOf(file)
-        ).asBytes();
-        Files.delete(file);
-        MatcherAssert.assertThat(
-            Files.exists(file),
-            Matchers.equalTo(false)
-        );
-    }
-
-    @Test
-    public void readsEmptyClosableReaderAsBytes() throws Exception {
+    public void readsAndClosesReader() throws Exception {
         final EmptyClosableReader reader = new EmptyClosableReader();
         new ReaderAsBytes(reader).asBytes();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must close the reader after reading it",
             reader.isClosed(),
-            Matchers.equalTo(true)
-        );
+            new IsTrue()
+        ).affirm();
     }
 }
