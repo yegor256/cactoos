@@ -23,9 +23,9 @@
  */
 package org.cactoos.collection;
 
-import org.cactoos.iterable.IterableOf;
-import org.hamcrest.core.AllOf;
-import org.hamcrest.core.IsCollectionContaining;
+import java.io.IOException;
+import java.util.Collection;
+import org.cactoos.text.FormattedText;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -41,19 +41,22 @@ public final class SlicedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sliceCollection() {
+    public void sliceCollection() throws IOException {
+        final Collection<String> expected = new CollectionOf<>(
+            "three", "four"
+        );
         new Assertion<>(
-            "Can't get slice portion of collection",
+            new FormattedText(
+                "Must get sliced collection of [%s]",
+                expected
+            ).asString(),
             new Sliced<>(
                 2,
                 2,
                 "one", "two", "three", "four"
             ),
-            new AllOf<>(
-                new IterableOf<org.hamcrest.Matcher<? super Sliced<String>>>(
-                    new IsCollectionContaining<>(new IsEqual<>("three")),
-                    new IsCollectionContaining<>(new IsEqual<>("four"))
-                )
+            new IsEqual<>(
+                expected
             )
         ).affirm();
     }

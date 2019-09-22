@@ -23,9 +23,10 @@
  */
 package org.cactoos.iterable;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.text.FormattedText;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Sliced}.
@@ -38,17 +39,22 @@ public final class SlicedTest {
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void sliceIterable() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't get slice portion of iterable",
+        final Iterable<String> expected = new IterableOf<>(
+            "two", "three"
+        );
+        new Assertion<>(
+            new FormattedText(
+                "Must get sliced iterable of elements of [%s]",
+                expected
+            ).asString(),
             new Sliced<>(
                 1,
                 2,
                 "one", "two", "three", "four"
             ),
-            Matchers.contains(
-                "two",
-                "three"
+            new IsEqual<>(
+                expected
             )
-        );
+        ).affirm();
     }
 }

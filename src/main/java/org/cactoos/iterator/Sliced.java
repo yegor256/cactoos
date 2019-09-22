@@ -31,6 +31,7 @@ import java.util.Iterator;
  * <p>There is no thread-safety guarantee.</p>
  * @param <T> The type of the iterator.
  * @since 1.0.0
+ * @todo #1190:This class to be refactored by extending an IteratorEnvelope
  */
 public final class Sliced<T> implements Iterator<T> {
 
