@@ -27,11 +27,13 @@ import java.util.Iterator;
 
 /**
  * Creates an iterator returning an interval(slice) of the original iterator
+ * by means of providing starting index, number of elements to retrieve from
+ * the starting index and a decorated original iterator.
  *
  * <p>There is no thread-safety guarantee.</p>
  * @param <T> The type of the iterator.
  * @since 1.0.0
- * @todo #1190:This class to be refactored by extending an IteratorEnvelope
+ * @todo #1190:30min This class to be refactored by extending IteratorEnvelope
  */
 public final class Sliced<T> implements Iterator<T> {
 

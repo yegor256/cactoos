@@ -24,7 +24,6 @@
 package org.cactoos.iterator;
 
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.text.FormattedText;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -38,15 +37,9 @@ import org.llorllale.cactoos.matchers.Assertion;
 public final class SlicedTest {
 
     @Test
-    public void sliceTheMiddle() throws Exception {
-        final Iterable<Integer> expected = new IterableOf<>(
-            4, 5
-        );
+    public void sliceTheMiddle() {
         new Assertion<>(
-            new FormattedText(
-                "Must return sliced iterator of [%s]",
-                expected
-            ).asString(),
+            "Must return sliced iterator",
             new IterableOf<>(
                 new Sliced<>(
                     3,
@@ -57,21 +50,17 @@ public final class SlicedTest {
                 )
             ),
             new IsEqual<>(
-                expected
+                new IterableOf<>(
+                    4, 5
+                )
             )
         ).affirm();
     }
 
     @Test
-    public void sliceTheHead() throws Exception {
-        final Iterable<Integer> expected = new IterableOf<>(
-            1, 2, 3, 4, 5
-        );
+    public void sliceTheHead() {
         new Assertion<>(
-            new FormattedText(
-                "Must return iterator with the head elements of [%s]",
-                expected
-            ).asString(),
+            "Must return iterator with the head elements",
             new IterableOf<>(
                 new Sliced<>(
                     0,
@@ -82,21 +71,17 @@ public final class SlicedTest {
                 )
             ),
             new IsEqual<>(
-                expected
+                new IterableOf<>(
+                    1, 2, 3, 4, 5
+                )
             )
         ).affirm();
     }
 
     @Test
-    public void sliceTheWholeTail() throws Exception {
-        final Iterable<Integer> expected = new IterableOf<>(
-            6, 7, 8, 9, 0
-        );
+    public void sliceTheWholeTail() {
         new Assertion<>(
-            new FormattedText(
-                "Must return the iterator of tail elements of [%s]",
-                expected
-            ).asString(),
+            "Must return the iterator of tail elements",
             new IterableOf<>(
                 new Sliced<>(
                     5,
@@ -107,7 +92,9 @@ public final class SlicedTest {
                 )
             ),
             new IsEqual<>(
-                expected
+                new IterableOf<>(
+                    6, 7, 8, 9, 0
+                )
             )
         ).affirm();
     }

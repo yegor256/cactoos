@@ -23,40 +23,32 @@
  */
 package org.cactoos.collection;
 
-import java.io.IOException;
-import java.util.Collection;
-import org.cactoos.text.FormattedText;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Sliced}.
- *
  * @since 1.0.0
  * @checkstyle JavadocMethodCheck (500 lines)
- * * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class SlicedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sliceCollection() throws IOException {
-        final Collection<String> expected = new CollectionOf<>(
-            "three", "four"
-        );
+    public void sliceCollection() {
         new Assertion<>(
-            new FormattedText(
-                "Must get sliced collection of [%s]",
-                expected
-            ).asString(),
+            "Must get sliced collection",
             new Sliced<>(
                 2,
                 2,
                 "one", "two", "three", "four"
             ),
             new IsEqual<>(
-                expected
+                new CollectionOf<>(
+                    "three", "four"
+                )
             )
         ).affirm();
     }

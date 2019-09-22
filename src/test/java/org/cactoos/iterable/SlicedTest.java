@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.text.FormattedText;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -39,21 +38,17 @@ public final class SlicedTest {
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void sliceIterable() throws Exception {
-        final Iterable<String> expected = new IterableOf<>(
-            "two", "three"
-        );
         new Assertion<>(
-            new FormattedText(
-                "Must get sliced iterable of elements of [%s]",
-                expected
-            ).asString(),
+            "Must get sliced iterable of elements",
             new Sliced<>(
                 1,
                 2,
                 "one", "two", "three", "four"
             ),
             new IsEqual<>(
-                expected
+                new IterableOf<>(
+                    "two", "three"
+                )
             )
         ).affirm();
     }
