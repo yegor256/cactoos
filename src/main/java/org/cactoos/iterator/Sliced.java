@@ -33,7 +33,7 @@ import java.util.Iterator;
  * <p>There is no thread-safety guarantee.</p>
  * @param <T> The type of the iterator.
  * @since 1.0.0
- * @todo #1190:30min This class to be refactored by extending IteratorEnvelope,
+ * @todo #1188:30min This class to be refactored by extending IteratorEnvelope,
  *  which will provide extra functionality to subclasses and is planned to be
  *  added to Cactoos shortly.
  */
