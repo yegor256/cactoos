@@ -33,6 +33,9 @@ import java.util.NoSuchElementException;
  *
  * @param <T> Element type
  * @since 0.34
+ * @todo #1188:30min Change the implementation of this class with the help of
+ *  <tt>org.cactoos.iterator.Sliced</tt> decorator, as it contains specific
+ *  constructor to build skipped iterator.
  */
 public final class Skipped<T> implements Iterator<T> {
 

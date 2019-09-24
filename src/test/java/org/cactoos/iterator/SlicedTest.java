@@ -63,11 +63,10 @@ public final class SlicedTest {
             "Must return iterator with the head elements",
             new IterableOf<>(
                 new Sliced<>(
-                    0,
-                    5,
                     new IteratorOf<>(
                         1, 2, 3, 4, 5, 6, 7, 8, 9, 0
-                    )
+                    ),
+                    5
                 )
             ),
             new IsEqual<>(
@@ -85,7 +84,6 @@ public final class SlicedTest {
             new IterableOf<>(
                 new Sliced<>(
                     5,
-                    100,
                     new IteratorOf<>(
                         1, 2, 3, 4, 5, 6, 7, 8, 9, 0
                     )

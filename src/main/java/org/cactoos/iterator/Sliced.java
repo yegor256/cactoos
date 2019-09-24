@@ -24,11 +24,15 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 /**
  * Creates an iterator returning an interval(slice) of the original iterator
  * by means of providing starting index, number of elements to retrieve from
  * the starting index and a decorated original iterator.
+ * Can be used to retrieve the head, tail or a portion in the middle of the
+ * original iterator.
  *
  * <p>There is no thread-safety guarantee.</p>
  * @param <T> The type of the iterator.
@@ -45,6 +49,21 @@ public final class Sliced<T> implements Iterator<T> {
     private final Iterator<T> iterator;
 
     /**
+     * First index of the resulted iterator.
+     */
+    private final int start;
+
+    /**
+     * Current index on the original iterator.
+     */
+    private int current;
+
+    /**
+     * Predicate which tests whether the end has been reached.
+     */
+    private Predicate<Integer> end;
+
+    /**
      * Constructor.
      * @param start Starting index
      * @param count Maximum number of elements for resulted iterator
@@ -52,22 +71,77 @@ public final class Sliced<T> implements Iterator<T> {
      */
     public Sliced(final int start, final int count,
         final Iterator<T> iterator) {
-        this.iterator = new HeadOf<>(
-            count,
-            new Skipped<>(
-                start,
-                iterator
-            )
-        );
+        this(start, iterator, index -> index > start + count - 1);
+    }
+
+    /**
+     * Constructor.
+     * Constructs a head iterator with a number of heading elements
+     * @param iterator Decorated iterator
+     * @param count Maximum number of elements for resulted iterator
+     */
+    public Sliced(final Iterator<T> iterator, final int count) {
+        this(0, count, iterator);
+    }
+
+    /**
+     * Constructor.
+     * Constructs an iterator of start position and up to the end
+     * @param start Starting index
+     * @param iterator Decorated iterator
+     */
+    public Sliced(final int start, final Iterator<T> iterator) {
+        this(start, iterator, any -> !iterator.hasNext());
+    }
+
+    /**
+     * Constructor.
+     * @param start Starting index
+     * @param iterator Decorated iterator
+     * @param end Predicate that test whether iterating should stop
+     */
+    private Sliced(final int start, final Iterator<T> iterator,
+        final Predicate<Integer> end) {
+        this.start = start;
+        this.end = end;
+        this.iterator = iterator;
+        this.current = 0;
     }
 
     @Override
     public boolean hasNext() {
-        return this.iterator.hasNext();
+        this.skip();
+        return !this.ended() && this.iterator.hasNext();
     }
 
     @Override
     public T next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have items any more"
+            );
+        }
+        ++this.current;
         return this.iterator.next();
+    }
+
+    /**
+     * Skips head elements up to start index.
+     */
+    private void skip() {
+        while (this.current < this.start && this.iterator.hasNext()) {
+            this.iterator.next();
+            ++this.current;
+        }
+    }
+
+    /**
+     * Test whether the end has been reached.
+     * @return Returns <tt>true</tt> if the count of elements to retrieve
+     *  has been iterated over or original iterator has been iterated over,
+     *  otherwise <tt>false</tt>
+     */
+    private boolean ended() {
+        return this.end.test(this.current);
     }
 }

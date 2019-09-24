@@ -33,6 +33,9 @@ import java.util.NoSuchElementException;
  *
  * @param <T> Element type
  * @since 0.8
+ * @todo #1188:30min Change the implementation of this class with the help of
+ *  <tt>org.cactoos.iterator.Sliced</tt> decorator, as it contains specific
+ *  constructor to build heading iterator.
  */
 public final class HeadOf<T> implements Iterator<T> {
 
