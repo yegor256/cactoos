@@ -23,10 +23,13 @@
  */
 package org.cactoos.iterator;
 
+import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.Constant;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test for {@link Sliced}.
@@ -63,10 +66,11 @@ public final class SlicedTest {
             "Must return iterator with the head elements",
             new IterableOf<>(
                 new Sliced<>(
+                    0,
+                    5,
                     new IteratorOf<>(
                         1, 2, 3, 4, 5, 6, 7, 8, 9, 0
-                    ),
-                    5
+                    )
                 )
             ),
             new IsEqual<>(
@@ -93,6 +97,25 @@ public final class SlicedTest {
                 new IterableOf<>(
                     6, 7, 8, 9, 0
                 )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void failSlicing() {
+        new Assertion<>(
+            "Must fail on slicing",
+            () -> new Constant<>(
+                new Sliced<>(
+                    0, 0,
+                    new IteratorOf<>(
+                        1
+                    )
+                ).next()
+            ).value(),
+            new Throws<>(
+                "The iterator doesn't have items any more",
+                NoSuchElementException.class
             )
         ).affirm();
     }

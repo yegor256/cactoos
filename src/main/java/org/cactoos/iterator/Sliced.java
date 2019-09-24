@@ -25,7 +25,7 @@ package org.cactoos.iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.function.Predicate;
+import java.util.function.IntPredicate;
 
 /**
  * Creates an iterator returning an interval(slice) of the original iterator
@@ -61,7 +61,7 @@ public final class Sliced<T> implements Iterator<T> {
     /**
      * Predicate which tests whether the end has been reached.
      */
-    private Predicate<Integer> end;
+    private IntPredicate end;
 
     /**
      * Constructor.
@@ -71,17 +71,7 @@ public final class Sliced<T> implements Iterator<T> {
      */
     public Sliced(final int start, final int count,
         final Iterator<T> iterator) {
-        this(start, iterator, index -> index > start + count - 1);
-    }
-
-    /**
-     * Constructor.
-     * Constructs a head iterator with a number of heading elements
-     * @param iterator Decorated iterator
-     * @param count Maximum number of elements for resulted iterator
-     */
-    public Sliced(final Iterator<T> iterator, final int count) {
-        this(0, count, iterator);
+        this(start, index -> index > start + count - 1, iterator);
     }
 
     /**
@@ -91,17 +81,17 @@ public final class Sliced<T> implements Iterator<T> {
      * @param iterator Decorated iterator
      */
     public Sliced(final int start, final Iterator<T> iterator) {
-        this(start, iterator, any -> !iterator.hasNext());
+        this(start, any -> !iterator.hasNext(), iterator);
     }
 
     /**
      * Constructor.
      * @param start Starting index
-     * @param iterator Decorated iterator
      * @param end Predicate that test whether iterating should stop
+     * @param iterator Decorated iterator
      */
-    private Sliced(final int start, final Iterator<T> iterator,
-        final Predicate<Integer> end) {
+    private Sliced(final int start, final IntPredicate end,
+        final Iterator<T> iterator) {
         this.start = start;
         this.end = end;
         this.iterator = iterator;
@@ -111,7 +101,7 @@ public final class Sliced<T> implements Iterator<T> {
     @Override
     public boolean hasNext() {
         this.skip();
-        return !this.ended() && this.iterator.hasNext();
+        return !this.end.test(this.current) && this.iterator.hasNext();
     }
 
     @Override
@@ -133,15 +123,5 @@ public final class Sliced<T> implements Iterator<T> {
             this.iterator.next();
             ++this.current;
         }
-    }
-
-    /**
-     * Test whether the end has been reached.
-     * @return Returns <tt>true</tt> if the count of elements to retrieve
-     *  has been iterated over or original iterator has been iterated over,
-     *  otherwise <tt>false</tt>
-     */
-    private boolean ended() {
-        return this.end.test(this.current);
     }
 }
