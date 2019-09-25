@@ -21,63 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.collection;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.Collection;
+import org.cactoos.iterable.IterableOf;
 
 /**
- * Head portion of the iterator.
+ * Sliced portion of the collection.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <T> Element type
- * @since 0.8
- * @todo #1188:30min Change the implementation of this class with the help of
- *  <tt>org.cactoos.iterator.Sliced</tt> decorator, as it contains specific
- *  constructor to build heading iterator.
+ * @since 1.0.0
  */
-public final class HeadOf<T> implements Iterator<T> {
-
-    /**
-     * Decorated iterator.
-     */
-    private final Iterator<T> origin;
-
-    /**
-     * Number of head elements.
-     */
-    private final int head;
-
-    /**
-     * Current element index.
-     */
-    private int current;
+public final class Sliced<T> extends CollectionEnvelope<T> {
 
     /**
      * Ctor.
-     * @param iterator Decorated iterator
-     * @param num Num of head elements
+     * @param start Starting index
+     * @param count Maximum number of elements for resulted iterator
+     * @param items Items
      */
-    public HeadOf(final int num, final Iterator<T> iterator) {
-        this.origin = iterator;
-        this.head = num;
-        this.current = 0;
+    @SafeVarargs
+    public Sliced(final int start, final int count, final T... items) {
+        this(start, count, new IterableOf<>(items));
     }
 
-    @Override
-    public boolean hasNext() {
-        return this.current < this.head && this.origin.hasNext();
+    /**
+     * Ctor.
+     * @param start Starting index
+     * @param count Maximum number of elements for resulted iterator
+     * @param iterable Source iterable
+     */
+    public Sliced(final int start, final int count,
+        final Iterable<T> iterable) {
+        this(start, count, new CollectionOf<T>(iterable));
     }
 
-    @Override
-    public T next() {
-        if (!this.hasNext()) {
-            throw new NoSuchElementException(
-                "The iterator doesn't have items any more"
-            );
-        }
-        ++this.current;
-        return this.origin.next();
+    /**
+     * Ctor.
+     * @param start Starting index
+     * @param count Maximum number of elements for resulted iterator
+     * @param collection Source collection
+     */
+    public Sliced(final int start, final int count,
+        final Collection<T> collection) {
+        super(() -> new CollectionOf<T>(
+            new org.cactoos.iterable.Sliced<T>(start, count, collection)
+        ));
     }
 }

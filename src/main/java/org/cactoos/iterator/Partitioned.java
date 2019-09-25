@@ -34,6 +34,9 @@ import java.util.NoSuchElementException;
  *
  * @param <T> Partitions value type
  * @since 0.29
+ * @todo #1188:30min Change the implementation of this class with the help of
+ *  <tt>org.cactoos.iterator.Sliced</tt> decorator, to slice the original
+ *  iterator into sliced portions.
  */
 public final class Partitioned<T> implements Iterator<List<T>> {
 
