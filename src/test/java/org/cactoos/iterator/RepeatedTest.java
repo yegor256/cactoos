@@ -24,10 +24,9 @@
 package org.cactoos.iterator;
 
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link Repeated}.
@@ -41,25 +40,23 @@ public final class RepeatedTest {
     public void allSameTest() throws Exception {
         final int size = 42;
         final int element = 11;
-        MatcherAssert.assertThat(
-            "Can't generate an iterable with fixed size",
-            new LengthOf(
-                new IterableOf<>(
-                    new Repeated<>(
-                        size, element
-                    )
+        new Assertion<>(
+            "Must generate an iterable with fixed size",
+            new IterableOf<>(
+                new Repeated<>(
+                    size, element
                 )
-            ).intValue(),
-            Matchers.equalTo(size)
-        );
+            ),
+            new HasSize(size)
+        ).affirm();
     }
 
     @Test
     public void emptyTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't generate an empty iterator",
-            (Iterable<Integer>) () -> new Repeated<>(0, 0),
-            Matchers.iterableWithSize(0)
-        );
+        new Assertion<>(
+            "Must generate an empty iterator",
+            new IterableOf<>(new Repeated<>(0, 0)),
+            new HasSize(0)
+        ).affirm();
     }
 }
