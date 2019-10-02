@@ -23,72 +23,53 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Iterator;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test cases for {@link NoNulls}.
  *
  * <p>There is no thread-safety guarantee.
- *
- * @since 0.35
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.35
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class NoNullsTest {
-
-    /**
-     * A rule for handling an exception.
-     */
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void nextThrowsErrorIfNull() {
         new Assertion<>(
             "Must throw exception",
             () -> new NoNulls<>(
-                new Iterator<Integer>() {
-                    @Override
-                    public boolean hasNext() {
-                        return true;
-                    }
-
-                    @Override
-                    public Integer next() {
-                        return null;
-                    }
-
-                    @Override
-                    public String toString() {
-                        return "Iterator@NoNullsTest";
-                    }
-                }
+                new IteratorOf<>(new String[]{null})
             ).next(),
             new Throws<>(
-                "Item #0 of Iterator@NoNullsTest is NULL",
+                new MatcherOf<>(
+                    (String msg) -> msg.matches("^Item #0 of .*? is NULL")
+                ),
                 IllegalStateException.class
             )
         ).affirm();
     }
 
-    /*
-    * @todo #1039:15min Currently it's impossible to match error messages
-    *  by a pattern or partially. Replace {@link Rule} with {@link Throws} after
-    *  <a href="https://github.com/llorllale/cactoos-matchers/issues/108">llorllale/cactoos-matchers#108</a>
-    *  is fixed
-    */
     @Test
     public void nthThrowsErrorIfNull() {
-        this.exception.expect(IllegalStateException.class);
-        final Iterator<String> itr = new NoNulls<>(
-            new IteratorOf<>("a", "b", null, "c")
-        );
-        while (itr.hasNext()) {
-            itr.next();
-        }
+        new Assertion<>(
+            "Must throw exception",
+            () -> new TailOf<>(
+                1,
+                new NoNulls<>(
+                    new IteratorOf<>("a", "b", null, "c")
+                )
+            ).next(),
+            new Throws<>(
+                new MatcherOf<>(
+                    (String msg) -> msg.matches("^Item #2 of .*? is NULL")
+                ),
+                IllegalStateException.class
+            )
+        ).affirm();
     }
 }
