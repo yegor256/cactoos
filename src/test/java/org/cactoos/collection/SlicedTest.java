@@ -21,54 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.collection;
 
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.Throws;
 
 /**
- * Test cases for {@link NoNulls}.
- *
- * <p>There is no thread-safety guarantee.
+ * Test case for {@link Sliced}.
+ * @since 1.0.0
  * @checkstyle JavadocMethodCheck (500 lines)
- * @since 0.35
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class NoNullsTest {
+public final class SlicedTest {
 
     @Test
-    public void nextThrowsErrorIfNull() {
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void sliceCollection() {
         new Assertion<>(
-            "Must throw exception",
-            () -> new NoNulls<>(
-                new IteratorOf<>(new String[]{null})
-            ).next(),
-            new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.matches("^Item #0 of .*? is NULL")
-                ),
-                IllegalStateException.class
-            )
-        ).affirm();
-    }
-
-    @Test
-    public void nthThrowsErrorIfNull() {
-        new Assertion<>(
-            "Must throw exception",
-            () -> new TailOf<>(
-                1,
-                new NoNulls<>(
-                    new IteratorOf<>("a", "b", null, "c")
+            "Must get sliced collection",
+            new Sliced<>(
+                2,
+                2,
+                "one", "two", "three", "four"
+            ),
+            new IsEqual<>(
+                new CollectionOf<>(
+                    "three", "four"
                 )
-            ).next(),
-            new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.matches("^Item #2 of .*? is NULL")
-                ),
-                IllegalStateException.class
             )
         ).affirm();
     }

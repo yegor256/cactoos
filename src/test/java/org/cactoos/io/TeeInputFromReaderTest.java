@@ -26,11 +26,11 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.text.TextOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -59,10 +59,7 @@ public final class TeeInputFromReaderTest {
                 new ReaderOf(input),
                 output
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -78,10 +75,7 @@ public final class TeeInputFromReaderTest {
                 output,
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -97,10 +91,7 @@ public final class TeeInputFromReaderTest {
                 output,
                 StandardCharsets.UTF_8
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -117,10 +108,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8,
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -136,10 +124,7 @@ public final class TeeInputFromReaderTest {
                 output,
                 StandardCharsets.UTF_8.name()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -157,10 +142,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8.name(),
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -175,10 +157,7 @@ public final class TeeInputFromReaderTest {
                 new ReaderOf(input),
                 output.toPath()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -194,10 +173,7 @@ public final class TeeInputFromReaderTest {
                 output.toPath(),
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -213,10 +189,7 @@ public final class TeeInputFromReaderTest {
                 output.toPath(),
                 StandardCharsets.UTF_8
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -233,10 +206,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8,
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -252,10 +222,7 @@ public final class TeeInputFromReaderTest {
                 output.toPath(),
                 StandardCharsets.UTF_8.name()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -273,10 +240,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8.name(),
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -291,10 +255,7 @@ public final class TeeInputFromReaderTest {
                 new ReaderOf(input),
                 new OutputTo(output)
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -310,10 +271,7 @@ public final class TeeInputFromReaderTest {
                 new OutputTo(output),
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -329,10 +287,7 @@ public final class TeeInputFromReaderTest {
                 new OutputTo(output),
                 StandardCharsets.UTF_8
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -350,10 +305,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8,
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -369,10 +321,7 @@ public final class TeeInputFromReaderTest {
                 new OutputTo(output),
                 StandardCharsets.UTF_8.name()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 
@@ -390,10 +339,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8.name(),
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         ).affirm();
     }
 }

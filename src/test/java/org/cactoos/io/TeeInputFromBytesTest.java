@@ -29,6 +29,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -55,10 +56,7 @@ public final class TeeInputFromBytesTest {
                 new BytesOf(message),
                 output.toPath()
             ),
-            new TeeInputHasResult(
-                message,
-                output
-            )
+            new InputHasContent(message)
         );
     }
 
@@ -72,10 +70,7 @@ public final class TeeInputFromBytesTest {
                 new BytesOf(message),
                 output
             ),
-            new TeeInputHasResult(
-                message,
-                output
-            )
+            new InputHasContent(message)
         );
     }
 
@@ -89,10 +84,7 @@ public final class TeeInputFromBytesTest {
                 new BytesOf(message),
                 new OutputTo(output)
             ),
-            new TeeInputHasResult(
-                message,
-                output
-            )
+            new InputHasContent(message)
         );
     }
 }

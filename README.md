@@ -188,7 +188,7 @@ new And(
 To sort a list of words in the file:
 
 ```java
-List<String> sorted = new ListOf<>(
+List<Text> sorted = new ListOf<>(
   new Sorted<>(
     new Split(
       new TextOf(
@@ -204,7 +204,7 @@ To count elements in an iterable:
 
 ```java
 int total = new LengthOf(
-  "how", "are", "you"
+  new IterableOf<>("how", "are", "you")
 ).intValue();
 ```
 
@@ -222,10 +222,10 @@ This is its object-oriented alternative (no streams!):
 
 ```java
 new And(
-  names,
   n -> {
     System.out.printf("Hello, %s!\n", n);
-  }
+  },
+  names
 ).value();
 ```
 
@@ -241,11 +241,11 @@ Here is its object-oriented alternative:
 
 ```java
 new And(
-  new Endless<>(ready),
   ready -> {
     System.out.println("Still waiting...");
     return !ready;
-  }
+  },
+  new Endless<>(booleanParameter)
 ).value();
 ```
 
@@ -270,7 +270,7 @@ To format an `OffsetDateTime` into a `Text`:
 
 ```java
 final OffsetDateTime date = ...;
-final OffsetDateTimeAsText text = new OffsetDateTimeAsText(date);
+final String text = new TextOf(date).asString();
 ```
 
 ## Our objects vs. their static methods

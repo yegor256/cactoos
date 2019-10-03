@@ -26,11 +26,11 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -57,10 +57,7 @@ public final class TeeInputFromInputTest {
                 new InputOf(input),
                 output.toPath()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -74,10 +71,7 @@ public final class TeeInputFromInputTest {
                 new InputOf(input),
                 output
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -91,10 +85,7 @@ public final class TeeInputFromInputTest {
                 new InputOf(input),
                 new WriterTo(output)
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -109,10 +100,7 @@ public final class TeeInputFromInputTest {
                 new WriterTo(output),
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -127,10 +115,7 @@ public final class TeeInputFromInputTest {
                 new WriterTo(output),
                 StandardCharsets.UTF_8
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -146,10 +131,7 @@ public final class TeeInputFromInputTest {
                 StandardCharsets.UTF_8,
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -164,10 +146,7 @@ public final class TeeInputFromInputTest {
                 new WriterTo(output),
                 StandardCharsets.UTF_8.name()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -184,10 +163,7 @@ public final class TeeInputFromInputTest {
                 StandardCharsets.UTF_8.name(),
                 input.length()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 }
