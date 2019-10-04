@@ -33,21 +33,13 @@ import java.util.NoSuchElementException;
  *
  * @param <T> Element type
  * @since 0.34
- * @todo #1188:30min Change the implementation of this class with the help of
- *  <tt>org.cactoos.iterator.Sliced</tt> decorator, as it contains specific
- *  constructor to build skipped iterator.
  */
 public final class Skipped<T> implements Iterator<T> {
 
     /**
-     * Decorated iterator.
+     * Sliced iterator.
      */
-    private final Iterator<T> origin;
-
-    /**
-     * Count skip elements.
-     */
-    private int skip;
+    private final Iterator<T> sliced;
 
     /**
      * Ctor.
@@ -55,34 +47,16 @@ public final class Skipped<T> implements Iterator<T> {
      * @param skp Count skip elements
      */
     public Skipped(final int skp, final Iterator<T> iterator) {
-        this.origin = iterator;
-        this.skip = skp;
+        this.sliced = new Sliced<>(skp, iterator);
     }
 
     @Override
     public boolean hasNext() {
-        this.omit();
-        return this.origin.hasNext();
+        return this.sliced.hasNext();
     }
 
     @Override
     public T next() {
-        this.omit();
-        if (!this.hasNext()) {
-            throw new NoSuchElementException(
-                "The iterator doesn't have items any more"
-            );
-        }
-        return this.origin.next();
-    }
-
-    /**
-     * Skip first N items.
-     */
-    private void omit() {
-        while (this.skip > 0 && this.origin.hasNext()) {
-            this.origin.next();
-            --this.skip;
-        }
+        return this.sliced.next();
     }
 }
