@@ -309,9 +309,26 @@ Ask your questions related to cactoos library on [Stackoverflow](https://stackov
 Just fork the repo and send us a pull request.
 
 Make sure your branch builds without any warnings/issues:
-
 ```
-mvn clean install -Pqulice
+mvn clean verify -Pqulice
+```
+
+To run a build similar to the CI with Docker only, use:
+```
+docker run \
+	--tty \
+	--interactive \
+	--workdir=/main \
+	--volume=${PWD}:/main \
+	--volume=cactoos-mvn-cache:/root/.m2 \
+	--rm \
+	maven:3-jdk-8 \
+	bash -c "mvn clean install site -Pqulice -Psite --errors; chown -R $(id -u):$(id -g) target/"
+```
+
+To remove the cache used by Docker-based build:
+```
+docker volume rm cactoos-mvn-cache
 ```
 
 We also lint the git commit log. We highly recommend you install [this](https://github.com/llorllale/go-gitlint)
