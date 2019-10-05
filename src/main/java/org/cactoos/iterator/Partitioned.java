@@ -28,15 +28,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import org.cactoos.list.ListOf;
 
 /**
  * Iterator implementation for {@link Iterator} partitioning.
  *
  * @param <T> Partitions value type
  * @since 0.29
- * @todo #1188:30min Change the implementation of this class with the help of
- *  <tt>org.cactoos.iterator.Sliced</tt> decorator, to slice the original
- *  iterator into sliced portions.
  */
 public final class Partitioned<T> implements Iterator<List<T>> {
 
@@ -72,11 +70,13 @@ public final class Partitioned<T> implements Iterator<List<T>> {
         if (this.size < 1) {
             throw new IllegalArgumentException("Partition size < 1");
         }
-        final List<T> result = new LinkedList<>();
-        for (int count = 0; count < this.size && this.hasNext(); ++count) {
-            result.add(this.decorated.next());
-        }
-        return Collections.unmodifiableList(result);
+        return Collections.unmodifiableList(
+            new LinkedList<>(
+                new ListOf<>(
+                    new Sliced<>(0, this.size, this.decorated)
+                )
+            )
+        );
     }
 
 }
