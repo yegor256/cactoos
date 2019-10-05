@@ -338,3 +338,4 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@izrik](https://github.com/izrik) as Richard Sartor
   - [@Vatavuk](https://github.com/Vatavuk) as Vedran Grgo Vatavuk
   - [@dgroup](https://github.com/dgroup) as Yurii Dubinka
+
