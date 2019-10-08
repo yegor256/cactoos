@@ -163,9 +163,9 @@ The MIT License (MIT)
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
                 <!--
-                 @todo #1151:30min To fix qulice build erros is necessary update it.
-                  But there're a lot of files don't pass in the new qulice checks.
-                  So, let's fix some of them and remove the exclusion here.
+                 @todo #1151:30min After updated qulice-maven-plugin there're a
+                  lot of files which don't pass in the qulice checks. So, let's
+                  fix them and remove the their exclusion bellow.
                  -->
                 <exclude>checkstyle:/src/main/java/org/cactoos/bytes/Base64Bytes.java</exclude>
                 <exclude>checkstyle:/src/main/java/org/cactoos/bytes/BytesBase64.java</exclude>
