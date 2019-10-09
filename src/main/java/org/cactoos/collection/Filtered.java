@@ -38,8 +38,8 @@ public final class Filtered<X> extends CollectionEnvelope<X> {
 
     /**
      * Ctor.
-     * @param src Source collection
      * @param func Filter function
+     * @param src Source collection
      * @since 0.23
      */
     @SafeVarargs
@@ -49,8 +49,8 @@ public final class Filtered<X> extends CollectionEnvelope<X> {
 
     /**
      * Ctor.
-     * @param src Source collection
      * @param func Filter function
+     * @param src Source collection
      */
     public Filtered(final Func<X, Boolean> func, final Iterable<X> src) {
         super(() -> new CollectionOf<>(
@@ -59,5 +59,4 @@ public final class Filtered<X> extends CollectionEnvelope<X> {
             )
         ));
     }
-
 }

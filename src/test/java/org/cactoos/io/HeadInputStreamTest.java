@@ -38,6 +38,7 @@ import org.llorllale.cactoos.matchers.TextIs;
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class HeadInputStreamTest {
 
     @Test
@@ -46,7 +47,12 @@ public final class HeadInputStreamTest {
             new InputOf("testSkippingLessThanTotal").stream(),
             5
         );
-        stream.skip(3L);
+        final long skipped = stream.skip(3L);
+        new Assertion<>(
+            "Incorrect number of bytes skipped",
+            skipped,
+            new IsEqual<>(3L)
+        ).affirm();
         new Assertion<>(
             "Incorrect head of the input stream has been read",
             new InputOf(stream),
@@ -60,7 +66,12 @@ public final class HeadInputStreamTest {
             new InputOf("testSkippingMoreThanTotal").stream(),
             5
         );
-        stream.skip(7L);
+        final long skipped = stream.skip(7L);
+        new Assertion<>(
+            "Incorrect number of bytes skipped",
+            skipped,
+            new IsEqual<>(5L)
+        ).affirm();
         final String input = new TextOf(stream).asString();
         new Assertion<>(
             "The result text wasn't empty",
@@ -75,7 +86,12 @@ public final class HeadInputStreamTest {
             new InputOf("testResetting").stream(),
             5
         );
-        stream.skip(7L);
+        final long skipped = stream.skip(7L);
+        new Assertion<>(
+            "Incorrect number of bytes skipped",
+            skipped,
+            new IsEqual<>(5L)
+        ).affirm();
         stream.reset();
         new Assertion<>(
             "Reset didn't change the state",

@@ -116,6 +116,7 @@ public final class InputOfTest {
                         public int read() throws IOException {
                             return input.read();
                         }
+
                         @Override
                         public void close() throws IOException {
                             input.close();
@@ -351,11 +352,13 @@ public final class InputOfTest {
                 public X509Certificate[] getAcceptedIssuers() {
                     return new X509Certificate[0];
                 }
+
                 @Override
                 public void checkClientTrusted(
                     final X509Certificate[] cert, final String arg) {
                     // nothing to do
                 }
+
                 @Override
                 public void checkServerTrusted(
                     final X509Certificate[] cert, final String arg) {

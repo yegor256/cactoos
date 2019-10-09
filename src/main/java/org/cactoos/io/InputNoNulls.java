@@ -38,6 +38,7 @@ public final class InputNoNulls implements Input {
      * The input.
      */
     private final Input origin;
+
     /**
      * Ctor.
      * @param input The input
@@ -45,6 +46,7 @@ public final class InputNoNulls implements Input {
     public InputNoNulls(final Input input) {
         this.origin = input;
     }
+
     @Override
     public InputStream stream() throws Exception {
         if (this.origin == null) {

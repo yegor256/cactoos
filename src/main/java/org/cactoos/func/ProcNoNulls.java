@@ -36,6 +36,7 @@ public final class ProcNoNulls<X> implements Proc<X> {
      * The procedure.
      */
     private final Proc<X> origin;
+
     /**
      * Ctor.
      * @param proc The procedure
@@ -43,6 +44,7 @@ public final class ProcNoNulls<X> implements Proc<X> {
     public ProcNoNulls(final Proc<X> proc) {
         this.origin = proc;
     }
+
     @Override
     public void exec(final X input) throws Exception {
         if (this.origin == null) {

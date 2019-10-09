@@ -61,7 +61,7 @@ public final class Zip implements Input {
     @Override
     public InputStream stream() throws Exception {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try (final ZipOutputStream zip = new ZipOutputStream(out)) {
+        try (ZipOutputStream zip = new ZipOutputStream(out)) {
             for (final Path path : this.origin) {
                 final File file = path.toFile();
                 final ZipEntry entry = new ZipEntry(
@@ -70,7 +70,7 @@ public final class Zip implements Input {
                 zip.putNextEntry(entry);
                 if (file.isFile()) {
                     try (
-                        final FileInputStream input = new FileInputStream(file)
+                        FileInputStream input = new FileInputStream(file)
                     ) {
                         zip.write(new BytesOf(new InputOf(input)).asBytes());
                     }

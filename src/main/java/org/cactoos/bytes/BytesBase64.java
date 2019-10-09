@@ -38,6 +38,7 @@ public final class BytesBase64 implements Bytes {
      * Origin bytes.
      */
     private final Bytes origin;
+
     /**
      * The encoder to use.
      */

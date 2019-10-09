@@ -34,10 +34,12 @@ import org.cactoos.BiFunc;
  * @since 0.11
  */
 public final class BiFuncNoNulls<X, Y, Z> implements BiFunc<X, Y, Z> {
+
     /**
      * The function.
      */
     private final BiFunc<X, Y, Z> origin;
+
     /**
      * Ctor.
      * @param func The function
@@ -45,6 +47,7 @@ public final class BiFuncNoNulls<X, Y, Z> implements BiFunc<X, Y, Z> {
     public BiFuncNoNulls(final BiFunc<X, Y, Z> func) {
         this.origin = func;
     }
+
     @Override
     public Z apply(final X first, final Y second) throws Exception {
         if (this.origin == null) {

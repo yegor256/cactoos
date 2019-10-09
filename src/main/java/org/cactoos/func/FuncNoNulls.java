@@ -38,6 +38,7 @@ public final class FuncNoNulls<X, Y> implements Func<X, Y> {
      * The function.
      */
     private final Func<X, Y> func;
+
     /**
      * Ctor.
      * @param fnc The function
@@ -45,6 +46,7 @@ public final class FuncNoNulls<X, Y> implements Func<X, Y> {
     public FuncNoNulls(final Func<X, Y> fnc) {
         this.func = fnc;
     }
+
     @Override
     public Y apply(final X input) throws Exception {
         if (this.func == null) {

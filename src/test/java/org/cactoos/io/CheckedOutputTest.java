@@ -57,7 +57,7 @@ public final class CheckedOutputTest {
             "must wrap checked exception",
             new CheckedOutput<>(
                 () -> {
-                    throw new Exception("runtime2");
+                    throw new IOException("runtime2");
                 },
                 IOException::new
             )::stream,

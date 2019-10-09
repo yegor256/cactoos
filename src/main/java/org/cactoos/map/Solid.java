@@ -61,10 +61,10 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param map The map to extend
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param map The map to extend
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @checkstyle ParameterNumberCheck (5 lines)
      */
@@ -79,9 +79,9 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param list List of items
      * @param <Z> Type of items in the list
      */
     public <Z> Solid(final Func<Z, X> key,
@@ -91,8 +91,8 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      */
     @SafeVarargs
@@ -103,8 +103,8 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      */
     public <Z> Solid(final Func<Z, Map.Entry<X, Y>> entry,
@@ -114,9 +114,9 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     * @param entry Func to create entry
      * @param map The map to extend
      * @param list List of items
-     * @param entry Func to create entry
      * @param <Z> Type of items in the list
      */
     public <Z> Solid(final Func<Z, Map.Entry<X, Y>> entry,
@@ -153,5 +153,4 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
             )
         );
     }
-
 }

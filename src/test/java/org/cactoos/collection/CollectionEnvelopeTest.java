@@ -182,6 +182,7 @@ public final class CollectionEnvelopeTest {
 
     /**
      * Custom collection.
+     * @since 0.32
      */
     private static class CustomCollection extends CollectionEnvelope<String> {
 

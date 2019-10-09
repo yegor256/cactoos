@@ -86,6 +86,7 @@ public final class TeeInputStreamTest {
 
     /**
      * Mock object around StringWriter for checking closing state.
+     * @since 0.1
      */
     private static final class StringWriterMock extends StringWriter {
         /**

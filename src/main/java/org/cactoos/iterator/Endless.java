@@ -24,6 +24,7 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Unchecked;
 
@@ -73,7 +74,7 @@ public final class Endless<T> implements Iterator<T> {
     }
 
     @Override
-    public T next() {
+    public T next() throws NoSuchElementException {
         return this.origin.value();
     }
 }

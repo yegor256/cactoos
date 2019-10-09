@@ -61,8 +61,8 @@ public final class Sorted<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param iterator The underlying iterator
      * @param comparator The comparator
+     * @param iterator The underlying iterator
      */
     public Sorted(final Comparator<T> comparator, final Iterator<T> iterator) {
         this.scalar = new Unchecked<>(

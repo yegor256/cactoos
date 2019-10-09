@@ -58,8 +58,8 @@ public final class Timed<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
-     * @param async Async function
      * @param milliseconds Milliseconds
+     * @param async Async function
      */
     public Timed(final long milliseconds, final Func<X, Future<Y>> async) {
         this.func = async;

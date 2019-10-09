@@ -52,7 +52,7 @@ public final class ZipTest {
         final Path dir = this.folder.newFolder().toPath();
         dir.resolve("x/y").toFile().mkdirs();
         Files.write(dir.resolve("x/y/test"), "".getBytes());
-        try (final ZipInputStream input = new ZipInputStream(
+        try (ZipInputStream input = new ZipInputStream(
             new Zip(
                 new Directory(dir)
             ).stream()

@@ -57,7 +57,7 @@ public final class NumberOfTest {
             "Can't parse long number",
             new NumberOf("186789235425346").longValue(),
             // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(186789235425346L)
+            Matchers.equalTo(186_789_235_425_346L)
         );
     }
 
@@ -72,7 +72,7 @@ public final class NumberOfTest {
             "Can't parse integer number",
             new NumberOf("1867892354").intValue(),
             // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(1867892354)
+            Matchers.equalTo(1_867_892_354)
         );
     }
 
@@ -87,7 +87,7 @@ public final class NumberOfTest {
             "Can't parse double number",
             new NumberOf("185.65156465123").doubleValue(),
             // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(185.65156465123)
+            Matchers.equalTo(185.65_156_465_123)
         );
     }
 

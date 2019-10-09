@@ -52,6 +52,7 @@ public final class IoCheckedTest {
         }
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     @Test(expected = IOException.class)
     public void throwsException() throws Exception {
         new IoChecked<>(

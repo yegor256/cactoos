@@ -140,7 +140,7 @@ public final class FormattedText extends TextEnvelope {
             @Override
             public String value() throws Exception {
                 final StringBuilder out = new StringBuilder(0);
-                try (final Formatter fmt = new Formatter(out, locale)) {
+                try (Formatter fmt = new Formatter(out, locale)) {
                     fmt.format(
                         ptn.asString(),
                         args.toArray()

@@ -26,11 +26,12 @@ package org.cactoos.io;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.core.IsEqual;
@@ -41,9 +42,9 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link org.cactoos.io.GzipOutput}.
- * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @since 0.29
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class GzipOutputTest {
@@ -67,7 +68,7 @@ public final class GzipOutputTest {
             writer.write(content);
         }
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (final OutputStream output = new GzipOutput(
+        try (OutputStream output = new GzipOutput(
             new OutputTo(baos)
         ).stream()
         ) {
@@ -87,9 +88,12 @@ public final class GzipOutputTest {
 
     @Test(expected = IOException.class)
     public void writeToClosedGzipOutput() throws Exception {
-        final OutputStream stream = new FileOutputStream(
-            this.folder.newFile("cactoos.txt")
-        );
+        final OutputStream stream =
+            Files.newOutputStream(
+                Paths.get(
+                    this.folder.newFile("cactoos.txt").getPath()
+                )
+            );
         stream.close();
         new LengthOf(
             new TeeInput(

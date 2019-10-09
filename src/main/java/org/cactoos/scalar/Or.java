@@ -107,8 +107,8 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
      * @param proc Proc to use
+     * @param src The iterable
      * @param <X> Type of items in the iterable
      * @since 0.24
      */
@@ -118,8 +118,8 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
      * @param func Func to map
+     * @param src The iterable
      * @param <X> Type of items in the iterable
      */
     public <X> Or(final Func<X, Boolean> func, final Iterable<X> src) {

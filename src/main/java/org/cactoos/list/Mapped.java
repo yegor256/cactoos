@@ -38,8 +38,8 @@ public final class Mapped<X, Y> extends ListEnvelope<Y> {
 
     /**
      * Ctor.
-     * @param src Source iterable
      * @param fnc Func
+     * @param src Source iterable
      */
     public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
         super(() -> new ListOf<Y>(

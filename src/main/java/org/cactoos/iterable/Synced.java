@@ -36,7 +36,6 @@ import java.util.Iterator;
  * the encapsulated iterable, use {@link Sticky}.</p>
  *
  * <p>Objects of this class are thread-safe.</p>
- *
  * @param <X> Type of item
  * @since 0.24
  */
@@ -46,6 +45,7 @@ public final class Synced<X> implements Iterable<X> {
      * The iterable.
      */
     private final Iterable<X> origin;
+
     /**
      * Sync lock.
      */
@@ -70,8 +70,8 @@ public final class Synced<X> implements Iterable<X> {
 
     /**
      * Ctor.
-     * @param iterable The iterable synchronize access to.
      * @param lck The lock to synchronize with.
+     * @param iterable The iterable synchronize access to.
      */
     public Synced(final Object lck, final Iterable<X> iterable) {
         this.origin = iterable;
@@ -84,5 +84,4 @@ public final class Synced<X> implements Iterable<X> {
             return this.origin.iterator();
         }
     }
-
 }

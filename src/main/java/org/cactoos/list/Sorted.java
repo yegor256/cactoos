@@ -71,8 +71,8 @@ public final class Sorted<T> extends ListEnvelope<T> {
 
     /**
      * Ctor.
-     * @param src The underlying collection
      * @param cmp The comparator
+     * @param src The underlying collection
      */
     @SafeVarargs
     public Sorted(final Comparator<T> cmp, final T... src) {
@@ -81,8 +81,8 @@ public final class Sorted<T> extends ListEnvelope<T> {
 
     /**
      * Ctor.
-     * @param src The underlying collection
      * @param cmp The comparator
+     * @param src The underlying collection
      */
     public Sorted(final Comparator<T> cmp, final Collection<T> src) {
         super(() -> {
@@ -90,8 +90,6 @@ public final class Sorted<T> extends ListEnvelope<T> {
             items.addAll(src);
             items.sort(cmp);
             return Collections.unmodifiableList(items);
-        }
-);
+        });
     }
-
 }

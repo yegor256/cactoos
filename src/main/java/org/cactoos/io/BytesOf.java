@@ -260,7 +260,7 @@ public final class BytesOf implements Bytes {
         this(
             () -> {
                 try (
-                    final ByteArrayOutputStream baos =
+                    ByteArrayOutputStream baos =
                         new ByteArrayOutputStream()
                 ) {
                     error.printStackTrace(
@@ -302,9 +302,9 @@ public final class BytesOf implements Bytes {
         this(
             () -> {
                 try (
-                    final ByteArrayOutputStream baos =
+                    ByteArrayOutputStream baos =
                         new ByteArrayOutputStream();
-                    final PrintStream stream = new PrintStream(
+                    PrintStream stream = new PrintStream(
                         baos, true, charset.toString()
                     )
                 ) {

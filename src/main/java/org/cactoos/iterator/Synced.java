@@ -47,6 +47,7 @@ public final class Synced<T> implements Iterator<T> {
      * The original iterator.
      */
     private final Iterator<T> iterator;
+
     /**
      * The lock to use.
      */
@@ -62,8 +63,8 @@ public final class Synced<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param iterator The iterator to synchronize access to.
      * @param lock The lock to use for synchronization.
+     * @param iterator The iterator to synchronize access to.
      */
     public Synced(final ReadWriteLock lock, final Iterator<T> iterator) {
         this.iterator = iterator;

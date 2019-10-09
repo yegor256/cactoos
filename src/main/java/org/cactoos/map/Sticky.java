@@ -65,10 +65,10 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param map The map to extend
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param map The map to extend
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.12
      * @checkstyle ParameterNumberCheck (5 lines)
@@ -84,9 +84,9 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.11
      */
@@ -97,8 +97,8 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.11
      */
@@ -110,8 +110,8 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.11
      */
@@ -122,9 +122,9 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     * @param entry Func to create entry
      * @param map The map to extend
      * @param list List of items
-     * @param entry Func to create entry
      * @param <Z> Type of items in the list
      * @since 0.12
      */

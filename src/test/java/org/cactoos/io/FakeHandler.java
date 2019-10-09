@@ -34,7 +34,6 @@ import org.cactoos.text.UncheckedText;
  * Fake handler logger.
  *
  * <p>There is no thread-safety guarantee.
- *
  * @since 0.29
  */
 public final class FakeHandler extends Handler {
@@ -42,6 +41,7 @@ public final class FakeHandler extends Handler {
      * Lines.
      */
     private final List<String> entries;
+
     /**
      * Ctor.
      */
@@ -49,18 +49,22 @@ public final class FakeHandler extends Handler {
         super();
         this.entries = new LinkedList<>();
     }
+
     @Override
     public void publish(final LogRecord record) {
         this.entries.add(record.getMessage());
     }
+
     @Override
     public void close() {
         // Intended empty.
     }
+
     @Override
     public void flush() {
         // Intended empty.
     }
+
     @Override
     public String toString() {
         return new UncheckedText(

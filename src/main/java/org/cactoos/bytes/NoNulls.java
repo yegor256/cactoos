@@ -36,6 +36,7 @@ public final class NoNulls implements Bytes {
      * The input.
      */
     private final Bytes origin;
+
     /**
      * Ctor.
      * @param bytes The input
@@ -43,6 +44,7 @@ public final class NoNulls implements Bytes {
     public NoNulls(final Bytes bytes) {
         this.origin = bytes;
     }
+
     @Override
     public byte[] asBytes() throws Exception {
         if (this.origin == null) {

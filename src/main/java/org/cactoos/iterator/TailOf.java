@@ -44,8 +44,8 @@ public final class TailOf<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param iterator Decorated iterator
      * @param num Number of tail elements
+     * @param iterator Decorated iterator
      */
     public TailOf(final int num, final Iterator<T> iterator) {
         this.origin = new LinkedList<>(

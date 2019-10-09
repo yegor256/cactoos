@@ -40,8 +40,8 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
 
     /**
      * Ctor.
-     * @param src Source collection
      * @param fnc Func
+     * @param src Source collection
      * @since 0.23
      */
     @SafeVarargs
@@ -51,8 +51,8 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
 
     /**
      * Ctor.
-     * @param src Source collection
      * @param fnc Func
+     * @param src Source collection
      */
     public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
         this(fnc, new CollectionOf<>(src));
@@ -60,8 +60,8 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
 
     /**
      * Ctor.
-     * @param src Source collection
      * @param fnc Func
+     * @param src Source collection
      */
     public Mapped(final Func<X, Y> fnc, final Collection<X> src) {
         super(() -> new CollectionOf<>(

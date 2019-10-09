@@ -53,7 +53,7 @@ public final class IoCheckedBiProcTest {
     public void wrapsExceptions() {
         final IoCheckedBiProc<Object, Object> proc = new IoCheckedBiProc<>(
             (first, second) -> {
-                throw new Exception();
+                throw new IOException();
             }
         );
         new Assertion<>(
@@ -63,7 +63,7 @@ public final class IoCheckedBiProcTest {
                 return true;
             },
             new Throws<>(
-                "java.lang.Exception",
+                "java.io.IOException",
                 IOException.class
             )
         ).affirm();

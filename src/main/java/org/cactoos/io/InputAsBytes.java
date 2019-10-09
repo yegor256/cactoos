@@ -34,7 +34,6 @@ import org.cactoos.Input;
  * <p>This class is for internal use only. Use {@link BytesOf} instead.</p>
  *
  * <p>There is no thread-safety guarantee.
- *
  * @since 0.1
  */
 final class InputAsBytes implements Bytes {
@@ -70,10 +69,13 @@ final class InputAsBytes implements Bytes {
 
     @Override
     public byte[] asBytes() throws Exception {
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            final InputStream stream = new TeeInput(
-                this.source, new OutputTo(baos)
-            ).stream()) {
+        try (
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            InputStream stream = new TeeInput(
+                this.source,
+                new OutputTo(baos)
+            ).stream()
+        ) {
             final byte[] buf = new byte[this.size];
             while (true) {
                 if (stream.read(buf) < 0) {

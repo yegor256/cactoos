@@ -56,8 +56,8 @@ public final class HeadOf<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param iterator Decorated iterator
      * @param num Num of head elements
+     * @param iterator Decorated iterator
      */
     public HeadOf(final int num, final Iterator<T> iterator) {
         this.origin = iterator;

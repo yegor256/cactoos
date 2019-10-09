@@ -87,7 +87,7 @@ public final class LengthOf extends NumberEnvelope {
                     "Cannot use a buffer limited to zero size"
                 );
             }
-            try (final InputStream stream = input.stream()) {
+            try (InputStream stream = input.stream()) {
                 final byte[] buf = new byte[max];
                 long length = 0L;
                 while (true) {

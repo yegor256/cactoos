@@ -80,8 +80,8 @@ public final class ResourceOf implements Input {
     /**
      * New resource input with specified {@link ClassLoader}.
      * @param res Resource name
-     * @param ldr Resource class loader
      * @param fbk Fallback
+     * @param ldr Resource class loader
      */
     public ResourceOf(final CharSequence res,
         final Func<CharSequence, Input> fbk, final ClassLoader ldr) {
@@ -175,8 +175,8 @@ public final class ResourceOf implements Input {
     /**
      * New resource input with specified {@link ClassLoader}.
      * @param res Resource name
-     * @param ldr Resource class loader
      * @param fbk Fallback
+     * @param ldr Resource class loader
      */
     public ResourceOf(final Text res,
         final Func<Text, Input> fbk, final ClassLoader ldr) {

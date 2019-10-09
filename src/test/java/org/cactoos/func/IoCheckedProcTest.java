@@ -56,7 +56,7 @@ public final class IoCheckedProcTest {
     public void rethrowsCheckedToIoException() throws Exception {
         new IoCheckedProc<>(
             i -> {
-                throw new Exception("intended to fail");
+                throw new InterruptedException("intended to fail");
             }
         ).exec(1);
     }

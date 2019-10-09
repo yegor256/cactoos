@@ -63,10 +63,10 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param map The map to extend
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param map The map to extend
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @checkstyle ParameterNumberCheck (5 lines)
      */
@@ -93,8 +93,8 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      */
     @SafeVarargs
@@ -105,8 +105,8 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      */
     public <Z> Synced(final Func<Z, Map.Entry<X, Y>> entry,
@@ -116,9 +116,9 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     * @param entry Func to create entry
      * @param map The map to extend
      * @param list List of items
-     * @param entry Func to create entry
      * @param <Z> Type of items in the list
      */
     public <Z> Synced(final Func<Z, Map.Entry<X, Y>> entry,
@@ -159,5 +159,4 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
             )
         );
     }
-
 }

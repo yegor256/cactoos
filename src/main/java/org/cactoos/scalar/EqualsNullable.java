@@ -36,6 +36,7 @@ public final class EqualsNullable implements Scalar<Boolean> {
      * The first object for comparison.
      */
     private final Scalar<Object> first;
+
     /**
      * The second object for comparison.
      */

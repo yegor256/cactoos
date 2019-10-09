@@ -108,6 +108,7 @@ public final class NoNullsTest {
             )
         ).affirm();
     }
+
     @Test
     public void getThrowsErrorIfListIteratorNextValueIsNullValue() {
         new Assertion<>(

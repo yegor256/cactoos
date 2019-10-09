@@ -87,6 +87,7 @@ public final class Retry<T> implements Scalar<T> {
         // @checkstyle MagicNumberCheck (1 line)
         this(scalar, 3, wait);
     }
+
     /**
      * Ctor.
      * @param scalar Scalar original

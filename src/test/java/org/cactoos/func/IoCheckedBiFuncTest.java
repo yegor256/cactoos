@@ -55,7 +55,7 @@ public final class IoCheckedBiFuncTest {
     public void rethrowsCheckedToIoException() throws Exception {
         new IoCheckedBiFunc<>(
             (fst, scd) -> {
-                throw new Exception("intended to fail");
+                throw new IOException("intended to fail");
             }
         ).apply(1, 2);
     }

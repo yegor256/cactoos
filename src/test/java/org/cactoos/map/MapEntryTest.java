@@ -79,7 +79,7 @@ public final class MapEntryTest {
             "the hash code are not equals",
             new MapEntry<>("elegant", "objects").hashCode(),
             // @checkstyle MagicNumber (1 line)
-            new IsEqual<>(32739498)
+            new IsEqual<>(32_739_498)
         );
     }
 

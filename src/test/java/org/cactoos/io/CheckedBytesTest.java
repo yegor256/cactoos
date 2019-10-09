@@ -57,7 +57,7 @@ public final class CheckedBytesTest {
             "must wrap checked exception",
             new CheckedBytes<>(
                 () -> {
-                    throw new Exception("runtime2");
+                    throw new IOException("runtime2");
                 },
                 IOException::new
             )::asBytes,

@@ -83,7 +83,7 @@ public final class RetryTest {
 
     @Test
     public void runsScalarMultipleTimesIgnoringNegativeDuration()
-    throws Exception {
+        throws Exception {
         // @checkstyle MagicNumberCheck (2 line)
         final int times = 2;
         final AtomicInteger tries = new AtomicInteger(0);

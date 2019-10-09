@@ -39,7 +39,7 @@ public final class TempFolderTest {
 
     @Test
     public void createsDirectory() throws Exception {
-        try (final TempFolder folder = new TempFolder()) {
+        try (TempFolder folder = new TempFolder()) {
             final File dir = folder.value().toFile();
             new Assertion<>(
                 "must create new directory",

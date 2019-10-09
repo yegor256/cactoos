@@ -98,6 +98,7 @@ public final class EqualityTest {
 
     /**
      * Weight.
+     * @since 0.31
      */
     private static final class Letters implements Bytes {
 

@@ -50,6 +50,7 @@ public final class TextEnvelopeTest {
             new IsEqual<>(text)
         );
     }
+
     /**
      * Test for {@link TextEnvelope#equals(Object)} method. Must assert
      * that the envelope value is equal another text representing the same
@@ -129,6 +130,7 @@ public final class TextEnvelopeTest {
 
     /**
      * Dummy class for {@link TextEnvelope} testing.
+     * @since 0.32
      */
     private final class TextEnvelopeDummy extends TextEnvelope {
 
@@ -140,6 +142,7 @@ public final class TextEnvelopeTest {
         TextEnvelopeDummy(final Scalar<String> scalar) {
             super(scalar);
         }
+
         /**
          * Ctor.
          *

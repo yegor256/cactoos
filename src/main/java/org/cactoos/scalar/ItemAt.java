@@ -86,9 +86,9 @@ public final class ItemAt<T> implements Scalar<T> {
     /**
      * Ctor.
      *
-     * @param iterable Iterable
      * @param position Position
      * @param fallback Fallback value
+     * @param iterable Iterable
      */
     public ItemAt(
         final int position,

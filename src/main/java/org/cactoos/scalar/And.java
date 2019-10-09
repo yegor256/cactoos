@@ -109,8 +109,8 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
      * @param proc Proc to use
+     * @param src The iterable
      * @param <X> Type of items in the iterable
      * @since 0.24
      */
@@ -120,8 +120,8 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
      * @param func Func to map
+     * @param src The iterable
      * @param <X> Type of items in the iterable
      * @since 0.24
      */

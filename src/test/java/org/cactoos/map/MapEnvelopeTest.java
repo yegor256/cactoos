@@ -328,6 +328,7 @@ public final class MapEnvelopeTest {
      * Class derived from MapEnvelope to use in some tests.
      * @param <K> - key type
      * @param <V> - value type
+     * @since 0.4
      */
     private static class DerivedMapEnvelope<K, V> extends MapEnvelope<K, V> {
         DerivedMapEnvelope(final Map<K, V> content) {

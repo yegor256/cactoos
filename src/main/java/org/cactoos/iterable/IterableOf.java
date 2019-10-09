@@ -87,9 +87,9 @@ public final class IterableOf<X> implements Iterable<X> {
      * <p>
      * Elements will continue to be provided so long as {@code next} produces
      * non-empty iterators.
-     * @param <I> Custom iterator
      * @param first First bag of elements
      * @param next Subsequent bags of elements
+     * @param <I> Custom iterator
      * @todo #947:30min Move this constructor in its own class with its own
      *  tests and meaningful name (maybe Paged?). Then remove the
      *  ClassDataAbstractionCouplingCheck suppression for IterableOf.

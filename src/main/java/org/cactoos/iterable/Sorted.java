@@ -60,8 +60,8 @@ public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param src The underlying iterable
      * @param cmp The comparator
+     * @param src The underlying iterable
      */
     @SafeVarargs
     public Sorted(final Comparator<T> cmp, final T... src) {
@@ -70,8 +70,8 @@ public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param src The underlying iterable
      * @param cmp The comparator
+     * @param src The underlying iterable
      */
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
         super(

@@ -95,8 +95,8 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
      * @param proc Proc to use
+     * @param src The iterable
      * @param <X> Type of items in the iterable
      */
     public <X> AndInThreads(final Proc<X> proc, final Iterable<X> src) {
@@ -105,8 +105,8 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
      * @param func Func to map
+     * @param src The iterable
      * @param <X> Type of items in the iterable
      */
     public <X> AndInThreads(final Func<X, Boolean> func,
@@ -164,8 +164,8 @@ public final class AndInThreads implements Scalar<Boolean> {
     /**
      * Ctor.
      * @param svc Executable service to run thread in
-     * @param src The iterable
      * @param proc Proc to use
+     * @param src The iterable
      * @param <X> Type of items in the iterable
      */
     public <X> AndInThreads(final ExecutorService svc,
@@ -176,8 +176,8 @@ public final class AndInThreads implements Scalar<Boolean> {
     /**
      * Ctor.
      * @param svc Executable service to run thread in
-     * @param src The iterable
      * @param func Func to map
+     * @param src The iterable
      * @param <X> Type of items in the iterable
      */
     public <X> AndInThreads(final ExecutorService svc,

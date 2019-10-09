@@ -134,6 +134,7 @@ public final class IterableOfTest {
             )
         );
     }
+
     @Test
     public void notEqualsToObjectOfAnotherType() {
         new Assertion<>(

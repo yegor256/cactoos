@@ -89,7 +89,7 @@ public final class ProcOfTest {
         final String str = "test input";
         final List<String> list = new ArrayList<>(1);
         new ProcOf<String>(
-            (input) -> {
+            input -> {
                 list.add(input);
                 return list.size();
             }

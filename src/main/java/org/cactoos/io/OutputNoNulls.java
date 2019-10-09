@@ -38,6 +38,7 @@ public final class OutputNoNulls implements Output {
      * The output.
      */
     private final Output origin;
+
     /**
      * Ctor.
      * @param output The output
@@ -45,6 +46,7 @@ public final class OutputNoNulls implements Output {
     public OutputNoNulls(final Output output) {
         this.origin = output;
     }
+
     @Override
     public OutputStream stream() throws Exception {
         if (this.origin == null) {

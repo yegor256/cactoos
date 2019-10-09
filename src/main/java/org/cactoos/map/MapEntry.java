@@ -101,7 +101,7 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
             hash = this.key.hashCode();
         }
         if (this.value == null) {
-            hash ^= 0;
+            hash ^= 1;
         } else {
             hash ^= this.value.hashCode();
         }

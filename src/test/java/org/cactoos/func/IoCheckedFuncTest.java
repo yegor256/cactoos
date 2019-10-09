@@ -57,7 +57,7 @@ public final class IoCheckedFuncTest {
     public void rethrowsCheckedToIoException() throws Exception {
         new IoCheckedFunc<>(
             i -> {
-                throw new Exception("intended to fail");
+                throw new IOException("intended to fail");
             }
         ).apply(1);
     }
