@@ -145,6 +145,7 @@ public final class IterableOf<X> implements Iterable<X> {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
     public boolean equals(final Object other) {
         return new Unchecked<>(
             new Or(

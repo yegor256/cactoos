@@ -147,6 +147,7 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
     public final boolean equals(final Object other) {
         return new Unchecked<>(
             new Or(

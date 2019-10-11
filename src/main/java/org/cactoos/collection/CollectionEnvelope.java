@@ -151,6 +151,7 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
     public final boolean equals(final Object other) {
         return new Unchecked<>(
             new Or(
