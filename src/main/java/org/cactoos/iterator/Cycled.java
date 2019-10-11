@@ -26,6 +26,7 @@ package org.cactoos.iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Cycled Iterator.
@@ -45,7 +46,7 @@ public final class Cycled<T> implements Iterator<T> {
     /**
      * Iterator.
      */
-    private Iterator<T> iterator;
+    private AtomicReference<Iterator<T>> reference;
 
     /**
      * Ctor.
@@ -53,14 +54,18 @@ public final class Cycled<T> implements Iterator<T> {
      */
     public Cycled(final Iterable<T> iterable) {
         this.origin = iterable;
+        this.reference = new AtomicReference<>(iterable.iterator());
     }
 
     @Override
     public boolean hasNext() {
-        if (this.iterator == null || !this.iterator.hasNext()) {
-            this.iterator = this.origin.iterator();
+        if (!this.reference.get().hasNext()) {
+            this.reference.compareAndSet(
+                this.reference.get(),
+                this.origin.iterator()
+            );
         }
-        return this.iterator.hasNext();
+        return this.reference.get().hasNext();
     }
 
     @Override
@@ -70,6 +75,6 @@ public final class Cycled<T> implements Iterator<T> {
                 "The iterator doesn't have any more items"
             );
         }
-        return this.iterator.next();
+        return this.reference.get().next();
     }
 }
