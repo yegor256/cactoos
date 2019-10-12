@@ -27,6 +27,8 @@ import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link NumberOf}.
@@ -94,5 +96,14 @@ public final class NumberOfTest {
     @Test(expected = RuntimeException.class)
     public void failsIfTextDoesNotRepresentADouble() throws IOException {
         new NumberOf("abfdsc").doubleValue();
+    }
+
+    @Test
+    public void parsesInt() throws IOException {
+        new Assertion<>(
+            "Can't parse into int",
+            () -> new NumberOf("185").value().intValue(),
+            new ScalarHasValue<>(185)
+        ).affirm();
     }
 }
