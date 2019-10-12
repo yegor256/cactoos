@@ -21,37 +21,64 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.scalar;
 
-import java.util.NoSuchElementException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.Throws;
 
 /**
- * Test Case for {@link Endless}.
- * @since 0.11
+ * Test case for {@link Sealed}.
+ *
+ * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class EndlessTest {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class SealedTest {
 
     @Test
-    public void endlessIterableTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't get unique endless iterable item",
-            new Endless<>(1),
-            Matchers.hasItem(1)
-        );
+    public void testInteger() {
+        new Assertion<>(
+            "Integer did not pass equality",
+            new Sealed(100).intValue(),
+            new IsEqual<>(100)
+        ).affirm();
     }
 
     @Test
-    public void noElementTest() throws Exception {
+    public void testFloat() {
         new Assertion<>(
-            "Must get sliced iterable of elements",
-            () -> new Endless<>(null).iterator().next(),
-            new Throws<>(NoSuchElementException.class)
+            "Float did not pass equality",
+            new Sealed(100).floatValue(),
+            new IsEqual<>(100.0f)
+        ).affirm();
+    }
+
+    @Test
+    public void testLong() {
+        new Assertion<>(
+            "Long did not pass equality",
+            new Sealed(100).longValue(),
+            new IsEqual<>(100L)
+        ).affirm();
+    }
+
+    @Test
+    public void testDouble() {
+        new Assertion<>(
+            "Double did not pass equality",
+            new Sealed(100).doubleValue(),
+            new IsEqual<>(100.0d)
+        ).affirm();
+    }
+
+    @Test
+    public void testFailed() {
+        new Assertion<>(
+            "Float did not pass equality",
+            new Sealed(100).floatValue(),
+            new IsEqual<>(100.0f)
         ).affirm();
     }
 }
