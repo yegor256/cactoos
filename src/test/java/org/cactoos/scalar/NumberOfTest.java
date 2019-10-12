@@ -27,12 +27,15 @@ import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link NumberOf}.
  *
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumber (500 lines)
  */
 public final class NumberOfTest {
 
@@ -41,7 +44,6 @@ public final class NumberOfTest {
         MatcherAssert.assertThat(
             "Can't parse float number",
             new NumberOf("1656.894").floatValue(),
-            // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(1656.894F)
         );
     }
@@ -56,7 +58,6 @@ public final class NumberOfTest {
         MatcherAssert.assertThat(
             "Can't parse long number",
             new NumberOf("186789235425346").longValue(),
-            // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(186_789_235_425_346L)
         );
     }
@@ -71,7 +72,6 @@ public final class NumberOfTest {
         MatcherAssert.assertThat(
             "Can't parse integer number",
             new NumberOf("1867892354").intValue(),
-            // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(1_867_892_354)
         );
     }
@@ -86,7 +86,6 @@ public final class NumberOfTest {
         MatcherAssert.assertThat(
             "Can't parse double number",
             new NumberOf("185.65156465123").doubleValue(),
-            // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(185.65_156_465_123)
         );
     }
@@ -94,5 +93,14 @@ public final class NumberOfTest {
     @Test(expected = RuntimeException.class)
     public void failsIfTextDoesNotRepresentADouble() throws IOException {
         new NumberOf("abfdsc").doubleValue();
+    }
+
+    @Test
+    public void parsesValueInt() throws IOException {
+        new Assertion<>(
+            "Can't parse into int",
+            () -> new NumberOf("185").value().intValue(),
+            new ScalarHasValue<>(185)
+        ).affirm();
     }
 }

@@ -26,13 +26,13 @@ package org.cactoos.scalar;
 import org.cactoos.Scalar;
 
 /**
- * Sealed Envelope for the {@link Number}, that contains four types of number.
+ * Sealed serializable envelope for the {@link Number}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 1.0
  */
-public final class Sealed extends NumberEnvelope {
+final class Sealed extends NumberEnvelope {
 
     /**
      * Serialization marker.
@@ -41,13 +41,26 @@ public final class Sealed extends NumberEnvelope {
 
     /**
      * Ctor.
+     * @param number Number value.
+     */
+    Sealed(final Number number) {
+        this(
+            number::longValue,
+            number::intValue,
+            number::floatValue,
+            number::doubleValue
+        );
+    }
+
+    /**
+     * Ctor.
      * @param lnm Long scalar
      * @param inm Integer scalar
      * @param fnm Float scalar
-     * @param dnm Long scalar
+     * @param dnm Double scalar
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public Sealed(final Scalar<Long> lnm, final Scalar<Integer> inm,
+    Sealed(final Scalar<Long> lnm, final Scalar<Integer> inm,
         final Scalar<Float> fnm, final Scalar<Double> dnm) {
         super(lnm, inm, fnm, dnm);
     }
