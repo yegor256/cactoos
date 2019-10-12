@@ -45,11 +45,6 @@ public final class Endless<T> implements Iterator<T> {
     private final Unchecked<T> origin;
 
     /**
-     * Identifies if element or scalar is null.
-     */
-    private final boolean nullable;
-
-    /**
      * Ctor.
      * @param element Element to repeat
      */
@@ -71,19 +66,18 @@ public final class Endless<T> implements Iterator<T> {
      */
     public Endless(final Unchecked<T> scalar) {
         this.origin = scalar;
-        this.nullable = this.origin == null || this.origin.value() == null;
     }
 
     @Override
     public boolean hasNext() {
-        return !this.nullable;
+        return this.origin.value() != null;
     }
 
     @Override
     public T next() {
         if (!this.hasNext()) {
             throw new NoSuchElementException(
-                "The iterator doesn't have items any more"
+                "The iterator doesn't have item"
             );
         }
         return this.origin.value();

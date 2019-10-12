@@ -38,7 +38,7 @@ import org.llorllale.cactoos.matchers.Throws;
 public final class EndlessTest {
 
     @Test
-    public void endlessIterableTest() throws Exception {
+    public void endlessIterableTest() {
         MatcherAssert.assertThat(
             "Can't get unique endless iterable item",
             new Endless<>(1),
@@ -47,7 +47,7 @@ public final class EndlessTest {
     }
 
     @Test
-    public void noElementTest() throws Exception {
+    public void elementsIsNullTest() {
         new Assertion<>(
             "Must get sliced iterable of elements",
             () -> new Endless<>(null).iterator().next(),
