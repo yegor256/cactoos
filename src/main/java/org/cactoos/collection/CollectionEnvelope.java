@@ -100,16 +100,12 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
 
     @Override
     public final boolean add(final X item) {
-        throw new UnsupportedOperationException(
-            "#add(): the collection is read-only"
-        );
+        return this.col.value().add(item);
     }
 
     @Override
     public final boolean remove(final Object object) {
-        throw new UnsupportedOperationException(
-            "#remove(): the collection is read-only"
-        );
+        return this.col.value().remove(object);
     }
 
     @Override
@@ -119,30 +115,22 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
 
     @Override
     public final boolean addAll(final Collection<? extends X> list) {
-        throw new UnsupportedOperationException(
-            "#addAll(): the collection is read-only"
-        );
+        return this.col.value().addAll(list);
     }
 
     @Override
     public final boolean removeAll(final Collection<?> list) {
-        throw new UnsupportedOperationException(
-            "#removeAll(): the collection is read-only"
-        );
+        return this.col.value().removeAll(list);
     }
 
     @Override
     public final boolean retainAll(final Collection<?> list) {
-        throw new UnsupportedOperationException(
-            "#retainAll(): the collection is read-only"
-        );
+        return this.col.value().retainAll(list);
     }
 
     @Override
     public final void clear() {
-        throw new UnsupportedOperationException(
-            "#clear(): the collection is read-only"
-        );
+        this.col.value().clear();
     }
 
     @Override

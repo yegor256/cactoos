@@ -72,7 +72,7 @@ public final class Shuffled<T> extends ListEnvelope<T> {
             final List<T> items = new LinkedList<>();
             items.addAll(src);
             Collections.shuffle(items);
-            return Collections.unmodifiableList(items);
+            return new Immutable<>(items);
         });
     }
 

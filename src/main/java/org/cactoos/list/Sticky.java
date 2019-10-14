@@ -68,7 +68,7 @@ public final class Sticky<X> extends ListEnvelope<X> {
                 () -> {
                     final List<X> temp = new LinkedList<>();
                     temp.addAll(list);
-                    return Collections.unmodifiableList(temp);
+                    return new Immutable<>(temp);
                 }
             )
         );

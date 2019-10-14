@@ -72,7 +72,7 @@ public final class Reversed<X> extends CollectionEnvelope<X> {
             final List<X> items = new LinkedList<>();
             items.addAll(src);
             Collections.reverse(items);
-            return items;
+            return new Immutable<>(items);
         });
     }
 

@@ -31,7 +31,7 @@ import org.cactoos.collection.CollectionEnvelope;
 import org.cactoos.scalar.Unchecked;
 
 /**
- * {@link List} envelope that doesn't allow mutations.
+ * {@link List} envelope that allows mutations.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -70,7 +70,7 @@ public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
     @Override
     public final boolean addAll(final int index,
         final Collection<? extends T> items) {
-        throw new UnsupportedOperationException("#addAll()");
+        return this.list.value().addAll(index, items);
     }
 
     @Override
@@ -80,17 +80,17 @@ public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
 
     @Override
     public final T set(final int index, final T element) {
-        throw new UnsupportedOperationException("#set()");
+        return this.list.value().set(index, element);
     }
 
     @Override
     public final void add(final int index, final T element) {
-        throw new UnsupportedOperationException("#add()");
+        this.list.value().add(index, element);
     }
 
     @Override
     public final T remove(final int index) {
-        throw new UnsupportedOperationException("#remove()");
+        return this.list.value().remove(index);
     }
 
     @Override

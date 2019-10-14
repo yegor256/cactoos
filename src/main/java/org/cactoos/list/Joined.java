@@ -62,7 +62,7 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param src Source lists
      */
     public Joined(final Iterable<List<X>> src) {
-        super(() -> Collections.unmodifiableList(
+        super(() -> new Immutable<>(
             new ListOf<>(src).stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toList())

@@ -23,12 +23,12 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
+import org.cactoos.list.Immutable;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 
@@ -92,7 +92,7 @@ public final class Matched<X> implements Iterable<X> {
                         );
                     }
                 }
-                return Collections.unmodifiableList(rslt).iterator();
+                return new Immutable<>(rslt).iterator();
             }
         );
     }

@@ -89,7 +89,7 @@ public final class Sorted<T> extends ListEnvelope<T> {
             final List<T> items = new ArrayList<>(src.size());
             items.addAll(src);
             items.sort(cmp);
-            return Collections.unmodifiableList(items);
+            return new Immutable<>(items);
         }
 );
     }

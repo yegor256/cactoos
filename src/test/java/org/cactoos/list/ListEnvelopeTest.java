@@ -37,6 +37,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @todo #898:30min Get rid of the Immutable in StringList class
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
 public final class ListEnvelopeTest {
@@ -174,7 +175,7 @@ public final class ListEnvelopeTest {
 
     private static final class StringList extends ListEnvelope<String> {
         StringList(final String... elements) {
-            super(() -> Arrays.asList(elements));
+            super(() -> new Immutable<>(Arrays.asList(elements)));
         }
     }
 }

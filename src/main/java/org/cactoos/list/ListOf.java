@@ -76,7 +76,7 @@ public final class ListOf<T> extends ListEnvelope<T> {
             for (final T item : src) {
                 temp.add(item);
             }
-            return Collections.unmodifiableList(temp);
+            return new Immutable<>(temp);
         });
     }
 
