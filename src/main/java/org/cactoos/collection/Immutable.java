@@ -155,4 +155,14 @@ public final class Immutable<X> implements Collection<X> {
     public String toString() {
         return this.col.toString();
     }
+
+    @Override
+    public int hashCode() {
+        return this.col.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.col.equals(obj);
+    }
 }

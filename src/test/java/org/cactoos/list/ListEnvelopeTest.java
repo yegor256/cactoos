@@ -37,7 +37,9 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
- * @todo #898:30min Get rid of the Immutable in StringList class
+ * @todo #898:30min Get rid of the Immutable in StringList nested class
+ * That's because this test should check the original behavior of ListEnvelope
+ * Now this test checks behavior of the Immutable decorator
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
 public final class ListEnvelopeTest {

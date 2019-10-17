@@ -174,6 +174,11 @@ public final class Immutable<T> implements List<T> {
         );
     }
 
+    /**
+     * @todo #898:30min Introduce an Immutable wrapper for ListIterator
+     * and use it here and above instead of ListIteratorOf.
+     * One another option is renaming of ListIteratorOf.
+     */
     @Override
     public ListIterator<T> listIterator(final int index) {
         return new ListIteratorOf<>(
@@ -183,7 +188,7 @@ public final class Immutable<T> implements List<T> {
 
     @Override
     public List<T> subList(final int start, final int end) {
-        return new Immutable<T>(this.list.subList(start, end));
+        return new Immutable<>(this.list.subList(start, end));
     }
 
     @Override
