@@ -162,7 +162,7 @@ public final class Immutable<X> implements Collection<X> {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         return this.col.equals(obj);
     }
 }

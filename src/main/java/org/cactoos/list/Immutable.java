@@ -35,6 +35,9 @@ import java.util.ListIterator;
  *
  * @param <T> Element type
  * @since 1.16
+ * @todo #898:30min Introduce an Immutable wrapper for {@link ListIterator}
+ *  and use it in listIterator() methods instead of {@link ListIteratorOf}.
+ *  One another option is renaming of {@link ListIteratorOf}.
  */
 @SuppressWarnings(
     {
@@ -174,11 +177,6 @@ public final class Immutable<T> implements List<T> {
         );
     }
 
-    /**
-     * @todo #898:30min Introduce an Immutable wrapper for ListIterator
-     * and use it here and above instead of ListIteratorOf.
-     * One another option is renaming of ListIteratorOf.
-     */
     @Override
     public ListIterator<T> listIterator(final int index) {
         return new ListIteratorOf<>(
