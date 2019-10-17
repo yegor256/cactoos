@@ -23,7 +23,6 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.collection.IsCollectionWithSize;
@@ -75,7 +74,7 @@ public final class JoinedTest {
         new Assertion<>(
             "Size must be 0",
             new Joined<String>(
-                Collections.emptyList()
+                new ListOf<String>()
             ),
             new IsCollectionWithSize<>(new IsEqual<>(0))
         ).affirm();
@@ -98,59 +97,117 @@ public final class JoinedTest {
         new Assertion<>(
             "Must be empty",
             new Joined<String>(
-                Collections.emptyList()
+                new ListOf<String>()
             ),
             new IsEmptyCollection<>()
         ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testAdd() {
-        new Joined<Integer>(
-            new IterableOf<>(1, 2),
-            new IterableOf<>(3, 4),
-            new IterableOf<>(5, 6)
-        ).add(7);
+        final Joined<Integer> joined = new Joined<>(
+            new IterableOf<Iterable<Integer>>(
+                new IterableOf<>(1, 2),
+                new IterableOf<>(3, 4),
+                new IterableOf<>(5, 6)
+            )
+        );
+        joined.add(7);
+        new Assertion<>(
+            "Must contain added element",
+            joined,
+            new IsEqual<>(
+                new ListOf<>(1, 2, 3, 4, 5, 6, 7)
+            )
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testRemove() {
-        new Joined<String>(
-            new IterableOf<>("w", "a"),
-            new IterableOf<>("b", "c")
-        ).remove("t");
+        final Joined<String> joined = new Joined<>(
+            new IterableOf<Iterable<String>>(
+                new IterableOf<>("w", "a"),
+                new IterableOf<>("b", "c")
+            )
+        );
+        joined.remove("a");
+        new Assertion<>(
+            "Must not contain removed element",
+            joined,
+            new IsEqual<>(
+                new ListOf<>("w", "b", "c")
+            )
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testAddAll() {
-        new Joined<Integer>(
-            new IterableOf<>(111),
-            new IterableOf<>(222),
-            new IterableOf<>(333)
-        ).addAll(new ListOf<>(111, 222));
+        final Joined<Integer> joined = new Joined<>(
+            new IterableOf<Iterable<Integer>>(
+                new IterableOf<>(111),
+                new IterableOf<>(222),
+                new IterableOf<>(333)
+            )
+        );
+        joined.addAll(new ListOf<>(444, 555));
+        new Assertion<>(
+            "Must contain all added elements",
+            joined,
+            new IsEqual<>(
+                new ListOf<>(111, 222, 333, 444, 555)
+            )
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testRemoveAll() {
-        new Joined<Integer>(
-            new IterableOf<>(111, 222),
-            new IterableOf<>(444)
-        ).removeAll(new ListOf<>(222));
+        final Joined<Integer> joined = new Joined<>(
+            new IterableOf<Iterable<Integer>>(
+                new IterableOf<>(111, 222),
+                new IterableOf<>(444)
+            )
+        );
+        joined.removeAll(new ListOf<>(222, 444));
+        new Assertion<>(
+            "Must not contain all removed element",
+            joined,
+            new IsEqual<>(
+                new ListOf<>(111)
+            )
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testRetainAll() {
-        new Joined<Integer>(
-            new IterableOf<>(22),
-            new IterableOf<>(11)
-        ).retainAll(new ListOf<>(66, 11));
+        final Joined<Integer> joined = new Joined<>(
+            new IterableOf<Iterable<Integer>>(
+                new IterableOf<>(22),
+                new IterableOf<>(11, 33)
+            )
+        );
+        joined.retainAll(new ListOf<>(66, 11, 33));
+        new Assertion<>(
+            "Must contain all retained element",
+            joined,
+            new IsEqual<>(
+                new ListOf<>(11, 33)
+            )
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testClear() {
-        new Joined<Integer>(
-            new IterableOf<>(10),
-            new IterableOf<>(20)
-        ).clear();
+        final Joined<Integer> joined = new Joined<>(
+            new IterableOf<Iterable<Integer>>(
+                new IterableOf<>(10),
+                new IterableOf<>(20)
+            )
+        );
+        joined.clear();
+        new Assertion<>(
+            "Must be empty after clear",
+            joined,
+            new IsEmptyCollection<>()
+        ).affirm();
     }
 }

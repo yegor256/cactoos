@@ -29,7 +29,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
-import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.HasSize;
 
@@ -109,9 +108,9 @@ public final class ListOfTest {
             () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
         );
         MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying iterable",
+            "Can sense the changes in the underlying iterable",
             list.size(),
-            new IsNot<>(new IsEqual<>(list.size()))
+            new IsEqual<>(list.size())
         );
     }
 

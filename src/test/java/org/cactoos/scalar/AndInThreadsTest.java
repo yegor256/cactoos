@@ -101,10 +101,8 @@ public final class AndInThreadsTest {
 
     @Test
     public void iteratesList() {
-        final List<String> list = new ArrayList<>(
-            new Synced<>(
-                new ArrayList<>(2)
-            )
+        final List<String> list = new Synced<>(
+            new ArrayList<>(2)
         );
         MatcherAssert.assertThat(
             "Can't iterate a list with a procedure",
@@ -137,10 +135,8 @@ public final class AndInThreadsTest {
 
     @Test
     public void iteratesEmptyList() {
-        final List<String> list = new ArrayList<>(
-            new Synced<>(
-                new ArrayList<>(2)
-            )
+        final List<String> list = new Synced<>(
+            new ArrayList<>(2)
         );
         MatcherAssert.assertThat(
             "Can't iterate a list",
@@ -164,10 +160,8 @@ public final class AndInThreadsTest {
 
     @Test
     public void worksWithProc() throws Exception {
-        final List<Integer> list = new ArrayList<>(
-            new Synced<>(
-                new ArrayList<>(2)
-            )
+        final List<Integer> list = new Synced<>(
+            new ArrayList<>(2)
         );
         new AndInThreads(
             (Proc<Integer>) list::add,
@@ -205,10 +199,8 @@ public final class AndInThreadsTest {
 
     @Test
     public void worksWithProcIterable() throws Exception {
-        final List<Integer> list = new ArrayList<>(
-            new Synced<>(
-                new ArrayList<>(2)
-            )
+        final List<Integer> list = new Synced<>(
+            new ArrayList<>(2)
         );
         new AndInThreads(
             new ProcNoNulls<Integer>(list::add),
@@ -248,10 +240,8 @@ public final class AndInThreadsTest {
 
     @Test
     public void worksWithExecServiceProcValues() throws Exception {
-        final List<Integer> list = new ArrayList<>(
-            new Synced<>(
-                new ArrayList<>(2)
-            )
+        final List<Integer> list = new Synced<>(
+            new ArrayList<>(2)
         );
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(
@@ -280,10 +270,8 @@ public final class AndInThreadsTest {
 
     @Test
     public void worksWithExecServiceProcIterable() throws Exception {
-        final List<Integer> list = new ArrayList<>(
-            new Synced<>(
-                new ArrayList<>(2)
-            )
+        final List<Integer> list = new Synced<>(
+            new ArrayList<>(2)
         );
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(

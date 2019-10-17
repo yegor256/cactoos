@@ -47,10 +47,8 @@ public final class Joined<X> extends CollectionEnvelope<X> {
      * @param list Items to concatenate
      */
     public Joined(final Iterable<Iterable<X>> list) {
-        super(() -> new Immutable<>(
-            new CollectionOf<>(
-                new org.cactoos.iterable.Joined<>(list)
-            )
+        super(() -> new CollectionOf<>(
+            new org.cactoos.iterable.Joined<>(list)
         ));
     }
 

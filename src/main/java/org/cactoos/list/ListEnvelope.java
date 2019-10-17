@@ -56,71 +56,73 @@ public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
     /**
      * Encapsulated list.
      */
-    private final Unchecked<List<T>> list;
+    private final List<T> list;
 
     /**
      * Ctor.
-     * @param src Source
+     * @param list Encapsulated list
      */
-    public ListEnvelope(final Scalar<List<T>> src) {
-        super(src::value);
-        this.list = new Unchecked<>(src);
+    public ListEnvelope(final List<T> list) {
+        super(list);
+        this.list = list;
+    }
+
+    /**
+     * Ctor.
+     * @param slr The scalar
+     */
+    public ListEnvelope(final Scalar<List<T>> slr) {
+        this(new Unchecked<>(slr).value());
     }
 
     @Override
     public final boolean addAll(final int index,
         final Collection<? extends T> items) {
-        return this.list.value().addAll(index, items);
+        return this.list.addAll(index, items);
     }
 
     @Override
     public final T get(final int index) {
-        return this.list.value().get(index);
+        return this.list.get(index);
     }
 
     @Override
     public final T set(final int index, final T element) {
-        return this.list.value().set(index, element);
+        return this.list.set(index, element);
     }
 
     @Override
     public final void add(final int index, final T element) {
-        this.list.value().add(index, element);
+        this.list.add(index, element);
     }
 
     @Override
     public final T remove(final int index) {
-        return this.list.value().remove(index);
+        return this.list.remove(index);
     }
 
     @Override
     public final int indexOf(final Object item) {
-        return this.list.value().indexOf(item);
+        return this.list.indexOf(item);
     }
 
     @Override
     public final int lastIndexOf(final Object item) {
-        return this.list.value().lastIndexOf(item);
+        return this.list.lastIndexOf(item);
     }
 
     @Override
     public final ListIterator<T> listIterator() {
-        return new ListIteratorOf<>(
-            this.list.value().listIterator()
-        );
+        return this.list.listIterator();
     }
 
     @Override
     public final ListIterator<T> listIterator(final int index) {
-        return new ListIteratorOf<>(
-            this.list.value().listIterator(index)
-        );
+        return this.list.listIterator(index);
     }
 
     @Override
     public final List<T> subList(final int start, final int end) {
-        return new ListEnvelope<T>(
-            () -> this.list.value().subList(start, end)
-        ) { };
+        return this.list.subList(start, end);
     }
 }

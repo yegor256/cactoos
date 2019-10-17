@@ -23,7 +23,6 @@
  */
 package org.cactoos.collection;
 
-import java.util.ArrayList;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.collection.IsArrayContaining;
@@ -122,58 +121,106 @@ public final class ReversedTest {
         ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testAdd() {
-        new Reversed<>(
+        final Reversed<Integer> reversed = new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
             )
-        ).add(6);
+        );
+        reversed.add(6);
+        new Assertion<>(
+            "Must contain added element",
+            reversed,
+            new IsEqual<>(
+                new ListOf<>(
+                4, 3, 2, 1, 6
+                )
+            )
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testRemove() {
-        new Reversed<>(
+        final Reversed<Integer> reversed = new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
             )
-        ).remove(1);
+        );
+        reversed.remove(1);
+        new Assertion<>(
+            "Must not contain removed element",
+            reversed,
+            new IsEqual<>(
+                new ListOf<>(
+                4, 3, 2
+                )
+            )
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testAddAll() {
-        new Reversed<>(
+        final Reversed<Integer> reversed = new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
             )
-        ).addAll(new ArrayList<>(6));
+        );
+        reversed.addAll(new ListOf<>(5, 6, 7));
+        new Assertion<>(
+            "Must contain all added elements",
+            reversed,
+            new IsEqual<>(
+                new ListOf<>(
+                4, 3, 2, 1, 5, 6, 7
+                )
+            )
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testRemoveAll() {
-        new Reversed<>(
+        final Reversed<Integer> reversed = new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
             )
-        ).removeAll(new ArrayList<>(2));
+        );
+        reversed.removeAll(new ListOf<>(2, 1));
+        new Assertion<>(
+            "Must not contain all removed elements",
+            reversed,
+            new IsEqual<>(new ListOf<>(4, 3))
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testRetainAll() {
-        new Reversed<>(
+        final Reversed<Integer> reversed = new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
             )
-        ).retainAll(new ArrayList<>(2));
+        );
+        reversed.retainAll(new ListOf<>(3, 4));
+        new Assertion<>(
+            "Must contain all retained elements",
+            reversed,
+            new IsEqual<>(new ListOf<>(4, 3))
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test()
     public void testClear() {
-        new Reversed<>(
+        final Reversed<Integer> reversed = new Reversed<>(
             new IterableOf<>(
                 1, 2, 3, 4
             )
-        ).clear();
+        );
+        reversed.clear();
+        new Assertion<>(
+            "Must be empty after clear",
+            reversed,
+            new IsEmptyCollection<>()
+        ).affirm();
     }
 
     @Test
