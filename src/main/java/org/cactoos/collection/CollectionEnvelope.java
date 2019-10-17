@@ -71,7 +71,7 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
      * @param slr The scalar
      */
     public CollectionEnvelope(final Scalar<Collection<X>> slr) {
-        this.col = new Unchecked<>(slr).value();
+        this(new Unchecked<>(slr).value());
     }
 
     @Override
