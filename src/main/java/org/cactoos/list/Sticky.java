@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Matched;
 
 /**
  * List decorator that goes through the list only once.
@@ -38,8 +39,11 @@ import org.cactoos.iterable.IterableOf;
  *
  * @param <X> Type of item
  * @since 0.8
- * @todo #898:10min Replace Collections.unmodifiableList
+ * @todo #898:30min Replace Collections.unmodifiableList
  *  with the {@link org.cactoos.collection.Immutable}
+ *  in the following classes:
+ *  {@link Sticky}, {@link Sorted}, {@link Shuffled},
+ *  {@link ListOf}, {@link Joined}, {@link Matched}
  */
 public final class Sticky<X> extends ListEnvelope<X> {
 

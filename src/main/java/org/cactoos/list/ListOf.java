@@ -44,8 +44,6 @@ import org.cactoos.iterable.IterableOf;
  * @param <T> List type
  * @see Sticky
  * @since 0.1
- * @todo #898:10min Replace Collections.unmodifiableList
- *  with the {@link org.cactoos.collection.Immutable}
  */
 public final class ListOf<T> extends ListEnvelope<T> {
 

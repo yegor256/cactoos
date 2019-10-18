@@ -41,8 +41,6 @@ import org.cactoos.text.FormattedText;
  *
  * @param <X> Type of item.
  * @since 0.39
- * @todo #898:10min Replace Collections.unmodifiableList
- *  with the {@link org.cactoos.collection.Immutable}
  */
 public final class Matched<X> implements Iterable<X> {
 
