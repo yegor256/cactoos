@@ -40,8 +40,8 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @todo #898:15min Replace Collections.emptyList()
- *  with the {@link ListOf}
+ * @todo #898:15min Replace Collections.emptyList() with the {@link ListOf}
+ *  That's because we want to get rid of the static methods.
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class JoinedTest {
