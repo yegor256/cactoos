@@ -25,7 +25,10 @@ package org.cactoos.list;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -52,11 +55,20 @@ public final class ListEnvelopeTest {
         iterator.remove();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void returnsListIteratorWithUnsupportedSet() {
-        final ListEnvelope<String> list = new StringList("one");
+    @Test()
+    public void returnsListIteratorWithSupportedSet() {
+        final ListEnvelope<String> list = new StringList("one", "two");
         final ListIterator<String> iterator = list.listIterator(1);
+        iterator.next();
         iterator.set("zero");
+        iterator.previous();
+        MatcherAssert.assertThat(
+            "iterator is not equal to expected",
+            () -> iterator,
+            Matchers.contains(
+                "zero"
+            )
+        );
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -76,12 +88,21 @@ public final class ListEnvelopeTest {
         iterator.remove();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void subListReturnsListIteratorWithUnsupportedSet() {
-        final ListEnvelope<String> list = new StringList("one");
-        final ListIterator<String> iterator = list.subList(0, 1)
-            .listIterator(1);
+    @Test()
+    public void subListReturnsListIteratorWithSupportedSet() {
+        final ListIterator<String> iterator = new StringList("one", "two", "three")
+            .subList(0, 2)
+            .listIterator(0);
+        iterator.next();
         iterator.set("zero");
+        iterator.previous();
+        MatcherAssert.assertThat(
+            "iterator is not equal to expected",
+            () -> iterator,
+            Matchers.contains(
+                "zero", "two"
+            )
+        );
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -117,10 +138,17 @@ public final class ListEnvelopeTest {
         list.subList(0, 1).remove(0);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void returnsSubListWithUnsupportedSet() {
-        final ListEnvelope<String> list = new StringList("one");
-        list.subList(0, 1).set(0, "zero");
+    @Test()
+    public void returnsSubListWithSupportedSet() {
+        final List<String> sublist = new StringList("one").subList(0, 1);
+        sublist.set(0, "zero");
+        new Assertion<>(
+            "subList must be equal to expected",
+            sublist,
+            new IsEqual<>(
+                new ListOf<>("zero")
+            )
+        ).affirm();
     }
 
     @Test(expected = UnsupportedOperationException.class)

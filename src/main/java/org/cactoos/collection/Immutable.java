@@ -85,7 +85,7 @@ public final class Immutable<X> implements Collection<X> {
 
     @Override
     public Iterator<X> iterator() {
-        return new org.cactoos.iterator.Immutable<>(this.col.iterator());
+        return this.col.iterator();
     }
 
     @Override

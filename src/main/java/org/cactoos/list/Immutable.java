@@ -78,7 +78,7 @@ public final class Immutable<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new org.cactoos.iterator.Immutable<>(this.list.iterator());
+        return this.list.iterator();
     }
 
     @Override
@@ -94,12 +94,16 @@ public final class Immutable<T> implements List<T> {
 
     @Override
     public boolean add(final T item) {
-        throw new UnsupportedOperationException("#add()");
+        throw new UnsupportedOperationException(
+            "#add(T): the list is read-only"
+        );
     }
 
     @Override
     public boolean remove(final Object item) {
-        throw new UnsupportedOperationException("#remove()");
+        throw new UnsupportedOperationException(
+            "#remove(Object): the list is read-only"
+        );
     }
 
     @Override
@@ -110,33 +114,35 @@ public final class Immutable<T> implements List<T> {
     @Override
     public boolean addAll(final Collection<? extends T> items) {
         throw new UnsupportedOperationException(
-            "#addAll(): the collection is read-only"
+            "#addAll(Collection): the list is read-only"
         );
     }
 
     @Override
     public boolean addAll(final int index, final Collection<? extends T> items) {
-        throw new UnsupportedOperationException("#addAll()");
+        throw new UnsupportedOperationException(
+            "#addAll(int, Collection): the list is read-only"
+        );
     }
 
     @Override
     public boolean removeAll(final Collection<?> items) {
         throw new UnsupportedOperationException(
-            "#removeAll(): the collection is read-only"
+            "#removeAll(): the list is read-only"
         );
     }
 
     @Override
     public boolean retainAll(final Collection<?> items) {
         throw new UnsupportedOperationException(
-            "#retainAll(): the collection is read-only"
+            "#retainAll(): the list is read-only"
         );
     }
 
     @Override
     public void clear() {
         throw new UnsupportedOperationException(
-            "#clear(): the collection is read-only"
+            "#clear(): the list is read-only"
         );
     }
 
@@ -147,17 +153,23 @@ public final class Immutable<T> implements List<T> {
 
     @Override
     public T set(final int index, final T item) {
-        throw new UnsupportedOperationException("#set()");
+        throw new UnsupportedOperationException(
+            "#set(): the list is read-only"
+        );
     }
 
     @Override
     public void add(final int index, final T item) {
-        throw new UnsupportedOperationException("#add()");
+        throw new UnsupportedOperationException(
+            "#add(int, T): the list is read-only"
+        );
     }
 
     @Override
     public T remove(final int index) {
-        throw new UnsupportedOperationException("#remove()");
+        throw new UnsupportedOperationException(
+            "#remove(int): the list is read-only"
+        );
     }
 
     @Override
@@ -172,21 +184,17 @@ public final class Immutable<T> implements List<T> {
 
     @Override
     public ListIterator<T> listIterator() {
-        return new ListIteratorOf<>(
-            this.list.listIterator()
-        );
+        return this.list.listIterator();
     }
 
     @Override
     public ListIterator<T> listIterator(final int index) {
-        return new ListIteratorOf<>(
-            this.list.listIterator(index)
-        );
+        return this.list.listIterator(index);
     }
 
     @Override
     public List<T> subList(final int start, final int end) {
-        return new Immutable<>(this.list.subList(start, end));
+        return this.list.subList(start, end);
     }
 
     @Override
