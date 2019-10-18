@@ -41,7 +41,8 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle MagicNumber (500 line)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @todo #898:15min Replace Collections.emptyList() with the {@link ListOf}
- *  That's because we want to get rid of the static methods.
+ *  That is because it is necessary to get rid of the static methods
+ *  as much as possible
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class JoinedTest {
