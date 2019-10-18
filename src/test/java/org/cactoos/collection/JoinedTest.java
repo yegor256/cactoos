@@ -23,6 +23,7 @@
  */
 package org.cactoos.collection;
 
+import java.util.Collections;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.collection.IsCollectionWithSize;
@@ -39,6 +40,8 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @todo #898:15min Replace Collections.emptyList()
+ *  with the {@link ListOf}
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class JoinedTest {
@@ -74,7 +77,7 @@ public final class JoinedTest {
         new Assertion<>(
             "Size must be 0",
             new Joined<String>(
-                new ListOf<String>()
+                Collections.emptyList()
             ),
             new IsCollectionWithSize<>(new IsEqual<>(0))
         ).affirm();
@@ -97,7 +100,7 @@ public final class JoinedTest {
         new Assertion<>(
             "Must be empty",
             new Joined<String>(
-                new ListOf<String>()
+                Collections.emptyList()
             ),
             new IsEmptyCollection<>()
         ).affirm();

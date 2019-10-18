@@ -23,12 +23,12 @@
  */
 package org.cactoos.iterable;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
-import org.cactoos.list.Immutable;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 
@@ -41,6 +41,8 @@ import org.cactoos.text.FormattedText;
  *
  * @param <X> Type of item.
  * @since 0.39
+ * @todo #898:10min Replace Collections.unmodifiableList
+ *  with the {@link org.cactoos.collection.Immutable}
  */
 public final class Matched<X> implements Iterable<X> {
 
@@ -92,7 +94,7 @@ public final class Matched<X> implements Iterable<X> {
                         );
                     }
                 }
-                return new Immutable<>(rslt).iterator();
+                return Collections.unmodifiableList(rslt).iterator();
             }
         );
     }

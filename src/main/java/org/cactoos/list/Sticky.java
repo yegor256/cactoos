@@ -38,6 +38,8 @@ import org.cactoos.iterable.IterableOf;
  *
  * @param <X> Type of item
  * @since 0.8
+ * @todo #898:10min Replace Collections.unmodifiableList
+ *  with the {@link org.cactoos.collection.Immutable}
  */
 public final class Sticky<X> extends ListEnvelope<X> {
 
@@ -68,7 +70,7 @@ public final class Sticky<X> extends ListEnvelope<X> {
                 () -> {
                     final List<X> temp = new LinkedList<>();
                     temp.addAll(list);
-                    return new Immutable<>(temp);
+                    return Collections.unmodifiableList(temp);
                 }
             )
         );

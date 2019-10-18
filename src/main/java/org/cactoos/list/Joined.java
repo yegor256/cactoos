@@ -34,6 +34,8 @@ import java.util.stream.Collectors;
  *
  * @param <X> Type of source item
  * @since 0.20
+ * @todo #898:10min Replace Collections.unmodifiableList
+ *  with the {@link org.cactoos.collection.Immutable}
  */
 public final class Joined<X> extends ListEnvelope<X> {
 
@@ -62,7 +64,7 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param src Source lists
      */
     public Joined(final Iterable<List<X>> src) {
-        super(() -> new Immutable<>(
+        super(() -> Collections.unmodifiableList(
             new ListOf<>(src).stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toList())

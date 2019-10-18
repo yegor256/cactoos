@@ -66,7 +66,7 @@ public final class Sliced<T> extends CollectionEnvelope<T> {
      */
     public Sliced(final int start, final int count,
         final Collection<T> collection) {
-        super(() -> new CollectionOf<>(
+        super(() -> new CollectionOf<T>(
             new org.cactoos.iterable.Sliced<T>(start, count, collection)
         ));
     }

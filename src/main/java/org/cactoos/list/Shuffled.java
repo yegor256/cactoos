@@ -42,6 +42,8 @@ import java.util.List;
  * @param <T> Element type
  * @see Sticky
  * @since 0.23
+ * @todo #898:10min Replace Collections.unmodifiableList
+ *  with the {@link org.cactoos.collection.Immutable}
  */
 public final class Shuffled<T> extends ListEnvelope<T> {
 
@@ -72,7 +74,7 @@ public final class Shuffled<T> extends ListEnvelope<T> {
             final List<T> items = new LinkedList<>();
             items.addAll(src);
             Collections.shuffle(items);
-            return new Immutable<>(items);
+            return Collections.unmodifiableList(items);
         });
     }
 

@@ -43,6 +43,8 @@ import java.util.List;
  * @param <T> Element type
  * @see Sticky
  * @since 0.19
+ * @todo #898:10min Replace Collections.unmodifiableList
+ *  with the {@link org.cactoos.collection.Immutable}
  */
 public final class Sorted<T> extends ListEnvelope<T> {
 
@@ -89,7 +91,7 @@ public final class Sorted<T> extends ListEnvelope<T> {
             final List<T> items = new ArrayList<>(src.size());
             items.addAll(src);
             items.sort(cmp);
-            return new Immutable<>(items);
+            return Collections.unmodifiableList(items);
         }
 );
     }
