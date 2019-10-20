@@ -38,6 +38,9 @@ import java.util.ListIterator;
  * @todo #898:30min Introduce an Immutable wrapper for {@link ListIterator}
  *  and use it in listIterator() methods instead of {@link ListIteratorOf}.
  *  One another option is renaming of {@link ListIteratorOf}.
+ * @todo #898:30min Replace all the Collections.unmodifiableList
+ *  with the {@link org.cactoos.list.Immutable}
+ *  from the cactoos codebase.
  */
 @SuppressWarnings(
     {
@@ -200,5 +203,15 @@ public final class Immutable<T> implements List<T> {
     @Override
     public String toString() {
         return this.list.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.list.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return this.list.equals(obj);
     }
 }

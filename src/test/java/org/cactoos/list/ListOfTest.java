@@ -25,7 +25,6 @@ package org.cactoos.list;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
@@ -99,19 +98,6 @@ public final class ListOfTest {
     public void highBoundTest() throws Exception {
         // @checkstyle MagicNumber (1 line)
         new ListOf<>(Collections.nCopies(10, 0)).get(11);
-    }
-
-    @Test
-    public void sensesChangesInIterable() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final List<Integer> list = new ListOf<>(
-            () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
-        );
-        MatcherAssert.assertThat(
-            "Can sense the changes in the underlying iterable",
-            list.size(),
-            new IsEqual<>(list.size())
-        );
     }
 
     @Test

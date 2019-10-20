@@ -39,11 +39,6 @@ import org.cactoos.iterable.Matched;
  *
  * @param <X> Type of item
  * @since 0.8
- * @todo #898:30min Replace Collections.unmodifiableList
- *  with the {@link org.cactoos.collection.Immutable}
- *  in the following classes:
- *  {@link Sticky}, {@link Sorted}, {@link Shuffled},
- *  {@link ListOf}, {@link Joined}, {@link Matched}
  */
 public final class Sticky<X> extends ListEnvelope<X> {
 

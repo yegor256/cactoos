@@ -24,11 +24,10 @@
 package org.cactoos.list;
 
 import org.cactoos.collection.CollectionOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -37,6 +36,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.16
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public class ImmutableTest {
@@ -82,15 +82,13 @@ public class ImmutableTest {
 
     @Test
     public void iterator() {
-        MatcherAssert.assertThat(
-            "iterator() is not equal to original",
+        new Assertion<>(
+            "iterator() is equal to original",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
             ).iterator(),
-            IsIterableContainingInOrder.contains(
-                1, 2
-            )
-        );
+            new HasValues<>(1, 2)
+        ).affirm();
     }
 
     @Test
@@ -341,28 +339,24 @@ public class ImmutableTest {
 
     @Test
     public void listIterator() {
-        MatcherAssert.assertThat(
-            "listIterator() is not equal to original",
+        new Assertion<>(
+            "listIterator() is equal to original",
             () -> new Immutable<>(
                 new ListOf<>("a", "b", "c", "b")
             ).listIterator(),
-            IsIterableContainingInOrder.contains(
-                "a", "b", "c", "b"
-            )
-        );
+            new HasValues<>("a", "b", "c", "b")
+        ).affirm();
     }
 
     @Test
     public void testListIterator() {
-        MatcherAssert.assertThat(
-            "listIterator(int) is not equal to original",
+        new Assertion<>(
+            "listIterator(int) is equal to original",
             () -> new Immutable<>(
                 new ListOf<>("a", "b", "c", "b")
             ).listIterator(2),
-            IsIterableContainingInOrder.contains(
-                "c", "b"
-            )
-        );
+            new HasValues<>("c", "b")
+        ).affirm();
     }
 
     @Test
@@ -387,6 +381,33 @@ public class ImmutableTest {
             ).toString(),
             new IsEqual<>(
                 new ListOf<>("a", "b", "c").toString()
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void testHashCode() {
+        new Assertion<>(
+            "hashCode() must be equals to original",
+            new Immutable<>(
+                new ListOf<>(1, 2, 3)
+            ).hashCode(),
+            new IsEqual<>(
+                new ListOf<>(1, 2, 3).hashCode()
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void testEquals() {
+        final ListOf<Integer> another = new ListOf<>(4, 5, 6);
+        new Assertion<>(
+            "equals() must be equals to original",
+            new Immutable<>(
+                new ListOf<>(1, 2, 3)
+            ).equals(another),
+            new IsEqual<>(
+                new ListOf<>(1, 2, 3).equals(another)
             )
         ).affirm();
     }

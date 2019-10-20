@@ -24,11 +24,11 @@
 package org.cactoos.collection;
 
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
+import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -36,8 +36,8 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Immutable}.
  *
  * @since 1.16
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public class ImmutableTest {
@@ -48,10 +48,8 @@ public class ImmutableTest {
             "size() must be equals to original",
             new Immutable<>(
                 new CollectionOf<>(1, 2)
-            ).size(),
-            new IsEqual<>(
-                new CollectionOf<>(1, 2).size()
-            )
+            ),
+            new HasSize(2)
         ).affirm();
     }
 
@@ -70,15 +68,13 @@ public class ImmutableTest {
 
     @Test
     public void iterator() {
-        MatcherAssert.assertThat(
-            "iterator() is not equal to original",
+        new Assertion<>(
+            "iterator() is equal to original",
             () -> new Immutable<>(
                 new CollectionOf<>(1, 2)
             ).iterator(),
-            IsIterableContainingInOrder.contains(
-                1, 2
-            )
-        );
+            new HasValues<>(1, 2)
+        ).affirm();
     }
 
     @Test

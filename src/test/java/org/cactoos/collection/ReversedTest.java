@@ -172,7 +172,7 @@ public final class ReversedTest {
             reversed,
             new IsEqual<>(
                 new ListOf<>(
-                4, 3, 2, 1, 5, 6, 7
+                    4, 3, 2, 1, 5, 6, 7
                 )
             )
         ).affirm();
