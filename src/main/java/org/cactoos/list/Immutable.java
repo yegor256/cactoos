@@ -39,8 +39,8 @@ import java.util.ListIterator;
  *  and use it in listIterator() methods instead of {@link ListIteratorOf}.
  *  One another option is renaming of {@link ListIteratorOf}.
  * @todo #898:30min Replace all the Collections.unmodifiableList
- *  with the {@link org.cactoos.list.Immutable}
- *  from the cactoos codebase.
+ *  with the {@link org.cactoos.list.Immutable} from the cactoos codebase.
+ *  That should be done because Elegant Object principles are against static methods.
  */
 @SuppressWarnings(
     {

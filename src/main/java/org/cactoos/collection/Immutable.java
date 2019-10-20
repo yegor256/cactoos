@@ -35,8 +35,8 @@ import org.cactoos.iterable.IterableOf;
  * @param <X> Type of source item
  * @since 1.16
  * @todo #898:30min Replace all the Collections.unmodifiableCollection
- *  with the {@link org.cactoos.collection.Immutable}
- *  from the cactoos codebase.
+ *  with the {@link org.cactoos.collection.Immutable} from the cactoos codebase.
+ *  That should be done because Elegant Object principles are against static methods.
  */
 @SuppressWarnings(
     {
