@@ -24,10 +24,13 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.iterable.IterableOf;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IteratorOf}.
@@ -39,47 +42,60 @@ public final class IteratorOfTest {
 
     @Test
     public void emptyIteratorDoesNotHaveNext() {
-        MatcherAssert.assertThat(
-            "Can't create empty iterator",
+        new Assertion<>(
+            "Must create empty iterator",
             new IteratorOf<>().hasNext(),
-            CoreMatchers.equalTo(false)
-        );
+            new IsNot<>(new IsTrue())
+        ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void emptyIteratorThrowsException() {
-        new IteratorOf<>().next();
+        new Assertion<>(
+            "Must throw an exception if empty",
+            () -> new IteratorOf<>().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
         final IteratorOf<Integer> iterator = this.iteratorWithFetchedElements();
-        MatcherAssert.assertThat(
-            "Can't create non empty iterator",
+        new Assertion<>(
+            "Must create non empty iterator",
             iterator.hasNext(),
-            CoreMatchers.equalTo(false)
-        );
+            new IsNot<>(new IsTrue())
+        ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void nonEmptyIteratorThrowsException() {
-        final IteratorOf<Integer> iterator = this.iteratorWithFetchedElements();
-        iterator.next();
+        new Assertion<>(
+            "Must throw an exception if consumed",
+            () -> this.iteratorWithFetchedElements().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
     public void convertStringsToIterator() {
-        MatcherAssert.assertThat(
-            "Can't create an iterator of strings",
-            () -> new IteratorOf<>(
-                "a", "b", "c"
+        new Assertion<>(
+            "Must create an iterator of strings",
+            new IterableOf<>(
+                new IteratorOf<>(
+                    "a", "b", "c"
+                )
             ),
-            Matchers.contains(
+            new HasValues<>(
                 "a", "b", "c"
             )
-        );
+        ).affirm();
     }
 
+    // @todo #1166:30min According to this Yegor's post
+    //  https://www.yegor256.com/2016/05/03/test-methods-must-share-nothing.html
+    //  test methods must share nothing. Refactor this class by inlining the
+    //  the code below and remove the method below.
     private IteratorOf<Integer> iteratorWithFetchedElements() {
         final IteratorOf<Integer> iterator = new IteratorOf<>(
             1, 2, 3
