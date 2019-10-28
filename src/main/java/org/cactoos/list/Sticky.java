@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Matched;
 
 /**
  * List decorator that goes through the list only once.

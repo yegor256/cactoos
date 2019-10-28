@@ -26,7 +26,6 @@ package org.cactoos.collection;
 import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.Scalar;
-import org.cactoos.iterator.Immutable;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
@@ -55,99 +54,95 @@ import org.cactoos.scalar.Unchecked;
 public abstract class CollectionEnvelope<X> implements Collection<X> {
 
     /**
-     * Shuffled one.
+     * The wrapped collection.
      */
-    private final Unchecked<Collection<X>> col;
+    private final Collection<X> col;
+
+    /**
+     * Ctor.
+     * @param col The wrapped collection
+     */
+    public CollectionEnvelope(final Collection<X> col) {
+        this.col = col;
+    }
 
     /**
      * Ctor.
      * @param slr The scalar
      */
     public CollectionEnvelope(final Scalar<Collection<X>> slr) {
-        this.col = new Unchecked<>(slr);
+        this(new Unchecked<>(slr).value());
     }
 
     @Override
     public final int size() {
-        return this.col.value().size();
+        return this.col.size();
     }
 
     @Override
     public final boolean isEmpty() {
-        return this.col.value().isEmpty();
+        return this.col.isEmpty();
     }
 
     @Override
     public final Iterator<X> iterator() {
-        return new Immutable<>(this.col.value().iterator());
+        return this.col.iterator();
     }
 
     @Override
     public final boolean contains(final Object object) {
-        return this.col.value().contains(object);
+        return this.col.contains(object);
     }
 
     @Override
     public final Object[] toArray() {
-        return this.col.value().toArray();
+        return this.col.toArray();
     }
 
     @Override
     @SuppressWarnings("PMD.UseVarargs")
     public final <T> T[] toArray(final T[] array) {
-        return this.col.value().toArray(array);
+        return this.col.toArray(array);
     }
 
     @Override
     public final boolean add(final X item) {
-        throw new UnsupportedOperationException(
-            "#add(): the collection is read-only"
-        );
+        return this.col.add(item);
     }
 
     @Override
     public final boolean remove(final Object object) {
-        throw new UnsupportedOperationException(
-            "#remove(): the collection is read-only"
-        );
+        return this.col.remove(object);
     }
 
     @Override
     public final boolean containsAll(final Collection<?> list) {
-        return this.col.value().containsAll(list);
+        return this.col.containsAll(list);
     }
 
     @Override
     public final boolean addAll(final Collection<? extends X> list) {
-        throw new UnsupportedOperationException(
-            "#addAll(): the collection is read-only"
-        );
+        return this.col.addAll(list);
     }
 
     @Override
     public final boolean removeAll(final Collection<?> list) {
-        throw new UnsupportedOperationException(
-            "#removeAll(): the collection is read-only"
-        );
+        return this.col.removeAll(list);
     }
 
     @Override
     public final boolean retainAll(final Collection<?> list) {
-        throw new UnsupportedOperationException(
-            "#retainAll(): the collection is read-only"
-        );
+        return this.col.retainAll(list);
     }
 
     @Override
     public final void clear() {
-        throw new UnsupportedOperationException(
-            "#clear(): the collection is read-only"
-        );
+        this.col.clear();
     }
 
     @Override
     public final String toString() {
-        return this.col.value().toString();
+        return this.col.toString();
     }
 
     @Override
