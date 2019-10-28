@@ -42,6 +42,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  *
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.TooManyMethods"})
 public final class CollectionEnvelopeTest {
@@ -57,7 +58,6 @@ public final class CollectionEnvelopeTest {
         final Iterator<String> iterator = list.iterator();
         iterator.next();
         iterator.remove();
-
         new Assertion<>(
             "Iterator should be empty",
             new IterableOf<>(iterator),
