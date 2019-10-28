@@ -21,58 +21,66 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.iterator;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Matched;
+import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
- * List decorator that goes through the list only once.
+ * {@link Iterator} that delegates to another {@link Iterator}.
  *
- * <p>The list is read only.</p>
- *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of item
- * @since 0.8
+ * @since 0.43
  */
-public final class Sticky<X> extends ListEnvelope<X> {
+public abstract class IteratorEnvelope<X> implements Iterator<X> {
+
+    /**
+     * Wrapped {@link Iterator}.
+     */
+    private final Iterator<X> wrapped;
 
     /**
      * Ctor.
-     * @param items The array
+     * @param iter The {@link Iterator} to wrap.
      */
-    @SafeVarargs
-    public Sticky(final X... items) {
-        this(new IterableOf<>(items));
+    public IteratorEnvelope(final Iterator<X> iter) {
+        this.wrapped = iter;
     }
 
-    /**
-     * Ctor.
-     * @param items The array
-     */
-    public Sticky(final Iterable<X> items) {
-        this(new ListOf<>(items));
+    @Override
+    public final boolean hasNext() {
+        return this.wrapped.hasNext();
     }
 
-    /**
-     * Ctor.
-     * @param list The iterable
-     */
-    public Sticky(final Collection<X> list) {
-        super(
-            new org.cactoos.scalar.Sticky<>(
-                () -> {
-                    final List<X> temp = new LinkedList<>();
-                    temp.addAll(list);
-                    return Collections.unmodifiableList(temp);
-                }
-            )
-        );
+    @Override
+    public final X next() {
+        return this.wrapped.next();
     }
 
+    @Override
+    public final void forEachRemaining(final Consumer<? super X> action) {
+        this.wrapped.forEachRemaining(action);
+    }
+
+    @Override
+    public final void remove() {
+        this.wrapped.remove();
+    }
+
+    @Override
+    public final String toString() {
+        return this.wrapped.toString();
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        return this.wrapped.equals(obj);
+    }
+
+    @Override
+    public final int hashCode() {
+        return this.wrapped.hashCode();
+    }
 }

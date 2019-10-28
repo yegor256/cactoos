@@ -25,10 +25,11 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
+import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link HeadOf}.
@@ -41,55 +42,64 @@ public final class HeadOfTest {
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void headIterator() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't skip elements in iterator",
-            () -> new HeadOf<>(
-                2,
-                new IteratorOf<>(
-                    "one", "two", "three", "four"
+        new Assertion<>(
+            "Must skip elements in iterator",
+            new IterableOf<>(
+                new HeadOf<>(
+                    2,
+                    new IteratorOf<>(
+                        "one", "two", "three", "four"
+                    )
                 )
             ),
-            Matchers.contains(
+            new HasValues<>(
                 "one",
                 "two"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void returnsIntactIterator() throws Exception {
-        MatcherAssert.assertThat(
-            new LengthOf(
-                new IterableOf<>(
-                    new HeadOf<>(
-                        3,
-                        new IteratorOf<>(
-                            "one", "two"
-                        )
+        new Assertion<>(
+            "Must return an intact iterator",
+            new IterableOf<>(
+                new HeadOf<>(
+                    3,
+                    new IteratorOf<>(
+                        "one", "two"
                     )
                 )
-            ).intValue(),
-            Matchers.equalTo(2)
-        );
+            ),
+            new HasSize(2)
+        ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void returnsEmptyIterator() throws Exception {
-        new HeadOf<>(
-            0,
-            new IteratorOf<>(
-                "one", "two"
-            )
-        ).next();
+        new Assertion<>(
+            "Must throw an exception if empty",
+            () -> new HeadOf<>(
+                0,
+                new IteratorOf<>(
+                    "one", "two"
+                )
+            ).next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void emptyIteratorForNegativeSize() throws Exception {
-        new HeadOf<>(
-            -1,
-            new IteratorOf<>(
-                "one", "two"
-            )
-        ).next();
+        new Assertion<>(
+            "Must throw an exception for negative size",
+            () -> new HeadOf<>(
+                -1,
+                new IteratorOf<>(
+                    "one", "two"
+                )
+            ).next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

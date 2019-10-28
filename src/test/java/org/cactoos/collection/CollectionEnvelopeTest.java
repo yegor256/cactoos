@@ -29,7 +29,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
+import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
@@ -43,8 +45,8 @@ import org.llorllale.cactoos.matchers.Assertion;
  */
 @SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.TooManyMethods"})
 public final class CollectionEnvelopeTest {
-    @Test(expected = UnsupportedOperationException.class)
-    public void returnsIteratorWithUnsupportedRemove() {
+    @Test()
+    public void returnsIteratorWithSupportedRemove() {
         final CollectionEnvelope<String> list = new CollectionEnvelope<String>(
             () -> {
                 final List<String> inner = new LinkedList<>();
@@ -55,6 +57,12 @@ public final class CollectionEnvelopeTest {
         final Iterator<String> iterator = list.iterator();
         iterator.next();
         iterator.remove();
+
+        new Assertion<>(
+            "Iterator should be empty",
+            new IterableOf<>(iterator),
+            new IsEmptyIterable<>()
+        ).affirm();
     }
 
     @Test
