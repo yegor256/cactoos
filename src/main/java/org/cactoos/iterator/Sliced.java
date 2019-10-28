@@ -37,9 +37,6 @@ import java.util.function.IntPredicate;
  * <p>There is no thread-safety guarantee.</p>
  * @param <T> The type of the iterator.
  * @since 1.0.0
- * @todo #1188:30min This class to be refactored by extending IteratorEnvelope,
- *  which will provide extra functionality to subclasses and is planned to be
- *  added to Cactoos shortly.
  */
 public final class Sliced<T> implements Iterator<T> {
 
