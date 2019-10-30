@@ -24,26 +24,21 @@
 package org.cactoos.set;
 
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
  * Test case for {@link SetOf}.
  *
  * @since 0.49.2
- * @checkstyle MagicNumber (500 line)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SetOfTest {
 
-    /**
-     * Ensures that SetOf behaves as set, which means no duplicates.
-     */
     @Test
     public void behavesAsSet() {
         MatcherAssert.assertThat(
-            "Can't behave as a set",
-            new SetOf<>(1, 2, 2),
-            new BehavesAsSet<>(2)
+            new SetOf<>(1, 2, 2, 0),
+            Matchers.containsInAnyOrder(1, 2, 0)
         );
     }
 }

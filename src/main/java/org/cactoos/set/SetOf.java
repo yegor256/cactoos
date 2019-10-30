@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.And;
 
 /**
  * Iterable as {@link Set}.
@@ -60,8 +59,9 @@ public final class SetOf<T> extends SetEnvelope<T> {
     public SetOf(final Iterable<T> src) {
         super(() -> {
             final Set<T> tmp = new HashSet<>();
-            new And(tmp::add, src)
-                .value();
+            for (final T elem : src) {
+                tmp.add(elem);
+            }
             return Collections.unmodifiableSet(tmp);
         });
     }
