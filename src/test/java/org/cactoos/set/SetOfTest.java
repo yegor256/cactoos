@@ -25,15 +25,20 @@ package org.cactoos.set;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
+import org.hamcrest.Matcher;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link SetOf}.
  * @since 0.49.2
  * @checkstyle MagicNumber (500 line)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SetOfTest {
@@ -43,7 +48,13 @@ public final class SetOfTest {
         new Assertion<>(
             "Must keep unique numbers",
             new SetOf<>(1, 2, 2),
-            new HasValues<>(1, 2)
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<Integer>>>(
+                    new HasSize(2),
+                    new IsCollectionContaining<>(new IsEqual<>(1)),
+                    new IsCollectionContaining<>(new IsEqual<>(2))
+                )
+            )
         ).affirm();
     }
 
@@ -52,7 +63,14 @@ public final class SetOfTest {
         new Assertion<>(
             "Must keep unique numbers",
             new SetOf<>(1, 1, 2, 3),
-            new HasValues<>(1, 2, 3)
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<Integer>>>(
+                    new HasSize(3),
+                    new IsCollectionContaining<>(new IsEqual<>(1)),
+                    new IsCollectionContaining<>(new IsEqual<>(2)),
+                    new IsCollectionContaining<>(new IsEqual<>(3))
+                )
+            )
         ).affirm();
     }
 
@@ -61,7 +79,14 @@ public final class SetOfTest {
         new Assertion<>(
             "Must keep unique numbers",
             new SetOf<>(1, 2, 2, 3),
-            new HasValues<>(1, 2, 3)
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<Integer>>>(
+                    new HasSize(3),
+                    new IsCollectionContaining<>(new IsEqual<>(1)),
+                    new IsCollectionContaining<>(new IsEqual<>(2)),
+                    new IsCollectionContaining<>(new IsEqual<>(3))
+                )
+            )
         ).affirm();
     }
 
@@ -69,13 +94,22 @@ public final class SetOfTest {
     public void behaveAsSetWithOriginalMergedCollectionsWithDuplicates() {
         new Assertion<>(
             "Must keep unique string literals",
-            new SetOf<>(
-                new Joined<>(
-                    new IterableOf<>("cc"),
+            new SetOf<String>(
+                new Joined<String>(
+                    new IterableOf<>("cc", "ff"),
                     new IterableOf<>("aa", "bb", "cc", "dd")
                 )
             ),
-            new HasValues<>("dd", "aa", "bb", "cc")
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<String>>>(
+                    new HasSize(5),
+                    new IsCollectionContaining<>(new IsEqual<>("aa")),
+                    new IsCollectionContaining<>(new IsEqual<>("bb")),
+                    new IsCollectionContaining<>(new IsEqual<>("cc")),
+                    new IsCollectionContaining<>(new IsEqual<>("dd")),
+                    new IsCollectionContaining<>(new IsEqual<>("ff"))
+                )
+            )
         ).affirm();
     }
 }
