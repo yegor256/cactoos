@@ -23,27 +23,59 @@
  */
 package org.cactoos.set;
 
-import org.hamcrest.MatcherAssert;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Joined;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link SetOf}.
- *
  * @since 0.49.2
  * @checkstyle MagicNumber (500 line)
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SetOfTest {
 
-    /**
-     * Ensures that SetOf behaves as set, which means no duplicates.
-     */
     @Test
-    public void behavesAsSet() {
-        MatcherAssert.assertThat(
-            "Can't behave as a set",
+    public void behaveAsSetWithOriginalDuplicationsInTheTail() {
+        new Assertion<>(
+            "Must keep unique numbers",
             new SetOf<>(1, 2, 2),
-            new BehavesAsSet<>(2)
-        );
+            new HasValues<>(1, 2)
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalDuplicationsInTheHead() {
+        new Assertion<>(
+            "Must keep unique numbers",
+            new SetOf<>(1, 1, 2, 3),
+            new HasValues<>(1, 2, 3)
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalDuplicationsInTheMiddle() {
+        new Assertion<>(
+            "Must keep unique numbers",
+            new SetOf<>(1, 2, 2, 3),
+            new HasValues<>(1, 2, 3)
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalMergedCollectionsWithDuplicates() {
+        new Assertion<>(
+            "Must keep unique string literals",
+            new SetOf<>(
+                new Joined<>(
+                    new IterableOf<>("cc"),
+                    new IterableOf<>("aa", "bb", "cc", "dd")
+                )
+            ),
+            new HasValues<>("dd", "aa", "bb", "cc")
+        ).affirm();
     }
 }
