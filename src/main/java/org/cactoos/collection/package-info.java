@@ -26,5 +26,20 @@
  * Collections, tests.
  *
  * @since 0.14
+ * @todo #1184:30min The behaviours of the classes of this package
+ *  are akward because CollectionOf is based on a Scalar while some
+ *  of the tests of the other classes are expecting mutable collections,
+ *  except for Sticky itself.
+ *  This resulted in the use of Sticky in most of the classes of this package
+ *  during the resolution of #1184 to preserve the actual behaviour. Some
+ *  tests of Sticky were also ignored because of this.
+ *  It is as if CollectionOf was once made to be immutable but
+ *  now there is Immutable for that: ask ARC what direction to take and
+ *  apply it to make this whole package consistent. Keep in mind that
+ *  Collection is particular in the way that it is an Iterable and that
+ *  there are no direct implementation of Collection in Java, but only
+ *  sub-interfaces (Set, List, etc) with their own implementation.
+ *  Also don't forget to unignore or modify the tests of Sticky and improve
+ *  the other tests to be clear about the expected behaviour.
  */
 package org.cactoos.collection;

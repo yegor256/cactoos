@@ -23,6 +23,8 @@
  */
 package org.cactoos.collection;
 
+import org.cactoos.iterable.IterableOf;
+
 /**
  * Joined collection.
  *
@@ -39,7 +41,7 @@ public final class Joined<X> extends CollectionEnvelope<X> {
      */
     @SafeVarargs
     public Joined(final Iterable<X>... list) {
-        this(new CollectionOf<>(list));
+        this(new IterableOf<>(list));
     }
 
     /**
@@ -47,9 +49,10 @@ public final class Joined<X> extends CollectionEnvelope<X> {
      * @param list Items to concatenate
      */
     public Joined(final Iterable<Iterable<X>> list) {
-        super(() -> new CollectionOf<X>(
-            new org.cactoos.iterable.Joined<>(list)
-        ));
+        super(
+            new Sticky<>(
+                new org.cactoos.iterable.Joined<>(list)
+            )
+        );
     }
-
 }

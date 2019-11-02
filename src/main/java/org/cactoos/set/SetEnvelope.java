@@ -24,7 +24,6 @@
 package org.cactoos.set;
 
 import java.util.Set;
-import org.cactoos.Scalar;
 import org.cactoos.collection.CollectionEnvelope;
 
 /**
@@ -49,7 +48,7 @@ public abstract class SetEnvelope<T> extends CollectionEnvelope<T> implements
      *
      * @param src Source
      */
-    public SetEnvelope(final Scalar<Set<T>> src) {
-        super(src::value);
+    public SetEnvelope(final Set<T> src) {
+        super(src);
     }
 }

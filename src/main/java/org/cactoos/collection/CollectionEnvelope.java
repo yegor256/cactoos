@@ -24,13 +24,7 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
-import java.util.Iterator;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.Or;
-import org.cactoos.scalar.SumOfInt;
-import org.cactoos.scalar.Unchecked;
+import org.cactoos.iterable.IterableEnvelope;
 
 /**
  * Base collection.
@@ -38,20 +32,9 @@ import org.cactoos.scalar.Unchecked;
  * <p>There is no thread-safety guarantee.</p>
  * @param <X> Element type
  * @since 0.23
- * @checkstyle AbstractClassNameCheck (500 lines)
- * @todo #947:30min CollectionEnvelope should extends IterableEnvelope and
- *  only delegates all the methods of Collection to the wrapped Collection.
- *  See IterableEnvelope for an example. If needed CollectionOf should have
- *  some methods that were previously here and implement Collection instead
- *  of extending CollectionEnvelope. Again see IterableOf for an example.
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AbstractNaming"
-    }
-)
-public abstract class CollectionEnvelope<X> implements Collection<X> {
+public abstract class CollectionEnvelope<X>
+    extends IterableEnvelope<X> implements Collection<X> {
 
     /**
      * The wrapped collection.
@@ -63,15 +46,8 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
      * @param col The wrapped collection
      */
     public CollectionEnvelope(final Collection<X> col) {
+        super(col);
         this.col = col;
-    }
-
-    /**
-     * Ctor.
-     * @param slr The scalar
-     */
-    public CollectionEnvelope(final Scalar<Collection<X>> slr) {
-        this(new Unchecked<>(slr).value());
     }
 
     @Override
@@ -85,11 +61,6 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
     }
 
     @Override
-    public final Iterator<X> iterator() {
-        return this.col.iterator();
-    }
-
-    @Override
     public final boolean contains(final Object object) {
         return this.col.contains(object);
     }
@@ -100,7 +71,6 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
     }
 
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
     public final <T> T[] toArray(final T[] array) {
         return this.col.toArray(array);
     }
@@ -138,53 +108,5 @@ public abstract class CollectionEnvelope<X> implements Collection<X> {
     @Override
     public final void clear() {
         this.col.clear();
-    }
-
-    @Override
-    public final String toString() {
-        return this.col.toString();
-    }
-
-    @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
-    public final boolean equals(final Object other) {
-        return new Unchecked<>(
-            new Or(
-                () -> other == this,
-                new And(
-                    () -> other != null,
-                    () -> Collection.class.isAssignableFrom(other.getClass()),
-                    () -> {
-                        final Collection<?> compared = (Collection<?>) other;
-                        return this.size() == compared.size();
-                    },
-                    () -> {
-                        final Iterable<?> compared = (Iterable<?>) other;
-                        final Iterator<?> iterator = compared.iterator();
-                        return new Unchecked<>(
-                            new And(
-                                (X input) -> input.equals(iterator.next()),
-                                this
-                            )
-                        ).value();
-                    }
-                )
-            )
-        ).value();
-    }
-
-    // @checkstyle MagicNumberCheck (30 lines)
-    @Override
-    public final int hashCode() {
-        return new Unchecked<>(
-            new Folded<>(
-                42,
-                (hash, entry) -> new SumOfInt(
-                    () -> 37 * hash,
-                    entry::hashCode
-                ).value(),
-                this
-            )
-        ).value();
     }
 }

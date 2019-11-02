@@ -69,12 +69,14 @@ public final class Synced<T> extends CollectionEnvelope<T> {
      */
     public Synced(final Collection<T> src) {
         super(
-            new org.cactoos.scalar.Synced<>(
-                () -> {
-                    final Collection<T> temp = new LinkedList<>();
-                    temp.addAll(src);
-                    return Collections.synchronizedCollection(temp);
-                }
+            new CollectionOf<>(
+                new org.cactoos.scalar.Synced<>(
+                    () -> {
+                        final Collection<T> temp = new LinkedList<>();
+                        src.forEach(temp::add);
+                        return Collections.synchronizedCollection(temp);
+                    }
+                )
             )
         );
     }

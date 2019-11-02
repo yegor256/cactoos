@@ -23,7 +23,6 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,12 +30,6 @@ import org.cactoos.iterable.IterableOf;
 
 /**
  * Reversed collection.
- *
- * <p>Pay attention that sorting will happen on each operation
- * with the collection. Every time you touch it, it will fetch the
- * entire collection from the encapsulated object and reverse it. If you
- * want to avoid that "side-effect", decorate it with
- * {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -60,20 +53,18 @@ public final class Reversed<X> extends CollectionEnvelope<X> {
      * @param src Source collection
      */
     public Reversed(final Iterable<X> src) {
-        this(new CollectionOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Source collection
-     */
-    public Reversed(final Collection<X> src) {
-        super(() -> {
-            final List<X> items = new LinkedList<>();
-            items.addAll(src);
-            Collections.reverse(items);
-            return items;
-        });
+        super(
+            new Sticky<>(
+                new CollectionOf<>(
+                    () -> {
+                        final List<X> items = new LinkedList<>();
+                        src.forEach(items::add);
+                        Collections.reverse(items);
+                        return items;
+                    }
+                )
+            )
+        );
     }
 
 }

@@ -23,7 +23,6 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collection;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -52,17 +51,10 @@ public final class TailOf<T> extends CollectionEnvelope<T> {
      * @param src Source iterable
      */
     public TailOf(final int num, final Iterable<T> src) {
-        this(num, new CollectionOf<T>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param num Number of tail elements
-     * @param src Source collection
-     */
-    public TailOf(final int num, final Collection<T> src) {
-        super(() -> new CollectionOf<T>(
-            new org.cactoos.iterable.TailOf<T>(num, src)
-        ));
+        super(
+            new Sticky<>(
+                new org.cactoos.iterable.TailOf<>(num, src)
+            )
+        );
     }
 }

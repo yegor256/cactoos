@@ -23,20 +23,13 @@
  */
 package org.cactoos.collection;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.list.ListOf;
 
 /**
  * Sorted collection.
- *
- * <p>Pay attention that sorting will happen on each operation
- * with the collection. Every time you touch it, it will fetch the
- * entire collection from the encapsulated object and sort it. If you
- * want to avoid that "side-effect", decorate it with
- * {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -87,20 +80,17 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
      * @param src The underlying collection
      */
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
-        this(cmp, new CollectionOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param cmp The comparator
-     * @param src The underlying collection
-     */
-    public Sorted(final Comparator<T> cmp, final Collection<T> src) {
-        super(() -> {
-            final List<T> items = new ArrayList<>(src.size());
-            items.addAll(src);
-            items.sort(cmp);
-            return items;
-        });
+        super(
+            new Sticky<>(
+                new CollectionOf<>(
+                    () -> {
+                        final List<T> items = new LinkedList<>();
+                        src.forEach(items::add);
+                        items.sort(cmp);
+                        return items;
+                    }
+                )
+            )
+        );
     }
 }

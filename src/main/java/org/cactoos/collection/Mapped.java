@@ -23,7 +23,6 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collection;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 
@@ -55,17 +54,10 @@ public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
      * @param src Source collection
      */
     public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
-        this(fnc, new CollectionOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param fnc Func
-     * @param src Source collection
-     */
-    public Mapped(final Func<X, Y> fnc, final Collection<X> src) {
-        super(() -> new CollectionOf<>(
-            new org.cactoos.iterable.Mapped<>(fnc, src)
-        ));
+        super(
+            new Sticky<>(
+                new org.cactoos.iterable.Mapped<>(fnc, src)
+            )
+        );
     }
 }

@@ -23,7 +23,6 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collection;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -52,18 +51,11 @@ public final class HeadOf<T> extends CollectionEnvelope<T> {
      * @param src Source iterable
      */
     public HeadOf(final int num, final Iterable<T> src) {
-        this(num, new CollectionOf<T>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param num Number of head elements
-     * @param src Source collection
-     */
-    public HeadOf(final int num, final Collection<T> src) {
-        super(() -> new CollectionOf<T>(
-            new org.cactoos.iterable.HeadOf<T>(num, src)
-        ));
+        super(
+            new Sticky<>(
+                new org.cactoos.iterable.HeadOf<>(num, src)
+            )
+        );
     }
 
 }

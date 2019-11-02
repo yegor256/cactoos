@@ -156,4 +156,19 @@ public final class NoNulls<X> implements Collection<X> {
     public void clear() {
         this.col.clear();
     }
+
+    @Override
+    public String toString() {
+        return this.col.toString();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return this.col.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.col.hashCode();
+    }
 }

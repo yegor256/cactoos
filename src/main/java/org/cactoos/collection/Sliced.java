@@ -23,7 +23,6 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collection;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -51,23 +50,13 @@ public final class Sliced<T> extends CollectionEnvelope<T> {
      * Ctor.
      * @param start Starting index
      * @param count Maximum number of elements for resulted iterator
-     * @param iterable Source iterable
+     * @param src Source iterable
      */
-    public Sliced(final int start, final int count,
-        final Iterable<T> iterable) {
-        this(start, count, new CollectionOf<T>(iterable));
-    }
-
-    /**
-     * Ctor.
-     * @param start Starting index
-     * @param count Maximum number of elements for resulted iterator
-     * @param collection Source collection
-     */
-    public Sliced(final int start, final int count,
-        final Collection<T> collection) {
-        super(() -> new CollectionOf<T>(
-            new org.cactoos.iterable.Sliced<T>(start, count, collection)
-        ));
+    public Sliced(final int start, final int count, final Iterable<T> src) {
+        super(
+            new Sticky<>(
+                new org.cactoos.iterable.Sliced<>(start, count, src)
+            )
+        );
     }
 }

@@ -23,9 +23,12 @@
  */
 package org.cactoos.collection;
 
+import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
+import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -34,7 +37,9 @@ import org.llorllale.cactoos.matchers.Assertion;
  *
  * @since 0.23
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
 public final class CollectionOfTest {
 
     @Test
@@ -79,4 +84,109 @@ public final class CollectionOfTest {
         ).affirm();
     }
 
+    @Test()
+    public void returnsIteratorWithSupportedRemove() {
+        final CollectionEnvelope<String> list = new CollectionEnvelope<String>(
+            new CollectionOf<>("eleven")
+        ) { };
+        final Iterator<String> iterator = list.iterator();
+        iterator.next();
+        iterator.remove();
+        new Assertion<>(
+            "Must return an empty Iterator",
+            new IterableOf<>(iterator),
+            new IsEmptyIterable<>()
+        ).affirm();
+    }
+
+    @Test
+    public void notEqualToObjectOfAnotherType() {
+        new Assertion<>(
+            "Must not equal an object of different type",
+            new CollectionOf<>(),
+            new IsNot<>(new IsEqual<>("a"))
+        ).affirm();
+    }
+
+    @Test
+    public void notEqualToCollectionOfDifferentSize() {
+        new Assertion<>(
+            "Must not equal a collection of different size",
+            new CollectionOf<>(),
+            new IsNot<>(new IsEqual<>(new CollectionOf<>("b")))
+        ).affirm();
+    }
+
+    @Test
+    public void notEqualToCollectionOfDifferentElements() {
+        new Assertion<>(
+            "Must not equal a collection with different content",
+            new CollectionOf<>("a", "b"),
+            new IsNot<>(new IsEqual<>(new CollectionOf<>("a", "c")))
+        ).affirm();
+    }
+
+    @Test
+    public void equalToItself() {
+        final CollectionOf<String> col = new CollectionOf<>("val1", "val2");
+        new Assertion<>(
+            "Must equal to itself",
+            col,
+            new IsEqual<>(col)
+        ).affirm();
+    }
+
+    @Test
+    public void equalToCollectionWithIdenticalContent() {
+        new Assertion<>(
+            "Must equal a collection with identical content",
+            new CollectionOf<>("val1", "val2"),
+            new IsEqual<>(new CollectionOf<>("val1", "val2"))
+        ).affirm();
+    }
+
+    @Test
+    public void equalToListWithIdenticalContent() {
+        new Assertion<>(
+            "Must equal a list with identical content",
+            new CollectionOf<>("a"),
+            new IsEqual<>(new ListOf<>("a"))
+        ).affirm();
+    }
+
+    @Test
+    public void equalToEmptyCollection() {
+        new Assertion<>(
+            "Must equal an empty collection",
+            new CollectionOf<>(),
+            new IsEqual<>(new CollectionOf<>())
+        ).affirm();
+    }
+
+    @Test
+    public void notEqualToNull() {
+        new Assertion<>(
+            "Must not equal to null",
+            new CollectionOf<>(),
+            new IsNot<>(new IsEqual<>(null))
+        ).affirm();
+    }
+
+    @Test
+    public void hashCodeEqual() {
+        new Assertion<>(
+            "Must have same hash code for same entries",
+            new CollectionOf<>("a", "b").hashCode(),
+            new IsEqual<>(new CollectionOf<>("a", "b").hashCode())
+        ).affirm();
+    }
+
+    @Test
+    public void differentHashCode() {
+        new Assertion<>(
+            "Must have different hash code for different entries",
+            new CollectionOf<>("a", "b").hashCode(),
+            new IsNot<>(new IsEqual<>(new CollectionOf<>("b", "a").hashCode()))
+        ).affirm();
+    }
 }

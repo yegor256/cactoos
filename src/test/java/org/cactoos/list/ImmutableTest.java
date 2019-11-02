@@ -457,7 +457,7 @@ public class ImmutableTest {
             "hashCode() must be equal to hashCode of the corresponding List",
             new Immutable<>(1, 2, 3).hashCode(),
             new IsEqual<>(
-                new ListOf<>(1, 2, 3).hashCode()
+                new Immutable<>(1, 2, 3).hashCode()
             )
         ).affirm();
     }

@@ -23,18 +23,12 @@
  */
 package org.cactoos.collection;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Shuffled collection.
- *
- * <p>Pay attention that shuffling will happen every time you touch
- * it: it will fetch all elements from the encapsulated collection and
- * shuffle them again on each call to any of its methods. If you want to
- * avoid that "side-effect", decorate it with {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -57,20 +51,18 @@ public final class Shuffled<T> extends CollectionEnvelope<T> {
      * @param src The underlying collection
      */
     public Shuffled(final Iterable<T> src) {
-        this(new CollectionOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying collection
-     */
-    public Shuffled(final Collection<T> src) {
-        super(() -> {
-            final List<T> items = new ArrayList<>(src.size());
-            items.addAll(src);
-            Collections.shuffle(items);
-            return items;
-        });
+        super(
+            new Sticky<>(
+                new CollectionOf<>(
+                    () -> {
+                        final List<T> items = new LinkedList<>();
+                        src.forEach(items::add);
+                        Collections.shuffle(items);
+                        return items;
+                    }
+                )
+            )
+        );
     }
 
 }

@@ -71,6 +71,18 @@ public final class HashCode implements Scalar<Integer> {
      * @checkstyle MagicNumber (3 lines)
      */
     public HashCode(final Object... attributes) {
+        this(new IterableOf<>(attributes));
+    }
+
+    /**
+     * Ctor.
+     *
+     * <p>The {@code initial} and {@code multiplier} values are arbitrarily
+     * set to 17 and 31 respectively.
+     * @param attributes The object's attributes
+     * @checkstyle MagicNumber (3 lines)
+     */
+    public HashCode(final Iterable<?> attributes) {
         this(17, 31, attributes);
     }
 
@@ -83,11 +95,25 @@ public final class HashCode implements Scalar<Integer> {
     public HashCode(
         final int initial, final int multiplier, final Object... attributes
     ) {
+        this(initial, multiplier, new IterableOf<>(attributes));
+    }
+
+    /**
+     * Ctor.
+     * @param initial Initial value (non-zero recommended)
+     * @param multiplier Step multiplier (odd prime recommended)
+     * @param attributes The object's attributes
+     */
+    public HashCode(
+        final int initial,
+        final int multiplier,
+        final Iterable<?> attributes
+    ) {
         this(
             new Folded<>(
                 initial,
                 (hash, attr) -> hash * multiplier + Objects.hashCode(attr),
-                new IterableOf<>(attributes)
+                attributes
             )
         );
     }

@@ -30,7 +30,7 @@ import org.cactoos.iterable.IterableOf;
  * Filtered collection.
  *
  * <p>There is no thread-safety guarantee.
- *
+
  * @param <X> Type of source item
  * @since 1.16
  */
@@ -53,10 +53,12 @@ public final class Filtered<X> extends CollectionEnvelope<X> {
      * @param src Source collection
      */
     public Filtered(final Func<X, Boolean> func, final Iterable<X> src) {
-        super(() -> new CollectionOf<>(
-            new org.cactoos.iterable.Filtered<>(
-                func, src
+        super(
+            new Sticky<>(
+                new org.cactoos.iterable.Filtered<>(
+                    func, src
+                )
             )
-        ));
+        );
     }
 }

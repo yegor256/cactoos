@@ -23,7 +23,6 @@
  */
 package org.cactoos.collection;
 
-import java.util.Collection;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -52,16 +51,7 @@ public final class Skipped<T> extends CollectionEnvelope<T> {
      * @param src Source iterable
      */
     public Skipped(final int skip, final Iterable<T> src) {
-        this(skip, new CollectionOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param skip How many to skip
-     * @param src Source collection
-     */
-    public Skipped(final int skip, final Collection<T> src) {
-        super(() -> new CollectionOf<>(
+        super(new Sticky<>(
             new org.cactoos.iterable.Skipped<>(skip, src)
         ));
     }
