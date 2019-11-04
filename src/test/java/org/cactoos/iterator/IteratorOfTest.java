@@ -23,6 +23,7 @@
  */
 package org.cactoos.iterator;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsNot;
@@ -37,6 +38,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class IteratorOfTest {
 
@@ -60,7 +62,12 @@ public final class IteratorOfTest {
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
-        final IteratorOf<Integer> iterator = this.iteratorWithFetchedElements();
+        final Iterator<Integer> iterator = new Skipped<>(
+            3,
+            new IteratorOf<>(
+                1, 2, 3
+            )
+        );
         new Assertion<>(
             "Must create non empty iterator",
             iterator.hasNext(),
@@ -70,9 +77,15 @@ public final class IteratorOfTest {
 
     @Test
     public void nonEmptyIteratorThrowsException() {
+        final Iterator<Character> iterator = new Skipped<>(
+            2,
+            new IteratorOf<>(
+                'a', 'b'
+            )
+        );
         new Assertion<>(
             "Must throw an exception if consumed",
-            () -> this.iteratorWithFetchedElements().next(),
+            () -> iterator.next(),
             new Throws<>(NoSuchElementException.class)
         ).affirm();
     }
@@ -90,19 +103,5 @@ public final class IteratorOfTest {
                 "a", "b", "c"
             )
         ).affirm();
-    }
-
-    // @todo #1166:30min According to this Yegor's post
-    //  https://www.yegor256.com/2016/05/03/test-methods-must-share-nothing.html
-    //  test methods must share nothing. Refactor this class by inlining the
-    //  the code below and remove the method below.
-    private IteratorOf<Integer> iteratorWithFetchedElements() {
-        final IteratorOf<Integer> iterator = new IteratorOf<>(
-            1, 2, 3
-        );
-        iterator.next();
-        iterator.next();
-        iterator.next();
-        return iterator;
     }
 }
