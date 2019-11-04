@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IteratorOf}.
- *
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
@@ -65,7 +64,7 @@ public final class IteratorOfTest {
         final Iterator<Integer> iterator = new IteratorOf<>(
             1, 2, 3
         );
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iterator.next();
         }
         new Assertion<>(
@@ -80,7 +79,7 @@ public final class IteratorOfTest {
         final Iterator<Character> iterator = new IteratorOf<>(
             'a', 'b'
         );
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iterator.next();
         }
         new Assertion<>(
