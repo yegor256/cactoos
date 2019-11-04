@@ -62,12 +62,12 @@ public final class IteratorOfTest {
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
-        final Iterator<Integer> iterator = new Skipped<>(
-            3,
-            new IteratorOf<>(
-                1, 2, 3
-            )
+        final Iterator<Integer> iterator = new IteratorOf<>(
+            1, 2, 3
         );
+        while(iterator.hasNext()) {
+            iterator.next();
+        }
         new Assertion<>(
             "Must create non empty iterator",
             iterator.hasNext(),
@@ -77,12 +77,12 @@ public final class IteratorOfTest {
 
     @Test
     public void nonEmptyIteratorThrowsException() {
-        final Iterator<Character> iterator = new Skipped<>(
-            2,
-            new IteratorOf<>(
-                'a', 'b'
-            )
+        final Iterator<Character> iterator = new IteratorOf<>(
+            'a', 'b'
         );
+        while(iterator.hasNext()) {
+            iterator.next();
+        }
         new Assertion<>(
             "Must throw an exception if consumed",
             () -> iterator.next(),
