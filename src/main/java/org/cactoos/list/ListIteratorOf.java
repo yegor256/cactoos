@@ -36,6 +36,9 @@ import org.cactoos.scalar.Unchecked;
  *
  * @param <T> Items type
  * @since 0.35
+ * @todo #1219:30min {@link ListIteratorOf} does not have to be immutable.
+ *  Make it possible to use mutable operations like remove/set/add in this
+ *  {@link ListIteratorOf} and change the class javadoc as well.
  */
 public final class ListIteratorOf<T> implements ListIterator<T> {
 
