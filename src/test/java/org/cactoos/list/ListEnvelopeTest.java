@@ -25,7 +25,6 @@ package org.cactoos.list;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import org.hamcrest.MatcherAssert;
@@ -45,7 +44,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  That's because this test should check the original behavior of ListEnvelope
  *  Now this test checks behavior of the Immutable decorator
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
 public final class ListEnvelopeTest {
 
     @Test(expected = UnsupportedOperationException.class)
@@ -58,7 +57,7 @@ public final class ListEnvelopeTest {
 
     @Test()
     public void returnsListIteratorWithSupportedSet() {
-        final ListEnvelope<String> list = new MutableStringList("one", "two");
+        final ListEnvelope<String> list = new StringList("one", "two");
         final ListIterator<String> iterator = list.listIterator(1);
         iterator.next();
         iterator.set("zero");
@@ -158,15 +157,55 @@ public final class ListEnvelopeTest {
         list.subList(0, 1).add("two");
     }
 
+    @Test
+    public void getsPreviousIndex() {
+        new Assertion<>(
+            "List iterator returns incorrect previous index",
+            new ListIteratorOf<>(
+                new ListOf<>(1)
+            ).previousIndex(),
+            new IsEqual<>(-1)
+        ).affirm();
+    }
+
+    @Test
+    public void getsPrevious() {
+        new Assertion<>(
+            "List iterator returns incorrect previous item",
+            new ListIteratorOf<>(
+                new ListOf<>(3, 7),
+                1
+            ).previous(),
+            new IsEqual<>(3)
+        ).affirm();
+    }
+
+    @Test
+    public void getsNextIndex() {
+        new Assertion<>(
+            "List iterator returns incorrect next index",
+            new ListIteratorOf<>(
+                new ListOf<>(1)
+            ).nextIndex(),
+            new IsEqual<>(0)
+        ).affirm();
+    }
+
+    @Test
+    public void getsNext() {
+        new Assertion<>(
+            "List iterator returns incorrect next item",
+            new ListIteratorOf<>(
+                new ListOf<>(5, 11, 13),
+                1
+            ).next(),
+            new IsEqual<>(11)
+        ).affirm();
+    }
+
     private static final class StringList extends ListEnvelope<String> {
         StringList(final String... elements) {
             super(() -> new Immutable<>(Arrays.asList(elements)));
-        }
-    }
-
-    private static final class MutableStringList extends ListEnvelope<String> {
-        MutableStringList(final String... elements) {
-            super(() -> new LinkedList<>(Arrays.asList(elements)));
         }
     }
 }

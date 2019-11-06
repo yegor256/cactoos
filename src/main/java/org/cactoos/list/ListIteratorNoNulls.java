@@ -47,7 +47,7 @@ public final class ListIteratorNoNulls<T> implements ListIterator<T> {
      * @param src List iterator.
      */
     public ListIteratorNoNulls(final ListIterator<T> src) {
-        this.listiterator = new ImmutableListIterator<>(src);
+        this.listiterator = new ListIteratorOf<>(src);
     }
 
     @Override

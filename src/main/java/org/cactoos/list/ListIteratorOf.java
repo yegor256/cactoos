@@ -30,14 +30,14 @@ import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
 /**
- * List Iterator that doesn't allow mutations.
+ * Iterator of the list that doesn't allow mutations.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <T> Items type
  * @since 0.35
  */
-public final class ImmutableListIterator<T> implements ListIterator<T> {
+public final class ListIteratorOf<T> implements ListIterator<T> {
 
     /**
      * Original list iterator.
@@ -48,7 +48,7 @@ public final class ImmutableListIterator<T> implements ListIterator<T> {
      * Ctor.
      * @param list List that will be called to get a list iterator.
      */
-    public ImmutableListIterator(final List<T> list) {
+    public ListIteratorOf(final List<T> list) {
         this(list::listIterator);
     }
 
@@ -57,7 +57,7 @@ public final class ImmutableListIterator<T> implements ListIterator<T> {
      * @param list List that will be called to get a list iterator.
      * @param index Start index for a newly created list iterator.
      */
-    public ImmutableListIterator(final List<T> list, final int index) {
+    public ListIteratorOf(final List<T> list, final int index) {
         this(() -> list.listIterator(index));
     }
 
@@ -65,7 +65,7 @@ public final class ImmutableListIterator<T> implements ListIterator<T> {
      * Ctor.
      * @param iter Original list iterator.
      */
-    public ImmutableListIterator(final ListIterator<T> iter) {
+    public ListIteratorOf(final ListIterator<T> iter) {
         this(() -> iter);
     }
 
@@ -73,7 +73,7 @@ public final class ImmutableListIterator<T> implements ListIterator<T> {
      * Ctor.
      * @param orig Original list iterator.
      */
-    public ImmutableListIterator(final Scalar<ListIterator<T>> orig) {
+    public ListIteratorOf(final Scalar<ListIterator<T>> orig) {
         this.origin = new Unchecked<>(new Sticky<>(orig));
     }
 
