@@ -21,86 +21,81 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package org.cactoos.list;
 
 import java.util.ListIterator;
 
 /**
- * A decorator of {@link ListIterator} that tolerates no NULLs.
+ * Immutable {@link ListIterator} that doesn't allow mutations.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
- * @param <T> Element type
- * @since 0.39
+ * @param <T> Items type
+ * @since 1.0
  */
-public final class ListIteratorNoNulls<T> implements ListIterator<T> {
+public final class ImmutableListIterator<T> implements ListIterator<T> {
 
     /**
-     * ListIterator.
+     * Original list iterator.
      */
-    private final ListIterator<T> listiterator;
+    private final ListIterator<T> origin;
 
     /**
      * Ctor.
-     *
-     * @param src List iterator.
+     * @param iter Original list iterator.
      */
-    public ListIteratorNoNulls(final ListIterator<T> src) {
-        this.listiterator = new ListIteratorOf<>(src);
+    public ImmutableListIterator(final ListIterator<T> iter) {
+        this.origin = iter;
     }
 
     @Override
     public boolean hasNext() {
-        return this.listiterator.hasNext();
+        return this.origin.hasNext();
     }
 
     @Override
     public T next() {
-        final T next = this.listiterator.next();
-        if (next == null) {
-            throw new IllegalStateException("Next item is NULL");
-        }
-        return next;
+        return this.origin.next();
     }
 
     @Override
     public boolean hasPrevious() {
-        return this.listiterator.hasPrevious();
+        return this.origin.hasPrevious();
     }
 
     @Override
     public T previous() {
-        final T next = this.listiterator.previous();
-        if (next == null) {
-            throw new IllegalStateException("Previous item is NULL");
-        }
-        return next;
+        return this.origin.previous();
     }
 
     @Override
     public int nextIndex() {
-        return this.listiterator.nextIndex();
+        return this.origin.nextIndex();
     }
 
     @Override
     public int previousIndex() {
-        return this.listiterator.previousIndex();
+        return this.origin.previousIndex();
     }
 
     @Override
     public void remove() {
-        this.listiterator.remove();
+        throw new UnsupportedOperationException(
+            "List Iterator is read-only and doesn't allow removing items"
+        );
     }
 
     @Override
     public void set(final T item) {
-        this.listiterator.set(item);
+        throw new UnsupportedOperationException(
+            "List Iterator is read-only and doesn't allow rewriting items"
+        );
     }
 
     @Override
     public void add(final T item) {
-        this.listiterator.add(item);
+        throw new UnsupportedOperationException(
+            "List Iterator is read-only and doesn't allow adding items"
+        );
     }
-
 }

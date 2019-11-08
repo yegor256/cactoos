@@ -35,9 +35,6 @@ import java.util.ListIterator;
  *
  * @param <T> Element type
  * @since 1.16
- * @todo #898:30min Introduce an Immutable wrapper for {@link ListIterator}
- *  and use it in listIterator() methods instead of {@link ListIteratorOf}.
- *  One another option is renaming of {@link ListIteratorOf}.
  * @todo #898:30min Replace all the Collections.unmodifiableList
  *  with the {@link org.cactoos.list.Immutable} from the cactoos codebase.
  *  That should be done because Elegant Object principles are against static methods.
@@ -187,12 +184,16 @@ public final class Immutable<T> implements List<T> {
 
     @Override
     public ListIterator<T> listIterator() {
-        return this.list.listIterator();
+        return new ImmutableListIterator<>(
+            this.list.listIterator()
+        );
     }
 
     @Override
     public ListIterator<T> listIterator(final int index) {
-        return this.list.listIterator(index);
+        return new ImmutableListIterator<>(
+            this.list.listIterator(index)
+        );
     }
 
     @Override

@@ -25,6 +25,7 @@ package org.cactoos.list;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import org.hamcrest.MatcherAssert;
@@ -57,7 +58,7 @@ public final class ListEnvelopeTest {
 
     @Test()
     public void returnsListIteratorWithSupportedSet() {
-        final ListEnvelope<String> list = new StringList("one", "two");
+        final ListEnvelope<String> list = new MutableStringList("one", "two");
         final ListIterator<String> iterator = list.listIterator(1);
         iterator.next();
         iterator.set("zero");
@@ -206,6 +207,12 @@ public final class ListEnvelopeTest {
     private static final class StringList extends ListEnvelope<String> {
         StringList(final String... elements) {
             super(() -> new Immutable<>(Arrays.asList(elements)));
+        }
+    }
+
+    private static final class MutableStringList extends ListEnvelope<String> {
+        MutableStringList(final String... elements) {
+            super(() -> new LinkedList<>(Arrays.asList(elements)));
         }
     }
 }
