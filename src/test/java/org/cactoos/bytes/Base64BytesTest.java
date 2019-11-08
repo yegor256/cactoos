@@ -26,9 +26,9 @@ package org.cactoos.bytes;
 
 import java.util.Base64;
 import org.cactoos.io.BytesOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link org.cactoos.bytes.Base64Bytes}.
@@ -41,8 +41,8 @@ public final class Base64BytesTest {
 
     @Test
     public void checkDecodeBasicDecoder() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't decodes bytes using the Base64 encoding basic scheme.",
+        new Assertion<>(
+            "Must decode bytes using the Base64 encoding basic scheme",
             new Base64Bytes(
                 new BytesOf(
                     "SGVsbG8h"
@@ -51,13 +51,13 @@ public final class Base64BytesTest {
             new IsEqual<>(
                 new BytesOf("Hello!").asBytes()
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void checkDecodeUrlDecoder() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't decodes bytes using the Base64 encoding url scheme",
+        new Assertion<>(
+            "Must decode bytes using the Base64 encoding url scheme",
             new Base64Bytes(
                 new BytesOf(
                     "SGVsbG8h"
@@ -66,13 +66,13 @@ public final class Base64BytesTest {
             new IsEqual<>(
                 new BytesOf("Hello!").asBytes()
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void checkDecodeMimeDecoder() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't decodes bytes using the Base64 encoding mime scheme",
+        new Assertion<>(
+            "Must decode bytes using the Base64 encoding mime scheme",
             new Base64Bytes(
                 new BytesOf(
                     "SGVsbG8h"
@@ -81,7 +81,7 @@ public final class Base64BytesTest {
             new IsEqual<>(
                 new BytesOf("Hello!").asBytes()
             )
-        );
+        ).affirm();
     }
 
 }

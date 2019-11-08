@@ -25,9 +25,9 @@ package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Scalar;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link BiFuncOf}.
@@ -39,55 +39,59 @@ public final class BiFuncOfTest {
 
     @Test
     public void convertsFuncIntoBiFunc() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must convert function into bi-function",
             new BiFuncOf<>(
                 input -> 1
             ).apply(1, 2),
-            Matchers.equalTo(1)
-        );
+            new IsEqual<>(1)
+        ).affirm();
     }
 
     @Test
     public void convertsProcIntoBiFunc() throws Exception {
         final AtomicBoolean done = new AtomicBoolean(false);
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must convert procedure into bi-function",
             new BiFuncOf<String, Integer, Boolean>(
                 input -> done.set(true),
                 true
             ).apply("hello world", 1),
-            Matchers.equalTo(done.get())
-        );
+            new IsEqual<>(done.get())
+        ).affirm();
     }
 
     @Test
     public void convertsRunnableIntoBiFunc() throws Exception {
         final AtomicBoolean done = new AtomicBoolean(false);
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must convert runnable into bi-function",
             new BiFuncOf<String, Integer, Boolean>(
                 () -> done.set(true),
                 true
             ).apply("hello, world", 1),
-            Matchers.equalTo(true)
-        );
+            new IsEqual<>(true)
+        ).affirm();
     }
 
     @Test
     public void convertsValueIntoBiFunc() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must convert value into bi-function",
             new BiFuncOf<String, Integer, Boolean>(
                 true
             ).apply("hello, dude!", 1),
-            Matchers.equalTo(true)
-        );
+            new IsEqual<>(true)
+        ).affirm();
     }
 
     @Test
     public void convertsScalarIntoBiFunc() throws Exception {
         final Scalar<Boolean> scalar = () -> true;
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must convert scalar into bi-function",
             new BiFuncOf<Boolean, Boolean, Boolean>(scalar).apply(false, false),
-            Matchers.equalTo(true)
-        );
+            new IsEqual<>(true)
+        ).affirm();
     }
-
 }
