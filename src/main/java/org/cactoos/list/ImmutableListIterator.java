@@ -45,7 +45,7 @@ public final class ImmutableListIterator<T> implements ListIterator<T> {
      * @param iter Original list iterator.
      */
     public ImmutableListIterator(final ListIterator<T> iter) {
-        this.origin = new ListIteratorOf<>(iter);
+        this.origin = iter;
     }
 
     @Override
@@ -81,21 +81,21 @@ public final class ImmutableListIterator<T> implements ListIterator<T> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException(
-            "Iterator is read-only and doesn't allow removing items"
+            "List Iterator is read-only and doesn't allow removing items"
         );
     }
 
     @Override
     public void set(final T item) {
         throw new UnsupportedOperationException(
-            "Iterator is read-only and doesn't allow rewriting items"
+            "List Iterator is read-only and doesn't allow rewriting items"
         );
     }
 
     @Override
     public void add(final T item) {
         throw new UnsupportedOperationException(
-            "Iterator is read-only and doesn't allow adding items"
+            "List Iterator is read-only and doesn't allow adding items"
         );
     }
 }

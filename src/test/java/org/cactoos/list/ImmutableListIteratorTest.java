@@ -23,10 +23,10 @@
  */
 package org.cactoos.list;
 
-import java.util.ListIterator;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ImmutableListIterator}.
@@ -39,9 +39,9 @@ import org.llorllale.cactoos.matchers.Assertion;
 public final class ImmutableListIteratorTest {
 
     @Test
-    public void getsPreviousIndex() {
+    public void mustReturnPreviousIndex() {
         new Assertion<>(
-            "List iterator returns incorrect previous index",
+            "Must return next previous index",
             new ImmutableListIterator<>(
                 new ListOf<>(1).listIterator()
             ).previousIndex(),
@@ -50,9 +50,9 @@ public final class ImmutableListIteratorTest {
     }
 
     @Test
-    public void getsPrevious() {
+    public void mustReturnPreviousElement() {
         new Assertion<>(
-            "List iterator returns incorrect previous item",
+            "Must return previous element",
             new ImmutableListIterator<>(
                 new ListOf<>(3, 7).listIterator(1)
             ).previous(),
@@ -61,9 +61,9 @@ public final class ImmutableListIteratorTest {
     }
 
     @Test
-    public void getsNextIndex() {
+    public void mustReturnNextIndex() {
         new Assertion<>(
-            "List iterator returns incorrect next index",
+            "Must return next index",
             new ImmutableListIterator<>(
                 new ListOf<>(1).listIterator()
             ).nextIndex(),
@@ -72,9 +72,9 @@ public final class ImmutableListIteratorTest {
     }
 
     @Test
-    public void getsNext() {
+    public void mustReturnNextElement() {
         new Assertion<>(
-            "List iterator returns incorrect next item",
+            "Must return next element",
             new ImmutableListIterator<>(
                 new ListOf<>(5, 11, 13).listIterator(1)
             ).next(),
@@ -82,27 +82,54 @@ public final class ImmutableListIteratorTest {
         ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void doesNotSupportRemove() {
-        final ListIterator<Integer> iterator = new ImmutableListIterator<>(
-            new ListOf<>(1, 2).listIterator()
-        );
-        iterator.remove();
+    @Test
+    public void mustRaiseErrorOnListIteratorRemove() {
+        new Assertion<>(
+            "Must throw error if modified with remove operation",
+            () -> {
+                new ImmutableListIterator<>(
+                    new ListOf<>(1, 2).listIterator()
+                ).remove();
+                return 0;
+            },
+            new Throws<>(
+                "List Iterator is read-only and doesn't allow removing items",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void doesNotSupportAdd() {
-        final ListIterator<Integer> iterator = new ImmutableListIterator<>(
-            new ListOf<>(1, 2).listIterator()
-        );
-        iterator.add(1);
+    @Test
+    public void mustRaiseErrorOnListIteratorAdd() {
+        new Assertion<>(
+            "Must throw error if modified with add operation",
+            () -> {
+                new ImmutableListIterator<>(
+                    new ListOf<>(1, 2).listIterator()
+                ).add(1);
+                return 0;
+            },
+            new Throws<>(
+                "List Iterator is read-only and doesn't allow adding items",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void doesNotSupportSet() {
-        final ListIterator<Integer> iterator = new ImmutableListIterator<>(
-            new ListOf<>(1, 2).listIterator()
-        );
-        iterator.set(1);
+    @Test
+    public void mustRaiseErrorOnListIteratorSet() {
+        new Assertion<>(
+            "Must throw error if modified with set operation",
+            () -> {
+                new ImmutableListIterator<>(
+                    new ListOf<>(1, 2).listIterator()
+                ).set(1);
+                return 0;
+            },
+            new Throws<>(
+                "List Iterator is read-only and doesn't allow rewriting items",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 }
