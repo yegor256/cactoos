@@ -30,15 +30,13 @@ import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
 /**
- * Iterator of the list that doesn't allow mutations.
+ * List Iterator of the list that allows mutations if the original
+ *  list iterator does support.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <T> Items type
  * @since 0.35
- * @todo #1219:30min {@link ListIteratorOf} does not have to be immutable.
- *  Make it possible to use mutable operations like remove/set/add in this
- *  {@link ListIteratorOf} and change the class javadoc as well.
  */
 public final class ListIteratorOf<T> implements ListIterator<T> {
 
@@ -112,22 +110,16 @@ public final class ListIteratorOf<T> implements ListIterator<T> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException(
-            "Iterator is read-only and doesn't allow removing items"
-        );
+        this.origin.value().remove();
     }
 
     @Override
     public void set(final T item) {
-        throw new UnsupportedOperationException(
-            "Iterator is read-only and doesn't allow rewriting items"
-        );
+        this.origin.value().set(item);
     }
 
     @Override
     public void add(final T item) {
-        throw new UnsupportedOperationException(
-            "Iterator is read-only and doesn't allow adding items"
-        );
+        this.origin.value().add(item);
     }
 }

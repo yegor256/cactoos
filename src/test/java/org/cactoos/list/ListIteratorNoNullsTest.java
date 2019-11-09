@@ -23,9 +23,13 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -38,12 +42,15 @@ import org.llorllale.cactoos.matchers.Throws;
 public final class ListIteratorNoNullsTest {
 
     @Test
-    public void getThrowsErrorIfListIteratorNextValueIsNullValue() {
+    public void mustThrowsErrorIfListIteratorNextValueIsNull() {
         new Assertion<>(
-            "must throw error if removed value is null",
-            () -> new ListIteratorNoNulls<>(
-                new ListOf<>(null, 2, 3).listIterator()
-            ).next(),
+            "must throw error next item is null",
+            () -> {
+                new ListIteratorNoNulls<>(
+                    new ListOf<>(null, 2, 3).listIterator()
+                ).next();
+                return 0;
+            },
             new Throws<>(
                 "Next item is NULL",
                 IllegalStateException.class
@@ -52,13 +59,17 @@ public final class ListIteratorNoNullsTest {
     }
 
     @Test
-    public void getThrowsErrorIfListIteratorPreviousValueIsNullValue() {
-        final ListIterator<Integer> listiterator =
-            new ListOf<>(null, 2, 3).listIterator();
-        listiterator.next();
+    public void mustThrowsErrorIfListIteratorPreviousValueIsNull() {
         new Assertion<>(
             "must throw error if previous value is null",
-            () -> new ListIteratorNoNulls<>(listiterator).previous(),
+            () -> {
+                new ListIteratorNoNulls<>(
+                    new ListOf<>(
+                        null, 2, 3
+                    ).listIterator(1)
+                ).previous();
+                return 0;
+            },
             new Throws<>(
                 "Previous item is NULL",
                 IllegalStateException.class
@@ -67,53 +78,61 @@ public final class ListIteratorNoNullsTest {
     }
 
     @Test
-    public void addThrowsErrorForImmutableListIterator() {
+    public void mustAddToListIterator() {
         new Assertion<>(
-            "must throw error if modified with add",
+            "must add to list iterator",
             () -> {
-                new ListIteratorNoNulls<>(
-                    new ListOf<>(1, 2, 3).listIterator()
-                ).add(4);
-                return 0;
+                final List<Integer> list = new ArrayList<>(2);
+                list.add(1);
+                list.add(2);
+                final ListIterator<Integer> iterator = new ListIteratorNoNulls<>(
+                    list.listIterator()
+                );
+                iterator.next();
+                iterator.add(4);
+                return iterator.previous();
+            },
+            new ScalarHasValue<>(4)
+        ).affirm();
+    }
+
+    @Test
+    public void mustRemoveFromListIterator() {
+        new Assertion<>(
+            "must remove element from list iterator",
+            () -> {
+                final List<Integer> list = new ArrayList<>(2);
+                list.add(1);
+                list.add(2);
+                final ListIterator<Integer> iterator = new ListIteratorNoNulls<>(
+                    list.listIterator()
+                );
+                iterator.next();
+                iterator.remove();
+                return iterator.previous();
             },
             new Throws<>(
-                "Iterator is read-only and doesn't allow adding items",
-                UnsupportedOperationException.class
+                NoSuchElementException.class
             )
         ).affirm();
     }
 
     @Test
-    public void removeThrowsErrorForImmutableListIterator() {
+    public void mustSetValueListIterator() {
         new Assertion<>(
-            "must throw error if modified with remove",
+            "must set element into list iterator",
             () -> {
-                new ListIteratorNoNulls<>(
-                    new ListOf<>(1, 2, 3).listIterator()
-                ).remove();
-                return 0;
+                final List<Integer> list = new ArrayList<>(2);
+                list.add(1);
+                list.add(2);
+                final ListIterator<Integer> iterator = new ListIteratorNoNulls<>(
+                    list.listIterator()
+                );
+                iterator.next();
+                iterator.set(4);
+                return iterator.previous();
             },
-            new Throws<>(
-                "Iterator is read-only and doesn't allow removing items",
-                UnsupportedOperationException.class
-            )
-        ).affirm();
-    }
-
-    @Test
-    public void setThrowsErrorForImmutableListIterator() {
-        new Assertion<>(
-            "must throw error if modified with set",
-            () -> {
-                new ListIteratorNoNulls<>(
-                    new ListOf<>(1, 2, 3).listIterator()
-                ).set(4);
-                return 0;
-            },
-            new Throws<>(
-                "Iterator is read-only and doesn't allow rewriting items",
-                UnsupportedOperationException.class
-            )
+            new ScalarHasValue<>(4)
         ).affirm();
     }
 }

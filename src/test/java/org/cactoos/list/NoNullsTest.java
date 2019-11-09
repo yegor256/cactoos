@@ -152,7 +152,6 @@ public final class NoNullsTest {
                 return 0;
             },
             new Throws<>(
-                "Iterator is read-only and doesn't allow adding items",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -167,7 +166,6 @@ public final class NoNullsTest {
                 return 0;
             },
             new Throws<>(
-                "Iterator is read-only and doesn't allow removing items",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -182,7 +180,6 @@ public final class NoNullsTest {
                 return 0;
             },
             new Throws<>(
-                "Iterator is read-only and doesn't allow rewriting items",
                 UnsupportedOperationException.class
             )
         ).affirm();

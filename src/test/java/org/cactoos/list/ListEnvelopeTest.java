@@ -45,7 +45,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  *  That's because this test should check the original behavior of ListEnvelope
  *  Now this test checks behavior of the Immutable decorator
  */
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public final class ListEnvelopeTest {
 
     @Test(expected = UnsupportedOperationException.class)
@@ -159,9 +159,9 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void getsPreviousIndex() {
+    public void mustReturnPreviousIndex() {
         new Assertion<>(
-            "List iterator returns incorrect previous index",
+            "List Iterator must return previous index",
             new ListIteratorOf<>(
                 new ListOf<>(1)
             ).previousIndex(),
@@ -170,9 +170,9 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void getsPrevious() {
+    public void mustReturnPreviousElement() {
         new Assertion<>(
-            "List iterator returns incorrect previous item",
+            "List Iterator must return previous element",
             new ListIteratorOf<>(
                 new ListOf<>(3, 7),
                 1
@@ -182,9 +182,9 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void getsNextIndex() {
+    public void mustReturnNextIndex() {
         new Assertion<>(
-            "List iterator returns incorrect next index",
+            "List iterator must return next index",
             new ListIteratorOf<>(
                 new ListOf<>(1)
             ).nextIndex(),
@@ -193,9 +193,9 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void getsNext() {
+    public void mustReturnNextElement() {
         new Assertion<>(
-            "List iterator returns incorrect next item",
+            "List iterator must return next item",
             new ListIteratorOf<>(
                 new ListOf<>(5, 11, 13),
                 1
