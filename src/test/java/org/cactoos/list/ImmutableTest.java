@@ -23,6 +23,9 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.cactoos.collection.CollectionOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -38,8 +41,23 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public class ImmutableTest {
+
+    @Test
+    public void testImmutability() {
+        final List<String> strings = new ArrayList<>(Arrays.asList("a", "b", "c"));
+        final List<String> immutable = new Immutable<>(strings);
+        final int original = immutable.size();
+        strings.add("d");
+        new Assertion<>(
+            "inner list must not be changed",
+            original,
+            new IsEqual<>(
+                immutable.size()
+            )
+        ).affirm();
+    }
 
     @Test
     public void size() {
@@ -368,6 +386,22 @@ public class ImmutableTest {
             ).subList(1, 2),
             new IsEqual<>(
                 new ListOf<>("a", "b", "c").subList(1, 2)
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void immutableSubList() {
+        new Assertion<>(
+            "subList() must be immutable",
+            () -> new Immutable<>(
+                new ListOf<>("a", "b", "c")
+            ).subList(0, 2).add("d"),
+            new Throws<>(
+                new MatcherOf<>(
+                    (String msg) -> msg.equals("#add(T): the list is read-only")
+                ),
+                UnsupportedOperationException.class
             )
         ).affirm();
     }

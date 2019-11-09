@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import org.cactoos.collection.Sliced;
 
 /**
  * {@link List} envelope that doesn't allow mutations.
@@ -55,10 +56,18 @@ public final class Immutable<T> implements List<T> {
 
     /**
      * Ctor.
-     * @param src Source
+     * @param src Source collection
+     */
+    public Immutable(final Collection<T> src) {
+        this(new ListOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src Source list
      */
     public Immutable(final List<T> src) {
-        this.list = src;
+        this.list = new ListOf<>(src);
     }
 
     @Override
@@ -198,7 +207,9 @@ public final class Immutable<T> implements List<T> {
 
     @Override
     public List<T> subList(final int start, final int end) {
-        return this.list.subList(start, end);
+        return new Immutable<>(
+            new Sliced<>(start, end - start, this.list)
+        );
     }
 
     @Override
