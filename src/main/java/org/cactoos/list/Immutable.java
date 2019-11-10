@@ -23,9 +23,9 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.Scalar;
@@ -96,7 +96,7 @@ public final class Immutable<T> implements List<T> {
      */
     public Immutable(final Iterable<T> src) {
         this(() -> {
-            final List<T> copy = new LinkedList<>();
+            final List<T> copy = new ArrayList<>(1);
             for (final T item : src) {
                 copy.add(item);
             }
