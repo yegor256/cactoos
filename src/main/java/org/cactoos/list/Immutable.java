@@ -25,9 +25,19 @@ package org.cactoos.list;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import org.cactoos.Scalar;
 import org.cactoos.collection.Sliced;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.Or;
+import org.cactoos.scalar.SumOfInt;
+import org.cactoos.scalar.Unchecked;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 
 /**
  * {@link List} envelope that doesn't allow mutations.
@@ -36,6 +46,7 @@ import org.cactoos.collection.Sliced;
  *
  * @param <T> Element type
  * @since 1.16
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @todo #898:30min Replace all the Collections.unmodifiableList
  *  with the {@link org.cactoos.list.Immutable} from the cactoos codebase.
  *  That should be done because Elegant Object principles are against static methods.
@@ -56,10 +67,19 @@ public final class Immutable<T> implements List<T> {
 
     /**
      * Ctor.
+     * @param items Source array
+     */
+    @SafeVarargs
+    public Immutable(final T... items) {
+        this(new IterableOf<>(items));
+    }
+
+    /**
+     * Ctor.
      * @param src Source collection
      */
     public Immutable(final Collection<T> src) {
-        this(new ListOf<>(src));
+        this(new IterableOf<>(src.iterator()));
     }
 
     /**
@@ -67,7 +87,29 @@ public final class Immutable<T> implements List<T> {
      * @param src Source list
      */
     public Immutable(final List<T> src) {
-        this.list = new ListOf<>(src);
+        this(new IterableOf<>(src.iterator()));
+    }
+
+    /**
+     * Ctor.
+     * @param src Source iterable
+     */
+    public Immutable(final Iterable<T> src) {
+        this(() -> {
+            final List<T> copy = new LinkedList<>();
+            for (final T item : src) {
+                copy.add(item);
+            }
+            return copy;
+        });
+    }
+
+    /**
+     * Ctor.
+     * @param slr The scalar
+     */
+    public Immutable(final Scalar<List<T>> slr) {
+        this.list = new Unchecked<>(slr).value();
     }
 
     @Override
@@ -213,17 +255,46 @@ public final class Immutable<T> implements List<T> {
     }
 
     @Override
-    public String toString() {
-        return this.list.toString();
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    public boolean equals(final Object other) {
+        return new Unchecked<>(
+            new Or(
+                () -> other == this,
+                new And(
+                    () -> other != null,
+                    () -> List.class.isAssignableFrom(other.getClass()),
+                    () -> {
+                        final List<?> compared = (List<?>) other;
+                        final Iterator<?> iterator = compared.iterator();
+                        return new Unchecked<>(
+                            new And(
+                                (T input) -> input.equals(iterator.next()),
+                                this
+                            )
+                        ).value();
+                    }
+                )
+            )
+        ).value();
     }
 
+    // @checkstyle MagicNumberCheck (30 lines)
     @Override
     public int hashCode() {
-        return this.list.hashCode();
+        return new Unchecked<>(
+            new Folded<>(
+                42,
+                (hash, entry) -> new SumOfInt(
+                    () -> 37 * hash,
+                    entry::hashCode
+                ).value(),
+                this
+            )
+        ).value();
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        return this.list.equals(obj);
+    public String toString() {
+        return new UncheckedText(new TextOf(this)).asString();
     }
 }

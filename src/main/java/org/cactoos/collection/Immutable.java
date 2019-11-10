@@ -37,6 +37,11 @@ import org.cactoos.iterable.IterableOf;
  * @todo #898:30min Replace all the Collections.unmodifiableCollection
  *  with the {@link org.cactoos.collection.Immutable} from the cactoos codebase.
  *  That should be done because Elegant Object principles are against static methods.
+ * @todo #1224:30min Original collection should be copied inside this
+ *  immutable decorator. That should be done because otherwise true immutability
+ *  cannot be achieved.
+ *  see: https://github.com/yegor256/cactoos/issues/1224 and
+ *  https://docs.oracle.com/javase/tutorial/essential/concurrency/immutable.html
  */
 @SuppressWarnings(
     {
