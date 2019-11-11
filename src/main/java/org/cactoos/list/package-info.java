@@ -26,5 +26,11 @@
  * Lists, tests.
  *
  * @since 0.14
+ * @todo #1230:30min The following list implmenetation classes
+ *  {@link org.cactoos.list.Joined}, {@link org.cactoos.list.Mapped},
+ *  {@link org.cactoos.list.NoNulls}, {@link org.cactoos.list.Shuffled},
+ *  {@link org.cactoos.list.Solid}, {@link org.cactoos.list.Solid},
+ *  {@link org.cactoos.list.Sorted}, {@link org.cactoos.list.Sticky},
+ *  {@link org.cactoos.list.Synced} should support mutability.
  */
 package org.cactoos.list;
