@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.Scalar;
-import org.cactoos.collection.Sliced;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
@@ -250,7 +249,7 @@ public final class Immutable<T> implements List<T> {
     @Override
     public List<T> subList(final int start, final int end) {
         return new Immutable<>(
-            new Sliced<>(start, end - start, this.list)
+            this.list.subList(start, end)
         );
     }
 
