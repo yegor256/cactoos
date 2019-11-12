@@ -28,6 +28,7 @@ import org.cactoos.Scalar;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link BiFuncOf}.
@@ -70,7 +71,7 @@ public final class BiFuncOfTest {
                 () -> done.set(true),
                 true
             ).apply("hello, world", 1),
-            new IsEqual<>(true)
+            new IsTrue()
         ).affirm();
     }
 
@@ -81,7 +82,7 @@ public final class BiFuncOfTest {
             new BiFuncOf<String, Integer, Boolean>(
                 true
             ).apply("hello, dude!", 1),
-            new IsEqual<>(true)
+            new IsTrue()
         ).affirm();
     }
 
@@ -91,7 +92,7 @@ public final class BiFuncOfTest {
         new Assertion<>(
             "Must convert scalar into bi-function",
             new BiFuncOf<Boolean, Boolean, Boolean>(scalar).apply(false, false),
-            new IsEqual<>(true)
+            new IsTrue()
         ).affirm();
     }
 }

@@ -28,6 +28,7 @@ import org.cactoos.scalar.Constant;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link FuncOf}.
@@ -57,7 +58,7 @@ public final class FuncOfTest {
             new FuncOf<String, Boolean>(
                 true
             ).apply("hello, dude!"),
-            new IsEqual<>(true)
+            new IsTrue()
         ).affirm();
     }
 
