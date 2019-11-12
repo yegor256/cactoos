@@ -23,8 +23,12 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.cactoos.collection.CollectionOf;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
@@ -38,8 +42,21 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public class ImmutableTest {
+
+    @Test
+    public void innerListMustNotBeChanged() {
+        final List<String> strings = new ArrayList<>(Arrays.asList("a", "b", "c"));
+        final List<String> immutable = new Immutable<>(strings);
+        final int original = immutable.size();
+        strings.add("d");
+        new Assertion<>(
+            "inner list must not be changed",
+            original,
+            new IsEqual<>(immutable.size())
+        ).affirm();
+    }
 
     @Test
     public void size() {
@@ -373,25 +390,72 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testToString() {
+    public void immutableSubList() {
         new Assertion<>(
-            "toString() must be equals to original",
-            new Immutable<>(
+            "subList() result must be immutable",
+            () -> new Immutable<>(
                 new ListOf<>("a", "b", "c")
-            ).toString(),
-            new IsEqual<>(
-                new ListOf<>("a", "b", "c").toString()
+            ).subList(0, 2).add("d"),
+            new Throws<>(
+                new MatcherOf<>(
+                    (String msg) -> msg.equals("#add(T): the list is read-only")
+                ),
+                UnsupportedOperationException.class
             )
+        ).affirm();
+    }
+
+    @Test
+    public void notEqualsToObjectOfAnotherType() {
+        new Assertion<>(
+            "must not equal to object of another type",
+            new Immutable<>(),
+            new IsNot<>(new IsEqual<>(new Object()))
+        ).affirm();
+    }
+
+    @Test
+    public void notEqualsToListWithDifferentElements() {
+        new Assertion<>(
+            "must not equal to List with different elements",
+            new Immutable<>(1, 2),
+            new IsNot<>(new IsEqual<>(new ListOf<>(1, 0)))
+        ).affirm();
+    }
+
+    @Test
+    public void isEqualToItself() {
+        final List<Integer> list = new Immutable<>(1, 2);
+        new Assertion<>(
+            "must be equal to itself",
+            list,
+            new IsEqual<>(list)
+        ).affirm();
+    }
+
+    @Test
+    public void isEqualToListWithTheSameElements() {
+        new Assertion<>(
+            "must be equal to List with the same elements",
+            new Immutable<>(1, 2),
+            new IsEqual<>(new ListOf<>(1, 2))
+        ).affirm();
+    }
+
+    @Test
+    public void equalToEmptyImmutable() {
+        new Assertion<>(
+            "empty Immutable must be equal to empty Immutable",
+            new Immutable<>(),
+            new IsEqual<>(new Immutable<>())
         ).affirm();
     }
 
     @Test
     public void testHashCode() {
         new Assertion<>(
-            "hashCode() must be equals to original",
-            new Immutable<>(
-                new ListOf<>(1, 2, 3)
-            ).hashCode(),
+            "hashCode() must be equal to hashCode of the corresponding List",
+            new Immutable<>(1, 2, 3).hashCode(),
             new IsEqual<>(
                 new ListOf<>(1, 2, 3).hashCode()
             )
@@ -399,16 +463,11 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testEquals() {
-        final ListOf<Integer> another = new ListOf<>(4, 5, 6);
+    public void testToString() {
         new Assertion<>(
-            "equals() must be equals to original",
-            new Immutable<>(
-                new ListOf<>(1, 2, 3)
-            ).equals(another),
-            new IsEqual<>(
-                new ListOf<>(1, 2, 3).equals(another)
-            )
+            "toString() must be concatenation of nested elements",
+            new Immutable<>("a", "b", "c").toString(),
+            new IsEqual<>("a, b, c")
         ).affirm();
     }
 }

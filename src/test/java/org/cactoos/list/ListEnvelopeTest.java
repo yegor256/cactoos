@@ -26,13 +26,14 @@ package org.cactoos.list;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.ListIterator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ListEnvelope}.
@@ -41,6 +42,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @todo #898:30min Get rid of the Immutable in StringList nested class
  *  That's because this test should check the original behavior of ListEnvelope
  *  Now this test checks behavior of the Immutable decorator
@@ -91,19 +93,25 @@ public final class ListEnvelopeTest {
 
     @Test()
     public void subListReturnsListIteratorWithSupportedSet() {
-        final ListIterator<String> iterator = new StringList("one", "two", "three")
-            .subList(0, 2)
-            .listIterator(0);
-        iterator.next();
-        iterator.set("zero");
-        iterator.previous();
-        MatcherAssert.assertThat(
-            "iterator is not equal to expected",
-            () -> iterator,
-            Matchers.contains(
-                "zero", "two"
+        new Assertion<>(
+            "subList.listIterator().set() must throw exception",
+            () -> {
+                final ListIterator<String> iterator = new StringList("one", "two", "three")
+                    .subList(0, 2)
+                    .listIterator(0);
+                iterator.next();
+                iterator.set("zero");
+                return new Object();
+            },
+            new Throws<>(
+                new MatcherOf<>(
+                    (String msg) -> msg.equals(
+                        "List Iterator is read-only and doesn't allow rewriting items"
+                    )
+                ),
+                UnsupportedOperationException.class
             )
-        );
+        ).affirm();
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -141,13 +149,14 @@ public final class ListEnvelopeTest {
 
     @Test()
     public void returnsSubListWithSupportedSet() {
-        final List<String> sublist = new StringList("one").subList(0, 1);
-        sublist.set(0, "zero");
         new Assertion<>(
-            "subList must be equal to expected",
-            sublist,
-            new IsEqual<>(
-                new ListOf<>("zero")
+            "subList.set() must throw exception",
+            () -> new StringList("one").subList(0, 1).set(0, "zero"),
+            new Throws<>(
+                new MatcherOf<>(
+                    (String msg) -> msg.equals("#set(): the list is read-only")
+                ),
+                UnsupportedOperationException.class
             )
         ).affirm();
     }
