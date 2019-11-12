@@ -25,6 +25,7 @@ package org.cactoos.set;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
+import org.cactoos.text.TextOf;
 import org.hamcrest.Matcher;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsCollectionContaining;
@@ -46,7 +47,7 @@ public final class SetOfTest {
     @Test
     public void behaveAsSetWithOriginalDuplicationsInTheTail() {
         new Assertion<>(
-            "Must keep unique numbers",
+            "Must keep unique integer numbers",
             new SetOf<>(1, 2, 2),
             new AllOf<>(
                 new IterableOf<Matcher<? super SetOf<Integer>>>(
@@ -61,7 +62,7 @@ public final class SetOfTest {
     @Test
     public void behaveAsSetWithOriginalDuplicationsInTheHead() {
         new Assertion<>(
-            "Must keep unique numbers",
+            "Must keep unique integer numbers",
             new SetOf<>(1, 1, 2, 3),
             new AllOf<>(
                 new IterableOf<Matcher<? super SetOf<Integer>>>(
@@ -77,7 +78,7 @@ public final class SetOfTest {
     @Test
     public void behaveAsSetWithOriginalDuplicationsInTheMiddle() {
         new Assertion<>(
-            "Must keep unique numbers",
+            "Must keep unique integer numbers",
             new SetOf<>(1, 2, 2, 3),
             new AllOf<>(
                 new IterableOf<Matcher<? super SetOf<Integer>>>(
@@ -91,7 +92,7 @@ public final class SetOfTest {
     }
 
     @Test
-    public void behaveAsSetWithOriginalMergedCollectionsWithDuplicates() {
+    public void behaveAsSetMergedCollectionsOfLiteralsWithDuplicates() {
         new Assertion<>(
             "Must keep unique string literals",
             new SetOf<String>(
@@ -108,6 +109,65 @@ public final class SetOfTest {
                     new IsCollectionContaining<>(new IsEqual<>("cc")),
                     new IsCollectionContaining<>(new IsEqual<>("dd")),
                     new IsCollectionContaining<>(new IsEqual<>("ff"))
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalDuplicationsOfCharsInTheMiddle() {
+        new Assertion<>(
+            "Must keep unique characters",
+            new SetOf<>('a', 'b', 'b', 'c', 'a', 'b', 'd'),
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<Character>>>(
+                    new HasSize(4),
+                    new IsCollectionContaining<>(new IsEqual<>('a')),
+                    new IsCollectionContaining<>(new IsEqual<>('b')),
+                    new IsCollectionContaining<>(new IsEqual<>('c')),
+                    new IsCollectionContaining<>(new IsEqual<>('d'))
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalDuplicationsOfDoublesInTheMiddle() {
+        new Assertion<>(
+            "Must keep unique double numbers",
+            new SetOf<>(1.5d, 2.4d, 1.5d, 2.4d, 2.4d, 1.5d),
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<Double>>>(
+                    new HasSize(2),
+                    new IsCollectionContaining<>(new IsEqual<>(1.5d)),
+                    new IsCollectionContaining<>(new IsEqual<>(2.4d))
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalDuplicationsOfTextsInTheMiddle() {
+        new Assertion<>(
+            "Must keep unique TextOf objects",
+            new SetOf<>(
+                new TextOf("12345"),
+                new TextOf("67890"),
+                new TextOf("12345"),
+                new TextOf("00000")
+            ),
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<TextOf>>>(
+                    new HasSize(3),
+                    new IsCollectionContaining<>(
+                        new IsEqual<>(new TextOf("12345"))
+                    ),
+                    new IsCollectionContaining<>(
+                        new IsEqual<>(new TextOf("67890"))
+                    ),
+                    new IsCollectionContaining<>(
+                        new IsEqual<>(new TextOf("00000"))
+                    )
                 )
             )
         ).affirm();
