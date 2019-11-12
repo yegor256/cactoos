@@ -25,10 +25,10 @@ package org.cactoos.func;
 
 import java.io.EOFException;
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link CheckedFunc}.
@@ -68,22 +68,23 @@ public final class CheckedFuncTest {
                 IOException::new
             ).apply(true);
         } catch (final IOException exp) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "Extra wrapping of IOException has been added",
                 exp.getCause(),
                 new IsNull<>()
-            );
+            ).affirm();
         }
     }
 
     @Test
     public void noExceptionThrown() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must not throw an exception",
             new CheckedFunc<>(
                 input -> true,
                 exp -> exp
             ).apply(false),
             new IsEqual<>(true)
-        );
+        ).affirm();
     }
 }

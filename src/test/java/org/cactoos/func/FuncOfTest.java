@@ -25,10 +25,10 @@ package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.scalar.Constant;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link FuncOf}.
@@ -41,32 +41,34 @@ public final class FuncOfTest {
     @Test
     public void convertsProcIntoFunc() throws Exception {
         final AtomicBoolean done = new AtomicBoolean(false);
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must convert procedure into function",
             new FuncOf<String, Boolean>(
                 input -> done.set(true),
                 true
             ).apply("hello world"),
-            Matchers.equalTo(done.get())
-        );
+            new IsEqual<>(done.get())
+        ).affirm();
     }
 
     @Test
     public void convertsValueIntoFunc() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must convert value into function",
             new FuncOf<String, Boolean>(
                 true
             ).apply("hello, dude!"),
-            Matchers.equalTo(true)
-        );
+            new IsTrue()
+        ).affirm();
     }
 
     @Test
     public void convertsScalarIntoFunc() throws Exception {
         final Constant<Integer> scalar = new Constant<>(1);
-        MatcherAssert.assertThat(
-            "Result of func doesn't equal to the original value",
+        new Assertion<>(
+            "Result of func must be equal to the original value",
             new FuncOf<>(scalar).apply(new Object()),
             new IsEqual<>(scalar.value())
-        );
+        ).affirm();
     }
 }
