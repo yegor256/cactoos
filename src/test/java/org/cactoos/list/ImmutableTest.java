@@ -46,7 +46,7 @@ import org.llorllale.cactoos.matchers.Throws;
 public class ImmutableTest {
 
     @Test
-    public void testImmutability() {
+    public void innerListMustNotBeChanged() {
         final List<String> strings = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final List<String> immutable = new Immutable<>(strings);
         final int original = immutable.size();
@@ -54,9 +54,7 @@ public class ImmutableTest {
         new Assertion<>(
             "inner list must not be changed",
             original,
-            new IsEqual<>(
-                immutable.size()
-            )
+            new IsEqual<>(immutable.size())
         ).affirm();
     }
 
@@ -394,7 +392,7 @@ public class ImmutableTest {
     @Test
     public void immutableSubList() {
         new Assertion<>(
-            "subList() must be immutable",
+            "subList() result must be immutable",
             () -> new Immutable<>(
                 new ListOf<>("a", "b", "c")
             ).subList(0, 2).add("d"),
@@ -421,9 +419,7 @@ public class ImmutableTest {
         new Assertion<>(
             "must not equal to List with different elements",
             new Immutable<>(1, 2),
-            new IsNot<>(
-                new IsEqual<>(new ListOf<>(1, 0))
-            )
+            new IsNot<>(new IsEqual<>(new ListOf<>(1, 0)))
         ).affirm();
     }
 
@@ -471,9 +467,7 @@ public class ImmutableTest {
         new Assertion<>(
             "toString() must be concatenation of nested elements",
             new Immutable<>("a", "b", "c").toString(),
-            new IsEqual<>(
-                "a, b, c"
-            )
+            new IsEqual<>("a, b, c")
         ).affirm();
     }
 }

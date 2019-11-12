@@ -23,13 +23,14 @@
  */
 package org.cactoos.list;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
@@ -70,15 +71,7 @@ public final class Immutable<T> implements List<T> {
      */
     @SafeVarargs
     public Immutable(final T... items) {
-        this(new IterableOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param src Source collection
-     */
-    public Immutable(final Collection<T> src) {
-        this(new IterableOf<>(src.iterator()));
+        this(new CollectionOf<T>(items));
     }
 
     /**
@@ -86,7 +79,7 @@ public final class Immutable<T> implements List<T> {
      * @param src Source list
      */
     public Immutable(final List<T> src) {
-        this(new IterableOf<>(src.iterator()));
+        this(new CollectionOf<>(src));
     }
 
     /**
@@ -94,11 +87,17 @@ public final class Immutable<T> implements List<T> {
      * @param src Source iterable
      */
     public Immutable(final Iterable<T> src) {
+        this(new CollectionOf<T>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param src Source collection
+     */
+    public Immutable(final Collection<T> src) {
         this(() -> {
-            final List<T> copy = new ArrayList<>(1);
-            for (final T item : src) {
-                copy.add(item);
-            }
+            final List<T> copy = new ArrayList<>(src.size());
+            copy.addAll(src);
             return copy;
         });
     }
@@ -254,7 +253,7 @@ public final class Immutable<T> implements List<T> {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    @SuppressFBWarnings("EQ_UNUSUAL")
     public boolean equals(final Object other) {
         return new Unchecked<>(
             new Or(
