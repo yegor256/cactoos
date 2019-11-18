@@ -23,27 +23,153 @@
  */
 package org.cactoos.set;
 
-import org.hamcrest.MatcherAssert;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Joined;
+import org.cactoos.text.TextOf;
+import org.hamcrest.Matcher;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link SetOf}.
- *
  * @since 0.49.2
  * @checkstyle MagicNumber (500 line)
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SetOfTest {
 
-    /**
-     * Ensures that SetOf behaves as set, which means no duplicates.
-     */
     @Test
-    public void behavesAsSet() {
-        MatcherAssert.assertThat(
-            "Can't behave as a set",
+    public void behaveAsSetWithOriginalDuplicationsInTheTail() {
+        new Assertion<>(
+            "Must keep unique integer numbers",
             new SetOf<>(1, 2, 2),
-            new BehavesAsSet<>(2)
-        );
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<Integer>>>(
+                    new HasSize(2),
+                    new IsCollectionContaining<>(new IsEqual<>(1)),
+                    new IsCollectionContaining<>(new IsEqual<>(2))
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalDuplicationsInTheHead() {
+        new Assertion<>(
+            "Must keep unique integer numbers",
+            new SetOf<>(1, 1, 2, 3),
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<Integer>>>(
+                    new HasSize(3),
+                    new IsCollectionContaining<>(new IsEqual<>(1)),
+                    new IsCollectionContaining<>(new IsEqual<>(2)),
+                    new IsCollectionContaining<>(new IsEqual<>(3))
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalDuplicationsInTheMiddle() {
+        new Assertion<>(
+            "Must keep unique integer numbers",
+            new SetOf<>(1, 2, 2, 3),
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<Integer>>>(
+                    new HasSize(3),
+                    new IsCollectionContaining<>(new IsEqual<>(1)),
+                    new IsCollectionContaining<>(new IsEqual<>(2)),
+                    new IsCollectionContaining<>(new IsEqual<>(3))
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetMergedCollectionsOfLiteralsWithDuplicates() {
+        new Assertion<>(
+            "Must keep unique string literals",
+            new SetOf<String>(
+                new Joined<String>(
+                    new IterableOf<>("cc", "ff"),
+                    new IterableOf<>("aa", "bb", "cc", "dd")
+                )
+            ),
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<String>>>(
+                    new HasSize(5),
+                    new IsCollectionContaining<>(new IsEqual<>("aa")),
+                    new IsCollectionContaining<>(new IsEqual<>("bb")),
+                    new IsCollectionContaining<>(new IsEqual<>("cc")),
+                    new IsCollectionContaining<>(new IsEqual<>("dd")),
+                    new IsCollectionContaining<>(new IsEqual<>("ff"))
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalDuplicationsOfCharsInTheMiddle() {
+        new Assertion<>(
+            "Must keep unique characters",
+            new SetOf<>('a', 'b', 'b', 'c', 'a', 'b', 'd'),
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<Character>>>(
+                    new HasSize(4),
+                    new IsCollectionContaining<>(new IsEqual<>('a')),
+                    new IsCollectionContaining<>(new IsEqual<>('b')),
+                    new IsCollectionContaining<>(new IsEqual<>('c')),
+                    new IsCollectionContaining<>(new IsEqual<>('d'))
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalDuplicationsOfDoublesInTheMiddle() {
+        new Assertion<>(
+            "Must keep unique double numbers",
+            new SetOf<>(1.5d, 2.4d, 1.5d, 2.4d, 2.4d, 1.5d),
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<Double>>>(
+                    new HasSize(2),
+                    new IsCollectionContaining<>(new IsEqual<>(1.5d)),
+                    new IsCollectionContaining<>(new IsEqual<>(2.4d))
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void behaveAsSetWithOriginalDuplicationsOfTextsInTheMiddle() {
+        new Assertion<>(
+            "Must keep unique TextOf objects",
+            new SetOf<>(
+                new TextOf("12345"),
+                new TextOf("67890"),
+                new TextOf("12345"),
+                new TextOf("00000")
+            ),
+            new AllOf<>(
+                new IterableOf<Matcher<? super SetOf<TextOf>>>(
+                    new HasSize(3),
+                    new IsCollectionContaining<>(
+                        new IsEqual<>(new TextOf("12345"))
+                    ),
+                    new IsCollectionContaining<>(
+                        new IsEqual<>(new TextOf("67890"))
+                    ),
+                    new IsCollectionContaining<>(
+                        new IsEqual<>(new TextOf("00000"))
+                    )
+                )
+            )
+        ).affirm();
     }
 }
