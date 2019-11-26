@@ -208,7 +208,7 @@ int total = new LengthOf(
 ).intValue();
 ```
 
-To get unique elements in a collection:
+To get a set of unique elements by providing varargs:
 
 ```java
 final Set<String> unique = new SetOf<String>(
@@ -219,14 +219,14 @@ final Set<String> unique = new SetOf<String>(
 );
 ```
 
-To get unique elements of existing iterable:
+To get a set of unique elements from existing iterable:
 ```java
 final Set<String> words = new SetOf<>(
     new IterableOf<>("abc", "bcd", "abc", "ccc")
 );
 ```
 
-To ge sorted unique iterable of existing iterable:
+To get sorted iterable with unique elements from existing iterable:
 ```java
 final Iterable<String> sorted = new Sorted<>(
     new SetOf<>(
