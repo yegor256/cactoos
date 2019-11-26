@@ -208,6 +208,33 @@ int total = new LengthOf(
 ).intValue();
 ```
 
+To get unique elements in a collection:
+
+```java
+final Set<String> unique = new SetOf<String>(
+    "one",
+    "two",
+    "one",
+    "three"
+);
+```
+
+To get unique elements of existing iterable:
+```java
+final Set<String> words = new SetOf<>(
+    new IterableOf<>("abc", "bcd", "abc", "ccc")
+);
+```
+
+To ge sorted unique iterable of existing iterable:
+```java
+final Iterable<String> sorted = new Sorted<>(
+    new SetOf<>(
+        new IterableOf<>("abc", "bcd", "abc", "ccc")
+    )
+);
+```
+
 ## Funcs and Procs
 
 This is a traditional `foreach` loop:
