@@ -25,14 +25,9 @@ package org.cactoos.io;
 
 import java.util.Arrays;
 import java.util.Random;
-
-import org.cactoos.scalar.Equals;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
-import org.llorllale.cactoos.matchers.Matches;
 
 /**
  * Tests for {@link TailOf}.
@@ -49,11 +44,11 @@ public final class TailOfTest {
         "Must tail on Long stream",
         new BytesOf(
             new TailOf(
-                    new InputOf(bytes),
-                    size - 1
+                new InputOf(bytes),
+                size - 1
             )
         ).asBytes(),
-                new IsEqual<>(Arrays.copyOfRange(bytes, 1, bytes.length))
+            new IsEqual<>(Arrays.copyOfRange(bytes, 1, bytes.length))
         ).affirm();
     }
 
@@ -65,11 +60,11 @@ public final class TailOfTest {
         "Must tail on Exact Stream",
         new BytesOf(
             new TailOf(
-                    new InputOf(bytes),
+                new InputOf(bytes),
                     size
                 )
-            ).asBytes(),
-                new IsEqual<>(bytes)
+        ).asBytes(),
+            new IsEqual<>(bytes)
         ).affirm();
     }
 
@@ -81,12 +76,12 @@ public final class TailOfTest {
         "Must tails on Exact Stream and Buffer",
         new BytesOf(
             new TailOf(
-                    new InputOf(bytes),
+                new InputOf(bytes),
                     size,
                     size
-            )
+                )
         ).asBytes(),
-                new IsEqual<>(bytes)
+            new IsEqual<>(bytes)
         ).affirm();
     }
 
@@ -98,11 +93,11 @@ public final class TailOfTest {
         "Must tails on Shorter Stream",
             new BytesOf(
                 new TailOf(
-                        new InputOf(bytes),
-                    size + 1
+                    new InputOf(bytes),
+                        size + 1
                 )
             ).asBytes(),
-            Matchers.equalTo(bytes)
+            new IsEqual<>(bytes)
         ).affirm();
     }
 
@@ -114,14 +109,12 @@ public final class TailOfTest {
         "Must tails on Stream longer than buffer and bytes",
         new BytesOf(
             new TailOf(
-                    new InputOf(bytes),
+                new InputOf(bytes),
                     size - 1,
                     size - 1
             )
         ).asBytes(),
-                new IsEqual<>(
-                        Arrays.copyOfRange(bytes, 1, bytes.length)
-                )
+            new IsEqual<>(Arrays.copyOfRange(bytes, 1, bytes.length))
         ).affirm();
     }
 
@@ -131,8 +124,8 @@ public final class TailOfTest {
         new BytesOf(
             new TailOf(
                 new InputOf(new BytesOf(this.generate(size))),
-                size,
-                size - 1
+                    size,
+                    size - 1
             )
         ).asBytes();
     }
