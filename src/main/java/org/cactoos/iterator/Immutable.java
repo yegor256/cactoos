@@ -26,7 +26,7 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 
 /**
- * Iterator that doesn't allow removal of elements.
+ * Decorator that doesn't allow removal from the wrapped {@link Iterator}.
  *
  * <p>There is no thread-safety guarantee.</p>
  *

@@ -45,15 +45,14 @@ import org.llorllale.cactoos.matchers.Throws;
 public class ImmutableTest {
 
     @Test
-    public void innerListMustNotBeChanged() {
+    public void innerListIsDecorated() {
         final List<String> strings = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final List<String> immutable = new Immutable<>(strings);
-        final int original = immutable.size();
         strings.add("d");
         new Assertion<>(
-            "inner list must not be changed",
-            original,
-            new IsEqual<>(immutable.size())
+            "Must reflect inner list in the decorator",
+            immutable,
+            new IsEqual<>(strings)
         ).affirm();
     }
 
@@ -408,7 +407,7 @@ public class ImmutableTest {
     public void notEqualsToObjectOfAnotherType() {
         new Assertion<>(
             "must not equal to object of another type",
-            new Immutable<>(),
+            new Immutable<>(new ListOf<>()),
             new IsNot<>(new IsEqual<>(new Object()))
         ).affirm();
     }
@@ -417,14 +416,14 @@ public class ImmutableTest {
     public void notEqualsToListWithDifferentElements() {
         new Assertion<>(
             "must not equal to List with different elements",
-            new Immutable<>(1, 2),
+            new Immutable<>(new ListOf<>(1, 2)),
             new IsNot<>(new IsEqual<>(new ListOf<>(1, 0)))
         ).affirm();
     }
 
     @Test
     public void isEqualToItself() {
-        final List<Integer> list = new Immutable<>(1, 2);
+        final List<Integer> list = new Immutable<>(new ListOf<>(1, 2));
         new Assertion<>(
             "must be equal to itself",
             list,
@@ -436,7 +435,7 @@ public class ImmutableTest {
     public void isEqualToListWithTheSameElements() {
         new Assertion<>(
             "must be equal to List with the same elements",
-            new Immutable<>(1, 2),
+            new Immutable<>(new ListOf<>(1, 2)),
             new IsEqual<>(new ListOf<>(1, 2))
         ).affirm();
     }
@@ -445,8 +444,8 @@ public class ImmutableTest {
     public void equalToEmptyImmutable() {
         new Assertion<>(
             "empty Immutable must be equal to empty Immutable",
-            new Immutable<>(),
-            new IsEqual<>(new Immutable<>())
+            new Immutable<>(new ListOf<>()),
+            new IsEqual<>(new Immutable<>(new ListOf<>()))
         ).affirm();
     }
 
@@ -454,9 +453,9 @@ public class ImmutableTest {
     public void testHashCode() {
         new Assertion<>(
             "hashCode() must be equal to hashCode of the corresponding List",
-            new Immutable<>(1, 2, 3).hashCode(),
+            new Immutable<>(new ListOf<>(1, 2, 3)).hashCode(),
             new IsEqual<>(
-                new Immutable<>(1, 2, 3).hashCode()
+                new ListOf<>(1, 2, 3).hashCode()
             )
         ).affirm();
     }
@@ -464,9 +463,9 @@ public class ImmutableTest {
     @Test
     public void testToString() {
         new Assertion<>(
-            "toString() must be concatenation of nested elements",
-            new Immutable<>("a", "b", "c").toString(),
-            new IsEqual<>("a, b, c")
+            "toString() must be equal to toString of the corresponding List",
+            new Immutable<>(new ListOf<>("a", "b", "c")).toString(),
+            new IsEqual<>(new ListOf<>("a", "b", "c").toString())
         ).affirm();
     }
 }

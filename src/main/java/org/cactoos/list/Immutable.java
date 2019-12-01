@@ -23,23 +23,13 @@
  */
 package org.cactoos.list;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.Or;
-import org.cactoos.scalar.SumOfInt;
-import org.cactoos.scalar.Unchecked;
-import org.cactoos.text.TextOf;
-import org.cactoos.text.UncheckedText;
 
 /**
- * {@link List} envelope that doesn't allow mutations.
+ * Decorator that doesn't allow mutations of the wrapped {@link List}.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -66,43 +56,10 @@ public final class Immutable<T> implements List<T> {
 
     /**
      * Ctor.
-     * @param items Source array
-     */
-    @SafeVarargs
-    public Immutable(final T... items) {
-        this(new IterableOf<T>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param src Source list
-     */
-    public Immutable(final List<T> src) {
-        this(() -> new ListOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Source iterable
-     */
-    public Immutable(final Iterable<T> src) {
-        this(() -> new ListOf<>(src));
-    }
-
-    /**
-     * Ctor.
      * @param src Source collection
      */
-    public Immutable(final Collection<T> src) {
-        this(() -> new ListOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param slr The scalar
-     */
-    public Immutable(final Scalar<List<T>> slr) {
-        this.list = new Unchecked<>(slr).value();
+    public Immutable(final List<T> src) {
+        this.list = src;
     }
 
     @Override
@@ -248,46 +205,17 @@ public final class Immutable<T> implements List<T> {
     }
 
     @Override
-    @SuppressFBWarnings("EQ_UNUSUAL")
     public boolean equals(final Object other) {
-        return new Unchecked<>(
-            new Or(
-                () -> other == this,
-                new And(
-                    () -> other != null,
-                    () -> List.class.isAssignableFrom(other.getClass()),
-                    () -> {
-                        final List<?> compared = (List<?>) other;
-                        final Iterator<?> iterator = compared.iterator();
-                        return new Unchecked<>(
-                            new And(
-                                (T input) -> input.equals(iterator.next()),
-                                this
-                            )
-                        ).value();
-                    }
-                )
-            )
-        ).value();
+        return this.list.equals(other);
     }
 
-    // @checkstyle MagicNumberCheck (30 lines)
     @Override
     public int hashCode() {
-        return new Unchecked<>(
-            new Folded<>(
-                42,
-                (hash, entry) -> new SumOfInt(
-                    () -> 37 * hash,
-                    entry::hashCode
-                ).value(),
-                this
-            )
-        ).value();
+        return this.list.hashCode();
     }
 
     @Override
     public String toString() {
-        return new UncheckedText(new TextOf(this)).asString();
+        return this.list.toString();
     }
 }
