@@ -26,6 +26,7 @@ package org.cactoos.list;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ListIterator;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
@@ -53,6 +54,97 @@ public class ImmutableTest {
             "Must reflect inner list in the decorator",
             immutable,
             new IsEqual<>(strings)
+        ).affirm();
+    }
+
+    @Test
+    public void returnsListIteratorWithUnsupportedRemove() {
+        new Assertion<>(
+            "Must return a list iterator that does not support remove()",
+            () -> {
+                final List<String> list = new Immutable<>(new ListOf<>("one"));
+                final ListIterator<String> iterator = list.listIterator();
+                iterator.next();
+                iterator.remove();
+                return true;
+            },
+            new Throws<>(UnsupportedOperationException.class)
+        ).affirm();
+    }
+
+    @Test
+    public void returnsListIteratorWithUnsupportedAdd() {
+        new Assertion<>(
+            "Must return a list iterator that does not support add()",
+            () -> {
+                final List<String> list = new Immutable<>(new ListOf<>("one"));
+                final ListIterator<String> iterator = list.listIterator();
+                iterator.next();
+                iterator.add("two");
+                return true;
+            },
+            new Throws<>(UnsupportedOperationException.class)
+        ).affirm();
+    }
+
+    @Test
+    public void subListReturnsListIteratorWithUnsupportedRemove() {
+        new Assertion<>(
+            "Must return a subtlist with a list iterator that does not support remove()",
+            () -> {
+                final List<String> list = new Immutable<>(new ListOf<>("one"));
+                final ListIterator<String> iterator = list.subList(0, 1).listIterator();
+                iterator.next();
+                iterator.remove();
+                return true;
+            },
+            new Throws<>(UnsupportedOperationException.class)
+        ).affirm();
+    }
+
+    @Test
+    public void subListReturnsListIteratorWithUnsupportedAdd() {
+        new Assertion<>(
+            "Must return a subtlist with a list iterator that does not support add()",
+            () -> {
+                final List<String> list = new Immutable<>(new ListOf<>("one"));
+                final ListIterator<String> iterator = list.subList(0, 1).listIterator();
+                iterator.next();
+                iterator.add("two");
+                return true;
+            },
+            new Throws<>(UnsupportedOperationException.class)
+        ).affirm();
+    }
+
+    @Test()
+    public void subListReturnsListIteratorWithUnsupportedSet() {
+        new Assertion<>(
+            "subList.listIterator().set() must throw exception",
+            () -> {
+                final ListIterator<String> iterator = new Immutable<>(
+                    new ListOf<>("one", "two", "three")
+                ).subList(0, 2).listIterator(0);
+                iterator.next();
+                iterator.set("zero");
+                return new Object();
+            },
+            new Throws<>(
+                "List Iterator is read-only and doesn't allow rewriting items",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
+    }
+
+    @Test()
+    public void returnsSubListWithUnsupportedSet() {
+        new Assertion<>(
+            "subList.set() must throw exception",
+            () -> new Immutable<>(new ListOf<>("one")).subList(0, 1).set(0, "zero"),
+            new Throws<>(
+                "#set(): the list is read-only",
+                UnsupportedOperationException.class
+            )
         ).affirm();
     }
 
@@ -453,9 +545,9 @@ public class ImmutableTest {
     public void testHashCode() {
         new Assertion<>(
             "hashCode() must be equal to hashCode of the corresponding List",
-            new Immutable<>(new ListOf<>(1, 2, 3)).hashCode(),
+            new Immutable<>(new ListOf<>(1, 2)).hashCode(),
             new IsEqual<>(
-                new ListOf<>(1, 2, 3).hashCode()
+                new ListOf<>(1, 2).hashCode()
             )
         ).affirm();
     }

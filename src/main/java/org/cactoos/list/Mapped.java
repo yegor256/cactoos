@@ -42,7 +42,7 @@ public final class Mapped<X, Y> extends ListEnvelope<Y> {
      * @param src Source iterable
      */
     public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
-        super(() -> new ListOf<Y>(
+        super(new ListOf<>(
             new org.cactoos.iterable.Mapped<>(fnc, src)
         ));
     }

@@ -23,11 +23,15 @@
  */
 package org.cactoos.list;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
+import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterable as {@link List}.
@@ -45,7 +49,11 @@ import org.cactoos.iterable.IterableOf;
  * @see Sticky
  * @since 0.1
  */
-public final class ListOf<T> extends ListEnvelope<T> {
+public final class ListOf<T> implements List<T> {
+    /**
+     * List.
+     */
+    private final Unchecked<List<T>> list;
 
     /**
      * Ctor.
@@ -71,13 +79,148 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * @param src An {@link Iterable}
      */
     public ListOf(final Iterable<T> src) {
-        super(() -> {
+        this(() -> {
             final List<T> temp = new LinkedList<>();
-            for (final T item : src) {
-                temp.add(item);
-            }
+            src.forEach(temp::add);
             return Collections.unmodifiableList(temp);
         });
     }
 
+    /**
+     * Ctor.
+     * @param slr The scalar
+     */
+    public ListOf(final Scalar<List<T>> slr) {
+        this.list = new Unchecked<>(slr);
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return this.list.value().iterator();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this.list.value().equals(other);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.list.value().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.list.value().toString();
+    }
+
+    @Override
+    public int size() {
+        return this.list.value().size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.list.value().isEmpty();
+    }
+
+    @Override
+    public boolean contains(final Object object) {
+        return this.list.value().contains(object);
+    }
+
+    @Override
+    public Object[] toArray() {
+        return this.list.value().toArray();
+    }
+
+    @Override
+    public <X> X[] toArray(final X[] array) {
+        return this.list.value().toArray(array);
+    }
+
+    @Override
+    public boolean add(final T item) {
+        return this.list.value().add(item);
+    }
+
+    @Override
+    public boolean remove(final Object object) {
+        return this.list.value().remove(object);
+    }
+
+    @Override
+    public boolean containsAll(final Collection<?> col) {
+        return this.list.value().containsAll(col);
+    }
+
+    @Override
+    public boolean addAll(final Collection<? extends T> col) {
+        return this.list.value().addAll(col);
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> col) {
+        return this.list.value().removeAll(col);
+    }
+
+    @Override
+    public boolean retainAll(final Collection<?> col) {
+        return this.list.value().retainAll(col);
+    }
+
+    @Override
+    public void clear() {
+        this.list.value().clear();
+    }
+
+    @Override
+    public boolean addAll(final int index, final Collection<? extends T> col) {
+        return this.list.value().addAll(index, col);
+    }
+
+    @Override
+    public T get(final int index) {
+        return this.list.value().get(index);
+    }
+
+    @Override
+    public T set(final int index, final T element) {
+        return this.list.value().set(index, element);
+    }
+
+    @Override
+    public void add(final int index, final T element) {
+        this.list.value().add(index, element);
+    }
+
+    @Override
+    public T remove(final int index) {
+        return this.list.value().remove(index);
+    }
+
+    @Override
+    public int indexOf(final Object element) {
+        return this.list.value().indexOf(element);
+    }
+
+    @Override
+    public int lastIndexOf(final Object element) {
+        return this.list.value().lastIndexOf(element);
+    }
+
+    @Override
+    public ListIterator<T> listIterator() {
+        return this.list.value().listIterator();
+    }
+
+    @Override
+    public ListIterator<T> listIterator(final int index) {
+        return this.list.value().listIterator(index);
+    }
+
+    @Override
+    public List<T> subList(final int start, final int end) {
+        return this.list.value().subList(start, end);
+    }
 }

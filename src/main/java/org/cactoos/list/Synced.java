@@ -23,7 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,24 +58,18 @@ public final class Synced<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
-     * @param items The array
-     */
-    public Synced(final Iterable<X> items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
      * @param list The iterable
      */
-    public Synced(final Collection<X> list) {
+    public Synced(final Iterable<X> list) {
         super(
-            new org.cactoos.scalar.Synced<>(
-                () -> {
-                    final List<X> temp = new LinkedList<>();
-                    temp.addAll(list);
-                    return Collections.synchronizedList(temp);
-                }
+            new ListOf<>(
+                new org.cactoos.scalar.Synced<>(
+                    () -> {
+                        final List<X> temp = new LinkedList<>();
+                        list.forEach(temp::add);
+                        return Collections.synchronizedList(temp);
+                    }
+                )
             )
         );
     }

@@ -50,8 +50,10 @@ public final class Solid<X> extends ListEnvelope<X> {
      */
     public Solid(final Iterable<X> items) {
         super(
-            new org.cactoos.scalar.Solid<>(
-                () -> new Synced<>(new Sticky<>(items))
+            new ListOf<>(
+                new org.cactoos.scalar.Solid<>(
+                    () -> new Synced<>(new Sticky<>(items))
+                )
             )
         );
     }

@@ -26,6 +26,7 @@ package org.cactoos.list;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Joined list.
@@ -42,9 +43,8 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param src Source lists
      */
     @SafeVarargs
-    @SuppressWarnings("PMD.UseVarargs")
     public Joined(final List<X>... src) {
-        this(new ListOf<>(src));
+        this(new IterableOf<>(src));
     }
 
     /**
@@ -53,8 +53,9 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param items List
      * @since 0.32
      */
+    @SuppressWarnings("unchecked")
     public Joined(final X item, final List<X> items) {
-        super(() -> new Joined<X>(new ListOf<X>(item), items));
+        super(new Joined<>(new ListOf<>(item), items));
     }
 
     /**
@@ -62,10 +63,11 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param src Source lists
      */
     public Joined(final Iterable<List<X>> src) {
-        super(() -> Collections.unmodifiableList(
-            new ListOf<>(src).stream()
-                .flatMap(List::stream)
-                .collect(Collectors.toList())
+        super(
+            Collections.unmodifiableList(
+                new ListOf<>(src).stream()
+                    .flatMap(List::stream)
+                    .collect(Collectors.toList())
             )
         );
     }

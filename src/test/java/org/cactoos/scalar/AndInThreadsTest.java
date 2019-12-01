@@ -33,6 +33,7 @@ import org.cactoos.func.ProcNoNulls;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
+import org.cactoos.list.Sticky;
 import org.cactoos.list.Synced;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
@@ -99,8 +100,8 @@ public final class AndInThreadsTest {
 
     @Test
     public void iteratesList() {
-        final List<String> list = new Synced<>(
-            new ArrayList<>(2)
+        final List<String> list = new Sticky<>(
+            new Synced<>(new ArrayList<>(2))
         );
         MatcherAssert.assertThat(
             "Can't iterate a list with a procedure",
@@ -182,8 +183,8 @@ public final class AndInThreadsTest {
 
     @Test
     public void worksWithExecServiceProcValues() throws Exception {
-        final List<Integer> list = new Synced<>(
-            new ArrayList<>(2)
+        final List<Integer> list = new Sticky<>(
+            new Synced<>(new ArrayList<>(2))
         );
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(
@@ -212,8 +213,8 @@ public final class AndInThreadsTest {
 
     @Test
     public void worksWithExecServiceProcIterable() throws Exception {
-        final List<Integer> list = new Synced<>(
-            new ArrayList<>(2)
+        final List<Integer> list = new Sticky<>(
+            new Synced<>(new ArrayList<>(2))
         );
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(

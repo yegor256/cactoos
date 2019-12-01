@@ -23,10 +23,10 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Shuffled list.
@@ -51,29 +51,24 @@ public final class Shuffled<T> extends ListEnvelope<T> {
      */
     @SafeVarargs
     public Shuffled(final T... src) {
-        this(new ListOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying collection
-     */
-    @SuppressWarnings("unchecked")
-    public Shuffled(final Iterable<T> src) {
-        this(new ListOf<>(src));
+        this(new IterableOf<>(src));
     }
 
     /**
      * Ctor.
      * @param src Source
      */
-    public Shuffled(final Collection<T> src) {
-        super(() -> {
-            final List<T> items = new LinkedList<>();
-            items.addAll(src);
-            Collections.shuffle(items);
-            return Collections.unmodifiableList(items);
-        });
+    public Shuffled(final Iterable<T> src) {
+        super(
+            new ListOf<>(
+                () -> {
+                    final List<T> items = new LinkedList<>();
+                    src.forEach(items::add);
+                    Collections.shuffle(items);
+                    return Collections.unmodifiableList(items);
+                }
+            )
+        );
     }
 
 }

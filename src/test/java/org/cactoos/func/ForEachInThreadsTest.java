@@ -26,6 +26,7 @@ package org.cactoos.func;
 import java.util.ArrayList;
 import java.util.List;
 import org.cactoos.list.ListOf;
+import org.cactoos.list.Sticky;
 import org.cactoos.list.Synced;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Test;
@@ -37,15 +38,16 @@ import org.llorllale.cactoos.matchers.MatcherOf;
  *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public class ForEachInThreadsTest {
 
     @Test
     @SuppressWarnings("unchecked")
     public void testProcIterable() throws Exception {
-        final List<Integer> list = new Synced<>(
-            new ArrayList<>(
-                2
+        final List<Integer> list = new Sticky<>(
+            new Synced<>(
+                new ArrayList<>(2)
             )
         );
         new ForEachInThreads<Integer>(

@@ -23,17 +23,12 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Matched;
 
 /**
  * List decorator that goes through the list only once.
- *
- * <p>The list is read only.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -53,24 +48,18 @@ public final class Sticky<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
-     * @param items The array
-     */
-    public Sticky(final Iterable<X> items) {
-        this(new ListOf<>(items));
-    }
-
-    /**
-     * Ctor.
      * @param list The iterable
      */
-    public Sticky(final Collection<X> list) {
+    public Sticky(final Iterable<X> list) {
         super(
-            new org.cactoos.scalar.Sticky<>(
-                () -> {
-                    final List<X> temp = new LinkedList<>();
-                    temp.addAll(list);
-                    return Collections.unmodifiableList(temp);
-                }
+            new ListOf<>(
+                new org.cactoos.scalar.Sticky<>(
+                    () -> {
+                        final List<X> temp = new LinkedList<>();
+                        list.forEach(temp::add);
+                        return temp;
+                    }
+                )
             )
         );
     }

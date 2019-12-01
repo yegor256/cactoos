@@ -23,7 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -215,13 +214,13 @@ public final class ListEnvelopeTest {
 
     private static final class StringList extends ListEnvelope<String> {
         StringList(final String... elements) {
-            super(() -> new Immutable<>(Arrays.asList(elements)));
+            super(new Immutable<>(new ListOf<>(elements)));
         }
     }
 
     private static final class MutableStringList extends ListEnvelope<String> {
         MutableStringList(final String... elements) {
-            super(() -> new LinkedList<>(Arrays.asList(elements)));
+            super(new LinkedList<>(new ListOf<>(elements)));
         }
     }
 }

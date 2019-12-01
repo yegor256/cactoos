@@ -26,9 +26,7 @@ package org.cactoos.list;
 import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
-import org.cactoos.Scalar;
 import org.cactoos.collection.CollectionEnvelope;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * {@link List} envelope that allows mutations.
@@ -38,11 +36,6 @@ import org.cactoos.scalar.Unchecked;
  * @param <T> Element type
  * @since 0.23
  * @checkstyle AbstractClassNameCheck (500 lines)
- * @todo #947:30min ListEnvelope should only delegates all the methods
- *  of List to the wrapped List. See IterableEnvelope for an example.
- *  If needed ListOf should have some methods that were previously here
- *  and implement List instead of extending ListEnvelope.
- *  Again see IterableOf for an example.
  */
 @SuppressWarnings(
     {
@@ -65,14 +58,6 @@ public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
     public ListEnvelope(final List<T> list) {
         super(list);
         this.list = list;
-    }
-
-    /**
-     * Ctor.
-     * @param slr The scalar
-     */
-    public ListEnvelope(final Scalar<List<T>> slr) {
-        this(new Unchecked<>(slr).value());
     }
 
     @Override

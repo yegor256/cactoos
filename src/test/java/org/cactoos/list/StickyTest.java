@@ -23,7 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -152,51 +151,6 @@ public final class StickyTest {
             list.size(),
             new IsEqual<>(2)
         );
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testAdd() throws Exception {
-        new Sticky<>(1, 2).add(1);
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testRemove() throws Exception {
-        new Sticky<>(1, 2).remove(1);
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testAddAll() throws Exception {
-        new Sticky<>(1, 2).addAll(new ArrayList<>(2));
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testRemoveAll() throws Exception {
-        new Sticky<>(1, 2).removeAll(new ArrayList<>(2));
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testRetainAll() throws Exception {
-        new Sticky<>(1, 2).retainAll(new ArrayList<>(2));
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testClear() throws Exception {
-        new Sticky<>(1, 2).clear();
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testSet() throws Exception {
-        new Sticky<>(1, 2).set(1, 1);
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testAddIndex() throws Exception {
-        new Sticky<>(1, 2).add(1, 1);
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testRemoveIndex() throws Exception {
-        new Sticky<>(1, 2).remove(1);
     }
 
     @Test
