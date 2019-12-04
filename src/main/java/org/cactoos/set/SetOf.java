@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.cactoos.collection.CollectionEnvelope;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -60,13 +59,11 @@ public final class SetOf<T> extends CollectionEnvelope<T> implements Set<T> {
      */
     public SetOf(final Iterable<T> src) {
         super(
-            new CollectionOf<>(
-                () -> {
-                    final Set<T> tmp = new HashSet<>();
-                    src.forEach(tmp::add);
-                    return Collections.unmodifiableSet(tmp);
-                }
-            )
+            () -> {
+                final Set<T> tmp = new HashSet<>();
+                src.forEach(tmp::add);
+                return Collections.unmodifiableSet(tmp);
+            }
         );
     }
 }

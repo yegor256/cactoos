@@ -60,23 +60,13 @@ public final class Synced<T> extends CollectionEnvelope<T> {
      * @param src An {@link Iterable}
      */
     public Synced(final Iterable<T> src) {
-        this(new CollectionOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src An {@link Iterable}
-     */
-    public Synced(final Collection<T> src) {
         super(
-            new CollectionOf<>(
-                new org.cactoos.scalar.Synced<>(
-                    () -> {
-                        final Collection<T> temp = new LinkedList<>();
-                        src.forEach(temp::add);
-                        return Collections.synchronizedCollection(temp);
-                    }
-                )
+            new org.cactoos.scalar.Synced<>(
+                () -> {
+                    final Collection<T> temp = new LinkedList<>();
+                    src.forEach(temp::add);
+                    return Collections.synchronizedCollection(temp);
+                }
             )
         );
     }

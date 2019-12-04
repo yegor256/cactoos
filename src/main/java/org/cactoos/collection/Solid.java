@@ -52,10 +52,8 @@ public final class Solid<T> extends CollectionEnvelope<T> {
      */
     public Solid(final Iterable<T> src) {
         super(
-            new CollectionOf<>(
-                new org.cactoos.scalar.Solid<>(
-                    () -> new Synced<>(new Sticky<>(src))
-                )
+            new org.cactoos.scalar.Solid<>(
+                () -> new Synced<>(new Sticky<>(src))
             )
         );
     }

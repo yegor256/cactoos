@@ -25,6 +25,7 @@
 package org.cactoos.collection;
 
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsCollectionContaining;
@@ -84,7 +85,7 @@ public final class SkippedTest {
             "Can't skip elements in collection",
             new Skipped<>(
                 2,
-                new CollectionOf<>("one", "two", "three", "four")
+                new ListOf<>("one", "two", "three", "four")
             ),
             new AllOf<>(
                 new IterableOf<org.hamcrest.Matcher<? super Skipped<String>>>(

@@ -24,6 +24,7 @@
 package org.cactoos.collection;
 
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -47,7 +48,7 @@ public class ImmutableTest {
         new Assertion<>(
             "size() must be equals to original",
             new Immutable<>(
-                new CollectionOf<>(1, 2)
+                new ListOf<>(1, 2)
             ),
             new HasSize(2)
         ).affirm();
@@ -58,10 +59,10 @@ public class ImmutableTest {
         new Assertion<>(
             "isEmpty() must be equals to original",
             new Immutable<>(
-                new CollectionOf<>(1, 2)
+                new ListOf<>(1, 2)
             ).isEmpty(),
             new IsEqual<>(
-                new CollectionOf<>(1, 2).isEmpty()
+                new ListOf<>(1, 2).isEmpty()
             )
         ).affirm();
     }
@@ -71,7 +72,7 @@ public class ImmutableTest {
         new Assertion<>(
             "iterator() is equal to original",
             () -> new Immutable<>(
-                new CollectionOf<>(1, 2)
+                new ListOf<>(1, 2)
             ).iterator(),
             new HasValues<>(1, 2)
         ).affirm();
@@ -82,10 +83,10 @@ public class ImmutableTest {
         new Assertion<>(
             "contains() must be equals to original",
             new Immutable<>(
-                new CollectionOf<>(1, 2)
+                new ListOf<>(1, 2)
             ).contains(1),
             new IsEqual<>(
-                new CollectionOf<>(1, 2).contains(1)
+                new ListOf<>(1, 2).contains(1)
             )
         ).affirm();
     }
@@ -95,10 +96,10 @@ public class ImmutableTest {
         new Assertion<>(
             "toArray() must be equals to original",
             new Immutable<>(
-                new CollectionOf<>(1, 2)
+                new ListOf<>(1, 2)
             ).toArray(),
             new IsEqual<>(
-                new CollectionOf<>(1, 2).toArray()
+                new ListOf<>(1, 2).toArray()
             )
         ).affirm();
     }
@@ -111,7 +112,7 @@ public class ImmutableTest {
                 1, 2, 3
             ).toArray(new Integer[3]),
             new IsEqual<>(
-                new CollectionOf<>(1, 2, 3).toArray(new Integer[3])
+                new ListOf<>(1, 2, 3).toArray(new Integer[3])
             )
         ).affirm();
     }
@@ -137,7 +138,7 @@ public class ImmutableTest {
         new Assertion<>(
             "remove() must throw exception",
             () -> new Immutable<>(
-                new CollectionOf<>(1, 2)
+                new ListOf<>(1, 2)
             ).remove(1),
             new Throws<>(
                 new MatcherOf<>(
@@ -150,14 +151,14 @@ public class ImmutableTest {
 
     @Test
     public void containsAll() {
-        final CollectionOf<Integer> another = new CollectionOf<>(3, 4, 5);
+        final ListOf<Integer> another = new ListOf<>(3, 4, 5);
         new Assertion<>(
             "containsAll() must be equals to original",
             new Immutable<>(
-                new CollectionOf<>(1, 2, 3)
+                new ListOf<>(1, 2, 3)
             ).containsAll(another),
             new IsEqual<>(
-                new CollectionOf<>(1, 2, 3).containsAll(another)
+                new ListOf<>(1, 2, 3).containsAll(another)
             )
         ).affirm();
     }
@@ -167,8 +168,8 @@ public class ImmutableTest {
         new Assertion<>(
             "addAll() must throw exception",
             () -> new Immutable<>(
-                new CollectionOf<>(1, 2)
-            ).addAll(new CollectionOf<>(3, 4)),
+                new ListOf<>(1, 2)
+            ).addAll(new ListOf<>(3, 4)),
             new Throws<>(
                 new MatcherOf<>(
                     (String msg) -> msg.equals("#addAll(): the collection is read-only")
@@ -183,8 +184,8 @@ public class ImmutableTest {
         new Assertion<>(
             "removeAll() must throw exception",
             () -> new Immutable<>(
-                new CollectionOf<>(1, 2, 3)
-            ).removeAll(new CollectionOf<>(2, 3)),
+                new ListOf<>(1, 2, 3)
+            ).removeAll(new ListOf<>(2, 3)),
             new Throws<>(
                 new MatcherOf<>(
                     (String msg) -> msg.equals("#removeAll(): the collection is read-only")
@@ -199,8 +200,8 @@ public class ImmutableTest {
         new Assertion<>(
             "retainAll() must throw exception",
             () -> new Immutable<>(
-                new CollectionOf<>(1, 2, 3)
-            ).retainAll(new CollectionOf<>(1)),
+                new ListOf<>(1, 2, 3)
+            ).retainAll(new ListOf<>(1)),
             new Throws<>(
                 new MatcherOf<>(
                     (String msg) -> msg.equals("#retainAll(): the collection is read-only")
@@ -216,7 +217,7 @@ public class ImmutableTest {
             "clear() must throw exception",
             () -> {
                 new Immutable<>(
-                    new CollectionOf<>(1, 2, 3)
+                    new ListOf<>(1, 2, 3)
                 ).clear();
                 return new Object();
             },
@@ -234,10 +235,10 @@ public class ImmutableTest {
         new Assertion<>(
             "toString() must be equals to original",
             new Immutable<>(
-                new CollectionOf<>(1, 2, 3)
+                new ListOf<>(1, 2, 3)
             ).toString(),
             new IsEqual<>(
-                new CollectionOf<>(1, 2, 3).toString()
+                new ListOf<>(1, 2, 3).toString()
             )
         ).affirm();
     }
@@ -247,24 +248,24 @@ public class ImmutableTest {
         new Assertion<>(
             "hashCode() must be equals to original",
             new Immutable<>(
-                new CollectionOf<>(1, 2, 3)
+                new ListOf<>(1, 2, 3)
             ).hashCode(),
             new IsEqual<>(
-                new CollectionOf<>(1, 2, 3).hashCode()
+                new ListOf<>(1, 2, 3).hashCode()
             )
         ).affirm();
     }
 
     @Test
     public void testEquals() {
-        final CollectionOf<Integer> another = new CollectionOf<>(4, 5, 6);
+        final ListOf<Integer> another = new ListOf<>(4, 5, 6);
         new Assertion<>(
             "equals() must be equals to original",
             new Immutable<>(
-                new CollectionOf<>(1, 2, 3)
+                new ListOf<>(1, 2, 3)
             ).equals(another),
             new IsEqual<>(
-                new CollectionOf<>(1, 2, 3).equals(another)
+                new ListOf<>(1, 2, 3).equals(another)
             )
         ).affirm();
     }

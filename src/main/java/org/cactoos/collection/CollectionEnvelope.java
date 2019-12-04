@@ -24,7 +24,9 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
+import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableEnvelope;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Base collection.
@@ -40,6 +42,14 @@ public abstract class CollectionEnvelope<X>
      * The wrapped collection.
      */
     private final Collection<X> col;
+
+    /**
+     * Ctor.
+     * @param scalar Scalar to return collection
+     */
+    public CollectionEnvelope(final Scalar<Collection<X>> scalar) {
+        this(new Unchecked<>(scalar).value());
+    }
 
     /**
      * Ctor.

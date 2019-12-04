@@ -25,8 +25,8 @@ package org.cactoos.scalar;
 
 import java.util.stream.Collectors;
 import org.cactoos.Scalar;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 
 /**
  * Make a scalar which is sum of scalar's values.
@@ -61,7 +61,7 @@ final class SumOfScalar implements Scalar<SumOf> {
     public SumOf value() {
         return new SumOf(
             new IterableOf<>(
-                new CollectionOf<>(this.scalars)
+                new ListOf<>(this.scalars)
                     .stream()
                     .map(
                         scalar -> new Unchecked<>(scalar).value()

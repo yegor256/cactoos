@@ -23,8 +23,6 @@
  */
 package org.cactoos.list;
 
-import java.util.Collection;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -51,19 +49,10 @@ public final class Solid<X> extends ListEnvelope<X> {
      * @param items The array
      */
     public Solid(final Iterable<X> items) {
-        this(new CollectionOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param list The iterable
-     */
-    public Solid(final Collection<X> list) {
         super(
             new org.cactoos.scalar.Solid<>(
-                () -> new Synced<>(new Sticky<>(list))
+                () -> new Synced<>(new Sticky<>(items))
             )
         );
     }
-
 }

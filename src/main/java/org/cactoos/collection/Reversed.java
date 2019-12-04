@@ -54,15 +54,13 @@ public final class Reversed<X> extends CollectionEnvelope<X> {
      */
     public Reversed(final Iterable<X> src) {
         super(
-            new Sticky<>(
-                new CollectionOf<>(
-                    () -> {
-                        final List<X> items = new LinkedList<>();
-                        src.forEach(items::add);
-                        Collections.reverse(items);
-                        return items;
-                    }
-                )
+            new org.cactoos.scalar.Sticky<>(
+                () -> {
+                    final List<X> items = new LinkedList<>();
+                    src.forEach(items::add);
+                    Collections.reverse(items);
+                    return items;
+                }
             )
         );
     }

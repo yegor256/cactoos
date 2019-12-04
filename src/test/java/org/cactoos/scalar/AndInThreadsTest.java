@@ -29,7 +29,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.func.FuncOf;
 import org.cactoos.func.ProcNoNulls;
 import org.cactoos.iterable.IterableOf;
@@ -117,7 +116,7 @@ public final class AndInThreadsTest {
         MatcherAssert.assertThat(
             list,
             new IsIterableContainingInAnyOrder<String>(
-                new CollectionOf<Matcher<? super String>>(
+                new ListOf<Matcher<? super String>>(
                     new MatcherOf<>(
                         text -> {
                             return "hello".equals(text);
@@ -170,7 +169,7 @@ public final class AndInThreadsTest {
         MatcherAssert.assertThat(
             list,
             new IsIterableContainingInAnyOrder<Integer>(
-                new CollectionOf<Matcher<? super Integer>>(
+                new ListOf<Matcher<? super Integer>>(
                     new MatcherOf<>(
                         value -> {
                             return value.equals(1);
@@ -204,12 +203,12 @@ public final class AndInThreadsTest {
         );
         new AndInThreads(
             new ProcNoNulls<Integer>(list::add),
-                new ListOf<>(1, 2)
+            new ListOf<>(1, 2)
         ).value();
         MatcherAssert.assertThat(
             list,
             new IsIterableContainingInAnyOrder<Integer>(
-                new CollectionOf<Matcher<? super Integer>>(
+                new ListOf<Matcher<? super Integer>>(
                     new MatcherOf<>(
                         value -> {
                             return value.equals(1);
@@ -252,7 +251,7 @@ public final class AndInThreadsTest {
         MatcherAssert.assertThat(
             list,
             new IsIterableContainingInAnyOrder<Integer>(
-                new CollectionOf<Matcher<? super Integer>>(
+                new ListOf<Matcher<? super Integer>>(
                     new MatcherOf<>(
                         value -> {
                             return value.equals(1);
@@ -277,12 +276,12 @@ public final class AndInThreadsTest {
         new AndInThreads(
             service,
             new ProcNoNulls<Integer>(list::add),
-                new ListOf<>(1, 2)
+            new ListOf<>(1, 2)
         ).value();
         MatcherAssert.assertThat(
             list,
             new IsIterableContainingInAnyOrder<Integer>(
-                new CollectionOf<Matcher<? super Integer>>(
+                new ListOf<Matcher<? super Integer>>(
                     new MatcherOf<>(
                         value -> {
                             return value.equals(1);

@@ -26,6 +26,7 @@ package org.cactoos.collection;
 import java.util.Collection;
 import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 
 /**
  * Collection that doesn't allow any modifications.
@@ -70,7 +71,7 @@ public final class Immutable<X> implements Collection<X> {
      * @param src Source iterable
      */
     public Immutable(final Iterable<X> src) {
-        this(new CollectionOf<>(src));
+        this(new ListOf<X>(src));
     }
 
     /**

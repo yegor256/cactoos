@@ -26,7 +26,9 @@ package org.cactoos.collection;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
+import org.cactoos.scalar.Sticky;
 
 /**
  * Sorted collection.
@@ -58,10 +60,7 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
      */
     @SuppressWarnings("unchecked")
     public Sorted(final Iterable<T> src) {
-        this(
-            (Comparator<T>) Comparator.naturalOrder(),
-            new CollectionOf<>(src)
-        );
+        this((Comparator<T>) Comparator.naturalOrder(), src);
     }
 
     /**
@@ -71,7 +70,7 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
      */
     @SafeVarargs
     public Sorted(final Comparator<T> cmp, final T... src) {
-        this(cmp, new CollectionOf<>(src));
+        this(cmp, new IterableOf<T>(src));
     }
 
     /**
@@ -82,14 +81,12 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
         super(
             new Sticky<>(
-                new CollectionOf<>(
-                    () -> {
-                        final List<T> items = new LinkedList<>();
-                        src.forEach(items::add);
-                        items.sort(cmp);
-                        return items;
-                    }
-                )
+                () -> {
+                    final List<T> items = new LinkedList<>();
+                    src.forEach(items::add);
+                    items.sort(cmp);
+                    return items;
+                }
             )
         );
     }

@@ -52,14 +52,12 @@ public final class Sticky<E> extends CollectionEnvelope<E> {
      */
     public Sticky(final Iterable<E> src) {
         super(
-            new CollectionOf<>(
-                new org.cactoos.scalar.Sticky<>(
-                    () -> {
-                        final Collection<E> temp = new LinkedList<>();
-                        src.forEach(temp::add);
-                        return temp;
-                    }
-                )
+            new org.cactoos.scalar.Sticky<>(
+                () -> {
+                    final Collection<E> temp = new LinkedList<>();
+                    src.forEach(temp::add);
+                    return temp;
+                }
             )
         );
     }
