@@ -26,6 +26,8 @@ package org.cactoos.collection;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import org.cactoos.func.FuncOf;
+import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -61,13 +63,17 @@ public final class Synced<T> extends CollectionEnvelope<T> {
      */
     public Synced(final Iterable<T> src) {
         super(
-            new org.cactoos.scalar.Synced<>(
-                () -> {
-                    final Collection<T> temp = new LinkedList<>();
-                    src.forEach(temp::add);
-                    return Collections.synchronizedCollection(temp);
-                }
-            )
+            new UncheckedFunc<>(
+                new FuncOf<Iterable<T>, Collection<T>>(
+                    new org.cactoos.scalar.Synced<>(
+                        () -> {
+                            final Collection<T> temp = new LinkedList<>();
+                            src.forEach(temp::add);
+                            return Collections.synchronizedCollection(temp);
+                        }
+                    )
+                )
+            ).apply(src)
         );
     }
 

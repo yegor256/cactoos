@@ -23,11 +23,13 @@
  */
 package org.cactoos.collection;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.func.FuncOf;
+import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.Sticky;
 
 /**
  * Shuffled collection.
@@ -54,14 +56,18 @@ public final class Shuffled<T> extends CollectionEnvelope<T> {
      */
     public Shuffled(final Iterable<T> src) {
         super(
-            new Sticky<>(
-                () -> {
-                    final List<T> items = new LinkedList<>();
-                    src.forEach(items::add);
-                    Collections.shuffle(items);
-                    return items;
-                }
-            )
+            new UncheckedFunc<>(
+                new FuncOf<Iterable<T>, Collection<T>>(
+                    new org.cactoos.scalar.Sticky<>(
+                        () -> {
+                            final List<T> items = new LinkedList<>();
+                            src.forEach(items::add);
+                            Collections.shuffle(items);
+                            return items;
+                        }
+                    )
+                )
+            ).apply(src)
         );
     }
 
