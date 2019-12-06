@@ -27,10 +27,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.cactoos.collection.CollectionEnvelope;
-import org.cactoos.func.FuncOf;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterable as {@link Set}.
@@ -62,16 +60,12 @@ public final class SetOf<T> extends CollectionEnvelope<T> implements Set<T> {
      */
     public SetOf(final Iterable<T> src) {
         super(
-            new UncheckedFunc<>(
-                new FuncOf<Iterable<T>, Set<T>>(
-                    new Unchecked<>(
-                        () -> {
-                            final Set<T> tmp = new HashSet<>();
-                            src.forEach(tmp::add);
-                            return Collections.unmodifiableSet(tmp);
-                        }
-                    )
-                )
+            new UncheckedFunc<Iterable<T>, Set<T>>(
+                input -> {
+                    final Set<T> tmp = new HashSet<>();
+                    input.forEach(tmp::add);
+                    return Collections.unmodifiableSet(tmp);
+                }
             ).apply(src)
         );
     }

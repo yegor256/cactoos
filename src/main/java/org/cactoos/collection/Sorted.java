@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.func.FuncOf;
+import org.cactoos.func.StickyFunc;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
@@ -83,15 +83,13 @@ public final class Sorted<T> extends CollectionEnvelope<T> {
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
         super(
             new UncheckedFunc<>(
-                new FuncOf<Iterable<T>, Collection<T>>(
-                    new org.cactoos.scalar.Sticky<>(
-                        () -> {
-                            final List<T> items = new LinkedList<>();
-                            src.forEach(items::add);
-                            items.sort(cmp);
-                            return items;
-                        }
-                    )
+                new StickyFunc<Iterable<T>, Collection<T>>(
+                    input -> {
+                        final List<T> items = new LinkedList<>();
+                        input.forEach(items::add);
+                        items.sort(cmp);
+                        return items;
+                    }
                 )
             ).apply(src)
         );
