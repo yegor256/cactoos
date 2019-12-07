@@ -27,9 +27,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.func.FuncOf;
-import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * A {@link Collection} that is both synchronized and sticky.
@@ -57,20 +56,18 @@ public final class Solid<T> extends CollectionEnvelope<T> {
      */
     public Solid(final Iterable<T> src) {
         super(
-            new UncheckedFunc<>(
-                new FuncOf<Iterable<T>, Collection<T>>(
-                    new org.cactoos.scalar.Solid<>(
-                        new org.cactoos.scalar.Sticky<>(
-                            () -> {
-                                final List<T> items = new LinkedList<>();
-                                src.forEach(items::add);
-                                Collections.shuffle(items);
-                                return items;
-                            }
-                        )
+            new Unchecked<>(
+                new org.cactoos.scalar.Solid<>(
+                    new org.cactoos.scalar.Sticky<>(
+                        () -> {
+                            final List<T> items = new LinkedList<>();
+                            src.forEach(items::add);
+                            Collections.shuffle(items);
+                            return items;
+                        }
                     )
                 )
-            ).apply(src)
+            ).value()
         );
     }
 
