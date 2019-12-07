@@ -25,7 +25,7 @@ package org.cactoos.collection;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import org.cactoos.func.StickyFunc;
+import org.cactoos.func.FuncOf;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterable.IterableOf;
 
@@ -55,12 +55,14 @@ public final class Sticky<E> extends CollectionEnvelope<E> {
     public Sticky(final Iterable<E> src) {
         super(
             new UncheckedFunc<>(
-                new StickyFunc<Iterable<E>, Collection<E>>(
-                    input -> {
-                        final Collection<E> temp = new LinkedList<>();
-                        input.forEach(temp::add);
-                        return temp;
-                    }
+                new FuncOf<Iterable<E>, Collection<E>>(
+                    new org.cactoos.scalar.Sticky<>(
+                        () -> {
+                            final Collection<E> temp = new LinkedList<>();
+                            src.forEach(temp::add);
+                            return temp;
+                        }
+                    )
                 )
             ).apply(src)
         );
