@@ -23,7 +23,6 @@
  */
 package org.cactoos.collection;
 
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -109,7 +108,7 @@ public class ImmutableTest {
         new Assertion<>(
             "toArray(T[]) must be equals to original",
             new Immutable<>(
-                1, 2, 3
+                new ListOf<>(1, 2, 3)
             ).toArray(new Integer[3]),
             new IsEqual<>(
                 new ListOf<>(1, 2, 3).toArray(new Integer[3])
@@ -122,7 +121,7 @@ public class ImmutableTest {
         new Assertion<>(
             "add() must throw exception",
             () -> new Immutable<>(
-                new IterableOf<>(1, 2)
+                new ListOf<>(1, 2)
             ).add(3),
             new Throws<>(
                 new MatcherOf<>(
