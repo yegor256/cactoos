@@ -31,6 +31,7 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test Case for {@link CollectionOf}.
@@ -41,7 +42,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @Deprecated
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public final class CollectionOfTest {
 
     @Test
@@ -90,7 +91,8 @@ public final class CollectionOfTest {
     public void returnsIteratorWithSupportedRemove() {
         final CollectionEnvelope<String> list = new CollectionEnvelope<String>(
             new CollectionOf<>("eleven")
-        ) { };
+        ) {
+        };
         final Iterator<String> iterator = list.iterator();
         iterator.next();
         iterator.remove();
@@ -189,6 +191,53 @@ public final class CollectionOfTest {
             "Must have different hash code for different entries",
             new CollectionOf<>("a", "b").hashCode(),
             new IsNot<>(new IsEqual<>(new CollectionOf<>("b", "a").hashCode()))
+        ).affirm();
+    }
+
+    @Test
+    public void contains() {
+        new Assertion<>(
+            "Must contain element",
+            new CollectionOf<>("a", "b").contains("a"),
+            new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    public void add() {
+        new Assertion<>(
+            "Must add element",
+            new CollectionOf<>("a", "b").add("c"),
+            new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    public void addAll() {
+        new Assertion<>(
+            "Must add all elements",
+            new CollectionOf<>("a", "b").addAll(new ListOf<String>("c", "d")),
+            new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    public void remove() {
+        new Assertion<>(
+            "Must remove element",
+            new CollectionOf<>("a", "b").remove("b"),
+            new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    public void removeAll() {
+        new Assertion<>(
+            "Must remove all elements",
+            new CollectionOf<>("a", "b").removeAll(
+                new CollectionOf<>("a", "b")
+            ),
+            new IsTrue()
         ).affirm();
     }
 }
