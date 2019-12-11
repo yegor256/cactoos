@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link CollectionOf}.
- * NOTE: This test class is to be removed
  * @since 0.23
  * @deprecated This test class is to be removed after {@link CollectionOf}
  *  is completely removed.
