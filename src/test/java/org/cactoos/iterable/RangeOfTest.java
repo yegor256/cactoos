@@ -61,6 +61,7 @@ public class RangeOfTest {
                     100,
                     new Func<Integer, Integer>() {
                         private int last;
+
                         @Override
                         public Integer apply(
                             final Integer input) throws Exception {

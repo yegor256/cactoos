@@ -53,8 +53,8 @@ import org.cactoos.scalar.Unchecked;
  * @todo #1116:30min Remove this deprecated class after the issue
  *  https://github.com/llorllale/cactoos-matchers/issues/148 has been resolved.
  *  The Cactoos-Matchers project(https://github.com/llorllale/cactoos-matchers)
- *  utilizes this class and by removing the class right now will cause issues
- *  of class not found in the Cactoos-Matchers project.
+ *  utilizes this class and by removing the class right now causes issues with
+ *  class not found in the Cactoos-Matchers project.
  */
 @Deprecated
 public final class CollectionOf<T> implements Collection<T> {

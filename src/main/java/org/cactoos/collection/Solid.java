@@ -24,6 +24,9 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Unchecked;
 
@@ -55,7 +58,14 @@ public final class Solid<T> extends CollectionEnvelope<T> {
         super(
             new Unchecked<>(
                 new org.cactoos.scalar.Solid<>(
-                    () -> new Synced<>(new Sticky<>(src))
+                    new org.cactoos.scalar.Sticky<>(
+                        () -> {
+                            final List<T> items = new LinkedList<>();
+                            src.forEach(items::add);
+                            Collections.shuffle(items);
+                            return items;
+                        }
+                    )
                 )
             ).value()
         );
