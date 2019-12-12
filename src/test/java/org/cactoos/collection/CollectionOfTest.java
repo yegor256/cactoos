@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link CollectionOf}.
- * NOTE: This test class is to be removed
  * @since 0.23
  * @deprecated This test class is to be removed after {@link CollectionOf}
  *  is completely removed.
@@ -42,7 +41,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @Deprecated
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public final class CollectionOfTest {
 
     @Test
@@ -91,7 +90,8 @@ public final class CollectionOfTest {
     public void returnsIteratorWithSupportedRemove() {
         final CollectionEnvelope<String> list = new CollectionEnvelope<String>(
             new CollectionOf<>("eleven")
-        ) { };
+        ) {
+        };
         final Iterator<String> iterator = list.iterator();
         iterator.next();
         iterator.remove();
