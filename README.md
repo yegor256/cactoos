@@ -138,10 +138,10 @@ To flatten one iterable:
 ```java
 new Joined<>(
   new Mapped<>(
-      iter -> new IterableOf<>(
-          new ListOf<>(iter).toArray(new Integer[]{})
-      ),
-      new IterableOf<>(1, 2, 3, 4, 5, 6))
+    iter -> new IterableOf<>(
+      new ListOf<>(iter).toArray(new Integer[]{})
+    ),
+    new IterableOf<>(1, 2, 3, 4, 5, 6))
   )
 );    // Iterable<Integer>
 ```
