@@ -23,6 +23,7 @@
  */
 package org.cactoos.collection;
 
+import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -46,7 +47,7 @@ public final class SlicedTest {
                 "one", "two", "three", "four"
             ),
             new IsEqual<>(
-                new CollectionOf<>(
+                new ListOf<>(
                     "three", "four"
                 )
             )

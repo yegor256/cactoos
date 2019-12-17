@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterable as {@link Collection}.
@@ -60,16 +61,8 @@ public final class Synced<T> extends CollectionEnvelope<T> {
      * @param src An {@link Iterable}
      */
     public Synced(final Iterable<T> src) {
-        this(new CollectionOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src An {@link Iterable}
-     */
-    public Synced(final Collection<T> src) {
         super(
-            new CollectionOf<>(
+            new Unchecked<>(
                 new org.cactoos.scalar.Synced<>(
                     () -> {
                         final Collection<T> temp = new LinkedList<>();
@@ -77,7 +70,7 @@ public final class Synced<T> extends CollectionEnvelope<T> {
                         return Collections.synchronizedCollection(temp);
                     }
                 )
-            )
+            ).value()
         );
     }
 

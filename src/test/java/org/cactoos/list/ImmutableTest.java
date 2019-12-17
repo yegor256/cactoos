@@ -26,7 +26,6 @@ package org.cactoos.list;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.cactoos.collection.CollectionOf;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
@@ -187,7 +186,7 @@ public class ImmutableTest {
             "addAll(Collection) must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
-            ).addAll(new CollectionOf<>(3, 4)),
+            ).addAll(new ListOf<>(3, 4)),
             new Throws<>(
                 new MatcherOf<>(
                     (String msg) -> msg.equals("#addAll(Collection): the list is read-only")
@@ -203,7 +202,7 @@ public class ImmutableTest {
             "addAll(int, Collection) must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
-            ).addAll(2, new CollectionOf<>(3, 4)),
+            ).addAll(2, new ListOf<>(3, 4)),
             new Throws<>(
                 new MatcherOf<>(
                     (String msg) -> msg.equals("#addAll(int, Collection): the list is read-only")
@@ -219,7 +218,7 @@ public class ImmutableTest {
             "removeAll() must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2, 3)
-            ).removeAll(new CollectionOf<>(1, 3)),
+            ).removeAll(new ListOf<>(1, 3)),
             new Throws<>(
                 new MatcherOf<>(
                     (String msg) -> msg.equals("#removeAll(): the list is read-only")
@@ -235,7 +234,7 @@ public class ImmutableTest {
             "retainAll() must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2, 3)
-            ).retainAll(new CollectionOf<>(1, 3)),
+            ).retainAll(new ListOf<>(1, 3)),
             new Throws<>(
                 new MatcherOf<>(
                     (String msg) -> msg.equals("#retainAll(): the list is read-only")

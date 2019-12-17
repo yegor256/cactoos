@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Reversed collection.
@@ -54,8 +55,8 @@ public final class Reversed<X> extends CollectionEnvelope<X> {
      */
     public Reversed(final Iterable<X> src) {
         super(
-            new Sticky<>(
-                new CollectionOf<>(
+            new Unchecked<>(
+                new org.cactoos.scalar.Sticky<>(
                     () -> {
                         final List<X> items = new LinkedList<>();
                         src.forEach(items::add);
@@ -63,7 +64,7 @@ public final class Reversed<X> extends CollectionEnvelope<X> {
                         return items;
                     }
                 )
-            )
+            ).value()
         );
     }
 

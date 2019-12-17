@@ -26,7 +26,7 @@ package org.cactoos.iterable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import org.cactoos.Func;
-import org.cactoos.collection.CollectionOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class RangeOfTest {
     public final void testIntegerRange() {
         MatcherAssert.assertThat(
             "Can't generate a range of integers",
-            new CollectionOf<>(
+            new ListOf<>(
                 new RangeOf<>(1, 5, value -> ++value)
             ),
             Matchers.contains(1, 2, 3, 4, 5)
@@ -55,7 +55,7 @@ public class RangeOfTest {
     public final void testIntegerFibonacciRange() {
         MatcherAssert.assertThat(
             "Can't generate a range of fibonacci integers",
-            new CollectionOf<>(
+            new ListOf<>(
                 new RangeOf<>(
                     1,
                     100,
@@ -79,7 +79,7 @@ public class RangeOfTest {
     public final void testLongRange() {
         MatcherAssert.assertThat(
             "Can't generate a range of long",
-            new CollectionOf<>(
+            new ListOf<>(
                 new RangeOf<>(1L, 5L, value -> ++value)
             ),
             Matchers.contains(1L, 2L, 3L, 4L, 5L)
@@ -90,7 +90,7 @@ public class RangeOfTest {
     public final void testCharacterRange() {
         MatcherAssert.assertThat(
             "Can't generate a range of characters",
-            new CollectionOf<>(
+            new ListOf<>(
                 new RangeOf<>('a', 'c', value -> ++value)
             ),
             Matchers.contains('a', 'b', 'c')
@@ -101,7 +101,7 @@ public class RangeOfTest {
     public final void testLocalDateRange() {
         MatcherAssert.assertThat(
             "Can't generate a range of local dates.",
-            new CollectionOf<>(
+            new ListOf<>(
                 new RangeOf<>(
                     LocalDate.of(2017, 1, 1),
                     LocalDate.of(2017, 1, 3),

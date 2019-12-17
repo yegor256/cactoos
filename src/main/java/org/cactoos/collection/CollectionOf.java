@@ -45,11 +45,18 @@ import org.cactoos.scalar.Unchecked;
  * the encapsulated iterable, use {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.
- *
  * @param <T> List type
  * @see Sticky
  * @since 0.1
+ * @deprecated This test class is to be removed after Cactoos-Matchers project
+ * remooves the usage of it.
+ * @todo #1116:30min Remove this deprecated class after the issue
+ *  https://github.com/llorllale/cactoos-matchers/issues/148 has been resolved.
+ *  The Cactoos-Matchers project(https://github.com/llorllale/cactoos-matchers)
+ *  utilizes this class and by removing the class right now causes issues with
+ *  class not found in the Cactoos-Matchers project.
  */
+@Deprecated
 public final class CollectionOf<T> implements Collection<T> {
     /**
      * Collection.

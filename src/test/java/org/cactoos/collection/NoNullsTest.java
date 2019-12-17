@@ -23,6 +23,7 @@
  */
 package org.cactoos.collection;
 
+import org.cactoos.list.ListOf;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
@@ -44,7 +45,7 @@ public final class NoNullsTest {
         new Assertion<>(
             "Must throw exception",
             () -> new NoNulls<>(
-                new CollectionOf<>(1, null, 3)
+                new ListOf<>(1, null, 3)
             ).toArray(),
             new Throws<>(
                 "Item #1 of #toArray() is NULL",
@@ -58,7 +59,7 @@ public final class NoNullsTest {
         new Assertion<>(
             "Must throw exception for the item#1",
             () -> new NoNulls<>(
-                new CollectionOf<>(1, null, 3)
+                new ListOf<>(1, null, 3)
             ).toArray(new Object[3]),
             new Throws<>(
                 "Item #1 of #toArray(array) is NULL",
@@ -72,7 +73,7 @@ public final class NoNullsTest {
         new Assertion<>(
             "Must throw exception for #contains(null)",
             () -> new NoNulls<>(
-                new CollectionOf<>(1, 2, 3)
+                new ListOf<>(1, 2, 3)
             ).contains(null),
             new Throws<>(
                 "Argument of #contains(T) is NULL",
@@ -85,9 +86,9 @@ public final class NoNullsTest {
     public void testSuccessNotNullArg() {
         new Assertion<>(
             "Must contain not null argument",
-                new NoNulls<>(
-                new CollectionOf<>(1)
-                    ).contains(1),
+            new NoNulls<>(
+                new ListOf<>(1)
+            ).contains(1),
             new IsTrue()
         ).affirm();
     }

@@ -26,6 +26,7 @@ package org.cactoos.collection;
 import java.util.Collection;
 import java.util.LinkedList;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Collection decorator that goes through the list only once.
@@ -52,7 +53,7 @@ public final class Sticky<E> extends CollectionEnvelope<E> {
      */
     public Sticky(final Iterable<E> src) {
         super(
-            new CollectionOf<>(
+            new Unchecked<>(
                 new org.cactoos.scalar.Sticky<>(
                     () -> {
                         final Collection<E> temp = new LinkedList<>();
@@ -60,7 +61,7 @@ public final class Sticky<E> extends CollectionEnvelope<E> {
                         return temp;
                     }
                 )
-            )
+            ).value()
         );
     }
 }

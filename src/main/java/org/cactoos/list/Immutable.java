@@ -24,13 +24,12 @@
 package org.cactoos.list;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.Scalar;
-import org.cactoos.collection.CollectionOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
@@ -71,7 +70,7 @@ public final class Immutable<T> implements List<T> {
      */
     @SafeVarargs
     public Immutable(final T... items) {
-        this(new CollectionOf<T>(items));
+        this(new IterableOf<T>(items));
     }
 
     /**
@@ -79,7 +78,7 @@ public final class Immutable<T> implements List<T> {
      * @param src Source list
      */
     public Immutable(final List<T> src) {
-        this(new CollectionOf<>(src));
+        this(() -> new ListOf<>(src));
     }
 
     /**
@@ -87,7 +86,7 @@ public final class Immutable<T> implements List<T> {
      * @param src Source iterable
      */
     public Immutable(final Iterable<T> src) {
-        this(new CollectionOf<T>(src));
+        this(() -> new ListOf<>(src));
     }
 
     /**
@@ -95,11 +94,7 @@ public final class Immutable<T> implements List<T> {
      * @param src Source collection
      */
     public Immutable(final Collection<T> src) {
-        this(() -> {
-            final List<T> copy = new ArrayList<>(src.size());
-            copy.addAll(src);
-            return copy;
-        });
+        this(() -> new ListOf<>(src));
     }
 
     /**

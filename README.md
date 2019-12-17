@@ -139,9 +139,9 @@ To flatten one iterable:
 new Joined<>(
   new Mapped<>(
     iter -> new IterableOf<>(
-      new CollectionOf<>(iter).toArray(new Integer[]{})
+      new ListOf<>(iter).toArray(new Integer[]{})
     ),
-    new IterableOf<>(new IterableOf<>(1, 2, 3, 4, 5, 6))
+    new IterableOf<>(1, 2, 3, 4, 5, 6))
   )
 );    // Iterable<Integer>
 ```
@@ -151,7 +151,7 @@ To flatten and join several iterables:
 new Joined<>(
   new Mapped<>(
     iter -> new IterableOf<>(
-      new CollectionOf<>(iter).toArray(new Integer[]{})
+      new ListOf<>(iter).toArray(new Integer[]{})
     ),
     new Joined<>(
       new IterableOf<>(new IterableOf<>(1, 2, 3)),
