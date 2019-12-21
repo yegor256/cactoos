@@ -25,10 +25,10 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
-import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -52,9 +52,11 @@ public final class TailOfTest {
                     )
                 )
             ),
-            new HasValues<>(
-                "three",
-                "four"
+            new IsEqual<>(
+                new IterableOf<>(
+                    "three",
+                    "four"
+                )
             )
         ).affirm();
     }
