@@ -23,33 +23,25 @@
  */
 package org.cactoos.text;
 
-import java.util.Iterator;
 import org.cactoos.Text;
+import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 
 /**
  * Split the Text.
  *
+ * @see String#split(String)
+ * @see String#split(String, int)
  * @since 0.9
  */
-public final class Split implements Iterable<Text> {
-
-    /**
-     * The origin string.
-     */
-    private final UncheckedText origin;
-
-    /**
-     * The regex.
-     */
-    private final UncheckedText regex;
-
+public final class Split extends IterableEnvelope<Text> {
     /**
      * Ctor.
      *
      * @param text The text
      * @param rgx The regex
+     * @see String#split(String)
      */
     public Split(final String text, final String rgx) {
         this(
@@ -60,8 +52,25 @@ public final class Split implements Iterable<Text> {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
+     * @param lmt The limit
+     * @see String#split(String, int)
+     */
+    public Split(final String text, final String rgx, final int lmt) {
+        this(
+            new UncheckedText(new TextOf(text)),
+            new UncheckedText(new TextOf(rgx)),
+            lmt
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param rgx The regex
+     * @see String#split(String)
      */
     public Split(final String text, final Text rgx) {
         this(new UncheckedText(text), new UncheckedText(rgx));
@@ -71,6 +80,18 @@ public final class Split implements Iterable<Text> {
      * Ctor.
      * @param text The text
      * @param rgx The regex
+     * @param lmt The limit
+     * @see String#split(String, int)
+     */
+    public Split(final String text, final Text rgx, final int lmt) {
+        this(new UncheckedText(text), new UncheckedText(rgx), lmt);
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param rgx The regex
+     * @see String#split(String)
      */
     public Split(final Text text, final String rgx) {
         this(new UncheckedText(text), new UncheckedText(rgx));
@@ -80,6 +101,18 @@ public final class Split implements Iterable<Text> {
      * Ctor.
      * @param text The text
      * @param rgx The regex
+     * @param lmt The limit
+     * @see String#split(String, int)
+     */
+    public Split(final Text text, final String rgx, final int lmt) {
+        this(new UncheckedText(text), new UncheckedText(rgx), lmt);
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param rgx The regex
+     * @see String#split(String)
      */
     public Split(final Text text, final Text rgx) {
         this(new UncheckedText(text), new UncheckedText(rgx));
@@ -89,19 +122,38 @@ public final class Split implements Iterable<Text> {
      * Ctor.
      * @param text The text
      * @param rgx The regex
+     * @param lmt The limit
+     * @see String#split(String, int)
      */
-    public Split(final UncheckedText text, final UncheckedText rgx) {
-        this.origin = text;
-        this.regex = rgx;
+    public Split(final Text text, final Text rgx, final int lmt) {
+        this(new UncheckedText(text), new UncheckedText(rgx), lmt);
     }
 
-    @Override
-    public Iterator<Text> iterator() {
-        return new Mapped<String, Text>(
-            TextOf::new,
-            new IterableOf<>(
-                this.origin.asString().split(this.regex.asString())
+    /**
+     * Ctor.
+     * @param text The text
+     * @param rgx The regex
+     * @see String#split(String)
+     */
+    public Split(final UncheckedText text, final UncheckedText rgx) {
+        this(text, rgx, 0);
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     * @param rgx The regex
+     * @param lmt The limit
+     * @see String#split(String, int)
+     */
+    public Split(final UncheckedText text, final UncheckedText rgx, final int lmt) {
+        super(
+            new Mapped<String, Text>(
+                TextOf::new,
+                new IterableOf<>(
+                    text.asString().split(rgx.asString(), lmt)
+                )
             )
-        ).iterator();
+        );
     }
 }

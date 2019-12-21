@@ -23,73 +23,114 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.scalar.LengthOf;
-import org.hamcrest.Matchers;
+import org.cactoos.Text;
+import org.cactoos.iterable.IterableOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link Split}.
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class SplitTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void splitTextLength() throws Exception {
+    public void splitStringWithStringRegex() throws Exception {
         new Assertion<>(
-            "Can't split a text. Incorrect length",
-            new LengthOf(
-                new Split("Hello world!", "\\s+")
-            ).intValue(),
-            Matchers.equalTo(2)
-        ).affirm();
-    }
-
-    @Test
-    public void splitTextItem() throws Exception {
-        new Assertion<>(
-            "Can't split a text. Incorrect item",
-            new Split("Hello world! [2]", "\\s+").iterator().next(),
-            new TextHasString("Hello")
+            "Must split string with string regex",
+            new Split("Hello world!", "\\s+"),
+            new IsEqual<>(new IterableOf<>(new TextOf("Hello"), new TextOf("world!")))
         ).affirm();
     }
 
     @Test
     public void splitStringWithTextRegex() throws Exception {
         new Assertion<>(
-            "Can't split an string with text regex",
-            new Split(
-                "Cactoos OOP!",
-                new TextOf("\\s")
-            ).iterator().next(),
-            new TextHasString("Cactoos")
+            "Must split string with text regex",
+            new Split("Cactoos OOP!", new TextOf("\\s")),
+            new IsEqual<>(new IterableOf<>(new TextOf("Cactoos"), new TextOf("OOP!")))
         ).affirm();
     }
 
     @Test
     public void splitTextWithStringRegex() throws Exception {
         new Assertion<>(
-            "Can't split an text with string regex",
-            new Split(
-                new TextOf("Cact4Primitives!"),
-                "\\d+"
-            ).iterator().next(),
-            new TextHasString("Cact")
+            "Must split text with string regex",
+            new Split(new TextOf("Cact4Primitives!"), "\\d+"),
+            new IsEqual<>(new IterableOf<>(new TextOf("Cact"), new TextOf("Primitives!")))
         ).affirm();
     }
 
     @Test
     public void splitTextWithTextRegex() throws Exception {
         new Assertion<>(
-            "Can't split an text with text regex",
-            new Split(
-                new TextOf("Split#OOP!"),
-                "\\W+"
-            ).iterator().next(),
-            new TextHasString("Split")
+            "Must split text with text regex",
+            new Split(new TextOf("Split#OOP"), new TextOf("#")),
+            new IsEqual<>(new IterableOf<>(new TextOf("Split"), new TextOf("OOP")))
+        ).affirm();
+    }
+
+    @Test
+    public void splitStringWithStringRegexAndLimit() throws Exception {
+        new Assertion<>(
+            "Must split string with string regex and limit",
+            new Split("Hello! ! world!", " ", 2),
+            new IsEqual<>(new IterableOf<>(new TextOf("Hello!"), new TextOf("! world!")))
+        ).affirm();
+    }
+
+    @Test
+    public void splitStringWithTextRegexAndLimit() throws Exception {
+        new Assertion<>(
+            "Must split string with text regex and limit",
+            new Split("Cactoos! ! OOP!", new TextOf(" "), 2),
+            new IsEqual<>(new IterableOf<>(new TextOf("Cactoos!"), new TextOf("! OOP!")))
+        ).affirm();
+    }
+
+    @Test
+    public void splitTextWithStringRegexAndLimit() throws Exception {
+        final Text txt = new TextOf("Cact!4Primitives");
+        new Assertion<>(
+            "Must split text with string regex and limit",
+            new Split(txt, "4", 1),
+            new IsEqual<>(new IterableOf<>(txt))
+        ).affirm();
+    }
+
+    @Test
+    public void splitTextWithTextRegexAndLimit() throws Exception {
+        final Text txt = new TextOf("Split!# #OOP");
+        new Assertion<>(
+            "Must split text with text regex and limit",
+            new Split(txt, "\\W+", 1),
+            new IsEqual<>(new IterableOf<>(txt))
+        ).affirm();
+    }
+
+    @Test
+    public void splitWithZeroLimit() throws Exception {
+        new Assertion<>(
+            "Must split string with string regex and zero limit",
+            new Split("Hello. The! !world", " +", 0),
+            new IsEqual<>(
+                new IterableOf<>(new TextOf("Hello."), new TextOf("The!"), new TextOf("!world"))
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void splitWithNegativeLimit() throws Exception {
+        new Assertion<>(
+            "Must split string with string regex and negative limit",
+            new Split("Hello: The world", " ", -1),
+            new IsEqual<>(
+                new IterableOf<>(new TextOf("Hello:"), new TextOf("The"), new TextOf("world"))
+            )
         ).affirm();
     }
 }
