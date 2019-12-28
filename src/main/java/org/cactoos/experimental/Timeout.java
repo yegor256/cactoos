@@ -29,6 +29,7 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.collection.Mapped;
@@ -36,42 +37,69 @@ import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
 
 /**
- * Allows to execute the tasks concurrently.
+ * Allows to execute the tasks concurrently within given timeout.
  *
  * @param <T> The type of task result item.
  * @since 1.0.0
  */
-public final class Threads<T> extends IterableEnvelope<T> {
+public final class Timeout<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
      * @param exc The executor.
+     * @param timeout The maximum time to wait.
+     * @param unit The time unit of the timeout argument.
      * @param tasks The tasks to be executed concurrently.
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     @SafeVarargs
-    public Threads(final ExecutorService exc, final Scalar<T>... tasks) {
-        this(exc, new IterableOf<>(tasks));
+    public Timeout(
+        final ExecutorService exc,
+        final long timeout,
+        final TimeUnit unit,
+        final Scalar<T>... tasks
+    ) {
+        this(exc, new IterableOf<>(tasks), timeout, unit);
     }
 
     /**
      * Ctor.
      * @param exc The executor.
      * @param tasks The tasks to be executed concurrently.
+     * @param timeout The maximum time to wait.
+     * @param unit The time unit of the timeout argument.
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public Threads(final ExecutorService exc, final Iterable<Scalar<T>> tasks) {
-        this(exc::invokeAll, tasks);
+    public Timeout(
+        final ExecutorService exc,
+        final Iterable<Scalar<T>> tasks,
+        final long timeout,
+        final TimeUnit unit
+    ) {
+        this(
+            input -> exc.invokeAll(input, timeout, unit),
+            tasks
+        );
     }
 
     /**
      * Ctor.
      * @param threads The quantity of threads which will be used within the
      *  {@link ExecutorService}.
+     * @param timeout The maximum time to wait.
+     * @param unit The time unit of the timeout argument.
      * @param tasks The tasks to be executed concurrently.
      * @see Executors#newFixedThreadPool(int)
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     @SafeVarargs
-    public Threads(final int threads, final Scalar<T>... tasks) {
-        this(threads, new IterableOf<>(tasks));
+    public Timeout(
+        final int threads,
+        final long timeout,
+        final TimeUnit unit,
+        final Scalar<T>... tasks
+    ) {
+        this(threads, new IterableOf<>(tasks), timeout, unit);
     }
 
     /**
@@ -79,16 +107,24 @@ public final class Threads<T> extends IterableEnvelope<T> {
      * @param threads The quantity of threads which will be used within the
      *  {@link ExecutorService}.
      * @param tasks The tasks to be executed concurrently.
+     * @param timeout The maximum time to wait.
+     * @param unit The time unit of the timeout argument.
      * @checkstyle IndentationCheck (20 lines)
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public Threads(final int threads, final Iterable<Scalar<T>> tasks) {
+    public Timeout(
+        final int threads,
+        final Iterable<Scalar<T>> tasks,
+        final long timeout,
+        final TimeUnit unit
+    ) {
         this(
             todo -> {
                 final ExecutorService executor = Executors.newFixedThreadPool(
                     threads
                 );
                 try {
-                    return executor.invokeAll(todo);
+                    return executor.invokeAll(todo, timeout, unit);
                 } finally {
                     executor.shutdown();
                 }
@@ -104,7 +140,7 @@ public final class Threads<T> extends IterableEnvelope<T> {
      * @checkstyle IllegalCatchCheck (20 lines)
      */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    private Threads(
+    private Timeout(
         final Func<Collection<Callable<T>>, Collection<Future<T>>> fnc,
         final Iterable<Scalar<T>> tasks
     ) {
