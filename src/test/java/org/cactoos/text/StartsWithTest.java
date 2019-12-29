@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
@@ -64,10 +65,22 @@ public class StartsWithTest {
         new Assertion<>(
             "Foo is not prefix of FooBar",
             new StartsWith(
-                new TextOf("FooBar"),
-                new TextOf("Foo")
+                "FooBar",
+                "Foo"
             ).value(),
             new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    public void textStartsWithoutPrefix() throws Exception {
+        new Assertion<>(
+            "Baz is prefix of FooBarBaz",
+            new StartsWith(
+                "FooBarBaz",
+                "Baz"
+            ).value(),
+            new IsNot<>(new IsTrue())
         ).affirm();
     }
 
