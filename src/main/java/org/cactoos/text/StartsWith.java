@@ -26,6 +26,13 @@ package org.cactoos.text;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 
+/**
+ * Determines if text starts with a given prefix.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.44
+ */
 public final class StartsWith implements Scalar<Boolean> {
 
     /**
@@ -37,29 +44,31 @@ public final class StartsWith implements Scalar<Boolean> {
      * The prefix.
      */
     private final Text prefix;
-    
+
     /**
      * Ctor.
+     *
      * @param text The text
      * @param prefix The prefix
      */
     public StartsWith(final Text text, final Text prefix) {
-    	this.text = text;
-    	this.prefix = prefix;
-	}
+        this.text = text;
+        this.prefix = prefix;
+    }
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param prefix The prefix
      */
     public StartsWith(final String text, final String prefix) {
-    	this(new TextOf(text), new TextOf(prefix));
-	}
-	
-	@Override
-	public Boolean value() throws Exception {
-		return this.text.asString().startsWith(this.prefix.asString());
-	}
-	
+        this(new TextOf(text), new TextOf(prefix));
+    }
+
+    @Override
+    public Boolean value() throws Exception {
+        return this.text.asString().startsWith(this.prefix.asString());
+    }
+
 }

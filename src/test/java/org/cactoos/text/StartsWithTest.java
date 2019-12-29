@@ -23,47 +23,52 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link StartsWith}.
+ *
+ * @since 0.44
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public class StartsWithTest {
 
     @Test
-    public void determinesEmptyStartsWithEmpty() {
-        MatcherAssert.assertThat(
+    public void emptyStartsWithEmpty() throws Exception {
+        new Assertion<>(
             "Empty is not prefix of empty",
             new StartsWith(
-                new TextOf(""), new TextOf("")
-            ),
-            new ScalarHasValue<>(Boolean.TRUE)
-        );
+                new TextOf(""),
+                new TextOf("")
+            ).value(),
+            new IsTrue()
+        ).affirm();
     }
-    
+
     @Test
-    public void determinesTextStartsWithEmpty() {
-        MatcherAssert.assertThat(
+    public void textStartsWithEmpty() throws Exception {
+        new Assertion<>(
             "Empty is not prefix of any string",
             new StartsWith(
-                new TextOf("Any string"), new TextOf("")
-            ),
-            new ScalarHasValue<>(Boolean.TRUE)
-        );
+                new TextOf("Any string"),
+                new TextOf("")
+            ).value(),
+            new IsTrue()
+        ).affirm();
     }
-	
+
     @Test
-    public void determinesTextStartsWithPrefix() {
-        MatcherAssert.assertThat(
-            "Any is not prefix of any string",
+    public void textStartsWithPrefix() throws Exception {
+        new Assertion<>(
+            "Foo is not prefix of FooBar",
             new StartsWith(
-                new TextOf("Any string"), new TextOf("Any")
-            ),
-            new ScalarHasValue<>(Boolean.TRUE)
-        );
+                new TextOf("FooBar"),
+                new TextOf("Foo")
+            ).value(),
+            new IsTrue()
+        ).affirm();
     }
-    
+
 }
