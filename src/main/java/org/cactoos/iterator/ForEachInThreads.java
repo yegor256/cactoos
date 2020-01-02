@@ -30,20 +30,21 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.AndInThreads;
 
 /**
- * Executes a {@link org.cactoos.Proc} for each element of an
+ * Executes a {@link org.cactoos.Proc} in a new Thread for each element of an
  * {@link java.lang.Iterable}
  *
  * <p>
  * This class can be effectively used to iterate through a collection, just like
- * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)} works:
+ * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)} works,
+ * but with no guarantee on the output sorting:
  * </p>
  *
  * {@code
- * new ForEach(
+ * new ForEachInThreads(
  *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
  * ).execute(
  *    new IterableOf<>("Mary", "John", "William", "Napkin")
- * ); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
+ * ); // will print 'Mary' 'John' 'William' 'Napkin' to standard output. Sorting is not guaranteed.
  * }
  * <p>
  * There is no thread-safety guarantee.
