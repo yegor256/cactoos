@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.func.ProcNoNulls;
@@ -158,34 +157,6 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void worksWithProc() throws Exception {
-        final List<Integer> list = new Synced<>(
-            new ArrayList<>(2)
-        );
-        new AndInThreads(
-            (Proc<Integer>) list::add,
-            1, 1
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            new IsIterableContainingInAnyOrder<Integer>(
-                new ListOf<Matcher<? super Integer>>(
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(1);
-                        }
-                    ),
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(1);
-                        }
-                    )
-                )
-            )
-        );
-    }
-
-    @Test
     public void worksWithFunc() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
@@ -193,34 +164,6 @@ public final class AndInThreadsTest {
                 1, -1, 0
             ),
             new ScalarHasValue<>(false)
-        );
-    }
-
-    @Test
-    public void worksWithProcIterable() throws Exception {
-        final List<Integer> list = new Synced<>(
-            new ArrayList<>(2)
-        );
-        new AndInThreads(
-            new ProcNoNulls<Integer>(list::add),
-            new ListOf<>(1, 2)
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            new IsIterableContainingInAnyOrder<Integer>(
-                new ListOf<Matcher<? super Integer>>(
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(1);
-                        }
-                    ),
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(2);
-                        }
-                    )
-                )
-            )
         );
     }
 
