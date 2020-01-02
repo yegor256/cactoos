@@ -171,7 +171,7 @@ new And(
         System.out.printf("Item: %s\n", input);
       }
     ),
-    new IterableOf<>("how", "are", "you")
+    new IterableOf<>("how", "are", "you", "?")
   )
 ).value();
 ```
@@ -179,10 +179,11 @@ new And(
 Or even more compact:
 
 ```java
-new And(
-  (String input) -> System.out.printf("Item: %s\n", input),
-  "how", "are", "you"
-).value();
+new ForEach<String>(
+    (String input) -> System.out.printf(
+        "Item: %s\n", input
+    )
+).exec("how", "are", "you", "?");
 ```
 
 To sort a list of words in the file:
