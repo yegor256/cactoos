@@ -32,16 +32,13 @@ import java.util.Iterator;
  *
  * @param <T> Element type
  * @since 0.8
- * @todo #1188:30min Change the implementation of this class with the help of
- *  <tt>org.cactoos.iterator.Sliced</tt> decorator, as it contains specific
- *  constructor to build heading iterator.
  */
 public final class HeadOf<T> implements Iterator<T> {
 
     /**
-     * Decorated sliced
+     * Decorated sliced.
      */
-    private final Sliced<T> sliced;
+    private final Iterator<T> sliced;
 
     /**
      * Ctor.
@@ -54,11 +51,11 @@ public final class HeadOf<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return sliced.hasNext();
+        return this.sliced.hasNext();
     }
 
     @Override
     public T next() {
-        return sliced.next();
+        return this.sliced.next();
     }
 }
