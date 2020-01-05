@@ -24,19 +24,19 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-import java.util.List;
+import java.util.NoSuchElementException;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.iterator.IteratorOf;
+import org.cactoos.func.UncheckedFunc;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
+import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.SumOfInt;
 import org.cactoos.scalar.Unchecked;
-import org.cactoos.text.TextOf;
-import org.cactoos.text.UncheckedText;
 
 /**
- * Array as iterable.
+ * Paged iterable.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -45,50 +45,62 @@ import org.cactoos.text.UncheckedText;
  * @checkstyle ClassDataAbstractionCouplingCheck (550 lines)
  */
 @SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
-public final class IterableOf<X> implements Iterable<X> {
+public final class Paged<X> implements Iterable<X> {
 
     /**
      * The encapsulated iterator.
      */
-    private final Scalar<Iterator<X>> itr;
+    private final Iterable<X> itr;
 
     /**
-     * Ctor.
-     * @param items The array
+     * Paged iterable.
+     * <p>
+     * Elements will continue to be provided so long as {@code next} produces
+     * non-empty iterators.
+     * @param first First bag of elements
+     * @param next Subsequent bags of elements
+     * @param <I> Custom iterator
      */
-    @SafeVarargs
-    public IterableOf(final X... items) {
-        this(() -> new IteratorOf<>(items));
-    }
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
+    public <I extends Iterator<X>> Paged(
+        final Scalar<I> first, final Func<I, I> next
+    ) {
+        // @checkstyle AnonInnerLengthCheck (30 lines)
+        this.itr = new IterableOf<>(
+            () -> new Iterator<X>() {
+                private Unchecked<I> current = new Unchecked<>(
+                    new Sticky<>(first)
+                );
+                private final UncheckedFunc<I, I> subsequent =
+                    new UncheckedFunc<>(next);
 
-    /**
-     * Ctor.
-     * @param list The list
-     */
-    public IterableOf(final List<X> list) {
-        this(list::iterator);
-    }
+                @Override
+                public boolean hasNext() {
+                    if (!this.current.value().hasNext()) {
+                        final I next = this.subsequent.apply(
+                            this.current.value()
+                        );
+                        this.current = new Unchecked<>(
+                            new Sticky<>(() -> next)
+                        );
+                    }
+                    return this.current.value().hasNext();
+                }
 
-    /**
-     * Ctor.
-     * @param list The list
-     * @since 0.21
-     */
-    public IterableOf(final Iterator<X> list) {
-        this(() -> list);
-    }
-
-    /**
-     * Ctor.
-     * @param sclr The encapsulated iterator of x
-     */
-    public IterableOf(final Scalar<Iterator<X>> sclr) {
-        this.itr = sclr;
+                @Override
+                public X next() {
+                    if (this.hasNext()) {
+                        return this.current.value().next();
+                    }
+                    throw new NoSuchElementException();
+                }
+            }
+        );
     }
 
     @Override
     public Iterator<X> iterator() {
-        return new Unchecked<>(this.itr).value();
+        return this.itr.iterator();
     }
 
     @Override
@@ -100,16 +112,7 @@ public final class IterableOf<X> implements Iterable<X> {
                 new And(
                     () -> other != null,
                     () -> Iterable.class.isAssignableFrom(other.getClass()),
-                    () -> {
-                        final Iterable<?> compared = (Iterable<?>) other;
-                        final Iterator<?> iterator = compared.iterator();
-                        return new Unchecked<>(
-                            new And(
-                                (X input) -> input.equals(iterator.next()),
-                                this
-                            )
-                        ).value();
-                    }
+                    () -> other.equals(this.itr)
                 )
             )
         ).value();
@@ -125,13 +128,13 @@ public final class IterableOf<X> implements Iterable<X> {
                     () -> 37 * hash,
                     entry::hashCode
                 ).value(),
-                this
+                this.itr
             )
         ).value();
     }
 
     @Override
     public String toString() {
-        return new UncheckedText(new TextOf(this)).asString();
+        return this.itr.toString();
     }
 }
