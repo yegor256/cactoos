@@ -24,9 +24,9 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import java.util.LinkedList;
+import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.list.ListOf;
+import org.cactoos.iterable.Reversed;
 
 /**
  * Tail portion of the iterator.
@@ -34,45 +34,23 @@ import org.cactoos.list.ListOf;
  * <p>There is no thread-safety guarantee.</p>
  * @param <T> Element type
  * @since 0.31
- * @todo #947:30min Reimplement the implementation using
- *  {@link org.cactoos.iterable.Reversed} decorator. Do not use concrete classes
- *  as {@link LinkedList} here, as it is already used in
- *  {@link org.cactoos.iterable.Reversed} decorator.
  */
-public final class TailOf<T> implements Iterator<T> {
-
-    /**
-     * Decorated iterator.
-     */
-    private final Iterator<T> origin;
-
+public final class TailOf<T> extends IteratorEnvelope<T> {
     /**
      * Ctor.
      * @param num Number of tail elements
      * @param iterator Decorated iterator
      */
     public TailOf(final int num, final Iterator<T> iterator) {
-        this.origin = new LinkedList<>(
-            new ListOf<>(
-                new IterableOf<>(
-                    new HeadOf<>(
-                        num,
-                        new LinkedList<>(
-                            new ListOf<>(new IterableOf<>(iterator))
-                        ).descendingIterator()
+        super(
+            new Reversed<>(
+                new HeadOf<>(
+                    num,
+                    new Reversed<>(
+                        new IterableOf<>(iterator)
                     )
                 )
-            )
-        ).descendingIterator();
-    }
-
-    @Override
-    public boolean hasNext() {
-        return this.origin.hasNext();
-    }
-
-    @Override
-    public T next() {
-        return this.origin.next();
+            ).iterator()
+        );
     }
 }
