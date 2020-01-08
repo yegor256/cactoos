@@ -33,12 +33,7 @@ import java.util.Iterator;
  * @param <T> Element type
  * @since 0.8
  */
-public final class HeadOf<T> implements Iterator<T> {
-
-    /**
-     * Decorated sliced.
-     */
-    private final Iterator<T> sliced;
+public final class HeadOf<T> extends IteratorEnvelope<T> {
 
     /**
      * Ctor.
@@ -46,16 +41,7 @@ public final class HeadOf<T> implements Iterator<T> {
      * @param iterator Decorated iterator
      */
     public HeadOf(final int num, final Iterator<T> iterator) {
-        this.sliced = new Sliced<>(0, num, iterator);
+        super(new Sliced<>(0, num, iterator));
     }
 
-    @Override
-    public boolean hasNext() {
-        return this.sliced.hasNext();
-    }
-
-    @Override
-    public T next() {
-        return this.sliced.next();
-    }
 }
