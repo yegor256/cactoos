@@ -21,12 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.func;
 
 import org.cactoos.Func;
 import org.cactoos.Proc;
-import org.cactoos.func.FuncOf;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.AndInThreads;
 
 /**
@@ -44,20 +42,21 @@ import org.cactoos.scalar.AndInThreads;
  *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
  * ).execute(
  *    new IterableOf<>("Mary", "John", "William", "Napkin")
- * ); // will print 'Mary' 'John' 'William' 'Napkin' to standard output. Sorting is not guaranteed.
+ * ); // Will print 'Mary' 'John' 'William' 'Napkin' to standard output.
+ *    // Order of printing can be random.
  * }
  * <p>
  * There is no thread-safety guarantee.
  *
  * @param <X> The type to itetare over
- * @since 0.44
+ * @since 1.0
  */
 public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
 
     /**
      * The proc.
      */
-    private final Func<X, Boolean> wrapped;
+    private final Func<X, Boolean> func;
 
     /**
      * Ctor.
@@ -65,26 +64,15 @@ public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
      * @param proc The proc to execute
      */
     public ForEachInThreads(final Proc<X> proc) {
-        this.wrapped = new FuncOf<>(
+        this.func = new FuncOf<>(
             proc, true
         );
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param src The iterable
-     * @exception Exception If fails
-     */
-    @SafeVarargs
-    public final void exec(final X... src) throws Exception {
-        this.exec(new IterableOf<>(src));
     }
 
     @Override
     public void exec(final Iterable<X> input) throws Exception {
         new AndInThreads(
-            this.wrapped, input
+            this.func, input
         ).value();
     }
 

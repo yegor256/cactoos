@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.func;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +35,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Test case for {@link ForEach}.
  *
- * @since 0.44
+ * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public class ForEachTest {
@@ -51,22 +51,9 @@ public class ForEachTest {
             )
         );
         new Assertion<>(
-            "List does not contain mapped Iterable elements (1)", list, new IsEqual<>(
-                new ListOf<>(
-                    1, 1
-                )
-            )
-        ).affirm();
-    }
-
-    @Test
-    public void testProcVarargs() throws Exception {
-        final List<Integer> list = new LinkedList<>();
-        new ForEach<Integer>(
-            (Proc<Integer>) list::add
-        ).exec(1, 1);
-        new Assertion<>(
-            "List does not contain mapped Iterable elements (2)", list, new IsEqual<>(
+            "List does not contain mapped Iterable elements (1)",
+            list,
+            new IsEqual<>(
                 new ListOf<>(
                     1, 1
                 )

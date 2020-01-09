@@ -21,12 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterator;
+package org.cactoos.func;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.cactoos.Proc;
-import org.cactoos.func.ProcNoNulls;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Synced;
 import org.hamcrest.Matcher;
@@ -38,7 +36,7 @@ import org.llorllale.cactoos.matchers.MatcherOf;
 /**
  * Test case for {@link ForEachInThreads}.
  *
- * @since 0.44
+ * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public class ForEachInThreadsTest {
@@ -73,40 +71,6 @@ public class ForEachInThreadsTest {
                         value -> {
                             return value.equals(
                                 2
-                            );
-                        }
-                    )
-                )
-            )
-        ).affirm();
-    }
-
-    @Test
-    public void testProcVarargs() throws Exception {
-        final List<Integer> list = new Synced<>(
-            new ArrayList<>(
-                2
-            )
-        );
-        new ForEachInThreads<Integer>(
-            (Proc<Integer>) list::add
-        ).exec(
-            1, 1
-        );
-        new Assertion<>(
-            "List does not contain mapped Iterable elements (2)", list,
-            new IsIterableContainingInAnyOrder<Integer>(
-                new ListOf<Matcher<? super Integer>>(
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(
-                                1
-                            );
-                        }
-                    ), new MatcherOf<>(
-                        value -> {
-                            return value.equals(
-                                1
                             );
                         }
                     )
