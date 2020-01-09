@@ -25,7 +25,6 @@ package org.cactoos.func;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.Proc;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
@@ -44,14 +43,14 @@ public class ForEachTest {
     public void testProcIterable() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new ForEach<Integer>(
-            (Proc<Integer>) list::add
+            list::add
         ).exec(
             new IterableOf<>(
                 1, 1
             )
         );
         new Assertion<>(
-            "List does not contain mapped Iterable elements (1)",
+            "List does not contain mapped Iterable elements",
             list,
             new IsEqual<>(
                 new ListOf<>(

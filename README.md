@@ -180,7 +180,7 @@ Or even more compact:
 
 ```java
 new ForEach<String>(
-    (String input) -> System.out.printf(
+    input -> System.out.printf(
         "Item: %s\n", input
     )
 ).exec("how", "are", "you", "?");

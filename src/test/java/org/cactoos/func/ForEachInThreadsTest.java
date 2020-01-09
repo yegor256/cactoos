@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Synced;
-import org.hamcrest.Matcher;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -42,6 +41,7 @@ import org.llorllale.cactoos.matchers.MatcherOf;
 public class ForEachInThreadsTest {
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testProcIterable() throws Exception {
         final List<Integer> list = new Synced<>(
             new ArrayList<>(
@@ -49,7 +49,7 @@ public class ForEachInThreadsTest {
             )
         );
         new ForEachInThreads<Integer>(
-            new ProcNoNulls<Integer>(
+            new ProcNoNulls<>(
                 list::add
             )
         ).exec(
@@ -58,9 +58,10 @@ public class ForEachInThreadsTest {
             )
         );
         new Assertion<>(
-            "List does not contain mapped Iterable elements (1)", list,
-            new IsIterableContainingInAnyOrder<Integer>(
-                new ListOf<Matcher<? super Integer>>(
+            "List does not contain mapped Iterable elements",
+            list,
+            new IsIterableContainingInAnyOrder<>(
+                new ListOf<>(
                     new MatcherOf<>(
                         value -> {
                             return value.equals(
