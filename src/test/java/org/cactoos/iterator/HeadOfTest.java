@@ -23,6 +23,8 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.junit.Test;
@@ -102,4 +104,43 @@ public final class HeadOfTest {
             new Throws<>(NoSuchElementException.class)
         ).affirm();
     }
+
+    @Test
+    public void iteratesForEachRemaining() throws Exception {
+        final List<String> lst = new ArrayList<>(2);
+        new HeadOf<>(
+            2,
+            new IteratorOf<>(
+                "one", "two", "three", "four"
+            )
+        ).forEachRemaining(
+            lst::add
+        );
+        new Assertion<>(
+            "Should iterate over 2 head elements",
+            lst,
+            new HasValues<>(
+                "one",
+                "two"
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void removeNotSupported() throws Exception {
+        new Assertion<>(
+            "Remove should not be supported",
+            () -> {
+                new HeadOf<>(
+                    1,
+                    new IteratorOf<>(
+                        "one", "two", "three", "four"
+                    )
+                ).remove();
+                return "Should have thrown exception";
+            },
+            new Throws<>(UnsupportedOperationException.class)
+        ).affirm();
+    }
+
 }
