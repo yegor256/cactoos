@@ -24,6 +24,7 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
+import org.cactoos.Scalar;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.scalar.Ternary;
@@ -34,9 +35,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Paged}.
- * @since 0.12
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCoupling (2 lines)
+ * @since 1.0
  */
 public final class PagedTest {
 
@@ -55,9 +54,9 @@ public final class PagedTest {
             new Paged<>(
                 () -> pages.next().iterator(),
                 page -> new Ternary<>(
-                    () -> pages.hasNext(),
+                    pages::hasNext,
                     () -> pages.next().iterator(),
-                    () -> new IteratorOf<String>()
+                    (Scalar<Iterator<String>>) IteratorOf::new
                 ).value()
             ),
             new IsEqual<>(new Joined<>(first, second, third))
@@ -79,9 +78,9 @@ public final class PagedTest {
             new Paged<>(
                 () -> pages.next().iterator(),
                 page -> new Ternary<>(
-                    () -> pages.hasNext(),
+                    pages::hasNext,
                     () -> pages.next().iterator(),
-                    () -> new IteratorOf<String>()
+                    (Scalar<Iterator<String>>) IteratorOf::new
                 ).value()
             ),
             new IsIterableWithSize<>(

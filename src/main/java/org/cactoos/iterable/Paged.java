@@ -28,11 +28,7 @@ import java.util.NoSuchElementException;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.Or;
 import org.cactoos.scalar.Sticky;
-import org.cactoos.scalar.SumOfInt;
 import org.cactoos.scalar.Unchecked;
 
 /**
@@ -41,16 +37,10 @@ import org.cactoos.scalar.Unchecked;
  * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of item
- * @since 0.12
+ * @since 1.0
  * @checkstyle ClassDataAbstractionCouplingCheck (550 lines)
  */
-@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
-public final class Paged<X> implements Iterable<X> {
-
-    /**
-     * The encapsulated iterator.
-     */
-    private final Iterable<X> itr;
+public final class Paged<X> extends IterableEnvelope<X> {
 
     /**
      * Paged iterable.
@@ -61,80 +51,42 @@ public final class Paged<X> implements Iterable<X> {
      * @param next Subsequent bags of elements
      * @param <I> Custom iterator
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public <I extends Iterator<X>> Paged(
         final Scalar<I> first, final Func<I, I> next
     ) {
         // @checkstyle AnonInnerLengthCheck (30 lines)
-        this.itr = new IterableOf<>(
-            () -> new Iterator<X>() {
-                private Unchecked<I> current = new Unchecked<>(
-                    new Sticky<>(first)
-                );
-                private final UncheckedFunc<I, I> subsequent =
-                    new UncheckedFunc<>(next);
+        super(
+            new IterableOf<>(
+                () -> new Iterator<X>() {
+                    private Unchecked<I> current = new Unchecked<>(
+                        new Sticky<>(first)
+                    );
+                    private final UncheckedFunc<I, I> subsequent =
+                        new UncheckedFunc<>(next);
 
-                @Override
-                public boolean hasNext() {
-                    if (!this.current.value().hasNext()) {
-                        final I next = this.subsequent.apply(
-                            this.current.value()
-                        );
-                        this.current = new Unchecked<>(
-                            new Sticky<>(() -> next)
-                        );
+                    @Override
+                    public boolean hasNext() {
+                        if (!this.current.value().hasNext()) {
+                            final I next = this.subsequent.apply(
+                                this.current.value()
+                            );
+                            this.current = new Unchecked<>(
+                                new Sticky<>(() -> next)
+                            );
+                        }
+                        return this.current.value().hasNext();
                     }
-                    return this.current.value().hasNext();
-                }
 
-                @Override
-                public X next() {
-                    if (this.hasNext()) {
-                        return this.current.value().next();
+                    @Override
+                    public X next() {
+                        if (this.hasNext()) {
+                            return this.current.value().next();
+                        }
+                        throw new NoSuchElementException();
                     }
-                    throw new NoSuchElementException();
                 }
-            }
+            )
         );
     }
 
-    @Override
-    public Iterator<X> iterator() {
-        return this.itr.iterator();
-    }
-
-    @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
-    public boolean equals(final Object other) {
-        return new Unchecked<>(
-            new Or(
-                () -> other == this,
-                new And(
-                    () -> other != null,
-                    () -> Iterable.class.isAssignableFrom(other.getClass()),
-                    () -> other.equals(this.itr)
-                )
-            )
-        ).value();
-    }
-
-    // @checkstyle MagicNumberCheck (30 lines)
-    @Override
-    public int hashCode() {
-        return new Unchecked<>(
-            new Folded<>(
-                42,
-                (hash, entry) -> new SumOfInt(
-                    () -> 37 * hash,
-                    entry::hashCode
-                ).value(),
-                this.itr
-            )
-        ).value();
-    }
-
-    @Override
-    public String toString() {
-        return this.itr.toString();
-    }
 }
