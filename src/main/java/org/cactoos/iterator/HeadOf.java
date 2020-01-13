@@ -24,7 +24,6 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Head portion of the iterator.
@@ -33,26 +32,8 @@ import java.util.NoSuchElementException;
  *
  * @param <T> Element type
  * @since 0.8
- * @todo #1188:30min Change the implementation of this class with the help of
- *  <tt>org.cactoos.iterator.Sliced</tt> decorator, as it contains specific
- *  constructor to build heading iterator.
  */
-public final class HeadOf<T> implements Iterator<T> {
-
-    /**
-     * Decorated iterator.
-     */
-    private final Iterator<T> origin;
-
-    /**
-     * Number of head elements.
-     */
-    private final int head;
-
-    /**
-     * Current element index.
-     */
-    private int current;
+public final class HeadOf<T> extends IteratorEnvelope<T> {
 
     /**
      * Ctor.
@@ -60,24 +41,7 @@ public final class HeadOf<T> implements Iterator<T> {
      * @param iterator Decorated iterator
      */
     public HeadOf(final int num, final Iterator<T> iterator) {
-        this.origin = iterator;
-        this.head = num;
-        this.current = 0;
+        super(new Sliced<>(0, num, iterator));
     }
 
-    @Override
-    public boolean hasNext() {
-        return this.current < this.head && this.origin.hasNext();
-    }
-
-    @Override
-    public T next() {
-        if (!this.hasNext()) {
-            throw new NoSuchElementException(
-                "The iterator doesn't have items any more"
-            );
-        }
-        ++this.current;
-        return this.origin.next();
-    }
 }
