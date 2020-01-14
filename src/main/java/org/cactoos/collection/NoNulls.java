@@ -139,7 +139,7 @@ public final class NoNulls<X> implements Collection<X> {
 
     @Override
     public boolean addAll(final Collection<? extends X> items) {
-        return this.col.removeAll(new NoNulls<>(items));
+        return this.col.addAll(new NoNulls<>(items));
     }
 
     @Override
