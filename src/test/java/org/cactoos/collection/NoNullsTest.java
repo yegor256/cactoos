@@ -107,4 +107,17 @@ public final class NoNullsTest {
             )
         ).affirm();
     }
+
+    @Test
+    public void throwsErrorIfNullInAddAll() {
+        final NoNulls<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
+        new Assertion<>(
+            "Must throw exception for nullable #addAll() parameter collection",
+            () -> nonulls.addAll(new ListOf<>(1, 2, null)),
+            new Throws<>(
+                "Item #2 of #toArray() is NULL",
+                IllegalStateException.class
+            )
+        ).affirm();
+    }
 }
