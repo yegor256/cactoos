@@ -23,7 +23,9 @@
  */
 package org.cactoos.collection;
 
+import java.util.ArrayList;
 import org.cactoos.list.ListOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
@@ -90,6 +92,32 @@ public final class NoNullsTest {
                 new ListOf<>(1)
             ).contains(1),
             new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    public void testSuccessAddAll() {
+        final NoNulls<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
+        nonulls.addAll(new ListOf<>(1, 2));
+        new Assertion<>(
+            "Must add all",
+            nonulls,
+            new IsEqual<>(
+                new ListOf<>(1, 2)
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void throwsErrorIfNullInAddAll() {
+        final NoNulls<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
+        new Assertion<>(
+            "Must throw exception for nullable #addAll() parameter collection",
+            () -> nonulls.addAll(new ListOf<>(1, 2, null)),
+            new Throws<>(
+                "Item #2 of #toArray() is NULL",
+                IllegalStateException.class
+            )
         ).affirm();
     }
 }
