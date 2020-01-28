@@ -27,7 +27,7 @@ import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
- * Determines if the provided origin ends with the provided origin pattern.
+ * Tests if this Text ends with the specified suffix.
  *
  * @since 1.0
  */

@@ -39,10 +39,6 @@ import org.cactoos.list.ListOf;
  * <p>Note this class is for internal usage only
  *
  * @since 0.30
- * @todo #1266:30min This class uses Java8 Stream API. Refactor the
- *  {@link value} method with the usage of {@link org.cactoos.iterable.Mapped}
- *  iterable as an elegant way. Also remove over-complicated construction of
- *  iterable and list.
  */
 final class SumOfScalar implements Scalar<SumOf> {
 
