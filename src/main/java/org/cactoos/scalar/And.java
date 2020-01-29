@@ -24,9 +24,7 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Func;
-import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 
@@ -35,19 +33,6 @@ import org.cactoos.iterable.Mapped;
  * This class performs short-circuit evaluation in which arguments are
  * executed only if the preceding argument does not suffice to determine
  * the value of the expression.
- *
- * <p>This class can be effectively used to iterate through
- * a collection, just like
- * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)}
- * works:</p>
- *
- * {@code
- * new And(
- *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
- *    new IterableOf<>("Mary", "John", "William", "Napkin")
- * ).value(); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
- *            // the result of this operation is always true
- * }
  *
  * <p>This class could be also used for matching multiple boolean
  * expressions:</p>
@@ -87,17 +72,6 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param proc Proc to map
-     * @param src The iterable
-     * @param <X> Type of items in the iterable
-     */
-    @SafeVarargs
-    public <X> And(final Proc<X> proc, final X... src) {
-        this(new FuncOf<>(proc, true), src);
-    }
-
-    /**
-     * Ctor.
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -105,17 +79,6 @@ public final class And implements Scalar<Boolean> {
     @SafeVarargs
     public <X> And(final Func<X, Boolean> func, final X... src) {
         this(func, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param proc Proc to use
-     * @param src The iterable
-     * @param <X> Type of items in the iterable
-     * @since 0.24
-     */
-    public <X> And(final Proc<X> proc, final Iterable<X> src) {
-        this(new FuncOf<>(proc, true), src);
     }
 
     /**

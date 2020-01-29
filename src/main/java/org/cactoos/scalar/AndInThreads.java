@@ -73,17 +73,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param proc Proc to map
-     * @param src The iterable
-     * @param <X> Type of items in the iterable
-     */
-    @SafeVarargs
-    public <X> AndInThreads(final Proc<X> proc, final X... src) {
-        this(new FuncOf<>(proc, true), src);
-    }
-
-    /**
-     * Ctor.
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -91,16 +80,6 @@ public final class AndInThreads implements Scalar<Boolean> {
     @SafeVarargs
     public <X> AndInThreads(final Func<X, Boolean> func, final X... src) {
         this(func, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param proc Proc to use
-     * @param src The iterable
-     * @param <X> Type of items in the iterable
-     */
-    public <X> AndInThreads(final Proc<X> proc, final Iterable<X> src) {
-        this(new FuncOf<>(proc, true), src);
     }
 
     /**
