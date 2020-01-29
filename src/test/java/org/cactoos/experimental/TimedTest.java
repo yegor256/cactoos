@@ -24,10 +24,13 @@
 
 package org.cactoos.experimental;
 
+import java.time.Duration;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import org.cactoos.Proc;
+import org.cactoos.func.FuncOf;
 import org.cactoos.func.Repeated;
 import org.cactoos.func.UncheckedFunc;
 import org.hamcrest.core.IsEqual;
@@ -38,45 +41,78 @@ import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
- * Test case for {@link Timeout}.
+ * Test case for {@link Timed}.
  *
  * @since 1.0.0
- * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class TimeoutTest {
+public final class TimedTest {
 
     /**
-     * Execute the tasks concurrently using {@link Timeout} when
+     * First text for test.
+     */
+    private static final String FIRST_TEXT = "txt 1";
+
+    /**
+     * Second text for test.
+     */
+    private static final String SECOND_TEXT = "txt 2";
+
+    /**
+     * Third text for test.
+     */
+    private static final String THIRD_TEXT = "txt 3";
+
+    /**
+     * Threads count.
+     */
+    private static final int THREADS = 3;
+
+    /**
+     * Repetitions count for running test several times.
+     */
+    private static final int REPETITIONS_COUNT = 5;
+
+    /**
+     * Sleep time.
+     */
+    private static final Duration SLEEP_TIME = Duration.ofMillis(100L);
+
+    /**
+     * Execute the tasks concurrently using {@link Timed} when
      *  {@link ExecutorService} was initiated by someone else.
      */
     @Test
     public void containsResults() {
         this.repeat(
             arg -> {
-                final ExecutorService extor = Executors.newFixedThreadPool(3);
+                final ExecutorService extor = Executors.newFixedThreadPool(TimedTest.THREADS);
                 try {
                     new Assertion<>(
-                        "contains results from callables",
-                        new Timeout<String>(
+                        "Contains results from callables",
+                        new Timed<String>(
                             extor,
                             1L,
                             TimeUnit.SECONDS,
                             () -> {
                                 this.sleep();
-                                return "txt 1";
+                                return TimedTest.FIRST_TEXT;
                             },
                             () -> {
                                 this.sleep();
-                                return "txt 2";
+                                return TimedTest.SECOND_TEXT;
                             },
                             () -> {
                                 this.sleep();
-                                return "txt 3";
+                                return TimedTest.THIRD_TEXT;
                             }
                         ),
-                        new HasValues<>("txt 1", "txt 2", "txt 3")
+                        new HasValues<>(
+                            TimedTest.FIRST_TEXT,
+                            TimedTest.SECOND_TEXT,
+                            TimedTest.THIRD_TEXT
+                        )
                     ).affirm();
                 } finally {
                     extor.shutdown();
@@ -96,25 +132,25 @@ public final class TimeoutTest {
     public void failsDueToTimeoutWithExternalExecutorService() {
         this.repeat(
             arg -> {
-                final ExecutorService extor = Executors.newFixedThreadPool(3);
+                final ExecutorService extor = Executors.newFixedThreadPool(TimedTest.THREADS);
                 try {
                     new Assertion<>(
-                        "fails due to timeout when using the external executor service",
-                        () -> new Timeout<String>(
+                        "Fails due to timeout when using the external executor service",
+                        () -> new Timed<String>(
                             extor,
                             1L,
                             TimeUnit.MILLISECONDS,
                             () -> {
                                 this.sleep();
-                                return "txt 1";
+                                return TimedTest.FIRST_TEXT;
                             },
                             () -> {
                                 this.sleep();
-                                return "txt 2";
+                                return TimedTest.SECOND_TEXT;
                             },
                             () -> {
                                 this.sleep();
-                                return "txt 3";
+                                return TimedTest.THIRD_TEXT;
                             }
                         ).iterator().next(),
                         new Throws<>(
@@ -139,8 +175,8 @@ public final class TimeoutTest {
     @Test
     public void failsDueToException() {
         new Assertion<>(
-            "wraps error into CompletionException",
-            () -> new Timeout<String>(
+            "Wraps error into CompletionException",
+            () -> new Timed<String>(
                 Executors.newSingleThreadExecutor(),
                 1L,
                 TimeUnit.SECONDS,
@@ -156,62 +192,60 @@ public final class TimeoutTest {
     }
 
     /**
-     * Execute the tasks concurrently using {@link Timeout} when
-     *  {@link ExecutorService} was initiated by {@link Timeout} itself.
+     * Execute the tasks concurrently using {@link Timed} when
+     *  {@link ExecutorService} was initiated by {@link Timed} itself.
      */
     @Test
     public void containsValuesWithInlineExecutorService() {
         this.repeat(
             arg -> new Assertion<>(
-                // @checkstyle LineLength (1 line)
-                "contains results from the callables when using the inline executor service",
-                new Timeout<String>(
-                    3,
+                "Contains results from the callables when using the inline executor service",
+                new Timed<String>(
+                    TimedTest.THREADS,
                     1L,
                     TimeUnit.SECONDS,
                     () -> {
                         this.sleep();
-                        return "txt 1";
+                        return TimedTest.FIRST_TEXT;
                     },
                     () -> {
                         this.sleep();
-                        return "txt 2";
+                        return TimedTest.SECOND_TEXT;
                     },
                     () -> {
                         this.sleep();
-                        return "txt 3";
+                        return TimedTest.THIRD_TEXT;
                     }
                 ),
-                new HasValues<>("txt 1", "txt 2", "txt 3")
+                new HasValues<>(TimedTest.FIRST_TEXT, TimedTest.SECOND_TEXT, TimedTest.THIRD_TEXT)
             ).affirm()
         );
     }
 
     /**
      * Execution takes longer than timeout when
-     *  {@link ExecutorService} was initiated by {@link Timeout} itself.
+     *  {@link ExecutorService} was initiated by {@link Timed} itself.
      */
     @Test
     public void failsDueToTimeoutWithInlineExecutorService() {
         this.repeat(
             arg -> new Assertion<>(
-                // @checkstyle LineLength (1 line)
-                "fails due to timeout when using the inline executor service",
-                () -> new Timeout<String>(
-                    3,
+                "Fails due to timeout when using the inline executor service",
+                () -> new Timed<String>(
+                    TimedTest.THREADS,
                     1L,
                     TimeUnit.MILLISECONDS,
                     () -> {
                         this.sleep();
-                        return "txt 1";
+                        return TimedTest.FIRST_TEXT;
                     },
                     () -> {
                         this.sleep();
-                        return "txt 2";
+                        return TimedTest.SECOND_TEXT;
                     },
                     () -> {
                         this.sleep();
-                        return "txt 3";
+                        return TimedTest.THIRD_TEXT;
                     }
                 ).iterator().next(),
                 new Throws<>(
@@ -226,16 +260,14 @@ public final class TimeoutTest {
      * Repeat the test several times.
      * @param test The test to execute.
      */
-    private void repeat(final org.cactoos.Proc<?> test) {
+    private void repeat(final Proc<Object> test) {
+        final Object dummy = new Object();
         new UncheckedFunc<>(
             new Repeated<>(
-                arg -> {
-                    test.exec(null);
-                    return null;
-                },
-                5
+                new FuncOf<>(test, dummy),
+                TimedTest.REPETITIONS_COUNT
             )
-        ).apply(Boolean.TRUE);
+        ).apply(dummy);
     }
 
     /**
@@ -243,7 +275,7 @@ public final class TimeoutTest {
      */
     private void sleep() {
         try {
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(TimedTest.SLEEP_TIME.toMillis());
         } catch (final InterruptedException iex) {
             throw new IllegalStateException(iex);
         }

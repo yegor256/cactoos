@@ -42,7 +42,7 @@ import org.cactoos.iterable.IterableOf;
  * @param <T> The type of task result item.
  * @since 1.0.0
  */
-public final class Timeout<T> extends IterableEnvelope<T> {
+public final class Timed<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
@@ -53,7 +53,7 @@ public final class Timeout<T> extends IterableEnvelope<T> {
      * @checkstyle ParameterNumberCheck (5 lines)
      */
     @SafeVarargs
-    public Timeout(
+    public Timed(
         final ExecutorService exc,
         final long timeout,
         final TimeUnit unit,
@@ -70,7 +70,7 @@ public final class Timeout<T> extends IterableEnvelope<T> {
      * @param unit The time unit of the timeout argument.
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public Timeout(
+    public Timed(
         final ExecutorService exc,
         final Iterable<Scalar<T>> tasks,
         final long timeout,
@@ -93,7 +93,7 @@ public final class Timeout<T> extends IterableEnvelope<T> {
      * @checkstyle ParameterNumberCheck (5 lines)
      */
     @SafeVarargs
-    public Timeout(
+    public Timed(
         final int threads,
         final long timeout,
         final TimeUnit unit,
@@ -112,7 +112,7 @@ public final class Timeout<T> extends IterableEnvelope<T> {
      * @checkstyle IndentationCheck (20 lines)
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public Timeout(
+    public Timed(
         final int threads,
         final Iterable<Scalar<T>> tasks,
         final long timeout,
@@ -140,7 +140,7 @@ public final class Timeout<T> extends IterableEnvelope<T> {
      * @checkstyle IllegalCatchCheck (20 lines)
      */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    private Timeout(
+    private Timed(
         final Func<Collection<Callable<T>>, Collection<Future<T>>> fnc,
         final Iterable<Scalar<T>> tasks
     ) {
