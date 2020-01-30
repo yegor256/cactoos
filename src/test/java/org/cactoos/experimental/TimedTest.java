@@ -25,6 +25,7 @@
 package org.cactoos.experimental;
 
 import java.time.Duration;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -46,7 +47,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0.0
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class TimedTest {
 
     /**
@@ -154,7 +154,7 @@ public final class TimedTest {
                             }
                         ).iterator().next(),
                         new Throws<>(
-                            new IsEqual<>("java.util.concurrent.CancellationException"),
+                            new IsEqual<>(CancellationException.class.getName()),
                             CompletionException.class
                         )
                     ).affirm();
@@ -249,7 +249,7 @@ public final class TimedTest {
                     }
                 ).iterator().next(),
                 new Throws<>(
-                    new IsEqual<>("java.util.concurrent.CancellationException"),
+                    new IsEqual<>(CancellationException.class.getName()),
                     CompletionException.class
                 )
             ).affirm()
