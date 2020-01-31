@@ -259,6 +259,12 @@ public final class TimedTest {
     /**
      * Repeat the test several times.
      * @param test The test to execute.
+     * @todo #1000:30min Create RepeatedProc decorator in order to get rid of this `dummy` object.
+     *  After it's done:
+     *  1. Leave a puzzle for creation RepeatedCallable decorator
+     *  2. Leave a puzzle for splitting the entire `org.cactoos.func` package into
+     *  `org.cactoos.func`, `org.cactoos.proc` and `org.cactoos.callable`, with each one holding
+     *  their related decorators, classes and interfaces.
      */
     private void repeat(final Proc<Object> test) {
         final Object dummy = new Object();
