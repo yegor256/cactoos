@@ -29,20 +29,20 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
- * Test cases for {@link HeadInput}.
+ * Test cases for {@link HeadOf}.
  *
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class HeadInputTest {
+public final class HeadOfTest {
 
     @Test
     public void readsHeadOfLongerInput() throws Exception {
         new Assertion<>(
             "must limit exactly the number of read bytes",
             new TextOf(
-                new HeadInput(
+                new HeadOf(
                     new InputOf("readsHeadOfLongerInput"),
                     5
                 )
@@ -57,7 +57,7 @@ public final class HeadInputTest {
         new Assertion<>(
             "must limit to at most the number of available bytes",
             new TextOf(
-                new HeadInput(
+                new HeadOf(
                     new InputOf(input),
                     35
                 )
