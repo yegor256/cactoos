@@ -31,6 +31,7 @@ import org.cactoos.text.UncheckedText;
 import org.hamcrest.Matcher;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -103,6 +104,25 @@ public final class SortedTest {
                     new IsEqual<>(new TextOf("gh"))
                 )
             )
+        ).affirm();
+    }
+
+    @Test
+    public void mustNotBeEqualToSortedSet() {
+        new Assertion<>(
+            "Sorted set must not be equal to the tested collection",
+            new Sorted<>(
+                Integer::compareTo,
+                2, 1, 3, 2, 1
+            ),
+            new IsNot<>(
+                new IsIterableContainingInOrder<>(
+                    new ListOf<Matcher<? super Integer>>(
+                        new IsEqual<>(1),
+                        new IsEqual<>(3),
+                        new IsEqual<>(2)
+                    )
+                ))
         ).affirm();
     }
 }
