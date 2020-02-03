@@ -52,6 +52,20 @@ public final class HeadOfTest {
     }
 
     @Test
+    public void readsEmptyHeadOfInput() throws Exception {
+        new Assertion<>(
+            "must limit to 0 the number of read bytes",
+            new TextOf(
+                new HeadOf(
+                    new InputOf("readsEmptyHeadOfInput"),
+                    0
+                )
+            ),
+            new TextHasString("")
+        ).affirm();
+    }
+
+    @Test
     public void readsHeadOfShorterInput() throws Exception {
         final String input = "readsHeadOfShorterInput";
         new Assertion<>(
