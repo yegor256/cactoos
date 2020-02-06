@@ -31,7 +31,7 @@ import org.cactoos.Input;
  *
  * @since 0.31
  */
-public final class HeadInput implements Input {
+public final class HeadOf implements Input {
 
     /**
      * The original input.
@@ -48,7 +48,7 @@ public final class HeadInput implements Input {
      * @param orig The original input.
      * @param len Limit of bytes that can be read from the beginning.
      */
-    public HeadInput(final Input orig, final int len) {
+    public HeadOf(final Input orig, final int len) {
         this.origin = orig;
         this.length = len;
     }
