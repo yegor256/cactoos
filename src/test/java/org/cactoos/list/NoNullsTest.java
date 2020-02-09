@@ -142,46 +142,4 @@ public final class NoNullsTest {
             )
         ).affirm();
     }
-
-    @Test
-    public void addThrowsErrorForImmutableListIterator() {
-        new Assertion<>(
-            "must throw error if modified with add",
-            () -> {
-                new NoNulls<>(new ListOf<>(1, 2, 3)).listIterator().add(4);
-                return 0;
-            },
-            new Throws<>(
-                UnsupportedOperationException.class
-            )
-        ).affirm();
-    }
-
-    @Test
-    public void removeThrowsErrorForImmutableListIterator() {
-        new Assertion<>(
-            "must throw error if modified with remove",
-            () -> {
-                new NoNulls<>(new ListOf<>(1, 2, 3)).listIterator().remove();
-                return 0;
-            },
-            new Throws<>(
-                UnsupportedOperationException.class
-            )
-        ).affirm();
-    }
-
-    @Test
-    public void setThrowsErrorForImmutableListIterator() {
-        new Assertion<>(
-            "must throw error if modified if set",
-            () -> {
-                new NoNulls<>(new ListOf<>(1, 2, 3)).listIterator().set(4);
-                return 0;
-            },
-            new Throws<>(
-                UnsupportedOperationException.class
-            )
-        ).affirm();
-    }
 }

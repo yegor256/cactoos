@@ -26,5 +26,8 @@
  * Sets.
  *
  * @since 0.49.2
+ * @todo #1242:30min The SetOf class should be implemented as an in-memory set,
+ *  for example based on HashSet. See ListOf for an example and #1242 for the
+ *  rationale behind this design.
  */
 package org.cactoos.set;
