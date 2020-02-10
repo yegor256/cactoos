@@ -8,8 +8,8 @@ env:
   MAVEN_OPTS: -Xmx1g
   JAVA_OPTS: -Xmx1g
 install: |
-  sudo gem install --no-rdoc --no-ri pdd
-  sudo gem install --no-rdoc --no-ri xcop
+  sudo gem install --no-document pdd
+  sudo gem install --no-document xcop
 architect:
 - paulodamaso
 - yegor256
