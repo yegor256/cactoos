@@ -23,13 +23,14 @@
  */
 package org.cactoos.set;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.TreeSet;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Unchecked;
 
 /**
- * Iterable as {@link Set}.
+ * Sorted Iterable as {@link Set}.
  *
  * <p>This class should be used very carefully. You must understand that
  * it will fetch the entire content of the encapsulated {@link Set} on each
@@ -38,31 +39,32 @@ import org.cactoos.scalar.Unchecked;
  * <p>There is no thread-safety guarantee.
  *
  * @param <T> Set type
- * @since 0.49.2
+ * @since 1.0.0
  */
-public final class SetOf<T> extends SetEnvelope<T> {
+public final class Sorted<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
-     *
+     * @param cmp Comparator
      * @param array An array of some elements
      */
     @SafeVarargs
-    public SetOf(final T... array) {
-        this(new IterableOf<>(array));
+    public Sorted(final Comparator<T> cmp, final T... array) {
+        this(cmp, new IterableOf<>(array));
     }
 
     /**
      * Ctor.
+     * @param cmp Comparator
      * @param src An {@link Iterable}
      */
-    public SetOf(final Iterable<T> src) {
+    public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
         super(
             new Unchecked<>(
                 () -> {
-                    final Set<T> tmp = new HashSet<>();
-                    src.forEach(tmp::add);
-                    return tmp;
+                    final Set<T> set = new TreeSet<>(cmp);
+                    src.forEach(set::add);
+                    return set;
                 }
             ).value()
         );

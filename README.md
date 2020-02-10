@@ -236,6 +236,22 @@ final Iterable<String> sorted = new Sorted<>(
 );
 ```
 
+To create a sorted set from existing vararg elements using comparator:
+```java
+final Set<String> sorted = new org.cactoos.set.Sorted<>(
+    (first, second) -> first.compareTo(second),
+    "abc", "bcd", "abc", "ccc", "acd"
+);
+```
+
+To create a sorted set from existing iterable using comparator:
+```java
+final Set<String> sorted = new org.cactoos.set.Sorted<>(
+    (first, second) -> first.compareTo(second),
+    new IterableOf<>("abc", "bcd", "abc", "ccc", "acd")
+);
+```
+
 ## Funcs and Procs
 
 This is a traditional `foreach` loop:
