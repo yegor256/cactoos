@@ -24,21 +24,10 @@
 package org.cactoos.list;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Synchronized list.
- *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link Iterable} on each
- * method call. It doesn't cache the data anyhow. If you don't
- * need this {@link java.util.List} to re-fresh
- * its content on every call, by doing round-trips to
- * the encapsulated iterable, use {@link Sticky}.</p>
-
- * <p>The list is read only.</p>
  *
  * <p>Objects of this class are thread-safe.</p>
  *
@@ -46,32 +35,11 @@ import org.cactoos.iterable.IterableOf;
  * @since 0.24
  */
 public final class Synced<X> extends ListEnvelope<X> {
-
     /**
      * Ctor.
-     * @param items The array
+     * @param list The underlying list
      */
-    @SafeVarargs
-    public Synced(final X... items) {
-        this(new IterableOf<>(items));
+    public Synced(final List<X> list) {
+        super(Collections.synchronizedList(list));
     }
-
-    /**
-     * Ctor.
-     * @param list The iterable
-     */
-    public Synced(final Iterable<X> list) {
-        super(
-            new ListOf<>(
-                new org.cactoos.scalar.Synced<>(
-                    () -> {
-                        final List<X> temp = new LinkedList<>();
-                        list.forEach(temp::add);
-                        return Collections.synchronizedList(temp);
-                    }
-                )
-            )
-        );
-    }
-
 }

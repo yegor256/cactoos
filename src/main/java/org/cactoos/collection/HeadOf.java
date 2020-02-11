@@ -32,6 +32,11 @@ import org.cactoos.iterable.IterableOf;
  *
  * @param <T> Type of source item
  * @since 0.29
+ * @todo #1242:30min Remove this class and replace it everywhere
+ *  it was needed by the appropriate usage of HeadOf from iterable
+ *  (composed with ListOf or SetOf in case a copy is needed)
+ *  or any other relevant concrete collection implementation.
+ *  See #1242 for the rationale about this.
  */
 public final class HeadOf<T> extends CollectionEnvelope<T> {
 

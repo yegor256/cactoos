@@ -35,6 +35,10 @@ import org.cactoos.scalar.Unchecked;
  *
  * @param <E> Type of item
  * @since 0.16
+ * @todo #1242:30min Remove this class and replace it everywhere
+ *  it was needed by the appropriate usage of ListOf, SetOf or
+ *  any other collection concrete implementation. See #1242
+ *  for the rationale about this.
  */
 public final class Sticky<E> extends CollectionEnvelope<E> {
 

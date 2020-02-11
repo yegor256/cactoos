@@ -36,6 +36,11 @@ import org.cactoos.scalar.Unchecked;
  *
  * @param <X> Type of source item
  * @since 1.16
+ * @todo #1242:30min Remove this class and replace it everywhere
+ *  it was needed by the appropriate usage of Reversed from iterable
+ *  (composed with ListOf or SetOf in case a copy is needed)
+ *  or any other relevant concrete collection implementation.
+ *  See #1242 for the rationale about this.
  */
 public final class Reversed<X> extends CollectionEnvelope<X> {
 

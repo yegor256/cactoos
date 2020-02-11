@@ -23,10 +23,8 @@
  */
 package org.cactoos.func;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.cactoos.list.ListOf;
-import org.cactoos.list.Sticky;
 import org.cactoos.list.Synced;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Test;
@@ -45,10 +43,8 @@ public class ForEachInThreadsTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testProcIterable() throws Exception {
-        final List<Integer> list = new Sticky<>(
-            new Synced<>(
-                new ArrayList<>(2)
-            )
+        final List<Integer> list = new Synced<>(
+            new ListOf<>()
         );
         new ForEachInThreads<Integer>(
             new ProcNoNulls<>(

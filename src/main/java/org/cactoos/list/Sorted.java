@@ -23,38 +23,18 @@
  */
 package org.cactoos.list;
 
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Sorted list.
  *
- * <p>Pay attention that sorting will happen on each operation
- * with the collection. Every time you touch it, it will fetch the
- * entire list from the encapsulated object and sort it. If you
- * want to avoid that "side-effect", decorate it with
- * {@link Sticky}.</p>
- *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Element type
- * @see Sticky
  * @since 0.19
  */
 public final class Sorted<T> extends ListEnvelope<T> {
-
-    /**
-     * Ctor.
-     * @param src The underlying collection
-     */
-    @SafeVarargs
-    public Sorted(final T... src) {
-        this(new IterableOf<>(src));
-    }
-
     /**
      * Ctor.
      *
@@ -62,38 +42,20 @@ public final class Sorted<T> extends ListEnvelope<T> {
      * implements {@link Comparable} interface. Otherwise, there will be
      * a type casting exception in runtime.</p>
      *
-     * @param src The underlying collection
+     * @param src The source collection
      */
     @SuppressWarnings("unchecked")
-    public Sorted(final Iterable<T> src) {
+    public Sorted(final List<T> src) {
         this((Comparator<T>) Comparator.naturalOrder(), src);
     }
 
     /**
      * Ctor.
      * @param cmp The comparator
-     * @param src The underlying collection
-     */
-    @SafeVarargs
-    public Sorted(final Comparator<T> cmp, final T... src) {
-        this(cmp, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param cmp The comparator
-     * @param src The underlying collection
+     * @param src The source collection
      */
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
-        super(
-            new ListOf<>(
-                () -> {
-                    final List<T> items = new LinkedList<>();
-                    src.forEach(items::add);
-                    items.sort(cmp);
-                    return Collections.unmodifiableList(items);
-                }
-            )
-        );
+        super(new ListOf<>(src));
+        super.sort(cmp);
     }
 }

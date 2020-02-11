@@ -40,7 +40,7 @@ public final class SyncedTest {
     public void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a list",
-            new Synced<>(1, 0, -1, -1, 2),
+            new Synced<>(new ListOf<>(1, 0, -1, -1, 2)),
             new BehavesAsList<>(0)
         );
     }
@@ -59,8 +59,7 @@ public final class SyncedTest {
                 );
                 return true;
             },
-            new RunsInThreads<>(new Synced<>(1, 0, -1, -1, 2))
+            new RunsInThreads<>(new Synced<>(new ListOf<>(1, 0, -1, -1, 2)))
         );
     }
-
 }

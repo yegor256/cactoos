@@ -32,6 +32,10 @@ import org.cactoos.iterable.IterableOf;
  *
  * @param <T> Element type
  * @since 0.31
+ * @todo #1242:30min Remove this class and replace it everywhere
+ *  it was needed by the appropriate usage of TailOf from list,
+ *  set, iterable, iterator or any other relevant concrete
+ *  collection implementation. See #1242 for the rationale about this.
  */
 public final class TailOf<T> extends CollectionEnvelope<T> {
 

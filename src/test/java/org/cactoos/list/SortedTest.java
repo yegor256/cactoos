@@ -68,7 +68,7 @@ public final class SortedTest {
             "Can't take one element from sorted list",
             new Sorted<>(
                 Comparator.reverseOrder(),
-                "alpha", "beta", "gamma", "delta"
+                new ListOf<>("alpha", "beta", "gamma", "delta")
             ).get(1),
             new IsEqual<>("delta")
         );

@@ -24,51 +24,24 @@
 package org.cactoos.list;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Shuffled list.
  *
- * <p>Pay attention that shuffling will happen on each operation
- * with the collection. Every time you touch it, it will fetch the
- * entire list from the encapsulated object and sort it. If you
- * want to avoid that "side-effect", decorate it with
- * {@link Sticky}.</p>
- *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Element type
- * @see Sticky
  * @since 0.23
  */
 public final class Shuffled<T> extends ListEnvelope<T> {
-
-    /**
-     * Ctor.
-     * @param src The underlying collection
-     */
-    @SafeVarargs
-    public Shuffled(final T... src) {
-        this(new IterableOf<>(src));
-    }
-
     /**
      * Ctor.
      * @param src Source
      */
     public Shuffled(final Iterable<T> src) {
-        super(
-            new ListOf<>(
-                () -> {
-                    final List<T> items = new LinkedList<>();
-                    src.forEach(items::add);
-                    Collections.shuffle(items);
-                    return Collections.unmodifiableList(items);
-                }
-            )
-        );
+        super(new ListOf<>(src));
+        Collections.shuffle(this);
     }
 
 }

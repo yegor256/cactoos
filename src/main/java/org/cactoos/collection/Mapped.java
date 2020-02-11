@@ -34,6 +34,11 @@ import org.cactoos.iterable.IterableOf;
  * @param <X> Type of source item
  * @param <Y> Type of target item
  * @since 0.14
+ * @todo #1242:30min Remove this class and replace it everywhere
+ *  it was needed by the appropriate usage of Mapped from iterable
+ *  (composed with ListOf or SetOf in case a copy is needed)
+ *  or any other relevant concrete collection implementation.
+ *  See #1242 for the rationale about this.
  */
 public final class Mapped<X, Y> extends CollectionEnvelope<Y> {
 
