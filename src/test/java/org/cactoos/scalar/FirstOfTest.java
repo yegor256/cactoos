@@ -82,9 +82,9 @@ public final class FirstOfTest {
     }
 
     @Test
-    public void shouldThrowExceptionForNotFoundElementTest() {
+    public void throwsFallbackIfNothingMatches() {
         new Assertion<>(
-            "Should not return anything",
+            "Fallback was not thrown",
             new FirstOf<>(
                 num -> num.equals(0),
                 // @checkstyle MagicNumber (10 lines)
