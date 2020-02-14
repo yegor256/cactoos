@@ -24,6 +24,11 @@
 package org.cactoos.io;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.cactoos.func.ForEach;
+import org.cactoos.func.ProcOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.Randomized;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -34,6 +39,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
  *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class TempFolderTest {
 
@@ -58,6 +64,53 @@ public final class TempFolderTest {
         new Assertion<>(
             "Can't delete folder while closing",
             !dir.value().toFile().exists(),
+            new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    public void deletesNonEmptyDirectory() throws Exception {
+        final TempFolder temp = new TempFolder();
+        final Path root = temp.value();
+        new ForEach<>(
+            new ProcOf<String>(
+                name -> {
+                    final Path dir = Files.createDirectories(
+                        new File(root.toFile(), name).toPath()
+                    );
+                    new ForEach<>(
+                        new ProcOf<String>(
+                            filename -> {
+                                new TempFile(
+                                    () -> dir,
+                                    filename,
+                                    ""
+                                ).value();
+                                return true;
+                            }
+                        )
+                    ).exec(
+                        new IterableOf<>(
+                            "file1.txt", "file2.txt", "file3.txt"
+                        )
+                    );
+                    return true;
+                }
+            )
+        ).exec(
+            new IterableOf<>(
+                "a", "b", "c", "d", "e"
+            )
+        );
+        new Assertion<>(
+            "Directory contains files and sub directories",
+            temp.value().toFile().exists(),
+            new IsTrue()
+        ).affirm();
+        temp.close();
+        new Assertion<>(
+            "Can't delete not empty folder while closing",
+            !temp.value().toFile().exists(),
             new IsTrue()
         ).affirm();
     }
