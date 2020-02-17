@@ -25,6 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.Filtered;
 
 /**
@@ -69,7 +70,7 @@ public final class FirstOf<T> implements Scalar<T> {
     public T value() throws Exception {
         return new ItemAt<>(
             0,
-            this.fallback.value(),
+            new FuncOf<>(this.fallback),
             new Filtered<>(this.condition, this.source)
         ).value();
     }

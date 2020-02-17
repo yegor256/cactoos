@@ -27,7 +27,9 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfInts;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link FirstOf}.
@@ -79,4 +81,23 @@ public final class FirstOfTest {
         );
     }
 
+    @Test
+    public void throwsFallbackIfNothingMatches() {
+        new Assertion<>(
+            "Fallback was not thrown",
+            new FirstOf<>(
+                num -> num.equals(0),
+                // @checkstyle MagicNumber (10 lines)
+                new IterableOf<>(
+                    1, 2, 3, 4, 5
+                ),
+                () -> {
+                    throw new IllegalArgumentException(
+                        String.format("Unable to found element with id %d", 0)
+                    );
+                }
+            ),
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
+    }
 }
