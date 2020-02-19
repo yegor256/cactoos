@@ -29,8 +29,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
+import org.cactoos.func.ForEach;
+import org.cactoos.func.IoCheckedProc;
+import org.cactoos.func.ProcOf;
+import org.cactoos.iterable.Sorted;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.text.Joined;
@@ -43,6 +48,7 @@ import org.cactoos.text.TextOf;
  * The physical folder is deleted from the filesystem when the temp folder is
  * closed.
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class TempFolder implements Scalar<Path>, Closeable {
 
@@ -125,6 +131,19 @@ public final class TempFolder implements Scalar<Path>, Closeable {
 
     @Override
     public void close() throws IOException {
-        Files.delete(new IoChecked<>(this).value());
+        new IoCheckedProc<>(
+            new ForEach<Path>(
+                new ProcOf<>(
+                    path -> path.toFile().delete()
+                )
+            )
+        ).exec(
+            new Sorted<>(
+                Comparator.reverseOrder(),
+                new Directory(
+                    new IoChecked<>(this).value()
+                )
+            )
+        );
     }
 }
