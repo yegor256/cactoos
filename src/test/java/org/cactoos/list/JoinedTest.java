@@ -23,9 +23,11 @@
  */
 package org.cactoos.list;
 
+import java.util.List;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
@@ -34,8 +36,9 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
+ * @checkstyle DiamondOperatorCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public final class JoinedTest {
 
     @Test
@@ -96,24 +99,31 @@ public final class JoinedTest {
     }
 
     @Test
-    public void toArray() throws Exception {
-        MatcherAssert.assertThat(
-            new Joined<Integer>(
-                new ListOf<>(11, 12),
-                new ListOf<>(13, 14)
-            ).toArray(),
-            new IsEqual<>(new ListOf<>(11, 12, 13, 14).toArray())
-        );
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
     public void add() throws Exception {
-        new Joined<String>(new ListOf<String>("add0")).add("new add0");
+        final List<String> joined = new Joined<String>(
+            new ListOf<>("One"),
+            new ListOf<>("Two")
+        );
+        joined.add("Three");
+        new Assertion<>(
+            "must be able to add element specified",
+            joined.size(),
+            new IsEqual<>(3)
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void remove() throws Exception {
-        new Joined<String>(new ListOf<String>("remove")).remove("new remove");
+        final List<String> joined = new Joined<String>(
+            new ListOf<>("One"),
+            new ListOf<>("Two")
+        );
+        joined.remove("Two");
+        new Assertion<>(
+            "must be able to remove element specified",
+            joined.size(),
+            new IsEqual<>(1)
+        ).affirm();
     }
 
     @Test
@@ -129,35 +139,83 @@ public final class JoinedTest {
         );
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void addAll() throws Exception {
-        new Joined<String>(
-            new ListOf<String>("addAll")
-        ).addAll(new ListOf<>("new addAll"));
+        final List<String> joined = new Joined<String>(
+            new ListOf<>("One"),
+            new ListOf<>("Two")
+        );
+        joined.addAll(
+            new ListOf<>("Three")
+        );
+        new Assertion<>(
+            "must be able to addAll elements specified",
+            joined.get(2),
+            new IsEqual<>("Three")
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void addAllSecond() throws Exception {
-        new Joined<String>(
-            new ListOf<String>("addAll1")
-        ).addAll(22, new ListOf<>("new addAll1"));
+    @Test
+    public void addAllInFront() throws Exception {
+        final List<String> joined = new Joined<String>(
+            new ListOf<>("One"),
+            new ListOf<>("Two")
+        );
+        joined.addAll(
+            0,
+            new ListOf<>("Three")
+        );
+        new Assertion<>(
+            "must be able to addAll elements specified",
+            joined.get(0),
+            new IsEqual<>("Three")
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void removeAll() throws Exception {
-        new Joined<String>(
-            new ListOf<String>("removeAll")
-        ).removeAll(new ListOf<>("new removeAll"));
+        final List<String> joined = new Joined<String>(
+            new ListOf<>("One"),
+            new ListOf<>("Two")
+        );
+        joined.removeAll(
+            new ListOf<>("Two")
+        );
+        new Assertion<>(
+            "must be able to removeAll elements specified",
+            joined.size(),
+            new IsEqual<>(1)
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void retainAll() throws Exception {
-        new Joined<String>().retainAll(new ListOf<>("retain", "All"));
+        final List<String> joined = new Joined<String>(
+            new ListOf<>("One"),
+            new ListOf<>("Two", "Three")
+        );
+        joined.retainAll(
+            new ListOf<>("One", "Two")
+        );
+        new Assertion<>(
+            "must be able to retain all",
+            joined.size(),
+            new IsEqual<>(2)
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void clear() throws Exception {
-        new Joined<String>(new ListOf<String>("clear")).clear();
+        final List<String> joined = new Joined<String>(
+            new ListOf<>("One"),
+            new ListOf<>("Two")
+        );
+        joined.clear();
+        new Assertion<>(
+            "must be able to clear",
+            joined.size(),
+            new IsEqual<>(0)
+        ).affirm();
     }
 
     @Test
@@ -172,19 +230,46 @@ public final class JoinedTest {
         );
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void set() throws Exception {
-        new Joined<String>(new ListOf<String>("set")).set(33, "new set");
+        final List<String> joined = new Joined<String>(
+            new ListOf<>("One"),
+            new ListOf<>("Two")
+        );
+        joined.set(0, "Three");
+        new Assertion<>(
+            "must be able to set element by specified index",
+            joined.get(0),
+            new IsEqual<>("Three")
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void addSecond() throws Exception {
-        new Joined<String>(new ListOf<String>("add")).add(44, "new add");
+    @Test
+    public void addByIndex() throws Exception {
+        final List<String> joined = new Joined<String>(
+            new ListOf<>("One"),
+            new ListOf<>("Two")
+        );
+        joined.add(0, "Three");
+        new Assertion<>(
+            "must be able to add element by specified index",
+            joined.get(0),
+            new IsEqual<>("Three")
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void removeSecond() throws Exception {
-        new Joined<String>().remove(55);
+    @Test
+    public void removeByIndex() throws Exception {
+        final List<String> joined = new Joined<String>(
+            new ListOf<>("One"),
+            new ListOf<>("Two")
+        );
+        joined.remove(0);
+        new Assertion<>(
+            "must be able to remove element by specified index",
+            joined.get(0),
+            new IsEqual<>("Two")
+        ).affirm();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
