@@ -38,11 +38,15 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @checkstyle MagicNumber (500 line)
  * @checkstyle DiamondOperatorCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.TooManyMethods"})
 public final class JoinedTest {
+    private static final String LITERAL_ONE = "ONE";
+    private static final String LITERAL_TWO = "TWO";
+    private static final String LITERAL_THREE = "THREE";
+    private static final String LITERAL_FOUR = "FOUR";
 
     @Test
-    public void behavesAsCollection() throws Exception {
+    public void behavesAsCollection() {
         MatcherAssert.assertThat(
             "Can't behave as a list",
             new Joined<Integer>(
@@ -54,7 +58,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void size() throws Exception {
+    public void size() {
         MatcherAssert.assertThat(
             new Joined<Integer>(
                 new ListOf<>(1, 2),
@@ -65,7 +69,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void isEmpty() throws Exception {
+    public void isEmpty() {
         MatcherAssert.assertThat(
             new Joined<Integer>(
                 new ListOf<Integer>(5, 6)
@@ -75,7 +79,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void contains() throws Exception {
+    public void contains() {
         final int element = 0;
         MatcherAssert.assertThat(
             new Joined<Integer>(
@@ -87,128 +91,194 @@ public final class JoinedTest {
     }
 
     @Test
-    public void iterator() throws Exception {
-        final String element = "element";
-        MatcherAssert.assertThat(
+    public void iterator() {
+        new Assertion<>(
+            "Joined Iterator must return next element equal to the first added",
             new Joined<String>(
-                new ListOf<>(element, "first"),
-                new ListOf<>("second", "third")
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(
+                    JoinedTest.LITERAL_THREE, JoinedTest.LITERAL_FOUR
+                )
             ).iterator().next(),
-            new IsEqual<>(element)
-        );
+            new IsEqual<>(
+                JoinedTest.LITERAL_ONE
+            )
+        ).affirm();
     }
 
     @Test
-    public void add() throws Exception {
+    public void add() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>("One"),
-            new ListOf<>("Two")
+            new ListOf<>(JoinedTest.LITERAL_ONE),
+            new ListOf<>(JoinedTest.LITERAL_TWO)
         );
-        joined.add("Three");
+        joined.add(JoinedTest.LITERAL_THREE);
         new Assertion<>(
             "must be able to add element specified",
-            joined.size(),
-            new IsEqual<>(3)
+            joined,
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
         ).affirm();
     }
 
     @Test
-    public void remove() throws Exception {
+    public void remove() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>("One"),
-            new ListOf<>("Two")
+            new ListOf<>(JoinedTest.LITERAL_ONE),
+            new ListOf<>(JoinedTest.LITERAL_TWO)
         );
-        joined.remove("Two");
+        joined.remove(JoinedTest.LITERAL_TWO);
         new Assertion<>(
             "must be able to remove element specified",
-            joined.size(),
-            new IsEqual<>(1)
+            joined,
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE
+                )
+            )
         ).affirm();
     }
 
     @Test
-    public void containsAll() throws Exception {
-        final String first = "item1";
-        final String second = "item2";
-        MatcherAssert.assertThat(
+    public void containsAll() {
+        new Assertion<>(
+            "must contain all elements",
             new Joined<String>(
-                new ListOf<>(first, "item3"),
-                new ListOf<>(second, "item4")
-            ).containsAll(new ListOf<>(first, second)),
-            new IsEqual<>(true)
-        );
+                new ListOf<>(JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_THREE),
+                new ListOf<>(JoinedTest.LITERAL_TWO, JoinedTest.LITERAL_FOUR)
+            ).containsAll(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO
+                )
+            ),
+            new IsTrue()
+        ).affirm();
     }
 
     @Test
-    public void addAll() throws Exception {
+    public void addAll() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>("One"),
-            new ListOf<>("Two")
+            new ListOf<>(JoinedTest.LITERAL_ONE),
+            new ListOf<>(JoinedTest.LITERAL_TWO)
         );
         joined.addAll(
-            new ListOf<>("Three")
+            new ListOf<>(
+                JoinedTest.LITERAL_THREE,
+                JoinedTest.LITERAL_FOUR
+            )
         );
         new Assertion<>(
             "must be able to addAll elements specified",
-            joined.get(2),
-            new IsEqual<>("Three")
+            joined,
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE,
+                    JoinedTest.LITERAL_FOUR
+                )
+            )
         ).affirm();
     }
 
     @Test
-    public void addAllInFront() throws Exception {
+    public void addAllInFront() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>("One"),
-            new ListOf<>("Two")
+            new ListOf<>(JoinedTest.LITERAL_ONE),
+            new ListOf<>(JoinedTest.LITERAL_TWO)
         );
         joined.addAll(
             0,
-            new ListOf<>("Three")
+            new ListOf<>(
+                JoinedTest.LITERAL_THREE,
+                JoinedTest.LITERAL_FOUR
+            )
         );
         new Assertion<>(
-            "must be able to addAll elements specified",
-            joined.get(0),
-            new IsEqual<>("Three")
+            "must be able to addAll elements in front",
+            joined,
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_THREE,
+                    JoinedTest.LITERAL_FOUR,
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO
+                )
+            )
         ).affirm();
     }
 
     @Test
-    public void removeAll() throws Exception {
+    public void removeAll() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>("One"),
-            new ListOf<>("Two")
+            new ListOf<>(
+                JoinedTest.LITERAL_ONE,
+                JoinedTest.LITERAL_TWO
+            ),
+            new ListOf<>(JoinedTest.LITERAL_THREE)
         );
         joined.removeAll(
-            new ListOf<>("Two")
+            new ListOf<>(
+                JoinedTest.LITERAL_TWO,
+                JoinedTest.LITERAL_THREE
+            )
         );
         new Assertion<>(
             "must be able to removeAll elements specified",
-            joined.size(),
-            new IsEqual<>(1)
+            joined,
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE
+                )
+            )
         ).affirm();
     }
 
     @Test
-    public void retainAll() throws Exception {
+    public void retainAll() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>("One"),
-            new ListOf<>("Two", "Three")
+            new ListOf<>(JoinedTest.LITERAL_ONE),
+            new ListOf<>(
+                JoinedTest.LITERAL_TWO,
+                JoinedTest.LITERAL_THREE
+            )
         );
         joined.retainAll(
-            new ListOf<>("One", "Two")
+            new ListOf<>(
+                JoinedTest.LITERAL_TWO,
+                JoinedTest.LITERAL_THREE
+            )
         );
         new Assertion<>(
             "must be able to retain all",
-            joined.size(),
-            new IsEqual<>(2)
+            joined,
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
         ).affirm();
     }
 
     @Test
-    public void clear() throws Exception {
+    public void clear() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>("One"),
-            new ListOf<>("Two")
+            new ListOf<>(
+                JoinedTest.LITERAL_TWO,
+                JoinedTest.LITERAL_THREE
+            ),
+            new ListOf<>(
+                JoinedTest.LITERAL_ONE
+            )
         );
         joined.clear();
         new Assertion<>(
@@ -219,84 +289,115 @@ public final class JoinedTest {
     }
 
     @Test
-    public void get() throws Exception {
-        final String element = "element2";
-        MatcherAssert.assertThat(
+    public void get() {
+        new Assertion<>(
+            "must get element",
             new Joined<String>(
-                new ListOf<>("element1"),
-                new ListOf<>(element, "element3")
+                new ListOf<>(
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                ),
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE
+                )
             ).get(1),
-            new IsEqual<>(element)
-        );
+            new IsEqual<>(JoinedTest.LITERAL_THREE)
+        ).affirm();
     }
 
     @Test
-    public void set() throws Exception {
+    public void set() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>("One"),
-            new ListOf<>("Two")
+            new ListOf<>(JoinedTest.LITERAL_ONE),
+            new ListOf<>(JoinedTest.LITERAL_TWO)
         );
-        joined.set(0, "Three");
+        joined.set(0, JoinedTest.LITERAL_THREE);
         new Assertion<>(
             "must be able to set element by specified index",
             joined.get(0),
-            new IsEqual<>("Three")
+            new IsEqual<>(JoinedTest.LITERAL_THREE)
         ).affirm();
     }
 
     @Test
-    public void addByIndex() throws Exception {
+    public void addByIndex() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>("One"),
-            new ListOf<>("Two")
+            new ListOf<>(JoinedTest.LITERAL_ONE),
+            new ListOf<>(JoinedTest.LITERAL_TWO)
         );
-        joined.add(0, "Three");
+        joined.add(0, JoinedTest.LITERAL_THREE);
         new Assertion<>(
             "must be able to add element by specified index",
             joined.get(0),
-            new IsEqual<>("Three")
+            new IsEqual<>(JoinedTest.LITERAL_THREE)
         ).affirm();
     }
 
     @Test
-    public void removeByIndex() throws Exception {
+    public void removeByIndex() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>("One"),
-            new ListOf<>("Two")
+            new ListOf<>(JoinedTest.LITERAL_ONE),
+            new ListOf<>(JoinedTest.LITERAL_TWO)
         );
         joined.remove(0);
         new Assertion<>(
             "must be able to remove element by specified index",
             joined.get(0),
-            new IsEqual<>("Two")
+            new IsEqual<>(JoinedTest.LITERAL_TWO)
+        ).affirm();
+    }
+
+    @Test
+    public void removeByElement() {
+        final List<String> joined = new Joined<String>(
+            new ListOf<>(JoinedTest.LITERAL_ONE),
+            new ListOf<>(JoinedTest.LITERAL_TWO)
+        );
+        joined.remove(JoinedTest.LITERAL_ONE);
+        new Assertion<>(
+            "must be able to remove element by specified element",
+            joined.get(0),
+            new IsEqual<>(JoinedTest.LITERAL_TWO)
         ).affirm();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void listIteratorSecond() throws Exception {
+    public void listIteratorSecond() {
         new Joined<Integer>().listIterator(66);
     }
 
     @Test
-    public void subList() throws Exception {
-        final String element = "elem2";
-        MatcherAssert.assertThat(
+    public void subList() {
+        new Assertion<>(
+            "must be able to to get sub list",
             new Joined<String>(
-                new ListOf<>("elem1", element),
-                new ListOf<>("elem3", "elem4")
-            ).subList(1, 3).iterator().next(),
-            new IsEqual<>(element)
-        );
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO, JoinedTest.LITERAL_THREE)
+            ).subList(1, 3),
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
     }
 
     @Test
     public void itemAndList() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "must be able to join element with a list",
             new Joined<>(
-                0,
-                new ListOf<>(1, 2, 3)
+                JoinedTest.LITERAL_ONE,
+                new ListOf<>(JoinedTest.LITERAL_TWO, JoinedTest.LITERAL_THREE)
             ),
-            new IsEqual<>(new ListOf<>(0, 1, 2, 3))
-        );
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
     }
 }
