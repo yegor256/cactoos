@@ -45,14 +45,17 @@ public final class JoinedTest {
      * Literal ONE value.
      */
     private static final String LITERAL_ONE = "ONE";
+
     /**
      * Literal TWO value.
      */
     private static final String LITERAL_TWO = "TWO";
+
     /**
      * Literal THREE value.
      */
     private static final String LITERAL_THREE = "THREE";
+
     /**
      * Literal FOUR value.
      */
