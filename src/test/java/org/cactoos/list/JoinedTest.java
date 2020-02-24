@@ -24,8 +24,8 @@
 package org.cactoos.list;
 
 import java.util.List;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
@@ -38,56 +38,88 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @checkstyle MagicNumber (500 line)
  * @checkstyle DiamondOperatorCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods"})
+@SuppressWarnings("PMD.TooManyMethods")
 public final class JoinedTest {
+
+    /**
+     * Literal ONE value.
+     */
     private static final String LITERAL_ONE = "ONE";
+    /**
+     * Literal TWO value.
+     */
     private static final String LITERAL_TWO = "TWO";
+    /**
+     * Literal THREE value.
+     */
     private static final String LITERAL_THREE = "THREE";
+    /**
+     * Literal FOUR value.
+     */
     private static final String LITERAL_FOUR = "FOUR";
 
     @Test
     public void behavesAsCollection() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a list",
-            new Joined<Integer>(
-                new ListOf<>(1, 2),
-                new ListOf<>(3, 4)
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(
+                    JoinedTest.LITERAL_THREE, JoinedTest.LITERAL_FOUR
+                )
             ),
-            new BehavesAsList<>(2)
-        );
+            new BehavesAsList<>(JoinedTest.LITERAL_TWO)
+        ).affirm();
     }
 
     @Test
     public void size() {
-        MatcherAssert.assertThat(
-            new Joined<Integer>(
-                new ListOf<>(1, 2),
-                new ListOf<>(3, 4)
+        new Assertion<>(
+            "must evaluate the size of the joined list",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(
+                    JoinedTest.LITERAL_THREE, JoinedTest.LITERAL_FOUR
+                )
             ).size(),
             new IsEqual<>(4)
-        );
+        ).affirm();
     }
 
     @Test
     public void isEmpty() {
-        MatcherAssert.assertThat(
-            new Joined<Integer>(
-                new ListOf<Integer>(5, 6)
+        new Assertion<>(
+            "must be evaluated as an empty list",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(
+                    JoinedTest.LITERAL_THREE, JoinedTest.LITERAL_FOUR
+                )
             ).isEmpty(),
-            new IsEqual<>(false)
-        );
+            new IsNot<>(new IsTrue())
+        ).affirm();
     }
 
     @Test
     public void contains() {
-        final int element = 0;
-        MatcherAssert.assertThat(
-            new Joined<Integer>(
-                new ListOf<>(7, 8),
-                new ListOf<>(9, element)
-            ).contains(element),
+        new Assertion<>(
+            "must contain element specified",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(
+                    JoinedTest.LITERAL_THREE, JoinedTest.LITERAL_FOUR
+                )
+            ).contains(JoinedTest.LITERAL_THREE),
             new IsTrue()
-        );
+        ).affirm();
     }
 
     @Test
