@@ -27,19 +27,17 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.Unchecked;
 
 /**
- * Sorted Iterable as {@link Set}.
- *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link Set} on each
- * method call. It doesn't cache the data anyhow. </p>
+ * Iterable as Sorted {@link Set} based on {@link TreeSet}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <T> Set type
  * @since 1.0.0
+ * @todo #1292:30min This class should also implements SortedSet
+ *  from the java collection framework by delegating to the
+ *  wrapped set. Some tests must be added for it.
  */
 public final class Sorted<T> extends SetEnvelope<T> {
 
@@ -58,15 +56,9 @@ public final class Sorted<T> extends SetEnvelope<T> {
      * @param cmp Comparator
      * @param src An {@link Iterable}
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
-        super(
-            new Unchecked<>(
-                () -> {
-                    final Set<T> set = new TreeSet<>(cmp);
-                    src.forEach(set::add);
-                    return set;
-                }
-            ).value()
-        );
+        super(new TreeSet<>(cmp));
+        src.forEach(super::add);
     }
 }
