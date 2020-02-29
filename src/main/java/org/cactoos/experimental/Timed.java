@@ -23,18 +23,19 @@
  */
 package org.cactoos.experimental;
 
-import java.util.Collection;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.collection.Mapped;
+import org.cactoos.func.CallableOf;
+import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 
 /**
  * Allows to execute the tasks concurrently within given timeout.
@@ -77,7 +78,7 @@ public final class Timed<T> extends IterableEnvelope<T> {
         final TimeUnit unit
     ) {
         this(
-            input -> exc.invokeAll(input, timeout, unit),
+            input -> exc.invokeAll(new ListOf<>(input), timeout, unit),
             tasks
         );
     }
@@ -124,7 +125,7 @@ public final class Timed<T> extends IterableEnvelope<T> {
                     threads
                 );
                 try {
-                    return executor.invokeAll(todo, timeout, unit);
+                    return executor.invokeAll(new ListOf<>(todo), timeout, unit);
                 } finally {
                     executor.shutdown();
                 }
@@ -137,26 +138,16 @@ public final class Timed<T> extends IterableEnvelope<T> {
      * Ctor.
      * @param fnc The function to map each task into {@link Future}.
      * @param tasks The tasks to be executed concurrently.
-     * @checkstyle IllegalCatchCheck (20 lines)
      */
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     private Timed(
-        final Func<Collection<Callable<T>>, Collection<Future<T>>> fnc,
+        final Func<Iterable<Callable<T>>, Iterable<Future<T>>> fnc,
         final Iterable<Scalar<T>> tasks
     ) {
         super(
-            new IterableOf<>(
-                () -> {
-                    try {
-                        return new Mapped<>(
-                            Future::get,
-                            fnc.apply(new Mapped<>(task -> task::value, tasks))
-                        ).iterator();
-                    } catch (final Exception exp) {
-                        throw new CompletionException(exp);
-                    }
-                }
-            )
+            () -> new Mapped<>(
+                Future::get,
+                new UncheckedFunc<>(fnc).apply(new Mapped<>(CallableOf::new, tasks))
+            ).iterator()
         );
     }
 }

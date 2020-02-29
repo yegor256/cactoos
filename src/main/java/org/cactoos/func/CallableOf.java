@@ -26,6 +26,7 @@ package org.cactoos.func;
 import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
+import org.cactoos.Scalar;
 
 /**
  * Func as {@link Callable}.
@@ -49,7 +50,7 @@ public final class CallableOf<X, T> implements Callable<T> {
     /**
      * Original callable.
      */
-    private final Callable<T> callable;
+    private final Scalar<T> scalar;
 
     /**
      * Ctor.
@@ -87,15 +88,15 @@ public final class CallableOf<X, T> implements Callable<T> {
 
     /**
      * Ctor.
-     * @param cal Encapsulated callable
+     * @param slr Encapsulated scalar
      * @since 0.41
      */
-    public CallableOf(final Callable<T> cal) {
-        this.callable = cal;
+    public CallableOf(final Scalar<T> slr) {
+        this.scalar = slr;
     }
 
     @Override
     public T call() throws Exception {
-        return this.callable.call();
+        return this.scalar.value();
     }
 }

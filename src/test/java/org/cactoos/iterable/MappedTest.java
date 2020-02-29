@@ -30,7 +30,9 @@ import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Mapped}.
@@ -76,5 +78,17 @@ public final class MappedTest {
             ).toString(),
             Matchers.equalTo("2, 4, 6")
         );
+    }
+
+    @Test
+    public void transformsArray() {
+        new Assertion<>(
+            "Transforms an array",
+            new Mapped<String, String>(
+                input -> new Upper(new TextOf(input)).asString(),
+                "a", "b", "c"
+            ),
+            new IsEqual<>(new IterableOf<>("A", "B", "C"))
+        ).affirm();
     }
 }
