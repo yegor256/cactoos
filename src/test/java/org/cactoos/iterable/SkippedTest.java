@@ -23,31 +23,117 @@
  */
 package org.cactoos.iterable;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.list.ListOf;
+import org.hamcrest.collection.IsEmptyIterable;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link Skipped}.
  *
  * @since 0.34
+ * @todo #1303:30min Remove the PMD.AvoidDuplicateLiterals suppress warning
+ *  below and change the tests literals so that they are different. Do not
+ *  use constants. The rationale si to make the tests more strong by not
+ *  tying them to the same literals.
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SkippedTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipIterable() {
-        MatcherAssert.assertThat(
-            "Can't skip elements in iterable",
+        new Assertion<>(
+            "Must skip elements in iterable",
+            new Skipped<>(
+                2,
+                new IterableOf<>("one", "two", "three", "four")
+            ),
+            new IsEqual<>(
+                new IterableOf<>(
+                    "three",
+                    "four"
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void skipArray() {
+        new Assertion<>(
+            "Must skip elements in array",
             new Skipped<>(
                 2,
                 "one", "two", "three", "four"
             ),
-            Matchers.contains(
-                "three",
-                "four"
+            new IsEqual<>(
+                new IterableOf<>(
+                    "three",
+                    "four"
+                )
             )
-        );
+        ).affirm();
+    }
+
+    @Test
+    public void skipCollection() {
+        new Assertion<>(
+            "Must skip elements in collection",
+            new Skipped<>(
+                2,
+                new ListOf<>("one", "two", "three", "four")
+            ),
+            new IsEqual<>(
+                new IterableOf<>(
+                    "three",
+                    "four"
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void skippedAllElements() {
+        new Assertion<>(
+            "Must skip all elements",
+            new Skipped<>(
+                2,
+                "one", "two"
+            ),
+            new IsEmptyIterable<>()
+        ).affirm();
+    }
+
+    @Test
+    public void skippedMoreThanExists() {
+        new Assertion<>(
+            "Can't skip more than exists",
+            new Skipped<>(
+                Integer.MAX_VALUE,
+                "one", "two"
+            ),
+            new IsEmptyIterable<>()
+        ).affirm();
+    }
+
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void skippedNegativeSize() {
+        new Assertion<>(
+            "Must process negative skipped size",
+            new Skipped<>(
+                -1,
+                "one", "two", "three", "four"
+            ),
+            new IsEqual<>(
+                new IterableOf<>(
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                )
+            )
+        ).affirm();
     }
 }
