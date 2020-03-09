@@ -1,5 +1,6 @@
 docker:
   image: yegor256/rultor-image
+  as_root: true
 assets:
   settings.xml: yegor256/home#assets/cactoos/settings.xml
   pubring.gpg: yegor256/home#assets/pubring.gpg
