@@ -56,4 +56,16 @@ public final class JoinedTest {
         ).affirm();
     }
 
+    @Test
+    public void joinsTextsWitjStringDelimit() {
+        new Assertion<>(
+            "Can't join texts with String delimit",
+            new Joined(
+                " ",
+                new TextOf("one"),
+                new TextOf("two")
+            ),
+            new TextHasString("one two")
+        ).affirm();
+    }
 }
