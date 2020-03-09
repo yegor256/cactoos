@@ -1,16 +1,11 @@
-docker:
-  image: yegor256/rultor-image
-  as_root: true
 assets:
   settings.xml: yegor256/home#assets/cactoos/settings.xml
   pubring.gpg: yegor256/home#assets/pubring.gpg
   secring.gpg: yegor256/home#assets/secring.gpg
-env:
-  MAVEN_OPTS: -Xmx1g
-  JAVA_OPTS: -Xmx1g
+docker:
+  as_root: true
 install: |
-  sudo gem install --no-document pdd
-  sudo gem install --no-document xcop
+  sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
 architect:
 - paulodamaso
 - yegor256
