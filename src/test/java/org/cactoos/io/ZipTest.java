@@ -67,7 +67,7 @@ public final class ZipTest {
                 "Can't list files in a directory represented by a path",
                 cnt,
                 // @checkstyle MagicNumber (1 line)
-                Matchers.equalTo(4)
+                Matchers.equalTo(1)
             );
         }
     }

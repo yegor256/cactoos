@@ -33,6 +33,9 @@ import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.cactoos.Input;
+import org.cactoos.func.ForEach;
+import org.cactoos.scalar.ItemAt;
+import org.cactoos.text.Joined;
 
 /**
  * Zip files and directory.
@@ -40,43 +43,48 @@ import org.cactoos.Input;
  * <br>There is no thread-safety guarantee.
  *
  * @since 0.29
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 public final class Zip implements Input {
 
     /**
-     * Origin directory.
+     * Origin list of files.
      */
-    private final Directory origin;
+    private final Directory directory;
 
     /**
      * Ctor.
      *
-     * @param origin Origin directory.
+     * @param dir Origin directory.
      */
-    public Zip(final Directory origin) {
-        this.origin = origin;
+    public Zip(final Directory dir) {
+        this.directory = dir;
     }
 
     @Override
     public InputStream stream() throws Exception {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final Path parent = new ItemAt<>(0, this.directory).value().getParent();
         try (ZipOutputStream zip = new ZipOutputStream(out)) {
-            for (final Path path : this.origin) {
-                final File file = path.toFile();
-                final ZipEntry entry = new ZipEntry(
-                    file.getPath()
-                );
-                zip.putNextEntry(entry);
-                if (file.isFile()) {
-                    try (
-                        FileInputStream input = new FileInputStream(file)
-                    ) {
-                        zip.write(new BytesOf(new InputOf(input)).asBytes());
+            new ForEach<Path>(
+                path -> {
+                    final File file = path.toFile();
+                    final String relative = parent.relativize(path).toString();
+                    if (file.isFile()) {
+                        zip.putNextEntry(new ZipEntry(relative));
+                        try (FileInputStream fis = new FileInputStream(file)) {
+                            zip.write(new BytesOf(new InputOf(fis)).asBytes());
+                        }
+                    } else if (!new Directory(file).iterator().hasNext()) {
+                        final Joined join = new Joined(
+                            File.separator, relative, ""
+                        );
+                        zip.putNextEntry(new ZipEntry(join.toString()));
                     }
+                    zip.closeEntry();
                 }
-                zip.closeEntry();
-            }
+            ).exec(this.directory);
         }
         return new ByteArrayInputStream(out.toByteArray());
     }
