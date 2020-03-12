@@ -26,5 +26,7 @@
  * Maps, tests.
  *
  * @since 0.14
+ * @todo #1235:30min Should replace all usage of MatcherAssert.assertThat with
+ *  Assertion from cactoos-matchers in this package.
  */
 package org.cactoos.map;
