@@ -29,6 +29,6 @@
  * @todo #1235:30min Continue replacing usage of MatcherAssert.assertThat with
  *  Assertion from cactoos-matchers. Should replace all occurrences of
  *  MatcherAssert.assertThat with Assertion from cactoos-matchers
- *  in org.cactoos.iterator package.
+ *  in the org.cactoos.iterator package.
  */
 package org.cactoos.iterator;
