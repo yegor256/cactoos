@@ -52,7 +52,7 @@ public final class TeeInputFromByteArrayTest {
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "Can't copy bytes",
+            "Can't copy bytes to path",
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 output.toPath()
@@ -67,7 +67,7 @@ public final class TeeInputFromByteArrayTest {
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "Can't copy bytes",
+            "Can't copy bytes to file",
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 output
@@ -82,7 +82,7 @@ public final class TeeInputFromByteArrayTest {
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "Can't copy bytes",
+            "Can't copy bytes to output",
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 new OutputTo(output)
