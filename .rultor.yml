@@ -3,9 +3,8 @@ assets:
   pubring.gpg: yegor256/home#assets/pubring.gpg
   secring.gpg: yegor256/home#assets/secring.gpg
 docker:
+  image: g4s8/rultor:alpine3.10
   as_root: true
-install: |
-  sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
 architect:
 - paulodamaso
 - yegor256
