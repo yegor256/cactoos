@@ -31,11 +31,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
@@ -59,17 +59,17 @@ public final class InputStreamOfTest {
             .toPath();
         final String content = "Hello, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read file content",
             new InputOf(new InputStreamOf(temp)),
             new InputHasContent(content)
-        );
+        ).affirm();
     }
 
     @Test
     public void readsFromReader() {
         final String content = "Hello, дорогой товарищ!";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from reader",
             new InputOf(new InputStreamOf(new StringReader(content))),
             new InputHasContent(content)
@@ -79,7 +79,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsFromReaderThroughSmallBuffer() {
         final String content = "Hello, صديق!";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from reader through small buffer",
             new InputOf(new InputStreamOf(new StringReader(content), 1)),
             new InputHasContent(content)
@@ -89,7 +89,7 @@ public final class InputStreamOfTest {
     @Test
     public void makesDataAvailable() throws IOException {
         final String content = "Hello,חבר!";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't show that data is available",
             new InputStreamOf(content).available(),
             Matchers.greaterThan(0)
@@ -103,7 +103,7 @@ public final class InputStreamOfTest {
         new LengthOf(
             new TeeInput(content, file)
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from file",
             new TextOf(new InputStreamOf(file)).asString(),
             Matchers.equalTo(content)
@@ -113,7 +113,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsBytes() throws Exception {
         final String content = "Bytes content";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from bytes",
             new TextOf(new InputStreamOf(new BytesOf(content))).asString(),
             Matchers.equalTo(content)
@@ -124,7 +124,7 @@ public final class InputStreamOfTest {
     public void readsBytesArray() throws Exception {
         final String content = "Bytes array content";
         final byte[] bytes = new BytesOf(content).asBytes();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from byte array",
             new TextOf(new InputStreamOf(bytes)).asString(),
             Matchers.equalTo(content)
@@ -134,7 +134,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsText() throws Exception {
         final String content = "Text content";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from text",
             new TextOf(new InputStreamOf(new TextOf(content))).asString(),
             Matchers.equalTo(content)
@@ -148,7 +148,7 @@ public final class InputStreamOfTest {
         new LengthOf(
             new TeeInput(content, file)
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from URI",
             new TextOf(new InputStreamOf(file.toURI())).asString(),
             Matchers.equalTo(content)
@@ -162,7 +162,7 @@ public final class InputStreamOfTest {
         new LengthOf(
             new TeeInput(content, file)
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from URL",
             new TextOf(new InputStreamOf(file.toURI().toURL())).asString(),
             Matchers.equalTo(content)
@@ -173,7 +173,7 @@ public final class InputStreamOfTest {
     public void readsFromReaderWithMax() throws Exception {
         final String content = "Reading with charset name and buffer size";
         final int max = 3;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from reader with charset name and buffer size",
             new TextOf(
                 new InputStreamOf(
@@ -189,7 +189,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsFromReaderWithCharsetWithMax() throws Exception {
         final String content = "Reading with charset and buffer size";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from reader with charset and buffer size",
             new TextOf(
                 new InputStreamOf(
@@ -205,7 +205,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsFromReaderWithCharset() throws Exception {
         final String content = "Content for reading with charset";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from reader with charset name",
             new TextOf(
                 new InputStreamOf(
@@ -224,7 +224,7 @@ public final class InputStreamOfTest {
         new LengthOf(
             new TeeInput(content, file)
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from text with charset",
             new TextOf(
                 new InputStreamOf(
@@ -239,7 +239,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsFromCharSequenceWithCharsetName() throws Exception {
         final String content = "Simple content";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from char sequence with charset name",
             new TextOf(
                 new InputStreamOf(
@@ -254,7 +254,7 @@ public final class InputStreamOfTest {
     @Test
     public void readsFromCharSequenceWithCharset() throws Exception {
         final String content = "Another simple content";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read from char sequence with charset",
             new TextOf(
                 new InputStreamOf(

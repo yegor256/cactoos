@@ -28,9 +28,9 @@ import java.net.URL;
 import org.cactoos.func.Repeated;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
@@ -44,7 +44,7 @@ public final class StickyTest {
 
     @Test
     public void readsFileContent() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read bytes from a file",
             new Sticky(
                 new ResourceOf(
@@ -60,12 +60,12 @@ public final class StickyTest {
                     10
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsRealUrl() throws MalformedURLException {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't fetch text page from the URL",
             new TextOf(
                 new Sticky(
@@ -78,13 +78,13 @@ public final class StickyTest {
                 )
             ),
             new EndsWith("est laborum.\n")
-        );
+        ).affirm();
     }
 
     @Test
     public void readsFileContentSlowlyAndCountsLength() {
         final long size = 100_000L;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read bytes from a large source slowly and count length",
             new LengthOf(
                 new Sticky(
@@ -92,13 +92,13 @@ public final class StickyTest {
                 )
             ).longValue(),
             Matchers.equalTo(size)
-        );
+        ).affirm();
     }
 
     @Test
     public void readsFileContentSlowly() throws Exception {
         final int size = 130_000;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read bytes from a large source slowly",
             new BytesOf(
                 new Sticky(
@@ -106,7 +106,7 @@ public final class StickyTest {
                 )
             ).asBytes().length,
             Matchers.equalTo(size)
-        );
+        ).affirm();
     }
 
 }

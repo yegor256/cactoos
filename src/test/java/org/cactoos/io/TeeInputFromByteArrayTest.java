@@ -25,10 +25,10 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
@@ -51,13 +51,14 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't copy bytes",
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 output.toPath()
             ),
             new InputHasContent(message)
-        );
+        ).affirm();
     }
 
     @Test
@@ -65,13 +66,14 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't copy bytes",
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 output
             ),
             new InputHasContent(message)
-        );
+        ).affirm();
     }
 
     @Test
@@ -79,12 +81,13 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't copy bytes",
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 new OutputTo(output)
             ),
             new InputHasContent(message)
-        );
+        ).affirm();
     }
 }
