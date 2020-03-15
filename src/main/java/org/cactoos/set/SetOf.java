@@ -26,14 +26,9 @@ package org.cactoos.set;
 import java.util.HashSet;
 import java.util.Set;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.Unchecked;
 
 /**
- * Iterable as {@link Set}.
- *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link Set} on each
- * method call. It doesn't cache the data anyhow. </p>
+ * Iterable as {@link Set} based on {@link HashSet}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -57,14 +52,7 @@ public final class SetOf<T> extends SetEnvelope<T> {
      * @param src An {@link Iterable}
      */
     public SetOf(final Iterable<T> src) {
-        super(
-            new Unchecked<>(
-                () -> {
-                    final Set<T> tmp = new HashSet<>();
-                    src.forEach(tmp::add);
-                    return tmp;
-                }
-            ).value()
-        );
+        super(new HashSet<>());
+        src.forEach(super::add);
     }
 }
