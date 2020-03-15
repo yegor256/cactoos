@@ -9,7 +9,6 @@ Many thanks for your contribution, we truly appreciate it. We will appreciate it
   - Description begins with the issue's number, then enumerates the changes - summarized - in bulletpoints
   - Description does not contain GitHub keywords (https://help.github.com/articles/closing-issues-using-keywords/).
   - You ran the build locally and it passed (see .travis.yml for all checks performed on PRs)
-  - Your commit messages comply with our rules (see .gitlint)
 
 This article will help you understand what we are looking for: http://www.yegor256.com/2015/02/09/serious-code-reviewer.html
 
