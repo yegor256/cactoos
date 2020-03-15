@@ -375,9 +375,6 @@ To remove the cache used by Docker-based build:
 docker volume rm cactoos-mvn-cache
 ```
 
-We also lint the git commit log. We highly recommend you install [this](https://github.com/llorllale/go-gitlint)
-tool and set up a `commit-msg` git hooks per the instructions.
-
 Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static code analyze tool with
 [checks list](http://checkstyle.sourceforge.net/checks.html) in GitHub precommits.
 

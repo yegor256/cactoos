@@ -309,40 +309,6 @@ The MIT License (MIT)
               </execution>
             </executions>
           </plugin>
-          <plugin>
-            <groupId>com.googlecode.maven-download-plugin</groupId>
-            <artifactId>download-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>install-gitlint</id>
-                <phase>initialize</phase>
-                <goals>
-                  <goal>wget</goal>
-                </goals>
-                <configuration>
-                  <url>https://github.com/llorllale/go-gitlint/releases/download/1.0.0/go-gitlint_1.0.0_${os.detected.name}_${os.detected.arch}.tar.gz</url>
-                  <unpack>true</unpack>
-                  <outputDirectory>${project.build.directory}</outputDirectory>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <phase>test</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <executable>${project.build.directory}/gitlint</executable>
-              <workingDirectory>${project.basedir}</workingDirectory>
-            </configuration>
-          </plugin>
         </plugins>
       </build>
     </profile>
