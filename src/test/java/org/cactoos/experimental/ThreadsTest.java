@@ -24,11 +24,12 @@
 
 package org.cactoos.experimental;
 
-import java.util.concurrent.CompletionException;
+import java.io.UncheckedIOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
+import org.cactoos.Scalar;
 import org.cactoos.func.Repeated;
 import org.cactoos.func.UncheckedFunc;
 import org.junit.Test;
@@ -95,13 +96,14 @@ public final class ThreadsTest {
             "wraps error into CompletionException",
             () -> new Threads<String>(
                 Executors.newSingleThreadExecutor(),
-                () -> {
+                (Scalar<String>) () -> {
                     throw new IllegalStateException("Something went wrong");
                 }
             ).iterator().next(),
             new Throws<>(
-                "java.lang.IllegalStateException: Something went wrong",
-                CompletionException.class
+                // @checkstyle LineLengthCheck (1 line)
+                "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
+                UncheckedIOException.class
             )
         ).affirm();
     }
