@@ -21,4 +21,4 @@ release:
   script: |-
     [[ "${tag}" =~ ^[0-9]+(\.[0-9]+)*$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}"
-    mvn clean deploy -Pcactoos -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml
+    mvn clean deploy -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml
