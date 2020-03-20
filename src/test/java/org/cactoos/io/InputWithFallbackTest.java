@@ -26,8 +26,8 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 
 /**
@@ -40,7 +40,7 @@ public final class InputWithFallbackTest {
 
     @Test
     public void readsAlternativeInput() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read alternative source",
             new TextOf(
                 new InputWithFallback(
@@ -51,12 +51,12 @@ public final class InputWithFallbackTest {
                 )
             ),
             new EndsWith("world!")
-        );
+        ).affirm();
     }
 
     @Test
     public void readsAlternativeInputUri() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read alternative source from URI",
             new TextOf(
                 new InputWithFallback(
@@ -67,7 +67,7 @@ public final class InputWithFallbackTest {
                 )
             ),
             new EndsWith("works!")
-        );
+        ).affirm();
     }
 
 }

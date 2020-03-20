@@ -25,9 +25,9 @@ package org.cactoos.io;
 
 import java.util.Arrays;
 import java.util.Random;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Tests for {@link TailOf}.
@@ -40,7 +40,8 @@ public final class TailOfTest {
     public void tailsOnLongStream() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't tail long stream",
             new BytesOf(
                 new TailOf(
                     new InputOf(new BytesOf(bytes)),
@@ -48,14 +49,15 @@ public final class TailOfTest {
                 )
             ).asBytes(),
             Matchers.equalTo(Arrays.copyOfRange(bytes, 1, bytes.length))
-        );
+        ).affirm();
     }
 
     @Test
     public void tailsOnExactStream() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't tail exact stream",
             new BytesOf(
                 new TailOf(
                     new InputOf(new BytesOf(bytes)),
@@ -63,14 +65,15 @@ public final class TailOfTest {
                 )
             ).asBytes(),
             Matchers.equalTo(bytes)
-        );
+        ).affirm();
     }
 
     @Test
     public void tailsOnExactStreamAndBuffer() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't tail exact stream and buffer",
             new BytesOf(
                 new TailOf(
                     new InputOf(new BytesOf(bytes)),
@@ -79,14 +82,15 @@ public final class TailOfTest {
                 )
             ).asBytes(),
             Matchers.equalTo(bytes)
-        );
+        ).affirm();
     }
 
     @Test
     public void tailsOnShorterStream() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't tail shorter stream",
             new BytesOf(
                 new TailOf(
                     new InputOf(new BytesOf(bytes)),
@@ -94,14 +98,15 @@ public final class TailOfTest {
                 )
             ).asBytes(),
             Matchers.equalTo(bytes)
-        );
+        ).affirm();
     }
 
     @Test
     public void tailsOnStreamLongerThanBufferAndBytes() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't tail longer stream",
             new BytesOf(
                 new TailOf(
                     new InputOf(new BytesOf(bytes)),
@@ -112,7 +117,7 @@ public final class TailOfTest {
             Matchers.equalTo(
                 Arrays.copyOfRange(bytes, 1, bytes.length)
             )
-        );
+        ).affirm();
     }
 
     @Test(expected = IllegalArgumentException.class)

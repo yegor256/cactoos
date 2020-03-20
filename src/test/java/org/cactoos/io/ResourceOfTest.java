@@ -27,9 +27,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link ResourceOf}.
@@ -41,7 +41,7 @@ public final class ResourceOfTest {
 
     @Test
     public void readsBinaryResource() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read bytes from a classpath resource",
             Arrays.copyOfRange(
                 new BytesOf(
@@ -59,12 +59,12 @@ public final class ResourceOfTest {
                     (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
                 }
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsTextResource() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read a text resource from classpath",
             new TextOf(
                 new ResourceOf(
@@ -72,12 +72,12 @@ public final class ResourceOfTest {
                 )
             ).asString(),
             Matchers.endsWith("est laborum.\n")
-        );
+        ).affirm();
     }
 
     @Test
     public void readAbsentResourceTest() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't replace an absent resource with a text",
             new TextOf(
                 new BytesOf(
@@ -88,7 +88,7 @@ public final class ResourceOfTest {
                 )
             ).asString(),
             Matchers.endsWith("replacement")
-        );
+        ).affirm();
     }
 
     @Test(expected = IOException.class)
@@ -102,19 +102,20 @@ public final class ResourceOfTest {
 
     @Test
     public void acceptsTextAsResourceName() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't accept Text as resource name",
             new TextOf(
                 new ResourceOf(
                     new TextOf("org/cactoos/small-text.txt")
                 )
             ).asString(),
             Matchers.endsWith("ex ea commodo")
-        );
+        ).affirm();
     }
 
     @Test
     public void acceptsTextsAsResourceNameAndFallback() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't use Texts as parameters",
             new TextOf(
                 new ResourceOf(
@@ -123,7 +124,7 @@ public final class ResourceOfTest {
                 )
             ).asString(),
             Matchers.startsWith("another")
-        );
+        ).affirm();
     }
 
 }

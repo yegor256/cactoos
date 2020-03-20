@@ -29,11 +29,11 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link LoggingOutput}.
@@ -68,11 +68,11 @@ public final class LoggingOutputTest {
                 )
             )
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log zero byte written to memory",
             logger.toString(),
             Matchers.containsString("Written 0 byte(s) to memory in ")
-        );
+        ).affirm();
     }
 
     @Test
@@ -87,11 +87,11 @@ public final class LoggingOutputTest {
         ) {
             out.write(new BytesOf("a").asBytes());
         }
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log one byte written to memory",
             logger.toString(),
             Matchers.containsString("Written 1 byte(s) to memory in")
-        );
+        ).affirm();
     }
 
     @Test
@@ -106,11 +106,11 @@ public final class LoggingOutputTest {
         ) {
             out.write(new BytesOf("Hello, товарищ!").asBytes());
         }
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log 22 bytes written to memory",
             logger.toString(),
             Matchers.containsString("Written 22 byte(s) to memory in")
-        );
+        ).affirm();
     }
 
     @Test
@@ -131,7 +131,7 @@ public final class LoggingOutputTest {
                 )
             ).intValue();
         }
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log write and close operations to text file",
             logger.toString(),
             Matchers.allOf(
@@ -143,7 +143,7 @@ public final class LoggingOutputTest {
                 Matchers.containsString("Written 74536 byte(s) to text file"),
                 Matchers.containsString("Closed output stream from text file")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -164,7 +164,7 @@ public final class LoggingOutputTest {
                 )
             ).intValue();
         }
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log all write and close operations to text file",
             logger.toString(),
             Matchers.allOf(
@@ -175,7 +175,7 @@ public final class LoggingOutputTest {
                 Matchers.containsString("Written 74536 byte(s) to text file"),
                 Matchers.containsString("Closed output stream from text file")
             )
-        );
+        ).affirm();
     }
 
 }
