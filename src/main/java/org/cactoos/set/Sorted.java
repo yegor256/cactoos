@@ -25,6 +25,7 @@ package org.cactoos.set;
 
 import java.util.Comparator;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import org.cactoos.iterable.IterableOf;
 
@@ -35,11 +36,14 @@ import org.cactoos.iterable.IterableOf;
  *
  * @param <T> Set type
  * @since 1.0.0
- * @todo #1292:30min This class should also implements SortedSet
- *  from the java collection framework by delegating to the
- *  wrapped set. Some tests must be added for it.
  */
-public final class Sorted<T> extends SetEnvelope<T> {
+@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
+public final class Sorted<T> extends SetEnvelope<T> implements SortedSet<T> {
+
+    /**
+     * The original Set this object delegates to.
+     */
+    private final SortedSet<T> origin;
 
     /**
      * Ctor.
@@ -58,7 +62,46 @@ public final class Sorted<T> extends SetEnvelope<T> {
      */
     @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
-        super(new TreeSet<>(cmp));
+        this(new TreeSet<>(cmp));
         src.forEach(super::add);
+    }
+
+    /**
+     * Primary ctor.
+     * @param origin The original SortedSet to delegate to.
+     */
+    private Sorted(final SortedSet<T> origin) {
+        super(origin);
+        this.origin = origin;
+    }
+
+    @Override
+    public Comparator<? super T> comparator() {
+        return this.origin.comparator();
+    }
+
+    @Override
+    public SortedSet<T> subSet(final T begin, final T end) {
+        return this.origin.subSet(begin, end);
+    }
+
+    @Override
+    public SortedSet<T> headSet(final T end) {
+        return this.origin.headSet(end);
+    }
+
+    @Override
+    public SortedSet<T> tailSet(final T from) {
+        return this.origin.tailSet(from);
+    }
+
+    @Override
+    public T first() {
+        return this.origin.first();
+    }
+
+    @Override
+    public T last() {
+        return this.origin.last();
     }
 }
