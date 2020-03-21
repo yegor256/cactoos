@@ -24,51 +24,85 @@
 
 package org.cactoos.io;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.File;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import java.util.zip.ZipFile;
+import org.cactoos.list.ListOf;
+import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link Zip}.
  *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ZipTest {
+
     /**
      * Temporary folder.
      */
     @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+    public final TemporaryFolder temporal = new TemporaryFolder();
 
     @Test
-    public void zip() throws Exception {
-        final Path dir = this.folder.newFolder().toPath();
-        dir.resolve("x/y").toFile().mkdirs();
-        Files.write(dir.resolve("x/y/test"), "".getBytes());
-        try (ZipInputStream input = new ZipInputStream(
-            new Zip(
-                new Directory(dir)
-            ).stream()
-        )) {
-            int cnt = 0;
-            ZipEntry entry = input.getNextEntry();
-            while (entry != null) {
-                ++cnt;
-                entry = input.getNextEntry();
-            }
-            MatcherAssert.assertThat(
-                "Can't list files in a directory represented by a path",
-                cnt,
-                // @checkstyle MagicNumber (1 line)
-                Matchers.equalTo(1)
-            );
+    public void mustZipDirectory() throws Exception {
+        final String zipname = "abc.zip";
+        final File folder = this.temporal.newFolder("abc");
+        try (OutputStream out = new OutputStreamTo(
+            new File(folder, "A.txt")
+        )
+        ) {
+            out.write("ABC".getBytes());
         }
+        try (OutputStream out = new OutputStreamTo(
+            new File(folder, "B.txt")
+        )
+        ) {
+            out.write("EFG".getBytes());
+        }
+        new Assertion<>(
+            "Must zip directory with the same directory structure",
+            new LengthOf(
+                new TeeInput(
+                    new InputOf(
+                        new Zip(
+                            new Directory(folder)
+                        ).stream()
+                    ),
+                    new OutputTo(
+                        this.temporal.newFile(zipname)
+                    )
+                )
+            ).value(),
+            new MatcherOf<>(
+                len -> {
+                    final File zippped = new File(
+                        folder.getParentFile(), zipname
+                    );
+                    try (ZipFile file = new ZipFile(zippped)) {
+                        final List<String> entries = file.stream().map(
+                            ZipEntry::toString
+                        ).collect(
+                            Collectors.toList()
+                        );
+                        return entries.containsAll(
+                            new ListOf<>(
+                                "abc\\A.txt",
+                                "abc\\B.txt"
+                            )
+                        );
+                    }
+                }
+            )
+        ).affirm();
     }
 }
