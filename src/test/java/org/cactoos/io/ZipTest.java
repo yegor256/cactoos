@@ -26,12 +26,12 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.OutputStream;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
+import org.cactoos.scalar.Sticky;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -71,38 +71,38 @@ public final class ZipTest {
         }
         new Assertion<>(
             "Must zip directory with the same directory structure",
-            new LengthOf(
-                new TeeInput(
-                    new InputOf(
-                        new Zip(
-                            new Directory(folder)
-                        ).stream()
-                    ),
-                    new OutputTo(
-                        this.temporal.newFile(zipname)
-                    )
-                )
-            ).value(),
-            new MatcherOf<>(
-                len -> {
-                    try (ZipFile file = new ZipFile(
-                        new File(
-                            folder.getParentFile(), zipname
+            new Sticky<>(() -> {
+                new LengthOf(
+                    new TeeInput(
+                        new InputOf(
+                            new Zip(
+                                new Directory(folder)
+                            ).stream()
+                        ),
+                        new OutputTo(
+                            this.temporal.newFile(zipname)
                         )
                     )
-                    ) {
-                        final List<String> entries = file.stream().map(
-                            ZipEntry::toString
-                        ).collect(
+                ).value();
+                try (ZipFile file = new ZipFile(
+                    new File(folder.getParentFile(), zipname)
+                )
+                ) {
+                    return new ListOf<>(
+                        file.stream().map(ZipEntry::toString).collect(
                             Collectors.toList()
-                        );
-                        return entries.containsAll(
-                            new ListOf<>(
-                                "abc\\A.txt",
-                                "abc\\B.txt"
-                            )
-                        );
-                    }
+                        )
+                    );
+                }
+            }),
+            new MatcherOf<>(
+                sclr -> {
+                    sclr.value().containsAll(
+                        new ListOf<>(
+                            "abs\\A.txt",
+                            "abc\\B.txt"
+                        )
+                    );
                 }
             )
         ).affirm();
