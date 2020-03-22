@@ -85,10 +85,12 @@ public final class ZipTest {
             ).value(),
             new MatcherOf<>(
                 len -> {
-                    final File zippped = new File(
-                        folder.getParentFile(), zipname
-                    );
-                    try (ZipFile file = new ZipFile(zippped)) {
+                    try (ZipFile file = new ZipFile(
+                        new File(
+                            folder.getParentFile(), zipname
+                        )
+                    )
+                    ) {
                         final List<String> entries = file.stream().map(
                             ZipEntry::toString
                         ).collect(
