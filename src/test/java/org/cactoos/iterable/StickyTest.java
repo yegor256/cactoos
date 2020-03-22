@@ -27,15 +27,17 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsEmptyIterable;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Sticky}.
  *
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class StickyTest {
 
@@ -47,11 +49,28 @@ public final class StickyTest {
                 () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
         );
-        MatcherAssert.assertThat(
-            "Can't ignore the changes in the underlying iterable",
+        new Assertion<>(
+            "Must ignore the changes in the underlying iterable",
             new LengthOf(list).intValue(),
-            Matchers.equalTo(new LengthOf(list).intValue())
-        );
+            new IsEqual<>(new LengthOf(list).intValue())
+        ).affirm();
     }
 
+    @Test
+    public void testEmpty() {
+        new Assertion<>(
+            "Must be empty",
+            new Sticky<>(),
+            new IsEmptyIterable<>()
+        ).affirm();
+    }
+
+    @Test
+    public void testEqualsIterable() {
+        new Assertion<>(
+            "Must be equals to equivalent iterable",
+            new Sticky<>(1, 2),
+            new IsEqual<>(new IterableOf<>(1, 2))
+        ).affirm();
+    }
 }

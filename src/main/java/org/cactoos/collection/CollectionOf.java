@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Sticky;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.HashCode;
 import org.cactoos.scalar.Or;
