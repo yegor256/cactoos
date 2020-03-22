@@ -71,30 +71,32 @@ public final class ZipTest {
         }
         new Assertion<>(
             "Must zip directory with the same directory structure",
-            new Sticky<>(() -> {
-                new LengthOf(
-                    new TeeInput(
-                        new InputOf(
-                            new Zip(
-                                new Directory(folder)
-                            ).stream()
-                        ),
-                        new OutputTo(
-                            this.temporal.newFile(zipname)
+            new Sticky<>(
+                () -> {
+                    new LengthOf(
+                        new TeeInput(
+                            new InputOf(
+                                new Zip(
+                                    new Directory(folder)
+                                ).stream()
+                            ),
+                            new OutputTo(
+                                this.temporal.newFile(zipname)
+                            )
                         )
+                    ).value();
+                    try (ZipFile file = new ZipFile(
+                        new File(folder.getParentFile(), zipname)
                     )
-                ).value();
-                try (ZipFile file = new ZipFile(
-                    new File(folder.getParentFile(), zipname)
-                )
-                ) {
-                    return new ListOf<>(
-                        file.stream().map(ZipEntry::toString).collect(
-                            Collectors.toList()
-                        )
-                    );
+                    ) {
+                        return new ListOf<>(
+                            file.stream().map(ZipEntry::toString).collect(
+                                Collectors.toList()
+                            )
+                        );
+                    }
                 }
-            }),
+            ),
             new MatcherOf<>(
                 sclr -> {
                     sclr.value().containsAll(
