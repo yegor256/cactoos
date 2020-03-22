@@ -89,7 +89,7 @@ public final class ZipTest {
                         new File(folder.getParentFile(), zipname)
                     )
                     ) {
-                        return file.stream().mastatup(ZipEntry::toString).collect(
+                        return file.stream().map(ZipEntry::toString).collect(
                             Collectors.toList()
                         );
                     }
