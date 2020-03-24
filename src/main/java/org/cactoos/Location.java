@@ -21,58 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Iterator;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import org.cactoos.Location;
 
 /**
- * Files and folders in a directory.
+ * Path of resource.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.21
+ * @see org.cactoos.io.Directory
+ * @since 1.0
  */
-public final class Directory implements Iterable<Path>, Location {
+public interface Location {
 
     /**
-     * Path of the directory.
+     * Return the path.
+     * @return The {@link Path} of a resource
      */
-    private final Path dir;
-
-    /**
-     * Ctor.
-     * @param file File as a path to directory.
-     */
-    public Directory(final File file) {
-        this(file.toPath());
-    }
-
-    /**
-     * Ctor.
-     * @param path Path of the dir
-     */
-    public Directory(final Path path) {
-        this.dir = path;
-    }
-
-    @Override
-    public Iterator<Path> iterator() {
-        try (Stream<Path> files = Files.walk(this.dir)) {
-            return files.collect(Collectors.toList()).iterator();
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    @Override
-    public Path path() {
-        return this.dir;
-    }
+    Path path();
 }

@@ -45,42 +45,8 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ZipTest {
-
-    /**
-     * Folder to zip
-     */
-    private static final String FOLDER = "abc";
-
-    /**
-     * Final zip file name
-     */
-    private static final String ZIPNAME = FOLDER + ".zip";
-
-    /**
-     * First file name
-     */
-    private static final String AFILE = "A.txt";
-
-    /**
-     * Second file name
-     */
-    private static final String BFILE = "B.txt";
-
-    /**
-     * Folder A
-     */
-    private static final String AFOLDER = "A";
-
-    /**
-     * Folder B
-     */
-    private static final String BFOLDER = "B";
-
-    /**
-     * Folder C
-     */
-    private static final String CFOLDER = "C";
 
     /**
      * Temporary folder.
@@ -90,23 +56,22 @@ public final class ZipTest {
 
     @Test
     public void mustZipDirectory() throws Exception {
-        final File folder = this.temporal.newFolder(FOLDER);
-        try (OutputStream out = new OutputStreamTo(new File(folder, AFILE))) {
+        final String zipname = "abc.zip";
+        final File folder = this.temporal.newFolder("abc");
+        try (OutputStream out = new OutputStreamTo(new File(folder, "A.txt"))) {
             out.write("ABC".getBytes());
         }
-        new File(folder, BFOLDER).mkdirs();
-        try (OutputStream out = new OutputStreamTo(
-            new File(folder, new Joined(File.separator, BFOLDER, BFILE).asString()))
-        ) {
+        new File(folder, "B").mkdirs();
+        try (OutputStream out = new OutputStreamTo(new File(folder, "B\\B.txt"))) {
             out.write("EFG".getBytes());
         }
-        new File(folder, CFOLDER).mkdirs();
+        new File(folder, "C").mkdirs();
         new Assertion<>(
             "Must zip directory with the same directory structure",
             new Sticky<>(
                 () -> {
                     try (OutputStream out = new OutputStreamTo(
-                        this.temporal.newFile(ZIPNAME)
+                        this.temporal.newFile(zipname)
                     )) {
                         out.write(
                             new BytesOf(
@@ -115,7 +80,7 @@ public final class ZipTest {
                         );
                     }
                     try (ZipFile zipped = new ZipFile(
-                        new File(folder.getParentFile(), ZIPNAME)
+                        new File(folder.getParentFile(), zipname)
                     )
                     ) {
                         return new IterableOf<>(
@@ -128,13 +93,9 @@ public final class ZipTest {
             ),
             new ScalarHasValue<>(
                 new IterableOf<>(
-                    new Joined(File.separator, FOLDER, AFILE),
-                    new Joined(File.separator, FOLDER, BFOLDER, BFILE),
-                    new Joined(
-                        File.separator,
-                        FOLDER,
-                        new Joined("/", CFOLDER, "").asString()
-                    )
+                    new Joined(File.separator, "abc", "A.txt"),
+                    new Joined(File.separator, "abc", "B", "B.txt"),
+                    new Joined(File.separator, "abc", "C/")
                 )
             )
         ).affirm();

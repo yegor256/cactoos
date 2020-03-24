@@ -36,7 +36,6 @@ import java.util.zip.ZipOutputStream;
 import org.cactoos.Input;
 import org.cactoos.func.ForEach;
 import org.cactoos.iterator.Skipped;
-import org.cactoos.scalar.ItemAt;
 import org.cactoos.text.Joined;
 
 /**
@@ -67,11 +66,11 @@ public final class Zip implements Input {
     @Override
     public InputStream stream() throws Exception {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final Path parent = new ItemAt<>(0, this.directory).value().getParent();
         try (ZipOutputStream zip = new ZipOutputStream(out)) {
             new ForEach<Path>(
                 path -> {
-                    final String relative = parent.relativize(path).toString();
+                    final String relative = this.directory.path().getParent()
+                        .relativize(path).toString();
                     final File file = path.toFile();
                     if (file.isFile()) {
                         zip.putNextEntry(new ZipEntry(relative));
