@@ -67,7 +67,9 @@ public final class ZipTest {
                 folder,
                 new Joined(
                     File.separator, "B", "B.txt"
-                ).asString()))) {
+                ).asString()
+            )
+        )) {
             out.write("EFG".getBytes());
         }
         new File(folder, "C").mkdirs();
