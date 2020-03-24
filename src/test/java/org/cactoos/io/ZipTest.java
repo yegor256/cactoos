@@ -27,16 +27,16 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.OutputStream;
 import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import org.cactoos.list.ListOf;
-import org.cactoos.scalar.LengthOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Sticky;
+import org.cactoos.text.Joined;
+import org.cactoos.text.TextOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link Zip}.
@@ -48,6 +48,41 @@ import org.llorllale.cactoos.matchers.MatcherOf;
 public final class ZipTest {
 
     /**
+     * Folder to zip
+     */
+    private static final String FOLDER = "abc";
+
+    /**
+     * Final zip file name
+     */
+    private static final String ZIPNAME = FOLDER + ".zip";
+
+    /**
+     * First file name
+     */
+    private static final String AFILE = "A.txt";
+
+    /**
+     * Second file name
+     */
+    private static final String BFILE = "B.txt";
+
+    /**
+     * Folder A
+     */
+    private static final String AFOLDER = "A";
+
+    /**
+     * Folder B
+     */
+    private static final String BFOLDER = "B";
+
+    /**
+     * Folder C
+     */
+    private static final String CFOLDER = "C";
+
+    /**
      * Temporary folder.
      */
     @Rule
@@ -55,55 +90,52 @@ public final class ZipTest {
 
     @Test
     public void mustZipDirectory() throws Exception {
-        final String zipname = "abc.zip";
-        final File folder = this.temporal.newFolder("abc");
-        try (OutputStream out = new OutputStreamTo(
-            new File(folder, "A.txt")
-        )
-        ) {
+        final File folder = this.temporal.newFolder(FOLDER);
+        try (OutputStream out = new OutputStreamTo(new File(folder, AFILE))) {
             out.write("ABC".getBytes());
         }
+        new File(folder, BFOLDER).mkdirs();
         try (OutputStream out = new OutputStreamTo(
-            new File(folder, "B.txt")
-        )
+            new File(folder, new Joined(File.separator, BFOLDER, BFILE).asString()))
         ) {
             out.write("EFG".getBytes());
         }
+        new File(folder, CFOLDER).mkdirs();
         new Assertion<>(
             "Must zip directory with the same directory structure",
             new Sticky<>(
                 () -> {
-                    new LengthOf(
-                        new TeeInput(
-                            new InputOf(
-                                new Zip(
-                                    new Directory(folder)
-                                ).stream()
-                            ),
-                            new OutputTo(
-                                this.temporal.newFile(zipname)
-                            )
-                        )
-                    ).value();
-                    try (ZipFile file = new ZipFile(
-                        new File(folder.getParentFile(), zipname)
+                    try (OutputStream out = new OutputStreamTo(
+                        this.temporal.newFile(ZIPNAME)
+                    )) {
+                        out.write(
+                            new BytesOf(
+                                new Zip(new Directory(folder))
+                            ).asBytes()
+                        );
+                    }
+                    try (ZipFile zipped = new ZipFile(
+                        new File(folder.getParentFile(), ZIPNAME)
                     )
                     ) {
-                        return file.stream().map(ZipEntry::toString).collect(
-                            Collectors.toList()
+                        return new IterableOf<>(
+                            zipped.stream().map(
+                                e -> new TextOf(e.getName())
+                            ).collect(Collectors.toList())
                         );
                     }
                 }
             ),
-            new MatcherOf<>(
-                sclr -> {
-                    sclr.value().containsAll(
-                        new ListOf<>(
-                            "abs\\A.txt",
-                            "abc\\B.txt"
-                        )
-                    );
-                }
+            new ScalarHasValue<>(
+                new IterableOf<>(
+                    new Joined(File.separator, FOLDER, AFILE),
+                    new Joined(File.separator, FOLDER, BFOLDER, BFILE),
+                    new Joined(
+                        File.separator,
+                        FOLDER,
+                        new Joined("/", CFOLDER, "").asString()
+                    )
+                )
             )
         ).affirm();
     }

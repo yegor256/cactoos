@@ -30,10 +30,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.cactoos.Input;
 import org.cactoos.func.ForEach;
+import org.cactoos.iterator.Skipped;
 import org.cactoos.scalar.ItemAt;
 import org.cactoos.text.Joined;
 
@@ -69,18 +71,24 @@ public final class Zip implements Input {
         try (ZipOutputStream zip = new ZipOutputStream(out)) {
             new ForEach<Path>(
                 path -> {
-                    final File file = path.toFile();
                     final String relative = parent.relativize(path).toString();
+                    final File file = path.toFile();
                     if (file.isFile()) {
                         zip.putNextEntry(new ZipEntry(relative));
                         try (FileInputStream fis = new FileInputStream(file)) {
                             zip.write(new BytesOf(new InputOf(fis)).asBytes());
                         }
-                    } else if (!new Directory(file).iterator().hasNext()) {
-                        final Joined join = new Joined(
-                            File.separator, relative, ""
+                    } else {
+                        final Iterator<Path> paths = new Skipped<>(
+                            1,
+                            new Directory(file).iterator()
                         );
-                        zip.putNextEntry(new ZipEntry(join.toString()));
+                        if (!paths.hasNext()) {
+                            final org.cactoos.text.Joined join = new Joined(
+                                "/", relative, ""
+                            );
+                            zip.putNextEntry(new ZipEntry(join.toString()));
+                        }
                     }
                     zip.closeEntry();
                 }
