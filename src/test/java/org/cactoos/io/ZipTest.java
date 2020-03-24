@@ -62,7 +62,12 @@ public final class ZipTest {
             out.write("ABC".getBytes());
         }
         new File(folder, "B").mkdirs();
-        try (OutputStream out = new OutputStreamTo(new File(folder, "B\\B.txt"))) {
+        try (OutputStream out = new OutputStreamTo(
+            new File(
+                folder,
+                new Joined(
+                    File.separator, "B", "B.txt"
+                ).asString()))) {
             out.write("EFG".getBytes());
         }
         new File(folder, "C").mkdirs();
