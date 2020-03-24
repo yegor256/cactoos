@@ -27,6 +27,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.OutputStream;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Sticky;
@@ -55,24 +56,49 @@ public final class ZipTest {
     public final TemporaryFolder temporal = new TemporaryFolder();
 
     @Test
+    public void mustZipEmptyDirectory() throws Exception {
+        final File folder = this.temporal.newFolder("empty");
+        new Assertion<>(
+            "Must zip empty directory",
+            new Sticky<>(
+                () -> {
+                    try (OutputStream out = new OutputStreamTo(
+                        this.temporal.newFile("empty.zip")
+                    )) {
+                        out.write(
+                            new BytesOf(
+                                new Zip(new Directory(folder))
+                            ).asBytes()
+                        );
+                    }
+                    try (ZipFile zipped = new ZipFile(
+                        new File(folder.getParentFile(), "empty.zip")
+                    )
+                    ) {
+                        return zipped.stream().map(
+                            ZipEntry::toString
+                        ).findFirst().get();
+                    }
+                }
+            ),
+            new ScalarHasValue<>(
+                "empty/"
+            )
+        ).affirm();
+    }
+
+    @Test
     public void mustZipDirectory() throws Exception {
         final String zipname = "abc.zip";
         final File folder = this.temporal.newFolder("abc");
-        try (OutputStream out = new OutputStreamTo(new File(folder, "A.txt"))) {
-            out.write("ABC".getBytes());
-        }
-        new File(folder, "B").mkdirs();
-        try (OutputStream out = new OutputStreamTo(
+        new File(folder, "A.txt").createNewFile();
+        new File(folder, "B").mkdir();
+        new File(
             new File(
-                folder,
-                new Joined(
-                    File.separator, "B", "B.txt"
-                ).asString()
-            )
-        )) {
-            out.write("EFG".getBytes());
-        }
-        new File(folder, "C").mkdirs();
+                new Joined(File.separator, folder.getPath(), "B").asString()
+            ), "B.txt"
+        ).createNewFile();
+        new File(folder, "C").mkdir();
         new Assertion<>(
             "Must zip directory with the same directory structure",
             new Sticky<>(

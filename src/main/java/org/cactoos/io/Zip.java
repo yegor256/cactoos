@@ -83,10 +83,11 @@ public final class Zip implements Input {
                             new Directory(file).iterator()
                         );
                         if (!paths.hasNext()) {
-                            final org.cactoos.text.Joined join = new Joined(
-                                "/", relative, ""
+                            zip.putNextEntry(
+                                new ZipEntry(
+                                    new Joined("/", relative, "").asString()
+                                )
                             );
-                            zip.putNextEntry(new ZipEntry(join.toString()));
                         }
                     }
                     zip.closeEntry();
