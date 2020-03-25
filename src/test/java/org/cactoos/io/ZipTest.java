@@ -26,10 +26,11 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.OutputStream;
-import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterator.Mapped;
+import org.cactoos.list.ListOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
@@ -75,14 +76,21 @@ public final class ZipTest {
                         new File(folder.getParentFile(), "empty.zip")
                     )
                     ) {
-                        return zipped.stream().map(
-                            ZipEntry::toString
-                        ).findFirst().get();
+                        return new IterableOf<>(
+                            new ListOf<>(
+                                new Mapped<>(
+                                    ZipEntry::getName,
+                                    zipped.stream().iterator()
+                                )
+                            )
+                        );
                     }
                 }
             ),
             new ScalarHasValue<>(
-                "empty/"
+                new IterableOf<>(
+                    "empty/"
+                )
             )
         ).affirm();
     }
@@ -117,9 +125,12 @@ public final class ZipTest {
                     )
                     ) {
                         return new IterableOf<>(
-                            zipped.stream().map(
-                                e -> new TextOf(e.getName())
-                            ).collect(Collectors.toList())
+                            new ListOf<>(
+                                new Mapped<>(
+                                    entry -> new TextOf(entry.getName()),
+                                    zipped.stream().iterator()
+                                )
+                            )
                         );
                     }
                 }
