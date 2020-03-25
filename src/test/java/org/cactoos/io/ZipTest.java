@@ -35,11 +35,11 @@ import org.cactoos.iterator.Mapped;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link Zip}.
@@ -88,8 +88,10 @@ public final class ZipTest {
                     }
                 )
             ),
-            new HasValues<>(
-                "empty/"
+            new IsEqual<>(
+                new ListOf<>(
+                    "empty/"
+                )
             )
         ).affirm();
     }
@@ -134,10 +136,12 @@ public final class ZipTest {
                     }
                 )
             ),
-            new HasValues<>(
-                new Joined(File.separator, "abc", "A.txt"),
-                new Joined(File.separator, "abc", "B", "B.txt"),
-                new Joined(File.separator, "abc", "C/")
+            new IsEqual<>(
+                new ListOf<>(
+                    new Joined(File.separator, "abc", "A.txt"),
+                    new Joined(File.separator, "abc", "B", "B.txt"),
+                    new Joined(File.separator, "abc", "C/")
+                )
             )
         ).affirm();
     }
