@@ -29,17 +29,16 @@ import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.cactoos.Text;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Sticky;
 import org.cactoos.iterator.Mapped;
 import org.cactoos.list.ListOf;
+import org.cactoos.scalar.Sticky;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
-import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link Zip}.
@@ -63,32 +62,30 @@ public final class ZipTest {
         new Assertion<>(
             "Must zip empty directory",
             new Sticky<>(
-                new IterableOf<>(
-                    () -> {
-                        try (OutputStream out = new OutputStreamTo(
-                            this.temporal.newFile("empty.zip")
-                        )) {
-                            out.write(
-                                new BytesOf(
-                                    new Zip(new Directory(folder))
-                                ).asBytes()
-                            );
-                        }
-                        try (ZipFile zipped = new ZipFile(
-                            new File(folder.getParentFile(), "empty.zip")
-                        )
-                        ) {
-                            return new ListOf<>(
-                                new Mapped<>(
-                                    ZipEntry::getName,
-                                    zipped.stream().iterator()
-                                )
-                            ).iterator();
-                        }
+                () -> {
+                    try (OutputStream out = new OutputStreamTo(
+                        this.temporal.newFile("empty.zip")
+                    )) {
+                        out.write(
+                            new BytesOf(
+                                new Zip(new Directory(folder))
+                            ).asBytes()
+                        );
                     }
-                )
+                    try (ZipFile zipped = new ZipFile(
+                        new File(folder.getParentFile(), "empty.zip")
+                    )
+                    ) {
+                        return new ListOf<>(
+                            new Mapped<>(
+                                ZipEntry::getName,
+                                zipped.stream().iterator()
+                            )
+                        );
+                    }
+                }
             ),
-            new IsEqual<>(
+            new ScalarHasValue<>(
                 new ListOf<>(
                     "empty/"
                 )
@@ -111,32 +108,30 @@ public final class ZipTest {
         new Assertion<>(
             "Must zip directory with the same directory structure",
             new Sticky<>(
-                new IterableOf<>(
-                    () -> {
-                        try (OutputStream out = new OutputStreamTo(
-                            this.temporal.newFile(zipname)
-                        )) {
-                            out.write(
-                                new BytesOf(
-                                    new Zip(new Directory(folder))
-                                ).asBytes()
-                            );
-                        }
-                        try (ZipFile zipped = new ZipFile(
-                            new File(folder.getParentFile(), zipname)
-                        )
-                        ) {
-                            return new ListOf<Text>(
-                                new Mapped<>(
-                                    entry -> new TextOf(entry.getName()),
-                                    zipped.stream().iterator()
-                                )
-                            ).iterator();
-                        }
+                () -> {
+                    try (OutputStream out = new OutputStreamTo(
+                        this.temporal.newFile(zipname)
+                    )) {
+                        out.write(
+                            new BytesOf(
+                                new Zip(new Directory(folder))
+                            ).asBytes()
+                        );
                     }
-                )
+                    try (ZipFile zipped = new ZipFile(
+                        new File(folder.getParentFile(), zipname)
+                    )
+                    ) {
+                        return new ListOf<Text>(
+                            new Mapped<>(
+                                entry -> new TextOf(entry.getName()),
+                                zipped.stream().iterator()
+                            )
+                        );
+                    }
+                }
             ),
-            new IsEqual<>(
+            new ScalarHasValue<>(
                 new ListOf<>(
                     new Joined(File.separator, "abc", "A.txt"),
                     new Joined(File.separator, "abc", "B", "B.txt"),
