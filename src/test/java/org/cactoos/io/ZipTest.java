@@ -137,7 +137,8 @@ public final class ZipTest {
             new HasValues<>(
                 new Joined(File.separator, "abc", "A.txt"),
                 new Joined(File.separator, "abc", "B", "B.txt"),
-                new Joined(File.separator, "abc", "C/"))
+                new Joined(File.separator, "abc", "C/")
+            )
         ).affirm();
     }
 }
