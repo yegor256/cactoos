@@ -26,7 +26,6 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.OutputStream;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.cactoos.Text;
 import org.cactoos.iterator.Mapped;
@@ -57,43 +56,6 @@ public final class ZipTest {
     public final TemporaryFolder temporal = new TemporaryFolder();
 
     @Test
-    public void mustZipEmptyDirectory() throws Exception {
-        final File folder = this.temporal.newFolder("empty");
-        new Assertion<>(
-            "Must zip empty directory",
-            new Sticky<>(
-                () -> {
-                    try (OutputStream out = new OutputStreamTo(
-                        this.temporal.newFile("empty.zip")
-                    )) {
-                        out.write(
-                            new BytesOf(
-                                new Zip(new Directory(folder))
-                            ).asBytes()
-                        );
-                    }
-                    try (ZipFile zipped = new ZipFile(
-                        new File(folder.getParentFile(), "empty.zip")
-                    )
-                    ) {
-                        return new ListOf<>(
-                            new Mapped<>(
-                                ZipEntry::getName,
-                                zipped.stream().iterator()
-                            )
-                        );
-                    }
-                }
-            ),
-            new ScalarHasValue<>(
-                new ListOf<>(
-                    "empty/"
-                )
-            )
-        ).affirm();
-    }
-
-    @Test
     public void mustZipDirectory() throws Exception {
         final String zipname = "abc.zip";
         final File folder = this.temporal.newFolder("abc");
@@ -104,7 +66,6 @@ public final class ZipTest {
                 new Joined(File.separator, folder.getPath(), "B").asString()
             ), "B.txt"
         ).createNewFile();
-        new File(folder, "C").mkdir();
         new Assertion<>(
             "Must zip directory with the same directory structure",
             new Sticky<>(
@@ -134,8 +95,7 @@ public final class ZipTest {
             new ScalarHasValue<>(
                 new ListOf<>(
                     new Joined(File.separator, "abc", "A.txt"),
-                    new Joined(File.separator, "abc", "B", "B.txt"),
-                    new Joined(File.separator, "abc", "C/")
+                    new Joined(File.separator, "abc", "B", "B.txt")
                 )
             )
         ).affirm();
