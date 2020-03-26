@@ -77,8 +77,8 @@ public final class Zip implements Input {
                         try (FileInputStream fis = new FileInputStream(file)) {
                             zip.write(new BytesOf(new InputOf(fis)).asBytes());
                         }
+                        zip.closeEntry();
                     }
-                    zip.closeEntry();
                 }
             ).exec(this.directory);
         }

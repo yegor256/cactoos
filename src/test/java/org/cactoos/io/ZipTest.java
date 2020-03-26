@@ -46,7 +46,6 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ZipTest {
 
     /**
@@ -59,13 +58,12 @@ public final class ZipTest {
     public void mustZipDirectory() throws Exception {
         final String zipname = "abc.zip";
         final File folder = this.temporal.newFolder("abc");
-        new File(folder, "A.txt").createNewFile();
-        new File(folder, "B").mkdir();
-        new File(
-            new File(
-                new Joined(File.separator, folder.getPath(), "B").asString()
-            ), "B.txt"
-        ).createNewFile();
+        final File afile = new File(folder, "A.txt");
+        afile.createNewFile();
+        final File bfolder = new File(folder, "B");
+        bfolder.mkdir();
+        final File bfile = new File(bfolder, "B.txt");
+        bfile.createNewFile();
         new Assertion<>(
             "Must zip directory with the same directory structure",
             new Sticky<>(
@@ -94,8 +92,17 @@ public final class ZipTest {
             ),
             new ScalarHasValue<>(
                 new ListOf<>(
-                    new Joined(File.separator, "abc", "A.txt"),
-                    new Joined(File.separator, "abc", "B", "B.txt")
+                    new Joined(
+                        File.separator,
+                        folder.getName(),
+                        afile.getName()
+                    ),
+                    new Joined(
+                        File.separator,
+                        folder.getName(),
+                        bfolder.getName(),
+                        bfile.getName()
+                    )
                 )
             )
         ).affirm();
