@@ -122,7 +122,6 @@ public final class SkippedTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skippedNegativeSize() {
         final String varda = "varda";
         final String yavanna = "yavanna";
