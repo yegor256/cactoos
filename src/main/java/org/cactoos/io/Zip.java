@@ -77,6 +77,7 @@ public final class Zip implements Input {
                         try (FileInputStream fis = new FileInputStream(file)) {
                             zip.write(new BytesOf(new InputOf(fis)).asBytes());
                         }
+                        zip.closeEntry();
                     } else {
                         final Iterator<Path> paths = new Skipped<>(
                             1,
@@ -88,9 +89,10 @@ public final class Zip implements Input {
                                     new Joined("/", relative, "").asString()
                                 )
                             );
+                            zip.closeEntry();
                         }
                     }
-                    zip.closeEntry();
+
                 }
             ).exec(this.directory);
         }
