@@ -26,6 +26,7 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.cactoos.Text;
 import org.cactoos.iterator.Mapped;
@@ -46,6 +47,7 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ZipTest {
 
     /**
@@ -55,15 +57,54 @@ public final class ZipTest {
     public final TemporaryFolder temporal = new TemporaryFolder();
 
     @Test
+    public void mustZipEmptyDirectory() throws Exception {
+        final File folder = this.temporal.newFolder("empty");
+        new Assertion<>(
+            "Must zip empty directory",
+            new Sticky<>(
+                () -> {
+                    try (OutputStream out = new OutputStreamTo(
+                        this.temporal.newFile("empty.zip")
+                    )) {
+                        out.write(
+                            new BytesOf(
+                                new Zip(new Directory(folder))
+                            ).asBytes()
+                        );
+                    }
+                    try (ZipFile zipped = new ZipFile(
+                        new File(folder.getParentFile(), "empty.zip")
+                    )
+                    ) {
+                        return new ListOf<>(
+                            new Mapped<>(
+                                ZipEntry::getName,
+                                zipped.stream().iterator()
+                            )
+                        );
+                    }
+                }
+            ),
+            new ScalarHasValue<>(
+                new ListOf<>(
+                    "empty/"
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
     public void mustZipDirectory() throws Exception {
         final String zipname = "abc.zip";
         final File folder = this.temporal.newFolder("abc");
-        final File afile = new File(folder, "A.txt");
-        afile.createNewFile();
-        final File bfolder = new File(folder, "B");
-        bfolder.mkdir();
-        final File bfile = new File(bfolder, "B.txt");
-        bfile.createNewFile();
+        new File(folder, "A.txt").createNewFile();
+        new File(folder, "B").mkdir();
+        new File(
+            new File(
+                new Joined(File.separator, folder.getPath(), "B").asString()
+            ), "B.txt"
+        ).createNewFile();
+        new File(folder, "C").mkdir();
         new Assertion<>(
             "Must zip directory with the same directory structure",
             new Sticky<>(
@@ -92,17 +133,9 @@ public final class ZipTest {
             ),
             new ScalarHasValue<>(
                 new ListOf<>(
-                    new Joined(
-                        File.separator,
-                        folder.getName(),
-                        afile.getName()
-                    ),
-                    new Joined(
-                        File.separator,
-                        folder.getName(),
-                        bfolder.getName(),
-                        bfile.getName()
-                    )
+                    new Joined(File.separator, "abc", "A.txt"),
+                    new Joined(File.separator, "abc", "B", "B.txt"),
+                    new Joined(File.separator, "abc", "C/")
                 )
             )
         ).affirm();

@@ -30,10 +30,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.cactoos.Input;
 import org.cactoos.func.ForEach;
+import org.cactoos.iterator.Skipped;
+import org.cactoos.text.Joined;
 
 /**
  * Zip files and directory.
@@ -42,9 +45,6 @@ import org.cactoos.func.ForEach;
  *
  * @since 0.29
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @todo #898:30min Currently {@link Zip} does not support zipping of empty
- *  sub folder. Please change the implementation so that empty folders are
- *  zipped as well.
  */
 @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 public final class Zip implements Input {
@@ -77,8 +77,20 @@ public final class Zip implements Input {
                         try (FileInputStream fis = new FileInputStream(file)) {
                             zip.write(new BytesOf(new InputOf(fis)).asBytes());
                         }
-                        zip.closeEntry();
+                    } else {
+                        final Iterator<Path> paths = new Skipped<>(
+                            1,
+                            new Directory(file).iterator()
+                        );
+                        if (!paths.hasNext()) {
+                            zip.putNextEntry(
+                                new ZipEntry(
+                                    new Joined("/", relative, "").asString()
+                                )
+                            );
+                        }
                     }
+                    zip.closeEntry();
                 }
             ).exec(this.directory);
         }
