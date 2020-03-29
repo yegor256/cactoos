@@ -125,4 +125,75 @@ public final class SortedTest {
                 ))
         ).affirm();
     }
+
+    @Test
+    public void returnsCorrectComparator() {
+        final Comparator<Integer> comparator = Integer::compareTo;
+        new Assertion<>(
+            "Comparator must be the same",
+            new Sorted<>(comparator, 1, 2, 3).comparator(),
+            new IsEqual<>(comparator)
+        ).affirm();
+    }
+
+    @Test
+    public void returnsSubset() {
+        new Assertion<>(
+            "Must return sorted subset",
+            new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).subSet(3, 9),
+            new IsIterableContainingInOrder<>(
+                new ListOf<Matcher<? super Integer>>(
+                    new IsEqual<>(3),
+                    new IsEqual<>(6)
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void returnsHeadset() {
+        new Assertion<>(
+            "Must return sorted headset",
+            new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).headSet(9),
+            new IsIterableContainingInOrder<>(
+                new ListOf<Matcher<? super Integer>>(
+                    new IsEqual<>(1),
+                    new IsEqual<>(3),
+                    new IsEqual<>(6)
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void returnsTailset() {
+        new Assertion<>(
+            "Must return sorted tailset",
+            new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).tailSet(6),
+            new IsIterableContainingInOrder<>(
+                new ListOf<Matcher<? super Integer>>(
+                    new IsEqual<>(6),
+                    new IsEqual<>(9)
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void returnsFirst() {
+        new Assertion<>(
+            "Must return first element",
+            new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).first(),
+            new IsEqual<>(1)
+        ).affirm();
+    }
+
+    @Test
+    public void returnsLast() {
+        new Assertion<>(
+            "Must return last element",
+            new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).last(),
+            new IsEqual<>(9)
+        ).affirm();
+    }
 }

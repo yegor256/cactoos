@@ -35,11 +35,8 @@ import org.cactoos.iterable.IterableOf;
  *
  * @param <T> Set type
  * @since 1.0.0
- * @todo #1292:30min This class should also implements SortedSet
- *  from the java collection framework by delegating to the
- *  wrapped set. Some tests must be added for it.
  */
-public final class Sorted<T> extends SetEnvelope<T> {
+public final class Sorted<T> extends SortedSetEnvelope<T> {
 
     /**
      * Ctor.
