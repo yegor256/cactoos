@@ -23,9 +23,10 @@
  */
 package org.cactoos.iterable;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.list.ListOf;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test Case for {@link Shuffled}.
@@ -38,14 +39,32 @@ public final class ShuffledTest {
 
     @Test
     public void shuffleArray() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't shuffle an iterable",
+        new Assertion<>(
+            "Must shuffle an iterable",
             new Shuffled<>(
                 new IterableOf<>(
                     6, 2, 5
                 )
             ),
-            Matchers.containsInAnyOrder(2, 5, 6)
-        );
+            new HasValues<>(2, 5, 6)
+        ).affirm();
+    }
+
+    @Test
+    public void shuffleCollection() {
+        new Assertion<>(
+            "Must shuffle elements in collection",
+            new Shuffled<>(new ListOf<>(1, 2, 0, -1)),
+            new HasValues<>(1, 2, 0, -1)
+        ).affirm();
+    }
+
+    @Test
+    public void shufflesIterable() {
+        new Assertion<>(
+            "Must shuffle elements in iterable",
+            new Shuffled<>(new IterableOf<>(1, 2, 0, -1)),
+            new HasValues<>(1, 2, 0, -1)
+        ).affirm();
     }
 }
