@@ -21,56 +21,76 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.collection;
+package org.cactoos.iterator;
 
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.List;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.Unchecked;
+import java.util.ListIterator;
+import org.cactoos.list.ListOf;
 
 /**
- * Reversed collection.
+ * Reverse iterator.
+ *
+ * <p>This loads the whole wrapped Iterator in memory in order
+ * to be able to reverse it.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @param <X> Type of source item
- * @since 1.16
- * @todo #1242:30min Remove this class and replace it everywhere
- *  it was needed by the appropriate usage of Reversed from iterable
- *  (composed with ListOf or SetOf in case a copy is needed)
- *  or any other relevant concrete collection implementation.
- *  See #1242 for the rationale about this.
+ * @param <X> Type of item
+ * @since 1.0
+ * @todo #1300:30min For now this class is only tested through tests coming
+ *  from iterables's Reversed: introduces tests for this class to enforce its
+ *  contract and validate it works as expected.
  */
-public final class Reversed<X> extends CollectionEnvelope<X> {
+public final class Reversed<X> implements Iterator<X> {
+
+    /**
+     * Origin iterator to be reversed.
+     */
+    private final ListIterator<X> origin;
 
     /**
      * Ctor.
-     * @param src Source collection
-     * @since 0.23
+     * @param src Source iterator
+     * @since 1.0
      */
     @SafeVarargs
     public Reversed(final X... src) {
-        this(new IterableOf<>(src));
+        this(new IteratorOf<>(src));
     }
 
     /**
      * Ctor.
-     * @param src Source collection
+     * @param src Source iterator
+     * @since 1.0
      */
-    public Reversed(final Iterable<X> src) {
-        super(
-            new Unchecked<>(
-                new org.cactoos.scalar.Sticky<>(
-                    () -> {
-                        final List<X> items = new LinkedList<>();
-                        src.forEach(items::add);
-                        Collections.reverse(items);
-                        return items;
-                    }
-                )
-            ).value()
-        );
+    public Reversed(final Iterator<X> src) {
+        this(new ListOf<>(src));
     }
 
+    /**
+     * Ctor.
+     * @param src Source list
+     */
+    private Reversed(final List<X> src) {
+        this(src.listIterator(src.size()));
+    }
+
+    /**
+     * Ctor.
+     * @param src Source list iterator
+     */
+    private Reversed(final ListIterator<X> src) {
+        this.origin = src;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return this.origin.hasPrevious();
+    }
+
+    @Override
+    public X next() {
+        return this.origin.previous();
+    }
 }
