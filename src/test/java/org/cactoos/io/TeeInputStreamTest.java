@@ -30,10 +30,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link TeeInputStream}.
@@ -47,7 +47,7 @@ public final class TeeInputStreamTest {
     public void copiesContentByteByByte() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final String content = "Hello, товарищ!";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't copy InputStream to OutputStream byte by byte",
             new TextOf(
                 new ReaderOf(
@@ -64,7 +64,7 @@ public final class TeeInputStreamTest {
                     new String(baos.toByteArray(), StandardCharsets.UTF_8)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -76,11 +76,11 @@ public final class TeeInputStreamTest {
                     new OutputTo(write)
                 )
             ).intValue();
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "Can't use output after usage from TeeInput",
                 write.isClosed(),
                 new IsEqual<>(true)
-            );
+            ).affirm();
         }
     }
 

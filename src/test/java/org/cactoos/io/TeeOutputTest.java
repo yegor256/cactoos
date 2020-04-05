@@ -27,7 +27,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -109,7 +108,7 @@ public final class TeeOutputTest {
     public void copiesWithPath() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final File file = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't copy Output with path",
             new TextOf(
                 new TeeInput(
@@ -123,14 +122,14 @@ public final class TeeOutputTest {
             new TextIs(
                 new TextOf(file.toPath())
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void copiesWithFile() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final File file = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't copy Output with file",
             new TextOf(
                 new TeeInput(
@@ -144,7 +143,7 @@ public final class TeeOutputTest {
             new TextIs(
                 new TextOf(file.toPath())
             )
-        );
+        ).affirm();
     }
 
     @Test

@@ -26,8 +26,8 @@ package org.cactoos.io;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Reader;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
@@ -51,11 +51,11 @@ public final class TeeReaderTest {
             done = reader.read();
         }
         reader.close();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read content",
             new InputOf(new ReaderOf(baos.toByteArray())),
             new InputHasContent(content)
-        );
+        ).affirm();
     }
 
 }

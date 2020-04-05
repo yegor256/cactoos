@@ -26,9 +26,9 @@ package org.cactoos.io;
 import java.io.IOException;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link UncheckedBytes}.
@@ -50,7 +50,7 @@ public final class UncheckedBytesTest {
     @Test
     public void worksNormallyWhenNoExceptionIsThrown() throws Exception {
         final Text source = new TextOf("hello, cactoos!");
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Cannot works normally when no exception is thrown",
             new UncheckedBytes(
                 new BytesOf(source)

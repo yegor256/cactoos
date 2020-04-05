@@ -27,9 +27,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.FormattedText;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
@@ -43,11 +43,11 @@ public final class TempFileTest {
     @Test
     public void createFile() throws Exception {
         try (TempFile file = new TempFile()) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "Cannot create a temp file",
                 Files.exists(file.value()),
                 Matchers.is(true)
-            );
+            ).affirm();
         }
     }
 
@@ -55,7 +55,7 @@ public final class TempFileTest {
     public void createFileInCustomPath() throws Exception {
         final Path custom = Paths.get(System.getProperty("user.home"));
         try (TempFile file = new TempFile(() -> custom, "", "")) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "Cannot create a temp file at a custom path",
                 file,
                 Matchers.allOf(
@@ -70,7 +70,7 @@ public final class TempFileTest {
                         }
                     )
                 )
-            );
+            ).affirm();
         }
     }
 
@@ -78,11 +78,11 @@ public final class TempFileTest {
     public void deleteFile() throws Exception {
         final TempFile file = new TempFile();
         file.close();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Cannot delete file on close",
             Files.exists(file.value()),
             Matchers.is(false)
-        );
+        ).affirm();
     }
 
     @Test
@@ -92,11 +92,11 @@ public final class TempFileTest {
             System.currentTimeMillis()
         ).asString();
         try (TempFile file = new TempFile(prefix, "")) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "File not created with the given prefix",
                 file.value().getFileName().toString(),
                 Matchers.startsWith(prefix)
-            );
+            ).affirm();
         }
     }
 
@@ -106,7 +106,7 @@ public final class TempFileTest {
             "randomSuffix%s", System.currentTimeMillis()
         ).asString();
         try (TempFile file = new TempFile("", suffix)) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "File not created with the given suffix",
                 file.value().getFileName().toString(),
                 Matchers.endsWith(suffix)

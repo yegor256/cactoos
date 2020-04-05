@@ -28,11 +28,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Zip}.
@@ -63,12 +63,12 @@ public final class ZipTest {
                 ++cnt;
                 entry = input.getNextEntry();
             }
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "Can't list files in a directory represented by a path",
                 cnt,
                 // @checkstyle MagicNumber (1 line)
                 Matchers.equalTo(4)
-            );
+            ).affirm();
         }
     }
 }
