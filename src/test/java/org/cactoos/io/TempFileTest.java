@@ -47,7 +47,7 @@ public final class TempFileTest {
         try (TempFile file = new TempFile()) {
             new Assertion<>(
                 "Cannot create a temp file",
-                Files.exists(file.value()),                
+                Files.exists(file.value()),
                 new IsTrue()
             ).affirm();
         }
@@ -82,7 +82,7 @@ public final class TempFileTest {
         file.close();
         new Assertion<>(
             "Cannot delete file on close",
-            Files.exists(file.value()),            
+            Files.exists(file.value()),
             new IsEqual<>(false)
         ).affirm();
     }
