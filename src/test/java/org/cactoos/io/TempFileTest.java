@@ -28,8 +28,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.FormattedText;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
@@ -45,8 +47,8 @@ public final class TempFileTest {
         try (TempFile file = new TempFile()) {
             new Assertion<>(
                 "Cannot create a temp file",
-                Files.exists(file.value()),
-                Matchers.is(true)
+                Files.exists(file.value()),                
+                new IsTrue()
             ).affirm();
         }
     }
@@ -80,8 +82,8 @@ public final class TempFileTest {
         file.close();
         new Assertion<>(
             "Cannot delete file on close",
-            Files.exists(file.value()),
-            Matchers.is(false)
+            Files.exists(file.value()),            
+            new IsEqual<>(false)
         ).affirm();
     }
 

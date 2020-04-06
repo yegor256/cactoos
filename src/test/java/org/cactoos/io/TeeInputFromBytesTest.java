@@ -52,7 +52,7 @@ public final class TeeInputFromBytesTest {
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "Bytes to path test - Message content is required",
+            "Must copy bytes to file path",
             new TeeInput(
                 new BytesOf(message),
                 output.toPath()
@@ -67,7 +67,7 @@ public final class TeeInputFromBytesTest {
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "Bytes to file test - Message content is required",
+            "Must copy bytes to file",
             new TeeInput(
                 new BytesOf(message),
                 output
@@ -82,7 +82,7 @@ public final class TeeInputFromBytesTest {
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "Bytes to output test - Message content is required",
+            "Must bytes to output",
             new TeeInput(
                 new BytesOf(message),
                 new OutputTo(output)

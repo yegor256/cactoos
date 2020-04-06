@@ -28,7 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -67,7 +67,7 @@ public final class ZipTest {
                 "Can't list files in a directory represented by a path",
                 cnt,
                 // @checkstyle MagicNumber (1 line)
-                Matchers.equalTo(4)
+                new IsEqual<>(4)
             ).affirm();
         }
     }
