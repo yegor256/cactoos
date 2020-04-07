@@ -52,7 +52,7 @@ public final class TeeReaderTest {
         }
         reader.close();
         new Assertion<>(
-            "Can't read content",
+            "Must read content",
             new InputOf(new ReaderOf(baos.toByteArray())),
             new InputHasContent(content)
         ).affirm();

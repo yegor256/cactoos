@@ -45,7 +45,7 @@ public final class TeeOutputStreamTest {
         final ByteArrayOutputStream copy = new ByteArrayOutputStream();
         final String content = "Hello, товарищ!";
         new Assertion<>(
-            "Can't copy OutputStream to OutputStream byte by byte",
+            "Must copy OutputStream to OutputStream byte by byte",
             new TextOf(
                 new ReaderOf(
                     new TeeInputStream(

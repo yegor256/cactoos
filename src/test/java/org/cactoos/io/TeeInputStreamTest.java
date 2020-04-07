@@ -77,7 +77,7 @@ public final class TeeInputStreamTest {
                 )
             ).intValue();
             new Assertion<>(
-                "Can't use output after usage from TeeInput",
+                "Must use output after usage from TeeInput",
                 write.isClosed(),
                 new IsEqual<>(true)
             ).affirm();

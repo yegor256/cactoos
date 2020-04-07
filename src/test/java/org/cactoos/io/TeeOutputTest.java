@@ -109,7 +109,7 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final File file = this.folder.newFile();
         new Assertion<>(
-            "Can't copy Output with path",
+            "Must copy Output with path",
             new TextOf(
                 new TeeInput(
                     new InputOf("Hello, товарищ! with path"),
@@ -130,7 +130,7 @@ public final class TeeOutputTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final File file = this.folder.newFile();
         new Assertion<>(
-            "Can't copy Output with file",
+            "Must copy Output with file",
             new TextOf(
                 new TeeInput(
                     new InputOf("Hello, товарищ! with file"),

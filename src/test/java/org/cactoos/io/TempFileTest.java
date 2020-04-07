@@ -47,7 +47,7 @@ public final class TempFileTest {
     public void createFile() throws Exception {
         try (TempFile file = new TempFile()) {
             new Assertion<>(
-                "Cannot create a temp file",
+                "Must create a temp file",
                 Files.exists(file.value()),
                 new IsEqual<>(true)
             ).affirm();
@@ -59,7 +59,7 @@ public final class TempFileTest {
         final Path custom = Paths.get(System.getProperty("user.home"));
         try (TempFile file = new TempFile(() -> custom, "", "")) {
             new Assertion<>(
-                "Cannot create a temp file at a custom path",
+                "Must create a temp file at a custom path",
                 file,
                 Matchers.allOf(
                     new MatcherOf<>(
@@ -82,7 +82,7 @@ public final class TempFileTest {
         final TempFile file = new TempFile();
         file.close();
         new Assertion<>(
-            "Cannot delete file on close",
+            "Must delete file on close",
             Files.exists(file.value()),
             new IsEqual<>(false)
         ).affirm();
@@ -96,7 +96,7 @@ public final class TempFileTest {
         ).asString();
         try (TempFile file = new TempFile(prefix, "")) {
             new Assertion<>(
-                "File not created with the given prefix",
+                "File must be created with the given prefix",
                 new TextOf(file.value().getFileName().toString()),
                 new StartsWith(prefix)
             ).affirm();
@@ -110,7 +110,7 @@ public final class TempFileTest {
         ).asString();
         try (TempFile file = new TempFile("", suffix)) {
             new Assertion<>(
-                "File not created with the given suffix",
+                "File must be created with the given suffix",
                 new TextOf(file.value().getFileName().toString()),
                 new StartsWith(suffix)
             );

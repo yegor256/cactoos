@@ -51,7 +51,7 @@ public final class UncheckedBytesTest {
     public void worksNormallyWhenNoExceptionIsThrown() throws Exception {
         final Text source = new TextOf("hello, cactoos!");
         new Assertion<>(
-            "Cannot works normally when no exception is thrown",
+            "Must works normally when no exception is thrown",
             new UncheckedBytes(
                 new BytesOf(source)
             ).asBytes(),
