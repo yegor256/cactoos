@@ -27,12 +27,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.FormattedText;
+import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Unit tests for {@link TempFile}.
@@ -48,7 +49,7 @@ public final class TempFileTest {
             new Assertion<>(
                 "Cannot create a temp file",
                 Files.exists(file.value()),
-                new IsTrue()
+                new IsEqual<>(true)
             ).affirm();
         }
     }
@@ -96,8 +97,8 @@ public final class TempFileTest {
         try (TempFile file = new TempFile(prefix, "")) {
             new Assertion<>(
                 "File not created with the given prefix",
-                file.value().getFileName().toString(),
-                Matchers.startsWith(prefix)
+                new TextOf(file.value().getFileName().toString()),
+                new StartsWith(prefix)
             ).affirm();
         }
     }
@@ -110,8 +111,8 @@ public final class TempFileTest {
         try (TempFile file = new TempFile("", suffix)) {
             new Assertion<>(
                 "File not created with the given suffix",
-                file.value().getFileName().toString(),
-                Matchers.endsWith(suffix)
+                new TextOf(file.value().getFileName().toString()),
+                new StartsWith(suffix)
             );
         }
     }
