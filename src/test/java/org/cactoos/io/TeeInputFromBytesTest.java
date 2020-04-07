@@ -35,12 +35,12 @@ import org.llorllale.cactoos.matchers.InputHasContent;
  * Test case for {@link TeeInput}. Cases for ctors which use
  * {@link org.cactoos.Bytes} as an input.
  * @since 1.0
- * @checkstyle JavadocMethodCheck (100 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)
  * @todo #1331:30min This test is incorrect. It is not being tested whether
  *  the path actually contains the content, only that TeeInput, as an Input,
  *  has the content. Correct this problem in all TeeInput tests. Solution: test
  *  the content of the file, not the content of teeinput.
+ * @checkstyle JavadocMethodCheck (100 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)
  */
 public final class TeeInputFromBytesTest {
 
