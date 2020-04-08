@@ -58,6 +58,6 @@ public final class UncheckedBytesTest {
             Matchers.equalTo(
                 new BytesOf(source).asBytes()
             )
-        );
+        ).affirm();
     }
 }

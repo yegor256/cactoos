@@ -32,6 +32,7 @@ import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.StartsWith;
 
@@ -40,6 +41,7 @@ import org.llorllale.cactoos.matchers.StartsWith;
  *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class TempFileTest {
 
@@ -112,8 +114,8 @@ public final class TempFileTest {
             new Assertion<>(
                 "File must be created with the given suffix",
                 new TextOf(file.value().getFileName().toString()),
-                new StartsWith(suffix)
-            );
+                new EndsWith(suffix)
+            ).affirm();
         }
     }
 }
