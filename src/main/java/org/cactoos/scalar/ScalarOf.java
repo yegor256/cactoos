@@ -28,7 +28,6 @@ import org.cactoos.Scalar;
 /**
  * ScalarOf.
  *
- * <p>-
  * @param <T> Element type
  * @since 0.4
  * @todo #1320:30min Continue: Introduce a class ScalarOf that takes
