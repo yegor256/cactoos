@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,19 @@ package org.cactoos.iterable;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterator.IteratorOf;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.Or;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.SumOfInt;
+import org.cactoos.scalar.Unchecked;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Array as iterable.
@@ -36,8 +46,15 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * @param <X> Type of item
  * @since 0.12
+ * @checkstyle ClassDataAbstractionCouplingCheck (550 lines)
  */
-public final class IterableOf<X> extends IterableEnvelope<X> {
+@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
+public final class IterableOf<X> implements Iterable<X> {
+
+    /**
+     * The encapsulated iterator.
+     */
+    private final Scalar<Iterator<X>> itr;
 
     /**
      * Ctor.
@@ -66,11 +83,108 @@ public final class IterableOf<X> extends IterableEnvelope<X> {
     }
 
     /**
+     * Paged iterable.
+     * <p>
+     * Elements will continue to be provided so long as {@code next} produces
+     * non-empty iterators.
+     * @param first First bag of elements
+     * @param next Subsequent bags of elements
+     * @param <I> Custom iterator
+     * @todo #947:30min Move this constructor in its own class with its own
+     *  tests and meaningful name (maybe Paged?). Then remove the
+     *  ClassDataAbstractionCouplingCheck suppression for IterableOf.
+     */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
+    public <I extends Iterator<X>> IterableOf(
+        final Scalar<I> first, final Func<I, I> next
+    ) {
+        // @checkstyle AnonInnerLengthCheck (30 lines)
+        this(
+            () -> new Iterator<X>() {
+                private Unchecked<I> current = new Unchecked<>(
+                    new Sticky<>(first)
+                );
+                private final UncheckedFunc<I, I> subsequent =
+                    new UncheckedFunc<>(next);
+
+                @Override
+                public boolean hasNext() {
+                    if (!this.current.value().hasNext()) {
+                        final I next = this.subsequent.apply(
+                            this.current.value()
+                        );
+                        this.current = new Unchecked<>(
+                            new Sticky<>(() -> next)
+                        );
+                    }
+                    return this.current.value().hasNext();
+                }
+
+                @Override
+                public X next() {
+                    if (this.hasNext()) {
+                        return this.current.value().next();
+                    }
+                    throw new NoSuchElementException();
+                }
+            }
+        );
+    }
+
+    /**
      * Ctor.
      * @param sclr The encapsulated iterator of x
      */
-    private IterableOf(final Scalar<Iterator<X>> sclr) {
-        super(() -> () -> new UncheckedScalar<>(sclr).value());
+    public IterableOf(final Scalar<Iterator<X>> sclr) {
+        this.itr = sclr;
     }
 
+    @Override
+    public Iterator<X> iterator() {
+        return new Unchecked<>(this.itr).value();
+    }
+
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    public boolean equals(final Object other) {
+        return new Unchecked<>(
+            new Or(
+                () -> other == this,
+                new And(
+                    () -> other != null,
+                    () -> Iterable.class.isAssignableFrom(other.getClass()),
+                    () -> {
+                        final Iterable<?> compared = (Iterable<?>) other;
+                        final Iterator<?> iterator = compared.iterator();
+                        return new Unchecked<>(
+                            new And(
+                                (X input) -> input.equals(iterator.next()),
+                                this
+                            )
+                        ).value();
+                    }
+                )
+            )
+        ).value();
+    }
+
+    // @checkstyle MagicNumberCheck (30 lines)
+    @Override
+    public int hashCode() {
+        return new Unchecked<>(
+            new Folded<>(
+                42,
+                (hash, entry) -> new SumOfInt(
+                    () -> 37 * hash,
+                    entry::hashCode
+                ).value(),
+                this
+            )
+        ).value();
+    }
+
+    @Override
+    public String toString() {
+        return new UncheckedText(new TextOf(this)).asString();
+    }
 }

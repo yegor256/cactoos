@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,8 @@
 package org.cactoos.io;
 
 import org.cactoos.text.HexOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -38,7 +38,7 @@ public final class Sha256DigestOfTest {
 
     @Test
     public void checksumOfEmptyString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the empty string's SHA-256 checksum",
             new HexOf(
                 new Sha256DigestOf(
@@ -49,12 +49,12 @@ public final class Sha256DigestOfTest {
                 // @checkstyle LineLengthCheck (1 lines)
                 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void checksumOfString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the string's SHA-256 checksum",
             new HexOf(
                 new Sha256DigestOf(
@@ -65,19 +65,21 @@ public final class Sha256DigestOfTest {
                 // @checkstyle LineLengthCheck (1 lines)
                 "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void checksumFromFile() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the file's SHA-256 checksum",
             new HexOf(
                 new Sha256DigestOf(
-                    new InputOf(
-                        new ResourceOf(
-                            "org/cactoos/digest-calculation.txt"
-                        ).stream()
+                    new Sticky(
+                        new InputOf(
+                            new ResourceOf(
+                                "org/cactoos/digest-calculation.txt"
+                            ).stream()
+                        )
                     )
                 )
             ),
@@ -85,7 +87,7 @@ public final class Sha256DigestOfTest {
                 // @checkstyle LineLengthCheck (1 lines)
                 "c94451bd1476a3728669de11e22c645906d806e63a95c5797de1f3e84f126a3e"
             )
-        );
+        ).affirm();
     }
 
 }

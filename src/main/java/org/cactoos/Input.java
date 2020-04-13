@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
  */
 package org.cactoos;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -55,33 +54,4 @@ public interface Input {
      */
     InputStream stream() throws Exception;
 
-    /**
-     * Input check for no nulls.
-     *
-     * @since 0.10
-     */
-    final class NoNulls implements Input {
-        /**
-         * The input.
-         */
-        private final Input origin;
-        /**
-         * Ctor.
-         * @param input The input
-         */
-        public NoNulls(final Input input) {
-            this.origin = input;
-        }
-        @Override
-        public InputStream stream() throws Exception {
-            if (this.origin == null) {
-                throw new IOException("NULL instead of a valid input");
-            }
-            final InputStream stream = this.origin.stream();
-            if (stream == null) {
-                throw new IOException("NULL instead of a valid stream");
-            }
-            return stream;
-        }
-    }
 }

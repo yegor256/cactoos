@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,27 +23,44 @@
  */
 package org.cactoos;
 
+import org.cactoos.scalar.NoNulls;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
- * Test case for {@link Scalar.NoNulls}.
+ * Test case for {@link NoNulls}.
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ScalarTest {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullArgument() throws Exception {
-        new Scalar.NoNulls<>(null).value();
+    @Test
+    public void failForNullArgument() {
+        new Assertion<>(
+            "Must fail for null argument",
+            () -> new NoNulls<>(null).value(),
+            new Throws<>(
+                "NULL instead of a valid scalar",
+                IllegalArgumentException.class
+            )
+        ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void failForNullResult() throws Exception {
-        new Scalar.NoNulls<>(() -> null).value();
+    @Test
+    public void failForNullResult() {
+        new Assertion<>(
+            "Must fail for null result",
+            () -> new NoNulls<>(() -> null).value(),
+            new Throws<>(
+                "NULL instead of a valid value",
+                IllegalStateException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void okForNoNulls() throws Exception {
-        new Scalar.NoNulls<>(() -> 1).value();
+        new NoNulls<>(() -> 1).value();
     }
 }

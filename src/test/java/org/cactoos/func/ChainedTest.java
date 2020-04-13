@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,9 @@ import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Chained}.
@@ -43,7 +43,8 @@ public final class ChainedTest {
 
     @Test
     public void withoutIterable() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must work without iterable",
             new LengthOf(
                 new Filtered<>(
                     input -> input.endsWith("12"),
@@ -56,13 +57,14 @@ public final class ChainedTest {
                     )
                 )
             ).intValue(),
-            Matchers.equalTo(3)
-        );
+            new IsEqual<>(3)
+        ).affirm();
     }
 
     @Test
     public void withIterable() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must work with iterable",
             new LengthOf(
                 new Filtered<>(
                     input -> !input.startsWith("st"),
@@ -79,7 +81,7 @@ public final class ChainedTest {
                     )
                 )
             ).intValue(),
-            Matchers.equalTo(2)
-        );
+            new IsEqual<>(2)
+        ).affirm();
     }
 }

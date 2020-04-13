@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ package org.cactoos.io;
 
 import java.io.InputStream;
 import org.cactoos.Input;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Input that doesn't throw checked {@link Exception}.
@@ -51,7 +51,7 @@ public final class UncheckedInput implements Input {
 
     @Override
     public InputStream stream() {
-        return new UncheckedScalar<>(this.input::stream).value();
+        return new Unchecked<>(this.input::stream).value();
     }
 
 }

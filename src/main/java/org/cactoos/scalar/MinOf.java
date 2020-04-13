@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,8 +42,8 @@ import org.cactoos.Scalar;
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
  * it more convenient and get rid of the checked exception you can
- * use the {@link UncheckedScalar} decorator. Or you may use
- * {@link IoCheckedScalar} to wrap it in an IOException.</p>
+ * use the {@link Unchecked} decorator. Or you may use
+ * {@link IoChecked} to wrap it in an IOException.</p>
  *
  * @since 0.24
  */
@@ -66,39 +66,43 @@ public final class MinOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MinOf(final Integer... src) {
-        super(() -> {
-            long min = Long.MAX_VALUE;
-            for (final int val : src) {
-                if ((long) val < min) {
-                    min = (long) val;
+        super(
+            () -> {
+                long min = Long.MAX_VALUE;
+                for (final int val : src) {
+                    if ((long) val < min) {
+                        min = (long) val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            int min = Integer.MAX_VALUE;
-            for (final int val : src) {
-                if (val < min) {
-                    min = val;
+                return min;
+            },
+            () -> {
+                int min = Integer.MAX_VALUE;
+                for (final int val : src) {
+                    if (val < min) {
+                        min = val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            float min = Float.MAX_VALUE;
-            for (final int val : src) {
-                if ((float) val < min) {
-                    min = (float) val;
+                return min;
+            },
+            () -> {
+                float min = Float.MAX_VALUE;
+                for (final int val : src) {
+                    if ((float) val < min) {
+                        min = (float) val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            double min = Double.MAX_VALUE;
-            for (final int val : src) {
-                if ((double) val < min) {
-                    min = (double) val;
+                return min;
+            },
+            () -> {
+                double min = Double.MAX_VALUE;
+                for (final int val : src) {
+                    if ((double) val < min) {
+                        min = (double) val;
+                    }
                 }
-            }
-            return min;
-        });
+                return min;
+            });
     }
 
     /**
@@ -106,39 +110,43 @@ public final class MinOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MinOf(final Long... src) {
-        super(() -> {
-            long min = Long.MAX_VALUE;
-            for (final long val : src) {
-                if (val < min) {
-                    min = val;
+        super(
+            () -> {
+                long min = Long.MAX_VALUE;
+                for (final long val : src) {
+                    if (val < min) {
+                        min = val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            int min = Integer.MAX_VALUE;
-            for (final long val : src) {
-                if ((int) val < min) {
-                    min = (int) val;
+                return min;
+            },
+            () -> {
+                int min = Integer.MAX_VALUE;
+                for (final long val : src) {
+                    if ((int) val < min) {
+                        min = (int) val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            float min = Float.MAX_VALUE;
-            for (final long val : src) {
-                if ((float) val < min) {
-                    min = (float) val;
+                return min;
+            },
+            () -> {
+                float min = Float.MAX_VALUE;
+                for (final long val : src) {
+                    if ((float) val < min) {
+                        min = (float) val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            double min = Double.MAX_VALUE;
-            for (final long val : src) {
-                if ((double) val < min) {
-                    min = (double) val;
+                return min;
+            },
+            () -> {
+                double min = Double.MAX_VALUE;
+                for (final long val : src) {
+                    if ((double) val < min) {
+                        min = (double) val;
+                    }
                 }
-            }
-            return min;
-        });
+                return min;
+            });
     }
 
     /**
@@ -146,39 +154,43 @@ public final class MinOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MinOf(final Double... src) {
-        super(() -> {
-            long min = Long.MAX_VALUE;
-            for (final double val : src) {
-                if ((long) val < min) {
-                    min = (long) val;
+        super(
+            () -> {
+                long min = Long.MAX_VALUE;
+                for (final double val : src) {
+                    if ((long) val < min) {
+                        min = (long) val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            int min = Integer.MAX_VALUE;
-            for (final double val : src) {
-                if ((int) val < min) {
-                    min = (int) val;
+                return min;
+            },
+            () -> {
+                int min = Integer.MAX_VALUE;
+                for (final double val : src) {
+                    if ((int) val < min) {
+                        min = (int) val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            float min = Float.MAX_VALUE;
-            for (final double val : src) {
-                if ((float) val < min) {
-                    min = (float) val;
+                return min;
+            },
+            () -> {
+                float min = Float.MAX_VALUE;
+                for (final double val : src) {
+                    if ((float) val < min) {
+                        min = (float) val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            double min = Double.MAX_VALUE;
-            for (final double val : src) {
-                if (val < min) {
-                    min = val;
+                return min;
+            },
+            () -> {
+                double min = Double.MAX_VALUE;
+                for (final double val : src) {
+                    if (val < min) {
+                        min = val;
+                    }
                 }
-            }
-            return min;
-        });
+                return min;
+            });
     }
 
     /**
@@ -186,39 +198,43 @@ public final class MinOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MinOf(final Float... src) {
-        super(() -> {
-            long min = Long.MAX_VALUE;
-            for (final float val : src) {
-                if ((long) val < min) {
-                    min = (long) val;
+        super(
+            () -> {
+                long min = Long.MAX_VALUE;
+                for (final float val : src) {
+                    if ((long) val < min) {
+                        min = (long) val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            int min = Integer.MAX_VALUE;
-            for (final float val : src) {
-                if ((int) val < min) {
-                    min = (int) val;
+                return min;
+            },
+            () -> {
+                int min = Integer.MAX_VALUE;
+                for (final float val : src) {
+                    if ((int) val < min) {
+                        min = (int) val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            float min = Float.MAX_VALUE;
-            for (final float val : src) {
-                if (val < min) {
-                    min = val;
+                return min;
+            },
+            () -> {
+                float min = Float.MAX_VALUE;
+                for (final float val : src) {
+                    if (val < min) {
+                        min = val;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            double min = Double.MAX_VALUE;
-            for (final float val : src) {
-                if ((double) val < min) {
-                    min = (double) val;
+                return min;
+            },
+            () -> {
+                double min = Double.MAX_VALUE;
+                for (final float val : src) {
+                    if ((double) val < min) {
+                        min = (double) val;
+                    }
                 }
-            }
-            return min;
-        });
+                return min;
+            });
     }
 
     /**
@@ -227,47 +243,50 @@ public final class MinOf extends NumberEnvelope {
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public MinOf(final Iterable<Number> src) {
-        super(() -> {
-            final Iterator<Number> numbers = src.iterator();
-            long min = Long.MAX_VALUE;
-            while (numbers.hasNext()) {
-                final long next = numbers.next().longValue();
-                if (next < min) {
-                    min = next;
+        super(
+            () -> {
+                final Iterator<Number> numbers = src.iterator();
+                long min = Long.MAX_VALUE;
+                while (numbers.hasNext()) {
+                    final long next = numbers.next().longValue();
+                    if (next < min) {
+                        min = next;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            final Iterator<Number> numbers = src.iterator();
-            int min = Integer.MAX_VALUE;
-            while (numbers.hasNext()) {
-                final int next = numbers.next().intValue();
-                if (next < min) {
-                    min = next;
+                return min;
+            },
+            () -> {
+                final Iterator<Number> numbers = src.iterator();
+                int min = Integer.MAX_VALUE;
+                while (numbers.hasNext()) {
+                    final int next = numbers.next().intValue();
+                    if (next < min) {
+                        min = next;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            final Iterator<Number> numbers = src.iterator();
-            float min = Float.MAX_VALUE;
-            while (numbers.hasNext()) {
-                final float next = numbers.next().floatValue();
-                if (next < min) {
-                    min = next;
+                return min;
+            },
+            () -> {
+                final Iterator<Number> numbers = src.iterator();
+                float min = Float.MAX_VALUE;
+                while (numbers.hasNext()) {
+                    final float next = numbers.next().floatValue();
+                    if (next < min) {
+                        min = next;
+                    }
                 }
-            }
-            return min;
-        }, () -> {
-            final Iterator<Number> numbers = src.iterator();
-            double min = Double.MAX_VALUE;
-            while (numbers.hasNext()) {
-                final double next = numbers.next().doubleValue();
-                if (next < min) {
-                    min = next;
+                return min;
+            },
+            () -> {
+                final Iterator<Number> numbers = src.iterator();
+                double min = Double.MAX_VALUE;
+                while (numbers.hasNext()) {
+                    final double next = numbers.next().doubleValue();
+                    if (next < min) {
+                        min = next;
+                    }
                 }
-            }
-            return min;
-        });
+                return min;
+            });
     }
-
 }

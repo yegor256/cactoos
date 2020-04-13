@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,9 @@ package org.cactoos.bytes;
 
 import java.util.Base64;
 import org.cactoos.io.BytesOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link org.cactoos.bytes.BytesBase64}.
@@ -40,8 +40,8 @@ public final class BytesBase64Test {
 
     @Test
     public void checkEncodeBasic() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't encodes bytes using the Base64 basic encoding scheme",
+        new Assertion<>(
+            "Must encode bytes using the Base64 basic encoding scheme",
             new BytesBase64(
                 new BytesOf(
                     "Hello!"
@@ -50,13 +50,13 @@ public final class BytesBase64Test {
             new IsEqual<>(
                 new BytesOf("SGVsbG8h").asBytes()
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void checkEncodeUrl() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't encodes bytes using the Base64 URL encoding scheme",
+        new Assertion<>(
+            "Must encode bytes using the Base64 URL encoding scheme",
             new BytesBase64(
                 new BytesOf(
                     "Hello!"
@@ -65,13 +65,13 @@ public final class BytesBase64Test {
             new IsEqual<>(
                 new BytesOf("SGVsbG8h").asBytes()
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void checkEncodeMime() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't encodes bytes using the Base64 mime encoding scheme",
+        new Assertion<>(
+            "Must encode bytes using the Base64 mime encoding scheme",
             new BytesBase64(
                 new BytesOf(
                     "Hello!"
@@ -80,7 +80,7 @@ public final class BytesBase64Test {
             new IsEqual<>(
                 new BytesOf("SGVsbG8h").asBytes()
             )
-        );
+        ).affirm();
     }
 
 }

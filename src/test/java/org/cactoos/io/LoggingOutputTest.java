@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,11 +29,11 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link LoggingOutput}.
@@ -68,49 +68,49 @@ public final class LoggingOutputTest {
                 )
             )
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log zero byte written to memory",
             logger.toString(),
             Matchers.containsString("Written 0 byte(s) to memory in ")
-        );
+        ).affirm();
     }
 
     @Test
     public void logWriteOneByte() throws Exception {
         final Logger logger = new FakeLogger();
         try (
-            final OutputStream out = new LoggingOutput(
-                () -> new ByteArrayOutputStream(),
+            OutputStream out = new LoggingOutput(
+                ByteArrayOutputStream::new,
                 "memory",
                 logger
             ).stream()
         ) {
             out.write(new BytesOf("a").asBytes());
         }
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log one byte written to memory",
             logger.toString(),
             Matchers.containsString("Written 1 byte(s) to memory in")
-        );
+        ).affirm();
     }
 
     @Test
     public void logWriteText() throws Exception {
         final Logger logger = new FakeLogger();
         try (
-            final OutputStream out = new LoggingOutput(
-                () -> new ByteArrayOutputStream(),
+            OutputStream out = new LoggingOutput(
+                ByteArrayOutputStream::new,
                 "memory",
                 logger
             ).stream()
         ) {
             out.write(new BytesOf("Hello, товарищ!").asBytes());
         }
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log 22 bytes written to memory",
             logger.toString(),
             Matchers.containsString("Written 22 byte(s) to memory in")
-        );
+        ).affirm();
     }
 
     @Test
@@ -131,7 +131,7 @@ public final class LoggingOutputTest {
                 )
             ).intValue();
         }
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log write and close operations to text file",
             logger.toString(),
             Matchers.allOf(
@@ -143,7 +143,7 @@ public final class LoggingOutputTest {
                 Matchers.containsString("Written 74536 byte(s) to text file"),
                 Matchers.containsString("Closed output stream from text file")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -151,7 +151,7 @@ public final class LoggingOutputTest {
         final Logger logger = new FakeLogger(Level.WARNING);
         final Path temp = this.folder.newFolder("ccts-2").toPath();
         final Path path = temp.resolve("a/b/c/file.txt");
-        try (final OutputStream output = new LoggingOutput(
+        try (OutputStream output = new LoggingOutput(
             new OutputTo(path),
             "text file",
             logger
@@ -164,7 +164,7 @@ public final class LoggingOutputTest {
                 )
             ).intValue();
         }
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log all write and close operations to text file",
             logger.toString(),
             Matchers.allOf(
@@ -175,7 +175,7 @@ public final class LoggingOutputTest {
                 Matchers.containsString("Written 74536 byte(s) to text file"),
                 Matchers.containsString("Closed output stream from text file")
             )
-        );
+        ).affirm();
     }
 
 }

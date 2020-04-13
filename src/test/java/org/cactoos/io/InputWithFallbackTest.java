@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,9 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
 
 /**
  * Test case for {@link InputWithFallback}.
@@ -41,7 +40,7 @@ public final class InputWithFallbackTest {
 
     @Test
     public void readsAlternativeInput() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read alternative source",
             new TextOf(
                 new InputWithFallback(
@@ -51,13 +50,13 @@ public final class InputWithFallbackTest {
                     new InputOf("hello, world!")
                 )
             ),
-            new TextHasString(Matchers.endsWith("world!"))
-        );
+            new EndsWith("world!")
+        ).affirm();
     }
 
     @Test
     public void readsAlternativeInputUri() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read alternative source from URI",
             new TextOf(
                 new InputWithFallback(
@@ -67,8 +66,8 @@ public final class InputWithFallbackTest {
                     new InputOf("it works!")
                 )
             ),
-            new TextHasString(Matchers.endsWith("works!"))
-        );
+            new EndsWith("works!")
+        ).affirm();
     }
 
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +27,20 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import org.cactoos.text.Randomized;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test Case for {@link Immutable}.
  *
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ImmutableTest {
     @Test(expected = UnsupportedOperationException.class)
@@ -65,5 +70,29 @@ public final class ImmutableTest {
         MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(true));
         immutable.next();
         MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(false));
+    }
+
+    @Test
+    public void decoratesToString() {
+        final String string = new Randomized().asString();
+        final Iterator<Object> iterator = new Iterator<Object>() {
+            public Object next() {
+                return new Object();
+            }
+
+            public boolean hasNext() {
+                return false;
+            }
+
+            public String toString() {
+                return string;
+            }
+        };
+        final Iterator<Object> immutable = new Immutable<>(iterator);
+        new Assertion<>(
+            "must delegate toString to decorated iterator",
+            new TextOf(immutable.toString()),
+            new TextIs(iterator.toString())
+        ).affirm();
     }
 }

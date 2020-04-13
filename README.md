@@ -2,10 +2,10 @@
 
 [![Donate via Zerocracy](https://www.0crat.com/contrib-badge/C63314D6Z.svg)](https://www.0crat.com/contrib/C63314D6Z)
 
-[![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
+[![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 [![Managed by Zerocracy](https://www.0crat.com/badge/C63314D6Z.svg)](https://www.0crat.com/p/C63314D6Z)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/cactoos)](http://www.rultor.com/p/yegor256/cactoos)
-[![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
+[![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Build Status](https://travis-ci.org/yegor256/cactoos.svg?branch=master)](https://travis-ci.org/yegor256/cactoos)
 [![Build status](https://ci.appveyor.com/api/projects/status/8vs8huy61og6jwif?svg=true)](https://ci.appveyor.com/project/yegor256/cactoos)
@@ -14,9 +14,12 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.cactoos/cactoos.svg)](https://maven-badges.herokuapp.com/maven-central/org.cactoos/cactoos)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/cactoos/blob/master/LICENSE.txt)
 
-[![jpeek report](http://i.jpeek.org/org.cactoos/cactoos/badge.svg)](http://i.jpeek.org/org.cactoos/cactoos/)
+[![jpeek report](https://i.jpeek.org/org.cactoos/cactoos/badge.svg)](https://i.jpeek.org/org.cactoos/cactoos/)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg)](https://codecov.io/github/yegor256/cactoos?branch=master)
 [![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.cactoos%3Acactoos)
+[![Hits-of-Code](https://hitsofcode.com/github/yegor256/cactoos)](https://hitsofcode.com/view/github/yegor256/cactoos)
+
+Project architect: [@paulodamaso](https://github.com/paulodamaso)
 
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
@@ -35,7 +38,7 @@ but mostly through static methods. Cactoos is suggesting
 to do almost exactly the same, but through objects.
 
 **Principles**.
-These are the [design principles](http://www.elegantobjects.org#principles) behind Cactoos.
+These are the [design principles](https://www.elegantobjects.org#principles) behind Cactoos.
 
 **How to use**.
 The library has no dependencies. All you need is this
@@ -107,11 +110,11 @@ To manipulate with a text:
 
 ```java
 // To lower case
-new LowerText(
+new Lowered(
 	new TextOf("Hello")
 );
 // To upper case
-new UpperText(
+new Upper(
 	new TextOf("Hello")
 );
 ```
@@ -131,6 +134,33 @@ Collection<String> filtered = new ListOf<>(
 );
 ```
 
+To flatten one iterable:
+```java
+new Joined<>(
+  new Mapped<>(
+    iter -> new IterableOf<>(
+      new ListOf<>(iter).toArray(new Integer[]{})
+    ),
+    new IterableOf<>(1, 2, 3, 4, 5, 6))
+  )
+);    // Iterable<Integer>
+```
+
+To flatten and join several iterables:
+```java
+new Joined<>(
+  new Mapped<>(
+    iter -> new IterableOf<>(
+      new ListOf<>(iter).toArray(new Integer[]{})
+    ),
+    new Joined<>(
+      new IterableOf<>(new IterableOf<>(1, 2, 3)),
+      new IterableOf<>(new IterableOf<>(4, 5, 6))
+    )
+  )
+);    // Iterable<Integer>
+```
+
 To iterate a collection:
 
 ```java
@@ -141,7 +171,7 @@ new And(
         System.out.printf("Item: %s\n", input);
       }
     ),
-    new IterableOf<>("how", "are", "you")
+    new IterableOf<>("how", "are", "you", "?")
   )
 ).value();
 ```
@@ -149,18 +179,19 @@ new And(
 Or even more compact:
 
 ```java
-new And(
-  (String input) -> System.out.printf("Item: %s\n", input),
-  "how", "are", "you"
-).value();
+new ForEach<String>(
+    input -> System.out.printf(
+        "Item: %s\n", input
+    )
+).exec("how", "are", "you", "?");
 ```
 
 To sort a list of words in the file:
 
 ```java
-List<String> sorted = new ListOf<>(
+List<Text> sorted = new ListOf<>(
   new Sorted<>(
-    new SplitText(
+    new Split(
       new TextOf(
         new File("/tmp/names.txt")
       ),
@@ -174,8 +205,51 @@ To count elements in an iterable:
 
 ```java
 int total = new LengthOf(
-  "how", "are", "you"
+  new IterableOf<>("how", "are", "you")
 ).intValue();
+```
+
+To create a set of elements by providing variable arguments:
+
+```java
+final Set<String> unique = new SetOf<String>(
+    "one",
+    "two",
+    "one",
+    "three"
+);
+```
+
+To create a set of elements from existing iterable:
+```java
+final Set<String> words = new SetOf<>(
+    new IterableOf<>("abc", "bcd", "abc", "ccc")
+);
+```
+
+To create a sorted iterable with unique elements from existing iterable:
+```java
+final Iterable<String> sorted = new Sorted<>(
+    new SetOf<>(
+        new IterableOf<>("abc", "bcd", "abc", "ccc")
+    )
+);
+```
+
+To create a sorted set from existing vararg elements using comparator:
+```java
+final Set<String> sorted = new org.cactoos.set.Sorted<>(
+    (first, second) -> first.compareTo(second),
+    "abc", "bcd", "abc", "ccc", "acd"
+);
+```
+
+To create a sorted set from existing iterable using comparator:
+```java
+final Set<String> sorted = new org.cactoos.set.Sorted<>(
+    (first, second) -> first.compareTo(second),
+    new IterableOf<>("abc", "bcd", "abc", "ccc", "acd")
+);
 ```
 
 ## Funcs and Procs
@@ -192,10 +266,10 @@ This is its object-oriented alternative (no streams!):
 
 ```java
 new And(
-  names,
   n -> {
     System.out.printf("Hello, %s!\n", n);
-  }
+  },
+  names
 ).value();
 ```
 
@@ -211,11 +285,11 @@ Here is its object-oriented alternative:
 
 ```java
 new And(
-  new Endless<>(ready),
   ready -> {
     System.out.println("Still waiting...");
     return !ready;
-  }
+  },
+  new Endless<>(booleanParameter)
 ).value();
 ```
 
@@ -240,7 +314,7 @@ To format an `OffsetDateTime` into a `Text`:
 
 ```java
 final OffsetDateTime date = ...;
-final OffsetDateTimeAsText text = new OffsetDateTimeAsText(date);
+final String text = new TextOf(date).asString();
 ```
 
 ## Our objects vs. their static methods
@@ -251,24 +325,24 @@ Cactoos | Guava | Apache Commons | JDK 8
 `Filtered` | `Iterables.filter()` | ? | -
 `FormattedText` | - | - | `String.format()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
-`JoinedText` | - | - | `String.join()`
+`Joined` | - | - | `String.join()`
 `LengthOf` | - | - | `String#length()`
-`LowerText` | - | - | `String#toLowerCase()`
-`NormalizedText` | - | `StringUtils.normalize()` | -
+`Lowered` | - | - | `String#toLowerCase()`
+`Normalized` | - | `StringUtils.normalize()` | -
 `Or` | `Iterables.any()` | - | -
-`RepeatedText` | - | `StringUtils.repeat()` | -
-`ReplacedText` | - | - | `String#replace()`
-`ReversedText` | - | - | `StringBuilder#reverse()`
-`RotatedText` | - | `StringUtils.rotate()`| -
-`SplitText` | - | - | `String#split()`
+`Repeated` | - | `StringUtils.repeat()` | -
+`Replaced` | - | - | `String#replace()`
+`Reversed` | - | - | `StringBuilder#reverse()`
+`Rotated` | - | `StringUtils.rotate()`| -
+`Split` | - | - | `String#split()`
 `StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()`
-`SubText` | - | - | `String#substring()`
-`SwappedCaseText` | - | `StringUtils.swapCase()` | -
+`Sub` | - | - | `String#substring()`
+`SwappedCase` | - | `StringUtils.swapCase()` | -
 `TextOf` | ? | `IOUtils.toString()` | -
-`TrimmedLeftText` | - | `StringUtils.stripStart()` | -
-`TrimmedRightText` | - | `StringUtils.stripEnd()` | -
-`TrimmedText` | - | `StringUtils.stripAll()` | `String#trim()`
-`UpperText` | - | - | `String#toUpperCase()`
+`TrimmedLeft` | - | `StringUtils.stripStart()` | -
+`TrimmedRight` | - | `StringUtils.stripEnd()` | -
+`Trimmed` | - | `StringUtils.stripAll()` | `String#trim()`
+`Upper` | - | - | `String#toUpperCase()`
 
 ## Questions
 
@@ -279,9 +353,26 @@ Ask your questions related to cactoos library on [Stackoverflow](https://stackov
 Just fork the repo and send us a pull request.
 
 Make sure your branch builds without any warnings/issues:
-
 ```
-mvn clean install -Pqulice
+mvn clean verify -Pqulice
+```
+
+To run a build similar to the CI with Docker only, use:
+```
+docker run \
+	--tty \
+	--interactive \
+	--workdir=/main \
+	--volume=${PWD}:/main \
+	--volume=cactoos-mvn-cache:/root/.m2 \
+	--rm \
+	maven:3-jdk-8 \
+	bash -c "mvn clean install site -Pqulice -Psite --errors; chown -R $(id -u):$(id -g) target/"
+```
+
+To remove the cache used by Docker-based build:
+```
+docker volume rm cactoos-mvn-cache
 ```
 
 Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static code analyze tool with
@@ -305,25 +396,6 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@izrik](https://github.com/izrik) as Richard Sartor
   - [@Vatavuk](https://github.com/Vatavuk) as Vedran Grgo Vatavuk
   - [@dgroup](https://github.com/dgroup) as Yurii Dubinka
-
-## License (MIT)
-
-Copyright (c) 2017-2018 Yegor Bugayenko
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+  - [@iakunin](https://github.com/iakunin) as Maksim Iakunin
+  - [@fanifieiev](https://github.com/fanifieiev) as Fevzi Anifieiev
+  - [@victornoel](https://github.com/victornoel) as Victor Noël

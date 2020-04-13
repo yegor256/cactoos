@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -72,9 +72,9 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.11
      */
@@ -85,10 +85,10 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param src The map to extend
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param src The map to extend
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.12
      * @checkstyle ParameterNumberCheck (5 lines)
@@ -104,8 +104,8 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.11
      */
@@ -116,9 +116,9 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     * @param entry Func to create entry
      * @param src The map to extend
      * @param list List of items
-     * @param entry Func to create entry
      * @param <Z> Type of items in the list
      * @since 0.11
      */
@@ -156,5 +156,4 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
             return Collections.unmodifiableMap(temp);
         });
     }
-
 }

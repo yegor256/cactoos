@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 package org.cactoos.iterable;
 
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Repeat an element.
@@ -51,7 +51,7 @@ public final class Repeated<T> extends IterableEnvelope<T> {
      * @param elm The element to repeat
      */
     public Repeated(final int total, final Scalar<T> elm) {
-        this(total, new UncheckedScalar<T>(elm));
+        this(total, new Unchecked<T>(elm));
     }
 
     /**
@@ -59,10 +59,12 @@ public final class Repeated<T> extends IterableEnvelope<T> {
      * @param total The total number of repetitions
      * @param item The element to repeat
      */
-    public Repeated(final int total, final UncheckedScalar<T> item) {
-        super(() -> () -> new org.cactoos.iterator.Repeated<>(
-            total, item
-        ));
+    public Repeated(final int total, final Unchecked<T> item) {
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.Repeated<>(total, item)
+            )
+        );
     }
 
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 package org.cactoos.set;
 
 import java.util.Set;
-import org.cactoos.Scalar;
 import org.cactoos.collection.CollectionEnvelope;
 
 /**
@@ -49,7 +48,7 @@ public abstract class SetEnvelope<T> extends CollectionEnvelope<T> implements
      *
      * @param src Source
      */
-    public SetEnvelope(final Scalar<Set<T>> src) {
-        super(src::value);
+    public SetEnvelope(final Set<T> src) {
+        super(src);
     }
 }

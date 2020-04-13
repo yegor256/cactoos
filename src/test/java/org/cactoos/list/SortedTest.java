@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ package org.cactoos.list;
 
 import java.util.Comparator;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
@@ -56,8 +56,8 @@ public final class SortedTest {
                     "one", "two", "three", "four"
                 )
             ),
-            Matchers.contains(
-                "four", "one", "three", "two"
+            new IsEqual<>(
+                new ListOf<>("four", "one", "three", "two")
             )
         );
     }
@@ -68,9 +68,9 @@ public final class SortedTest {
             "Can't take one element from sorted list",
             new Sorted<>(
                 Comparator.reverseOrder(),
-                "alpha", "beta", "gamma", "delta"
+                new ListOf<>("alpha", "beta", "gamma", "delta")
             ).get(1),
-            Matchers.equalTo("delta")
+            new IsEqual<>("delta")
         );
     }
 

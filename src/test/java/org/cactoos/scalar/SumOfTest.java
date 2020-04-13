@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,8 @@
 package org.cactoos.scalar;
 
 import java.util.Collection;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -81,6 +81,7 @@ public final class SumOfTest {
             new IsEqual<>(10L)
         );
     }
+
     @Test
     public void withCollectionInt() {
         MatcherAssert.assertThat(
@@ -90,6 +91,7 @@ public final class SumOfTest {
             new IsEqual<>(10)
         );
     }
+
     @Test
     public void withCollectionFloat() {
         MatcherAssert.assertThat(
@@ -99,6 +101,7 @@ public final class SumOfTest {
             new IsEqual<>(10.0f)
         );
     }
+
     @Test
     public void withCollectionDouble() {
         MatcherAssert.assertThat(
@@ -111,7 +114,7 @@ public final class SumOfTest {
 
     @Test
     public void withIterableOfInts() {
-        final Collection<Integer> ints = new CollectionOf<>(1, 2, 3, 4);
+        final Collection<Integer> ints = new ListOf<>(1, 2, 3, 4);
         MatcherAssert.assertThat(
             new SumOf(ints).intValue(),
             new IsEqual<>(10)
@@ -121,8 +124,8 @@ public final class SumOfTest {
     @Test
     public void overflowIntFromLongValues() {
         MatcherAssert.assertThat(
-            new SumOf((Integer.MAX_VALUE + 1L) * 2L, 10L).intValue(),
-            new IsEqual<>(2147483647)
+            new SumOf(2_147_483_647L + 1L << 1, 10L).intValue(),
+            new IsEqual<>(2_147_483_647)
         );
     }
 
@@ -130,9 +133,9 @@ public final class SumOfTest {
     public void overflowIntFromLongValuesIncludingNegative() {
         MatcherAssert.assertThat(
             new SumOf(
-                (Integer.MAX_VALUE + 1L) * 2L,
+                2_147_483_647L + 1L << 1,
                 10L,
-                -(Integer.MAX_VALUE + 1L) * 2L
+                -(2_147_483_647L + 1L) << 1
             ).intValue(),
             new IsEqual<>(10)
         );
@@ -141,8 +144,8 @@ public final class SumOfTest {
     @Test
     public void overflowFloatFromLongValues() {
         MatcherAssert.assertThat(
-            new SumOf((Integer.MAX_VALUE + 1L) * 2L, 10L).floatValue(),
-            new IsEqual<>(4294967300f)
+            new SumOf(2_147_483_647L + 1L << 1, 10L).floatValue(),
+            new IsEqual<>(4_294_967_300.0f)
         );
     }
 }

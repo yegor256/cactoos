@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,16 @@
 package org.cactoos.scalar;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.func.FuncOf;
+import org.cactoos.func.ProcNoNulls;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
+import org.cactoos.list.Synced;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -46,9 +45,6 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
 /**
  * Test case for {@link AndInThreads}.
  * @since 0.25
- * @todo #829:30min Remove the use of the static method
- *  `Collections.synchronizedList`. Replace by an object-oriented approach.
- *  Create a class similar to `SyncCollection` but mutable.
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
@@ -103,9 +99,7 @@ public final class AndInThreadsTest {
 
     @Test
     public void iteratesList() {
-        final List<String> list = Collections.synchronizedList(
-            new ArrayList<String>(2)
-        );
+        final List<String> list = new Synced<>(new ListOf<>());
         MatcherAssert.assertThat(
             "Can't iterate a list with a procedure",
             new AndInThreads(
@@ -119,7 +113,7 @@ public final class AndInThreadsTest {
         MatcherAssert.assertThat(
             list,
             new IsIterableContainingInAnyOrder<String>(
-                new CollectionOf<Matcher<? super String>>(
+                new ListOf<Matcher<? super String>>(
                     new MatcherOf<>(
                         text -> {
                             return "hello".equals(text);
@@ -137,8 +131,8 @@ public final class AndInThreadsTest {
 
     @Test
     public void iteratesEmptyList() {
-        final List<String> list = Collections.synchronizedList(
-            new ArrayList<String>(2)
+        final List<String> list = new Synced<>(
+            new ArrayList<>(2)
         );
         MatcherAssert.assertThat(
             "Can't iterate a list",
@@ -161,34 +155,6 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void worksWithProc() throws Exception {
-        final List<Integer> list = Collections.synchronizedList(
-            new ArrayList<Integer>(2)
-        );
-        new AndInThreads(
-            (Proc<Integer>) list::add,
-            1, 1
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            new IsIterableContainingInAnyOrder<Integer>(
-                new CollectionOf<Matcher<? super Integer>>(
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(1);
-                        }
-                    ),
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(1);
-                        }
-                    )
-                )
-            )
-        );
-    }
-
-    @Test
     public void worksWithFunc() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
@@ -196,34 +162,6 @@ public final class AndInThreadsTest {
                 1, -1, 0
             ),
             new ScalarHasValue<>(false)
-        );
-    }
-
-    @Test
-    public void worksWithProcIterable() throws Exception {
-        final List<Integer> list = Collections.synchronizedList(
-            new ArrayList<Integer>(2)
-        );
-        new AndInThreads(
-            new Proc.NoNulls<Integer>(list::add),
-                new ListOf<>(1, 2)
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            new IsIterableContainingInAnyOrder<Integer>(
-                new CollectionOf<Matcher<? super Integer>>(
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(1);
-                        }
-                    ),
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(2);
-                        }
-                    )
-                )
-            )
         );
     }
 
@@ -242,19 +180,17 @@ public final class AndInThreadsTest {
 
     @Test
     public void worksWithExecServiceProcValues() throws Exception {
-        final List<Integer> list = Collections.synchronizedList(
-            new ArrayList<Integer>(2)
-        );
+        final List<Integer> list = new Synced<>(new ListOf<>());
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(
             service,
-            new Proc.NoNulls<Integer>(list::add),
+            new ProcNoNulls<Integer>(list::add),
             1, 2
         ).value();
         MatcherAssert.assertThat(
             list,
             new IsIterableContainingInAnyOrder<Integer>(
-                new CollectionOf<Matcher<? super Integer>>(
+                new ListOf<Matcher<? super Integer>>(
                     new MatcherOf<>(
                         value -> {
                             return value.equals(1);
@@ -272,19 +208,17 @@ public final class AndInThreadsTest {
 
     @Test
     public void worksWithExecServiceProcIterable() throws Exception {
-        final List<Integer> list = Collections.synchronizedList(
-            new ArrayList<Integer>(2)
-        );
+        final List<Integer> list = new Synced<>(new ListOf<>());
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(
             service,
-            new Proc.NoNulls<Integer>(list::add),
-                new ListOf<>(1, 2)
+            new ProcNoNulls<Integer>(list::add),
+            new ListOf<>(1, 2)
         ).value();
         MatcherAssert.assertThat(
             list,
             new IsIterableContainingInAnyOrder<Integer>(
-                new CollectionOf<Matcher<? super Integer>>(
+                new ListOf<Matcher<? super Integer>>(
                     new MatcherOf<>(
                         value -> {
                             return value.equals(1);

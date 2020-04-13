@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,9 @@
 package org.cactoos.iterator;
 
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test Case for {@link Shuffled}.
@@ -36,19 +36,20 @@ import org.junit.Test;
 public final class ShuffledTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void shuffleIterable() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't shuffle elements in iterator",
-            () -> new Shuffled<>(
-                new IterableOf<>(
-                    "a", "b"
-                ).iterator()
+        new Assertion<>(
+            "Must shuffle elements in iterator",
+            new IterableOf<>(
+                new Shuffled<>(
+                    new IteratorOf<>(
+                        "a", "b"
+                    )
+                )
             ),
-            Matchers.containsInAnyOrder(
+            new HasValues<>(
                 "a", "b"
             )
-        );
+        ).affirm();
     }
 
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-import org.cactoos.Scalar;
-import org.cactoos.iterator.Immutable;
-import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Iterable envelope.
@@ -35,29 +32,39 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * @param <X> Type of item
  * @since 0.24
- * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings("PMD.AbstractNaming")
 public abstract class IterableEnvelope<X> implements Iterable<X> {
 
     /**
-     * The iterable.
+     * The wrapped iterable.
      */
-    private final UncheckedScalar<Iterable<X>> iterable;
+    private final Iterable<X> wrapped;
 
     /**
      * Ctor.
-     * @param scalar The source
+     * @param iterable The wrapped iterable
      */
-    public IterableEnvelope(final Scalar<Iterable<X>> scalar) {
-        this.iterable = new UncheckedScalar<>(scalar);
+    public IterableEnvelope(final Iterable<X> iterable) {
+        this.wrapped = iterable;
     }
 
     @Override
     public final Iterator<X> iterator() {
-        return new Immutable<>(
-            this.iterable.value().iterator()
-        );
+        return this.wrapped.iterator();
     }
 
+    @Override
+    public final boolean equals(final Object other) {
+        return this.wrapped.equals(other);
+    }
+
+    @Override
+    public final int hashCode() {
+        return this.wrapped.hashCode();
+    }
+
+    @Override
+    public final String toString() {
+        return this.wrapped.toString();
+    }
 }

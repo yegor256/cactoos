@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import org.cactoos.list.ListOf;
 
 /**
  * Iterator implementation for {@link Iterator} partitioning.
@@ -41,10 +42,12 @@ public final class Partitioned<T> implements Iterator<List<T>> {
      * Iterator to decorate.
      */
     private final Iterator<T> decorated;
+
     /**
      * Size of the partitions.
      */
     private final int size;
+
     /**
      * Ctor.
      *
@@ -69,11 +72,13 @@ public final class Partitioned<T> implements Iterator<List<T>> {
         if (this.size < 1) {
             throw new IllegalArgumentException("Partition size < 1");
         }
-        final List<T> result = new LinkedList<>();
-        for (int count = 0; count < this.size && this.hasNext(); ++count) {
-            result.add(this.decorated.next());
-        }
-        return Collections.unmodifiableList(result);
+        return Collections.unmodifiableList(
+            new LinkedList<>(
+                new ListOf<>(
+                    new Sliced<>(0, this.size, this.decorated)
+                )
+            )
+        );
     }
 
 }

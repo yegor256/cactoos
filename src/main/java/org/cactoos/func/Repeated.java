@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 package org.cactoos.func;
 
 import org.cactoos.Func;
-import org.cactoos.Proc;
 
 /**
  * Func that repeats its calculation a few times before
@@ -33,10 +32,6 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.6
- * @todo #861:30min Avoid usage of null value in ctor(Proc, int) which is
- *  against design principles.
- *  Perhaps in creating RepeatedProc?
- *  Please take a look on #551 and #843 for more details.
  */
 public final class Repeated<X, Y> implements Func<X, Y> {
 
@@ -49,16 +44,6 @@ public final class Repeated<X, Y> implements Func<X, Y> {
      * How many times to run.
      */
     private final int times;
-
-    /**
-     * Ctor.
-     * @param proc Proc
-     * @param max How many times
-     * @since 0.12
-     */
-    public Repeated(final Proc<X> proc, final int max) {
-        this(new FuncOf<>(proc, null), max);
-    }
 
     /**
      * Ctor.

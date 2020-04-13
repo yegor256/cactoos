@@ -1,31 +1,24 @@
-docker:
-  image: yegor256/java8
 assets:
-  settings.xml: zerocracy/home#assets/cactoos/settings.xml
-  pubring.gpg: zerocracy/home#assets/pubring.gpg
-  secring.gpg: zerocracy/home#assets/secring.gpg
-env:
-  MAVEN_OPTS: -Xmx1g
-  JAVA_OPTS: -Xmx1g
-install: |
-  sudo gem install --no-rdoc --no-ri pdd
-  sudo gem install --no-rdoc --no-ri xcop
-  sudo pip install gitlint
+  settings.xml: yegor256/home#assets/cactoos/settings.xml
+  pubring.gpg: yegor256/home#assets/pubring.gpg
+  secring.gpg: yegor256/home#assets/secring.gpg
+docker:
+  image: g4s8/rultor:alpine3.10
+  as_root: true
 architect:
-- llorllale
+- paulodamaso
 - yegor256
 merge:
   script: |
-    pdd --file=/dev/null
-    git log --not master --pretty=%B | gitlint
+    pdd -f /dev/null
     mvn clean install -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
 deploy:
   script: |
+    pdd -f /dev/null
     mvn clean deploy -Pqulice --errors --settings ../settings.xml
 release:
   script: |-
     [[ "${tag}" =~ ^[0-9]+(\.[0-9]+)*$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}"
-    git commit -am "${tag}"
-    mvn clean deploy -Pcactoos -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml
+    mvn clean deploy -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml

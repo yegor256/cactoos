@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,11 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link TailOf}.
@@ -41,53 +42,66 @@ public final class TailOfTest {
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void tailIterator() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't get tail portion of iterator",
-            () -> new TailOf<>(
-                2,
-                new IterableOf<>(
-                    "one", "two", "three", "four"
-                ).iterator()
+        new Assertion<>(
+            "Must get tail portion of iterator",
+            new IterableOf<>(
+                new TailOf<>(
+                    2,
+                    new IteratorOf<>(
+                        "one", "two", "three", "four"
+                    )
+                )
             ),
-            Matchers.contains(
-                "three",
-                "four"
+            new IsEqual<>(
+                new IterableOf<>(
+                    "three",
+                    "four"
+                )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void returnsIntactIterator() throws Exception {
-        MatcherAssert.assertThat(
-            new LengthOf(
+        new Assertion<>(
+            "Must return an intact iterator",
+            new IterableOf<>(
                 new TailOf<>(
                     3,
-                    new IterableOf<>(
+                    new IteratorOf<>(
                         "one", "two"
-                    ).iterator()
+                    )
                 )
-            ).intValue(),
-            Matchers.equalTo(2)
-        );
+            ),
+            new HasSize(2)
+        ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void returnsEmptyIterator() throws Exception {
-        new TailOf<>(
-            0,
-            new IterableOf<>(
-                "one", "two"
-            ).iterator()
-        ).next();
+        new Assertion<>(
+            "Must throw an exception if empty",
+            () -> new TailOf<>(
+                0,
+                new IteratorOf<>(
+                    "one", "two"
+                )
+            ).next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void emptyIteratorForNegativeSize() throws Exception {
-        new TailOf<>(
-            -1,
-            new IterableOf<>(
-                "one", "two"
-            ).iterator()
-        ).next();
+        new Assertion<>(
+            "Must throw an exception for negative size",
+            () -> new TailOf<>(
+                -1,
+                new IteratorOf<>(
+                    "one", "two"
+                )
+            ).next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

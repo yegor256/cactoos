@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,7 @@
 package org.cactoos.collection;
 
 import java.util.Collection;
-import java.util.Iterator;
-import org.cactoos.Scalar;
-import org.cactoos.iterator.Immutable;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.InheritanceLevel;
-import org.cactoos.scalar.SumOfIntScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.iterable.IterableEnvelope;
 
 /**
  * Base collection.
@@ -39,158 +32,81 @@ import org.cactoos.scalar.UncheckedScalar;
  * <p>There is no thread-safety guarantee.</p>
  * @param <X> Element type
  * @since 0.23
- * @todo #881:30min CollectionEnvelope equals method does not compare objects
- *  that implements Collection class. It only compares classes derived from
- *  CollectionEnvelope.
- *  There are three approaches to solve this issue:
- *  1. add an instanceof (against our principles)
- *  2. build a new type that checks if a class implements/extends an interface
- *  3. modify InheritanceLevel to take into account (1)
- * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AbstractNaming"
-    }
-)
-public abstract class CollectionEnvelope<X> implements Collection<X> {
+public abstract class CollectionEnvelope<X>
+    extends IterableEnvelope<X> implements Collection<X> {
 
     /**
-     * Shuffled one.
+     * The wrapped collection.
      */
-    private final UncheckedScalar<Collection<X>> col;
+    private final Collection<X> col;
 
     /**
      * Ctor.
-     * @param slr The scalar
+     * @param col The wrapped collection
      */
-    public CollectionEnvelope(final Scalar<Collection<X>> slr) {
-        this.col = new UncheckedScalar<>(slr);
+    public CollectionEnvelope(final Collection<X> col) {
+        super(col);
+        this.col = col;
     }
 
     @Override
     public final int size() {
-        return this.col.value().size();
+        return this.col.size();
     }
 
     @Override
     public final boolean isEmpty() {
-        return this.col.value().isEmpty();
-    }
-
-    @Override
-    public final Iterator<X> iterator() {
-        return new Immutable<>(this.col.value().iterator());
+        return this.col.isEmpty();
     }
 
     @Override
     public final boolean contains(final Object object) {
-        return this.col.value().contains(object);
+        return this.col.contains(object);
     }
 
     @Override
     public final Object[] toArray() {
-        return this.col.value().toArray();
+        return this.col.toArray();
     }
 
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
     public final <T> T[] toArray(final T[] array) {
-        return this.col.value().toArray(array);
+        return this.col.toArray(array);
     }
 
     @Override
     public final boolean add(final X item) {
-        throw new UnsupportedOperationException(
-            "#add(): the collection is read-only"
-        );
+        return this.col.add(item);
     }
 
     @Override
     public final boolean remove(final Object object) {
-        throw new UnsupportedOperationException(
-            "#remove(): the collection is read-only"
-        );
+        return this.col.remove(object);
     }
 
     @Override
     public final boolean containsAll(final Collection<?> list) {
-        return this.col.value().containsAll(list);
+        return this.col.containsAll(list);
     }
 
     @Override
     public final boolean addAll(final Collection<? extends X> list) {
-        throw new UnsupportedOperationException(
-            "#addAll(): the collection is read-only"
-        );
+        return this.col.addAll(list);
     }
 
     @Override
     public final boolean removeAll(final Collection<?> list) {
-        throw new UnsupportedOperationException(
-            "#removeAll(): the collection is read-only"
-        );
+        return this.col.removeAll(list);
     }
 
     @Override
     public final boolean retainAll(final Collection<?> list) {
-        throw new UnsupportedOperationException(
-            "#retainAll(): the collection is read-only"
-        );
+        return this.col.retainAll(list);
     }
 
     @Override
     public final void clear() {
-        throw new UnsupportedOperationException(
-            "#clear(): the collection is read-only"
-        );
-    }
-
-    // @checkstyle DesignForExtensionCheck (5 lines)
-    @Override
-    public String toString() {
-        return this.col.value().toString();
-    }
-
-    @Override
-    public final boolean equals(final Object other) {
-        return new UncheckedScalar<>(
-            new And(
-                () -> other != null,
-                () -> new InheritanceLevel(
-                    other.getClass(), CollectionEnvelope.class
-                ).value() > -1,
-                () -> {
-                    final Collection<?> compared = (Collection<?>) other;
-                    return this.size() == compared.size();
-                },
-                () -> {
-                    final Iterable<?> compared = (Iterable<?>) other;
-                    final Iterator<?> iterator = compared.iterator();
-                    return new UncheckedScalar<>(
-                        new And(
-                            (X input) -> input.equals(iterator.next()),
-                            this
-                        )
-                    ).value();
-                }
-            )
-        ).value();
-    }
-
-    // @checkstyle MagicNumberCheck (30 lines)
-    @Override
-    public final int hashCode() {
-        return new UncheckedScalar<>(
-            new Folded<>(
-                42,
-                (hash, entry) -> new SumOfIntScalar(
-                    () -> 37 * hash,
-                    entry::hashCode
-                ).value(),
-                this
-            )
-        ).value();
+        this.col.clear();
     }
 }

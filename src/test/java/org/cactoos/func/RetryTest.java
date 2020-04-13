@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,11 @@
 package org.cactoos.func;
 
 import java.security.SecureRandom;
-import java.util.concurrent.atomic.AtomicBoolean;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import java.time.Duration;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.FuncApplies;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Retry}.
@@ -40,8 +41,9 @@ import org.junit.Test;
 public final class RetryTest {
 
     @Test
-    public void runsFuncMultipleTimes() throws Exception {
-        MatcherAssert.assertThat(
+    public void runsFuncMultipleTimes() {
+        new Assertion<>(
+            "Didn't run multiple times",
             new Retry<>(
                 input -> {
                     if (new SecureRandom().nextDouble() > 0.3d) {
@@ -50,53 +52,50 @@ public final class RetryTest {
                     return 0;
                 },
                 Integer.MAX_VALUE
-            ).apply(true),
-            Matchers.equalTo(0)
-        );
+            ),
+            new FuncApplies<>(true, 0)
+        ).affirm();
     }
 
     @Test
-    public void runsProcMultipleTimes() throws Exception {
-        MatcherAssert.assertThat(
+    public void runsFuncConditionMultipleTimes() {
+        new Assertion<>(
+            "Didn't check condition multiple times",
             new Retry<>(
                 input -> {
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");
                     }
-                },
-                Integer.MAX_VALUE
-            ).apply(true),
-            Matchers.nullValue()
-        );
-    }
-
-    @Test
-    public void runsProcDefaultMultipleTimes() throws Exception {
-        final AtomicBoolean fail = new AtomicBoolean(true);
-        MatcherAssert.assertThat(
-            new Retry<>(
-                input -> {
-                    if (fail.getAndSet(false)) {
-                        throw new IllegalArgumentException("May happen");
-                    }
-                }
-            ).apply(true),
-            Matchers.nullValue()
-        );
-    }
-
-    @Test
-    public void runsProcConditionMultipleTimes() throws Exception {
-        MatcherAssert.assertThat(
-            new Retry<>(
-                input -> {
-                    if (new SecureRandom().nextDouble() > 0.3d) {
-                        throw new IllegalArgumentException("May happen");
-                    }
+                    return true;
                 },
                 count -> count == Integer.MAX_VALUE
+            ),
+            new FuncApplies<>(true, true)
+        ).affirm();
+    }
+
+    @Test
+    public void processInterruptExceptionOnWait() {
+        final Thread main = Thread.currentThread();
+        new Thread(
+            () -> {
+                while (true) {
+                    if (Thread.State.TIMED_WAITING == main.getState()) {
+                        main.interrupt();
+                        return;
+                    }
+                }
+            }).start();
+        new Assertion<>(
+            "Must be interrupted on wait",
+            () -> new Retry<>(
+                input -> {
+                    throw new IllegalArgumentException("Happens");
+                },
+                attempts -> false,
+                Duration.ofMillis(Long.MAX_VALUE)
             ).apply(true),
-            Matchers.nullValue()
-        );
+            new Throws<>("sleep interrupted", InterruptedException.class)
+        ).affirm();
     }
 }

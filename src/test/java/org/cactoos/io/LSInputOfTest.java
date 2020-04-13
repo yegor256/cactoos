@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@
  */
 package org.cactoos.io;
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link LSInputOf}.
@@ -38,19 +38,19 @@ public final class LSInputOfTest {
 
     @Test
     public void readsSimpleInput() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read simple input",
             new LSInputOf(
                 new InputOf("hello, world!")
             ).getStringData(),
             Matchers.endsWith("world!")
-        );
+        ).affirm();
     }
 
     @Test
     public void readsBiggerInput() {
         final int size = 400_000;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read bigger input",
             new LSInputOf(
                 new InputOf(
@@ -58,13 +58,13 @@ public final class LSInputOfTest {
                 )
             ).getStringData().length(),
             Matchers.equalTo(size)
-        );
+        ).affirm();
     }
 
     @Test
     public void countsBytesInBiggerInput() {
         final int size = 300_000;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't count bytes in a bigger input",
             new LSInputOf(
                 new InputOf(
@@ -72,7 +72,7 @@ public final class LSInputOfTest {
                 )
             ).getStringData().length(),
             Matchers.equalTo(size)
-        );
+        ).affirm();
     }
 
 }

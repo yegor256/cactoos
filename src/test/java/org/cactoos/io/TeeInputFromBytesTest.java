@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.llorllale.cactoos.matchers.TeeInputHasResult;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -56,10 +56,7 @@ public final class TeeInputFromBytesTest {
                 new BytesOf(message),
                 output.toPath()
             ),
-            new TeeInputHasResult(
-                message,
-                output
-            )
+            new InputHasContent(message)
         );
     }
 
@@ -73,10 +70,7 @@ public final class TeeInputFromBytesTest {
                 new BytesOf(message),
                 output
             ),
-            new TeeInputHasResult(
-                message,
-                output
-            )
+            new InputHasContent(message)
         );
     }
 
@@ -90,10 +84,7 @@ public final class TeeInputFromBytesTest {
                 new BytesOf(message),
                 new OutputTo(output)
             ),
-            new TeeInputHasResult(
-                message,
-                output
-            )
+            new InputHasContent(message)
         );
     }
 }

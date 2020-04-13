@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,108 +25,202 @@ package org.cactoos.list;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.ListIterator;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ListEnvelope}.
  *
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle JavadocTypeCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @todo #898:30min Get rid of the Immutable in StringList nested class
+ *  That's because this test should check the original behavior of ListEnvelope
+ *  Now this test checks behavior of the Immutable decorator
  */
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public final class ListEnvelopeTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void returnsListIteratorWithUnsupportedRemove() {
-        final ListEnvelope<String> list = new ListEnvelope<String>(
-            () -> {
-                final List<String> inner = new LinkedList<>();
-                inner.add("one");
-                return inner;
-            }
-        ) {
-        };
+        final ListEnvelope<String> list = new StringList("one");
         final Iterator<String> iterator = list.listIterator();
         iterator.next();
         iterator.remove();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void returnsListIteratorWithUnsupportedSet() {
-        final ListEnvelope<String> list = new ListEnvelope<String>(
-            () -> {
-                final List<String> inner = new LinkedList<>();
-                inner.add("three");
-                return inner;
-            }
-        ) {
-        };
+    @Test()
+    public void returnsListIteratorWithSupportedSet() {
+        final ListEnvelope<String> list = new MutableStringList("one", "two");
         final ListIterator<String> iterator = list.listIterator(1);
+        iterator.next();
         iterator.set("zero");
+        iterator.previous();
+        MatcherAssert.assertThat(
+            "iterator is not equal to expected",
+            () -> iterator,
+            Matchers.contains(
+                "zero"
+            )
+        );
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void returnsListIteratorWithUnsupportedAdd() {
-        final ListEnvelope<String> list = new ListEnvelope<String>(
-            () -> {
-                final List<String> inner = new LinkedList<>();
-                inner.add("ten");
-                return inner;
-            }
-        ) {
-        };
+        final ListEnvelope<String> list = new StringList("one");
         final ListIterator<String> iterator = list.listIterator();
         iterator.next();
-        iterator.add("twenty");
+        iterator.add("two");
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void subListReturnsListIteratorWithUnsupportedRemove() {
+        final ListEnvelope<String> list = new StringList("one");
+        final Iterator<String> iterator = list.subList(0, 1)
+            .listIterator();
+        iterator.next();
+        iterator.remove();
+    }
+
+    @Test()
+    public void subListReturnsListIteratorWithSupportedSet() {
+        new Assertion<>(
+            "subList.listIterator().set() must throw exception",
+            () -> {
+                final ListIterator<String> iterator = new StringList("one", "two", "three")
+                    .subList(0, 2)
+                    .listIterator(0);
+                iterator.next();
+                iterator.set("zero");
+                return new Object();
+            },
+            new Throws<>(
+                new MatcherOf<>(
+                    (String msg) -> msg.equals(
+                        "List Iterator is read-only and doesn't allow rewriting items"
+                    )
+                ),
+                UnsupportedOperationException.class
+            )
+        ).affirm();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void subListReturnsListIteratorWithUnsupportedAdd() {
+        final ListEnvelope<String> list = new StringList("one");
+        final ListIterator<String> iterator = list.subList(0, 1)
+            .listIterator();
+        iterator.next();
+        iterator.add("two");
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void removeIsNotSupported() {
+        final ListEnvelope<String> list = new StringList("one");
+        list.remove(0);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void setIsNotSupported() {
+        final ListEnvelope<String> list = new StringList("one");
+        list.set(0, "zero");
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void addIsNotSupported() {
+        final ListEnvelope<String> list = new StringList("one");
+        list.add("two");
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void returnsSubListWithUnsupportedRemove() {
+        final ListEnvelope<String> list = new StringList("one");
+        list.subList(0, 1).remove(0);
+    }
+
+    @Test()
+    public void returnsSubListWithSupportedSet() {
+        new Assertion<>(
+            "subList.set() must throw exception",
+            () -> new StringList("one").subList(0, 1).set(0, "zero"),
+            new Throws<>(
+                new MatcherOf<>(
+                    (String msg) -> msg.equals("#set(): the list is read-only")
+                ),
+                UnsupportedOperationException.class
+            )
+        ).affirm();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void returnsSubListWithUnsupportedAdd() {
+        final ListEnvelope<String> list = new StringList("one");
+        list.subList(0, 1).add("two");
     }
 
     @Test
-    public void getsPreviousIndex() {
-        MatcherAssert.assertThat(
-            "List iterator returns incorrect previous index",
-            new org.cactoos.list.ListIterator<>(
+    public void mustReturnPreviousIndex() {
+        new Assertion<>(
+            "List Iterator must return previous index",
+            new ListIteratorOf<>(
                 new ListOf<>(1)
             ).previousIndex(),
             new IsEqual<>(-1)
-        );
+        ).affirm();
     }
 
     @Test
-    public void getsPrevious() {
-        MatcherAssert.assertThat(
-            "List iterator returns incorrect previous item",
-            new org.cactoos.list.ListIterator<>(
+    public void mustReturnPreviousElement() {
+        new Assertion<>(
+            "List Iterator must return previous element",
+            new ListIteratorOf<>(
                 new ListOf<>(3, 7),
                 1
             ).previous(),
             new IsEqual<>(3)
-        );
+        ).affirm();
     }
 
     @Test
-    public void getsNextIndex() {
-        MatcherAssert.assertThat(
-            "List iterator returns incorrect next index",
-            new org.cactoos.list.ListIterator<>(
+    public void mustReturnNextIndex() {
+        new Assertion<>(
+            "List iterator must return next index",
+            new ListIteratorOf<>(
                 new ListOf<>(1)
             ).nextIndex(),
             new IsEqual<>(0)
-        );
+        ).affirm();
     }
 
     @Test
-    public void getsNext() {
-        MatcherAssert.assertThat(
-            "List iterator returns incorrect next item",
-            new org.cactoos.list.ListIterator<>(
+    public void mustReturnNextElement() {
+        new Assertion<>(
+            "List iterator must return next item",
+            new ListIteratorOf<>(
                 new ListOf<>(5, 11, 13),
                 1
             ).next(),
             new IsEqual<>(11)
-        );
+        ).affirm();
+    }
+
+    private static final class StringList extends ListEnvelope<String> {
+        StringList(final String... elements) {
+            super(new Immutable<>(new ListOf<>(elements)));
+        }
+    }
+
+    private static final class MutableStringList extends ListEnvelope<String> {
+        MutableStringList(final String... elements) {
+            super(new LinkedList<>(new ListOf<>(elements)));
+        }
     }
 }

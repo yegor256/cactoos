@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,22 +24,27 @@
 
 package org.cactoos.io;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.zip.GZIPInputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link org.cactoos.io.GzipOutput}.
- * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @since 0.29
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class GzipOutputTest {
@@ -51,40 +56,44 @@ public final class GzipOutputTest {
 
     @Test
     public void writeToGzipOutput() throws Exception {
-        final byte[] bytes = {
-            (byte) GZIPInputStream.GZIP_MAGIC,
-            // @checkstyle MagicNumberCheck (1 line)
-            (byte) (GZIPInputStream.GZIP_MAGIC >> 8), (byte) 0x08,
-            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-            (byte) 0x00, (byte) 0x00, (byte) 0xF3, (byte) 0x48, (byte) 0xCD,
-            (byte) 0xC9, (byte) 0xC9, (byte) 0x57, (byte) 0x04, (byte) 0x00,
-            (byte) 0x56, (byte) 0xCC, (byte) 0x2A, (byte) 0x9D, (byte) 0x06,
-            (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        };
+        final String content = "Hello!";
+        final ByteArrayOutputStream expected = new ByteArrayOutputStream();
+        try (
+            Writer writer = new BufferedWriter(
+                new OutputStreamWriter(
+                    new GZIPOutputStream(expected)
+                )
+            )
+        ) {
+            writer.write(content);
+        }
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (final OutputStream output = new GzipOutput(
+        try (OutputStream output = new GzipOutput(
             new OutputTo(baos)
         ).stream()
         ) {
             new LengthOf(
                 new TeeInput(
-                    "Hello!",
+                    content,
                     new OutputTo(output)
                 )
             ).value();
         }
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't write to a gzip output",
             baos.toByteArray(),
-            Matchers.equalTo(bytes)
-        );
+            new IsEqual<>(expected.toByteArray())
+        ).affirm();
     }
 
     @Test(expected = IOException.class)
     public void writeToClosedGzipOutput() throws Exception {
-        final OutputStream stream = new FileOutputStream(
-            this.folder.newFile("cactoos.txt")
-        );
+        final OutputStream stream =
+            Files.newOutputStream(
+                Paths.get(
+                    this.folder.newFile("cactoos.txt").getPath()
+                )
+            );
         stream.close();
         new LengthOf(
             new TeeInput(

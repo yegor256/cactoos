@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,8 @@ import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -73,7 +73,7 @@ public final class LoggingInputStream extends InputStream {
     /**
      * Logger level.
      */
-    private final UncheckedScalar<Level> level;
+    private final Unchecked<Level> level;
 
     /**
      * Ctor.
@@ -99,8 +99,8 @@ public final class LoggingInputStream extends InputStream {
         this.origin = input;
         this.source = src;
         this.logger = lgr;
-        this.level = new UncheckedScalar<>(
-            new StickyScalar<>(
+        this.level = new Unchecked<>(
+            new Sticky<>(
                 () -> {
                     Level lvl = lgr.getLevel();
                     if (lvl == null) {
@@ -121,8 +121,13 @@ public final class LoggingInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         final byte[] buf = new byte[1];
-        this.read(buf);
-        return Byte.toUnsignedInt(buf[0]);
+        final int size;
+        if (this.read(buf) == -1) {
+            size = -1;
+        } else {
+            size = Byte.toUnsignedInt(buf[0]);
+        }
+        return size;
     }
 
     @Override

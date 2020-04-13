@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
@@ -72,8 +71,8 @@ import org.cactoos.iterable.Mapped;
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
  * it more convenient and get rid of the checked exception you can
- * use the {@link UncheckedScalar} decorator. Or you may use
- * {@link IoCheckedScalar} to wrap it in an IOException.</p>
+ * use the {@link Unchecked} decorator. Or you may use
+ * {@link IoChecked} to wrap it in an IOException.</p>
  *
  * @since 0.8
  */
@@ -108,19 +107,8 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
      * @param proc Proc to use
-     * @param <X> Type of items in the iterable
-     * @since 0.24
-     */
-    public <X> Or(final Proc<X> proc, final Iterator<X> src) {
-        this(proc, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
      * @param src The iterable
-     * @param proc Proc to use
      * @param <X> Type of items in the iterable
      * @since 0.24
      */
@@ -130,19 +118,8 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param src The iterable
      * @param func Func to map
-     * @param <X> Type of items in the iterable
-     * @since 0.24
-     */
-    public <X> Or(final Func<X, Boolean> func, final Iterator<X> src) {
-        this(func, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
      * @param src The iterable
-     * @param func Func to map
      * @param <X> Type of items in the iterable
      */
     public <X> Or(final Func<X, Boolean> func, final Iterable<X> src) {
@@ -176,15 +153,6 @@ public final class Or implements Scalar<Boolean> {
     @SafeVarargs
     public Or(final Scalar<Boolean>... scalar) {
         this(new IterableOf<>(scalar));
-    }
-
-    /**
-     * Ctor.
-     * @param iterator The iterator.
-     * @since 0.24
-     */
-    public Or(final Iterator<Scalar<Boolean>> iterator) {
-        this(new IterableOf<>(iterator));
     }
 
     /**

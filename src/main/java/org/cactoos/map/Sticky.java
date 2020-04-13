@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,10 @@ package org.cactoos.map;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.StickyScalar;
 
 /**
  * Map decorator that goes through the map only once.
@@ -67,10 +65,10 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param map The map to extend
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param map The map to extend
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.12
      * @checkstyle ParameterNumberCheck (5 lines)
@@ -86,9 +84,9 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.11
      */
@@ -99,8 +97,8 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.11
      */
@@ -112,8 +110,8 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @since 0.11
      */
@@ -124,9 +122,9 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     * @param entry Func to create entry
      * @param map The map to extend
      * @param list List of items
-     * @param entry Func to create entry
      * @param <Z> Type of items in the list
      * @since 0.12
      */
@@ -141,15 +139,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      */
     public Sticky(final Iterable<Map.Entry<X, Y>> list) {
         this(new MapOf<>(list));
-    }
-
-    /**
-     * Ctor.
-     * @param list Entries for the entries
-     * @since 0.21
-     */
-    public Sticky(final Iterator<Map.Entry<X, Y>> list) {
-        this(() -> list);
     }
 
     /**
@@ -169,7 +158,7 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      */
     public Sticky(final Map<X, Y> map) {
         super(
-            new StickyScalar<>(
+            new org.cactoos.scalar.Sticky<>(
                 () -> {
                     final Map<X, Y> temp = new HashMap<>(0);
                     temp.putAll(map);

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,9 @@ import java.io.OutputStream;
 
 /**
  * Stream that copies input to output.
+ * <b>WARNING:</b>
+ * This class closes {@link TeeInputStream#output}
+ * after {@link TeeInputStream#close()}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -94,7 +97,7 @@ public final class TeeInputStream extends InputStream {
     @Override
     public void close() throws IOException {
         this.input.close();
-        this.output.flush();
+        this.output.close();
     }
 
     @Override

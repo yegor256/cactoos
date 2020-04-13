@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,30 +23,20 @@
  */
 package org.cactoos.list;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
 
 /**
- * Iterable as {@link List}.
- *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link List} on each
- * method call. It doesn't cache the data anyhow. If you don't
- * need this {@link List} to re-fresh its content on every call,
- * by doing round-trips to the encapsulated iterable, decorate it with
- * {@link Sticky}.</p>
+ * Implementation of {@link List}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <T> List type
- * @see Sticky
  * @since 0.1
  */
 public final class ListOf<T> extends ListEnvelope<T> {
-
     /**
      * Ctor.
      *
@@ -71,13 +61,7 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * @param src An {@link Iterable}
      */
     public ListOf(final Iterable<T> src) {
-        super(() -> {
-            final List<T> temp = new LinkedList<>();
-            for (final T item : src) {
-                temp.add(item);
-            }
-            return Collections.unmodifiableList(temp);
-        });
+        super(new LinkedList<>());
+        src.forEach(super::add);
     }
-
 }

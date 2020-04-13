@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,12 @@ package org.cactoos.io;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import org.cactoos.Input;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link ReaderOf}.
@@ -49,102 +48,102 @@ public final class ReaderOfTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-    @Test(expected = NullPointerException.class)
-    public void readsNull() throws Exception {
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf((Input) null)).asString(),
-            new IsEqual<>("")
-        );
-    }
-
     @Test
     public void readsEmpty() throws Exception {
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf("")).asString(),
-            new IsEqual<>("")
-        );
+        final String empty = "";
+        new Assertion<>(
+            "Must read empty string",
+            new TextOf(new ReaderOf(empty)),
+            new TextIs(empty)
+        ).affirm();
     }
 
     @Test
     public void readsCharVarArg() throws Exception {
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf('a', 'b', 'c')).asString(),
-            new IsEqual<>("abc")
-        );
+        new Assertion<>(
+            "Must read chars var args",
+            new TextOf(new ReaderOf('a', 'b', 'c')),
+            new TextIs("abc")
+        ).affirm();
     }
 
     @Test
     public void readsCharArrayWithCharset() throws Exception {
         final String message =
             "char array on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read chars var args with charset",
             new TextOf(
                 new ReaderOf(
                     message.toCharArray(),
                     StandardCharsets.UTF_8
                 )
-            ).asString(),
-            new IsEqual<>(message)
-        );
+            ),
+            new TextIs(message)
+        ).affirm();
     }
 
     @Test
     public void readsCharArrayWithCharsetByName() throws Exception {
         final String message =
             "char array with charset on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read chars array with charset",
             new TextOf(
                 new ReaderOf(
                     message.toCharArray(),
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(message)
-        );
+            ),
+            new TextIs(message)
+        ).affirm();
     }
 
     @Test
     public void readsByteArray() throws Exception {
         final String message =
             "byte array on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read bytes array",
             new TextOf(
                 new ReaderOf(
                     message.getBytes(StandardCharsets.UTF_8)
                 )
-            ).asString(),
-            new IsEqual<>(message)
-        );
+            ),
+            new TextIs(message)
+        ).affirm();
     }
 
     @Test
     public void readsByteArrayWithCharset() throws Exception {
         final String message =
             "byte array with charset on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read bytes array with charset",
             new TextOf(
                 new ReaderOf(
                     message.getBytes(StandardCharsets.UTF_8),
                     StandardCharsets.UTF_8
                 )
-            ).asString(),
-            new IsEqual<>(message)
-        );
+            ),
+            new TextIs(message)
+        ).affirm();
     }
 
     @Test
     public void readsByteArrayWithCharsetByName() throws Exception {
         final String message =
             "bte array with charset by name on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read bytes array with charset by name",
             new TextOf(
                 new ReaderOf(
                     message.getBytes(StandardCharsets.UTF_8),
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(message)
-        );
+            ),
+            new TextIs(message)
+        ).affirm();
     }
 
     @Test
@@ -156,10 +155,11 @@ public final class ReaderOfTest {
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf(input)).asString(),
-            new IsEqual<>(message)
-        );
+        new Assertion<>(
+            "Must read from path",
+            new TextOf(new ReaderOf(input)),
+            new TextIs(message)
+        ).affirm();
     }
 
     @Test
@@ -171,10 +171,11 @@ public final class ReaderOfTest {
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf(input)).asString(),
-            new IsEqual<>(message)
-        );
+        new Assertion<>(
+            "Must read from file",
+            new TextOf(new ReaderOf(input)),
+            new TextIs(message)
+        ).affirm();
     }
 
     @Test
@@ -186,16 +187,17 @@ public final class ReaderOfTest {
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from url",
             new TextOf(
                 new ReaderOf(
                     input
                         .toURI()
                         .toURL()
                 )
-            ).asString(),
-            new IsEqual<>(message)
-        );
+            ),
+            new TextIs(message)
+        ).affirm();
     }
 
     @Test
@@ -207,209 +209,225 @@ public final class ReaderOfTest {
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf(input.toURI())).asString(),
-            new IsEqual<>(message)
-        );
+        new Assertion<>(
+            "Must read from uri",
+            new TextOf(new ReaderOf(input.toURI())),
+            new TextIs(message)
+        ).affirm();
     }
 
     @Test
     public void readsBytes() throws Exception {
         final String input =
             "Bytes on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf(new BytesOf(input))).asString(),
-            new IsEqual<>(input)
-        );
+        new Assertion<>(
+            "Must read from bytes",
+            new TextOf(new ReaderOf(new BytesOf(input))),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsText() throws Exception {
         final String input =
             "Text on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf(new TextOf(input))).asString(),
-            new IsEqual<>(input)
-        );
+        new Assertion<>(
+            "Must read from text",
+            new TextOf(new ReaderOf(new TextOf(input))),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsTextWithCharset() throws Exception {
         final String input =
             "Text with charset on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from text with charset",
             new TextOf(
                 new ReaderOf(
                     new TextOf(input),
                     StandardCharsets.UTF_8
                 )
-            ).asString(),
-            new IsEqual<>(input)
-        );
+            ),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsTextWithCharsetByName() throws Exception {
         final String input =
             "Text with charset by name on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from text with charset by name",
             new TextOf(
                 new ReaderOf(
                     new TextOf(input),
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(input)
-        );
+            ),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsCharSequence() throws Exception {
         final String input =
             "char sequence on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf(input)).asString(),
-            new IsEqual<>(input)
-        );
+        new Assertion<>(
+            "Must read from char sequence",
+            new TextOf(new ReaderOf(input)),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsCharSequenceWithCharset() throws Exception {
         final String input =
             "char sequence with charset on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from char sequance with charset",
             new TextOf(
                 new ReaderOf(
                     input,
                     StandardCharsets.UTF_8
                 )
-            ).asString(),
-            new IsEqual<>(input)
-        );
+            ),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsCharSequenceWithCharsetByName() throws Exception {
         final String input =
             "char sequence with charset by name on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from char sequence with charset by name",
             new TextOf(
                 new ReaderOf(
                     input,
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(input)
-        );
+            ),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsInput() throws Exception {
         final String input =
             "Input on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf(new InputOf(input))).asString(),
-            new IsEqual<>(input)
-        );
+        new Assertion<>(
+            "Must read from input",
+            new TextOf(new ReaderOf(new InputOf(input))),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsInputWithCharset() throws Exception {
         final String input =
             "Input with charset on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from input with charset",
             new TextOf(
                 new ReaderOf(
                     new InputOf(input),
                     StandardCharsets.UTF_8
                 )
-            ).asString(),
-            new IsEqual<>(input)
-        );
+            ),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsInputWithCharsetByName() throws Exception {
         final String input =
             "Input with charset by name on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from input with charset by name",
             new TextOf(
                 new ReaderOf(
                     new InputOf(input),
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(input)
-        );
+            ),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsInputWithCharsetDecoder() throws Exception {
         final String input =
             "Input with charset decoder on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from input with charset decoder",
             new TextOf(
                 new ReaderOf(
                     new InputOf(input),
                     StandardCharsets.UTF_8.newDecoder()
                 )
-            ).asString(),
-            new IsEqual<>(input)
-        );
+            ),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsInputStream() throws Exception {
         final String input =
             "InputStream on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
-            new TextOf(new ReaderOf(new InputStreamOf(input))).asString(),
-            new IsEqual<>(input)
-        );
+        new Assertion<>(
+            "Must read from stream",
+            new TextOf(new ReaderOf(new InputStreamOf(input))),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsInputStreamWithCharset() throws Exception {
         final String input =
             "InputStream with charset on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from stream with charset",
             new TextOf(
                 new ReaderOf(
                     new InputStreamOf(input),
                     StandardCharsets.UTF_8
                 )
-            ).asString(),
-            new IsEqual<>(input)
-        );
+            ),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsInputStreamWithCharsetByName() throws Exception {
         final String input =
             "InputStream with charset by name on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from stream with charset by name",
             new TextOf(
                 new ReaderOf(
                     new InputStreamOf(input),
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(input)
-        );
+            ),
+            new TextIs(input)
+        ).affirm();
     }
 
     @Test
     public void readsInputStreamWithCharsetDecoder() throws Exception {
         final String input =
             "InputStream with charset decoder on äÄ üÜ öÖ ß жш";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must read from stream with charset decoder",
             new TextOf(
                 new ReaderOf(
                     new InputStreamOf(input),
                     StandardCharsets.UTF_8.newDecoder()
                 )
-            ).asString(),
-            new IsEqual<>(input)
-        );
+            ),
+            new TextIs(input)
+        ).affirm();
     }
 }

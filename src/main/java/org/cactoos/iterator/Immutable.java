@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 
 /**
- * Iterator that doesn't allow removal of elements.
+ * Decorator that doesn't allow removal from the wrapped {@link Iterator}.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -58,4 +58,8 @@ public final class Immutable<T> implements Iterator<T> {
         return this.iterator.next();
     }
 
+    @Override
+    public String toString() {
+        return this.iterator.toString();
+    }
 }

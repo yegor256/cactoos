@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,6 @@ import java.util.Iterator;
  * the encapsulated iterable, use {@link Sticky}.</p>
  *
  * <p>Objects of this class are thread-safe.</p>
- *
  * @param <X> Type of item
  * @since 0.24
  */
@@ -46,6 +45,7 @@ public final class Synced<X> implements Iterable<X> {
      * The iterable.
      */
     private final Iterable<X> origin;
+
     /**
      * Sync lock.
      */
@@ -65,15 +65,15 @@ public final class Synced<X> implements Iterable<X> {
      * @param iterable The iterable synchronize access to.
      */
     public Synced(final Iterable<X> iterable) {
-        this(iterable, new Object());
+        this(new Object(), iterable);
     }
 
     /**
      * Ctor.
-     * @param iterable The iterable synchronize access to.
      * @param lck The lock to synchronize with.
+     * @param iterable The iterable synchronize access to.
      */
-    public Synced(final Iterable<X> iterable, final Object lck) {
+    public Synced(final Object lck, final Iterable<X> iterable) {
         this.origin = iterable;
         this.lock = lck;
     }
@@ -84,5 +84,4 @@ public final class Synced<X> implements Iterable<X> {
             return this.origin.iterator();
         }
     }
-
 }

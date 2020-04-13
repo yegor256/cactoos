@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ package org.cactoos.func;
 
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.Sticky;
 
 /**
  * Func that caches previously calculated values and doesn't
@@ -41,7 +41,7 @@ import org.cactoos.scalar.StickyScalar;
  *
  * @param <X> Type of input
  * @param <Y> Type of output
- * @see StickyScalar
+ * @see Sticky
  * @since 0.1
  */
 public final class StickyFunc<X, Y> implements Func<X, Y> {

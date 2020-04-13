@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Tests for DateOf.
@@ -42,53 +42,71 @@ public class DateOfTest {
 
     @Test
     public final void testParsingIsoFormattedStringToDate() {
-        MatcherAssert.assertThat(
-            "Can't parse a Date with default/ISO format.",
-            new DateOf("2017-12-13T14:15:16.000000017Z").value(),
-            Matchers.is(
+        new Assertion<>(
+            "must parse a Date with default/ISO format.",
+            new DateOf("2017-12-13T14:15:16.000000017Z"),
+            new ScalarHasValue<>(
                 Date.from(
                     LocalDateTime.of(
                         2017, 12, 13, 14, 15, 16, 17
                     ).toInstant(ZoneOffset.UTC)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public final void testParsingCustomFormattedStringToDate() {
-        MatcherAssert.assertThat(
-            "Can't parse a Date with custom format.",
+        new Assertion<>(
+            "must parse a Date with custom format.",
             new DateOf(
                 "2017-12-13 14:15:16.000000017",
                 "yyyy-MM-dd HH:mm:ss.n"
-            ).value(),
-            Matchers.is(
+            ),
+            new ScalarHasValue<>(
                 Date.from(
                     LocalDateTime.of(
                         2017, 12, 13, 14, 15, 16, 17
                     ).toInstant(ZoneOffset.UTC)
                 )
             )
-        );
+        ).affirm();
+    }
+
+    @Test
+    public final void testParsingCustomFormattedStringWithoutTimeToDate() {
+        new Assertion<>(
+            "must parse a Date with custom format.",
+            new DateOf(
+                "2018-01-01",
+                "yyyy-MM-dd"
+            ),
+            new ScalarHasValue<>(
+                Date.from(
+                    LocalDateTime.of(
+                        2018, 01, 01, 0, 0, 0, 0
+                    ).toInstant(ZoneOffset.UTC)
+                )
+            )
+        ).affirm();
     }
 
     @Test
     public final void testParsingCustomFormatterStringToDate() {
-        MatcherAssert.assertThat(
-            "Can't parse a Date with custom format.",
+        new Assertion<>(
+            "must parse a Date with custom format.",
             new DateOf(
                 "2017-12-13 14:15:16.000000017",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
-            ).value(),
-            Matchers.is(
+            ),
+            new ScalarHasValue<>(
                 Date.from(
                     LocalDateTime.of(
                         2017, 12, 13, 14, 15, 16, 17
                     ).toInstant(ZoneOffset.UTC)
                 )
             )
-        );
+        ).affirm();
     }
 
 }

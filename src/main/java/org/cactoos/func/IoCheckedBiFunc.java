@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ package org.cactoos.func;
 
 import java.io.IOException;
 import org.cactoos.BiFunc;
-import org.cactoos.scalar.IoCheckedScalar;
+import org.cactoos.scalar.IoChecked;
 
 /**
  * Func that doesn't throw checked {@link Exception}, but throws
@@ -54,7 +54,7 @@ public final class IoCheckedBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     @Override
     public Z apply(final X first, final Y second) throws IOException {
-        return new IoCheckedScalar<>(
+        return new IoChecked<>(
             () -> this.func.apply(first, second)
         ).value();
     }

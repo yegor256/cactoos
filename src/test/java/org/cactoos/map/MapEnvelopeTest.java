@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +23,14 @@
  */
 package org.cactoos.map;
 
+import java.util.HashMap;
 import java.util.Map;
-import org.cactoos.func.FuncOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link MapEnvelope}.
@@ -44,94 +43,74 @@ import org.llorllale.cactoos.matchers.MatcherOf;
 @SuppressWarnings("PMD.TooManyMethods")
 public final class MapEnvelopeTest {
 
-    /**
-     * A rule for handling an exception.
-     */
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
-
     @Test
     public void putThrowsException() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "#put() is not supported, it's a read-only map"
-        );
-        MatcherAssert.assertThat(
-            "put method did not throw exception",
-            new NoNulls<>(
+        new Assertion<>(
+            "put method must throw exception",
+            () -> new NoNulls<>(
                 new MapOf<Integer, Integer>(
-                    new MapEntry<Integer, Integer>(0, -1)
+                    new MapEntry<>(0, -1)
                 )
-            ),
-            new MatcherOf<>(
-                new FuncOf<>(
-                    (map) -> map.put(2, 2),
-                    true
-                ))
-        );
+            ).put(2, 2),
+            new Throws<>(
+                "#put() is not supported, it's a read-only map",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void removeThrowsException() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "#remove() is not supported, it's a read-only map"
-        );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "remove method did not throw exception",
-            new NoNulls<>(
+            () -> new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
-            ),
-            new MatcherOf<>(
-                new FuncOf<>(
-                    (map) -> map.remove(0),
-                    true
-                ))
-        );
+            ).remove(0),
+            new Throws<>(
+                "#remove() is not supported, it's a read-only map",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void putAllThrowsException() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "#putAll() is not supported, it's a read-only map"
-        );
-        MatcherAssert.assertThat(
-            "putAll method did not throw exception",
-            new NoNulls<>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<>(0, -1)
-                )
-            ),
-            new MatcherOf<>(
-                new FuncOf<>(
-                    (map) -> map.putAll(new MapOf<Integer, Integer>()),
-                    true
-                ))
-        );
+        new Assertion<>(
+            "putAll method must throw exception",
+            () -> {
+                new NoNulls<>(
+                    new MapOf<Integer, Integer>(
+                        new MapEntry<>(0, -1)
+                    )
+                ).putAll(new MapOf<Integer, Integer>());
+                return 0;
+            },
+            new Throws<>(
+                "#putAll() is not supported, it's a read-only map",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void clearThrowsException() {
-        this.exception.expect(UnsupportedOperationException.class);
-        this.exception.expectMessage(
-            "#clear() is not supported, it's a read-only map"
-        );
-        MatcherAssert.assertThat(
-            "clear method did not throw exception",
-            new NoNulls<>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<>(0, -1)
-                )
-            ),
-            new MatcherOf<>(
-                new FuncOf<>(
-                    Map::clear,
-                    true
-                ))
-        );
+        new Assertion<>(
+            "clear method must throw exception",
+            () -> {
+                new NoNulls<>(
+                    new MapOf<Integer, Integer>(
+                        new MapEntry<>(0, -1)
+                    )
+                ).clear();
+                return 0;
+            },
+            new Throws<>(
+                "#clear() is not supported, it's a read-only map",
+                UnsupportedOperationException.class
+            )
+        ).affirm();
     }
 
     @Test
@@ -247,14 +226,14 @@ public final class MapEnvelopeTest {
         );
     }
 
-    @Test(expected = NullPointerException.class)
-    public void equalFailsOnNull() {
+    @Test
+    public void equalsDoesNotFailOnNulls() {
         final MapEntry<String, String> first =
             new MapEntry<>("key3", "value3");
         final MapEntry<String, String> second =
             new MapEntry<>("key4", null);
         MatcherAssert.assertThat(
-            "Map allows null values, but shouldn't",
+            "Map must allow null values",
             new MapOf<String, String>(first, second),
             new IsEqual<>(new MapOf<String, String>(first, second))
         );
@@ -305,12 +284,55 @@ public final class MapEnvelopeTest {
         );
     }
 
-    @Test(expected = NullPointerException.class)
-    public void hashCodeFailsOnNull() {
+    @Test
+    public void hashCodeDoesNotFailOnNulls() {
         final MapEntry<String, String> first =
             new MapEntry<>("key10", "value10");
         final MapEntry<String, String> second =
             new MapEntry<>("key11", null);
         new MapOf<String, String>(first, second).hashCode();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void emptyMapEnvelopeShouldBeEqualToEmptyDerivedMap() {
+        final MapEnvelope<Integer, String> base = new MapOf<>();
+        final DerivedMapEnvelope<Integer, String> derived =
+            new DerivedMapEnvelope<>(new HashMap<>());
+        new Assertion<>(
+            "EmpBase and derived MapEnvelope which are empty should be equal.",
+            base,
+            new IsEqual<>(derived)
+        ).affirm();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void mapEnvelopeShouldCompareDerivedClasses() {
+        final int key = 1;
+        final String value = "one";
+        final MapEntry<Integer, String> entry = new MapEntry<>(key, value);
+        final MapEnvelope<Integer, String> base = new MapOf<>(entry);
+        final Map<Integer, String> hashmap = new HashMap<>();
+        hashmap.put(key, value);
+        final DerivedMapEnvelope<Integer, String> derived =
+            new DerivedMapEnvelope<>(hashmap);
+        new Assertion<>(
+            "Base and derived MapEnvelope of same content should be equal.",
+            base,
+            new IsEqual<>(derived)
+        ).affirm();
+    }
+
+    /**
+     * Class derived from MapEnvelope to use in some tests.
+     * @param <K> - key type
+     * @param <V> - value type
+     * @since 0.4
+     */
+    private static class DerivedMapEnvelope<K, V> extends MapEnvelope<K, V> {
+        DerivedMapEnvelope(final Map<K, V> content) {
+            super(() -> content);
+        }
     }
 }

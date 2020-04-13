@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,9 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterator that never ends.
@@ -41,7 +42,7 @@ public final class Endless<T> implements Iterator<T> {
     /**
      * The element to repeat.
      */
-    private final UncheckedScalar<T> origin;
+    private final Unchecked<T> origin;
 
     /**
      * Ctor.
@@ -56,24 +57,29 @@ public final class Endless<T> implements Iterator<T> {
      * @param scalar Scalar to repeat
      */
     public Endless(final Scalar<T> scalar) {
-        this(new UncheckedScalar<>(scalar));
+        this(new Unchecked<>(scalar));
     }
 
     /**
      * Ctor.
      * @param scalar Scalar to repeat
      */
-    public Endless(final UncheckedScalar<T> scalar) {
+    public Endless(final Unchecked<T> scalar) {
         this.origin = scalar;
     }
 
     @Override
     public boolean hasNext() {
-        return true;
+        return this.origin.value() != null;
     }
 
     @Override
     public T next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have item"
+            );
+        }
         return this.origin.value();
     }
 }

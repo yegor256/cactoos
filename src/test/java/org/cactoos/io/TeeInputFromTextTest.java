@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.llorllale.cactoos.matchers.TeeInputHasResult;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -58,10 +58,7 @@ public final class TeeInputFromTextTest {
                 new TextOf(input),
                 output.toPath()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -76,10 +73,7 @@ public final class TeeInputFromTextTest {
                 output.toPath(),
                 StandardCharsets.UTF_8
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -94,10 +88,7 @@ public final class TeeInputFromTextTest {
                 output.toPath(),
                 StandardCharsets.UTF_8.name()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -111,10 +102,7 @@ public final class TeeInputFromTextTest {
                 new TextOf(input),
                 output
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -129,10 +117,7 @@ public final class TeeInputFromTextTest {
                 output,
                 StandardCharsets.UTF_8
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -147,10 +132,7 @@ public final class TeeInputFromTextTest {
                 output,
                 StandardCharsets.UTF_8.name()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -164,10 +146,7 @@ public final class TeeInputFromTextTest {
                 new TextOf(input),
                 new OutputTo(output)
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -182,10 +161,7 @@ public final class TeeInputFromTextTest {
                 new OutputTo(output),
                 StandardCharsets.UTF_8
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 
@@ -200,10 +176,7 @@ public final class TeeInputFromTextTest {
                 new OutputTo(output),
                 StandardCharsets.UTF_8.name()
             ),
-            new TeeInputHasResult(
-                input,
-                new TextOf(output)
-            )
+            new InputHasContent(input)
         );
     }
 }

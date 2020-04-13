@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,42 +46,4 @@ public interface BiProc<X, Y> {
      * @throws Exception If fails
      */
     void exec(X first, Y second) throws Exception;
-
-    /**
-     * BiProc check for no nulls.
-     * @param <X> Type of input
-     * @param <Y> Type of input
-     */
-    final class NoNulls<X, Y> implements BiProc<X, Y> {
-        /**
-         * The proc.
-         */
-        private final BiProc<X, Y> origin;
-        /**
-         * Ctor.
-         * @param proc The function
-         */
-        public NoNulls(final BiProc<X, Y> proc) {
-            this.origin = proc;
-        }
-        @Override
-        public void exec(final X first, final Y second) throws Exception {
-            if (this.origin == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid function"
-                );
-            }
-            if (first == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid first argument"
-                );
-            }
-            if (second == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid second argument"
-                );
-            }
-            this.origin.exec(first, second);
-        }
-    }
 }

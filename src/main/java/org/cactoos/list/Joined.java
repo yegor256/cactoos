@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@
  */
 package org.cactoos.list;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Joined list.
@@ -42,9 +42,8 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param src Source lists
      */
     @SafeVarargs
-    @SuppressWarnings("PMD.UseVarargs")
     public Joined(final List<X>... src) {
-        this(new ListOf<>(src));
+        this(new IterableOf<>(src));
     }
 
     /**
@@ -53,8 +52,9 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param items List
      * @since 0.32
      */
+    @SuppressWarnings("unchecked")
     public Joined(final X item, final List<X> items) {
-        super(() -> new Joined<X>(new ListOf<X>(item), items));
+        this(new ListOf<>(item), items);
     }
 
     /**
@@ -62,11 +62,10 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param src Source lists
      */
     public Joined(final Iterable<List<X>> src) {
-        super(() -> Collections.unmodifiableList(
+        super(
             new ListOf<>(src).stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toList())
-            )
         );
     }
 

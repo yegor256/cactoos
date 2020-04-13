@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,11 +28,11 @@ import java.net.URL;
 import org.cactoos.func.Repeated;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
  * Test case for {@link Sticky}.
@@ -44,7 +44,7 @@ public final class StickyTest {
 
     @Test
     public void readsFileContent() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read bytes from a file",
             new Sticky(
                 new ResourceOf(
@@ -56,16 +56,16 @@ public final class StickyTest {
                     input -> new BytesOf(
                         new TeeInput(input, new DeadOutput())
                     // @checkstyle MagicNumber (2 lines)
-                    ).asBytes().length == 74536,
+                    ).asBytes().length == 74_536,
                     10
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsRealUrl() throws MalformedURLException {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't fetch text page from the URL",
             new TextOf(
                 new Sticky(
@@ -77,16 +77,14 @@ public final class StickyTest {
                     )
                 )
             ),
-            new TextHasString(
-                Matchers.endsWith("est laborum.\n")
-            )
-        );
+            new EndsWith("est laborum.\n")
+        ).affirm();
     }
 
     @Test
     public void readsFileContentSlowlyAndCountsLength() {
         final long size = 100_000L;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read bytes from a large source slowly and count length",
             new LengthOf(
                 new Sticky(
@@ -94,13 +92,13 @@ public final class StickyTest {
                 )
             ).longValue(),
             Matchers.equalTo(size)
-        );
+        ).affirm();
     }
 
     @Test
     public void readsFileContentSlowly() throws Exception {
         final int size = 130_000;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read bytes from a large source slowly",
             new BytesOf(
                 new Sticky(
@@ -108,7 +106,7 @@ public final class StickyTest {
                 )
             ).asBytes().length,
             Matchers.equalTo(size)
-        );
+        ).affirm();
     }
 
 }

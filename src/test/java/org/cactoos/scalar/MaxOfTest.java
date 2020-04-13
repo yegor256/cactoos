@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link MaxOf}.
@@ -35,118 +34,294 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class MaxOfTest {
 
     @Test
-    public void withIntegerCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
-            ).intValue(),
-            Matchers.equalTo(4)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
-            ).longValue(),
-            Matchers.equalTo(4L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
-            ).doubleValue(),
-            Matchers.equalTo(4.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
-            ).floatValue(),
-            Matchers.equalTo(4.0f)
-        );
+    public void withPositiveIntegerCollection() {
+        new Assertion<>(
+            "must select maximum integer of positive integers",
+            () -> new MaxOf(1, 2, 3, 4).intValue(),
+            new ScalarHasValue<>(4)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of positive integers",
+            () -> new MaxOf(1, 2, 3, 4).longValue(),
+            new ScalarHasValue<>(4L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of positive integers",
+            () -> new MaxOf(1, 2, 3, 4).doubleValue(),
+            new ScalarHasValue<>(4.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of positive integers",
+            () -> new MaxOf(1, 2, 3, 4).floatValue(),
+            new ScalarHasValue<>(4.0f)
+        ).affirm();
     }
 
     @Test
-    public void withLongCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
-            ).intValue(),
-            Matchers.equalTo(4)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
-            ).longValue(),
-            Matchers.equalTo(4L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
-            ).doubleValue(),
-            Matchers.equalTo(4.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
-            ).floatValue(),
-            Matchers.equalTo(4.0f)
-        );
+    public void withPositiveLongCollection() {
+        new Assertion<>(
+            "must select maximum integer of positive longs",
+            () -> new MaxOf(1L, 2L, 3L, 4L).intValue(),
+            new ScalarHasValue<>(4)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of positive longs",
+            () -> new MaxOf(1L, 2L, 3L, 4L).longValue(),
+            new ScalarHasValue<>(4L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of positive longs",
+            () -> new MaxOf(1L, 2L, 3L, 4L).doubleValue(),
+            new ScalarHasValue<>(4.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of positive longs",
+            () -> new MaxOf(1L, 2L, 3L, 4L).floatValue(),
+            new ScalarHasValue<>(4.0f)
+        ).affirm();
     }
 
     @Test
-    public void withDoubleCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).intValue(),
-            Matchers.equalTo(4)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).longValue(),
-            Matchers.equalTo(4L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).doubleValue(),
-            Matchers.equalTo(4.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).floatValue(),
-            Matchers.equalTo(4.0f)
-        );
+    public void withPositiveDoubleCollection() {
+        new Assertion<>(
+            "must select maximum integer of positive doubles",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).intValue(),
+            new ScalarHasValue<>(4)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of positive doubles",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).longValue(),
+            new ScalarHasValue<>(4L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of positive doubles",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).doubleValue(),
+            new ScalarHasValue<>(4.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of positive doubles",
+            () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).floatValue(),
+            new ScalarHasValue<>(4.0f)
+        ).affirm();
     }
 
     @Test
-    public void withFloatCollection() {
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).intValue(),
-            Matchers.equalTo(4)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).longValue(),
-            Matchers.equalTo(4L)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).doubleValue(),
-            Matchers.equalTo(4.0d)
-        );
-        MatcherAssert.assertThat(
-            new MaxOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).floatValue(),
-            Matchers.equalTo(4.0f)
-        );
+    public void withPositiveFloatCollection() {
+        new Assertion<>(
+            "must select maximum integer of positive floats",
+            () -> new MaxOf(1.0f, 2.0f, 3.0f, 4.0f).intValue(),
+            new ScalarHasValue<>(4)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of positive floats",
+            () -> new MaxOf(1.0f, 2.0f, 3.0f, 4.0f).longValue(),
+            new ScalarHasValue<>(4L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of positive floats",
+            () -> new MaxOf(1.0f, 2.0f, 3.0f, 4.0f).doubleValue(),
+            new ScalarHasValue<>(4.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of positive floats",
+            () -> new MaxOf(1.0f, 2.0f, 3.0f, 4.0f).floatValue(),
+            new ScalarHasValue<>(4.0f)
+        ).affirm();
     }
 
+    @Test
+    public void withNegativeIntegerCollection() {
+        new Assertion<>(
+            "must select maximum integer of negative integers",
+            () -> new MaxOf(-1, -2, -3, -4).intValue(),
+            new ScalarHasValue<>(-1)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of negative integers",
+            () -> new MaxOf(-1, -2, -3, -4).longValue(),
+            new ScalarHasValue<>(-1L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of negative integers",
+            () -> new MaxOf(-1, -2, -3, -4).doubleValue(),
+            new ScalarHasValue<>(-1.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of negative integers",
+            () -> new MaxOf(-1, -2, -3, -4).floatValue(),
+            new ScalarHasValue<>(-1.0f)
+        ).affirm();
+    }
+
+    @Test
+    public void withNegativeLongCollection() {
+        new Assertion<>(
+            "must select maximum integer of negative longs",
+            () -> new MaxOf(-1L, -2L, -3L, -4L).intValue(),
+            new ScalarHasValue<>(-1)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of negative longs",
+            () -> new MaxOf(-1L, -2L, -3L, -4L).longValue(),
+            new ScalarHasValue<>(-1L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of negative longs",
+            () -> new MaxOf(-1L, -2L, -3L, -4L).doubleValue(),
+            new ScalarHasValue<>(-1.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of negative longs",
+            () -> new MaxOf(-1L, -2L, -3L, -4L).floatValue(),
+            new ScalarHasValue<>(-1.0f)
+        ).affirm();
+    }
+
+    @Test
+    public void withNegativeDoubleCollection() {
+        new Assertion<>(
+            "must select maximum integer of negative doubles",
+            () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).intValue(),
+            new ScalarHasValue<>(-1)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of negative doubles",
+            () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).longValue(),
+            new ScalarHasValue<>(-1L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of negative doubles",
+            () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).doubleValue(),
+            new ScalarHasValue<>(-1.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of negative doubles",
+            () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).floatValue(),
+            new ScalarHasValue<>(-1.0f)
+        ).affirm();
+    }
+
+    @Test
+    public void withNegativeFloatCollection() {
+        new Assertion<>(
+            "must select maximum integer of negative floats",
+            () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).intValue(),
+            new ScalarHasValue<>(-1)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of negative floats",
+            () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).longValue(),
+            new ScalarHasValue<>(-1L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of negative floats",
+            () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).doubleValue(),
+            new ScalarHasValue<>(-1.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of negative floats",
+            () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).floatValue(),
+            new ScalarHasValue<>(-1.0f)
+        ).affirm();
+    }
+
+    @Test
+    public void withPositiveAndNegativeIntegerCollection() {
+        new Assertion<>(
+            "must select maximum integer of positive and negative integers",
+            () -> new MaxOf(-2, -1, 0, 1, 2).intValue(),
+            new ScalarHasValue<>(2)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of positive and negative integers",
+            () -> new MaxOf(-2, -1, 0, 1, 2).longValue(),
+            new ScalarHasValue<>(2L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of positive and negative integers",
+            () -> new MaxOf(-2, -1, 0, 1, 2).doubleValue(),
+            new ScalarHasValue<>(2.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of positive and negative integers",
+            () -> new MaxOf(-2, -1, 0, 1, 2).floatValue(),
+            new ScalarHasValue<>(2.0f)
+        ).affirm();
+    }
+
+    @Test
+    public void withPositiveAndNegativeLongCollection() {
+        new Assertion<>(
+            "must select maximum integer of positive and negative longs",
+            () -> new MaxOf(-2L, -1L, 0L, 1L, 2L).intValue(),
+            new ScalarHasValue<>(2)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of positive and negative longs",
+            () -> new MaxOf(-2L, -1L, 0L, 1L, 2L).longValue(),
+            new ScalarHasValue<>(2L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of positive and negative longs",
+            () -> new MaxOf(-2L, -1L, 0L, 1L, 2L).doubleValue(),
+            new ScalarHasValue<>(2.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of positive and negative longs",
+            () -> new MaxOf(-2L, -1L, 0L, 1L, 2L).floatValue(),
+            new ScalarHasValue<>(2.0f)
+        ).affirm();
+    }
+
+    @Test
+    public void withPositiveAndNegativeDoubleCollection() {
+        new Assertion<>(
+            "must select maximum integer of positive and negative doubles",
+            () -> new MaxOf(-2.0d, -1.0d, 0.0d, 1.0d, 2.0d).intValue(),
+            new ScalarHasValue<>(2)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of positive and negative doubles",
+            () -> new MaxOf(-2.0d, -1.0d, 0.0d, 1.0d, 2.0d).longValue(),
+            new ScalarHasValue<>(2L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of positive and negative doubles",
+            () -> new MaxOf(-2.0d, -1.0d, 0.0d, 1.0d, 2.0d).doubleValue(),
+            new ScalarHasValue<>(2.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of positive and negative doubles",
+            () -> new MaxOf(-2.0d, -1.0d, 0.0d, 1.0d, 2.0d).floatValue(),
+            new ScalarHasValue<>(2.0f)
+        ).affirm();
+    }
+
+    @Test
+    public void withPositiveAndNegativeFloatCollection() {
+        new Assertion<>(
+            "must select maximum integer of positive and negative floats",
+            () -> new MaxOf(-2.0f, -1.0f, 0.0f, 1.0f, 2.0f).intValue(),
+            new ScalarHasValue<>(2)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum long of positive and negative floats",
+            () -> new MaxOf(-2.0f, -1.0f, 0.0f, 1.0f, 2.0f).longValue(),
+            new ScalarHasValue<>(2L)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum double of positive and negative floats",
+            () -> new MaxOf(-2.0f, -1.0f, 0.0f, 1.0f, 2.0f).doubleValue(),
+            new ScalarHasValue<>(2.0d)
+        ).affirm();
+        new Assertion<>(
+            "must select maximum float of positive and negative floats",
+            () -> new MaxOf(-2.0f, -1.0f, 0.0f, 1.0f, 2.0f).floatValue(),
+            new ScalarHasValue<>(2.0f)
+        ).affirm();
+    }
 }

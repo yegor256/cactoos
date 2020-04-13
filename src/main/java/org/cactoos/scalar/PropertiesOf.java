@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@ public final class PropertiesOf implements Scalar<Properties> {
     /**
      * The underlying properties.
      */
-    private final IoCheckedScalar<Properties> scalar;
+    private final IoChecked<Properties> scalar;
 
     /**
      * Ctor.
@@ -76,7 +76,7 @@ public final class PropertiesOf implements Scalar<Properties> {
         this(
             () -> {
                 final Properties props = new Properties();
-                try (final InputStream stream = input.stream()) {
+                try (InputStream stream = input.stream()) {
                     props.load(stream);
                 }
                 return props;
@@ -134,7 +134,7 @@ public final class PropertiesOf implements Scalar<Properties> {
      * @param sclr The underlying properties
      */
     private PropertiesOf(final Scalar<Properties> sclr) {
-        this.scalar = new IoCheckedScalar<>(sclr);
+        this.scalar = new IoChecked<>(sclr);
     }
 
     @Override

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,12 @@
  */
 package org.cactoos.iterable;
 
+import java.util.NoSuchElementException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link Endless}.
@@ -35,11 +38,20 @@ import org.junit.Test;
 public final class EndlessTest {
 
     @Test
-    public void endlessIterableTest() throws Exception {
+    public void endlessIterableTest() {
         MatcherAssert.assertThat(
             "Can't get unique endless iterable item",
             new Endless<>(1),
             Matchers.hasItem(1)
         );
+    }
+
+    @Test
+    public void elementsIsNullTest() {
+        new Assertion<>(
+            "Must get sliced iterable of elements",
+            () -> new Endless<>(null).iterator().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

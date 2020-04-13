@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ public final class StickyTest {
                 new MapEntry<>(0, -1),
                 new MapEntry<>(1, 1)
             ),
-            new BehavesAsMap<>(0, 1)
+            new BehavesAsMap<>(1, 1)
         );
     }
 

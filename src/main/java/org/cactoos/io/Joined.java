@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,13 +42,23 @@ public final class Joined implements Input {
 
     /**
      * Ctor.
+     * @param ipts Iterable of inputs
+     */
+    public Joined(final Iterable<Input> ipts) {
+        this.inputs = ipts;
+    }
+
+    /**
+     * Ctor.
      * @param first First input
-     * @param rest The rest
+     * @param rest The other inputs
      */
     public Joined(final Input first, final Input... rest) {
-        this.inputs = new org.cactoos.iterable.Joined<>(
-            first,
-            new IterableOf<>(rest)
+        this(
+            new org.cactoos.iterable.Joined<>(
+                first,
+                new IterableOf<>(rest)
+            )
         );
     }
 

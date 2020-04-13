@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,8 @@
 package org.cactoos.io;
 
 import org.cactoos.text.HexOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -38,7 +38,7 @@ public final class Sha1DigestOfTest {
 
     @Test
     public void checksumOfEmptyString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the empty string's SHA-1 checksum",
             new HexOf(
                 new Sha1DigestOf(
@@ -48,12 +48,12 @@ public final class Sha1DigestOfTest {
             new TextHasString(
                 "da39a3ee5e6b4b0d3255bfef95601890afd80709"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void checksumOfString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the string's SHA-1 checksum",
             new HexOf(
                 new Sha1DigestOf(
@@ -63,26 +63,28 @@ public final class Sha1DigestOfTest {
             new TextHasString(
                 "2ef7bde608ce5404e97d5f042f95f89f1c232871"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void checksumFromFile() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the file's SHA-1 checksum",
             new HexOf(
                 new Sha1DigestOf(
-                    new InputOf(
-                        new ResourceOf(
-                            "org/cactoos/digest-calculation.txt"
-                        ).stream()
+                    new Sticky(
+                        new InputOf(
+                            new ResourceOf(
+                                "org/cactoos/digest-calculation.txt"
+                            ).stream()
+                        )
                     )
                 )
             ),
             new TextHasString(
                 "34f80bdab9b93af514004f127e440139aad63e2d"
             )
-        );
+        ).affirm();
     }
 
 }

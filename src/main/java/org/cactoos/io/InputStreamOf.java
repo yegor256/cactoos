@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,8 +36,8 @@ import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * An {@link InputStream} that encapsulates other sources of data.
@@ -51,7 +51,7 @@ public final class InputStreamOf extends InputStream {
     /**
      * The source.
      */
-    private final UncheckedScalar<InputStream> source;
+    private final Unchecked<InputStream> source;
 
     /**
      * Ctor.
@@ -229,7 +229,7 @@ public final class InputStreamOf extends InputStream {
      */
     private InputStreamOf(final Scalar<InputStream> src) {
         super();
-        this.source = new UncheckedScalar<>(new StickyScalar<>(src));
+        this.source = new Unchecked<>(new Sticky<>(src));
     }
 
     @Override

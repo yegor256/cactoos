@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,8 +40,8 @@ public final class EqualsTest {
         MatcherAssert.assertThat(
             "Can't compare if two integers are equals",
             new Equals<>(
-                () -> new Integer(1),
-                () -> new Integer(1)
+                () -> Integer.valueOf(1),
+                () -> Integer.valueOf(1)
             ).value(),
             Matchers.equalTo(true)
         );
@@ -52,8 +52,8 @@ public final class EqualsTest {
         MatcherAssert.assertThat(
             "Can't compare if two integers are not equals",
             new Equals<>(
-                () -> new Integer(1),
-                () -> new Integer(2)
+                () -> Integer.valueOf(1),
+                () -> Integer.valueOf(2)
             ).value(),
             Matchers.equalTo(false)
         );

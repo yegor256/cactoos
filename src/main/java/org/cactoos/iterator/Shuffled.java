@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Shuffled iterator.
@@ -43,15 +43,15 @@ public final class Shuffled<T> implements Iterator<T> {
     /**
      * Shuffled scalar.
      */
-    private final UncheckedScalar<Iterator<T>> scalar;
+    private final Unchecked<Iterator<T>> scalar;
 
     /**
      * Ctor.
      * @param iterator The original iterator
      */
     public Shuffled(final Iterator<T> iterator) {
-        this.scalar = new UncheckedScalar<>(
-            new StickyScalar<>(
+        this.scalar = new Unchecked<>(
+            new Sticky<>(
                 () -> {
                     final List<T> items = new LinkedList<>();
                     while (iterator.hasNext()) {

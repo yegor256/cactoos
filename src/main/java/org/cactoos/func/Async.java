@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,11 +45,6 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.10
- * @todo #861:30min Avoid usage of null value in ctor(Proc, ExecutorService),
- *  ctor(Proc, ThreadFactory) and ctor(Proc) which is against design
- *  principles.
- *  Perhaps with a creation of AsyncProc or removal of this functionality?
- *  Please take a look on #551 and #843 for more details.
  */
 public final class Async<X, Y> implements Func<X, Future<Y>>, Proc<X> {
 
@@ -65,27 +60,10 @@ public final class Async<X, Y> implements Func<X, Future<Y>>, Proc<X> {
 
     /**
      * Ctor.
-     * @param proc The proc
-     */
-    public Async(final Proc<X> proc) {
-        this(new FuncOf<>(proc, null));
-    }
-
-    /**
-     * Ctor.
      * @param fnc The func
      */
     public Async(final Func<X, Y> fnc) {
         this(fnc, Executors.defaultThreadFactory());
-    }
-
-    /**
-     * Ctor.
-     * @param proc The proc
-     * @param fct Factory
-     */
-    public Async(final Proc<X> proc, final ThreadFactory fct) {
-        this(new FuncOf<>(proc, null), fct);
     }
 
     /**
@@ -95,16 +73,6 @@ public final class Async<X, Y> implements Func<X, Future<Y>>, Proc<X> {
      */
     public Async(final Func<X, Y> fnc, final ThreadFactory fct) {
         this(fnc, Executors.newSingleThreadExecutor(fct));
-    }
-
-    /**
-     * Ctor.
-     * @param proc The proc
-     * @param exec Executor Service
-     * @since 0.17
-     */
-    public Async(final Proc<X> proc, final ExecutorService exec) {
-        this(new FuncOf<>(proc, null), exec);
     }
 
     /**

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,13 +32,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
 import org.cactoos.iterable.Endless;
 import org.cactoos.iterable.HeadOf;
-import org.cactoos.text.JoinedText;
+import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
-import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
+import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.StartsWith;
 import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link BytesOf}.
@@ -53,11 +57,11 @@ public final class BytesOfTest {
     public void readsLargeInMemoryContent() throws Exception {
         final int multiplier = 5_000;
         final String body = "1234567890";
-        MatcherAssert.assertThat(
-            "Can't read large content from in-memory Input",
+        new Assertion<>(
+            "must read large content from in-memory Input",
             new BytesOf(
                 new InputOf(
-                    new JoinedText(
+                    new Joined(
                         "",
                         new HeadOf<>(
                             multiplier, new Endless<>(body)
@@ -65,62 +69,62 @@ public final class BytesOfTest {
                     )
                 )
             ).asBytes().length,
-            Matchers.equalTo(body.length() * multiplier)
-        );
+            new IsEqual<>(body.length() * multiplier)
+        ).affirm();
     }
 
     @Test
     public void readsInputIntoBytes() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from Input",
-            new String(
+        new Assertion<>(
+            "must read bytes from Input",
+            new TextOf(
                 new BytesOf(
                     new InputOf("Hello, друг!")
-                ).asBytes(),
-                StandardCharsets.UTF_8
+                )
             ),
             Matchers.allOf(
-                Matchers.startsWith("Hello, "),
-                Matchers.endsWith("друг!")
+                new StartsWith("Hello, "),
+                new EndsWith("друг!")
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsFromReader() throws Exception {
         final String source = "hello, друг!";
-        MatcherAssert.assertThat(
-            "Can't read string through a reader",
+        new Assertion<>(
+            "must read string through a reader",
             new TextOf(
-                new BytesOf(
-                    new StringReader(source),
-                    StandardCharsets.UTF_8,
-                    // @checkstyle MagicNumberCheck (1 line)
-                    16 << 10
+                new Sticky(
+                    new InputOf(
+                        new BytesOf(
+                            new StringReader(source),
+                            StandardCharsets.UTF_8,
+                            // @checkstyle MagicNumberCheck (1 line)
+                            16 << 10
+                        )
+                    )
                 )
-            ).asString(),
-            Matchers.equalTo(source)
-        );
+            ),
+            new TextIs(source)
+        ).affirm();
     }
 
     @Test
     public void readsInputIntoBytesWithSmallBuffer() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from Input with a small reading buffer",
-            new String(
+        new Assertion<>(
+            "must read bytes from Input with a small reading buffer",
+            new TextOf(
                 new BytesOf(
-                    new InputOf(
-                        new TextOf("Hello, товарищ!")
-                    ),
+                    new InputOf("Hello, товарищ!"),
                     2
-                ).asBytes(),
-                StandardCharsets.UTF_8
+                )
             ),
             Matchers.allOf(
-                Matchers.startsWith("Hello,"),
-                Matchers.endsWith("товарищ!")
+                new StartsWith("Hello,"),
+                new EndsWith("товарищ!")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -129,49 +133,47 @@ public final class BytesOfTest {
         final InputStream input = new ByteArrayInputStream(
             "how are you?".getBytes()
         );
-        MatcherAssert.assertThat(
-            "Can't close InputStream correctly",
-            new TextOf(
-                new InputOf(
-                    new InputStream() {
-                        @Override
-                        public int read() throws IOException {
-                            return input.read();
-                        }
-                        @Override
-                        public void close() throws IOException {
-                            input.close();
-                            closed.set(true);
-                        }
+        new TextOf(
+            new InputOf(
+                new InputStream() {
+                    @Override
+                    public int read() throws IOException {
+                        return input.read();
                     }
-                ),
-                StandardCharsets.UTF_8
-            ).asString(),
-            new MatcherOf<>(
-                text -> {
-                    return closed.get();
+
+                    @Override
+                    public void close() throws IOException {
+                        input.close();
+                        closed.set(true);
+                    }
                 }
-            )
-        );
+            ),
+            StandardCharsets.UTF_8
+        ).asString();
+        new Assertion<>(
+            "must close InputStream correctly",
+            closed.get(),
+            new IsTrue()
+        ).affirm();
     }
 
     @Test
     public void asBytes() throws Exception {
         final Text text = new TextOf("Hello!");
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert text into bytes",
             new BytesOf(
                 new InputOf(text)
             ).asBytes(),
-            Matchers.equalTo(
+            new IsEqual<>(
                 new BytesOf(text.asString()).asBytes()
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void printsStackTrace() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't print exception stacktrace",
             new TextOf(
                 new BytesOf(
@@ -181,30 +183,26 @@ public final class BytesOfTest {
                 )
             ),
             new TextHasString(
-                Matchers.allOf(
-                    Matchers.containsString("java.io.IOException"),
-                    Matchers.containsString("doesn't work at all"),
-                    Matchers.containsString(
-                        "\tat org.cactoos.io.BytesOfTest"
-                    )
+                new Joined(
+                    System.lineSeparator(),
+                    "java.io.IOException: It doesn't work at all",
+                    "\tat org.cactoos.io.BytesOfTest"
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void printsStackTraceFromArray() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't print exception stacktrace from array",
             new TextOf(
                 new BytesOf(
                     new IOException("").getStackTrace()
                 )
             ),
-            new TextHasString(
-                Matchers.containsString("org.cactoos.io.BytesOfTest")
-            )
-        );
+            new TextHasString("org.cactoos.io.BytesOfTest")
+        ).affirm();
     }
 
 }

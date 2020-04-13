@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import org.cactoos.BiFunc;
 import org.cactoos.map.MapEntry;
-import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.Sticky;
 
 /**
  * Func that accepts two arguments and caches previously calculated values
@@ -43,7 +43,7 @@ import org.cactoos.scalar.StickyScalar;
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of output
- * @see StickyScalar
+ * @see Sticky
  * @since 0.13
  */
 public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {

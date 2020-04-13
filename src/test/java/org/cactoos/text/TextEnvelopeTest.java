@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -50,6 +50,7 @@ public final class TextEnvelopeTest {
             new IsEqual<>(text)
         );
     }
+
     /**
      * Test for {@link TextEnvelope#equals(Object)} method. Must assert
      * that the envelope value is equal another text representing the same
@@ -68,7 +69,7 @@ public final class TextEnvelopeTest {
     /**
      * Test for {@link TextEnvelope#equals(Object)} method. Must assert
      * that the envelope value is equal another text representing the same
-     * value (in this case a {@link JoinedText}).
+     * value (in this case a {@link Joined}).
      */
     @Test
     public void testEqualsOtherText() {
@@ -76,7 +77,7 @@ public final class TextEnvelopeTest {
             "Envelope does not match another text representing the same value",
             new TextEnvelopeDummy("isequaltoanothertext"),
             new IsEqual<>(
-                new JoinedText("", "is", "equal", "to", "another", "text")
+                new Joined("", "is", "equal", "to", "another", "text")
             )
         );
     }
@@ -129,6 +130,7 @@ public final class TextEnvelopeTest {
 
     /**
      * Dummy class for {@link TextEnvelope} testing.
+     * @since 0.32
      */
     private final class TextEnvelopeDummy extends TextEnvelope {
 
@@ -140,6 +142,7 @@ public final class TextEnvelopeTest {
         TextEnvelopeDummy(final Scalar<String> scalar) {
             super(scalar);
         }
+
         /**
          * Ctor.
          *

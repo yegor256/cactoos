@@ -2,7 +2,7 @@
 <!--
 The MIT License (MIT)
 
- Copyright (c) 2017-2018 Yegor Bugayenko
+ Copyright (c) 2017-2020 Yegor Bugayenko
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,9 @@ The MIT License (MIT)
 <verifications xmlns="http://maven.apache.org/verifications/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/verifications/1.0.0 http://maven.apache.org/xsd/verifications-1.0.0.xsd">
   <files>
     <file>
+      <exists>true</exists>
       <location>LICENSE.txt</location>
-      <contains>2017-2018</contains>
+      <contains>2017-2020</contains>
     </file>
   </files>
 </verifications>

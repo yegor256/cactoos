@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,9 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.Func;
-import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Joined}.
@@ -38,62 +36,41 @@ import org.junit.Test;
 public final class JoinedTest {
 
     @Test
-    public void transformsList() {
-        MatcherAssert.assertThat(
-            "Can't concatenate iterables together",
-            new LengthOf(
-                new Joined<String>(
-                    new IterableOf<>("hello", "world", "друг"),
-                    new IterableOf<>("how", "are", "you"),
-                    new IterableOf<>("what's", "up")
-                )
-            ).intValue(),
-            Matchers.equalTo(8)
-        );
+    public void joinsIterables() {
+        new Assertion<>(
+            "Must concatenate iterables together",
+            new Joined<String>(
+                new IterableOf<>("h", "w"),
+                new IterableOf<>("a", "y")
+            ),
+            new IsEqual<>(new IterableOf<>("h", "w", "a", "y"))
+        ).affirm();
     }
 
     @Test
-    public void joinsIterables() {
-        MatcherAssert.assertThat(
-            "Can't concatenate mapped iterables together",
+    public void joinsMappedIterables() {
+        new Assertion<>(
+            "Must concatenate mapped iterables together",
             new Joined<>(
                 new Mapped<>(
-                    (Func<String, Iterable<String>>) IterableOf::new,
-                    new IterableOf<>("x")
+                    IterableOf::new,
+                    new IterableOf<>("x", "y")
                 )
             ),
-            Matchers.iterableWithSize(1)
-        );
-    }
-
-    @Test
-    public void joinsIterablesWithSize() {
-        // @checkstyle DiamondOperatorCheck (1 line)
-        final Iterable<Integer> list = new Joined<Integer>(
-            new IterableOf<>(1, 2, -1, 0, 1),
-            new IterableOf<>(),
-            new IterableOf<>(1, -1, 0, 0),
-            new IterableOf<>(1)
-        );
-        MatcherAssert.assertThat(
-            "Can't concatenate four iterables together",
-            list, Matchers.iterableWithSize(10)
-        );
-        MatcherAssert.assertThat(
-            "Can't concatenate four iterables together, again",
-            list, Matchers.iterableWithSize(10)
-        );
+            new IsEqual<>(new IterableOf<>("x", "y"))
+        ).affirm();
     }
 
     @Test
     public void joinItemAndIterable() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must join item and iterable",
             new Joined<>(
                 0,
                 new IterableOf<>(1, 2, 3)
             ),
-            Matchers.contains(0, 1, 2, 3)
-        );
+            new IsEqual<>(new IterableOf<>(0, 1, 2, 3))
+        ).affirm();
     }
 
 }

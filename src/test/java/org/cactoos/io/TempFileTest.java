@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ public final class TempFileTest {
 
     @Test
     public void createFile() throws Exception {
-        try (final TempFile file = new TempFile()) {
+        try (TempFile file = new TempFile()) {
             MatcherAssert.assertThat(
                 "Cannot create a temp file",
                 Files.exists(file.value()),
@@ -54,7 +54,7 @@ public final class TempFileTest {
     @Test
     public void createFileInCustomPath() throws Exception {
         final Path custom = Paths.get(System.getProperty("user.home"));
-        try (final TempFile file = new TempFile(() -> custom, "", "")) {
+        try (TempFile file = new TempFile(() -> custom, "", "")) {
             MatcherAssert.assertThat(
                 "Cannot create a temp file at a custom path",
                 file,
@@ -91,7 +91,7 @@ public final class TempFileTest {
             "randomPrefix%s",
             System.currentTimeMillis()
         ).asString();
-        try (final TempFile file = new TempFile(prefix, "")) {
+        try (TempFile file = new TempFile(prefix, "")) {
             MatcherAssert.assertThat(
                 "File not created with the given prefix",
                 file.value().getFileName().toString(),
@@ -105,7 +105,7 @@ public final class TempFileTest {
         final String suffix = new FormattedText(
             "randomSuffix%s", System.currentTimeMillis()
         ).asString();
-        try (final TempFile file = new TempFile("", suffix)) {
+        try (TempFile file = new TempFile("", suffix)) {
             MatcherAssert.assertThat(
                 "File not created with the given suffix",
                 file.value().getFileName().toString(),

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,10 @@
 package org.cactoos.iterable;
 
 /**
- * Reverse iterator.
+ * Reverse iterable.
+ *
+ * <p>This loads the whole wrapped {@link Iterable} in memory
+ * each time {@link #iterator()} is called in order to be able to reverse it.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -33,7 +36,6 @@ package org.cactoos.iterable;
  * @since 0.9
  */
 public final class Reversed<X> extends IterableEnvelope<X> {
-
     /**
      * Ctor.
      * @param src Source iterable
@@ -41,7 +43,7 @@ public final class Reversed<X> extends IterableEnvelope<X> {
      */
     @SafeVarargs
     public Reversed(final X... src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+        this(new IterableOf<>(src));
     }
 
     /**
@@ -50,15 +52,6 @@ public final class Reversed<X> extends IterableEnvelope<X> {
      * @since 0.23
      */
     public Reversed(final Iterable<X> src) {
-        this(new org.cactoos.collection.Reversed<>(src));
+        super(new IterableOf<>(() -> new org.cactoos.iterator.Reversed<>(src.iterator())));
     }
-
-    /**
-     * Ctor.
-     * @param reversed Reversed collection
-     */
-    public Reversed(final org.cactoos.collection.Reversed<X> reversed) {
-        super(() -> reversed);
-    }
-
 }

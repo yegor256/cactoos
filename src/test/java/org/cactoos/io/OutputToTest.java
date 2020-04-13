@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
@@ -55,11 +55,11 @@ public final class OutputToTest {
         final Path path = temp.resolve("one/two/three/file.txt");
         final String content = "Hello, товарищ!";
         new LengthOf(new TeeInput(content, new OutputTo(path))).intValue();
-        MatcherAssert.assertThat(
-            "Can't write into path",
+        new Assertion<>(
+            "Must write into path",
             new InputOf(path),
             new InputHasContent(content)
-        );
+        ).affirm();
     }
 
     @Test
@@ -70,11 +70,11 @@ public final class OutputToTest {
         new LengthOf(
             new TeeInput(txt, new SyncOutput(new OutputTo(path.toFile())))
         ).intValue();
-        MatcherAssert.assertThat(
-            "Can't write into file",
+        new Assertion<>(
+            "Must write into file",
             new InputOf(path.toFile()),
             new InputHasContent(txt)
-        );
+        ).affirm();
     }
 
     @Test
@@ -82,11 +82,11 @@ public final class OutputToTest {
         final String txt = "Hello, writer!";
         final StringWriter output = new StringWriter();
         new LengthOf(new TeeInput(txt, new OutputTo(output))).intValue();
-        MatcherAssert.assertThat(
-            "Can't write into writer",
+        new Assertion<>(
+            "Must write into writer",
             new InputOf(output.getBuffer()),
             new InputHasContent(txt)
-        );
+        ).affirm();
     }
 
     @Test
@@ -96,11 +96,11 @@ public final class OutputToTest {
         new LengthOf(
             new TeeInput(txt, new OutputTo(output, StandardCharsets.UTF_8))
         ).intValue();
-        MatcherAssert.assertThat(
-            "Can't write into writer with charset",
+        new Assertion<>(
+            "Must write into writer with charset",
             new InputOf(output.getBuffer()),
             new InputHasContent(txt)
-        );
+        ).affirm();
     }
 
     @Test
@@ -110,11 +110,11 @@ public final class OutputToTest {
         new LengthOf(
             new TeeInput(txt, new OutputTo(output, StandardCharsets.UTF_8))
         ).intValue();
-        MatcherAssert.assertThat(
-            "Can't write into writer with charset by name",
+        new Assertion<>(
+            "Must write into writer with charset by name",
             new InputOf(output.getBuffer()),
             new InputHasContent(txt)
-        );
+        ).affirm();
     }
 
     @Test
@@ -127,11 +127,11 @@ public final class OutputToTest {
                 new OutputTo(output, StandardCharsets.UTF_8, 1)
             )
         ).intValue();
-        MatcherAssert.assertThat(
-            "Can't write into writer with charset and size",
+        new Assertion<>(
+            "Must write into writer with charset and size",
             new InputOf(output.getBuffer()),
             new InputHasContent(txt)
-        );
+        ).affirm();
     }
 
     @Test
@@ -144,11 +144,11 @@ public final class OutputToTest {
                 new OutputTo(output, 1)
             )
         ).intValue();
-        MatcherAssert.assertThat(
-            "Can't write into writer with size",
+        new Assertion<>(
+            "Must write into writer with size",
             new InputOf(output.getBuffer()),
             new InputHasContent(txt)
-        );
+        ).affirm();
     }
 
     @Test
@@ -161,11 +161,11 @@ public final class OutputToTest {
                 new OutputTo(output, StandardCharsets.UTF_8.name(), 1)
             )
         ).intValue();
-        MatcherAssert.assertThat(
-            "Can't write into writer with charset by name and size",
+        new Assertion<>(
+            "Must write into writer with charset by name and size",
             new InputOf(output.getBuffer()),
             new InputHasContent(txt)
-        );
+        ).affirm();
     }
 
     @Test
@@ -178,10 +178,10 @@ public final class OutputToTest {
                 new OutputTo(output, StandardCharsets.UTF_8.newDecoder(), 1)
             )
         ).intValue();
-        MatcherAssert.assertThat(
-            "Can't write into writer with decoder and size",
+        new Assertion<>(
+            "Must write into writer with decoder and size",
             new InputOf(output.getBuffer()),
             new InputHasContent(txt)
-        );
+        ).affirm();
     }
 }

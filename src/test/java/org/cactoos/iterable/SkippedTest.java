@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,11 @@
  */
 package org.cactoos.iterable;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.list.ListOf;
+import org.hamcrest.collection.IsEmptyIterable;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link Skipped}.
@@ -36,18 +38,104 @@ import org.junit.Test;
 public final class SkippedTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipIterable() {
-        MatcherAssert.assertThat(
-            "Can't skip elements in iterable",
+        final String one = "one";
+        final String two = "two";
+        final String three = "three";
+        final String four = "four";
+        new Assertion<>(
+            "Must skip elements in iterable",
             new Skipped<>(
                 2,
-                "one", "two", "three", "four"
+                new IterableOf<>(one, two, three, four)
             ),
-            Matchers.contains(
-                "three",
-                "four"
+            new IsEqual<>(
+                new IterableOf<>(
+                    three,
+                    four
+                )
             )
-        );
+        ).affirm();
+    }
+
+    @Test
+    public void skipArray() {
+        final String five = "five";
+        final String six = "six";
+        final String seven = "seven";
+        final String eight = "eight";
+        new Assertion<>(
+            "Must skip elements in array",
+            new Skipped<>(
+                2,
+                five, six, seven, eight
+            ),
+            new IsEqual<>(
+                new IterableOf<>(
+                    seven,
+                    eight
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void skipCollection() {
+        final String nine = "nine";
+        final String eleven = "eleven";
+        final String twelve = "twelve";
+        final String hundred = "hundred";
+        new Assertion<>(
+            "Must skip elements in collection",
+            new Skipped<>(
+                2,
+                new ListOf<>(nine, eleven, twelve, hundred)
+            ),
+            new IsEqual<>(
+                new IterableOf<>(twelve, hundred)
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void skippedAllElements() {
+        new Assertion<>(
+            "Must skip all elements",
+            new Skipped<>(
+                2,
+                "Frodo", "Gandalf"
+            ),
+            new IsEmptyIterable<>()
+        ).affirm();
+    }
+
+    @Test
+    public void skippedMoreThanExists() {
+        new Assertion<>(
+            "Can't skip more than exists",
+            new Skipped<>(
+                Integer.MAX_VALUE,
+                "Sauron", "Morgoth"
+            ),
+            new IsEmptyIterable<>()
+        ).affirm();
+    }
+
+    @Test
+    public void skippedNegativeSize() {
+        final String varda = "varda";
+        final String yavanna = "yavanna";
+        final String nessa = "nessa";
+        final String vaire = "vaire";
+        new Assertion<>(
+            "Must process negative skipped size",
+            new Skipped<>(
+                -1,
+                varda, yavanna, nessa, vaire
+            ),
+            new IsEqual<>(
+                new IterableOf<>(varda, yavanna, nessa, vaire)
+            )
+        ).affirm();
     }
 }

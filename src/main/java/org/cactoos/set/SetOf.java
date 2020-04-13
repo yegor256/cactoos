@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,18 +23,12 @@
  */
 package org.cactoos.set;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.And;
 
 /**
- * Iterable as {@link Set}.
- *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link Set} on each
- * method call. It doesn't cache the data anyhow. </p>
+ * Iterable as {@link Set} based on {@link HashSet}.
  *
  * <p>There is no thread-safety guarantee.
  *
@@ -58,12 +52,7 @@ public final class SetOf<T> extends SetEnvelope<T> {
      * @param src An {@link Iterable}
      */
     public SetOf(final Iterable<T> src) {
-        super(() -> {
-            final Set<T> tmp = new HashSet<>();
-            new And(tmp::add, src)
-                .value();
-            return Collections.unmodifiableSet(tmp);
-        });
+        super(new HashSet<>());
+        src.forEach(super::add);
     }
-
 }

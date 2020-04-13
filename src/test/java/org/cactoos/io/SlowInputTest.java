@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,9 @@ package org.cactoos.io;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link SlowInput}.
@@ -41,7 +41,7 @@ public final class SlowInputTest {
     @Test
     public void calculatesLength() {
         final String text = "What's up, друг?";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the length of Input",
             new LengthOf(
                 new SlowInput(
@@ -51,19 +51,19 @@ public final class SlowInputTest {
                 )
             ).intValue(),
             Matchers.equalTo(text.getBytes(StandardCharsets.UTF_8).length)
-        );
+        ).affirm();
     }
 
     @Test
     public void readsFileContentSlowly() {
         final long size = 100_000L;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate length if the input is slow",
             new LengthOf(
                 new SlowInput(size)
             ).longValue(),
             Matchers.equalTo(size)
-        );
+        ).affirm();
     }
 
 }

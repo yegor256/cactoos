@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import org.cactoos.io.BytesOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
@@ -43,11 +43,11 @@ public final class HexOfTest {
 
     @Test
     public void emptyText() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't represent an empty hexadecimal text",
+        new Assertion<>(
+            "Must represent an empty hexadecimal text",
             new HexOf(new TextOf("")).asBytes(),
             new MatcherOf<>(array -> array.length == 0)
-        );
+        ).affirm();
     }
 
     @Test
@@ -56,8 +56,8 @@ public final class HexOfTest {
         for (int index = 0; index < 256; ++index) {
             bytes[index] = (byte) (index + Byte.MIN_VALUE);
         }
-        MatcherAssert.assertThat(
-            "Can't convert hexadecimal text to bytes",
+        new Assertion<>(
+            "Must convert hexadecimal text to bytes",
             new HexOf(
                 new org.cactoos.text.HexOf(
                     new BytesOf(bytes)
@@ -66,7 +66,7 @@ public final class HexOfTest {
             new MatcherOf<>(
                 (byte[] array) -> Arrays.equals(bytes, array)
             )
-        );
+        ).affirm();
     }
 
     @Test(expected = IOException.class)

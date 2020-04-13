@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,102 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.text.JoinedText;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.list.ListOf;
+import org.hamcrest.collection.IsEmptyIterable;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link Reversed}.
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ReversedTest {
 
     @Test
     public void reversesIterable() {
-        MatcherAssert.assertThat(
-            "Can't reverse an iterable",
-            new JoinedText(
-                " ",
-                new Reversed<>(
-                    new IterableOf<>(
-                        "hello", "world", "dude"
-                    )
+        new Assertion<>(
+            "Must reverse an iterable",
+            new Reversed<>(
+                new IterableOf<>(
+                    "h", "w", "d"
                 )
             ),
-            new TextHasString("dude world hello")
-        );
+            new IsEqual<>(new IterableOf<>("d", "w", "h"))
+        ).affirm();
     }
 
+    @Test
+    public void iteratesMultipleTimes() {
+        final Iterable<String> itr = new Reversed<>(
+            new IterableOf<>("h", "w", "d")
+        );
+        final Iterable<String> expected = new IterableOf<>("d", "w", "h");
+        new Assertion<>(
+            "Must iterates once",
+            itr,
+            new IsEqual<>(expected)
+        ).affirm();
+        new Assertion<>(
+            "Must iterates twice",
+            itr,
+            new IsEqual<>(expected)
+        ).affirm();
+    }
+
+    @Test
+    public void reverseList() {
+        final String last = "last";
+        new Assertion<>(
+            "Must reverse list",
+            new Reversed<>(
+                new ListOf<>(
+                    "item", last
+                )
+            ).iterator().next(),
+            new IsEqual<>(last)
+        ).affirm();
+    }
+
+    @Test
+    public void reverseEmptyList() {
+        new Assertion<>(
+            "Must reverse empty list",
+            new Reversed<>(
+                new ListOf<>()
+            ),
+            new IsEmptyIterable<>()
+        ).affirm();
+    }
+
+    @Test
+    public void size() {
+        new Assertion<>(
+            "Size must be the same",
+            new Reversed<>(
+                new IterableOf<>(
+                    "0", "1", "2"
+                )
+            ),
+            new HasSize(3)
+        ).affirm();
+    }
+
+    @Test
+    public void isEmpty() {
+        new Assertion<>(
+            "Must be not empty",
+            new Reversed<>(
+                new IterableOf<>(
+                    6, 16
+                )
+            ),
+            new IsNot<>(new IsEmptyIterable<>())
+        ).affirm();
+    }
 }

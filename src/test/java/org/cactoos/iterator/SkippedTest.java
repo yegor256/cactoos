@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link Skipped}.
@@ -40,28 +41,34 @@ public final class SkippedTest {
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void skipIterator() {
-        MatcherAssert.assertThat(
-            "Can't skip elements in iterator",
-            () -> new Skipped<>(
-                new IterableOf<>(
-                    "one", "two", "three", "four"
-                ).iterator(),
-                2
+        new Assertion<>(
+            "Must skip elements in iterator",
+            new IterableOf<>(
+                new Skipped<>(
+                    2,
+                    new IteratorOf<>(
+                        "one", "two", "three", "four"
+                    )
+                )
             ),
-            Matchers.contains(
+            new HasValues<>(
                 "three",
                 "four"
             )
-        );
+        ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void errorSkippedMoreThanExists() {
-        new Skipped<>(
-            new IterableOf<>(
-                "one", "two"
-            ).iterator(),
-            2
-        ).next();
+        new Assertion<>(
+            "Must throw an exception",
+            () -> new Skipped<>(
+                2,
+                new IteratorOf<>(
+                    "one", "two"
+                )
+            ).next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

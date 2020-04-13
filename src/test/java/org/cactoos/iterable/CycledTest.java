@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -39,9 +40,9 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
 public final class CycledTest {
 
     @Test
-    public void repeatIterableTest() throws Exception {
+    public void repeatIterableTest() {
         final String expected = "two";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't repeat iterable",
             new ItemAt<>(
                 // @checkstyle MagicNumberCheck (1 line)<
@@ -54,7 +55,7 @@ public final class CycledTest {
             new ScalarHasValue<>(
                 expected
             )
-        );
+        ).affirm();
     }
 
     @Test

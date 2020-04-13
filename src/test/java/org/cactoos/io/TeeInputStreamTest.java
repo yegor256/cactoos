@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -68,7 +68,7 @@ public final class TeeInputStreamTest {
     }
 
     @Test
-    public void leftInputUnclosed() {
+    public void leftInputClosed() {
         try (StringWriterMock write = new StringWriterMock()) {
             new LengthOf(
                 new TeeInput(
@@ -79,13 +79,14 @@ public final class TeeInputStreamTest {
             MatcherAssert.assertThat(
                 "Can't use output after usage from TeeInput",
                 write.isClosed(),
-                new IsEqual<>(false)
+                new IsEqual<>(true)
             );
         }
     }
 
     /**
      * Mock object around StringWriter for checking closing state.
+     * @since 0.1
      */
     private static final class StringWriterMock extends StringWriter {
         /**

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,8 @@
 package org.cactoos.io;
 
 import org.cactoos.text.HexOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -38,7 +38,7 @@ public final class Md5DigestOfTest {
 
     @Test
     public void checksumOfEmptyString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the empty string's MD5 checksum",
             new HexOf(
                 new Md5DigestOf(
@@ -48,12 +48,12 @@ public final class Md5DigestOfTest {
             new TextHasString(
                 "d41d8cd98f00b204e9800998ecf8427e"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void checksumOfString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the string's MD5 checksum",
             new HexOf(
                 new Md5DigestOf(
@@ -63,26 +63,28 @@ public final class Md5DigestOfTest {
             new TextHasString(
                 "ed076287532e86365e841e92bfc50d8c"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void checksumFromFile() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the file's MD5 checksum",
             new HexOf(
                 new Md5DigestOf(
-                    new InputOf(
-                        new ResourceOf(
-                            "org/cactoos/digest-calculation.txt"
-                        ).stream()
+                    new Sticky(
+                        new InputOf(
+                            new ResourceOf(
+                                "org/cactoos/digest-calculation.txt"
+                            ).stream()
+                        )
                     )
                 )
             ),
             new TextHasString(
                 "162665ab3d58424724f83f28e7a147d6"
             )
-        );
+        ).affirm();
     }
 
 }

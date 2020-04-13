@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Head portion of the iterator.
@@ -34,47 +33,15 @@ import java.util.NoSuchElementException;
  * @param <T> Element type
  * @since 0.8
  */
-public final class HeadOf<T> implements Iterator<T> {
-
-    /**
-     * Decorated iterator.
-     */
-    private final Iterator<T> origin;
-
-    /**
-     * Number of head elements.
-     */
-    private final int head;
-
-    /**
-     * Current element index.
-     */
-    private int current;
+public final class HeadOf<T> extends IteratorEnvelope<T> {
 
     /**
      * Ctor.
-     * @param iterator Decorated iterator
      * @param num Num of head elements
+     * @param iterator Decorated iterator
      */
     public HeadOf(final int num, final Iterator<T> iterator) {
-        this.origin = iterator;
-        this.head = num;
-        this.current = 0;
+        super(new Sliced<>(0, num, iterator));
     }
 
-    @Override
-    public boolean hasNext() {
-        return this.current < this.head && this.origin.hasNext();
-    }
-
-    @Override
-    public T next() {
-        if (!this.hasNext()) {
-            throw new NoSuchElementException(
-                "The iterator doesn't have items any more"
-            );
-        }
-        ++this.current;
-        return this.origin.next();
-    }
 }

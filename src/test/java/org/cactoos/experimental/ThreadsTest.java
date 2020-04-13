@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,73 +24,144 @@
 
 package org.cactoos.experimental;
 
-import java.util.Collection;
-import java.util.concurrent.Callable;
+import java.io.UncheckedIOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import org.cactoos.list.ListOf;
-import org.cactoos.list.Mapped;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.Proc;
+import org.cactoos.Scalar;
+import org.cactoos.func.Repeated;
+import org.cactoos.func.UncheckedFunc;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Threads}.
  *
  * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class ThreadsTest {
 
     /**
-     * Example of JDK8 way for handling of concurrent tasks.
-     * This code base should be simplified.
-     * @todo #962:30min o.c.experimental Design the implementation of ThreadsOf.
-     *  The initial scope is including:
-     *  1) receive the ExecutorService;
-     *  2) receive the tasks to complete;
-     *  3) execute the tasks concurrently and return the values.
+     * Execute the tasks concurrently using {@link Threads} when
+     *  {@link ExecutorService} was initiated by someone else.
      */
-    @Test(timeout = 10000)
-    public void oldSchoolWay() {
-        final ExecutorService extor = Executors.newFixedThreadPool(5);
-        try {
-            final Collection<Future<String>> futures = extor.invokeAll(
-                new ListOf<Callable<String>>(
-                    () -> {
-                        TimeUnit.SECONDS.sleep(2);
-                        return "1st";
-                    },
-                    () -> {
-                        TimeUnit.SECONDS.sleep(6);
-                        return "3rd";
-                    },
-                    () -> {
-                        TimeUnit.SECONDS.sleep(4);
-                        return "2nd";
+    @Test
+    public void containsResults() {
+        this.repeat(
+            arg -> {
+                final ExecutorService extor = Executors.newFixedThreadPool(3);
+                try {
+                    new Assertion<>(
+                        "contains results from callables",
+                        new Threads<String>(
+                            extor,
+                            () -> {
+                                this.sleep();
+                                return "txt 1";
+                            },
+                            () -> {
+                                this.sleep();
+                                return "txt 2";
+                            },
+                            () -> {
+                                this.sleep();
+                                return "txt 3";
+                            }
+                        ),
+                        new HasValues<>("txt 1", "txt 2", "txt 3")
+                    ).affirm();
+                } finally {
+                    extor.shutdown();
+                    if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
+                        extor.shutdownNow();
                     }
-                )
-            );
-            MatcherAssert.assertThat(
-                new Mapped<>(Future::get, futures),
-                Matchers.hasItems("1st", "3rd", "2nd")
-            );
-        } catch (final InterruptedException exp) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException(exp);
-        } finally {
-            try {
-                extor.shutdown();
-                if (!extor.awaitTermination(2, TimeUnit.SECONDS)) {
-                    extor.shutdownNow();
                 }
-            } catch (final InterruptedException exp) {
-                Thread.currentThread().interrupt();
-                extor.shutdownNow();
             }
+        );
+    }
+
+    /**
+     * Execute 1 task within executor service and ensure that we'll get the
+     *  expected exception type.
+     */
+    @Test
+    public void failsDueToException() {
+        new Assertion<>(
+            "wraps error into CompletionException",
+            () -> new Threads<String>(
+                Executors.newSingleThreadExecutor(),
+                (Scalar<String>) () -> {
+                    throw new IllegalStateException("Something went wrong");
+                }
+            ).iterator().next(),
+            new Throws<>(
+                // @checkstyle LineLengthCheck (1 line)
+                "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
+                UncheckedIOException.class
+            )
+        ).affirm();
+    }
+
+    /**
+     * Execute the tasks concurrently using {@link Threads} when
+     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     */
+    @Test
+    public void containsValuesWithInlineExecutorService() {
+        this.repeat(
+            arg -> new Assertion<>(
+                // @checkstyle LineLength (1 line)
+                "contains results from the callables when using the inline executor service",
+                new Threads<String>(
+                    3,
+                    () -> {
+                        this.sleep();
+                        return "txt 1";
+                    },
+                    () -> {
+                        this.sleep();
+                        return "txt 2";
+                    },
+                    () -> {
+                        this.sleep();
+                        return "txt 3";
+                    }
+                ),
+                new HasValues<>("txt 1", "txt 2", "txt 3")
+            ).affirm()
+        );
+    }
+
+    /**
+     * Repeat the test several times.
+     * @param test The test to execute.
+     */
+    private void repeat(final Proc<?> test) {
+        new UncheckedFunc<>(
+            new Repeated<>(
+                arg -> {
+                    test.exec(null);
+                    return null;
+                },
+                5
+            )
+        ).apply(Boolean.TRUE);
+    }
+
+    /**
+     * Sleep.
+     */
+    private void sleep() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(100L);
+        } catch (final InterruptedException iex) {
+            throw new IllegalStateException(iex);
         }
     }
 }

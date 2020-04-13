@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,8 +49,12 @@ public final class TailOf<T> extends IterableEnvelope<T>  {
      * @param iterable Decorated iterable
      */
     public TailOf(final int num, final Iterable<T> iterable) {
-        super(() -> () -> new org.cactoos.iterator.TailOf<>(
-            num, iterable.iterator()
-        ));
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.TailOf<>(
+                    num, iterable.iterator()
+                )
+            )
+        );
     }
 }

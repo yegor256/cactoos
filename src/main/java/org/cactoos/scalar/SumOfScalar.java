@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,8 @@ package org.cactoos.scalar;
 
 import java.util.stream.Collectors;
 import org.cactoos.Scalar;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 
 /**
  * Make a scalar which is sum of scalar's values.
@@ -61,10 +61,10 @@ final class SumOfScalar implements Scalar<SumOf> {
     public SumOf value() {
         return new SumOf(
             new IterableOf<>(
-                new CollectionOf<>(this.scalars)
+                new ListOf<>(this.scalars)
                     .stream()
                     .map(
-                        scalar -> new UncheckedScalar<>(scalar).value()
+                        scalar -> new Unchecked<>(scalar).value()
                     ).collect(Collectors.toList())
             )
         );

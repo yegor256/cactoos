@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.BiFunc;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -47,16 +47,7 @@ public final class Matched<X> implements Iterable<X> {
     /**
      * The matched iterator.
      */
-    private final UncheckedScalar<Iterator<X>> mtr;
-
-    /**
-     * Ctor.
-     * @param fst The first iterator of duplex iterator.
-     * @param snd The second part of duplex iterator.
-     */
-    public Matched(final Iterator<X> fst, final Iterator<X> snd) {
-        this(Object::equals, new IterableOf<>(fst), new IterableOf<>(snd));
-    }
+    private final Unchecked<Iterator<X>> mtr;
 
     /**
      * Ctor.
@@ -111,7 +102,7 @@ public final class Matched<X> implements Iterable<X> {
      * @param mtr The matched iterator.
      */
     private Matched(final Scalar<Iterator<X>> mtr) {
-        this.mtr = new UncheckedScalar<>(mtr);
+        this.mtr = new Unchecked<>(mtr);
     }
 
     @Override

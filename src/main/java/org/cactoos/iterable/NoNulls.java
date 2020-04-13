@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-import org.cactoos.iterator.IteratorNoNulls;
 
 /**
  * A decorator for {@link Iterable} that doesn't allow any NULL.
@@ -51,7 +50,7 @@ public final class NoNulls<X> implements Iterable<X> {
 
     @Override
     public Iterator<X> iterator() {
-        return new IteratorNoNulls<>(this.origin.iterator());
+        return new org.cactoos.iterator.NoNulls<>(this.origin.iterator());
     }
 
 }

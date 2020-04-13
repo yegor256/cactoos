@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Skipped iterator.
@@ -37,49 +36,26 @@ import java.util.NoSuchElementException;
 public final class Skipped<T> implements Iterator<T> {
 
     /**
-     * Decorated iterator.
+     * Sliced iterator.
      */
-    private final Iterator<T> origin;
-
-    /**
-     * Count skip elements.
-     */
-    private int skip;
+    private final Iterator<T> sliced;
 
     /**
      * Ctor.
-     * @param iterator Decorated iterator
      * @param skp Count skip elements
+     * @param iterator Decorated iterator
      */
-    public Skipped(final Iterator<T> iterator, final int skp) {
-        this.origin = iterator;
-        this.skip = skp;
+    public Skipped(final int skp, final Iterator<T> iterator) {
+        this.sliced = new Sliced<>(skp, iterator);
     }
 
     @Override
     public boolean hasNext() {
-        this.omit();
-        return this.origin.hasNext();
+        return this.sliced.hasNext();
     }
 
     @Override
     public T next() {
-        this.omit();
-        if (!this.hasNext()) {
-            throw new NoSuchElementException(
-                "The iterator doesn't have items any more"
-            );
-        }
-        return this.origin.next();
-    }
-
-    /**
-     * Skip first N items.
-     */
-    private void omit() {
-        while (this.skip > 0 && this.origin.hasNext()) {
-            this.origin.next();
-            --this.skip;
-        }
+        return this.sliced.next();
     }
 }

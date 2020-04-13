@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,15 +28,16 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link LoggingInput}.
  *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings(
     {
@@ -56,11 +57,11 @@ public final class LoggingInputTest {
                 logger
             )
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log zero byte read from dead input",
             logger.toString(),
             Matchers.containsString("Read 0 byte(s) from dead input in")
-        );
+        ).affirm();
     }
 
     @Test
@@ -73,11 +74,11 @@ public final class LoggingInputTest {
                 logger
             )
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log one byte read from memory",
             logger.toString(),
             Matchers.containsString("Read 1 byte(s) from memory in")
-        );
+        ).affirm();
     }
 
     @Test
@@ -90,11 +91,11 @@ public final class LoggingInputTest {
                 logger
             )
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log 22 bytes read from memory",
             logger.toString(),
             Matchers.containsString("Read 22 byte(s) from memory in")
-        );
+        ).affirm();
     }
 
     @Test
@@ -107,7 +108,7 @@ public final class LoggingInputTest {
                 logger
             )
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log 74536 bytes read from text file",
             logger.toString(),
             Matchers.allOf(
@@ -117,7 +118,7 @@ public final class LoggingInputTest {
                 Matchers.containsString("Read 74536 byte(s) from text file in"),
                 Matchers.containsString("Closed input stream from text file")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -130,7 +131,7 @@ public final class LoggingInputTest {
                 logger
             )
         ).intValue();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log all read and close operations from text file",
             logger.toString(),
             Matchers.allOf(
@@ -141,7 +142,7 @@ public final class LoggingInputTest {
                 Matchers.containsString("Read 74536 byte(s) from text file"),
                 Matchers.containsString("Closed input stream from text file")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -153,11 +154,11 @@ public final class LoggingInputTest {
             logger
         // @checkstyle MagicNumber (1 line)
         ).stream().skip(100);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log skip from text file",
             logger.toString(),
             Matchers.containsString("Skipped 100 byte(s) from text file.")
-        );
+        ).affirm();
     }
 
     @Test
@@ -168,13 +169,13 @@ public final class LoggingInputTest {
             "text file",
             logger
         ).stream().available();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log avaliable byte(s) from text file",
             logger.toString(),
             Matchers.containsString(
                 "There is(are) 74536 byte(s) available from text file"
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -188,14 +189,14 @@ public final class LoggingInputTest {
         // @checkstyle MagicNumber (1 line)
         input.mark(150);
         input.reset();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log mark and reset from text file",
             logger.toString(),
             Matchers.allOf(
                 Matchers.containsString("Marked position 150 from text file"),
                 Matchers.containsString("Reset input stream from text file")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -206,13 +207,13 @@ public final class LoggingInputTest {
             "text file",
             logger
         ).stream().markSupported();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't log mark and reset are not supported from text file",
             logger.toString(),
             Matchers.containsString(
                 "Mark and reset are supported from text file"
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -228,11 +229,11 @@ public final class LoggingInputTest {
                     src
                 )
             ).intValue();
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "",
                 handler.toString(),
                 Matchers.containsString("Read 8 byte(s)")
-            );
+            ).affirm();
         } finally {
             logger.removeHandler(handler);
         }

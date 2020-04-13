@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,7 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
 import org.cactoos.Func;
-import org.cactoos.text.TextOf;
 
 /**
  * Mapped iterable.
@@ -53,23 +51,11 @@ public final class Mapped<X, Y> extends IterableEnvelope<Y> {
      * @param fnc Func
      * @param src Source iterable
      */
-    public Mapped(final Func<X, Y> fnc, final Iterator<X> src) {
-        this(fnc, new IterableOf<X>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param fnc Func
-     * @param src Source iterable
-     */
     public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
-        super(() -> () -> new org.cactoos.iterator.Mapped<>(
-            fnc, src.iterator()
-        ));
-    }
-
-    @Override
-    public String toString() {
-        return new TextOf(this).toString();
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.Mapped<>(fnc, src.iterator())
+            )
+        );
     }
 }

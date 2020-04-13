@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ package org.cactoos.io;
 import java.io.OutputStream;
 import org.cactoos.Func;
 import org.cactoos.Output;
-import org.cactoos.scalar.CheckedScalar;
+import org.cactoos.scalar.Checked;
 
 /**
  * Output that throws exception of specified type.
@@ -58,7 +58,7 @@ public final class CheckedOutput<E extends Exception> implements Output {
 
     @Override
     public OutputStream stream() throws E {
-        return new CheckedScalar<>(
+        return new Checked<>(
             this.origin::stream,
             this.func
         ).value();

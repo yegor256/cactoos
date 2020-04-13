@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,18 +23,19 @@
  */
 package org.cactoos.list;
 
-import java.util.Collections;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.UpperText;
+import org.cactoos.text.Upper;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link Mapped}.
  * @since 0.14
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
@@ -57,10 +58,10 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
             new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
+                input -> new Upper(new TextOf(input)),
                 new IterableOf<>("hello", "world", "друг")
             ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
+            new IsEqual<>("HELLO")
         );
     }
 
@@ -69,10 +70,10 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an empty iterable",
             new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
-                Collections.emptyList()
+                input -> new Upper(new TextOf(input)),
+                new IterableOf<>()
             ),
-            Matchers.emptyIterable()
+            new HasSize(0)
         );
     }
 
@@ -84,7 +85,7 @@ public final class MappedTest {
                 x -> x * 2,
                 new ListOf<>(1, 2, 3)
             ).toString(),
-            Matchers.equalTo("2, 4, 6")
+            new IsEqual<>("[2, 4, 6]")
         );
     }
 }

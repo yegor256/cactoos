@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ public final class ZipTest {
         final Path dir = this.folder.newFolder().toPath();
         dir.resolve("x/y").toFile().mkdirs();
         Files.write(dir.resolve("x/y/test"), "".getBytes());
-        try (final ZipInputStream input = new ZipInputStream(
+        try (ZipInputStream input = new ZipInputStream(
             new Zip(
                 new Directory(dir)
             ).stream()

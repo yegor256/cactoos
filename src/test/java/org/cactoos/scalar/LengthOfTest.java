@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -147,7 +147,7 @@ public final class LengthOfTest {
         MatcherAssert.assertThat(
             "Can't calculate length of iterator for integer",
             new LengthOf(
-                new ListOf<>(1, 2, 3, 4).iterator()
+                new ListOf<>(1, 2, 3, 4)
             ).intValue(),
             Matchers.equalTo(4)
         );
@@ -158,7 +158,7 @@ public final class LengthOfTest {
         MatcherAssert.assertThat(
             "Can't calculate length of iterator for double",
             new LengthOf(
-                new ListOf<>(1, 2, 3, 4).iterator()
+                new ListOf<>(1, 2, 3, 4)
             ).doubleValue(),
             Matchers.equalTo(4.0)
         );
@@ -169,7 +169,7 @@ public final class LengthOfTest {
         MatcherAssert.assertThat(
             "Can't calculate length of iterator for float",
             new LengthOf(
-                new ListOf<>(1, 2, 3, 4).iterator()
+                new ListOf<>(1, 2, 3, 4)
             ).floatValue(),
             Matchers.equalTo(4.0f)
         );
@@ -180,7 +180,7 @@ public final class LengthOfTest {
         MatcherAssert.assertThat(
             "Can't calculate length of empty iterator",
             new LengthOf(
-                new ListOf<>().iterator()
+                new ListOf<>()
             ).intValue(),
             Matchers.equalTo(0)
         );

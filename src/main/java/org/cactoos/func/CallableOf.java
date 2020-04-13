@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ package org.cactoos.func;
 import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
+import org.cactoos.Scalar;
 
 /**
  * Func as {@link Callable}.
@@ -47,14 +48,9 @@ import org.cactoos.Proc;
 public final class CallableOf<X, T> implements Callable<T> {
 
     /**
-     * Original func.
+     * Original callable.
      */
-    private final Func<X, T> func;
-
-    /**
-     * The input.
-     */
-    private final X input;
+    private final Scalar<T> scalar;
 
     /**
      * Ctor.
@@ -63,39 +59,44 @@ public final class CallableOf<X, T> implements Callable<T> {
      * @since 0.32
      */
     public CallableOf(final Runnable runnable, final T result) {
-        this(new FuncOf<>(runnable, result));
+        this(() -> {
+            runnable.run();
+            return result;
+        });
     }
 
     /**
      * Ctor.
      * @param proc Encapsulated proc
+     * @param ipt Input
      * @param result Result to return
-     * @since 0.32
+     * @since 0.41
      */
-    public CallableOf(final Proc<X> proc, final T result) {
-        this(new FuncOf<>(proc, result));
-    }
-
-    /**
-     * Ctor.
-     * @param fnc Encapsulated func
-     */
-    public CallableOf(final Func<X, T> fnc) {
-        this(fnc, null);
+    public CallableOf(final Proc<X> proc, final X ipt, final T result) {
+        this(new FuncOf<>(proc, result), ipt);
     }
 
     /**
      * Ctor.
      * @param fnc Encapsulated func
      * @param ipt Input
+     * @since 0.41
      */
     public CallableOf(final Func<X, T> fnc, final X ipt) {
-        this.func = fnc;
-        this.input = ipt;
+        this(() -> fnc.apply(ipt));
+    }
+
+    /**
+     * Ctor.
+     * @param slr Encapsulated scalar
+     * @since 0.41
+     */
+    public CallableOf(final Scalar<T> slr) {
+        this.scalar = slr;
     }
 
     @Override
     public T call() throws Exception {
-        return this.func.apply(this.input);
+        return this.scalar.value();
     }
 }

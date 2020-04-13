@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,18 +23,17 @@
  */
 package org.cactoos.io;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link WriterAsOutput}.
@@ -54,25 +53,20 @@ public final class WriterAsOutputTest {
     public void writesLargeContentToFile() throws IOException {
         final Path temp = this.folder.newFile("cactoos-1.txt-1")
             .toPath();
-        try (final OutputStreamWriter writer = new OutputStreamWriter(
-            new FileOutputStream(temp.toFile()), StandardCharsets.UTF_8
+        try (OutputStreamWriter writer = new OutputStreamWriter(
+            Files.newOutputStream(temp.toAbsolutePath()),
+            StandardCharsets.UTF_8
         )) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "Can't copy Input to Output and return Input",
-                new TextOf(
-                    new TeeInput(
-                        new ResourceOf("org/cactoos/large-text.txt"),
-                        new WriterAsOutput(writer)
-                    )
+                new TeeInput(
+                    new ResourceOf("org/cactoos/large-text.txt"),
+                    new WriterAsOutput(writer)
                 ),
-                new TextHasString(
-                    new MatcherOf<>(
-                        str -> {
-                            return new TextOf(temp).asString().equals(str);
-                        }
-                    )
+                new InputHasContent(
+                    new TextOf(temp)
                 )
-            );
+            ).affirm();
         }
     }
 

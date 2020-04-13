@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@
  */
 package org.cactoos.func;
 
+import java.time.Duration;
 import org.cactoos.Func;
-import org.cactoos.Proc;
 
 /**
  * Func that will try a few times before throwing an exception.
@@ -34,11 +34,6 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.8
- * @todo #861:30min Avoid usage of null value in ctor(Proc),
- *  ctor(Proc, int), ctor(Proc, Func(Integer, Boolean)) which is against
- *  design principles.
- *  Perhaps in creating RetryProc?
- *  Please take a look on #551 and #843 for more details.
  */
 public final class Retry<X, Y> implements Func<X, Y> {
 
@@ -53,33 +48,9 @@ public final class Retry<X, Y> implements Func<X, Y> {
     private final Func<Integer, Boolean> exit;
 
     /**
-     * Ctor.
-     * @param proc Func original
-     * @since 0.12
+     * Wait between executions.
      */
-    public Retry(final Proc<X> proc) {
-        this(new FuncOf<>(proc, null));
-    }
-
-    /**
-     * Ctor.
-     * @param proc Func original
-     * @param attempts Maximum number of attempts
-     * @since 0.12
-     */
-    public Retry(final Proc<X> proc, final int attempts) {
-        this(new FuncOf<>(proc, null), attempts);
-    }
-
-    /**
-     * Ctor.
-     * @param proc Func original
-     * @param ext Exit condition, returns TRUE if there is no more reason to try
-     * @since 0.12
-     */
-    public Retry(final Proc<X> proc, final Func<Integer, Boolean> ext) {
-        this(new FuncOf<>(proc, null), ext);
-    }
+    private final Duration wait;
 
     /**
      * Ctor.
@@ -96,17 +67,43 @@ public final class Retry<X, Y> implements Func<X, Y> {
      * @param attempts Maximum number of attempts
      */
     public Retry(final Func<X, Y> fnc, final int attempts) {
-        this(fnc, attempt -> attempt >= attempts);
+        this(fnc, attempts, Duration.ZERO);
     }
 
     /**
      * Ctor.
+     *
+     * @param fnc Func original
+     * @param attempts Maximum number of attempts
+     * @param wait The executions of the function
+     */
+    public Retry(final Func<X, Y> fnc, final int attempts,
+        final Duration wait) {
+        this(fnc, attempt -> attempt >= attempts, wait);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param fnc Func original
      * @param ext Exit condition, returns TRUE if there is no more reason to try
      */
     public Retry(final Func<X, Y> fnc, final Func<Integer, Boolean> ext) {
+        this(fnc, ext, Duration.ZERO);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param fnc Func original
+     * @param ext Exit condition, returns TRUE if there is no more reason to try
+     * @param wait The executions of the function
+     */
+    public Retry(final Func<X, Y> fnc, final Func<Integer, Boolean> ext,
+        final Duration wait) {
         this.func = fnc;
         this.exit = ext;
+        this.wait = wait;
     }
 
     @Override
@@ -126,6 +123,14 @@ public final class Retry<X, Y> implements Func<X, Y> {
                 // @checkstyle IllegalCatchCheck (1 line)
             } catch (final Exception ex) {
                 error = ex;
+            }
+            if (!this.wait.isZero() && !this.wait.isNegative()) {
+                try {
+                    Thread.sleep(this.wait.toMillis());
+                } catch (final InterruptedException ex) {
+                    error = ex;
+                    break;
+                }
             }
             ++attempt;
         }

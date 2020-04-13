@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,14 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.iterable.Endless;
 import org.cactoos.iterable.HeadOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
+import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link InputAsBytes}.
@@ -39,14 +43,15 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("unchecked")
 public final class InputAsBytesTest {
 
     @Test
     public void readsLargeInMemoryContent() throws Exception {
         final int multiplier = 5_000;
         final String body = "1234567890";
-        MatcherAssert.assertThat(
-            "Can't read large content from in-memory Input",
+        new Assertion<>(
+            "must read large content from in-memory Input",
             new InputAsBytes(
                 new InputOf(
                     String.join(
@@ -57,51 +62,53 @@ public final class InputAsBytesTest {
                     )
                 )
             ).asBytes().length,
-            Matchers.equalTo(body.length() * multiplier)
-        );
+            new IsEqual<>(body.length() * multiplier)
+        ).affirm();
     }
 
     @Test
     // @checkstyle AnonInnerLengthCheck (100 lines)
     public void readsLargeContent() throws Exception {
         final int size = 100_000;
-        try (final InputStream slow = new SlowInputStream(size)) {
-            MatcherAssert.assertThat(
-                "Can't read large content from Input",
+        try (InputStream slow = new SlowInputStream(size)) {
+            new Assertion<>(
+                "must read large content from Input",
                 new InputAsBytes(
                     new InputOf(slow)
                 ).asBytes().length,
-                Matchers.equalTo(size)
-            );
+                new IsEqual<>(size)
+            ).affirm();
         }
     }
 
     @Test
     public void readsInputIntoBytes() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from Input",
-            new String(
+        new Assertion<>(
+            "must read bytes from Input",
+            new TextOf(
                 new InputAsBytes(
                     new InputOf(
                         new BytesOf(
                             new TextOf("Hello, друг!")
                         )
                     )
-                ).asBytes(),
+                ),
                 StandardCharsets.UTF_8
             ),
-            Matchers.allOf(
-                Matchers.startsWith("Hello, "),
-                Matchers.endsWith("друг!")
+            new AllOf<>(
+                new IterableOf<>(
+                    new StartsWith("Hello, "),
+                    new EndsWith("друг!")
+                )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsInputIntoBytesWithSmallBuffer() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't read bytes from Input with a small reading buffer",
-            new String(
+        new Assertion<>(
+            "must read bytes from Input with a small reading buffer",
+            new TextOf(
                 new InputAsBytes(
                     new InputOf(
                         new BytesOf(
@@ -109,14 +116,16 @@ public final class InputAsBytesTest {
                         )
                     ),
                     2
-                ).asBytes(),
+                ),
                 StandardCharsets.UTF_8
             ),
-            Matchers.allOf(
-                Matchers.startsWith("Hello,"),
-                Matchers.endsWith("товарищ!")
+            new AllOf<>(
+                new IterableOf<>(
+                    new StartsWith("Hello,"),
+                    new EndsWith("товарищ!")
+                )
             )
-        );
+        ).affirm();
     }
 
 }

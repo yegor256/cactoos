@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,9 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import org.cactoos.collection.CollectionOf;
+import org.cactoos.iterable.HeadOf;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Reversed;
 
 /**
  * Tail portion of the iterator.
@@ -34,38 +35,22 @@ import org.cactoos.collection.CollectionOf;
  * @param <T> Element type
  * @since 0.31
  */
-public final class TailOf<T> implements Iterator<T> {
-
-    /**
-     * Decorated iterator.
-     */
-    private final Iterator<T> origin;
-
+public final class TailOf<T> extends IteratorEnvelope<T> {
     /**
      * Ctor.
-     * @param iterator Decorated iterator
      * @param num Number of tail elements
+     * @param iterator Decorated iterator
      */
     public TailOf(final int num, final Iterator<T> iterator) {
-        this.origin = new LinkedList<>(
-            new CollectionOf<>(
+        super(
+            new Reversed<>(
                 new HeadOf<>(
                     num,
-                    new LinkedList<>(
-                        new CollectionOf<>(iterator)
-                    ).descendingIterator()
+                    new Reversed<>(
+                        new IterableOf<>(iterator)
+                    )
                 )
-            )
-        ).descendingIterator();
-    }
-
-    @Override
-    public boolean hasNext() {
-        return this.origin.hasNext();
-    }
-
-    @Override
-    public T next() {
-        return this.origin.next();
+            ).iterator()
+        );
     }
 }

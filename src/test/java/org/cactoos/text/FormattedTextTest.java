@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,7 @@ public final class FormattedTextTest {
             "Can't format a text with objects",
             new FormattedText(
                 new TextOf("%d. Number as %s"),
-                new Integer(1),
+                1,
                 new String("string")
             ),
             new TextHasString("1. Number as string")
@@ -99,7 +99,7 @@ public final class FormattedTextTest {
             "Can't format a text with Locale",
             new FormattedText(
                 // @checkstyle MagicNumber (1 line)
-                "%,d", Locale.GERMAN, 1234567890
+                "%,d", Locale.GERMAN, 1_234_567_890
             ),
             new TextHasString("1.234.567.890")
         );

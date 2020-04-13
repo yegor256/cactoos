@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -79,7 +79,7 @@ public final class MapEntryTest {
             "the hash code are not equals",
             new MapEntry<>("elegant", "objects").hashCode(),
             // @checkstyle MagicNumber (1 line)
-            new IsEqual<>(32739498)
+            new IsEqual<>(32_739_498)
         );
     }
 

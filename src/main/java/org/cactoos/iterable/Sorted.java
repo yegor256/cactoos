@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -60,8 +60,8 @@ public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param src The underlying iterable
      * @param cmp The comparator
+     * @param src The underlying iterable
      */
     @SafeVarargs
     public Sorted(final Comparator<T> cmp, final T... src) {
@@ -70,12 +70,14 @@ public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param src The underlying iterable
      * @param cmp The comparator
+     * @param src The underlying iterable
      */
     public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
-        super(() -> () -> new org.cactoos.iterator.Sorted<>(
-            cmp, src.iterator()
-        ));
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.Sorted<>(cmp, src.iterator())
+            )
+        );
     }
 }

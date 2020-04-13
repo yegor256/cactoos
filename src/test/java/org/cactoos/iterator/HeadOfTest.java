@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,15 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
+import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link HeadOf}.
@@ -41,53 +44,103 @@ public final class HeadOfTest {
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void headIterator() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't skip elements in iterator",
-            () -> new HeadOf<>(
-                2,
-                new IterableOf<>(
-                    "one", "two", "three", "four"
-                ).iterator()
+        new Assertion<>(
+            "Must skip elements in iterator",
+            new IterableOf<>(
+                new HeadOf<>(
+                    2,
+                    new IteratorOf<>(
+                        "one", "two", "three", "four"
+                    )
+                )
             ),
-            Matchers.contains(
+            new HasValues<>(
                 "one",
                 "two"
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void returnsIntactIterator() throws Exception {
-        MatcherAssert.assertThat(
-            new LengthOf(
+        new Assertion<>(
+            "Must return an intact iterator",
+            new IterableOf<>(
                 new HeadOf<>(
                     3,
-                    new IterableOf<>(
+                    new IteratorOf<>(
                         "one", "two"
-                    ).iterator()
+                    )
                 )
-            ).intValue(),
-            Matchers.equalTo(2)
-        );
+            ),
+            new HasSize(2)
+        ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void returnsEmptyIterator() throws Exception {
-        new HeadOf<>(
-            0,
-            new IterableOf<>(
-                "one", "two"
-            ).iterator()
-        ).next();
+        new Assertion<>(
+            "Must throw an exception if empty",
+            () -> new HeadOf<>(
+                0,
+                new IteratorOf<>(
+                    "one", "two"
+                )
+            ).next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void emptyIteratorForNegativeSize() throws Exception {
-        new HeadOf<>(
-            -1,
-            new IterableOf<>(
-                "one", "two"
-            ).iterator()
-        ).next();
+        new Assertion<>(
+            "Must throw an exception for negative size",
+            () -> new HeadOf<>(
+                -1,
+                new IteratorOf<>(
+                    "one", "two"
+                )
+            ).next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
+
+    @Test
+    public void iteratesForEachRemaining() throws Exception {
+        final List<String> lst = new ArrayList<>(2);
+        new HeadOf<>(
+            2,
+            new IteratorOf<>(
+                "one", "two", "three", "four"
+            )
+        ).forEachRemaining(
+            lst::add
+        );
+        new Assertion<>(
+            "Should iterate over 2 head elements",
+            lst,
+            new HasValues<>(
+                "one",
+                "two"
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void removeNotSupported() throws Exception {
+        new Assertion<>(
+            "Remove should not be supported",
+            () -> {
+                new HeadOf<>(
+                    1,
+                    new IteratorOf<>(
+                        "one", "two", "three", "four"
+                    )
+                ).remove();
+                return "Should have thrown exception";
+            },
+            new Throws<>(UnsupportedOperationException.class)
+        ).affirm();
+    }
+
 }

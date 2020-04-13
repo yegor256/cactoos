@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Parser for {@link OffsetDateTime} instances.
@@ -38,7 +38,7 @@ public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
     /**
      * The parsed date.
      */
-    private final UncheckedScalar<OffsetDateTime> parsed;
+    private final Unchecked<OffsetDateTime> parsed;
 
     /**
      * Parses ISO date to create {@link OffsetDateTime} instances.
@@ -70,7 +70,7 @@ public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
      */
     public OffsetDateTimeOf(final CharSequence date,
         final DateTimeFormatter formatter) {
-        this.parsed = new UncheckedScalar<>(
+        this.parsed = new Unchecked<>(
             () -> ZonedDateTime.from(formatter.parse(date)).toOffsetDateTime()
         );
     }

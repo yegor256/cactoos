@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,28 @@
  */
 package org.cactoos;
 
-import org.cactoos.scalar.IoCheckedScalar;
-import org.cactoos.scalar.StickyScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.IoChecked;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Scalar.
  *
  * <p>If you don't want to have any checked exceptions being thrown
  * out of your {@link Scalar}, you can use
- * {@link UncheckedScalar} decorator. Also
- * you may try {@link IoCheckedScalar}.</p>
+ * {@link Unchecked} decorator. Also
+ * you may try {@link IoChecked}.</p>
  *
  * <p>If you want to cache the result of the {@link Scalar} and
  * make sure it doesn't calculate anything twice, you can use
- * {@link StickyScalar} decorator.</p>
+ * {@link Sticky} decorator.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <T> Type of result
- * @see StickyScalar
- * @see UncheckedScalar
- * @see IoCheckedScalar
+ * @see Sticky
+ * @see Unchecked
+ * @see IoChecked
  * @since 0.1
  */
 public interface Scalar<T> {
@@ -55,40 +55,5 @@ public interface Scalar<T> {
      * @throws Exception If fails
      */
     T value() throws Exception;
-
-    /**
-     * Scalar check for no nulls.
-     *
-     * @param <T> Type of result
-     * @since 0.11
-     */
-    final class NoNulls<T> implements Scalar<T> {
-        /**
-         * The scalar.
-         */
-        private final Scalar<T> origin;
-        /**
-         * Ctor.
-         * @param sclr The scalar
-         */
-        public NoNulls(final Scalar<T> sclr) {
-            this.origin = sclr;
-        }
-        @Override
-        public T value() throws Exception {
-            if (this.origin == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid scalar"
-                );
-            }
-            final T value = this.origin.value();
-            if (value == null) {
-                throw new IllegalStateException(
-                    "NULL instead of a valid value"
-                );
-            }
-            return value;
-        }
-    }
 
 }

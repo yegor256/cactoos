@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,11 @@
  */
 package org.cactoos.io;
 
-import java.io.EOFException;
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link CheckedOutput}.
@@ -37,24 +37,32 @@ import org.junit.Test;
  */
 public final class CheckedOutputTest {
 
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionIsNotWrapped() throws Exception {
-        new CheckedOutput<>(
-            () -> {
-                throw new IllegalStateException("runtime1");
-            },
-            IOException::new
-        ).stream();
+    @Test
+    public void runtimeExceptionIsNotWrapped() {
+        new Assertion<>(
+            "must not wrap runtime exception",
+            new CheckedOutput<>(
+                () -> {
+                    throw new IllegalStateException("runtime1");
+                },
+                IOException::new
+            )::stream,
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
-    @Test(expected = IOException.class)
-    public void checkedExceptionIsWrapped() throws Exception {
-        new CheckedOutput<>(
-            () -> {
-                throw new EOFException("runtime2");
-            },
-            IOException::new
-        ).stream();
+    @Test
+    public void checkedExceptionIsWrapped() {
+        new Assertion<>(
+            "must wrap checked exception",
+            new CheckedOutput<>(
+                () -> {
+                    throw new IOException("runtime2");
+                },
+                IOException::new
+            )::stream,
+            new Throws<>(IOException.class)
+        ).affirm();
     }
 
     @Test
@@ -67,11 +75,11 @@ public final class CheckedOutputTest {
                 IOException::new
             ).stream();
         } catch (final IOException exp) {
-            MatcherAssert.assertThat(
-                "Extra wrapping of IOException has been added",
+            new Assertion<>(
+                "must not add extra wrapping of IOException",
                 exp.getCause(),
                 new IsNull<>()
-            );
+            ).affirm();
         }
     }
 }

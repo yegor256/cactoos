@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ package org.cactoos.func;
 import java.io.EOFException;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link CheckedBiProc}.
@@ -69,11 +69,11 @@ public final class CheckedBiProcTest {
                 IOException::new
             ).exec(true, true);
         } catch (final IOException exp) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
                 "Extra wrapping of IOException has been added",
                 exp.getCause(),
                 new IsNull<>()
-            );
+            ).affirm();
         }
     }
 
@@ -84,9 +84,10 @@ public final class CheckedBiProcTest {
             (first, second) -> counter.incrementAndGet(),
             exp -> exp
         ).exec(true, true);
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must not throw an exception",
             counter.get(),
             new IsEqual<>(1)
-        );
+        ).affirm();
     }
 }

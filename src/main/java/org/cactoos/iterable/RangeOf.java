@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,28 +48,29 @@ public final class
         }
     )
     public RangeOf(final T min, final T max, final Func<T, T> incrementor) {
-        super(() -> new IterableOf<>(
-            new Iterator<T>() {
-                private final UncheckedFunc<T, T> inc =
-                    new UncheckedFunc<>(incrementor);
-                private T value = min;
+        super(
+            new IterableOf<>(
+                () -> new Iterator<T>() {
+                    private final UncheckedFunc<T, T> inc =
+                        new UncheckedFunc<>(incrementor);
+                    private T value = min;
 
-                @Override
-                public boolean hasNext() {
-                    return this.value.compareTo(max) < 1;
-                }
-
-                @Override
-                public T next() {
-                    if (!this.hasNext()) {
-                        throw new NoSuchElementException();
+                    @Override
+                    public boolean hasNext() {
+                        return this.value.compareTo(max) < 1;
                     }
-                    final T result = this.value;
-                    this.value = this.inc.apply(this.value);
-                    return result;
-                }
-            }
-        ));
-    }
 
+                    @Override
+                    public T next() {
+                        if (!this.hasNext()) {
+                            throw new NoSuchElementException();
+                        }
+                        final T result = this.value;
+                        this.value = this.inc.apply(this.value);
+                        return result;
+                    }
+                }
+            )
+        );
+    }
 }

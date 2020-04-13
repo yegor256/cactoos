@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,10 @@
  */
 package org.cactoos.scalar;
 
-import java.util.NoSuchElementException;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.Filtered;
-import org.cactoos.iterable.HeadOf;
-import org.cactoos.iterable.IterableOf;
 
 /**
  * Find first element in a list that satisfies specified condition.
@@ -70,19 +68,10 @@ public final class FirstOf<T> implements Scalar<T> {
 
     @Override
     public T value() throws Exception {
-        return new ScalarWithFallback<>(
-            () -> new HeadOf<>(
-                1,
-                new Filtered<>(this.condition, this.source)
-            ).iterator().next(),
-            new IterableOf<FallbackFrom<T>>(
-                new FallbackFrom<>(
-                    new IterableOf<Class<? extends Throwable>>(
-                        NoSuchElementException.class
-                    ),
-                    t1 -> this.fallback.value()
-                )
-            )
+        return new ItemAt<>(
+            0,
+            new FuncOf<>(this.fallback),
+            new Filtered<>(this.condition, this.source)
         ).value();
     }
 }

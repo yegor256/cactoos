@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,11 +25,11 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.llorllale.cactoos.matchers.TeeInputHasResult;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use byte array as an
@@ -51,16 +51,14 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't copy bytes to path",
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 output.toPath()
             ),
-            new TeeInputHasResult(
-                message,
-                output
-            )
-        );
+            new InputHasContent(message)
+        ).affirm();
     }
 
     @Test
@@ -68,16 +66,14 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't copy bytes to file",
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 output
             ),
-            new TeeInputHasResult(
-                message,
-                output
-            )
-        );
+            new InputHasContent(message)
+        ).affirm();
     }
 
     @Test
@@ -85,15 +81,13 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Can't copy bytes to output",
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 new OutputTo(output)
             ),
-            new TeeInputHasResult(
-                message,
-                output
-            )
-        );
+            new InputHasContent(message)
+        ).affirm();
     }
 }

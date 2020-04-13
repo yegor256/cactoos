@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,23 +23,31 @@
  */
 package org.cactoos.iterable;
 
+import java.util.Iterator;
+import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.LengthOf;
+import org.cactoos.scalar.Ternary;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsIterableWithSize;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link IterableOf}.
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
 public final class IterableOfTest {
 
     @Test
     public void convertsScalarsToIterable() {
         MatcherAssert.assertThat(
-            "Can't convert scalars to iterable",
+            "must convert scalars to iterable",
             new LengthOf(
                 new IterableOf<>(
                     "a", "b", "c"
@@ -53,7 +61,7 @@ public final class IterableOfTest {
     @Test
     public void convertsArrayOfIntsToIterable() {
         MatcherAssert.assertThat(
-            "Can't convert int scalars to iterable",
+            "must convert int scalars to iterable",
             new IterableOf<>(1, 2, 0, 2),
             Matchers.hasItem(0)
         );
@@ -62,7 +70,7 @@ public final class IterableOfTest {
     @Test
     public void convertsObjectsToIterable() {
         MatcherAssert.assertThat(
-            "Can't convert objects to iterable",
+            "must convert objects to iterable",
             new LengthOf(
                 new IterableOf<>(
                     new TextOf("a"), new TextOf("b"), new TextOf("c")
@@ -73,5 +81,121 @@ public final class IterableOfTest {
         );
     }
 
-}
+    @Test
+    @SuppressWarnings({"unchecked", "PMD.AvoidDuplicateLiterals"})
+    public void containAllPagedContentInOrder() throws Exception {
+        final Iterable<String> first = new IterableOf<>("one", "two");
+        final Iterable<String> second = new IterableOf<>("three", "four");
+        final Iterable<String> third = new IterableOf<>("five");
+        final Iterable<Iterable<String>> service = new IterableOf<>(
+            first, second, third
+        );
+        final Iterator<Iterable<String>> pages = service.iterator();
+        MatcherAssert.assertThat(
+            "must have all page values",
+            new IterableOf<>(
+                () -> pages.next().iterator(),
+                page -> new Ternary<>(
+                    () -> pages.hasNext(),
+                    () -> pages.next().iterator(),
+                    () -> new IteratorOf<String>()
+                ).value()
+            ),
+            new IsEqual<>(new Joined<>(first, second, third))
+        );
+    }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    public void reportTotalPagedLength() throws Exception {
+        final Iterable<String> first = new IterableOf<>("A", "five");
+        final Iterable<String> second = new IterableOf<>("word", "long");
+        final Iterable<String> third = new IterableOf<>("sentence");
+        final Iterable<Iterable<String>> service = new IterableOf<>(
+            first, second, third
+        );
+        final Iterator<Iterable<String>> pages = service.iterator();
+        MatcherAssert.assertThat(
+            "length must be equal to total number of elements",
+            new IterableOf<>(
+                () -> pages.next().iterator(),
+                page -> new Ternary<>(
+                    () -> pages.hasNext(),
+                    () -> pages.next().iterator(),
+                    () -> new IteratorOf<String>()
+                ).value()
+            ),
+            new IsIterableWithSize<>(
+                new IsEqual<>(
+                    new LengthOf(
+                        new Joined<>(first, second, third)
+                    ).intValue()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void notEqualsToObjectOfAnotherType() {
+        new Assertion<>(
+            "must not equal to object of another type",
+            new IterableOf<>(),
+            new IsNot<>(new IsEqual<>(new Object()))
+        ).affirm();
+    }
+
+    @Test
+    public void notEqualsToIterableWithDifferentElements() {
+        new Assertion<>(
+            "must not equal to Iterable with different elements",
+            new IterableOf<>(1, 2),
+            new IsNot<>(new IsEqual<>(new IterableOf<>(1, 0)))
+        ).affirm();
+    }
+
+    @Test
+    public void isEqualToItself() {
+        final IterableOf<Integer> iterable = new IterableOf<>(1, 2);
+        new Assertion<>(
+            "must be equal to itself",
+            iterable,
+            new IsEqual<>(iterable)
+        ).affirm();
+    }
+
+    @Test
+    public void isEqualToIterableWithTheSameElements() {
+        new Assertion<>(
+            "must be equal to Iterable with the same elements",
+            new IterableOf<>(1, 2),
+            new IsEqual<>(new IterableOf<>(1, 2))
+        ).affirm();
+    }
+
+    @Test
+    public void equalToEmptyIterable() {
+        new Assertion<>(
+            "empty Iterable must be equal to empty Iterable",
+            new IterableOf<>(),
+            new IsEqual<>(new IterableOf<>())
+        ).affirm();
+    }
+
+    @Test
+    public void differentHashCode() {
+        new Assertion<>(
+            "must have different hashCode for Iterables with different content",
+            new IterableOf<>(1, 2).hashCode(),
+            new IsNot<>(new IsEqual<>(new IterableOf<>(2, 1).hashCode()))
+        ).affirm();
+    }
+
+    @Test
+    public void equalHashCode() {
+        new Assertion<>(
+            "must have equal hashCode for Iterables with equal content",
+            new IterableOf<>(1, 2).hashCode(),
+            new IsEqual<>(new IterableOf<>(1, 2).hashCode())
+        ).affirm();
+    }
+}

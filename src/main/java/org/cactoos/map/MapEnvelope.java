@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,13 +25,15 @@ package org.cactoos.map;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.And;
+import org.cactoos.scalar.EqualsNullable;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
-import org.cactoos.scalar.SumOfIntScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.SumOfInt;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.TextOf;
 
 /**
@@ -44,6 +46,7 @@ import org.cactoos.text.TextOf;
  * @see Sticky
  * @since 0.24
  * @checkstyle AbstractClassNameCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings(
     {
@@ -56,14 +59,14 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     /**
      * The map.
      */
-    private final UncheckedScalar<Map<X, Y>> map;
+    private final Unchecked<Map<X, Y>> map;
 
     /**
      * Ctor.
      * @param scalar The scalar
      */
     public MapEnvelope(final Scalar<Map<X, Y>> scalar) {
-        this.map = new UncheckedScalar<>(scalar);
+        this.map = new Unchecked<>(scalar);
     }
 
     @Override
@@ -144,8 +147,9 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
     public final boolean equals(final Object other) {
-        return new UncheckedScalar<>(
+        return new Unchecked<>(
             new Or(
                 () -> this == other,
                 new And(
@@ -160,19 +164,14 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     // @checkstyle MagicNumberCheck (30 lines)
     @Override
     public final int hashCode() {
-        return new UncheckedScalar<>(
+        return new Unchecked<>(
             new Folded<>(
                 42,
-                (hash, entry) -> {
-                    final int keys = new SumOfIntScalar(
-                        () -> 37 * hash,
-                        () -> entry.getKey().hashCode()
-                    ).value();
-                    return new SumOfIntScalar(
-                        () -> 37 * keys,
-                        () -> entry.getValue().hashCode()
-                    ).value();
-                },
+                (hash, entry) -> new SumOfInt(
+                    () -> 37 * hash,
+                    () -> entry.getKey().hashCode(),
+                    () -> Objects.hashCode(entry.getValue())
+                ).value(),
                 this.map.value().entrySet()
             )
         ).value();
@@ -185,14 +184,15 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
      * @return True if contents are equal false otherwise
      */
     private Boolean contentsEqual(final Map<?, ?> other) {
-        return new UncheckedScalar<>(
+        return new Unchecked<>(
             new And(
-                (entry) -> {
-                    final X key = entry.getKey();
-                    final Y value = entry.getValue();
+                entry -> {
                     return new And(
-                        () -> other.containsKey(key),
-                        () -> other.get(key).equals(value)
+                        () -> other.containsKey(entry.getKey()),
+                        () -> new EqualsNullable(
+                            () -> other.get(entry.getKey()),
+                            entry.getValue()
+                        ).value()
                     ).value();
                 }, this.entrySet()
             )

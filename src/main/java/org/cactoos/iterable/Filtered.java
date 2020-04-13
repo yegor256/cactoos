@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
 import org.cactoos.Func;
 
 /**
@@ -64,21 +63,13 @@ public final class Filtered<X> extends IterableEnvelope<X> {
      * Ctor.
      * @param fnc Predicate
      * @param src Source iterable
-     * @since 0.21
-     */
-    public Filtered(final Func<X, Boolean> fnc, final Iterator<X> src) {
-        this(fnc, new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param fnc Predicate
-     * @param src Source iterable
      */
     public Filtered(final Func<X, Boolean> fnc, final Iterable<X> src) {
-        super(() -> () -> new org.cactoos.iterator.Filtered<>(
-            fnc, src.iterator()
-        ));
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.Filtered<>(fnc, src.iterator())
+            )
+        );
     }
 
 }

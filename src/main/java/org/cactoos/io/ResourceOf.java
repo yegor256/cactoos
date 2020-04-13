@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -80,8 +80,8 @@ public final class ResourceOf implements Input {
     /**
      * New resource input with specified {@link ClassLoader}.
      * @param res Resource name
-     * @param ldr Resource class loader
      * @param fbk Fallback
+     * @param ldr Resource class loader
      */
     public ResourceOf(final CharSequence res,
         final Func<CharSequence, Input> fbk, final ClassLoader ldr) {
@@ -175,8 +175,8 @@ public final class ResourceOf implements Input {
     /**
      * New resource input with specified {@link ClassLoader}.
      * @param res Resource name
-     * @param ldr Resource class loader
      * @param fbk Fallback
+     * @param ldr Resource class loader
      */
     public ResourceOf(final Text res,
         final Func<Text, Input> fbk, final ClassLoader ldr) {

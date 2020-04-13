@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +26,14 @@ package org.cactoos.iterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.NoSuchElementException;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Partitioned}.
@@ -46,7 +49,9 @@ public final class PartitionedTest {
         MatcherAssert.assertThat(
             "Can't generate an empty Partitioned.",
             new LengthOf(
-                new Partitioned<>(1, Collections.emptyIterator())
+                new IterableOf<>(
+                    new Partitioned<>(1, Collections.emptyIterator())
+                )
             ).intValue(),
             Matchers.equalTo(0)
         );
@@ -90,20 +95,18 @@ public final class PartitionedTest {
     @Test
     @SuppressWarnings("unchecked")
     public void partitionedLastPartitionSmaller() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a Partitioned of size 2 last partition smaller.",
-            new ArrayList<>(
-                new ListOf<>(
-                    new Partitioned<>(2, new ListOf<>(1, 2, 3).iterator())
-                )
+            new ListOf<>(
+                new Partitioned<>(2, new ListOf<>(1, 2, 3).iterator())
             ),
-            Matchers.equalTo(
+            new IsEqual<>(
                 new ListOf<>(
                     new ListOf<>(1, 2),
-                    Collections.singletonList(3)
+                    new ListOf<>(3)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test(expected = IllegalArgumentException.class)

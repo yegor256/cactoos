@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import java.util.LinkedList;
-import java.util.List;
-import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterator.IteratorOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -84,47 +79,8 @@ public final class AndTest {
     @Test
     public void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
-            new And(new IteratorOf<Scalar<Boolean>>()),
+            new And(new IterableOf<Scalar<Boolean>>()),
             new ScalarHasValue<>(true)
-        );
-    }
-
-    @Test
-    public void testProcIterable() throws Exception {
-        final List<Integer> list = new LinkedList<>();
-        new And(
-            (Proc<Integer>) list::add,
-            new IterableOf<>(1, 1)
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            Matchers.contains(1, 1)
-        );
-    }
-
-    @Test
-    public void testProcIterator() throws Exception {
-        final List<Integer> list = new LinkedList<>();
-        new And(
-            (Proc<Integer>) list::add,
-            new IteratorOf<>(1, 1)
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            Matchers.contains(1, 1)
-        );
-    }
-
-    @Test
-    public void testProcVarargs() throws Exception {
-        final List<Integer> list = new LinkedList<>();
-        new And(
-            (Proc<Integer>) list::add,
-            2, 3, 4
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            Matchers.contains(2, 3, 4)
         );
     }
 
@@ -144,7 +100,7 @@ public final class AndTest {
         MatcherAssert.assertThat(
             new And(
                 input -> input > 0,
-                new IteratorOf<>(1, -1, 0)
+                new IterableOf<>(1, -1, 0)
             ),
             new ScalarHasValue<>(false)
         );

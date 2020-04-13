@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,8 +36,8 @@ import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.scalar.IoCheckedScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.IoChecked;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * An {@link Input} that encapsulates other sources of data.
@@ -62,7 +62,7 @@ public final class InputOf implements Input {
     public InputOf(final File file) {
         this(
             () -> new FileInputStream(
-                new UncheckedScalar<>(() -> file).value()
+                new Unchecked<>(() -> file).value()
             )
         );
     }
@@ -100,7 +100,7 @@ public final class InputOf implements Input {
      * @param scalar The url
      */
     public InputOf(final Scalar<URL> scalar) {
-        this(() -> new IoCheckedScalar<>(scalar).value().openStream());
+        this(() -> new IoChecked<>(scalar).value().openStream());
     }
 
     /**
@@ -282,7 +282,7 @@ public final class InputOf implements Input {
      */
     public InputOf(final Bytes src) {
         this(
-            () -> new IoCheckedScalar<InputStream>(
+            () -> new IoChecked<InputStream>(
                 () -> new ByteArrayInputStream(src.asBytes())
             ).value()
         );

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,13 +23,11 @@
  */
 package org.cactoos.map;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.SyncScalar;
 
 /**
  * Map decorator that goes through the map only once.
@@ -65,10 +63,10 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param map The map to extend
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param map The map to extend
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @checkstyle ParameterNumberCheck (5 lines)
      */
@@ -95,8 +93,8 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      */
     @SafeVarargs
@@ -107,8 +105,8 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      */
     public <Z> Synced(final Func<Z, Map.Entry<X, Y>> entry,
@@ -118,9 +116,9 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     * @param entry Func to create entry
      * @param map The map to extend
      * @param list List of items
-     * @param entry Func to create entry
      * @param <Z> Type of items in the list
      */
     public <Z> Synced(final Func<Z, Map.Entry<X, Y>> entry,
@@ -134,14 +132,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      */
     public Synced(final Iterable<Map.Entry<X, Y>> list) {
         this(new MapOf<>(list));
-    }
-
-    /**
-     * Ctor.
-     * @param list Entries for the entries
-     */
-    public Synced(final Iterator<Map.Entry<X, Y>> list) {
-        this(() -> list);
     }
 
     /**
@@ -160,7 +150,7 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      */
     public Synced(final Map<X, Y> map) {
         super(
-            new SyncScalar<>(
+            new org.cactoos.scalar.Synced<>(
                 () -> {
                     final Map<X, Y> temp = new ConcurrentHashMap<>(0);
                     temp.putAll(map);
@@ -169,5 +159,4 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
             )
         );
     }
-
 }

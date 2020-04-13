@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,9 +53,10 @@ public final class IoCheckedBiProc<X, Y> implements BiProc<X, Y> {
 
     @Override
     public void exec(final X first, final Y second) throws IOException {
-        new IoCheckedBiFunc<>(
-            new BiFuncOf<>(this.proc, null)
-        ).apply(first, second);
+        new CheckedBiProc<>(
+            this.proc,
+            IOException::new
+        ).exec(first, second);
     }
 
 }

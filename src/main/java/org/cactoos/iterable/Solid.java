@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,6 @@
  * SOFTWARE.
  */
 package org.cactoos.iterable;
-
-import org.cactoos.Scalar;
-import org.cactoos.scalar.SolidScalar;
 
 /**
  * An {@link Iterable} that is both synchronized and sticky.
@@ -50,13 +47,7 @@ public final class Solid<X> extends IterableEnvelope<X> {
      * @param iterable The iterable
      */
     public Solid(final Iterable<X> iterable) {
-        super(
-            new Scalar.NoNulls<Iterable<X>>(
-                new SolidScalar<Iterable<X>>(
-                    () -> new Synced<X>(new Sticky<>(iterable))
-                )
-            )
-        );
+        super(new Synced<>(new Sticky<>(iterable)));
     }
 
 }

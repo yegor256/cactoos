@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,39 +23,18 @@
  */
 package org.cactoos.list;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * Sorted list.
  *
- * <p>Pay attention that sorting will happen on each operation
- * with the collection. Every time you touch it, it will fetch the
- * entire list from the encapsulated object and sort it. If you
- * want to avoid that "side-effect", decorate it with
- * {@link Sticky}.</p>
- *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Element type
- * @see Sticky
  * @since 0.19
  */
 public final class Sorted<T> extends ListEnvelope<T> {
-
-    /**
-     * Ctor.
-     * @param src The underlying collection
-     */
-    @SafeVarargs
-    public Sorted(final T... src) {
-        this(new ListOf<>(src));
-    }
-
     /**
      * Ctor.
      *
@@ -63,50 +42,20 @@ public final class Sorted<T> extends ListEnvelope<T> {
      * implements {@link Comparable} interface. Otherwise, there will be
      * a type casting exception in runtime.</p>
      *
-     * @param src The underlying collection
-     * @since 0.21
-     */
-    public Sorted(final Iterator<T> src) {
-        this(() -> src);
-    }
-
-    /**
-     * Ctor.
-     *
-     * <p>If you're using this ctor you must be sure that type {@code T}
-     * implements {@link Comparable} interface. Otherwise, there will be
-     * a type casting exception in runtime.</p>
-     *
-     * @param src The underlying collection
+     * @param src The source collection
      */
     @SuppressWarnings("unchecked")
-    public Sorted(final Iterable<T> src) {
-        this((Comparator<T>) Comparator.naturalOrder(), new ListOf<>(src));
+    public Sorted(final List<T> src) {
+        this((Comparator<T>) Comparator.naturalOrder(), src);
     }
 
     /**
      * Ctor.
-     * @param src The underlying collection
      * @param cmp The comparator
+     * @param src The source collection
      */
-    @SafeVarargs
-    public Sorted(final Comparator<T> cmp, final T... src) {
-        this(cmp, new ListOf<>(src));
+    public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
+        super(new ListOf<>(src));
+        super.sort(cmp);
     }
-
-    /**
-     * Ctor.
-     * @param src The underlying collection
-     * @param cmp The comparator
-     */
-    public Sorted(final Comparator<T> cmp, final Collection<T> src) {
-        super(() -> {
-            final List<T> items = new ArrayList<>(src.size());
-            items.addAll(src);
-            items.sort(cmp);
-            return Collections.unmodifiableList(items);
-        }
-);
-    }
-
 }

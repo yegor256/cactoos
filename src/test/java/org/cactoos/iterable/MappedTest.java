@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,12 @@ import java.util.Collections;
 import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.UpperText;
+import org.cactoos.text.Upper;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Mapped}.
@@ -45,7 +47,7 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
             new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
+                input -> new Upper(new TextOf(input)),
                 new IterableOf<>(
                     "hello", "world", "друг"
                 )
@@ -59,7 +61,7 @@ public final class MappedTest {
         MatcherAssert.assertThat(
             "Can't transform an empty iterable",
             new Mapped<String, Text>(
-                input -> new UpperText(new TextOf(input)),
+                input -> new Upper(new TextOf(input)),
                 Collections.emptyList()
             ),
             Matchers.emptyIterable()
@@ -76,5 +78,17 @@ public final class MappedTest {
             ).toString(),
             Matchers.equalTo("2, 4, 6")
         );
+    }
+
+    @Test
+    public void transformsArray() {
+        new Assertion<>(
+            "Transforms an array",
+            new Mapped<String, String>(
+                input -> new Upper(new TextOf(input)).asString(),
+                "a", "b", "c"
+            ),
+            new IsEqual<>(new IterableOf<>("A", "B", "C"))
+        ).affirm();
     }
 }

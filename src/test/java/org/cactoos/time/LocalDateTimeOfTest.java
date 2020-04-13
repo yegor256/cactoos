@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,9 @@ package org.cactoos.time;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Tests for {@link LocalDateTimeOf}.
@@ -40,35 +40,35 @@ public class LocalDateTimeOfTest {
 
     @Test
     public final void testParsingIsoFormattedStringToLocalDateTime() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't parse a LocalDateTime with default/ISO format.",
-            new LocalDateTimeOf("2017-12-13T14:15:16.000000017+01:00").value(),
-            Matchers.is(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
-        );
+            new LocalDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
+            new ScalarHasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
+        ).affirm();
     }
 
     @Test
     public final void testParsingFormattedStringWithFormatToLocalDateTime() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't parse a LocalDateTime with custom format.",
             new LocalDateTimeOf(
                 "2017-12-13 14:15:16.000000017",
                 "yyyy-MM-dd HH:mm:ss.n"
-            ).value(),
-            Matchers.is(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
-        );
+            ),
+            new ScalarHasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
+        ).affirm();
     }
 
     @Test
     public final void testParsingFormattedStringWithFormatterToLocalDateTime() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't parse a LocalDateTime with custom formatter.",
             new LocalDateTimeOf(
                 "2017-12-13 14:15:16.000000017",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
-            ).value(),
-            Matchers.is(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
-        );
+            ),
+            new ScalarHasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
+        ).affirm();
     }
 
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,42 +43,4 @@ public interface Text {
      * @throws Exception If fails
      */
     String asString() throws Exception;
-
-    /**
-     * Text check for no nulls.
-     *
-     * <p>There is no thread-safety guarantee.
-     *
-     * @since 0.11
-     */
-    final class NoNulls implements Text {
-        /**
-         * The origin text.
-         */
-        private final Text origin;
-
-        /**
-         * Ctor.
-         * @param text The text
-         */
-        public NoNulls(final Text text) {
-            this.origin = text;
-        }
-
-        @Override
-        public String asString() throws Exception {
-            if (this.origin == null) {
-                throw new IllegalArgumentException(
-                    "NULL instead of a valid text"
-                );
-            }
-            final String string = this.origin.asString();
-            if (string == null) {
-                throw new IllegalStateException(
-                    "NULL instead of a valid result string"
-                );
-            }
-            return string;
-        }
-    }
 }

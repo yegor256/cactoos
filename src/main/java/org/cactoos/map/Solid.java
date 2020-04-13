@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,10 @@
  */
 package org.cactoos.map;
 
-import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.SolidScalar;
 
 /**
  * A {@link Map} that is both synchronized and sticky.
@@ -63,10 +61,10 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param map The map to extend
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param map The map to extend
+     * @param list List of items
      * @param <Z> Type of items in the list
      * @checkstyle ParameterNumberCheck (5 lines)
      */
@@ -81,9 +79,9 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
+     * @param list List of items
      * @param <Z> Type of items in the list
      */
     public <Z> Solid(final Func<Z, X> key,
@@ -93,8 +91,8 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      */
     @SafeVarargs
@@ -105,8 +103,8 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param list List of items
      * @param entry Func to create entry
+     * @param list List of items
      * @param <Z> Type of items in the list
      */
     public <Z> Solid(final Func<Z, Map.Entry<X, Y>> entry,
@@ -116,9 +114,9 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     * @param entry Func to create entry
      * @param map The map to extend
      * @param list List of items
-     * @param entry Func to create entry
      * @param <Z> Type of items in the list
      */
     public <Z> Solid(final Func<Z, Map.Entry<X, Y>> entry,
@@ -132,14 +130,6 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
      */
     public Solid(final Iterable<Map.Entry<X, Y>> list) {
         this(new MapOf<>(list));
-    }
-
-    /**
-     * Ctor.
-     * @param list Entries for the entries
-     */
-    public Solid(final Iterator<Map.Entry<X, Y>> list) {
-        this(() -> list);
     }
 
     /**
@@ -158,10 +148,9 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
      */
     public Solid(final Map<X, Y> map) {
         super(
-            new SolidScalar<Map<X, Y>>(
+            new org.cactoos.scalar.Solid<Map<X, Y>>(
                 () -> new Synced<>(new Sticky<X, Y>(map))
             )
         );
     }
-
 }

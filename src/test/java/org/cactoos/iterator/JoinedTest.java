@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2018 Yegor Bugayenko
+ * Copyright (c) 2017-2020 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,53 +23,57 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
-import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Joined}.
  * @since 0.14
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class JoinedTest {
 
     @Test
     public void joinsIterators() {
-        MatcherAssert.assertThat(
-            "Can't concatenate mapped iterators together",
-            new LengthOf(
-                new IteratorNoNulls<>(
-                    new Joined<Iterator<String>>(
-                        new Mapped<>(
-                            input -> new IteratorOf<>(input),
-                            new IteratorOf<>("x")
-                        )
+        new Assertion<>(
+            "Must concatenate mapped iterators together",
+            new IterableOf<>(
+                new Joined<>(
+                    new Mapped<>(
+                        IteratorOf::new,
+                        new IterableOf<>("x", "y")
                     )
                 )
-            ).intValue(),
-            Matchers.equalTo(1)
-        );
+            ),
+            new HasSize(2)
+        ).affirm();
     }
 
     @Test
     public void callsNextDirectlyOnNonEmptyIterator() {
-        MatcherAssert.assertThat(
-            "Cannot call next method directly on non-empty iterator",
+        new Assertion<>(
+            "Must call next method directly on non-empty iterator",
             new Joined<Integer>(
                 new IteratorOf<>(1),
                 new IteratorOf<>(2)
             ).next(),
-            Matchers.equalTo(1)
-        );
+            new IsEqual<>(1)
+        ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void throwsExceptionWhenCallNextOnEmptyIterator() {
-        new Joined<Integer>(new IteratorOf<>()).next();
+        new Assertion<>(
+            "Must throw an exception",
+            () -> new Joined<Integer>(new IteratorOf<>()).next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
-
 }
