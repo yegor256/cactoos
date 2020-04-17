@@ -31,10 +31,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
-import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.func.Repeated;
 import org.cactoos.func.UncheckedFunc;
+import org.cactoos.scalar.ScalarOf;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -180,9 +180,12 @@ public final class TimedTest {
                 Executors.newSingleThreadExecutor(),
                 1L,
                 TimeUnit.SECONDS,
-                (Scalar<String>) () -> {
-                    throw new IllegalStateException("Something went wrong");
-                }
+                new ScalarOf<String>(
+                    () -> {
+                        // @checkstyle LineLengthCheck (1 line)
+                        throw new IllegalStateException("Something went wrong");
+                    }
+                )
             ).iterator().next(),
             new Throws<>(
                 // @checkstyle LineLengthCheck (1 line)
