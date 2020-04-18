@@ -26,10 +26,10 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
@@ -52,13 +52,14 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input to the output path",
             new TeeInput(
                 new InputOf(input),
                 output.toPath()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -66,13 +67,14 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input to the output file",
             new TeeInput(
                 new InputOf(input),
                 output
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -80,13 +82,14 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ write #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input to the output",
             new TeeInput(
                 new InputOf(input),
                 new WriterTo(output)
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -94,14 +97,15 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ writer #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input with size to the output",
             new TeeInput(
                 new InputOf(input),
                 new WriterTo(output),
                 input.length()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -109,14 +113,15 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ writer #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input with charset to output",
             new TeeInput(
                 new InputOf(input),
                 new WriterTo(output),
                 StandardCharsets.UTF_8
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -124,7 +129,8 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ writer #4 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input with charset and size to output",
             new TeeInput(
                 new InputOf(input),
                 new WriterTo(output),
@@ -132,7 +138,7 @@ public final class TeeInputFromInputTest {
                 input.length()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -140,14 +146,15 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ writer #5 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input with charset by name to output",
             new TeeInput(
                 new InputOf(input),
                 new WriterTo(output),
                 StandardCharsets.UTF_8.name()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -156,7 +163,8 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ writer #6 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input with charset by name and size to output",
             new TeeInput(
                 new InputOf(input),
                 new WriterTo(output),
@@ -164,6 +172,6 @@ public final class TeeInputFromInputTest {
                 input.length()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 }

@@ -27,10 +27,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
@@ -57,13 +57,14 @@ public final class TeeInputFromFileTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input file to output file",
             new TeeInput(
                 input,
                 output
             ),
             new InputHasContent(message)
-        );
+        ).affirm();
     }
 
     @Test
@@ -76,13 +77,14 @@ public final class TeeInputFromFileTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input file to output path",
             new TeeInput(
                 input,
                 output.toPath()
             ),
             new InputHasContent(message)
-        );
+        ).affirm();
     }
 
     @Test
@@ -95,12 +97,13 @@ public final class TeeInputFromFileTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must copy from input file to output",
             new TeeInput(
                 input,
                 new OutputTo(output)
             ),
             new InputHasContent(message)
-        );
+        ).affirm();
     }
 }
