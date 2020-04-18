@@ -26,11 +26,5 @@
  * Scalars.
  *
  * @since 0.12
- * @todo #1293:30min Introduce a class ScalarOf that takes various
- *  objects such as a Supplier, Callable, etc and implement Scalar.
- *  Use it to replace in particular the casting to Scalar done in
- *  ThreadsTest#failsDueToException, TimedTest#failsDueToException
- *  and all the other places where it is needed. Add tests for each
- *  of the constructors.
  */
 package org.cactoos.scalar;
