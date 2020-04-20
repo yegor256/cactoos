@@ -69,7 +69,7 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-                "text can't be copied to the path with UTF_8 charset",
+            "text can't be copied to the path with UTF_8 charset",
             new TeeInput(
                 new TextOf(input),
                 output.toPath(),
@@ -148,7 +148,7 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-                "text can't be copied to the output",
+            "text can't be copied to the output",
             new TeeInput(
                 new TextOf(input),
                 new OutputTo(output)
