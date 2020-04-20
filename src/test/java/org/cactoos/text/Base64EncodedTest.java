@@ -25,8 +25,8 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -41,7 +41,7 @@ public final class Base64EncodedTest {
      */
     @Test
     public void checkEncode() throws IOException {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't encodes text using the Base64 encoding scheme",
             new Base64Encoded(
                 "Hello!"

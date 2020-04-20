@@ -27,9 +27,9 @@ import java.util.Iterator;
 import java.util.Set;
 import org.cactoos.collection.BehavesAsCollection;
 import org.hamcrest.Description;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsEqual;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Matcher for set.
@@ -55,7 +55,7 @@ public final class BehavesAsSet<T> extends TypeSafeMatcher<Set<T>> {
 
     @Override
     public boolean matchesSafely(final Set<T> item) {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Does not contain duplicates",
             this.occurrences(item.iterator()),
             new IsEqual<>(1)

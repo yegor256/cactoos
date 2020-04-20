@@ -26,10 +26,10 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
@@ -52,7 +52,8 @@ public final class TeeInputFromCharArrayTest {
         final String input =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "char array can't be copied to the file with charset UTF_8",
             new TeeInput(
                 input.toCharArray(),
                 output,
@@ -68,7 +69,8 @@ public final class TeeInputFromCharArrayTest {
         final String input =
             "Hello, товарищ file #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "char array can't be copied to the file with UTF_8 charset's name",
             new TeeInput(
                 input.toCharArray(),
                 output,
@@ -83,7 +85,8 @@ public final class TeeInputFromCharArrayTest {
         final String input =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "char array can't be copied to the output",
             new TeeInput(
                 input.toCharArray(),
                 new OutputTo(output)
@@ -97,7 +100,8 @@ public final class TeeInputFromCharArrayTest {
         final String input =
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "char array can't be copied to the output with UTF_8 charset",
             new TeeInput(
                 input.toCharArray(),
                 new OutputTo(output),
@@ -113,7 +117,8 @@ public final class TeeInputFromCharArrayTest {
         final String input =
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "char array can't be copied to the output with UTF_8 charset's name",
             new TeeInput(
                 input.toCharArray(),
                 new OutputTo(output),
@@ -128,7 +133,8 @@ public final class TeeInputFromCharArrayTest {
         final String input =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "char array can't be copied to the path",
             new TeeInput(
                 input.toCharArray(),
                 output.toPath()
@@ -142,7 +148,8 @@ public final class TeeInputFromCharArrayTest {
         final String input =
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "char array can't be copied to the path with UTF_8 charset",
             new TeeInput(
                 input.toCharArray(),
                 output.toPath(),
@@ -158,7 +165,8 @@ public final class TeeInputFromCharArrayTest {
         final String input =
             "Hello, товарищ path #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "char array can't be copied to the path with UTF_8 charset's name",
             new TeeInput(
                 input.toCharArray(),
                 output.toPath(),
@@ -173,7 +181,8 @@ public final class TeeInputFromCharArrayTest {
         final File output = this.folder.newFile();
         final String input =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "char array can't be copied to the file",
             new TeeInput(
                 input.toCharArray(),
                 output

@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -36,7 +36,7 @@ public final class IsBlankTest {
 
     @Test
     public void determinesEmptyText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't determine an empty text",
             new IsBlank(
                 new TextOf("")
@@ -47,7 +47,7 @@ public final class IsBlankTest {
 
     @Test
     public void determinesBlankText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't determine an empty text with spaces",
             new IsBlank(
                 new TextOf("  ")
@@ -58,7 +58,7 @@ public final class IsBlankTest {
 
     @Test
     public void determinesNotBlankText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't detect a nonempty text",
             new IsBlank(
                 new TextOf("not empty")

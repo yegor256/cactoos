@@ -28,8 +28,8 @@ import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -42,7 +42,7 @@ public final class FormattedTextTest {
 
     @Test
     public void formatsText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a text",
             new FormattedText(
                 "%d. Formatted %s", 1, "text"
@@ -53,7 +53,7 @@ public final class FormattedTextTest {
 
     @Test
     public void formatsTextWithObjects() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a text with objects",
             new FormattedText(
                 new TextOf("%d. Number as %s"),
@@ -74,7 +74,7 @@ public final class FormattedTextTest {
 
     @Test
     public void formatsTextWithCollection() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a text with a collection",
             new FormattedText(
                 new TextOf("%d. Formatted as %s"),
@@ -95,7 +95,7 @@ public final class FormattedTextTest {
 
     @Test
     public void formatsWithLocale() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a text with Locale",
             new FormattedText(
                 // @checkstyle MagicNumber (1 line)
@@ -107,7 +107,7 @@ public final class FormattedTextTest {
 
     @Test
     public void formatsWithText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a string with text",
             new FormattedText(
                 "Format with text: %s",
