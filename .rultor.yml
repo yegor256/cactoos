@@ -7,6 +7,9 @@ docker:
 architect:
 - paulodamaso
 - yegor256
+install: |
+  sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
+  pdd -f /dev/null
 merge:
   script: |
     pdd -f /dev/null
