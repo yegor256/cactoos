@@ -56,8 +56,8 @@ public final class FirstOfTest {
     @Test
     public void returnsMatchingValueWithExceptionalFallback() {
         final int value = 2;
-        MatcherAssert.assertThat(
-            "Exception is thrown",
+        new Assertion<>(
+            "Exception was not thrown",
             new FirstOf<>(
                 i -> i >= value,
                 new IterableOfInts(0, value),
@@ -68,7 +68,7 @@ public final class FirstOfTest {
                 }
             ),
             new ScalarHasValue<>(value)
-        );
+        ).affirm();
     }
 
     @Test
