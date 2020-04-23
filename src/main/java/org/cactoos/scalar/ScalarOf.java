@@ -21,10 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.scalar;
+
+import org.cactoos.Scalar;
 
 /**
- * Scalars.
+ * ScalarOf.
  *
- * @since 0.12
+ * @param <T> Element type
+ * @since 0.4
+ * @todo #1320:30min Continue implement class ScalarOf that takes various
+ *  objects such as a Supplier, Callable, etc and implement Scalar. Use it
+ *  to replace in all places where it is needed. Add tests for each of the
+ *  constructors.
  */
-package org.cactoos.scalar;
+public final class ScalarOf<T> implements Scalar<T> {
+
+    /**
+     * The scalar.
+     */
+    private final Scalar<T> origin;
+
+    /**
+     * Ctor.
+     *
+     * @param origin The scalar
+     */
+    public ScalarOf(final Scalar<T> origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public T value() throws Exception {
+        return this.origin.value();
+    }
+}
