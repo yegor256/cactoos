@@ -54,6 +54,24 @@ public final class FirstOfTest {
     }
 
     @Test
+    public void returnsMatchingValueWithExceptionalFallback() {
+        final int value = 2;
+        MatcherAssert.assertThat(
+            "Exception is thrown",
+            new FirstOf<>(
+                i -> i >= value,
+                new IterableOfInts(0, value),
+                () -> {
+                    throw new IllegalArgumentException(
+                        "This exception should not be thrown"
+                    );
+                }
+            ),
+            new ScalarHasValue<>(value)
+        );
+    }
+
+    @Test
     public void returnsFirstValueForMultipleMatchingOnes() {
         final String value = "1";
         MatcherAssert.assertThat(
