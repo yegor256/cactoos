@@ -13,7 +13,7 @@ install: |
 merge:
   script: |
     pdd -f /dev/null
-    mvn clean install -Pqulice --errors --settings ../settings.xml
+    mvn clean install -Pqulice -Psonar --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
 deploy:
   script: |
