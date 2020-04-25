@@ -13,7 +13,7 @@ install: |
 merge:
   script: |
     pdd -f /dev/null
-    mvn clean install -Pqulice -Psonar --errors --settings ../settings.xml
+    mvn clean install -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
 deploy:
   script: |
@@ -23,4 +23,4 @@ release:
   script: |-
     [[ "${tag}" =~ ^[0-9]+(\.[0-9]+)*$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}"
-    mvn clean deploy -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml
+    mvn clean deploy -Pqulice -Psonatype --errors --settings ../settings.xml
