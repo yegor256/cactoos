@@ -25,20 +25,21 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.IOException;
+import org.cactoos.text.TextOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
  * {@link org.cactoos.Bytes} as an input.
  * @since 1.0
- * @todo #1331:30min This test is incorrect. It is not being tested whether
- *  the path actually contains the content, only that TeeInput, as an Input,
- *  has the content. Correct this problem in all TeeInput tests. Solution: test
- *  the content of the file, not the content of teeinput.
+ * @todo #1341:30min Correct any TeeInput tests that are not testing if the
+ *  path actually contains the content, just that TeeInput, as an Input,has
+ *  the content. Solution: test the content of the file, not the content of
+ *  teeinput (e.g. #1331).
  * @checkstyle JavadocMethodCheck (100 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)
  */
@@ -57,11 +58,15 @@ public final class TeeInputFromBytesTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy bytes to file path",
-            new TeeInput(
-                new BytesOf(message),
-                output.toPath()
+            new TextOf(
+                new TeeInput(
+                    new BytesOf(message),
+                    output.toPath()
+                )
             ),
-            new InputHasContent(message)
+            new TextIs(
+                new TextOf(output.toPath())
+            )
         ).affirm();
     }
 
@@ -72,11 +77,15 @@ public final class TeeInputFromBytesTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must copy bytes to file",
-            new TeeInput(
-                new BytesOf(message),
-                output
+            new TextOf(
+                new TeeInput(
+                    new BytesOf(message),
+                    output
+                )
             ),
-            new InputHasContent(message)
+            new TextIs(
+                new TextOf(output.toPath())
+            )
         ).affirm();
     }
 
@@ -87,11 +96,15 @@ public final class TeeInputFromBytesTest {
         final File output = this.folder.newFile();
         new Assertion<>(
             "Must bytes to output",
-            new TeeInput(
-                new BytesOf(message),
-                new OutputTo(output)
+            new TextOf(
+                new TeeInput(
+                    new BytesOf(message),
+                    new OutputTo(output)
+                )
             ),
-            new InputHasContent(message)
+            new TextIs(
+                new TextOf(output.toPath())
+            )
         ).affirm();
     }
 }
