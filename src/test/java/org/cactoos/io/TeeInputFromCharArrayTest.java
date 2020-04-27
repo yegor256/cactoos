@@ -60,7 +60,7 @@ public final class TeeInputFromCharArrayTest {
                 StandardCharsets.UTF_8
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
