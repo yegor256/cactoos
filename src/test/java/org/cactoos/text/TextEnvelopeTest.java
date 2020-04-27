@@ -48,7 +48,7 @@ public final class TextEnvelopeTest {
             "Envelope value does not match String value",
             new TextEnvelopeDummy(text).asString(),
             new IsEqual<>(text)
-        );
+        ).affirm();
     }
 
     /**
@@ -63,7 +63,7 @@ public final class TextEnvelopeTest {
             "Envelope does not match text representing the same value",
             new TextEnvelopeDummy(text),
             new IsEqual<>(new TextOf(text))
-        );
+        ).affirm();
     }
 
     /**
@@ -79,7 +79,7 @@ public final class TextEnvelopeTest {
             new IsEqual<>(
                 new Joined("", "is", "equal", "to", "another", "text")
             )
-        );
+        ).affirm();
     }
 
     /**
@@ -95,7 +95,7 @@ public final class TextEnvelopeTest {
             new IsNot<>(
                 new IsEqual<>(new Object())
             )
-        );
+        ).affirm();
     }
 
     /**
@@ -110,7 +110,7 @@ public final class TextEnvelopeTest {
             new TextEnvelopeDummy("is not equals to not Text object")
                 .equals(null),
             new IsEqual<>(false)
-        );
+        ).affirm();
     }
 
     /**
@@ -125,7 +125,7 @@ public final class TextEnvelopeTest {
             "Enveloped hashCode does not match its represented String hashcode",
             new TextEnvelopeDummy(hash).hashCode(),
             new IsEqual<>(hash.hashCode())
-        );
+        ).affirm();
     }
 
     /**

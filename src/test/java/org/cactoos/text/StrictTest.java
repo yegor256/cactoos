@@ -64,7 +64,7 @@ public final class StrictTest {
             "Given strings are not equal",
             new Strict(s -> true, new TextOf("text")),
             new TextIs("text")
-        );
+        ).affirm();
     }
 
     /**
@@ -99,6 +99,6 @@ public final class StrictTest {
                 new TextOf("text1")
             ),
             new TextIs("text1")
-        );
+        ).affirm();
     }
 }

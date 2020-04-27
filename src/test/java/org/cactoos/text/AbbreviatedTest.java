@@ -43,7 +43,7 @@ public final class AbbreviatedTest {
             // @checkstyle MagicNumber (1 line)
             new Abbreviated(msg, 8),
             new TextHasString(msg)
-        );
+        ).affirm();
     }
 
     @Test
@@ -53,7 +53,7 @@ public final class AbbreviatedTest {
             // @checkstyle MagicNumber (1 line)
             new Abbreviated("hello world", 8),
             new TextHasString("hello...")
-        );
+        ).affirm();
     }
 
     @Test
@@ -63,7 +63,7 @@ public final class AbbreviatedTest {
             // @checkstyle MagicNumber (1 line)
             new Abbreviated("oo programming", 10),
             new TextHasString("oo prog...")
-        );
+        ).affirm();
     }
 
     @Test
@@ -74,7 +74,7 @@ public final class AbbreviatedTest {
             // @checkstyle MagicNumber (1 line)
             new Abbreviated(msg, 15),
             new TextHasString(msg)
-        );
+        ).affirm();
     }
 
     @Test
@@ -85,7 +85,7 @@ public final class AbbreviatedTest {
             // @checkstyle MagicNumber (1 line)
             new Abbreviated(msg, 17),
             new TextHasString(msg)
-        );
+        ).affirm();
     }
 
     @Test
@@ -96,7 +96,7 @@ public final class AbbreviatedTest {
             // @checkstyle MagicNumber (1 line)
             new Abbreviated(msg, 15),
             new TextHasString(msg)
-        );
+        ).affirm();
     }
 
     @Test
@@ -107,7 +107,7 @@ public final class AbbreviatedTest {
             // @checkstyle MagicNumber (1 line)
             new Abbreviated(msg, 50),
             new TextHasString(msg)
-        );
+        ).affirm();
     }
 
     @Test
@@ -121,7 +121,7 @@ public final class AbbreviatedTest {
             new TextHasString(
                 "The quick brown fox jumps over the lazy black dog and after that returned to ..."
             )
-        );
+        ).affirm();
     }
 
 }

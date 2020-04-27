@@ -76,7 +76,7 @@ public final class TextOfTest {
                 Matchers.startsWith("привет, "),
                 Matchers.endsWith("друг!")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -90,7 +90,7 @@ public final class TextOfTest {
                 Matchers.startsWith("Hello, "),
                 Matchers.endsWith("друг! with default charset")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -106,7 +106,7 @@ public final class TextOfTest {
                 Matchers.startsWith("Hi,"),
                 Matchers.endsWith("товарищ! with small buffer")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -136,7 +136,7 @@ public final class TextOfTest {
                 Matchers.startsWith("Hello,"),
                 Matchers.endsWith("товарищ! with default charset")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -154,7 +154,7 @@ public final class TextOfTest {
                     StandardCharsets.UTF_8
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -169,7 +169,7 @@ public final class TextOfTest {
                     StandardCharsets.UTF_8
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -184,7 +184,7 @@ public final class TextOfTest {
                 Matchers.startsWith("O que sera"),
                 Matchers.endsWith(" que sera")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -196,7 +196,7 @@ public final class TextOfTest {
                 bytes
             ).asString(),
             Matchers.equalTo(new String(bytes, StandardCharsets.UTF_8))
-        );
+        ).affirm();
     }
 
     @Test
@@ -212,7 +212,7 @@ public final class TextOfTest {
                 Matchers.startsWith(starts),
                 Matchers.endsWith(ends)
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -228,7 +228,7 @@ public final class TextOfTest {
                 Matchers.startsWith(starts),
                 Matchers.endsWith(ends)
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -247,7 +247,7 @@ public final class TextOfTest {
                     "\tat org.cactoos.text.TextOfTest"
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -262,7 +262,7 @@ public final class TextOfTest {
             Matchers.equalTo(
                 new String(content.getBytes(), StandardCharsets.UTF_8)
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -275,7 +275,7 @@ public final class TextOfTest {
             "Can't read multiline inputStream",
             new TextOf(stream).asString(),
             Matchers.equalTo(content)
-        );
+        ).affirm();
     }
 
     @Test
@@ -288,7 +288,7 @@ public final class TextOfTest {
             "Can't read multiline inputStream with carriage return",
             new TextOf(stream).asString(),
             Matchers.equalTo(content)
-        );
+        ).affirm();
     }
 
     @Test
@@ -302,7 +302,7 @@ public final class TextOfTest {
             "Can't read closed input stream",
             new TextOf(stream).asString(),
             Matchers.equalTo(content)
-        );
+        ).affirm();
     }
 
     @Test
@@ -315,7 +315,7 @@ public final class TextOfTest {
             "Can't read empty input stream",
             new TextOf(stream).asString(),
             Matchers.equalTo(content)
-        );
+        ).affirm();
     }
 
     @Test
@@ -326,7 +326,7 @@ public final class TextOfTest {
                 new IOException("").getStackTrace()
             ),
             new TextHasString("org.cactoos.text.TextOfTest")
-        );
+        ).affirm();
     }
 
     @Test
@@ -373,7 +373,7 @@ public final class TextOfTest {
             "Can't format a LocalDate with ISO format.",
             new TextOf(LocalDate.now()).asString(),
             new IsNot<>(new IsBlank())
-        );
+        ).affirm();
     }
 
     @Test

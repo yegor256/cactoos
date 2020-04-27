@@ -53,13 +53,13 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "char sequence can't be copied to the file",
+            "char sequence must be copied to the file",
             new TeeInput(
                 input,
                 output
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -68,14 +68,14 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ file #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "char sequence can't be copied to the file with UTF_8 charset",
+            "char sequence must be copied to the file with UTF_8 charset",
             new TeeInput(
                 input,
                 output,
                 StandardCharsets.UTF_8
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -85,14 +85,14 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ file #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "char sequence can't be copied to the file with UTF_8 charset's name",
+            "char sequence must be copied to the file with UTF_8 charset's name",
             new TeeInput(
                 input,
                 output,
                 StandardCharsets.UTF_8.name()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -101,13 +101,13 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "char sequence can't be copied to the path",
+            "char sequence must be copied to the path",
             new TeeInput(
                 input,
                 output.toPath()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -116,14 +116,14 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "char sequence can't be copied to the path with UTF_8 charset",
+            "char sequence must be copied to the path with UTF_8 charset",
             new TeeInput(
                 input,
                 output.toPath(),
                 StandardCharsets.UTF_8
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -133,14 +133,14 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ path #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "char sequence can't be copied to the path with UTF_8 charset's name",
+            "char sequence must be copied to the path with UTF_8 charset's name",
             new TeeInput(
                 input,
                 output.toPath(),
                 StandardCharsets.UTF_8.name()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -149,13 +149,13 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "char sequence can't be copied to the output",
+            "char sequence must be copied to the output",
             new TeeInput(
                 input,
                 new OutputTo(output)
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -164,14 +164,14 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "char sequence can't be copied to the output with UTF_8 charset",
+            "char sequence must be copied to the output with UTF_8 charset",
             new TeeInput(
                 input,
                 new OutputTo(output),
                 StandardCharsets.UTF_8
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -181,13 +181,13 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "char sequence can't be copied to the output with UTF_8 charset's name",
+            "char sequence must be copied to the output with UTF_8 charset's name",
             new TeeInput(
                 input,
                 new OutputTo(output),
                 StandardCharsets.UTF_8.name()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 }

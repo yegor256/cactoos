@@ -59,7 +59,7 @@ public final class BehavesAsSet<T> extends TypeSafeMatcher<Set<T>> {
             "Does not contain duplicates",
             this.occurrences(item.iterator()),
             new IsEqual<>(1)
-        );
+        ).affirm();
         return new BehavesAsCollection<>(this.sample).matchesSafely(item);
     }
 

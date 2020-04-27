@@ -49,6 +49,6 @@ public final class Base64EncodedTest {
             new TextHasString(
                 "SGVsbG8h"
             )
-        );
+        ).affirm();
     }
 }

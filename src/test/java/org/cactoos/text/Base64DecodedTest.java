@@ -50,6 +50,6 @@ public final class Base64DecodedTest {
             new TextHasString(
                 "Hello!"
             )
-        );
+        ).affirm();
     }
 }

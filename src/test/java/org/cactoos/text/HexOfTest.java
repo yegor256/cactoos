@@ -44,7 +44,7 @@ public final class HexOfTest {
                 new BytesOf("")
             ),
             new TextHasString("")
-        );
+        ).affirm();
     }
 
     @Test
@@ -55,6 +55,6 @@ public final class HexOfTest {
                 new BytesOf("What's up, друг?")
             ),
             new TextHasString("5768617427732075702c20d0b4d180d183d0b33f")
-        );
+        ).affirm();
     }
 }

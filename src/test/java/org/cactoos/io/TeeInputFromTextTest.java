@@ -54,13 +54,13 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "text can't be copied to the path",
+            "text must be copied to the path",
             new TeeInput(
                 new TextOf(input),
                 output.toPath()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -69,14 +69,14 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "text can't be copied to the path with UTF_8 charset",
+            "text must be copied to the path with UTF_8 charset",
             new TeeInput(
                 new TextOf(input),
                 output.toPath(),
                 StandardCharsets.UTF_8
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -85,14 +85,14 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ path #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "text can't be copied to the path with UTF_8 charset's name",
+            "text must be copied to the path with UTF_8 charset's name",
             new TeeInput(
                 new TextOf(input),
                 output.toPath(),
                 StandardCharsets.UTF_8.name()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -101,13 +101,13 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "text can't be copied to the file",
+            "text must be copied to the file",
             new TeeInput(
                 new TextOf(input),
                 output
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -116,14 +116,14 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ file #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "text can't be copied to the file with UTF_8 charset",
+            "text must be copied to the file with UTF_8 charset",
             new TeeInput(
                 new TextOf(input),
                 output,
                 StandardCharsets.UTF_8
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -132,14 +132,14 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ file #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "text can't be copied to the file with UTF_8 charset's name",
+            "text must be copied to the file with UTF_8 charset's name",
             new TeeInput(
                 new TextOf(input),
                 output,
                 StandardCharsets.UTF_8.name()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -148,13 +148,13 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "text can't be copied to the output",
+            "text must be copied to the output",
             new TeeInput(
                 new TextOf(input),
                 new OutputTo(output)
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -163,14 +163,14 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "text can't be copied to the output with UTF_8 charset",
+            "text must be copied to the output with UTF_8 charset",
             new TeeInput(
                 new TextOf(input),
                 new OutputTo(output),
                 StandardCharsets.UTF_8
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 
     @Test
@@ -179,13 +179,13 @@ public final class TeeInputFromTextTest {
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new Assertion<>(
-            "text can't be copied to the output with UTF_8 charset's name",
+            "text must be copied to the output with UTF_8 charset's name",
             new TeeInput(
                 new TextOf(input),
                 new OutputTo(output),
                 StandardCharsets.UTF_8.name()
             ),
             new InputHasContent(input)
-        );
+        ).affirm();
     }
 }

@@ -48,7 +48,7 @@ public final class FormattedTextTest {
                 "%d. Formatted %s", 1, "text"
             ),
             new TextHasString("1. Formatted text")
-        );
+        ).affirm();
     }
 
     @Test
@@ -61,7 +61,7 @@ public final class FormattedTextTest {
                 new String("string")
             ),
             new TextHasString("1. Number as string")
-        );
+        ).affirm();
     }
 
     @Test(expected = UnknownFormatConversionException.class)
@@ -81,7 +81,7 @@ public final class FormattedTextTest {
                 new ListOf<>(1, "txt")
             ),
             new TextHasString("1. Formatted as txt")
-        );
+        ).affirm();
     }
 
     @Test(expected = IllegalFormatConversionException.class)
@@ -102,7 +102,7 @@ public final class FormattedTextTest {
                 "%,d", Locale.GERMAN, 1_234_567_890
             ),
             new TextHasString("1.234.567.890")
-        );
+        ).affirm();
     }
 
     @Test
@@ -114,6 +114,6 @@ public final class FormattedTextTest {
                 new TextOf("Cactoos")
             ),
             new TextHasString("Format with text: Cactoos")
-        );
+        ).affirm();
     }
 }

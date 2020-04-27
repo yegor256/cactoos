@@ -42,7 +42,7 @@ public final class IsBlankTest {
                 new TextOf("")
             ),
             new ScalarHasValue<>(Boolean.TRUE)
-        );
+        ).affirm();
     }
 
     @Test
@@ -53,7 +53,7 @@ public final class IsBlankTest {
                 new TextOf("  ")
             ),
             new ScalarHasValue<>(Boolean.TRUE)
-        );
+        ).affirm();
     }
 
     @Test
@@ -64,6 +64,6 @@ public final class IsBlankTest {
                 new TextOf("not empty")
             ),
             new ScalarHasValue<>(Boolean.FALSE)
-        );
+        ).affirm();
     }
 }
