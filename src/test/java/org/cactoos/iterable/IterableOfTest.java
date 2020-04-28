@@ -35,6 +35,7 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link IterableOf}.
@@ -103,6 +104,24 @@ public final class IterableOfTest {
             ),
             new IsEqual<>(new Joined<>(first, second, third))
         );
+    }
+
+    @Test
+    public void isNotEqualsToIterableWithMoreElements() {
+        new Assertion<>(
+            "Must compare iterables and second one is bigger",
+            new IterableOf<>("a", "b").equals(new IterableOf<>("a")),
+            new IsNot<>(new IsTrue())
+        ).affirm();
+    }
+
+    @Test
+    public void isNotEqualsToIterableWithLessElements() {
+        new Assertion<>(
+            "Must compare iterables and first one is bigger",
+            new IterableOf<>("a").equals(new IterableOf<>("a", "b")),
+            new IsNot<>(new IsTrue())
+        ).affirm();
     }
 
     @Test

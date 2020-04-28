@@ -31,6 +31,7 @@ import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.And;
+import org.cactoos.scalar.False;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
 import org.cactoos.scalar.Sticky;
@@ -155,13 +156,13 @@ public final class IterableOf<X> implements Iterable<X> {
                     () -> Iterable.class.isAssignableFrom(other.getClass()),
                     () -> {
                         final Iterable<?> compared = (Iterable<?>) other;
-                        final Iterator<?> iterator = compared.iterator();
-                        return new Unchecked<>(
-                            new And(
-                                (X input) -> input.equals(iterator.next()),
-                                this
-                            )
-                        ).value();
+                        final Iterator<X> ftr = this.iterator();
+                        final Iterator<?> str = compared.iterator();
+                        boolean failed = false;
+                        while (ftr.hasNext() && str.hasNext() && (!failed)) {
+                            failed = !ftr.next().equals(str.next());
+                        }
+                        return !failed && !ftr.hasNext() && !str.hasNext();
                     }
                 )
             )
