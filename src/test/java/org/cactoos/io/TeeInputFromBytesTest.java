@@ -26,12 +26,11 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import org.cactoos.scalar.LengthOf;
-import org.cactoos.text.TextOf;
-import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.InputHasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -62,8 +61,8 @@ public final class TeeInputFromBytesTest {
         ).intValue();
         new Assertion<>(
             "Must copy bytes to file path",
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new InputOf(output),
+            new InputHasContent(message)
         ).affirm();
     }
 
@@ -77,8 +76,8 @@ public final class TeeInputFromBytesTest {
         ).intValue();
         new Assertion<>(
             "Must copy bytes to file",
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new InputOf(output),
+            new InputHasContent(message)
         ).affirm();
     }
 
@@ -92,8 +91,8 @@ public final class TeeInputFromBytesTest {
         ).intValue();
         new Assertion<>(
             "Must bytes to output",
-            new TextOf(output).asString(),
-            new IsEqual<>(message)
+            new InputOf(output),
+            new InputHasContent(message)
         ).affirm();
     }
 }
