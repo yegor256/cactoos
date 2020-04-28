@@ -28,6 +28,8 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Matched}.
@@ -49,6 +51,32 @@ public final class MatchedTest {
             ),
             Matchers.hasItems(1, 2, 3)
         );
+    }
+
+    @Test
+    public void noCorrelationWithBiggerSecondIterable() throws IllegalStateException {
+        new Assertion<>(
+            "All elements have correlation function as `endsWith`",
+            () -> new Matched<>(
+                (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
+                new IterableOf<>("1st elem", "2nd elem"),
+                new IterableOf<>("`A` elem", "`B` elem", "'C' elem")
+            ).iterator(),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
+    }
+
+    @Test
+    public void noCorrelationWithSmallerSecondIterable() throws IllegalStateException {
+        new Assertion<>(
+            "All elements have correlation function as `endsWith`",
+            () -> new Matched<>(
+                (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
+                new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
+                new IterableOf<>("`A` elem", "`B` elem")
+            ).iterator(),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
     @Test

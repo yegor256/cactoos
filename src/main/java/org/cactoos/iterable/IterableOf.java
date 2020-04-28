@@ -31,10 +31,13 @@ import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.And;
+import org.cactoos.scalar.Checked;
+import org.cactoos.scalar.False;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.SumOfInt;
+import org.cactoos.scalar.True;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UncheckedText;
@@ -146,6 +149,7 @@ public final class IterableOf<X> implements Iterable<X> {
 
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    @SuppressWarnings (value = "unchecked")
     public boolean equals(final Object other) {
         return new Unchecked<>(
             new Or(
@@ -154,14 +158,22 @@ public final class IterableOf<X> implements Iterable<X> {
                     () -> other != null,
                     () -> Iterable.class.isAssignableFrom(other.getClass()),
                     () -> {
-                        final Iterable<?> compared = (Iterable<?>) other;
-                        final Iterator<X> ftr = this.iterator();
-                        final Iterator<?> str = compared.iterator();
-                        boolean failed = false;
-                        while (ftr.hasNext() && str.hasNext() && (!failed)) {
-                            failed = !ftr.next().equals(str.next());
+                        final Iterable<X> compared = (Iterable<X>) other;
+                        boolean equals;
+                        try {
+                            equals = new Checked<>(
+                                new And(
+                                    (X value) -> new True().value(),
+                                    new Matched<>(
+                                        this,
+                                        compared
+                                    )
+                                ), e -> new IllegalStateException()
+                            ).value();
+                        } catch (final IllegalStateException exception) {
+                            equals = new False().value();
                         }
-                        return !failed && !ftr.hasNext() && !str.hasNext();
+                        return equals;
                     }
                 )
             )

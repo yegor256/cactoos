@@ -73,8 +73,8 @@ public final class Matched<X> implements Iterable<X> {
                 final Iterator<X> ftr = fst.iterator();
                 final Iterator<X> str = snd.iterator();
                 final List<X> rslt = new LinkedList<>();
-                while (ftr.hasNext()) {
-                    if (!str.hasNext()) {
+                while (ftr.hasNext() || str.hasNext()) {
+                    if (!str.hasNext() || !ftr.hasNext()) {
                         throw new IllegalStateException(
                             "Size mismatch of iterators"
                         );
