@@ -25,12 +25,13 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.IOException;
+import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -56,17 +57,13 @@ public final class TeeInputFromBytesTest {
         final String message =
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        new LengthOf(
+            new TeeInput(new BytesOf(message), output.toPath())
+        ).intValue();
         new Assertion<>(
             "Must copy bytes to file path",
-            new TextOf(
-                new TeeInput(
-                    new BytesOf(message),
-                    output.toPath()
-                )
-            ),
-            new TextIs(
-                new TextOf(output.toPath())
-            )
+            new TextOf(output).asString(),
+            new IsEqual<>(message)
         ).affirm();
     }
 
@@ -75,17 +72,13 @@ public final class TeeInputFromBytesTest {
         final String message =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        new LengthOf(
+            new TeeInput(new BytesOf(message), output)
+        ).intValue();
         new Assertion<>(
             "Must copy bytes to file",
-            new TextOf(
-                new TeeInput(
-                    new BytesOf(message),
-                    output
-                )
-            ),
-            new TextIs(
-                new TextOf(output.toPath())
-            )
+            new TextOf(output).asString(),
+            new IsEqual<>(message)
         ).affirm();
     }
 
@@ -94,17 +87,13 @@ public final class TeeInputFromBytesTest {
         final String message =
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        new LengthOf(
+            new TeeInput(new BytesOf(message), new OutputTo(output))
+        ).intValue();
         new Assertion<>(
             "Must bytes to output",
-            new TextOf(
-                new TeeInput(
-                    new BytesOf(message),
-                    new OutputTo(output)
-                )
-            ),
-            new TextIs(
-                new TextOf(output.toPath())
-            )
+            new TextOf(output).asString(),
+            new IsEqual<>(message)
         ).affirm();
     }
 }

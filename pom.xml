@@ -317,9 +317,9 @@ The MIT License (MIT)
       <build>
         <plugins>
           <plugin>
-            <groupId>org.sonarsource.scanner.maven</groupId>
+            <groupId>org.codehaus.mojo</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
-            <version>3.6.1.1688</version>
+            <version>3.3.0.603</version>
             <executions>
               <execution>
                 <phase>package</phase>
@@ -331,11 +331,6 @@ The MIT License (MIT)
           </plugin>
         </plugins>
       </build>
-      <properties>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.organization>yegor256-github</sonar.organization>
-        <sonar.projectKey>org.cactoos:cactoos</sonar.projectKey>
-      </properties>
     </profile>
   </profiles>
 </project>
