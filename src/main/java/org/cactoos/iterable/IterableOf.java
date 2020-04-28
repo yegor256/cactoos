@@ -31,10 +31,11 @@ import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.And;
-import org.cactoos.scalar.Checked;
+import org.cactoos.scalar.FallbackFrom;
 import org.cactoos.scalar.False;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
+import org.cactoos.scalar.ScalarWithFallback;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.SumOfInt;
 import org.cactoos.scalar.True;
@@ -159,21 +160,21 @@ public final class IterableOf<X> implements Iterable<X> {
                     () -> Iterable.class.isAssignableFrom(other.getClass()),
                     () -> {
                         final Iterable<X> compared = (Iterable<X>) other;
-                        boolean equals;
-                        try {
-                            equals = new Checked<>(
-                                new And(
-                                    (X value) -> new True().value(),
-                                    new Matched<>(
-                                        this,
-                                        compared
-                                    )
-                                ), e -> new IllegalStateException()
-                            ).value();
-                        } catch (final IllegalStateException exception) {
-                            equals = new False().value();
-                        }
-                        return equals;
+                        return new ScalarWithFallback<>(
+                            new And(
+                                (X value) -> new True().value(),
+                                new Matched<>(
+                                    this,
+                                    compared
+                                )
+                            ),
+                            new IterableOf<>(
+                                new FallbackFrom<>(
+                                    IllegalStateException.class,
+                                    ex -> new False().value()
+                                )
+                            )
+                        ).value();
                     }
                 )
             )
