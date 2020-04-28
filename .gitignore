@@ -6,3 +6,4 @@ target/
 .settings
 .classpath
 .recommenders
+/nbproject/
