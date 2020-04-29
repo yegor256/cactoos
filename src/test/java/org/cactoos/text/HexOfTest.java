@@ -25,8 +25,8 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import org.cactoos.io.BytesOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -38,23 +38,23 @@ public final class HexOfTest {
 
     @Test
     public void empytString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't represent an empty string as hexadecimal",
             new HexOf(
                 new BytesOf("")
             ),
             new TextHasString("")
-        );
+        ).affirm();
     }
 
     @Test
     public void notEmpytString() throws IOException {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't represent a string as hexadecimal",
             new HexOf(
                 new BytesOf("What's up, друг?")
             ),
             new TextHasString("5768617427732075702c20d0b4d180d183d0b33f")
-        );
+        ).affirm();
     }
 }

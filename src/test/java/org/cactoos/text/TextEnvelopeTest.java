@@ -26,10 +26,10 @@ package org.cactoos.text;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Tests for {@link TextEnvelope}.
@@ -44,11 +44,11 @@ public final class TextEnvelopeTest {
     @Test
     public void testAsString() throws Exception {
         final String text = "asString";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Envelope value does not match String value",
             new TextEnvelopeDummy(text).asString(),
             new IsEqual<>(text)
-        );
+        ).affirm();
     }
 
     /**
@@ -59,11 +59,11 @@ public final class TextEnvelopeTest {
     @Test
     public void testEquals() {
         final String text = "equals";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Envelope does not match text representing the same value",
             new TextEnvelopeDummy(text),
             new IsEqual<>(new TextOf(text))
-        );
+        ).affirm();
     }
 
     /**
@@ -73,13 +73,13 @@ public final class TextEnvelopeTest {
      */
     @Test
     public void testEqualsOtherText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Envelope does not match another text representing the same value",
             new TextEnvelopeDummy("isequaltoanothertext"),
             new IsEqual<>(
                 new Joined("", "is", "equal", "to", "another", "text")
             )
-        );
+        ).affirm();
     }
 
     /**
@@ -89,13 +89,13 @@ public final class TextEnvelopeTest {
      */
     @Test
     public void testDoesNotEqualsNonTextObject() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Envelope does not match another object which is not a string",
             new TextEnvelopeDummy("is not equals to null"),
             new IsNot<>(
                 new IsEqual<>(new Object())
             )
-        );
+        ).affirm();
     }
 
     /**
@@ -105,12 +105,12 @@ public final class TextEnvelopeTest {
     @Test
     @SuppressWarnings("PMD.EqualsNull")
     public void testDoesNotEqualsFalse() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Envelope does not equals null",
             new TextEnvelopeDummy("is not equals to not Text object")
                 .equals(null),
             new IsEqual<>(false)
-        );
+        ).affirm();
     }
 
     /**
@@ -121,11 +121,11 @@ public final class TextEnvelopeTest {
     @Test
     public void testHashCode() {
         final String hash = "hashCode";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Enveloped hashCode does not match its represented String hashcode",
             new TextEnvelopeDummy(hash).hashCode(),
             new IsEqual<>(hash.hashCode())
-        );
+        ).affirm();
     }
 
     /**
