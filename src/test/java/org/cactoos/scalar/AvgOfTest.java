@@ -238,8 +238,7 @@ public final class AvgOfTest {
     @Test
     public void withDoubleCollectionNegativeNumbersDoubleValue() {
         new Assertion<>(
-            "Average of negative double values in negative double collection " +
-            "must be negative double value",
+            "Average of negative double values in negative double collection must be negative double value",
             new AvgOf(
                 -1.0d, -2.0d, -3.0d, -4.0d
             ).doubleValue(),
