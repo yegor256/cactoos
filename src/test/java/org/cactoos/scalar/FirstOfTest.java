@@ -118,4 +118,16 @@ public final class FirstOfTest {
             new Throws<>(IllegalArgumentException.class)
         ).affirm();
     }
+
+    @Test
+    public void returnsFirstValue() {
+        new Assertion<>(
+            "Returns first value",
+            new FirstOf<>(
+                new IterableOfInts(2, 1, 0),
+                () -> -1
+            ),
+            new ScalarHasValue<>(2)
+        ).affirm();
+    }
 }
