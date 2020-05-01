@@ -24,12 +24,9 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,8 +59,8 @@ public final class TeeInputFromBytesTest {
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         Files.write(
-                output.toPath(),
-                message.getBytes(StandardCharsets.UTF_8)
+            output.toPath(),
+            message.getBytes(StandardCharsets.UTF_8)
         );
         new LengthOf(
             new TeeInput(new BytesOf(message), output.toPath())
@@ -81,8 +78,8 @@ public final class TeeInputFromBytesTest {
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         Files.write(
-                output.toPath(),
-                message.getBytes(StandardCharsets.UTF_8)
+            output.toPath(),
+            message.getBytes(StandardCharsets.UTF_8)
         );
         new LengthOf(
             new TeeInput(new BytesOf(message), output)
@@ -100,8 +97,8 @@ public final class TeeInputFromBytesTest {
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         Files.write(
-                output.toPath(),
-                message.getBytes(StandardCharsets.UTF_8)
+            output.toPath(),
+            message.getBytes(StandardCharsets.UTF_8)
         );
         new LengthOf(
             new TeeInput(new BytesOf(message), new OutputTo(output))
