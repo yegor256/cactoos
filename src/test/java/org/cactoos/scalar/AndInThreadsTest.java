@@ -55,7 +55,7 @@ public final class AndInThreadsTest {
     @Test
     public void allTrue() throws Exception {
         new Assertion<>(
-                "Each object must be True",
+            "Each object must be True",
             new AndInThreads(
                 new True(),
                 new True(),
@@ -68,7 +68,7 @@ public final class AndInThreadsTest {
     @Test
     public void oneFalse() throws Exception {
         new Assertion<>(
-                "One object must be False",
+            "One object must be False",
             new AndInThreads(
                 new True(),
                 new False(),
@@ -81,7 +81,7 @@ public final class AndInThreadsTest {
     @Test
     public void allFalse() throws Exception {
         new Assertion<>(
-                "Each object must be False",
+            "Each object must be False",
             new AndInThreads(
                 new IterableOf<Scalar<Boolean>>(
                     new False(),
@@ -96,7 +96,7 @@ public final class AndInThreadsTest {
     @Test
     public void emptyIterator() throws Exception {
         new Assertion<>(
-                "Iterator must be empty",
+            "Iterator must be empty",
             new AndInThreads(new IterableOf<Scalar<Boolean>>()),
             new ScalarHasValue<>(true)
         ).affirm();
@@ -116,7 +116,7 @@ public final class AndInThreadsTest {
             new ScalarHasValue<>(true)
         ).affirm();
         new Assertion<>(
-                "Iterable must contain elements in any order",
+            "Iterable must contain elements in any order",
             list,
             new IsIterableContainingInAnyOrder<String>(
                 new ListOf<Matcher<? super String>>(

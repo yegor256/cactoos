@@ -42,7 +42,7 @@ public final class AndTest {
     @Test
     public void allTrue() throws Exception {
         new Assertion<>(
-                "Each object must be True",
+            "Each object must be True",
             new And(
                 new True(),
                 new True(),
@@ -55,7 +55,7 @@ public final class AndTest {
     @Test
     public void oneFalse() throws Exception {
         new Assertion<>(
-                "One object must be False",
+            "One object must be False",
             new And(
                 new True(),
                 new False(),
@@ -68,7 +68,7 @@ public final class AndTest {
     @Test
     public void allFalse() throws Exception {
         new Assertion<>(
-                "Each object must be False",
+            "Each object must be False",
             new And(
                 new IterableOf<Scalar<Boolean>>(
                     new False(),
@@ -83,7 +83,7 @@ public final class AndTest {
     @Test
     public void emptyIterator() throws Exception {
         new Assertion<>(
-                "Iterator must be empty",
+            "Iterator must be empty",
             new And(new IterableOf<Scalar<Boolean>>()),
             new ScalarHasValue<>(true)
         ).affirm();

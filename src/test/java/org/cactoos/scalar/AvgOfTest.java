@@ -43,7 +43,7 @@ public final class AvgOfTest {
     @Test
     public void withEmptyCollection() {
         new Assertion<>(
-                "Average of elements in empty collection must be zero",
+            "Average of elements in empty collection must be zero",
             new AvgOf(Collections.emptyList()).longValue(),
             Matchers.equalTo(0L)
         ).affirm();
@@ -52,7 +52,7 @@ public final class AvgOfTest {
     @Test
     public void withIntCollectionIntValue() {
         new Assertion<>(
-                "Average of int values in int collection must be int value",
+            "Average of int values in int collection must be int value",
             new AvgOf(
                 1, 2, 3, 4
             ).intValue(),
@@ -63,7 +63,7 @@ public final class AvgOfTest {
     @Test
     public void withIntCollectionIntValueMaxValues() {
         new Assertion<>(
-                "Average of MAX int values in MAX int collection must be MAX int value",
+            "Average of MAX int values in MAX int collection must be MAX int value",
             new AvgOf(
                 Integer.MAX_VALUE, Integer.MAX_VALUE
             ).intValue(),
@@ -74,7 +74,7 @@ public final class AvgOfTest {
     @Test
     public void withIntCollectionLongValue() {
         new Assertion<>(
-                "Average of int values in int collection must be long value",
+            "Average of int values in int collection must be long value",
             new AvgOf(
                 1, 2, 3, 4
             ).longValue(),
@@ -85,7 +85,7 @@ public final class AvgOfTest {
     @Test
     public void withIntCollectionDoubleValue() {
         new Assertion<>(
-                "Average of int values in int collection must be double value",
+            "Average of int values in int collection must be double value",
             new AvgOf(
                 1, 2, 3, 4
             ).doubleValue(),
@@ -96,7 +96,7 @@ public final class AvgOfTest {
     @Test
     public void withIntCollectionFloatValue() {
         new Assertion<>(
-                "Average of int values in int collection must be float value",
+            "Average of int values in int collection must be float value",
             new AvgOf(
                 1, 2, 3, 4
             ).floatValue(),
@@ -107,7 +107,7 @@ public final class AvgOfTest {
     @Test
     public void withLongCollectionIntValue() {
         new Assertion<>(
-                "Average of long values in long collection must be int value",
+            "Average of long values in long collection must be int value",
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).intValue(),
@@ -118,7 +118,7 @@ public final class AvgOfTest {
     @Test
     public void withLongCollectionLongValue() {
         new Assertion<>(
-                "Average of long values in long collection must be long value",
+            "Average of long values in long collection must be long value",
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).longValue(),
@@ -129,7 +129,7 @@ public final class AvgOfTest {
     @Test
     public void withLongCollectionMaxValue() {
         new Assertion<>(
-                "Average of MAX long values in MAX long collection must be MAX long value",
+            "Average of MAX long values in MAX long collection must be MAX long value",
             new AvgOf(
                 Long.MAX_VALUE, Long.MAX_VALUE
             ).longValue(),
@@ -140,7 +140,7 @@ public final class AvgOfTest {
     @Test
     public void withLongCollectionDoubleValue() {
         new Assertion<>(
-                "Average of long values in long collection must be double value",
+            "Average of long values in long collection must be double value",
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).doubleValue(),
@@ -151,7 +151,7 @@ public final class AvgOfTest {
     @Test
     public void withLongCollectionFloatValue() {
         new Assertion<>(
-                "Average of long values in long collection must be float value",
+            "Average of long values in long collection must be float value",
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).floatValue(),
@@ -162,7 +162,7 @@ public final class AvgOfTest {
     @Test
     public void withDoubleCollectionIntValue() {
         new Assertion<>(
-                "Average of double values in double collection must be int value",
+            "Average of double values in double collection must be int value",
             new AvgOf(
                 1.0d, 2.0d, 3.0d, 4.0d
             ).intValue(),
@@ -173,7 +173,7 @@ public final class AvgOfTest {
     @Test
     public void withDoubleCollectionLongValue() {
         new Assertion<>(
-                "Average of double values in double collection must be long value",
+            "Average of double values in double collection must be long value",
             new AvgOf(
                 1.0d, 2.0d, 3.0d, 4.0d
             ).longValue(),
@@ -184,7 +184,7 @@ public final class AvgOfTest {
     @Test
     public void withDoubleCollectionDoubleValue() {
         new Assertion<>(
-                "Average of double values in double collection must be double value",
+            "Average of double values in double collection must be double value",
             new AvgOf(
                 1.0d, 2.0d, 3.0d, 4.0d
             ).doubleValue(),
@@ -195,7 +195,7 @@ public final class AvgOfTest {
     @Test
     public void withDoubleCollectionMaxValue() {
         new Assertion<>(
-                "Average of MAX double values in MAX double collection must be MAX double value",
+            "Average of MAX double values in MAX double collection must be MAX double value",
             new AvgOf(
                 Double.MAX_VALUE, Double.MAX_VALUE
             ).doubleValue(),
@@ -206,7 +206,7 @@ public final class AvgOfTest {
     @Test
     public void withDoubleCollectionMinValue() {
         new Assertion<>(
-                "Average of MIN double values in MIN double collection must be MIN double value",
+            "Average of MIN double values in MIN double collection must be MIN double value",
             new AvgOf(
                 Double.MIN_VALUE, Double.MIN_VALUE
             ).doubleValue(),
@@ -238,8 +238,8 @@ public final class AvgOfTest {
     @Test
     public void withDoubleCollectionNegativeNumbersDoubleValue() {
         new Assertion<>(
-                "Average of negative double values in negative double collection " +
-                        "must be negative double value",
+            "Average of negative double values in negative double collection " +
+            "must be negative double value",
             new AvgOf(
                 -1.0d, -2.0d, -3.0d, -4.0d
             ).doubleValue(),
@@ -250,7 +250,7 @@ public final class AvgOfTest {
     @Test
     public void withDecimalCollectionPrecisionProblem() {
         new Assertion<>(
-                "Average of decimal values must have precision problem",
+            "Average of decimal values must have precision problem",
             new AvgOf(
                 100.0, 100.666, 100.0
             ).floatValue(),
@@ -261,7 +261,7 @@ public final class AvgOfTest {
     @Test
     public void withDecimalCollectionPrecisionProblemExtraDecimalRange() {
         new Assertion<>(
-                "Average of decimal values with extra decimal range must have precision problem",
+            "Average of decimal values with extra decimal range must have precision problem",
             new AvgOf(
                 100.266, 100.267
             ).floatValue(),
@@ -272,7 +272,7 @@ public final class AvgOfTest {
     @Test
     public void withFloatCollectionIntValue() {
         new Assertion<>(
-                "Average of float values in float collection must be int value",
+            "Average of float values in float collection must be int value",
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).intValue(),
@@ -283,7 +283,7 @@ public final class AvgOfTest {
     @Test
     public void withFloatCollectionLongValue() {
         new Assertion<>(
-                "Average of float values in float collection must be long value",
+            "Average of float values in float collection must be long value",
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).longValue(),
@@ -294,7 +294,7 @@ public final class AvgOfTest {
     @Test
     public void withFloatCollectionDoubleValue() {
         new Assertion<>(
-                "Average of float values in float collection must be double value",
+            "Average of float values in float collection must be double value",
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).doubleValue(),
@@ -305,7 +305,7 @@ public final class AvgOfTest {
     @Test
     public void withFloatCollectionFloatValue() {
         new Assertion<>(
-                "Average of float values in float collection must be float value",
+            "Average of float values in float collection must be float value",
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).floatValue(),
@@ -316,7 +316,7 @@ public final class AvgOfTest {
     @Test
     public void withFloatCollectionMaxValue() {
         new Assertion<>(
-                "Average of MAX float values in MAX float collection must be MAX float value",
+            "Average of MAX float values in MAX float collection must be MAX float value",
             new AvgOf(
                 Float.MAX_VALUE, Float.MAX_VALUE
             ).floatValue(),
@@ -327,7 +327,7 @@ public final class AvgOfTest {
     @Test
     public void withFloatCollectionMinValue() {
         new Assertion<>(
-                "Average of MIN float values in MIN float collection must be MIN float value",
+            "Average of MIN float values in MIN float collection must be MIN float value",
             new AvgOf(
                 Float.MIN_VALUE, Float.MIN_VALUE
             ).floatValue(),
@@ -338,7 +338,7 @@ public final class AvgOfTest {
     @Test
     public void withIntScalarsIntValue() {
         new Assertion<>(
-                "Average of int scalars must be int value",
+            "Average of int scalars must be int value",
             new AvgOf(
                 () -> 1, () -> 2, () -> 10
             ).intValue(),
@@ -349,7 +349,7 @@ public final class AvgOfTest {
     @Test
     public void withLongScalarsIntValue() {
         new Assertion<>(
-                "Average of long scalars must be int value",
+            "Average of long scalars must be int value",
             new AvgOf(
                 () -> 1L, () -> 2L, () -> 10L
             ).intValue(),
@@ -360,7 +360,7 @@ public final class AvgOfTest {
     @Test
     public void withFloatScalarsIntValue() {
         new Assertion<>(
-                "Average of float scalars must be int value",
+            "Average of float scalars must be int value",
             new AvgOf(
                 () -> 1.0f, () -> 2.0f, () -> 10.0f
             ).longValue(),
@@ -371,7 +371,7 @@ public final class AvgOfTest {
     @Test
     public void withDoubleScalarsIntValue() {
         new Assertion<>(
-                "Average of double scalars must be int value",
+            "Average of double scalars must be int value",
             new AvgOf(
                 () -> 1.0d, () -> 2.0d, () -> 10.0d
             ).intValue(),
@@ -382,7 +382,7 @@ public final class AvgOfTest {
     @Test
     public void withIterableOfScalars() {
         new Assertion<>(
-                "Average of iterable scalars must be long value",
+            "Average of iterable scalars must be long value",
             new AvgOf(
                 new IterableOf<Scalar<Number>>(() -> 1L, () -> 2L, () -> 10L)
             ).longValue(),
@@ -393,7 +393,7 @@ public final class AvgOfTest {
     @Test
     public void withCompositionOfScalars() {
         new Assertion<>(
-                "Average of composition of scalars must be int value",
+            "Average of composition of scalars must be int value",
             new AvgOf(
                 () -> new MinOf(1.0d, 2.0d),
                 () -> new MaxOf(2.0d, 4.0d),
