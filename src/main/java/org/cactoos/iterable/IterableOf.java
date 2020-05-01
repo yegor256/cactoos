@@ -162,7 +162,7 @@ public final class IterableOf<X> implements Iterable<X> {
                         final Iterable<X> compared = (Iterable<X>) other;
                         return new ScalarWithFallback<>(
                             new And(
-                                (X value) -> new True().value(),
+                                (X value) -> true,
                                 new Matched<>(
                                     this,
                                     compared
@@ -171,7 +171,7 @@ public final class IterableOf<X> implements Iterable<X> {
                             new IterableOf<>(
                                 new FallbackFrom<>(
                                     IllegalStateException.class,
-                                    ex -> new False().value()
+                                    ex -> false
                                 )
                             )
                         ).value();
