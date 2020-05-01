@@ -54,6 +54,19 @@ public final class FirstOf<T> implements Scalar<T> {
     private final Scalar<T> fallback;
 
     /**
+     * Constructor with default condition (always `true`) and plain fallback.
+     * @param src Source iterable
+     * @param fbck Fallback used if no value matches
+     */
+    public FirstOf(final Iterable<T> src, final T fbck) {
+        this(
+            new FuncOf<>(true),
+            src,
+            () -> fbck
+        );
+    }
+
+    /**
      * Constructor with default condition (always `true`).
      * @param src Source iterable
      * @param fbck Fallback used if no value matches

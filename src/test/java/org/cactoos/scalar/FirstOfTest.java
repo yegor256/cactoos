@@ -120,12 +120,24 @@ public final class FirstOfTest {
     }
 
     @Test
-    public void returnsFirstValue() {
+    public void returnsFirstValueWithScalarFallback() {
         new Assertion<>(
-            "Returns first value",
-            new FirstOf<>(
+            "Returns first value with scalar fallback",
+            new FirstOf<Integer>(
                 new IterableOfInts(2, 1, 0),
                 () -> -1
+            ),
+            new ScalarHasValue<>(2)
+        ).affirm();
+    }
+
+    @Test
+    public void returnsFirstValueWithIntegerFallback() {
+        new Assertion<>(
+            "Returns first value with Integer fallback",
+            new FirstOf<>(
+                new IterableOfInts(2, 1, 0),
+                -1
             ),
             new ScalarHasValue<>(2)
         ).affirm();
