@@ -174,8 +174,8 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         Files.write(
-                output.toPath(),
-                input.getBytes(StandardCharsets.UTF_8)
+            output.toPath(),
+            input.getBytes(StandardCharsets.UTF_8)
         );
         new Assertion<>(
             "char sequence must be copied to the output",
@@ -193,8 +193,8 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         Files.write(
-                output.toPath(),
-                input.getBytes(StandardCharsets.UTF_8)
+            output.toPath(),
+            input.getBytes(StandardCharsets.UTF_8)
         );
         new Assertion<>(
             "char sequence must be copied to the output with UTF_8 charset",
@@ -214,8 +214,8 @@ public final class TeeInputFromCharSequenceTest {
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         Files.write(
-                output.toPath(),
-                input.getBytes(StandardCharsets.UTF_8)
+            output.toPath(),
+            input.getBytes(StandardCharsets.UTF_8)
         );
         new Assertion<>(
             "char sequence must be copied to the output with UTF_8 charset's name",
