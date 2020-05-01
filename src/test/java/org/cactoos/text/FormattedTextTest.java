@@ -28,8 +28,8 @@ import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -42,18 +42,18 @@ public final class FormattedTextTest {
 
     @Test
     public void formatsText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a text",
             new FormattedText(
                 "%d. Formatted %s", 1, "text"
             ),
             new TextHasString("1. Formatted text")
-        );
+        ).affirm();
     }
 
     @Test
     public void formatsTextWithObjects() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a text with objects",
             new FormattedText(
                 new TextOf("%d. Number as %s"),
@@ -61,7 +61,7 @@ public final class FormattedTextTest {
                 new String("string")
             ),
             new TextHasString("1. Number as string")
-        );
+        ).affirm();
     }
 
     @Test(expected = UnknownFormatConversionException.class)
@@ -74,14 +74,14 @@ public final class FormattedTextTest {
 
     @Test
     public void formatsTextWithCollection() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a text with a collection",
             new FormattedText(
                 new TextOf("%d. Formatted as %s"),
                 new ListOf<>(1, "txt")
             ),
             new TextHasString("1. Formatted as txt")
-        );
+        ).affirm();
     }
 
     @Test(expected = IllegalFormatConversionException.class)
@@ -95,25 +95,25 @@ public final class FormattedTextTest {
 
     @Test
     public void formatsWithLocale() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a text with Locale",
             new FormattedText(
                 // @checkstyle MagicNumber (1 line)
                 "%,d", Locale.GERMAN, 1_234_567_890
             ),
             new TextHasString("1.234.567.890")
-        );
+        ).affirm();
     }
 
     @Test
     public void formatsWithText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't format a string with text",
             new FormattedText(
                 "Format with text: %s",
                 new TextOf("Cactoos")
             ),
             new TextHasString("Format with text: Cactoos")
-        );
+        ).affirm();
     }
 }

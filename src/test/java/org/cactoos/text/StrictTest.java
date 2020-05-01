@@ -24,7 +24,6 @@
 package org.cactoos.text;
 
 import java.util.regex.Pattern;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
@@ -61,11 +60,11 @@ public final class StrictTest {
      */
     @Test
     public void returnsUnchangedIfPredicateIsPositive() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Given strings are not equal",
             new Strict(s -> true, new TextOf("text")),
             new TextIs("text")
-        );
+        ).affirm();
     }
 
     /**
@@ -93,13 +92,13 @@ public final class StrictTest {
      */
     @Test
     public void returnsUnchangedIfMatchedWithPattern() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Given strings are not equal",
             new Strict(
                 Pattern.compile("^[a-zA-Z0-9]+$"),
                 new TextOf("text1")
             ),
             new TextIs("text1")
-        );
+        ).affirm();
     }
 }

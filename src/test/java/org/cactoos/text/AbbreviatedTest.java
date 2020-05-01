@@ -23,8 +23,8 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
 /**
@@ -38,82 +38,82 @@ public final class AbbreviatedTest {
     @Test
     public void abbreviatesAnEmptyText() {
         final String msg = "";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't abbreviate an msg text",
             // @checkstyle MagicNumber (1 line)
             new Abbreviated(msg, 8),
             new TextHasString(msg)
-        );
+        ).affirm();
     }
 
     @Test
     public void abbreviatesText() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't abbreviate a text",
             // @checkstyle MagicNumber (1 line)
             new Abbreviated("hello world", 8),
             new TextHasString("hello...")
-        );
+        ).affirm();
     }
 
     @Test
     public void abbreviatesTextOneCharSmaller() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't abbreviate a text one char smaller",
             // @checkstyle MagicNumber (1 line)
             new Abbreviated("oo programming", 10),
             new TextHasString("oo prog...")
-        );
+        ).affirm();
     }
 
     @Test
     public void abbreviatesTextWithSameLength() {
         final String msg = "elegant objects";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't abbreviate a text with same length",
             // @checkstyle MagicNumber (1 line)
             new Abbreviated(msg, 15),
             new TextHasString(msg)
-        );
+        ).affirm();
     }
 
     @Test
     public void abbreviatesTextOneCharBigger() {
         final String msg = "the old mcdonald";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't abbreviate a text one char bigger",
             // @checkstyle MagicNumber (1 line)
             new Abbreviated(msg, 17),
             new TextHasString(msg)
-        );
+        ).affirm();
     }
 
     @Test
     public void abbreviatesTextTwoCharsBigger() {
         final String msg = "hi everybody!";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't abbreviate a text two chars bigger",
             // @checkstyle MagicNumber (1 line)
             new Abbreviated(msg, 15),
             new TextHasString(msg)
-        );
+        ).affirm();
     }
 
     @Test
     public void abbreviatesTextWithWidthBiggerThanLength() {
         final String msg = "cactoos framework";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't abbreviate a text with width bigger than length",
             // @checkstyle MagicNumber (1 line)
             new Abbreviated(msg, 50),
             new TextHasString(msg)
-        );
+        ).affirm();
     }
 
     @Test
     public void abbreviatesTextBiggerThanDefaultMaxWidth() {
         // @checkstyle LineLengthCheck (10 line)
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't abbreviate a text bigger than default max width",
             new Abbreviated(
                 "The quick brown fox jumps over the lazy black dog and after that returned to the cave"
@@ -121,7 +121,7 @@ public final class AbbreviatedTest {
             new TextHasString(
                 "The quick brown fox jumps over the lazy black dog and after that returned to ..."
             )
-        );
+        ).affirm();
     }
 
 }

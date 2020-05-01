@@ -21,49 +21,64 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.iterator;
 
+import org.cactoos.list.ListOf;
+import org.hamcrest.collection.IsEmptyCollection;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
- * Test case for {@link IsBlank}.
- * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
+ * Test case for {@link Reversed}.
+ *
+ * @since 0.45
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class IsBlankTest {
+public final class ReversedTest {
 
     @Test
-    public void determinesEmptyText() {
+    public void reversesIterator() {
         new Assertion<>(
-            "Can't determine an empty text",
-            new IsBlank(
-                new TextOf("")
+            "Must reverse the iterator",
+            new ListOf<>(
+                new Reversed<>(
+                    new IteratorOf<>("c", "a", "c", "t", "o", "o", "s")
+                )
             ),
-            new ScalarHasValue<>(Boolean.TRUE)
+            new IsEqual<>(
+                new ListOf<>(
+                    new IteratorOf<>("s", "o", "o", "t", "c", "a", "c")
+                )
+            )
         ).affirm();
     }
 
     @Test
-    public void determinesBlankText() {
+    public void reversesEmptyList() {
         new Assertion<>(
-            "Can't determine an empty text with spaces",
-            new IsBlank(
-                new TextOf("  ")
+            "Must reverse empty list",
+            new ListOf<>(
+                new Reversed<>(
+                    new IteratorOf<>()
+                )
             ),
-            new ScalarHasValue<>(Boolean.TRUE)
+            new IsEmptyCollection<>()
         ).affirm();
     }
 
     @Test
-    public void determinesNotBlankText() {
+    public void iteratorSizeReversed() {
         new Assertion<>(
-            "Can't detect a nonempty text",
-            new IsBlank(
-                new TextOf("not empty")
+            "Must be the same size",
+            new ListOf<>(
+                new Reversed<>(
+                    new IteratorOf<>("c", "a", "c", "t", "o", "o", "s")
+                )
             ),
-            new ScalarHasValue<>(Boolean.FALSE)
+            new HasSize(7)
         ).affirm();
     }
+
 }

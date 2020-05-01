@@ -38,9 +38,6 @@ import org.cactoos.list.ListOf;
  *
  * @param <X> Type of item
  * @since 1.0
- * @todo #1300:30min For now this class is only tested through tests coming
- *  from iterables's Reversed: introduces tests for this class to enforce its
- *  contract and validate it works as expected.
  */
 public final class Reversed<X> implements Iterator<X> {
 

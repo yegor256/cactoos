@@ -41,7 +41,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
@@ -65,7 +64,7 @@ public final class TextOfTest {
 
     @Test
     public void readsInputIntoText() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read text from Input",
             new Synced(
                 new TextOf(
@@ -77,12 +76,12 @@ public final class TextOfTest {
                 Matchers.startsWith("привет, "),
                 Matchers.endsWith("друг!")
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsInputIntoTextWithDefaultCharset() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read text from Input with default charset",
             new TextOf(
                 new InputOf("Hello, друг! with default charset")
@@ -91,12 +90,12 @@ public final class TextOfTest {
                 Matchers.startsWith("Hello, "),
                 Matchers.endsWith("друг! with default charset")
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsInputIntoTextWithSmallBuffer() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read text with a small reading buffer",
             new TextOf(
                 new InputOf("Hi, товарищ! with small buffer"),
@@ -107,7 +106,7 @@ public final class TextOfTest {
                 Matchers.startsWith("Hi,"),
                 Matchers.endsWith("товарищ! with small buffer")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -127,7 +126,7 @@ public final class TextOfTest {
     @Test
     public void readsInputIntoTextWithSmallBufferAndDefaultCharset()
         throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read text with a small reading buffer and default charset",
             new TextOf(
                 new InputOf("Hello, товарищ! with default charset"),
@@ -137,13 +136,13 @@ public final class TextOfTest {
                 Matchers.startsWith("Hello,"),
                 Matchers.endsWith("товарищ! with default charset")
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsFromReader() throws Exception {
         final String source = "hello, друг!";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read string through a reader",
             new TextOf(
                 new StringReader(source),
@@ -155,13 +154,13 @@ public final class TextOfTest {
                     StandardCharsets.UTF_8
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsFromReaderWithDefaultEncoding() throws Exception {
         final String source = "hello, друг! with default encoding";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read string with default encoding through a reader",
             new TextOf(new StringReader(source)).asString(),
             Matchers.equalTo(
@@ -170,12 +169,12 @@ public final class TextOfTest {
                     StandardCharsets.UTF_8
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsEncodedArrayOfCharsIntoText() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read array of encoded chars into text.",
             new TextOf(
                 'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
@@ -185,26 +184,26 @@ public final class TextOfTest {
                 Matchers.startsWith("O que sera"),
                 Matchers.endsWith(" que sera")
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsAnArrayOfBytes() throws Exception {
         final byte[] bytes = new byte[] {(byte) 0xCA, (byte) 0xFE};
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read array of bytes",
             new TextOf(
                 bytes
             ).asString(),
             Matchers.equalTo(new String(bytes, StandardCharsets.UTF_8))
-        );
+        ).affirm();
     }
 
     @Test
     public void readsStringBuilder() throws Exception {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't process a string builder",
             new TextOf(
                 new StringBuilder(starts).append(ends)
@@ -213,14 +212,14 @@ public final class TextOfTest {
                 Matchers.startsWith(starts),
                 Matchers.endsWith(ends)
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsStringBuffer() throws Exception {
         final String starts = "In our daily life, ";
         final String ends = "we can smile!";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't process a string builder hahahaha",
             new TextOf(
                 new StringBuffer(starts).append(ends)
@@ -229,12 +228,12 @@ public final class TextOfTest {
                 Matchers.startsWith(starts),
                 Matchers.endsWith(ends)
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void printsStackTrace() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't print exception stacktrace",
             new TextOf(
                 new IOException(
@@ -248,7 +247,7 @@ public final class TextOfTest {
                     "\tat org.cactoos.text.TextOfTest"
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -257,13 +256,13 @@ public final class TextOfTest {
         final InputStream stream = new ByteArrayInputStream(
             content.getBytes(StandardCharsets.UTF_8.name())
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read inputStream",
             new TextOf(stream).asString(),
             Matchers.equalTo(
                 new String(content.getBytes(), StandardCharsets.UTF_8)
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -272,11 +271,11 @@ public final class TextOfTest {
         final InputStream stream = new ByteArrayInputStream(
             content.getBytes(StandardCharsets.UTF_8.name())
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read multiline inputStream",
             new TextOf(stream).asString(),
             Matchers.equalTo(content)
-        );
+        ).affirm();
     }
 
     @Test
@@ -285,11 +284,11 @@ public final class TextOfTest {
         final InputStream stream = new ByteArrayInputStream(
             content.getBytes(StandardCharsets.UTF_8.name())
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read multiline inputStream with carriage return",
             new TextOf(stream).asString(),
             Matchers.equalTo(content)
-        );
+        ).affirm();
     }
 
     @Test
@@ -299,11 +298,11 @@ public final class TextOfTest {
             content.getBytes(StandardCharsets.UTF_8.name())
         );
         stream.close();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read closed input stream",
             new TextOf(stream).asString(),
             Matchers.equalTo(content)
-        );
+        ).affirm();
     }
 
     @Test
@@ -312,22 +311,22 @@ public final class TextOfTest {
         final InputStream stream = new ByteArrayInputStream(
             content.getBytes(StandardCharsets.UTF_8.name())
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't read empty input stream",
             new TextOf(stream).asString(),
             Matchers.equalTo(content)
-        );
+        ).affirm();
     }
 
     @Test
     public void printsStackTraceFromArray() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't print exception stacktrace from array",
             new TextOf(
                 new IOException("").getStackTrace()
             ),
             new TextHasString("org.cactoos.text.TextOfTest")
-        );
+        ).affirm();
     }
 
     @Test
@@ -374,7 +373,7 @@ public final class TextOfTest {
             "Can't format a LocalDate with ISO format.",
             new TextOf(LocalDate.now()).asString(),
             new IsNot<>(new IsBlank())
-        );
+        ).affirm();
     }
 
     @Test
