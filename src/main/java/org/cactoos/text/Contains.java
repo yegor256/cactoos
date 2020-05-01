@@ -44,40 +44,40 @@ public final class Contains implements Scalar<Boolean> {
     private final Text other;
 
     /**
-     * Ctor .
-     * @param orgn The origin
-     * @param othr The other
+     * Ctor.
+     * @param origin The origin
+     * @param other The other
      */
-    public Contains(final String orgn, final String othr) {
-        this(new TextOf(orgn), new TextOf(othr));
+    public Contains(final String origin, final String other) {
+        this(new TextOf(origin), new TextOf(other));
     }
 
     /**
      * Ctor.
-     * @param orgn The origin
-     * @param othr The other
+     * @param origin The origin
+     * @param other The other
      */
-    public Contains(final String orgn, final Text othr) {
-        this(new TextOf(orgn), othr);
+    public Contains(final String origin, final Text other) {
+        this(new TextOf(origin), other);
     }
 
     /**
      * Ctor.
-     * @param orgn The origin
-     * @param othr The other
+     * @param origin The origin
+     * @param other The other
      */
-    public Contains(final Text orgn, final String othr) {
-        this(orgn, new TextOf(othr));
+    public Contains(final Text origin, final String other) {
+        this(origin, new TextOf(other));
     }
 
     /**
      * Ctor.
-     * @param orgn The origin
-     * @param othr The other
+     * @param origin The origin
+     * @param other The other
      */
-    public Contains(final Text orgn, final Text othr) {
-        this.origin = orgn;
-        this.other = othr;
+    public Contains(final Text origin, final Text other) {
+        this.origin = origin;
+        this.other = other;
     }
 
     @Override
