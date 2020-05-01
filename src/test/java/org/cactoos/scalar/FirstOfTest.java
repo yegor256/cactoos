@@ -142,4 +142,16 @@ public final class FirstOfTest {
             new ScalarHasValue<>(2)
         ).affirm();
     }
+
+    @Test
+    public void returnsFallbackWhenIterableEmpty() {
+        new Assertion<>(
+            "Returns fallback when iterable empty",
+            new FirstOf<Integer>(
+                new IterableOf<>(),
+                () -> -1
+            ),
+            new ScalarHasValue<>(-1)
+        ).affirm();
+    }
 }
