@@ -26,9 +26,9 @@ package org.cactoos.scalar;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.func.BiFuncOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -44,8 +44,8 @@ public final class AndWithIndexTest {
     @Test
     public void iteratesListWithIndex() {
         final List<String> list = new LinkedList<>();
-        MatcherAssert.assertThat(
-            "Can't iterate a list with a procedure",
+        new Assertion<>(
+            "Must iterate a list with a procedure",
             new AndWithIndex(
                 new BiFuncOf<>(
                     (text, index) -> list.add(index, text),
@@ -61,6 +61,6 @@ public final class AndWithIndexTest {
                     )
                 )
             )
-        );
+        ).affirm();
     }
 }

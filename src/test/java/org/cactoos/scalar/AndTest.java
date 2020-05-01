@@ -27,6 +27,7 @@ import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -40,31 +41,34 @@ public final class AndTest {
 
     @Test
     public void allTrue() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+                "Each object must be True",
             new And(
                 new True(),
                 new True(),
                 new True()
             ),
             new ScalarHasValue<>(true)
-        );
+        ).affirm();
     }
 
     @Test
     public void oneFalse() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+                "One object must be False",
             new And(
                 new True(),
                 new False(),
                 new True()
             ),
             new ScalarHasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
     public void allFalse() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+                "Each object must be False",
             new And(
                 new IterableOf<Scalar<Boolean>>(
                     new False(),
@@ -73,15 +77,16 @@ public final class AndTest {
                 )
             ),
             new ScalarHasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
     public void emptyIterator() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+                "Iterator must be empty",
             new And(new IterableOf<Scalar<Boolean>>()),
             new ScalarHasValue<>(true)
-        );
+        ).affirm();
     }
 
     @Test
