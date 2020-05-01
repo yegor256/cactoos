@@ -39,6 +39,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -53,31 +54,34 @@ public final class AndInThreadsTest {
 
     @Test
     public void allTrue() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Each object must be True",
             new AndInThreads(
                 new True(),
                 new True(),
                 new True()
             ),
             new ScalarHasValue<>(true)
-        );
+        ).affirm();
     }
 
     @Test
     public void oneFalse() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "One object must be False",
             new AndInThreads(
                 new True(),
                 new False(),
                 new True()
             ),
             new ScalarHasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
     public void allFalse() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Each object must be False",
             new AndInThreads(
                 new IterableOf<Scalar<Boolean>>(
                     new False(),
@@ -86,22 +90,23 @@ public final class AndInThreadsTest {
                 )
             ),
             new ScalarHasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
     public void emptyIterator() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Iterator must be empty",
             new AndInThreads(new IterableOf<Scalar<Boolean>>()),
             new ScalarHasValue<>(true)
-        );
+        ).affirm();
     }
 
     @Test
     public void iteratesList() {
         final List<String> list = new Synced<>(new ListOf<>());
-        MatcherAssert.assertThat(
-            "Can't iterate a list with a procedure",
+        new Assertion<>(
+            "Must iterate a list with a procedure",
             new AndInThreads(
                 new Mapped<String, Scalar<Boolean>>(
                     new FuncOf<>(list::add, () -> true),
@@ -109,8 +114,9 @@ public final class AndInThreadsTest {
                 )
             ),
             new ScalarHasValue<>(true)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "Iterable must contain elements in any order",
             list,
             new IsIterableContainingInAnyOrder<String>(
                 new ListOf<Matcher<? super String>>(
@@ -126,7 +132,7 @@ public final class AndInThreadsTest {
                     )
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -134,8 +140,8 @@ public final class AndInThreadsTest {
         final List<String> list = new Synced<>(
             new ArrayList<>(2)
         );
-        MatcherAssert.assertThat(
-            "Can't iterate a list",
+        new Assertion<>(
+            "Must iterate an empty list",
             new AndInThreads(
                 new Mapped<String, Scalar<Boolean>>(
                     new FuncOf<>(list::add, () -> true), new IterableOf<>()
@@ -151,7 +157,7 @@ public final class AndInThreadsTest {
                     )
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test

@@ -26,9 +26,9 @@ package org.cactoos.scalar;
 import java.util.Collections;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link AvgOf}.
@@ -42,160 +42,176 @@ public final class AvgOfTest {
 
     @Test
     public void withEmptyCollection() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of elements in empty collection must be zero",
             new AvgOf(Collections.emptyList()).longValue(),
             Matchers.equalTo(0L)
-        );
+        ).affirm();
     }
 
     @Test
     public void withIntCollectionIntValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in int collection must be int value",
             new AvgOf(
                 1, 2, 3, 4
             ).intValue(),
             Matchers.equalTo(2)
-        );
+        ).affirm();
     }
 
     @Test
     public void withIntCollectionIntValueMaxValues() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in MAX int collection must be MAX int value",
             new AvgOf(
                 Integer.MAX_VALUE, Integer.MAX_VALUE
             ).intValue(),
             Matchers.equalTo(Integer.MAX_VALUE)
-        );
+        ).affirm();
     }
 
     @Test
     public void withIntCollectionLongValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in int collection must be long value",
             new AvgOf(
                 1, 2, 3, 4
             ).longValue(),
             Matchers.equalTo(2L)
-        );
+        ).affirm();
     }
 
     @Test
     public void withIntCollectionDoubleValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in int collection must be double value",
             new AvgOf(
                 1, 2, 3, 4
             ).doubleValue(),
             Matchers.equalTo(2.5d)
-        );
+        ).affirm();
     }
 
     @Test
     public void withIntCollectionFloatValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in int collection must be float value",
             new AvgOf(
                 1, 2, 3, 4
             ).floatValue(),
             Matchers.equalTo(2.5f)
-        );
+        ).affirm();
     }
 
     @Test
     public void withLongCollectionIntValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in long collection must be int value",
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).intValue(),
             Matchers.equalTo(2)
-        );
+        ).affirm();
     }
 
     @Test
     public void withLongCollectionLongValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in long collection must be long value",
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).longValue(),
             Matchers.equalTo(2L)
-        );
+        ).affirm();
     }
 
     @Test
     public void withLongCollectionMaxValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in MAX long collection must be MAX long value",
             new AvgOf(
                 Long.MAX_VALUE, Long.MAX_VALUE
             ).longValue(),
             Matchers.equalTo(Long.MAX_VALUE)
-        );
+        ).affirm();
     }
 
     @Test
     public void withLongCollectionDoubleValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in long collection must be double value",
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).doubleValue(),
             Matchers.equalTo(2.5d)
-        );
+        ).affirm();
     }
 
     @Test
     public void withLongCollectionFloatValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in long collection must be float value",
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).floatValue(),
             Matchers.equalTo(2.5f)
-        );
+        ).affirm();
     }
 
     @Test
     public void withDoubleCollectionIntValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in double collection must be int value",
             new AvgOf(
                 1.0d, 2.0d, 3.0d, 4.0d
             ).intValue(),
             Matchers.equalTo(2)
-        );
+        ).affirm();
     }
 
     @Test
     public void withDoubleCollectionLongValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in double collection must be long value",
             new AvgOf(
                 1.0d, 2.0d, 3.0d, 4.0d
             ).longValue(),
             Matchers.equalTo(2L)
-        );
+        ).affirm();
     }
 
     @Test
     public void withDoubleCollectionDoubleValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in double collection must be double value",
             new AvgOf(
                 1.0d, 2.0d, 3.0d, 4.0d
             ).doubleValue(),
             Matchers.equalTo(2.5d)
-        );
+        ).affirm();
     }
 
     @Test
     public void withDoubleCollectionMaxValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in MAX double collection must be MAX double value",
             new AvgOf(
                 Double.MAX_VALUE, Double.MAX_VALUE
             ).doubleValue(),
             Matchers.equalTo(Double.MAX_VALUE)
-        );
+        ).affirm();
     }
 
     @Test
     public void withDoubleCollectionMinValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in MIN double collection must be MIN double value",
             new AvgOf(
                 Double.MIN_VALUE, Double.MIN_VALUE
             ).doubleValue(),
             Matchers.equalTo(Double.MIN_VALUE)
-        );
+        ).affirm();
     }
 
     @Test(expected = NumberFormatException.class)
@@ -221,147 +237,162 @@ public final class AvgOfTest {
 
     @Test
     public void withDoubleCollectionNegativeNumbersDoubleValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in negative double collection must be negative double value",
             new AvgOf(
                 -1.0d, -2.0d, -3.0d, -4.0d
             ).doubleValue(),
             Matchers.equalTo(-2.5d)
-        );
+        ).affirm();
     }
 
     @Test
     public void withDecimalCollectionPrecisionProblem() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of decimal values must have precision problem",
             new AvgOf(
                 100.0, 100.666, 100.0
             ).floatValue(),
             Matchers.equalTo(100.222f)
-        );
+        ).affirm();
     }
 
     @Test
     public void withDecimalCollectionPrecisionProblemExtraDecimalRange() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of decimal values with extra decimal range must have precision problem",
             new AvgOf(
                 100.266, 100.267
             ).floatValue(),
             Matchers.equalTo(100.2665f)
-        );
+        ).affirm();
     }
 
     @Test
     public void withFloatCollectionIntValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of float values in float collection must be int value",
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).intValue(),
             Matchers.equalTo(2)
-        );
+        ).affirm();
     }
 
     @Test
     public void withFloatCollectionLongValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in float collection must be long value",
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).longValue(),
             Matchers.equalTo(2L)
-        );
+        ).affirm();
     }
 
     @Test
     public void withFloatCollectionDoubleValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in float collection must be double value",
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).doubleValue(),
             Matchers.equalTo(2.5d)
-        );
+        ).affirm();
     }
 
     @Test
     public void withFloatCollectionFloatValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in float collection must be float value",
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).floatValue(),
             Matchers.equalTo(2.5f)
-        );
+        ).affirm();
     }
 
     @Test
     public void withFloatCollectionMaxValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in MAX float collection must be MAX float value",
             new AvgOf(
                 Float.MAX_VALUE, Float.MAX_VALUE
             ).floatValue(),
             Matchers.equalTo(Float.MAX_VALUE)
-        );
+        ).affirm();
     }
 
     @Test
     public void withFloatCollectionMinValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of values in MIN float collection must be MIN float value",
             new AvgOf(
                 Float.MIN_VALUE, Float.MIN_VALUE
             ).floatValue(),
             Matchers.equalTo(Float.MIN_VALUE)
-        );
+        ).affirm();
     }
 
     @Test
     public void withIntScalarsIntValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of int scalars must be int value",
             new AvgOf(
                 () -> 1, () -> 2, () -> 10
             ).intValue(),
             Matchers.equalTo(4)
-        );
+        ).affirm();
     }
 
     @Test
     public void withLongScalarsIntValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of long scalars must be int value",
             new AvgOf(
                 () -> 1L, () -> 2L, () -> 10L
             ).intValue(),
             Matchers.equalTo(4)
-        );
+        ).affirm();
     }
 
     @Test
     public void withFloatScalarsIntValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of float scalars must be int value",
             new AvgOf(
                 () -> 1.0f, () -> 2.0f, () -> 10.0f
             ).longValue(),
             Matchers.equalTo(4L)
-        );
+        ).affirm();
     }
 
     @Test
     public void withDoubleScalarsIntValue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of double scalars must be int value",
             new AvgOf(
                 () -> 1.0d, () -> 2.0d, () -> 10.0d
             ).intValue(),
             Matchers.equalTo(4)
-        );
+        ).affirm();
     }
 
     @Test
     public void withIterableOfScalars() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of iterable scalars must be long value",
             new AvgOf(
                 new IterableOf<Scalar<Number>>(() -> 1L, () -> 2L, () -> 10L)
             ).longValue(),
             Matchers.equalTo(4L)
-        );
+        ).affirm();
     }
 
     @Test
     public void withCompositionOfScalars() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Average of composition of scalars must be int value",
             new AvgOf(
                 () -> new MinOf(1.0d, 2.0d),
                 () -> new MaxOf(2.0d, 4.0d),
@@ -369,6 +400,6 @@ public final class AvgOfTest {
                 new Ternary<>(true, 5.0d, 1.0d)
             ).intValue(),
             Matchers.equalTo(3)
-        );
+        ).affirm();
     }
 }
