@@ -26,6 +26,8 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -52,6 +54,10 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Must copy from input to the output path",
             new TeeInput(
@@ -67,6 +73,10 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Must copy from input to the output file",
             new TeeInput(
@@ -82,6 +92,10 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ write #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Must copy from input to the output",
             new TeeInput(
@@ -97,6 +111,10 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ writer #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Must copy from input with size to the output",
             new TeeInput(
@@ -113,6 +131,10 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ writer #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Must copy from input with charset to output",
             new TeeInput(
@@ -129,6 +151,10 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ writer #4 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Must copy from input with charset and size to output",
             new TeeInput(
@@ -146,6 +172,10 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ writer #5 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Must copy from input with charset by name to output",
             new TeeInput(
@@ -163,6 +193,10 @@ public final class TeeInputFromInputTest {
         final String input =
             "Hello, товарищ writer #6 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Must copy from input with charset by name and size to output",
             new TeeInput(

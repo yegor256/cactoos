@@ -26,6 +26,8 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 import org.cactoos.text.TextOf;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,6 +55,10 @@ public final class TeeInputFromTextTest {
         final String input =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "text must be copied to the path",
             new TeeInput(
@@ -68,6 +74,10 @@ public final class TeeInputFromTextTest {
         final String input =
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "text must be copied to the path with UTF_8 charset",
             new TeeInput(
@@ -84,6 +94,10 @@ public final class TeeInputFromTextTest {
         final String input =
             "Hello, товарищ path #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "text must be copied to the path with UTF_8 charset's name",
             new TeeInput(
@@ -100,6 +114,10 @@ public final class TeeInputFromTextTest {
         final String input =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "text must be copied to the file",
             new TeeInput(
@@ -115,6 +133,10 @@ public final class TeeInputFromTextTest {
         final String input =
             "Hello, товарищ file #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "text must be copied to the file with UTF_8 charset",
             new TeeInput(
@@ -131,6 +153,10 @@ public final class TeeInputFromTextTest {
         final String input =
             "Hello, товарищ file #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "text must be copied to the file with UTF_8 charset's name",
             new TeeInput(
@@ -147,6 +173,10 @@ public final class TeeInputFromTextTest {
         final String input =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "text must be copied to the output",
             new TeeInput(
@@ -162,6 +192,10 @@ public final class TeeInputFromTextTest {
         final String input =
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "text must be copied to the output with UTF_8 charset",
             new TeeInput(
@@ -178,6 +212,10 @@ public final class TeeInputFromTextTest {
         final String input =
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                input.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "text must be copied to the output with UTF_8 charset's name",
             new TeeInput(

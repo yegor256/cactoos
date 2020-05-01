@@ -24,7 +24,12 @@
 package org.cactoos.io;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,7 +41,7 @@ import org.llorllale.cactoos.matchers.InputHasContent;
  * Test case for {@link TeeInput}. Cases for ctors which use
  * {@link org.cactoos.Bytes} as an input.
  * @since 1.0
- * @todo #1341:30min Correct any TeeInput tests that are not testing if the
+ * @todo #1360:30min Correct any TeeInput tests that are not testing if the
  *  path actually contains the content, just that TeeInput, as an Input,has
  *  the content. Solution: test the content of the file, not the content of
  *  teeinput (e.g. #1331).
@@ -56,6 +61,10 @@ public final class TeeInputFromBytesTest {
         final String message =
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                message.getBytes(StandardCharsets.UTF_8)
+        );
         new LengthOf(
             new TeeInput(new BytesOf(message), output.toPath())
         ).intValue();
@@ -71,6 +80,10 @@ public final class TeeInputFromBytesTest {
         final String message =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                message.getBytes(StandardCharsets.UTF_8)
+        );
         new LengthOf(
             new TeeInput(new BytesOf(message), output)
         ).intValue();
@@ -86,6 +99,10 @@ public final class TeeInputFromBytesTest {
         final String message =
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                message.getBytes(StandardCharsets.UTF_8)
+        );
         new LengthOf(
             new TeeInput(new BytesOf(message), new OutputTo(output))
         ).intValue();

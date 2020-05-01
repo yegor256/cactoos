@@ -25,6 +25,8 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -51,6 +53,10 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                message.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Can't copy bytes to path",
             new TeeInput(
@@ -66,6 +72,10 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                message.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Can't copy bytes to file",
             new TeeInput(
@@ -81,6 +91,10 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        Files.write(
+                output.toPath(),
+                message.getBytes(StandardCharsets.UTF_8)
+        );
         new Assertion<>(
             "Can't copy bytes to output",
             new TeeInput(
