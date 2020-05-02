@@ -36,6 +36,10 @@ import org.llorllale.cactoos.matchers.InputHasContent;
  * Test case for {@link TeeInput}. Cases for ctors which use char sequence as
  * an input.
  * @since 1.0
+ * @todo #1360:30min Correct any TeeInput tests that are not testing if the
+ *  path actually contains the content, just that TeeInput, as an Input,has
+ *  the content. Solution: test the content of the file, not the content of
+ *  teeinput (e.g. #1331).
  * @checkstyle JavadocMethodCheck (215 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (215 lines)
  */
