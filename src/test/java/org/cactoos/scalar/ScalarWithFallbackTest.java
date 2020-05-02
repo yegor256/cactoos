@@ -29,6 +29,7 @@ import java.util.IllegalFormatWidthException;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -36,6 +37,7 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  *
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("unchecked")
 public final class ScalarWithFallbackTest {
@@ -59,6 +61,34 @@ public final class ScalarWithFallbackTest {
     }
 
     @Test
+    public void usesMainFuncFromExceptionAndFallback() throws Exception {
+        final String message = "Main function's result #1 (exp & flbck)";
+        new Assertion<>(
+            "Using the main function if no exception (exp & flbck)",
+            new ScalarWithFallback<>(
+                () -> message,
+                IOException.class,
+                Throwable::getMessage
+            ),
+            new ScalarHasValue<>(message)
+        ).affirm();
+    }
+
+    @Test
+    public void usesMainFuncFromIterableExceptionAndFallback() throws Exception {
+        final String message = "Main function's result #1 (exp iterable & flbck)";
+        new Assertion<>(
+            "Using the main function if no exception (exp iterable & flbck)",
+            new ScalarWithFallback<>(
+                () -> message,
+                new IterableOf<>(IOException.class),
+                Throwable::getMessage
+            ),
+            new ScalarHasValue<>(message)
+        ).affirm();
+    }
+
+    @Test
     public void usesFallback() throws Exception {
         final String message = "Fallback from IOException";
         MatcherAssert.assertThat(
@@ -76,6 +106,38 @@ public final class ScalarWithFallbackTest {
             ),
             new ScalarHasValue<>(message)
         );
+    }
+
+    @Test
+    public void usesFallbackFromExceptionAndFallback() throws Exception {
+        final String message = "Fallback from IOException (exp & flbck)";
+        new Assertion<>(
+            "Using a single fallback in case of exception (exp & flbck)",
+            new ScalarWithFallback<>(
+                () -> {
+                    throw new IOException("Failure with IOException (exp & flbck)");
+                },
+                IOException.class,
+                exp -> message
+            ),
+            new ScalarHasValue<>(message)
+        ).affirm();
+    }
+
+    @Test
+    public void usesFallbackFromIterableExceptionAndFallback() throws Exception {
+        final String message = "Fallback from IOException (exp iterable & flbck)";
+        new Assertion<>(
+            "Using a single fallback in case of exception (exp iterable & flbck)",
+            new ScalarWithFallback<>(
+                () -> {
+                    throw new IOException("Failure with IOException (exp iterable & flbck)");
+                },
+                new IterableOf<>(IOException.class),
+                exp -> message
+            ),
+            new ScalarHasValue<>(message)
+        ).affirm();
     }
 
     @Test
