@@ -54,7 +54,7 @@ public final class TeeInputFromCharArrayTest {
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
-          new TeeInput(input.toCharArray(), new OutputTo(output))
+            new TeeInput(input.toCharArray(), new OutputTo(output))
         ).intValue();
         new Assertion<>(
             "char array must be copied to the file with charset UTF_8",
