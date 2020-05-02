@@ -26,7 +26,6 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-
 import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;
