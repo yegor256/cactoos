@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link BoolOf}.
@@ -37,28 +37,28 @@ public final class BoolOfTest {
 
     @Test
     public void trueTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't parse 'true' string",
+        new Assertion<>(
+            "Must be parsed string 'true'",
             new BoolOf("true").value(),
-            Matchers.equalTo(true)
-        );
+            new IsEqual<>(true)
+        ).affirm();
     }
 
     @Test
     public void falseTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't parse 'false' string",
+        new Assertion<>(
+            "Must be parsed string 'false'",
             new BoolOf("false").value(),
-            Matchers.equalTo(false)
-        );
+            new IsEqual<>(false)
+        ).affirm();
     }
 
     @Test
     public void isFalseIfTextDoesNotRepresentABoolean() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't parse a non-boolean string",
+        new Assertion<>(
+            "Must be parsed a non-boolean string",
             new BoolOf("abc").value(),
-            Matchers.equalTo(false)
-        );
+            new IsEqual<>(false)
+        ).affirm();
     }
 }

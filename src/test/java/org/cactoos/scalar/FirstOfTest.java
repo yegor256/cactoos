@@ -25,7 +25,6 @@ package org.cactoos.scalar;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfInts;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -42,15 +41,15 @@ public final class FirstOfTest {
     @Test
     public void returnsMatchingValue() {
         final int value = 1;
-        MatcherAssert.assertThat(
-            "Didn't return the only matching element",
+        new Assertion<>(
+            "Must return the only matching element",
             new FirstOf<>(
                 i -> i >= value,
                 new IterableOfInts(0, value),
                 () -> -1
             ),
             new ScalarHasValue<>(value)
-        );
+        ).affirm();
     }
 
     @Test
@@ -74,29 +73,29 @@ public final class FirstOfTest {
     @Test
     public void returnsFirstValueForMultipleMatchingOnes() {
         final String value = "1";
-        MatcherAssert.assertThat(
-            "Didn't return first matching element",
+        new Assertion<>(
+            "Must return first matching element",
             new FirstOf<>(
                 i -> !i.isEmpty(),
                 new IterableOf<>("1", "2"),
                 () -> ""
             ),
             new ScalarHasValue<>(value)
-        );
+        ).affirm();
     }
 
     @Test
     public void returnsFallbackIfNothingMatches() {
         final String value = "abc";
-        MatcherAssert.assertThat(
-            "Didn't return fallback",
+        new Assertion<>(
+            "Must return fallback",
             new FirstOf<>(
                 i -> i.length() > 2,
                 new IterableOf<>("ab", "cd"),
                 () -> value
             ),
             new ScalarHasValue<>(value)
-        );
+        ).affirm();
     }
 
     @Test

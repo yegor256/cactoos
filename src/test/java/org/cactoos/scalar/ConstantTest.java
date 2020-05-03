@@ -23,9 +23,10 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsSame;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Constant}.
@@ -37,20 +38,20 @@ public final class ConstantTest {
     @Test
     public void returnsGivenValue() throws Exception {
         final String value = "Hello World";
-        MatcherAssert.assertThat(
-            "Can't return given value",
+        new Assertion<>(
+            "Must return given value",
             new Constant<>(value).value(),
-            Matchers.equalTo(value)
-        );
+            new IsEqual<>(value)
+        ).affirm();
     }
 
     @Test
     public void alwaysReturnsSameValue() throws Exception {
         final Constant<String> constant = new Constant<>("Good Bye!");
-        MatcherAssert.assertThat(
-            "Can't return same value",
+        new Assertion<>(
+            "Must return same value",
             constant.value(),
-            Matchers.sameInstance(constant.value())
-        );
+            new IsSame<>(constant.value())
+        ).affirm();
     }
 }

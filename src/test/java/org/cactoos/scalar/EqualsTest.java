@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Equals}.
@@ -37,50 +37,50 @@ public final class EqualsTest {
 
     @Test
     public void compareEquals() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't compare if two integers are equals",
+        new Assertion<>(
+            "Must compare if two integers are equals",
             new Equals<>(
                 () -> Integer.valueOf(1),
                 () -> Integer.valueOf(1)
             ).value(),
-            Matchers.equalTo(true)
-        );
+            new IsEqual<>(true)
+        ).affirm();
     }
 
     @Test
     public void compareNotEquals() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't compare if two integers are not equals",
+        new Assertion<>(
+            "Must compare if two integers are not equals",
             new Equals<>(
                 () -> Integer.valueOf(1),
                 () -> Integer.valueOf(2)
             ).value(),
-            Matchers.equalTo(false)
-        );
+            new IsEqual<>(false)
+        ).affirm();
     }
 
     @Test
     public void compareEqualsText() throws Exception {
         final String str = "hello";
-        MatcherAssert.assertThat(
-            "Can't compare if two strings are equals",
+        new Assertion<>(
+            "Must compare if two strings are equals",
             new Equals<>(
                 () -> str,
                 () -> str
             ).value(),
-            Matchers.equalTo(true)
-        );
+            new IsEqual<>(true)
+        ).affirm();
     }
 
     @Test
     public void compareNotEqualsText() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't compare if two strings are not equals",
+        new Assertion<>(
+            "Must compare if two strings are not equals",
             new Equals<>(
                 () -> "world",
                 () -> "worle"
             ).value(),
-            Matchers.equalTo(false)
-        );
+            new IsEqual<>(false)
+        ).affirm();
     }
 }

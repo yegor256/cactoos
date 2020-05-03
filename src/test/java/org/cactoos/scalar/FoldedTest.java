@@ -25,9 +25,9 @@ package org.cactoos.scalar;
 
 import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.RangeOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Folded}.
@@ -39,8 +39,8 @@ public final class FoldedTest {
 
     @Test
     public void skipIterable() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't fold elements in iterable",
+        new Assertion<>(
+            "Must fold elements in iterable",
             new Folded<>(
                 0L, (first, second) -> first + second,
                 new HeadOf<>(
@@ -48,20 +48,20 @@ public final class FoldedTest {
                     new RangeOf<>(0L, Long.MAX_VALUE, value -> ++value)
                 )
             ).value(),
-            Matchers.equalTo(45L)
-        );
+            new IsEqual<>(45L)
+        ).affirm();
     }
 
     @Test
     public void constructedFromVarargs() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't fold elements in vararg array",
+        new Assertion<>(
+            "Must fold elements in vararg array",
             new Folded<>(
                 0L,
                 (first, second) -> first + second,
                 1, 2, 3, 4, 5
             ).value(),
-            Matchers.equalTo(15L)
-        );
+            new IsEqual<>(15L)
+        ).affirm();
     }
 }
