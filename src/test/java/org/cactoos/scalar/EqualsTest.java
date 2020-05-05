@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link Equals}.
@@ -42,8 +42,8 @@ public final class EqualsTest {
             new Equals<>(
                 () -> Integer.valueOf(1),
                 () -> Integer.valueOf(1)
-            ).value(),
-            new IsEqual<>(true)
+            ),
+            new ScalarHasValue<>(true)
         ).affirm();
     }
 
@@ -54,8 +54,8 @@ public final class EqualsTest {
             new Equals<>(
                 () -> Integer.valueOf(1),
                 () -> Integer.valueOf(2)
-            ).value(),
-            new IsEqual<>(false)
+            ),
+            new ScalarHasValue<>(false)
         ).affirm();
     }
 
@@ -67,8 +67,8 @@ public final class EqualsTest {
             new Equals<>(
                 () -> str,
                 () -> str
-            ).value(),
-            new IsEqual<>(true)
+            ),
+            new ScalarHasValue<>(true)
         ).affirm();
     }
 
@@ -79,8 +79,8 @@ public final class EqualsTest {
             new Equals<>(
                 () -> "world",
                 () -> "worle"
-            ).value(),
-            new IsEqual<>(false)
+            ),
+            new ScalarHasValue<>(false)
         ).affirm();
     }
 }

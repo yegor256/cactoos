@@ -29,6 +29,7 @@
  *  Assertion from cactoos-matchers. Once there is no more usage of
  *  MatcherAssert.assertThat, add the signature of MatcherAssert.assertThat to
  *  forbidden-apis.txt
+ * @todo #1367:30min Replace all IsEqual with ScalarHashValue in scalar tests.
  * @since 0.12
  */
 package org.cactoos.scalar;

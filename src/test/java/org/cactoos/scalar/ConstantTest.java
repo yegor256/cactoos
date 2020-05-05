@@ -23,10 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.core.IsEqual;
-import org.hamcrest.core.IsSame;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link Constant}.
@@ -40,8 +39,8 @@ public final class ConstantTest {
         final String value = "Hello World";
         new Assertion<>(
             "Must return given value",
-            new Constant<>(value).value(),
-            new IsEqual<>(value)
+            new Constant<>(value),
+            new ScalarHasValue<>(value)
         ).affirm();
     }
 
@@ -50,8 +49,8 @@ public final class ConstantTest {
         final Constant<String> constant = new Constant<>("Good Bye!");
         new Assertion<>(
             "Must return same value",
-            constant.value(),
-            new IsSame<>(constant.value())
+            constant,
+            new ScalarHasValue<>(constant.value())
         ).affirm();
     }
 }

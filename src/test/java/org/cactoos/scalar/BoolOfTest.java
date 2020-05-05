@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link BoolOf}.
@@ -39,8 +39,8 @@ public final class BoolOfTest {
     public void trueTest() throws Exception {
         new Assertion<>(
             "Must be parsed string 'true'",
-            new BoolOf("true").value(),
-            new IsEqual<>(true)
+            new BoolOf("true"),
+            new ScalarHasValue<>(true)
         ).affirm();
     }
 
@@ -48,8 +48,8 @@ public final class BoolOfTest {
     public void falseTest() throws Exception {
         new Assertion<>(
             "Must be parsed string 'false'",
-            new BoolOf("false").value(),
-            new IsEqual<>(false)
+            new BoolOf("false"),
+            new ScalarHasValue<>(false)
         ).affirm();
     }
 
@@ -57,8 +57,8 @@ public final class BoolOfTest {
     public void isFalseIfTextDoesNotRepresentABoolean() throws Exception {
         new Assertion<>(
             "Must be parsed a non-boolean string",
-            new BoolOf("abc").value(),
-            new IsEqual<>(false)
+            new BoolOf("abc"),
+            new ScalarHasValue<>(false)
         ).affirm();
     }
 }
