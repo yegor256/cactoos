@@ -31,10 +31,14 @@ import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.And;
+import org.cactoos.scalar.FallbackFrom;
+import org.cactoos.scalar.False;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
+import org.cactoos.scalar.ScalarWithFallback;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.SumOfInt;
+import org.cactoos.scalar.True;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UncheckedText;
@@ -146,6 +150,7 @@ public final class IterableOf<X> implements Iterable<X> {
 
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    @SuppressWarnings (value = "unchecked")
     public boolean equals(final Object other) {
         return new Unchecked<>(
             new Or(
@@ -154,12 +159,20 @@ public final class IterableOf<X> implements Iterable<X> {
                     () -> other != null,
                     () -> Iterable.class.isAssignableFrom(other.getClass()),
                     () -> {
-                        final Iterable<?> compared = (Iterable<?>) other;
-                        final Iterator<?> iterator = compared.iterator();
-                        return new Unchecked<>(
+                        final Iterable<X> compared = (Iterable<X>) other;
+                        return new ScalarWithFallback<>(
                             new And(
-                                (X input) -> input.equals(iterator.next()),
-                                this
+                                (X value) -> true,
+                                new Matched<>(
+                                    this,
+                                    compared
+                                )
+                            ),
+                            new IterableOf<>(
+                                new FallbackFrom<>(
+                                    IllegalStateException.class,
+                                    ex -> false
+                                )
                             )
                         ).value();
                     }
