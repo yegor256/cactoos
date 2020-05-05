@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link DivisionOf}.
@@ -40,10 +40,11 @@ public final class DivisionOfTest {
      */
     @Test
     public void dividesIntNumbers() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must divide int numbers",
             new DivisionOf(4, 2).intValue(),
             new IsEqual<>(2)
-        );
+        ).affirm();
     }
 
     /**
@@ -51,10 +52,11 @@ public final class DivisionOfTest {
      */
     @Test
     public void dividesLongNumbers() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must divide long numbers",
             new DivisionOf(4L, 2L).longValue(),
             new IsEqual<>(2L)
-        );
+        ).affirm();
     }
 
     /**
@@ -62,10 +64,11 @@ public final class DivisionOfTest {
      */
     @Test
     public void dividesFloatNumbers() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must divide float numbers",
             new DivisionOf(2f, 4f).floatValue(),
             new IsEqual<>(0.5f)
-        );
+        ).affirm();
     }
 
     /**
@@ -73,9 +76,10 @@ public final class DivisionOfTest {
      */
     @Test
     public void dividesDoubleNumbers() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must divide double numbers",
             new DivisionOf(2d, 4d).doubleValue(),
             new IsEqual<>(0.5d)
-        );
+        ).affirm();
     }
 }
