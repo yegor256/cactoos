@@ -30,4 +30,4 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mvn clean deploy -P cactoos -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml
-    rm settings.xml
+    rm -f settings.xml
