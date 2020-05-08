@@ -41,11 +41,11 @@ public final class NumberOfTest {
 
     @Test
     public void parsesFloat() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse float number",
+         new Assertion<>(
+            "Must parse float number",
             new NumberOf("1656.894").floatValue(),
             Matchers.equalTo(1656.894F)
-        );
+        ).affirm();
     }
 
     @Test(expected = RuntimeException.class)
@@ -55,11 +55,11 @@ public final class NumberOfTest {
 
     @Test
     public void parsesLong() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse long number",
+         new Assertion<>(
+            "Must parse long number",
             new NumberOf("186789235425346").longValue(),
             Matchers.equalTo(186_789_235_425_346L)
-        );
+        ).affirm();
     }
 
     @Test(expected = RuntimeException.class)
@@ -69,11 +69,11 @@ public final class NumberOfTest {
 
     @Test
     public void parsesInteger() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse integer number",
+         new Assertion<>(
+            "Must parse integer number",
             new NumberOf("1867892354").intValue(),
             Matchers.equalTo(1_867_892_354)
-        );
+        ).affirm();
     }
 
     @Test(expected = RuntimeException.class)
@@ -83,11 +83,11 @@ public final class NumberOfTest {
 
     @Test
     public void parsesDouble() throws IOException {
-        MatcherAssert.assertThat(
-            "Can't parse double number",
+         new Assertion<>(
+            "Must parse double number",
             new NumberOf("185.65156465123").doubleValue(),
             Matchers.equalTo(185.65_156_465_123)
-        );
+        ).affirm();
     }
 
     @Test(expected = RuntimeException.class)
@@ -98,7 +98,7 @@ public final class NumberOfTest {
     @Test
     public void parsesValueInt() throws IOException {
         new Assertion<>(
-            "Can't parse into int",
+            "Must parse into int",
             () -> new NumberOf("185").value().intValue(),
             new ScalarHasValue<>(185)
         ).affirm();

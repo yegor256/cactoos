@@ -30,6 +30,7 @@ import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Reduced}.
@@ -49,14 +50,14 @@ public final class ReducedTest {
     @Test
     public void singleAtSingleIterable() throws Exception {
         final Integer single = 10;
-        MatcherAssert.assertThat(
-            "Can't find the single",
+        new Assertion<>(
+            "Must find the single",
             new Reduced<>(
                 (first, last) -> first,
                 new IterableOf<Scalar<Integer>>(() -> single)
             ).value(),
             Matchers.equalTo(single)
-        );
+        ).affirm();
     }
 
     @Test
@@ -64,8 +65,8 @@ public final class ReducedTest {
         final String one = "Apple";
         final String two = "Banana";
         final String three = "Orange";
-        MatcherAssert.assertThat(
-            "Can't find the first",
+        new Assertion<>(
+            "Must find the first",
             new Reduced<>(
                 (first, last) -> first,
                 new IterableOf<Scalar<String>>(
@@ -75,7 +76,7 @@ public final class ReducedTest {
                 )
             ).value(),
             Matchers.equalTo(one)
-        );
+        ).affirm();
     }
 
     @Test
@@ -83,8 +84,8 @@ public final class ReducedTest {
         final Character one = 'A';
         final Character two = 'B';
         final Character three = 'O';
-        MatcherAssert.assertThat(
-            "Can't find the last",
+        new Assertion<>(
+            "Must find the last",
             new Reduced<>(
                 (first, last) -> last,
                 new IterableOf<Scalar<Character>>(
@@ -94,7 +95,7 @@ public final class ReducedTest {
                 )
             ).value(),
             Matchers.equalTo(three)
-        );
+        ).affirm();
     }
 
     @Test
@@ -102,8 +103,8 @@ public final class ReducedTest {
         final String one = "One";
         final String two = "Two";
         final String three = "Three";
-        MatcherAssert.assertThat(
-            "Can't concatenate the strings in vararg array",
+        new Assertion<>(
+            "Must concatenate the strings in vararg array",
             new Reduced<>(
                 (first, last) -> first + last,
                 one,
@@ -111,6 +112,6 @@ public final class ReducedTest {
                 three
             ).value(),
             Matchers.equalTo("OneTwoThree")
-        );
+        ).affirm();
     }
 }
