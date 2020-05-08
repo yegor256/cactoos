@@ -31,6 +31,7 @@ import org.cactoos.iterator.Repeated;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.cactoos.map.Sticky;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
