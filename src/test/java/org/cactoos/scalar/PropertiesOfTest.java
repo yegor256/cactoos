@@ -35,6 +35,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
