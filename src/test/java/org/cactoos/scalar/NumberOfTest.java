@@ -41,7 +41,7 @@ public final class NumberOfTest {
 
     @Test
     public void parsesFloat() throws IOException {
-         new Assertion<>(
+        new Assertion<>(
             "Must parse float number",
             new NumberOf("1656.894").floatValue(),
             Matchers.equalTo(1656.894F)
@@ -55,7 +55,7 @@ public final class NumberOfTest {
 
     @Test
     public void parsesLong() throws IOException {
-         new Assertion<>(
+        new Assertion<>(
             "Must parse long number",
             new NumberOf("186789235425346").longValue(),
             Matchers.equalTo(186_789_235_425_346L)
@@ -69,7 +69,7 @@ public final class NumberOfTest {
 
     @Test
     public void parsesInteger() throws IOException {
-         new Assertion<>(
+        new Assertion<>(
             "Must parse integer number",
             new NumberOf("1867892354").intValue(),
             Matchers.equalTo(1_867_892_354)
@@ -83,7 +83,7 @@ public final class NumberOfTest {
 
     @Test
     public void parsesDouble() throws IOException {
-         new Assertion<>(
+        new Assertion<>(
             "Must parse double number",
             new NumberOf("185.65156465123").doubleValue(),
             Matchers.equalTo(185.65_156_465_123)

@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
