@@ -25,9 +25,9 @@
 package org.cactoos.scalar;
 
 import java.util.Objects;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Tests for {@link HashCode}.
@@ -46,8 +46,8 @@ public final class HashCodeTest {
         final Object[] attributes = {5, 31, "abc", 5, 50f, "xyz"};
         new Assertion<>(
             "Value must be equal to Josh Block's implementation of hashCode()",
-            new HashCode(initial, multiplier, attributes).value(),
-            new IsEqual<>(
+            new HashCode(initial, multiplier, attributes),
+            new ScalarHasValue<>(
                 joshBloch(initial, multiplier, attributes)
             )
         ).affirm();
@@ -65,8 +65,8 @@ public final class HashCodeTest {
         new Assertion<>(
             // @checkstyle LineLength (1 line)
             "Value must be equal to Josh Block's implementation of hashCode() with initial=17 and multiplier=31",
-            new HashCode(attributes).value(),
-            new IsEqual<>(
+            new HashCode(attributes),
+            new ScalarHasValue<>(
                 joshBloch(initial, multiplier, attributes)
             )
         ).affirm();

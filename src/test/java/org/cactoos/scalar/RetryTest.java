@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.Matchers;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -76,8 +75,8 @@ public final class RetryTest {
                     }
                     return 0;
                 }
-            ).value(),
-           new IsEqual<>(0)
+            ),
+           new ScalarHasValue<>(0)
         ).affirm();
     }
 
@@ -99,8 +98,8 @@ public final class RetryTest {
                 Integer.MAX_VALUE,
                 // @checkstyle MagicNumberCheck (1 line)
                 Duration.of(-5, ChronoUnit.DAYS)
-            ).value(),
-            new IsEqual<>(0)
+            ),
+            new ScalarHasValue<>(0)
         ).affirm();
     }
 

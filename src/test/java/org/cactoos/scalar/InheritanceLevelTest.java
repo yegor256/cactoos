@@ -25,8 +25,8 @@ package org.cactoos.scalar;
 
 import java.io.FileNotFoundException;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link InheritanceLevel}.
@@ -42,8 +42,8 @@ public final class InheritanceLevelTest {
             new InheritanceLevel(
                 FileNotFoundException.class,
                 Exception.class
-            ).value(),
-            new IsEqual<>(2)
+            ),
+            new ScalarHasValue<>(2)
         );
     }
 
@@ -53,8 +53,8 @@ public final class InheritanceLevelTest {
             new InheritanceLevel(
                 FileNotFoundException.class,
                 RuntimeException.class
-            ).value(),
-            new IsEqual<>(Integer.MIN_VALUE)
+            ),
+            new ScalarHasValue<>(Integer.MIN_VALUE)
         );
     }
 
@@ -64,8 +64,8 @@ public final class InheritanceLevelTest {
             new InheritanceLevel(
                 FileNotFoundException.class,
                 FileNotFoundException.class
-            ).value(),
-            new IsEqual<>(0)
+            ),
+            new ScalarHasValue<>(0)
         );
     }
 }
