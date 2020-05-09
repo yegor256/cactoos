@@ -25,9 +25,9 @@ package org.cactoos.scalar;
 
 import java.io.IOException;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link NumberOf}.
@@ -98,8 +98,8 @@ public final class NumberOfTest {
     public void parsesValueInt() throws IOException {
         new Assertion<>(
             "Must parse into int",
-            () -> new NumberOf("185").value().intValue(),
-            new ScalarHasValue<>(185)
+            new NumberOf("185").intValue(),
+            new IsEqual<>(185)
         ).affirm();
     }
 }

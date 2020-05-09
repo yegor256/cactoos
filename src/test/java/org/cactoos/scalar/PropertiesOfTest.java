@@ -31,7 +31,8 @@ import org.cactoos.iterator.Repeated;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.cactoos.map.Sticky;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
@@ -122,7 +123,7 @@ public final class PropertiesOfTest {
         new Assertion<>(
             "Must sense the changes in the underlying map",
             props.value().size(),
-            Matchers.not(Matchers.equalTo(props.value().size()))
+            new IsNot<>(new IsEqual<>(props.value().size()))
         ).affirm();
     }
 
