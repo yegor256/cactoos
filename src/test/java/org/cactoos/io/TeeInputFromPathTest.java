@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -38,10 +39,6 @@ import org.llorllale.cactoos.matchers.InputHasContent;
  * Test case for {@link TeeInput}. Cases for ctors which use {@link Path} as
  * an input.
  * @since 1.0
- * @todo #1372:30min Correct any TeeInput tests that are not testing if the
- *  path actually contains the content, just that TeeInput, as an Input,has
- *  the content. Solution: test the content of the file, not the content of
- *  teeinput (e.g. #1331).
  * @checkstyle JavadocMethodCheck (120 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (120 lines)
  */
@@ -63,12 +60,12 @@ public final class TeeInputFromPathTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
+        new LengthOf(
+            new TeeInput(input.toPath(), output.toPath())
+        ).intValue();
         new Assertion<>(
             "Must copy from input path to output path",
-            new TeeInput(
-                input.toPath(),
-                output.toPath()
-            ),
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
@@ -83,12 +80,12 @@ public final class TeeInputFromPathTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
+        new LengthOf(
+            new TeeInput(input.toPath(), output)
+        ).intValue();
         new Assertion<>(
             "Must copy from input path to output file",
-            new TeeInput(
-                input.toPath(),
-                output
-            ),
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
@@ -103,12 +100,12 @@ public final class TeeInputFromPathTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
+        new LengthOf(
+            new TeeInput(input.toPath(), new OutputTo(output))
+        ).intValue();
         new Assertion<>(
             "Must copy from input path to output",
-            new TeeInput(
-                input.toPath(),
-                new OutputTo(output)
-            ),
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
