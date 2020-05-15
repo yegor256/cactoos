@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.util.IllegalFormatException;
 import java.util.IllegalFormatWidthException;
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -45,8 +44,8 @@ public final class ScalarWithFallbackTest {
     @Test
     public void usesMainFunc() throws Exception {
         final String message = "Main function's result #1";
-        MatcherAssert.assertThat(
-            "Can't use the main function if no exception",
+        new Assertion<>(
+            "Must use the main function if no exception",
             new ScalarWithFallback<>(
                 () -> message,
                 new IterableOf<>(
@@ -57,7 +56,7 @@ public final class ScalarWithFallbackTest {
                 )
             ),
             new ScalarHasValue<>(message)
-        );
+        ).affirm();
     }
 
     @Test
@@ -91,8 +90,8 @@ public final class ScalarWithFallbackTest {
     @Test
     public void usesFallback() throws Exception {
         final String message = "Fallback from IOException";
-        MatcherAssert.assertThat(
-            "Can't use a single fallback in case of exception",
+        new Assertion<>(
+            "Must use a single fallback in case of exception",
             new ScalarWithFallback<>(
                 () -> {
                     throw new IOException("Failure with IOException");
@@ -105,7 +104,7 @@ public final class ScalarWithFallbackTest {
                 )
             ),
             new ScalarHasValue<>(message)
-        );
+        ).affirm();
     }
 
     @Test
@@ -143,8 +142,8 @@ public final class ScalarWithFallbackTest {
     @Test
     public void usesFallbackOfInterruptedException() throws Exception {
         final String message = "Fallback from InterruptedException";
-        MatcherAssert.assertThat(
-            "Can't use a fallback from Interrupted in case of exception",
+        new Assertion<>(
+            "Must use a fallback from Interrupted in case of exception",
             new ScalarWithFallback<>(
                 () -> {
                     throw new InterruptedException(
@@ -159,14 +158,14 @@ public final class ScalarWithFallbackTest {
                 )
             ),
             new ScalarHasValue<>(message)
-        );
+        ).affirm();
     }
 
     @Test
     public void usesTheClosestFallback() throws Exception {
         final String expected = "Fallback from IllegalFormatException";
-        MatcherAssert.assertThat(
-            "Can't find the closest fallback",
+        new Assertion<>(
+            "Must find the closest fallback",
             new ScalarWithFallback<>(
                 () -> {
                     throw new IllegalFormatWidthException(1);
@@ -183,7 +182,7 @@ public final class ScalarWithFallbackTest {
                 )
             ),
             new ScalarHasValue<>(expected)
-        );
+        ).affirm();
     }
 
     @Test(expected = Exception.class)

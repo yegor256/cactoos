@@ -25,7 +25,7 @@
 /**
  * Scalars, tests.
  *
- * @todo #1367:30min Continue replacing usage of MatcherAssert.assertThat with
+ * @todo #1375:30min Continue replacing usage of MatcherAssert.assertThat with
  *  Assertion from cactoos-matchers. Once there is no more usage of
  *  MatcherAssert.assertThat, add the signature of MatcherAssert.assertThat to
  *  forbidden-apis.txt

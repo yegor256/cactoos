@@ -31,9 +31,10 @@ import org.cactoos.iterator.Repeated;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.cactoos.map.Sticky;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -48,8 +49,8 @@ public final class PropertiesOfTest {
 
     @Test
     public void readsStringContent() {
-        MatcherAssert.assertThat(
-            "Can't read properties from an input string",
+        new Assertion<>(
+            "Must read properties from an input string",
             new PropertiesOf(
                 "foo=Hello, world!\nbar=works fine?\n"
             ),
@@ -62,13 +63,13 @@ public final class PropertiesOfTest {
                     }
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void readsInputContent() {
-        MatcherAssert.assertThat(
-            "Can't read properties from an input",
+        new Assertion<>(
+            "Must read properties from an input",
             new PropertiesOf(
                 new InputOf("greet=Hello, inner world!\nask=works fine?\n")
             ),
@@ -81,13 +82,13 @@ public final class PropertiesOfTest {
                     }
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void convertsMapToProperties() {
-        MatcherAssert.assertThat(
-            "Can't convert map to properties",
+        new Assertion<>(
+            "Must convert map to properties",
             new PropertiesOf(
                 new Sticky<>(
                     new MapOf<Integer, String>(
@@ -103,7 +104,7 @@ public final class PropertiesOfTest {
                     }
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -119,11 +120,11 @@ public final class PropertiesOfTest {
                 )
             )
         );
-        MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying map",
+        new Assertion<>(
+            "Must sense the changes in the underlying map",
             props.value().size(),
-            Matchers.not(Matchers.equalTo(props.value().size()))
-        );
+            new IsNot<>(new IsEqual<>(props.value().size()))
+        ).affirm();
     }
 
 }
