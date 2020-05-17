@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link True}.
@@ -37,9 +37,10 @@ public final class TrueTest {
 
     @Test
     public void asValue() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must be True",
             new True().value(),
-            Matchers.equalTo(true)
-        );
+            new IsTrue()
+        ).affirm();
     }
 }

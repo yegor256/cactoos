@@ -27,9 +27,9 @@ package org.cactoos.scalar;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link LengthOf}.
@@ -43,146 +43,146 @@ public final class LengthOfTest {
 
     @Test
     public void lengthOfInputWithIntegerValue() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of input with integer value",
+        new Assertion<>(
+            "Must calculate length of input with integer value",
             new LengthOf(
                 new InputOf("Hello1")
             ).intValue(),
-            Matchers.equalTo(6)
-        );
+            new IsEqual<>(6)
+        ).affirm();
     }
 
     @Test
     public void lengthOfInputWithDoubleValue() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of input with double value",
+        new Assertion<>(
+            "Must calculate length of input with double value",
             new LengthOf(
                 new InputOf("Hello2")
             ).doubleValue(),
-            Matchers.equalTo(6.0)
-        );
+            new IsEqual<>(6.0)
+        ).affirm();
     }
 
     @Test
     public void lengthOfInputWithFloatValue() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of input with float value",
+        new Assertion<>(
+            "Must calculate length of input with float value",
             new LengthOf(
                 new InputOf("Hello3")
             ).floatValue(),
-            Matchers.equalTo(6.0f)
-        );
+            new IsEqual<>(6.0f)
+        ).affirm();
     }
 
     @Test
     public void lengthOfInputWithCustomBuffer() {
-        MatcherAssert.assertThat(
-            "Can't calculate length with custom buffer",
+        new Assertion<>(
+            "Must calculate length with custom buffer",
             new LengthOf(
                 new InputOf("test buffer1"),
                 1
             ).intValue(),
-            Matchers.equalTo(12)
-        );
+            new IsEqual<>(12)
+        ).affirm();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void lengthOfZeroBuffer() {
-        MatcherAssert.assertThat(
-            "Can't calculate length with buffer of 0",
+        new Assertion<>(
+            "Must calculate length with buffer of 0",
             new LengthOf(
                 new InputOf("test buffer2"),
                 0
             ).intValue(),
-            Matchers.equalTo(12)
-        );
+            new IsEqual<>(12)
+        ).affirm();
     }
 
     @Test
     public void lengthOfWithIntegerValue() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of iterable for integer",
+        new Assertion<>(
+            "Must calculate length of iterable for integer",
             new LengthOf(
                 new IterableOf<>(1, 2, 3, 4)
             ).intValue(),
-            Matchers.equalTo(4)
-        );
+            new IsEqual<>(4)
+        ).affirm();
     }
 
     @Test
     public void lengthOfWithDoubleValue() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of iterable for double",
+        new Assertion<>(
+            "Must calculate length of iterable for double",
             new LengthOf(
                 new IterableOf<>(1, 2, 3, 4)
             ).doubleValue(),
-            Matchers.equalTo(4.0)
-        );
+            new IsEqual<>(4.0)
+        ).affirm();
     }
 
     @Test
     public void lengthOfWithFloatValue() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of iterable for float",
+        new Assertion<>(
+            "Must calculate length of iterable for float",
             new LengthOf(
                 new IterableOf<>(1, 2, 3, 4)
             ).floatValue(),
-            Matchers.equalTo(4.0f)
-        );
+            new IsEqual<>(4.0f)
+        ).affirm();
     }
 
     @Test
     public void lengthOfEmptyIterable() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of empty iterable",
+        new Assertion<>(
+            "Must calculate length of empty iterable",
             new LengthOf(
                 new IterableOf<>()
             ).intValue(),
-            Matchers.equalTo(0)
-        );
+            new IsEqual<>(0)
+        ).affirm();
     }
 
     @Test
     public void lengthOfWithIntegerValues() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of iterator for integer",
+        new Assertion<>(
+            "Must calculate length of iterator for integer",
             new LengthOf(
                 new ListOf<>(1, 2, 3, 4)
             ).intValue(),
-            Matchers.equalTo(4)
-        );
+            new IsEqual<>(4)
+        ).affirm();
     }
 
     @Test
     public void lengthOfWithDoubleNumber() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of iterator for double",
+        new Assertion<>(
+            "Must calculate length of iterator for double",
             new LengthOf(
                 new ListOf<>(1, 2, 3, 4)
             ).doubleValue(),
-            Matchers.equalTo(4.0)
-        );
+            new IsEqual<>(4.0)
+        ).affirm();
     }
 
     @Test
     public void lengthOfWithFloatNumber() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of iterator for float",
+        new Assertion<>(
+            "Must calculate length of iterator for float",
             new LengthOf(
                 new ListOf<>(1, 2, 3, 4)
             ).floatValue(),
-            Matchers.equalTo(4.0f)
-        );
+            new IsEqual<>(4.0f)
+        ).affirm();
     }
 
     @Test
     public void lengthOfEmptyIterator() {
-        MatcherAssert.assertThat(
-            "Can't calculate length of empty iterator",
+        new Assertion<>(
+            "Must calculate length of empty iterator",
             new LengthOf(
                 new ListOf<>()
             ).intValue(),
-            Matchers.equalTo(0)
-        );
+            new IsEqual<>(0)
+        ).affirm();
     }
 }
