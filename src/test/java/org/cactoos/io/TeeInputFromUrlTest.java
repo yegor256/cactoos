@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -58,14 +59,12 @@ public final class TeeInputFromUrlTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
+        new LengthOf(
+            new TeeInput(input.toURI().toURL(), output.toPath())
+        ).intValue();
         new Assertion<>(
             "Must copy from URL to path.",
-            new TeeInput(
-                input
-                    .toURI()
-                    .toURL(),
-                output.toPath()
-            ),
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
@@ -80,14 +79,12 @@ public final class TeeInputFromUrlTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
+        new LengthOf(
+            new TeeInput(input.toURI().toURL(), output)
+        ).intValue();
         new Assertion<>(
             "Must copy from URL to file.",
-            new TeeInput(
-                input
-                    .toURI()
-                    .toURL(),
-                output
-            ),
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
@@ -102,14 +99,12 @@ public final class TeeInputFromUrlTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
+        new LengthOf(
+            new TeeInput(input.toURI().toURL(), new OutputTo(output))
+        ).intValue();
         new Assertion<>(
             "Must copy from URL to output.",
-            new TeeInput(
-                input
-                    .toURI()
-                    .toURL(),
-                new OutputTo(output)
-            ),
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
