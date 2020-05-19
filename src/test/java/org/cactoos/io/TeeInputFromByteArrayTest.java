@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -51,12 +52,15 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Can't copy bytes to path",
+        new LengthOf(
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 output.toPath()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Can't copy bytes to path",
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
@@ -66,12 +70,15 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Can't copy bytes to file",
+        new LengthOf(
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 output
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Can't copy bytes to file",
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
@@ -81,12 +88,15 @@ public final class TeeInputFromByteArrayTest {
         final String message =
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Can't copy bytes to output",
+        new LengthOf(
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
                 new OutputTo(output)
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Can't copy bytes to output",
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }

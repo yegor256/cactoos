@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -36,10 +37,6 @@ import org.llorllale.cactoos.matchers.InputHasContent;
  * Test case for {@link TeeInput}. Cases for ctors which use
  * {@link java.io.Reader} as an input.
  * @since 1.0
- * @todo #1381:30min Correct any TeeInput tests that are not testing if the
- *  path actually contains the content, just that TeeInput, as an Input,has
- *  the content. Solution: test the content of the file, not the content of
- *  teeinput (e.g. #1331 and #1372).
  * @checkstyle JavadocMethodCheck (400 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (400 lines)
  */
@@ -57,12 +54,12 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
+        new LengthOf(
+            new TeeInput(new ReaderOf(input), output)
+        ).intValue();
         new Assertion<>(
             "Must copy from reader to file.",
-            new TeeInput(
-                new ReaderOf(input),
-                output
-            ),
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -72,13 +69,16 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ file #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with size to file.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output,
                 input.length()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with size to file.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -88,13 +88,16 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ file #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset to file.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output,
                 StandardCharsets.UTF_8
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset to file.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -104,14 +107,17 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ file #4 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset and size to file.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output,
                 StandardCharsets.UTF_8,
                 input.length()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset and size to file.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -121,13 +127,16 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ file #5 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset by name to file.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output,
                 StandardCharsets.UTF_8.name()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset by name to file.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -138,14 +147,17 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ file #6 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset by name and size to file.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output,
                 StandardCharsets.UTF_8.name(),
                 input.length()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset by name and size to file.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -155,12 +167,15 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader to path.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output.toPath()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader to path.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -170,13 +185,16 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with size to path",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output.toPath(),
                 input.length()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with size to path",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -186,13 +204,16 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ path #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset to path.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output.toPath(),
                 StandardCharsets.UTF_8
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset to path.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -202,14 +223,17 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ path #4 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset and size to path.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output.toPath(),
                 StandardCharsets.UTF_8,
                 input.length()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset and size to path.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -219,13 +243,16 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ path #5 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset by name to path.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output.toPath(),
                 StandardCharsets.UTF_8.name()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset by name to path.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -236,14 +263,17 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ path #6 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset by name and size to path.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 output.toPath(),
                 StandardCharsets.UTF_8.name(),
                 input.length()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset by name and size to path.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -253,12 +283,15 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader to output.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output)
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader to output.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -268,13 +301,16 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with size to output.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output),
                 input.length()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with size to output.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -284,13 +320,16 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset to output.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output),
                 StandardCharsets.UTF_8
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset to output.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -301,14 +340,17 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ output #4 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset and size to output.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output),
                 StandardCharsets.UTF_8,
                 input.length()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset and size to output.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -318,13 +360,16 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ output #5 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset by name to output.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output),
                 StandardCharsets.UTF_8.name()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset by name to output.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }
@@ -335,14 +380,17 @@ public final class TeeInputFromReaderTest {
         final String input =
             "Hello, товарищ output #6 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from reader with charset by name and size to output.",
+        new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
                 new OutputTo(output),
                 StandardCharsets.UTF_8.name(),
                 input.length()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from reader with charset by name and size to output.",
+            new InputOf(output),
             new InputHasContent(input)
         ).affirm();
     }

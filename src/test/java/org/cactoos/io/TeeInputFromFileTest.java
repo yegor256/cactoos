@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -57,12 +58,15 @@ public final class TeeInputFromFileTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from input file to output file",
+        new LengthOf(
             new TeeInput(
                 input,
                 output
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from input file to output file",
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
@@ -77,12 +81,15 @@ public final class TeeInputFromFileTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from input file to output path",
+        new LengthOf(
             new TeeInput(
                 input,
                 output.toPath()
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from input file to output path",
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
@@ -97,12 +104,15 @@ public final class TeeInputFromFileTest {
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from input file to output",
+        new LengthOf(
             new TeeInput(
                 input,
                 new OutputTo(output)
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from input file to output",
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
