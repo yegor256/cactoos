@@ -26,9 +26,9 @@ package org.cactoos.scalar;
 import java.io.IOException;
 import java.util.IllegalFormatException;
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link FallbackFrom}.
@@ -41,37 +41,37 @@ public final class FallbackFromTest {
 
     @Test
     public void supportsException() {
-        MatcherAssert.assertThat(
-            "IOException class is not supported, but should be",
+        new Assertion<>(
+            "Must support exactly exception class",
             new FallbackFrom<>(
                 new IterableOf<>(IOException.class),
                 exp -> "IOException fallback"
             ).support(IOException.class),
             new IsEqual<>(0)
-        );
+        ).affirm();
     }
 
     @Test
     public void supportsInheritedException() {
-        MatcherAssert.assertThat(
-            "RuntimeException class is not supported, but should be",
+        new Assertion<>(
+            "Must support inherited exception class",
             new FallbackFrom<>(
                 new IterableOf<>(RuntimeException.class),
                 exp -> "RuntimeException fallback #1"
             ).support(IllegalFormatException.class),
             new IsEqual<>(2)
-        );
+        ).affirm();
     }
 
     @Test
     public void doesNotSupportException() {
-        MatcherAssert.assertThat(
-            "RuntimeException class is supported, but should not be",
+        new Assertion<>(
+            "Must not support unrelated exception class",
             new FallbackFrom<>(
                 new IterableOf<>(RuntimeException.class),
                 exp -> "RuntimeException fallback #2"
             ).support(ClassNotFoundException.class),
             new IsEqual<>(Integer.MIN_VALUE)
-        );
+        ).affirm();
     }
 }

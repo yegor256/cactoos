@@ -24,8 +24,8 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Bytes;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -38,62 +38,68 @@ public final class EqualityTest {
 
     @Test
     public void notEqualLeft() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must compare smaller to greater",
             new Equality<>(
                 new EqualityTest.Letters("A"), new EqualityTest.Letters("AB")
             ),
             new ScalarHasValue<>(-1)
-        );
+        ).affirm();
     }
 
     @Test
     public void notEqualRight() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must compare greater to smaller",
             new Equality<>(
                 new EqualityTest.Letters("AB"), new EqualityTest.Letters("A")
             ),
             new ScalarHasValue<>(1)
-        );
+        ).affirm();
     }
 
     @Test
     public void notEqualLeftWithSameSize() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must compare smaller to smaller with same size",
             new Equality<>(
                 new EqualityTest.Letters("A"), new EqualityTest.Letters("B")
             ),
             new ScalarHasValue<>(-1)
-        );
+        ).affirm();
     }
 
     @Test
     public void notEqualRightWithSameSize() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must compare greater to smaller with same size",
             new Equality<>(
                 new EqualityTest.Letters("B"), new EqualityTest.Letters("A")
             ),
             new ScalarHasValue<>(1)
-        );
+        ).affirm();
     }
 
     @Test
     public void equal() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must compare equals",
             new Equality<>(
                 new EqualityTest.Letters("A"), new EqualityTest.Letters("A")
             ),
             new ScalarHasValue<>(0)
-        );
+        ).affirm();
     }
 
     @Test
     public void compareEmptyArrays() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must compare empty",
             new Equality<>(
                 new EqualityTest.Letters(""), new EqualityTest.Letters("")
             ),
             new ScalarHasValue<>(0)
-        );
+        ).affirm();
     }
 
     /**
