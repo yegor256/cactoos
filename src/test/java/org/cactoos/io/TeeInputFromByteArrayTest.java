@@ -59,7 +59,7 @@ public final class TeeInputFromByteArrayTest {
             )
         ).intValue();
         new Assertion<>(
-            "Can't copy bytes to path",
+            "Must copy bytes to path",
             new InputOf(output),
             new InputHasContent(message)
         ).affirm();
@@ -77,7 +77,7 @@ public final class TeeInputFromByteArrayTest {
             )
         ).intValue();
         new Assertion<>(
-            "Can't copy bytes to file",
+            "Must copy bytes to file",
             new InputOf(output),
             new InputHasContent(message)
         ).affirm();
@@ -95,7 +95,7 @@ public final class TeeInputFromByteArrayTest {
             )
         ).intValue();
         new Assertion<>(
-            "Can't copy bytes to output",
+            "Must copy bytes to output",
             new InputOf(output),
             new InputHasContent(message)
         ).affirm();
