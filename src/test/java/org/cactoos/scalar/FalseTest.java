@@ -23,9 +23,10 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link False}.
@@ -37,10 +38,19 @@ public final class FalseTest {
 
     @Test
     public void asValue() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must return false",
             new False().value(),
-            Matchers.equalTo(false)
-        );
+            new IsEqual<>(false)
+        ).affirm();
     }
 
+    @Test
+    public void asScalar() throws Exception {
+        new Assertion<>(
+            "Must be false",
+            new False(),
+            new ScalarHasValue<>(false)
+        ).affirm();
+    }
 }

@@ -24,9 +24,9 @@
 package org.cactoos.scalar;
 
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IoChecked}.
@@ -39,36 +39,43 @@ public final class IoCheckedTest {
     @Test
     public void rethrowsIoException() {
         final IOException exception = new IOException("intended");
-        try {
-            new IoChecked<>(
+        new Assertion<>(
+            "Must rethrow IOException",
+            () -> new IoChecked<>(
                 () -> {
                     throw exception;
                 }
-            ).value();
-        } catch (final IOException ex) {
-            MatcherAssert.assertThat(
-                ex, Matchers.is(exception)
-            );
-        }
+            ).value(),
+            new Throws<>(exception.getMessage(), exception.getClass())
+        ).affirm();
     }
 
+    @Test
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
-    @Test(expected = IOException.class)
-    public void throwsException() throws Exception {
-        new IoChecked<>(
-            () -> {
-                throw new Exception("intended to fail");
-            }
-        ).value();
+    public void throwsException() {
+        new Assertion<>(
+            "Must throw IOException from Exception",
+            () -> new IoChecked<>(
+                () -> {
+                    throw new Exception("intended to fail");
+                }
+            ).value(),
+            new Throws<>(IOException.class)
+        ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionGoesOut() throws IOException {
-        new IoChecked<>(
-            () -> {
-                throw new IllegalStateException("intended to fail here");
-            }
-        ).value();
+    @Test
+    public void runtimeExceptionGoesOut() {
+        final RuntimeException exception = new IllegalStateException("intended to fail here");
+        new Assertion<>(
+            "Must rethrow RuntimeExcepion",
+            () -> new IoChecked<>(
+                () -> {
+                    throw exception;
+                }
+            ).value(),
+            new Throws<>(exception.getMessage(), exception.getClass())
+        ).affirm();
     }
 
 }
