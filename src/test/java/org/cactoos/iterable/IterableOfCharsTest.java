@@ -23,9 +23,10 @@
  */
 package org.cactoos.iterable;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.text.TextOf;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link IterableOfChars}.
@@ -37,9 +38,10 @@ public final class IterableOfCharsTest {
 
     @Test
     public void convertsCharactersToIterable() {
-        MatcherAssert.assertThat(
-            new IterableOfChars("txt".toCharArray()),
-            Matchers.contains('t', 'x', 't')
-        );
+        new Assertion<>(
+            "Must create Iterable from Text",
+            new IterableOfChars(new TextOf("txt")),
+            new HasValues<>('t', 'x', 't')
+        ).affirm();
     }
 }

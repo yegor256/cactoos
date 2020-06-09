@@ -23,9 +23,10 @@
  */
 package org.cactoos.iterable;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.cactoos.text.TextOf;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link IterableOfBytes}.
@@ -34,13 +35,26 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class IterableOfBytesTest {
+    @Test
+    public void convertsTextToIterableOfBytes() {
+        new Assertion<>(
+            "Must create Iterable from Text",
+            new IterableOfBytes(
+                new TextOf("ABC")
+            ),
+            new HasValues<>(
+                (byte) 'A', (byte) 'B', (byte) 'C'
+            )
+        ).affirm();
+    }
 
     @Test
     public void convertsBytesToIterable() {
         final byte[] bytes = "txt".getBytes();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must create Iterable from bytes",
             new IterableOfBytes(bytes),
-            Matchers.contains(bytes[0], bytes[1], bytes[2])
-        );
+            new HasValues<>(bytes[0], bytes[1], bytes[2])
+        ).affirm();
     }
 }

@@ -40,6 +40,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
@@ -345,6 +346,22 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * @param iterator The iterable to convert to string
+     */
+    public TextOf(final Iterator<Character> iterator) {
+        this(
+            () -> {
+                final StringBuilder buf = new StringBuilder();
+                iterator.forEachRemaining(buf::append);
+                return buf.toString();
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     *
      * @param input The InputStream where the text is read from
      * @since 0.21
      */

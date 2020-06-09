@@ -26,6 +26,7 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Text;
 
 /**
  * {@link Iterator} that returns the {@code char}s as {@link Character}s.
@@ -44,6 +45,22 @@ public final class IteratorOfChars implements Iterator<Character> {
      * Current position.
      */
     private final AtomicInteger position;
+
+    /**
+     * Ctor.
+     * @param str String to iterate
+     */
+    public IteratorOfChars(final String str) {
+        this(str.toCharArray());
+    }
+
+    /**
+     * Ctor.
+     * @param txt Text to iterate
+     */
+    public IteratorOfChars(final Text txt) {
+        this(txt.toString());
+    }
 
     /**
      * Ctor.

@@ -26,6 +26,9 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Bytes;
+import org.cactoos.Text;
+import org.cactoos.io.BytesOf;
 
 /**
  * Iterator that returns a set of bytes.
@@ -53,6 +56,33 @@ public final class IteratorOfBytes implements Iterator<Byte> {
     public IteratorOfBytes(final byte... itms) {
         this.items = itms;
         this.position = new AtomicInteger(0);
+    }
+
+    /**
+     * Ctor.
+     * @param txt Text to iterate
+     * @throws Exception If fails
+     */
+    public IteratorOfBytes(final Text txt) throws Exception {
+        this(new BytesOf(txt));
+    }
+
+    /**
+     * Ctor.
+     * @param bytes Bytes to iterate
+     * @throws Exception If fails
+     */
+    public IteratorOfBytes(final Bytes bytes) throws Exception {
+        this(bytes.asBytes());
+    }
+
+    /**
+     * Ctor.
+     * @param str String to iterate
+     * @throws Exception If fails
+     */
+    public IteratorOfBytes(final String str) throws Exception {
+        this(new BytesOf(str));
     }
 
     @Override

@@ -28,12 +28,17 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Iterator;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Text;
+import org.cactoos.iterable.IterableOfBytes;
+import org.cactoos.list.ListOf;
 
 /**
  * A {@link Bytes} that encapsulates other sources of data.
@@ -325,6 +330,39 @@ public final class BytesOf implements Bytes {
      */
     public BytesOf(final byte... bytes) {
         this(() -> bytes);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param iterator Iterator of bytes
+     */
+    public BytesOf(final Iterator<Byte> iterator) {
+        this(new IterableOfBytes(iterator));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param bytes Iterable of bytes
+     */
+    public BytesOf(final Iterable<Byte> bytes) {
+        this(new ListOf<>(bytes));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param bytes Collection of bytes
+     */
+    public BytesOf(final Collection<Byte> bytes) {
+        this(() -> {
+            final ByteBuffer buf = ByteBuffer.allocate(
+                bytes.size()
+            );
+            bytes.forEach(buf::put);
+            return buf.array();
+        });
     }
 
     /**

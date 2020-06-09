@@ -23,10 +23,15 @@
  */
 package org.cactoos.iterator;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.cactoos.list.ListOf;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Tests for {@link IteratorOfBytes}.
@@ -37,6 +42,42 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class IteratorOfBytesTest {
+    @Test
+    public void canBeConstructedFromString() throws Exception {
+        final Iterator<Byte> itr = new IteratorOfBytes(
+            "F"
+        );
+        new Assertion<>(
+            "Must have 1 element",
+            new ListOf<>(
+                itr.next(),
+                itr.hasNext()
+            ),
+            new HasValues<Object>(
+                (byte) 'F', false
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void canBeConstructedFromText() throws Exception {
+        final Iterator<Byte> itr = new IteratorOfBytes(
+            new TextOf("ABC")
+        );
+        new Assertion<>(
+            "Must have 3 elements",
+            new ListOf<>(
+                itr.next(),
+                itr.next(),
+                itr.next(),
+                itr.hasNext()
+            ),
+            new HasValues<Object>(
+                (byte) 'A', (byte) 'B', (byte) 'C', false
+            )
+        ).affirm();
+    }
+
     @Test
     public void emptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(

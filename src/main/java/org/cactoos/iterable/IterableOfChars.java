@@ -23,6 +23,7 @@
  */
 package org.cactoos.iterable;
 
+import org.cactoos.Text;
 import org.cactoos.iterator.IteratorOfChars;
 
 /**
@@ -38,5 +39,21 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
      */
     public IterableOfChars(final char... chars) {
         super(new IterableOf<>(() -> new IteratorOfChars(chars)));
+    }
+
+    /**
+     * Ctor.
+     * @param str String
+     */
+    public IterableOfChars(final String str) {
+        this(str.toCharArray());
+    }
+
+    /**
+     * Ctor.
+     * @param txt Text
+     */
+    public IterableOfChars(final Text txt) {
+        this(txt.toString());
     }
 }

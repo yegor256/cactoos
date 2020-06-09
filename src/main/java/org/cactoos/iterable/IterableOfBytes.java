@@ -23,6 +23,9 @@
  */
 package org.cactoos.iterable;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import org.cactoos.Text;
 import org.cactoos.iterator.IteratorOfBytes;
 
 /**
@@ -37,6 +40,30 @@ public final class IterableOfBytes extends IterableEnvelope<Byte> {
      * @param bytes Bytes
      */
     public IterableOfBytes(final byte... bytes) {
-        super(new IterableOf<>(() -> new IteratorOfBytes(bytes)));
+        this(new IteratorOfBytes(bytes));
+    }
+
+    /**
+     * Ctor.
+     * @param bytes Iterator
+     */
+    public IterableOfBytes(final Iterator<Byte> bytes) {
+        super(new IterableOf<>(bytes));
+    }
+
+    /**
+     * Ctor.
+     * @param str String
+     */
+    public IterableOfBytes(final String str) {
+        this(str.getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
+     * Ctor.
+     * @param txt Text
+     */
+    public IterableOfBytes(final Text txt) {
+        this(txt.toString());
     }
 }

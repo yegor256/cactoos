@@ -24,9 +24,13 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Tests for {@link IteratorOfChars}.
@@ -35,6 +39,19 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class IteratorOfCharsTest {
+    @Test
+    public void canBeConstructedFromText() {
+        new Assertion<>(
+            "Iterator must contain all characters of the string",
+            new IterableOf<>(
+                new IteratorOfChars(
+                    new TextOf("abc")
+                )
+            ),
+            new HasValues<>('a', 'b', 'c')
+        ).affirm();
+    }
+
     @Test
     public void emptyIteratorDoesNotHaveNext() {
         MatcherAssert.assertThat(

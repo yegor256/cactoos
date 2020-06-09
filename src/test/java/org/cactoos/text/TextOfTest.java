@@ -41,7 +41,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
+import org.cactoos.iterator.IteratorOfChars;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
@@ -562,6 +564,17 @@ public final class TextOfTest {
             "Can't format a ZonedDateTime with ISO format.",
             new TextOf(ZonedDateTime.now()).asString(),
             new IsNot<>(new IsNull<>())
+        ).affirm();
+    }
+
+    @Test
+    public void readsIteratorToText() throws IOException {
+        new Assertion<>(
+            "Can't read Iterator to Text",
+            new TextOf(
+                new IteratorOfChars("qwer")
+            ).asString(),
+            new IsEqual<>("qwer")
         ).affirm();
     }
 }

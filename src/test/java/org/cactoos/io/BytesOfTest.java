@@ -32,6 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
 import org.cactoos.iterable.Endless;
 import org.cactoos.iterable.HeadOf;
+import org.cactoos.iterator.IteratorOfBytes;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;
@@ -164,6 +165,20 @@ public final class BytesOfTest {
             "Can't convert text into bytes",
             new BytesOf(
                 new InputOf(text)
+            ).asBytes(),
+            new IsEqual<>(
+                new BytesOf(text.asString()).asBytes()
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void asBytesFromIterator() throws Exception {
+        final Text text = new TextOf("Good bye!");
+        new Assertion<>(
+            "Can't convert iterator into bytes",
+            new BytesOf(
+                new IteratorOfBytes(text)
             ).asBytes(),
             new IsEqual<>(
                 new BytesOf(text.asString()).asBytes()
