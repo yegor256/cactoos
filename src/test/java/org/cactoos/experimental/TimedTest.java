@@ -31,9 +31,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
-import org.cactoos.func.FuncOf;
-import org.cactoos.func.Repeated;
-import org.cactoos.func.UncheckedFunc;
+import org.cactoos.RepeatedProc;
+import org.cactoos.func.UncheckedProc;
 import org.cactoos.scalar.ScalarOf;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
@@ -263,21 +262,17 @@ public final class TimedTest {
     /**
      * Repeat the test several times.
      * @param test The test to execute.
-     * @todo #1000:30min Create RepeatedProc decorator in order to get rid of this `dummy` object.
-     *  After it's done:
-     *  1. Leave a puzzle for creation RepeatedCallable decorator
-     *  2. Leave a puzzle for splitting the entire `org.cactoos.func` package into
-     *  `org.cactoos.func`, `org.cactoos.proc` and `org.cactoos.callable`, with each one holding
-     *  their related decorators, classes and interfaces.
+     * @todo #1277:30min Create RepeatedCallable decorator in order
+     *  to get rid of `dummy` object parameter.
      */
     private void repeat(final Proc<Object> test) {
         final Object dummy = new Object();
-        new UncheckedFunc<>(
-            new Repeated<>(
-                new FuncOf<>(test, dummy),
+        new UncheckedProc<>(
+            new RepeatedProc<>(
+                test,
                 TimedTest.REPETITIONS_COUNT
             )
-        ).apply(dummy);
+        ).exec(dummy);
     }
 
     /**
