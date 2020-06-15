@@ -262,8 +262,8 @@ public final class TimedTest {
     /**
      * Repeat the test several times.
      * @param test The test to execute.
-     * @todo #1277:30min Create RepeatedCallable decorator in order
-     *  to get rid of `dummy` object parameter.
+     * @todo #1277:30min Create RepeatedCallable decorator to get rid of `dummy` object parameter
+     *  required in #exec(X) method. Then inline the body of this method.
      */
     private void repeat(final Proc<Object> test) {
         final Object dummy = new Object();
