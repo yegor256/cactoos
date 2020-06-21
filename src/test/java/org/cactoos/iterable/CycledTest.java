@@ -26,7 +26,7 @@ package org.cactoos.iterable;
 import java.util.Collections;
 import org.cactoos.scalar.ItemAt;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;

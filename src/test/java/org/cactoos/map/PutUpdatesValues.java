@@ -25,7 +25,7 @@ package org.cactoos.map;
 
 import java.util.Map;
 import org.hamcrest.Description;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
 
 /**

@@ -24,7 +24,7 @@
 package org.cactoos.list;
 
 import java.util.Comparator;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 

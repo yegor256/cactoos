@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.MatcherOf;
 

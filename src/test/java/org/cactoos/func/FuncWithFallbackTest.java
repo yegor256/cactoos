@@ -28,7 +28,7 @@ import java.util.IllegalFormatException;
 import java.util.IllegalFormatWidthException;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.FallbackFrom;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.FuncApplies;
 

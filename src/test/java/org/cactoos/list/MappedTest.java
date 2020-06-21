@@ -27,7 +27,7 @@ import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.HasSize;

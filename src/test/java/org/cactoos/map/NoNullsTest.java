@@ -25,7 +25,7 @@ package org.cactoos.map;
 
 import java.util.HashMap;
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;

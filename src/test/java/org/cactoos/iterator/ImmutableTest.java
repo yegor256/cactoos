@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Random;
 import org.cactoos.text.Randomized;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;

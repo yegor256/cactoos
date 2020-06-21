@@ -24,7 +24,7 @@
 package org.cactoos.iterable;
 
 import java.util.NoSuchElementException;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;

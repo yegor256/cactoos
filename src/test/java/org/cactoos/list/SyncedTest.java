@@ -24,7 +24,7 @@
 package org.cactoos.list;
 
 import java.util.Collections;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 

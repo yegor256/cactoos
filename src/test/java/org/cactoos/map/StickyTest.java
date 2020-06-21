@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Repeated;
 import org.cactoos.text.FormattedText;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.IsAnything;
 import org.hamcrest.core.IsEqual;

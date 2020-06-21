@@ -25,7 +25,7 @@ package org.cactoos.func;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;

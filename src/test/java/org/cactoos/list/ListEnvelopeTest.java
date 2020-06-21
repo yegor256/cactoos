@@ -26,7 +26,7 @@ package org.cactoos.list;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;

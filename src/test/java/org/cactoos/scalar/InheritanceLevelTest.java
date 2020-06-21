@@ -24,7 +24,7 @@
 package org.cactoos.scalar;
 
 import java.io.FileNotFoundException;
-import org.hamcrest.MatcherAssert;
+import org.cactoos.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
