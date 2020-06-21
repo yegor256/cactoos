@@ -24,9 +24,9 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IoCheckedBiFunc}.
@@ -38,17 +38,18 @@ public final class IoCheckedBiFuncTest {
     @Test
     public void rethrowsIoException() {
         final IOException exception = new IOException("intended");
-        try {
-            new IoCheckedBiFunc<>(
+        new Assertion<>(
+            "Must rethrow IOException",
+            () -> new IoCheckedBiFunc<>(
                 (fst, scd) -> {
                     throw exception;
                 }
-            ).apply(1, 2);
-        } catch (final IOException ex) {
-            MatcherAssert.assertThat(
-                ex, Matchers.is(exception)
-            );
-        }
+            ).apply(1, 2),
+            new Throws<>(
+                exception.getMessage(),
+                exception.getClass()
+            )
+        ).affirm();
     }
 
     @Test(expected = IOException.class)

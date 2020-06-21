@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import org.cactoos.text.FormattedText;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link ProcOf}.
@@ -51,14 +51,14 @@ public final class ProcOfTest {
                 }
             }
         ).exec("You can use any input in a Runnable.");
-        MatcherAssert.assertThat(
+        new Assertion<>(
             new FormattedText(
                 "Wrong result when created with a Runnable. Expected %s",
                 str
             ).asString(),
             list,
             Matchers.contains(str)
-        );
+        ).affirm();
     }
 
     @Test
@@ -74,14 +74,14 @@ public final class ProcOfTest {
                 }
             }
         ).exec("You can use any input in a Callable");
-        MatcherAssert.assertThat(
+        new Assertion<>(
             new FormattedText(
                 "Wrong result when created with a Callable. Expected %s",
                 str
             ).asString(),
             list,
             Matchers.contains(str)
-        );
+        ).affirm();
     }
 
     @Test
@@ -94,13 +94,13 @@ public final class ProcOfTest {
                 return list.size();
             }
         ).exec(str);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             new FormattedText(
                 "Wrong result when created with a Func. Expected %s",
                 str
             ).asString(),
             list,
             Matchers.contains(str)
-        );
+        ).affirm();
     }
 }

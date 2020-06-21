@@ -24,8 +24,8 @@
 package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
@@ -39,7 +39,7 @@ public final class RunnableOfTest {
     @Test
     public void convertsFuncIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't execute Runnable with Func",
             new RunnableOf<>(
                 input -> {
@@ -53,13 +53,13 @@ public final class RunnableOfTest {
                     return done.get();
                 }
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void convertsProcIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't execute Runnable with ProcOf",
             new RunnableOf<>(
                 new ProcOf<>(
@@ -75,13 +75,13 @@ public final class RunnableOfTest {
                     return done.get();
                 }
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void convertsCallableIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't execute Runnable with Callable",
             new RunnableOf<>(
                 () -> {
@@ -95,7 +95,7 @@ public final class RunnableOfTest {
                     return done.get();
                 }
             )
-        );
+        ).affirm();
     }
 
 }

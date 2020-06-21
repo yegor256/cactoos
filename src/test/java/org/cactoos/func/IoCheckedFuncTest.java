@@ -24,10 +24,9 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.cactoos.Func;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IoCheckedFunc}.
@@ -40,35 +39,48 @@ public final class IoCheckedFuncTest {
     @Test
     public void rethrowsIoException() {
         final IOException exception = new IOException("intended");
-        try {
-            new IoCheckedFunc<>(
-                (Func<Integer, String>) i -> {
+        new Assertion<>(
+            "Must rethrow original IOException",
+            () -> new IoCheckedFunc<>(
+                i -> {
                     throw exception;
                 }
-            ).apply(1);
-        } catch (final IOException ex) {
-            MatcherAssert.assertThat(
-                ex, Matchers.is(exception)
-            );
-        }
+            ).apply(1),
+            new Throws<>(
+                exception.getMessage(),
+                exception.getClass()
+            )
+        ).affirm();
     }
 
-    @Test(expected = IOException.class)
-    public void rethrowsCheckedToIoException() throws Exception {
-        new IoCheckedFunc<>(
-            i -> {
-                throw new IOException("intended to fail");
-            }
-        ).apply(1);
+    @Test
+    public void rethrowsCheckedToIoException() {
+        new Assertion<>(
+            "Must rethrow as IOException",
+            () -> new IoCheckedFunc<>(
+                i -> {
+                    throw new InterruptedException("intended to fail");
+                }
+            ).apply(1),
+            new Throws<>(
+                IOException.class
+            )
+        ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionGoesOut() throws IOException {
-        new IoCheckedFunc<>(
-            i -> {
-                throw new IllegalStateException("intended to fail here");
-            }
-        ).apply(1);
+    @Test
+    public void runtimeExceptionGoesOut() {
+        new Assertion<>(
+            "Must throw runtime exception as is",
+            () -> new IoCheckedFunc<>(
+                i -> {
+                    throw new IllegalStateException("intended to fail here");
+                }
+            ).apply(1),
+            new Throws<>(
+                IllegalStateException.class
+            )
+        ).affirm();
     }
 
 }

@@ -25,9 +25,9 @@ package org.cactoos.func;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -36,32 +36,35 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class SyncFuncTest {
 
     @Test
     public void funcWorksInThreads() {
         final List<Integer> list = new LinkedList<>();
         final int threads = 100;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Sync func can't work well in multiple threads",
             func -> func.apply(true),
             new RunsInThreads<>(
                 new SyncFunc<Boolean, Boolean>(
-                    input -> {
-                        return list.add(1);
-                    }
+                    input -> list.add(1)
                 ),
                 threads
             )
-        );
-        MatcherAssert.assertThat(list.size(), Matchers.equalTo(threads));
+        ).affirm();
+        new Assertion<>(
+            "Must run the expected amount of threads",
+            list.size(),
+            Matchers.equalTo(threads)
+        ).affirm();
     }
 
     @Test
     public void procWorksInThreads() {
         final int threads = 100;
         final int[] counter = new int[]{0};
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Sync func with proc can't work well in multiple threads",
             func -> func.apply(1),
             new RunsInThreads<>(
@@ -73,15 +76,19 @@ public final class SyncFuncTest {
                 ),
                 threads
             )
-        );
-        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
+        ).affirm();
+        new Assertion<>(
+            "Must run the expected amount of threads",
+            counter[0],
+            Matchers.equalTo(threads)
+        ).affirm();
     }
 
     @Test
     public void callableWorksInThreads() {
         final int threads = 100;
         final int[] counter = new int[]{0};
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Sync func with callable can't work well in multiple threads",
             func -> func.apply(1),
             new RunsInThreads<>(
@@ -93,15 +100,19 @@ public final class SyncFuncTest {
                 ),
                 threads
             )
-        );
-        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
+        ).affirm();
+        new Assertion<>(
+            "Must run the expected amount of threads",
+            counter[0],
+            Matchers.equalTo(threads)
+        ).affirm();
     }
 
     @Test
     public void runnableWorksInThreads() {
         final int threads = 100;
         final int[] counter = new int[]{0};
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Sync func with runnable can't work well in multiple threads",
             func -> func.apply(1),
             new RunsInThreads<>(
@@ -111,7 +122,11 @@ public final class SyncFuncTest {
                 ),
                 threads
             )
-        );
-        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
+        ).affirm();
+        new Assertion<>(
+            "Must run the expected amount of threads",
+            counter[0],
+            Matchers.equalTo(threads)
+        ).affirm();
     }
 }
