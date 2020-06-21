@@ -26,8 +26,8 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import java.util.Iterator;
 import org.cactoos.Func;
-import org.cactoos.iterator.IteratorOf;
 import org.cactoos.MatcherAssert;
+import org.cactoos.iterator.IteratorOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 

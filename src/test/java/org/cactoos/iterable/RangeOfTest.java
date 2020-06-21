@@ -26,8 +26,8 @@ package org.cactoos.iterable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import org.cactoos.Func;
-import org.cactoos.list.ListOf;
 import org.cactoos.MatcherAssert;
+import org.cactoos.list.ListOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 

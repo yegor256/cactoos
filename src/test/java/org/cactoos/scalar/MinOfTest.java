@@ -23,8 +23,8 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.list.ListOf;
 import org.cactoos.MatcherAssert;
+import org.cactoos.list.ListOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 

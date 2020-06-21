@@ -25,10 +25,10 @@ package org.cactoos.scalar;
 
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.MatcherAssert;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.ScalarHasValue;

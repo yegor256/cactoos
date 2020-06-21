@@ -24,9 +24,9 @@
 package org.cactoos.scalar;
 
 import java.util.Collection;
+import org.cactoos.MatcherAssert;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 

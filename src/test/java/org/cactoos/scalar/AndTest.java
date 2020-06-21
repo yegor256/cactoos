@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
+import org.cactoos.MatcherAssert;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;

@@ -25,8 +25,8 @@ package org.cactoos.func;
 
 import java.security.SecureRandom;
 import org.cactoos.Func;
-import org.cactoos.list.ListOf;
 import org.cactoos.MatcherAssert;
+import org.cactoos.list.ListOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;

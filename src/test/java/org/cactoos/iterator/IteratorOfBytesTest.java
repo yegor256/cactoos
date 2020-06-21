@@ -25,9 +25,9 @@ package org.cactoos.iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.cactoos.MatcherAssert;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
