@@ -86,19 +86,6 @@ public final class Reduced<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param reduce Reducing function
-     * @param scalars The scalars
-     */
-    public Reduced(
-        final BiFunc<T, T, T> reduce,
-        final Iterable<Scalar<T>> scalars
-    ) {
-        this.items = scalars;
-        this.function = reduce;
-    }
-
-    /**
-     * Ctor.
      * @param values The scalars
      * @param reduce Reducing function
      */
@@ -110,6 +97,19 @@ public final class Reduced<T> implements Scalar<T> {
             reduce,
             new Mapped<>(x -> () -> x, values)
         );
+    }
+
+    /**
+     * Ctor.
+     * @param reduce Reducing function
+     * @param scalars The scalars
+     */
+    public Reduced(
+        final BiFunc<T, T, T> reduce,
+        final Iterable<Scalar<T>> scalars
+    ) {
+        this.items = scalars;
+        this.function = reduce;
     }
 
     /**

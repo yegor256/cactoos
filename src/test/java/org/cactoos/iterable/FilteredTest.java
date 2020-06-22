@@ -147,18 +147,6 @@ public final class FilteredTest {
     }
 
     @Test
-    public void filtersWithFunc() {
-        new Assertion<>(
-            "Must be filtered with Scalar<Boolean> result",
-            new Filtered<>(
-                new IterableOf<>("a", "b", "c", "x"),
-                input -> new StartsWith(input, "c")
-            ),
-            new HasValues<>("c")
-        ).affirm();
-    }
-
-    @Test
     public void filtersWithTwoFuncsCombined() throws Exception {
         new Assertion<>(
             "Must be filtered with two filters",
