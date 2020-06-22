@@ -1,8 +1,3 @@
 @defaultMessage Do not use static methods
 org.hamcrest.Matchers
-
-@defaultMessage Please specify failure reason
-org.hamcrest.MatcherAssert#assertThat(java.lang.Object, org.hamcrest.Matcher)
-
-@defaultMessage Please specify failure reason
-org.junit.Assert#assertThat(java.lang.Object, org.hamcrest.Matcher)
+org.hamcrest.MatcherAssert
