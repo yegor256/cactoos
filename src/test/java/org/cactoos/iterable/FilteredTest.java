@@ -23,14 +23,21 @@
  */
 package org.cactoos.iterable;
 
+import org.cactoos.Func;
+import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
+import org.cactoos.scalar.And;
 import org.cactoos.scalar.LengthOf;
+import org.cactoos.scalar.Reduced;
+import org.cactoos.text.EndsWith;
+import org.cactoos.text.StartsWith;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -49,7 +56,8 @@ public final class FilteredTest {
             new LengthOf(
                 new Filtered<>(
                     // @checkstyle MagicNumber (1 line)
-                    input -> input.length() > 4, new IterableOf<>(
+                    input -> input.length() > 4,
+                    new IterableOf<>(
                         "hello", "world", "друг"
                     )
                 )
@@ -118,7 +126,7 @@ public final class FilteredTest {
     public void withItemsNotEmpty() {
         new Assertion<>(
             "Must not be empty with items",
-            new Filtered<String>(
+            new Filtered<>(
                 input -> input.length() > 4,
                 new IterableOf<>("first", "second")
             ),
@@ -130,11 +138,52 @@ public final class FilteredTest {
     public void withoutItemsIsEmpty() {
         new Assertion<>(
             "Must be empty without items",
-            new Filtered<String>(
+            new Filtered<>(
                 input -> input.length() > 16,
                 new IterableOf<>("third", "fourth")
             ),
             new IsEmptyIterable<>()
+        ).affirm();
+    }
+
+
+    @Test
+    public void filtersWithFunc() {
+        new Assertion<>(
+            "Must be filtered with Scalar<Boolean>",
+            new Filtered<>(
+                new IterableOf<>("a", "b", "c", "x"),
+                input -> new StartsWith(input, "c")
+            ),
+            new HasValues<>("c")
+        ).affirm();
+    }
+
+    /**
+     * @todo #1313:30m Add `func.And<>(Func<X, Scalar<Boolean>>...)` for combing
+     *  several filter function, and replace use of `Reduced` in this method by
+     *  it.
+     */
+    @Test
+    public void filtersWithVararg() throws Exception {
+        new Assertion<>(
+            "Must be filtered with Scalar<Boolean>",
+            new Filtered<>(
+                new IterableOf<>("ay", "xb", "yx", "xy"),
+                new Reduced<>(
+                    new ListOf<Func<String, Scalar<Boolean>>>(
+                        input -> new StartsWith(input, "x"),
+                        input -> new EndsWith(input, "y")
+                    ),
+                    (f, g) ->
+                        input ->
+                            new And(
+                                f.apply(input),
+                                g.apply(input)
+                            )
+                ).value()
+            ),
+            new HasValues<>("xy")
         ).affirm();
     }
 

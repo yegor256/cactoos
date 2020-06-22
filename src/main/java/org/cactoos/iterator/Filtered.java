@@ -28,7 +28,9 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 import org.cactoos.Func;
+import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Filtered iterator.
@@ -61,7 +63,7 @@ public final class Filtered<X> implements Iterator<X> {
     /**
      * Predicate.
      */
-    private final Func<X, Boolean> func;
+    private final Func<X, Scalar<Boolean>> func;
 
     /**
      * The buffer storing the objects of the iterator.
@@ -74,18 +76,28 @@ public final class Filtered<X> implements Iterator<X> {
      * @param src Source iterable
      */
     public Filtered(final Func<X, Boolean> fnc, final Iterator<X> src) {
+        this(src, input -> () -> fnc.apply(input));
+    }
+
+    /**
+     * Ctor.
+     * @param src Source iterable
+     * @param fnc Predicate
+     */
+    public Filtered(final Iterator<X> src, final Func<X, Scalar<Boolean>> fnc) {
         this.iterator = src;
         this.func = fnc;
         this.buffer = new LinkedList<>();
     }
 
+
     @Override
     public boolean hasNext() {
-        final UncheckedFunc<X, Boolean> fnc = new UncheckedFunc<>(this.func);
+        final UncheckedFunc<X, Scalar<Boolean>> fnc = new UncheckedFunc<>(this.func);
         if (this.buffer.isEmpty()) {
             while (this.iterator.hasNext()) {
                 final X object = this.iterator.next();
-                if (fnc.apply(object)) {
+                if (new Unchecked<>(fnc.apply(object)).value()) {
                     this.buffer.add(object);
                     break;
                 }
