@@ -24,10 +24,10 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.cactoos.MatcherAssert;
 import org.cactoos.Proc;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link IoCheckedProc}.
@@ -46,9 +46,11 @@ public final class IoCheckedProcTest {
                 }
             ).exec(1);
         } catch (final IOException ex) {
-            MatcherAssert.assertThat(
-                ex, Matchers.is(exception)
-            );
+            new Assertion<>(
+                "",
+                ex,
+                Matchers.is(exception)
+            ).affirm();
         }
     }
 

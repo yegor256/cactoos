@@ -24,8 +24,8 @@
 package org.cactoos.scalar;
 
 import java.io.FileNotFoundException;
-import org.cactoos.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -38,34 +38,37 @@ public final class InheritanceLevelTest {
 
     @Test
     public void twoInheritanceLevelsBetweenClasses() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new InheritanceLevel(
                 FileNotFoundException.class,
                 Exception.class
             ),
-            new ScalarHasValue<>(2)
-        );
+            new ScalarHasValue<Integer>(2)
+        ).affirm();
     }
 
     @Test
     public void classesAreNotRelated() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new InheritanceLevel(
                 FileNotFoundException.class,
                 RuntimeException.class
             ),
-            new ScalarHasValue<>(Integer.MIN_VALUE)
-        );
+            new ScalarHasValue<Integer>(Integer.MIN_VALUE)
+        ).affirm();
     }
 
     @Test
     public void classesAreIdentical() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new InheritanceLevel(
                 FileNotFoundException.class,
                 FileNotFoundException.class
             ),
-            new ScalarHasValue<>(0)
-        );
+            new ScalarHasValue<Integer>(0)
+        ).affirm();
     }
 }

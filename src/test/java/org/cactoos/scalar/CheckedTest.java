@@ -25,9 +25,9 @@ package org.cactoos.scalar;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Checked}.
@@ -66,10 +66,11 @@ public final class CheckedTest {
                 IOException::new
             ).value();
         } catch (final IOException exp) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
+                "",
                 exp.getCause(),
                 Matchers.nullValue()
-            );
+            ).affirm();
         }
     }
 
@@ -83,10 +84,11 @@ public final class CheckedTest {
                 IOException::new
             ).value();
         } catch (final FileNotFoundException exp) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
+                "",
                 exp.getCause(),
                 Matchers.nullValue()
-            );
+            ).affirm();
         }
     }
 
@@ -101,10 +103,11 @@ public final class CheckedTest {
                 exp -> new IOException(message, exp)
             ).value();
         } catch (final IOException exp) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
+                "",
                 exp.getMessage(),
                 Matchers.containsString(message)
-            );
+            ).affirm();
         }
     }
 }

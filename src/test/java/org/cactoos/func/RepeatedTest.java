@@ -26,10 +26,10 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import java.util.Iterator;
 import org.cactoos.Func;
-import org.cactoos.MatcherAssert;
 import org.cactoos.iterator.IteratorOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Repeated}.
@@ -49,10 +49,11 @@ public final class RepeatedTest {
             },
             3
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             func.apply(true),
             Matchers.equalTo(5)
-        );
+        ).affirm();
     }
 
     @Test
@@ -63,10 +64,11 @@ public final class RepeatedTest {
             },
             2
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             func.apply(true),
             Matchers.equalTo(null)
-        );
+        ).affirm();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -77,9 +79,10 @@ public final class RepeatedTest {
             },
             0
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             func.apply(true),
             Matchers.equalTo(func.apply(true))
-        );
+        ).affirm();
     }
 }

@@ -26,6 +26,7 @@ package org.cactoos.list;
 import java.util.Collections;
 import org.cactoos.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -47,19 +48,26 @@ public final class SyncedTest {
 
     @Test
     public void worksInThreads() {
-        MatcherAssert.assertThat(
-            list -> !list.iterator().hasNext(),
-            new RunsInThreads<>(new Synced<>(Collections.emptyList()))
-        );
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
+            list1 -> !list1.iterator().hasNext(),
+            new RunsInThreads<>(
+                new Synced<>(Collections.emptyList())
+            )
+        ).affirm();
+        new Assertion<>(
+            "",
             list -> {
-                MatcherAssert.assertThat(
+                new Assertion<>(
+                    "",
                     list,
                     new BehavesAsList<>(0)
-                );
+                ).affirm();
                 return true;
             },
-            new RunsInThreads<>(new Synced<>(new ListOf<>(1, 0, -1, -1, 2)))
-        );
+            new RunsInThreads<>(
+                new Synced<>(new ListOf<>(1, 0, -1, -1, 2))
+            )
+        ).affirm();
     }
 }

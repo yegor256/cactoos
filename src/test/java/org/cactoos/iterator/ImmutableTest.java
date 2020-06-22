@@ -27,7 +27,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import org.cactoos.MatcherAssert;
 import org.cactoos.text.Randomized;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
@@ -58,7 +57,11 @@ public final class ImmutableTest {
         final Iterator<Integer> immutable = new Immutable<>(
             new IteratorOf<>(value)
         );
-        MatcherAssert.assertThat(immutable.next(), new IsEqual<>(value));
+        new Assertion<>(
+            "",
+            immutable.next(),
+            new IsEqual<Integer>(value)
+        ).affirm();
     }
 
     @Test
@@ -67,9 +70,17 @@ public final class ImmutableTest {
         final Iterator<Integer> immutable = new Immutable<>(
             new IteratorOf<>(value)
         );
-        MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(true));
+        new Assertion<>(
+            "",
+            immutable.hasNext(),
+            new IsEqual<Boolean>(true)
+        ).affirm();
         immutable.next();
-        MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(false));
+        new Assertion<>(
+            "",
+            immutable.hasNext(),
+            new IsEqual<Boolean>(false)
+        ).affirm();
     }
 
     @Test

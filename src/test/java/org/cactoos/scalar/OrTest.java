@@ -31,6 +31,7 @@ import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -45,7 +46,8 @@ public final class OrTest {
 
     @Test
     public void allFalse() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Or(
                 new False(),
                 new False(),
@@ -53,13 +55,14 @@ public final class OrTest {
                 new False(),
                 new False()
             ),
-            new ScalarHasValue<>(false)
-        );
+            new ScalarHasValue<Boolean>(false)
+        ).affirm();
     }
 
     @Test
     public void oneTrue() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Or(
                 new False(),
                 new True(),
@@ -67,13 +70,14 @@ public final class OrTest {
                 new False(),
                 new False()
             ),
-            new ScalarHasValue<>(true)
-        );
+            new ScalarHasValue<Boolean>(true)
+        ).affirm();
     }
 
     @Test
     public void allTrue() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Or(
                 new IterableOf<Scalar<Boolean>>(
                     new True(),
@@ -83,16 +87,17 @@ public final class OrTest {
                     new True()
                 )
             ),
-            new ScalarHasValue<>(true)
-        );
+            new ScalarHasValue<Boolean>(true)
+        ).affirm();
     }
 
     @Test
     public void emptyIterator() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Or(new IterableOf<Scalar<Boolean>>()),
-            new ScalarHasValue<>(false)
-        );
+            new ScalarHasValue<Boolean>(false)
+        ).affirm();
     }
 
     @Test
@@ -102,10 +107,11 @@ public final class OrTest {
             (Proc<Integer>) list::add,
             new IterableOf<>(1, 2, 3, 4)
         ).value();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             list,
             Matchers.contains(1, 2, 3, 4)
-        );
+        ).affirm();
     }
 
     @Test
@@ -115,10 +121,11 @@ public final class OrTest {
             (Proc<Integer>) list::add,
             new IterableOf<>(1, 2, 3, 4)
         ).value();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             list,
             Matchers.contains(1, 2, 3, 4)
-        );
+        ).affirm();
     }
 
     @Test
@@ -128,43 +135,47 @@ public final class OrTest {
             (Proc<Integer>) list::add,
             2, 3, 4
         ).value();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             list,
             Matchers.contains(2, 3, 4)
-        );
+        ).affirm();
     }
 
     @Test
     public void testFuncIterable() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Or(
                 input -> input > 0,
                 new IterableOf<>(-1, 1, 0)
             ),
-            new ScalarHasValue<>(true)
-        );
+            new ScalarHasValue<Boolean>(true)
+        ).affirm();
     }
 
     @Test
     public void testFuncIterator() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Or(
                 input -> input > 0,
                 new IterableOf<>(-1, 1, 0)
             ),
-            new ScalarHasValue<>(true)
-        );
+            new ScalarHasValue<Boolean>(true)
+        ).affirm();
     }
 
     @Test
     public void testFuncVarargs() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Or(
                 input -> input > 0,
                 -1, -2, 0
             ),
-            new ScalarHasValue<>(false)
-        );
+            new ScalarHasValue<Boolean>(false)
+        ).affirm();
     }
 
     @Test

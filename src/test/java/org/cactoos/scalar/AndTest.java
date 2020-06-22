@@ -91,35 +91,38 @@ public final class AndTest {
 
     @Test
     public void testFuncIterable() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new And(
                 input -> input > 0,
                 new IterableOf<>(1, -1, 0)
             ),
-            new ScalarHasValue<>(false)
-        );
+            new ScalarHasValue<Boolean>(false)
+        ).affirm();
     }
 
     @Test
     public void testFuncIterator() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new And(
                 input -> input > 0,
                 new IterableOf<>(1, -1, 0)
             ),
-            new ScalarHasValue<>(false)
-        );
+            new ScalarHasValue<Boolean>(false)
+        ).affirm();
     }
 
     @Test
     public void testFuncVarargs() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new And(
                 input -> input > 0,
                 -1, -2, 0
             ),
-            new ScalarHasValue<>(false)
-        );
+            new ScalarHasValue<Boolean>(false)
+        ).affirm();
     }
 
     @Test

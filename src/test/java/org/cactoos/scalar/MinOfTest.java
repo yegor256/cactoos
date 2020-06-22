@@ -23,10 +23,10 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.MatcherAssert;
 import org.cactoos.list.ListOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link MinOf}.
@@ -39,114 +39,130 @@ public final class MinOfTest {
 
     @Test
     public void withIntegerCollection() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
             ).intValue(),
             Matchers.equalTo(1)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
             ).longValue(),
             Matchers.equalTo(1L)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
             ).doubleValue(),
             Matchers.equalTo(1.0d)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
             ).floatValue(),
             Matchers.equalTo(1.0f)
-        );
+        ).affirm();
     }
 
     @Test
     public void withLongCollection() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
             ).intValue(),
             Matchers.equalTo(1)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
             ).longValue(),
             Matchers.equalTo(1L)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
             ).doubleValue(),
             Matchers.equalTo(1.0d)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
             ).floatValue(),
             Matchers.equalTo(1.0f)
-        );
+        ).affirm();
     }
 
     @Test
     public void withDoubleCollection() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
             ).intValue(),
             Matchers.equalTo(1)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
             ).longValue(),
             Matchers.equalTo(1L)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
             ).doubleValue(),
             Matchers.equalTo(1.0d)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
             ).floatValue(),
             Matchers.equalTo(1.0f)
-        );
+        ).affirm();
     }
 
     @Test
     public void withFloatCollection() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
             ).intValue(),
             Matchers.equalTo(1)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
             ).longValue(),
             Matchers.equalTo(1L)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
             ).doubleValue(),
             Matchers.equalTo(1.0d)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "",
             new MinOf(
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
             ).floatValue(),
             Matchers.equalTo(1.0f)
-        );
+        ).affirm();
     }
 
 }

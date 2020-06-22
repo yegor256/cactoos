@@ -40,15 +40,8 @@ public final class MatcherAssert {
     private MatcherAssert() {
     }
 
-    public static <T> void assertThat(final T actual,
-        final Matcher<? super T> matcher) {
-        MatcherAssert.assertThat(
-            "", actual, matcher
-        );
-    }
-
     public static <T> void assertThat(final String desc,
-        final T actual, final Matcher<? super T> matcher) {
+        final T actual, final Matcher<T> matcher) {
         new Assertion<>(
             desc,
             actual,

@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.cactoos.MatcherAssert;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.func.ProcNoNulls;
@@ -162,18 +161,20 @@ public final class AndInThreadsTest {
 
     @Test
     public void worksWithFunc() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new AndInThreads(
                 input -> input > 0,
                 1, -1, 0
             ),
-            new ScalarHasValue<>(false)
-        );
+            new ScalarHasValue<Boolean>(false)
+        ).affirm();
     }
 
     @Test
     public void worksWithIterableScalarBoolean() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new AndInThreads(
                 new ListOf<Scalar<Boolean>>(
                     new Constant<Boolean>(true),
@@ -181,7 +182,7 @@ public final class AndInThreadsTest {
                 )
             ).value(),
             Matchers.equalTo(true)
-        );
+        ).affirm();
     }
 
     @Test
@@ -193,7 +194,8 @@ public final class AndInThreadsTest {
             new ProcNoNulls<Integer>(list::add),
             1, 2
         ).value();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             list,
             new IsIterableContainingInAnyOrder<Integer>(
                 new ListOf<Matcher<? super Integer>>(
@@ -209,7 +211,7 @@ public final class AndInThreadsTest {
                     )
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -221,7 +223,8 @@ public final class AndInThreadsTest {
             new ProcNoNulls<Integer>(list::add),
             new ListOf<>(1, 2)
         ).value();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             list,
             new IsIterableContainingInAnyOrder<Integer>(
                 new ListOf<Matcher<? super Integer>>(
@@ -237,24 +240,26 @@ public final class AndInThreadsTest {
                     )
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void worksWithExecServiceScalarBooleans() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
                 new Constant<Boolean>(false),
                 new Constant<Boolean>(false)
             ).value(),
             Matchers.equalTo(false)
-        );
+        ).affirm();
     }
 
     @Test
     public void worksWithExecServiceIterableScalarBoolean() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
                 new ListOf<Scalar<Boolean>>(
@@ -263,17 +268,18 @@ public final class AndInThreadsTest {
                 )
             ).value(),
             Matchers.equalTo(false)
-        );
+        ).affirm();
     }
 
     @Test
     public void worksWithEmptyIterableScalarBoolean() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new AndInThreads(
                 new ListOf<Scalar<Boolean>>()
             ).value(),
             Matchers.equalTo(true)
-        );
+        ).affirm();
     }
 
 }

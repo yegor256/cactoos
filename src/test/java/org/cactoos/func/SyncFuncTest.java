@@ -28,6 +28,7 @@ import java.util.List;
 import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -54,7 +55,11 @@ public final class SyncFuncTest {
                 threads
             )
         );
-        MatcherAssert.assertThat(list.size(), Matchers.equalTo(threads));
+        new Assertion<>(
+            "",
+            list.size(),
+            Matchers.equalTo(threads)
+        ).affirm();
     }
 
     @Test
@@ -74,7 +79,11 @@ public final class SyncFuncTest {
                 threads
             )
         );
-        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
+        new Assertion<>(
+            "",
+            counter[0],
+            Matchers.equalTo(threads)
+        ).affirm();
     }
 
     @Test
@@ -94,7 +103,11 @@ public final class SyncFuncTest {
                 threads
             )
         );
-        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
+        new Assertion<>(
+            "",
+            counter[0],
+            Matchers.equalTo(threads)
+        ).affirm();
     }
 
     @Test
@@ -112,6 +125,10 @@ public final class SyncFuncTest {
                 threads
             )
         );
-        MatcherAssert.assertThat(counter[0], Matchers.equalTo(threads));
+        new Assertion<>(
+            "",
+            counter[0],
+            Matchers.equalTo(threads)
+        ).affirm();
     }
 }

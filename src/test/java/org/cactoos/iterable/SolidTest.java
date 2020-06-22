@@ -27,6 +27,7 @@ import org.cactoos.MatcherAssert;
 import org.cactoos.Scalar;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -81,10 +82,11 @@ public final class SolidTest {
         MatcherAssert.assertThat(
             "Can't behave as an iterable in multiple threads",
             list -> {
-                MatcherAssert.assertThat(
+                new Assertion<>(
+                    "",
                     list.iterator().next(),
                     Matchers.equalTo(list.iterator().next())
-                );
+                ).affirm();
                 return true;
             },
             new RunsInThreads<>(new Solid<>(1, 0, -1, -1, 2))

@@ -24,9 +24,9 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link IoCheckedBiFunc}.
@@ -45,9 +45,11 @@ public final class IoCheckedBiFuncTest {
                 }
             ).apply(1, 2);
         } catch (final IOException ex) {
-            MatcherAssert.assertThat(
-                ex, Matchers.is(exception)
-            );
+            new Assertion<>(
+                "",
+                ex,
+                Matchers.is(exception)
+            ).affirm();
         }
     }
 

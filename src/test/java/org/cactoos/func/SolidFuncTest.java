@@ -29,6 +29,7 @@ import org.cactoos.MatcherAssert;
 import org.cactoos.list.ListOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -44,10 +45,11 @@ public final class SolidFuncTest {
         final Func<Boolean, Integer> func = new SolidFunc<>(
             input -> new SecureRandom().nextInt()
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             func.apply(true) + func.apply(true),
             Matchers.equalTo(func.apply(true) + func.apply(true))
-        );
+        ).affirm();
     }
 
     @Test
@@ -55,10 +57,11 @@ public final class SolidFuncTest {
         MatcherAssert.assertThat(
             "Can't work well in multiple threads",
             func -> {
-                MatcherAssert.assertThat(
+                new Assertion<>(
+                    "",
                     func.apply(true),
                     Matchers.equalTo(func.apply(true))
-                );
+                ).affirm();
                 return true;
             },
             new RunsInThreads<>(

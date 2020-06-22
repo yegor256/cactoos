@@ -26,6 +26,7 @@ package org.cactoos.iterable;
 import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -41,10 +42,11 @@ public final class SyncedTest {
         MatcherAssert.assertThat(
             "Can't behave as an iterable in multiple threads",
             list -> {
-                MatcherAssert.assertThat(
+                new Assertion<>(
+                    "",
                     list.iterator().next(),
                     Matchers.equalTo(list.iterator().next())
-                );
+                ).affirm();
                 return true;
             },
             new RunsInThreads<>(new Synced<>(1, 0, -1, -1, 2))

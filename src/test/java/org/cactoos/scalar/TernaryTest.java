@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Ternary}.
@@ -37,43 +37,47 @@ public final class TernaryTest {
 
     @Test
     public void conditionTrue() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Ternary<>(
                 new True(),
                 6,
                 16
             ).value(),
             Matchers.equalTo(6)
-        );
+        ).affirm();
     }
 
     @Test
     public void conditionFalse() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Ternary<>(
                 new False(),
                 6,
                 16
             ).value(),
             Matchers.equalTo(16)
-        );
+        ).affirm();
     }
 
     @Test
     public void conditionBoolean() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Ternary<>(
                 true,
                 6,
                 16
             ).value(),
             Matchers.equalTo(6)
-        );
+        ).affirm();
     }
 
     @Test
     public void conditionFunc() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new Ternary<>(
                 5,
                 input -> input > 3,
@@ -81,6 +85,6 @@ public final class TernaryTest {
                 input -> input = 2
             ).value(),
             Matchers.equalTo(8)
-        );
+        ).affirm();
     }
 }

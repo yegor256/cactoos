@@ -23,9 +23,9 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link IterableOfBooleans}.
@@ -37,9 +37,10 @@ public final class IterableOfBooleansTest {
 
     @Test
     public void convertsBooleanValuesToIterable() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "",
             new IterableOfBooleans(true, false),
             Matchers.contains(true, false)
-        );
+        ).affirm();
     }
 }
