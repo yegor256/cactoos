@@ -90,7 +90,6 @@ public final class Filtered<X> implements Iterator<X> {
         this.buffer = new LinkedList<>();
     }
 
-
     @Override
     public boolean hasNext() {
         final UncheckedFunc<X, Scalar<Boolean>> fnc = new UncheckedFunc<>(this.func);

@@ -73,11 +73,10 @@ public final class Filtered<X> extends IterableEnvelope<X> {
         );
     }
 
-
     /**
      * Ctor.
-     * @param fnc Predicate
      * @param src Source iterable
+     * @param fnc Predicate
      */
     public Filtered(final Iterable<X> src, final Func<X, Scalar<Boolean>> fnc) {
         super(
@@ -89,5 +88,4 @@ public final class Filtered<X> extends IterableEnvelope<X> {
             )
         );
     }
-
 }
