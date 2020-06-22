@@ -146,11 +146,10 @@ public final class FilteredTest {
         ).affirm();
     }
 
-
     @Test
     public void filtersWithFunc() {
         new Assertion<>(
-            "Must be filtered with Scalar<Boolean>",
+            "Must be filtered with Scalar<Boolean> result",
             new Filtered<>(
                 new IterableOf<>("a", "b", "c", "x"),
                 input -> new StartsWith(input, "c")
@@ -160,14 +159,16 @@ public final class FilteredTest {
     }
 
     /**
-     * @todo #1313:30m Add `func.And<>(Func<X, Scalar<Boolean>>...)` for combing
-     *  several filter function, and replace use of `Reduced` in this method by
-     *  it.
+     * Test with {@code Func<X, Scalar<Boolean>>}.
+     *
+     * @todo #1313:30m Add {@code func.And<>(Func<X, Scalar<Boolean>>...)} for
+     *  combing filter functions, and replace use of {@link Reduced}
+     *  in this method by it.
      */
     @Test
-    public void filtersWithVararg() throws Exception {
+    public void filtersWithTwoFuncsCombined() throws Exception {
         new Assertion<>(
-            "Must be filtered with Scalar<Boolean>",
+            "Must be filtered with two filters",
             new Filtered<>(
                 new IterableOf<>("ay", "xb", "yx", "xy"),
                 new Reduced<>(
