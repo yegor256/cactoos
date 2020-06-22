@@ -62,6 +62,15 @@ public final class EndsWith implements Scalar<Boolean> {
         this.suffix = suffix;
     }
 
+    /**
+     * Ctor.
+     * @param origin The origin
+     * @param suffix The suffix
+     */
+    public EndsWith(final String origin, final String suffix) {
+        this(new TextOf(origin), suffix);
+    }
+
     @Override
     public Boolean value() throws Exception {
         return this.origin.asString().endsWith(this.suffix.asString());
