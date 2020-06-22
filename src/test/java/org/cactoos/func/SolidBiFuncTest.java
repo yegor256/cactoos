@@ -26,7 +26,6 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -53,8 +52,8 @@ public final class SolidBiFuncTest {
         new Assertion<>(
             "SolidBiFunc can't work properly in concurrent threads.",
             func -> func.apply(true),
-            (Matcher<Func<Func<Boolean, Boolean>, Boolean>>) new RunsInThreads<Func<Boolean, Boolean>>(
-                (Func<Boolean, Boolean>) input -> testable.apply(1, 1),
+            new RunsInThreads<Func<Boolean, Boolean>>(
+                input -> testable.apply(1, 1),
                 threads
             )
         ).affirm();

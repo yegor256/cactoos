@@ -57,7 +57,7 @@ public final class SyncedTest {
                     "Can't behave as a map in thread",
                     map,
                     new BehavesAsMap<Integer, Integer>(1, 1)
-        ).affirm();
+                ).affirm();
                 return true;
             },
             new RunsInThreads<Synced<Integer, Integer>>(

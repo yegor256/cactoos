@@ -75,11 +75,11 @@ public final class MapEntryTest {
 
     @Test
     public void compareHash() {
-        // @checkstyle MagicNumber (1 line)
         new Assertion<>(
             "the hash code are not equals",
             new MapEntry<>("elegant", "objects").hashCode(),
-            new IsEqual<Integer>(32_739_498)
+            // @checkstyle MagicNumber (1 line)
+            new IsEqual<>(32_739_498)
         ).affirm();
     }
 

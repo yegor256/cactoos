@@ -68,7 +68,7 @@ public final class SolidTest {
                     "Can't behave as a map in thread",
                     map,
                     new BehavesAsMap<Integer, Integer>(1, 1)
-        ).affirm();
+                ).affirm();
                 return true;
             },
             new RunsInThreads<Solid<Integer, Integer>>(

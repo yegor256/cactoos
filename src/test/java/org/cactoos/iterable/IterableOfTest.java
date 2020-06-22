@@ -46,7 +46,6 @@ public final class IterableOfTest {
 
     @Test
     public void convertsScalarsToIterable() {
-        // @checkstyle MagicNumber (1 line)
         new Assertion<>(
             "must convert scalars to iterable",
             new LengthOf(
@@ -54,6 +53,7 @@ public final class IterableOfTest {
                     "a", "b", "c"
                 )
             ).intValue(),
+            // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(3)
         ).affirm();
     }
@@ -62,14 +62,13 @@ public final class IterableOfTest {
     public void convertsArrayOfIntsToIterable() {
         new Assertion<>(
             "must convert int scalars to iterable",
-            new IterableOf<Integer>(1, 2, 0, 2),
+            new IterableOf<>(1, 2, 0, 2),
             Matchers.hasItem(0)
         ).affirm();
     }
 
     @Test
     public void convertsObjectsToIterable() {
-        // @checkstyle MagicNumber (1 line)
         new Assertion<>(
             "must convert objects to iterable",
             new LengthOf(
@@ -77,6 +76,7 @@ public final class IterableOfTest {
                     new TextOf("a"), new TextOf("b"), new TextOf("c")
                 )
             ).intValue(),
+            // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(3)
         ).affirm();
     }
