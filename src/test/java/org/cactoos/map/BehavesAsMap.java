@@ -25,11 +25,11 @@ package org.cactoos.map;
 
 import java.util.Map;
 import org.hamcrest.Description;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.IsCollectionContaining;
 import org.hamcrest.core.IsEqual;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Matcher for collection.
@@ -63,24 +63,24 @@ public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>>  {
 
     @Override
     public boolean matchesSafely(final Map<K, V> map) {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Doesn't contain the key",
             map,
             new IsMapContaining<>(
                 new IsEqual<>(this.key),
                 new IsEqual<>(this.value)
             )
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
             "Doesn't contain the key in #keySet()",
             map.keySet(),
             new IsCollectionContaining<>(new IsEqual<>(this.key))
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
             "Doesn't contain the value in #values()",
             map.values(),
             new IsCollectionContaining<>(new IsEqual<>(this.value))
-        );
+        ).affirm();
         return true;
     }
 
