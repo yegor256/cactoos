@@ -25,7 +25,6 @@ package org.cactoos.func;
 
 import java.security.SecureRandom;
 import org.cactoos.Func;
-import org.cactoos.MatcherAssert;
 import org.cactoos.list.ListOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -54,7 +53,7 @@ public final class SolidFuncTest {
 
     @Test
     public void worksInThreads() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't work well in multiple threads",
             func -> {
                 new Assertion<>(
@@ -64,10 +63,10 @@ public final class SolidFuncTest {
                 ).affirm();
                 return true;
             },
-            new RunsInThreads<>(
+            new RunsInThreads<SolidFunc<Object, ListOf<Integer>>>(
                 new SolidFunc<>(x -> new ListOf<>(1, 2))
             )
-        );
+        ).affirm();
     }
 
 }

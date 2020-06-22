@@ -26,9 +26,10 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
-import org.cactoos.MatcherAssert;
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -49,19 +50,19 @@ public final class SolidBiFuncTest {
                     return true;
                 }
             );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "SolidBiFunc can't work properly in concurrent threads.",
             func -> func.apply(true),
-            new RunsInThreads<>(
+            (Matcher<Func<Func<Boolean, Boolean>, Boolean>>) new RunsInThreads<Func<Boolean, Boolean>>(
                 (Func<Boolean, Boolean>) input -> testable.apply(1, 1),
                 threads
             )
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
             "Shared resource has been modified by multiple threads.",
             shared[0],
             Matchers.is(1)
-        );
+        ).affirm();
     }
 
     @Test
@@ -71,10 +72,10 @@ public final class SolidBiFuncTest {
                 (first, second) -> new SecureRandom().nextInt(),
                 1
             );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Result of (0, 0) call wasn't invalidated.",
             func.apply(0, 0) + func.apply(1, 1),
             Matchers.not(func.apply(1, 1) + func.apply(0, 0))
-        );
+        ).affirm();
     }
 }

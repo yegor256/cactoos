@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.MatcherAssert;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -43,14 +42,14 @@ public final class MatchedTest {
 
     @Test
     public void iterator() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "All elements have correlation function as `equal`",
-            new Matched<>(
+            new Matched<Integer>(
                 new IterableOf<>(1, 2, 3),
                 new IterableOf<>(1, 2, 3)
             ),
             Matchers.hasItems(1, 2, 3)
-        );
+        ).affirm();
     }
 
     @Test
@@ -81,15 +80,15 @@ public final class MatchedTest {
 
     @Test
     public void endsWith() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "All elements have correlation function as `endsWith`",
-            new Matched<>(
+            new Matched<String>(
                 (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
                 new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
                 new IterableOf<>("`A` elem", "`B` elem", "'C' elem")
             ),
             Matchers.iterableWithSize(3)
-        );
+        ).affirm();
     }
 
     @Test(expected = IllegalStateException.class)

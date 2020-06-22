@@ -23,8 +23,8 @@
  */
 package org.cactoos.map;
 
-import org.cactoos.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -38,35 +38,35 @@ public final class SyncedTest {
 
     @Test
     public void behavesAsMap() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a map",
             new Synced<Integer, Integer>(
                 new MapEntry<>(0, -1),
                 new MapEntry<>(1, 1)
             ),
-            new BehavesAsMap<>(1, 1)
-        );
+            new BehavesAsMap<Integer, Integer>(1, 1)
+        ).affirm();
     }
 
     @Test
     public void worksInThreads() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a map in multiple threads",
             map -> {
-                MatcherAssert.assertThat(
+                new Assertion<>(
                     "Can't behave as a map in thread",
                     map,
-                    new BehavesAsMap<>(1, 1)
-                );
+                    new BehavesAsMap<Integer, Integer>(1, 1)
+        ).affirm();
                 return true;
             },
-            new RunsInThreads<>(
+            new RunsInThreads<Synced<Integer, Integer>>(
                 new Synced<Integer, Integer>(
                     new MapEntry<>(0, -1),
                     new MapEntry<>(1, 1)
                 )
             )
-        );
+        ).affirm();
     }
 
 }

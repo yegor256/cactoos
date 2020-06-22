@@ -24,12 +24,14 @@
 package org.cactoos.map;
 
 import java.util.HashSet;
-import org.cactoos.MatcherAssert;
+import java.util.List;
+import java.util.Set;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Grouped}.
@@ -42,45 +44,47 @@ public final class GroupedTest {
 
     @Test
     public void groupedByNumber() throws Exception {
-        MatcherAssert.assertThat(
+        // @checkstyle MagicNumberCheck (1 line)
+        new Assertion<>(
             "Can't behave as a map",
-            new Grouped<>(
-            // @checkstyle MagicNumberCheck (1 line)
-            new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
+            new Grouped<Integer, String, Integer>(
+                // @checkstyle MagicNumberCheck (1 line)
+                new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
                 number -> number,
                 Object::toString
             ),
-            new BehavesAsMap<>(1, new ListOf<>("1", "1", "1"))
-        );
+            new BehavesAsMap<Integer, List<String>>(1, new ListOf<>("1", "1", "1"))
+        ).affirm();
     }
 
     @Test
     public void emptyIterable() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't build grouped by empty iterable",
             new Grouped<>(
                 new IterableOf<Integer>(),
                 number -> number,
                 Object::toString
             ).entrySet(),
-            new IsEqual<>(new HashSet<>())
-        );
+            new IsEqual<Set<?>>(new HashSet<>())
+        ).affirm();
     }
 
     @Test
     public void groupedByOneHasEntries() throws Exception {
-        MatcherAssert.assertThat(
+        // @checkstyle MagicNumberCheck (1 line)
+        new Assertion<>(
             "Can't group int values",
-            new Grouped<>(
+            new Grouped<Integer, String, Integer>(
                 // @checkstyle MagicNumberCheck (1 line)
                 new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
                 number -> number,
                 Object::toString
             ),
-            new IsMapContaining<>(
+            new IsMapContaining<Integer, List<String>>(
                 new IsEqual<>(1),
                 new IsEqual<>(new ListOf<>("1", "1", "1"))
             )
-        );
+        ).affirm();
     }
 }

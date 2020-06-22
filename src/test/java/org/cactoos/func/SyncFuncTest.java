@@ -25,7 +25,6 @@ package org.cactoos.func;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -43,10 +42,10 @@ public final class SyncFuncTest {
     public void funcWorksInThreads() {
         final List<Integer> list = new LinkedList<>();
         final int threads = 100;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Sync func can't work well in multiple threads",
             func -> func.apply(true),
-            new RunsInThreads<>(
+            new RunsInThreads<SyncFunc<Boolean, Boolean>>(
                 new SyncFunc<Boolean, Boolean>(
                     input -> {
                         return list.add(1);
@@ -54,7 +53,7 @@ public final class SyncFuncTest {
                 ),
                 threads
             )
-        );
+        ).affirm();
         new Assertion<>(
             "",
             list.size(),
@@ -66,10 +65,10 @@ public final class SyncFuncTest {
     public void procWorksInThreads() {
         final int threads = 100;
         final int[] counter = new int[]{0};
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Sync func with proc can't work well in multiple threads",
             func -> func.apply(1),
-            new RunsInThreads<>(
+            new RunsInThreads<SyncFunc<Integer, Boolean>>(
                 new SyncFunc<Integer, Boolean>(
                     new ProcOf<>(
                         input -> counter[0] = counter[0] + input
@@ -78,7 +77,7 @@ public final class SyncFuncTest {
                 ),
                 threads
             )
-        );
+        ).affirm();
         new Assertion<>(
             "",
             counter[0],
@@ -90,10 +89,10 @@ public final class SyncFuncTest {
     public void callableWorksInThreads() {
         final int threads = 100;
         final int[] counter = new int[]{0};
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Sync func with callable can't work well in multiple threads",
             func -> func.apply(1),
-            new RunsInThreads<>(
+            new RunsInThreads<SyncFunc<Integer, Boolean>>(
                 new SyncFunc<Integer, Boolean>(
                     () -> {
                         counter[0] = counter[0] + 1;
@@ -102,7 +101,7 @@ public final class SyncFuncTest {
                 ),
                 threads
             )
-        );
+        ).affirm();
         new Assertion<>(
             "",
             counter[0],
@@ -114,17 +113,17 @@ public final class SyncFuncTest {
     public void runnableWorksInThreads() {
         final int threads = 100;
         final int[] counter = new int[]{0};
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Sync func with runnable can't work well in multiple threads",
             func -> func.apply(1),
-            new RunsInThreads<>(
+            new RunsInThreads<SyncFunc<Integer, Boolean>>(
                 new SyncFunc<Integer, Boolean>(
                     () -> counter[0] = counter[0] + 1,
                     true
                 ),
                 threads
             )
-        );
+        ).affirm();
         new Assertion<>(
             "",
             counter[0],

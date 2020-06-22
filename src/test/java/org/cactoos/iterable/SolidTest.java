@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.MatcherAssert;
 import org.cactoos.Scalar;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -46,14 +45,16 @@ public final class SolidTest {
                 new IterableOf<>(1, -1, 0, 1)
             )
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't turn a mapped iterable into a list",
-            list, Matchers.iterableWithSize(4)
-        );
-        MatcherAssert.assertThat(
+            list,
+            Matchers.iterableWithSize(4)
+        ).affirm();
+        new Assertion<>(
             "Can't turn a mapped iterable into a list, again",
-            list, Matchers.iterableWithSize(4)
-        );
+            list,
+            Matchers.iterableWithSize(4)
+        ).affirm();
     }
 
     @Test
@@ -64,10 +65,11 @@ public final class SolidTest {
                 new IterableOf<>(1, -1, 0, 1)
             )
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't map only once",
-            list.iterator().next(), Matchers.equalTo(list.iterator().next())
-        );
+            list.iterator().next(),
+            Matchers.equalTo(list.iterator().next())
+        ).affirm();
     }
 
     @Test
@@ -79,7 +81,7 @@ public final class SolidTest {
 
     @Test
     public void worksInThreads() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as an iterable in multiple threads",
             list -> {
                 new Assertion<>(
@@ -89,8 +91,8 @@ public final class SolidTest {
                 ).affirm();
                 return true;
             },
-            new RunsInThreads<>(new Solid<>(1, 0, -1, -1, 2))
-        );
+            new RunsInThreads<Solid<Integer>>(new Solid<>(1, 0, -1, -1, 2))
+        ).affirm();
     }
 
 }

@@ -25,7 +25,6 @@ package org.cactoos.iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import org.cactoos.MatcherAssert;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
@@ -80,11 +79,11 @@ public final class IteratorOfBytesTest {
 
     @Test
     public void emptyIteratorDoesNotHaveNext() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "hasNext is true for empty iterator.",
             new IteratorOfBytes().hasNext(),
-            new IsEqual<>(false)
-        );
+            new IsEqual<Boolean>(false)
+        ).affirm();
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -94,11 +93,11 @@ public final class IteratorOfBytesTest {
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "hasNext is true for fully traversed iterator.",
             this.iteratorWithFetchedElements().hasNext(),
-            new IsEqual<>(false)
-        );
+            new IsEqual<Boolean>(false)
+        ).affirm();
     }
 
     @Test(expected = NoSuchElementException.class)

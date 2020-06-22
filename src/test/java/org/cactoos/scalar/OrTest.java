@@ -25,7 +25,6 @@ package org.cactoos.scalar;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.MatcherAssert;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
@@ -180,7 +179,7 @@ public final class OrTest {
 
     @Test
     public void testMultipleFuncConditionTrue() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't compare subject with true conditions",
             new Or(
                 3,
@@ -188,20 +187,20 @@ public final class OrTest {
                 input -> input > 5,
                 input -> input > 4
             ),
-            new ScalarHasValue<>(true)
-        );
+            new ScalarHasValue<Boolean>(true)
+        ).affirm();
     }
 
     @Test
     public void testMultipleFuncConditionFalse() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't compare subject with false conditions",
             new Or(
                 "cactoos",
                 input -> input.contains("singleton"),
                 input -> input.contains("static")
             ),
-            new ScalarHasValue<>(false)
-        );
+            new ScalarHasValue<Boolean>(false)
+        ).affirm();
     }
 }

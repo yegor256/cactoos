@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -39,7 +38,7 @@ public final class SyncedTest {
 
     @Test
     public void worksInThreads() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as an iterable in multiple threads",
             list -> {
                 new Assertion<>(
@@ -49,8 +48,8 @@ public final class SyncedTest {
                 ).affirm();
                 return true;
             },
-            new RunsInThreads<>(new Synced<>(1, 0, -1, -1, 2))
-        );
+            new RunsInThreads<Synced<Integer>>(new Synced<>(1, 0, -1, -1, 2))
+        ).affirm();
     }
 
 }

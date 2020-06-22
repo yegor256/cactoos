@@ -25,7 +25,6 @@ package org.cactoos.iterable;
 
 import java.util.Collections;
 import java.util.Comparator;
-import org.cactoos.MatcherAssert;
 import org.cactoos.list.ListOf;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
@@ -43,40 +42,40 @@ public final class SortedTest {
 
     @Test
     public void sortsAnArray() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't sort an iterable",
-            new Sorted<>(
+            new Sorted<Integer>(
                 new IterableOf<>(
                     3, 2, 10, 44, -6, 0
                 )
             ),
             Matchers.hasItems(-6, 0, 2, 3, 10, 44)
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void sortsAnArrayWithComparator() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't sort an iterable with a comparator",
-            new Sorted<>(
+            new Sorted<String>(
                 Comparator.reverseOrder(), new IterableOf<>(
-                    "a", "c", "hello", "dude", "Friend"
-                )
+                "a", "c", "hello", "dude", "Friend"
+            )
             ),
             Matchers.hasItems("hello", "dude", "c", "a", "Friend")
-        );
+        ).affirm();
     }
 
     @Test
     public void sortsAnEmptyArray() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't sort an empty iterable",
             new Sorted<Integer>(
                 Collections.emptyList()
             ),
             Matchers.iterableWithSize(0)
-        );
+        ).affirm();
     }
 
     @Test

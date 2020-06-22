@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.MatcherAssert;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
@@ -39,6 +38,7 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.StringStartsWith;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link MapOf}.
@@ -51,31 +51,31 @@ public final class MapOfTest {
 
     @Test
     public void behavesAsMap() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a map",
-            new NoNulls<>(
+            new NoNulls<Integer, Integer>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1),
                     new MapEntry<>(1, 1)
                 )
             ),
-            new BehavesAsMap<>(1, 1)
-        );
+            new BehavesAsMap<Integer, Integer>(1, 1)
+        ).affirm();
     }
 
     @Test
     public void convertsIterableToMap() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert iterable to map",
             new MapOf<Integer, String>(
                 new MapEntry<>(0, "hello, "),
                 new MapEntry<>(1, "world!")
             ),
-            new IsMapContaining<>(
+            new IsMapContaining<Integer, String>(
                 new IsEqual<>(0),
                 new StringStartsWith("hello")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -89,16 +89,16 @@ public final class MapOfTest {
                 )
             )
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't sense the changes in the underlying map",
             map.size(),
-            new IsNot<>(new IsEqual<>(map.size()))
-        );
+            new IsNot<Integer>(new IsEqual<>(map.size()))
+        ).affirm();
     }
 
     @Test
     public void createsMapWithFunctions() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't create a map with functions as values",
             new MapOf<Integer, Scalar<Boolean>>(
                 new MapEntry<>(0, () -> true),
@@ -109,25 +109,25 @@ public final class MapOfTest {
                     }
                 )
             ),
-            new IsMapContaining<>(new IsEqual<>(0), new IsAnything<>())
-        );
+            new IsMapContaining<Integer, Scalar<Boolean>>(new IsEqual<>(0), new IsAnything<>())
+        ).affirm();
     }
 
     @Test
     public void integersToString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert map of integers to string",
             new MapOf<Integer, Integer>(
                 new MapEntry<>(-1, 0),
                 new MapEntry<>(1, 2)
             ).toString(),
-            new IsEqual<>("{-1=0, 1=2}")
-        );
+            new IsEqual<String>("{-1=0, 1=2}")
+        ).affirm();
     }
 
     @Test
     public void mapsToString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert map op maps to string",
             new MapOf<Integer, Map<String, String>>(
                 new MapEntry<Integer, Map<String, String>>(
@@ -145,23 +145,23 @@ public final class MapOfTest {
                     )
                 )
             ).toString(),
-            new IsEqual<>("{-1={4=7, first=second}, 1={green=red, 2.7=3.1}}")
-        );
+            new IsEqual<String>("{-1={4=7, first=second}, 1={green=red, 2.7=3.1}}")
+        ).affirm();
     }
 
     @Test
     public void emptyToString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert empty map to string",
             new MapOf<Integer, Map<String, String>>().toString(),
-            new IsEqual<>("{}")
-        );
+            new IsEqual<String>("{}")
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void createsMapFromMapAndMapEntries() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't create a map from map and map entries",
             new MapOf<Integer, Integer>(
                 new MapOf<Integer, Integer>(
@@ -169,32 +169,32 @@ public final class MapOfTest {
                 ),
                 new MapEntry<Integer, Integer>(1, 1)
             ),
-            new AllOf<>(
+            new AllOf<MapOf<Integer, Integer>>(
                 new IterableOf<>(
                     new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0)),
                     new IsMapContaining<>(new IsEqual<>(1), new IsEqual<>(1))
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void createsMapFromFunctionsAndIterable() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't create a map from functions and iterable.",
             new MapOf<Integer, Integer>(
                 new FuncOf<Integer, Integer>(0),
                 new FuncOf<Integer, Integer>(0),
                 new IterableOf<Integer>(0)
             ),
-            new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0))
-        );
+            new IsMapContaining<Integer, Integer>(new IsEqual<>(0), new IsEqual<>(0))
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void createsMapFromMapFunctionsAndIterable() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't create a map from map, functions and iterable.",
             new MapOf<Integer, Integer>(
                 new FuncOf<Integer, Integer>(0),
@@ -204,13 +204,13 @@ public final class MapOfTest {
                 ),
                 new IterableOf<>(0)
             ),
-            new AllOf<>(
+            new AllOf<MapOf<Integer, Integer>>(
                 new IterableOf<>(
                     new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0)),
                     new IsMapContaining<>(new IsEqual<>(1), new IsEqual<>(1))
                 )
             )
-        );
+        ).affirm();
     }
 
 }

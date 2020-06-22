@@ -27,7 +27,6 @@ import java.security.SecureRandom;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.MatcherAssert;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Repeated;
 import org.cactoos.text.FormattedText;
@@ -36,6 +35,7 @@ import org.hamcrest.core.IsAnything;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.StringEndsWith;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Sticky}.
@@ -48,14 +48,14 @@ public final class StickyTest {
 
     @Test
     public void behavesAsMap() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a map",
             new Sticky<Integer, Integer>(
                 new MapEntry<>(0, -1),
                 new MapEntry<>(1, 1)
             ),
-            new BehavesAsMap<>(1, 1)
-        );
+            new BehavesAsMap<Integer, Integer>(1, 1)
+        ).affirm();
     }
 
     @Test
@@ -72,31 +72,31 @@ public final class StickyTest {
                 )
             )
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't ignore the changes in the underlying map",
             map.size(),
-            new IsEqual<>(map.size())
-        );
+            new IsEqual<Integer>(map.size())
+        ).affirm();
     }
 
     @Test
     public void decoratesEntries() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't decorate a list of entries",
             new Sticky<String, String>(
                 new MapEntry<>("first", "Jeffrey"),
                 new MapEntry<>("last", "Lebowski")
             ),
-            new IsMapContaining<>(
+            new IsMapContaining<String, String>(
                 new IsAnything<>(),
                 new StringEndsWith("ski")
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void extendsExistingMap() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't extend an existing map",
             new Sticky<String, String>(
                 new Sticky<String, String>(
@@ -106,18 +106,18 @@ public final class StickyTest {
                 new MapEntry<>("year", "2017"),
                 new MapEntry<>("mileage", "12,000")
             ),
-            new IsMapContaining<>(
+            new IsMapContaining<String, String>(
                 new IsAnything<>(),
                 new StringEndsWith(",000")
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void extendsExistingMapWithFunc() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't transform and decorate a list of entries",
-            new Sticky<>(
+            new Sticky<String, String>(
                 color -> new MapEntry<>(
                     color, color.toUpperCase(Locale.ENGLISH)
                 ),
@@ -127,18 +127,18 @@ public final class StickyTest {
                 ),
                 new IterableOf<>("yellow", "red", "blue")
             ),
-            new IsMapContaining<>(
+            new IsMapContaining<String, String>(
                 new IsAnything<>(),
                 new IsEqual<>("BLUE")
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void extendsExistingMapWithTwoFuncs() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't transform and decorate a list of entries with two funcs",
-            new Sticky<>(
+            new Sticky<String, String>(
                 color -> new FormattedText("[%s]", color).asString(),
                 String::toUpperCase,
                 new Sticky<String, String>(
@@ -147,10 +147,10 @@ public final class StickyTest {
                 ),
                 new IterableOf<>("yellow!", "red!", "blue!")
             ),
-            new IsMapContaining<>(
+            new IsMapContaining<String, String>(
                 new IsAnything<>(),
                 new IsEqual<>("BLUE!")
             )
-        );
+        ).affirm();
     }
 }

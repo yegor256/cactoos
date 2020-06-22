@@ -26,10 +26,10 @@ package org.cactoos.func;
 import java.io.IOException;
 import java.util.IllegalFormatException;
 import java.util.IllegalFormatWidthException;
-import org.cactoos.MatcherAssert;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.FallbackFrom;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.FuncApplies;
 
 /**
@@ -44,40 +44,40 @@ public final class FuncWithFallbackTest {
     @Test
     public void usesMainFunc() throws Exception {
         final String expected = "It's success";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't use the main function if no exception",
-            new FuncWithFallback<>(
+            new FuncWithFallback<Integer, String>(
                 input -> expected,
                 new FallbackFrom<>(
                     Exception.class,
                     ex -> "In case of failure..."
                 )
             ),
-            new FuncApplies<>(1, expected)
-        );
+            new FuncApplies<Integer, String>(1, expected)
+        ).affirm();
     }
 
     @Test
     public void usesFallback() throws Exception {
         final String expected = "Never mind";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't use the callback in case of exception",
-            new FuncWithFallback<>(
+            new FuncWithFallback<Integer, String>(
                 input -> {
                     throw new IOException("Failure");
                 },
                 new FallbackFrom<>(IOException.class, ex -> expected)
             ),
-            new FuncApplies<>(1, expected)
-        );
+            new FuncApplies<Integer, String>(1, expected)
+        ).affirm();
     }
 
     @Test
     public void usesFallbackOfInterruptedException() throws Exception {
         final String expected = "Fallback from InterruptedException";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't use a fallback from Interrupted in case of exception",
-            new FuncWithFallback<>(
+            new FuncWithFallback<Integer, String>(
                 input -> {
                     throw new InterruptedException(
                         "Failure with InterruptedException"
@@ -85,16 +85,16 @@ public final class FuncWithFallbackTest {
                 },
                 new FallbackFrom<>(InterruptedException.class, exp -> expected)
             ),
-            new FuncApplies<>(1, expected)
-        );
+            new FuncApplies<Integer, String>(1, expected)
+        ).affirm();
     }
 
     @Test
     public void usesTheClosestFallback() throws Exception {
         final String expected = "Fallback from IllegalFormatException";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't find the closest fallback",
-            new FuncWithFallback<>(
+            new FuncWithFallback<Integer, String>(
                 input -> {
                     throw new IllegalFormatWidthException(1);
                 },
@@ -109,8 +109,8 @@ public final class FuncWithFallbackTest {
                     )
                 )
             ),
-            new FuncApplies<>(1, expected)
-        );
+            new FuncApplies<Integer, String>(1, expected)
+        ).affirm();
     }
 
     @Test(expected = Exception.class)

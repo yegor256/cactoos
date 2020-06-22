@@ -24,7 +24,6 @@
 package org.cactoos.map;
 
 import java.util.Map;
-import org.cactoos.MatcherAssert;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.Sub;
@@ -34,6 +33,7 @@ import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -49,35 +49,35 @@ public final class SolidTest {
 
     @Test
     public void behavesAsMap() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a map",
             new Solid<Integer, Integer>(
                 new MapEntry<>(0, -1),
                 new MapEntry<>(1, 1)
             ),
-            new BehavesAsMap<>(1, 1)
-        );
+            new BehavesAsMap<Integer, Integer>(1, 1)
+        ).affirm();
     }
 
     @Test
     public void worksInThreads() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a map in multiple threads",
             map -> {
-                MatcherAssert.assertThat(
+                new Assertion<>(
                     "Can't behave as a map in thread",
                     map,
-                    new BehavesAsMap<>(1, 1)
-                );
+                    new BehavesAsMap<Integer, Integer>(1, 1)
+        ).affirm();
                 return true;
             },
-            new RunsInThreads<>(
+            new RunsInThreads<Solid<Integer, Integer>>(
                 new Solid<Integer, Integer>(
                     new MapEntry<>(0, -1),
                     new MapEntry<>(1, 1)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -86,10 +86,11 @@ public final class SolidTest {
             input -> new MapEntry<>(input, () -> input),
             1, -1, 0, 1
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't map only once",
-            map.get(0), new IsEqual<>(map.get(0))
-        );
+            map.get(0),
+            new IsEqual<Scalar<Integer>>(map.get(0))
+        ).affirm();
     }
 
     @Test
@@ -99,21 +100,21 @@ public final class SolidTest {
             new MapEntry<>(0, 10),
             new MapEntry<>(1, 11)
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Does not extends existing map with array of entries",
             new Solid<>(
                 map,
                 new MapEntry<>(2, 12),
                 new MapEntry<>(3, 13)
             ).size(),
-            new IsEqual<>(4)
-        );
+            new IsEqual<Integer>(4)
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void acceptsEmptyArray() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Accepts empty array of entries",
             new Solid<Integer, Integer>(
                 new Solid<>(
@@ -122,8 +123,8 @@ public final class SolidTest {
                 ),
                 (Map.Entry<Integer, Integer>[]) new Map.Entry<?, ?>[0]
             ).size(),
-            new IsEqual<>(2)
-        );
+            new IsEqual<Integer>(2)
+        ).affirm();
     }
 
     @Test
@@ -134,10 +135,10 @@ public final class SolidTest {
             value -> new Upper(new TextOf(value)).asString(),
             new IterableOf<>("aa", "bb")
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Functions are not applied to key and value",
             map,
-            new AllOf<>(
+            new AllOf<Solid<String, String>>(
                 new IterableOf<>(
                     new IsMapContaining<>(
                         new IsEqual<>("a"),
@@ -150,7 +151,7 @@ public final class SolidTest {
                     new MatcherOf<>(m -> m.size() == 2)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -160,26 +161,26 @@ public final class SolidTest {
             value -> new Upper(new TextOf(value)).asString(),
             new IterableOf<String>()
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Empty Iterable cannot be accepted for key and value mapping",
             map,
-            new MatcherOf<>(m -> m.size() == 0)
-        );
+            new MatcherOf<Solid<String, String>>(m -> m.size() == 0)
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void mapsIterableWithMapEntryFunc() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Function are not applied to entry",
-            new Solid<>(
+            new Solid<String, String>(
                 entry -> new MapEntry<>(
                     new Sub(new TextOf(entry), 0, 1).asString(),
                     new Upper(new TextOf(entry)).asString()
                 ),
                 new IterableOf<>("aa", "bb")
             ),
-            new AllOf<>(
+            new AllOf<Solid<String, String>>(
                 new IterableOf<>(
                     new IsMapContaining<>(
                         new IsEqual<>("a"),
@@ -192,21 +193,21 @@ public final class SolidTest {
                     new MatcherOf<>(m -> m.size() == 2)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void mapsEmptyIterableWithMapEntryFunc() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Empty Iterable cannot be accepted for MapEntry mapping",
-            new Solid<>(
+            new Solid<String, String>(
                 entry -> new MapEntry<>(
                     new Sub(new TextOf(entry), 0, 1).asString(),
                     new Upper(new TextOf(entry)).asString()
                 ),
                 new IterableOf<String>()
             ),
-            new MatcherOf<>(m -> m.size() == 0)
-        );
+            new MatcherOf<Solid<String, String>>(m -> m.size() == 0)
+        ).affirm();
     }
 }

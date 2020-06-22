@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Collections;
-import org.cactoos.MatcherAssert;
 import org.cactoos.scalar.ItemAt;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.Matchers;
@@ -60,7 +59,7 @@ public final class CycledTest {
 
     @Test
     public void notCycledEmptyTest() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate an empty iterable",
             new LengthOf(
                 new Cycled<>(
@@ -68,6 +67,6 @@ public final class CycledTest {
                 )
             ).intValue(),
             Matchers.equalTo(0)
-        );
+        ).affirm();
     }
 }

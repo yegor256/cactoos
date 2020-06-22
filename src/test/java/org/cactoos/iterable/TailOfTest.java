@@ -23,9 +23,9 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link TailOf}.
@@ -38,9 +38,9 @@ public final class TailOfTest {
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void tailIterable() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't get tail portion of iterable",
-            new TailOf<>(
+            new TailOf<String>(
                 3,
                 "one", "two", "three", "four"
             ),
@@ -49,6 +49,6 @@ public final class TailOfTest {
                 "three",
                 "four"
             )
-        );
+        ).affirm();
     }
 }

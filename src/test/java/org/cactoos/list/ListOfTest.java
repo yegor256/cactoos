@@ -25,10 +25,10 @@ package org.cactoos.list;
 
 import java.util.Collections;
 import java.util.List;
-import org.cactoos.MatcherAssert;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 
 /**
@@ -48,44 +48,44 @@ public final class ListOfTest {
 
     @Test
     public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a list",
-            new ListOf<>(1, 2),
-            new BehavesAsList<>(2)
-        );
+            new ListOf<Integer>(1, 2),
+            new BehavesAsList<Integer>(2)
+        ).affirm();
     }
 
     @Test
     public void elementAtIndexTest() throws Exception {
         final int num = 345;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert an iterable to a list",
             new ListOf<>(-1, num, 0, 1).get(1),
-            new IsEqual<>(num)
-        );
+            new IsEqual<Integer>(num)
+        ).affirm();
     }
 
     @Test
     public void sizeTest() throws Exception {
         final int size = 42;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't build a list with a certain size",
-            new ListOf<>(
+            new ListOf<Integer>(
                 Collections.nCopies(size, 0)
             ),
             new HasSize(size)
-        );
+        ).affirm();
     }
 
     @Test
     public void emptyTest() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert an empty iterable to an empty list",
-            new ListOf<>(
+            new ListOf<Object>(
                 new IterableOf<>()
             ),
             new HasSize(0)
-        );
+        ).affirm();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -108,61 +108,61 @@ public final class ListOfTest {
                 new IterableOf<>(1, -1, 0, 1)
             )
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't turn a mapped iterable into a list",
             list,
             new HasSize(4)
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
             "Can't turn a mapped iterable into a list, again",
             list,
             new HasSize(4)
-        );
+        ).affirm();
     }
 
     @Test
     public void equalsComparesContentBothListEnvelopes() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't compare using equals.",
-            new ListOf<>(1, 2),
-            new IsEqual<>(new ListOf<>(1, 2))
-        );
+            new ListOf<Integer>(1, 2),
+            new IsEqual<ListOf<Integer>>(new ListOf<>(1, 2))
+        ).affirm();
     }
 
     @Test
     public void equalsComparesContentListEnvelopeWithNormalList() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't compare using equals.",
-            new ListOf<>(1, 2),
-            new IsEqual<>(new ListOf<>(1, 2))
-        );
+            new ListOf<Integer>(1, 2),
+            new IsEqual<ListOf<Integer>>(new ListOf<>(1, 2))
+        ).affirm();
     }
 
     @Test
     public void equalsComparesEmptyLists() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't compare using equals.",
-            new ListOf<>(),
-            new IsEqual<>(new ListOf<>())
-        );
+            new ListOf<Object>(),
+            new IsEqual<ListOf<Object>>(new ListOf<>())
+        ).affirm();
     }
 
     @Test
     public void toStringUsesListContent() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't print content using toString.",
             new ListOf<>(1, 2).toString(),
-            new IsEqual<>("[1, 2]")
-        );
+            new IsEqual<String>("[1, 2]")
+        ).affirm();
     }
 
     @Test
     public void hashCodesListContent() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't create hashcode.",
             new ListOf<>(1, 2).hashCode(),
-            new IsEqual<>(new ListOf<>(1, 2).hashCode())
-        );
+            new IsEqual<Integer>(new ListOf<>(1, 2).hashCode())
+        ).affirm();
     }
 
 }

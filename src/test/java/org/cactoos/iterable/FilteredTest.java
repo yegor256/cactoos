@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.MatcherAssert;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.Matchers;
@@ -44,7 +43,8 @@ public final class FilteredTest {
 
     @Test
     public void filtersList() {
-        MatcherAssert.assertThat(
+        // @checkstyle MagicNumber (1 line)
+        new Assertion<>(
             "Can't calculate the length of an iterable",
             new LengthOf(
                 new Filtered<>(
@@ -55,12 +55,12 @@ public final class FilteredTest {
                 )
             ).intValue(),
             Matchers.equalTo(2)
-        );
+        ).affirm();
     }
 
     @Test
     public void filtersEmptyList() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't calculate the length of an empty iterable",
             new LengthOf(
                 new Filtered<>(
@@ -69,7 +69,7 @@ public final class FilteredTest {
                 )
             ).intValue(),
             Matchers.equalTo(0)
-        );
+        ).affirm();
     }
 
     @Test
@@ -78,14 +78,16 @@ public final class FilteredTest {
             i -> i > 0,
             new IterableOf<>(1, 2, -1, 0, 1)
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't filter the iterable twice",
-            list, Matchers.iterableWithSize(3)
-        );
-        MatcherAssert.assertThat(
+            list,
+            Matchers.iterableWithSize(3)
+        ).affirm();
+        new Assertion<>(
             "Can't filter the iterable twice, again",
-            list, Matchers.iterableWithSize(3)
-        );
+            list,
+            Matchers.iterableWithSize(3)
+        ).affirm();
     }
 
     @Test

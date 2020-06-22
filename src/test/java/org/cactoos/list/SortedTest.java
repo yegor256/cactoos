@@ -24,9 +24,9 @@
 package org.cactoos.list;
 
 import java.util.Comparator;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link Sorted}.
@@ -38,40 +38,40 @@ public final class SortedTest {
 
     @Test
     public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a list",
-            new Sorted<>(
+            new Sorted<Integer>(
                 new ListOf<>(1, 0, -1, -1, 2)
             ),
-            new BehavesAsList<>(0)
-        );
+            new BehavesAsList<Integer>(0)
+        ).affirm();
     }
 
     @Test
     public void sortsCollection() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't sort elements in list",
-            new Sorted<>(
+            new Sorted<String>(
                 new ListOf<>(
                     "one", "two", "three", "four"
                 )
             ),
-            new IsEqual<>(
+            new IsEqual<ListEnvelope<String>>(
                 new ListOf<>("four", "one", "three", "two")
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void takesItemFromSortedList() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't take one element from sorted list",
             new Sorted<>(
                 Comparator.reverseOrder(),
                 new ListOf<>("alpha", "beta", "gamma", "delta")
             ).get(1),
-            new IsEqual<>("delta")
-        );
+            new IsEqual<String>("delta")
+        ).affirm();
     }
 
 }

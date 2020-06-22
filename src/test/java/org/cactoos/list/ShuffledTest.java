@@ -23,8 +23,8 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -37,25 +37,25 @@ public final class ShuffledTest {
 
     @Test
     public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a list",
-            new NoNulls<>(
+            new NoNulls<Integer>(
                 new Shuffled<>(
                     new ListOf<>(1, 0, -1, -1, 2)
                 )
             ),
-            new BehavesAsList<>(0)
-        );
+            new BehavesAsList<Integer>(0)
+        ).affirm();
     }
 
     @Test
     public void shufflesList() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't shuffle elements in list",
-            new Shuffled<>(
+            new Shuffled<Integer>(
                 new ListOf<>(1, 0, -1, -1, 2)
             ),
-            new HasValues<>(-1)
-        );
+            new HasValues<Integer>(-1)
+        ).affirm();
     }
 }

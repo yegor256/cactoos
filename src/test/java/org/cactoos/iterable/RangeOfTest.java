@@ -24,12 +24,13 @@
 package org.cactoos.iterable;
 
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 import org.cactoos.Func;
-import org.cactoos.MatcherAssert;
 import org.cactoos.list.ListOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test of range implementation.
@@ -42,25 +43,26 @@ public class RangeOfTest {
 
     @Test
     public final void testIntegerRange() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a range of integers",
-            new ListOf<>(
+            new ListOf<Integer>(
                 new RangeOf<>(1, 5, value -> ++value)
             ),
             Matchers.contains(1, 2, 3, 4, 5)
-        );
+        ).affirm();
     }
 
     @Test
     public final void testIntegerFibonacciRange() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a range of fibonacci integers",
-            new ListOf<>(
+            new ListOf<Integer>(
                 new RangeOf<>(
                     1,
                     100,
                     new Func<Integer, Integer>() {
                         private int last;
+
                         @Override
                         public Integer apply(
                             final Integer input) throws Exception {
@@ -72,36 +74,36 @@ public class RangeOfTest {
                 )
             ),
             Matchers.contains(1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
-        );
+        ).affirm();
     }
 
     @Test
     public final void testLongRange() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a range of long",
-            new ListOf<>(
+            new ListOf<Long>(
                 new RangeOf<>(1L, 5L, value -> ++value)
             ),
             Matchers.contains(1L, 2L, 3L, 4L, 5L)
-        );
+        ).affirm();
     }
 
     @Test
     public final void testCharacterRange() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a range of characters",
-            new ListOf<>(
+            new ListOf<Character>(
                 new RangeOf<>('a', 'c', value -> ++value)
             ),
             Matchers.contains('a', 'b', 'c')
-        );
+        ).affirm();
     }
 
     @Test
     public final void testLocalDateRange() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a range of local dates.",
-            new ListOf<>(
+            new ListOf<ChronoLocalDate>(
                 new RangeOf<>(
                     LocalDate.of(2017, 1, 1),
                     LocalDate.of(2017, 1, 3),
@@ -113,7 +115,7 @@ public class RangeOfTest {
                 LocalDate.of(2017, 1, 2),
                 LocalDate.of(2017, 1, 3)
             )
-        );
+        ).affirm();
     }
 
 }

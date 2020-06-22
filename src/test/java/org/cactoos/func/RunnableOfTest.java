@@ -24,8 +24,8 @@
 package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.cactoos.MatcherAssert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
@@ -39,29 +39,29 @@ public final class RunnableOfTest {
     @Test
     public void convertsFuncIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't execute Runnable with Func",
-            new RunnableOf<>(
+            new RunnableOf<Object>(
                 input -> {
                     done.set(true);
                     return 1;
                 }
             ),
             new MatcherOf<Runnable>(
-                input -> {
-                    input.run();
+                input1 -> {
+                    input1.run();
                     return done.get();
                 }
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void convertsProcIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't execute Runnable with ProcOf",
-            new RunnableOf<>(
+            new RunnableOf<Object>(
                 new ProcOf<>(
                     input -> {
                         done.set(true);
@@ -70,20 +70,20 @@ public final class RunnableOfTest {
                 )
             ),
             new MatcherOf<Runnable>(
-                input -> {
-                    input.run();
+                input1 -> {
+                    input1.run();
                     return done.get();
                 }
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void convertsCallableIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't execute Runnable with Callable",
-            new RunnableOf<>(
+            new RunnableOf<Object>(
                 () -> {
                     done.set(true);
                     return null;
@@ -95,7 +95,7 @@ public final class RunnableOfTest {
                     return done.get();
                 }
             )
-        );
+        ).affirm();
     }
 
 }

@@ -24,9 +24,9 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Tests for {@link IteratorOfDoubles}.
@@ -39,11 +39,11 @@ import org.junit.Test;
 public final class IteratorOfDoublesTest {
     @Test
     public void emptyIteratorDoesNotHaveNext() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "hasNext is true for empty iterator.",
             new IteratorOfDoubles().hasNext(),
-            new IsEqual<>(false)
-        );
+            new IsEqual<Boolean>(false)
+        ).affirm();
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -53,11 +53,11 @@ public final class IteratorOfDoublesTest {
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "hasNext is true for fully traversed iterator.",
             this.iteratorWithFetchedElements().hasNext(),
-            new IsEqual<>(false)
-        );
+            new IsEqual<Boolean>(false)
+        ).affirm();
     }
 
     @Test(expected = NoSuchElementException.class)

@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import java.util.Collections;
-import org.cactoos.MatcherAssert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
@@ -39,11 +38,11 @@ public final class SyncedTest {
 
     @Test
     public void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a list",
-            new Synced<>(new ListOf<>(1, 0, -1, -1, 2)),
-            new BehavesAsList<>(0)
-        );
+            new Synced<Integer>(new ListOf<>(1, 0, -1, -1, 2)),
+            new BehavesAsList<Integer>(0)
+        ).affirm();
     }
 
     @Test

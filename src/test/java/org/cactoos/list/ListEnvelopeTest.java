@@ -26,7 +26,6 @@ package org.cactoos.list;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -64,13 +63,13 @@ public final class ListEnvelopeTest {
         iterator.next();
         iterator.set("zero");
         iterator.previous();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "iterator is not equal to expected",
-            () -> iterator,
+            (Iterable<? extends String>) () -> iterator,
             Matchers.contains(
                 "zero"
             )
-        );
+        ).affirm();
     }
 
     @Test(expected = UnsupportedOperationException.class)

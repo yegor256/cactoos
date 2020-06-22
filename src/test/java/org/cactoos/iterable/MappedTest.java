@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Collections;
-import org.cactoos.MatcherAssert;
 import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
@@ -44,7 +43,7 @@ public final class MappedTest {
 
     @Test
     public void transformsList() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't transform an iterable",
             new Mapped<String, Text>(
                 input -> new Upper(new TextOf(input)),
@@ -53,31 +52,31 @@ public final class MappedTest {
                 )
             ).iterator().next().asString(),
             Matchers.equalTo("HELLO")
-        );
+        ).affirm();
     }
 
     @Test
     public void transformsEmptyList() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't transform an empty iterable",
             new Mapped<String, Text>(
                 input -> new Upper(new TextOf(input)),
                 Collections.emptyList()
             ),
             Matchers.emptyIterable()
-        );
+        ).affirm();
     }
 
     @Test
     public void string() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert to string",
             new Mapped<Integer, Integer>(
                 x -> x * 2,
                 new ListOf<>(1, 2, 3)
             ).toString(),
             Matchers.equalTo("2, 4, 6")
-        );
+        ).affirm();
     }
 
     @Test

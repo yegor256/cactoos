@@ -23,10 +23,10 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.MatcherAssert;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Partitioned}.
@@ -39,24 +39,24 @@ public final class PartitionedTest {
 
     @Test
     public void partitionedEmpty() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a Partitioned without values.",
             new LengthOf(
                 new Partitioned<>(2)
             ).intValue(),
             Matchers.equalTo(0)
-        );
+        ).affirm();
     }
 
     @Test
     public void partitionedWithPartial() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a Partitioned with partition size.",
             new LengthOf(
                 new Partitioned<>(2, new IterableOf<>(1, 2, 3))
             ).intValue(),
             Matchers.equalTo(2)
-        );
+        ).affirm();
     }
 
 }

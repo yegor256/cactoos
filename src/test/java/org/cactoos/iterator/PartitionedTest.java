@@ -25,8 +25,8 @@ package org.cactoos.iterator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.NoSuchElementException;
-import org.cactoos.MatcherAssert;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
@@ -46,7 +46,7 @@ public final class PartitionedTest {
 
     @Test
     public void emptyPartitioned() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate an empty Partitioned.",
             new LengthOf(
                 new IterableOf<>(
@@ -54,15 +54,15 @@ public final class PartitionedTest {
                 )
             ).intValue(),
             Matchers.equalTo(0)
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void partitionedOne() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a Partitioned of partition size 1.",
-            new ArrayList<>(
+            new ArrayList<List<Integer>>(
                 new ListOf<>(
                     new Partitioned<>(1, new ListOf<>(1, 2, 3).iterator())
                 )
@@ -73,15 +73,15 @@ public final class PartitionedTest {
                     Collections.singletonList(3)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void partitionedEqualSize() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a Partitioned of partition size 2.",
-            new ArrayList<>(
+            new ArrayList<List<Integer>>(
                 new ListOf<>(
                     new Partitioned<>(2, new ListOf<>(1, 2, 3, 4).iterator())
                 )
@@ -89,7 +89,7 @@ public final class PartitionedTest {
             Matchers.equalTo(
                 new ListOf<>(new ListOf<>(1, 2), new ListOf<>(3, 4))
             )
-        );
+        ).affirm();
     }
 
     @Test

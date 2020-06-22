@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-import org.cactoos.MatcherAssert;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.scalar.Ternary;
@@ -47,39 +46,39 @@ public final class IterableOfTest {
 
     @Test
     public void convertsScalarsToIterable() {
-        MatcherAssert.assertThat(
+        // @checkstyle MagicNumber (1 line)
+        new Assertion<>(
             "must convert scalars to iterable",
             new LengthOf(
                 new IterableOf<>(
                     "a", "b", "c"
                 )
             ).intValue(),
-            // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(3)
-        );
+        ).affirm();
     }
 
     @Test
     public void convertsArrayOfIntsToIterable() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "must convert int scalars to iterable",
-            new IterableOf<>(1, 2, 0, 2),
+            new IterableOf<Integer>(1, 2, 0, 2),
             Matchers.hasItem(0)
-        );
+        ).affirm();
     }
 
     @Test
     public void convertsObjectsToIterable() {
-        MatcherAssert.assertThat(
+        // @checkstyle MagicNumber (1 line)
+        new Assertion<>(
             "must convert objects to iterable",
             new LengthOf(
                 new IterableOf<>(
                     new TextOf("a"), new TextOf("b"), new TextOf("c")
                 )
             ).intValue(),
-            // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(3)
-        );
+        ).affirm();
     }
 
     @Test
@@ -92,9 +91,9 @@ public final class IterableOfTest {
             first, second, third
         );
         final Iterator<Iterable<String>> pages = service.iterator();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "must have all page values",
-            new IterableOf<>(
+            new IterableOf<String>(
                 () -> pages.next().iterator(),
                 page -> new Ternary<>(
                     () -> pages.hasNext(),
@@ -102,8 +101,8 @@ public final class IterableOfTest {
                     () -> new IteratorOf<String>()
                 ).value()
             ),
-            new IsEqual<>(new Joined<>(first, second, third))
-        );
+            new IsEqual<Iterable<String>>(new Joined<>(first, second, third))
+        ).affirm();
     }
 
     @Test
@@ -134,9 +133,9 @@ public final class IterableOfTest {
             first, second, third
         );
         final Iterator<Iterable<String>> pages = service.iterator();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "length must be equal to total number of elements",
-            new IterableOf<>(
+            new IterableOf<String>(
                 () -> pages.next().iterator(),
                 page -> new Ternary<>(
                     () -> pages.hasNext(),
@@ -144,14 +143,14 @@ public final class IterableOfTest {
                     () -> new IteratorOf<String>()
                 ).value()
             ),
-            new IsIterableWithSize<>(
+            new IsIterableWithSize<String>(
                 new IsEqual<>(
                     new LengthOf(
                         new Joined<>(first, second, third)
                     ).intValue()
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test

@@ -24,10 +24,10 @@
 package org.cactoos.map;
 
 import java.util.Map;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsEqual;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Check a clear method.
@@ -42,10 +42,11 @@ public final class ClearDeletesAllValues<K, V> extends
     @Override
     public boolean matchesSafely(final Map<K, V> map) {
         map.clear();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't be cleared",
-            map.isEmpty(), new IsEqual<>(true)
-        );
+            map.isEmpty(),
+            new IsEqual<Boolean>(true)
+        ).affirm();
         return true;
     }
 

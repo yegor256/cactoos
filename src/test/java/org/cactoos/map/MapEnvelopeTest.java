@@ -25,7 +25,6 @@ package org.cactoos.map;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.cactoos.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
@@ -115,102 +114,102 @@ public final class MapEnvelopeTest {
 
     @Test
     public void mapIsEmptyTrue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "#isEmpty() returns false for empty map",
             new NoNulls<>(
                 new MapOf<Integer, Integer>()
             ).isEmpty(),
-            new IsEqual<>(true)
-        );
+            new IsEqual<Boolean>(true)
+        ).affirm();
     }
 
     @Test
     public void mapIsEmptyFalse() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "#isEmpty() returns true for not empty map",
             new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(1, 0)
                 )
             ).isEmpty(),
-            new IsEqual<>(false)
-        );
+            new IsEqual<Boolean>(false)
+        ).affirm();
     }
 
     @Test
     public void mapContainsKeyTrue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "contains key returns false with exist key",
             new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(1, 0)
                 )
             ).containsKey(1),
-            new IsEqual<>(true)
-        );
+            new IsEqual<Boolean>(true)
+        ).affirm();
     }
 
     @Test
     public void mapContainsKeyFalse() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "contains key returns true with absent key",
             new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(1, 0)
                 )
             ).containsKey(0),
-            new IsEqual<>(false)
-        );
+            new IsEqual<Boolean>(false)
+        ).affirm();
     }
 
     @Test
     public void mapContainsValueTrue() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "contains value returns false with exist value",
             new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(1, 0)
                 )
             ).containsValue(0),
-            new IsEqual<>(true)
-        );
+            new IsEqual<Boolean>(true)
+        ).affirm();
     }
 
     @Test
     public void mapContainsValueFalse() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "contains value returns true with absent value",
             new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(1, 0)
                 )
             ).containsValue(1),
-            new IsEqual<>(false)
-        );
+            new IsEqual<Boolean>(false)
+        ).affirm();
     }
 
     @Test
     public void mapEqualsToItself() {
         final MapOf<String, String> map =
             new MapOf<String, String>(new MapEntry<>("key", "value"));
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Map doesn't equal to itself",
             map,
-            new IsEqual<>(map)
-        );
+            new IsEqual<MapOf<String, String>>(map)
+        ).affirm();
     }
 
     @Test
     public void mapNotEqualsToAnotherClass() {
         final MapOf<String, String> map =
             new MapOf<String, String>(new MapEntry<>("key1", "value1"));
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Map equals to an instance of another type",
             map,
-            new IsNot<>(
+            new IsNot<Object>(
                 new IsEqual<>("Totally different type")
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -219,11 +218,11 @@ public final class MapEnvelopeTest {
         final String value = "value2";
         final MapEntry<String, String> input = new MapEntry<>(key, value);
         final MapEntry<String, String> expected = new MapEntry<>(key, value);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Map doesn't equal to another map with same entries",
             new MapOf<String, String>(input),
-            new IsEqual<>(new MapOf<String, String>(expected))
-        );
+            new IsEqual<MapOf<String, String>>(new MapOf<String, String>(expected))
+        ).affirm();
     }
 
     @Test
@@ -232,43 +231,43 @@ public final class MapEnvelopeTest {
             new MapEntry<>("key3", "value3");
         final MapEntry<String, String> second =
             new MapEntry<>("key4", null);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Map must allow null values",
             new MapOf<String, String>(first, second),
-            new IsEqual<>(new MapOf<String, String>(first, second))
-        );
+            new IsEqual<MapOf<String, String>>(new MapOf<String, String>(first, second))
+        ).affirm();
     }
 
     @Test
     public void mapNotEqualsToOtherWithDifferentKeys() {
         final String value = "value5";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Map equals to another map with different keys",
             new MapOf<String, String>(new MapEntry<>("key5", value)),
-            new IsNot<>(
+            new IsNot<MapOf<String, String>>(
                 new IsEqual<>(
                     new MapOf<String, String>(
                         new MapEntry<>("key6", value)
                     )
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void mapNotEqualsToOtherWithDifferentValues() {
         final String key = "key7";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Map equals to another map with different values",
             new MapOf<String, String>(new MapEntry<>(key, "value7")),
-            new IsNot<>(
+            new IsNot<MapOf<String, String>>(
                 new IsEqual<>(
                     new MapOf<String, String>(
                         new MapEntry<>(key, "value8")
                     )
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -277,11 +276,11 @@ public final class MapEnvelopeTest {
         final String value = "value9";
         final MapEntry<String, String> input = new MapEntry<>(key, value);
         final MapEntry<String, String> expected = new MapEntry<>(key, value);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "hashCode returns different results for same entries",
             new MapOf<String, String>(input).hashCode(),
-            new IsEqual<>(new MapOf<String, String>(expected).hashCode())
-        );
+            new IsEqual<Integer>(new MapOf<String, String>(expected).hashCode())
+        ).affirm();
     }
 
     @Test

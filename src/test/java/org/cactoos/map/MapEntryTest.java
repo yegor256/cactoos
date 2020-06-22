@@ -23,9 +23,9 @@
  */
 package org.cactoos.map;
 
-import org.cactoos.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link MapEntry}.
@@ -39,22 +39,22 @@ public final class MapEntryTest {
     public void getKey() {
         final String key = "hello";
         final String value = "world";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't get key in the map entry",
             new MapEntry<>(key, value).getKey(),
-            new IsEqual<>(key)
-        );
+            new IsEqual<String>(key)
+        ).affirm();
     }
 
     @Test
     public void getValue() {
         final String key = "foo";
         final String value = "bar";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't get value in the map entry",
             new MapEntry<>(key, value).getValue(),
-            new IsEqual<>(value)
-        );
+            new IsEqual<String>(value)
+        ).affirm();
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -66,29 +66,29 @@ public final class MapEntryTest {
     public void equalsTo() {
         final String key = "eo";
         final String value = "book";
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "MapEntries are not equals",
             new MapEntry<>(key, value).equals(new MapEntry<>(key, value)),
-            new IsEqual<>(true)
-        );
+            new IsEqual<Boolean>(true)
+        ).affirm();
     }
 
     @Test
     public void compareHash() {
-        MatcherAssert.assertThat(
+        // @checkstyle MagicNumber (1 line)
+        new Assertion<>(
             "the hash code are not equals",
             new MapEntry<>("elegant", "objects").hashCode(),
-            // @checkstyle MagicNumber (1 line)
-            new IsEqual<>(32_739_498)
-        );
+            new IsEqual<Integer>(32_739_498)
+        ).affirm();
     }
 
     @Test
     public void toStringMethod() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "ToString method returns unexpected value",
             new MapEntry<>("somekey", "somevalue").toString(),
-            new IsEqual<>("somekey=somevalue")
-        );
+            new IsEqual<String>("somekey=somevalue")
+        ).affirm();
     }
 }
