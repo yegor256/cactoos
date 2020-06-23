@@ -23,13 +23,8 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.Func;
-import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
-import org.cactoos.scalar.And;
 import org.cactoos.scalar.LengthOf;
-import org.cactoos.scalar.Reduced;
-import org.cactoos.text.EndsWith;
 import org.cactoos.text.StartsWith;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -149,40 +144,13 @@ public final class FilteredTest {
     @Test
     public void filtersWithTwoFuncsCombined() throws Exception {
         new Assertion<>(
-            "Must be filtered with two filters",
+            "Must be filtered",
             new Filtered<>(
                 new IterableOf<>("ay", "xb", "yx", "xy"),
-                FilteredTest.combine(
-                    input -> new StartsWith(input, "x"),
-                    input -> new EndsWith(input, "y")
-                )
+                input -> new StartsWith(input, "x")
             ),
             new HasValues<>("xy")
         ).affirm();
-    }
-
-    /**
-     * Combine filters.
-     *
-     * @param funcs Func to combine.
-     * @todo #1313:30m Add {@code func.And<>(Func<X, Scalar<Boolean>>...)} for
-     *  combing filter functions, and replace use of {@link Reduced}
-     *  in this method by it. And then remove this method.
-     */
-    @SafeVarargs
-    private static Func<String, Scalar<Boolean>> combine(
-        final Func<String, Scalar<Boolean>>... funcs) throws Exception {
-        return new Reduced<>(
-            new ListOf<>(
-                funcs
-            ),
-            (f, g) ->
-                input ->
-                    new And(
-                        f.apply(input),
-                        g.apply(input)
-                    )
-        ).value();
     }
 
 }
