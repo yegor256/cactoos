@@ -142,7 +142,7 @@ public final class FilteredTest {
     }
 
     @Test
-    public void filtersWithTwoFuncsCombined() throws Exception {
+    public void filtersWithFuncToScalar() {
         new Assertion<>(
             "Must be filtered",
             new Filtered<>(
