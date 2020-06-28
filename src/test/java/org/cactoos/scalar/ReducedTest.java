@@ -113,22 +113,4 @@ public final class ReducedTest {
             new ScalarHasValue<>("OneTwoThree")
         ).affirm();
     }
-
-    @Test
-    public void constructedFromIterable() {
-        // @checkstyle MagicNumberCheck (15 lines)
-        new Assertion<>(
-            "Must sum elements",
-            new Reduced<>(
-                new IterableOf<>(
-                    1,
-                    2,
-                    3
-                ),
-                Integer::sum
-            ),
-            new ScalarHasValue<>(6)
-        ).affirm();
-    }
-
 }
