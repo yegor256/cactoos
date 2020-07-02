@@ -5,7 +5,7 @@ assets:
   pubring.gpg: yegor256/home#assets/pubring.gpg
   secring.gpg: yegor256/home#assets/secring.gpg
 architect:
-- paulodamaso
+- victornoel
 - yegor256
 install: |
   sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
