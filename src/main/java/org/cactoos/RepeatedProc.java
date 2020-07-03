@@ -27,8 +27,7 @@ import org.cactoos.func.FuncOf;
 import org.cactoos.func.Repeated;
 
 /**
- * Proc that repeats its calculation a few times before
- * returning the last result.
+ * Proc that runs repeatedly for a number of times.
  *
  * @param <X> Type of input
  * @since 0.49.2
