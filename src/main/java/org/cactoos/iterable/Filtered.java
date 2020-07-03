@@ -24,6 +24,7 @@
 package org.cactoos.iterable;
 
 import org.cactoos.Func;
+import org.cactoos.Scalar;
 
 /**
  * Filtered iterable.
@@ -72,4 +73,19 @@ public final class Filtered<X> extends IterableEnvelope<X> {
         );
     }
 
+    /**
+     * Ctor.
+     * @param src Source iterable
+     * @param fnc Predicate
+     */
+    public Filtered(final Iterable<X> src, final Func<X, Scalar<Boolean>> fnc) {
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.Filtered<>(
+                    src.iterator(),
+                    fnc
+                )
+            )
+        );
+    }
 }
