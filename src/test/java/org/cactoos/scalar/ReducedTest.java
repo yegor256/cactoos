@@ -27,9 +27,9 @@ import java.util.Collections;
 import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link Reduced}.
@@ -47,20 +47,20 @@ public final class ReducedTest {
     }
 
     @Test
-    public void singleAtSingleIterable() throws Exception {
+    public void singleAtSingleIterable() {
         final Integer single = 10;
         new Assertion<>(
             "Must find the single",
             new Reduced<>(
                 (first, last) -> first,
                 new IterableOf<Scalar<Integer>>(() -> single)
-            ).value(),
-            Matchers.equalTo(single)
+            ),
+            new ScalarHasValue<>(single)
         ).affirm();
     }
 
     @Test
-    public void firstAtIterable() throws Exception {
+    public void firstAtIterable() {
         final String one = "Apple";
         final String two = "Banana";
         final String three = "Orange";
@@ -73,13 +73,13 @@ public final class ReducedTest {
                     () -> two,
                     () -> three
                 )
-            ).value(),
-            Matchers.equalTo(one)
+            ),
+            new ScalarHasValue<>(one)
         ).affirm();
     }
 
     @Test
-    public void lastAtIterable() throws Exception {
+    public void lastAtIterable() {
         final Character one = 'A';
         final Character two = 'B';
         final Character three = 'O';
@@ -92,13 +92,13 @@ public final class ReducedTest {
                     () -> two,
                     () -> three
                 )
-            ).value(),
-            Matchers.equalTo(three)
+            ),
+            new ScalarHasValue<>(three)
         ).affirm();
     }
 
     @Test
-    public void constructedFromVarargs() throws Exception {
+    public void constructedFromVarargs() {
         final String one = "One";
         final String two = "Two";
         final String three = "Three";
@@ -109,8 +109,8 @@ public final class ReducedTest {
                 one,
                 two,
                 three
-            ).value(),
-            Matchers.equalTo("OneTwoThree")
+            ),
+            new ScalarHasValue<>("OneTwoThree")
         ).affirm();
     }
 }

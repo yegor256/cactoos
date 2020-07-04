@@ -19,7 +19,7 @@
 [![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.cactoos%3Acactoos)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/cactoos)](https://hitsofcode.com/view/github/yegor256/cactoos)
 
-Project architect: [@paulodamaso](https://github.com/paulodamaso)
+Project architect: [@victornoel](https://github.com/victornoel)
 
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
@@ -399,3 +399,4 @@ Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static
   - [@iakunin](https://github.com/iakunin) as Maksim Iakunin
   - [@fanifieiev](https://github.com/fanifieiev) as Fevzi Anifieiev
   - [@victornoel](https://github.com/victornoel) as Victor Noël
+  - [@paulodamaso](https://github.com/paulodamaso) as Paulo Lobo
