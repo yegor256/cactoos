@@ -30,9 +30,9 @@ import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link NoNulls}.
@@ -49,12 +49,6 @@ import org.junit.rules.ExpectedException;
     }
 )
 public final class NoNullsTest {
-
-    /**
-     * A rule for handling an exception.
-     */
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void getSize() {
@@ -374,27 +368,33 @@ public final class NoNullsTest {
 
     @Test
     public void putThrowsErrorIfValueNull() {
-        this.exception.expect(IllegalStateException.class);
-        this.exception.expectMessage(
-            "Value at #put(1,V) is NULL"
-        );
-        new NoNulls<Integer, Integer>(
-            new HashMap<>()
-        ).put(1, null);
+        new Assertion<>(
+            "Should throws an error if value is null",
+            () -> new NoNulls<Integer, Integer>(
+                new HashMap<>()
+            ).put(1, null),
+            new Throws<>(
+                "Value at #put(1,V) is NULL",
+                IllegalStateException.class
+            )
+        ).affirm();
     }
 
     @Test
     public void putThrowsErrorIfPreviousValueNull() {
-        this.exception.expect(IllegalStateException.class);
-        this.exception.expectMessage(
-            "Value returned by #put(1,2) is NULL"
-        );
-        new NoNulls<>(
-            new HashMap<Integer, Integer>() {
-                {
-                    put(1, null);
+        new Assertion<>(
+            "Should throws an error if previous value is null",
+            () -> new NoNulls<>(
+                new HashMap<Integer, Integer>() {
+                    {
+                        put(1, null);
+                    }
                 }
-            }
-        ).put(1, 2);
+            ).put(1, 2),
+            new Throws<>(
+                "Value returned by #put(1,2) is NULL",
+                IllegalStateException.class
+            )
+        ).affirm();
     }
 }
