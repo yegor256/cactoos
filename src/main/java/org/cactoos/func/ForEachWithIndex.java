@@ -25,9 +25,7 @@ package org.cactoos.func;
 
 import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
-import org.cactoos.Func;
 import org.cactoos.Proc;
-import org.cactoos.scalar.And;
 import org.cactoos.scalar.AndWithIndex;
 
 /**
