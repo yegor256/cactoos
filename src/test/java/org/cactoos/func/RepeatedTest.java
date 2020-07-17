@@ -27,9 +27,10 @@ import java.security.SecureRandom;
 import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.iterator.IteratorOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Repeated}.
@@ -44,42 +45,41 @@ public final class RepeatedTest {
     public void runsFuncMultipleTimes() throws Exception {
         final Iterator<Integer> iter = new IteratorOf<>(1, 2, 5, 6);
         final Func<Boolean, Integer> func = new Repeated<>(
-            input -> {
-                return iter.next();
-            },
+            input -> iter.next(),
             3
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must be applied 3 times",
             func.apply(true),
             Matchers.equalTo(5)
-        );
+        ).affirm();
     }
 
     @Test
     public void repeatsNullsResults() throws Exception {
         final Func<Boolean, Integer> func = new Repeated<>(
-            input -> {
-                return null;
-            },
+            input -> null,
             2
         );
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must repeat NULL",
             func.apply(true),
             Matchers.equalTo(null)
-        );
+        ).affirm();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void doesntRepeatAny() throws Exception {
+    @Test
+    public void doesntRepeatAny() {
         final Func<Boolean, Integer> func = new Repeated<>(
-            input -> {
-                return new SecureRandom().nextInt();
-            },
+            input -> new SecureRandom().nextInt(),
             0
         );
-        MatcherAssert.assertThat(
-            func.apply(true),
-            Matchers.equalTo(func.apply(true))
-        );
+        new Assertion<>(
+            "Must throw if parameter is not correct",
+            () -> func.apply(true),
+            new Throws<>(
+                IllegalArgumentException.class
+            )
+        ).affirm();
     }
 }

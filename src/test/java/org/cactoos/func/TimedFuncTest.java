@@ -28,9 +28,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 import org.cactoos.iterable.Endless;
 import org.cactoos.scalar.And;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Timed}.
@@ -71,23 +71,25 @@ public final class TimedFuncTest {
             ).apply(true);
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception exp) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
+                "Must be canceled after 1 sec",
                 future.isCancelled(),
                 Matchers.equalTo(true)
-            );
+            ).affirm();
         }
     }
 
     @Test
     public void functionIsExecuted() throws Exception {
         final long period = 3000L;
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must execute the function",
             new Timed<Boolean, Boolean>(
                 input -> true,
                 period
             ).apply(true),
             Matchers.equalTo(true)
-        );
+        ).affirm();
     }
 }
 

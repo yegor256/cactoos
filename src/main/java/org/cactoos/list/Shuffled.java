@@ -24,7 +24,6 @@
 package org.cactoos.list;
 
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Shuffled list.
