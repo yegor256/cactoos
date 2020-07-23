@@ -34,7 +34,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public class ForEachWithIndexTest {
+public final class ForEachWithIndexTest {
 
     @Test
     public void testBiProcIterable() throws Exception {
@@ -47,7 +47,7 @@ public class ForEachWithIndexTest {
             )
         );
         new Assertion<>(
-            "String does not contain mapped Iterable elements",
+            "String must contain mapped Iterable elements",
             builder.toString(),
             new IsEqual<>(
                 "1: 'Mary' 2: 'John' 3: 'William' 4: 'Napkin' "
