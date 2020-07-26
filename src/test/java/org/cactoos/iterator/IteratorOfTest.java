@@ -84,7 +84,7 @@ public final class IteratorOfTest {
         }
         new Assertion<>(
             "Must throw an exception if consumed",
-            () -> iterator.next(),
+            iterator::next,
             new Throws<>(NoSuchElementException.class)
         ).affirm();
     }

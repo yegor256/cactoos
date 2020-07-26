@@ -37,7 +37,7 @@ public final class SortedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sortsIterable() throws Exception {
+    public void sortsIterable() {
         new Assertion<>(
             "Must sort elements in iterator",
             new IterableOf<>(

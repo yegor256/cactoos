@@ -36,7 +36,7 @@ import org.llorllale.cactoos.matchers.HasValues;
 public final class ShuffledTest {
 
     @Test
-    public void shuffleIterable() throws Exception {
+    public void shuffleIterable() {
         new Assertion<>(
             "Must shuffle elements in iterator",
             new IterableOf<>(

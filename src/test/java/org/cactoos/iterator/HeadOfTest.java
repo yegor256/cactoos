@@ -43,7 +43,7 @@ public final class HeadOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void headIterator() throws Exception {
+    public void headIterator() {
         new Assertion<>(
             "Must skip elements in iterator",
             new IterableOf<>(
@@ -62,7 +62,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void returnsIntactIterator() throws Exception {
+    public void returnsIntactIterator() {
         new Assertion<>(
             "Must return an intact iterator",
             new IterableOf<>(
@@ -78,7 +78,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void returnsEmptyIterator() throws Exception {
+    public void returnsEmptyIterator() {
         new Assertion<>(
             "Must throw an exception if empty",
             () -> new HeadOf<>(
@@ -92,7 +92,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void emptyIteratorForNegativeSize() throws Exception {
+    public void emptyIteratorForNegativeSize() {
         new Assertion<>(
             "Must throw an exception for negative size",
             () -> new HeadOf<>(
@@ -106,7 +106,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void iteratesForEachRemaining() throws Exception {
+    public void iteratesForEachRemaining() {
         final List<String> lst = new ArrayList<>(2);
         new HeadOf<>(
             2,
@@ -127,7 +127,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void removeNotSupported() throws Exception {
+    public void removeNotSupported() {
         new Assertion<>(
             "Remove should not be supported",
             () -> {

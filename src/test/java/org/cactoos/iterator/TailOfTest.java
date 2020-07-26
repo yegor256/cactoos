@@ -41,7 +41,7 @@ public final class TailOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void tailIterator() throws Exception {
+    public void tailIterator() {
         new Assertion<>(
             "Must get tail portion of iterator",
             new IterableOf<>(
@@ -62,7 +62,7 @@ public final class TailOfTest {
     }
 
     @Test
-    public void returnsIntactIterator() throws Exception {
+    public void returnsIntactIterator() {
         new Assertion<>(
             "Must return an intact iterator",
             new IterableOf<>(
@@ -78,7 +78,7 @@ public final class TailOfTest {
     }
 
     @Test
-    public void returnsEmptyIterator() throws Exception {
+    public void returnsEmptyIterator() {
         new Assertion<>(
             "Must throw an exception if empty",
             () -> new TailOf<>(
@@ -92,7 +92,7 @@ public final class TailOfTest {
     }
 
     @Test
-    public void emptyIteratorForNegativeSize() throws Exception {
+    public void emptyIteratorForNegativeSize() {
         new Assertion<>(
             "Must throw an exception for negative size",
             () -> new TailOf<>(

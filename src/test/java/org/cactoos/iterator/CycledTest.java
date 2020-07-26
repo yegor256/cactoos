@@ -40,7 +40,7 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
 public final class CycledTest {
 
     @Test
-    public void repeatIteratorTest() throws Exception {
+    public void repeatIteratorTest() {
         final String expected = "two";
         new Assertion<>(
             "must repeat iterator",
@@ -64,7 +64,7 @@ public final class CycledTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void notCycledEmptyTest() throws Exception {
+    public void notCycledEmptyTest() {
         new Cycled<>(
             Collections::emptyIterator
         ).next();

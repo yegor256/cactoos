@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Random;
 import org.cactoos.text.Randomized;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -43,6 +42,7 @@ import org.llorllale.cactoos.matchers.TextIs;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ImmutableTest {
+
     @Test(expected = UnsupportedOperationException.class)
     public void doesNotAllowRemovingOfElements() {
         final List<String> list = new LinkedList<>();
@@ -58,7 +58,11 @@ public final class ImmutableTest {
         final Iterator<Integer> immutable = new Immutable<>(
             new IteratorOf<>(value)
         );
-        MatcherAssert.assertThat(immutable.next(), new IsEqual<>(value));
+        new Assertion<>(
+            "wrong value is provided",
+            immutable.next(),
+            new IsEqual<>(value)
+        ).affirm();
     }
 
     @Test
@@ -67,9 +71,17 @@ public final class ImmutableTest {
         final Iterator<Integer> immutable = new Immutable<>(
             new IteratorOf<>(value)
         );
-        MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(true));
+        new Assertion<>(
+            "hasNext is false for not traversed iterator",
+            immutable.hasNext(),
+            new IsEqual<>(true)
+        ).affirm();
         immutable.next();
-        MatcherAssert.assertThat(immutable.hasNext(), new IsEqual<>(false));
+        new Assertion<>(
+            "hasNext is true for already traversed iterator",
+            immutable.hasNext(),
+            new IsEqual<>(false)
+        ).affirm();
     }
 
     @Test

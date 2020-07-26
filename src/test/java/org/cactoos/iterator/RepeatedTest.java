@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.HasSize;
 public final class RepeatedTest {
 
     @Test
-    public void allSameTest() throws Exception {
+    public void allSameTest() {
         final int size = 42;
         final int element = 11;
         new Assertion<>(
@@ -52,7 +52,7 @@ public final class RepeatedTest {
     }
 
     @Test
-    public void emptyTest() throws Exception {
+    public void emptyTest() {
         new Assertion<>(
             "Must generate an empty iterator",
             new IterableOf<>(new Repeated<>(0, 0)),

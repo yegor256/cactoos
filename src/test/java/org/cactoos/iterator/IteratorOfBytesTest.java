@@ -27,7 +27,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -42,6 +41,7 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class IteratorOfBytesTest {
+
     @Test
     public void canBeConstructedFromString() throws Exception {
         final Iterator<Byte> itr = new IteratorOfBytes(
@@ -80,11 +80,11 @@ public final class IteratorOfBytesTest {
 
     @Test
     public void emptyIteratorDoesNotHaveNext() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "hasNext is true for empty iterator.",
             new IteratorOfBytes().hasNext(),
             new IsEqual<>(false)
-        );
+        ).affirm();
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -94,7 +94,7 @@ public final class IteratorOfBytesTest {
 
     @Test
     public void nonEmptyIteratorDoesNotHaveNext() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "hasNext is true for fully traversed iterator.",
             this.iteratorWithFetchedElements().hasNext(),
             new IsEqual<>(false)

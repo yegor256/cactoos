@@ -29,7 +29,6 @@ import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -46,7 +45,7 @@ public final class PartitionedTest {
 
     @Test
     public void emptyPartitioned() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate an empty Partitioned.",
             new LengthOf(
                 new IterableOf<>(
@@ -54,13 +53,13 @@ public final class PartitionedTest {
                 )
             ).intValue(),
             Matchers.equalTo(0)
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void partitionedOne() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a Partitioned of partition size 1.",
             new ArrayList<>(
                 new ListOf<>(
@@ -73,13 +72,13 @@ public final class PartitionedTest {
                     Collections.singletonList(3)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void partitionedEqualSize() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't generate a Partitioned of partition size 2.",
             new ArrayList<>(
                 new ListOf<>(
@@ -89,7 +88,7 @@ public final class PartitionedTest {
             Matchers.equalTo(
                 new ListOf<>(new ListOf<>(1, 2), new ListOf<>(3, 4))
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -124,7 +123,7 @@ public final class PartitionedTest {
     @Test(expected = NoSuchElementException.class)
     public void emptyPartitionedNextThrowsException() {
         new Partitioned<>(
-            2, Collections.emptyList().iterator()
+            2, Collections.emptyIterator()
         ).next();
     }
 
