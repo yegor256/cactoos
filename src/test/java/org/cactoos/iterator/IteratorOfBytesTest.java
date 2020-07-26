@@ -98,7 +98,7 @@ public final class IteratorOfBytesTest {
             "hasNext is true for fully traversed iterator.",
             this.iteratorWithFetchedElements().hasNext(),
             new IsEqual<>(false)
-        );
+        ).affirm();
     }
 
     @Test(expected = NoSuchElementException.class)
