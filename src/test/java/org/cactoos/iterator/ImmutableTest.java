@@ -59,7 +59,7 @@ public final class ImmutableTest {
             new IteratorOf<>(value)
         );
         new Assertion<>(
-            "wrong value is provided",
+            "next must return first value from iterator",
             immutable.next(),
             new IsEqual<>(value)
         ).affirm();
@@ -72,13 +72,13 @@ public final class ImmutableTest {
             new IteratorOf<>(value)
         );
         new Assertion<>(
-            "hasNext is false for not traversed iterator",
+            "hasNext must return true for not traversed iterator",
             immutable.hasNext(),
             new IsEqual<>(true)
         ).affirm();
         immutable.next();
         new Assertion<>(
-            "hasNext is true for already traversed iterator",
+            "hasNext must return false for already traversed iterator",
             immutable.hasNext(),
             new IsEqual<>(false)
         ).affirm();
