@@ -73,7 +73,7 @@ public final class ImmutableTest {
     }
 
     @Test
-    public void decoratesToString() {
+    public void decoratesToString() throws Exception {
         final String string = new Randomized().asString();
         final Iterator<Object> iterator = new Iterator<Object>() {
             public Object next() {

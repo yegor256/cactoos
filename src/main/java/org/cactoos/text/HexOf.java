@@ -24,7 +24,7 @@
 package org.cactoos.text;
 
 import org.cactoos.Bytes;
-import org.cactoos.Text;
+import org.cactoos.Scalar;
 
 /**
  * Hexadecimal representation of Bytes.
@@ -34,7 +34,7 @@ import org.cactoos.Text;
  * @since 0.28
  */
 @SuppressWarnings("PMD.ConstructorShouldDoInitialization")
-public final class HexOf implements Text {
+public final class HexOf extends TextEnvelope {
 
     /**
      * The hexadecimal chars.
@@ -45,30 +45,24 @@ public final class HexOf implements Text {
     };
 
     /**
-     * The Bytes.
-     */
-    private final Bytes bytes;
-
-    /**
      * Ctor.
-     * @param source The bytes
+     * @param bytes The bytes
      */
-    public HexOf(final Bytes source) {
-        this.bytes = source;
+    public HexOf(final Bytes bytes) {
+        super(new Scalar<String>() {
+            @Override
+            public String value() throws Exception {
+                final byte[] bts = bytes.asBytes();
+                final char[] hex = new char[bts.length * 2];
+                int chr = -1;
+                for (int idx = 0; idx < bts.length; ++idx) {
+                    // @checkstyle MagicNumber (3 line)
+                    final int value = 0xff & bts[idx];
+                    hex[++chr] = HexOf.HEX_CHARS[value >>> 4];
+                    hex[++chr] = HexOf.HEX_CHARS[value & 0x0f];
+                }
+                return new String(hex);
+            }
+        });
     }
-
-    @Override
-    public String asString() throws Exception {
-        final byte[] bts = this.bytes.asBytes();
-        final char[] hex = new char[bts.length * 2];
-        int chr = -1;
-        for (int idx = 0; idx < bts.length; ++idx) {
-            // @checkstyle MagicNumber (3 line)
-            final int value = 0xff & bts[idx];
-            hex[++chr] = HexOf.HEX_CHARS[value >>> 4];
-            hex[++chr] = HexOf.HEX_CHARS[value & 0x0f];
-        }
-        return new String(hex);
-    }
-
 }

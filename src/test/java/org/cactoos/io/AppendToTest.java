@@ -53,10 +53,10 @@ public final class AppendToTest {
      * Ensures that AppendTo is failing on a negative predicate result.
      */
     @Test
-    public void failsIfFileDoesNotExist() {
+    public void failsIfFileDoesNotExist() throws Exception {
         final File source = new File(
             new Randomized(
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
             ).asString()
         );
         new Assertion<>(

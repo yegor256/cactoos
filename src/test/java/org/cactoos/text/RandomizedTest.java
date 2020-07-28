@@ -41,7 +41,7 @@ import org.llorllale.cactoos.matchers.TextHasString;
 public final class RandomizedTest {
 
     @Test
-    public void generatesRandomTextOfRandomLength() {
+    public void generatesRandomTextOfRandomLength() throws Exception {
         new Assertion<>(
             "Generated text is empty",
             new Randomized().asString().length(),
@@ -50,7 +50,7 @@ public final class RandomizedTest {
     }
 
     @Test
-    public void generatesRandomTextOfSpecifiedLength() {
+    public void generatesRandomTextOfSpecifiedLength() throws Exception {
         new Assertion<>(
             "Generated text has incorrect length",
             new Randomized(512).asString().length(),
@@ -59,7 +59,7 @@ public final class RandomizedTest {
     }
 
     @Test
-    public void generatesRandomTextOfSpecifiedChars() {
+    public void generatesRandomTextOfSpecifiedChars() throws Exception {
         new Assertion<>(
             "Generated text contains not allowed characters",
             new Randomized('a')

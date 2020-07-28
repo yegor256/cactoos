@@ -27,7 +27,6 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 import org.cactoos.Scalar;
-import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.Unchecked;
 
@@ -37,32 +36,13 @@ import org.cactoos.scalar.Unchecked;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.32
- * @todo #1116:30min All classes implementing Text need to be refactored
- *  to extend TextEnvelope - asString() should be removed and implementation
- *  from TextEnvelope should be used. This to-do should be moved to another
- *  class which need to be refactored.
  */
-public final class Randomized implements Text {
+public final class Randomized extends TextEnvelope {
 
     /**
      * Max length of generated text (if no length is specified).
      */
     private static final int MAX_RANDOM_LENGTH = 255;
-
-    /**
-     * List of characters allowed for generating.
-     */
-    private final List<Character> characters;
-
-    /**
-     * Length of generated text.
-     */
-    private final Scalar<Integer> length;
-
-    /**
-     * Characters index randomizer.
-     */
-    private final Random indices;
 
     /**
      * Ctor.
@@ -159,21 +139,18 @@ public final class Randomized implements Text {
      * @param len Length of generated text.
      * @param rnd Characters index randomizer.
      */
-    public Randomized(final List<Character> chrs, final Scalar<Integer> len,
-        final Random rnd) {
-        this.characters = chrs;
-        this.length = len;
-        this.indices = rnd;
-    }
-
-    @Override
-    public String asString() {
-        final int len = new Unchecked<>(this.length).value();
-        final StringBuilder builder = new StringBuilder(len);
-        final int bound = this.characters.size();
-        for (int index = 0; index < len; index = index + 1) {
-            builder.append(this.characters.get(this.indices.nextInt(bound)));
-        }
-        return builder.toString();
+    public Randomized(final List<Character> chrs, final Scalar<Integer> len, final Random rnd) {
+        super(new Scalar<String>() {
+            @Override
+            public String value() {
+                final int length = new Unchecked<>(len).value();
+                final StringBuilder builder = new StringBuilder(length);
+                final int bound = chrs.size();
+                for (int index = 0; index < length; index = index + 1) {
+                    builder.append(chrs.get(rnd.nextInt(bound)));
+                }
+                return builder.toString();
+            }
+        });
     }
 }
