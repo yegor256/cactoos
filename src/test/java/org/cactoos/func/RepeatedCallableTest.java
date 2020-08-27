@@ -21,11 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.func.CallableOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
 import org.junit.Test;

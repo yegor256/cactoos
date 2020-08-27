@@ -21,45 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
 
-import org.cactoos.func.FuncOf;
-import org.cactoos.func.Repeated;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Proc;
+import org.hamcrest.core.IsEqual;
+import org.junit.Assert;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Proc that runs repeatedly for a number of times.
+ * Test case for {@link RepeatedProc}.
  *
- * @param <X> Type of input
  * @since 0.49.2
- * @todo #1277:30m Split the entire `org.cactoos.func` package
- *  into `org.cactoos.func`, `org.cactoos.proc`
- *  and `org.cactoos.callable`,
- *  with each one holding their related decorators, classes and interfaces.
+ * @checkstyle MagicNumberCheck (100 line)
+ * @checkstyle JavadocMethodCheck (100 lines)
  */
-public final class RepeatedProc<X> implements Proc<X> {
-    /**
-     * The repeated func.
-     */
-    private final Func<X, Boolean> func;
+public final class RepeatedProcTest {
 
-    /**
-     * Ctor.
-     *
-     * <p>If {@code count} is equal or less than zero {@link #exec(Object)}
-     * will return an exception.</p>
-     *
-     * @param prc Proc to repeat.
-     * @param count How many times.
-     */
-    public RepeatedProc(final Proc<X> prc, final int count) {
-        this.func = new Repeated<>(
-            new FuncOf<>(prc, true),
-            count
+    @Test
+    public void runsProcMultipleTimes() throws Exception {
+        final AtomicInteger atom = new AtomicInteger();
+        final Proc<AtomicInteger> func = new RepeatedProc<>(
+            AtomicInteger::getAndIncrement,
+            3
+        );
+        func.exec(atom);
+        new Assertion<>(
+            "must run proc 3 times",
+            atom.get(),
+            new IsEqual<>(3)
         );
     }
 
-    @Override
-    public void exec(final X input) throws Exception {
-        this.func.apply(input);
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsIfZero() throws Exception {
+        final Proc<Object> func = new RepeatedProc<>(
+            obj -> Assert.fail("unexpected"),
+            0
+        );
+        func.exec(new Object());
     }
 }

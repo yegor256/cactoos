@@ -21,27 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
 
 import java.util.concurrent.Callable;
+import org.cactoos.Func;
 
 /**
  * Callable that runs repeatedly for a number of times.
  *
- * @param <T> Type of output
+ * @param <X> Type of output
  * @since 0.49.2
  */
-public final class RepeatedCallable<T> implements Callable<T> {
+public final class RepeatedCallable<X> implements Callable<X> {
 
     /**
-     * Original callable.
+     * The repeated func.
      */
-    private final Callable<T> callable;
-
-    /**
-     * How many times to run.
-     */
-    private final int times;
+    private final Func<Boolean, Callable<X>> func;
 
     /**
      * Ctor.
@@ -50,25 +46,18 @@ public final class RepeatedCallable<T> implements Callable<T> {
      * an exception.</p>
      *
      * @param cllbl Callable to repeat.
-     * @param max How many times.
+     * @param count How many times.
      */
-    public RepeatedCallable(final Callable<T> cllbl, final int max) {
-        this.callable = cllbl;
-        this.times = max;
+    public RepeatedCallable(final Callable<X> cllbl, final int count) {
+        this.func = new Repeated<>(
+            new FuncOf<Boolean, Callable<X>>(cllbl),
+            count
+        );
     }
 
     @Override
-    public T call() throws Exception {
-        if (this.times <= 0) {
-            throw new IllegalArgumentException(
-                "The number of repetitions must be at least 1"
-            );
-        }
-        T result = null;
-        for (int idx = 0; idx < this.times; ++idx) {
-            result = this.callable.call();
-        }
-        return result;
+    public X call() throws Exception {
+        return this.func.apply(true).call();
     }
 
 }
