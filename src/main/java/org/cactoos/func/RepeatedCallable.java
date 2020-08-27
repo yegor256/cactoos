@@ -24,7 +24,6 @@
 package org.cactoos.func;
 
 import java.util.concurrent.Callable;
-import org.cactoos.Func;
 
 /**
  * Callable that runs repeatedly for a number of times.
@@ -35,9 +34,14 @@ import org.cactoos.Func;
 public final class RepeatedCallable<X> implements Callable<X> {
 
     /**
-     * The repeated func.
+     * Callable.
      */
-    private final Func<Boolean, Callable<X>> func;
+    private final Callable<X> callable;
+
+    /**
+     * Times to repeat.
+     */
+    private final int times;
 
     /**
      * Ctor.
@@ -49,15 +53,16 @@ public final class RepeatedCallable<X> implements Callable<X> {
      * @param count How many times.
      */
     public RepeatedCallable(final Callable<X> cllbl, final int count) {
-        this.func = new Repeated<>(
-            new FuncOf<Boolean, Callable<X>>(cllbl),
-            count
-        );
+        this.callable = cllbl;
+        this.times = count;
     }
 
     @Override
     public X call() throws Exception {
-        return this.func.apply(true).call();
+        return new Repeated<>(
+            new FuncOf<>(this.callable),
+            this.times
+        ).apply(true);
     }
 
 }
