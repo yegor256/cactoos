@@ -36,9 +36,6 @@ import java.util.ListIterator;
  * @param <T> Element type
  * @since 1.16
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @todo #898:30min Replace all the Collections.unmodifiableList
- *  with the {@link org.cactoos.list.Immutable} from the cactoos codebase.
- *  That should be done because Elegant Object principles are against static methods.
  */
 @SuppressWarnings(
     {
