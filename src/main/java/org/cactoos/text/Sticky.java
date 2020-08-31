@@ -48,15 +48,7 @@ public final class Sticky implements Text {
      * @param txt Text to cache
      */
     public Sticky(final Text txt) {
-        this((Scalar<String>) txt::asString);
-    }
-
-    /**
-     * Private ctor.
-     * @param sclr Scalar to cache
-     */
-    private Sticky(final Scalar<String> sclr) {
-        this.scalar = new org.cactoos.scalar.Sticky<>(sclr);
+        this.scalar = new org.cactoos.scalar.Sticky<>(txt::asString);
     }
 
     @Override
