@@ -26,7 +26,8 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
@@ -60,7 +61,7 @@ public final class SolidBiFuncTest {
         new Assertion<>(
             "Shared resource has been modified by multiple threads.",
             shared[0],
-            Matchers.is(1)
+            new IsEqual<>(1)
         ).affirm();
     }
 
@@ -74,7 +75,11 @@ public final class SolidBiFuncTest {
         new Assertion<>(
             "Result of (0, 0) call wasn't invalidated.",
             func.apply(0, 0) + func.apply(1, 1),
-            Matchers.not(func.apply(1, 1) + func.apply(0, 0))
+            new IsNot<>(
+                new IsEqual<>(
+                    func.apply(1, 1) + func.apply(0, 0)
+                )
+            )
         ).affirm();
     }
 }

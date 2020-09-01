@@ -25,7 +25,7 @@ package org.cactoos.func;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
@@ -56,7 +56,7 @@ public final class SyncFuncTest {
         new Assertion<>(
             "Must run the expected amount of threads",
             list.size(),
-            Matchers.equalTo(threads)
+            new IsEqual<>(threads)
         ).affirm();
     }
 
@@ -80,7 +80,7 @@ public final class SyncFuncTest {
         new Assertion<>(
             "Must run the expected amount of threads",
             counter[0],
-            Matchers.equalTo(threads)
+            new IsEqual<>(threads)
         ).affirm();
     }
 
@@ -104,7 +104,7 @@ public final class SyncFuncTest {
         new Assertion<>(
             "Must run the expected amount of threads",
             counter[0],
-            Matchers.equalTo(threads)
+            new IsEqual<>(threads)
         ).affirm();
     }
 
@@ -126,7 +126,7 @@ public final class SyncFuncTest {
         new Assertion<>(
             "Must run the expected amount of threads",
             counter[0],
-            Matchers.equalTo(threads)
+            new IsEqual<>(threads)
         ).affirm();
     }
 }

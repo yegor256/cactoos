@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import org.cactoos.text.FormattedText;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link ProcOf}.
@@ -57,7 +57,7 @@ public final class ProcOfTest {
                 str
             ).asString(),
             list,
-            Matchers.contains(str)
+            new HasValues<>(str)
         ).affirm();
     }
 
@@ -80,7 +80,7 @@ public final class ProcOfTest {
                 str
             ).asString(),
             list,
-            Matchers.contains(str)
+            new HasValues<>(str)
         ).affirm();
     }
 
@@ -100,7 +100,7 @@ public final class ProcOfTest {
                 str
             ).asString(),
             list,
-            Matchers.contains(str)
+            new HasValues<>(str)
         ).affirm();
     }
 }

@@ -27,7 +27,8 @@ import java.security.SecureRandom;
 import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.iterator.IteratorOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
@@ -51,7 +52,7 @@ public final class RepeatedTest {
         new Assertion<>(
             "Must be applied 3 times",
             func.apply(true),
-            Matchers.equalTo(5)
+            new IsEqual<>(5)
         ).affirm();
     }
 
@@ -64,7 +65,7 @@ public final class RepeatedTest {
         new Assertion<>(
             "Must repeat NULL",
             func.apply(true),
-            Matchers.equalTo(null)
+            new IsNull<>()
         ).affirm();
     }
 
