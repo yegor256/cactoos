@@ -32,8 +32,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
 import org.cactoos.RepeatedProc;
+import org.cactoos.scalar.ScalarOfCallable;
 import org.cactoos.func.UncheckedProc;
-import org.cactoos.scalar.ScalarOf;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -179,7 +179,7 @@ public final class TimedTest {
                 Executors.newSingleThreadExecutor(),
                 1L,
                 TimeUnit.SECONDS,
-                new ScalarOf<String>(
+                new ScalarOfCallable<>(
                     () -> {
                         // @checkstyle LineLengthCheck (1 line)
                         throw new IllegalStateException("Something went wrong");
