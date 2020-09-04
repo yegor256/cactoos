@@ -21,44 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.func;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
- * Test case for {@link RepeatedProc}.
+ * Test case for {@link RepeatedCallable}.
  *
  * @since 0.49.2
  * @checkstyle MagicNumberCheck (100 line)
  * @checkstyle JavadocMethodCheck (100 lines)
  */
-public final class RepeatedProcTest {
+public final class RepeatedCallableTest {
 
     @Test
-    public void runsProcMultipleTimes() throws Exception {
+    public void runsCallableMultipleTimes() throws Exception {
         final AtomicInteger atom = new AtomicInteger();
-        final Proc<AtomicInteger> func = new RepeatedProc<>(
-            AtomicInteger::getAndIncrement,
+        final Callable<Integer> callable = new RepeatedCallable<>(
+            new CallableOf<>(
+                () -> atom.getAndIncrement()
+            ),
             3
         );
-        func.exec(atom);
         new Assertion<>(
-            "must run proc 3 times",
-            atom.get(),
+            "Must run callable 3 times",
+            callable.call(),
             new IsEqual<>(3)
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void throwsIfZero() throws Exception {
-        final Proc<Object> func = new RepeatedProc<>(
-            obj -> Assert.fail("unexpected"),
-            0
-        );
-        func.exec(new Object());
+    @Test
+    public void throwsIfZero() {
+        new Assertion<>(
+            // @checkstyle LineLengthCheck (1 line)
+            "Must throws an exception if number of repetitions not be at least 1",
+            () -> new RepeatedCallable<>(
+                new CallableOf<>(
+                    () -> {
+                        Assert.fail("intended to fail");
+                    },
+                    true
+                ),
+                0
+            ).call(),
+            new Throws<>(
+                "The number of repetitions must be at least 1",
+                IllegalArgumentException.class
+            )
+        ).affirm();
     }
+
 }

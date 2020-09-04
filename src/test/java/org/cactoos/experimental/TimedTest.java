@@ -30,9 +30,8 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import org.cactoos.Proc;
-import org.cactoos.RepeatedProc;
-import org.cactoos.func.UncheckedProc;
+import org.cactoos.func.CallableOf;
+import org.cactoos.func.RepeatedCallable;
 import org.cactoos.scalar.ScalarOfCallable;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
@@ -83,44 +82,58 @@ public final class TimedTest {
      *  {@link ExecutorService} was initiated by someone else.
      */
     @Test
-    public void containsResults() {
-        this.repeat(
-            arg -> {
-                final ExecutorService extor = Executors.newFixedThreadPool(TimedTest.THREADS);
-                try {
-                    new Assertion<>(
-                        "Contains results from callables",
-                        new Timed<String>(
-                            extor,
-                            1L,
-                            TimeUnit.SECONDS,
-                            () -> {
-                                this.sleep();
-                                return TimedTest.FIRST_TEXT;
-                            },
-                            () -> {
-                                this.sleep();
-                                return TimedTest.SECOND_TEXT;
-                            },
-                            () -> {
-                                this.sleep();
-                                return TimedTest.THIRD_TEXT;
+    @SuppressWarnings({
+        "PMD.AvoidThrowingRawExceptionTypes", "PMD.DoNotThrowExceptionInFinally"
+    })
+    public void containsResults() throws Exception {
+        new RepeatedCallable<>(
+            new CallableOf<>(
+                () -> {
+                    final ExecutorService extor = Executors.newFixedThreadPool(
+                        TimedTest.THREADS
+                    );
+                    try {
+                        new Assertion<>(
+                            "Contains results from callables",
+                            new Timed<String>(
+                                extor,
+                                1L,
+                                TimeUnit.SECONDS,
+                                () -> {
+                                    this.sleep();
+                                    return TimedTest.FIRST_TEXT;
+                                },
+                                () -> {
+                                    this.sleep();
+                                    return TimedTest.SECOND_TEXT;
+                                },
+                                () -> {
+                                    this.sleep();
+                                    return TimedTest.THIRD_TEXT;
+                                }
+                            ),
+                            new HasValues<>(
+                                TimedTest.FIRST_TEXT,
+                                TimedTest.SECOND_TEXT,
+                                TimedTest.THIRD_TEXT
+                            )
+                        ).affirm();
+                    } finally {
+                        extor.shutdown();
+                        try {
+                            if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
+                                extor.shutdownNow();
                             }
-                        ),
-                        new HasValues<>(
-                            TimedTest.FIRST_TEXT,
-                            TimedTest.SECOND_TEXT,
-                            TimedTest.THIRD_TEXT
-                        )
-                    ).affirm();
-                } finally {
-                    extor.shutdown();
-                    if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
-                        extor.shutdownNow();
+                        } catch (final InterruptedException ex) {
+                            Thread.currentThread().interrupt();
+                            throw new RuntimeException(ex);
+                        }
                     }
-                }
-            }
-        );
+                },
+                true
+            ),
+            TimedTest.REPETITIONS_COUNT
+        ).call();
     }
 
     /**
@@ -128,43 +141,59 @@ public final class TimedTest {
      *  {@link ExecutorService} was initiated by someone else.
      */
     @Test
-    public void failsDueToTimeoutWithExternalExecutorService() {
-        this.repeat(
-            arg -> {
-                final ExecutorService extor = Executors.newFixedThreadPool(TimedTest.THREADS);
-                try {
-                    new Assertion<>(
-                        "Fails due to timeout when using the external executor service",
-                        () -> new Timed<String>(
-                            extor,
-                            1L,
-                            TimeUnit.MILLISECONDS,
-                            () -> {
-                                this.sleep();
-                                return TimedTest.FIRST_TEXT;
-                            },
-                            () -> {
-                                this.sleep();
-                                return TimedTest.SECOND_TEXT;
-                            },
-                            () -> {
-                                this.sleep();
-                                return TimedTest.THIRD_TEXT;
+    @SuppressWarnings({
+        "PMD.AvoidThrowingRawExceptionTypes", "PMD.DoNotThrowExceptionInFinally"
+    })
+    public void failsDueToTimeoutWithExternalExecutorService()
+        throws Exception {
+        new RepeatedCallable<>(
+            new CallableOf<>(
+                () -> {
+                    final ExecutorService extor = Executors.newFixedThreadPool(
+                        TimedTest.THREADS
+                    );
+                    try {
+                        new Assertion<>(
+                            // @checkstyle LineLengthCheck (1 line)
+                            "Fails due to timeout when using the external executor service",
+                            () -> new Timed<String>(
+                                extor,
+                                1L,
+                                TimeUnit.MILLISECONDS,
+                                () -> {
+                                    this.sleep();
+                                    return TimedTest.FIRST_TEXT;
+                                },
+                                () -> {
+                                    this.sleep();
+                                    return TimedTest.SECOND_TEXT;
+                                },
+                                () -> {
+                                    this.sleep();
+                                    return TimedTest.THIRD_TEXT;
+                                }
+                            ).iterator().next(),
+                            new Throws<>(
+                                new IsNull<>(),
+                                CancellationException.class
+                            )
+                        ).affirm();
+                    } finally {
+                        extor.shutdown();
+                        try {
+                            if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
+                                extor.shutdownNow();
                             }
-                        ).iterator().next(),
-                        new Throws<>(
-                            new IsNull<>(),
-                            CancellationException.class
-                        )
-                    ).affirm();
-                } finally {
-                    extor.shutdown();
-                    if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
-                        extor.shutdownNow();
+                        } catch (final InterruptedException ex) {
+                            Thread.currentThread().interrupt();
+                            throw new RuntimeException(ex);
+                        }
                     }
-                }
-            }
-        );
+                },
+                true
+            ),
+            TimedTest.REPETITIONS_COUNT
+        ).call();
     }
 
     /**
@@ -199,30 +228,41 @@ public final class TimedTest {
      *  {@link ExecutorService} was initiated by {@link Timed} itself.
      */
     @Test
-    public void containsValuesWithInlineExecutorService() {
-        this.repeat(
-            arg -> new Assertion<>(
-                "Contains results from the callables when using the inline executor service",
-                new Timed<String>(
-                    TimedTest.THREADS,
-                    1L,
-                    TimeUnit.SECONDS,
-                    () -> {
-                        this.sleep();
-                        return TimedTest.FIRST_TEXT;
-                    },
-                    () -> {
-                        this.sleep();
-                        return TimedTest.SECOND_TEXT;
-                    },
-                    () -> {
-                        this.sleep();
-                        return TimedTest.THIRD_TEXT;
-                    }
-                ),
-                new HasValues<>(TimedTest.FIRST_TEXT, TimedTest.SECOND_TEXT, TimedTest.THIRD_TEXT)
-            ).affirm()
-        );
+    public void containsValuesWithInlineExecutorService() throws Exception {
+        new RepeatedCallable<>(
+            new CallableOf<>(
+                () -> {
+                    new Assertion<>(
+                        // @checkstyle LineLengthCheck (1 line)
+                        "Contains results from the callables when using the inline executor service",
+                        new Timed<String>(
+                            TimedTest.THREADS,
+                            1L,
+                            TimeUnit.SECONDS,
+                            () -> {
+                                this.sleep();
+                                return TimedTest.FIRST_TEXT;
+                            },
+                            () -> {
+                                this.sleep();
+                                return TimedTest.SECOND_TEXT;
+                            },
+                            () -> {
+                                this.sleep();
+                                return TimedTest.THIRD_TEXT;
+                            }
+                        ),
+                        new HasValues<>(
+                            TimedTest.FIRST_TEXT,
+                            TimedTest.SECOND_TEXT,
+                            TimedTest.THIRD_TEXT
+                        )
+                    ).affirm();
+                },
+                true
+            ),
+            TimedTest.REPETITIONS_COUNT
+        ).call();
     }
 
     /**
@@ -230,49 +270,40 @@ public final class TimedTest {
      *  {@link ExecutorService} was initiated by {@link Timed} itself.
      */
     @Test
-    public void failsDueToTimeoutWithInlineExecutorService() {
-        this.repeat(
-            arg -> new Assertion<>(
-                "Fails due to timeout when using the inline executor service",
-                () -> new Timed<String>(
-                    TimedTest.THREADS,
-                    1L,
-                    TimeUnit.MILLISECONDS,
-                    () -> {
-                        this.sleep();
-                        return TimedTest.FIRST_TEXT;
-                    },
-                    () -> {
-                        this.sleep();
-                        return TimedTest.SECOND_TEXT;
-                    },
-                    () -> {
-                        this.sleep();
-                        return TimedTest.THIRD_TEXT;
-                    }
-                ).iterator().next(),
-                new Throws<>(
-                    new IsNull<>(),
-                    CancellationException.class
-                )
-            ).affirm()
-        );
-    }
-
-    /**
-     * Repeat the test several times.
-     * @param test The test to execute.
-     * @todo #1277:30min Create RepeatedCallable decorator to get rid of `dummy` object parameter
-     *  required in #exec(X) method. Then inline the body of this method.
-     */
-    private void repeat(final Proc<Object> test) {
-        final Object dummy = new Object();
-        new UncheckedProc<>(
-            new RepeatedProc<>(
-                test,
-                TimedTest.REPETITIONS_COUNT
-            )
-        ).exec(dummy);
+    public void failsDueToTimeoutWithInlineExecutorService() throws Exception {
+        new RepeatedCallable<>(
+            new CallableOf<>(
+                () -> {
+                    new Assertion<>(
+                        // @checkstyle LineLengthCheck (1 line)
+                        "Fails due to timeout when using the inline executor service",
+                        () -> new Timed<String>(
+                            TimedTest.THREADS,
+                            1L,
+                            TimeUnit.MILLISECONDS,
+                            () -> {
+                                this.sleep();
+                                return TimedTest.FIRST_TEXT;
+                            },
+                            () -> {
+                                this.sleep();
+                                return TimedTest.SECOND_TEXT;
+                            },
+                            () -> {
+                                this.sleep();
+                                return TimedTest.THIRD_TEXT;
+                            }
+                        ).iterator().next(),
+                        new Throws<>(
+                            new IsNull<>(),
+                            CancellationException.class
+                        )
+                    ).affirm();
+                },
+                true
+            ),
+            TimedTest.REPETITIONS_COUNT
+        ).call();
     }
 
     /**
