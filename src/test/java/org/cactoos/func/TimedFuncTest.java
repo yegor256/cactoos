@@ -28,9 +28,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 import org.cactoos.iterable.Endless;
 import org.cactoos.scalar.And;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link Timed}.
@@ -74,7 +74,7 @@ public final class TimedFuncTest {
             new Assertion<>(
                 "Must be canceled after 1 sec",
                 future.isCancelled(),
-                new IsEqual<>(true)
+                new IsTrue()
             ).affirm();
         }
     }
@@ -88,8 +88,7 @@ public final class TimedFuncTest {
                 input -> true,
                 period
             ).apply(true),
-            new IsEqual<>(true)
+            new IsTrue()
         ).affirm();
     }
 }
-
