@@ -25,7 +25,8 @@ package org.cactoos.func;
 
 import java.security.SecureRandom;
 import org.cactoos.Func;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -45,7 +46,7 @@ public final class StickyFuncTest {
         new Assertion<>(
             "Must cache results",
             func.apply(true) + func.apply(true),
-            Matchers.equalTo(
+            new IsEqual<>(
                 func.apply(true) + func.apply(true)
             )
         ).affirm();
@@ -61,13 +62,13 @@ public final class StickyFuncTest {
         new Assertion<>(
             "Must cache two results",
             first + second,
-            Matchers.equalTo(func.apply(0) + func.apply(1))
+            new IsEqual<>(func.apply(0) + func.apply(1))
         ).affirm();
         final int third = func.apply(-1);
         new Assertion<>(
             "Must cache next two results",
             second + third,
-            Matchers.equalTo(func.apply(1) + func.apply(-1))
+            new IsEqual<>(func.apply(1) + func.apply(-1))
         ).affirm();
     }
 
@@ -79,7 +80,11 @@ public final class StickyFuncTest {
         new Assertion<>(
             "Must be not be cached",
             func.apply(true) + func.apply(true),
-            Matchers.not(Matchers.equalTo(func.apply(true) + func.apply(true)))
+            new IsNot<>(
+                new IsEqual<>(
+                    func.apply(true) + func.apply(true)
+                )
+            )
         ).affirm();
     }
 

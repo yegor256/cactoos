@@ -25,7 +25,7 @@ package org.cactoos.func;
 
 import java.security.SecureRandom;
 import org.cactoos.BiFunc;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -44,7 +44,7 @@ public final class StickyBiFuncTest {
         new Assertion<>(
             "Must cache results",
             func.apply(true, true) + func.apply(true, true),
-            Matchers.equalTo(func.apply(true, true) + func.apply(true, true))
+            new IsEqual<>(func.apply(true, true) + func.apply(true, true))
         ).affirm();
     }
 
