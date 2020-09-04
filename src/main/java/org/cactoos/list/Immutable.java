@@ -76,7 +76,7 @@ public final class Immutable<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return this.list.iterator();
+        return new org.cactoos.iterator.Immutable<>(this.list.iterator());
     }
 
     @Override
