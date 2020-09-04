@@ -36,11 +36,11 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
 final class ScalarOfCallableTest {
     @Test
     void worksWithCallable() {
-        final Object o = new Object();
+        final Object obj = new Object();
         new Assertion<>(
             "must hold the same value",
-            new ScalarOfCallable<>(new CallableOf<>(() -> {}, o)),
-            new ScalarHasValue<>(o)
+            new ScalarOfCallable<>(new CallableOf<>(new Constant<>(obj))),
+            new ScalarHasValue<>(obj)
         ).affirm();
     }
 }
