@@ -26,6 +26,8 @@ package org.cactoos.func;
 import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
+import org.cactoos.proc.ProcOf;
+import org.cactoos.proc.UncheckedProc;
 
 /**
  * Func as Runnable.

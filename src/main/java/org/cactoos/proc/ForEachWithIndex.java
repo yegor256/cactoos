@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
 import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 import org.cactoos.Proc;
+import org.cactoos.func.BiFuncOf;
 import org.cactoos.scalar.AndWithIndex;
 
 /**

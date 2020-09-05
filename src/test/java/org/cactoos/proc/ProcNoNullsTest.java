@@ -21,38 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
-import org.cactoos.BiProc;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.core.IsEqual;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * BiProc that doesn't throw checked {@link Exception}.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @param <X> Type of input
- * @param <Y> Type of input
- * @since 0.22
+ * Test case for {@link ProcNoNulls}.
+ * @since 0.11
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class UncheckedBiProc<X, Y> implements BiProc<X, Y> {
+public final class ProcNoNullsTest {
 
-    /**
-     * Original proc.
-     */
-    private final BiProc<X, Y> proc;
-
-    /**
-     * Ctor.
-     * @param prc Encapsulated proc
-     */
-    public UncheckedBiProc(final BiProc<X, Y> prc) {
-        this.proc = prc;
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullProc() throws Exception {
+        new ProcNoNulls<>(null).exec(new Object());
     }
 
-    @Override
-    public void exec(final X first, final Y second) {
-        new UncheckedBiFunc<>(
-            new BiFuncOf<>(this.proc, null)
-        ).apply(first, second);
+    @Test(expected = IllegalArgumentException.class)
+    public void failForNullInput() throws Exception {
+        new ProcNoNulls<>(input -> { }).exec(null);
+    }
+
+    @Test
+    public void okForNoNulls() throws Exception {
+        final AtomicInteger counter = new AtomicInteger();
+        new ProcNoNulls<>(AtomicInteger::incrementAndGet)
+            .exec(counter);
+        new Assertion<>(
+            "Can't involve the \"Proc.exec(X input)\" method",
+            counter.get(),
+            new IsEqual<>(1)
+        ).affirm();
     }
 }

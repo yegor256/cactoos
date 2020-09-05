@@ -21,41 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
-import java.io.IOException;
-import org.cactoos.Proc;
+import org.cactoos.iterable.IterableOf;
+import org.hamcrest.core.IsEqual;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Proc that doesn't throw checked {@link Exception}, but
- * throws {@link java.io.IOException} instead.
+ * Test case for {@link ForEachWithIndex}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @param <X> Type of input
- * @since 0.4
+ * @since 1.0
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IoCheckedProc<X> implements Proc<X> {
+public final class ForEachWithIndexTest {
 
-    /**
-     * Original proc.
-     */
-    private final Proc<X> proc;
-
-    /**
-     * Ctor.
-     * @param prc Encapsulated func
-     */
-    public IoCheckedProc(final Proc<X> prc) {
-        this.proc = prc;
-    }
-
-    @Override
-    public void exec(final X input) throws IOException {
-        new CheckedProc<>(
-            this.proc,
-            IOException::new
-        ).exec(input);
+    @Test
+    public void testBiProcIterable() throws Exception {
+        final StringBuilder builder = new StringBuilder();
+        new ForEachWithIndex<>(
+            (input, index) -> builder.append(String.format("%d: '%s' ", index + 1, input))
+        ).exec(
+            new IterableOf<>(
+                "Mary", "John", "William", "Napkin"
+            )
+        );
+        new Assertion<>(
+            "String must contain mapped Iterable elements",
+            builder.toString(),
+            new IsEqual<>(
+                "1: 'Mary' 2: 'John' 3: 'William' 4: 'Napkin' "
+            )
+        ).affirm();
     }
 
 }

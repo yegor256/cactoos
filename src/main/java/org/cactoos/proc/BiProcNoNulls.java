@@ -21,42 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import org.cactoos.Proc;
+import org.cactoos.BiProc;
 
 /**
- * Proc that doesn't throw checked {@link Exception}.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * BiProc check for no nulls.
  * @param <X> Type of input
- * @since 0.2
+ * @param <Y> Type of input
+ * @since 0.20
  */
-public final class UncheckedProc<X> implements Proc<X> {
+public final class BiProcNoNulls<X, Y> implements BiProc<X, Y> {
 
     /**
-     * Original proc.
+     * The proc.
      */
-    private final Proc<X> proc;
+    private final BiProc<X, Y> origin;
 
     /**
      * Ctor.
-     * @param prc Encapsulated func
+     * @param proc The function
      */
-    public UncheckedProc(final Proc<X> prc) {
-        this.proc = prc;
+    public BiProcNoNulls(final BiProc<X, Y> proc) {
+        this.origin = proc;
     }
 
     @Override
-    public void exec(final X input) {
-        try {
-            new IoCheckedProc<>(this.proc).exec(input);
-        } catch (final IOException ex) {
-            throw new UncheckedIOException(ex);
+    public void exec(final X first, final Y second) throws Exception {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid function"
+            );
         }
+        if (first == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid first argument"
+            );
+        }
+        if (second == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid second argument"
+            );
+        }
+        this.origin.exec(first, second);
     }
-
 }

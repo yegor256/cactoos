@@ -21,45 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.IOException;
 import org.cactoos.Proc;
-import org.hamcrest.core.IsEqual;
-import org.junit.Assert;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link RepeatedProc}.
+ * Proc that doesn't throw checked {@link Exception}, but
+ * throws {@link java.io.IOException} instead.
  *
- * @since 0.49.2
- * @checkstyle MagicNumberCheck (100 line)
- * @checkstyle JavadocMethodCheck (100 lines)
+ * <p>There is no thread-safety guarantee.
+ *
+ * @param <X> Type of input
+ * @since 0.4
  */
-public final class RepeatedProcTest {
+public final class IoCheckedProc<X> implements Proc<X> {
 
-    @Test
-    public void runsProcMultipleTimes() throws Exception {
-        final AtomicInteger atom = new AtomicInteger();
-        final Proc<AtomicInteger> func = new RepeatedProc<>(
-            AtomicInteger::getAndIncrement,
-            3
-        );
-        func.exec(atom);
-        new Assertion<>(
-            "must run proc 3 times",
-            atom.get(),
-            new IsEqual<>(3)
-        );
+    /**
+     * Original proc.
+     */
+    private final Proc<X> proc;
+
+    /**
+     * Ctor.
+     * @param prc Encapsulated func
+     */
+    public IoCheckedProc(final Proc<X> prc) {
+        this.proc = prc;
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void throwsIfZero() throws Exception {
-        final Proc<Object> func = new RepeatedProc<>(
-            obj -> Assert.fail("unexpected"),
-            0
-        );
-        func.exec(new Object());
+    @Override
+    public void exec(final X input) throws IOException {
+        new CheckedProc<>(
+            this.proc,
+            IOException::new
+        ).exec(input);
     }
+
 }

@@ -21,58 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
+import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
-import org.cactoos.list.Synced;
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
- * Test case for {@link ForEachInThreads}.
+ * Test case for {@link ForEach}.
  *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public class ForEachInThreadsTest {
+public class ForEachTest {
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testProcIterable() throws Exception {
-        final List<Integer> list = new Synced<>(
-            new ListOf<>()
-        );
-        new ForEachInThreads<Integer>(
-            new ProcNoNulls<>(
-                list::add
-            )
+        final List<Integer> list = new LinkedList<>();
+        new ForEach<Integer>(
+            list::add
         ).exec(
-            new ListOf<>(
-                1, 2
+            new IterableOf<>(
+                1, 1
             )
         );
         new Assertion<>(
             "List does not contain mapped Iterable elements",
             list,
-            new IsIterableContainingInAnyOrder<>(
+            new IsEqual<>(
                 new ListOf<>(
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(
-                                1
-                            );
-                        }
-                    ), new MatcherOf<>(
-                        value -> {
-                            return value.equals(
-                                2
-                            );
-                        }
-                    )
+                    1, 1
                 )
             )
         ).affirm();

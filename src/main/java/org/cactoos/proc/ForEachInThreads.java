@@ -21,49 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
 import org.cactoos.Func;
 import org.cactoos.Proc;
-import org.cactoos.scalar.Checked;
+import org.cactoos.func.FuncOf;
+import org.cactoos.scalar.AndInThreads;
 
 /**
- * Proc that throws exception of specified type.
+ * Executes a {@link org.cactoos.Proc} in a new Thread for each element of an
+ * {@link java.lang.Iterable}
  *
- * @param <X> Type of input
- * @param <E> Exception's type
- * @since 0.32
+ * <p>
+ * This class can be effectively used to iterate through a collection, just like
+ * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)} works,
+ * but with no guarantee on the output sorting:
+ * </p>
+ *
+ * {@code
+ * new ForEachInThreads(
+ *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
+ * ).execute(
+ *    new IterableOf<>("Mary", "John", "William", "Napkin")
+ * ); // Will print 'Mary' 'John' 'William' 'Napkin' to standard output.
+ *    // Order of printing can be random.
+ * }
+ * <p>
+ * There is no thread-safety guarantee.
+ *
+ * @param <X> The type to itetare over
+ * @since 1.0
  */
-public final class CheckedProc<X, E extends Exception> implements Proc<X> {
+public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
 
     /**
-     * Original proc.
+     * The proc.
      */
-    private final Proc<X> origin;
-
-    /**
-     * Function that wraps exception of {@link #origin} to the required type.
-     */
-    private final Func<Exception, E> func;
+    private final Func<X, Boolean> func;
 
     /**
      * Ctor.
-     * @param original Original proc
-     * @param fnc Function that wraps exceptions.
+     *
+     * @param proc The proc to execute
      */
-    public CheckedProc(final Proc<X> original, final Func<Exception, E> fnc) {
-        this.origin = original;
-        this.func = fnc;
+    public ForEachInThreads(final Proc<X> proc) {
+        this.func = new FuncOf<>(
+            proc, true
+        );
     }
 
     @Override
-    public void exec(final X input) throws E {
-        new Checked<>(
-            () -> {
-                this.origin.exec(input);
-                return true;
-            },
-            this.func
+    public void exec(final Iterable<X> input) throws Exception {
+        new AndInThreads(
+            this.func, input
         ).value();
     }
+
 }

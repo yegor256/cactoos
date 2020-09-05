@@ -25,6 +25,7 @@ package org.cactoos.func;
 
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.proc.ProcOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;

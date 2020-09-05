@@ -21,38 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
-import org.cactoos.iterable.IterableOf;
-import org.hamcrest.core.IsEqual;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.Assertion;
+import java.util.concurrent.Callable;
+import org.cactoos.Func;
+import org.cactoos.Proc;
 
 /**
- * Test case for {@link ForEachWithIndex}.
+ * Func as Proc.
  *
- * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
+ * <p>There is no thread-safety guarantee.
+ *
+ * @param <X> Type of input
+ * @since 0.12
  */
-public final class ForEachWithIndexTest {
+public final class ProcOf<X> implements Proc<X> {
 
-    @Test
-    public void testBiProcIterable() throws Exception {
-        final StringBuilder builder = new StringBuilder();
-        new ForEachWithIndex<>(
-            (input, index) -> builder.append(String.format("%d: '%s' ", index + 1, input))
-        ).exec(
-            new IterableOf<>(
-                "Mary", "John", "William", "Napkin"
-            )
-        );
-        new Assertion<>(
-            "String must contain mapped Iterable elements",
-            builder.toString(),
-            new IsEqual<>(
-                "1: 'Mary' 2: 'John' 3: 'William' 4: 'Napkin' "
-            )
-        ).affirm();
+    /**
+     * The proc.
+     */
+    private final Proc<X> proc;
+
+    /**
+     * Ctor.
+     * @param runnable The runnable
+     */
+    public ProcOf(final Runnable runnable) {
+        this((Proc<X>) input -> runnable.run());
     }
 
+    /**
+     * Ctor.
+     * @param callable The callable
+     */
+    public ProcOf(final Callable<X> callable) {
+        this((Proc<X>) input -> callable.call());
+    }
+
+    /**
+     * Ctor.
+     * @param fnc The proc
+     */
+    public ProcOf(final Func<X, ?> fnc) {
+        this((Proc<X>) fnc::apply);
+    }
+
+    /**
+     * Ctor.
+     * @param prc The proc
+     */
+    private ProcOf(final Proc<X> prc) {
+        this.proc = prc;
+    }
+
+    @Override
+    public void exec(final X input) throws Exception {
+        this.proc.exec(input);
+    }
 }

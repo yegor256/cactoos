@@ -21,31 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos;
+package org.cactoos.proc;
 
-import org.cactoos.proc.IoCheckedProc;
-import org.cactoos.proc.UncheckedProc;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import org.junit.Test;
 
 /**
- * Procedure.
+ * Test case for {@link UncheckedProc}.
  *
- * <p>If you don't want to have any checked exceptions being thrown
- * out of your {@link Proc}, you can use
- * {@link UncheckedProc} decorator. Also
- * you may try {@link IoCheckedProc}.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @param <X> Type of input
- * @see org.cactoos.func.FuncOf
- * @since 0.1
+ * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public interface Proc<X> {
+public final class UncheckedProcTest {
 
-    /**
-     * Execute it.
-     * @param input The argument
-     * @throws Exception If fails
-     */
-    void exec(X input) throws Exception;
+    @Test(expected = UncheckedIOException.class)
+    public void rethrowsCheckedToUncheckedException() {
+        new UncheckedProc<>(
+            input -> {
+                throw new IOException("intended");
+            }
+        ).exec(1);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void runtimeExceptionGoesOut() {
+        new UncheckedProc<>(
+            i -> {
+                throw new IllegalStateException("intended to fail");
+            }
+        ).exec(1);
+    }
+
 }

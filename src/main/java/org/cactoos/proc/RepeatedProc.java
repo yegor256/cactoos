@@ -21,42 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
+import org.cactoos.Func;
 import org.cactoos.Proc;
+import org.cactoos.func.FuncOf;
+import org.cactoos.func.Repeated;
 
 /**
- * Proc check for no nulls.
+ * Proc that runs repeatedly for a number of times.
  *
  * @param <X> Type of input
- * @since 0.11
+ * @since 0.49.2
+ * @todo #1277:30m Split the entire `org.cactoos.func` package
+ *  into `org.cactoos.func`, `org.cactoos.proc`
+ *  and `org.cactoos.callable`,
+ *  with each one holding their related decorators, classes and interfaces.
  */
-public final class ProcNoNulls<X> implements Proc<X> {
+public final class RepeatedProc<X> implements Proc<X> {
     /**
-     * The procedure.
+     * The repeated func.
      */
-    private final Proc<X> origin;
+    private final Func<X, Boolean> func;
 
     /**
      * Ctor.
-     * @param proc The procedure
+     *
+     * <p>If {@code count} is equal or less than zero {@link #exec(Object)}
+     * will return an exception.</p>
+     *
+     * @param prc Proc to repeat.
+     * @param count How many times.
      */
-    public ProcNoNulls(final Proc<X> proc) {
-        this.origin = proc;
+    public RepeatedProc(final Proc<X> prc, final int count) {
+        this.func = new Repeated<>(
+            new FuncOf<>(prc, true),
+            count
+        );
     }
 
     @Override
     public void exec(final X input) throws Exception {
-        if (this.origin == null) {
-            throw new IllegalArgumentException(
-                "NULL instead of a valid procedure"
-            );
-        }
-        if (input == null) {
-            throw new IllegalArgumentException(
-                "NULL instead of a valid input"
-            );
-        }
-        this.origin.exec(input);
+        this.func.apply(input);
     }
 }

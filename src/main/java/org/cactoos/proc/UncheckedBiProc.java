@@ -21,57 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
-import org.cactoos.Func;
-import org.cactoos.Proc;
-import org.cactoos.scalar.And;
+import org.cactoos.BiProc;
+import org.cactoos.func.BiFuncOf;
+import org.cactoos.func.UncheckedBiFunc;
 
 /**
- * Executes a {@link org.cactoos.Proc} for each element of an
- * {@link java.lang.Iterable}
+ * BiProc that doesn't throw checked {@link Exception}.
  *
- * <p>
- * This class can be effectively used to iterate through a collection, just like
- * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)} works:
- * </p>
+ * <p>There is no thread-safety guarantee.
  *
- * {@code
- * new ForEach(
- *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
- * ).execute(
- *    new IterableOf<>("Mary", "John", "William", "Napkin")
- * ); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
- * }
- * <p>
- * There is no thread-safety guarantee.
- *
- * @param <X> The type to itetare over
- * @since 1.0
+ * @param <X> Type of input
+ * @param <Y> Type of input
+ * @since 0.22
  */
-public final class ForEach<X> implements Proc<Iterable<X>> {
+public final class UncheckedBiProc<X, Y> implements BiProc<X, Y> {
 
     /**
-     * The proc.
+     * Original proc.
      */
-    private final Func<X, Boolean> func;
+    private final BiProc<X, Y> proc;
 
     /**
      * Ctor.
-     *
-     * @param proc The proc to execute
+     * @param prc Encapsulated proc
      */
-    public ForEach(final Proc<X> proc) {
-        this.func = new FuncOf<>(
-            proc, true
-        );
+    public UncheckedBiProc(final BiProc<X, Y> prc) {
+        this.proc = prc;
     }
 
     @Override
-    public void exec(final Iterable<X> input) throws Exception {
-        new And(
-            this.func, input
-        ).value();
+    public void exec(final X first, final Y second) {
+        new UncheckedBiFunc<>(
+            new BiFuncOf<>(this.proc, null)
+        ).apply(first, second);
     }
-
 }

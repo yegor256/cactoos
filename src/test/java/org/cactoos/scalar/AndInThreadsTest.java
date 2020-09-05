@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
-import org.cactoos.func.ProcNoNulls;
+import org.cactoos.proc.ProcNoNulls;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;

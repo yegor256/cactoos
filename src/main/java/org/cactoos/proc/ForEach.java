@@ -21,29 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
 import org.cactoos.Func;
 import org.cactoos.Proc;
-import org.cactoos.scalar.AndInThreads;
+import org.cactoos.func.FuncOf;
+import org.cactoos.scalar.And;
 
 /**
- * Executes a {@link org.cactoos.Proc} in a new Thread for each element of an
+ * Executes a {@link org.cactoos.Proc} for each element of an
  * {@link java.lang.Iterable}
  *
  * <p>
  * This class can be effectively used to iterate through a collection, just like
- * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)} works,
- * but with no guarantee on the output sorting:
+ * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)} works:
  * </p>
  *
  * {@code
- * new ForEachInThreads(
+ * new ForEach(
  *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
  * ).execute(
  *    new IterableOf<>("Mary", "John", "William", "Napkin")
- * ); // Will print 'Mary' 'John' 'William' 'Napkin' to standard output.
- *    // Order of printing can be random.
+ * ); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
  * }
  * <p>
  * There is no thread-safety guarantee.
@@ -51,7 +50,7 @@ import org.cactoos.scalar.AndInThreads;
  * @param <X> The type to itetare over
  * @since 1.0
  */
-public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
+public final class ForEach<X> implements Proc<Iterable<X>> {
 
     /**
      * The proc.
@@ -63,7 +62,7 @@ public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
      *
      * @param proc The proc to execute
      */
-    public ForEachInThreads(final Proc<X> proc) {
+    public ForEach(final Proc<X> proc) {
         this.func = new FuncOf<>(
             proc, true
         );
@@ -71,7 +70,7 @@ public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
 
     @Override
     public void exec(final Iterable<X> input) throws Exception {
-        new AndInThreads(
+        new And(
             this.func, input
         ).value();
     }

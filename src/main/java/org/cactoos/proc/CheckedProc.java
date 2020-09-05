@@ -21,39 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import org.hamcrest.core.IsEqual;
-import org.junit.Test;
-import org.llorllale.cactoos.matchers.Assertion;
+import org.cactoos.Func;
+import org.cactoos.Proc;
+import org.cactoos.scalar.Checked;
 
 /**
- * Test case for {@link ProcNoNulls}.
- * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
+ * Proc that throws exception of specified type.
+ *
+ * @param <X> Type of input
+ * @param <E> Exception's type
+ * @since 0.32
  */
-public final class ProcNoNullsTest {
+public final class CheckedProc<X, E extends Exception> implements Proc<X> {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullProc() throws Exception {
-        new ProcNoNulls<>(null).exec(new Object());
+    /**
+     * Original proc.
+     */
+    private final Proc<X> origin;
+
+    /**
+     * Function that wraps exception of {@link #origin} to the required type.
+     */
+    private final Func<Exception, E> func;
+
+    /**
+     * Ctor.
+     * @param original Original proc
+     * @param fnc Function that wraps exceptions.
+     */
+    public CheckedProc(final Proc<X> original, final Func<Exception, E> fnc) {
+        this.origin = original;
+        this.func = fnc;
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullInput() throws Exception {
-        new ProcNoNulls<>(input -> { }).exec(null);
-    }
-
-    @Test
-    public void okForNoNulls() throws Exception {
-        final AtomicInteger counter = new AtomicInteger();
-        new ProcNoNulls<>(AtomicInteger::incrementAndGet)
-            .exec(counter);
-        new Assertion<>(
-            "Can't involve the \"Proc.exec(X input)\" method",
-            counter.get(),
-            new IsEqual<>(1)
-        ).affirm();
+    @Override
+    public void exec(final X input) throws E {
+        new Checked<>(
+            () -> {
+                this.origin.exec(input);
+                return true;
+            },
+            this.func
+        ).value();
     }
 }

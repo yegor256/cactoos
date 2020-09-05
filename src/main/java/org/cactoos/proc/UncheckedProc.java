@@ -21,52 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
-import org.cactoos.BiProc;
-import org.cactoos.Func;
-import org.cactoos.scalar.Checked;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import org.cactoos.Proc;
 
 /**
- * BiProc that throws exception of specified type.
+ * Proc that doesn't throw checked {@link Exception}.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of input
- * @param <Y> Type of input
- * @param <E> Exception's type
- * @since 0.32
+ * @since 0.2
  */
-public final class CheckedBiProc<X, Y, E extends Exception> implements
-    BiProc<X, Y> {
+public final class UncheckedProc<X> implements Proc<X> {
 
     /**
-     * Original BiProc.
+     * Original proc.
      */
-    private final BiProc<X, Y> origin;
-
-    /**
-     * Function that wraps exception of {@link #origin} to the required type.
-     */
-    private final Func<Exception, E> func;
+    private final Proc<X> proc;
 
     /**
      * Ctor.
-     * @param original Original BiProc
-     * @param fnc Function that wraps exceptions.
+     * @param prc Encapsulated func
      */
-    public CheckedBiProc(final BiProc<X, Y> original,
-        final Func<Exception, E> fnc) {
-        this.origin = original;
-        this.func = fnc;
+    public UncheckedProc(final Proc<X> prc) {
+        this.proc = prc;
     }
 
     @Override
-    public void exec(final X first, final Y second) throws E {
-        new Checked<>(
-            () -> {
-                this.origin.exec(first, second);
-                return true;
-            },
-            this.func
-        ).value();
+    public void exec(final X input) {
+        try {
+            new IoCheckedProc<>(this.proc).exec(input);
+        } catch (final IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
     }
+
 }

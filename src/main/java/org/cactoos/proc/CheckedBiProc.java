@@ -21,48 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
 import org.cactoos.BiProc;
+import org.cactoos.Func;
+import org.cactoos.scalar.Checked;
 
 /**
- * BiProc check for no nulls.
+ * BiProc that throws exception of specified type.
+ *
  * @param <X> Type of input
  * @param <Y> Type of input
- * @since 0.20
+ * @param <E> Exception's type
+ * @since 0.32
  */
-public final class BiProcNoNulls<X, Y> implements BiProc<X, Y> {
+public final class CheckedBiProc<X, Y, E extends Exception> implements
+    BiProc<X, Y> {
 
     /**
-     * The proc.
+     * Original BiProc.
      */
     private final BiProc<X, Y> origin;
 
     /**
-     * Ctor.
-     * @param proc The function
+     * Function that wraps exception of {@link #origin} to the required type.
      */
-    public BiProcNoNulls(final BiProc<X, Y> proc) {
-        this.origin = proc;
+    private final Func<Exception, E> func;
+
+    /**
+     * Ctor.
+     * @param original Original BiProc
+     * @param fnc Function that wraps exceptions.
+     */
+    public CheckedBiProc(final BiProc<X, Y> original,
+        final Func<Exception, E> fnc) {
+        this.origin = original;
+        this.func = fnc;
     }
 
     @Override
-    public void exec(final X first, final Y second) throws Exception {
-        if (this.origin == null) {
-            throw new IllegalArgumentException(
-                "NULL instead of a valid function"
-            );
-        }
-        if (first == null) {
-            throw new IllegalArgumentException(
-                "NULL instead of a valid first argument"
-            );
-        }
-        if (second == null) {
-            throw new IllegalArgumentException(
-                "NULL instead of a valid second argument"
-            );
-        }
-        this.origin.exec(first, second);
+    public void exec(final X first, final Y second) throws E {
+        new Checked<>(
+            () -> {
+                this.origin.exec(first, second);
+                return true;
+            },
+            this.func
+        ).value();
     }
 }

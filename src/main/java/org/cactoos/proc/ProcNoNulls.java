@@ -21,61 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
-import java.util.concurrent.Callable;
-import org.cactoos.Func;
 import org.cactoos.Proc;
 
 /**
- * Func as Proc.
- *
- * <p>There is no thread-safety guarantee.
+ * Proc check for no nulls.
  *
  * @param <X> Type of input
- * @since 0.12
+ * @since 0.11
  */
-public final class ProcOf<X> implements Proc<X> {
-
+public final class ProcNoNulls<X> implements Proc<X> {
     /**
-     * The proc.
+     * The procedure.
      */
-    private final Proc<X> proc;
-
-    /**
-     * Ctor.
-     * @param runnable The runnable
-     */
-    public ProcOf(final Runnable runnable) {
-        this((Proc<X>) input -> runnable.run());
-    }
+    private final Proc<X> origin;
 
     /**
      * Ctor.
-     * @param callable The callable
+     * @param proc The procedure
      */
-    public ProcOf(final Callable<X> callable) {
-        this((Proc<X>) input -> callable.call());
-    }
-
-    /**
-     * Ctor.
-     * @param fnc The proc
-     */
-    public ProcOf(final Func<X, ?> fnc) {
-        this((Proc<X>) fnc::apply);
-    }
-
-    /**
-     * Ctor.
-     * @param prc The proc
-     */
-    private ProcOf(final Proc<X> prc) {
-        this.proc = prc;
+    public ProcNoNulls(final Proc<X> proc) {
+        this.origin = proc;
     }
 
     @Override
     public void exec(final X input) throws Exception {
-        this.proc.exec(input);
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid procedure"
+            );
+        }
+        if (input == null) {
+            throw new IllegalArgumentException(
+                "NULL instead of a valid input"
+            );
+        }
+        this.origin.exec(input);
     }
 }

@@ -21,36 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Proc;
+import org.hamcrest.core.IsEqual;
+import org.junit.Assert;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link UncheckedProc}.
+ * Test case for {@link RepeatedProc}.
  *
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.49.2
+ * @checkstyle MagicNumberCheck (100 line)
+ * @checkstyle JavadocMethodCheck (100 lines)
  */
-public final class UncheckedProcTest {
+public final class RepeatedProcTest {
 
-    @Test(expected = UncheckedIOException.class)
-    public void rethrowsCheckedToUncheckedException() {
-        new UncheckedProc<>(
-            input -> {
-                throw new IOException("intended");
-            }
-        ).exec(1);
+    @Test
+    public void runsProcMultipleTimes() throws Exception {
+        final AtomicInteger atom = new AtomicInteger();
+        final Proc<AtomicInteger> func = new RepeatedProc<>(
+            AtomicInteger::getAndIncrement,
+            3
+        );
+        func.exec(atom);
+        new Assertion<>(
+            "must run proc 3 times",
+            atom.get(),
+            new IsEqual<>(3)
+        );
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionGoesOut() {
-        new UncheckedProc<>(
-            i -> {
-                throw new IllegalStateException("intended to fail");
-            }
-        ).exec(1);
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsIfZero() throws Exception {
+        final Proc<Object> func = new RepeatedProc<>(
+            obj -> Assert.fail("unexpected"),
+            0
+        );
+        func.exec(new Object());
     }
-
 }
