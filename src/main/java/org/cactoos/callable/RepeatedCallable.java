@@ -21,9 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.callable;
 
 import java.util.concurrent.Callable;
+import org.cactoos.func.FuncOf;
+import org.cactoos.func.Repeated;
 
 /**
  * Callable that runs repeatedly for a number of times.

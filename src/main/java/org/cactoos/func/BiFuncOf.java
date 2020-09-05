@@ -29,6 +29,7 @@ import org.cactoos.BiProc;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
+import org.cactoos.callable.CallableOf;
 
 /**
  * Represents many possible inputs as {@link BiFunc}.

@@ -30,7 +30,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.func.CallableOf;
+import org.cactoos.callable.CallableOf;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;

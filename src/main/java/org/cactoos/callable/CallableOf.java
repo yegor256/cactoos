@@ -21,12 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.callable;
 
 import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
+import org.cactoos.func.FuncOf;
 
 /**
  * Func as {@link Callable}.

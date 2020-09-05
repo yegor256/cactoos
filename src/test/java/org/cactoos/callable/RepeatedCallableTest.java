@@ -21,66 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.callable;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.core.IsEqual;
+import org.junit.Assert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
- * Test case for {@link CallableOf}.
+ * Test case for {@link RepeatedCallable}.
  *
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.49.2
+ * @checkstyle MagicNumberCheck (100 line)
+ * @checkstyle JavadocMethodCheck (100 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class CallableOfTest {
+public final class RepeatedCallableTest {
 
     @Test
-    public void convertsRunnableIntoCallable() throws Exception {
-        final AtomicBoolean flag = new AtomicBoolean(false);
-        new CallableOf<>(
-            () -> flag.set(true),
-            true
-        ).call();
+    public void runsCallableMultipleTimes() throws Exception {
+        final AtomicInteger atom = new AtomicInteger();
+        final Callable<Integer> callable = new RepeatedCallable<>(
+            new CallableOf<>(
+                () -> atom.getAndIncrement()
+            ),
+            3
+        );
         new Assertion<>(
-            "must have been set by callable",
-            flag.get(),
-            new IsEqual<>(true)
-        ).affirm();
+            "Must run callable 3 times",
+            callable.call(),
+            new IsEqual<>(3)
+        );
     }
 
     @Test
-    public void convertsProcIntoCallable() throws Exception {
-        final AtomicBoolean flag = new AtomicBoolean(false);
+    public void throwsIfZero() {
         new Assertion<>(
-            "must return predefined result",
-            new CallableOf<>(
-                bool -> {
-                    flag.set(bool);
-                },
-                true,
-                false
+            // @checkstyle LineLengthCheck (1 line)
+            "Must throws an exception if number of repetitions not be at least 1",
+            () -> new RepeatedCallable<>(
+                new CallableOf<>(
+                    () -> {
+                        Assert.fail("intended to fail");
+                    },
+                    true
+                ),
+                0
             ).call(),
-            new IsEqual<>(false)
-        ).affirm();
-        new Assertion<>(
-            "must have been set by callable",
-            flag.get(),
-            new IsEqual<>(true)
-        ).affirm();
-    }
-
-    @Test
-    public void convertsFuncIntoCallable() throws Exception {
-        new Assertion<>(
-            "must return the application of func",
-            new CallableOf<>(
-                num -> num + 1,
-                1
-            ).call(),
-            new IsEqual<>(2)
+            new Throws<>(
+                "The number of repetitions must be at least 1",
+                IllegalArgumentException.class
+            )
         ).affirm();
     }
 
