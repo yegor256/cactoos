@@ -23,16 +23,15 @@
  */
 package org.cactoos.list;
 
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.Throws;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link ListEnvelope}.
@@ -42,24 +41,13 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocTypeCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @todo #898:30min Get rid of the Immutable in StringList nested class
- *  That's because this test should check the original behavior of ListEnvelope
- *  Now this test checks behavior of the Immutable decorator
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public final class ListEnvelopeTest {
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void returnsListIteratorWithUnsupportedRemove() {
-        final ListEnvelope<String> list = new StringList("one");
-        final Iterator<String> iterator = list.listIterator();
-        iterator.next();
-        iterator.remove();
-    }
-
-    @Test()
+    @Test
     public void returnsListIteratorWithSupportedSet() {
-        final ListEnvelope<String> list = new MutableStringList("one", "two");
+        final ListEnvelope<String> list = new StringList("one", "two");
         final ListIterator<String> iterator = list.listIterator(1);
         iterator.next();
         iterator.set("zero");
@@ -73,97 +61,113 @@ public final class ListEnvelopeTest {
         );
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void returnsListIteratorWithUnsupportedAdd() {
-        final ListEnvelope<String> list = new StringList("one");
-        final ListIterator<String> iterator = list.listIterator();
-        iterator.next();
-        iterator.add("two");
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void subListReturnsListIteratorWithUnsupportedRemove() {
-        final ListEnvelope<String> list = new StringList("one");
-        final Iterator<String> iterator = list.subList(0, 1)
-            .listIterator();
-        iterator.next();
-        iterator.remove();
-    }
-
-    @Test()
-    public void subListReturnsListIteratorWithSupportedSet() {
-        new Assertion<>(
-            "subList.listIterator().set() must throw exception",
-            () -> {
-                final ListIterator<String> iterator = new StringList("one", "two", "three")
-                    .subList(0, 2)
-                    .listIterator(0);
-                iterator.next();
-                iterator.set("zero");
-                return new Object();
-            },
-            new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals(
-                        "List Iterator is read-only and doesn't allow rewriting items"
-                    )
-                ),
-                UnsupportedOperationException.class
-            )
-        ).affirm();
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void subListReturnsListIteratorWithUnsupportedAdd() {
-        final ListEnvelope<String> list = new StringList("one");
-        final ListIterator<String> iterator = list.subList(0, 1)
-            .listIterator();
-        iterator.next();
-        iterator.add("two");
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void removeIsNotSupported() {
+    @Test
+    public void removeIsDelegated() {
         final ListEnvelope<String> list = new StringList("one");
         list.remove(0);
+        new Assertion<>(
+            "must be empty",
+            list,
+            new IsEmptyCollection<>()
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void setIsNotSupported() {
+    @Test
+    public void indexOfIsDelegated() {
+        final ListEnvelope<String> list = new StringList("one");
+        new Assertion<>(
+            "must return corrent index",
+            list.indexOf("one"),
+            new IsEqual<>(0)
+        ).affirm();
+    }
+
+    @Test
+    public void addAllIsDelegated() {
+        final ListEnvelope<String> list = new StringList("one");
+        list.addAll(0, new StringList("two"));
+        new Assertion<>(
+            "must be empty",
+            list,
+            new IsEqual<>(new ListOf<>("two", "one"))
+        ).affirm();
+    }
+
+    @Test
+    public void setIsDelegatedToTheOriginal() {
         final ListEnvelope<String> list = new StringList("one");
         list.set(0, "zero");
+        new Assertion<>(
+            "value must be changed",
+            list,
+            new HasValues<>("zero")
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void addIsNotSupported() {
+    @Test
+    public void addIsDelegated() {
         final ListEnvelope<String> list = new StringList("one");
         list.add("two");
+        new Assertion<>(
+            "value must be added",
+            list,
+            new HasValues<>("one", "two")
+        ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void returnsSubListWithUnsupportedRemove() {
+    public void returnsSubListWithRemove() {
         final ListEnvelope<String> list = new StringList("one");
         list.subList(0, 1).remove(0);
+        new Assertion<>(
+            "must be empty after removal",
+            list,
+            new IsEmptyCollection<>()
+        ).affirm();
     }
 
-    @Test()
+    @Test
     public void returnsSubListWithSupportedSet() {
+        final List<String> list = new StringList("one");
+        list.subList(0, 1).set(0, "zero");
         new Assertion<>(
-            "subList.set() must throw exception",
-            () -> new StringList("one").subList(0, 1).set(0, "zero"),
-            new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#set(): the list is read-only")
-                ),
-                UnsupportedOperationException.class
+            "subList.set() must change the original list",
+            list,
+            new HasValues<>(
+                "zero"
             )
         ).affirm();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void returnsSubListWithUnsupportedAdd() {
+    @Test
+    public void addsAtGivenIndex() {
         final ListEnvelope<String> list = new StringList("one");
-        list.subList(0, 1).add("two");
+        list.add(0, "two");
+        new Assertion<>(
+            "must add value",
+            list,
+            new HasValues<>("two")
+        ).affirm();
+    }
+
+    @Test
+    public void getsAtGivenIndex() {
+        final ListEnvelope<String> list = new StringList("one");
+        new Assertion<>(
+            "must add value",
+            list.get(0),
+            new IsEqual<>("one")
+        ).affirm();
+    }
+
+    @Test
+    public void getsLastIndexOfValue() {
+        final ListEnvelope<String> list = new StringList("one");
+        list.add(1, "one");
+        new Assertion<>(
+            "must be last index",
+            list.lastIndexOf("one"),
+            new IsEqual<>(1)
+        ).affirm();
     }
 
     @Test
@@ -214,13 +218,8 @@ public final class ListEnvelopeTest {
 
     private static final class StringList extends ListEnvelope<String> {
         StringList(final String... elements) {
-            super(new Immutable<>(new ListOf<>(elements)));
+            super(new ListOf<>(elements));
         }
     }
 
-    private static final class MutableStringList extends ListEnvelope<String> {
-        MutableStringList(final String... elements) {
-            super(new LinkedList<>(new ListOf<>(elements)));
-        }
-    }
 }

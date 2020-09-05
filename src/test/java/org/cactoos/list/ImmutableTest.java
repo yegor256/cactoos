@@ -561,7 +561,6 @@ public class ImmutableTest {
         ).affirm();
     }
 
-
     @Test
     public void subListReturnsListIteratorWithSupportedSet() {
         new Assertion<>(
