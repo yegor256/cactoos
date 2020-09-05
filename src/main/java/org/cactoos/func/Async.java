@@ -45,10 +45,6 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.10
- *
- * @todo #1406:30m This class should not implement Proc, as it's always
- *  used as Func. Clarify the rationale for it being Proc, if it's
- *  unnecessary de-implement Proc. And implement Async for Proc if needed.
  */
 public final class Async<X, Y> implements Func<X, Future<Y>>, Proc<X> {
 
