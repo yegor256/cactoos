@@ -29,7 +29,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
-import org.cactoos.callable.CallableOf;
+import org.cactoos.scalar.CallableOf;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;

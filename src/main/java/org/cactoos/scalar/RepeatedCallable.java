@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.callable;
+package org.cactoos.scalar;
 
 import java.util.concurrent.Callable;
 import org.cactoos.func.FuncOf;
