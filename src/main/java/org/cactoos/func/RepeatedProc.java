@@ -31,6 +31,10 @@ import org.cactoos.Proc;
  *
  * @param <X> Type of input
  * @since 0.49.2
+ * @todo #1277:30m Split the entire `org.cactoos.func` package
+ *  into `org.cactoos.func`, `org.cactoos.proc`
+ *  and `org.cactoos.callable`,
+ *  with each one holding their related decorators, classes and interfaces.
  */
 public final class RepeatedProc<X> implements Proc<X> {
     /**
