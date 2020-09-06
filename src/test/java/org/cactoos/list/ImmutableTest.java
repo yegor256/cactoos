@@ -564,7 +564,7 @@ public class ImmutableTest {
     @Test
     public void subListReturnsListIteratorWithSupportedSet() {
         new Assertion<>(
-            "subList.listIterator().set() must throw exception",
+            "subList's iterator must be immutable",
             () -> {
                 final ListIterator<String> iterator = new Immutable<>(
                     new ListOf<String>("one", "two", "three")

@@ -66,7 +66,7 @@ public final class ListEnvelopeTest {
         final ListEnvelope<String> list = new StringList("one");
         list.remove(0);
         new Assertion<>(
-            "must be empty",
+            "must be empty after removal of 0th element",
             list,
             new IsEmptyCollection<>()
         ).affirm();
@@ -76,7 +76,7 @@ public final class ListEnvelopeTest {
     public void indexOfIsDelegated() {
         final ListEnvelope<String> list = new StringList("one");
         new Assertion<>(
-            "must return corrent index",
+            "must return correct index of element",
             list.indexOf("one"),
             new IsEqual<>(0)
         ).affirm();
@@ -119,7 +119,7 @@ public final class ListEnvelopeTest {
         final ListEnvelope<String> list = new StringList("one");
         list.subList(0, 1).remove(0);
         new Assertion<>(
-            "must be empty after removal",
+            "must be empty after removal of 0th element via subList",
             list,
             new IsEmptyCollection<>()
         ).affirm();
@@ -130,7 +130,7 @@ public final class ListEnvelopeTest {
         final List<String> list = new StringList("one");
         list.subList(0, 1).set(0, "zero");
         new Assertion<>(
-            "subList.set() must change the original list",
+            "ListEnvelope().subList(...).set() must change the original list",
             list,
             new HasValues<>(
                 "zero"
@@ -143,7 +143,7 @@ public final class ListEnvelopeTest {
         final ListEnvelope<String> list = new StringList("one");
         list.add(0, "two");
         new Assertion<>(
-            "must add value",
+            "must add value at given index",
             list,
             new HasValues<>("two")
         ).affirm();
@@ -153,7 +153,7 @@ public final class ListEnvelopeTest {
     public void getsAtGivenIndex() {
         final ListEnvelope<String> list = new StringList("one");
         new Assertion<>(
-            "must add value",
+            "must get 0th value",
             list.get(0),
             new IsEqual<>("one")
         ).affirm();
@@ -164,7 +164,7 @@ public final class ListEnvelopeTest {
         final ListEnvelope<String> list = new StringList("one");
         list.add(1, "one");
         new Assertion<>(
-            "must be last index",
+            "must return correct last index of element",
             list.lastIndexOf("one"),
             new IsEqual<>(1)
         ).affirm();
@@ -173,7 +173,7 @@ public final class ListEnvelopeTest {
     @Test
     public void mustReturnPreviousIndex() {
         new Assertion<>(
-            "List Iterator must return previous index",
+            "List iterator must return previous index",
             new ListIteratorOf<>(
                 new ListOf<>(1)
             ).previousIndex(),
@@ -184,7 +184,7 @@ public final class ListEnvelopeTest {
     @Test
     public void mustReturnPreviousElement() {
         new Assertion<>(
-            "List Iterator must return previous element",
+            "List iterator must return previous element",
             new ListIteratorOf<>(
                 new ListOf<>(3, 7),
                 1
@@ -209,7 +209,7 @@ public final class ListEnvelopeTest {
         new Assertion<>(
             "List iterator must return next item",
             new ListIteratorOf<>(
-                new ListOf<>(5, 11, 13),
+                new  ListOf<>(5, 11, 13),
                 1
             ).next(),
             new IsEqual<>(11)
