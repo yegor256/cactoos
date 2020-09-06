@@ -25,9 +25,9 @@ package org.cactoos.func;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link UncheckedBiFunc}.
@@ -52,7 +52,7 @@ public final class UncheckedBiFuncTest {
             new UncheckedBiFunc<>(
                 (fst, scd) -> true
             ).apply(1, 2),
-            Matchers.equalTo(true)
+            new IsTrue()
         ).affirm();
     }
 

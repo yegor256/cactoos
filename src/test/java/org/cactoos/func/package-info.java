@@ -23,7 +23,7 @@
  */
 
 /**
- * Functions and procedures, tests.
+ * Functions, tests.
  *
  * @since 0.2
  */

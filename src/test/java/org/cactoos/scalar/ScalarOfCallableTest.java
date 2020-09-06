@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.func.CallableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;

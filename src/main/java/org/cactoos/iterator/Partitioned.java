@@ -23,11 +23,10 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import org.cactoos.list.Immutable;
 import org.cactoos.list.ListOf;
 
 /**
@@ -72,12 +71,8 @@ public final class Partitioned<T> implements Iterator<List<T>> {
         if (this.size < 1) {
             throw new IllegalArgumentException("Partition size < 1");
         }
-        return Collections.unmodifiableList(
-            new LinkedList<>(
-                new ListOf<>(
-                    new Sliced<>(0, this.size, this.decorated)
-                )
-            )
+        return new Immutable<>(
+            new ListOf<>(new Sliced<>(0, this.size, this.decorated))
         );
     }
 

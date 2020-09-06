@@ -23,13 +23,16 @@
  */
 package org.cactoos;
 
+import org.cactoos.proc.IoCheckedProc;
+import org.cactoos.proc.UncheckedProc;
+
 /**
  * Procedure.
  *
  * <p>If you don't want to have any checked exceptions being thrown
  * out of your {@link Proc}, you can use
- * {@link org.cactoos.func.UncheckedProc} decorator. Also
- * you may try {@link org.cactoos.func.IoCheckedProc}.</p>
+ * {@link UncheckedProc} decorator. Also
+ * you may try {@link IoCheckedProc}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *

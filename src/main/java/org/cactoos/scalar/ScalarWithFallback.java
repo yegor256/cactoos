@@ -27,6 +27,7 @@ import java.util.Comparator;
 import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.func.FallbackFrom;
 import org.cactoos.func.FuncWithFallback;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Filtered;

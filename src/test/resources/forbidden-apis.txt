@@ -6,3 +6,6 @@ org.hamcrest.MatcherAssert#assertThat(java.lang.Object, org.hamcrest.Matcher)
 
 @defaultMessage Please specify failure reason
 org.junit.Assert#assertThat(java.lang.Object, org.hamcrest.Matcher)
+
+@defaultMessage Please avoid using static methods.
+java.util.Collections#unmodifiableList(java.util.List)

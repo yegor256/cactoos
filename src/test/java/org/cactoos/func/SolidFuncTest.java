@@ -26,7 +26,7 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import org.cactoos.Func;
 import org.cactoos.list.ListOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
@@ -47,7 +47,7 @@ public final class SolidFuncTest {
         new Assertion<>(
             "Must cache results",
             func.apply(true) + func.apply(true),
-            Matchers.equalTo(func.apply(true) + func.apply(true))
+            new IsEqual<>(func.apply(true) + func.apply(true))
         ).affirm();
     }
 
@@ -59,7 +59,7 @@ public final class SolidFuncTest {
                 new Assertion<>(
                     "Result must be cached",
                     func.apply(true),
-                    Matchers.equalTo(func.apply(true))
+                    new IsEqual<>(func.apply(true))
                 ).affirm();
                 return true;
             },

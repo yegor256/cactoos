@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.func.ProcOf;
+import org.cactoos.proc.ProcOf;
 
 /**
  * Binary operation.

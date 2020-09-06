@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -50,60 +51,66 @@ public final class TeeInputFromUriTest {
 
     @Test
     public void copiesFromUriToPath() throws IOException {
-        final String message =
-            "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
+        final String message = "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from URI to path.",
+        new LengthOf(
             new TeeInput(
                 input.toURI(),
                 output
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from URI to path.",
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
 
     @Test
     public void copiesFromUriToFile() throws IOException {
-        final String message =
-            "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
+        final String message = "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from URI to file.",
+        new LengthOf(
             new TeeInput(
                 input.toURI(),
                 output
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from URI to file.",
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
 
     @Test
     public void copiesFromUriToOutput() throws IOException {
-        final String message =
-            "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
+        final String message = "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
         final File output = this.folder.newFile();
-        new Assertion<>(
-            "Must copy from URI to output.",
+        new LengthOf(
             new TeeInput(
                 input.toURI(),
                 new OutputTo(output)
-            ),
+            )
+        ).intValue();
+        new Assertion<>(
+            "Must copy from URI to output.",
+            new InputOf(output),
             new InputHasContent(message)
         ).affirm();
     }
