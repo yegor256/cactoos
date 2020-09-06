@@ -23,9 +23,11 @@
  */
 package org.cactoos.scalar;
 
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ScalarEnvelope}.
@@ -42,6 +44,22 @@ public final class ScalarEnvelopeTest {
             "must delegate calls to apply",
             new Static(1),
             new ScalarHasValue<>(1)
+        ).affirm();
+    }
+
+    @Test
+    public void propagatesException() {
+        new Assertion<>(
+            "must not alter the exception thrown by original Scalar",
+            new ScalarEnvelope<Integer>(
+                () -> {
+                    throw new UnsupportedOperationException("ok");
+                }) {
+            },
+            new Throws<>(
+                new IsEqual<>("ok"),
+                UnsupportedOperationException.class
+            )
         ).affirm();
     }
 
