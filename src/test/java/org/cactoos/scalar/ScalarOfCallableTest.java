@@ -38,7 +38,7 @@ final class ScalarOfCallableTest {
     void worksWithCallable() {
         final Object obj = new Object();
         new Assertion<>(
-            "must hold the same value",
+            "must hold the same value as given by callable",
             new ScalarOfCallable<>(new CallableOf<>(new Constant<>(obj))),
             new ScalarHasValue<>(obj)
         ).affirm();

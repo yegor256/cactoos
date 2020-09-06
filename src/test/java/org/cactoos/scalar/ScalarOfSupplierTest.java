@@ -37,7 +37,7 @@ final class ScalarOfSupplierTest {
     void createsScalarFromSupplier() {
         final Object obj = new Object();
         new Assertion<>(
-            "must hold the same value",
+            "must hold the same value as given by supplier",
             new ScalarOfSupplier<>(() -> obj),
             new ScalarHasValue<>(obj)
         ).affirm();
