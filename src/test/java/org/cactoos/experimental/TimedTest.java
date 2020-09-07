@@ -92,7 +92,7 @@ public final class TimedTest {
                 try {
                     new Assertion<>(
                         "Contains results from callables",
-                        new Timed<>(
+                        new Timed<String>(
                             extor,
                             1L,
                             TimeUnit.SECONDS,
@@ -266,7 +266,7 @@ public final class TimedTest {
                 new Assertion<>(
                     // @checkstyle LineLengthCheck (1 line)
                     "Fails due to timeout when using the inline executor service",
-                    () -> new Timed<>(
+                    () -> new Timed<String>(
                         TimedTest.THREADS,
                         1L,
                         TimeUnit.MILLISECONDS,
