@@ -31,7 +31,6 @@ import java.util.concurrent.TimeUnit;
 import org.cactoos.Proc;
 import org.cactoos.func.Repeated;
 import org.cactoos.func.UncheckedFunc;
-import org.cactoos.scalar.ScalarOfCallable;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
@@ -96,12 +95,10 @@ public final class ThreadsTest {
             "wraps error into CompletionException",
             () -> new Threads<String>(
                 Executors.newSingleThreadExecutor(),
-                new ScalarOfCallable<>(
-                    () -> {
-                        // @checkstyle LineLengthCheck (1 line)
-                        throw new IllegalStateException("Something went wrong");
-                    }
-                )
+                () -> {
+                    // @checkstyle LineLengthCheck (1 line)
+                    throw new IllegalStateException("Something went wrong");
+                }
             ).iterator().next(),
             new Throws<>(
                 // @checkstyle LineLengthCheck (1 line)
