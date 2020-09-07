@@ -96,7 +96,7 @@ public final class ThreadsTest {
             "wraps error into CompletionException",
             () -> new Threads<String>(
                 Executors.newSingleThreadExecutor(),
-                new ScalarOf<String>(
+                new ScalarOf<>(
                     () -> {
                         // @checkstyle LineLengthCheck (1 line)
                         throw new IllegalStateException("Something went wrong");

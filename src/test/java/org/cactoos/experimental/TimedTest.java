@@ -30,9 +30,7 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import org.cactoos.scalar.CallableOf;
 import org.cactoos.scalar.RepeatedCallable;
-import org.cactoos.scalar.ScalarOf;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -87,156 +85,15 @@ public final class TimedTest {
     })
     public void containsResults() throws Exception {
         new RepeatedCallable<>(
-            new CallableOf<>(
-                () -> {
-                    final ExecutorService extor = Executors.newFixedThreadPool(
-                        TimedTest.THREADS
-                    );
-                    try {
-                        new Assertion<>(
-                            "Contains results from callables",
-                            new Timed<String>(
-                                extor,
-                                1L,
-                                TimeUnit.SECONDS,
-                                () -> {
-                                    this.sleep();
-                                    return TimedTest.FIRST_TEXT;
-                                },
-                                () -> {
-                                    this.sleep();
-                                    return TimedTest.SECOND_TEXT;
-                                },
-                                () -> {
-                                    this.sleep();
-                                    return TimedTest.THIRD_TEXT;
-                                }
-                            ),
-                            new HasValues<>(
-                                TimedTest.FIRST_TEXT,
-                                TimedTest.SECOND_TEXT,
-                                TimedTest.THIRD_TEXT
-                            )
-                        ).affirm();
-                    } finally {
-                        extor.shutdown();
-                        try {
-                            if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
-                                extor.shutdownNow();
-                            }
-                        } catch (final InterruptedException ex) {
-                            Thread.currentThread().interrupt();
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                },
-                true
-            ),
-            TimedTest.REPETITIONS_COUNT
-        ).call();
-    }
-
-    /**
-     * Execution takes longer than timeout when
-     *  {@link ExecutorService} was initiated by someone else.
-     */
-    @Test
-    @SuppressWarnings({
-        "PMD.AvoidThrowingRawExceptionTypes", "PMD.DoNotThrowExceptionInFinally"
-    })
-    public void failsDueToTimeoutWithExternalExecutorService()
-        throws Exception {
-        new RepeatedCallable<>(
-            new CallableOf<>(
-                () -> {
-                    final ExecutorService extor = Executors.newFixedThreadPool(
-                        TimedTest.THREADS
-                    );
-                    try {
-                        new Assertion<>(
-                            // @checkstyle LineLengthCheck (1 line)
-                            "Fails due to timeout when using the external executor service",
-                            () -> new Timed<String>(
-                                extor,
-                                1L,
-                                TimeUnit.MILLISECONDS,
-                                () -> {
-                                    this.sleep();
-                                    return TimedTest.FIRST_TEXT;
-                                },
-                                () -> {
-                                    this.sleep();
-                                    return TimedTest.SECOND_TEXT;
-                                },
-                                () -> {
-                                    this.sleep();
-                                    return TimedTest.THIRD_TEXT;
-                                }
-                            ).iterator().next(),
-                            new Throws<>(
-                                new IsNull<>(),
-                                CancellationException.class
-                            )
-                        ).affirm();
-                    } finally {
-                        extor.shutdown();
-                        try {
-                            if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
-                                extor.shutdownNow();
-                            }
-                        } catch (final InterruptedException ex) {
-                            Thread.currentThread().interrupt();
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                },
-                true
-            ),
-            TimedTest.REPETITIONS_COUNT
-        ).call();
-    }
-
-    /**
-     * Execute 1 task within executor service and ensure that we'll get the
-     *  expected exception type.
-     */
-    @Test
-    public void failsDueToException() {
-        new Assertion<>(
-            "Wraps error into CompletionException",
-            () -> new Timed<String>(
-                Executors.newSingleThreadExecutor(),
-                1L,
-                TimeUnit.SECONDS,
-                new ScalarOf<String>(
-                    () -> {
-                        // @checkstyle LineLengthCheck (1 line)
-                        throw new IllegalStateException("Something went wrong");
-                    }
-                )
-            ).iterator().next(),
-            new Throws<>(
-                // @checkstyle LineLengthCheck (1 line)
-                "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
-                UncheckedIOException.class
-            )
-        ).affirm();
-    }
-
-    /**
-     * Execute the tasks concurrently using {@link Timed} when
-     *  {@link ExecutorService} was initiated by {@link Timed} itself.
-     */
-    @Test
-    public void containsValuesWithInlineExecutorService() throws Exception {
-        new RepeatedCallable<>(
-            new CallableOf<>(
-                () -> {
+            () -> {
+                final ExecutorService extor = Executors.newFixedThreadPool(
+                    TimedTest.THREADS
+                );
+                try {
                     new Assertion<>(
-                        // @checkstyle LineLengthCheck (1 line)
-                        "Contains results from the callables when using the inline executor service",
+                        "Contains results from callables",
                         new Timed<String>(
-                            TimedTest.THREADS,
+                            extor,
                             1L,
                             TimeUnit.SECONDS,
                             () -> {
@@ -258,27 +115,44 @@ public final class TimedTest {
                             TimedTest.THIRD_TEXT
                         )
                     ).affirm();
-                },
-                true
-            ),
+                } finally {
+                    extor.shutdown();
+                    try {
+                        if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
+                            extor.shutdownNow();
+                        }
+                    } catch (final InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                        throw new RuntimeException(ex);
+                    }
+                }
+                return true;
+            },
             TimedTest.REPETITIONS_COUNT
         ).call();
     }
 
     /**
      * Execution takes longer than timeout when
-     *  {@link ExecutorService} was initiated by {@link Timed} itself.
+     *  {@link ExecutorService} was initiated by someone else.
      */
     @Test
-    public void failsDueToTimeoutWithInlineExecutorService() throws Exception {
+    @SuppressWarnings({
+        "PMD.AvoidThrowingRawExceptionTypes", "PMD.DoNotThrowExceptionInFinally"
+    })
+    public void failsDueToTimeoutWithExternalExecutorService()
+        throws Exception {
         new RepeatedCallable<>(
-            new CallableOf<>(
-                () -> {
+            () -> {
+                final ExecutorService extor = Executors.newFixedThreadPool(
+                    TimedTest.THREADS
+                );
+                try {
                     new Assertion<>(
                         // @checkstyle LineLengthCheck (1 line)
-                        "Fails due to timeout when using the inline executor service",
+                        "Fails due to timeout when using the external executor service",
                         () -> new Timed<String>(
-                            TimedTest.THREADS,
+                            extor,
                             1L,
                             TimeUnit.MILLISECONDS,
                             () -> {
@@ -299,9 +173,123 @@ public final class TimedTest {
                             CancellationException.class
                         )
                     ).affirm();
-                },
-                true
-            ),
+                } finally {
+                    extor.shutdown();
+                    try {
+                        if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
+                            extor.shutdownNow();
+                        }
+                    } catch (final InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                        throw new RuntimeException(ex);
+                    }
+                }
+                return true;
+            },
+            TimedTest.REPETITIONS_COUNT
+        ).call();
+    }
+
+    /**
+     * Execute 1 task within executor service and ensure that we'll get the
+     *  expected exception type.
+     */
+    @Test
+    public void failsDueToException() {
+        new Assertion<>(
+            "Wraps error into CompletionException",
+            () -> new Timed<String>(
+                Executors.newSingleThreadExecutor(),
+                1L,
+                TimeUnit.SECONDS,
+                () -> {
+                    // @checkstyle LineLengthCheck (1 line)
+                    throw new IllegalStateException("Something went wrong");
+                }
+            ).iterator().next(),
+            new Throws<>(
+                // @checkstyle LineLengthCheck (1 line)
+                "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
+                UncheckedIOException.class
+            )
+        ).affirm();
+    }
+
+    /**
+     * Execute the tasks concurrently using {@link Timed} when
+     *  {@link ExecutorService} was initiated by {@link Timed} itself.
+     */
+    @Test
+    public void containsValuesWithInlineExecutorService() throws Exception {
+        new RepeatedCallable<>(
+            () -> {
+                new Assertion<>(
+                    // @checkstyle LineLengthCheck (1 line)
+                    "Contains results from the callables when using the inline executor service",
+                    new Timed<String>(
+                        TimedTest.THREADS,
+                        1L,
+                        TimeUnit.SECONDS,
+                        () -> {
+                            this.sleep();
+                            return TimedTest.FIRST_TEXT;
+                        },
+                        () -> {
+                            this.sleep();
+                            return TimedTest.SECOND_TEXT;
+                        },
+                        () -> {
+                            this.sleep();
+                            return TimedTest.THIRD_TEXT;
+                        }
+                    ),
+                    new HasValues<>(
+                        TimedTest.FIRST_TEXT,
+                        TimedTest.SECOND_TEXT,
+                        TimedTest.THIRD_TEXT
+                    )
+                ).affirm();
+                return true;
+            },
+            TimedTest.REPETITIONS_COUNT
+        ).call();
+    }
+
+    /**
+     * Execution takes longer than timeout when
+     *  {@link ExecutorService} was initiated by {@link Timed} itself.
+     */
+    @Test
+    public void failsDueToTimeoutWithInlineExecutorService() throws Exception {
+        new RepeatedCallable<>(
+            () -> {
+                new Assertion<>(
+                    // @checkstyle LineLengthCheck (1 line)
+                    "Fails due to timeout when using the inline executor service",
+                    () -> new Timed<String>(
+                        TimedTest.THREADS,
+                        1L,
+                        TimeUnit.MILLISECONDS,
+                        () -> {
+                            this.sleep();
+                            return TimedTest.FIRST_TEXT;
+                        },
+                        () -> {
+                            this.sleep();
+                            return TimedTest.SECOND_TEXT;
+                        },
+                        () -> {
+                            this.sleep();
+                            return TimedTest.THIRD_TEXT;
+                        }
+                    ).iterator().next(),
+                    new Throws<>(
+                        new IsNull<>(),
+                        CancellationException.class
+                    )
+                ).affirm();
+                return true;
+            },
             TimedTest.REPETITIONS_COUNT
         ).call();
     }

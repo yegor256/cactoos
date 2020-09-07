@@ -23,51 +23,23 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
-import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
-import org.llorllale.cactoos.matchers.Throws;
 
 /**
- * Test case for {@link ScalarEnvelope}.
- *
- * @since 0.41
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTypeCheck (500 lines)
+ * Test case for {@link ScalarOfSupplier}.
+ * @since 0.47
  */
-public final class ScalarEnvelopeTest {
+final class ScalarOfSupplierTest {
 
     @Test
-    public void envelopeDelegatesCalls() {
+    void createsScalarFromSupplier() {
+        final Object obj = new Object();
         new Assertion<>(
-            "must delegate calls to apply",
-            new Static(1),
-            new ScalarHasValue<>(1)
+            "must hold the same value as given by supplier",
+            new ScalarOfSupplier<>(() -> obj),
+            new ScalarHasValue<>(obj)
         ).affirm();
-    }
-
-    @Test
-    public void propagatesException() {
-        final String message = "ok";
-        final Scalar<Integer> scalar = () -> {
-            throw new UnsupportedOperationException(message);
-        };
-        new Assertion<>(
-            "must not alter the exception thrown by original Scalar",
-            new ScalarEnvelope<Integer>(scalar) {
-            },
-            new Throws<>(
-                new IsEqual<>(message),
-                UnsupportedOperationException.class
-            )
-        ).affirm();
-    }
-
-    private static final class Static extends ScalarEnvelope<Integer> {
-        Static(final int result) {
-            super(() -> result);
-        }
     }
 }
