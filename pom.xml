@@ -27,7 +27,7 @@ The MIT License (MIT)
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.50.0</version>
+    <version>0.50.5</version>
   </parent>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
@@ -81,9 +81,6 @@ The MIT License (MIT)
       <url>https://github.com/yegor256/cactoos</url>
     </site>
   </distributionManagement>
-  <properties>
-    <junit-platform.version>5.6.2</junit-platform.version>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.takes</groupId>
@@ -122,7 +119,6 @@ The MIT License (MIT)
     <dependency>
       <groupId>org.junit.vintage</groupId>
       <artifactId>junit-vintage-engine</artifactId>
-      <version>${junit-platform.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -157,17 +153,6 @@ The MIT License (MIT)
               </configuration>
             </execution>
           </executions>
-        </plugin>
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.9.1</version>
-          <dependencies>
-            <dependency>
-              <groupId>org.apache.maven.doxia</groupId>
-              <artifactId>doxia-module-markdown</artifactId>
-              <version>1.9.1</version>
-            </dependency>
-          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>
