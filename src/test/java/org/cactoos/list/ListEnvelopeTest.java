@@ -87,7 +87,7 @@ public final class ListEnvelopeTest {
         final ListEnvelope<String> list = new StringList("one");
         list.addAll(0, new StringList("two"));
         new Assertion<>(
-            "must be empty",
+            "element must be added at 0th position",
             list,
             new IsEqual<>(new ListOf<>("two", "one"))
         ).affirm();
