@@ -560,4 +560,30 @@ public class ImmutableTest {
             new IsEqual<>(new ListOf<>("a", "b", "c").toString())
         ).affirm();
     }
+
+    @Test
+    public void subListReturnsListIteratorWithSupportedSet() {
+        new Assertion<>(
+            "subList's iterator must be immutable",
+            () -> {
+                final ListIterator<String> iterator = new Immutable<>(
+                    new ListOf<String>("one", "two", "three")
+                )
+                    .subList(0, 2)
+                    .listIterator(0);
+                iterator.next();
+                iterator.set("zero");
+                return new Object();
+            },
+            new Throws<>(
+                new MatcherOf<>(
+                    (String msg) -> msg.equals(
+                        "List Iterator is read-only and doesn't allow rewriting items"
+                    )
+                ),
+                UnsupportedOperationException.class
+            )
+        ).affirm();
+    }
+
 }
