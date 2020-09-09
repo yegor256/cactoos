@@ -45,7 +45,6 @@ import org.cactoos.scalar.Unchecked;
  *  should be removed after that.
  */
 @SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
-
 public final class Paged<X> extends IterableEnvelope<X> {
 
     /**
@@ -95,4 +94,3 @@ public final class Paged<X> extends IterableEnvelope<X> {
         );
     }
 }
-
