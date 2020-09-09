@@ -40,8 +40,12 @@ import org.cactoos.scalar.Unchecked;
  *
  * @param <X> Type of item
  * @since 0.47
+ * @todo #1183:30m Continue refactoring and add `iterator.Paged` by
+ *  extracting inner anon class from this class. The checkstyle suppression
+ *  should be removed after that.
  */
 @SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
+
 public final class Paged<X> extends IterableEnvelope<X> {
 
     /**
