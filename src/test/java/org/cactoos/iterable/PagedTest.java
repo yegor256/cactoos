@@ -24,13 +24,17 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import org.cactoos.Scalar;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.LengthOf;
+import org.cactoos.scalar.ScalarOfCallable;
 import org.cactoos.scalar.Ternary;
 import org.hamcrest.collection.IsIterableWithSize;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Paged}.
@@ -40,16 +44,15 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class PagedTest {
 
     @Test
-    @SuppressWarnings({"unchecked", "PMD.AvoidDuplicateLiterals"})
-    void containAllPagedContentInOrder() throws Exception {
+    @SuppressWarnings("unchecked")
+    void containAllPagedContentInOrder() {
         final Iterable<String> first = new IterableOf<>("one", "two");
         final Iterable<String> second = new IterableOf<>("three", "four");
         final Iterable<String> third = new IterableOf<>("five");
-        final Iterable<Iterable<String>> service = new IterableOf<>(
+        final Iterator<Iterable<String>> pages = new IteratorOf<>(
             first, second, third
         );
-        final Iterator<Iterable<String>> pages = service.iterator();
-        new Assertion<Iterable<?>>(
+        new Assertion<Iterable<String>>(
             "must have all page values",
             new Paged<>(
                 () -> pages.next().iterator(),
@@ -65,8 +68,8 @@ final class PagedTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    void reportTotalPagedLength() throws Exception {
-        final Iterable<String> first = new IterableOf<>("A", "five");
+    void reportTotalPagedLength() {
+        final Iterable<String> first = new IterableOf<>("A", "six");
         final Iterable<String> second = new IterableOf<>("word", "long");
         final Iterable<String> third = new IterableOf<>("sentence");
         final Iterable<Iterable<String>> service = new IterableOf<>(
@@ -90,6 +93,27 @@ final class PagedTest {
                     ).intValue()
                 )
             )
+        ).affirm();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void throwsNoSuchElement() {
+        final Iterable<Iterable<String>> service = new IterableOf<>();
+        final Iterator<Iterable<String>> pages = service.iterator();
+        new Assertion<Scalar<String>>(
+            "must throw an exception when first iterator is empty",
+            new ScalarOfCallable<String>(
+                () -> new Paged<>(
+                    () -> pages.next().iterator(),
+                    page -> new Ternary<>(
+                        () -> pages.hasNext(),
+                        () -> pages.next().iterator(),
+                        () -> new IteratorOf<String>()
+                    ).value()
+                ).iterator().next()
+            ),
+            new Throws<>(NoSuchElementException.class)
         ).affirm();
     }
 
