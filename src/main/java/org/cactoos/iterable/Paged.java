@@ -25,6 +25,7 @@ package org.cactoos.iterable;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
@@ -62,30 +63,35 @@ public final class Paged<X> extends IterableEnvelope<X> {
         super(
             new IterableOf<>(
                 () -> new Iterator<X>() {
-                    private Unchecked<I> current = new Unchecked<>(
-                        new Sticky<>(first)
-                    );
+                    private final AtomicReference<Unchecked<I>> current =
+                        new AtomicReference<>(
+                            new Unchecked<>(
+                                new Sticky<>(first)
+                            )
+                        );
 
                     private final UncheckedFunc<I, I> subsequent =
                         new UncheckedFunc<>(next);
 
                     @Override
                     public boolean hasNext() {
-                        if (!this.current.value().hasNext()) {
+                        if (!this.current.get().value().hasNext()) {
                             final I next = this.subsequent.apply(
-                                this.current.value()
+                                this.current.get().value()
                             );
-                            this.current = new Unchecked<>(
-                                new Sticky<>(() -> next)
+                            this.current.set(
+                                new Unchecked<>(
+                                    new Sticky<>(() -> next)
+                                )
                             );
                         }
-                        return this.current.value().hasNext();
+                        return this.current.get().value().hasNext();
                     }
 
                     @Override
                     public X next() {
                         if (this.hasNext()) {
-                            return this.current.value().next();
+                            return this.current.get().value().next();
                         }
                         throw new NoSuchElementException();
                     }
