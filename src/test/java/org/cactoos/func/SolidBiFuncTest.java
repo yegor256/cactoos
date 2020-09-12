@@ -28,7 +28,7 @@ import org.cactoos.BiFunc;
 import org.cactoos.Func;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -38,9 +38,9 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SolidBiFuncTest {
+final class SolidBiFuncTest {
     @Test
-    public void testThatFuncIsSynchronized() {
+    void testThatFuncIsSynchronized() {
         final int threads = 100;
         final int[] shared = new int[]{0};
         final BiFunc<Integer, Integer, Boolean> testable =
@@ -66,7 +66,7 @@ public final class SolidBiFuncTest {
     }
 
     @Test
-    public void testThatFuncResultCacheIsLimited() throws Exception {
+    void testThatFuncResultCacheIsLimited() throws Exception {
         final BiFunc<Integer, Integer, Integer> func =
             new SolidBiFunc<>(
                 (first, second) -> new SecureRandom().nextInt(),

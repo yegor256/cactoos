@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.InputHasContent;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class DeadOutputTest {
+final class DeadOutputTest {
 
     @Test
-    public void readsEmptyContent() {
+    void readsEmptyContent() {
         new Assertion<>(
             "must write empty content",
             new TeeInput(

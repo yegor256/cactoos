@@ -26,7 +26,7 @@ package org.cactoos.list;
 import java.util.Comparator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test Case for {@link Sorted}.
@@ -34,10 +34,10 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class SortedTest {
+final class SortedTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
+    void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a list",
             new Sorted<>(
@@ -48,7 +48,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void sortsCollection() throws Exception {
+    void sortsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't sort elements in list",
             new Sorted<>(
@@ -63,7 +63,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void takesItemFromSortedList() throws Exception {
+    void takesItemFromSortedList() throws Exception {
         MatcherAssert.assertThat(
             "Can't take one element from sorted list",
             new Sorted<>(

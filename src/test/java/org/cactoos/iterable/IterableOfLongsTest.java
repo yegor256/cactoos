@@ -25,7 +25,7 @@ package org.cactoos.iterable;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link IterableOfLongs}.
@@ -33,10 +33,10 @@ import org.junit.Test;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableOfLongsTest {
+final class IterableOfLongsTest {
 
     @Test
-    public void convertsLongValuesToIterable() {
+    void convertsLongValuesToIterable() {
         final long[] values = new long[]{1, 2, 3};
         MatcherAssert.assertThat(
             new IterableOfLongs(values),

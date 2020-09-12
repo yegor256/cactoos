@@ -26,7 +26,7 @@ package org.cactoos.iterable;
 import org.cactoos.list.ListOf;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SkippedTest {
+final class SkippedTest {
 
     @Test
-    public void skipIterable() {
+    void skipIterable() {
         final String one = "one";
         final String two = "two";
         final String three = "three";
@@ -59,7 +59,7 @@ public final class SkippedTest {
     }
 
     @Test
-    public void skipArray() {
+    void skipArray() {
         final String five = "five";
         final String six = "six";
         final String seven = "seven";
@@ -80,7 +80,7 @@ public final class SkippedTest {
     }
 
     @Test
-    public void skipCollection() {
+    void skipCollection() {
         final String nine = "nine";
         final String eleven = "eleven";
         final String twelve = "twelve";
@@ -98,7 +98,7 @@ public final class SkippedTest {
     }
 
     @Test
-    public void skippedAllElements() {
+    void skippedAllElements() {
         new Assertion<>(
             "Must skip all elements",
             new Skipped<>(
@@ -110,7 +110,7 @@ public final class SkippedTest {
     }
 
     @Test
-    public void skippedMoreThanExists() {
+    void skippedMoreThanExists() {
         new Assertion<>(
             "Can't skip more than exists",
             new Skipped<>(
@@ -122,7 +122,7 @@ public final class SkippedTest {
     }
 
     @Test
-    public void skippedNegativeSize() {
+    void skippedNegativeSize() {
         final String varda = "varda";
         final String yavanna = "yavanna";
         final String nessa = "nessa";

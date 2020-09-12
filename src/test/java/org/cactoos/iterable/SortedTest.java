@@ -29,7 +29,7 @@ import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -39,10 +39,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SortedTest {
+final class SortedTest {
 
     @Test
-    public void sortsAnArray() throws Exception {
+    void sortsAnArray() throws Exception {
         MatcherAssert.assertThat(
             "Can't sort an iterable",
             new Sorted<>(
@@ -56,7 +56,7 @@ public final class SortedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sortsAnArrayWithComparator() throws Exception {
+    void sortsAnArrayWithComparator() throws Exception {
         MatcherAssert.assertThat(
             "Can't sort an iterable with a comparator",
             new Sorted<>(
@@ -69,7 +69,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void sortsAnEmptyArray() throws Exception {
+    void sortsAnEmptyArray() throws Exception {
         MatcherAssert.assertThat(
             "Can't sort an empty iterable",
             new Sorted<Integer>(
@@ -80,7 +80,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void sortsCollection() {
+    void sortsCollection() {
         new Assertion<>(
             "Must sort elements in collection",
             new Sorted<>(

@@ -38,7 +38,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -50,10 +50,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
-public final class AndInThreadsTest {
+final class AndInThreadsTest {
 
     @Test
-    public void allTrue() throws Exception {
+    void allTrue() throws Exception {
         new Assertion<>(
             "Each object must be True",
             new AndInThreads(
@@ -66,7 +66,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void oneFalse() throws Exception {
+    void oneFalse() throws Exception {
         new Assertion<>(
             "One object must be False",
             new AndInThreads(
@@ -79,7 +79,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void allFalse() throws Exception {
+    void allFalse() throws Exception {
         new Assertion<>(
             "Each object must be False",
             new AndInThreads(
@@ -94,7 +94,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void emptyIterator() throws Exception {
+    void emptyIterator() throws Exception {
         new Assertion<>(
             "Iterator must be empty",
             new AndInThreads(new IterableOf<Scalar<Boolean>>()),
@@ -103,7 +103,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void iteratesList() {
+    void iteratesList() {
         final List<String> list = new Synced<>(new ListOf<>());
         new Assertion<>(
             "Must iterate a list with a procedure",
@@ -136,7 +136,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void iteratesEmptyList() {
+    void iteratesEmptyList() {
         final List<String> list = new Synced<>(
             new ArrayList<>(2)
         );
@@ -161,7 +161,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void worksWithFunc() throws Exception {
+    void worksWithFunc() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 input -> input > 0,
@@ -172,7 +172,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void worksWithIterableScalarBoolean() throws Exception {
+    void worksWithIterableScalarBoolean() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 new ListOf<Scalar<Boolean>>(
@@ -185,7 +185,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void worksWithExecServiceProcValues() throws Exception {
+    void worksWithExecServiceProcValues() throws Exception {
         final List<Integer> list = new Synced<>(new ListOf<>());
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(
@@ -213,7 +213,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void worksWithExecServiceProcIterable() throws Exception {
+    void worksWithExecServiceProcIterable() throws Exception {
         final List<Integer> list = new Synced<>(new ListOf<>());
         final ExecutorService service = Executors.newSingleThreadExecutor();
         new AndInThreads(
@@ -241,7 +241,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void worksWithExecServiceScalarBooleans() throws Exception {
+    void worksWithExecServiceScalarBooleans() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
@@ -253,7 +253,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void worksWithExecServiceIterableScalarBoolean() throws Exception {
+    void worksWithExecServiceIterableScalarBoolean() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
@@ -267,7 +267,7 @@ public final class AndInThreadsTest {
     }
 
     @Test
-    public void worksWithEmptyIterableScalarBoolean() throws Exception {
+    void worksWithEmptyIterableScalarBoolean() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
                 new ListOf<Scalar<Boolean>>()

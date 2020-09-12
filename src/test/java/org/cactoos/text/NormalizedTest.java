@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NormalizedTest {
+final class NormalizedTest {
 
     @Test
-    public void normalizesText() {
+    void normalizesText() {
         new Assertion<>(
             "Can't normalize a text",
             new Normalized(" \t hello  \t\tworld   \t"),

@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  */
-public final class LSInputOfTest {
+final class LSInputOfTest {
 
     @Test
-    public void readsSimpleInput() {
+    void readsSimpleInput() {
         new Assertion<>(
             "Can't read simple input",
             new LSInputOf(
@@ -48,7 +48,7 @@ public final class LSInputOfTest {
     }
 
     @Test
-    public void readsBiggerInput() {
+    void readsBiggerInput() {
         final int size = 400_000;
         new Assertion<>(
             "Can't read bigger input",
@@ -62,7 +62,7 @@ public final class LSInputOfTest {
     }
 
     @Test
-    public void countsBytesInBiggerInput() {
+    void countsBytesInBiggerInput() {
         final int size = 300_000;
         new Assertion<>(
             "Can't count bytes in a bigger input",

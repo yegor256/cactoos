@@ -25,7 +25,7 @@
 package org.cactoos.scalar;
 
 import java.util.Objects;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -33,14 +33,14 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * Tests for {@link HashCode}.
  * @since 1.0
  */
-public final class HashCodeTest {
+final class HashCodeTest {
     /**
      * {@link HashCode} must compute the exact same hashCode as produced
      * by Joshua Block's "Item 9: Always override hashCode when you override
      * equals" in Effective Java, 2nd edition.
      */
     @Test
-    public void computeHashCode() {
+    void computeHashCode() {
         final int initial = 5;
         final int multiplier = 31;
         final Object[] attributes = {5, 31, "abc", 5, 50f, "xyz"};
@@ -58,7 +58,7 @@ public final class HashCodeTest {
      * {@code multiplier} value of 31 when these are not provided.
      */
     @Test
-    public void computeHashCodeWithDefaultValues() {
+    void computeHashCodeWithDefaultValues() {
         final int initial = 17;
         final int multiplier = 31;
         final Object[] attributes = {494, 43, "test", 190, 298f, "joshua"};

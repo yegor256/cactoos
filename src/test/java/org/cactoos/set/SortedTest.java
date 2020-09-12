@@ -32,7 +32,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -43,10 +43,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class SortedTest {
+final class SortedTest {
 
     @Test
-    public void mustSortIntegerArrayAsSetInAscendingOrder() {
+    void mustSortIntegerArrayAsSetInAscendingOrder() {
         new Assertion<>(
             "Must keep unique integer numbers sorted",
             new Sorted<>(
@@ -64,7 +64,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void mustSortIntegerIterableAsSetInDescendingOrder() {
+    void mustSortIntegerIterableAsSetInDescendingOrder() {
         new Assertion<>(
             "Must keep unique integer numbers sorted in descending order",
             new Sorted<>(
@@ -82,7 +82,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void mustSortTextIterableAsSetUsingCustomCOmparator() {
+    void mustSortTextIterableAsSetUsingCustomCOmparator() {
         new Assertion<>(
             "Must keep unique integer numbers sorted in descending order",
             new Sorted<>(
@@ -108,7 +108,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void mustNotBeEqualToSortedSet() {
+    void mustNotBeEqualToSortedSet() {
         new Assertion<>(
             "Sorted set must not be equal to the tested collection",
             new Sorted<>(
@@ -127,7 +127,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void returnsCorrectComparator() {
+    void returnsCorrectComparator() {
         final Comparator<Integer> comparator = Integer::compareTo;
         new Assertion<>(
             "Comparator must be the same",
@@ -137,7 +137,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void returnsSubset() {
+    void returnsSubset() {
         new Assertion<>(
             "Must return sorted subset",
             new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).subSet(3, 9),
@@ -151,7 +151,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void returnsHeadset() {
+    void returnsHeadset() {
         new Assertion<>(
             "Must return sorted headset",
             new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).headSet(9),
@@ -166,7 +166,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void returnsTailset() {
+    void returnsTailset() {
         new Assertion<>(
             "Must return sorted tailset",
             new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).tailSet(6),
@@ -180,7 +180,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void returnsFirst() {
+    void returnsFirst() {
         new Assertion<>(
             "Must return first element",
             new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).first(),
@@ -189,7 +189,7 @@ public final class SortedTest {
     }
 
     @Test
-    public void returnsLast() {
+    void returnsLast() {
         new Assertion<>(
             "Must return last element",
             new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).last(),

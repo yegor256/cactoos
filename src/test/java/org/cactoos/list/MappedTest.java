@@ -29,7 +29,7 @@ import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasSize;
 
 /**
@@ -39,10 +39,10 @@ import org.llorllale.cactoos.matchers.HasSize;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class MappedTest {
+final class MappedTest {
 
     @Test
-    public void behavesAsCollection() {
+    void behavesAsCollection() {
         MatcherAssert.assertThat(
             "Can't behave as a list",
             new Mapped<Integer, Integer>(
@@ -54,7 +54,7 @@ public final class MappedTest {
     }
 
     @Test
-    public void transformsList() throws Exception {
+    void transformsList() throws Exception {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
             new Mapped<String, Text>(
@@ -66,7 +66,7 @@ public final class MappedTest {
     }
 
     @Test
-    public void transformsEmptyList() {
+    void transformsEmptyList() {
         MatcherAssert.assertThat(
             "Can't transform an empty iterable",
             new Mapped<String, Text>(
@@ -78,7 +78,7 @@ public final class MappedTest {
     }
 
     @Test
-    public void string() {
+    void string() {
         MatcherAssert.assertThat(
             "Can't convert to string",
             new Mapped<Integer, Integer>(

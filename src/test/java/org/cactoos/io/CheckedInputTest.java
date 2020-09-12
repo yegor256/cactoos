@@ -25,7 +25,7 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import org.hamcrest.core.IsNull;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CheckedInputTest {
+final class CheckedInputTest {
 
     @Test
-    public void runtimeExceptionIsNotWrapped() {
+    void runtimeExceptionIsNotWrapped() {
         new Assertion<>(
             "must not wrap runtime exception",
             new CheckedInput<>(
@@ -52,7 +52,7 @@ public final class CheckedInputTest {
     }
 
     @Test
-    public void checkedExceptionIsWrapped() {
+    void checkedExceptionIsWrapped() {
         new Assertion<>(
             "must wrap checked exception",
             new CheckedInput<>(
@@ -66,7 +66,7 @@ public final class CheckedInputTest {
     }
 
     @Test
-    public void extraWrappingIgnored() {
+    void extraWrappingIgnored() {
         try {
             new CheckedInput<>(
                 () -> {

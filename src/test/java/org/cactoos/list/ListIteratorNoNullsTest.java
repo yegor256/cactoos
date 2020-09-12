@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -39,10 +39,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class ListIteratorNoNullsTest {
+final class ListIteratorNoNullsTest {
 
     @Test
-    public void mustThrowsErrorIfListIteratorNextValueIsNull() {
+    void mustThrowsErrorIfListIteratorNextValueIsNull() {
         new Assertion<>(
             "must throw error next item is null",
             () -> {
@@ -59,7 +59,7 @@ public final class ListIteratorNoNullsTest {
     }
 
     @Test
-    public void mustThrowsErrorIfListIteratorPreviousValueIsNull() {
+    void mustThrowsErrorIfListIteratorPreviousValueIsNull() {
         new Assertion<>(
             "must throw error if previous value is null",
             () -> {
@@ -78,7 +78,7 @@ public final class ListIteratorNoNullsTest {
     }
 
     @Test
-    public void mustAddToListIterator() {
+    void mustAddToListIterator() {
         new Assertion<>(
             "must add to list iterator",
             () -> {
@@ -97,7 +97,7 @@ public final class ListIteratorNoNullsTest {
     }
 
     @Test
-    public void mustRemoveFromListIterator() {
+    void mustRemoveFromListIterator() {
         new Assertion<>(
             "must remove element from list iterator",
             () -> {
@@ -118,7 +118,7 @@ public final class ListIteratorNoNullsTest {
     }
 
     @Test
-    public void mustSetValueListIterator() {
+    void mustSetValueListIterator() {
         new Assertion<>(
             "must set element into list iterator",
             () -> {

@@ -23,7 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ConstantTest {
+final class ConstantTest {
 
     @Test
-    public void returnsGivenValue() throws Exception {
+    void returnsGivenValue() throws Exception {
         final String value = "Hello World";
         new Assertion<>(
             "Must return given value",
@@ -45,7 +45,7 @@ public final class ConstantTest {
     }
 
     @Test
-    public void alwaysReturnsSameValue() throws Exception {
+    void alwaysReturnsSameValue() throws Exception {
         final Constant<String> constant = new Constant<>("Good Bye!");
         new Assertion<>(
             "Must return same value",

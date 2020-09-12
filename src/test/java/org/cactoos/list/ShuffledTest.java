@@ -24,7 +24,7 @@
 package org.cactoos.list;
 
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class ShuffledTest {
+final class ShuffledTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
+    void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a list",
             new NoNulls<>(
@@ -49,7 +49,7 @@ public final class ShuffledTest {
     }
 
     @Test
-    public void shufflesList() throws Exception {
+    void shufflesList() throws Exception {
         MatcherAssert.assertThat(
             "Can't shuffle elements in list",
             new Shuffled<>(

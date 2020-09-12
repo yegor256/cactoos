@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.FuncApplies;
 import org.llorllale.cactoos.matchers.MatcherOf;
@@ -40,9 +40,9 @@ import org.llorllale.cactoos.matchers.MatcherOf;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class AsyncTest {
+final class AsyncTest {
     @Test
-    public void runsInBackground() {
+    void runsInBackground() {
         new Assertion<>(
             "Can't run in the background",
             new Async<>(
@@ -61,7 +61,7 @@ public final class AsyncTest {
     }
 
     @Test
-    public void runsAsProcInBackground() {
+    void runsAsProcInBackground() {
         new Assertion<>(
             "Can't run proc in the background",
             input -> {
@@ -79,7 +79,7 @@ public final class AsyncTest {
     }
 
     @Test
-    public void runsInBackgroundWithoutFuture() {
+    void runsInBackgroundWithoutFuture() {
         final CountDownLatch latch = new CountDownLatch(1);
         new Assertion<>(
             "Can't run in the background without us touching the Future",
@@ -98,7 +98,7 @@ public final class AsyncTest {
     }
 
     @Test
-    public void runsInBackgroundWithThreadFactory() {
+    void runsInBackgroundWithThreadFactory() {
         final String name = "secret name for thread factory";
         final ThreadFactory factory = r -> new Thread(r, name);
         final CountDownLatch latch = new CountDownLatch(1);
@@ -131,7 +131,7 @@ public final class AsyncTest {
     }
 
     @Test
-    public void runsInBackgroundWithExecutorService() {
+    void runsInBackgroundWithExecutorService() {
         final String name = "secret name for thread executor";
         final ThreadFactory factory = r -> new Thread(r, name);
         final CountDownLatch latch = new CountDownLatch(1);

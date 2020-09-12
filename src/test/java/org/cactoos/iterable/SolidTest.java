@@ -26,7 +26,7 @@ package org.cactoos.iterable;
 import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
-public final class SolidTest {
+final class SolidTest {
 
     @Test
-    public void makesListFromMappedIterable() {
+    void makesListFromMappedIterable() {
         final Iterable<Integer> list = new Solid<>(
             new org.cactoos.list.Mapped<>(
                 i -> i + 1,
@@ -56,7 +56,7 @@ public final class SolidTest {
     }
 
     @Test
-    public void mapsToSameObjects() {
+    void mapsToSameObjects() {
         final Iterable<Scalar<Integer>> list = new Solid<>(
             new org.cactoos.list.Mapped<>(
                 i -> (Scalar<Integer>) () -> i,
@@ -70,14 +70,14 @@ public final class SolidTest {
     }
 
     @Test
-    public void worksInThreadsMultipleTimes() {
+    void worksInThreadsMultipleTimes() {
         for (int count = 0; count < 10; ++count) {
             this.worksInThreads();
         }
     }
 
     @Test
-    public void worksInThreads() {
+    void worksInThreads() {
         MatcherAssert.assertThat(
             "Can't behave as an iterable in multiple threads",
             list -> {

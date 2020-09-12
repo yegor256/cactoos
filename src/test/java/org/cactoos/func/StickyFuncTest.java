@@ -27,7 +27,7 @@ import java.security.SecureRandom;
 import org.cactoos.Func;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyFuncTest {
+final class StickyFuncTest {
 
     @Test
-    public void cachesFuncResults() throws Exception {
+    void cachesFuncResults() throws Exception {
         final Func<Boolean, Integer> func = new StickyFunc<>(
             input -> new SecureRandom().nextInt()
         );
@@ -53,7 +53,7 @@ public final class StickyFuncTest {
     }
 
     @Test
-    public void cachesWithLimitedBuffer() throws Exception {
+    void cachesWithLimitedBuffer() throws Exception {
         final Func<Integer, Integer> func = new StickyFunc<>(
             input -> new SecureRandom().nextInt(), 2
         );
@@ -73,7 +73,7 @@ public final class StickyFuncTest {
     }
 
     @Test
-    public void cachesWithZeroBuffer() throws Exception {
+    void cachesWithZeroBuffer() throws Exception {
         final Func<Boolean, Integer> func = new StickyFunc<>(
             input -> new SecureRandom().nextInt(), 0
         );

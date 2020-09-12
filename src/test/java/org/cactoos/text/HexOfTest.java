@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import org.cactoos.io.BytesOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.28
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class HexOfTest {
+final class HexOfTest {
 
     @Test
-    public void empytString() {
+    void empytString() {
         new Assertion<>(
             "Can't represent an empty string as hexadecimal",
             new HexOf(
@@ -48,7 +48,7 @@ public final class HexOfTest {
     }
 
     @Test
-    public void notEmpytString() throws IOException {
+    void notEmpytString() throws IOException {
         new Assertion<>(
             "Can't represent a string as hexadecimal",
             new HexOf(

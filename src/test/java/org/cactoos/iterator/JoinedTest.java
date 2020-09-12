@@ -27,7 +27,7 @@ import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.Throws;
@@ -38,10 +38,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class JoinedTest {
+final class JoinedTest {
 
     @Test
-    public void joinsIterators() {
+    void joinsIterators() {
         new Assertion<>(
             "Must concatenate mapped iterators together",
             new IterableOf<>(
@@ -57,7 +57,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void callsNextDirectlyOnNonEmptyIterator() {
+    void callsNextDirectlyOnNonEmptyIterator() {
         new Assertion<>(
             "Must call next method directly on non-empty iterator",
             new Joined<Integer>(
@@ -69,7 +69,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void throwsExceptionWhenCallNextOnEmptyIterator() {
+    void throwsExceptionWhenCallNextOnEmptyIterator() {
         new Assertion<>(
             "Must throw an exception",
             () -> new Joined<Integer>(new IteratorOf<>()).next(),

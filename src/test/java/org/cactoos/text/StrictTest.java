@@ -24,7 +24,7 @@
 package org.cactoos.text;
 
 import java.util.regex.Pattern;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
 import org.llorllale.cactoos.matchers.Throws;
@@ -36,14 +36,14 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle MagicNumber (500 line)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class StrictTest {
+final class StrictTest {
 
     /**
      * Ensures that Strict is failing on a negative predicate result.
      * @throws Exception If fails
      */
     @Test
-    public void failsIfPredicateIsNegative() {
+    void failsIfPredicateIsNegative() {
         new Assertion<>(
             "Must throw IllegalArgumentException",
             () -> new Strict(s -> false, new TextOf("text")).asString(),
@@ -59,7 +59,7 @@ public final class StrictTest {
      * predicate result.
      */
     @Test
-    public void returnsUnchangedIfPredicateIsPositive() {
+    void returnsUnchangedIfPredicateIsPositive() {
         new Assertion<>(
             "Given strings are not equal",
             new Strict(s -> true, new TextOf("text")),
@@ -72,7 +72,7 @@ public final class StrictTest {
      * @throws Exception If fails
      */
     @Test
-    public void failsIfNotMatchedWithPattern() {
+    void failsIfNotMatchedWithPattern() {
         new Assertion<>(
             "Must throw IllegalArgumentException",
             () -> new Strict(
@@ -91,7 +91,7 @@ public final class StrictTest {
      * on a matched with pattern string.
      */
     @Test
-    public void returnsUnchangedIfMatchedWithPattern() {
+    void returnsUnchangedIfMatchedWithPattern() {
         new Assertion<>(
             "Given strings are not equal",
             new Strict(

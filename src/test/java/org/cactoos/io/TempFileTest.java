@@ -30,7 +30,7 @@ import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.MatcherOf;
@@ -43,10 +43,10 @@ import org.llorllale.cactoos.matchers.StartsWith;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class TempFileTest {
+final class TempFileTest {
 
     @Test
-    public void createFile() throws Exception {
+    void createFile() throws Exception {
         try (TempFile file = new TempFile()) {
             new Assertion<>(
                 "Must create a temp file",
@@ -57,7 +57,7 @@ public final class TempFileTest {
     }
 
     @Test
-    public void createFileInCustomPath() throws Exception {
+    void createFileInCustomPath() throws Exception {
         final Path custom = Paths.get(System.getProperty("user.home"));
         try (TempFile file = new TempFile(() -> custom, "", "")) {
             new Assertion<>(
@@ -80,7 +80,7 @@ public final class TempFileTest {
     }
 
     @Test
-    public void deleteFile() throws Exception {
+    void deleteFile() throws Exception {
         final TempFile file = new TempFile();
         file.close();
         new Assertion<>(
@@ -91,7 +91,7 @@ public final class TempFileTest {
     }
 
     @Test
-    public void createFileWithPrefix() throws Exception {
+    void createFileWithPrefix() throws Exception {
         final String prefix = new FormattedText(
             "randomPrefix%s",
             System.currentTimeMillis()
@@ -106,7 +106,7 @@ public final class TempFileTest {
     }
 
     @Test
-    public void createFileWithSuffix() throws Exception {
+    void createFileWithSuffix() throws Exception {
         final String suffix = new FormattedText(
             "randomSuffix%s", System.currentTimeMillis()
         ).asString();

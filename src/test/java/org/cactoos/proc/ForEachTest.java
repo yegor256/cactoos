@@ -28,7 +28,7 @@ import java.util.List;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -40,7 +40,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 public class ForEachTest {
 
     @Test
-    public void testProcIterable() throws Exception {
+    void testProcIterable() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new ForEach<Integer>(
             list::add

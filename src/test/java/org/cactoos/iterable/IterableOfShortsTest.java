@@ -25,18 +25,18 @@ package org.cactoos.iterable;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link IterableOfShorts}.
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableOfShortsTest {
+final class IterableOfShortsTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidUsingShortType")
-    public void convertsShortValuesToIterable() {
+    void convertsShortValuesToIterable() {
         final short[] values = new short[]{1, 2, 3};
         MatcherAssert.assertThat(
             new IterableOfShorts(values),

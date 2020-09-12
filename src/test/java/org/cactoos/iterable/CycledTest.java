@@ -28,7 +28,7 @@ import org.cactoos.scalar.ItemAt;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CycledTest {
+final class CycledTest {
 
     @Test
-    public void repeatIterableTest() {
+    void repeatIterableTest() {
         final String expected = "two";
         new Assertion<>(
             "Can't repeat iterable",
@@ -59,7 +59,7 @@ public final class CycledTest {
     }
 
     @Test
-    public void notCycledEmptyTest() throws Exception {
+    void notCycledEmptyTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't generate an empty iterable",
             new LengthOf(

@@ -26,7 +26,7 @@ package org.cactoos.func;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Scalar;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class BiFuncOfTest {
+final class BiFuncOfTest {
 
     @Test
-    public void convertsFuncIntoBiFunc() throws Exception {
+    void convertsFuncIntoBiFunc() throws Exception {
         new Assertion<>(
             "Must convert function into bi-function",
             new BiFuncOf<>(
@@ -50,7 +50,7 @@ public final class BiFuncOfTest {
     }
 
     @Test
-    public void convertsProcIntoBiFunc() throws Exception {
+    void convertsProcIntoBiFunc() throws Exception {
         final AtomicBoolean done = new AtomicBoolean(false);
         new Assertion<>(
             "Must convert procedure into bi-function",
@@ -63,7 +63,7 @@ public final class BiFuncOfTest {
     }
 
     @Test
-    public void convertsRunnableIntoBiFunc() throws Exception {
+    void convertsRunnableIntoBiFunc() throws Exception {
         final AtomicBoolean done = new AtomicBoolean(false);
         new Assertion<>(
             "Must convert runnable into bi-function",
@@ -76,7 +76,7 @@ public final class BiFuncOfTest {
     }
 
     @Test
-    public void convertsValueIntoBiFunc() throws Exception {
+    void convertsValueIntoBiFunc() throws Exception {
         new Assertion<>(
             "Must convert value into bi-function",
             new BiFuncOf<String, Integer, Boolean>(
@@ -87,7 +87,7 @@ public final class BiFuncOfTest {
     }
 
     @Test
-    public void convertsScalarIntoBiFunc() throws Exception {
+    void convertsScalarIntoBiFunc() throws Exception {
         final Scalar<Boolean> scalar = () -> true;
         new Assertion<>(
             "Must convert scalar into bi-function",

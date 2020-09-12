@@ -24,7 +24,7 @@
 package org.cactoos.text;
 
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
 public class StartsWithTest {
 
     @Test
-    public void emptyStartsWithEmpty() throws Exception {
+    void emptyStartsWithEmpty() throws Exception {
         new Assertion<>(
             "Empty is not prefix of empty",
             new StartsWith(
@@ -49,7 +49,7 @@ public class StartsWithTest {
     }
 
     @Test
-    public void textStartsWithEmpty() throws Exception {
+    void textStartsWithEmpty() throws Exception {
         new Assertion<>(
             "Empty is not prefix of any string",
             new StartsWith(
@@ -61,7 +61,7 @@ public class StartsWithTest {
     }
 
     @Test
-    public void textStartsWithPrefix() throws Exception {
+    void textStartsWithPrefix() throws Exception {
         new Assertion<>(
             "Foo is not prefix of FooBar",
             new StartsWith(
@@ -73,7 +73,7 @@ public class StartsWithTest {
     }
 
     @Test
-    public void textStartsWithoutPrefix() throws Exception {
+    void textStartsWithoutPrefix() throws Exception {
         new Assertion<>(
             "Baz is prefix of FooBarBaz",
             new StartsWith(

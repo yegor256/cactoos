@@ -26,7 +26,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import org.cactoos.text.TextOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.EndsWith;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class InputWithFallbackTest {
+final class InputWithFallbackTest {
 
     @Test
-    public void readsAlternativeInput() {
+    void readsAlternativeInput() {
         new Assertion<>(
             "Can't read alternative source",
             new TextOf(
@@ -55,7 +55,7 @@ public final class InputWithFallbackTest {
     }
 
     @Test
-    public void readsAlternativeInputUri() {
+    void readsAlternativeInputUri() {
         new Assertion<>(
             "Can't read alternative source from URI",
             new TextOf(

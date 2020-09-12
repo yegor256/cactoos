@@ -24,7 +24,7 @@
 package org.cactoos.iterable;
 
 import org.cactoos.text.TextOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -34,9 +34,9 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableOfBytesTest {
+final class IterableOfBytesTest {
     @Test
-    public void convertsTextToIterableOfBytes() {
+    void convertsTextToIterableOfBytes() {
         new Assertion<>(
             "Must create Iterable from Text",
             new IterableOfBytes(
@@ -49,7 +49,7 @@ public final class IterableOfBytesTest {
     }
 
     @Test
-    public void convertsBytesToIterable() {
+    void convertsBytesToIterable() {
         final byte[] bytes = "txt".getBytes();
         new Assertion<>(
             "Must create Iterable from bytes",

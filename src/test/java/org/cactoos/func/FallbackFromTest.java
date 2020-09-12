@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.IllegalFormatException;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("unchecked")
-public final class FallbackFromTest {
+final class FallbackFromTest {
 
     @Test
-    public void supportsException() {
+    void supportsException() {
         new Assertion<>(
             "Must support exactly exception class",
             new FallbackFrom<>(
@@ -52,7 +52,7 @@ public final class FallbackFromTest {
     }
 
     @Test
-    public void supportsInheritedException() {
+    void supportsInheritedException() {
         new Assertion<>(
             "Must support inherited exception class",
             new FallbackFrom<>(
@@ -64,7 +64,7 @@ public final class FallbackFromTest {
     }
 
     @Test
-    public void doesNotSupportException() {
+    void doesNotSupportException() {
         new Assertion<>(
             "Must not support unrelated exception class",
             new FallbackFrom<>(

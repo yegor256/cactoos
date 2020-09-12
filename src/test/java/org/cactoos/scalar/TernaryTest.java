@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Ternary}.
@@ -33,10 +33,10 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class TernaryTest {
+final class TernaryTest {
 
     @Test
-    public void conditionTrue() throws Exception {
+    void conditionTrue() throws Exception {
         MatcherAssert.assertThat(
             new Ternary<>(
                 new True(),
@@ -48,7 +48,7 @@ public final class TernaryTest {
     }
 
     @Test
-    public void conditionFalse() throws Exception {
+    void conditionFalse() throws Exception {
         MatcherAssert.assertThat(
             new Ternary<>(
                 new False(),
@@ -60,7 +60,7 @@ public final class TernaryTest {
     }
 
     @Test
-    public void conditionBoolean() throws Exception {
+    void conditionBoolean() throws Exception {
         MatcherAssert.assertThat(
             new Ternary<>(
                 true,
@@ -72,7 +72,7 @@ public final class TernaryTest {
     }
 
     @Test
-    public void conditionFunc() throws Exception {
+    void conditionFunc() throws Exception {
         MatcherAssert.assertThat(
             new Ternary<>(
                 5,

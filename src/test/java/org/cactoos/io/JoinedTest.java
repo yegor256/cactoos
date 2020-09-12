@@ -25,7 +25,7 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import org.cactoos.iterable.IterableOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
@@ -34,13 +34,13 @@ import org.llorllale.cactoos.matchers.InputHasContent;
  * @since 0.36
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class JoinedTest {
+final class JoinedTest {
     /**
      * Must join inputs in the given order.
      * @throws IOException If an error occurs
      */
     @Test
-    public void joinsOk() {
+    void joinsOk() {
         new Assertion<>(
             "Cannot properly join inputs",
             new Joined(
@@ -56,7 +56,7 @@ public final class JoinedTest {
      * Must join inputs of the iterable in the given order.
      */
     @Test
-    public void fromIterable() {
+    void fromIterable() {
         new Assertion<>(
             "Can't join iterable of inputs",
             new Joined(

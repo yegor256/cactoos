@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.RangeOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class FoldedTest {
+final class FoldedTest {
 
     @Test
-    public void skipIterable() throws Exception {
+    void skipIterable() throws Exception {
         new Assertion<>(
             "Must fold elements in iterable",
             new Folded<>(
@@ -54,7 +54,7 @@ public final class FoldedTest {
     }
 
     @Test
-    public void constructedFromVarargs() throws Exception {
+    void constructedFromVarargs() throws Exception {
         new Assertion<>(
             "Must fold elements in vararg array",
             new Folded<>(

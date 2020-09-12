@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class UpperTest {
+final class UpperTest {
 
     @Test
-    public void convertsText() {
+    void convertsText() {
         new Assertion<>(
             "Can't upper case a text",
             new Upper(new TextOf("Hello!")),
@@ -44,7 +44,7 @@ public final class UpperTest {
     }
 
     @Test
-    public void convertsString() {
+    void convertsString() {
         new Assertion<>(
             "Can't upper case a string",
             new Upper("World!"),

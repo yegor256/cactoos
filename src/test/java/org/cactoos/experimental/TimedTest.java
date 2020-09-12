@@ -32,7 +32,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.scalar.RepeatedCallable;
 import org.hamcrest.core.IsNull;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
@@ -43,7 +43,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0.0
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class TimedTest {
+final class TimedTest {
 
     /**
      * First text for test.
@@ -83,7 +83,7 @@ public final class TimedTest {
     @SuppressWarnings({
         "PMD.AvoidThrowingRawExceptionTypes", "PMD.DoNotThrowExceptionInFinally"
     })
-    public void containsResults() throws Exception {
+    void containsResults() throws Exception {
         new RepeatedCallable<>(
             () -> {
                 final ExecutorService extor = Executors.newFixedThreadPool(
@@ -140,7 +140,7 @@ public final class TimedTest {
     @SuppressWarnings({
         "PMD.AvoidThrowingRawExceptionTypes", "PMD.DoNotThrowExceptionInFinally"
     })
-    public void failsDueToTimeoutWithExternalExecutorService()
+    void failsDueToTimeoutWithExternalExecutorService()
         throws Exception {
         new RepeatedCallable<>(
             () -> {
@@ -195,7 +195,7 @@ public final class TimedTest {
      *  expected exception type.
      */
     @Test
-    public void failsDueToException() {
+    void failsDueToException() {
         new Assertion<>(
             "Wraps error into CompletionException",
             () -> new Timed<String>(
@@ -220,7 +220,7 @@ public final class TimedTest {
      *  {@link ExecutorService} was initiated by {@link Timed} itself.
      */
     @Test
-    public void containsValuesWithInlineExecutorService() throws Exception {
+    void containsValuesWithInlineExecutorService() throws Exception {
         new RepeatedCallable<>(
             () -> {
                 new Assertion<>(
@@ -260,7 +260,7 @@ public final class TimedTest {
      *  {@link ExecutorService} was initiated by {@link Timed} itself.
      */
     @Test
-    public void failsDueToTimeoutWithInlineExecutorService() throws Exception {
+    void failsDueToTimeoutWithInlineExecutorService() throws Exception {
         new RepeatedCallable<>(
             () -> {
                 new Assertion<>(

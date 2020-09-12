@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import org.cactoos.text.TextOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class HeadOfTest {
+final class HeadOfTest {
 
     @Test
-    public void readsHeadOfLongerInput() throws Exception {
+    void readsHeadOfLongerInput() throws Exception {
         new Assertion<>(
             "must limit exactly the number of read bytes",
             new TextOf(
@@ -52,7 +52,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void readsEmptyHeadOfInput() throws Exception {
+    void readsEmptyHeadOfInput() throws Exception {
         new Assertion<>(
             "must limit to 0 the number of read bytes",
             new TextOf(
@@ -66,7 +66,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void readsHeadOfShorterInput() throws Exception {
+    void readsHeadOfShorterInput() throws Exception {
         final String input = "readsHeadOfShorterInput";
         new Assertion<>(
             "must limit to at most the number of available bytes",

@@ -27,7 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.proc.ProcOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -38,10 +38,10 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class SyncFuncTest {
+final class SyncFuncTest {
 
     @Test
-    public void funcWorksInThreads() {
+    void funcWorksInThreads() {
         final List<Integer> list = new LinkedList<>();
         final int threads = 100;
         new Assertion<>(
@@ -62,7 +62,7 @@ public final class SyncFuncTest {
     }
 
     @Test
-    public void procWorksInThreads() {
+    void procWorksInThreads() {
         final int threads = 100;
         final int[] counter = new int[]{0};
         new Assertion<>(
@@ -86,7 +86,7 @@ public final class SyncFuncTest {
     }
 
     @Test
-    public void callableWorksInThreads() {
+    void callableWorksInThreads() {
         final int threads = 100;
         final int[] counter = new int[]{0};
         new Assertion<>(
@@ -110,7 +110,7 @@ public final class SyncFuncTest {
     }
 
     @Test
-    public void runnableWorksInThreads() {
+    void runnableWorksInThreads() {
         final int threads = 100;
         final int[] counter = new int[]{0};
         new Assertion<>(

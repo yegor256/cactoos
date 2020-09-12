@@ -23,7 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class MaxOfTest {
+final class MaxOfTest {
 
     @Test
-    public void withPositiveIntegerCollection() {
+    void withPositiveIntegerCollection() {
         new Assertion<>(
             "must select maximum integer of positive integers",
             () -> new MaxOf(1, 2, 3, 4).intValue(),
@@ -62,7 +62,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withPositiveLongCollection() {
+    void withPositiveLongCollection() {
         new Assertion<>(
             "must select maximum integer of positive longs",
             () -> new MaxOf(1L, 2L, 3L, 4L).intValue(),
@@ -86,7 +86,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withPositiveDoubleCollection() {
+    void withPositiveDoubleCollection() {
         new Assertion<>(
             "must select maximum integer of positive doubles",
             () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).intValue(),
@@ -110,7 +110,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withPositiveFloatCollection() {
+    void withPositiveFloatCollection() {
         new Assertion<>(
             "must select maximum integer of positive floats",
             () -> new MaxOf(1.0f, 2.0f, 3.0f, 4.0f).intValue(),
@@ -134,7 +134,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withNegativeIntegerCollection() {
+    void withNegativeIntegerCollection() {
         new Assertion<>(
             "must select maximum integer of negative integers",
             () -> new MaxOf(-1, -2, -3, -4).intValue(),
@@ -158,7 +158,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withNegativeLongCollection() {
+    void withNegativeLongCollection() {
         new Assertion<>(
             "must select maximum integer of negative longs",
             () -> new MaxOf(-1L, -2L, -3L, -4L).intValue(),
@@ -182,7 +182,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withNegativeDoubleCollection() {
+    void withNegativeDoubleCollection() {
         new Assertion<>(
             "must select maximum integer of negative doubles",
             () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).intValue(),
@@ -206,7 +206,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withNegativeFloatCollection() {
+    void withNegativeFloatCollection() {
         new Assertion<>(
             "must select maximum integer of negative floats",
             () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).intValue(),
@@ -230,7 +230,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withPositiveAndNegativeIntegerCollection() {
+    void withPositiveAndNegativeIntegerCollection() {
         new Assertion<>(
             "must select maximum integer of positive and negative integers",
             () -> new MaxOf(-2, -1, 0, 1, 2).intValue(),
@@ -254,7 +254,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withPositiveAndNegativeLongCollection() {
+    void withPositiveAndNegativeLongCollection() {
         new Assertion<>(
             "must select maximum integer of positive and negative longs",
             () -> new MaxOf(-2L, -1L, 0L, 1L, 2L).intValue(),
@@ -278,7 +278,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withPositiveAndNegativeDoubleCollection() {
+    void withPositiveAndNegativeDoubleCollection() {
         new Assertion<>(
             "must select maximum integer of positive and negative doubles",
             () -> new MaxOf(-2.0d, -1.0d, 0.0d, 1.0d, 2.0d).intValue(),
@@ -302,7 +302,7 @@ public final class MaxOfTest {
     }
 
     @Test
-    public void withPositiveAndNegativeFloatCollection() {
+    void withPositiveAndNegativeFloatCollection() {
         new Assertion<>(
             "must select maximum integer of positive and negative floats",
             () -> new MaxOf(-2.0f, -1.0f, 0.0f, 1.0f, 2.0f).intValue(),

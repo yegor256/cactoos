@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class RotatedTest {
+final class RotatedTest {
 
     @Test
-    public void rotateRightText() {
+    void rotateRightText() {
         new Assertion<>(
             "Can't rotate text to right",
             new Rotated(
@@ -47,7 +47,7 @@ public final class RotatedTest {
     }
 
     @Test
-    public void rotateLeftText() {
+    void rotateLeftText() {
         new Assertion<>(
             "Can't rotate text to left",
             new Rotated(
@@ -58,7 +58,7 @@ public final class RotatedTest {
     }
 
     @Test
-    public void noRotateWhenShiftZero() {
+    void noRotateWhenShiftZero() {
         final String nonrotate = "Cactoos!";
         new Assertion<>(
             "Rotate text shift zero",
@@ -70,7 +70,7 @@ public final class RotatedTest {
     }
 
     @Test
-    public void noRotateWhenShiftModZero() {
+    void noRotateWhenShiftModZero() {
         final String nonrotate = "Rotate";
         new Assertion<>(
             "Rotate text shift mod zero",
@@ -82,7 +82,7 @@ public final class RotatedTest {
     }
 
     @Test
-    public void noRotateWhenEmpty() {
+    void noRotateWhenEmpty() {
         new Assertion<>(
             "Rotate text when empty",
             new Rotated(

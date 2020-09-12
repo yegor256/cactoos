@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LoweredTest {
+final class LoweredTest {
 
     @Test
-    public void convertsText() {
+    void convertsText() {
         new Assertion<>(
             "Can't lower case a text",
             new Lowered(new TextOf("HelLo!")),
@@ -44,7 +44,7 @@ public final class LoweredTest {
     }
 
     @Test
-    public void convertsString() {
+    void convertsString() {
         new Assertion<>(
             "Can't lower case a string",
             new Lowered("WoRLd!"),

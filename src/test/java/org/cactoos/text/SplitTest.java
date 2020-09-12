@@ -26,7 +26,7 @@ package org.cactoos.text;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class SplitTest {
+final class SplitTest {
 
     @Test
-    public void splitStringWithStringRegex() throws Exception {
+    void splitStringWithStringRegex() throws Exception {
         new Assertion<>(
             "Must split string with string regex",
             new Split("Hello world!", "\\s+"),
@@ -48,7 +48,7 @@ public final class SplitTest {
     }
 
     @Test
-    public void splitStringWithTextRegex() throws Exception {
+    void splitStringWithTextRegex() throws Exception {
         new Assertion<>(
             "Must split string with text regex",
             new Split("Cactoos OOP!", new TextOf("\\s")),
@@ -57,7 +57,7 @@ public final class SplitTest {
     }
 
     @Test
-    public void splitTextWithStringRegex() throws Exception {
+    void splitTextWithStringRegex() throws Exception {
         new Assertion<>(
             "Must split text with string regex",
             new Split(new TextOf("Cact4Primitives!"), "\\d+"),
@@ -66,7 +66,7 @@ public final class SplitTest {
     }
 
     @Test
-    public void splitTextWithTextRegex() throws Exception {
+    void splitTextWithTextRegex() throws Exception {
         new Assertion<>(
             "Must split text with text regex",
             new Split(new TextOf("Split#OOP"), new TextOf("#")),
@@ -75,7 +75,7 @@ public final class SplitTest {
     }
 
     @Test
-    public void splitStringWithStringRegexAndLimit() throws Exception {
+    void splitStringWithStringRegexAndLimit() throws Exception {
         new Assertion<>(
             "Must split string with string regex and limit",
             new Split("Hello! ! world!", " ", 2),
@@ -84,7 +84,7 @@ public final class SplitTest {
     }
 
     @Test
-    public void splitStringWithTextRegexAndLimit() throws Exception {
+    void splitStringWithTextRegexAndLimit() throws Exception {
         new Assertion<>(
             "Must split string with text regex and limit",
             new Split("Cactoos! ! OOP!", new TextOf(" "), 2),
@@ -93,7 +93,7 @@ public final class SplitTest {
     }
 
     @Test
-    public void splitTextWithStringRegexAndLimit() throws Exception {
+    void splitTextWithStringRegexAndLimit() throws Exception {
         final Text txt = new TextOf("Cact!4Primitives");
         new Assertion<>(
             "Must split text with string regex and limit",
@@ -103,7 +103,7 @@ public final class SplitTest {
     }
 
     @Test
-    public void splitTextWithTextRegexAndLimit() throws Exception {
+    void splitTextWithTextRegexAndLimit() throws Exception {
         final Text txt = new TextOf("Split!# #OOP");
         new Assertion<>(
             "Must split text with text regex and limit",
@@ -113,7 +113,7 @@ public final class SplitTest {
     }
 
     @Test
-    public void splitWithZeroLimit() throws Exception {
+    void splitWithZeroLimit() throws Exception {
         new Assertion<>(
             "Must split string with string regex and zero limit",
             new Split("Hello. The! !world", " +", 0),
@@ -124,7 +124,7 @@ public final class SplitTest {
     }
 
     @Test
-    public void splitWithNegativeLimit() throws Exception {
+    void splitWithNegativeLimit() throws Exception {
         new Assertion<>(
             "Must split string with string regex and negative limit",
             new Split("Hello: The world", " ", -1),

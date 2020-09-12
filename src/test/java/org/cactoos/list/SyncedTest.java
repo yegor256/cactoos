@@ -25,7 +25,7 @@ package org.cactoos.list;
 
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class SyncedTest {
+final class SyncedTest {
 
     @Test
-    public void behavesAsCollection() throws Exception {
+    void behavesAsCollection() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a list",
             new Synced<>(new ListOf<>(1, 0, -1, -1, 2)),
@@ -46,7 +46,7 @@ public final class SyncedTest {
     }
 
     @Test
-    public void worksInThreads() {
+    void worksInThreads() {
         MatcherAssert.assertThat(
             list -> !list.iterator().hasNext(),
             new RunsInThreads<>(new Synced<>(Collections.emptyList()))

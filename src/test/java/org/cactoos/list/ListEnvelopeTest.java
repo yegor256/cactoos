@@ -29,7 +29,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -43,10 +43,10 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
-public final class ListEnvelopeTest {
+final class ListEnvelopeTest {
 
     @Test
-    public void returnsListIteratorWithSupportedSet() {
+    void returnsListIteratorWithSupportedSet() {
         final ListEnvelope<String> list = new StringList("one", "two");
         final ListIterator<String> iterator = list.listIterator(1);
         iterator.next();
@@ -62,7 +62,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void removeIsDelegated() {
+    void removeIsDelegated() {
         final ListEnvelope<String> list = new StringList("one");
         list.remove(0);
         new Assertion<>(
@@ -73,7 +73,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void indexOfIsDelegated() {
+    void indexOfIsDelegated() {
         final ListEnvelope<String> list = new StringList("one");
         new Assertion<>(
             "must return correct index of element",
@@ -83,7 +83,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void addAllIsDelegated() {
+    void addAllIsDelegated() {
         final ListEnvelope<String> list = new StringList("one");
         list.addAll(0, new StringList("two"));
         new Assertion<>(
@@ -94,7 +94,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void setIsDelegatedToTheOriginal() {
+    void setIsDelegatedToTheOriginal() {
         final ListEnvelope<String> list = new StringList("one");
         list.set(0, "zero");
         new Assertion<>(
@@ -105,7 +105,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void addIsDelegated() {
+    void addIsDelegated() {
         final ListEnvelope<String> list = new StringList("one");
         list.add("two");
         new Assertion<>(
@@ -115,7 +115,7 @@ public final class ListEnvelopeTest {
         ).affirm();
     }
 
-    public void returnsSubListWithRemove() {
+    void returnsSubListWithRemove() {
         final ListEnvelope<String> list = new StringList("one");
         list.subList(0, 1).remove(0);
         new Assertion<>(
@@ -126,7 +126,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void returnsSubListWithSupportedSet() {
+    void returnsSubListWithSupportedSet() {
         final List<String> list = new StringList("one");
         list.subList(0, 1).set(0, "zero");
         new Assertion<>(
@@ -139,7 +139,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void addsAtGivenIndex() {
+    void addsAtGivenIndex() {
         final ListEnvelope<String> list = new StringList("one");
         list.add(0, "two");
         new Assertion<>(
@@ -150,7 +150,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void getsAtGivenIndex() {
+    void getsAtGivenIndex() {
         final ListEnvelope<String> list = new StringList("one");
         new Assertion<>(
             "must get 0th value",
@@ -160,7 +160,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void getsLastIndexOfValue() {
+    void getsLastIndexOfValue() {
         final ListEnvelope<String> list = new StringList("one");
         list.add(1, "one");
         new Assertion<>(
@@ -171,7 +171,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void mustReturnPreviousIndex() {
+    void mustReturnPreviousIndex() {
         new Assertion<>(
             "List iterator must return previous index",
             new ListIteratorOf<>(
@@ -182,7 +182,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void mustReturnPreviousElement() {
+    void mustReturnPreviousElement() {
         new Assertion<>(
             "List iterator must return previous element",
             new ListIteratorOf<>(
@@ -194,7 +194,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void mustReturnNextIndex() {
+    void mustReturnNextIndex() {
         new Assertion<>(
             "List iterator must return next index",
             new ListIteratorOf<>(
@@ -205,7 +205,7 @@ public final class ListEnvelopeTest {
     }
 
     @Test
-    public void mustReturnNextElement() {
+    void mustReturnNextElement() {
         new Assertion<>(
             "List iterator must return next item",
             new ListIteratorOf<>(

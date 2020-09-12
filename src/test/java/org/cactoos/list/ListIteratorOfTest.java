@@ -24,7 +24,7 @@
 package org.cactoos.list;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -34,9 +34,9 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class ListIteratorOfTest {
+final class ListIteratorOfTest {
     @Test
-    public void mustReturnPreviousIndex() {
+    void mustReturnPreviousIndex() {
         new Assertion<>(
             "List Iterator must return previous index",
             new ListIteratorOf<>(
@@ -47,7 +47,7 @@ public final class ListIteratorOfTest {
     }
 
     @Test
-    public void mustReturnPreviousElement() {
+    void mustReturnPreviousElement() {
         new Assertion<>(
             "List Iterator must return previous element",
             new ListIteratorOf<>(
@@ -59,7 +59,7 @@ public final class ListIteratorOfTest {
     }
 
     @Test
-    public void mustReturnNextIndex() {
+    void mustReturnNextIndex() {
         new Assertion<>(
             "List iterator must return next index",
             new ListIteratorOf<>(
@@ -70,7 +70,7 @@ public final class ListIteratorOfTest {
     }
 
     @Test
-    public void mustReturnNextElement() {
+    void mustReturnNextElement() {
         new Assertion<>(
             "List iterator must return next item",
             new ListIteratorOf<>(

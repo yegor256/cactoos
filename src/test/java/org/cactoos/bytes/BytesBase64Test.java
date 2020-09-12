@@ -27,7 +27,7 @@ package org.cactoos.bytes;
 import java.util.Base64;
 import org.cactoos.io.BytesOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class BytesBase64Test {
+final class BytesBase64Test {
 
     @Test
-    public void checkEncodeBasic() throws Exception {
+    void checkEncodeBasic() throws Exception {
         new Assertion<>(
             "Must encode bytes using the Base64 basic encoding scheme",
             new BytesBase64(
@@ -54,7 +54,7 @@ public final class BytesBase64Test {
     }
 
     @Test
-    public void checkEncodeUrl() throws Exception {
+    void checkEncodeUrl() throws Exception {
         new Assertion<>(
             "Must encode bytes using the Base64 URL encoding scheme",
             new BytesBase64(
@@ -69,7 +69,7 @@ public final class BytesBase64Test {
     }
 
     @Test
-    public void checkEncodeMime() throws Exception {
+    void checkEncodeMime() throws Exception {
         new Assertion<>(
             "Must encode bytes using the Base64 mime encoding scheme",
             new BytesBase64(

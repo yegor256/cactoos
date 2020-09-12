@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class PaddedStartTest {
+final class PaddedStartTest {
 
     @Test
-    public void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
+    void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
         new Assertion<>(
             "Shouldn't pad the text",
             new PaddedStart(
@@ -49,7 +49,7 @@ public final class PaddedStartTest {
     }
 
     @Test
-    public void somePaddingIfOrigTextIsShorterThanRequestedLength() {
+    void somePaddingIfOrigTextIsShorterThanRequestedLength() {
         new Assertion<>(
             "Should pad chars at start",
             new PaddedStart(
@@ -62,7 +62,7 @@ public final class PaddedStartTest {
     }
 
     @Test
-    public void noPaddingIfRequestedLengthIsNegative()  {
+    void noPaddingIfRequestedLengthIsNegative()  {
         new Assertion<>(
             "Shouldn't consider negative min length",
             new PaddedStart(

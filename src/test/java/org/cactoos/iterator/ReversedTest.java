@@ -26,7 +26,7 @@ package org.cactoos.iterator;
 import org.cactoos.list.ListOf;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.HasSize;
  * @since 0.45
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class ReversedTest {
+final class ReversedTest {
 
     @Test
-    public void reversesIterator() {
+    void reversesIterator() {
         new Assertion<>(
             "Must reverse the iterator",
             new ListOf<>(
@@ -56,7 +56,7 @@ public final class ReversedTest {
     }
 
     @Test
-    public void reversesEmptyList() {
+    void reversesEmptyList() {
         new Assertion<>(
             "Must reverse empty list",
             new ListOf<>(
@@ -69,7 +69,7 @@ public final class ReversedTest {
     }
 
     @Test
-    public void iteratorSizeReversed() {
+    void iteratorSizeReversed() {
         new Assertion<>(
             "Must be the same size",
             new ListOf<>(

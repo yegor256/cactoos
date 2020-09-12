@@ -24,7 +24,7 @@
 package org.cactoos.iterable;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
-public final class JoinedTest {
+final class JoinedTest {
 
     @Test
-    public void joinsIterables() {
+    void joinsIterables() {
         new Assertion<>(
             "Must concatenate iterables together",
             new Joined<String>(
@@ -48,7 +48,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void joinsMappedIterables() {
+    void joinsMappedIterables() {
         new Assertion<>(
             "Must concatenate mapped iterables together",
             new Joined<>(
@@ -62,7 +62,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void joinItemAndIterable() {
+    void joinItemAndIterable() {
         new Assertion<>(
             "Must join item and iterable",
             new Joined<>(

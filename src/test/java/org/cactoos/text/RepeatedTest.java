@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class RepeatedTest {
+final class RepeatedTest {
 
     @Test
-    public void repeatsWordsText() {
+    void repeatsWordsText() {
         new Assertion<>(
             "Can't repeats a text",
             // @checkstyle MagicNumber (1 line)
@@ -45,7 +45,7 @@ public final class RepeatedTest {
     }
 
     @Test
-    public void repeatsCharText() {
+    void repeatsCharText() {
         new Assertion<>(
             "Can't repeats a char",
             // @checkstyle MagicNumber (1 line)

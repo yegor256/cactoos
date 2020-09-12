@@ -27,7 +27,7 @@ import java.security.SecureRandom;
 import org.cactoos.Func;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SolidFuncTest {
+final class SolidFuncTest {
 
     @Test
-    public void cachesFuncResults() throws Exception {
+    void cachesFuncResults() throws Exception {
         final Func<Boolean, Integer> func = new SolidFunc<>(
             input -> new SecureRandom().nextInt()
         );
@@ -52,7 +52,7 @@ public final class SolidFuncTest {
     }
 
     @Test
-    public void worksInThreads() {
+    void worksInThreads() {
         new Assertion<>(
             "Must work well in multiple threads",
             func -> {

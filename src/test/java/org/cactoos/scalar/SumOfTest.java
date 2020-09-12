@@ -28,7 +28,7 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link SumOf}.
@@ -38,10 +38,10 @@ import org.junit.Test;
  * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class SumOfTest {
+final class SumOfTest {
 
     @Test
-    public void withListOfNumbersInt() {
+    void withListOfNumbersInt() {
         MatcherAssert.assertThat(
             new SumOf(1, 2, 3).intValue(),
             new IsEqual<>(6)
@@ -49,7 +49,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void withListOfNumbersDouble() {
+    void withListOfNumbersDouble() {
         MatcherAssert.assertThat(
             new SumOf(1.0d, 2.0d, 3.0d).doubleValue(),
             new IsEqual<>(6.0d)
@@ -57,7 +57,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void withListOfNumbersFloat() {
+    void withListOfNumbersFloat() {
         MatcherAssert.assertThat(
             new SumOf(1.0f, 2.0f, 3.0f).floatValue(),
             new IsEqual<>(6.0f)
@@ -65,7 +65,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void withListOfNumbersLong() {
+    void withListOfNumbersLong() {
         MatcherAssert.assertThat(
             new SumOf(1L, 2L, 3L).longValue(),
             new IsEqual<>(6L)
@@ -73,7 +73,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void withCollectionLong() {
+    void withCollectionLong() {
         MatcherAssert.assertThat(
             new SumOf(
                 new IterableOf<>(1, 2, 3, 4)
@@ -83,7 +83,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void withCollectionInt() {
+    void withCollectionInt() {
         MatcherAssert.assertThat(
             new SumOf(
                 new IterableOf<>(1L, 2L, 3L, 4L)
@@ -93,7 +93,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void withCollectionFloat() {
+    void withCollectionFloat() {
         MatcherAssert.assertThat(
             new SumOf(
                 new IterableOf<>(1.0f, 2.0f, 3.0f, 4.0f)
@@ -103,7 +103,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void withCollectionDouble() {
+    void withCollectionDouble() {
         MatcherAssert.assertThat(
             new SumOf(
                 new IterableOf<>(1.0d, 2.0d, 3.0d, 4.0d)
@@ -113,7 +113,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void withIterableOfInts() {
+    void withIterableOfInts() {
         final Collection<Integer> ints = new ListOf<>(1, 2, 3, 4);
         MatcherAssert.assertThat(
             new SumOf(ints).intValue(),
@@ -122,7 +122,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void overflowIntFromLongValues() {
+    void overflowIntFromLongValues() {
         MatcherAssert.assertThat(
             new SumOf(2_147_483_647L + 1L << 1, 10L).intValue(),
             new IsEqual<>(2_147_483_647)
@@ -130,7 +130,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void overflowIntFromLongValuesIncludingNegative() {
+    void overflowIntFromLongValuesIncludingNegative() {
         MatcherAssert.assertThat(
             new SumOf(
                 2_147_483_647L + 1L << 1,
@@ -142,7 +142,7 @@ public final class SumOfTest {
     }
 
     @Test
-    public void overflowFloatFromLongValues() {
+    void overflowFloatFromLongValues() {
         MatcherAssert.assertThat(
             new SumOf(2_147_483_647L + 1L << 1, 10L).floatValue(),
             new IsEqual<>(4_294_967_300.0f)

@@ -23,7 +23,7 @@
  */
 package org.cactoos.iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.Throws;
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.35
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class NoNullsTest {
+final class NoNullsTest {
 
     @Test
-    public void nextThrowsErrorIfNull() {
+    void nextThrowsErrorIfNull() {
         new Assertion<>(
             "Must throw exception",
             () -> new NoNulls<>(
@@ -55,7 +55,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void nthThrowsErrorIfNull() {
+    void nthThrowsErrorIfNull() {
         new Assertion<>(
             "Must throw exception",
             () -> new TailOf<>(
