@@ -111,10 +111,9 @@ The MIT License (MIT)
       </exclusions>
     </dependency>
     <!--
-     @todo #1411:30min Migrate existing tests to JUnit 5. It mainly means
-      changing the imports and move from Ignore to Disabled annotation as
-      well as replace rules with corresponding annotations. Once this is done
-      remove the dependencies below.
+     @todo #1416:30min Migrate the rest of tests to JUnit 5 Junit 4 Rule
+      should be replaced with a Jupiter counterpart. `@Text(expected=..)`
+      with `Throws`. After that remove this dependencies.
     -->
     <dependency>
       <groupId>org.junit.vintage</groupId>
