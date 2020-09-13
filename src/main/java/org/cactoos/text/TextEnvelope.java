@@ -23,71 +23,46 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
-import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.IoChecked;
-import org.cactoos.scalar.Or;
-import org.cactoos.scalar.Unchecked;
 
 /**
- * Text envelope that provides {@link #equals(Object)} and {@link #hashCode()}
- * methods.
+ * {@link Text} envelope.
+ *
  * @since 0.32
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
 public abstract class TextEnvelope implements Text {
 
     /**
-     * String value of the envelope.
+     * Wrapped Text.
      */
-    private final IoChecked<String> origin;
+    private final Text origin;
 
     /**
      * Ctor.
      * @param text Text representing the text value.
      */
     public TextEnvelope(final Text text) {
-        this(new IoChecked<>(text::asString));
-    }
-
-    /**
-     * Ctor.
-     * @param scalar Scalar representing the text value.
-     */
-    public TextEnvelope(final Scalar<String> scalar) {
-        this.origin = new IoChecked<>(scalar);
+        this.origin = text;
     }
 
     @Override
-    public final String asString() throws IOException {
-        return this.origin.value();
+    public final String asString() throws Exception {
+        return this.origin.asString();
     }
 
     @Override
     public final String toString() {
-        return new UncheckedText(this).asString();
+        return this.origin.toString();
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        return this.origin.equals(obj);
     }
 
     @Override
     public final int hashCode() {
-        return new Unchecked<>(this.origin).value().hashCode();
-    }
-
-    @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
-    public final boolean equals(final Object obj) {
-        return new Unchecked<>(
-            new Or(
-                () -> this == obj,
-                new And(
-                    () -> obj instanceof Text,
-                    () -> new UncheckedText(this)
-                        .asString()
-                        .equals(new UncheckedText((Text) obj).asString())
-                )
-            )
-        ).value();
+        return this.origin.hashCode();
     }
 }

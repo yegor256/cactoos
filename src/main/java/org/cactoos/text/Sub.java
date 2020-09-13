@@ -90,21 +90,23 @@ public final class Sub extends TextEnvelope {
      * @param start Start position in the text
      * @param end End position in the text
      */
-    @SuppressWarnings({"PMD.CallSuperInConstructor",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
     public Sub(final Text text, final Unchecked<Integer> start,
         final Unchecked<Integer> end) {
-        super((Scalar<String>) () -> {
-            int begin = start.value();
-            if (begin < 0) {
-                begin = 0;
-            }
-            int finish = end.value();
-            final String origin = text.asString();
-            if (origin.length() < finish) {
-                finish = origin.length();
-            }
-            return origin.substring(begin, finish);
-        });
+        super(
+            new TextOf(
+                () -> {
+                    int begin = start.value();
+                    if (begin < 0) {
+                        begin = 0;
+                    }
+                    int finish = end.value();
+                    final String origin = text.asString();
+                    if (origin.length() < finish) {
+                        finish = origin.length();
+                    }
+                    return origin.substring(begin, finish);
+                }
+            )
+        );
     }
 }

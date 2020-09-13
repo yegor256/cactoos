@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -41,9 +40,9 @@ public final class Abbreviated extends TextEnvelope {
     private static final int MAX_WIDTH = 80;
 
     /**
-     * The ellipses width.
+     * The ellipses.
      */
-    private static final int ELLIPSES_WIDTH = 3;
+    private static final String ELLIPSES = "...";
 
     /**
      * Ctor.
@@ -81,27 +80,33 @@ public final class Abbreviated extends TextEnvelope {
      * Ctor.
      * @param text The Text
      * @param max Max width of the result string
+     * @todo #1287:30min Introduce `text.Flatten` that takes a `Scalar` of `Text`
+     *  and call `value()` then `asString()` on it. Add some tests for it (including
+     *  for `equals`). Then replace the code below by a composition of `text.Flatten`
+     *  and `scalar.Ternary`. Then do the same for `PrefixOf` and `SuffixOf` using
+     *  `text.Sub`.
      */
-    @SuppressWarnings({
-        "PMD.CallSuperInConstructor",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-        })
     public Abbreviated(final Text text, final int max) {
-        super((Scalar<String>) () -> {
-            final Text abbreviated;
-            if (text.asString().length() <= max) {
-                abbreviated = text;
-            } else {
-                abbreviated = new FormattedText(
-                    "%s...",
-                    new Sub(
-                        text,
-                        0,
-                        max - Abbreviated.ELLIPSES_WIDTH
-                    ).asString()
-                );
-            }
-            return abbreviated.asString();
-        });
+        super(
+            new TextOf(
+                () -> {
+                    final Text abbreviated;
+                    if (text.asString().length() <= max) {
+                        abbreviated = text;
+                    } else {
+                        abbreviated = new FormattedText(
+                            "%s%s",
+                            new Sub(
+                                text,
+                                0,
+                                max - Abbreviated.ELLIPSES.length()
+                            ).asString(),
+                            Abbreviated.ELLIPSES
+                        );
+                    }
+                    return abbreviated.asString();
+                }
+            )
+        );
     }
 }

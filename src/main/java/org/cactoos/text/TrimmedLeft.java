@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -40,18 +39,19 @@ public final class TrimmedLeft extends TextEnvelope {
      * @param text The text
      */
     public TrimmedLeft(final Text text) {
-        super(new Scalar<String>() {
-            @Override
-            public String value() throws Exception {
-                final String string = text.asString();
-                int cursor = 0;
-                while (cursor < string.length() && Character.isWhitespace(
-                    string.charAt(cursor)
-                )) {
-                    cursor = cursor + 1;
+        super(
+            new TextOf(
+                () -> {
+                    final String string = text.asString();
+                    int cursor = 0;
+                    while (cursor < string.length() && Character.isWhitespace(
+                        string.charAt(cursor)
+                    )) {
+                        cursor = cursor + 1;
+                    }
+                    return string.substring(cursor);
                 }
-                return string.substring(cursor);
-            }
-        });
+            )
+        );
     }
 }

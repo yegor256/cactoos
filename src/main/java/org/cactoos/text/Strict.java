@@ -25,7 +25,6 @@ package org.cactoos.text;
 
 import java.util.regex.Pattern;
 import org.cactoos.Func;
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -52,17 +51,21 @@ public final class Strict extends TextEnvelope {
      * @param origin The Text
      */
     public Strict(final Func<String, Boolean> predicate, final Text origin) {
-        super((Scalar<String>) () -> {
-            final String str = origin.asString();
-            if (!predicate.apply(str)) {
-                throw new IllegalArgumentException(
-                    new FormattedText(
-                        "String '%s' does not match a given predicate",
-                        str
-                    ).asString()
-                );
-            }
-            return str;
-        });
+        super(
+            new TextOf(
+                () -> {
+                    final String str = origin.asString();
+                    if (!predicate.apply(str)) {
+                        throw new IllegalArgumentException(
+                            new FormattedText(
+                                "String '%s' does not match a given predicate",
+                                str
+                            ).asString()
+                        );
+                    }
+                    return str;
+                }
+            )
+        );
     }
 }

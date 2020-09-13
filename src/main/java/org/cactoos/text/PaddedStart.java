@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -43,16 +42,20 @@ public final class PaddedStart extends TextEnvelope {
      */
     public PaddedStart(
         final Text text, final int length, final char symbol) {
-        super((Scalar<String>) () -> {
-            final String original = text.asString();
-            return new Joined(
-                new TextOf(""),
-                new Repeated(
-                    new TextOf(symbol), length - original.length()
-                ),
-                text
-            ).asString();
-        });
+        super(
+            new TextOf(
+                () -> {
+                    final String original = text.asString();
+                    return new Joined(
+                        new TextOf(""),
+                        new Repeated(
+                            new TextOf(symbol), length - original.length()
+                        ),
+                        text
+                    ).asString();
+                }
+            )
+        );
     }
 }
 

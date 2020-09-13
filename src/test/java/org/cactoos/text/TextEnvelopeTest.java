@@ -27,7 +27,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
 import org.hamcrest.core.IsEqual;
-import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -52,97 +51,10 @@ final class TextEnvelopeTest {
     }
 
     /**
-     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
-     * that the envelope value is equal another text representing the same
-     * value.
-     */
-    @Test
-    void testEquals() {
-        final String text = "equals";
-        new Assertion<>(
-            "Envelope does not match text representing the same value",
-            new TextEnvelopeDummy(text),
-            new IsEqual<>(new TextOf(text))
-        ).affirm();
-    }
-
-    /**
-     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
-     * that the envelope value is equal another text representing the same
-     * value (in this case a {@link Joined}).
-     */
-    @Test
-    void testEqualsOtherText() {
-        new Assertion<>(
-            "Envelope does not match another text representing the same value",
-            new TextEnvelopeDummy("isequaltoanothertext"),
-            new IsEqual<>(
-                new Joined("", "is", "equal", "to", "another", "text")
-            )
-        ).affirm();
-    }
-
-    /**
-     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
-     * that the envelope value is not equal another object not being a
-     * instance of Text without failing
-     */
-    @Test
-    void testDoesNotEqualsNonTextObject() {
-        new Assertion<>(
-            "Envelope does not match another object which is not a string",
-            new TextEnvelopeDummy("is not equals to null"),
-            new IsNot<>(
-                new IsEqual<>(new Object())
-            )
-        ).affirm();
-    }
-
-    /**
-     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
-     * that the envelope value is not equal to null without failing
-     */
-    @Test
-    @SuppressWarnings("PMD.EqualsNull")
-    void testDoesNotEqualsFalse() {
-        new Assertion<>(
-            "Envelope does not equals null",
-            new TextEnvelopeDummy("is not equals to not Text object")
-                .equals(null),
-            new IsEqual<>(false)
-        ).affirm();
-    }
-
-    /**
-     * Test for {@link TextEnvelope#hashCode()} method. Must assert that
-     * the {@link TextEnvelope} hashCode is equals to the hashCode of
-     * the String it represents.
-     */
-    @Test
-    void testHashCode() {
-        final String hash = "hashCode";
-        new Assertion<>(
-            "Enveloped hashCode does not match its represented String hashcode",
-            new TextEnvelopeDummy(hash).hashCode(),
-            new IsEqual<>(hash.hashCode())
-        ).affirm();
-    }
-
-    /**
      * Dummy class for {@link TextEnvelope} testing.
      * @since 0.32
      */
     private final class TextEnvelopeDummy extends TextEnvelope {
-
-        /**
-         * Ctor.
-         *
-         * @param scalar Text to be enveloped.
-         */
-        TextEnvelopeDummy(final Scalar<String> scalar) {
-            super(scalar);
-        }
-
         /**
          * Ctor.
          *
@@ -161,6 +73,15 @@ final class TextEnvelopeTest {
         TextEnvelopeDummy(final String input,
             final Charset cset) {
             this(() -> new String(input.getBytes(cset), cset));
+        }
+
+        /**
+         * Ctor.
+         *
+         * @param scalar Text to be enveloped.
+         */
+        TextEnvelopeDummy(final Scalar<String> scalar) {
+            super(new TextOf(scalar));
         }
     }
 }

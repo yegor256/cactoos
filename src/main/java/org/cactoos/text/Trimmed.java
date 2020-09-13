@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -40,11 +39,6 @@ public final class Trimmed extends TextEnvelope {
      * @param text The text
      */
     public Trimmed(final Text text) {
-        super(new Scalar<String>() {
-            @Override
-            public String value() throws Exception {
-                return text.asString().trim();
-            }
-        });
+        super(new TextOf(() -> text.asString().trim()));
     }
 }

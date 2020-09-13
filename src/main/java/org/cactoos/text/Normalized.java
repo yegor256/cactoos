@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -48,11 +47,11 @@ public final class Normalized extends TextEnvelope {
      */
     public Normalized(final Text text) {
         super(
-            (Scalar<String>) () -> new Replaced(
+            new Replaced(
                 new Trimmed(text),
                 "\\s+",
                 " "
-            ).asString()
+            )
         );
     }
 }
