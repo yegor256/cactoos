@@ -26,7 +26,7 @@ package org.cactoos.collection;
 import java.util.ArrayList;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -40,10 +40,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class NoNullsTest {
+final class NoNullsTest {
 
     @Test
-    public void throwsErrorIfNullInToArray() {
+    void throwsErrorIfNullInToArray() {
         new Assertion<>(
             "Must throw exception",
             () -> new NoNulls<>(
@@ -57,7 +57,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void throwsErrorIfNullInToArrayWithArg() {
+    void throwsErrorIfNullInToArrayWithArg() {
         new Assertion<>(
             "Must throw exception for the item#1",
             () -> new NoNulls<>(
@@ -71,7 +71,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void throwsErrorIfNullInContainsArg() {
+    void throwsErrorIfNullInContainsArg() {
         new Assertion<>(
             "Must throw exception for #contains(null)",
             () -> new NoNulls<>(
@@ -85,7 +85,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void testSuccessNotNullArg() {
+    void testSuccessNotNullArg() {
         new Assertion<>(
             "Must contain not null argument",
             new NoNulls<>(
@@ -96,7 +96,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void testSuccessAddAll() {
+    void testSuccessAddAll() {
         final NoNulls<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
         nonulls.addAll(new ListOf<>(1, 2));
         new Assertion<>(
@@ -109,7 +109,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void throwsErrorIfNullInAddAll() {
+    void throwsErrorIfNullInAddAll() {
         final NoNulls<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
         new Assertion<>(
             "Must throw exception for nullable #addAll() parameter collection",

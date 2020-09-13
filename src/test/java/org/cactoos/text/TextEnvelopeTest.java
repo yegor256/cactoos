@@ -28,21 +28,21 @@ import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Tests for {@link TextEnvelope}.
  * @since 0.32
  */
-public final class TextEnvelopeTest {
+final class TextEnvelopeTest {
     /**
      * Test for {@link TextEnvelope#asString()} method. Must assert that
      * the envelope asString value is equal to its string value.
      * @throws Exception Throws from asString.
      */
     @Test
-    public void testAsString() throws Exception {
+    void testAsString() throws Exception {
         final String text = "asString";
         new Assertion<>(
             "Envelope value does not match String value",
@@ -57,7 +57,7 @@ public final class TextEnvelopeTest {
      * value.
      */
     @Test
-    public void testEquals() {
+    void testEquals() {
         final String text = "equals";
         new Assertion<>(
             "Envelope does not match text representing the same value",
@@ -72,7 +72,7 @@ public final class TextEnvelopeTest {
      * value (in this case a {@link Joined}).
      */
     @Test
-    public void testEqualsOtherText() {
+    void testEqualsOtherText() {
         new Assertion<>(
             "Envelope does not match another text representing the same value",
             new TextEnvelopeDummy("isequaltoanothertext"),
@@ -88,7 +88,7 @@ public final class TextEnvelopeTest {
      * instance of Text without failing
      */
     @Test
-    public void testDoesNotEqualsNonTextObject() {
+    void testDoesNotEqualsNonTextObject() {
         new Assertion<>(
             "Envelope does not match another object which is not a string",
             new TextEnvelopeDummy("is not equals to null"),
@@ -104,7 +104,7 @@ public final class TextEnvelopeTest {
      */
     @Test
     @SuppressWarnings("PMD.EqualsNull")
-    public void testDoesNotEqualsFalse() {
+    void testDoesNotEqualsFalse() {
         new Assertion<>(
             "Envelope does not equals null",
             new TextEnvelopeDummy("is not equals to not Text object")
@@ -119,7 +119,7 @@ public final class TextEnvelopeTest {
      * the String it represents.
      */
     @Test
-    public void testHashCode() {
+    void testHashCode() {
         final String hash = "hashCode";
         new Assertion<>(
             "Enveloped hashCode does not match its represented String hashcode",

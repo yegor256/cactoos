@@ -25,7 +25,7 @@ package org.cactoos.iterable;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link IterableOfFloats}.
@@ -33,10 +33,10 @@ import org.junit.Test;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableOfFloatsTest {
+final class IterableOfFloatsTest {
 
     @Test
-    public void convertsFloatValuesToIterable() {
+    void convertsFloatValuesToIterable() {
         final float[] values = {1, 2, 3};
         MatcherAssert.assertThat(
             new IterableOfFloats(values),

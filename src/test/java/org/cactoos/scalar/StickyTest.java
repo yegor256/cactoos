@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import java.security.SecureRandom;
 import org.cactoos.Scalar;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyTest {
+final class StickyTest {
 
     @Test
-    public void cachesScalarResults() throws Exception {
+    void cachesScalarResults() throws Exception {
         final Scalar<Integer> scalar = new Sticky<>(
             () -> new SecureRandom().nextInt()
         );

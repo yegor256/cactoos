@@ -27,7 +27,7 @@ import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Constant;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SlicedTest {
+final class SlicedTest {
 
     @Test
-    public void sliceTheMiddle() {
+    void sliceTheMiddle() {
         new Assertion<>(
             "Must return sliced iterator",
             new IterableOf<>(
@@ -61,7 +61,7 @@ public final class SlicedTest {
     }
 
     @Test
-    public void sliceTheHead() {
+    void sliceTheHead() {
         new Assertion<>(
             "Must return iterator with the head elements",
             new IterableOf<>(
@@ -82,7 +82,7 @@ public final class SlicedTest {
     }
 
     @Test
-    public void sliceTheWholeTail() {
+    void sliceTheWholeTail() {
         new Assertion<>(
             "Must return the iterator of tail elements",
             new IterableOf<>(
@@ -102,7 +102,7 @@ public final class SlicedTest {
     }
 
     @Test
-    public void failSlicing() {
+    void failSlicing() {
         new Assertion<>(
             "Must fail on slicing",
             () -> new Constant<>(

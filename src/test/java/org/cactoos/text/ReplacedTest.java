@@ -26,7 +26,7 @@ package org.cactoos.text;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 import org.llorllale.cactoos.matchers.Throws;
@@ -38,10 +38,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
-public final class ReplacedTest {
+final class ReplacedTest {
 
     @Test
-    public void replaceText() {
+    void replaceText() {
         new Assertion<>(
             "Can't replace a text",
             new Replaced(
@@ -53,7 +53,7 @@ public final class ReplacedTest {
     }
 
     @Test
-    public void notReplaceTextWhenSubstringNotFound() {
+    void notReplaceTextWhenSubstringNotFound() {
         final String text = "HelloAgain!";
         new Assertion<>(
             "Replace a text abnormally",
@@ -66,7 +66,7 @@ public final class ReplacedTest {
     }
 
     @Test
-    public void replacesAllOccurrences() {
+    void replacesAllOccurrences() {
         new Assertion<>(
             "Can't replace a text with multiple needle occurrences",
             new Replaced(
@@ -79,7 +79,7 @@ public final class ReplacedTest {
     }
 
     @Test
-    public void regexConstantReplace() {
+    void regexConstantReplace() {
         new Assertion<>(
             "Cannot do simple replacement with regex",
             new Replaced(
@@ -92,7 +92,7 @@ public final class ReplacedTest {
     }
 
     @Test
-    public void regexDynamicReplace() {
+    void regexDynamicReplace() {
         new Assertion<>(
             "Cannot do dynamic string replacement",
             new Replaced(
@@ -105,7 +105,7 @@ public final class ReplacedTest {
     }
 
     @Test
-    public void emptyText() {
+    void emptyText() {
         new Assertion<>(
             "Substitution in empty text with non-empty regex.",
             new Replaced(
@@ -118,7 +118,7 @@ public final class ReplacedTest {
     }
 
     @Test
-    public void emptyRegex() {
+    void emptyRegex() {
         new Assertion<>(
             "Substitution in text with empty regex.",
             new Replaced(
@@ -131,7 +131,7 @@ public final class ReplacedTest {
     }
 
     @Test
-    public void emptyTextAndEmptyRegex() {
+    void emptyTextAndEmptyRegex() {
         new Assertion<>(
             "Substitution in empty text with empty regex.",
             new Replaced(
@@ -144,7 +144,7 @@ public final class ReplacedTest {
     }
 
     @Test
-    public void invalidRegex() {
+    void invalidRegex() {
         final String regex = "invalid_regex{0,";
         new Assertion<>(
             "Doesn't throw proper exception",
@@ -166,7 +166,7 @@ public final class ReplacedTest {
     }
 
     @Test
-    public void nonDefaultCharsetText() {
+    void nonDefaultCharsetText() {
         new Assertion<>(
             "Cannot do dynamic string replacement with non-default charset",
             new Replaced(
@@ -179,7 +179,7 @@ public final class ReplacedTest {
     }
 
     @Test
-    public void unicodeText() {
+    void unicodeText() {
         new Assertion<>(
             "Cannot do dynamic string replacement with unicode characters",
             new Replaced(

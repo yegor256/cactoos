@@ -25,7 +25,7 @@ package org.cactoos.iterable;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
-public final class SyncedTest {
+final class SyncedTest {
 
     @Test
-    public void worksInThreads() {
+    void worksInThreads() {
         MatcherAssert.assertThat(
             "Can't behave as an iterable in multiple threads",
             list -> {

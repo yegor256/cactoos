@@ -37,7 +37,7 @@ import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.IsTrue;
@@ -52,10 +52,10 @@ import org.llorllale.cactoos.matchers.TextIs;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class BytesOfTest {
+final class BytesOfTest {
 
     @Test
-    public void readsLargeInMemoryContent() throws Exception {
+    void readsLargeInMemoryContent() throws Exception {
         final int multiplier = 5_000;
         final String body = "1234567890";
         new Assertion<>(
@@ -75,7 +75,7 @@ public final class BytesOfTest {
     }
 
     @Test
-    public void readsInputIntoBytes() throws Exception {
+    void readsInputIntoBytes() throws Exception {
         new Assertion<>(
             "must read bytes from Input",
             new TextOf(
@@ -91,7 +91,7 @@ public final class BytesOfTest {
     }
 
     @Test
-    public void readsFromReader() throws Exception {
+    void readsFromReader() throws Exception {
         final String source = "hello, друг!";
         new Assertion<>(
             "must read string through a reader",
@@ -112,7 +112,7 @@ public final class BytesOfTest {
     }
 
     @Test
-    public void readsInputIntoBytesWithSmallBuffer() throws Exception {
+    void readsInputIntoBytesWithSmallBuffer() throws Exception {
         new Assertion<>(
             "must read bytes from Input with a small reading buffer",
             new TextOf(
@@ -129,7 +129,7 @@ public final class BytesOfTest {
     }
 
     @Test
-    public void closesInputStream() throws Exception {
+    void closesInputStream() throws Exception {
         final AtomicBoolean closed = new AtomicBoolean();
         final InputStream input = new ByteArrayInputStream(
             "how are you?".getBytes()
@@ -159,7 +159,7 @@ public final class BytesOfTest {
     }
 
     @Test
-    public void asBytes() throws Exception {
+    void asBytes() throws Exception {
         final Text text = new TextOf("Hello!");
         new Assertion<>(
             "Can't convert text into bytes",
@@ -173,7 +173,7 @@ public final class BytesOfTest {
     }
 
     @Test
-    public void asBytesFromIterator() throws Exception {
+    void asBytesFromIterator() throws Exception {
         final Text text = new TextOf("Good bye!");
         new Assertion<>(
             "Can't convert iterator into bytes",
@@ -187,7 +187,7 @@ public final class BytesOfTest {
     }
 
     @Test
-    public void printsStackTrace() {
+    void printsStackTrace() {
         new Assertion<>(
             "Can't print exception stacktrace",
             new TextOf(
@@ -208,7 +208,7 @@ public final class BytesOfTest {
     }
 
     @Test
-    public void printsStackTraceFromArray() {
+    void printsStackTraceFromArray() {
         new Assertion<>(
             "Can't print exception stacktrace from array",
             new TextOf(

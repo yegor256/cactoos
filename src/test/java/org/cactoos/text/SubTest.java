@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SubTest {
+final class SubTest {
 
     @Test
-    public void cutTextWithStartAndEnd() {
+    void cutTextWithStartAndEnd() {
         new Assertion<>(
             "Can't cut a text with start and end",
             // @checkstyle MagicNumber (1 line)
@@ -45,7 +45,7 @@ public final class SubTest {
     }
 
     @Test
-    public void cutTextWithStart() {
+    void cutTextWithStart() {
         new Assertion<>(
             "Can't cut a text with start",
             new Sub("cut here", 2),

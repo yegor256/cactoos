@@ -25,7 +25,7 @@ package org.cactoos;
 
 import org.cactoos.text.NoNulls;
 import org.cactoos.text.TextOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 import org.llorllale.cactoos.matchers.Throws;
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TextTest {
+final class TextTest {
 
     @Test
-    public void failForNullArgument() {
+    void failForNullArgument() {
         new Assertion<>(
             "Must fail for null argument",
             () -> new NoNulls(null).asString(),
@@ -50,7 +50,7 @@ public final class TextTest {
     }
 
     @Test
-    public void failForNullResult() {
+    void failForNullResult() {
         new Assertion<>(
             "Must fail for null result",
             () -> new NoNulls(() -> null).asString(),
@@ -62,7 +62,7 @@ public final class TextTest {
     }
 
     @Test
-    public void okForNoNulls() {
+    void okForNoNulls() {
         final String message = "Hello";
         new Assertion<>(
             "Must work with NoNulls",

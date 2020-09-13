@@ -27,7 +27,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -38,10 +38,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle MagicNumberCheck (100 line)
  * @checkstyle JavadocMethodCheck (100 lines)
  */
-public final class RepeatedCallableTest {
+final class RepeatedCallableTest {
 
     @Test
-    public void runsCallableMultipleTimes() throws Exception {
+    void runsCallableMultipleTimes() throws Exception {
         final AtomicInteger atom = new AtomicInteger();
         final Callable<Integer> callable = new RepeatedCallable<>(
             new CallableOf<>(
@@ -57,7 +57,7 @@ public final class RepeatedCallableTest {
     }
 
     @Test
-    public void throwsIfZero() {
+    void throwsIfZero() {
         new Assertion<>(
             // @checkstyle LineLengthCheck (1 line)
             "Must throws an exception if number of repetitions not be at least 1",

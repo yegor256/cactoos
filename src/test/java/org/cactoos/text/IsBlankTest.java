@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IsBlankTest {
+final class IsBlankTest {
 
     @Test
-    public void determinesEmptyText() {
+    void determinesEmptyText() {
         new Assertion<>(
             "Can't determine an empty text",
             new IsBlank(
@@ -46,7 +46,7 @@ public final class IsBlankTest {
     }
 
     @Test
-    public void determinesBlankText() {
+    void determinesBlankText() {
         new Assertion<>(
             "Can't determine an empty text with spaces",
             new IsBlank(
@@ -57,7 +57,7 @@ public final class IsBlankTest {
     }
 
     @Test
-    public void determinesNotBlankText() {
+    void determinesNotBlankText() {
         new Assertion<>(
             "Can't detect a nonempty text",
             new IsBlank(

@@ -27,7 +27,7 @@ import java.util.List;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Synced;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
@@ -42,7 +42,7 @@ public class ForEachInThreadsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testProcIterable() throws Exception {
+    void testProcIterable() throws Exception {
         final List<Integer> list = new Synced<>(
             new ListOf<>()
         );

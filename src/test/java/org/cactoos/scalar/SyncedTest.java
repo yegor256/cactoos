@@ -27,7 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.Scalar;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SyncedTest {
+final class SyncedTest {
 
     @Test
-    public void worksInThreads() {
+    void worksInThreads() {
         final List<Integer> list = new LinkedList<>();
         final int threads = 100;
         new Assertion<>(

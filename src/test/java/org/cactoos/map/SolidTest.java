@@ -33,7 +33,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -45,10 +45,10 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class SolidTest {
+final class SolidTest {
 
     @Test
-    public void behavesAsMap() {
+    void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
             new Solid<Integer, Integer>(
@@ -60,7 +60,7 @@ public final class SolidTest {
     }
 
     @Test
-    public void worksInThreads() {
+    void worksInThreads() {
         MatcherAssert.assertThat(
             "Can't behave as a map in multiple threads",
             map -> {
@@ -81,7 +81,7 @@ public final class SolidTest {
     }
 
     @Test
-    public void mapsToSameObjects() throws Exception {
+    void mapsToSameObjects() throws Exception {
         final Map<Integer, Scalar<Integer>> map = new Solid<>(
             input -> new MapEntry<>(input, () -> input),
             1, -1, 0, 1
@@ -94,7 +94,7 @@ public final class SolidTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void extendsExistingMapWithArrayOfEntries() {
+    void extendsExistingMapWithArrayOfEntries() {
         final Solid<Integer, Integer> map = new Solid<>(
             new MapEntry<>(0, 10),
             new MapEntry<>(1, 11)
@@ -112,7 +112,7 @@ public final class SolidTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void acceptsEmptyArray() {
+    void acceptsEmptyArray() {
         MatcherAssert.assertThat(
             "Accepts empty array of entries",
             new Solid<Integer, Integer>(
@@ -128,7 +128,7 @@ public final class SolidTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void mapsIterableWithKeyFuncAndValueFunc() {
+    void mapsIterableWithKeyFuncAndValueFunc() {
         final Solid<String, String> map = new Solid<>(
             key -> new Sub(new TextOf(key), 0, 1).asString(),
             value -> new Upper(new TextOf(value)).asString(),
@@ -154,7 +154,7 @@ public final class SolidTest {
     }
 
     @Test
-    public void mapsEmptyIterableWithKeyFuncAndValueFunc() {
+    void mapsEmptyIterableWithKeyFuncAndValueFunc() {
         final Solid<String, String> map = new Solid<>(
             key -> new Sub(new TextOf(key), 0, 1).asString(),
             value -> new Upper(new TextOf(value)).asString(),
@@ -169,7 +169,7 @@ public final class SolidTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void mapsIterableWithMapEntryFunc() {
+    void mapsIterableWithMapEntryFunc() {
         MatcherAssert.assertThat(
             "Function are not applied to entry",
             new Solid<>(
@@ -196,7 +196,7 @@ public final class SolidTest {
     }
 
     @Test
-    public void mapsEmptyIterableWithMapEntryFunc() {
+    void mapsEmptyIterableWithMapEntryFunc() {
         MatcherAssert.assertThat(
             "Empty Iterable cannot be accepted for MapEntry mapping",
             new Solid<>(

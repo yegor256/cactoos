@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 import org.llorllale.cactoos.matchers.TextIs;
@@ -37,9 +37,9 @@ import org.llorllale.cactoos.matchers.TextIs;
  * @since 0.43
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class MappedTest {
+final class MappedTest {
     @Test
-    public void transformsScalar() throws Exception {
+    void transformsScalar() throws Exception {
         new Assertion<>(
             "must transform scalar",
             new Mapped<String, Text>(

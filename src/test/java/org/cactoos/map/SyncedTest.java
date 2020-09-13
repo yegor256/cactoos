@@ -24,7 +24,7 @@
 package org.cactoos.map;
 
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class SyncedTest {
+final class SyncedTest {
 
     @Test
-    public void behavesAsMap() {
+    void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
             new Synced<Integer, Integer>(
@@ -49,7 +49,7 @@ public final class SyncedTest {
     }
 
     @Test
-    public void worksInThreads() {
+    void worksInThreads() {
         MatcherAssert.assertThat(
             "Can't behave as a map in multiple threads",
             map -> {

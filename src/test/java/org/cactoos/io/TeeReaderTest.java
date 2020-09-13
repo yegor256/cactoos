@@ -26,7 +26,7 @@ package org.cactoos.io;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Reader;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.InputHasContent;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TeeReaderTest {
+final class TeeReaderTest {
 
     @Test
-    public void testTeeReader() throws IOException {
+    void testTeeReader() throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final String content = "Hello, товарищ!";
         final Reader reader = new TeeReader(

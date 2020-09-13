@@ -26,7 +26,7 @@ package org.cactoos.iterable;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Partitioned}.
@@ -35,10 +35,10 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
-public final class PartitionedTest {
+final class PartitionedTest {
 
     @Test
-    public void partitionedEmpty() {
+    void partitionedEmpty() {
         MatcherAssert.assertThat(
             "Can't generate a Partitioned without values.",
             new LengthOf(
@@ -49,7 +49,7 @@ public final class PartitionedTest {
     }
 
     @Test
-    public void partitionedWithPartial() {
+    void partitionedWithPartial() {
         MatcherAssert.assertThat(
             "Can't generate a Partitioned with partition size.",
             new LengthOf(

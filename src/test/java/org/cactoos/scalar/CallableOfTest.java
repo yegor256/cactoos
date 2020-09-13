@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class CallableOfTest {
+final class CallableOfTest {
 
     @Test
-    public void convertsRunnableIntoCallable() throws Exception {
+    void convertsRunnableIntoCallable() throws Exception {
         final AtomicBoolean flag = new AtomicBoolean(false);
         new CallableOf<>(
             () -> flag.set(true),
@@ -52,7 +52,7 @@ public final class CallableOfTest {
     }
 
     @Test
-    public void convertsProcIntoCallable() throws Exception {
+    void convertsProcIntoCallable() throws Exception {
         final AtomicBoolean flag = new AtomicBoolean(false);
         new Assertion<>(
             "must return predefined result",
@@ -73,7 +73,7 @@ public final class CallableOfTest {
     }
 
     @Test
-    public void convertsFuncIntoCallable() throws Exception {
+    void convertsFuncIntoCallable() throws Exception {
         new Assertion<>(
             "must return the application of func",
             new CallableOf<>(

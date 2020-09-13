@@ -25,7 +25,7 @@ package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.proc.ProcOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.MatcherOf;
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class RunnableOfTest {
+final class RunnableOfTest {
 
     @Test
-    public void convertsFuncIntoRunnable() {
+    void convertsFuncIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
         new Assertion<>(
             "Can't execute Runnable with Func",
@@ -58,7 +58,7 @@ public final class RunnableOfTest {
     }
 
     @Test
-    public void convertsProcIntoRunnable() {
+    void convertsProcIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
         new Assertion<>(
             "Can't execute Runnable with ProcOf",
@@ -80,7 +80,7 @@ public final class RunnableOfTest {
     }
 
     @Test
-    public void convertsCallableIntoRunnable() {
+    void convertsCallableIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
         new Assertion<>(
             "Can't execute Runnable with Callable",

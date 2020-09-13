@@ -35,7 +35,7 @@ import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.IsAnything;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.StringEndsWith;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Sticky}.
@@ -44,10 +44,10 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class StickyTest {
+final class StickyTest {
 
     @Test
-    public void behavesAsMap() {
+    void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
             new Sticky<Integer, Integer>(
@@ -59,7 +59,7 @@ public final class StickyTest {
     }
 
     @Test
-    public void ignoresChangesInMap() throws Exception {
+    void ignoresChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
         final Map<Integer, Integer> map = new Sticky<>(
             new MapOf<>(
@@ -80,7 +80,7 @@ public final class StickyTest {
     }
 
     @Test
-    public void decoratesEntries() throws Exception {
+    void decoratesEntries() throws Exception {
         MatcherAssert.assertThat(
             "Can't decorate a list of entries",
             new Sticky<String, String>(
@@ -95,7 +95,7 @@ public final class StickyTest {
     }
 
     @Test
-    public void extendsExistingMap() throws Exception {
+    void extendsExistingMap() throws Exception {
         MatcherAssert.assertThat(
             "Can't extend an existing map",
             new Sticky<String, String>(
@@ -114,7 +114,7 @@ public final class StickyTest {
     }
 
     @Test
-    public void extendsExistingMapWithFunc() throws Exception {
+    void extendsExistingMapWithFunc() throws Exception {
         MatcherAssert.assertThat(
             "Can't transform and decorate a list of entries",
             new Sticky<>(
@@ -135,7 +135,7 @@ public final class StickyTest {
     }
 
     @Test
-    public void extendsExistingMapWithTwoFuncs() throws Exception {
+    void extendsExistingMapWithTwoFuncs() throws Exception {
         MatcherAssert.assertThat(
             "Can't transform and decorate a list of entries with two funcs",
             new Sticky<>(

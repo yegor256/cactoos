@@ -25,18 +25,18 @@ package org.cactoos.iterable;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test Case for {@link HeadOf}.
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class HeadOfTest {
+final class HeadOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void headIterable() throws Exception {
+    void headIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't skip elements in iterable",
             new HeadOf<>(

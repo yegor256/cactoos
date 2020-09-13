@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IoCheckedFuncTest {
+final class IoCheckedFuncTest {
 
     @Test
-    public void rethrowsIoException() {
+    void rethrowsIoException() {
         final IOException exception = new IOException("intended");
         new Assertion<>(
             "Must rethrow original IOException",
@@ -54,7 +54,7 @@ public final class IoCheckedFuncTest {
     }
 
     @Test
-    public void rethrowsCheckedToIoException() {
+    void rethrowsCheckedToIoException() {
         new Assertion<>(
             "Must rethrow as IOException",
             () -> new IoCheckedFunc<>(
@@ -69,7 +69,7 @@ public final class IoCheckedFuncTest {
     }
 
     @Test
-    public void runtimeExceptionGoesOut() {
+    void runtimeExceptionGoesOut() {
         new Assertion<>(
             "Must throw runtime exception as is",
             () -> new IoCheckedFunc<>(

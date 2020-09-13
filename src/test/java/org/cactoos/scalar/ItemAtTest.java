@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import java.io.IOException;
 import org.cactoos.iterable.IterableOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
-public final class ItemAtTest {
+final class ItemAtTest {
 
     @Test
-    public void elementByPosIterableTest() {
+    void elementByPosIterableTest() {
         new Assertion<>(
             "must take the item by position from the iterable",
             new ItemAt<>(
@@ -52,7 +52,7 @@ public final class ItemAtTest {
     }
 
     @Test
-    public void elementByPosFallbackIterableTest() {
+    void elementByPosFallbackIterableTest() {
         final int fallback = 5;
         new Assertion<>(
             "must fallback to default one",
@@ -64,7 +64,7 @@ public final class ItemAtTest {
     }
 
     @Test
-    public void elementByPosNoFallbackIterableTest() {
+    void elementByPosNoFallbackIterableTest() {
         new Assertion<>(
             "must take the item by position from the iterable",
             new ItemAt<>(
@@ -76,7 +76,7 @@ public final class ItemAtTest {
     }
 
     @Test
-    public void elementByPosTest() {
+    void elementByPosTest() {
         new Assertion<>(
             "must take the item by position from the iterator",
             new ItemAt<>(
@@ -89,7 +89,7 @@ public final class ItemAtTest {
     }
 
     @Test
-    public void failForNegativePositionTest() {
+    void failForNegativePositionTest() {
         new Assertion<>(
             "Must fail for negative position",
             () -> new ItemAt<>(
@@ -105,7 +105,7 @@ public final class ItemAtTest {
     }
 
     @Test
-    public void failForPosMoreLengthTest() {
+    void failForPosMoreLengthTest() {
         new Assertion<>(
             "Must fail for greater than length position",
             () -> new ItemAt<>(
@@ -121,7 +121,7 @@ public final class ItemAtTest {
     }
 
     @Test
-    public void sameValueTest() throws Exception {
+    void sameValueTest() throws Exception {
         final ItemAt<Integer> item = new ItemAt<>(
             1,
             // @checkstyle MagicNumberCheck (1 lines)

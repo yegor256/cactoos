@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import org.cactoos.text.FormattedText;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ProcOfTest {
+final class ProcOfTest {
 
     @Test
-    public void worksWithRunnable() throws Exception {
+    void worksWithRunnable() throws Exception {
         final String str = "test string";
         final List<String> list = new ArrayList<>(1);
         new ProcOf<String>(
@@ -62,7 +62,7 @@ public final class ProcOfTest {
     }
 
     @Test
-    public void worksWithCallable() throws Exception {
+    void worksWithCallable() throws Exception {
         final String str = "test str";
         final List<String> list = new ArrayList<>(1);
         new ProcOf<String>(
@@ -85,7 +85,7 @@ public final class ProcOfTest {
     }
 
     @Test
-    public void worksWithFunc() throws Exception {
+    void worksWithFunc() throws Exception {
         final String str = "test input";
         final List<String> list = new ArrayList<>(1);
         new ProcOf<String>(

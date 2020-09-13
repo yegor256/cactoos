@@ -24,7 +24,7 @@
 package org.cactoos.scalar;
 
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IoCheckedTest {
+final class IoCheckedTest {
 
     @Test
-    public void rethrowsIoException() {
+    void rethrowsIoException() {
         final IOException exception = new IOException("intended");
         new Assertion<>(
             "Must rethrow IOException",
@@ -52,7 +52,7 @@ public final class IoCheckedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
-    public void throwsException() {
+    void throwsException() {
         new Assertion<>(
             "Must throw IOException from Exception",
             () -> new IoChecked<>(
@@ -65,7 +65,7 @@ public final class IoCheckedTest {
     }
 
     @Test
-    public void runtimeExceptionGoesOut() {
+    void runtimeExceptionGoesOut() {
         final RuntimeException exception = new IllegalStateException("intended to fail here");
         new Assertion<>(
             "Must rethrow RuntimeExcepion",

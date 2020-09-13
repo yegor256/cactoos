@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -41,10 +41,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class RetryTest {
+final class RetryTest {
 
     @Test
-    public void runsScalarMultipleTimes() throws Exception {
+    void runsScalarMultipleTimes() throws Exception {
         new Assertion<>(
             "must retry in case of failure",
             new Retry<>(
@@ -62,7 +62,7 @@ public final class RetryTest {
     }
 
     @Test
-    public void runsScalarTwiceWithDefaults() throws Exception {
+    void runsScalarTwiceWithDefaults() throws Exception {
         // @checkstyle MagicNumberCheck (1 line)
         final AtomicInteger tries = new AtomicInteger(0);
         new Assertion<>(
@@ -81,7 +81,7 @@ public final class RetryTest {
     }
 
     @Test
-    public void runsScalarMultipleTimesIgnoringNegativeDuration()
+    void runsScalarMultipleTimesIgnoringNegativeDuration()
         throws Exception {
         // @checkstyle MagicNumberCheck (2 line)
         final int times = 2;
@@ -105,7 +105,7 @@ public final class RetryTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void runsScalarMultipleTimesWithWait() throws Exception {
+    void runsScalarMultipleTimesWithWait() throws Exception {
         // @checkstyle MagicNumberCheck (3 line)
         final int times = 3;
         final long wait = 500;

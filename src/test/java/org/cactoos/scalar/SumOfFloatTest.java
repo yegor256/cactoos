@@ -23,7 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SumOfFloatTest {
+final class SumOfFloatTest {
 
     @Test
-    public void withListOfScalarsInt() {
+    void withListOfScalarsInt() {
         new Assertion<>(
             "must sum scalars",
             new SumOfFloat(() -> 1f, () -> 2f, () -> 3f),
@@ -46,7 +46,7 @@ public final class SumOfFloatTest {
     }
 
     @Test
-    public void withEmptyList() {
+    void withEmptyList() {
         new Assertion<>(
             "must sum empty list to 0",
             new SumOfFloat(),
@@ -55,7 +55,7 @@ public final class SumOfFloatTest {
     }
 
     @Test
-    public void withListOfOneElement() {
+    void withListOfOneElement() {
         new Assertion<>(
             "must sum singleton list",
             new SumOfFloat(() -> 5f),

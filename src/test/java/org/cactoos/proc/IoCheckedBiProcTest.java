@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.func.IoCheckedBiFunc;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -36,9 +36,9 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IoCheckedBiProcTest {
+final class IoCheckedBiProcTest {
     @Test
-    public void executesWrappedProc() throws Exception {
+    void executesWrappedProc() throws Exception {
         final AtomicInteger counter = new AtomicInteger();
         new IoCheckedBiProc<>(
             (first, second) -> counter.incrementAndGet()
@@ -51,7 +51,7 @@ public final class IoCheckedBiProcTest {
     }
 
     @Test
-    public void wrapsExceptions() {
+    void wrapsExceptions() {
         final IoCheckedBiProc<Object, Object> proc = new IoCheckedBiProc<>(
             (first, second) -> {
                 throw new IOException();
@@ -71,7 +71,7 @@ public final class IoCheckedBiProcTest {
     }
 
     @Test
-    public void rethrowsIoException() {
+    void rethrowsIoException() {
         final IOException exception = new IOException("intended");
         try {
             new IoCheckedBiProc<>(
@@ -89,7 +89,7 @@ public final class IoCheckedBiProcTest {
     }
 
     @Test
-    public void runtimeExceptionGoesOut() {
+    void runtimeExceptionGoesOut() {
         final String msg = "intended to fail here";
         final IoCheckedBiProc<Object, Object> proc = new IoCheckedBiProc<>(
             (fst, scd) -> {

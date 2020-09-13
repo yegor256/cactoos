@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.ListIterator;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.MatcherOf;
@@ -46,7 +46,7 @@ import org.llorllale.cactoos.matchers.Throws;
 public class ImmutableTest {
 
     @Test
-    public void innerListIsDecorated() {
+    void innerListIsDecorated() {
         final List<String> strings = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final List<String> immutable = new Immutable<>(strings);
         strings.add("d");
@@ -58,7 +58,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void returnsListIteratorWithUnsupportedRemove() {
+    void returnsListIteratorWithUnsupportedRemove() {
         new Assertion<>(
             "Must return a list iterator that does not support remove()",
             () -> {
@@ -73,7 +73,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void returnsListIteratorWithUnsupportedAdd() {
+    void returnsListIteratorWithUnsupportedAdd() {
         new Assertion<>(
             "Must return a list iterator that does not support add()",
             () -> {
@@ -88,7 +88,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void subListReturnsListIteratorWithUnsupportedRemove() {
+    void subListReturnsListIteratorWithUnsupportedRemove() {
         new Assertion<>(
             "Must return a subtlist with a list iterator that does not support remove()",
             () -> {
@@ -103,7 +103,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void subListReturnsListIteratorWithUnsupportedAdd() {
+    void subListReturnsListIteratorWithUnsupportedAdd() {
         new Assertion<>(
             "Must return a subtlist with a list iterator that does not support add()",
             () -> {
@@ -118,7 +118,7 @@ public class ImmutableTest {
     }
 
     @Test()
-    public void subListReturnsListIteratorWithUnsupportedSet() {
+    void subListReturnsListIteratorWithUnsupportedSet() {
         new Assertion<>(
             "subList.listIterator().set() must throw exception",
             () -> {
@@ -137,7 +137,7 @@ public class ImmutableTest {
     }
 
     @Test()
-    public void returnsSubListWithUnsupportedSet() {
+    void returnsSubListWithUnsupportedSet() {
         new Assertion<>(
             "subList.set() must throw exception",
             () -> new Immutable<>(new ListOf<>("one")).subList(0, 1).set(0, "zero"),
@@ -149,7 +149,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void size() {
+    void size() {
         new Assertion<>(
             "size() must be equals to original",
             new Immutable<>(
@@ -162,7 +162,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void isEmpty() {
+    void isEmpty() {
         new Assertion<>(
             "isEmpty() must be equals to original",
             new Immutable<>(
@@ -175,7 +175,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void contains() {
+    void contains() {
         new Assertion<>(
             "contains() must be equals to original",
             new Immutable<>(
@@ -188,7 +188,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void iterator() {
+    void iterator() {
         new Assertion<>(
             "iterator() is equal to original",
             () -> new Immutable<>(
@@ -199,7 +199,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void toArray() {
+    void toArray() {
         new Assertion<>(
             "toArray() must be equals to original",
             new Immutable<>(
@@ -212,7 +212,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testToArray() {
+    void testToArray() {
         new Assertion<>(
             "toArray(T[]) must be equals to original",
             new Immutable<>(
@@ -225,7 +225,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void add() {
+    void add() {
         new Assertion<>(
             "add(T) must throw exception",
             () -> new Immutable<>(
@@ -241,7 +241,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void remove() {
+    void remove() {
         new Assertion<>(
             "remove(Object) must throw exception",
             () -> new Immutable<>(
@@ -257,7 +257,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void containsAll() {
+    void containsAll() {
         new Assertion<>(
             "containsAll() must be equals to original",
             new Immutable<>(
@@ -272,7 +272,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void addAll() {
+    void addAll() {
         new Assertion<>(
             "addAll(Collection) must throw exception",
             () -> new Immutable<>(
@@ -288,7 +288,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testAddAll() {
+    void testAddAll() {
         new Assertion<>(
             "addAll(int, Collection) must throw exception",
             () -> new Immutable<>(
@@ -304,7 +304,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void removeAll() {
+    void removeAll() {
         new Assertion<>(
             "removeAll() must throw exception",
             () -> new Immutable<>(
@@ -320,7 +320,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void retainAll() {
+    void retainAll() {
         new Assertion<>(
             "retainAll() must throw exception",
             () -> new Immutable<>(
@@ -336,7 +336,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void clear() {
+    void clear() {
         new Assertion<>(
             "clear() must throw exception",
             () -> {
@@ -355,7 +355,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void get() {
+    void get() {
         new Assertion<>(
             "get() must be equals to original",
             new Immutable<>(
@@ -368,7 +368,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void set() {
+    void set() {
         new Assertion<>(
             "set() must throw exception",
             () -> new Immutable<>(
@@ -384,7 +384,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testAdd() {
+    void testAdd() {
         new Assertion<>(
             "add(int, T) must throw exception",
             () -> {
@@ -403,7 +403,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testRemove() {
+    void testRemove() {
         new Assertion<>(
             "remove(int) must throw exception",
             () -> new Immutable<>(
@@ -419,7 +419,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void indexOf() {
+    void indexOf() {
         new Assertion<>(
             "indexOf() must be equals to original",
             new Immutable<>(
@@ -432,7 +432,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void lastIndexOf() {
+    void lastIndexOf() {
         new Assertion<>(
             "lastIndexOf() must be equals to original",
             new Immutable<>(
@@ -445,7 +445,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void listIterator() {
+    void listIterator() {
         new Assertion<>(
             "listIterator() is equal to original",
             () -> new Immutable<>(
@@ -456,7 +456,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testListIterator() {
+    void testListIterator() {
         new Assertion<>(
             "listIterator(int) is equal to original",
             () -> new Immutable<>(
@@ -467,7 +467,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void subList() {
+    void subList() {
         new Assertion<>(
             "subList() must be equals to original",
             new Immutable<>(
@@ -480,7 +480,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void immutableSubList() {
+    void immutableSubList() {
         new Assertion<>(
             "subList() result must be immutable",
             () -> new Immutable<>(
@@ -496,7 +496,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void notEqualsToObjectOfAnotherType() {
+    void notEqualsToObjectOfAnotherType() {
         new Assertion<>(
             "must not equal to object of another type",
             new Immutable<>(new ListOf<>()),
@@ -505,7 +505,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void notEqualsToListWithDifferentElements() {
+    void notEqualsToListWithDifferentElements() {
         new Assertion<>(
             "must not equal to List with different elements",
             new Immutable<>(new ListOf<>(1, 2)),
@@ -514,7 +514,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void isEqualToItself() {
+    void isEqualToItself() {
         final List<Integer> list = new Immutable<>(new ListOf<>(1, 2));
         new Assertion<>(
             "must be equal to itself",
@@ -524,7 +524,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void isEqualToListWithTheSameElements() {
+    void isEqualToListWithTheSameElements() {
         new Assertion<>(
             "must be equal to List with the same elements",
             new Immutable<>(new ListOf<>(1, 2)),
@@ -533,7 +533,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void equalToEmptyImmutable() {
+    void equalToEmptyImmutable() {
         new Assertion<>(
             "empty Immutable must be equal to empty Immutable",
             new Immutable<>(new ListOf<>()),
@@ -542,7 +542,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testHashCode() {
+    void testHashCode() {
         new Assertion<>(
             "hashCode() must be equal to hashCode of the corresponding List",
             new Immutable<>(new ListOf<>(1, 2)).hashCode(),
@@ -553,7 +553,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         new Assertion<>(
             "toString() must be equal to toString of the corresponding List",
             new Immutable<>(new ListOf<>("a", "b", "c")).toString(),
@@ -562,7 +562,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void subListReturnsListIteratorWithSupportedSet() {
+    void subListReturnsListIteratorWithSupportedSet() {
         new Assertion<>(
             "subList's iterator must be immutable",
             () -> {

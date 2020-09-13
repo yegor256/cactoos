@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TrimmedRightTest {
+final class TrimmedRightTest {
 
     @Test
-    public void convertsText() {
+    void convertsText() {
         new Assertion<>(
             "Can't right trim a text",
             new TrimmedRight(new TextOf("  Hello!   \t ")),
@@ -44,7 +44,7 @@ public final class TrimmedRightTest {
     }
 
     @Test
-    public void trimmedBlankTextIsEmptyText() {
+    void trimmedBlankTextIsEmptyText() {
         new Assertion<>(
             "Can't trim a blank text",
             new TrimmedRight(new TextOf("  \t ")),

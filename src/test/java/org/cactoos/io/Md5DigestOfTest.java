@@ -24,7 +24,7 @@
 package org.cactoos.io;
 
 import org.cactoos.text.HexOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class Md5DigestOfTest {
+final class Md5DigestOfTest {
 
     @Test
-    public void checksumOfEmptyString() {
+    void checksumOfEmptyString() {
         new Assertion<>(
             "Can't calculate the empty string's MD5 checksum",
             new HexOf(
@@ -52,7 +52,7 @@ public final class Md5DigestOfTest {
     }
 
     @Test
-    public void checksumOfString() {
+    void checksumOfString() {
         new Assertion<>(
             "Can't calculate the string's MD5 checksum",
             new HexOf(
@@ -67,7 +67,7 @@ public final class Md5DigestOfTest {
     }
 
     @Test
-    public void checksumFromFile() throws Exception {
+    void checksumFromFile() throws Exception {
         new Assertion<>(
             "Can't calculate the file's MD5 checksum",
             new HexOf(

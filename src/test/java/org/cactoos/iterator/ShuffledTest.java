@@ -24,7 +24,7 @@
 package org.cactoos.iterator;
 
 import org.cactoos.iterable.IterableOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ShuffledTest {
+final class ShuffledTest {
 
     @Test
-    public void shuffleIterable() {
+    void shuffleIterable() {
         new Assertion<>(
             "Must shuffle elements in iterator",
             new IterableOf<>(

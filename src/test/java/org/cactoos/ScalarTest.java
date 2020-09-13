@@ -24,7 +24,7 @@
 package org.cactoos;
 
 import org.cactoos.scalar.NoNulls;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ScalarTest {
+final class ScalarTest {
 
     @Test
-    public void failForNullArgument() {
+    void failForNullArgument() {
         new Assertion<>(
             "Must fail for null argument",
             () -> new NoNulls<>(null).value(),
@@ -48,7 +48,7 @@ public final class ScalarTest {
     }
 
     @Test
-    public void failForNullResult() {
+    void failForNullResult() {
         new Assertion<>(
             "Must fail for null result",
             () -> new NoNulls<>(() -> null).value(),
@@ -60,7 +60,7 @@ public final class ScalarTest {
     }
 
     @Test
-    public void okForNoNulls() throws Exception {
+    void okForNoNulls() throws Exception {
         new NoNulls<>(() -> 1).value();
     }
 }

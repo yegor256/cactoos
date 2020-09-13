@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class EndsWithTest {
+final class EndsWithTest {
 
     @Test
-    public void textMatchesEnding() {
+    void textMatchesEnding() {
         new Assertion<>(
             "Text's ending must match pattern",
             new EndsWith(
@@ -47,7 +47,7 @@ public final class EndsWithTest {
     }
 
     @Test
-    public void textMismatchesEnding() {
+    void textMismatchesEnding() {
         new Assertion<>(
             "Text's ending must not match pattern",
             new EndsWith(

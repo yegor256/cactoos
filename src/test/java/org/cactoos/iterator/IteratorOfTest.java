@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.IsTrue;
@@ -39,10 +39,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class IteratorOfTest {
+final class IteratorOfTest {
 
     @Test
-    public void emptyIteratorDoesNotHaveNext() {
+    void emptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "Must create empty iterator",
             new IteratorOf<>().hasNext(),
@@ -51,7 +51,7 @@ public final class IteratorOfTest {
     }
 
     @Test
-    public void emptyIteratorThrowsException() {
+    void emptyIteratorThrowsException() {
         new Assertion<>(
             "Must throw an exception if empty",
             () -> new IteratorOf<>().next(),
@@ -60,7 +60,7 @@ public final class IteratorOfTest {
     }
 
     @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
+    void nonEmptyIteratorDoesNotHaveNext() {
         final Iterator<Integer> iterator = new IteratorOf<>(
             1, 2, 3
         );
@@ -75,7 +75,7 @@ public final class IteratorOfTest {
     }
 
     @Test
-    public void nonEmptyIteratorThrowsException() {
+    void nonEmptyIteratorThrowsException() {
         final Iterator<Character> iterator = new IteratorOf<>(
             'a', 'b'
         );
@@ -90,7 +90,7 @@ public final class IteratorOfTest {
     }
 
     @Test
-    public void convertStringsToIterator() {
+    void convertStringsToIterator() {
         new Assertion<>(
             "Must create an iterator of strings",
             new IterableOf<>(

@@ -29,7 +29,7 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -39,10 +39,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
  */
-public final class ChainedTest {
+final class ChainedTest {
 
     @Test
-    public void withoutIterable() throws Exception {
+    void withoutIterable() throws Exception {
         new Assertion<>(
             "Must work without iterable",
             new LengthOf(
@@ -62,7 +62,7 @@ public final class ChainedTest {
     }
 
     @Test
-    public void withIterable() throws Exception {
+    void withIterable() throws Exception {
         new Assertion<>(
             "Must work with iterable",
             new LengthOf(

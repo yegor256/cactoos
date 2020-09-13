@@ -24,7 +24,7 @@
 package org.cactoos.iterable;
 
 import org.cactoos.text.TextOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IterableOfCharsTest {
+final class IterableOfCharsTest {
 
     @Test
-    public void convertsCharactersToIterable() {
+    void convertsCharactersToIterable() {
         new Assertion<>(
             "Must create Iterable from Text",
             new IterableOfChars(new TextOf("txt")),

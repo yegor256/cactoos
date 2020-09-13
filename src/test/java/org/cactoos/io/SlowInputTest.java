@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SlowInputTest {
+final class SlowInputTest {
 
     @Test
-    public void calculatesLength() {
+    void calculatesLength() {
         final String text = "What's up, друг?";
         new Assertion<>(
             "Can't calculate the length of Input",
@@ -55,7 +55,7 @@ public final class SlowInputTest {
     }
 
     @Test
-    public void readsFileContentSlowly() {
+    void readsFileContentSlowly() {
         final long size = 100_000L;
         new Assertion<>(
             "Can't calculate length if the input is slow",

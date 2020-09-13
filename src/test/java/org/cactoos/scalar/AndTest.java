@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle MagicNumber (500 line)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class AndTest {
+final class AndTest {
 
     @Test
-    public void allTrue() throws Exception {
+    void allTrue() throws Exception {
         new Assertion<>(
             "Each object must be True",
             new And(
@@ -53,7 +53,7 @@ public final class AndTest {
     }
 
     @Test
-    public void oneFalse() throws Exception {
+    void oneFalse() throws Exception {
         new Assertion<>(
             "One object must be False",
             new And(
@@ -66,7 +66,7 @@ public final class AndTest {
     }
 
     @Test
-    public void allFalse() throws Exception {
+    void allFalse() throws Exception {
         new Assertion<>(
             "Each object must be False",
             new And(
@@ -81,7 +81,7 @@ public final class AndTest {
     }
 
     @Test
-    public void emptyIterator() throws Exception {
+    void emptyIterator() throws Exception {
         new Assertion<>(
             "Iterator must be empty",
             new And(new IterableOf<Scalar<Boolean>>()),
@@ -90,7 +90,7 @@ public final class AndTest {
     }
 
     @Test
-    public void testFuncIterable() throws Exception {
+    void testFuncIterable() throws Exception {
         MatcherAssert.assertThat(
             new And(
                 input -> input > 0,
@@ -101,7 +101,7 @@ public final class AndTest {
     }
 
     @Test
-    public void testFuncIterator() throws Exception {
+    void testFuncIterator() throws Exception {
         MatcherAssert.assertThat(
             new And(
                 input -> input > 0,
@@ -112,7 +112,7 @@ public final class AndTest {
     }
 
     @Test
-    public void testFuncVarargs() throws Exception {
+    void testFuncVarargs() throws Exception {
         MatcherAssert.assertThat(
             new And(
                 input -> input > 0,
@@ -123,7 +123,7 @@ public final class AndTest {
     }
 
     @Test
-    public void testMultipleFuncConditionTrue() throws Exception {
+    void testMultipleFuncConditionTrue() throws Exception {
         MatcherAssert.assertThat(
             "Can't compare subject with true conditions",
             new And(
@@ -137,7 +137,7 @@ public final class AndTest {
     }
 
     @Test
-    public void testMultipleFuncConditionFalse() throws Exception {
+    void testMultipleFuncConditionFalse() throws Exception {
         MatcherAssert.assertThat(
             "Can't compare subject with false conditions",
             new And(

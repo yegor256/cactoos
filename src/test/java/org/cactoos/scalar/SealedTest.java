@@ -24,7 +24,7 @@
 package org.cactoos.scalar;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class SealedTest {
+final class SealedTest {
 
     @Test
-    public void testInteger() {
+    void testInteger() {
         new Assertion<>(
             "Integer did not pass equality",
             new Sealed(100).intValue(),
@@ -47,7 +47,7 @@ public final class SealedTest {
     }
 
     @Test
-    public void testFloat() {
+    void testFloat() {
         new Assertion<>(
             "Float did not pass equality",
             new Sealed(100).floatValue(),
@@ -56,7 +56,7 @@ public final class SealedTest {
     }
 
     @Test
-    public void testLong() {
+    void testLong() {
         new Assertion<>(
             "Long did not pass equality",
             new Sealed(100).longValue(),
@@ -65,7 +65,7 @@ public final class SealedTest {
     }
 
     @Test
-    public void testDouble() {
+    void testDouble() {
         new Assertion<>(
             "Double did not pass equality",
             new Sealed(100).doubleValue(),
@@ -74,7 +74,7 @@ public final class SealedTest {
     }
 
     @Test
-    public void testFailed() {
+    void testFailed() {
         new Assertion<>(
             "Float did not pass equality",
             new Sealed(100).floatValue(),

@@ -27,7 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.func.BiFuncOf;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -39,10 +39,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class AndWithIndexTest {
+final class AndWithIndexTest {
 
     @Test
-    public void iteratesListWithIndex() {
+    void iteratesListWithIndex() {
         final List<String> list = new LinkedList<>();
         new Assertion<>(
             "Must iterate a list with a procedure",

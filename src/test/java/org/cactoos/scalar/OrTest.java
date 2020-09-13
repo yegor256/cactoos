@@ -30,7 +30,7 @@ import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -41,10 +41,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle MagicNumber (500 line)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class OrTest {
+final class OrTest {
 
     @Test
-    public void allFalse() throws Exception {
+    void allFalse() throws Exception {
         MatcherAssert.assertThat(
             new Or(
                 new False(),
@@ -58,7 +58,7 @@ public final class OrTest {
     }
 
     @Test
-    public void oneTrue() throws Exception {
+    void oneTrue() throws Exception {
         MatcherAssert.assertThat(
             new Or(
                 new False(),
@@ -72,7 +72,7 @@ public final class OrTest {
     }
 
     @Test
-    public void allTrue() throws Exception {
+    void allTrue() throws Exception {
         MatcherAssert.assertThat(
             new Or(
                 new IterableOf<Scalar<Boolean>>(
@@ -88,7 +88,7 @@ public final class OrTest {
     }
 
     @Test
-    public void emptyIterator() throws Exception {
+    void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
             new Or(new IterableOf<Scalar<Boolean>>()),
             new ScalarHasValue<>(false)
@@ -96,7 +96,7 @@ public final class OrTest {
     }
 
     @Test
-    public void testProcIterable() throws Exception {
+    void testProcIterable() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new Or(
             (Proc<Integer>) list::add,
@@ -109,7 +109,7 @@ public final class OrTest {
     }
 
     @Test
-    public void testProcIterator() throws Exception {
+    void testProcIterator() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new Or(
             (Proc<Integer>) list::add,
@@ -122,7 +122,7 @@ public final class OrTest {
     }
 
     @Test
-    public void testProcVarargs() throws Exception {
+    void testProcVarargs() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new Or(
             (Proc<Integer>) list::add,
@@ -135,7 +135,7 @@ public final class OrTest {
     }
 
     @Test
-    public void testFuncIterable() throws Exception {
+    void testFuncIterable() throws Exception {
         MatcherAssert.assertThat(
             new Or(
                 input -> input > 0,
@@ -146,7 +146,7 @@ public final class OrTest {
     }
 
     @Test
-    public void testFuncIterator() throws Exception {
+    void testFuncIterator() throws Exception {
         MatcherAssert.assertThat(
             new Or(
                 input -> input > 0,
@@ -157,7 +157,7 @@ public final class OrTest {
     }
 
     @Test
-    public void testFuncVarargs() throws Exception {
+    void testFuncVarargs() throws Exception {
         MatcherAssert.assertThat(
             new Or(
                 input -> input > 0,
@@ -168,7 +168,7 @@ public final class OrTest {
     }
 
     @Test
-    public void testMultipleFuncConditionTrue() throws Exception {
+    void testMultipleFuncConditionTrue() throws Exception {
         MatcherAssert.assertThat(
             "Can't compare subject with true conditions",
             new Or(
@@ -182,7 +182,7 @@ public final class OrTest {
     }
 
     @Test
-    public void testMultipleFuncConditionFalse() throws Exception {
+    void testMultipleFuncConditionFalse() throws Exception {
         MatcherAssert.assertThat(
             "Can't compare subject with false conditions",
             new Or(
