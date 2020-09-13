@@ -40,7 +40,7 @@ final class SolidTest {
     @Test
     void makesListFromMappedIterable() {
         final Iterable<Integer> list = new Solid<>(
-            new org.cactoos.list.Mapped<>(
+            new Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(1, -1, 0, 1)
             )
@@ -58,7 +58,7 @@ final class SolidTest {
     @Test
     void mapsToSameObjects() {
         final Iterable<Scalar<Integer>> list = new Solid<>(
-            new org.cactoos.list.Mapped<>(
+            new Mapped<>(
                 i -> (Scalar<Integer>) () -> i,
                 new IterableOf<>(1, -1, 0, 1)
             )
