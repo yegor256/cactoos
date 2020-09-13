@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -37,21 +36,23 @@ public final class SwappedCase extends TextEnvelope {
      * Ctor.
      * @param text The text
      */
-    @SuppressWarnings({"PMD.CallSuperInConstructor",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
     public SwappedCase(final Text text) {
-        super((Scalar<String>) () -> {
-            final String origin = text.asString();
-            final char[] chars = origin.toCharArray();
-            for (int idx = 0; idx < chars.length; idx += 1) {
-                final char chr = chars[idx];
-                if (Character.isUpperCase(chr)) {
-                    chars[idx] = Character.toLowerCase(chr);
-                } else if (Character.isLowerCase(chr)) {
-                    chars[idx] = Character.toUpperCase(chr);
+        super(
+            new TextOf(
+                () -> {
+                    final String origin = text.asString();
+                    final char[] chars = origin.toCharArray();
+                    for (int idx = 0; idx < chars.length; idx += 1) {
+                        final char chr = chars[idx];
+                        if (Character.isUpperCase(chr)) {
+                            chars[idx] = Character.toLowerCase(chr);
+                        } else if (Character.isLowerCase(chr)) {
+                            chars[idx] = Character.toUpperCase(chr);
+                        }
+                    }
+                    return new String(chars);
                 }
-            }
-            return new String(chars);
-        });
+            )
+        );
     }
 }

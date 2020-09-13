@@ -24,7 +24,6 @@
 package org.cactoos.text;
 
 import java.util.StringJoiner;
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
@@ -83,13 +82,16 @@ public final class Joined extends TextEnvelope {
      * @param txts Texts to be joined
      */
     public Joined(final Text delimit, final Iterable<? extends Text> txts) {
-        super((Scalar<String>) () -> {
-            final StringJoiner joint =
-                new StringJoiner(delimit.asString());
-            for (final Text text : txts) {
-                joint.add(text.asString());
-            }
-            return joint.toString();
-        });
+        super(
+            new TextOf(
+                () -> {
+                    final StringJoiner joint = new StringJoiner(delimit.asString());
+                    for (final Text text : txts) {
+                        joint.add(text.asString());
+                    }
+                    return joint.toString();
+                }
+            )
+        );
     }
 }

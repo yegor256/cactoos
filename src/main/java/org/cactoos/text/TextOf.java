@@ -45,10 +45,13 @@ import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
+import org.cactoos.Text;
 import org.cactoos.io.BytesOf;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.Or;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.time.Iso;
 
 /**
@@ -57,8 +60,20 @@ import org.cactoos.time.Iso;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.12
+ * @todo #1287:30min Introduce `Text` implementations `TextOfScalar`,
+ *  `TextOfBytes` and `TextOfDateTime` (i.e., for all of the constructor
+ *  below that delegates to a `Scalar`) and have `TextOf` extends `TextEnvelope`
+ *  to delegate to those new classes. If possible remove the checkstyle exclusions
+ *  below.
+ * @checkstyle ClassDataAbstractionCouplingCheck (1000 lines)
+ * @checkstyle ClassFanOutComplexityCheck (1000 lines)
  */
-public final class TextOf extends TextEnvelope {
+public final class TextOf implements Text {
+
+    /**
+     * String value of the envelope.
+     */
+    private final Scalar<String> origin;
 
     /**
      * Ctor.
@@ -412,11 +427,9 @@ public final class TextOf extends TextEnvelope {
      */
     public TextOf(final LocalDate date, final DateTimeFormatter formatter) {
         this(
-            new Sticky<>(
-                () -> formatter.format(
-                    ZonedDateTime.of(
-                        date, LocalTime.MIN, ZoneId.systemDefault()
-                    )
+            () -> formatter.format(
+                ZonedDateTime.of(
+                    date, LocalTime.MIN, ZoneId.systemDefault()
                 )
             )
         );
@@ -431,10 +444,7 @@ public final class TextOf extends TextEnvelope {
         final LocalDateTime date,
         final DateTimeFormatter formatter
     ) {
-        super((Scalar<String>) () -> formatter.format(
-            date.atZone(ZoneId.systemDefault())
-            )
-        );
+        this(() -> formatter.format(date.atZone(ZoneId.systemDefault())));
     }
 
     /**
@@ -509,13 +519,14 @@ public final class TextOf extends TextEnvelope {
      * @param formatter The formatter to use.
      */
     public TextOf(final Date date, final DateTimeFormatter formatter) {
-        super((Scalar<String>) () -> new TextOf(
-            ZonedDateTime.ofInstant(
-                date.toInstant(),
-                ZoneId.systemDefault()
-            ),
-            formatter
-        ).asString());
+        this(
+            () -> formatter.format(
+                ZonedDateTime.ofInstant(
+                    date.toInstant(),
+                    ZoneId.systemDefault()
+                )
+            )
+        );
     }
 
     /**
@@ -559,7 +570,7 @@ public final class TextOf extends TextEnvelope {
         final OffsetDateTime date,
         final DateTimeFormatter formatter
     ) {
-        super((Scalar<String>) () -> formatter.format(date));
+        this(() -> formatter.format(date));
     }
 
     /**
@@ -603,7 +614,7 @@ public final class TextOf extends TextEnvelope {
         final ZonedDateTime date,
         final DateTimeFormatter formatter
     ) {
-        super((Scalar<String>) () -> formatter.format(date));
+        this(() -> formatter.format(date));
     }
 
     /**
@@ -611,8 +622,38 @@ public final class TextOf extends TextEnvelope {
      *
      * @param scalar The Scalar of String
      */
-    private TextOf(final Scalar<String> scalar) {
-        super(scalar);
+    public TextOf(final Scalar<String> scalar) {
+        this.origin = scalar;
     }
 
+    @Override
+    public String asString() throws Exception {
+        return this.origin.value();
+    }
+
+    @Override
+    public String toString() {
+        return new UncheckedText(this).asString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new Unchecked<>(this.origin).value().hashCode();
+    }
+
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    public boolean equals(final Object obj) {
+        return new Unchecked<>(
+            new Or(
+                () -> this == obj,
+                new And(
+                    () -> obj instanceof Text,
+                    () -> new UncheckedText(this)
+                        .asString()
+                        .equals(new UncheckedText((Text) obj).asString())
+                )
+            )
+        ).value();
+    }
 }

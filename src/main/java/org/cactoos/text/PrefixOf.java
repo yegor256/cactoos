@@ -23,8 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
-
 /**
  * Returns a text that is before given boundary.
  *
@@ -39,18 +37,20 @@ public final class PrefixOf extends TextEnvelope {
      * @param text Text representing the text value
      * @param boundary String to which text will be split
      */
-    @SuppressWarnings({"PMD.CallSuperInConstructor",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
     public PrefixOf(final String text, final String boundary) {
-        super((Scalar<String>) () -> {
-            final String prefix;
-            final int idx = text.indexOf(boundary);
-            if (idx >= 0) {
-                prefix = text.substring(0, idx);
-            } else {
-                prefix = text;
-            }
-            return prefix;
-        });
+        super(
+            new TextOf(
+                () -> {
+                    final String prefix;
+                    final int idx = text.indexOf(boundary);
+                    if (idx >= 0) {
+                        prefix = text.substring(0, idx);
+                    } else {
+                        prefix = text;
+                    }
+                    return prefix;
+                }
+            )
+        );
     }
 }

@@ -23,8 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
-
 /**
  * Returns a text that is after given boundary.
  *
@@ -39,18 +37,20 @@ public final class SuffixOf extends TextEnvelope {
      * @param text Text representing the text value
      * @param boundary String after which text will be split
      */
-    @SuppressWarnings({"PMD.CallSuperInConstructor",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
     public SuffixOf(final String text, final String boundary) {
-        super((Scalar<String>) () -> {
-            final String suffix;
-            final int idx = text.indexOf(boundary);
-            if (idx >= 0) {
-                suffix = text.substring(idx + boundary.length());
-            } else {
-                suffix = "";
-            }
-            return suffix;
-        });
+        super(
+            new TextOf(
+                () -> {
+                    final String suffix;
+                    final int idx = text.indexOf(boundary);
+                    if (idx >= 0) {
+                        suffix = text.substring(idx + boundary.length());
+                    } else {
+                        suffix = "";
+                    }
+                    return suffix;
+                }
+            )
+        );
     }
 }

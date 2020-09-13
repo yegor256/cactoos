@@ -30,8 +30,6 @@ import java.util.regex.PatternSyntaxException;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.IoCheckedFunc;
-import org.cactoos.scalar.IoChecked;
 
 /**
  * Replace the Text.
@@ -84,21 +82,21 @@ public final class Replaced extends TextEnvelope {
         final Text text,
         final Scalar<Pattern> regex,
         final Func<Matcher, String> func) {
-        super((Scalar<String>) () -> {
-            final StringBuffer buffer = new StringBuffer();
-            final Matcher matcher = new IoChecked<>(regex)
-                .value()
-                .matcher(text.asString());
-            final IoCheckedFunc<Matcher, String> safe =
-                new IoCheckedFunc<>(func);
-            while (matcher.find()) {
-                matcher.appendReplacement(
-                    buffer,
-                    safe.apply(matcher)
-                );
-            }
-            matcher.appendTail(buffer);
-            return buffer.toString();
-        });
+        super(
+            new TextOf(
+                () -> {
+                    final StringBuffer buffer = new StringBuffer();
+                    final Matcher matcher = regex.value().matcher(text.asString());
+                    while (matcher.find()) {
+                        matcher.appendReplacement(
+                            buffer,
+                            func.apply(matcher)
+                        );
+                    }
+                    matcher.appendTail(buffer);
+                    return buffer.toString();
+                }
+            )
+        );
     }
 }

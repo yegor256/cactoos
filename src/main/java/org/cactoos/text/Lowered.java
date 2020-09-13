@@ -24,7 +24,6 @@
 package org.cactoos.text;
 
 import java.util.Locale;
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -56,9 +55,13 @@ public final class Lowered extends TextEnvelope {
      * Ctor.
      * @param text The text
      * @param locale The locale
+     * @todo #1287:30min Introduce `text.Mapped` that takes a `Text` and
+     *  a `Func` from `String` to `String`. Add some tests (included for
+     *  `equals`). Once it is done, replace the code below by the use of
+     *  `text.Mapped`. Do the same for all the one-liner mapping of the
+     *  `text` package (e.g., `Upper`, `Trimmed`).
      */
     public Lowered(final Text text, final Locale locale) {
-        super((Scalar<String>) () -> text.asString().toLowerCase(locale));
+        super(new TextOf(() -> text.asString().toLowerCase(locale)));
     }
-
 }

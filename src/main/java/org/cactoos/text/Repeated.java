@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -50,12 +49,16 @@ public final class Repeated extends TextEnvelope {
      * @param count How many times repeat the Text
      */
     public Repeated(final Text text, final int count) {
-        super((Scalar<String>) () -> {
-            final StringBuilder out = new StringBuilder();
-            for (int cnt = 0; cnt < count; ++cnt) {
-                out.append(text.asString());
-            }
-            return out.toString();
-        });
+        super(
+            new TextOf(
+                () -> {
+                    final StringBuilder out = new StringBuilder();
+                    for (int cnt = 0; cnt < count; ++cnt) {
+                        out.append(text.asString());
+                    }
+                    return out.toString();
+                }
+            )
+        );
     }
 }

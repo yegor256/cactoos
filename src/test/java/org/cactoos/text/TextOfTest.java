@@ -370,7 +370,7 @@ final class TextOfTest {
     }
 
     @Test
-    void readsCurrentLocalDateAsText() throws IOException {
+    void readsCurrentLocalDateAsText() throws Exception {
         new Assertion<>(
             "Can't format a LocalDate with ISO format.",
             new TextOf(LocalDate.now()).asString(),
@@ -422,7 +422,7 @@ final class TextOfTest {
     }
 
     @Test
-    void currentLocalDateTimeAsText() throws IOException {
+    void currentLocalDateTimeAsText() throws Exception {
         new Assertion<>(
             "Can't format a LocalDateTime with ISO format.",
             new TextOf(LocalDateTime.now()).asString(),
@@ -512,7 +512,7 @@ final class TextOfTest {
     }
 
     @Test
-    void currentOffsetDateTimeAsText() throws IOException {
+    void currentOffsetDateTimeAsText() throws Exception {
         new Assertion<>(
             "Can't format a OffsetDateTime with ISO format.",
             new TextOf(OffsetDateTime.now()).asString(),
@@ -559,7 +559,7 @@ final class TextOfTest {
     }
 
     @Test
-    void currentZonedDateTimeAsText() throws IOException {
+    void currentZonedDateTimeAsText() throws Exception {
         new Assertion<>(
             "Can't format a ZonedDateTime with ISO format.",
             new TextOf(ZonedDateTime.now()).asString(),
@@ -568,13 +568,90 @@ final class TextOfTest {
     }
 
     @Test
-    void readsIteratorToText() throws IOException {
+    void readsIteratorToText() throws Exception {
         new Assertion<>(
             "Can't read Iterator to Text",
             new TextOf(
                 new IteratorOfChars("qwer")
             ).asString(),
             new IsEqual<>("qwer")
+        ).affirm();
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is equal another text representing the same
+     * value.
+     */
+    @Test
+    void testEquals() {
+        final String text = "equals";
+        new Assertion<>(
+            "Must match text representing the same value",
+            new TextOf(text),
+            new IsEqual<>(new TextOf(text))
+        ).affirm();
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is equal another text representing the same
+     * value (in this case a {@link Joined}).
+     */
+    @Test
+    void testEqualsOtherText() {
+        new Assertion<>(
+            "Must match another text representing the same value",
+            new TextOf("isequaltoanothertext"),
+            new IsEqual<>(
+                new Joined("", "is", "equal", "to", "another", "text")
+            )
+        ).affirm();
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is not equal another object not being a
+     * instance of Text without failing
+     */
+    @Test
+    void testDoesNotEqualsNonTextObject() {
+        new Assertion<>(
+            "Must match another object which is not a string",
+            new TextOf("is not equals to null"),
+            new IsNot<>(
+                new IsEqual<>(new Object())
+            )
+        ).affirm();
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is not equal to null without failing
+     */
+    @Test
+    @SuppressWarnings("PMD.EqualsNull")
+    void testDoesNotEqualsFalse() {
+        new Assertion<>(
+            "Must not equals null",
+            new TextOf("is not equals to not Text object")
+                .equals(null),
+            new IsEqual<>(false)
+        ).affirm();
+    }
+
+    /**
+     * Test for {@link TextEnvelope#hashCode()} method. Must assert that
+     * the {@link TextEnvelope} hashCode is equals to the hashCode of
+     * the String it represents.
+     */
+    @Test
+    void testHashCode() {
+        final String hash = "hashCode";
+        new Assertion<>(
+            "Must match its represented String hashcode",
+            new TextOf(hash).hashCode(),
+            new IsEqual<>(hash.hashCode())
         ).affirm();
     }
 }
