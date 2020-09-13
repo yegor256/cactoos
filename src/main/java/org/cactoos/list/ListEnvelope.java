@@ -29,7 +29,7 @@ import java.util.ListIterator;
 import org.cactoos.collection.CollectionEnvelope;
 
 /**
- * {@link List} envelope that allows mutations.
+ * {@link List} envelope.
  *
  * <p>There is no thread-safety guarantee.</p>
  *

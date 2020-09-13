@@ -174,9 +174,7 @@ final class ListEnvelopeTest {
     void mustReturnPreviousIndex() {
         new Assertion<>(
             "List iterator must return previous index",
-            new ListIteratorOf<>(
-                new ListOf<>(1)
-            ).previousIndex(),
+            new StringList("1").listIterator().previousIndex(),
             new IsEqual<>(-1)
         ).affirm();
     }
@@ -185,11 +183,8 @@ final class ListEnvelopeTest {
     void mustReturnPreviousElement() {
         new Assertion<>(
             "List iterator must return previous element",
-            new ListIteratorOf<>(
-                new ListOf<>(3, 7),
-                1
-            ).previous(),
-            new IsEqual<>(3)
+            new StringList("3", "7").listIterator(1).previous(),
+            new IsEqual<>("3")
         ).affirm();
     }
 
@@ -197,9 +192,7 @@ final class ListEnvelopeTest {
     void mustReturnNextIndex() {
         new Assertion<>(
             "List iterator must return next index",
-            new ListIteratorOf<>(
-                new ListOf<>(1)
-            ).nextIndex(),
+            new StringList("1").listIterator().nextIndex(),
             new IsEqual<>(0)
         ).affirm();
     }
@@ -208,11 +201,8 @@ final class ListEnvelopeTest {
     void mustReturnNextElement() {
         new Assertion<>(
             "List iterator must return next item",
-            new ListIteratorOf<>(
-                new  ListOf<>(5, 11, 13),
-                1
-            ).next(),
-            new IsEqual<>(11)
+            new  StringList("5", "11", "13").listIterator(1).next(),
+            new IsEqual<>("11")
         ).affirm();
     }
 
@@ -221,5 +211,4 @@ final class ListEnvelopeTest {
             super(new ListOf<>(elements));
         }
     }
-
 }

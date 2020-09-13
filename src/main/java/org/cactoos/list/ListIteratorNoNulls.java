@@ -33,6 +33,8 @@ import java.util.ListIterator;
  *
  * @param <T> Element type
  * @since 0.39
+ * @todo #1247:30min Add also some null checks both to the `set` and
+ *  the `add` methods, then also add some tests to validate this behaviour.
  */
 public final class ListIteratorNoNulls<T> implements ListIterator<T> {
 
@@ -47,7 +49,7 @@ public final class ListIteratorNoNulls<T> implements ListIterator<T> {
      * @param src List iterator.
      */
     public ListIteratorNoNulls(final ListIterator<T> src) {
-        this.listiterator = new ListIteratorOf<>(src);
+        this.listiterator = src;
     }
 
     @Override
