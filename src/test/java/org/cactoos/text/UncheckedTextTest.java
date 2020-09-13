@@ -25,6 +25,7 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.object.HasToString;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -52,8 +53,10 @@ public final class UncheckedTextTest {
             "Must implement #toString which returns the same of #asString",
             new UncheckedText(
                 new TextOf(text)
-            ).toString(),
-            new IsEqual<>(text)
+            ),
+            new HasToString<>(
+                new IsEqual<>(text)
+            )
         ).affirm();
     }
 
