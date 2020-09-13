@@ -93,4 +93,9 @@ public final class UncheckedText implements Text {
         return txt;
     }
 
+    @Override
+    public String toString() {
+        return this.asString();
+    }
+
 }

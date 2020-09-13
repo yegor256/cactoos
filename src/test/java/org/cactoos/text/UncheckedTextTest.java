@@ -24,7 +24,9 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link UncheckedText}.
@@ -41,6 +43,18 @@ public final class UncheckedTextTest {
                 throw new IOException("intended");
             }
         ).asString();
+    }
+
+    @Test
+    public void toStringMustReturnSameOfAsString() {
+        final String text = "one";
+        new Assertion<>(
+            "Must implement #toString which returns the same of #asString",
+            new UncheckedText(
+                new TextOf(text)
+            ).toString(),
+            new IsEqual<>(text)
+        ).affirm();
     }
 
 }
