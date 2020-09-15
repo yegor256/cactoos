@@ -25,15 +25,7 @@ package org.cactoos.map;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.EqualsNullable;
-import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.Or;
-import org.cactoos.scalar.SumOfInt;
-import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.TextOf;
 
 /**
@@ -59,39 +51,39 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     /**
      * The map.
      */
-    private final Unchecked<Map<X, Y>> map;
+    private final Map<X, Y> map;
 
     /**
      * Ctor.
-     * @param scalar The scalar
+     * @param original The original map.
      */
-    public MapEnvelope(final Scalar<Map<X, Y>> scalar) {
-        this.map = new Unchecked<>(scalar);
+    public MapEnvelope(final Map<X, Y> original) {
+        this.map = original;
     }
 
     @Override
     public final int size() {
-        return this.map.value().size();
+        return this.map.size();
     }
 
     @Override
     public final boolean isEmpty() {
-        return this.map.value().isEmpty();
+        return this.map.isEmpty();
     }
 
     @Override
     public final boolean containsKey(final Object key) {
-        return this.map.value().containsKey(key);
+        return this.map.containsKey(key);
     }
 
     @Override
     public final boolean containsValue(final Object value) {
-        return this.map.value().containsValue(value);
+        return this.map.containsValue(value);
     }
 
     @Override
     public final Y get(final Object key) {
-        return this.map.value().get(key);
+        return this.map.get(key);
     }
 
     @Override
@@ -124,17 +116,17 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     @Override
     public final Set<X> keySet() {
-        return this.map.value().keySet();
+        return this.map.keySet();
     }
 
     @Override
     public final Collection<Y> values() {
-        return this.map.value().values();
+        return this.map.values();
     }
 
     @Override
     public final Set<Map.Entry<X, Y>> entrySet() {
-        return this.map.value().entrySet();
+        return this.map.entrySet();
     }
 
     @Override
@@ -147,55 +139,13 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
     public final boolean equals(final Object other) {
-        return new Unchecked<>(
-            new Or(
-                () -> this == other,
-                new And(
-                    () -> Map.class.isAssignableFrom(other.getClass()),
-                    () -> this.size() == ((Map<?, ?>) other).size(),
-                    () -> this.contentsEqual((Map<?, ?>) other)
-                )
-            )
-        ).value();
+        return this.map.equals(other);
     }
 
-    // @checkstyle MagicNumberCheck (30 lines)
     @Override
     public final int hashCode() {
-        return new Unchecked<>(
-            new Folded<>(
-                42,
-                (hash, entry) -> new SumOfInt(
-                    () -> 37 * hash,
-                    () -> entry.getKey().hashCode(),
-                    () -> Objects.hashCode(entry.getValue())
-                ).value(),
-                this.map.value().entrySet()
-            )
-        ).value();
+        return this.map.hashCode();
     }
 
-    /**
-     * Indicates whether contents of an other {@code Map} is the same
-     * as contents of this one on entry-by-entry basis.
-     * @param other Another instance of {@code Map} to compare with
-     * @return True if contents are equal false otherwise
-     */
-    private Boolean contentsEqual(final Map<?, ?> other) {
-        return new Unchecked<>(
-            new And(
-                entry -> {
-                    return new And(
-                        () -> other.containsKey(entry.getKey()),
-                        () -> new EqualsNullable(
-                            () -> other.get(entry.getKey()),
-                            entry.getValue()
-                        ).value()
-                    ).value();
-                }, this.entrySet()
-            )
-        ).value();
-    }
 }

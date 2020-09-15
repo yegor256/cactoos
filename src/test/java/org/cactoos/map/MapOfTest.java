@@ -24,19 +24,15 @@
 package org.cactoos.map;
 
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterator.Repeated;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsAnything;
 import org.hamcrest.core.IsEqual;
-import org.hamcrest.core.IsNot;
 import org.hamcrest.core.StringStartsWith;
 import org.junit.jupiter.api.Test;
 
@@ -75,24 +71,6 @@ final class MapOfTest {
                 new IsEqual<>(0),
                 new StringStartsWith("hello")
             )
-        );
-    }
-
-    @Test
-    void sensesChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final Map<Integer, Integer> map = new MapOf<>(
-            () -> new Repeated<>(
-                size.incrementAndGet(), () -> new MapEntry<>(
-                    new SecureRandom().nextInt(),
-                    1
-                )
-            )
-        );
-        MatcherAssert.assertThat(
-            "Can't sense the changes in the underlying map",
-            map.size(),
-            new IsNot<>(new IsEqual<>(map.size()))
         );
     }
 

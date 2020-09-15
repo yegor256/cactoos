@@ -332,7 +332,7 @@ public final class MapEnvelopeTest {
      */
     private static class DerivedMapEnvelope<K, V> extends MapEnvelope<K, V> {
         DerivedMapEnvelope(final Map<K, V> content) {
-            super(() -> content);
+            super(content);
         }
     }
 }
