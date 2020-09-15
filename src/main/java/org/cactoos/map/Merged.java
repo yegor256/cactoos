@@ -42,11 +42,12 @@ public final class Merged<K, V> extends MapEnvelope<K, V> {
      */
     @SafeVarargs
     public Merged(final Map<K, V>... maps) {
-        super(() -> new MapOf<>(
-            new ListOf<>(maps)
-                .stream()
-                .flatMap(map -> map.entrySet().stream())
-                .collect(Collectors.toList())
+        super(
+            new MapOf<>(
+                new ListOf<>(maps)
+                    .stream()
+                    .flatMap(map -> map.entrySet().stream())
+                    .collect(Collectors.toList())
             )
         );
     }
