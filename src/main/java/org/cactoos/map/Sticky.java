@@ -158,12 +158,14 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      */
     public Sticky(final Map<X, Y> map) {
         super(
-            new org.cactoos.scalar.Sticky<>(
-                () -> {
-                    final Map<X, Y> temp = new HashMap<>(0);
-                    temp.putAll(map);
-                    return Collections.unmodifiableMap(temp);
-                }
+            new MapOf<>(
+                new org.cactoos.scalar.Sticky<>(
+                    () -> {
+                        final Map<X, Y> temp = new HashMap<>(0);
+                        temp.putAll(map);
+                        return Collections.unmodifiableMap(temp);
+                    }
+                )
             )
         );
     }
