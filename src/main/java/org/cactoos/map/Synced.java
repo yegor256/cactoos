@@ -150,12 +150,14 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      */
     public Synced(final Map<X, Y> map) {
         super(
-            new org.cactoos.scalar.Synced<>(
-                () -> {
-                    final Map<X, Y> temp = new ConcurrentHashMap<>(0);
-                    temp.putAll(map);
-                    return temp;
-                }
+            new MapOf<>(
+                new org.cactoos.scalar.Synced<>(
+                    () -> {
+                        final Map<X, Y> temp = new ConcurrentHashMap<>(0);
+                        temp.putAll(map);
+                        return temp;
+                    }
+                )
             )
         );
     }
