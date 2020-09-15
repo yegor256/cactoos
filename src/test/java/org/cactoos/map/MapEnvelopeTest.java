@@ -259,41 +259,41 @@ public final class MapEnvelopeTest {
         final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
             new HashMap<>()
         );
-        map.put(11, 12);
-        MatcherAssert.assertThat(
+        map.put(0, 1);
+        new Assertion<>(
             "must contain element after #put()",
             map,
             new IsEqual<>(
                 new MapOf<Integer, Integer>(
-                    new MapEntry<>(11, 12)
+                    new MapEntry<>(0, 1)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     public void clearIsDelegated() {
         final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
             new MapOf<Integer, Integer>(
-                new MapEntry<>(13, 14)
+                new MapEntry<>(0, 1)
             )
         );
         map.clear();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "must be empty after #clear()",
             map,
             new IsMapWithSize<>(new IsEqual<>(0))
-        );
+        ).affirm();
     }
 
     @Test
     public void removeIsDelegated() {
         final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
             new MapOf<Integer, Integer>(
-                new MapEntry<>(13, 14)
+                new MapEntry<>(0, 1)
             )
         );
-        map.remove(13);
+        map.remove(0);
         new Assertion<>(
             "must be empty after #remove()",
             map,
