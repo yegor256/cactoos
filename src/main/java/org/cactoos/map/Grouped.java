@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+
 /**
  * Iterable as {@link Map}.
  *
@@ -57,16 +58,19 @@ public final class Grouped<K, V, T> extends MapEnvelope<K, List<V>> {
         final Function<T, K> keys,
         final Function<T, V> values
     ) {
-        super(() -> {
-            final Stream<T> stream = StreamSupport.stream(
-                list.spliterator(), false
-            );
-            return stream.collect(
-                Collectors.groupingBy(
-                    keys,
-                    Collectors.mapping(values, Collectors.toList())
-                )
-            );
-        });
+        super(
+            new MapOf<>(
+                () -> {
+                    final Stream<T> stream = StreamSupport.stream(
+                        list.spliterator(), false
+                    );
+                    return stream.collect(
+                        Collectors.groupingBy(
+                            keys,
+                            Collectors.mapping(values, Collectors.toList())
+                        )
+                    );
+                })
+        );
     }
 }
