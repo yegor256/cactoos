@@ -23,16 +23,11 @@
  */
 package org.cactoos.scalar;
 
-import java.security.SecureRandom;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.io.InputOf;
-import org.cactoos.iterator.Repeated;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.cactoos.map.Sticky;
-import org.hamcrest.core.IsEqual;
-import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
@@ -104,26 +99,6 @@ final class PropertiesOfTest {
                     }
                 )
             )
-        ).affirm();
-    }
-
-    @Test
-    void sensesChangesInMap() throws Exception {
-        final AtomicInteger size = new AtomicInteger(2);
-        final PropertiesOf props = new PropertiesOf(
-            new MapOf<>(
-                () -> new Repeated<>(
-                    size.incrementAndGet(), () -> new MapEntry<>(
-                        new SecureRandom().nextInt(),
-                        1
-                    )
-                )
-            )
-        );
-        new Assertion<>(
-            "Must sense the changes in the underlying map",
-            props.value().size(),
-            new IsNot<>(new IsEqual<>(props.value().size()))
         ).affirm();
     }
 
