@@ -148,8 +148,10 @@ public final class Solid<X, Y> extends MapEnvelope<X, Y> {
      */
     public Solid(final Map<X, Y> map) {
         super(
-            new org.cactoos.scalar.Solid<Map<X, Y>>(
-                () -> new Synced<>(new Sticky<X, Y>(map))
+            new MapOf<>(
+                new org.cactoos.scalar.Solid<Map<X, Y>>(
+                    () -> new Synced<>(new Sticky<X, Y>(map))
+                )
             )
         );
     }
