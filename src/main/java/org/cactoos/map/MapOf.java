@@ -23,7 +23,6 @@
  */
 package org.cactoos.map;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.Func;
@@ -147,23 +146,20 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param entries List of the entries
+     * @param scalar The scalar for Map.
      */
-    public MapOf(final Iterable<Map.Entry<X, Y>> entries) {
-        this(() -> {
-            final Map<X, Y> temp = new HashMap<>(0);
-            for (final Map.Entry<X, Y> entry : entries) {
-                temp.put(entry.getKey(), entry.getValue());
-            }
-            return Collections.unmodifiableMap(temp);
-        });
+    public MapOf(final Scalar<Map<X, Y>> scalar) {
+        this(new Unchecked<>(scalar).value().entrySet());
     }
 
     /**
      * Ctor.
-     * @param scalar The scalar for Map.
+     * @param entries List of the entries
      */
-    public MapOf(final Scalar<Map<X, Y>> scalar) {
-        super(new Unchecked<>(scalar).value());
+    public MapOf(final Iterable<Map.Entry<X, Y>> entries) {
+        super(new HashMap<>());
+        for (final Map.Entry<X, Y> entry : entries) {
+            this.put(entry.getKey(), entry.getValue());
+        }
     }
 }
