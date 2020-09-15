@@ -32,7 +32,7 @@ import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -41,10 +41,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class TeeInputStreamTest {
+final class TeeInputStreamTest {
 
     @Test
-    public void copiesContentByteByByte() throws Exception {
+    void copiesContentByteByByte() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final String content = "Hello, товарищ!";
         new Assertion<>(
@@ -68,7 +68,7 @@ public final class TeeInputStreamTest {
     }
 
     @Test
-    public void leftInputClosed() {
+    void leftInputClosed() {
         try (StringWriterMock write = new StringWriterMock()) {
             new LengthOf(
                 new TeeInput(

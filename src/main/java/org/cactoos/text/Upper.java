@@ -24,7 +24,6 @@
 package org.cactoos.text;
 
 import java.util.Locale;
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -58,11 +57,6 @@ public final class Upper extends TextEnvelope {
      * @param locale Locale
      */
     public Upper(final Text text, final Locale locale) {
-        super(new Scalar<String>() {
-            @Override
-            public String value() throws Exception {
-                return text.asString().toUpperCase(locale);
-            }
-        });
+        super(new TextOf(() -> text.asString().toUpperCase(locale)));
     }
 }

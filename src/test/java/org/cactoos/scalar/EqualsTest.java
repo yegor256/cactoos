@@ -23,7 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class EqualsTest {
+final class EqualsTest {
 
     @Test
-    public void compareEquals() throws Exception {
+    void compareEquals() throws Exception {
         new Assertion<>(
             "Must compare if two integers are equals",
             new Equals<>(
@@ -48,7 +48,7 @@ public final class EqualsTest {
     }
 
     @Test
-    public void compareNotEquals() throws Exception {
+    void compareNotEquals() throws Exception {
         new Assertion<>(
             "Must compare if two integers are not equals",
             new Equals<>(
@@ -60,7 +60,7 @@ public final class EqualsTest {
     }
 
     @Test
-    public void compareEqualsText() throws Exception {
+    void compareEqualsText() throws Exception {
         final String str = "hello";
         new Assertion<>(
             "Must compare if two strings are equals",
@@ -73,7 +73,7 @@ public final class EqualsTest {
     }
 
     @Test
-    public void compareNotEqualsText() throws Exception {
+    void compareNotEqualsText() throws Exception {
         new Assertion<>(
             "Must compare if two strings are not equals",
             new Equals<>(

@@ -23,27 +23,73 @@
  */
 package org.cactoos.list;
 
-import org.cactoos.Func;
+import java.util.ListIterator;
 
 /**
- * Mapped list.
+ * {@link ListIterator} envelope.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @param <X> Type of source item
- * @param <Y> Type of target item
- * @since 0.14
+ * @param <T> Items type
+ * @since 0.47
  */
-public final class Mapped<X, Y> extends ListEnvelope<Y> {
+public abstract class ListIteratorEnvelope<T> implements ListIterator<T> {
+
+    /**
+     * Original list iterator.
+     */
+    private final ListIterator<T> origin;
 
     /**
      * Ctor.
-     * @param fnc Func
-     * @param src Source iterable
+     * @param iter Original list iterator.
      */
-    public Mapped(final Func<X, Y> fnc, final Iterable<X> src) {
-        super(new ListOf<>(
-            new org.cactoos.iterable.Mapped<>(fnc, src)
-        ));
+    public ListIteratorEnvelope(final ListIterator<T> iter) {
+        this.origin = iter;
+    }
+
+    @Override
+    public final boolean hasNext() {
+        return this.origin.hasNext();
+    }
+
+    @Override
+    public final T next() {
+        return this.origin.next();
+    }
+
+    @Override
+    public final boolean hasPrevious() {
+        return this.origin.hasPrevious();
+    }
+
+    @Override
+    public final T previous() {
+        return this.origin.previous();
+    }
+
+    @Override
+    public final int nextIndex() {
+        return this.origin.nextIndex();
+    }
+
+    @Override
+    public final int previousIndex() {
+        return this.origin.previousIndex();
+    }
+
+    @Override
+    public final void remove() {
+        this.origin.remove();
+    }
+
+    @Override
+    public final void set(final T item) {
+        this.origin.set(item);
+    }
+
+    @Override
+    public final void add(final T item) {
+        this.origin.add(item);
     }
 }

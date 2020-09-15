@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -45,10 +45,10 @@ import org.llorllale.cactoos.matchers.Assertion;
         "PMD.AvoidDuplicateLiterals"
     }
 )
-public final class LoggingInputTest {
+final class LoggingInputTest {
 
     @Test
-    public void logReadFromDeadInput() throws IOException {
+    void logReadFromDeadInput() throws IOException {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new LoggingInput(
@@ -65,7 +65,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logReadFromOneByte() throws IOException {
+    void logReadFromOneByte() throws IOException {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new LoggingInput(
@@ -82,7 +82,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logReadFromText() throws IOException {
+    void logReadFromText() throws IOException {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new LoggingInput(
@@ -99,7 +99,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logReadFromLargeTextFile() throws IOException {
+    void logReadFromLargeTextFile() throws IOException {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new LoggingInput(
@@ -122,7 +122,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logAllFromLargeTextFile() throws IOException {
+    void logAllFromLargeTextFile() throws IOException {
         final Logger logger = new FakeLogger(Level.WARNING);
         new LengthOf(
             new LoggingInput(
@@ -146,7 +146,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logSkipFromLargeTextFile() throws Exception {
+    void logSkipFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),
@@ -162,7 +162,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logAvailableFromLargeTextFile() throws Exception {
+    void logAvailableFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),
@@ -179,7 +179,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logResetFromLargeTextFile() throws Exception {
+    void logResetFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         final InputStream input = new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),
@@ -200,7 +200,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logMarkSupportedFromLargeTextFile() throws Exception {
+    void logMarkSupportedFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),
@@ -217,7 +217,7 @@ public final class LoggingInputTest {
     }
 
     @Test
-    public void logIntoCreatedLogger() {
+    void logIntoCreatedLogger() {
         final FakeHandler handler = new FakeHandler();
         final String src = "my source";
         final Logger logger = Logger.getLogger(src);

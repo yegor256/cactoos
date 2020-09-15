@@ -25,7 +25,7 @@ package org.cactoos.collection;
 
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.HasValues;
@@ -43,7 +43,7 @@ import org.llorllale.cactoos.matchers.Throws;
 public class ImmutableTest {
 
     @Test
-    public void size() {
+    void size() {
         new Assertion<>(
             "size() must be equals to original",
             new Immutable<>(
@@ -54,7 +54,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void isEmpty() {
+    void isEmpty() {
         new Assertion<>(
             "isEmpty() must be equals to original",
             new Immutable<>(
@@ -67,7 +67,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void iterator() {
+    void iterator() {
         new Assertion<>(
             "iterator() is equal to original",
             () -> new Immutable<>(
@@ -78,7 +78,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void contains() {
+    void contains() {
         new Assertion<>(
             "contains() must be equals to original",
             new Immutable<>(
@@ -91,7 +91,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void toArray() {
+    void toArray() {
         new Assertion<>(
             "toArray() must be equals to original",
             new Immutable<>(
@@ -104,7 +104,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testToArray() {
+    void testToArray() {
         new Assertion<>(
             "toArray(T[]) must be equals to original",
             new Immutable<>(
@@ -117,7 +117,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void add() {
+    void add() {
         new Assertion<>(
             "add() must throw exception",
             () -> new Immutable<>(
@@ -133,7 +133,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void remove() {
+    void remove() {
         new Assertion<>(
             "remove() must throw exception",
             () -> new Immutable<>(
@@ -149,7 +149,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void containsAll() {
+    void containsAll() {
         final ListOf<Integer> another = new ListOf<>(3, 4, 5);
         new Assertion<>(
             "containsAll() must be equals to original",
@@ -163,7 +163,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void addAll() {
+    void addAll() {
         new Assertion<>(
             "addAll() must throw exception",
             () -> new Immutable<>(
@@ -179,7 +179,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void removeAll() {
+    void removeAll() {
         new Assertion<>(
             "removeAll() must throw exception",
             () -> new Immutable<>(
@@ -195,7 +195,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void retainAll() {
+    void retainAll() {
         new Assertion<>(
             "retainAll() must throw exception",
             () -> new Immutable<>(
@@ -211,7 +211,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void clear() {
+    void clear() {
         new Assertion<>(
             "clear() must throw exception",
             () -> {
@@ -230,7 +230,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         new Assertion<>(
             "toString() must be equals to original",
             new Immutable<>(
@@ -243,7 +243,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testHashCode() {
+    void testHashCode() {
         new Assertion<>(
             "hashCode() must be equals to original",
             new Immutable<>(
@@ -256,7 +256,7 @@ public class ImmutableTest {
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         final ListOf<Integer> another = new ListOf<>(4, 5, 6);
         new Assertion<>(
             "equals() must be equals to original",

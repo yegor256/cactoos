@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -38,10 +38,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class RandomizedTest {
+final class RandomizedTest {
 
     @Test
-    public void generatesRandomTextOfRandomLength() throws Exception {
+    void generatesRandomTextOfRandomLength() throws Exception {
         new Assertion<>(
             "Generated text is empty",
             new Randomized().asString().length(),
@@ -50,7 +50,7 @@ public final class RandomizedTest {
     }
 
     @Test
-    public void generatesRandomTextOfSpecifiedLength() throws Exception {
+    void generatesRandomTextOfSpecifiedLength() throws Exception {
         new Assertion<>(
             "Generated text has incorrect length",
             new Randomized(512).asString().length(),
@@ -59,7 +59,7 @@ public final class RandomizedTest {
     }
 
     @Test
-    public void generatesRandomTextOfSpecifiedChars() throws Exception {
+    void generatesRandomTextOfSpecifiedChars() throws Exception {
         new Assertion<>(
             "Generated text contains not allowed characters",
             new Randomized('a')
@@ -71,7 +71,7 @@ public final class RandomizedTest {
     }
 
     @Test
-    public void generatesRandomTextOfSpecifiedCharsAndLength() {
+    void generatesRandomTextOfSpecifiedCharsAndLength() {
         new Assertion<>(
             "Generated text doesn't match specification",
             new Randomized(10, 'a'),

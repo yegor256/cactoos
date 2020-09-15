@@ -25,7 +25,7 @@ package org.cactoos.func;
 
 import java.security.SecureRandom;
 import java.time.Duration;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.FuncApplies;
 import org.llorllale.cactoos.matchers.Throws;
@@ -38,10 +38,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle MagicNumberCheck (500 line)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class RetryTest {
+final class RetryTest {
 
     @Test
-    public void runsFuncMultipleTimes() {
+    void runsFuncMultipleTimes() {
         new Assertion<>(
             "Didn't run multiple times",
             new Retry<>(
@@ -58,7 +58,7 @@ public final class RetryTest {
     }
 
     @Test
-    public void runsFuncConditionMultipleTimes() {
+    void runsFuncConditionMultipleTimes() {
         new Assertion<>(
             "Didn't check condition multiple times",
             new Retry<>(
@@ -75,7 +75,7 @@ public final class RetryTest {
     }
 
     @Test
-    public void processInterruptExceptionOnWait() {
+    void processInterruptExceptionOnWait() {
         final Thread main = Thread.currentThread();
         new Thread(
             () -> {

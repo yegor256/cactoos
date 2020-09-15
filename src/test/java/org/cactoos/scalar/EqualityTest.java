@@ -24,7 +24,7 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Bytes;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class EqualityTest {
+final class EqualityTest {
 
     @Test
-    public void notEqualLeft() throws Exception {
+    void notEqualLeft() throws Exception {
         new Assertion<>(
             "Must compare smaller to greater",
             new Equality<>(
@@ -48,7 +48,7 @@ public final class EqualityTest {
     }
 
     @Test
-    public void notEqualRight() throws Exception {
+    void notEqualRight() throws Exception {
         new Assertion<>(
             "Must compare greater to smaller",
             new Equality<>(
@@ -59,7 +59,7 @@ public final class EqualityTest {
     }
 
     @Test
-    public void notEqualLeftWithSameSize() throws Exception {
+    void notEqualLeftWithSameSize() throws Exception {
         new Assertion<>(
             "Must compare smaller to smaller with same size",
             new Equality<>(
@@ -70,7 +70,7 @@ public final class EqualityTest {
     }
 
     @Test
-    public void notEqualRightWithSameSize() throws Exception {
+    void notEqualRightWithSameSize() throws Exception {
         new Assertion<>(
             "Must compare greater to smaller with same size",
             new Equality<>(
@@ -81,7 +81,7 @@ public final class EqualityTest {
     }
 
     @Test
-    public void equal() throws Exception {
+    void equal() throws Exception {
         new Assertion<>(
             "Must compare equals",
             new Equality<>(
@@ -92,7 +92,7 @@ public final class EqualityTest {
     }
 
     @Test
-    public void compareEmptyArrays() throws Exception {
+    void compareEmptyArrays() throws Exception {
         new Assertion<>(
             "Must compare empty",
             new Equality<>(

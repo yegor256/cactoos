@@ -26,7 +26,7 @@ package org.cactoos.iterable;
 import java.util.NoSuchElementException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class EndlessTest {
+final class EndlessTest {
 
     @Test
-    public void endlessIterableTest() {
+    void endlessIterableTest() {
         MatcherAssert.assertThat(
             "Can't get unique endless iterable item",
             new Endless<>(1),
@@ -47,7 +47,7 @@ public final class EndlessTest {
     }
 
     @Test
-    public void elementsIsNullTest() {
+    void elementsIsNullTest() {
         new Assertion<>(
             "Must get sliced iterable of elements",
             () -> new Endless<>(null).iterator().next(),

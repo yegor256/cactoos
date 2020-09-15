@@ -27,7 +27,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.cactoos.list.ListOf;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -40,10 +40,10 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @checkstyle TodoCommentCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class SyncedTest {
+final class SyncedTest {
 
     @Test
-    public void syncIteratorReturnsCorrectValuesWithExternalLock() {
+    void syncIteratorReturnsCorrectValuesWithExternalLock() {
         final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
         new Assertion<>(
             "Unexpected value found.",
@@ -57,7 +57,7 @@ public final class SyncedTest {
     }
 
     @Test
-    public void syncIteratorReturnsCorrectValuesWithInternalLock() {
+    void syncIteratorReturnsCorrectValuesWithInternalLock() {
         new Assertion<>(
             "Unexpected value found.",
             new ListOf<>(
@@ -71,7 +71,7 @@ public final class SyncedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void correctValuesForConcurrentNextNext() {
+    void correctValuesForConcurrentNextNext() {
         for (int iter = 0; iter < 5000; iter += 1) {
             new Assertion<>(
                 "",
@@ -98,7 +98,7 @@ public final class SyncedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    public void correctValuesForConcurrentNextHasNext() {
+    void correctValuesForConcurrentNextHasNext() {
         for (int iter = 0; iter < 5000; iter += 1) {
             new Assertion<>(
                 "",

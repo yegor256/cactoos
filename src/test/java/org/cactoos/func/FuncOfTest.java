@@ -26,7 +26,7 @@ package org.cactoos.func;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.scalar.Constant;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncOfTest {
+final class FuncOfTest {
 
     @Test
-    public void convertsProcIntoFunc() throws Exception {
+    void convertsProcIntoFunc() throws Exception {
         final AtomicBoolean done = new AtomicBoolean(false);
         new Assertion<>(
             "Must convert procedure into function",
@@ -52,7 +52,7 @@ public final class FuncOfTest {
     }
 
     @Test
-    public void convertsValueIntoFunc() throws Exception {
+    void convertsValueIntoFunc() throws Exception {
         new Assertion<>(
             "Must convert value into function",
             new FuncOf<String, Boolean>(
@@ -63,7 +63,7 @@ public final class FuncOfTest {
     }
 
     @Test
-    public void convertsScalarIntoFunc() throws Exception {
+    void convertsScalarIntoFunc() throws Exception {
         final Constant<Integer> scalar = new Constant<>(1);
         new Assertion<>(
             "Result of func must be equal to the original value",

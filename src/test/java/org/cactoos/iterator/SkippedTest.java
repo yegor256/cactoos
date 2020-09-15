@@ -25,7 +25,7 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
@@ -36,11 +36,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class SkippedTest {
+final class SkippedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void skipIterator() {
+    void skipIterator() {
         new Assertion<>(
             "Must skip elements in iterator",
             new IterableOf<>(
@@ -59,7 +59,7 @@ public final class SkippedTest {
     }
 
     @Test
-    public void errorSkippedMoreThanExists() {
+    void errorSkippedMoreThanExists() {
         new Assertion<>(
             "Must throw an exception",
             () -> new Skipped<>(

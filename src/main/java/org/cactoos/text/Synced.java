@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -48,13 +47,6 @@ public final class Synced extends TextEnvelope {
      * @param lck The lock
      */
     public Synced(final Text text, final Object lck) {
-        super(new Scalar<String>() {
-            @Override
-            public String value() throws Exception {
-                synchronized (lck) {
-                    return text.asString();
-                }
-            }
-        });
+        super(new TextOf(new org.cactoos.scalar.Synced<>(text::asString, lck)));
     }
 }

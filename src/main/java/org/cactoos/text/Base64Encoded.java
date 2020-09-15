@@ -24,7 +24,6 @@
 
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.bytes.BytesBase64;
 import org.cactoos.io.BytesOf;
@@ -51,10 +50,10 @@ public final class Base64Encoded extends TextEnvelope {
      * @param origin Origin text
      */
     public Base64Encoded(final Text origin) {
-        super((Scalar<String>) () -> new TextOf(
+        super(new TextOf(
             new BytesBase64(
                 new BytesOf(origin)
             )
-        ).asString());
+        ));
     }
 }

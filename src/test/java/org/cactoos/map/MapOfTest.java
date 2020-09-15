@@ -38,7 +38,7 @@ import org.hamcrest.core.IsAnything;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.StringStartsWith;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link MapOf}.
@@ -47,10 +47,10 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class MapOfTest {
+final class MapOfTest {
 
     @Test
-    public void behavesAsMap() {
+    void behavesAsMap() {
         MatcherAssert.assertThat(
             "Can't behave as a map",
             new NoNulls<>(
@@ -64,7 +64,7 @@ public final class MapOfTest {
     }
 
     @Test
-    public void convertsIterableToMap() {
+    void convertsIterableToMap() {
         MatcherAssert.assertThat(
             "Can't convert iterable to map",
             new MapOf<Integer, String>(
@@ -79,7 +79,7 @@ public final class MapOfTest {
     }
 
     @Test
-    public void sensesChangesInMap() throws Exception {
+    void sensesChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
         final Map<Integer, Integer> map = new MapOf<>(
             () -> new Repeated<>(
@@ -97,7 +97,7 @@ public final class MapOfTest {
     }
 
     @Test
-    public void createsMapWithFunctions() {
+    void createsMapWithFunctions() {
         MatcherAssert.assertThat(
             "Can't create a map with functions as values",
             new MapOf<Integer, Scalar<Boolean>>(
@@ -114,7 +114,7 @@ public final class MapOfTest {
     }
 
     @Test
-    public void integersToString() {
+    void integersToString() {
         MatcherAssert.assertThat(
             "Can't convert map of integers to string",
             new MapOf<Integer, Integer>(
@@ -126,7 +126,7 @@ public final class MapOfTest {
     }
 
     @Test
-    public void mapsToString() {
+    void mapsToString() {
         MatcherAssert.assertThat(
             "Can't convert map op maps to string",
             new MapOf<Integer, Map<String, String>>(
@@ -150,7 +150,7 @@ public final class MapOfTest {
     }
 
     @Test
-    public void emptyToString() {
+    void emptyToString() {
         MatcherAssert.assertThat(
             "Can't convert empty map to string",
             new MapOf<Integer, Map<String, String>>().toString(),
@@ -160,7 +160,7 @@ public final class MapOfTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void createsMapFromMapAndMapEntries() {
+    void createsMapFromMapAndMapEntries() {
         MatcherAssert.assertThat(
             "Can't create a map from map and map entries",
             new MapOf<Integer, Integer>(
@@ -179,7 +179,7 @@ public final class MapOfTest {
     }
 
     @Test
-    public void createsMapFromFunctionsAndIterable() {
+    void createsMapFromFunctionsAndIterable() {
         MatcherAssert.assertThat(
             "Can't create a map from functions and iterable.",
             new MapOf<Integer, Integer>(
@@ -193,7 +193,7 @@ public final class MapOfTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void createsMapFromMapFunctionsAndIterable() {
+    void createsMapFromMapFunctionsAndIterable() {
         MatcherAssert.assertThat(
             "Can't create a map from map, functions and iterable.",
             new MapOf<Integer, Integer>(

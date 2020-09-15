@@ -24,7 +24,7 @@
 package org.cactoos.iterable;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -33,11 +33,11 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SlicedTest {
+final class SlicedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void sliceIterable() throws Exception {
+    void sliceIterable() throws Exception {
         new Assertion<>(
             "Must get sliced iterable of elements",
             new Sliced<>(

@@ -33,7 +33,7 @@ import org.cactoos.map.MapOf;
 import org.cactoos.map.Sticky;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -45,10 +45,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class PropertiesOfTest {
+final class PropertiesOfTest {
 
     @Test
-    public void readsStringContent() {
+    void readsStringContent() {
         new Assertion<>(
             "Must read properties from an input string",
             new PropertiesOf(
@@ -67,7 +67,7 @@ public final class PropertiesOfTest {
     }
 
     @Test
-    public void readsInputContent() {
+    void readsInputContent() {
         new Assertion<>(
             "Must read properties from an input",
             new PropertiesOf(
@@ -86,7 +86,7 @@ public final class PropertiesOfTest {
     }
 
     @Test
-    public void convertsMapToProperties() {
+    void convertsMapToProperties() {
         new Assertion<>(
             "Must convert map to properties",
             new PropertiesOf(
@@ -108,7 +108,7 @@ public final class PropertiesOfTest {
     }
 
     @Test
-    public void sensesChangesInMap() throws Exception {
+    void sensesChangesInMap() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
         final PropertiesOf props = new PropertiesOf(
             new MapOf<>(

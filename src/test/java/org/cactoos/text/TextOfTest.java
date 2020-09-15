@@ -46,7 +46,7 @@ import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsBlank;
 import org.llorllale.cactoos.matchers.TextHasString;
@@ -62,10 +62,10 @@ import org.llorllale.cactoos.matchers.TextIs;
  * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
-public final class TextOfTest {
+final class TextOfTest {
 
     @Test
-    public void readsInputIntoText() throws Exception {
+    void readsInputIntoText() throws Exception {
         new Assertion<>(
             "Can't read text from Input",
             new Synced(
@@ -82,7 +82,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsInputIntoTextWithDefaultCharset() throws Exception {
+    void readsInputIntoTextWithDefaultCharset() throws Exception {
         new Assertion<>(
             "Can't read text from Input with default charset",
             new TextOf(
@@ -96,7 +96,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsInputIntoTextWithSmallBuffer() throws Exception {
+    void readsInputIntoTextWithSmallBuffer() throws Exception {
         new Assertion<>(
             "Can't read text with a small reading buffer",
             new TextOf(
@@ -112,7 +112,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsReaderIntoTextWithSmallBuffer() {
+    void readsReaderIntoTextWithSmallBuffer() {
         final String text = "Hi there! with small buffer";
         new Assertion<>(
             "Can't read text from Reader with a small reading buffer",
@@ -126,7 +126,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsInputIntoTextWithSmallBufferAndDefaultCharset()
+    void readsInputIntoTextWithSmallBufferAndDefaultCharset()
         throws Exception {
         new Assertion<>(
             "Can't read text with a small reading buffer and default charset",
@@ -142,7 +142,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsFromReader() throws Exception {
+    void readsFromReader() throws Exception {
         final String source = "hello, друг!";
         new Assertion<>(
             "Can't read string through a reader",
@@ -160,7 +160,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsFromReaderWithDefaultEncoding() throws Exception {
+    void readsFromReaderWithDefaultEncoding() throws Exception {
         final String source = "hello, друг! with default encoding";
         new Assertion<>(
             "Can't read string with default encoding through a reader",
@@ -175,7 +175,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsEncodedArrayOfCharsIntoText() throws Exception {
+    void readsEncodedArrayOfCharsIntoText() throws Exception {
         new Assertion<>(
             "Can't read array of encoded chars into text.",
             new TextOf(
@@ -190,7 +190,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsAnArrayOfBytes() throws Exception {
+    void readsAnArrayOfBytes() throws Exception {
         final byte[] bytes = new byte[] {(byte) 0xCA, (byte) 0xFE};
         new Assertion<>(
             "Can't read array of bytes",
@@ -202,7 +202,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsStringBuilder() throws Exception {
+    void readsStringBuilder() throws Exception {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
         new Assertion<>(
@@ -218,7 +218,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsStringBuffer() throws Exception {
+    void readsStringBuffer() throws Exception {
         final String starts = "In our daily life, ";
         final String ends = "we can smile!";
         new Assertion<>(
@@ -234,7 +234,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void printsStackTrace() {
+    void printsStackTrace() {
         new Assertion<>(
             "Can't print exception stacktrace",
             new TextOf(
@@ -253,7 +253,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsFromInputStream() throws Exception {
+    void readsFromInputStream() throws Exception {
         final String content = "line1";
         final InputStream stream = new ByteArrayInputStream(
             content.getBytes(StandardCharsets.UTF_8.name())
@@ -268,7 +268,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsMultilineInputStream() throws Exception {
+    void readsMultilineInputStream() throws Exception {
         final String content = "line1-\nline2";
         final InputStream stream = new ByteArrayInputStream(
             content.getBytes(StandardCharsets.UTF_8.name())
@@ -281,7 +281,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsMultilineInputStreamWithCarriageReturn() throws Exception {
+    void readsMultilineInputStreamWithCarriageReturn() throws Exception {
         final String content = "line1-\rline2";
         final InputStream stream = new ByteArrayInputStream(
             content.getBytes(StandardCharsets.UTF_8.name())
@@ -294,7 +294,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsClosedInputStream() throws Exception {
+    void readsClosedInputStream() throws Exception {
         final String content = "content";
         final InputStream stream = new ByteArrayInputStream(
             content.getBytes(StandardCharsets.UTF_8.name())
@@ -308,7 +308,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsEmptyInputStream() throws Exception {
+    void readsEmptyInputStream() throws Exception {
         final String content = "";
         final InputStream stream = new ByteArrayInputStream(
             content.getBytes(StandardCharsets.UTF_8.name())
@@ -321,7 +321,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void printsStackTraceFromArray() {
+    void printsStackTraceFromArray() {
         new Assertion<>(
             "Can't print exception stacktrace from array",
             new TextOf(
@@ -332,7 +332,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsLocalDateFormattedWithFormatString() {
+    void readsLocalDateFormattedWithFormatString() {
         final LocalDate date = LocalDate.of(2017, 12, 13);
         new Assertion<>(
             "Can't format a LocalDate with format.",
@@ -342,7 +342,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsLocalDateFormattedWithFormatStringWithLocale() {
+    void readsLocalDateFormattedWithFormatStringWithLocale() {
         final LocalDate date = LocalDate.of(2017, 12, 13);
         new Assertion<>(
             "Can't format a LocalDate with format using locale.",
@@ -354,7 +354,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsLocalDateFormattedAsIsoDateTime() throws IOException {
+    void readsLocalDateFormattedAsIsoDateTime() throws IOException {
         final LocalDate date = LocalDate.of(2017, 12, 13);
         new Assertion<>(
             "Can't format a LocalDate with default/ISO format.",
@@ -370,7 +370,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsCurrentLocalDateAsText() throws IOException {
+    void readsCurrentLocalDateAsText() throws Exception {
         new Assertion<>(
             "Can't format a LocalDate with ISO format.",
             new TextOf(LocalDate.now()).asString(),
@@ -379,7 +379,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void localDateTimeFormattedAsIsoDateTime() {
+    void localDateTimeFormattedAsIsoDateTime() {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
@@ -396,7 +396,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void localDateTimeFormattedWithFormatString() {
+    void localDateTimeFormattedWithFormatString() {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
@@ -408,7 +408,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void localDateTimeFormattedWithFormatStringWithLocale() {
+    void localDateTimeFormattedWithFormatStringWithLocale() {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
@@ -422,7 +422,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void currentLocalDateTimeAsText() throws IOException {
+    void currentLocalDateTimeAsText() throws Exception {
         new Assertion<>(
             "Can't format a LocalDateTime with ISO format.",
             new TextOf(LocalDateTime.now()).asString(),
@@ -431,7 +431,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void dateFormattedUsingIsoFormatter() {
+    void dateFormattedUsingIsoFormatter() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getDefault());
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -446,7 +446,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void dateFormattedUsingCustomFormat()  {
+    void dateFormattedUsingCustomFormat()  {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getDefault());
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -460,7 +460,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void dateFormattedUsingCustomFormatDifferentLocale() {
+    void dateFormattedUsingCustomFormatDifferentLocale() {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getDefault());
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
@@ -474,7 +474,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void offsetDateTimeFormattedAsIsoDateTime() {
+    void offsetDateTimeFormattedAsIsoDateTime() {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
@@ -486,7 +486,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void offsetDateTimeFormattedWithFormatString() {
+    void offsetDateTimeFormattedWithFormatString() {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
@@ -498,7 +498,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void offsetDateTimeFormattedWithFormatStringWithLocale() {
+    void offsetDateTimeFormattedWithFormatStringWithLocale() {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
@@ -512,7 +512,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void currentOffsetDateTimeAsText() throws IOException {
+    void currentOffsetDateTimeAsText() throws Exception {
         new Assertion<>(
             "Can't format a OffsetDateTime with ISO format.",
             new TextOf(OffsetDateTime.now()).asString(),
@@ -521,7 +521,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void zonedDateTimeFormattedAsIsoDateTime() {
+    void zonedDateTimeFormattedAsIsoDateTime() {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
@@ -533,7 +533,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void zonedDateTimeFormattedWithFormatString() {
+    void zonedDateTimeFormattedWithFormatString() {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
@@ -545,7 +545,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void zonedDateTimeFormattedWithFormatStringWithLocale() {
+    void zonedDateTimeFormattedWithFormatStringWithLocale() {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
@@ -559,7 +559,7 @@ public final class TextOfTest {
     }
 
     @Test
-    public void currentZonedDateTimeAsText() throws IOException {
+    void currentZonedDateTimeAsText() throws Exception {
         new Assertion<>(
             "Can't format a ZonedDateTime with ISO format.",
             new TextOf(ZonedDateTime.now()).asString(),
@@ -568,13 +568,90 @@ public final class TextOfTest {
     }
 
     @Test
-    public void readsIteratorToText() throws IOException {
+    void readsIteratorToText() throws Exception {
         new Assertion<>(
             "Can't read Iterator to Text",
             new TextOf(
                 new IteratorOfChars("qwer")
             ).asString(),
             new IsEqual<>("qwer")
+        ).affirm();
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is equal another text representing the same
+     * value.
+     */
+    @Test
+    void testEquals() {
+        final String text = "equals";
+        new Assertion<>(
+            "Must match text representing the same value",
+            new TextOf(text),
+            new IsEqual<>(new TextOf(text))
+        ).affirm();
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is equal another text representing the same
+     * value (in this case a {@link Joined}).
+     */
+    @Test
+    void testEqualsOtherText() {
+        new Assertion<>(
+            "Must match another text representing the same value",
+            new TextOf("isequaltoanothertext"),
+            new IsEqual<>(
+                new Joined("", "is", "equal", "to", "another", "text")
+            )
+        ).affirm();
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is not equal another object not being a
+     * instance of Text without failing
+     */
+    @Test
+    void testDoesNotEqualsNonTextObject() {
+        new Assertion<>(
+            "Must match another object which is not a string",
+            new TextOf("is not equals to null"),
+            new IsNot<>(
+                new IsEqual<>(new Object())
+            )
+        ).affirm();
+    }
+
+    /**
+     * Test for {@link TextEnvelope#equals(Object)} method. Must assert
+     * that the envelope value is not equal to null without failing
+     */
+    @Test
+    @SuppressWarnings("PMD.EqualsNull")
+    void testDoesNotEqualsFalse() {
+        new Assertion<>(
+            "Must not equals null",
+            new TextOf("is not equals to not Text object")
+                .equals(null),
+            new IsEqual<>(false)
+        ).affirm();
+    }
+
+    /**
+     * Test for {@link TextEnvelope#hashCode()} method. Must assert that
+     * the {@link TextEnvelope} hashCode is equals to the hashCode of
+     * the String it represents.
+     */
+    @Test
+    void testHashCode() {
+        final String hash = "hashCode";
+        new Assertion<>(
+            "Must match its represented String hashcode",
+            new TextOf(hash).hashCode(),
+            new IsEqual<>(hash.hashCode())
         ).affirm();
     }
 }

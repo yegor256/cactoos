@@ -23,7 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.SuspiciousEqualsMethodName")
-public final class EqualsNullableTest {
+final class EqualsNullableTest {
 
     @Test
-    public void nullEqualsNull() throws Exception {
+    void nullEqualsNull() throws Exception {
         new Assertion<>(
             "Must return true for both null objects",
             new EqualsNullable(() -> null, () -> null),
@@ -46,7 +46,7 @@ public final class EqualsNullableTest {
     }
 
     @Test
-    public void equals() throws Exception {
+    void equals() throws Exception {
         new Assertion<>(
             "Must return true for equal objects",
             new EqualsNullable(1, 1),
@@ -55,7 +55,7 @@ public final class EqualsNullableTest {
     }
 
     @Test
-    public void notEquals() throws Exception {
+    void notEquals() throws Exception {
         new Assertion<>(
             "Must return false for non equal objects",
             new EqualsNullable(1, 2),
@@ -64,7 +64,7 @@ public final class EqualsNullableTest {
     }
 
     @Test
-    public void equalsObjectAndScalar() throws Exception {
+    void equalsObjectAndScalar() throws Exception {
         new Assertion<>(
             "Must return true for object and scalar with the same value",
             new EqualsNullable(1, () -> 1),
@@ -73,7 +73,7 @@ public final class EqualsNullableTest {
     }
 
     @Test
-    public void equalsScalarAndObject() throws Exception {
+    void equalsScalarAndObject() throws Exception {
         new Assertion<>(
             "Must return true for scalar and object with the same value",
             new EqualsNullable(() -> 1, 1),

@@ -24,7 +24,7 @@
 package org.cactoos.scalar;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -33,13 +33,13 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.49.2
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class DivisionOfTest {
+final class DivisionOfTest {
 
     /**
      * Ensures that division of int numbers return proper value.
      */
     @Test
-    public void dividesIntNumbers() {
+    void dividesIntNumbers() {
         new Assertion<>(
             "Must divide int numbers",
             new DivisionOf(4, 2).intValue(),
@@ -51,7 +51,7 @@ public final class DivisionOfTest {
      * Ensures that division of long numbers return proper value.
      */
     @Test
-    public void dividesLongNumbers() {
+    void dividesLongNumbers() {
         new Assertion<>(
             "Must divide long numbers",
             new DivisionOf(4L, 2L).longValue(),
@@ -63,7 +63,7 @@ public final class DivisionOfTest {
      * Ensures that division of float numbers return proper value.
      */
     @Test
-    public void dividesFloatNumbers() {
+    void dividesFloatNumbers() {
         new Assertion<>(
             "Must divide float numbers",
             new DivisionOf(2f, 4f).floatValue(),
@@ -75,7 +75,7 @@ public final class DivisionOfTest {
      * Ensures that division of double numbers return proper value.
      */
     @Test
-    public void dividesDoubleNumbers() {
+    void dividesDoubleNumbers() {
         new Assertion<>(
             "Must divide double numbers",
             new DivisionOf(2d, 4d).doubleValue(),

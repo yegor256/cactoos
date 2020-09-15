@@ -26,7 +26,7 @@ package org.cactoos.list;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class NoNullsTest {
+final class NoNullsTest {
 
     @Test
-    public void getThrowsErrorIfNull() {
+    void getThrowsErrorIfNull() {
         new Assertion<>(
             "must throw error if contains null",
             () -> new NoNulls<>(
@@ -53,7 +53,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void setThrowsErrorIfArgumentNull() {
+    void setThrowsErrorIfArgumentNull() {
         new Assertion<>(
             "must throw error if set null",
             () -> new NoNulls<>(
@@ -67,7 +67,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void setThrowsErrorIfPreviousValueNull() {
+    void setThrowsErrorIfPreviousValueNull() {
         final ArrayList<Integer> list = new ArrayList<>(1);
         list.add(null);
         new Assertion<>(
@@ -81,7 +81,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void addThrowsErrorIfArgumentNull() {
+    void addThrowsErrorIfArgumentNull() {
         new Assertion<>(
             "must throw error if add null",
             () -> {
@@ -96,7 +96,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void removeThrowsErrorIfValueNull() {
+    void removeThrowsErrorIfValueNull() {
         final ArrayList<Integer> list = new ArrayList<>(1);
         list.add(null);
         new Assertion<>(
@@ -110,7 +110,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void getThrowsErrorIfListIteratorNextValueIsNullValue() {
+    void getThrowsErrorIfListIteratorNextValueIsNullValue() {
         new Assertion<>(
             "must throw error if removed value in iterator is null",
             () -> new NoNulls<>(
@@ -124,7 +124,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void getThrowsErrorIfListIteratorPreviousValueIsNullValue() {
+    void getThrowsErrorIfListIteratorPreviousValueIsNullValue() {
         final List<Integer> list = new ArrayList<>(2);
         list.add(1);
         list.add(2);

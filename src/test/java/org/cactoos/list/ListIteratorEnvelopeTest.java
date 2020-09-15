@@ -24,60 +24,71 @@
 package org.cactoos.list;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test cases for {@link ListIteratorOf}.
+ * Test cases for {@link ListIteratorEnvelope}.
  *
  * @since 0.35
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle JavadocTypeCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class ListIteratorOfTest {
+final class ListIteratorEnvelopeTest {
     @Test
-    public void mustReturnPreviousIndex() {
+    void mustReturnPreviousIndex() {
         new Assertion<>(
             "List Iterator must return previous index",
-            new ListIteratorOf<>(
-                new ListOf<>(1)
+            new StringListIterator(
+                "1"
             ).previousIndex(),
             new IsEqual<>(-1)
         ).affirm();
     }
 
     @Test
-    public void mustReturnPreviousElement() {
+    void mustReturnPreviousElement() {
         new Assertion<>(
             "List Iterator must return previous element",
-            new ListIteratorOf<>(
-                new ListOf<>(3, 7),
-                1
+            new StringListIterator(
+                1,
+                "3", "7"
             ).previous(),
-            new IsEqual<>(3)
+            new IsEqual<>("3")
         ).affirm();
     }
 
     @Test
-    public void mustReturnNextIndex() {
+    void mustReturnNextIndex() {
         new Assertion<>(
             "List iterator must return next index",
-            new ListIteratorOf<>(
-                new ListOf<>(1)
+            new StringListIterator(
+                "1"
             ).nextIndex(),
             new IsEqual<>(0)
         ).affirm();
     }
 
     @Test
-    public void mustReturnNextElement() {
+    void mustReturnNextElement() {
         new Assertion<>(
             "List iterator must return next item",
-            new ListIteratorOf<>(
-                new ListOf<>(5, 11, 13),
-                1
+            new StringListIterator(
+                1,
+                "5", "11", "13"
             ).next(),
-            new IsEqual<>(11)
+            new IsEqual<>("11")
         ).affirm();
+    }
+
+    private static final class StringListIterator extends ListIteratorEnvelope<String> {
+        StringListIterator(final int index, final String... elements) {
+            super(new ListOf<>(elements).listIterator(index));
+        }
+
+        StringListIterator(final String... elements) {
+            super(new ListOf<>(elements).listIterator());
+        }
     }
 }

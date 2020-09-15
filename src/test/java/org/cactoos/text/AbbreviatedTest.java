@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class AbbreviatedTest {
+final class AbbreviatedTest {
 
     @Test
-    public void abbreviatesAnEmptyText() {
+    void abbreviatesAnEmptyText() {
         final String msg = "";
         new Assertion<>(
             "Can't abbreviate an msg text",
@@ -47,7 +47,7 @@ public final class AbbreviatedTest {
     }
 
     @Test
-    public void abbreviatesText() {
+    void abbreviatesText() {
         new Assertion<>(
             "Can't abbreviate a text",
             // @checkstyle MagicNumber (1 line)
@@ -57,7 +57,7 @@ public final class AbbreviatedTest {
     }
 
     @Test
-    public void abbreviatesTextOneCharSmaller() {
+    void abbreviatesTextOneCharSmaller() {
         new Assertion<>(
             "Can't abbreviate a text one char smaller",
             // @checkstyle MagicNumber (1 line)
@@ -67,7 +67,7 @@ public final class AbbreviatedTest {
     }
 
     @Test
-    public void abbreviatesTextWithSameLength() {
+    void abbreviatesTextWithSameLength() {
         final String msg = "elegant objects";
         new Assertion<>(
             "Can't abbreviate a text with same length",
@@ -78,7 +78,7 @@ public final class AbbreviatedTest {
     }
 
     @Test
-    public void abbreviatesTextOneCharBigger() {
+    void abbreviatesTextOneCharBigger() {
         final String msg = "the old mcdonald";
         new Assertion<>(
             "Can't abbreviate a text one char bigger",
@@ -89,7 +89,7 @@ public final class AbbreviatedTest {
     }
 
     @Test
-    public void abbreviatesTextTwoCharsBigger() {
+    void abbreviatesTextTwoCharsBigger() {
         final String msg = "hi everybody!";
         new Assertion<>(
             "Can't abbreviate a text two chars bigger",
@@ -100,7 +100,7 @@ public final class AbbreviatedTest {
     }
 
     @Test
-    public void abbreviatesTextWithWidthBiggerThanLength() {
+    void abbreviatesTextWithWidthBiggerThanLength() {
         final String msg = "cactoos framework";
         new Assertion<>(
             "Can't abbreviate a text with width bigger than length",
@@ -111,7 +111,7 @@ public final class AbbreviatedTest {
     }
 
     @Test
-    public void abbreviatesTextBiggerThanDefaultMaxWidth() {
+    void abbreviatesTextBiggerThanDefaultMaxWidth() {
         // @checkstyle LineLengthCheck (10 line)
         new Assertion<>(
             "Can't abbreviate a text bigger than default max width",

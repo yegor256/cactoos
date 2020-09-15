@@ -23,7 +23,7 @@
  */
 package org.cactoos.io;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.InputHasContent;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class DeadInputTest {
+final class DeadInputTest {
 
     @Test
-    public void readsEmptyContent() {
+    void readsEmptyContent() {
         new Assertion<>(
             "must read empty content",
             new DeadInput(),

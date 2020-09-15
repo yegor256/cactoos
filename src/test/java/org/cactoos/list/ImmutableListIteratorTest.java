@@ -24,7 +24,7 @@
 package org.cactoos.list;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
-public final class ImmutableListIteratorTest {
+final class ImmutableListIteratorTest {
 
     @Test
-    public void mustReturnPreviousIndex() {
+    void mustReturnPreviousIndex() {
         new Assertion<>(
             "Must return next previous index",
             new ImmutableListIterator<>(
@@ -50,7 +50,7 @@ public final class ImmutableListIteratorTest {
     }
 
     @Test
-    public void mustReturnPreviousElement() {
+    void mustReturnPreviousElement() {
         new Assertion<>(
             "Must return previous element",
             new ImmutableListIterator<>(
@@ -61,7 +61,7 @@ public final class ImmutableListIteratorTest {
     }
 
     @Test
-    public void mustReturnNextIndex() {
+    void mustReturnNextIndex() {
         new Assertion<>(
             "Must return next index",
             new ImmutableListIterator<>(
@@ -72,7 +72,7 @@ public final class ImmutableListIteratorTest {
     }
 
     @Test
-    public void mustReturnNextElement() {
+    void mustReturnNextElement() {
         new Assertion<>(
             "Must return next element",
             new ImmutableListIterator<>(
@@ -83,7 +83,7 @@ public final class ImmutableListIteratorTest {
     }
 
     @Test
-    public void mustRaiseErrorOnListIteratorRemove() {
+    void mustRaiseErrorOnListIteratorRemove() {
         new Assertion<>(
             "Must throw error if modified with remove operation",
             () -> {
@@ -100,7 +100,7 @@ public final class ImmutableListIteratorTest {
     }
 
     @Test
-    public void mustRaiseErrorOnListIteratorAdd() {
+    void mustRaiseErrorOnListIteratorAdd() {
         new Assertion<>(
             "Must throw error if modified with add operation",
             () -> {
@@ -117,7 +117,7 @@ public final class ImmutableListIteratorTest {
     }
 
     @Test
-    public void mustRaiseErrorOnListIteratorSet() {
+    void mustRaiseErrorOnListIteratorSet() {
         new Assertion<>(
             "Must throw error if modified with set operation",
             () -> {

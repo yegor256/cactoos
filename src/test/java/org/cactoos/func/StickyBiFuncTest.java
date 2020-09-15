@@ -26,7 +26,7 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import org.cactoos.BiFunc;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class StickyBiFuncTest {
+final class StickyBiFuncTest {
 
     @Test
-    public void cachesFuncResults() throws Exception {
+    void cachesFuncResults() throws Exception {
         final BiFunc<Boolean, Boolean, Integer> func = new StickyBiFunc<>(
             (first, second) -> new SecureRandom().nextInt()
         );

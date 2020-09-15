@@ -30,7 +30,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsCollectionContaining;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 
@@ -42,10 +42,10 @@ import org.llorllale.cactoos.matchers.HasSize;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class SetOfTest {
+final class SetOfTest {
 
     @Test
-    public void behaveAsSetWithOriginalDuplicationsInTheTail() {
+    void behaveAsSetWithOriginalDuplicationsInTheTail() {
         new Assertion<>(
             "Must keep unique integer numbers",
             new SetOf<>(1, 2, 2),
@@ -60,7 +60,7 @@ public final class SetOfTest {
     }
 
     @Test
-    public void behaveAsSetWithOriginalDuplicationsInTheHead() {
+    void behaveAsSetWithOriginalDuplicationsInTheHead() {
         new Assertion<>(
             "Must keep unique integer numbers",
             new SetOf<>(1, 1, 2, 3),
@@ -76,7 +76,7 @@ public final class SetOfTest {
     }
 
     @Test
-    public void behaveAsSetWithOriginalDuplicationsInTheMiddle() {
+    void behaveAsSetWithOriginalDuplicationsInTheMiddle() {
         new Assertion<>(
             "Must keep unique integer numbers",
             new SetOf<>(1, 2, 2, 3),
@@ -92,7 +92,7 @@ public final class SetOfTest {
     }
 
     @Test
-    public void behaveAsSetMergedCollectionsOfLiteralsWithDuplicates() {
+    void behaveAsSetMergedCollectionsOfLiteralsWithDuplicates() {
         new Assertion<>(
             "Must keep unique string literals",
             new SetOf<String>(
@@ -115,7 +115,7 @@ public final class SetOfTest {
     }
 
     @Test
-    public void behaveAsSetWithOriginalDuplicationsOfCharsInTheMiddle() {
+    void behaveAsSetWithOriginalDuplicationsOfCharsInTheMiddle() {
         new Assertion<>(
             "Must keep unique characters",
             new SetOf<>('a', 'b', 'b', 'c', 'a', 'b', 'd'),
@@ -132,7 +132,7 @@ public final class SetOfTest {
     }
 
     @Test
-    public void behaveAsSetWithOriginalDuplicationsOfDoublesInTheMiddle() {
+    void behaveAsSetWithOriginalDuplicationsOfDoublesInTheMiddle() {
         new Assertion<>(
             "Must keep unique double numbers",
             new SetOf<>(1.5d, 2.4d, 1.5d, 2.4d, 2.4d, 1.5d),
@@ -147,7 +147,7 @@ public final class SetOfTest {
     }
 
     @Test
-    public void behaveAsSetWithOriginalDuplicationsOfTextsInTheMiddle() {
+    void behaveAsSetWithOriginalDuplicationsOfTextsInTheMiddle() {
         new Assertion<>(
             "Must keep unique TextOf objects",
             new SetOf<>(

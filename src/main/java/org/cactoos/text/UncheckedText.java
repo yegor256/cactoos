@@ -26,6 +26,9 @@ package org.cactoos.text;
 import org.cactoos.Func;
 import org.cactoos.Text;
 import org.cactoos.func.UncheckedFunc;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.Or;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Text that doesn't throw checked {@link Exception}.
@@ -91,6 +94,32 @@ public final class UncheckedText implements Text {
             txt = new UncheckedFunc<>(this.fallback).apply(ex);
         }
         return txt;
+    }
+
+    @Override
+    public String toString() {
+        return this.asString();
+    }
+
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    public boolean equals(final Object obj) {
+        return new Unchecked<>(
+            new Or(
+                () -> this == obj,
+                new And(
+                    () -> obj instanceof Text,
+                    () -> this.asString().equals(
+                        Text.class.cast(obj).asString()
+                    )
+                )
+            )
+        ).value();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.asString().hashCode();
     }
 
 }

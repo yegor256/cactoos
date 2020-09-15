@@ -24,7 +24,7 @@
 package org.cactoos.scalar;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FalseTest {
+final class FalseTest {
 
     @Test
-    public void asValue() throws Exception {
+    void asValue() throws Exception {
         new Assertion<>(
             "Must return false",
             new False().value(),
@@ -46,7 +46,7 @@ public final class FalseTest {
     }
 
     @Test
-    public void asScalar() throws Exception {
+    void asScalar() throws Exception {
         new Assertion<>(
             "Must be false",
             new False(),

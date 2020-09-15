@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
  */
-public final class ScalarEnvelopeTest {
+final class ScalarEnvelopeTest {
 
     @Test
-    public void envelopeDelegatesCalls() {
+    void envelopeDelegatesCalls() {
         new Assertion<>(
             "must delegate calls to apply",
             new Static(1),
@@ -49,7 +49,7 @@ public final class ScalarEnvelopeTest {
     }
 
     @Test
-    public void propagatesException() {
+    void propagatesException() {
         final String message = "ok";
         final Scalar<Integer> scalar = () -> {
             throw new UnsupportedOperationException(message);

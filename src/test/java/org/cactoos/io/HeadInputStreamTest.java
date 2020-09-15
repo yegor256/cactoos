@@ -25,7 +25,7 @@ package org.cactoos.io;
 
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.InputHasContent;
 import org.llorllale.cactoos.matchers.TextIs;
@@ -39,10 +39,10 @@ import org.llorllale.cactoos.matchers.TextIs;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class HeadInputStreamTest {
+final class HeadInputStreamTest {
 
     @Test
-    public void testSkippingLessThanTotal() throws Exception {
+    void testSkippingLessThanTotal() throws Exception {
         final HeadInputStream stream = new HeadInputStream(
             new InputOf("testSkippingLessThanTotal").stream(),
             5
@@ -61,7 +61,7 @@ public final class HeadInputStreamTest {
     }
 
     @Test
-    public void testSkippingMoreThanTotal() throws Exception {
+    void testSkippingMoreThanTotal() throws Exception {
         final HeadInputStream stream = new HeadInputStream(
             new InputOf("testSkippingMoreThanTotal").stream(),
             5
@@ -81,7 +81,7 @@ public final class HeadInputStreamTest {
     }
 
     @Test
-    public void testResetting() throws Exception {
+    void testResetting() throws Exception {
         final HeadInputStream stream = new HeadInputStream(
             new InputOf("testResetting").stream(),
             5
@@ -101,7 +101,7 @@ public final class HeadInputStreamTest {
     }
 
     @Test
-    public void testAvailableLessThanTotal() throws Exception {
+    void testAvailableLessThanTotal() throws Exception {
         final HeadInputStream stream = new HeadInputStream(
             new InputOf("testAvailableLessThanTotal").stream(),
             5

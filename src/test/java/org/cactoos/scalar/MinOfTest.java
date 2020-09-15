@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link MinOf}.
@@ -35,10 +35,10 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class MinOfTest {
+final class MinOfTest {
 
     @Test
-    public void withIntegerCollection() {
+    void withIntegerCollection() {
         MatcherAssert.assertThat(
             new MinOf(
                 new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
@@ -66,7 +66,7 @@ public final class MinOfTest {
     }
 
     @Test
-    public void withLongCollection() {
+    void withLongCollection() {
         MatcherAssert.assertThat(
             new MinOf(
                 new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
@@ -94,7 +94,7 @@ public final class MinOfTest {
     }
 
     @Test
-    public void withDoubleCollection() {
+    void withDoubleCollection() {
         MatcherAssert.assertThat(
             new MinOf(
                 new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
@@ -122,7 +122,7 @@ public final class MinOfTest {
     }
 
     @Test
-    public void withFloatCollection() {
+    void withFloatCollection() {
         MatcherAssert.assertThat(
             new MinOf(
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])

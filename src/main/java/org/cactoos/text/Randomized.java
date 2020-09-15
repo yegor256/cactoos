@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Random;
 import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * Randomized text.
@@ -140,17 +139,18 @@ public final class Randomized extends TextEnvelope {
      * @param rnd Characters index randomizer.
      */
     public Randomized(final List<Character> chrs, final Scalar<Integer> len, final Random rnd) {
-        super(new Scalar<String>() {
-            @Override
-            public String value() {
-                final int length = new Unchecked<>(len).value();
-                final StringBuilder builder = new StringBuilder(length);
-                final int bound = chrs.size();
-                for (int index = 0; index < length; index = index + 1) {
-                    builder.append(chrs.get(rnd.nextInt(bound)));
+        super(
+            new TextOf(
+                () -> {
+                    final int length = len.value();
+                    final StringBuilder builder = new StringBuilder(length);
+                    final int bound = chrs.size();
+                    for (int index = 0; index < length; index = index + 1) {
+                        builder.append(chrs.get(rnd.nextInt(bound)));
+                    }
+                    return builder.toString();
                 }
-                return builder.toString();
-            }
-        });
+            )
+        );
     }
 }

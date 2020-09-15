@@ -25,7 +25,7 @@ package org.cactoos.iterable;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link TailOf}.
@@ -33,11 +33,11 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class TailOfTest {
+final class TailOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void tailIterable() throws Exception {
+    void tailIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't get tail portion of iterable",
             new TailOf<>(

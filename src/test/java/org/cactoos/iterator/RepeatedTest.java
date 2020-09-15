@@ -24,7 +24,7 @@
 package org.cactoos.iterator;
 
 import org.cactoos.iterable.IterableOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.HasSize;
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class RepeatedTest {
+final class RepeatedTest {
 
     @Test
-    public void allSameTest() {
+    void allSameTest() {
         final int size = 42;
         final int element = 11;
         new Assertion<>(
@@ -52,7 +52,7 @@ public final class RepeatedTest {
     }
 
     @Test
-    public void emptyTest() {
+    void emptyTest() {
         new Assertion<>(
             "Must generate an empty iterator",
             new IterableOf<>(new Repeated<>(0, 0)),

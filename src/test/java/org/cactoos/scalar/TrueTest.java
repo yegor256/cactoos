@@ -23,7 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TrueTest {
+final class TrueTest {
 
     @Test
-    public void asValue() throws Exception {
+    void asValue() throws Exception {
         new Assertion<>(
             "Must be True",
             new True().value(),

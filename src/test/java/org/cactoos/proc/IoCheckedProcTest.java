@@ -25,7 +25,7 @@ package org.cactoos.proc;
 
 import java.io.IOException;
 import org.cactoos.Proc;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -35,9 +35,9 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IoCheckedProcTest {
+final class IoCheckedProcTest {
     @Test
-    public void rethrowsIoException() {
+    void rethrowsIoException() {
         final IOException exception = new IOException("intended");
         new Assertion<>(
             "Must rethrow original IOException",
@@ -54,7 +54,7 @@ public final class IoCheckedProcTest {
     }
 
     @Test
-    public void rethrowsCheckedToIoException() {
+    void rethrowsCheckedToIoException() {
         new Assertion<>(
             "Must wrap and throw IOException",
             () -> {
@@ -70,7 +70,7 @@ public final class IoCheckedProcTest {
     }
 
     @Test
-    public void runtimeExceptionGoesOut() {
+    void runtimeExceptionGoesOut() {
         new Assertion<>(
             "Must throw runtime exceptions as is",
             () -> {

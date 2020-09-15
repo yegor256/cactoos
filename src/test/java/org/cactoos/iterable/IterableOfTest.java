@@ -29,7 +29,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -39,10 +39,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
-public final class IterableOfTest {
+final class IterableOfTest {
 
     @Test
-    public void convertsScalarsToIterable() {
+    void convertsScalarsToIterable() {
         MatcherAssert.assertThat(
             "must convert scalars to iterable",
             new LengthOf(
@@ -56,7 +56,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void convertsArrayOfIntsToIterable() {
+    void convertsArrayOfIntsToIterable() {
         MatcherAssert.assertThat(
             "must convert int scalars to iterable",
             new IterableOf<>(1, 2, 0, 2),
@@ -65,7 +65,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void convertsObjectsToIterable() {
+    void convertsObjectsToIterable() {
         MatcherAssert.assertThat(
             "must convert objects to iterable",
             new LengthOf(
@@ -79,7 +79,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void isNotEqualsToIterableWithMoreElements() {
+    void isNotEqualsToIterableWithMoreElements() {
         new Assertion<>(
             "Must compare iterables and second one is bigger",
             new IterableOf<>("a", "b").equals(new IterableOf<>("a")),
@@ -88,7 +88,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void isNotEqualsToIterableWithLessElements() {
+    void isNotEqualsToIterableWithLessElements() {
         new Assertion<>(
             "Must compare iterables and first one is bigger",
             new IterableOf<>("a").equals(new IterableOf<>("a", "b")),
@@ -97,7 +97,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void notEqualsToObjectOfAnotherType() {
+    void notEqualsToObjectOfAnotherType() {
         new Assertion<>(
             "must not equal to object of another type",
             new IterableOf<>(),
@@ -106,7 +106,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void notEqualsToIterableWithDifferentElements() {
+    void notEqualsToIterableWithDifferentElements() {
         new Assertion<>(
             "must not equal to Iterable with different elements",
             new IterableOf<>(1, 2),
@@ -115,7 +115,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void isEqualToItself() {
+    void isEqualToItself() {
         final IterableOf<Integer> iterable = new IterableOf<>(1, 2);
         new Assertion<>(
             "must be equal to itself",
@@ -125,7 +125,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void isEqualToIterableWithTheSameElements() {
+    void isEqualToIterableWithTheSameElements() {
         new Assertion<>(
             "must be equal to Iterable with the same elements",
             new IterableOf<>(1, 2),
@@ -134,7 +134,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void equalToEmptyIterable() {
+    void equalToEmptyIterable() {
         new Assertion<>(
             "empty Iterable must be equal to empty Iterable",
             new IterableOf<>(),
@@ -143,7 +143,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void differentHashCode() {
+    void differentHashCode() {
         new Assertion<>(
             "must have different hashCode for Iterables with different content",
             new IterableOf<>(1, 2).hashCode(),
@@ -152,7 +152,7 @@ public final class IterableOfTest {
     }
 
     @Test
-    public void equalHashCode() {
+    void equalHashCode() {
         new Assertion<>(
             "must have equal hashCode for Iterables with equal content",
             new IterableOf<>(1, 2).hashCode(),

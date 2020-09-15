@@ -24,7 +24,7 @@
 package org.cactoos.scalar;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class NotTest {
+final class NotTest {
 
     @Test
-    public void trueToFalse() throws Exception {
+    void trueToFalse() throws Exception {
         new Assertion<>(
             "Must be changed from true to false",
             new Not(new True()).value(),
@@ -45,7 +45,7 @@ public final class NotTest {
     }
 
     @Test
-    public void falseToTrue() throws Exception {
+    void falseToTrue() throws Exception {
         new Assertion<>(
             "Must be changed from false to true",
             new Not(new False()).value(),

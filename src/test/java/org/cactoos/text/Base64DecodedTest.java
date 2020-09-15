@@ -25,7 +25,7 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -34,14 +34,14 @@ import org.llorllale.cactoos.matchers.TextHasString;
  *
  * @since 0.20.2
  */
-public final class Base64DecodedTest {
+final class Base64DecodedTest {
 
     /**
      * Check text decodes using the Base64 encoding scheme.
      * @throws IOException If fails.
      */
     @Test
-    public void checkDecode() throws IOException {
+    void checkDecode() throws IOException {
         new Assertion<>(
             "Can't decodes text using the Base64 encoding scheme",
             new Base64Decoded(

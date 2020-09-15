@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class JoinedTest {
+final class JoinedTest {
 
     @Test
-    public void joinsStrings() {
+    void joinsStrings() {
         new Assertion<>(
             "Can't join strings",
             new Joined(" ", "hello", "world"),
@@ -44,7 +44,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void joinsTexts() {
+    void joinsTexts() {
         new Assertion<>(
             "Can't join texts",
             new Joined(
@@ -57,7 +57,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void joinsTextsWitjStringDelimit() {
+    void joinsTextsWitjStringDelimit() {
         new Assertion<>(
             "Can't join texts with String delimit",
             new Joined(

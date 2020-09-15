@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
 
@@ -33,14 +33,14 @@ import org.llorllale.cactoos.matchers.TextIs;
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class SuffixOfTest {
+final class SuffixOfTest {
 
     /**
      * Ensures that After is returning empty string if
      * there is no given boundary.
      */
     @Test
-    public void returnsEmptyIfThereIsNoBoundary() {
+    void returnsEmptyIfThereIsNoBoundary() {
         new Assertion<>(
             "Given string is not empty",
             new SuffixOf("Cactoos with description", "after"),
@@ -53,7 +53,7 @@ public final class SuffixOfTest {
      * given boundary is equal to given string.
      */
     @Test
-    public void returnsEmptyIfStringIsBoundary() {
+    void returnsEmptyIfStringIsBoundary() {
         new Assertion<>(
             "Given string is not empty",
             new SuffixOf("Boundary", "Boundary"),
@@ -66,7 +66,7 @@ public final class SuffixOfTest {
      * after given boundary.
      */
     @Test
-    public void returnsAfterBoundaryString() {
+    void returnsAfterBoundaryString() {
         new Assertion<>(
             "Given strings are not equal",
             new SuffixOf("Anti-pattern", "Anti-"),

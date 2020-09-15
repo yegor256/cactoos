@@ -26,7 +26,7 @@ package org.cactoos.iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.Throws;
@@ -37,11 +37,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class TailOfTest {
+final class TailOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void tailIterator() {
+    void tailIterator() {
         new Assertion<>(
             "Must get tail portion of iterator",
             new IterableOf<>(
@@ -62,7 +62,7 @@ public final class TailOfTest {
     }
 
     @Test
-    public void returnsIntactIterator() {
+    void returnsIntactIterator() {
         new Assertion<>(
             "Must return an intact iterator",
             new IterableOf<>(
@@ -78,7 +78,7 @@ public final class TailOfTest {
     }
 
     @Test
-    public void returnsEmptyIterator() {
+    void returnsEmptyIterator() {
         new Assertion<>(
             "Must throw an exception if empty",
             () -> new TailOf<>(
@@ -92,7 +92,7 @@ public final class TailOfTest {
     }
 
     @Test
-    public void emptyIteratorForNegativeSize() {
+    void emptyIteratorForNegativeSize() {
         new Assertion<>(
             "Must throw an exception for negative size",
             () -> new TailOf<>(

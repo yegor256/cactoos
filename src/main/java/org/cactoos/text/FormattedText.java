@@ -26,7 +26,6 @@ package org.cactoos.text;
 import java.util.Collection;
 import java.util.Formatter;
 import java.util.Locale;
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 
@@ -136,18 +135,19 @@ public final class FormattedText extends TextEnvelope {
         final Locale locale,
         final Collection<Object> args
     ) {
-        super(new Scalar<String>() {
-            @Override
-            public String value() throws Exception {
-                final StringBuilder out = new StringBuilder(0);
-                try (Formatter fmt = new Formatter(out, locale)) {
-                    fmt.format(
-                        ptn.asString(),
-                        args.toArray()
-                    );
+        super(
+            new TextOf(
+                () -> {
+                    final StringBuilder out = new StringBuilder(0);
+                    try (Formatter fmt = new Formatter(out, locale)) {
+                        fmt.format(
+                            ptn.asString(),
+                            args.toArray()
+                        );
+                    }
+                    return out.toString();
                 }
-                return out.toString();
-            }
-        });
+            )
+        );
     }
 }

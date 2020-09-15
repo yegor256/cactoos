@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link SumOfScalar}.
@@ -34,10 +34,10 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class SumOfScalarTest {
+final class SumOfScalarTest {
 
     @Test
-    public void withListOfScalarsInt() {
+    void withListOfScalarsInt() {
         MatcherAssert.assertThat(
             new SumOfScalar(() -> 1, () -> 2, () -> 3)
                 .value()
@@ -47,7 +47,7 @@ public final class SumOfScalarTest {
     }
 
     @Test
-    public void withEmptyList() {
+    void withEmptyList() {
         MatcherAssert.assertThat(
             new SumOfScalar().value().intValue(),
             new IsEqual<>(0)
@@ -55,7 +55,7 @@ public final class SumOfScalarTest {
     }
 
     @Test
-    public void withListOfOneElement() {
+    void withListOfOneElement() {
         MatcherAssert.assertThat(
             new SumOfScalar(() -> 5).value().intValue(),
             new IsEqual<>(5)

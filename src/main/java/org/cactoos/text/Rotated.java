@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -37,25 +36,27 @@ public final class Rotated extends TextEnvelope {
      * @param text The text
      * @param shift The shift
      */
-    @SuppressWarnings({"PMD.CallSuperInConstructor",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"})
     public Rotated(final Text text, final int shift) {
-        super((Scalar<String>) () -> {
-            String origin = text.asString();
-            final int length = origin.length();
-            if (length != 0 && shift != 0 && shift % length != 0) {
-                final StringBuilder builder = new StringBuilder(length);
-                int offset = -(shift % length);
-                if (offset < 0) {
-                    offset = origin.length() + offset;
+        super(
+            new TextOf(
+                () -> {
+                    String origin = text.asString();
+                    final int length = origin.length();
+                    if (length != 0 && shift != 0 && shift % length != 0) {
+                        final StringBuilder builder = new StringBuilder(length);
+                        int offset = -(shift % length);
+                        if (offset < 0) {
+                            offset = origin.length() + offset;
+                        }
+                        origin = builder.append(
+                            origin.substring(offset)
+                        ).append(
+                            origin.substring(0, offset)
+                        ).toString();
+                    }
+                    return origin;
                 }
-                origin = builder.append(
-                    origin.substring(offset)
-                ).append(
-                    origin.substring(0, offset)
-                ).toString();
-            }
-            return origin;
-        });
+            )
+        );
     }
 }

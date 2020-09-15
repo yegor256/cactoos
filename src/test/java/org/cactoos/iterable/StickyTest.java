@@ -29,7 +29,7 @@ import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -39,10 +39,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class StickyTest {
+final class StickyTest {
 
     @Test
-    public void ignoresChangesInIterable() throws Exception {
+    void ignoresChangesInIterable() throws Exception {
         final AtomicInteger size = new AtomicInteger(2);
         final Iterable<Integer> list = new Sticky<>(
             new ListOf<>(
@@ -57,7 +57,7 @@ public final class StickyTest {
     }
 
     @Test
-    public void testEmpty() {
+    void testEmpty() {
         new Assertion<>(
             "Must be empty",
             new Sticky<>(),
@@ -66,7 +66,7 @@ public final class StickyTest {
     }
 
     @Test
-    public void testEqualsIterable() {
+    void testEqualsIterable() {
         new Assertion<>(
             "Must be equals to equivalent iterable",
             new Sticky<>(1, 2),

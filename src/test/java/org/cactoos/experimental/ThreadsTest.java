@@ -32,7 +32,7 @@ import org.cactoos.Proc;
 import org.cactoos.func.Repeated;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.scalar.ScalarOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
@@ -45,14 +45,14 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class ThreadsTest {
+final class ThreadsTest {
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
      *  {@link ExecutorService} was initiated by someone else.
      */
     @Test
-    public void containsResults() {
+    void containsResults() {
         this.repeat(
             arg -> {
                 final ExecutorService extor = Executors.newFixedThreadPool(3);
@@ -91,7 +91,7 @@ public final class ThreadsTest {
      *  expected exception type.
      */
     @Test
-    public void failsDueToException() {
+    void failsDueToException() {
         new Assertion<>(
             "wraps error into CompletionException",
             () -> new Threads<String>(
@@ -116,7 +116,7 @@ public final class ThreadsTest {
      *  {@link ExecutorService} was initiated by {@link Threads} itself.
      */
     @Test
-    public void containsValuesWithInlineExecutorService() {
+    void containsValuesWithInlineExecutorService() {
         this.repeat(
             arg -> new Assertion<>(
                 // @checkstyle LineLength (1 line)

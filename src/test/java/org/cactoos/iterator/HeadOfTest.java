@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.HasValues;
@@ -39,11 +39,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
-public final class HeadOfTest {
+final class HeadOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void headIterator() {
+    void headIterator() {
         new Assertion<>(
             "Must skip elements in iterator",
             new IterableOf<>(
@@ -62,7 +62,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void returnsIntactIterator() {
+    void returnsIntactIterator() {
         new Assertion<>(
             "Must return an intact iterator",
             new IterableOf<>(
@@ -78,7 +78,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void returnsEmptyIterator() {
+    void returnsEmptyIterator() {
         new Assertion<>(
             "Must throw an exception if empty",
             () -> new HeadOf<>(
@@ -92,7 +92,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void emptyIteratorForNegativeSize() {
+    void emptyIteratorForNegativeSize() {
         new Assertion<>(
             "Must throw an exception for negative size",
             () -> new HeadOf<>(
@@ -106,7 +106,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void iteratesForEachRemaining() {
+    void iteratesForEachRemaining() {
         final List<String> lst = new ArrayList<>(2);
         new HeadOf<>(
             2,
@@ -127,7 +127,7 @@ public final class HeadOfTest {
     }
 
     @Test
-    public void removeNotSupported() {
+    void removeNotSupported() {
         new Assertion<>(
             "Remove should not be supported",
             () -> {

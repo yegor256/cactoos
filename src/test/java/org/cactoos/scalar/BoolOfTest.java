@@ -23,7 +23,7 @@
  */
 package org.cactoos.scalar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class BoolOfTest {
+final class BoolOfTest {
 
     @Test
-    public void trueTest() throws Exception {
+    void trueTest() throws Exception {
         new Assertion<>(
             "Must be parsed string 'true'",
             new BoolOf("true"),
@@ -45,7 +45,7 @@ public final class BoolOfTest {
     }
 
     @Test
-    public void falseTest() throws Exception {
+    void falseTest() throws Exception {
         new Assertion<>(
             "Must be parsed string 'false'",
             new BoolOf("false"),
@@ -54,7 +54,7 @@ public final class BoolOfTest {
     }
 
     @Test
-    public void isFalseIfTextDoesNotRepresentABoolean() throws Exception {
+    void isFalseIfTextDoesNotRepresentABoolean() throws Exception {
         new Assertion<>(
             "Must be parsed a non-boolean string",
             new BoolOf("abc"),

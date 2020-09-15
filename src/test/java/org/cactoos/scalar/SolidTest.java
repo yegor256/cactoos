@@ -27,7 +27,7 @@ import java.security.SecureRandom;
 import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -39,10 +39,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class SolidTest {
+final class SolidTest {
 
     @Test
-    public void cachesScalarResults() throws Exception {
+    void cachesScalarResults() throws Exception {
         final Scalar<Integer> scalar = new Solid<>(
             () -> new SecureRandom().nextInt()
         );
@@ -54,7 +54,7 @@ public final class SolidTest {
     }
 
     @Test
-    public void worksInThreads() {
+    void worksInThreads() {
         new Assertion<>(
             "must work well in multiple threads",
             scalar -> {

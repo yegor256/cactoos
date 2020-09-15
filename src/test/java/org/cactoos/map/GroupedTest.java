@@ -29,7 +29,7 @@ import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Grouped}.
@@ -38,10 +38,10 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class GroupedTest {
+final class GroupedTest {
 
     @Test
-    public void groupedByNumber() throws Exception {
+    void groupedByNumber() throws Exception {
         MatcherAssert.assertThat(
             "Can't behave as a map",
             new Grouped<>(
@@ -55,7 +55,7 @@ public final class GroupedTest {
     }
 
     @Test
-    public void emptyIterable() throws Exception {
+    void emptyIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't build grouped by empty iterable",
             new Grouped<>(
@@ -68,7 +68,7 @@ public final class GroupedTest {
     }
 
     @Test
-    public void groupedByOneHasEntries() throws Exception {
+    void groupedByOneHasEntries() throws Exception {
         MatcherAssert.assertThat(
             "Can't group int values",
             new Grouped<>(

@@ -27,7 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.39
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class LoggingInputStreamTest {
+final class LoggingInputStreamTest {
 
     @Test
-    public void reThrowsException() {
+    void reThrowsException() {
         final String message = "Some read exception.";
         final LoggingInputStream stream = new LoggingInputStream(
             new InputStream() {
@@ -59,7 +59,7 @@ public final class LoggingInputStreamTest {
     }
 
     @Test
-    public void readEmptyStream() throws IOException {
+    void readEmptyStream() throws IOException {
         final LoggingInputStream stream = new LoggingInputStream(
             new ByteArrayInputStream(
                 "".getBytes()
@@ -75,7 +75,7 @@ public final class LoggingInputStreamTest {
     }
 
     @Test
-    public void readByteByByte() throws IOException {
+    void readByteByByte() throws IOException {
         final LoggingInputStream stream = new LoggingInputStream(
             new ByteArrayInputStream(
                 new byte[] {

@@ -31,7 +31,7 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.StartsWith;
@@ -44,10 +44,10 @@ import org.llorllale.cactoos.matchers.StartsWith;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("unchecked")
-public final class InputAsBytesTest {
+final class InputAsBytesTest {
 
     @Test
-    public void readsLargeInMemoryContent() throws Exception {
+    void readsLargeInMemoryContent() throws Exception {
         final int multiplier = 5_000;
         final String body = "1234567890";
         new Assertion<>(
@@ -68,7 +68,7 @@ public final class InputAsBytesTest {
 
     @Test
     // @checkstyle AnonInnerLengthCheck (100 lines)
-    public void readsLargeContent() throws Exception {
+    void readsLargeContent() throws Exception {
         final int size = 100_000;
         try (InputStream slow = new SlowInputStream(size)) {
             new Assertion<>(
@@ -82,7 +82,7 @@ public final class InputAsBytesTest {
     }
 
     @Test
-    public void readsInputIntoBytes() throws Exception {
+    void readsInputIntoBytes() throws Exception {
         new Assertion<>(
             "must read bytes from Input",
             new TextOf(
@@ -105,7 +105,7 @@ public final class InputAsBytesTest {
     }
 
     @Test
-    public void readsInputIntoBytesWithSmallBuffer() throws Exception {
+    void readsInputIntoBytesWithSmallBuffer() throws Exception {
         new Assertion<>(
             "must read bytes from Input with a small reading buffer",
             new TextOf(

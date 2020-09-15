@@ -30,10 +30,6 @@ import org.cactoos.Scalar;
  *
  * @param <T> Element type
  * @since 0.4
- * @todo #1320:30min Continue implement class ScalarOf that takes various
- *  objects such as a Supplier, Callable, etc and implement Scalar. Use it
- *  to replace in all places where it is needed. Add tests for each of the
- *  constructors.
  */
 public final class ScalarOf<T> implements Scalar<T> {
 

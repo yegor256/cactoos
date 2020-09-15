@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfInts;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FirstOfTest {
+final class FirstOfTest {
 
     @Test
-    public void returnsMatchingValue() {
+    void returnsMatchingValue() {
         final int value = 1;
         new Assertion<>(
             "Must return the only matching element",
@@ -53,7 +53,7 @@ public final class FirstOfTest {
     }
 
     @Test
-    public void returnsMatchingValueWithExceptionalFallback() {
+    void returnsMatchingValueWithExceptionalFallback() {
         final int value = 2;
         new Assertion<>(
             "Exception was not thrown",
@@ -71,7 +71,7 @@ public final class FirstOfTest {
     }
 
     @Test
-    public void returnsFirstValueForMultipleMatchingOnes() {
+    void returnsFirstValueForMultipleMatchingOnes() {
         final String value = "1";
         new Assertion<>(
             "Must return first matching element",
@@ -85,7 +85,7 @@ public final class FirstOfTest {
     }
 
     @Test
-    public void returnsFallbackIfNothingMatches() {
+    void returnsFallbackIfNothingMatches() {
         final String value = "abc";
         new Assertion<>(
             "Must return fallback",
@@ -99,7 +99,7 @@ public final class FirstOfTest {
     }
 
     @Test
-    public void throwsFallbackIfNothingMatches() {
+    void throwsFallbackIfNothingMatches() {
         new Assertion<>(
             "Fallback was not thrown",
             new FirstOf<>(
@@ -119,7 +119,7 @@ public final class FirstOfTest {
     }
 
     @Test
-    public void returnsFirstValueWithScalarFallback() {
+    void returnsFirstValueWithScalarFallback() {
         new Assertion<>(
             "Returns first value with scalar fallback",
             new FirstOf<Integer>(
@@ -131,7 +131,7 @@ public final class FirstOfTest {
     }
 
     @Test
-    public void returnsFirstValueWithIntegerFallback() {
+    void returnsFirstValueWithIntegerFallback() {
         new Assertion<>(
             "Returns first value with Integer fallback",
             new FirstOf<>(
@@ -143,7 +143,7 @@ public final class FirstOfTest {
     }
 
     @Test
-    public void returnsFallbackWhenIterableEmpty() {
+    void returnsFallbackWhenIterableEmpty() {
         new Assertion<>(
             "Returns fallback when iterable empty",
             new FirstOf<Integer>(

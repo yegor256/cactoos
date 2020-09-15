@@ -25,7 +25,7 @@ package org.cactoos.proc;
 
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -34,10 +34,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ForEachWithIndexTest {
+final class ForEachWithIndexTest {
 
     @Test
-    public void testBiProcIterable() throws Exception {
+    void testBiProcIterable() throws Exception {
         final StringBuilder builder = new StringBuilder();
         new ForEachWithIndex<>(
             (input, index) -> builder.append(String.format("%d: '%s' ", index + 1, input))

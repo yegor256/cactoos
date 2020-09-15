@@ -31,7 +31,7 @@ import org.cactoos.proc.ForEach;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.text.Randomized;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -42,10 +42,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class TempFolderTest {
+final class TempFolderTest {
 
     @Test
-    public void createsDirectory() throws Exception {
+    void createsDirectory() throws Exception {
         try (TempFolder folder = new TempFolder()) {
             final File dir = folder.value().toFile();
             new Assertion<>(
@@ -57,7 +57,7 @@ public final class TempFolderTest {
     }
 
     @Test
-    public void deletesDirectory() throws Exception {
+    void deletesDirectory() throws Exception {
         final TempFolder dir = new TempFolder(
             new Randomized('d', 'e', 'g').asString()
         );
@@ -70,7 +70,7 @@ public final class TempFolderTest {
     }
 
     @Test
-    public void deletesNonEmptyDirectory() throws Exception {
+    void deletesNonEmptyDirectory() throws Exception {
         final TempFolder temp = new TempFolder();
         final Path root = temp.value();
         new ForEach<>(
@@ -112,7 +112,7 @@ public final class TempFolderTest {
     }
 
     @Test
-    public void createDirectoryWithDirectoriesAndFiles() throws Exception {
+    void createDirectoryWithDirectoriesAndFiles() throws Exception {
         final TempFolder temp = new TempFolder();
         final Path root = temp.value();
         new ForEach<>(

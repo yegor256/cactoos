@@ -25,7 +25,7 @@ package org.cactoos.func;
 
 import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.FuncApplies;
 import org.llorllale.cactoos.matchers.TextIs;
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.TextIs;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
  */
-public final class FuncEnvelopeTest {
+final class FuncEnvelopeTest {
 
     @Test
-    public void envelopeDelegatesCalls() {
+    void envelopeDelegatesCalls() {
         new Assertion<>(
             "must delegate calls to apply",
             new Append(" stuff"),

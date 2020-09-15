@@ -30,7 +30,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
@@ -42,10 +42,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class FilteredTest {
+final class FilteredTest {
 
     @Test
-    public void filtersList() {
+    void filtersList() {
         MatcherAssert.assertThat(
             "Can't calculate the length of an iterable",
             new LengthOf(
@@ -62,7 +62,7 @@ public final class FilteredTest {
     }
 
     @Test
-    public void filtersEmptyList() {
+    void filtersEmptyList() {
         MatcherAssert.assertThat(
             "Can't calculate the length of an empty iterable",
             new LengthOf(
@@ -76,7 +76,7 @@ public final class FilteredTest {
     }
 
     @Test
-    public void filtersIterablesWithSize() {
+    void filtersIterablesWithSize() {
         final Iterable<Integer> list = new Filtered<>(
             i -> i > 0,
             new IterableOf<>(1, 2, -1, 0, 1)
@@ -92,7 +92,7 @@ public final class FilteredTest {
     }
 
     @Test
-    public void filterEmptyList() {
+    void filterEmptyList() {
         new Assertion<>(
             "Filter must work on empty collection",
             new Filtered<String>(
@@ -104,7 +104,7 @@ public final class FilteredTest {
     }
 
     @Test
-    public void length() {
+    void length() {
         new Assertion<>(
             "Size must be equal to number of items matching the filter",
             new LengthOf(
@@ -118,7 +118,7 @@ public final class FilteredTest {
     }
 
     @Test
-    public void withItemsNotEmpty() {
+    void withItemsNotEmpty() {
         new Assertion<>(
             "Must not be empty with items",
             new Filtered<>(
@@ -130,7 +130,7 @@ public final class FilteredTest {
     }
 
     @Test
-    public void withoutItemsIsEmpty() {
+    void withoutItemsIsEmpty() {
         new Assertion<>(
             "Must be empty without items",
             new Filtered<>(
@@ -142,7 +142,7 @@ public final class FilteredTest {
     }
 
     @Test
-    public void filtersWithFuncToScalar() {
+    void filtersWithFuncToScalar() {
         new Assertion<>(
             "Must be filtered",
             new Filtered<>(

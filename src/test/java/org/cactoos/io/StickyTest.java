@@ -29,7 +29,7 @@ import org.cactoos.func.Repeated;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.MatcherOf;
@@ -40,10 +40,10 @@ import org.llorllale.cactoos.matchers.MatcherOf;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class StickyTest {
+final class StickyTest {
 
     @Test
-    public void readsFileContent() {
+    void readsFileContent() {
         new Assertion<>(
             "Can't read bytes from a file",
             new Sticky(
@@ -64,7 +64,7 @@ public final class StickyTest {
     }
 
     @Test
-    public void readsRealUrl() throws MalformedURLException {
+    void readsRealUrl() throws MalformedURLException {
         new Assertion<>(
             "Can't fetch text page from the URL",
             new TextOf(
@@ -82,7 +82,7 @@ public final class StickyTest {
     }
 
     @Test
-    public void readsFileContentSlowlyAndCountsLength() {
+    void readsFileContentSlowlyAndCountsLength() {
         final long size = 100_000L;
         new Assertion<>(
             "Can't read bytes from a large source slowly and count length",
@@ -96,7 +96,7 @@ public final class StickyTest {
     }
 
     @Test
-    public void readsFileContentSlowly() throws Exception {
+    void readsFileContentSlowly() throws Exception {
         final int size = 130_000;
         new Assertion<>(
             "Can't read bytes from a large source slowly",

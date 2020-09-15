@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
@@ -32,10 +32,10 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ContainsTest {
+final class ContainsTest {
 
     @Test
-    public void textContainsText() {
+    void textContainsText() {
         new Assertion<>(
             "Text contains other Text",
             new Contains(
@@ -47,7 +47,7 @@ public final class ContainsTest {
     }
 
     @Test
-    public void textDoesNotContainText() {
+    void textDoesNotContainText() {
         new Assertion<>(
             "Text does not contain other Text",
             new Contains(
@@ -59,7 +59,7 @@ public final class ContainsTest {
     }
 
     @Test
-    public void textContainsString() {
+    void textContainsString() {
         new Assertion<>(
             "Text contains other String",
             new Contains(
@@ -71,7 +71,7 @@ public final class ContainsTest {
     }
 
     @Test
-    public void textDoesNotContainString() {
+    void textDoesNotContainString() {
         new Assertion<>(
             "Text does not contain other String",
             new Contains(
@@ -83,7 +83,7 @@ public final class ContainsTest {
     }
 
     @Test
-    public void stringContainsText() {
+    void stringContainsText() {
         new Assertion<>(
             "String contains other Text",
             new Contains(
@@ -95,7 +95,7 @@ public final class ContainsTest {
     }
 
     @Test
-    public void stringDoesNotContainText() {
+    void stringDoesNotContainText() {
         new Assertion<>(
             "String does not contain other Text",
             new Contains(
@@ -107,7 +107,7 @@ public final class ContainsTest {
     }
 
     @Test
-    public void stringContainsString() {
+    void stringContainsString() {
         new Assertion<>(
             "String contains other String",
             new Contains(
@@ -119,7 +119,7 @@ public final class ContainsTest {
     }
 
     @Test
-    public void stringDoesNotContainString() {
+    void stringDoesNotContainString() {
         new Assertion<>(
             "String does not contain other String",
             new Contains(

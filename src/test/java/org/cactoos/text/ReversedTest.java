@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
 
@@ -33,10 +33,10 @@ import org.llorllale.cactoos.matchers.TextHasString;
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReversedTest {
+final class ReversedTest {
 
     @Test
-    public void reverseText() {
+    void reverseText() {
         new Assertion<>(
             "Can't reverse a text",
             new Reversed(
@@ -47,7 +47,7 @@ public final class ReversedTest {
     }
 
     @Test
-    public void reversedEmptyTextIsEmptyText() {
+    void reversedEmptyTextIsEmptyText() {
         new Assertion<>(
             "Can't reverse empty text",
             new Reversed(
