@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
- * Test case for {@link StickyMap}.
+ * Test case for {@link Synced}.
  *
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
