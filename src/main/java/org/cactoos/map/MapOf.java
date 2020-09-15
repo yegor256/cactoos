@@ -27,9 +27,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.Func;
+import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterable as {@link Map}.
@@ -148,12 +150,20 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param entries List of the entries
      */
     public MapOf(final Iterable<Map.Entry<X, Y>> entries) {
-        super(() -> {
+        this(() -> {
             final Map<X, Y> temp = new HashMap<>(0);
             for (final Map.Entry<X, Y> entry : entries) {
                 temp.put(entry.getKey(), entry.getValue());
             }
             return Collections.unmodifiableMap(temp);
         });
+    }
+
+    /**
+     * Ctor.
+     * @param scalar The scalar for Map.
+     */
+    public MapOf(final Scalar<Map<X, Y>> scalar) {
+        super(new Unchecked<>(scalar).value());
     }
 }
