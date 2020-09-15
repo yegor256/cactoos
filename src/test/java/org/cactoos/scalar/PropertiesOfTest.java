@@ -27,7 +27,6 @@ import java.util.Properties;
 import org.cactoos.io.InputOf;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
-import org.cactoos.map.Sticky;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
@@ -85,11 +84,9 @@ final class PropertiesOfTest {
         new Assertion<>(
             "Must convert map to properties",
             new PropertiesOf(
-                new Sticky<>(
-                    new MapOf<Integer, String>(
-                        new MapEntry<>(0, "hello, world"),
-                        new MapEntry<>(1, "how are you?")
-                    )
+                new MapOf<Integer, String>(
+                    new MapEntry<>(0, "hello, world"),
+                    new MapEntry<>(1, "how are you?")
                 )
             ),
             new ScalarHasValue<>(
