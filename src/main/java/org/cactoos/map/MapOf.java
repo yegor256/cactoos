@@ -38,15 +38,11 @@ import org.cactoos.scalar.Unchecked;
  * <p>This class should be used very carefully. You must understand that
  * it will fetch the entire content of the encapsulated {@link Map} on each
  * method call. It doesn't cache the data anyhow.
- * If you don't need this {@link Map} to re-fresh its content on every call,
- * by doing round-trips to the encapsulated iterable, use
- * {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of key
  * @param <Y> Type of value
- * @see Sticky
  * @since 0.4
  */
 public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
