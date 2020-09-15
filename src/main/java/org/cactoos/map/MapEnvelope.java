@@ -88,30 +88,22 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     @Override
     public final Y put(final X key, final Y value) {
-        throw new UnsupportedOperationException(
-            "#put() is not supported, it's a read-only map"
-        );
+        return this.map.put(key, value);
     }
 
     @Override
     public final Y remove(final Object key) {
-        throw new UnsupportedOperationException(
-            "#remove() is not supported, it's a read-only map"
-        );
+        return this.map.remove(key);
     }
 
     @Override
-    public final void putAll(final Map<? extends X, ? extends Y> list) {
-        throw new UnsupportedOperationException(
-            "#putAll() is not supported, it's a read-only map"
-        );
+    public final void putAll(final Map<? extends X, ? extends Y> extra) {
+        this.map.putAll(extra);
     }
 
     @Override
     public final void clear() {
-        throw new UnsupportedOperationException(
-            "#clear() is not supported, it's a read-only map"
-        );
+        this.map.clear();
     }
 
     @Override
