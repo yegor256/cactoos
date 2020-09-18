@@ -23,7 +23,9 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Func;
 import org.cactoos.Text;
+import org.cactoos.scalar.Ternary;
 
 /**
  * Text in capitalized case, changed the first character to title case, no other
@@ -31,7 +33,7 @@ import org.cactoos.Text;
  *
  * @since 0.46
  */
-public class Capitalized extends TextEnvelope {
+public final class Capitalized extends TextEnvelope {
 
     /**
      * Ctor.
@@ -51,16 +53,25 @@ public class Capitalized extends TextEnvelope {
         super(
             new TextOf(
                 () -> {
-                    String capitalized = text.asString();
-                    if (!capitalized.isEmpty()) {
-                        final Text first = new Sub(capitalized, 0, 1);
+                    final Func<String, String> capitalize = cap -> {
+                        final Text first = new Sub(cap, 0, 1);
                         final Text upper = new Upper(first);
-                        if (!upper.equals(first)) {
-                            capitalized = new StringBuilder().append(upper).append(new Sub(text, 1))
-                                .toString();
-                        }
-                    }
-                    return capitalized;
+                        return
+                            new Ternary<String>(
+                                () -> upper.equals(first),
+                                () -> cap,
+                                () -> new StringBuilder()
+                                    .append(upper)
+                                    .append(new Sub(text, 1))
+                                    .toString())
+                            .value();
+                    };
+                    return new Ternary<String>(
+                        text.asString(),
+                        t -> t.isEmpty(),
+                        t -> t,
+                        t -> capitalize.apply(t)
+                            ).value();
                 }));
     }
 }

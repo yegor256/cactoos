@@ -23,7 +23,7 @@
  */
 package org.cactoos.text;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
 
@@ -31,11 +31,8 @@ import org.llorllale.cactoos.matchers.TextIs;
  * Test case for {@link Capitalized}.
  * @since 0.46
  */
-public class CapitalizedTest {
-    /**
-     * Text starting with upper case character.
-     */
-    private static final String UPPER_CASE = "Abc";
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+final class CapitalizedTest {
 
     @Test
     public void capitalizeEmptyText() {
@@ -68,8 +65,8 @@ public class CapitalizedTest {
     public void capitalizeTextStartingWithUpperCaseCharacter() {
         new Assertion<>(
             "Can't capitalize text starting with upper case character",
-            new Capitalized(new TextOf(CapitalizedTest.UPPER_CASE)),
-            new TextIs(CapitalizedTest.UPPER_CASE)
+            new Capitalized("Bar"),
+            new TextIs("Bar")
         ).affirm();
     }
 
