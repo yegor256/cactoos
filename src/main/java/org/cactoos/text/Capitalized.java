@@ -28,8 +28,9 @@ import org.cactoos.Text;
 import org.cactoos.scalar.Ternary;
 
 /**
- * Text in capitalized case, changed the first character to title case, no other
- * characters are changed.
+ * Text in capitalized case,
+ * changed the first character to title case as per {@link Character#toTitleCase(int)},
+ * no other characters are changed.
  *
  * @since 0.46
  */
@@ -53,25 +54,32 @@ public final class Capitalized extends TextEnvelope {
         super(
             new TextOf(
                 () -> {
-                    final Func<String, String> capitalize = cap -> {
-                        final Text first = new Sub(cap, 0, 1);
-                        final Text upper = new Upper(first);
+                    final Func<Text, Text> capitalize = cap -> {
+                        final Text titled = new TextOf(
+                            Character.toChars(
+                                Character.toTitleCase(
+                                    cap.asString().codePointAt(0)
+                                    )
+                                )
+                            );
                         return
-                            new Ternary<String>(
-                                () -> upper.equals(first),
+                            new Ternary<Text>(
+                                () -> new StartsWith(cap, titled).value(),
                                 () -> cap,
-                                () -> new StringBuilder()
-                                    .append(upper)
+                                () -> new TextOf(new StringBuilder()
+                                    .append(titled.asString())
                                     .append(new Sub(text, 1))
-                                    .toString())
+                                    .toString()
+                                    )
+                                )
                             .value();
                     };
-                    return new Ternary<String>(
-                        text.asString(),
-                        t -> t.isEmpty(),
+                    return new Ternary<Text>(
+                        text,
+                        t -> new IsBlank(t).value(),
                         t -> t,
                         t -> capitalize.apply(t)
-                            ).value();
+                            ).value().asString();
                 }));
     }
 }

@@ -35,54 +35,63 @@ import org.llorllale.cactoos.matchers.TextIs;
 final class CapitalizedTest {
 
     @Test
-    public void capitalizeEmptyText() {
+    void capitalizeEmptyText() {
         new Assertion<>(
-            "Can't capitalize an empty text",
+            "Must capitalize an empty text",
             new Capitalized(new TextOf("")),
             new TextIs("")
         ).affirm();
     }
 
     @Test
-    public void capitalizeSingleLowerCaseText() {
+    void capitalizeSingleLowerCaseText() {
         new Assertion<>(
-            "Can't capitalize single lower case text",
+            "Must capitalize single lower case text",
             new Capitalized(new TextOf("f")),
             new TextIs("F")
         ).affirm();
     }
 
     @Test
-    public void capitalizeSingleUpperCaseText() {
+    void capitalizeSingleUpperCaseText() {
         new Assertion<>(
-            "Can't capitalize single upper case text",
+            "Must capitalize single upper case text",
             new Capitalized(new TextOf("F")),
             new TextIs("F")
         ).affirm();
     }
 
     @Test
-    public void capitalizeTextStartingWithUpperCaseCharacter() {
+    void capitalizeTextStartingWithUpperCaseCharacter() {
         new Assertion<>(
-            "Can't capitalize text starting with upper case character",
+            "Must capitalize text starting with upper case character",
             new Capitalized("Bar"),
             new TextIs("Bar")
         ).affirm();
     }
 
     @Test
-    public void capitalizeTextStartingWithLowerCaseCharacter() {
+    void capitalizeTextStartingWithLowerCaseCharacter() {
         new Assertion<>(
-            "Can't capitalize text starting with lower case character",
+            "Must capitalize text starting with lower case character",
             new Capitalized(new TextOf("xyz")),
             new TextIs("Xyz")
         ).affirm();
     }
 
     @Test
-    public void capitalizeString() {
+    void capitalizeTextWithUnicodeCharacter() {
         new Assertion<>(
-            "Can't capitalize string",
+            "Must capitalize unicode character ǆ",
+            new Capitalized("ǆ"),
+            new TextIs("ǅ")
+        ).affirm();
+    }
+
+    @Test
+    void capitalizeString() {
+        new Assertion<>(
+            "Must capitalize string",
             new Capitalized("foo"),
             new TextIs("Foo")
         ).affirm();
