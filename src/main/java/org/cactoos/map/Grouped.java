@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
@@ -58,18 +57,14 @@ public final class Grouped<K, V, T> extends MapEnvelope<K, List<V>> {
         final Function<T, V> values
     ) {
         super(
-            new MapOf<>(
-                () -> {
-                    final Stream<T> stream = StreamSupport.stream(
-                        list.spliterator(), false
-                    );
-                    return stream.collect(
-                        Collectors.groupingBy(
-                            keys,
-                            Collectors.mapping(values, Collectors.toList())
-                        )
-                    );
-                })
+            StreamSupport.stream(
+                list.spliterator(), false
+            ).collect(
+                Collectors.groupingBy(
+                    keys,
+                    Collectors.mapping(values, Collectors.toList())
+                )
+            )
         );
     }
 }
