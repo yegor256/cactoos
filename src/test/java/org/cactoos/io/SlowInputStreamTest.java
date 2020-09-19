@@ -31,11 +31,12 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test for {@link SlowInputStream}.
  *
  * @since 0.47
+ * @checkstyle MagicNumberCheck (20 lines)
  */
 final class SlowInputStreamTest {
 
     @Test
-    void readsUnsigned() throws Exception {
+    void readsSigned() throws Exception {
         new Assertion<>(
             "must correctly convert signed bytes to int",
             new SlowInputStream(
