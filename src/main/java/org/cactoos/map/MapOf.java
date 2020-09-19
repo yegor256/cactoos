@@ -142,14 +142,6 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param scalar The scalar for Map.
-     */
-    public MapOf(final Scalar<Map<X, Y>> scalar) {
-        this(new Unchecked<>(scalar).value().entrySet());
-    }
-
-    /**
-     * Ctor.
      * @param entries List of the entries
      */
     public MapOf(final Iterable<Map.Entry<X, Y>> entries) {
