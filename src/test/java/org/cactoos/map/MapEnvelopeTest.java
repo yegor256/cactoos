@@ -26,11 +26,11 @@ package org.cactoos.map;
 import java.util.HashMap;
 import java.util.Map;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.collection.IsMapWithSize;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link MapEnvelope}.
@@ -42,76 +42,6 @@ import org.llorllale.cactoos.matchers.Throws;
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class MapEnvelopeTest {
-
-    @Test
-    public void putThrowsException() {
-        new Assertion<>(
-            "put method must throw exception",
-            () -> new NoNulls<>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<>(0, -1)
-                )
-            ).put(2, 2),
-            new Throws<>(
-                "#put() is not supported, it's a read-only map",
-                UnsupportedOperationException.class
-            )
-        ).affirm();
-    }
-
-    @Test
-    public void removeThrowsException() {
-        new Assertion<>(
-            "remove method did not throw exception",
-            () -> new NoNulls<>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<>(0, -1)
-                )
-            ).remove(0),
-            new Throws<>(
-                "#remove() is not supported, it's a read-only map",
-                UnsupportedOperationException.class
-            )
-        ).affirm();
-    }
-
-    @Test
-    public void putAllThrowsException() {
-        new Assertion<>(
-            "putAll method must throw exception",
-            () -> {
-                new NoNulls<>(
-                    new MapOf<Integer, Integer>(
-                        new MapEntry<>(0, -1)
-                    )
-                ).putAll(new MapOf<Integer, Integer>());
-                return 0;
-            },
-            new Throws<>(
-                "#putAll() is not supported, it's a read-only map",
-                UnsupportedOperationException.class
-            )
-        ).affirm();
-    }
-
-    @Test
-    public void clearThrowsException() {
-        new Assertion<>(
-            "clear method must throw exception",
-            () -> {
-                new NoNulls<>(
-                    new MapOf<Integer, Integer>(
-                        new MapEntry<>(0, -1)
-                    )
-                ).clear();
-                return 0;
-            },
-            new Throws<>(
-                "#clear() is not supported, it's a read-only map",
-                UnsupportedOperationException.class
-            )
-        ).affirm();
-    }
 
     @Test
     public void mapIsEmptyTrue() {
@@ -324,6 +254,53 @@ public final class MapEnvelopeTest {
         ).affirm();
     }
 
+    @Test
+    public void putIsDelegated() {
+        final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
+            new HashMap<>()
+        );
+        map.put(0, 1);
+        new Assertion<>(
+            "must contain element after #put()",
+            map,
+            new IsEqual<>(
+                new MapOf<Integer, Integer>(
+                    new MapEntry<>(0, 1)
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void clearIsDelegated() {
+        final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
+            new MapOf<Integer, Integer>(
+                new MapEntry<>(0, 1)
+            )
+        );
+        map.clear();
+        new Assertion<>(
+            "must be empty after #clear()",
+            map,
+            new IsMapWithSize<>(new IsEqual<>(0))
+        ).affirm();
+    }
+
+    @Test
+    public void removeIsDelegated() {
+        final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
+            new MapOf<Integer, Integer>(
+                new MapEntry<>(0, 1)
+            )
+        );
+        map.remove(0);
+        new Assertion<>(
+            "must be empty after #remove()",
+            map,
+            new IsMapWithSize<>(new IsEqual<>(0))
+        ).affirm();
+    }
+
     /**
      * Class derived from MapEnvelope to use in some tests.
      * @param <K> - key type
@@ -332,7 +309,7 @@ public final class MapEnvelopeTest {
      */
     private static class DerivedMapEnvelope<K, V> extends MapEnvelope<K, V> {
         DerivedMapEnvelope(final Map<K, V> content) {
-            super(() -> content);
+            super(content);
         }
     }
 }

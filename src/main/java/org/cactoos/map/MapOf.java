@@ -23,13 +23,14 @@
  */
 package org.cactoos.map;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.Func;
+import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterable as {@link Map}.
@@ -37,15 +38,11 @@ import org.cactoos.iterable.Mapped;
  * <p>This class should be used very carefully. You must understand that
  * it will fetch the entire content of the encapsulated {@link Map} on each
  * method call. It doesn't cache the data anyhow.
- * If you don't need this {@link Map} to re-fresh its content on every call,
- * by doing round-trips to the encapsulated iterable, use
- * {@link Sticky}.</p>
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of key
  * @param <Y> Type of value
- * @see Sticky
  * @since 0.4
  */
 public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
@@ -148,12 +145,9 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param entries List of the entries
      */
     public MapOf(final Iterable<Map.Entry<X, Y>> entries) {
-        super(() -> {
-            final Map<X, Y> temp = new HashMap<>(0);
-            for (final Map.Entry<X, Y> entry : entries) {
-                temp.put(entry.getKey(), entry.getValue());
-            }
-            return Collections.unmodifiableMap(temp);
-        });
+        super(new HashMap<>());
+        for (final Map.Entry<X, Y> entry : entries) {
+            this.put(entry.getKey(), entry.getValue());
+        }
     }
 }
