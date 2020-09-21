@@ -45,4 +45,15 @@ final class SlowInputStreamTest {
             new IsEqual<>(156)
         ).affirm();
     }
+
+    @Test
+    void readsUnsigned() throws Exception {
+        new Assertion<>(
+            "must correctly convert unsigned bytes to int",
+            new SlowInputStream(
+                new InputStreamOf(new BytesOf((byte) 65))
+            ).read(),
+            new IsEqual<>(65)
+        ).affirm();
+    }
 }
