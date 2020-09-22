@@ -63,7 +63,7 @@ final class SlowInputStream extends InputStream {
         if (this.read(buf) < 0) {
             result = -1;
         } else {
-            result = buf[0];
+            result = Byte.toUnsignedInt(buf[0]);
         }
         return result;
     }
