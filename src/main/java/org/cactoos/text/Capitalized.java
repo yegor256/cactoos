@@ -59,27 +59,26 @@ public final class Capitalized extends TextEnvelope {
                             Character.toChars(
                                 Character.toTitleCase(
                                     cap.asString().codePointAt(0)
-                                    )
                                 )
-                            );
+                            )
+                        );
                         return
                             new Ternary<Text>(
-                                () -> new StartsWith(cap, titled).value(),
+                                new StartsWith(cap, titled),
                                 () -> cap,
-                                () -> new TextOf(new StringBuilder()
-                                    .append(titled.asString())
-                                    .append(new Sub(text, 1))
-                                    .toString()
-                                    )
+                                () -> new Joined(
+                                    "",
+                                    titled,
+                                    new Sub(text, 1)
                                 )
+                            )
                             .value();
                     };
                     return new Ternary<Text>(
-                        text,
-                        t -> new IsBlank(t).value(),
-                        t -> t,
-                        t -> capitalize.apply(t)
-                            ).value().asString();
+                        new IsBlank(text),
+                        () -> text,
+                        () -> capitalize.apply(text)
+                    ).value().asString();
                 }));
     }
 }
