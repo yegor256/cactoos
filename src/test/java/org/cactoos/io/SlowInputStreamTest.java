@@ -31,7 +31,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test for {@link SlowInputStream}.
  *
  * @since 0.47
- * @checkstyle MagicNumberCheck (20 lines)
+ * @checkstyle MagicNumberCheck (40 lines)
  */
 final class SlowInputStreamTest {
 
