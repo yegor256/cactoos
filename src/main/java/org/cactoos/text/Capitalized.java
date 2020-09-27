@@ -46,8 +46,6 @@ public final class Capitalized extends TextEnvelope {
 
     /**
      * Ctor.
-     * TODO replace {@link Character#toTitleCase(int)} by it's EO version
-
      * @param text The text
      */
     public Capitalized(final Text text) {
@@ -62,7 +60,7 @@ public final class Capitalized extends TextEnvelope {
                             new TextOf(
                                 Character.toChars(
                                     Character.toTitleCase(
-                                        new Sub(text, 0, 1).asString().codePointAt(0)
+                                        text.asString().codePointAt(0)
                                     )
                                 )
                             ),
