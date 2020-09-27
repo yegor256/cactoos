@@ -23,64 +23,122 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.TextOf;
+import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link Ternary}.
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TernaryTest {
 
     @Test
-    void conditionTrue() throws Exception {
-        MatcherAssert.assertThat(
+    void conditionTrueScalar() throws Exception {
+        new Assertion<>(
+            "Must work with true scalar condition",
             new Ternary<>(
                 new True(),
                 6,
                 16
-            ).value(),
-            Matchers.equalTo(6)
-        );
+            ),
+            new ScalarHasValue<>(6)
+        ).affirm();
     }
 
     @Test
-    void conditionFalse() throws Exception {
-        MatcherAssert.assertThat(
+    void conditionFalseScalar() throws Exception {
+        new Assertion<>(
+            "Must work with false scalar condition",
             new Ternary<>(
                 new False(),
                 6,
                 16
-            ).value(),
-            Matchers.equalTo(16)
-        );
+            ),
+            new ScalarHasValue<>(16)
+        ).affirm();
     }
 
     @Test
-    void conditionBoolean() throws Exception {
-        MatcherAssert.assertThat(
+    void conditionStatic() throws Exception {
+        new Assertion<>(
+            "Must work with primitive static condition",
             new Ternary<>(
                 true,
                 6,
                 16
-            ).value(),
-            Matchers.equalTo(6)
-        );
+            ),
+            new ScalarHasValue<>(6)
+        ).affirm();
     }
 
     @Test
-    void conditionFunc() throws Exception {
-        MatcherAssert.assertThat(
+    void consequentScalar() throws Exception {
+        new Assertion<>(
+            "Must work with scalar consequent and alternative",
+            new Ternary<>(
+                true,
+                new Constant<>(6),
+                new Constant<>(16)
+            ),
+            new ScalarHasValue<>(6)
+        ).affirm();
+    }
+
+    @Test
+    void inputStatic() throws Exception {
+        new Assertion<>(
+            "Must call the functions with the input",
             new Ternary<>(
                 5,
                 input -> input > 3,
-                input -> input = 8,
-                input -> input = 2
-            ).value(),
-            Matchers.equalTo(8)
-        );
+                input -> input + 1,
+                input -> input + 2
+            ),
+            new ScalarHasValue<>(6)
+        ).affirm();
+    }
+
+    @Test
+    void inputScalar() throws Exception {
+        new Assertion<>(
+            "Must call the functions with the input scalar value",
+            new Ternary<>(
+                new Constant<>(5),
+                (Integer input) -> input > 3,
+                input -> input + 1,
+                input -> input + 2
+            ),
+            new ScalarHasValue<>(6)
+        ).affirm();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void inputScalarValueConserved() throws Exception {
+        new Assertion<>(
+            "Must conserve the same scalar value for each whole evaluation",
+            new Ternary<>(
+                new ScalarOf<>(new AtomicInteger(0)::incrementAndGet),
+                (Integer i) -> i == 1,
+                i -> new FormattedText("%d equals 1", i),
+                i -> new FormattedText("else: %d", i)
+            ),
+            new AllOf<>(
+                new IterableOf<>(
+                    new ScalarHasValue<>(new TextOf("1 equals 1")),
+                    new ScalarHasValue<>(new TextOf("else: 2")),
+                    new ScalarHasValue<>(new TextOf("else: 3"))
+                )
+            )
+        ).affirm();
     }
 }
