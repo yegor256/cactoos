@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Func;
 import org.cactoos.Text;
 import org.cactoos.scalar.Ternary;
 
@@ -47,37 +46,22 @@ public final class Capitalized extends TextEnvelope {
 
     /**
      * Ctor.
-     *
+     * TODO replace Upper by Titled
+
      * @param text The text
      */
     public Capitalized(final Text text) {
         super(
             new TextOf(
                 () -> {
-                    final Func<Text, Text> capitalize = cap -> {
-                        final Text titled = new TextOf(
-                            Character.toChars(
-                                Character.toTitleCase(
-                                    cap.asString().codePointAt(0)
-                                )
-                            )
-                        );
-                        return
-                            new Ternary<Text>(
-                                new StartsWith(cap, titled),
-                                () -> cap,
-                                () -> new Joined(
-                                    "",
-                                    titled,
-                                    new Sub(text, 1)
-                                )
-                            )
-                            .value();
-                    };
                     return new Ternary<Text>(
                         new IsBlank(text),
                         () -> text,
-                        () -> capitalize.apply(text)
+                        () -> new Joined(
+                            "",
+                            new Upper(new Sub(text, 0, 1)),
+                            new Sub(text, 1)
+                            )
                     ).value().asString();
                 }));
     }
