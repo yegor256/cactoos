@@ -41,7 +41,7 @@ public final class Mapped<X, Y> implements Iterator<Y> {
     /**
      * Iterator.
      */
-    private final Iterator<X> origin;
+    private final Iterator<? extends X> origin;
 
     /**
      * Function.
@@ -53,7 +53,7 @@ public final class Mapped<X, Y> implements Iterator<Y> {
      * @param func Func
      * @param iterator Source iterator
      */
-    public Mapped(final Func<X, Y> func, final Iterator<X> iterator) {
+    public Mapped(final Func<X, Y> func, final Iterator<? extends X> iterator) {
         this.origin = iterator;
         this.fnc = func;
     }

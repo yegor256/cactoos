@@ -58,7 +58,7 @@ public final class Filtered<X> implements Iterator<X> {
     /**
      * Iterator.
      */
-    private final Iterator<X> iterator;
+    private final Iterator<? extends X> iterator;
 
     /**
      * Predicate.
@@ -75,7 +75,9 @@ public final class Filtered<X> implements Iterator<X> {
      * @param fnc Predicate
      * @param src Source iterable
      */
-    public Filtered(final Func<X, Boolean> fnc, final Iterator<X> src) {
+    public Filtered(
+        final Func<X, Boolean> fnc, final Iterator<? extends X> src
+    ) {
         this(src, input -> () -> fnc.apply(input));
     }
 
@@ -84,7 +86,10 @@ public final class Filtered<X> implements Iterator<X> {
      * @param src Source iterable
      * @param fnc Predicate
      */
-    public Filtered(final Iterator<X> src, final Func<X, Scalar<Boolean>> fnc) {
+    public Filtered(
+        final Iterator<? extends X> src,
+        final Func<X, Scalar<Boolean>> fnc
+    ) {
         this.iterator = src;
         this.func = fnc;
         this.buffer = new LinkedList<>();

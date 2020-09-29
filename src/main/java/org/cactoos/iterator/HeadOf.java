@@ -40,7 +40,7 @@ public final class HeadOf<T> extends IteratorEnvelope<T> {
      * @param num Num of head elements
      * @param iterator Decorated iterator
      */
-    public HeadOf(final int num, final Iterator<T> iterator) {
+    public HeadOf(final int num, final Iterator<? extends T> iterator) {
         super(new Sliced<>(0, num, iterator));
     }
 

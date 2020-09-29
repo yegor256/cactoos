@@ -41,16 +41,19 @@ public final class TailOf<T> extends IteratorEnvelope<T> {
      * @param num Number of tail elements
      * @param iterator Decorated iterator
      */
-    public TailOf(final int num, final Iterator<T> iterator) {
+    public TailOf(final int num, final Iterator<? extends T> iterator) {
         super(
-            new Reversed<>(
-                new HeadOf<>(
-                    num,
-                    new Reversed<>(
-                        new IterableOf<>(iterator)
+            new Mapped<>(
+                x -> x,
+                new Reversed<>(
+                    new HeadOf<>(
+                        num,
+                        new Reversed<>(
+                            new IterableOf<>(iterator)
+                        )
                     )
-                )
-            ).iterator()
+                ).iterator()
+            )
         );
     }
 }
