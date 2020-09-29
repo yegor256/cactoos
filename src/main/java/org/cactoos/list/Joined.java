@@ -42,7 +42,7 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param src Source lists
      */
     @SafeVarargs
-    public Joined(final List<X>... src) {
+    public Joined(final List<? extends X>... src) {
         this(new IterableOf<>(src));
     }
 
@@ -53,7 +53,7 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @since 0.32
      */
     @SuppressWarnings("unchecked")
-    public Joined(final X item, final List<X> items) {
+    public Joined(final X item, final List<? extends X> items) {
         this(new ListOf<>(item), items);
     }
 
@@ -61,7 +61,7 @@ public final class Joined<X> extends ListEnvelope<X> {
      * Ctor.
      * @param src Source lists
      */
-    public Joined(final Iterable<List<X>> src) {
+    public Joined(final Iterable<List<? extends X>> src) {
         super(
             new ListOf<>(src).stream()
                 .flatMap(List::stream)

@@ -41,9 +41,10 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * Ctor.
      *
      * @param array An array of some elements
+     * @param <Z> Sub-type of T
      */
     @SafeVarargs
-    public ListOf(final T... array) {
+    public <Z extends T> ListOf(final Z... array) {
         this(new IterableOf<>(array));
     }
 
@@ -52,15 +53,15 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * @param src An {@link Iterator}
      * @since 0.21
      */
-    public ListOf(final Iterator<T> src) {
-        this(() -> src);
+    public ListOf(final Iterator<? extends T> src) {
+        this(new IterableOf<T>(src));
     }
 
     /**
      * Ctor.
      * @param src An {@link Iterable}
      */
-    public ListOf(final Iterable<T> src) {
+    public ListOf(final Iterable<? extends T> src) {
         super(new LinkedList<>());
         src.forEach(super::add);
     }
