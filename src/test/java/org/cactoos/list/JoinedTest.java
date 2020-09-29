@@ -24,19 +24,23 @@
 package org.cactoos.list;
 
 import java.util.List;
+import org.hamcrest.Matcher;
+import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsInstanceOf;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
- * Test case for {@link org.cactoos.collection.Joined}.
+ * Test case for {@link org.cactoos.list.Joined}.
  *
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 line)
  * @checkstyle DiamondOperatorCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class JoinedTest {
@@ -431,6 +435,27 @@ public final class JoinedTest {
                     JoinedTest.LITERAL_ONE,
                     JoinedTest.LITERAL_TWO,
                     JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void infersCorrectly() {
+        new Assertion<>(
+            "must be able to infer type of elements",
+            new Joined<>(
+                Integer.valueOf(1),
+                new ListOf<>(
+                    Double.valueOf(2),
+                    Double.valueOf(3)
+                )
+            ),
+            new IsIterableContainingInOrder<>(
+                new ListOf<Matcher<? super Number>>(
+                    new IsInstanceOf(Integer.class),
+                    new IsInstanceOf(Double.class),
+                    new IsInstanceOf(Double.class)
                 )
             )
         ).affirm();
