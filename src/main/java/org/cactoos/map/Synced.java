@@ -98,8 +98,10 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      */
     @SafeVarargs
-    public <Z> Synced(final Func<Z, Map.Entry<X, Y>> entry,
-        final Z... list) {
+    public <Z> Synced(
+        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Z... list
+    ) {
         this(new Mapped<>(entry, list));
     }
 
@@ -109,8 +111,10 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param list List of items
      * @param <Z> Type of items in the list
      */
-    public <Z> Synced(final Func<Z, Map.Entry<X, Y>> entry,
-        final Iterable<Z> list) {
+    public <Z> Synced(
+        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Iterable<Z> list
+    ) {
         this(new Mapped<>(entry, list));
     }
 
@@ -121,8 +125,10 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param list List of items
      * @param <Z> Type of items in the list
      */
-    public <Z> Synced(final Func<Z, Map.Entry<X, Y>> entry,
-        final Map<X, Y> map, final Iterable<Z> list) {
+    public <Z> Synced(
+        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Map<X, Y> map, final Iterable<Z> list
+    ) {
         this(map, new Mapped<>(entry, list));
     }
 
@@ -130,7 +136,7 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param list Entries for the entries
      */
-    public Synced(final Iterable<Map.Entry<X, Y>> list) {
+    public Synced(final Iterable<Map.Entry<? extends X, ? extends Y>> list) {
         this(new MapOf<>(list));
     }
 
@@ -139,8 +145,10 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param map Pre-existing map we want to extend
      * @param list Entries for the entries
      */
-    public Synced(final Map<X, Y> map,
-        final Iterable<Map.Entry<X, Y>> list) {
+    public Synced(
+        final Map<X, Y> map,
+        final Iterable<Map.Entry<? extends X, ? extends Y>> list
+    ) {
         this(new MapOf<>(map, list));
     }
 

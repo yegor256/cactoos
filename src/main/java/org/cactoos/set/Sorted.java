@@ -42,9 +42,10 @@ public final class Sorted<T> extends SortedSetEnvelope<T> {
      * Ctor.
      * @param cmp Comparator
      * @param array An array of some elements
+     * @param <Z> Sub-type of T
      */
     @SafeVarargs
-    public Sorted(final Comparator<T> cmp, final T... array) {
+    public <Z extends T> Sorted(final Comparator<T> cmp, final Z... array) {
         this(cmp, new IterableOf<>(array));
     }
 
@@ -54,7 +55,10 @@ public final class Sorted<T> extends SortedSetEnvelope<T> {
      * @param src An {@link Iterable}
      */
     @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
-    public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
+    public Sorted(
+        final Comparator<T> cmp,
+        final Iterable<? extends T> src
+    ) {
         super(new TreeSet<>(cmp));
         src.forEach(super::add);
     }

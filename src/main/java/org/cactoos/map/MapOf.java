@@ -26,11 +26,9 @@ package org.cactoos.map;
 import java.util.HashMap;
 import java.util.Map;
 import org.cactoos.Func;
-import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterable as {@link Map}.
@@ -106,8 +104,10 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      * @since 0.11
      */
-    public <Z> MapOf(final Func<Z, Map.Entry<X, Y>> entry,
-        final Iterable<Z> list) {
+    public <Z> MapOf(
+        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Iterable<Z> list
+    ) {
         this(new Mapped<>(entry, list));
     }
 
@@ -119,8 +119,10 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      * @since 0.11
      */
-    public <Z> MapOf(final Func<Z, Map.Entry<X, Y>> entry,
-        final Map<X, Y> src, final Iterable<Z> list) {
+    public <Z> MapOf(
+        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Map<X, Y> src, final Iterable<Z> list
+    ) {
         this(src, new Mapped<>(entry, list));
     }
 
@@ -131,8 +133,10 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @since 0.12
      */
     @SuppressWarnings("unchecked")
-    public MapOf(final Map<X, Y> src,
-        final Iterable<Map.Entry<X, Y>> list) {
+    public MapOf(
+        final Map<X, Y> src,
+        final Iterable<Map.Entry<? extends X, ? extends Y>> list
+    ) {
         this(
             new Joined<>(
                 src.entrySet(), list
@@ -144,9 +148,9 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param entries List of the entries
      */
-    public MapOf(final Iterable<Map.Entry<X, Y>> entries) {
+    public MapOf(final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
         super(new HashMap<>());
-        for (final Map.Entry<X, Y> entry : entries) {
+        for (final Entry<? extends X, ? extends Y> entry : entries) {
             this.put(entry.getKey(), entry.getValue());
         }
     }
