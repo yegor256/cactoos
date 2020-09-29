@@ -48,7 +48,7 @@ public final class HeadOf<T> extends IterableEnvelope<T> {
      * @param num Number of head elements
      * @param iterable Decorated iterable
      */
-    public HeadOf(final int num, final Iterable<T> iterable) {
+    public HeadOf(final int num, final Iterable<? extends T> iterable) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.HeadOf<>(

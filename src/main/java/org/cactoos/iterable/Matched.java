@@ -54,7 +54,9 @@ public final class Matched<X> implements Iterable<X> {
      * @param fst The first part of duplex iterator.
      * @param snd The second part of duplex iterator.
      */
-    public Matched(final Iterable<X> fst, final Iterable<X> snd) {
+    public Matched(
+        final Iterable<? extends X> fst, final Iterable<? extends X> snd
+    ) {
         this(Object::equals, fst, snd);
     }
 
@@ -66,12 +68,12 @@ public final class Matched<X> implements Iterable<X> {
      */
     public Matched(
         final BiFunc<X, X, Boolean> fnc,
-        final Iterable<X> fst, final Iterable<X> snd
+        final Iterable<? extends X> fst, final Iterable<? extends X> snd
     ) {
         this(
             () -> {
-                final Iterator<X> ftr = fst.iterator();
-                final Iterator<X> str = snd.iterator();
+                final Iterator<? extends X> ftr = fst.iterator();
+                final Iterator<? extends X> str = snd.iterator();
                 final List<X> rslt = new LinkedList<>();
                 while (ftr.hasNext() || str.hasNext()) {
                     if (!str.hasNext() || !ftr.hasNext()) {

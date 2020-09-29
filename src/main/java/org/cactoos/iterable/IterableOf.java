@@ -28,6 +28,7 @@ import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.func.FallbackFrom;
 import org.cactoos.iterator.IteratorOf;
+import org.cactoos.iterator.Mapped;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
@@ -52,7 +53,7 @@ public final class IterableOf<X> implements Iterable<X> {
     /**
      * The encapsulated iterator.
      */
-    private final Scalar<Iterator<X>> itr;
+    private final Scalar<Iterator<? extends X>> itr;
 
     /**
      * Ctor.
@@ -67,7 +68,7 @@ public final class IterableOf<X> implements Iterable<X> {
      * Ctor.
      * @param list The list
      */
-    public IterableOf(final List<X> list) {
+    public IterableOf(final List<? extends X> list) {
         this(list::iterator);
     }
 
@@ -76,7 +77,7 @@ public final class IterableOf<X> implements Iterable<X> {
      * @param list The list
      * @since 0.21
      */
-    public IterableOf(final Iterator<X> list) {
+    public IterableOf(final Iterator<? extends X> list) {
         this(() -> list);
     }
 
@@ -84,13 +85,13 @@ public final class IterableOf<X> implements Iterable<X> {
      * Ctor.
      * @param sclr The encapsulated iterator of x
      */
-    public IterableOf(final Scalar<Iterator<X>> sclr) {
+    public IterableOf(final Scalar<Iterator<? extends X>> sclr) {
         this.itr = sclr;
     }
 
     @Override
     public Iterator<X> iterator() {
-        return new Unchecked<>(this.itr).value();
+        return new Mapped<>(x -> x, new Unchecked<>(this.itr).value());
     }
 
     @Override
