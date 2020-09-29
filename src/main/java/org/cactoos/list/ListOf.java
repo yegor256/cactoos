@@ -41,10 +41,9 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * Ctor.
      *
      * @param array An array of some elements
-     * @param <Z> Sub-type of T
      */
     @SafeVarargs
-    public <Z extends T> ListOf(final Z... array) {
+    public ListOf(final T... array) {
         this(new IterableOf<>(array));
     }
 

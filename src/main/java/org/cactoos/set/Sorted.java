@@ -42,10 +42,9 @@ public final class Sorted<T> extends SortedSetEnvelope<T> {
      * Ctor.
      * @param cmp Comparator
      * @param array An array of some elements
-     * @param <Z> Sub-type of T
      */
     @SafeVarargs
-    public <Z extends T> Sorted(final Comparator<T> cmp, final Z... array) {
+    public Sorted(final Comparator<T> cmp, final T... array) {
         this(cmp, new IterableOf<>(array));
     }
 

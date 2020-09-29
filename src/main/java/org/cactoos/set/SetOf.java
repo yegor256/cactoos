@@ -41,10 +41,9 @@ public final class SetOf<T> extends SetEnvelope<T> {
      * Ctor.
      *
      * @param array An array of some elements
-     * @param <Z> Sub-type of T
      */
     @SafeVarargs
-    public <Z extends T> SetOf(final Z... array) {
+    public SetOf(final T... array) {
         this(new IterableOf<>(array));
     }
 
