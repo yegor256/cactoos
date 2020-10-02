@@ -31,24 +31,13 @@ import org.cactoos.Scalar;
  * @param <T> Element type
  * @since 0.4
  */
-public final class ScalarOf<T> implements Scalar<T> {
-
-    /**
-     * The scalar.
-     */
-    private final Scalar<T> origin;
-
+public final class ScalarOf<T> extends ScalarEnvelope<T> {
     /**
      * Ctor.
      *
-     * @param origin The scalar
+     * @param scalar The scalar
      */
-    public ScalarOf(final Scalar<T> origin) {
-        this.origin = origin;
-    }
-
-    @Override
-    public T value() throws Exception {
-        return this.origin.value();
+    public ScalarOf(final Scalar<T> scalar) {
+        super(scalar);
     }
 }
