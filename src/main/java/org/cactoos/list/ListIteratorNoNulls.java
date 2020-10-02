@@ -33,8 +33,6 @@ import java.util.ListIterator;
  *
  * @param <T> Element type
  * @since 0.39
- * @todo #1247:30min Add also some null checks both to the `set` and
- *  the `add` methods, then also add some tests to validate this behaviour.
  */
 public final class ListIteratorNoNulls<T> implements ListIterator<T> {
 
@@ -97,11 +95,21 @@ public final class ListIteratorNoNulls<T> implements ListIterator<T> {
 
     @Override
     public void set(final T item) {
+        if (item == null) {
+            throw new IllegalArgumentException(
+                "Item can't be NULL in #set(T)"
+            );
+        }
         this.listiterator.set(item);
     }
 
     @Override
     public void add(final T item) {
+        if (item == null) {
+            throw new IllegalArgumentException(
+                "Item can't be NULL in #add(T)"
+            );
+        }
         this.listiterator.add(item);
     }
 
