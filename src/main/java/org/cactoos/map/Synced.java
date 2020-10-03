@@ -70,9 +70,12 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public <Z> Synced(final Func<Z, X> key,
-        final Func<Z, Y> value, final Map<X, Y> map,
-        final Iterable<Z> list) {
+    public <Z> Synced(
+        final Func<Z, X> key,
+        final Func<Z, Y> value,
+        final Map<X, Y> map,
+        final Iterable<Z> list
+    ) {
         this(
             item -> new MapEntry<>(key.apply(item), value.apply(item)),
             map, list
@@ -86,8 +89,11 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param value Func to create value
      * @param <Z> Type of items in the list
      */
-    public <Z> Synced(final Iterable<Z> list, final Func<Z, X> key,
-        final Func<Z, Y> value) {
+    public <Z> Synced(
+        final Iterable<Z> list,
+        final Func<Z, X> key,
+        final Func<Z, Y> value
+    ) {
         this(item -> new MapEntry<>(key.apply(item), value.apply(item)), list);
     }
 
