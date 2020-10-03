@@ -76,7 +76,8 @@ public final class Filtered<X> implements Iterator<X> {
      * @param src Source iterable
      */
     public Filtered(
-        final Func<X, Boolean> fnc, final Iterator<? extends X> src
+        final Func<X, Boolean> fnc,
+        final Iterator<? extends X> src
     ) {
         this(src, input -> () -> fnc.apply(input));
     }
