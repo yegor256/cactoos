@@ -136,9 +136,9 @@ public final class AvgOf extends NumberEnvelope {
     public AvgOf(final Iterable<Scalar<Number>> src) {
         super(
             new Ternary<>(
-                new LengthOf(src).longValue(),
-                len -> len > 0,
-                len -> new Folded<>(
+                new LengthOf(src),
+                (Double len) -> len > 0,
+                len -> new Folded<BigDecimal, BigDecimal>(
                     BigDecimal.ZERO,
                     (sum, value) -> sum.add(value, MathContext.DECIMAL128),
                     new Mapped<>(

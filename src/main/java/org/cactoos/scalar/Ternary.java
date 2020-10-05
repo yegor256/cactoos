@@ -25,6 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.Func;
 import org.cactoos.Scalar;
+import org.cactoos.func.FuncOf;
 
 /**
  * Ternary operation.
@@ -39,51 +40,17 @@ import org.cactoos.Scalar;
  *
  * <pre>{@code
  * new Ternary<>(
- *     5,
- *     input -> input > 3,
- *     input -> input = 8,
- *     input -> input = 2
- * ).value() // will be equal to 8
+ *     scalar,
+ *     value -> value > 3,
+ *     value -> true,
+ *     value -> false
+ * ).value() // will be equal to true
  * }</pre>
  *
  * @param <T> Type of item.
  * @since 0.8
  */
-public final class Ternary<T> implements Scalar<T> {
-
-    /**
-     * The condition.
-     */
-    private final Scalar<Boolean> condition;
-
-    /**
-     * The consequent.
-     */
-    private final Scalar<T> consequent;
-
-    /**
-     * The alternative.
-     */
-    private final Scalar<T> alternative;
-
-    /**
-     * Ctor.
-     * @param input The input to pass to all of them
-     * @param cnd The condition
-     * @param cons The consequent
-     * @param alter The alternative
-     * @param <X> Type of input
-     * @since 0.9
-     * @checkstyle ParameterNumberCheck (5 lines)
-     */
-    public <X> Ternary(final X input, final Func<X, Boolean> cnd,
-        final Func<X, T> cons, final Func<X, T> alter) {
-        this(
-            () -> cnd.apply(input),
-            () -> cons.apply(input),
-            () -> alter.apply(input)
-        );
-    }
+public final class Ternary<T> extends ScalarEnvelope<T> {
 
     /**
      * Ctor.
@@ -113,21 +80,66 @@ public final class Ternary<T> implements Scalar<T> {
      * @param alter The alternative
      * @since 0.9
      */
-    public Ternary(final Scalar<Boolean> cnd, final Scalar<T> cons,
-        final Scalar<T> alter) {
-        this.condition = cnd;
-        this.consequent = cons;
-        this.alternative = alter;
+    public Ternary(final boolean cnd, final Scalar<T> cons, final Scalar<T> alter) {
+        this(new Constant<>(cnd), cons, alter);
     }
 
-    @Override
-    public T value() throws Exception {
-        final Scalar<T> result;
-        if (this.condition.value()) {
-            result = this.consequent;
-        } else {
-            result = this.alternative;
-        }
-        return result.value();
+    /**
+     * Ctor.
+     * @param cnd The condition
+     * @param cons The consequent
+     * @param alter The alternative
+     * @since 0.9
+     */
+    public Ternary(final Scalar<Boolean> cnd, final Scalar<T> cons, final Scalar<T> alter) {
+        this(
+            new Object(),
+            new FuncOf<>(cnd),
+            new FuncOf<>(cons),
+            new FuncOf<>(alter)
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param input The input to pass to all of them
+     * @param cnd The condition
+     * @param cons The consequent
+     * @param alter The alternative
+     * @param <X> Type of input
+     * @since 0.9
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public <X> Ternary(
+        final X input, final Func<X, Boolean> cnd,
+        final Func<X, T> cons, final Func<X, T> alter
+    ) {
+        this(new Constant<>(input), cnd, cons, alter);
+    }
+
+    /**
+     * Ctor.
+     * @param input The input to pass to all of them
+     * @param cnd The condition
+     * @param cons The consequent
+     * @param alter The alternative
+     * @param <X> Type of input
+     * @since 0.9
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public <X> Ternary(
+        final Scalar<X> input, final Func<X, Boolean> cnd,
+        final Func<X, T> cons, final Func<X, T> alter
+    ) {
+        super(() -> {
+            final X inp = input.value();
+            final Func<X, T> result;
+            if (cnd.apply(inp)) {
+                result = cons;
+            } else {
+                result = alter;
+            }
+            return result.apply(inp);
+        });
     }
 }
