@@ -25,7 +25,6 @@ package org.cactoos.text;
 
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.scalar.LengthOf;
 
 /**
  * Concatenate a texts.
@@ -49,18 +48,6 @@ public class Concatenated extends TextEnvelope {
      * @param txts Texts to be concatenated
      */
     public Concatenated(final Iterable<? extends Text> txts) {
-        super(
-            new TextOf(
-                () -> {
-                    final StringBuilder builder = new StringBuilder(
-                        new LengthOf(txts).value().intValue()
-                    );
-                    for (final Text text : txts) {
-                        builder.append(text.asString());
-                    }
-                    return builder.toString();
-                }
-             )
-        );
+        super(new Joined(new TextOf(""), txts));
     }
 }
