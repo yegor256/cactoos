@@ -31,7 +31,7 @@ import org.cactoos.iterable.IterableOf;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.46
+ * @since 0.47
  */
 public class Concatenated extends TextEnvelope {
 

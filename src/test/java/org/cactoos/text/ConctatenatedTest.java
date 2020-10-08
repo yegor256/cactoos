@@ -32,7 +32,7 @@ import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link Concatenated}.
- * @since 0.46
+ * @since 0.47
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class ConctatenatedTest {
