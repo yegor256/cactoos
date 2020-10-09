@@ -27,7 +27,7 @@ import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 
 /**
- * Concatenate a texts.
+ * Concatenate a Text.
  *
  * <p>There is no thread-safety guarantee.
  *
