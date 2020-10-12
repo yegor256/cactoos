@@ -24,7 +24,6 @@
 
 package org.cactoos.text;
 
-import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
