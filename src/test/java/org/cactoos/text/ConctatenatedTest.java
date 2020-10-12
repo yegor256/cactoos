@@ -59,7 +59,7 @@ final class ConctatenatedTest {
     void concatenateIterables() {
         new Assertion<>(
             "Must concatenate iterables",
-            new Concatenated(new IterableOf<Text>(new TextOf("foo"), new TextOf("foo1"))),
+            new Concatenated(new IterableOf<>(new TextOf("foo"), new TextOf("foo1"))),
             new TextIs("foofoo1")
         ).affirm();
     }
