@@ -73,11 +73,11 @@ public final class ListIteratorNoNulls<T> implements ListIterator<T> {
 
     @Override
     public T previous() {
-        final T next = this.listiterator.previous();
-        if (next == null) {
+        final T prev = this.listiterator.previous();
+        if (prev == null) {
             throw new IllegalStateException("Previous item is NULL");
         }
-        return next;
+        return prev;
     }
 
     @Override
