@@ -29,7 +29,8 @@ import org.cactoos.Text;
 /**
  * Text in upper case.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>
+ * There is no thread-safety guarantee.
  *
  * @since 0.1
  */
@@ -57,6 +58,6 @@ public final class Upper extends TextEnvelope {
      * @param locale Locale
      */
     public Upper(final Text text, final Locale locale) {
-        super(new TextOf(() -> text.asString().toUpperCase(locale)));
+        super(new Mapped(str -> str.toUpperCase(locale), text));
     }
 }
