@@ -28,7 +28,8 @@ import org.cactoos.Text;
 /**
  * Text without control characters (char &lt;= 32) only from left.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>
+ * There is no thread-safety guarantee.
  *
  * @since 0.12
  */
@@ -40,17 +41,19 @@ public final class TrimmedLeft extends TextEnvelope {
      */
     public TrimmedLeft(final Text text) {
         super(
-            new TextOf(
-                () -> {
-                    final String string = text.asString();
+            new Mapped(
+                string -> {
                     int cursor = 0;
-                    while (cursor < string.length() && Character.isWhitespace(
-                        string.charAt(cursor)
-                    )) {
+                    while (
+                        cursor < string.length() && Character.isWhitespace(
+                            string.charAt(cursor)
+                        )
+                    ) {
                         cursor = cursor + 1;
                     }
                     return string.substring(cursor);
-                }
+                },
+                text
             )
         );
     }
