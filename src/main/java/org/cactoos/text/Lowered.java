@@ -62,6 +62,6 @@ public final class Lowered extends TextEnvelope {
      *  `text` package (e.g., `Upper`, `Trimmed`).
      */
     public Lowered(final Text text, final Locale locale) {
-        super(new TextOf(() -> text.asString().toLowerCase(locale)));
+        super(new Mapped(str -> str.toLowerCase(locale), text));
     }
 }
