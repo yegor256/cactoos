@@ -38,9 +38,8 @@ public final class SwappedCase extends TextEnvelope {
      */
     public SwappedCase(final Text text) {
         super(
-            new TextOf(
-                () -> {
-                    final String origin = text.asString();
+            new Mapped(
+                origin -> {
                     final char[] chars = origin.toCharArray();
                     for (int idx = 0; idx < chars.length; idx += 1) {
                         final char chr = chars[idx];
@@ -51,7 +50,8 @@ public final class SwappedCase extends TextEnvelope {
                         }
                     }
                     return new String(chars);
-                }
+                },
+                text
             )
         );
     }
