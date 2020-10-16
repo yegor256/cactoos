@@ -52,9 +52,8 @@ public final class Strict extends TextEnvelope {
      */
     public Strict(final Func<String, Boolean> predicate, final Text origin) {
         super(
-            new TextOf(
-                () -> {
-                    final String str = origin.asString();
+            new Mapped(
+                str -> {
                     if (!predicate.apply(str)) {
                         throw new IllegalArgumentException(
                             new FormattedText(
@@ -64,7 +63,8 @@ public final class Strict extends TextEnvelope {
                         );
                     }
                     return str;
-                }
+                },
+                origin
             )
         );
     }
