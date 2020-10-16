@@ -35,18 +35,18 @@ public final class IsEmpty implements Scalar<Boolean> {
     /**
      * The text.
      */
-    private final Text origin;
+    private final Text txt;
 
     /**
      * Ctor.
      * @param text The text
      */
     public IsEmpty(final Text text) {
-        this.origin = text;
+        this.txt = text;
     }
 
     @Override
     public Boolean value() throws Exception {
-        return this.origin.asString().isEmpty();
+        return this.txt.asString().isEmpty();
     }
 }
