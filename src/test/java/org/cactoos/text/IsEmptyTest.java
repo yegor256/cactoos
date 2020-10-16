@@ -45,7 +45,7 @@ final class IsEmptyTest {
     @Test
     void determinesNonemptyText() {
         new Assertion<>(
-            "Must't detect nonempty text",
+            "Mustn't detect nonempty text",
             new IsEmpty(new TextOf("abc")),
             new ScalarHasValue<>(Boolean.FALSE)
         ).affirm();
@@ -54,7 +54,7 @@ final class IsEmptyTest {
     @Test
     void determinesBlankText() {
         new Assertion<>(
-            "Must't detect blank text",
+            "Mustn't detect blank text",
             new IsEmpty(new TextOf(" ")),
             new ScalarHasValue<>(Boolean.FALSE)
         ).affirm();
