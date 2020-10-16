@@ -93,19 +93,19 @@ public final class Sub extends TextEnvelope {
     public Sub(final Text text, final Unchecked<Integer> start,
         final Unchecked<Integer> end) {
         super(
-            new TextOf(
-                () -> {
+            new Mapped(
+                origin -> {
                     int begin = start.value();
                     if (begin < 0) {
                         begin = 0;
                     }
                     int finish = end.value();
-                    final String origin = text.asString();
                     if (origin.length() < finish) {
                         finish = origin.length();
                     }
                     return origin.substring(begin, finish);
-                }
+                },
+                text
             )
         );
     }
