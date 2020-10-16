@@ -28,7 +28,8 @@ import org.cactoos.Text;
 /**
  * Text without control characters (char &lt;= 32) from both ends.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>
+ * There is no thread-safety guarantee.
  *
  * @since 0.1
  */
@@ -39,6 +40,6 @@ public final class Trimmed extends TextEnvelope {
      * @param text The text
      */
     public Trimmed(final Text text) {
-        super(new TextOf(() -> text.asString().trim()));
+        super(new Mapped(str -> str.trim(), text));
     }
 }
