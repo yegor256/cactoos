@@ -160,6 +160,70 @@ The MIT License (MIT)
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-verifier-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.6</version>
+        <configuration>
+          <output>file</output>
+          <outputDirectory>${project.build.directory}/coverage</outputDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <id>jacoco-initialize</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>jacoco-check</id>
+            <phase>test</phase>
+            <goals>
+              <goal>check</goal>
+              <goal>report</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <rule>
+                  <element>BUNDLE</element>
+                  <limits>
+                    <limit>
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.61</minimum>
+                    </limit>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.65</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.65</minimum>
+                    </limit>
+                    <limit>
+                      <counter>COMPLEXITY</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.57</minimum>
+                    </limit>
+                    <limit>
+                      <counter>METHOD</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.57</minimum>
+                    </limit>
+                    <limit>
+                      <counter>CLASS</counter>
+                      <value>MISSEDCOUNT</value>
+                      <maximum>15</maximum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <profiles>
@@ -207,75 +271,6 @@ The MIT License (MIT)
               <execution>
                 <goals>
                   <goal>testCheck</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.5</version>
-            <configuration>
-              <output>file</output>
-            </configuration>
-            <executions>
-              <execution>
-                <id>jacoco-initialize</id>
-                <goals>
-                  <goal>prepare-agent</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>jacoco-check</id>
-                <phase>test</phase>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-                <configuration>
-                  <rules>
-                    <rule>
-                      <element>BUNDLE</element>
-                      <limits>
-                        <limit>
-                          <counter>INSTRUCTION</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>0.61</minimum>
-                        </limit>
-                        <limit>
-                          <counter>LINE</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>0.65</minimum>
-                        </limit>
-                        <limit>
-                          <counter>BRANCH</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>0.65</minimum>
-                        </limit>
-                        <limit>
-                          <counter>COMPLEXITY</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>0.57</minimum>
-                        </limit>
-                        <limit>
-                          <counter>METHOD</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>0.57</minimum>
-                        </limit>
-                        <limit>
-                          <counter>CLASS</counter>
-                          <value>MISSEDCOUNT</value>
-                          <maximum>15</maximum>
-                        </limit>
-                      </limits>
-                    </rule>
-                  </rules>
-                </configuration>
-              </execution>
-              <execution>
-                <id>jacoco-site</id>
-                <phase>install</phase>
-                <goals>
-                  <goal>report</goal>
                 </goals>
               </execution>
             </executions>
