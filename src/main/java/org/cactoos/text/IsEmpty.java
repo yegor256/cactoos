@@ -27,30 +27,27 @@ import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
- * Determines if text is blank (consists of spaces) or not.
- *
- * <p>There is no thread-safety guarantee.
- * @see IsEmpty
- * @since 0.1
+ * Determines if text is empty or not.
+ * @see IsBlank
+ * @since 0.47
  */
-public final class IsBlank implements Scalar<Boolean> {
+public final class IsEmpty implements Scalar<Boolean> {
 
     /**
      * The text.
      */
-    private final Text origin;
+    private final Text txt;
 
     /**
      * Ctor.
      * @param text The text
      */
-    public IsBlank(final Text text) {
-        this.origin = text;
+    public IsEmpty(final Text text) {
+        this.txt = text;
     }
 
     @Override
     public Boolean value() throws Exception {
-        return this.origin.asString().chars()
-            .allMatch(Character::isWhitespace);
+        return this.txt.asString().isEmpty();
     }
 }

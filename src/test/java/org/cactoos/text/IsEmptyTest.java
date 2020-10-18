@@ -23,34 +23,40 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
-import org.cactoos.Text;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
- * Determines if text is blank (consists of spaces) or not.
- *
- * <p>There is no thread-safety guarantee.
- * @see IsEmpty
- * @since 0.1
+ * Test case for {@link IsEmpty}.
+ * @since 0.47
  */
-public final class IsBlank implements Scalar<Boolean> {
+final class IsEmptyTest {
 
-    /**
-     * The text.
-     */
-    private final Text origin;
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public IsBlank(final Text text) {
-        this.origin = text;
+    @Test
+    void determinesEmptyText() {
+        new Assertion<>(
+            "Must determine empty text",
+            new IsEmpty(new TextOf("")),
+            new ScalarHasValue<>(Boolean.TRUE)
+        ).affirm();
     }
 
-    @Override
-    public Boolean value() throws Exception {
-        return this.origin.asString().chars()
-            .allMatch(Character::isWhitespace);
+    @Test
+    void determinesNonemptyText() {
+        new Assertion<>(
+            "Must not detect non-empty text",
+            new IsEmpty(new TextOf("abc")),
+            new ScalarHasValue<>(Boolean.FALSE)
+        ).affirm();
+    }
+
+    @Test
+    void determinesBlankText() {
+        new Assertion<>(
+            "Must not detect blank text",
+            new IsEmpty(new TextOf(" ")),
+            new ScalarHasValue<>(Boolean.FALSE)
+        ).affirm();
     }
 }
