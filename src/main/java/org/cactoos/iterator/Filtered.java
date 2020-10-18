@@ -63,7 +63,7 @@ public final class Filtered<X> implements Iterator<X> {
     /**
      * Predicate.
      */
-    private final Func<X, Scalar<Boolean>> func;
+    private final Func<? super X, Scalar<Boolean>> func;
 
     /**
      * The buffer storing the objects of the iterator.
@@ -76,7 +76,7 @@ public final class Filtered<X> implements Iterator<X> {
      * @param src Source iterable
      */
     public Filtered(
-        final Func<X, Boolean> fnc,
+        final Func<? super X, Boolean> fnc,
         final Iterator<? extends X> src
     ) {
         this(src, input -> () -> fnc.apply(input));
@@ -89,7 +89,7 @@ public final class Filtered<X> implements Iterator<X> {
      */
     public Filtered(
         final Iterator<? extends X> src,
-        final Func<X, Scalar<Boolean>> fnc
+        final Func<? super X, Scalar<Boolean>> fnc
     ) {
         this.iterator = src;
         this.func = fnc;
@@ -98,7 +98,8 @@ public final class Filtered<X> implements Iterator<X> {
 
     @Override
     public boolean hasNext() {
-        final UncheckedFunc<X, Scalar<Boolean>> fnc = new UncheckedFunc<>(this.func);
+        final UncheckedFunc<? super X, Scalar<Boolean>> fnc = 
+            new UncheckedFunc<>(this.func);
         if (this.buffer.isEmpty()) {
             while (this.iterator.hasNext()) {
                 final X object = this.iterator.next();
