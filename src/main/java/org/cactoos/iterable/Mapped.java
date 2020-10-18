@@ -33,8 +33,8 @@ import org.cactoos.Func;
  * @param <X> Type of source item
  * @param <Y> Type of target item
  * @since 0.1
- * @todo #1169:30m Remove type parameter X from this 
- *   class definition, and put extra type parameter on each ctor. 
+ * @todo #1169:30m Remove type parameter X from this
+ *   class definition, and put extra type parameter on each ctor.
  *   Possibly, the same change is possible in {@link iterator.Mapped},
  *   if so, leave a todo there after you're done with this one.
  */
