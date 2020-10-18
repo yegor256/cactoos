@@ -36,7 +36,7 @@ import org.cactoos.Func;
  * @todo #1169:30m Remove type parameter X from this 
  *   class definition, and put extra type parameter on each ctor. 
  *   Possibly, the same change is possible in {@link iterator.Mapped},
- *   if so, leave a todo there.
+ *   if so, leave a todo there after you're done with this one.
  */
 public final class Mapped<X, Y> extends IterableEnvelope<Y> {
 
@@ -46,7 +46,7 @@ public final class Mapped<X, Y> extends IterableEnvelope<Y> {
      * @param src Source iterable
      */
     @SafeVarargs
-    public Mapped(final Func<X, Y> fnc, final X... src) {
+    public Mapped(final Func<? super X, Y> fnc, final X... src) {
         this(fnc, new IterableOf<X>(src));
     }
 
@@ -55,7 +55,7 @@ public final class Mapped<X, Y> extends IterableEnvelope<Y> {
      * @param fnc Func
      * @param src Source iterable
      */
-    public Mapped(final Func<X, Y> fnc, final Iterable<? extends X> src) {
+    public Mapped(final Func<? super X, Y> fnc, final Iterable<? extends X> src) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Mapped<>(fnc, src.iterator())
