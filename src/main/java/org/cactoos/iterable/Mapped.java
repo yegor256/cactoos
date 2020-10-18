@@ -34,9 +34,9 @@ import org.cactoos.Func;
  * @param <Y> Type of target item
  * @since 0.1
  * @todo #1169:30m Remove type parameter X from this
- *   class definition, and put extra type parameter on each ctor.
- *   Possibly, the same change is possible in {@link iterator.Mapped},
- *   if so, leave a todo there after you're done with this one.
+ *  class definition, and put extra type parameter on each ctor.
+ *  Possibly, the same change is possible in {@link iterator.Mapped},
+ *  if so, leave a todo there after you're done with this one.
  */
 public final class Mapped<X, Y> extends IterableEnvelope<Y> {
 
