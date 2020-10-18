@@ -68,7 +68,7 @@ public final class Matched<X> implements Iterable<X> {
      * @param snd The second part of duplex iterator.
      */
     public Matched(
-        final BiFunc<X, X, Boolean> fnc,
+        final BiFunc<? super X, ? super X, Boolean> fnc,
         final Iterable<? extends X> fst,
         final Iterable<? extends X> snd
     ) {

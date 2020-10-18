@@ -92,6 +92,19 @@ public final class MatchedTest {
         );
     }
 
+    @Test
+    public void matchedAsNumbers() {
+        MatcherAssert.assertThat(
+            "All elements must be treated as Number",
+            new Matched<>(
+                (Number fst, Number snd) -> fst.intValue() == snd.intValue(),
+                new IterableOf<>(1d, 2d, 3d),
+                new IterableOf<>(1L, 2L, 3L)
+            ),
+            Matchers.iterableWithSize(3)
+        );
+    }
+
     @Test(expected = IllegalStateException.class)
     public void noCorrelation() {
         new LengthOf(
