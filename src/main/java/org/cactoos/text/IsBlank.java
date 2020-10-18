@@ -27,10 +27,10 @@ import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
- * Determines if text is blank (consists of spaces) or no.
+ * Determines if text is blank (consists of spaces) or not.
  *
  * <p>There is no thread-safety guarantee.
- *
+ * @see IsEmpty
  * @since 0.1
  */
 public final class IsBlank implements Scalar<Boolean> {
