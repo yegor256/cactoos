@@ -78,7 +78,7 @@ public final class Filtered<X> extends IterableEnvelope<X> {
      * @param src Source iterable
      * @param fnc Predicate
      */
-    public Filtered(final Iterable<X> src, final Func<? super X, Scalar<Boolean>> fnc) {
+    public Filtered(final Iterable<? extends X> src, final Func<? super X, Scalar<Boolean>> fnc) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Filtered<>(
