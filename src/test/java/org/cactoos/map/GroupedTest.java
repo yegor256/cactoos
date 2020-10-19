@@ -83,4 +83,23 @@ final class GroupedTest {
             )
         );
     }
+
+
+    @Test
+    void groupedBySuperType() throws Exception {
+        MatcherAssert.assertThat(
+            "Must group Number values",
+            new Grouped<>(
+                // @checkstyle MagicNumberCheck (1 line)
+                new IterableOf<Number>(1, 1f, 1L, 4f, 5, 6f, 7, 8f, 9),
+                Number::intValue,
+                Object::toString
+            ),
+            new IsMapContaining<>(
+                new IsEqual<>(1),
+                new IsEqual<>(new ListOf<>("1", "1.0", "1"))
+            )
+        );
+    }
+
 }
