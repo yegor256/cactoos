@@ -84,7 +84,6 @@ final class GroupedTest {
         );
     }
 
-
     @Test
     void groupedBySuperType() throws Exception {
         MatcherAssert.assertThat(
