@@ -148,7 +148,7 @@ public final class Split extends IterableEnvelope<Text> {
      */
     public Split(final UncheckedText text, final UncheckedText rgx, final int lmt) {
         super(
-            new Mapped<String, Text>(
+            new Mapped<>(
                 TextOf::new,
                 new IterableOf<>(
                     text.asString().split(rgx.asString(), lmt)
