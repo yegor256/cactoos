@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Collections;
-import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
