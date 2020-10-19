@@ -129,4 +129,17 @@ public final class MatchedTest {
         Assert.fail("There is no 'non-null' correlation between 2nd elements");
     }
 
+    @Test
+    public void iterablesOfDifferentTypes() {
+        MatcherAssert.assertThat(
+            "All elements must be treated according to their type",
+            new Matched<>(
+                (Number fst, String snd) -> fst.intValue() == Integer.parseInt(snd),
+                new IterableOf<>(1, 2, 3),
+                new IterableOf<>("1", "2", "3")
+            ),
+            Matchers.iterableWithSize(3)
+        );
+    }
+
 }
