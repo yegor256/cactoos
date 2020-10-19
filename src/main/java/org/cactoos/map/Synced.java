@@ -32,9 +32,13 @@ import org.cactoos.iterable.Mapped;
 /**
  * Map decorator that goes through the map only once.
  *
- * <p>The map is read-only.</p>
+ * <p>
+ * The map is read-only.
+ * </p>
  *
- * <p>Objects of this class are thread-safe.</p>
+ * <p>
+ * Objects of this class are thread-safe.
+ * </p>
  *
  * @param <X> Type of key
  * @param <Y> Type of value
@@ -71,10 +75,10 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @checkstyle ParameterNumberCheck (5 lines)
      */
     public <Z> Synced(
-        final Func<Z, X> key,
-        final Func<Z, Y> value,
-        final Map<X, Y> map,
-        final Iterable<Z> list
+        final Func<? super Z, ? extends X> key,
+        final Func<? super Z, ? extends Y> value,
+        final Map<? extends X, ? extends Y> map,
+        final Iterable<? extends Z> list
     ) {
         this(
             item -> new MapEntry<>(key.apply(item), value.apply(item)),
@@ -90,9 +94,9 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      */
     public <Z> Synced(
-        final Iterable<Z> list,
-        final Func<Z, X> key,
-        final Func<Z, Y> value
+        final Iterable<? extends Z> list,
+        final Func<? super Z, ? extends X> key,
+        final Func<? super Z, ? extends Y> value
     ) {
         this(item -> new MapEntry<>(key.apply(item), value.apply(item)), list);
     }
@@ -105,7 +109,7 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      */
     @SafeVarargs
     public <Z> Synced(
-        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Func<? super Z, Map.Entry<? extends X, ? extends Y>> entry,
         final Z... list
     ) {
         this(new Mapped<>(entry, list));
@@ -132,8 +136,9 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      */
     public <Z> Synced(
-        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
-        final Map<X, Y> map, final Iterable<Z> list
+        final Func<? super Z, ? extends Map.Entry<? extends X, ? extends Y>> entry,
+        final Map<? extends X, ? extends Y> map,
+        final Iterable<? extends Z> list
     ) {
         this(map, new Mapped<>(entry, list));
     }
@@ -152,7 +157,7 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param list Entries for the entries
      */
     public Synced(
-        final Map<X, Y> map,
+        final Map<? extends X, ? extends Y> map,
         final Iterable<Map.Entry<? extends X, ? extends Y>> list
     ) {
         this(new MapOf<>(map, list));
@@ -162,7 +167,8 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param map The map
      */
-    public Synced(final Map<X, Y> map) {
-        super(Collections.synchronizedMap(map));
+    @SuppressWarnings("unchecked")
+    public Synced(final Map<? extends X, ? extends Y> map) {
+        super(Collections.synchronizedMap(new MapOf<>(map)));
     }
 }
