@@ -33,11 +33,13 @@ import org.cactoos.iterable.Mapped;
 /**
  * Iterable as {@link Map}.
  *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link Map} on each
- * method call. It doesn't cache the data anyhow.
+ * <p>
+ * This class should be used very carefully. You must understand that it will
+ * fetch the entire content of the encapsulated {@link Map} on each method call.
+ * It doesn't cache the data anyhow.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>
+ * There is no thread-safety guarantee.
  *
  * @param <X> Type of key
  * @param <Y> Type of value
@@ -50,7 +52,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param list List of entries
      */
     @SafeVarargs
-    public MapOf(final Map.Entry<X, Y>... list) {
+    public MapOf(final Map.Entry<? extends X, ? extends Y>... list) {
         this(new IterableOf<>(list));
     }
 
@@ -61,7 +63,10 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @since 0.12
      */
     @SafeVarargs
-    public MapOf(final Map<X, Y> src, final Map.Entry<X, Y>... list) {
+    public MapOf(
+        final Map<? extends X, ? extends Y> src,
+        final Map.Entry<? extends X, ? extends Y>... list
+    ) {
         this(src, new IterableOf<>(list));
     }
 
@@ -73,8 +78,11 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      * @since 0.11
      */
-    public <Z> MapOf(final Func<Z, X> key,
-        final Func<Z, Y> value, final Iterable<Z> list) {
+    public <Z> MapOf(
+        final Func<? super Z, ? extends X> key,
+        final Func<? super Z, ? extends Y> value,
+        final Iterable<? extends Z> list
+    ) {
         this(item -> new MapEntry<>(key.apply(item), value.apply(item)), list);
     }
 
@@ -88,9 +96,12 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @since 0.12
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public <Z> MapOf(final Func<Z, X> key,
-        final Func<Z, Y> value, final Map<X, Y> src,
-        final Iterable<Z> list) {
+    public <Z> MapOf(
+        final Func<? super Z, ? extends X> key,
+        final Func<? super Z, ? extends Y> value,
+        final Map<? extends X, ? extends Y> src,
+        final Iterable<Z> list
+    ) {
         this(
             item -> new MapEntry<>(key.apply(item), value.apply(item)),
             src, list
@@ -105,8 +116,8 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @since 0.11
      */
     public <Z> MapOf(
-        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
-        final Iterable<Z> list
+        final Func<? super Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Iterable<? extends Z> list
     ) {
         this(new Mapped<>(entry, list));
     }
@@ -120,8 +131,9 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @since 0.11
      */
     public <Z> MapOf(
-        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
-        final Map<X, Y> src, final Iterable<Z> list
+        final Func<? super Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Map<? extends X, ? extends Y> src,
+        final Iterable<? extends Z> list
     ) {
         this(src, new Mapped<>(entry, list));
     }
@@ -134,7 +146,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      */
     @SuppressWarnings("unchecked")
     public MapOf(
-        final Map<X, Y> src,
+        final Map<? extends X, ? extends Y> src,
         final Iterable<Map.Entry<? extends X, ? extends Y>> list
     ) {
         this(
