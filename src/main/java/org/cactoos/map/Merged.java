@@ -41,7 +41,7 @@ public final class Merged<K, V> extends MapEnvelope<K, V> {
      * @param maps Maps to merge.
      */
     @SafeVarargs
-    public Merged(final Map<K, V>... maps) {
+    public Merged(final Map<? extends K, ? extends V>... maps) {
         super(
             new MapOf<>(
                 new ListOf<>(maps)
