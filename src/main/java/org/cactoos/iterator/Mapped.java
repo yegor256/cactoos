@@ -24,8 +24,8 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.Func;
-import org.cactoos.func.UncheckedFunc;
 import org.cactoos.scalar.Unchecked;
 
 /**
@@ -43,7 +43,7 @@ public final class Mapped<Y> extends IteratorEnvelope<Y> {
      * Ctor.
      * @param func Func
      * @param iterator Source iterator
-     * @param <Y> Type of item
+     * @param <X> Type of item
      * @checkstyle AnonInnerLengthCheck (60 lines)
      */
     public <X> Mapped(
@@ -60,11 +60,14 @@ public final class Mapped<Y> extends IteratorEnvelope<Y> {
 
                 @Override
                 public Y next() {
-                    return new Unchecked<>(
-                        new org.cactoos.scalar.Mapped<>(
-                            func, iterator::next
-                        )
-                    ).value();
+                    if (this.hasNext()) {
+                        return new Unchecked<>(
+                            new org.cactoos.scalar.Mapped<>(
+                                func, iterator::next
+                            )
+                        ).value();
+                    }
+                    throw new NoSuchElementException();
                 }
 
                 @Override
