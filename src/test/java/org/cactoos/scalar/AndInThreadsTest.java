@@ -144,7 +144,7 @@ final class AndInThreadsTest {
             "Must iterate an empty list",
             new AndInThreads(
                 new Mapped<Scalar<Boolean>>(
-                    new FuncOf<>(list::add, () -> true), 
+                    new FuncOf<>(list::add, () -> true),
                     new IterableOf<String>()
                 )
             ),
