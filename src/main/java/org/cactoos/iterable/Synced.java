@@ -25,6 +25,8 @@ package org.cactoos.iterable;
 
 import java.util.Iterator;
 
+import org.cactoos.iterator.Mapped;
+
 /**
  * Synchronized iterable.
  *
@@ -44,7 +46,7 @@ public final class Synced<X> implements Iterable<X> {
     /**
      * The iterable.
      */
-    private final Iterable<X> origin;
+    private final Iterable<? extends X> origin;
 
     /**
      * Sync lock.
@@ -64,7 +66,7 @@ public final class Synced<X> implements Iterable<X> {
      * Ctor.
      * @param iterable The iterable synchronize access to.
      */
-    public Synced(final Iterable<X> iterable) {
+    public Synced(final Iterable<? extends X> iterable) {
         this(new Object(), iterable);
     }
 
@@ -73,7 +75,7 @@ public final class Synced<X> implements Iterable<X> {
      * @param lck The lock to synchronize with.
      * @param iterable The iterable synchronize access to.
      */
-    public Synced(final Object lck, final Iterable<X> iterable) {
+    public Synced(final Object lck, final Iterable<? extends X> iterable) {
         this.origin = iterable;
         this.lock = lck;
     }
@@ -81,7 +83,7 @@ public final class Synced<X> implements Iterable<X> {
     @Override
     public Iterator<X> iterator() {
         synchronized (this.lock) {
-            return this.origin.iterator();
+            return new Mapped<>(x -> x, this.origin.iterator());
         }
     }
 }
