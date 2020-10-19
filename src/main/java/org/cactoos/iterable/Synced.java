@@ -24,20 +24,22 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-
 import org.cactoos.iterator.Mapped;
 
 /**
  * Synchronized iterable.
  *
- * <p>This class should be used very carefully. You must understand that
- * it will fetch the entire content of the encapsulated {@link Iterable} on each
- * method call. It doesn't cache the data anyhow. If you don't
- * need this {@link Iterable} to re-fresh
- * its content on every call, by doing round-trips to
- * the encapsulated iterable, use {@link Sticky}.</p>
+ * <p>
+ * This class should be used very carefully. You must understand that it will
+ * fetch the entire content of the encapsulated {@link Iterable} on each method
+ * call. It doesn't cache the data anyhow. If you don't need this
+ * {@link Iterable} to re-fresh its content on every call, by doing round-trips
+ * to the encapsulated iterable, use {@link Sticky}.
+ * </p>
  *
- * <p>Objects of this class are thread-safe.</p>
+ * <p>
+ * Objects of this class are thread-safe.
+ * </p>
  * @param <X> Type of item
  * @since 0.24
  */
