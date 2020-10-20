@@ -169,6 +169,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      */
     @SuppressWarnings("unchecked")
     public Synced(final Map<? extends X, ? extends Y> map) {
-        super(Collections.synchronizedMap(new MapOf<>(map)));
+        super((Map<X, Y>) Collections.synchronizedMap(map));
     }
 }
