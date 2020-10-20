@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,18 +42,18 @@ public final class MatchedTest {
 
     @Test
     public void iterator() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "All elements have correlation function as `equal`",
             new Matched<>(
                 new IterableOf<>(1, 2, 3),
                 new IterableOf<>(1, 2, 3)
             ),
             Matchers.hasItems(1, 2, 3)
-        );
+        ).affirm();
     }
 
     @Test
-    public void noCorrelationWithBiggerSecondIterable() throws IllegalStateException {
+    public void noCorrelationWithBiggerSecondIterable() {
         new Assertion<>(
             "All elements have correlation function as `endsWith`",
             () -> new Matched<>(
@@ -67,7 +66,7 @@ public final class MatchedTest {
     }
 
     @Test
-    public void noCorrelationWithSmallerSecondIterable() throws IllegalStateException {
+    public void noCorrelationWithSmallerSecondIterable() {
         new Assertion<>(
             "All elements have correlation function as `endsWith`",
             () -> new Matched<>(
@@ -81,7 +80,7 @@ public final class MatchedTest {
 
     @Test
     public void endsWith() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "All elements have correlation function as `endsWith`",
             new Matched<>(
                 (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
@@ -89,12 +88,12 @@ public final class MatchedTest {
                 new IterableOf<>("`A` elem", "`B` elem", "'C' elem")
             ),
             Matchers.iterableWithSize(3)
-        );
+        ).affirm();
     }
 
     @Test
     public void matchedAsNumbers() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "All elements must be treated as Number",
             new Matched<>(
                 (Number fst, Number snd) -> fst.intValue() == snd.intValue(),
@@ -102,7 +101,7 @@ public final class MatchedTest {
                 new IterableOf<>(1L, 2L, 3L)
             ),
             Matchers.iterableWithSize(3)
-        );
+        ).affirm();
     }
 
     @Test(expected = IllegalStateException.class)
@@ -131,7 +130,7 @@ public final class MatchedTest {
 
     @Test
     public void iterablesOfDifferentTypes() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "All elements must be treated according to their type",
             new Matched<>(
                 (Number fst, String snd) -> fst.intValue() == Integer.parseInt(snd),
@@ -139,7 +138,7 @@ public final class MatchedTest {
                 new IterableOf<>("1", "2", "3")
             ),
             Matchers.iterableWithSize(3)
-        );
+        ).affirm();
     }
 
 }
