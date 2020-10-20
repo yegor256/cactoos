@@ -45,8 +45,6 @@ import org.cactoos.text.UncheckedText;
  * @param <X> Type of item
  * @since 0.12
  * @checkstyle ClassDataAbstractionCouplingCheck (550 lines)
- * @todo #1169:30m This class uses Mapped in order to coerce wild-card type.
- *  Research a more eloquent solution and remove usage of Mapped.
  */
 @SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
 public final class IterableOf<X> implements Iterable<X> {
