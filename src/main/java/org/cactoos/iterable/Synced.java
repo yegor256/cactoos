@@ -82,10 +82,11 @@ public final class Synced<X> implements Iterable<X> {
         this.lock = lck;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Iterator<X> iterator() {
         synchronized (this.lock) {
-            return new Mapped<>(x -> x, this.origin.iterator());
+            return (Iterator<X>) this.origin.iterator();
         }
     }
 }
