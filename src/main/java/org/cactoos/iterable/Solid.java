@@ -47,7 +47,7 @@ public final class Solid<X> extends IterableEnvelope<X> {
      * @param iterable The iterable
      */
     public Solid(final Iterable<? extends X> iterable) {
-        super(new Synced<>(new Sticky<>(new Mapped<>(x -> x, iterable))));
+        super(new Synced<>(new Sticky<>(iterable)));
     }
 
 }
