@@ -42,7 +42,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class MappedTest {
 
     @Test
-    @SuppressWarnings("unchecked")
     void transformsList() throws Exception {
         MatcherAssert.assertThat(
             "Can't transform an iterable",
