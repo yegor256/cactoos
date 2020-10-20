@@ -26,7 +26,6 @@ package org.cactoos.iterable;
 import java.util.Collections;
 import java.util.Comparator;
 import org.cactoos.list.ListOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -43,7 +42,7 @@ final class SortedTest {
 
     @Test
     void sortsAnArray() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't sort an iterable",
             new Sorted<>(
                 new IterableOf<>(
@@ -51,13 +50,13 @@ final class SortedTest {
                 )
             ),
             Matchers.hasItems(-6, 0, 2, 3, 10, 44)
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     void sortsAnArrayWithComparator() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't sort an iterable with a comparator",
             new Sorted<>(
                 Comparator.reverseOrder(), new IterableOf<>(
@@ -65,18 +64,18 @@ final class SortedTest {
                 )
             ),
             Matchers.hasItems("hello", "dude", "c", "a", "Friend")
-        );
+        ).affirm();
     }
 
     @Test
     void sortsAnEmptyArray() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't sort an empty iterable",
             new Sorted<Integer>(
                 Collections.emptyList()
             ),
             Matchers.iterableWithSize(0)
-        );
+        ).affirm();
     }
 
     @Test
@@ -91,4 +90,19 @@ final class SortedTest {
             new IsEqual<>(new IterableOf<>("f", "o", "t", "t"))
         ).affirm();
     }
+
+    @Test
+    void sortsByNymberComprator() throws Exception {
+        new Assertion<>(
+            "Must sort an iterable of numbers",
+            new Sorted<>(
+                (Number fst, Number snd) -> Integer.compare(fst.intValue(), snd.intValue()),
+                new IterableOf<Number>(3L, 1f, 2d)
+            ),
+            new IsEqual<>(
+                new IterableOf<Number>(1f, 2d, 3L)
+            )
+        ).affirm();
+    }
+
 }

@@ -54,8 +54,8 @@ public final class Sorted<T> extends IterableEnvelope<T> {
      * @param src The underlying iterable
      */
     @SuppressWarnings("unchecked")
-    public Sorted(final Iterable<T> src) {
-        this((Comparator<T>) Comparator.naturalOrder(), src);
+    public Sorted(final Iterable<? extends T> src) {
+        this((Comparator<? super T>) Comparator.naturalOrder(), src);
     }
 
     /**
@@ -64,7 +64,7 @@ public final class Sorted<T> extends IterableEnvelope<T> {
      * @param src The underlying iterable
      */
     @SafeVarargs
-    public Sorted(final Comparator<T> cmp, final T... src) {
+    public Sorted(final Comparator<? super T> cmp, final T... src) {
         this(cmp, new IterableOf<>(src));
     }
 
@@ -73,7 +73,7 @@ public final class Sorted<T> extends IterableEnvelope<T> {
      * @param cmp The comparator
      * @param src The underlying iterable
      */
-    public Sorted(final Comparator<T> cmp, final Iterable<T> src) {
+    public Sorted(final Comparator<? super T> cmp, final Iterable<? extends T> src) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Sorted<>(cmp, src.iterator())
