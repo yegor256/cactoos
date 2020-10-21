@@ -134,7 +134,7 @@ public final class AvgOf extends NumberEnvelope {
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public AvgOf(final Iterable<Scalar<Number>> src) {
-        super(
+        super(new NumberOf(
             new Ternary<>(
                 new LengthOf(src).longValue(),
                 len -> len > 0,
@@ -153,6 +153,6 @@ public final class AvgOf extends NumberEnvelope {
                 ).doubleValue(),
                 len -> 0.0
             )
-        );
+        ));
     }
 }

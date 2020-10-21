@@ -45,7 +45,7 @@ import org.cactoos.text.TextOf;
  * {@link IoChecked} to wrap it in an IOException.</p>
  * @since 0.2
  */
-public final class NumberOf extends Number implements Scalar<Number> {
+public final class NumberOf extends NumberEnvelope {
 
     /**
      * Serialization marker.
@@ -65,49 +65,26 @@ public final class NumberOf extends Number implements Scalar<Number> {
         this(new TextOf(txt));
     }
 
+    public NumberOf(final Scalar<Long> lnm, final Scalar<Integer> inm,
+                          final Scalar<Float> fnm, final Scalar<Double> dnm) {
+        this(dnm);
+    }
+
     /**
      * Ctor.
      * @param text Number-text
      */
     public NumberOf(final Text text) {
-        this.envelope = new Sealed(
-            new Sticky<>(
-                () -> Long.parseLong(text.asString())
-            ),
-            new Sticky<>(
-                () -> Integer.parseInt(text.asString())
-            ),
-            new Sticky<>(
-                () -> Float.parseFloat(text.asString())
-            ),
-            new Sticky<>(
+        this(new Sticky<>(
                 () -> Double.parseDouble(text.asString())
-            )
-        );
+        ));
     }
 
-    @Override
-    public Number value() {
-        return this.envelope;
-    }
-
-    @Override
-    public int intValue() {
-        return this.envelope.intValue();
-    }
-
-    @Override
-    public long longValue() {
-        return this.envelope.longValue();
-    }
-
-    @Override
-    public float floatValue() {
-        return this.envelope.floatValue();
-    }
-
-    @Override
-    public double doubleValue() {
-        return this.envelope.doubleValue();
+    /**
+     * Ctor.
+     * @param dnm Double scalar
+     */
+    public NumberOf(final Scalar<Double> dnm) {
+        super(new Unchecked<>(dnm).value());
     }
 }

@@ -109,7 +109,7 @@ public final class LengthOf extends NumberEnvelope {
      * @param dnm Double number.
      */
     private LengthOf(final Scalar<Double> dnm) {
-        super(dnm);
+        super(new NumberOf(dnm));
     }
 
 }

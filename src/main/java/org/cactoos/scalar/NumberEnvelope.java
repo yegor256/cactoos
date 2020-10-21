@@ -41,78 +41,34 @@ public abstract class NumberEnvelope extends Number implements Scalar<Double> {
      */
     private static final long serialVersionUID = -1924406337256921883L;
 
-    /**
-     * The LONG number.
-     */
-    private final Scalar<Long> lnum;
+    private final Number origin;
 
-    /**
-     * The INT number.
-     */
-    private final Scalar<Integer> inum;
-
-    /**
-     * The FLOAT number.
-     */
-    private final Scalar<Float> fnum;
-
-    /**
-     * The DOUBLE number.
-     */
-    private final Scalar<Double> dnum;
-
-    /**
-     * Ctor.
-     * @param dnm Double scalar
-     */
-    public NumberEnvelope(final Scalar<Double> dnm) {
-        this(
-            () -> dnm.value().longValue(),
-            () -> dnm.value().intValue(),
-            () -> dnm.value().floatValue(),
-            dnm
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param lnm Long scalar
-     * @param inm Integer scalar
-     * @param fnm Float scalar
-     * @param dnm Long scalar
-     * @checkstyle ParameterNumberCheck (5 lines)
-     */
-    public NumberEnvelope(final Scalar<Long> lnm, final Scalar<Integer> inm,
-        final Scalar<Float> fnm, final Scalar<Double> dnm) {
-        super();
-        this.lnum = lnm;
-        this.inum = inm;
-        this.fnum = fnm;
-        this.dnum = dnm;
+    public NumberEnvelope(final Number number) {
+        this.origin = number;
     }
 
     @Override
-    public final int intValue() {
-        return new Unchecked<>(this.inum).value();
+    public Double value() throws Exception {
+        return doubleValue();
     }
 
     @Override
-    public final long longValue() {
-        return new Unchecked<>(this.lnum).value();
+    public int intValue() {
+        return origin.intValue();
     }
 
     @Override
-    public final float floatValue() {
-        return new Unchecked<>(this.fnum).value();
+    public long longValue() {
+        return origin.longValue();
     }
 
     @Override
-    public final double doubleValue() {
-        return new Unchecked<>(this.dnum).value();
+    public float floatValue() {
+        return origin.floatValue();
     }
 
     @Override
-    public final Double value() throws Exception {
-        return this.dnum.value();
+    public double doubleValue() {
+        return origin.doubleValue();
     }
 }

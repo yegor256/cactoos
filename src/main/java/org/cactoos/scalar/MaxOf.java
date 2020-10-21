@@ -67,7 +67,7 @@ public final class MaxOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MaxOf(final Integer... src) {
-        super(
+        super(new NumberOf(
             () -> {
                 long max = Long.MIN_VALUE;
                 for (final int val : src) {
@@ -103,7 +103,7 @@ public final class MaxOf extends NumberEnvelope {
                     }
                 }
                 return max;
-            });
+            }));
     }
 
     /**
@@ -111,7 +111,7 @@ public final class MaxOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MaxOf(final Long... src) {
-        super(
+        super(new NumberOf(
             () -> {
                 long max = Long.MIN_VALUE;
                 for (final long val : src) {
@@ -147,7 +147,7 @@ public final class MaxOf extends NumberEnvelope {
                     }
                 }
                 return max;
-            });
+            }));
     }
 
     /**
@@ -155,7 +155,7 @@ public final class MaxOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MaxOf(final Double... src) {
-        super(
+        super(new NumberOf(
             () -> {
                 long max = Long.MIN_VALUE;
                 for (final double val : src) {
@@ -191,7 +191,7 @@ public final class MaxOf extends NumberEnvelope {
                     }
                 }
                 return max;
-            });
+            }));
     }
 
     /**
@@ -199,7 +199,7 @@ public final class MaxOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MaxOf(final Float... src) {
-        super(
+        super(new NumberOf(
             () -> {
                 long max = Long.MIN_VALUE;
                 for (final float val : src) {
@@ -235,7 +235,7 @@ public final class MaxOf extends NumberEnvelope {
                     }
                 }
                 return max;
-            });
+            }));
     }
 
     /**
@@ -244,7 +244,7 @@ public final class MaxOf extends NumberEnvelope {
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public MaxOf(final Iterable<Number> src) {
-        super(
+        super(new NumberOf(
             () -> {
                 final Iterator<Number> numbers = src.iterator();
                 long max = Long.MIN_VALUE;
@@ -288,6 +288,6 @@ public final class MaxOf extends NumberEnvelope {
                     }
                 }
                 return max;
-            });
+            }));
     }
 }

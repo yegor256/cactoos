@@ -72,7 +72,7 @@ public final class MultiplicationOf extends NumberEnvelope {
      * @param src The iterable
      */
     public MultiplicationOf(final Iterable<? extends Number> src) {
-        super(() -> {
+        super(new NumberOf(() -> {
             if (!src.iterator().hasNext()) {
                 throw new IllegalArgumentException(
                     "Zero arguments - can not multiply"
@@ -86,6 +86,6 @@ public final class MultiplicationOf extends NumberEnvelope {
                         src
                     )
                 ).value().doubleValue();
-        });
+        }));
     }
 }

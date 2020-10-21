@@ -50,10 +50,10 @@ public final class DivisionOf extends NumberEnvelope {
      * @param divisor The divisor
      */
     public DivisionOf(final Number dividend, final Number divisor) {
-        super(() -> BigDecimal.valueOf(dividend.doubleValue()).divide(
+        super(new NumberOf(() -> BigDecimal.valueOf(dividend.doubleValue()).divide(
             BigDecimal.valueOf(divisor.doubleValue()),
             MathContext.DECIMAL128
         ).doubleValue()
-        );
+        ));
     }
 }

@@ -62,6 +62,6 @@ final class Sealed extends NumberEnvelope {
      */
     Sealed(final Scalar<Long> lnm, final Scalar<Integer> inm,
         final Scalar<Float> fnm, final Scalar<Double> dnm) {
-        super(lnm, inm, fnm, dnm);
+        super(new NumberOf(lnm, inm, fnm, dnm));
     }
 }
