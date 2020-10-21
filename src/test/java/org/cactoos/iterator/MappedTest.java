@@ -23,10 +23,13 @@
  */
 package org.cactoos.iterator;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link org.cactoos.iterator.Mapped}.
@@ -45,6 +48,20 @@ final class MappedTest {
                 )
             ),
             new HasValues<>("1", "2", "0")
+        ).affirm();
+    }
+
+    @Test
+    void failsIfIteratorExhausted() {
+        final Iterator<String> iterator = new Mapped<>(
+            Number::toString,
+            new IteratorOf<Number>(1)
+        );
+        iterator.next();
+        new Assertion<>(
+            "must throw NSEE",
+            iterator::next,
+            new Throws<>(NoSuchElementException.class)
         ).affirm();
     }
 }
