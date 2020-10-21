@@ -42,7 +42,12 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings(
+    {
+        "PMD.AvoidDuplicateLiterals",
+        "PMD.TooManyMethods"
+    }
+)
 final class SortedTest {
 
     @Test
@@ -122,7 +127,8 @@ final class SortedTest {
                         new IsEqual<>(3),
                         new IsEqual<>(2)
                     )
-                ))
+                )
+            )
         ).affirm();
     }
 
@@ -196,4 +202,23 @@ final class SortedTest {
             new IsEqual<>(9)
         ).affirm();
     }
+
+    @Test
+    void mustSortIntegersByNumberComparator() {
+        new Assertion<>(
+            "Must keep unique integer numbers sorted",
+            new Sorted<Number>(
+                Comparator.comparing(Number::intValue),
+                2, 1, 3, 2, 1
+            ),
+            new IsIterableContainingInOrder<>(
+                new ListOf<Matcher<? super Number>>(
+                    new IsEqual<>(1),
+                    new IsEqual<>(2),
+                    new IsEqual<>(3)
+                )
+            )
+        ).affirm();
+    }
+
 }

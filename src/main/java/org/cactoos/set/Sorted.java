@@ -44,7 +44,7 @@ public final class Sorted<T> extends SortedSetEnvelope<T> {
      * @param array An array of some elements
      */
     @SafeVarargs
-    public Sorted(final Comparator<T> cmp, final T... array) {
+    public Sorted(final Comparator<? super T> cmp, final T... array) {
         this(cmp, new IterableOf<>(array));
     }
 
@@ -55,7 +55,7 @@ public final class Sorted<T> extends SortedSetEnvelope<T> {
      */
     @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public Sorted(
-        final Comparator<T> cmp,
+        final Comparator<? super T> cmp,
         final Iterable<? extends T> src
     ) {
         super(new TreeSet<>(cmp));
