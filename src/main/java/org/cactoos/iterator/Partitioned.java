@@ -40,7 +40,7 @@ public final class Partitioned<T> implements Iterator<List<T>> {
     /**
      * Iterator to decorate.
      */
-    private final Iterator<T> decorated;
+    private final Iterator<? extends T> decorated;
 
     /**
      * Size of the partitions.
@@ -53,7 +53,7 @@ public final class Partitioned<T> implements Iterator<List<T>> {
      * @param sze Size of the partitions.
      * @param src Source iterator.
      */
-    public Partitioned(final int sze, final Iterator<T> src) {
+    public Partitioned(final int sze, final Iterator<? extends T> src) {
         this.size = sze;
         this.decorated = src;
     }

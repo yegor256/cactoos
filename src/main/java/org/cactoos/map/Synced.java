@@ -32,9 +32,13 @@ import org.cactoos.iterable.Mapped;
 /**
  * Map decorator that goes through the map only once.
  *
- * <p>The map is read-only.</p>
+ * <p>
+ * The map is read-only.
+ * </p>
  *
- * <p>Objects of this class are thread-safe.</p>
+ * <p>
+ * Objects of this class are thread-safe.
+ * </p>
  *
  * @param <X> Type of key
  * @param <Y> Type of value
@@ -70,9 +74,12 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public <Z> Synced(final Func<Z, X> key,
-        final Func<Z, Y> value, final Map<X, Y> map,
-        final Iterable<Z> list) {
+    public <Z> Synced(
+        final Func<? super Z, ? extends X> key,
+        final Func<? super Z, ? extends Y> value,
+        final Map<? extends X, ? extends Y> map,
+        final Iterable<? extends Z> list
+    ) {
         this(
             item -> new MapEntry<>(key.apply(item), value.apply(item)),
             map, list
@@ -86,8 +93,11 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param value Func to create value
      * @param <Z> Type of items in the list
      */
-    public <Z> Synced(final Iterable<Z> list, final Func<Z, X> key,
-        final Func<Z, Y> value) {
+    public <Z> Synced(
+        final Iterable<? extends Z> list,
+        final Func<? super Z, ? extends X> key,
+        final Func<? super Z, ? extends Y> value
+    ) {
         this(item -> new MapEntry<>(key.apply(item), value.apply(item)), list);
     }
 
@@ -98,8 +108,10 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      */
     @SafeVarargs
-    public <Z> Synced(final Func<Z, Map.Entry<X, Y>> entry,
-        final Z... list) {
+    public <Z> Synced(
+        final Func<? super Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Z... list
+    ) {
         this(new Mapped<>(entry, list));
     }
 
@@ -109,8 +121,10 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param list List of items
      * @param <Z> Type of items in the list
      */
-    public <Z> Synced(final Func<Z, Map.Entry<X, Y>> entry,
-        final Iterable<Z> list) {
+    public <Z> Synced(
+        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Iterable<Z> list
+    ) {
         this(new Mapped<>(entry, list));
     }
 
@@ -121,8 +135,11 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param list List of items
      * @param <Z> Type of items in the list
      */
-    public <Z> Synced(final Func<Z, Map.Entry<X, Y>> entry,
-        final Map<X, Y> map, final Iterable<Z> list) {
+    public <Z> Synced(
+        final Func<? super Z, ? extends Map.Entry<? extends X, ? extends Y>> entry,
+        final Map<? extends X, ? extends Y> map,
+        final Iterable<? extends Z> list
+    ) {
         this(map, new Mapped<>(entry, list));
     }
 
@@ -130,7 +147,7 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param list Entries for the entries
      */
-    public Synced(final Iterable<Map.Entry<X, Y>> list) {
+    public Synced(final Iterable<Map.Entry<? extends X, ? extends Y>> list) {
         this(new MapOf<>(list));
     }
 
@@ -139,8 +156,10 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param map Pre-existing map we want to extend
      * @param list Entries for the entries
      */
-    public Synced(final Map<X, Y> map,
-        final Iterable<Map.Entry<X, Y>> list) {
+    public Synced(
+        final Map<? extends X, ? extends Y> map,
+        final Iterable<Map.Entry<? extends X, ? extends Y>> list
+    ) {
         this(new MapOf<>(map, list));
     }
 
@@ -148,7 +167,8 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param map The map
      */
-    public Synced(final Map<X, Y> map) {
-        super(Collections.synchronizedMap(map));
+    @SuppressWarnings("unchecked")
+    public Synced(final Map<? extends X, ? extends Y> map) {
+        super((Map<X, Y>) Collections.synchronizedMap(map));
     }
 }

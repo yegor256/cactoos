@@ -108,7 +108,7 @@ final class AndInThreadsTest {
         new Assertion<>(
             "Must iterate a list with a procedure",
             new AndInThreads(
-                new Mapped<String, Scalar<Boolean>>(
+                new Mapped<>(
                     new FuncOf<>(list::add, () -> true),
                     new IterableOf<>("hello", "world")
                 )
@@ -143,8 +143,9 @@ final class AndInThreadsTest {
         new Assertion<>(
             "Must iterate an empty list",
             new AndInThreads(
-                new Mapped<String, Scalar<Boolean>>(
-                    new FuncOf<>(list::add, () -> true), new IterableOf<>()
+                new Mapped<Scalar<Boolean>>(
+                    new FuncOf<>(list::add, () -> true),
+                    new IterableOf<String>()
                 )
             ),
             new ScalarHasValue<>(

@@ -42,7 +42,7 @@ final class MappedTest {
     void transformsScalar() throws Exception {
         new Assertion<>(
             "must transform scalar",
-            new Mapped<String, Text>(
+            new Mapped<Text>(
                 input -> new Upper(new TextOf(input)),
                 () -> "hello"
             ),

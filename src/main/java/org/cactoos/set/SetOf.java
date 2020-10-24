@@ -51,7 +51,7 @@ public final class SetOf<T> extends SetEnvelope<T> {
      * Ctor.
      * @param src An {@link Iterable}
      */
-    public SetOf(final Iterable<T> src) {
+    public SetOf(final Iterable<? extends T> src) {
         super(new HashSet<>());
         src.forEach(super::add);
     }

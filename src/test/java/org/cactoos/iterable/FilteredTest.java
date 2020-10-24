@@ -153,4 +153,16 @@ final class FilteredTest {
         ).affirm();
     }
 
+    @Test
+    void filterWithNumberFilter() {
+        new Assertion<>(
+            "Must be filtered with super type filter",
+            new Filtered<Double>(
+                (Number d) -> d.doubleValue() > 0,
+                new IterableOf<Double>(1d, -2d, 3d)
+            ),
+            new HasValues<>(1d, 3d)
+        ).affirm();
+    }
+
 }

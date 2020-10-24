@@ -111,4 +111,26 @@ public final class MergedTest {
             null
         ).size();
     }
+
+    @Test
+    public void behavesAsMapWithWildCards() {
+        new Assertion<>(
+            "Must behave as a map with common type",
+            new Merged<Number, Number>(
+                new MapOf<Integer, Integer>(
+                    new MapEntry<>(1, 1)
+                ),
+                new MapOf<Long, Long>(
+                    new MapEntry<>(2L, 1L)
+                )
+            ),
+            new IsEqual<>(
+                new MapOf<Number, Number>(
+                    new MapEntry<>(1, 1),
+                    new MapEntry<>(2L, 1L)
+                )
+            )
+        ).affirm();
+    }
+
 }

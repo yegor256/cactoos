@@ -43,7 +43,7 @@ public final class Sliced<T> implements Iterator<T> {
     /**
      * Decorated iterator.
      */
-    private final Iterator<T> iterator;
+    private final Iterator<? extends T> iterator;
 
     /**
      * First index of the resulted iterator.
@@ -67,7 +67,7 @@ public final class Sliced<T> implements Iterator<T> {
      * @param iterator Decorated iterator
      */
     public Sliced(final int start, final int count,
-        final Iterator<T> iterator) {
+        final Iterator<? extends T> iterator) {
         this(start, index -> index > start + count - 1, iterator);
     }
 
@@ -88,7 +88,7 @@ public final class Sliced<T> implements Iterator<T> {
      * @param iterator Decorated iterator
      */
     private Sliced(final int start, final IntPredicate end,
-        final Iterator<T> iterator) {
+        final Iterator<? extends T> iterator) {
         this.start = start;
         this.end = end;
         this.iterator = iterator;

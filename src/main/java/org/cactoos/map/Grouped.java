@@ -32,10 +32,13 @@ import java.util.stream.StreamSupport;
 /**
  * Iterable as {@link Map}.
  *
- * <p>This class groups objects from iterable by applying
- * functions for keys and values</p>
+ * <p>
+ * This class groups objects from iterable by applying functions for keys and
+ * values
+ * </p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>
+ * There is no thread-safety guarantee.
  *
  * @param <K> Type of key
  * @param <V> Type of value
@@ -52,9 +55,9 @@ public final class Grouped<K, V, T> extends MapEnvelope<K, List<V>> {
      * @param values Function to get a value
      */
     public Grouped(
-        final Iterable<T> list,
-        final Function<T, K> keys,
-        final Function<T, V> values
+        final Iterable<? extends T> list,
+        final Function<? super T, ? extends K> keys,
+        final Function<? super T, ? extends V> values
     ) {
         super(
             StreamSupport.stream(

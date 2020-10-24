@@ -54,7 +54,10 @@ public final class Matched<X> implements Iterable<X> {
      * @param fst The first part of duplex iterator.
      * @param snd The second part of duplex iterator.
      */
-    public Matched(final Iterable<X> fst, final Iterable<X> snd) {
+    public Matched(
+        final Iterable<? extends X> fst,
+        final Iterable<? extends X> snd
+    ) {
         this(Object::equals, fst, snd);
     }
 
@@ -63,15 +66,17 @@ public final class Matched<X> implements Iterable<X> {
      * @param fnc The function to detect the correlation between elements.
      * @param fst The first part of duplex iterator.
      * @param snd The second part of duplex iterator.
+     * @param <Y> Type of item in snd.
      */
-    public Matched(
-        final BiFunc<X, X, Boolean> fnc,
-        final Iterable<X> fst, final Iterable<X> snd
+    public <Y> Matched(
+        final BiFunc<? super X, ? super Y, Boolean> fnc,
+        final Iterable<? extends X> fst,
+        final Iterable<? extends Y> snd
     ) {
         this(
             () -> {
-                final Iterator<X> ftr = fst.iterator();
-                final Iterator<X> str = snd.iterator();
+                final Iterator<? extends X> ftr = fst.iterator();
+                final Iterator<? extends Y> str = snd.iterator();
                 final List<X> rslt = new LinkedList<>();
                 while (ftr.hasNext() || str.hasNext()) {
                     if (!str.hasNext() || !ftr.hasNext()) {
@@ -80,7 +85,7 @@ public final class Matched<X> implements Iterable<X> {
                         );
                     }
                     final X fvl = ftr.next();
-                    final X svl = str.next();
+                    final Y svl = str.next();
                     if (fnc.apply(fvl, svl)) {
                         rslt.add(fvl);
                     } else {

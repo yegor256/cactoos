@@ -31,7 +31,9 @@ import org.cactoos.iterable.Reversed;
 /**
  * Tail portion of the iterator.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>
+ * There is no thread-safety guarantee.
+ * </p>
  * @param <T> Element type
  * @since 0.31
  */
@@ -41,7 +43,7 @@ public final class TailOf<T> extends IteratorEnvelope<T> {
      * @param num Number of tail elements
      * @param iterator Decorated iterator
      */
-    public TailOf(final int num, final Iterator<T> iterator) {
+    public TailOf(final int num, final Iterator<? extends T> iterator) {
         super(
             new Reversed<>(
                 new HeadOf<>(

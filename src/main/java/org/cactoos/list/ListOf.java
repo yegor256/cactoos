@@ -52,15 +52,15 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * @param src An {@link Iterator}
      * @since 0.21
      */
-    public ListOf(final Iterator<T> src) {
-        this(() -> src);
+    public ListOf(final Iterator<? extends T> src) {
+        this(new IterableOf<T>(src));
     }
 
     /**
      * Ctor.
      * @param src An {@link Iterable}
      */
-    public ListOf(final Iterable<T> src) {
+    public ListOf(final Iterable<? extends T> src) {
         super(new LinkedList<>());
         src.forEach(super::add);
     }

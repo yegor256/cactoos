@@ -28,45 +28,34 @@ import org.cactoos.Func;
 import org.cactoos.Scalar;
 
 /**
- * {@link Scalar} that apply a {@link Func} to the result
- * of another {@link Scalar}.
+ * {@link Scalar} that apply a {@link Func} to the result of another
+ * {@link Scalar}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>
+ * There is no thread-safety guarantee.
  *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link IOException}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use the {@link Unchecked} decorator.</p>
+ * <p>
+ * This class implements {@link Scalar}, which throws a checked
+ * {@link IOException}. This may not be convenient in many cases. To make it
+ * more convenient and get rid of the checked exception you can use the
+ * {@link Unchecked} decorator.
+ * </p>
  *
- * @param <T> Type of wrapped scalar result
  * @param <U> Type of result
  * @since 1.0.0
  */
-public final class Mapped<T, U> implements Scalar<U> {
-
-    /**
-     * Original scalar.
-     */
-    private final Scalar<T> origin;
-
-    /**
-     * Func.
-     */
-    private final Func<T, U> func;
-
+public final class Mapped<U> extends ScalarEnvelope<U> {
     /**
      * Ctor.
-     * @param mapping Fun to apply
-     * @param scalar Encapsulated scalar
+     * @param func Map function.
+     * @param scalar Scalar.
+     * @param <T> Type of input.
      */
-    public Mapped(final Func<T, U> mapping, final Scalar<T> scalar) {
-        this.origin = scalar;
-        this.func = mapping;
-    }
-
-    @Override
-    public U value() throws Exception {
-        return this.func.apply(this.origin.value());
+    public <T> Mapped(
+        final Func<? super T, ? extends U> func,
+        final Scalar<? extends T> scalar
+    ) {
+        super(() -> func.apply(scalar.value()));
     }
 
 }

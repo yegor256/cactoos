@@ -56,7 +56,7 @@ public final class Filtered<X> extends IterableEnvelope<X> {
      * @since 0.21
      */
     @SafeVarargs
-    public Filtered(final Func<X, Boolean> fnc, final X... src) {
+    public Filtered(final Func<? super X, Boolean> fnc, final X... src) {
         this(fnc, new IterableOf<>(src));
     }
 
@@ -65,7 +65,7 @@ public final class Filtered<X> extends IterableEnvelope<X> {
      * @param fnc Predicate
      * @param src Source iterable
      */
-    public Filtered(final Func<X, Boolean> fnc, final Iterable<X> src) {
+    public Filtered(final Func<? super X, Boolean> fnc, final Iterable<? extends X> src) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Filtered<>(fnc, src.iterator())
@@ -78,7 +78,7 @@ public final class Filtered<X> extends IterableEnvelope<X> {
      * @param src Source iterable
      * @param fnc Predicate
      */
-    public Filtered(final Iterable<X> src, final Func<X, Scalar<Boolean>> fnc) {
+    public Filtered(final Iterable<? extends X> src, final Func<? super X, Scalar<Boolean>> fnc) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Filtered<>(
