@@ -26,6 +26,7 @@ package org.cactoos.text;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Tests for @{link Mapped}.
@@ -42,7 +43,7 @@ final class MappedTest {
                 s -> String.format("<%s>", s),
                 new TextOf("hi")
             ),
-            new TextHasString("<hi>")
+            new TextIs("<hi>")
         ).affirm();
     }
 
@@ -54,7 +55,7 @@ final class MappedTest {
                 String::toLowerCase,
                 new TextOf("ABC")
             ),
-            new TextHasString("abc")
+            new TextIs("abc")
         ).affirm();
     }
 
