@@ -49,7 +49,7 @@ final class MappedTest {
     @Test
     void maps() {
         new Assertion<>(
-            "must apply mehtod reference to a string",
+            "must apply method reference to a string",
             new Mapped(
                 String::toLowerCase,
                 new TextOf("ABC")
