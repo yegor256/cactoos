@@ -25,7 +25,6 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
 import org.llorllale.cactoos.matchers.TextIs;
 
 /**
