@@ -30,7 +30,7 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import org.cactoos.scalar.RepeatedCallable;
+import org.cactoos.scalar.Repeated;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -84,7 +84,7 @@ final class TimedTest {
         "PMD.AvoidThrowingRawExceptionTypes", "PMD.DoNotThrowExceptionInFinally"
     })
     void containsResults() throws Exception {
-        new RepeatedCallable<>(
+        new Repeated<>(
             () -> {
                 final ExecutorService extor = Executors.newFixedThreadPool(
                     TimedTest.THREADS
@@ -129,7 +129,7 @@ final class TimedTest {
                 return true;
             },
             TimedTest.REPETITIONS_COUNT
-        ).call();
+        ).value();
     }
 
     /**
@@ -142,7 +142,7 @@ final class TimedTest {
     })
     void failsDueToTimeoutWithExternalExecutorService()
         throws Exception {
-        new RepeatedCallable<>(
+        new Repeated<>(
             () -> {
                 final ExecutorService extor = Executors.newFixedThreadPool(
                     TimedTest.THREADS
@@ -187,7 +187,7 @@ final class TimedTest {
                 return true;
             },
             TimedTest.REPETITIONS_COUNT
-        ).call();
+        ).value();
     }
 
     /**
@@ -221,7 +221,7 @@ final class TimedTest {
      */
     @Test
     void containsValuesWithInlineExecutorService() throws Exception {
-        new RepeatedCallable<>(
+        new Repeated<>(
             () -> {
                 new Assertion<>(
                     // @checkstyle LineLengthCheck (1 line)
@@ -252,7 +252,7 @@ final class TimedTest {
                 return true;
             },
             TimedTest.REPETITIONS_COUNT
-        ).call();
+        ).value();
     }
 
     /**
@@ -261,7 +261,7 @@ final class TimedTest {
      */
     @Test
     void failsDueToTimeoutWithInlineExecutorService() throws Exception {
-        new RepeatedCallable<>(
+        new Repeated<>(
             () -> {
                 new Assertion<>(
                     // @checkstyle LineLengthCheck (1 line)
@@ -291,7 +291,7 @@ final class TimedTest {
                 return true;
             },
             TimedTest.REPETITIONS_COUNT
-        ).call();
+        ).value();
     }
 
     /**

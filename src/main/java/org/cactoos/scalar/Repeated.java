@@ -23,22 +23,20 @@
  */
 package org.cactoos.scalar;
 
-import java.util.concurrent.Callable;
+import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
-import org.cactoos.func.Repeated;
 
 /**
- * Callable that runs repeatedly for a number of times.
+ * Scalar that runs repeatedly for a number of times.
  *
- * @param <X> Type of output
+ * @param <T> Type of output
  * @since 0.49.2
  */
-public final class RepeatedCallable<X> implements Callable<X> {
-
+public final class Repeated<T> implements Scalar<T> {
     /**
-     * Callable.
+     * Scalar.
      */
-    private final Callable<X> callable;
+    private final Scalar<T> scalar;
 
     /**
      * Times to repeat.
@@ -48,23 +46,23 @@ public final class RepeatedCallable<X> implements Callable<X> {
     /**
      * Ctor.
      *
-     * <p>If {@code max} is equal or less than zero {@link #call()} will return
+     * <p>If {@code max} is equal or less than zero {@link #value()} will
+     * return
      * an exception.</p>
      *
-     * @param cllbl Callable to repeat.
+     * @param sclr Scalar to repeat.
      * @param count How many times.
      */
-    public RepeatedCallable(final Callable<X> cllbl, final int count) {
-        this.callable = cllbl;
+    public Repeated(final Scalar<T> sclr, final int count) {
+        this.scalar = sclr;
         this.times = count;
     }
 
     @Override
-    public X call() throws Exception {
-        return new Repeated<>(
-            new FuncOf<>(this.callable),
+    public T value() throws Exception {
+        return new org.cactoos.func.Repeated<>(
+            new FuncOf<>(this.scalar),
             this.times
         ).apply(true);
     }
-
 }
