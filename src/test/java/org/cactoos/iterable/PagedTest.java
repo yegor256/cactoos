@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.LengthOf;
-import org.cactoos.scalar.ScalarOfCallable;
+import org.cactoos.scalar.ScalarOf;
 import org.cactoos.scalar.Ternary;
 import org.hamcrest.collection.IsIterableWithSize;
 import org.hamcrest.core.IsEqual;
@@ -103,7 +103,7 @@ final class PagedTest {
         final Iterator<Iterable<String>> pages = service.iterator();
         new Assertion<Scalar<String>>(
             "must throw an exception when first iterator is empty",
-            new ScalarOfCallable<String>(
+            new ScalarOf<>(
                 () -> new Paged<>(
                     () -> pages.next().iterator(),
                     page -> new Ternary<>(
