@@ -23,6 +23,7 @@
  */
 package org.cactoos.iterable;
 
+import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -56,11 +57,13 @@ public final class MatchedTest {
     public void noCorrelationWithBiggerSecondIterable() {
         new Assertion<>(
             "All elements have correlation function as `endsWith`",
-            () -> new Matched<>(
-                (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
-                new IterableOf<>("1st elem", "2nd elem"),
-                new IterableOf<>("`A` elem", "`B` elem", "'C' elem")
-            ).iterator(),
+            () -> new ListOf<>(
+                new Matched<>(
+                    (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
+                    new IterableOf<>("1st elem", "2nd elem"),
+                    new IterableOf<>("`A` elem", "`B` elem", "'C' elem")
+                )
+            ),
             new Throws<>(IllegalStateException.class)
         ).affirm();
     }
@@ -69,11 +72,13 @@ public final class MatchedTest {
     public void noCorrelationWithSmallerSecondIterable() {
         new Assertion<>(
             "All elements have correlation function as `endsWith`",
-            () -> new Matched<>(
-                (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
-                new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
-                new IterableOf<>("`A` elem", "`B` elem")
-            ).iterator(),
+            () -> new ListOf<>(
+                new Matched<>(
+                    (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
+                    new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
+                    new IterableOf<>("`A` elem", "`B` elem")
+                )
+            ),
             new Throws<>(IllegalStateException.class)
         ).affirm();
     }

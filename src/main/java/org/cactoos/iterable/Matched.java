@@ -23,32 +23,19 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import org.cactoos.BiFunc;
-import org.cactoos.Scalar;
-import org.cactoos.list.Immutable;
-import org.cactoos.scalar.Unchecked;
-import org.cactoos.text.FormattedText;
 
 /**
  * Matched iterable.
  *
  * Iterates over 2 iterables at the same time and verify that elements with the
- *  same position has correlation by the function. The function might be equals,
- *  endsWith, greaterThen, nonNull, empty, negative, positive, etc.
+ * same position has correlation by the function. The function might be equals,
+ * endsWith, greaterThen, nonNull, empty, negative, positive, etc.
  *
  * @param <X> Type of item.
  * @since 0.39
  */
-public final class Matched<X> implements Iterable<X> {
-
-    /**
-     * The matched iterator.
-     */
-    private final Unchecked<Iterator<X>> mtr;
-
+public final class Matched<X> extends IterableEnvelope<X> {
     /**
      * Ctor.
      * @param fst The first part of duplex iterator.
@@ -73,45 +60,12 @@ public final class Matched<X> implements Iterable<X> {
         final Iterable<? extends X> fst,
         final Iterable<? extends Y> snd
     ) {
-        this(
-            () -> {
-                final Iterator<? extends X> ftr = fst.iterator();
-                final Iterator<? extends Y> str = snd.iterator();
-                final List<X> rslt = new LinkedList<>();
-                while (ftr.hasNext() || str.hasNext()) {
-                    if (!str.hasNext() || !ftr.hasNext()) {
-                        throw new IllegalStateException(
-                            "Size mismatch of iterators"
-                        );
-                    }
-                    final X fvl = ftr.next();
-                    final Y svl = str.next();
-                    if (fnc.apply(fvl, svl)) {
-                        rslt.add(fvl);
-                    } else {
-                        throw new IllegalStateException(
-                            new FormattedText(
-                                "The is no correlation between `%s` and `%s`.",
-                                fvl, svl
-                            ).asString()
-                        );
-                    }
-                }
-                return new Immutable<>(rslt).iterator();
-            }
+        super(
+            new IterableOf<>(
+                new org.cactoos.iterator.Matched<>(
+                    fnc, fst.iterator(), snd.iterator()
+                )
+            )
         );
-    }
-
-    /**
-     * Ctor.
-     * @param mtr The matched iterator.
-     */
-    private Matched(final Scalar<Iterator<X>> mtr) {
-        this.mtr = new Unchecked<>(mtr);
-    }
-
-    @Override
-    public Iterator<X> iterator() {
-        return this.mtr.value();
     }
 }
