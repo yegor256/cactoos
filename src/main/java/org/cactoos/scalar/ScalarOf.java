@@ -23,15 +23,55 @@
  */
 package org.cactoos.scalar;
 
+import org.cactoos.Func;
+import org.cactoos.Proc;
 import org.cactoos.Scalar;
+import org.cactoos.func.FuncOf;
 
 /**
  * ScalarOf.
  *
+ * @param <X> Element type
  * @param <T> Element type
  * @since 0.4
  */
-public final class ScalarOf<T> extends ScalarEnvelope<T> {
+public final class ScalarOf<X, T> extends ScalarEnvelope<T> {
+    /**
+     * Ctor.
+     * @param runnable Encapsulated proc
+     * @param result Result to return
+     * @since 0.32
+     */
+    public ScalarOf(final Runnable runnable, final T result) {
+        this(
+            () -> {
+                runnable.run();
+                return result;
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param proc Encapsulated proc
+     * @param ipt Input
+     * @param result Result to return
+     * @since 0.41
+     */
+    public ScalarOf(final Proc<X> proc, final X ipt, final T result) {
+        this(new FuncOf<>(proc, result), ipt);
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Encapsulated func
+     * @param ipt Input
+     * @since 0.41
+     */
+    public ScalarOf(final Func<X, T> fnc, final X ipt) {
+        this(() -> fnc.apply(ipt));
+    }
+
     /**
      * Ctor.
      *

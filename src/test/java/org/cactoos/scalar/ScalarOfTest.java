@@ -29,21 +29,21 @@ import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link CallableOf}.
+ * Test case for {@link ScalarOf}.
  *
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-final class CallableOfTest {
+final class ScalarOfTest {
 
     @Test
     void convertsRunnableIntoCallable() throws Exception {
         final AtomicBoolean flag = new AtomicBoolean(false);
-        new CallableOf<>(
+        new ScalarOf<>(
             () -> flag.set(true),
             true
-        ).call();
+        ).value();
         new Assertion<>(
             "must have been set by callable",
             flag.get(),
@@ -56,13 +56,13 @@ final class CallableOfTest {
         final AtomicBoolean flag = new AtomicBoolean(false);
         new Assertion<>(
             "must return predefined result",
-            new CallableOf<>(
+            new ScalarOf<>(
                 bool -> {
                     flag.set(bool);
                 },
                 true,
                 false
-            ).call(),
+            ).value(),
             new IsEqual<>(false)
         ).affirm();
         new Assertion<>(
@@ -76,10 +76,10 @@ final class CallableOfTest {
     void convertsFuncIntoCallable() throws Exception {
         new Assertion<>(
             "must return the application of func",
-            new CallableOf<>(
+            new ScalarOf<>(
                 num -> num + 1,
                 1
-            ).call(),
+            ).value(),
             new IsEqual<>(2)
         ).affirm();
     }

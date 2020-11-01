@@ -34,7 +34,6 @@ import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
-import org.cactoos.scalar.CallableOf;
 
 /**
  * Allows to execute the tasks concurrently.
@@ -110,7 +109,12 @@ public final class Threads<T> extends IterableEnvelope<T> {
         super(
             () -> new Mapped<>(
                 Future::get,
-                new UncheckedFunc<>(fnc).apply(new Mapped<>(CallableOf::new, tasks))
+                new UncheckedFunc<>(fnc).apply(
+                    new Mapped<>(
+                        task -> () -> task.value(),
+                        tasks
+                    )
+                )
             ).iterator()
         );
     }

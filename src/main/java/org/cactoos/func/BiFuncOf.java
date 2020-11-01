@@ -29,7 +29,7 @@ import org.cactoos.BiProc;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.CallableOf;
+import org.cactoos.scalar.ScalarOf;
 
 /**
  * Represents many possible inputs as {@link BiFunc}.
@@ -115,7 +115,7 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
      * @since 0.32
      */
     public BiFuncOf(final Runnable runnable, final Z result) {
-        this(new CallableOf<>(runnable, result));
+        this(new ScalarOf<>(runnable, result));
     }
 
     /**
