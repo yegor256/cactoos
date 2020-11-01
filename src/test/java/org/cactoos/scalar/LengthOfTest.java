@@ -27,6 +27,7 @@ package org.cactoos.scalar;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
+import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -183,6 +184,17 @@ public final class LengthOfTest {
                 new ListOf<>()
             ).intValue(),
             new IsEqual<>(0)
+        ).affirm();
+    }
+
+    @Test
+    public void lengthOfText() {
+        new Assertion<>(
+            "Must calculate length of empty iterator",
+            new LengthOf(
+                new TextOf("abcd")
+            ).intValue(),
+            new IsEqual<>(4)
         ).affirm();
     }
 }
