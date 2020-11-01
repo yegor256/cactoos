@@ -39,6 +39,7 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @since 0.1.0
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class LengthOfTest {
