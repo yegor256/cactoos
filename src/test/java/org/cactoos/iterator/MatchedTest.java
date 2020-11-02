@@ -40,7 +40,7 @@ final class MatchedTest {
     @Test
     void failsWhenElementsNotMatch() {
         new Assertion<>(
-            "All elements have correlation function as `equal`",
+            "All elements have correlation function 'equals'",
             () -> new ListOf<>(
                 new Matched<>(
                     Objects::equals,
@@ -50,7 +50,7 @@ final class MatchedTest {
             ),
             new Throws<>(
                 new IsEqual<>(
-                    "The is no correlation between `1` and `0`."
+                    "There is no correlation between `1` and `0`."
                 ),
                 IllegalStateException.class
             )
@@ -60,7 +60,7 @@ final class MatchedTest {
     @Test
     void failsOnSizeMismatch() {
         new Assertion<>(
-            "must fail if sizes are different",
+            "must fail if sizes of iterators are different",
             () -> new ListOf<>(
                 new Matched<>(
                     Objects::equals,
@@ -78,7 +78,7 @@ final class MatchedTest {
     @Test
     void shouldProduceValuesOfFirstIterator() {
         new Assertion<>(
-            "must correlate all items",
+            "must match all items of first iterator",
             new ListOf<>(
                 new Matched<>(
                     (Number first, Number second) -> first.intValue() == second.intValue(),

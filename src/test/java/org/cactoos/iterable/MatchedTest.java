@@ -56,12 +56,12 @@ public final class MatchedTest {
     @Test
     public void noCorrelationWithBiggerSecondIterable() {
         new Assertion<>(
-            "All elements have correlation function as `endsWith`",
+            "All elements have correlation function as 'endsWith'",
             () -> new ListOf<>(
                 new Matched<>(
                     (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
                     new IterableOf<>("1st elem", "2nd elem"),
-                    new IterableOf<>("`A` elem", "`B` elem", "'C' elem")
+                    new IterableOf<>("'A' elem", "'B' elem", "'C' elem")
                 )
             ),
             new Throws<>(IllegalStateException.class)

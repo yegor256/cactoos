@@ -84,16 +84,15 @@ public final class Matched<X, Y> implements Iterator<X> {
         }
         final X fvl = this.first.next();
         final Y svl = this.second.next();
-        if (this.func.apply(fvl, svl)) {
-            return fvl;
-        } else {
+        if (!this.func.apply(fvl, svl)) {
             throw new IllegalStateException(
                 new FormattedText(
-                    "The is no correlation between `%s` and `%s`.",
+                    "There is no correlation between `%s` and `%s`.",
                     fvl, svl
                 ).toString()
             );
         }
+        return fvl;
     }
 
 }
