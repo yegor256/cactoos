@@ -53,11 +53,6 @@ public final class NumberOf extends NumberEnvelope {
     private static final long serialVersionUID = -1924406337256921883L;
 
     /**
-     * Number envelope.
-     */
-    private NumberEnvelope envelope;
-
-    /**
      * Ctor.
      * @param txt Number-string
      */
