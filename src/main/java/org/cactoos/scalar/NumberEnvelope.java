@@ -69,6 +69,6 @@ public abstract class NumberEnvelope extends Number implements Scalar<Double> {
 
     @Override
     public double doubleValue() {
-        return origin.doubleValue();
+        return this.origin.doubleValue();
     }
 }

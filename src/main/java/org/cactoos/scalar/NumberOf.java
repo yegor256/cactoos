@@ -65,8 +65,10 @@ public final class NumberOf extends NumberEnvelope {
         this(new TextOf(txt));
     }
 
-    public NumberOf(final Scalar<Long> lnm, final Scalar<Integer> inm,
-                          final Scalar<Float> fnm, final Scalar<Double> dnm) {
+    public NumberOf(final Scalar<Long> lnm,
+                    final Scalar<Integer> inm,
+                    final Scalar<Float> fnm,
+                    final Scalar<Double> dnm) {
         this(dnm);
     }
 

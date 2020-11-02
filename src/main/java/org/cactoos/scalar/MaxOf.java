@@ -67,43 +67,46 @@ public final class MaxOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MaxOf(final Integer... src) {
-        super(new NumberOf(
-            () -> {
-                long max = Long.MIN_VALUE;
-                for (final int val : src) {
-                    if ((long) val > max) {
-                        max = (long) val;
+        super(
+            new NumberOf(
+                () -> {
+                    long max = Long.MIN_VALUE;
+                    for (final int val : src) {
+                        if ((long) val > max) {
+                            max = (long) val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                int max = Integer.MIN_VALUE;
-                for (final int val : src) {
-                    if (val > max) {
-                        max = val;
+                    return max;
+                },
+                () -> {
+                    int max = Integer.MIN_VALUE;
+                    for (final int val : src) {
+                        if (val > max) {
+                            max = val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                float max = -Float.MAX_VALUE;
-                for (final int val : src) {
-                    if ((float) val > max) {
-                        max = (float) val;
+                    return max;
+                },
+                () -> {
+                    float max = -Float.MAX_VALUE;
+                    for (final int val : src) {
+                        if ((float) val > max) {
+                            max = (float) val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                double max = -Double.MAX_VALUE;
-                for (final int val : src) {
-                    if ((double) val > max) {
-                        max = (double) val;
+                    return max;
+                },
+                () -> {
+                    double max = -Double.MAX_VALUE;
+                    for (final int val : src) {
+                        if ((double) val > max) {
+                            max = (double) val;
+                        }
                     }
+                    return max;
                 }
-                return max;
-            }));
+            )
+        );
     }
 
     /**
@@ -111,43 +114,46 @@ public final class MaxOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MaxOf(final Long... src) {
-        super(new NumberOf(
-            () -> {
-                long max = Long.MIN_VALUE;
-                for (final long val : src) {
-                    if (val > max) {
-                        max = val;
+        super(
+            new NumberOf(
+                () -> {
+                    long max = Long.MIN_VALUE;
+                    for (final long val : src) {
+                        if (val > max) {
+                            max = val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                int max = Integer.MIN_VALUE;
-                for (final long val : src) {
-                    if ((int) val > max) {
-                        max = (int) val;
+                    return max;
+                },
+                () -> {
+                    int max = Integer.MIN_VALUE;
+                    for (final long val : src) {
+                        if ((int) val > max) {
+                            max = (int) val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                float max = -Float.MAX_VALUE;
-                for (final long val : src) {
-                    if ((float) val > max) {
-                        max = (float) val;
+                    return max;
+                },
+                () -> {
+                    float max = -Float.MAX_VALUE;
+                    for (final long val : src) {
+                        if ((float) val > max) {
+                            max = (float) val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                double max = -Double.MAX_VALUE;
-                for (final long val : src) {
-                    if ((double) val > max) {
-                        max = (double) val;
+                    return max;
+                },
+                () -> {
+                    double max = -Double.MAX_VALUE;
+                    for (final long val : src) {
+                        if ((double) val > max) {
+                            max = (double) val;
+                        }
                     }
+                    return max;
                 }
-                return max;
-            }));
+            )
+        );
     }
 
     /**
@@ -155,43 +161,46 @@ public final class MaxOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MaxOf(final Double... src) {
-        super(new NumberOf(
-            () -> {
-                long max = Long.MIN_VALUE;
-                for (final double val : src) {
-                    if ((long) val > max) {
-                        max = (long) val;
+        super(
+            new NumberOf(
+                () -> {
+                    long max = Long.MIN_VALUE;
+                    for (final double val : src) {
+                        if ((long) val > max) {
+                            max = (long) val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                int max = Integer.MIN_VALUE;
-                for (final double val : src) {
-                    if ((int) val > max) {
-                        max = (int) val;
+                    return max;
+                },
+                () -> {
+                    int max = Integer.MIN_VALUE;
+                    for (final double val : src) {
+                        if ((int) val > max) {
+                            max = (int) val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                float max = -Float.MAX_VALUE;
-                for (final double val : src) {
-                    if ((float) val > max) {
-                        max = (float) val;
+                    return max;
+                },
+                () -> {
+                    float max = -Float.MAX_VALUE;
+                    for (final double val : src) {
+                        if ((float) val > max) {
+                            max = (float) val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                double max = -Double.MAX_VALUE;
-                for (final double val : src) {
-                    if (val > max) {
-                        max = val;
+                    return max;
+                },
+                () -> {
+                    double max = -Double.MAX_VALUE;
+                    for (final double val : src) {
+                        if (val > max) {
+                            max = val;
+                        }
                     }
+                    return max;
                 }
-                return max;
-            }));
+            )
+        );
     }
 
     /**
@@ -199,43 +208,46 @@ public final class MaxOf extends NumberEnvelope {
      * @param src Numbers
      */
     public MaxOf(final Float... src) {
-        super(new NumberOf(
-            () -> {
-                long max = Long.MIN_VALUE;
-                for (final float val : src) {
-                    if ((long) val > max) {
-                        max = (long) val;
+        super(
+            new NumberOf(
+                () -> {
+                    long max = Long.MIN_VALUE;
+                    for (final float val : src) {
+                        if ((long) val > max) {
+                            max = (long) val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                int max = Integer.MIN_VALUE;
-                for (final float val : src) {
-                    if ((int) val > max) {
-                        max = (int) val;
+                    return max;
+                },
+                () -> {
+                    int max = Integer.MIN_VALUE;
+                    for (final float val : src) {
+                        if ((int) val > max) {
+                            max = (int) val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                float max = -Float.MAX_VALUE;
-                for (final float val : src) {
-                    if (val > max) {
-                        max = val;
+                    return max;
+                },
+                () -> {
+                    float max = -Float.MAX_VALUE;
+                    for (final float val : src) {
+                        if (val > max) {
+                            max = val;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                double max = -Double.MAX_VALUE;
-                for (final float val : src) {
-                    if ((double) val > max) {
-                        max = (double) val;
+                    return max;
+                },
+                () -> {
+                    double max = -Double.MAX_VALUE;
+                    for (final float val : src) {
+                        if ((double) val > max) {
+                            max = (double) val;
+                        }
                     }
+                    return max;
                 }
-                return max;
-            }));
+            )
+        );
     }
 
     /**
@@ -244,50 +256,53 @@ public final class MaxOf extends NumberEnvelope {
      * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public MaxOf(final Iterable<Number> src) {
-        super(new NumberOf(
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                long max = Long.MIN_VALUE;
-                while (numbers.hasNext()) {
-                    final long next = numbers.next().longValue();
-                    if (next > max) {
-                        max = next;
+        super(
+            new NumberOf(
+                () -> {
+                    final Iterator<Number> numbers = src.iterator();
+                    long max = Long.MIN_VALUE;
+                    while (numbers.hasNext()) {
+                        final long next = numbers.next().longValue();
+                        if (next > max) {
+                            max = next;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                int max = Integer.MIN_VALUE;
-                while (numbers.hasNext()) {
-                    final int next = numbers.next().intValue();
-                    if (next > max) {
-                        max = next;
+                    return max;
+                },
+                () -> {
+                    final Iterator<Number> numbers = src.iterator();
+                    int max = Integer.MIN_VALUE;
+                    while (numbers.hasNext()) {
+                        final int next = numbers.next().intValue();
+                        if (next > max) {
+                            max = next;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                float max = -Float.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final float next = numbers.next().floatValue();
-                    if (next > max) {
-                        max = next;
+                    return max;
+                },
+                () -> {
+                    final Iterator<Number> numbers = src.iterator();
+                    float max = -Float.MAX_VALUE;
+                    while (numbers.hasNext()) {
+                        final float next = numbers.next().floatValue();
+                        if (next > max) {
+                            max = next;
+                        }
                     }
-                }
-                return max;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                double max = -Double.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final double next = numbers.next().doubleValue();
-                    if (next > max) {
-                        max = next;
+                    return max;
+                },
+                () -> {
+                    final Iterator<Number> numbers = src.iterator();
+                    double max = -Double.MAX_VALUE;
+                    while (numbers.hasNext()) {
+                        final double next = numbers.next().doubleValue();
+                        if (next > max) {
+                            max = next;
+                        }
                     }
+                    return max;
                 }
-                return max;
-            }));
+            )
+        );
     }
 }
