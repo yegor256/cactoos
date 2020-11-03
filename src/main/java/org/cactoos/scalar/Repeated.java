@@ -23,6 +23,7 @@
  */
 package org.cactoos.scalar;
 
+import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 
@@ -34,35 +35,28 @@ import org.cactoos.func.FuncOf;
  */
 public final class Repeated<T> implements Scalar<T> {
     /**
-     * Scalar.
+     * Func.
      */
-    private final Scalar<T> scalar;
-
-    /**
-     * Times to repeat.
-     */
-    private final int times;
+    private final Func<Boolean, T> func;
 
     /**
      * Ctor.
      *
      * <p>If {@code max} is equal or less than zero {@link #value()} will
-     * return
-     * an exception.</p>
+     * return an exception.</p>
      *
-     * @param sclr Scalar to repeat.
-     * @param count How many times.
+     * @param scalar Scalar to repeat
+     * @param times How many times repeat
      */
-    public Repeated(final Scalar<T> sclr, final int count) {
-        this.scalar = sclr;
-        this.times = count;
+    public Repeated(final Scalar<T> scalar, final int times) {
+        this.func = new org.cactoos.func.Repeated<>(
+            new FuncOf<>(scalar),
+            times
+        );
     }
 
     @Override
     public T value() throws Exception {
-        return new org.cactoos.func.Repeated<>(
-            new FuncOf<>(this.scalar),
-            this.times
-        ).apply(true);
+        return this.func.apply(true);
     }
 }
