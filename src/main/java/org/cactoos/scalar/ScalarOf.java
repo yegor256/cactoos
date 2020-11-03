@@ -58,7 +58,7 @@ public final class ScalarOf<X, T> extends ScalarEnvelope<T> {
      * @param result Result to return
      * @since 0.41
      */
-    public ScalarOf(final Proc<X> proc, final X ipt, final T result) {
+    public ScalarOf(final Proc<? super X> proc, final X ipt, final T result) {
         this(new FuncOf<>(proc, result), ipt);
     }
 
@@ -68,7 +68,7 @@ public final class ScalarOf<X, T> extends ScalarEnvelope<T> {
      * @param ipt Input
      * @since 0.41
      */
-    public ScalarOf(final Func<X, T> fnc, final X ipt) {
+    public ScalarOf(final Func<? super X, T> fnc, final X ipt) {
         this(() -> fnc.apply(ipt));
     }
 
