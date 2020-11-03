@@ -283,8 +283,6 @@ The MIT License (MIT)
       <properties>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.organization>yegor256-github</sonar.organization>
-        <!-- See issue #1490 -->
-        <sonar.skip>true</sonar.skip>
       </properties>
       <build>
         <plugins>

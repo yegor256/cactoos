@@ -25,4 +25,5 @@ release:
     gpg --allow-secret-key-import --no-tty --batch --import /home/r/secring.gpg
     mvn versions:set "-DnewVersion=${tag}" --settings ../settings.xml
     git commit -am "${tag}"
-    mvn clean deploy -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml
+    # note: -Pcactoos is needed to have the gpg and sonar secrets injected
+    mvn clean deploy -Psonar -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml
