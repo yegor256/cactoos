@@ -24,6 +24,7 @@
 package org.cactoos.scalar;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Scalar;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -72,5 +73,41 @@ final class RepeatedTest {
                 IllegalArgumentException.class
             )
         ).affirm();
+    }
+
+    @Test
+    void countFiveTimes() throws Exception {
+        new Assertion<>(
+            "Must repeat count 5 times",
+            new Repeated<>(
+                new Count(1),
+                5
+            ),
+            new ScalarHasValue<>(5)
+        );
+    }
+
+    /**
+     * Just a simple count.
+     * @since 0.48
+     */
+    final class Count implements Scalar<Integer> {
+        /**
+         * Number.
+         */
+        private final AtomicInteger num;
+
+        /**
+         * Ctor.
+         * @param num Number to start to count
+         */
+        Count(final int num) {
+            this.num = new AtomicInteger(num);
+        }
+
+        @Override
+        public Integer value() throws Exception {
+            return this.num.incrementAndGet();
+        }
     }
 }
