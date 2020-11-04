@@ -31,8 +31,8 @@ import org.cactoos.func.FuncOf;
 /**
  * ScalarOf.
  *
- * @param <X> Element type
- * @param <T> Element type
+ * @param <X> Input element type
+ * @param <T> Output element type
  * @since 0.4
  */
 public final class ScalarOf<X, T> extends ScalarEnvelope<T> {
@@ -56,9 +56,14 @@ public final class ScalarOf<X, T> extends ScalarEnvelope<T> {
      * @param proc Encapsulated proc
      * @param ipt Input
      * @param result Result to return
+     * @param <X> Input element type
      * @since 0.41
      */
-    public ScalarOf(final Proc<? super X> proc, final X ipt, final T result) {
+    public <X> ScalarOf(
+        final Proc<? super X> proc,
+        final X ipt,
+        final T result
+    ) {
         this(new FuncOf<>(proc, result), ipt);
     }
 
@@ -66,9 +71,10 @@ public final class ScalarOf<X, T> extends ScalarEnvelope<T> {
      * Ctor.
      * @param fnc Encapsulated func
      * @param ipt Input
+     * @param <X> Input element type
      * @since 0.41
      */
-    public ScalarOf(final Func<? super X, T> fnc, final X ipt) {
+    public <X> ScalarOf(final Func<? super X, ? extends T> fnc, final X ipt) {
         this(() -> fnc.apply(ipt));
     }
 
