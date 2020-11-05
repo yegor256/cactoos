@@ -199,10 +199,19 @@ public final class LengthOfTest {
     }
 
     @Test
-    public void lengthOfUnicode() {
+    public void lengthOfUnicodeAsText() {
         new Assertion<>(
-            "Must calculate length of empty string",
+            "Must calculate character-length of unicode text",
             new LengthOf(new TextOf("привет")).intValue(),
+            new IsEqual<>(6)
+        ).affirm();
+    }
+
+    @Test
+    public void lengthOfUnicodeAsInput() {
+        new Assertion<>(
+            "Must calculate character-length of unicode input",
+            new LengthOf(new InputOf("Привет")).intValue(),
             new IsEqual<>(12)
         ).affirm();
     }

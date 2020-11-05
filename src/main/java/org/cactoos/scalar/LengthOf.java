@@ -65,12 +65,12 @@ public final class LengthOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     * Byte-length of Text.
-     * 
+     * Character-length of Text.
+     *
      * @param text The input
      */
     public LengthOf(final Text text) {
-        this(new InputOf(text));
+        this(() -> (double) text.asString().length());
     }
 
     /**
