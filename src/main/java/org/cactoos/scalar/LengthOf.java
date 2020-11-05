@@ -65,6 +65,8 @@ public final class LengthOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     * Byte-length of Text.
+     * 
      * @param text The input
      */
     public LengthOf(final Text text) {
