@@ -199,6 +199,15 @@ public final class LengthOfTest {
     }
 
     @Test
+    public void lengthOfUnicode() {
+        new Assertion<>(
+            "Must calculate length of empty string",
+            new LengthOf(new TextOf("привет")).intValue(),
+            new IsEqual<>(12)
+        ).affirm();
+    }
+
+    @Test
     public void lengthOfText() {
         final Number num = new LengthOf(new TextOf("abcd"));
         new Assertion<>(
