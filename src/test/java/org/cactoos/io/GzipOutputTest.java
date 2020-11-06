@@ -24,12 +24,7 @@
 
 package org.cactoos.io;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.zip.GZIPOutputStream;
@@ -86,7 +81,7 @@ public final class GzipOutputTest {
         ).affirm();
     }
 
-    @Test(expected = IOException.class)
+    @Test(expected = UncheckedIOException.class)
     public void writeToClosedGzipOutput() throws Exception {
         final OutputStream stream =
             Files.newOutputStream(

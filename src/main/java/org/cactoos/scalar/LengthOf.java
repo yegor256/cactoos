@@ -24,6 +24,7 @@
 
 package org.cactoos.scalar;
 
+import java.io.EOFException;
 import java.io.InputStream;
 import java.util.Iterator;
 import org.cactoos.Input;

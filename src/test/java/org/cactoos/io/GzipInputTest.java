@@ -24,11 +24,7 @@
 
 package org.cactoos.io;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.EOFException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
@@ -67,7 +63,7 @@ public final class GzipInputTest {
         ).affirm();
     }
 
-    @Test(expected = EOFException.class)
+    @Test(expected = UncheckedIOException.class)
     public void readFromDeadGzipInput() throws Exception {
         new LengthOf(
             new GzipInput(new DeadInput())
