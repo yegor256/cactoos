@@ -54,17 +54,17 @@ public abstract class NumberEnvelope extends Number implements Scalar<Double> {
 
     @Override
     public int intValue() {
-        return origin.intValue();
+        return this.origin.intValue();
     }
 
     @Override
     public long longValue() {
-        return origin.longValue();
+        return this.origin.longValue();
     }
 
     @Override
     public float floatValue() {
-        return origin.floatValue();
+        return this.origin.floatValue();
     }
 
     @Override
