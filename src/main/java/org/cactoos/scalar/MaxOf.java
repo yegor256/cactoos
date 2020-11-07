@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Find the greater among items.
@@ -96,54 +96,29 @@ public final class MaxOf extends NumberEnvelope {
     /**
      * Ctor.
      * @param src The iterable
-     * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public MaxOf(final Iterable<Number> src) {
         super(
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                long max = Long.MIN_VALUE;
-                while (numbers.hasNext()) {
-                    final long next = numbers.next().longValue();
-                    if (next > max) {
-                        max = next;
-                    }
-                }
-                return max;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                int max = Integer.MIN_VALUE;
-                while (numbers.hasNext()) {
-                    final int next = numbers.next().intValue();
-                    if (next > max) {
-                        max = next;
-                    }
-                }
-                return max;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                float max = -Float.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final float next = numbers.next().floatValue();
-                    if (next > max) {
-                        max = next;
-                    }
-                }
-                return max;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                double max = -Double.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final double next = numbers.next().doubleValue();
-                    if (next > max) {
-                        max = next;
-                    }
-                }
-                return max;
-            }
+            new Folded<>(
+                Long.MIN_VALUE,
+                Math::max,
+                new Mapped<>(Number::longValue, src)
+            ),
+            new Folded<>(
+                Integer.MIN_VALUE,
+                Math::max,
+                new Mapped<>(Number::intValue, src)
+            ),
+            new Folded<>(
+                -Float.MAX_VALUE,
+                Math::max,
+                new Mapped<>(Number::floatValue, src)
+            ),
+            new Folded<>(
+                -Double.MAX_VALUE,
+                Math::max,
+                new Mapped<>(Number::doubleValue, src)
+            )
         );
     }
 }

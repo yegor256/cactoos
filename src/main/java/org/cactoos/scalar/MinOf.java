@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Iterator;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Find the smaller among items.
@@ -95,54 +95,29 @@ public final class MinOf extends NumberEnvelope {
     /**
      * Ctor.
      * @param src The iterable
-     * @checkstyle ExecutableStatementCountCheck (150 lines)
      */
     public MinOf(final Iterable<Number> src) {
         super(
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                long min = Long.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final long next = numbers.next().longValue();
-                    if (next < min) {
-                        min = next;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                int min = Integer.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final int next = numbers.next().intValue();
-                    if (next < min) {
-                        min = next;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                float min = Float.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final float next = numbers.next().floatValue();
-                    if (next < min) {
-                        min = next;
-                    }
-                }
-                return min;
-            },
-            () -> {
-                final Iterator<Number> numbers = src.iterator();
-                double min = Double.MAX_VALUE;
-                while (numbers.hasNext()) {
-                    final double next = numbers.next().doubleValue();
-                    if (next < min) {
-                        min = next;
-                    }
-                }
-                return min;
-            }
+            new Folded<>(
+                Long.MAX_VALUE,
+                Math::min,
+                new Mapped<>(Number::longValue, src)
+            ),
+            new Folded<>(
+                Integer.MAX_VALUE,
+                Math::min,
+                new Mapped<>(Number::intValue, src)
+            ),
+            new Folded<>(
+                Float.MAX_VALUE,
+                Math::min,
+                new Mapped<>(Number::floatValue, src)
+            ),
+            new Folded<>(
+                Double.MAX_VALUE,
+                Math::min,
+                new Mapped<>(Number::doubleValue, src)
+            )
         );
     }
 }
