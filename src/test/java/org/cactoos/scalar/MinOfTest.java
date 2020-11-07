@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link MinOf}.
  *
  * @since 0.10
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
 final class MinOfTest {
