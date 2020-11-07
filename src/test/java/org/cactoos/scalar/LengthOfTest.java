@@ -27,9 +27,11 @@ package org.cactoos.scalar;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
+import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link LengthOf}.
@@ -37,6 +39,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.1.0
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class LengthOfTest {
@@ -183,6 +186,48 @@ public final class LengthOfTest {
                 new ListOf<>()
             ).intValue(),
             new IsEqual<>(0)
+        ).affirm();
+    }
+
+    @Test
+    public void lengthOfEmptyText() {
+        new Assertion<>(
+            "Must calculate length of empty string",
+            new LengthOf(new TextOf("")).intValue(),
+            new IsEqual<>(0)
+        ).affirm();
+    }
+
+    @Test
+    public void lengthOfUnicodeAsText() {
+        new Assertion<>(
+            "Must calculate character-length of unicode text",
+            new LengthOf(new TextOf("привет")).intValue(),
+            new IsEqual<>(6)
+        ).affirm();
+    }
+
+    @Test
+    public void lengthOfUnicodeAsInput() {
+        new Assertion<>(
+            "Must calculate character-length of unicode input",
+            new LengthOf(new InputOf("Привет")).intValue(),
+            new IsEqual<>(12)
+        ).affirm();
+    }
+
+    @Test
+    public void lengthOfText() {
+        final Number num = new LengthOf(new TextOf("abcd"));
+        new Assertion<>(
+            "Must calculate length of non-empty string",
+            new IterableOf<Number>(
+                num.intValue(),
+                num.floatValue(),
+                num.longValue(),
+                num.doubleValue()
+            ),
+            new HasValues<>(4, 4f, 4L, 4d)
         ).affirm();
     }
 }

@@ -28,11 +28,14 @@ import java.io.InputStream;
 import java.util.Iterator;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.io.InputOf;
 
 /**
  * Length.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>
+ * There is no thread-safety guarantee.
  *
  * @since 0.1
  */
@@ -58,6 +61,16 @@ public final class LengthOf extends NumberEnvelope {
             }
             return (double) size;
         });
+    }
+
+    /**
+     * Ctor.
+     * Character-length of Text.
+     *
+     * @param text The input
+     */
+    public LengthOf(final Text text) {
+        this(() -> (double) text.asString().length());
     }
 
     /**
