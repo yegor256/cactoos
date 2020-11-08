@@ -31,17 +31,7 @@ import org.cactoos.Text;
  *
  * @since 0.47
  */
-public final class Mapped implements Text {
-
-    /**
-     * Map function.
-     */
-    private final Func<String, String> func;
-
-    /**
-     * Original text.
-     */
-    private final Text text;
+public final class Mapped extends TextEnvelope {
 
     /**
      * Ctor.
@@ -50,13 +40,7 @@ public final class Mapped implements Text {
      * @param txt Original text
      */
     public Mapped(final Func<String, String> fnc, final Text txt) {
-        this.func = fnc;
-        this.text = txt;
-    }
-
-    @Override
-    public String asString() throws Exception {
-        return this.func.apply(this.text.asString());
+        super(new TextOf(() -> fnc.apply(txt.asString())));
     }
 
 }

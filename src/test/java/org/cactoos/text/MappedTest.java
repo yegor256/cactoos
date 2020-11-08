@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextIs;
@@ -33,6 +34,18 @@ import org.llorllale.cactoos.matchers.TextIs;
  * @since 0.47
  */
 final class MappedTest {
+
+    @Test
+    void resultShouldBeEqual() {
+        new Assertion<>(
+            "must be equal to the same text",
+            new Mapped(
+                String::toUpperCase,
+                new TextOf("hi")
+            ),
+            new IsEqual<>(new TextOf("HI"))
+        ).affirm();
+    }
 
     @Test
     void mapsWithFormat() {
