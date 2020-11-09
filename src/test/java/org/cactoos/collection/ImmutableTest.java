@@ -27,7 +27,6 @@ import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.Throws;
@@ -48,8 +47,8 @@ public class ImmutableTest {
             "size() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2)
-            ),
-            new HasSize(2)
+            ).size(),
+            new IsEqual<>(2)
         ).affirm();
     }
 
