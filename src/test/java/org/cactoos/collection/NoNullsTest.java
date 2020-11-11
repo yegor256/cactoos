@@ -107,7 +107,7 @@ final class NoNullsTest {
 
     @Test
     void testSuccessAddAll() {
-        final NoNulls<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
+        final Collection<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
         nonulls.addAll(new ListOf<>(1, 2));
         new Assertion<>(
             "Must add all",
@@ -120,7 +120,7 @@ final class NoNullsTest {
 
     @Test
     void throwsErrorIfNullInAddAll() {
-        final NoNulls<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
+        final Collection<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
         new Assertion<>(
             "Must throw exception for nullable #addAll() parameter collection",
             () -> nonulls.addAll(new ListOf<>(1, 2, null)),
@@ -134,7 +134,7 @@ final class NoNullsTest {
     @Test
     void behavesAsCollection() {
         new Assertion<>(
-            "Must behave as collection",
+            "Must behave as a no-null collection",
             new NoNulls<>(
                 new ListOf<>(1)
             ),
@@ -145,7 +145,7 @@ final class NoNullsTest {
     @Test
     void hasToString() {
         new Assertion<>(
-            "Must have correct toString",
+            "Must have correct NoNulls#toString() and contain value of its elements",
             new NoNulls<>(
                 new ListOf<>(1, 2, 3)
             ),
@@ -162,7 +162,7 @@ final class NoNullsTest {
         );
         col.clear();
         new Assertion<>(
-            "Must be empty after #clear()",
+            "Must be empty after NoNulls#clear() is called",
             col,
             new IsEmptyCollection<>()
         ).affirm();
@@ -175,7 +175,7 @@ final class NoNullsTest {
         );
         col.remove(1);
         new Assertion<>(
-            "Must have item removed",
+            "Must have item removed from no-null collection",
             col,
             new IsEqual<>(new ListOf<>(2, 3))
         ).affirm();
@@ -188,7 +188,7 @@ final class NoNullsTest {
         );
         col.add(3);
         new Assertion<>(
-            "Must have item added",
+            "Must have item added to no-null collection",
             col,
             new IsEqual<>(new ListOf<>(1, 2, 3))
         ).affirm();
@@ -227,7 +227,7 @@ final class NoNullsTest {
             new ListOf<>(1, 2, 3)
         );
         new Assertion<>(
-            "Must return false for the same collection",
+            "NoNulls#retainAll(...) must return false for the same elements",
             col.retainAll(new ListOf<>(1, 2, 3)),
             new IsNot<>(new IsTrue())
         ).affirm();
@@ -239,7 +239,7 @@ final class NoNullsTest {
             new ListOf<>(1, 2, 3)
         );
         new Assertion<>(
-            "Must return false for a different collection",
+            "NoNulls#retailAll(..) must return true for different elements",
             col.retainAll(new ListOf<>(1, null, 3)),
             new IsTrue()
         ).affirm();
@@ -248,7 +248,7 @@ final class NoNullsTest {
     @Test
     void throwsAtAttemptToRemoveNull() {
         new Assertion<>(
-            "Must throw exception when removing NULL",
+            "Must throw exception when removing NULL for NoNull collection",
             () -> new NoNulls<>(
                 new ListOf<>(1, 2, 3)
             ).remove(null),
@@ -268,6 +268,31 @@ final class NoNullsTest {
             new IsEqual<>(
                 items.hashCode()
             )
+        ).affirm();
+    }
+
+    @Test
+    void shouldBeEmpty() {
+        final Collection<Integer> col = new NoNulls<>(
+            new ListOf<>()
+        );
+        new Assertion<>(
+            "Must be empty if created from an empty list",
+            col.isEmpty(),
+            new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    void addsToEmptyCollection() {
+        final Collection<Integer> col = new NoNulls<>(
+            new ListOf<>()
+        );
+        col.add(1);
+        new Assertion<>(
+            "Must not be empty after an item was added",
+            col.isEmpty(),
+            new IsNot<>(new IsTrue())
         ).affirm();
     }
 
