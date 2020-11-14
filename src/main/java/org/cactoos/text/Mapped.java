@@ -23,40 +23,24 @@
  */
 package org.cactoos.text;
 
-import java.util.Locale;
+import org.cactoos.Func;
 import org.cactoos.Text;
 
 /**
- * Text in lower case.
+ * Mapped text.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.1
+ * @since 0.47
  */
-public final class Lowered extends TextEnvelope {
+public final class Mapped extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param text The text
+     *
+     * @param fnc Function to apply
+     * @param txt Original text
      */
-    public Lowered(final String text) {
-        this(new TextOf(text));
+    public Mapped(final Func<String, String> fnc, final Text txt) {
+        super(new TextOf(() -> fnc.apply(txt.asString())));
     }
 
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public Lowered(final Text text) {
-        this(text, Locale.ENGLISH);
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     * @param locale The locale
-     */
-    public Lowered(final Text text, final Locale locale) {
-        super(new Mapped(str -> str.toLowerCase(locale), text));
-    }
 }

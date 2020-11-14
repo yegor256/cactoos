@@ -39,10 +39,9 @@ public final class Reversed extends TextEnvelope {
      */
     public Reversed(final Text text) {
         super(
-            new TextOf(
-                () -> new StringBuilder(
-                    text.asString()
-                ).reverse().toString()
+            new Mapped(
+                string -> new StringBuilder(string).reverse().toString(),
+                text
             )
         );
     }

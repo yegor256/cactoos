@@ -50,7 +50,8 @@ public final class Replaced extends TextEnvelope {
     public Replaced(
         final Text text,
         final String find,
-        final String replace) {
+        final String replace
+    ) {
         this(text, () -> Pattern.compile(find), matcher -> replace);
     }
 
@@ -81,12 +82,13 @@ public final class Replaced extends TextEnvelope {
     public Replaced(
         final Text text,
         final Scalar<Pattern> regex,
-        final Func<Matcher, String> func) {
+        final Func<Matcher, String> func
+    ) {
         super(
-            new TextOf(
-                () -> {
+            new Mapped(
+                str -> {
                     final StringBuffer buffer = new StringBuffer();
-                    final Matcher matcher = regex.value().matcher(text.asString());
+                    final Matcher matcher = regex.value().matcher(str);
                     while (matcher.find()) {
                         matcher.appendReplacement(
                             buffer,
@@ -95,7 +97,8 @@ public final class Replaced extends TextEnvelope {
                     }
                     matcher.appendTail(buffer);
                     return buffer.toString();
-                }
+                },
+                text
             )
         );
     }

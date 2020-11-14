@@ -23,40 +23,52 @@
  */
 package org.cactoos.text;
 
-import java.util.Locale;
-import org.cactoos.Text;
+import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * Text in lower case.
+ * Tests for @{link Mapped}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.1
+ * @since 0.47
  */
-public final class Lowered extends TextEnvelope {
+final class MappedTest {
 
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public Lowered(final String text) {
-        this(new TextOf(text));
+    @Test
+    void resultShouldBeEqual() {
+        new Assertion<>(
+            "must be equal to the same text",
+            new Mapped(
+                String::toUpperCase,
+                new TextOf("hi")
+            ),
+            new IsEqual<>(new TextOf("HI"))
+        ).affirm();
     }
 
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public Lowered(final Text text) {
-        this(text, Locale.ENGLISH);
+    @Test
+    void mapsWithFormat() {
+        new Assertion<>(
+            "must apply lambda to a string",
+            new Mapped(
+                s -> String.format("<%s>", s),
+                new TextOf("hi")
+            ),
+            new TextIs("<hi>")
+        ).affirm();
     }
 
-    /**
-     * Ctor.
-     * @param text The text
-     * @param locale The locale
-     */
-    public Lowered(final Text text, final Locale locale) {
-        super(new Mapped(str -> str.toLowerCase(locale), text));
+    @Test
+    void maps() {
+        new Assertion<>(
+            "must apply method reference to a string",
+            new Mapped(
+                String::toLowerCase,
+                new TextOf("ABC")
+            ),
+            new TextIs("abc")
+        ).affirm();
     }
+
 }
