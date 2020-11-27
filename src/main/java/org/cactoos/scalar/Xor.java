@@ -24,6 +24,7 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 
 /**
@@ -70,6 +71,15 @@ public final class Xor implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     * @param scalar The Scalar.
+     */
+    @SafeVarargs
+    public Xor(final Scalar<Boolean>... scalar) {
+        this(new IterableOf<>(scalar));
+    }
+
+    /**
+     * Ctor.
      * @param iterable The iterable.
      */
     public Xor(final Iterable<Scalar<Boolean>> iterable) {
@@ -80,9 +90,8 @@ public final class Xor implements Scalar<Boolean> {
     public Boolean value() throws Exception {
         return new ListOf<Scalar<Boolean>>(this.origin)
             .stream().reduce(
-                new True(),
                 (org, next) -> () -> org.value().booleanValue() ^ next.value().booleanValue()
-            )
+            ).orElse(new True())
             .value();
     }
 }
