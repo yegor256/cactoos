@@ -110,7 +110,7 @@ final class XorTest {
     void emptyIterator() throws Exception {
         new Assertion<>(
             "Empty iterator must be true",
-            new And(new IterableOf<Scalar<Boolean>>()),
+            new Xor(new IterableOf<Scalar<Boolean>>()),
             new ScalarHasValue<>(true)
         ).affirm();
     }

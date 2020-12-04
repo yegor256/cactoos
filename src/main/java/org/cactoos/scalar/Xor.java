@@ -25,7 +25,6 @@ package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.list.ListOf;
 
 /**
  * Logical exclusive or.
@@ -88,10 +87,11 @@ public final class Xor implements Scalar<Boolean> {
 
     @Override
     public Boolean value() throws Exception {
-        return new ListOf<Scalar<Boolean>>(this.origin)
-            .stream().reduce(
-                (org, next) -> () -> org.value().booleanValue() ^ next.value().booleanValue()
-            ).orElse(new True())
+        return new Ternary<>(
+            new LengthOf(this.origin).value() > 0,
+            new Reduced<Boolean>((a, b) -> a ^ b, this.origin),
+            new True()
+            )
             .value();
     }
 }
