@@ -25,6 +25,7 @@ package org.cactoos.text;
 
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Concatenate a Text.
@@ -41,6 +42,19 @@ public class Concatenated extends TextEnvelope {
      */
     public Concatenated(final Text... txts) {
         this(new IterableOf<Text>(txts));
+    }
+
+    /**
+     * Ctor.
+     * @param strs Strings to be concatenated
+     */
+    public Concatenated(final String... strs) {
+        this(
+            new Mapped<>(
+                TextOf::new,
+                new IterableOf<String>(strs)
+            )
+        );
     }
 
     /**

@@ -62,4 +62,22 @@ final class ConctatenatedTest {
             new TextIs("foofoo1")
         ).affirm();
     }
+
+    @Test
+    void contatenateString() {
+        new Assertion<>(
+            "Must contcatenate single string",
+            new Concatenated("bar"),
+            new TextIs("bar")
+        ).affirm();
+    }
+
+    @Test
+    void contatenateStrings() {
+        new Assertion<>(
+            "Must contcatenate multi strings",
+            new Concatenated("abc", "xyz"),
+            new TextIs("abcxyz")
+        ).affirm();
+    }
 }
