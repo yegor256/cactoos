@@ -41,7 +41,7 @@ public class Concatenated extends TextEnvelope {
      * @param txts Texts to be concatenated
      */
     public Concatenated(final Text... txts) {
-        this(new IterableOf<Text>(txts));
+        this(new IterableOf<>(txts));
     }
 
     /**
@@ -52,7 +52,7 @@ public class Concatenated extends TextEnvelope {
         this(
             new Mapped<>(
                 TextOf::new,
-                new IterableOf<String>(strs)
+                new IterableOf<>(strs)
             )
         );
     }
