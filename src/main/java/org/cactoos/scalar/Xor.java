@@ -28,9 +28,9 @@ import org.cactoos.iterable.IterableOf;
 
 /**
  * Logical exclusive or.
- * This class performs short-circuit evaluation in which arguments are
- * executed only if the preceding argument does not suffice to determine
- * the value of the expression.
+
+ * For no elements in {@code origin} it returns {@link True}, otherwise
+ * returns {@link True} only when an odd number of elements have value true.
  *
  * <p>This class could be also used for matching multiple boolean
  * expressions:</p>
