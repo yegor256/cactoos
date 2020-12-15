@@ -107,9 +107,9 @@ final class XorTest {
     }
 
     @Test
-    void emptyIterator() throws Exception {
+    void emptyIteraable() throws Exception {
         new Assertion<>(
-            "Empty iterator must be true",
+            "Empty iterable must be true",
             new Xor(new IterableOf<Scalar<Boolean>>()),
             new ScalarHasValue<>(true)
         ).affirm();
@@ -118,7 +118,7 @@ final class XorTest {
     @Test
     void oddNumberOfTrue() throws Exception {
         new Assertion<>(
-            "Odd number of True must be True",
+            "Even number of True must be True",
             new Xor(
                 new False(),
                 new False(),

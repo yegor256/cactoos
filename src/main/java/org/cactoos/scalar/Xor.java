@@ -91,7 +91,6 @@ public final class Xor implements Scalar<Boolean> {
             new LengthOf(this.origin).value() > 0,
             new Reduced<Boolean>((a, b) -> a ^ b, this.origin),
             new True()
-            )
-            .value();
+        ).value();
     }
 }
