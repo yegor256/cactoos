@@ -104,7 +104,7 @@ public final class ListOfTest {
     @Test
     public void makesListFromMappedIterable() throws Exception {
         final List<Integer> list = new ListOf<>(
-            new Mapped<>(
+            new Mapped<Integer>(
                 i -> i + 1,
                 new IterableOf<>(1, -1, 0, 1)
             )

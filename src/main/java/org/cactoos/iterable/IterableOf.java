@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.func.FallbackFrom;
 import org.cactoos.iterator.IteratorOf;
@@ -46,7 +45,6 @@ import org.cactoos.text.UncheckedText;
  * @since 0.12
  * @checkstyle ClassDataAbstractionCouplingCheck (550 lines)
  */
-@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
 public final class IterableOf<X> implements Iterable<X> {
 
     /**
@@ -61,14 +59,6 @@ public final class IterableOf<X> implements Iterable<X> {
     @SafeVarargs
     public IterableOf(final X... items) {
         this(() -> new IteratorOf<>(items));
-    }
-
-    /**
-     * Ctor.
-     * @param list The list
-     */
-    public IterableOf(final List<? extends X> list) {
-        this(list::iterator);
     }
 
     /**

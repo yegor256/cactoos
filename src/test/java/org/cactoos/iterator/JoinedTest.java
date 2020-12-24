@@ -25,11 +25,9 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Mapped;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -37,22 +35,24 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.14
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MagicNumber (500 lines)
  */
 final class JoinedTest {
 
     @Test
+    @SuppressWarnings("unchecked")
     void joinsIterators() {
         new Assertion<>(
-            "Must concatenate mapped iterators together",
+            "Must concatenate iterable of iterators together",
             new IterableOf<>(
                 new Joined<>(
-                    new Mapped<>(
-                        IteratorOf::new,
-                        new IterableOf<>("x", "y")
+                    new IterableOf<>(
+                        new IteratorOf<>("x"),
+                        new IteratorOf<>("y")
                     )
                 )
             ),
-            new HasSize(2)
+            new IsEqual<>(new IterableOf<>("x", "y"))
         ).affirm();
     }
 
@@ -74,6 +74,21 @@ final class JoinedTest {
             "Must throw an exception",
             () -> new Joined<Integer>(new IteratorOf<>()).next(),
             new Throws<>(NoSuchElementException.class)
+        ).affirm();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void joinItemAndIterable() {
+        new Assertion<>(
+            "Must join item and iterable",
+            new IterableOf<>(
+                new Joined<>(
+                    0,
+                    new IteratorOf<>(1, 2, 3)
+                )
+            ),
+            new IsEqual<>(new IterableOf<>(0, 1, 2, 3))
         ).affirm();
     }
 }

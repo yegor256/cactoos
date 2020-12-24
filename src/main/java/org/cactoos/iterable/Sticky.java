@@ -23,8 +23,7 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Collection;
-import java.util.LinkedList;
+import org.cactoos.list.ListOf;
 import org.cactoos.scalar.Mapped;
 
 /**
@@ -50,19 +49,13 @@ public final class Sticky<X> extends IterableEnvelope<X> {
      * Ctor.
      * @param iterable The iterable
      */
-    public Sticky(final Iterable<X> iterable) {
+    public Sticky(final Iterable<? extends X> iterable) {
         super(
-            new IterableOf<>(
+            new IterableOf<X>(
                 new Mapped<>(
                     Iterable::iterator,
-                    new org.cactoos.scalar.Sticky<Iterable<X>>(
-                        () -> {
-                            final Collection<X> temp = new LinkedList<>();
-                            for (final X item : iterable) {
-                                temp.add(item);
-                            }
-                            return temp;
-                        }
+                    new org.cactoos.scalar.Sticky<>(
+                        () -> new ListOf<>(iterable)
                     )
                 )
             )

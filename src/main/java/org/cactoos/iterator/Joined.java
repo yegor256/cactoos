@@ -25,7 +25,7 @@ package org.cactoos.iterator;
 
 import java.util.Collections;
 import java.util.Iterator;
-import org.cactoos.list.ListOf;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * A few Iterators joined together.
@@ -40,27 +40,38 @@ public final class Joined<T> implements Iterator<T> {
     /**
      * Iterators.
      */
-    private final Iterator<Iterator<T>> iters;
+    private final Iterator<Iterator<? extends T>> iters;
 
     /**
      * Current traversal iterator.
      */
-    private Iterator<T> current;
+    private Iterator<? extends T> current;
 
     /**
      * Ctor.
      * @param items Items to concatenate
      */
     @SafeVarargs
-    public Joined(final Iterator<T>... items) {
-        this(new ListOf<>(items));
+    public Joined(final Iterator<? extends T>... items) {
+        this(new IterableOf<>(items));
+    }
+
+    /**
+     * Ctor.
+     * @param item First item
+     * @param items Iterable
+     * @since 0.49
+     */
+    @SuppressWarnings("unchecked")
+    public Joined(final T item, final Iterator<? extends T> items) {
+        this(new IterableOf<>(new IteratorOf<>(item), items));
     }
 
     /**
      * Ctor.
      * @param items Items to concatenate
      */
-    public Joined(final Iterable<Iterator<T>> items) {
+    public Joined(final Iterable<Iterator<? extends T>> items) {
         this.iters = items.iterator();
         this.current = Collections.emptyIterator();
     }

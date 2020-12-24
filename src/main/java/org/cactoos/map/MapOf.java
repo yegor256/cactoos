@@ -144,16 +144,11 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param list List of the entries
      * @since 0.12
      */
-    @SuppressWarnings("unchecked")
     public MapOf(
         final Map<? extends X, ? extends Y> src,
         final Iterable<Map.Entry<? extends X, ? extends Y>> list
     ) {
-        this(
-            new Joined<>(
-                src.entrySet(), list
-            )
-        );
+        this(new Joined<Map.Entry<? extends X, ? extends Y>>(src.entrySet(), list));
     }
 
     /**

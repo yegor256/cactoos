@@ -51,7 +51,7 @@ final class ChainedTest {
                     new Mapped<>(
                         new Chained<>(
                             input -> input.concat("1"),
-                            input -> input.concat("2")
+                            (String input) -> input.concat("2")
                         ),
                         new IterableOf<>("public", "final", "class")
                     )

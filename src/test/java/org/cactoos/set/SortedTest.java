@@ -34,6 +34,7 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link Sorted}.
@@ -51,15 +52,16 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class SortedTest {
 
     @Test
+    @SuppressWarnings("unchecked")
     void mustSortIntegerArrayAsSetInAscendingOrder() {
         new Assertion<>(
             "Must keep unique integer numbers sorted",
-            new Sorted<>(
+            new Sorted<Integer>(
                 Integer::compareTo,
                 2, 1, 3, 2, 1
             ),
-            new IsIterableContainingInOrder<>(
-                new ListOf<Matcher<? super Integer>>(
+            new IsIterableContainingInOrder<Integer>(
+                new ListOf<>(
                     new IsEqual<>(1),
                     new IsEqual<>(2),
                     new IsEqual<>(3)
@@ -69,15 +71,16 @@ final class SortedTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void mustSortIntegerIterableAsSetInDescendingOrder() {
         new Assertion<>(
             "Must keep unique integer numbers sorted in descending order",
-            new Sorted<>(
+            new Sorted<Integer>(
                 Comparator.reverseOrder(),
                 2, 1, 3, 2, 1
             ),
-            new IsIterableContainingInOrder<>(
-                new ListOf<Matcher<? super Integer>>(
+            new IsIterableContainingInOrder<Integer>(
+                new ListOf<>(
                     new IsEqual<>(3),
                     new IsEqual<>(2),
                     new IsEqual<>(1)
@@ -87,10 +90,11 @@ final class SortedTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void mustSortTextIterableAsSetUsingCustomCOmparator() {
         new Assertion<>(
             "Must keep unique integer numbers sorted in descending order",
-            new Sorted<>(
+            new Sorted<Text>(
                 (first, second) -> {
                     final String left = new UncheckedText(first).asString();
                     final String right = new UncheckedText(second).asString();
@@ -101,28 +105,29 @@ final class SortedTest {
                 new TextOf("gh"),
                 new TextOf("ef")
             ),
-            new IsIterableContainingInOrder<>(
-                new ListOf<Matcher<? super Text>>(
-                    new IsEqual<>(new TextOf("ab")),
-                    new IsEqual<>(new TextOf("cd")),
-                    new IsEqual<>(new TextOf("ef")),
-                    new IsEqual<>(new TextOf("gh"))
+            new IsIterableContainingInOrder<Text>(
+                new ListOf<>(
+                    new TextIs("ab"),
+                    new TextIs("cd"),
+                    new TextIs("ef"),
+                    new TextIs("gh")
                 )
             )
         ).affirm();
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void mustNotBeEqualToSortedSet() {
         new Assertion<>(
             "Sorted set must not be equal to the tested collection",
-            new Sorted<>(
+            new Sorted<Integer>(
                 Integer::compareTo,
                 2, 1, 3, 2, 1
             ),
             new IsNot<>(
-                new IsIterableContainingInOrder<>(
-                    new ListOf<Matcher<? super Integer>>(
+                new IsIterableContainingInOrder<Integer>(
+                    new ListOf<>(
                         new IsEqual<>(1),
                         new IsEqual<>(3),
                         new IsEqual<>(2)

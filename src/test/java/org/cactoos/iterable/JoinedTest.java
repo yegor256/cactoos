@@ -62,6 +62,7 @@ final class JoinedTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void joinItemAndIterable() {
         new Assertion<>(
             "Must join item and iterable",

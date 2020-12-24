@@ -81,7 +81,7 @@ public final class MultiplicationOf extends NumberEnvelope {
             return new Folded<>(
                 BigDecimal.ONE,
                 (mtn, value) -> mtn.multiply(value, MathContext.DECIMAL128),
-                    new Mapped<>(
+                    new Mapped<BigDecimal>(
                         number -> BigDecimal.valueOf(number.doubleValue()),
                         src
                     )

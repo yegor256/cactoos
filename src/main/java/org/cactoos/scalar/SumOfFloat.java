@@ -42,13 +42,7 @@ import org.cactoos.Scalar;
  *
  * @since 0.30
  */
-public final class SumOfFloat implements Scalar<Float> {
-
-    /**
-     * Varargs of Scalar to sum up values from.
-     */
-    private final Scalar<Float>[] scalars;
-
+public final class SumOfFloat extends ScalarEnvelope<Float> {
     /**
      * Ctor.
      * @param src Varargs of Scalar to sum up values from
@@ -56,11 +50,6 @@ public final class SumOfFloat implements Scalar<Float> {
      */
     @SafeVarargs
     public SumOfFloat(final Scalar<Float>... src) {
-        this.scalars = src;
-    }
-
-    @Override
-    public Float value() {
-        return new SumOfScalar(this.scalars).value().floatValue();
+        super(new Mapped<>(Number::floatValue, new SumOfScalar(src)));
     }
 }

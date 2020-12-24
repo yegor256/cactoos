@@ -99,4 +99,22 @@ final class PropertiesOfTest {
         ).affirm();
     }
 
+    @Test
+    void convertsMapEntriesToProperties() {
+        new Assertion<>(
+            "Must convert map entries to properties",
+            new PropertiesOf(
+                new MapEntry<>(0, "hello world"),
+                new MapEntry<>(1, "How are you?")
+            ),
+            new ScalarHasValue<>(
+                new MatcherOf<Properties>(
+                    props -> {
+                        return props.getProperty("0").endsWith(" world");
+                    }
+                )
+            )
+        ).affirm();
+    }
+
 }

@@ -46,22 +46,13 @@ public final class Joined<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param items Items to concatenate
-     * @since 0.21
-     */
-    public Joined(final Iterator<Iterable<? extends T>> items) {
-        this(new IterableOf<>(items));
-    }
-
-    /**
-     * Ctor.
      * @param item First item
      * @param items Iterable
      * @since 0.32
      */
     @SuppressWarnings("unchecked")
-    public Joined(final T item, final Iterable<T> items) {
-        super(new Joined<>(new IterableOf<>(item), items));
+    public Joined(final T item, final Iterable<? extends T> items) {
+        this(new IterableOf<>(new IterableOf<>(item), items));
     }
 
     /**
@@ -72,10 +63,9 @@ public final class Joined<T> extends IterableEnvelope<T> {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Joined<>(
-                    new Mapped<>(Iterable::iterator, items)
+                    new Mapped<Iterator<? extends T>>(Iterable::iterator, items)
                 )
             )
         );
     }
-
 }

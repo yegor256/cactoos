@@ -23,9 +23,9 @@
  */
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link SumOfScalar}.
@@ -37,28 +37,38 @@ import org.junit.jupiter.api.Test;
 final class SumOfScalarTest {
 
     @Test
-    void withListOfScalarsInt() {
-        MatcherAssert.assertThat(
-            new SumOfScalar(() -> 1, () -> 2, () -> 3)
-                .value()
-                .intValue(),
-            new IsEqual<>(6)
-        );
+    void withScalarsOfInt() {
+        new Assertion<>(
+            "should sum scalars of int",
+            new Mapped<>(
+                Number::intValue,
+                new SumOfScalar(() -> 1, () -> 2, () -> 3)
+            ),
+            new ScalarHasValue<>(6)
+        ).affirm();
     }
 
     @Test
-    void withEmptyList() {
-        MatcherAssert.assertThat(
-            new SumOfScalar().value().intValue(),
-            new IsEqual<>(0)
-        );
+    void withNoScalar() {
+        new Assertion<>(
+            "should sum no scalars to 0",
+            new Mapped<>(
+                Number::intValue,
+                new SumOfScalar()
+            ),
+            new ScalarHasValue<>(0)
+        ).affirm();
     }
 
     @Test
     void withListOfOneElement() {
-        MatcherAssert.assertThat(
-            new SumOfScalar(() -> 5).value().intValue(),
-            new IsEqual<>(5)
-        );
+        new Assertion<>(
+            "should sum one scalars of int",
+            new Mapped<>(
+                Number::intValue,
+                new SumOfScalar(() -> 5)
+            ),
+            new ScalarHasValue<>(5)
+        ).affirm();
     }
 }

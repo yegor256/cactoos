@@ -50,13 +50,6 @@ import org.cactoos.iterable.Mapped;
  *
  * @since 0.9
  */
-@SuppressWarnings(
-    {
-        "PMD.CallSuperInConstructor",
-        "PMD.OnlyOneConstructorShouldDoInitialization",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-    }
-)
 public final class SumOf extends NumberEnvelope {
 
     /**
@@ -108,7 +101,7 @@ public final class SumOf extends NumberEnvelope {
         super(() -> new Folded<>(
             BigDecimal.ZERO,
             (sum, value) -> sum.add(value, MathContext.DECIMAL128),
-            new Mapped<>(
+            new Mapped<BigDecimal>(
                 number -> BigDecimal.valueOf(number.doubleValue()),
                 src
             )).value().doubleValue()

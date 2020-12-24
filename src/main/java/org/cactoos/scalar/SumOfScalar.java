@@ -23,10 +23,8 @@
  */
 package org.cactoos.scalar;
 
-import java.util.stream.Collectors;
 import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.list.ListOf;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Make a scalar which is sum of scalar's values.
@@ -40,13 +38,7 @@ import org.cactoos.list.ListOf;
  *
  * @since 0.30
  */
-final class SumOfScalar implements Scalar<SumOf> {
-
-    /**
-     * Varargs of Scalar to sum up values from.
-     */
-    private final Scalar<? extends Number>[] scalars;
-
+final class SumOfScalar extends ScalarEnvelope<Number> {
     /**
      * Ctor.
      * @param src Varargs of Scalar to sum up values from
@@ -54,19 +46,6 @@ final class SumOfScalar implements Scalar<SumOf> {
      */
     @SafeVarargs
     SumOfScalar(final Scalar<? extends Number>... src) {
-        this.scalars = src;
-    }
-
-    @Override
-    public SumOf value() {
-        return new SumOf(
-            new IterableOf<>(
-                new ListOf<>(this.scalars)
-                    .stream()
-                    .map(
-                        scalar -> new Unchecked<>(scalar).value()
-                    ).collect(Collectors.toList())
-            )
-        );
+        super(() -> new SumOf(new Mapped<>(Scalar::value, src)));
     }
 }

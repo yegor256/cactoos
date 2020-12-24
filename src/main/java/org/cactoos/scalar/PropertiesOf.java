@@ -100,12 +100,10 @@ public final class PropertiesOf implements Scalar<Properties> {
     public PropertiesOf(final Iterable<Map.Entry<?, ?>> entries) {
         this(
             new MapOf<>(
-                new Mapped<>(
-                    input -> new MapEntry<>(
-                        input.getKey().toString(), input.getValue().toString()
-                    ),
-                    entries
-                )
+                input -> new MapEntry<>(
+                    input.getKey().toString(), input.getValue().toString()
+                ),
+                entries
             )
         );
     }
