@@ -43,7 +43,7 @@ public final class PaddedStart extends TextEnvelope {
     public PaddedStart(
         final Text text, final int length, final char symbol) {
         super(
-            new TextOf(
+            new Flattened(
                 () -> {
                     final String original = text.asString();
                     return new Joined(
@@ -51,8 +51,8 @@ public final class PaddedStart extends TextEnvelope {
                         new Repeated(
                             new TextOf(symbol), length - original.length()
                         ),
-                        text
-                    ).asString();
+                        new TextOf(original)
+                    );
                 }
             )
         );

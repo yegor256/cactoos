@@ -24,6 +24,7 @@
 package org.cactoos.text;
 
 import org.cactoos.Text;
+import org.cactoos.scalar.ScalarOf;
 import org.cactoos.scalar.Ternary;
 
 /**
@@ -32,6 +33,7 @@ import org.cactoos.scalar.Ternary;
  * no other characters are changed.
  *
  * @since 0.46
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class Capitalized extends TextEnvelope {
 
@@ -50,23 +52,24 @@ public final class Capitalized extends TextEnvelope {
      */
     public Capitalized(final Text text) {
         super(
-            new TextOf(
-                () -> {
-                    return new Ternary<Text>(
-                        new IsBlank(text),
-                        () -> text,
-                        () -> new Joined(
-                            "",
-                            new TextOf(
-                                Character.toChars(
-                                    Character.toTitleCase(
-                                        text.asString().codePointAt(0)
-                                    )
+            new Flattened(
+                new Ternary<>(
+                    new ScalarOf<>(() -> new Sticky(text)),
+                    (Text t) -> new IsBlank(t).value(),
+                    t -> t,
+                    t -> new Joined(
+                        "",
+                        new TextOf(
+                            Character.toChars(
+                                Character.toTitleCase(
+                                    t.asString().codePointAt(0)
                                 )
-                            ),
-                            new Sub(text, 1)
                             )
-                    ).value().asString();
-                }));
+                        ),
+                        new Sub(t, 1)
+                    )
+                )
+            )
+        );
     }
 }

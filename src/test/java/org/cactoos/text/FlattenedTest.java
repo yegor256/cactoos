@@ -24,43 +24,45 @@
 package org.cactoos.text;
 
 import org.cactoos.Text;
-import org.cactoos.func.FuncOf;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.ScalarOf;
-import org.cactoos.scalar.Ternary;
+import org.hamcrest.core.AllOf;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * Returns a text that is before given boundary.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @since 1.0
- */
-public final class PrefixOf extends TextEnvelope {
-
-    /**
-     * Ctor.
-     * @param text Text representing the text value
-     * @param boundary String to which text will be split
-     */
-    public PrefixOf(final String text, final String boundary) {
-        this(new TextOf(text), boundary);
+* Tests for {@link Flattened}.
+*
+* @since 0.49
+* @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+*/
+final class FlattenedTest {
+    @Test
+    void flattens() {
+        final Text txt = new TextOf("txt");
+        new Assertion<>(
+            "must flatten",
+            new Flattened(
+                new ScalarOf<>(() -> txt)
+            ),
+            new TextIs(txt)
+        ).affirm();
     }
 
-    /**
-     * Ctor.
-     * @param text Text representing the text value
-     * @param boundary String to which text will be split
-     */
-    public PrefixOf(final Text text, final String boundary) {
-        super(
-            new Flattened(
-                new Ternary<>(
-                    new ScalarOf<>(() -> new Sticky(text)),
-                    (Text t) -> t.asString().indexOf(boundary) >= 0,
-                    t -> new Sub(t, new FuncOf<>(0), s -> s.indexOf(boundary)),
-                    t -> t
-                )
-            )
+    @Test
+    void flattensTextThatChanges() {
+        final Iterable<Text> txts = new IterableOf<>(
+            new TextOf("txt1"),
+            new TextOf("txt2")
         );
+        new Assertion<>(
+            "must flatten a scalar that changes",
+            new Flattened(
+                new ScalarOf<>(txts.iterator()::next)
+            ),
+            new AllOf<Text>(new Mapped<>(TextIs::new, txts))
+        ).affirm();
     }
 }

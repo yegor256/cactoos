@@ -23,9 +23,10 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.scalar.Unchecked;
+import org.cactoos.func.FuncOf;
 
 /**
  * Extract a substring from a Text.
@@ -60,7 +61,16 @@ public final class Sub extends TextEnvelope {
      * @param strt Start position in the text
      */
     public Sub(final Text text, final int strt) {
-        this(text, () -> strt, () -> text.asString().length());
+        this(text, new FuncOf<>(strt));
+    }
+
+    /**
+     * Ctor.
+     * @param text The Text
+     * @param strt Start position in the text
+     */
+    public Sub(final Text text, final Func<String, Integer> strt) {
+        this(text, strt, s -> s.length());
     }
 
     /**
@@ -81,7 +91,7 @@ public final class Sub extends TextEnvelope {
      */
     public Sub(final Text text, final Scalar<Integer> strt,
         final Scalar<Integer> finish) {
-        this(text, new Unchecked<>(strt), new Unchecked<>(finish));
+        this(text, new FuncOf<>(strt), new FuncOf<>(finish));
     }
 
     /**
@@ -90,16 +100,16 @@ public final class Sub extends TextEnvelope {
      * @param start Start position in the text
      * @param end End position in the text
      */
-    public Sub(final Text text, final Unchecked<Integer> start,
-        final Unchecked<Integer> end) {
+    public Sub(final Text text, final Func<String, Integer> start,
+        final Func<String, Integer> end) {
         super(
             new Mapped(
                 origin -> {
-                    int begin = start.value();
+                    int begin = start.apply(origin);
                     if (begin < 0) {
                         begin = 0;
                     }
-                    int finish = end.value();
+                    int finish = end.apply(origin);
                     if (origin.length() < finish) {
                         finish = origin.length();
                     }

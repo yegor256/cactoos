@@ -23,44 +23,23 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.FuncOf;
-import org.cactoos.scalar.ScalarOf;
-import org.cactoos.scalar.Ternary;
+import org.cactoos.scalar.Mapped;
 
 /**
- * Returns a text that is before given boundary.
+ * {@link Text} from {@link Scalar}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 1.0
+ * @since 0.46
  */
-public final class PrefixOf extends TextEnvelope {
-
+public final class Flattened extends TextEnvelope {
     /**
      * Ctor.
-     * @param text Text representing the text value
-     * @param boundary String to which text will be split
+     * @param sclr The text
      */
-    public PrefixOf(final String text, final String boundary) {
-        this(new TextOf(text), boundary);
-    }
-
-    /**
-     * Ctor.
-     * @param text Text representing the text value
-     * @param boundary String to which text will be split
-     */
-    public PrefixOf(final Text text, final String boundary) {
-        super(
-            new Flattened(
-                new Ternary<>(
-                    new ScalarOf<>(() -> new Sticky(text)),
-                    (Text t) -> t.asString().indexOf(boundary) >= 0,
-                    t -> new Sub(t, new FuncOf<>(0), s -> s.indexOf(boundary)),
-                    t -> t
-                )
-            )
-        );
+    public Flattened(final Scalar<Text> sclr) {
+        super(new TextOf(new Mapped<>(Text::asString, sclr)));
     }
 }
