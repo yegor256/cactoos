@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import org.cactoos.Scalar;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * Repeat an element.
@@ -51,18 +50,9 @@ public final class Repeated<T> extends IterableEnvelope<T> {
      * @param elm The element to repeat
      */
     public Repeated(final int total, final Scalar<T> elm) {
-        this(total, new Unchecked<T>(elm));
-    }
-
-    /**
-     * Ctor.
-     * @param total The total number of repetitions
-     * @param item The element to repeat
-     */
-    public Repeated(final int total, final Unchecked<T> item) {
         super(
             new IterableOf<>(
-                () -> new org.cactoos.iterator.Repeated<>(total, item)
+                () -> new org.cactoos.iterator.Repeated<>(total, elm)
             )
         );
     }
