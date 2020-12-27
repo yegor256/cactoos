@@ -27,6 +27,7 @@ import org.cactoos.Text;
 import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.iterator.IteratorOf;
 
 /**
  * Split the Text.
@@ -151,7 +152,7 @@ public final class Split extends IterableEnvelope<Text> {
             new Mapped<>(
                 TextOf::new,
                 new IterableOf<>(
-                    text.asString().split(rgx.asString(), lmt)
+                    () -> new IteratorOf<>(text.asString().split(rgx.asString(), lmt))
                 )
             )
         );
