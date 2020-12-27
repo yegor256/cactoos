@@ -71,7 +71,7 @@ public final class Repeated<T> implements Iterator<T> {
      * @param max How many times to repeat
      * @param scalar Scalar to repeat
      */
-    public Repeated(final int max, final Unchecked<T> scalar) {
+    private Repeated(final int max, final Unchecked<T> scalar) {
         this.elm = scalar;
         this.repeat = max;
     }
