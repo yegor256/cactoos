@@ -136,17 +136,15 @@ public final class FormattedText extends TextEnvelope {
         final Collection<Object> args
     ) {
         super(
-            new TextOf(
-                () -> {
-                    final StringBuilder out = new StringBuilder(0);
+            new Mapped(
+                pattern -> {
+                    final StringBuilder out = new StringBuilder(pattern.length());
                     try (Formatter fmt = new Formatter(out, locale)) {
-                        fmt.format(
-                            ptn.asString(),
-                            args.toArray()
-                        );
+                        fmt.format(pattern, args.toArray());
                     }
                     return out.toString();
-                }
+                },
+                ptn
             )
         );
     }
