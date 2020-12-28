@@ -24,44 +24,30 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.text.TextOf;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * ScalarOf.
- *
- * @param <T> Element type
- * @since 0.4
- */
-public final class ScalarOf<T> implements Scalar<T> {
-
-    /**
-     * The scalar.
-     */
-    private final Scalar<T> origin;
-
-    /**
-     * Ctor.
-     *
-     * @param runnable The runnable
-     * @param result Result to return
-     */
-    public ScalarOf(final Runnable runnable, final T result) {
-        this(() -> {
-            runnable.run();
-            return result;
-        });
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param origin The scalar
-     */
-    public ScalarOf(final Scalar<T> origin) {
-        this.origin = origin;
-    }
-
-    @Override
-    public T value() throws Exception {
-        return this.origin.value();
+* Tests for {@link Flattened}.
+*
+* @since 0.49
+* @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+*/
+final class FlattenedTest {
+    @Test
+    void flattens() {
+        final Text txt = new TextOf("txt");
+        final Scalar<Text> sclr = new Constant<>(txt);
+        new Assertion<>(
+            "must flatten",
+            new Flattened<>(
+                new ScalarOf<>(() -> sclr)
+            ),
+            new ScalarHasValue<>(new TextIs(txt))
+        ).affirm();
     }
 }

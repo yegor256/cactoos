@@ -55,7 +55,7 @@ public final class Capitalized extends TextEnvelope {
             new Flattened(
                 new Ternary<>(
                     new ScalarOf<>(() -> new Sticky(text)),
-                    (Text t) -> new IsBlank(t).value(),
+                    new org.cactoos.func.Flattened<>(IsBlank::new),
                     t -> t,
                     t -> new Joined(
                         "",

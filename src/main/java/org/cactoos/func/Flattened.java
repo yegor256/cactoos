@@ -21,47 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.func;
 
+import org.cactoos.Func;
 import org.cactoos.Scalar;
 
 /**
- * ScalarOf.
+ * {@link Func} from {@link Func} of {@link Scalar}.
  *
- * @param <T> Element type
- * @since 0.4
+ * <p>There is no thread-safety guarantee.
+ *
+ * @param <X> Type of input
+ * @param <Y> Type of output
+ * @since 0.48
  */
-public final class ScalarOf<T> implements Scalar<T> {
-
-    /**
-     * The scalar.
-     */
-    private final Scalar<T> origin;
-
+public final class Flattened<X, Y> extends FuncEnvelope<X, Y> {
     /**
      * Ctor.
-     *
-     * @param runnable The runnable
-     * @param result Result to return
+     * @param sclr The func
      */
-    public ScalarOf(final Runnable runnable, final T result) {
-        this(() -> {
-            runnable.run();
-            return result;
-        });
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param origin The scalar
-     */
-    public ScalarOf(final Scalar<T> origin) {
-        this.origin = origin;
-    }
-
-    @Override
-    public T value() throws Exception {
-        return this.origin.value();
+    public Flattened(final Func<X, Scalar<Y>> sclr) {
+        super(x -> sclr.apply(x).value());
     }
 }

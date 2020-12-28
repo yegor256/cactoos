@@ -26,42 +26,19 @@ package org.cactoos.scalar;
 import org.cactoos.Scalar;
 
 /**
- * ScalarOf.
+ * {@link Scalar} from {@link Scalar} of {@link Scalar}.
  *
- * @param <T> Element type
- * @since 0.4
+ * <p>There is no thread-safety guarantee.
+ *
+ * @param <X> Element type
+ * @since 0.48
  */
-public final class ScalarOf<T> implements Scalar<T> {
-
-    /**
-     * The scalar.
-     */
-    private final Scalar<T> origin;
-
+public final class Flattened<X> extends ScalarEnvelope<X> {
     /**
      * Ctor.
-     *
-     * @param runnable The runnable
-     * @param result Result to return
+     * @param sclr The func
      */
-    public ScalarOf(final Runnable runnable, final T result) {
-        this(() -> {
-            runnable.run();
-            return result;
-        });
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param origin The scalar
-     */
-    public ScalarOf(final Scalar<T> origin) {
-        this.origin = origin;
-    }
-
-    @Override
-    public T value() throws Exception {
-        return this.origin.value();
+    public Flattened(final Scalar<Scalar<X>> sclr) {
+        super(() -> sclr.value().value());
     }
 }
