@@ -29,6 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Bytes;
 import org.cactoos.Text;
 import org.cactoos.io.BytesOf;
+import org.cactoos.io.UncheckedBytes;
 
 /**
  * Iterator that returns a set of bytes.
@@ -51,38 +52,35 @@ public final class IteratorOfBytes implements Iterator<Byte> {
 
     /**
      * Ctor.
-     * @param itms Items to iterate
-     */
-    public IteratorOfBytes(final byte... itms) {
-        this.items = itms;
-        this.position = new AtomicInteger(0);
-    }
-
-    /**
-     * Ctor.
      * @param txt Text to iterate
-     * @throws Exception If fails
      */
-    public IteratorOfBytes(final Text txt) throws Exception {
+    public IteratorOfBytes(final Text txt) {
         this(new BytesOf(txt));
     }
 
     /**
      * Ctor.
-     * @param bytes Bytes to iterate
-     * @throws Exception If fails
+     * @param str String to iterate
      */
-    public IteratorOfBytes(final Bytes bytes) throws Exception {
-        this(bytes.asBytes());
+    public IteratorOfBytes(final String str) {
+        this(new BytesOf(str));
     }
 
     /**
      * Ctor.
-     * @param str String to iterate
-     * @throws Exception If fails
+     * @param bytes Bytes to iterate
      */
-    public IteratorOfBytes(final String str) throws Exception {
-        this(new BytesOf(str));
+    public IteratorOfBytes(final Bytes bytes) {
+        this(new UncheckedBytes(bytes).asBytes());
+    }
+
+    /**
+     * Ctor.
+     * @param itms Items to iterate
+     */
+    public IteratorOfBytes(final byte... itms) {
+        this.items = itms;
+        this.position = new AtomicInteger(0);
     }
 
     @Override

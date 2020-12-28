@@ -35,14 +35,6 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
 
     /**
      * Ctor.
-     * @param chars Characters
-     */
-    public IterableOfChars(final char... chars) {
-        super(new IterableOf<>(() -> new IteratorOfChars(chars)));
-    }
-
-    /**
-     * Ctor.
      * @param str String
      */
     public IterableOfChars(final String str) {
@@ -55,5 +47,13 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
      */
     public IterableOfChars(final Text txt) {
         this(txt.toString());
+    }
+
+    /**
+     * Ctor.
+     * @param chars Characters
+     */
+    public IterableOfChars(final char... chars) {
+        super(new IterableOf<>(() -> new IteratorOfChars(chars)));
     }
 }
