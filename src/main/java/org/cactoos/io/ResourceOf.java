@@ -69,12 +69,34 @@ public final class ResourceOf implements Input {
     }
 
     /**
+     * New resource input with {@link ClassLoader} from the specified {@link Class}.
+     * @param res Resource name
+     * @param ldr Resource class loader
+     * @since 0.49
+     */
+    public ResourceOf(final CharSequence res, final Class<?> cls) {
+        this(res, cls.getClassLoader());
+    }
+
+    /**
      * New resource input with specified {@link ClassLoader}.
      * @param res Resource name
      * @param ldr Resource class loader
      */
     public ResourceOf(final CharSequence res, final ClassLoader ldr) {
         this(new TextOf(res), ldr);
+    }
+
+    /**
+     * New resource input with {@link ClassLoader} from the specified {@link Class}.
+     * @param res Resource name
+     * @param fbk Fallback
+     * @param ldr Resource class loader
+     * @since 0.49
+     */
+    public ResourceOf(final CharSequence res,
+        final Func<CharSequence, Input> fbk, final Class<?> cls) {
+        this(res, fbk, cls.getClassLoader());
     }
 
     /**
@@ -135,8 +157,9 @@ public final class ResourceOf implements Input {
             input -> {
                 throw new IOException(
                     new FormattedText(
-                        "Resource \"%s\" was not found",
-                        input.asString()
+                        "The resource \"%s\" was not found in %s",
+                        input.asString(),
+                        ldr
                     ).asString()
                 );
             },

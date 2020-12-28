@@ -76,6 +76,20 @@ public final class ResourceOfTest {
     }
 
     @Test
+    public void readsTextResourceThroughClassloader() throws Exception {
+        new Assertion<>(
+            "Can't read a text resource from classloader",
+            new TextOf(
+                new ResourceOf(
+                    "org/cactoos/large-text.txt",
+                    ResourceOfTest.class
+                )
+            ).asString(),
+            Matchers.endsWith(" laborum.\n")
+        ).affirm();
+    }
+
+    @Test
     public void readAbsentResourceTest() throws Exception {
         new Assertion<>(
             "Can't replace an absent resource with a text",
