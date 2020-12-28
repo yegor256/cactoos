@@ -135,4 +135,38 @@ final class ListIteratorNoNullsTest {
             new ScalarHasValue<>(4)
         ).affirm();
     }
+
+    @Test
+    void mustThrowsErrorIfAddANullItem() {
+        new Assertion<>(
+            "must throw error if add a null item",
+            () -> {
+                new ListIteratorNoNulls<>(
+                    new ListOf<>(1, 2, 3).listIterator()
+                ).add(null);
+                return 0;
+            },
+            new Throws<>(
+                "Item can't be NULL in #add(T)",
+                IllegalArgumentException.class
+            )
+        ).affirm();
+    }
+
+    @Test
+    void mustThrowsErrorIfSetANullItem() {
+        new Assertion<>(
+            "must throw error if set a null item",
+            () -> {
+                new ListIteratorNoNulls<>(
+                    new ListOf<>(1, 2, 3).listIterator()
+                ).set(null);
+                return 0;
+            },
+            new Throws<>(
+                "Item can't be NULL in #set(T)",
+                IllegalArgumentException.class
+            )
+        ).affirm();
+    }
 }
