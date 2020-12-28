@@ -34,10 +34,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Text;
-import org.cactoos.iterable.IterableOfBytes;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 
 /**
@@ -338,7 +339,7 @@ public final class BytesOf implements Bytes {
      * @param iterator Iterator of bytes
      */
     public BytesOf(final Iterator<Byte> iterator) {
-        this(new IterableOfBytes(iterator));
+        this(new IterableOf<>(iterator));
     }
 
     /**
@@ -347,7 +348,14 @@ public final class BytesOf implements Bytes {
      * @param bytes Iterable of bytes
      */
     public BytesOf(final Iterable<Byte> bytes) {
-        this(new ListOf<>(bytes));
+        this(() -> {
+            final List<Byte> concrete = new ListOf<>(bytes);
+            final ByteBuffer buf = ByteBuffer.allocate(
+                concrete.size()
+            );
+            concrete.forEach(buf::put);
+            return buf.array();
+        });
     }
 
     /**

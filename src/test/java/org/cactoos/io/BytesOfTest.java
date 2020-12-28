@@ -32,6 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
 import org.cactoos.iterable.Endless;
 import org.cactoos.iterable.HeadOf;
+import org.cactoos.iterable.IterableOfBytes;
 import org.cactoos.iterator.IteratorOfBytes;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
@@ -181,8 +182,20 @@ final class BytesOfTest {
                 new IteratorOfBytes(text)
             ).asBytes(),
             new IsEqual<>(
-                new BytesOf(text.asString()).asBytes()
+                new BytesOf(text).asBytes()
             )
+        ).affirm();
+    }
+
+    @Test
+    void asBytesFromIterable() throws Exception {
+        final Text text = new TextOf("Good bye");
+        new Assertion<>(
+            "Must convert iterable into bytes",
+            new BytesOf(
+                new IterableOfBytes(text)
+            ).asBytes(),
+            new IsEqual<>(new BytesOf(text).asBytes())
         ).affirm();
     }
 
