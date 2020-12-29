@@ -38,9 +38,8 @@ public final class Rotated extends TextEnvelope {
      */
     public Rotated(final Text text, final int shift) {
         super(
-            new TextOf(
-                () -> {
-                    String origin = text.asString();
+            new Mapped(
+                origin -> {
                     final int length = origin.length();
                     if (length != 0 && shift != 0 && shift % length != 0) {
                         final StringBuilder builder = new StringBuilder(length);
@@ -55,7 +54,8 @@ public final class Rotated extends TextEnvelope {
                         ).toString();
                     }
                     return origin;
-                }
+                },
+                text
             )
         );
     }

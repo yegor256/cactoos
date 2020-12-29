@@ -25,9 +25,11 @@ package org.cactoos.scalar;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.List;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 
 /**
  * Average of numbers.
@@ -50,16 +52,7 @@ import org.cactoos.iterable.Mapped;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.24
- * @checkstyle ExecutableStatementCountCheck (500 lines)
- * @checkstyle NPathComplexityCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.CallSuperInConstructor",
-        "PMD.OnlyOneConstructorShouldDoInitialization",
-        "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-    }
-)
 public final class AvgOf extends NumberEnvelope {
 
     /**
@@ -136,22 +129,17 @@ public final class AvgOf extends NumberEnvelope {
     public AvgOf(final Iterable<Scalar<Number>> src) {
         super(
             new Ternary<>(
-                new LengthOf(src),
-                (Double len) -> len > 0,
-                len -> new Folded<BigDecimal, BigDecimal>(
+                new ScalarOf<>(() -> new ListOf<>(new Mapped<Number>(Scalar::value, src))),
+                (List<Number> list) -> !list.isEmpty(),
+                list -> new Folded<BigDecimal, BigDecimal>(
                     BigDecimal.ZERO,
                     (sum, value) -> sum.add(value, MathContext.DECIMAL128),
-                    new Mapped<>(
-                        number -> BigDecimal.valueOf(
-                            number.value().doubleValue()
-                        ),
-                        src
-                    )
+                    new Mapped<>(s -> new BigDecimal(s.doubleValue()), list)
                 ).value().divide(
-                    BigDecimal.valueOf(len),
+                    BigDecimal.valueOf(list.size()),
                     MathContext.DECIMAL128
                 ).doubleValue(),
-                len -> 0.0
+                list -> 0.0
             )
         );
     }

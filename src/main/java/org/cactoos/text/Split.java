@@ -27,6 +27,7 @@ import org.cactoos.Text;
 import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.iterator.IteratorOf;
 
 /**
  * Split the Text.
@@ -44,10 +45,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @see String#split(String)
      */
     public Split(final String text, final String rgx) {
-        this(
-            new UncheckedText(new TextOf(text)),
-            new UncheckedText(new TextOf(rgx))
-        );
+        this(new TextOf(text), new TextOf(rgx));
     }
 
     /**
@@ -59,11 +57,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @see String#split(String, int)
      */
     public Split(final String text, final String rgx, final int lmt) {
-        this(
-            new UncheckedText(new TextOf(text)),
-            new UncheckedText(new TextOf(rgx)),
-            lmt
-        );
+        this(new TextOf(text), new TextOf(rgx), lmt);
     }
 
     /**
@@ -73,7 +67,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @see String#split(String)
      */
     public Split(final String text, final Text rgx) {
-        this(new UncheckedText(text), new UncheckedText(rgx));
+        this(new TextOf(text), rgx);
     }
 
     /**
@@ -84,7 +78,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @see String#split(String, int)
      */
     public Split(final String text, final Text rgx, final int lmt) {
-        this(new UncheckedText(text), new UncheckedText(rgx), lmt);
+        this(new TextOf(text), rgx, lmt);
     }
 
     /**
@@ -94,7 +88,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @see String#split(String)
      */
     public Split(final Text text, final String rgx) {
-        this(new UncheckedText(text), new UncheckedText(rgx));
+        this(text, new TextOf(rgx));
     }
 
     /**
@@ -105,7 +99,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @see String#split(String, int)
      */
     public Split(final Text text, final String rgx, final int lmt) {
-        this(new UncheckedText(text), new UncheckedText(rgx), lmt);
+        this(text, new TextOf(rgx), lmt);
     }
 
     /**
@@ -115,27 +109,6 @@ public final class Split extends IterableEnvelope<Text> {
      * @see String#split(String)
      */
     public Split(final Text text, final Text rgx) {
-        this(new UncheckedText(text), new UncheckedText(rgx));
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     * @param rgx The regex
-     * @param lmt The limit
-     * @see String#split(String, int)
-     */
-    public Split(final Text text, final Text rgx, final int lmt) {
-        this(new UncheckedText(text), new UncheckedText(rgx), lmt);
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     * @param rgx The regex
-     * @see String#split(String)
-     */
-    public Split(final UncheckedText text, final UncheckedText rgx) {
         this(text, rgx, 0);
     }
 
@@ -146,12 +119,12 @@ public final class Split extends IterableEnvelope<Text> {
      * @param lmt The limit
      * @see String#split(String, int)
      */
-    public Split(final UncheckedText text, final UncheckedText rgx, final int lmt) {
+    public Split(final Text text, final Text rgx, final int lmt) {
         super(
             new Mapped<>(
                 TextOf::new,
                 new IterableOf<>(
-                    text.asString().split(rgx.asString(), lmt)
+                    () -> new IteratorOf<>(text.asString().split(rgx.asString(), lmt))
                 )
             )
         );
