@@ -25,6 +25,7 @@ package org.cactoos.text;
 
 import org.cactoos.Text;
 import org.cactoos.func.FuncOf;
+import org.cactoos.scalar.Constant;
 import org.cactoos.scalar.ScalarOf;
 import org.cactoos.scalar.Ternary;
 
@@ -57,7 +58,7 @@ public final class PrefixOf extends TextEnvelope {
                 new Ternary<>(
                     new ScalarOf<>(() -> new Sticky(text)),
                     (Text t) -> t.asString().indexOf(boundary) >= 0,
-                    t -> new Sub(t, new FuncOf<>(0), s -> s.indexOf(boundary)),
+                    t -> new Sub(t, 0, s -> s.indexOf(boundary)),
                     t -> t
                 )
             )

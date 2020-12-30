@@ -23,37 +23,32 @@
  */
 package org.cactoos.scalar;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.core.IsEqual;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
- * Test case for {@link RepeatedCallable}.
+ * Test case for {@link Repeated}.
  *
  * @since 0.49.2
  * @checkstyle MagicNumberCheck (100 line)
  * @checkstyle JavadocMethodCheck (100 lines)
  */
-final class RepeatedCallableTest {
+final class RepeatedTest {
 
     @Test
-    void runsCallableMultipleTimes() throws Exception {
+    void runsMultipleTimes() throws Exception {
         final AtomicInteger atom = new AtomicInteger();
-        final Callable<Integer> callable = new RepeatedCallable<>(
-            new CallableOf<>(
-                () -> atom.getAndIncrement()
-            ),
-            3
-        );
         new Assertion<>(
-            "Must run callable 3 times",
-            callable.call(),
+            "Must run scalar 3 times",
+            new Repeated<>(
+                () -> atom.incrementAndGet(),
+                3
+            ).value(),
             new IsEqual<>(3)
-        );
+        ).affirm();
     }
 
     @Test
@@ -61,15 +56,15 @@ final class RepeatedCallableTest {
         new Assertion<>(
             // @checkstyle LineLengthCheck (1 line)
             "Must throws an exception if number of repetitions not be at least 1",
-            () -> new RepeatedCallable<>(
-                new CallableOf<>(
+            () -> new Repeated<>(
+                new ScalarOf<>(
                     () -> {
-                        Assert.fail("intended to fail");
+                        throw new IllegalStateException("intended to fail");
                     },
                     true
                 ),
                 0
-            ).call(),
+            ).value(),
             new Throws<>(
                 "The number of repetitions must be at least 1",
                 IllegalArgumentException.class

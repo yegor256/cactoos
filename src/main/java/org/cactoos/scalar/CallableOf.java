@@ -24,10 +24,7 @@
 package org.cactoos.scalar;
 
 import java.util.concurrent.Callable;
-import org.cactoos.Func;
-import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.func.FuncOf;
 
 /**
  * Func as {@link Callable}.
@@ -42,50 +39,15 @@ import org.cactoos.func.FuncOf;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @param <X> Type of input
  * @param <T> Type of output
  * @since 0.12
  */
-public final class CallableOf<X, T> implements Callable<T> {
+public final class CallableOf<T> implements Callable<T> {
 
     /**
      * Original callable.
      */
     private final Scalar<T> scalar;
-
-    /**
-     * Ctor.
-     * @param runnable Encapsulated proc
-     * @param result Result to return
-     * @since 0.32
-     */
-    public CallableOf(final Runnable runnable, final T result) {
-        this(() -> {
-            runnable.run();
-            return result;
-        });
-    }
-
-    /**
-     * Ctor.
-     * @param proc Encapsulated proc
-     * @param ipt Input
-     * @param result Result to return
-     * @since 0.41
-     */
-    public CallableOf(final Proc<X> proc, final X ipt, final T result) {
-        this(new FuncOf<>(proc, result), ipt);
-    }
-
-    /**
-     * Ctor.
-     * @param fnc Encapsulated func
-     * @param ipt Input
-     * @since 0.41
-     */
-    public CallableOf(final Func<X, T> fnc, final X ipt) {
-        this(() -> fnc.apply(ipt));
-    }
 
     /**
      * Ctor.

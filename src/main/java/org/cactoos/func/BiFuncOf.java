@@ -23,13 +23,11 @@
  */
 package org.cactoos.func;
 
-import java.util.concurrent.Callable;
 import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.CallableOf;
 
 /**
  * Represents many possible inputs as {@link BiFunc}.
@@ -47,14 +45,6 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
      * The func.
      */
     private final BiFunc<X, Y, Z> func;
-
-    /**
-     * Ctor.
-     * @param result The result
-     */
-    public BiFuncOf(final Z result) {
-        this((first, second) -> result);
-    }
 
     /**
      * Ctor.
@@ -102,27 +92,9 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
-     * @param callable The callable
-     */
-    public BiFuncOf(final Callable<Z> callable) {
-        this((first, second) -> callable.call());
-    }
-
-    /**
-     * Ctor.
-     * @param runnable The runnable
-     * @param result Result to return
-     * @since 0.32
-     */
-    public BiFuncOf(final Runnable runnable, final Z result) {
-        this(new CallableOf<>(runnable, result));
-    }
-
-    /**
-     * Ctor.
      * @param fnc Func
      */
-    private BiFuncOf(final BiFunc<X, Y, Z> fnc) {
+    public BiFuncOf(final BiFunc<X, Y, Z> fnc) {
         this.func = fnc;
     }
 
@@ -130,5 +102,4 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
     public Z apply(final X first, final Y second) throws Exception {
         return this.func.apply(first, second);
     }
-
 }

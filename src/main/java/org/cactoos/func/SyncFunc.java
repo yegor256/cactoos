@@ -23,9 +23,7 @@
  */
 package org.cactoos.func;
 
-import java.util.concurrent.Callable;
 import org.cactoos.Func;
-import org.cactoos.Proc;
 
 /**
  * Func that is thread-safe.
@@ -47,35 +45,6 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
      * Sync lock.
      */
     private final Object lock;
-
-    /**
-     * Ctor.
-     * @param runnable Func original
-     * @param result Result to return
-     * @since 0.32
-     */
-    public SyncFunc(final Runnable runnable, final Y result) {
-        this(new FuncOf<>(runnable, result));
-    }
-
-    /**
-     * Ctor.
-     * @param callable Func original
-     * @since 0.12
-     */
-    public SyncFunc(final Callable<Y> callable) {
-        this(new FuncOf<>(callable));
-    }
-
-    /**
-     * Ctor.
-     * @param proc Func original
-     * @param result Result to return
-     * @since 0.32
-     */
-    public SyncFunc(final Proc<X> proc, final Y result) {
-        this(new FuncOf<>(proc, result));
-    }
 
     /**
      * Ctor.

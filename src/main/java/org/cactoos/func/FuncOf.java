@@ -23,13 +23,9 @@
  */
 package org.cactoos.func;
 
-import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.Constant;
-import org.cactoos.scalar.ScalarOf;
-import org.cactoos.scalar.ScalarOfCallable;
 
 /**
  * Represents many possible inputs as {@link Func}.
@@ -46,32 +42,6 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
      * The func.
      */
     private final Func<X, Y> func;
-
-    /**
-     * Ctor.
-     * @param result The result
-     */
-    public FuncOf(final Y result) {
-        this(new Constant<>(result));
-    }
-
-    /**
-     * Ctor.
-     * @param callable The callable
-     */
-    public FuncOf(final Callable<Y> callable) {
-        this(new ScalarOfCallable<>(callable));
-    }
-
-    /**
-     * Ctor.
-     * @param runnable The runnable
-     * @param result Result to return
-     * @since 0.32
-     */
-    public FuncOf(final Runnable runnable, final Y result) {
-        this(new ScalarOf<>(runnable, result));
-    }
 
     /**
      * Ctor.

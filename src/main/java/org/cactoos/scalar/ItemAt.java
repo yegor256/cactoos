@@ -80,7 +80,7 @@ public final class ItemAt<T> implements Scalar<T> {
         final T fallback,
         final Iterable<T> iterable
     ) {
-        this(position, new FuncOf<>(fallback), iterable);
+        this(position, new FuncOf<>(new Constant<>(fallback)), iterable);
     }
 
     /**

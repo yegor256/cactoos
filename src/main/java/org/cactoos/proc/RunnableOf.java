@@ -21,24 +21,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.proc;
 
-import java.util.concurrent.Callable;
+import org.cactoos.Proc;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
- * ScalarOfCallable.
+ * Func as Runnable.
  *
- * @param <T> Element type.
- * @since 0.47
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.12
  */
-public final class ScalarOfCallable<T> extends ScalarEnvelope<T> {
+public final class RunnableOf implements Runnable {
+
+    /**
+     * Runnable.
+     */
+    private final Runnable runnable;
 
     /**
      * Ctor.
-     *
-     * @param callable The callable
+     * @param proc Encapsulated proc
+     * @param ipt Input
+     * @param <X> Type of input
+     * @since 0.32
      */
-    public ScalarOfCallable(final Callable<T> callable) {
-        super(callable::call);
+    public <X> RunnableOf(final Proc<? super X> proc, final X ipt) {
+        this(
+            () -> {
+                new UncheckedProc<>(proc).exec(ipt);
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param scalar Encapsulated scalar
+     * @since 0.11
+     */
+    public RunnableOf(final Scalar<?> scalar) {
+        this(
+            () -> {
+                new Unchecked<>(scalar).value();
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param runnable Encapsulated runnable
+     * @since 0.49
+     */
+    public RunnableOf(final Runnable runnable) {
+        this.runnable = runnable;
+    }
+
+    @Override
+    public void run() {
+        this.runnable.run();
     }
 }

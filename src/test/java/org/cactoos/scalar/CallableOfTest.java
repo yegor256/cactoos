@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -34,53 +33,15 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class CallableOfTest {
-
     @Test
-    void convertsRunnableIntoCallable() throws Exception {
-        final AtomicBoolean flag = new AtomicBoolean(false);
-        new CallableOf<>(
-            () -> flag.set(true),
-            true
-        ).call();
+    void convertsScalar() throws Exception {
         new Assertion<>(
-            "must have been set by callable",
-            flag.get(),
-            new IsEqual<>(true)
-        ).affirm();
-    }
-
-    @Test
-    void convertsProcIntoCallable() throws Exception {
-        final AtomicBoolean flag = new AtomicBoolean(false);
-        new Assertion<>(
-            "must return predefined result",
+            "must return the value of scalar",
             new CallableOf<>(
-                bool -> {
-                    flag.set(bool);
-                },
-                true,
-                false
+                new Constant<>(1)
             ).call(),
-            new IsEqual<>(false)
-        ).affirm();
-        new Assertion<>(
-            "must have been set by callable",
-            flag.get(),
-            new IsEqual<>(true)
-        ).affirm();
-    }
-
-    @Test
-    void convertsFuncIntoCallable() throws Exception {
-        new Assertion<>(
-            "must return the application of func",
-            new CallableOf<>(
-                num -> num + 1,
-                1
-            ).call(),
-            new IsEqual<>(2)
+            new IsEqual<>(1)
         ).affirm();
     }
 

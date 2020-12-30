@@ -60,7 +60,7 @@ public final class FirstOf<T> implements Scalar<T> {
      */
     public FirstOf(final Iterable<T> src, final T fbck) {
         this(
-            new FuncOf<>(true),
+            new FuncOf<>(new True()),
             src,
             () -> fbck
         );
@@ -73,7 +73,7 @@ public final class FirstOf<T> implements Scalar<T> {
      */
     public FirstOf(final Iterable<T> src, final Scalar<T> fbck) {
         this(
-            new FuncOf<>(true),
+            new FuncOf<>(new True()),
             src,
             fbck
         );

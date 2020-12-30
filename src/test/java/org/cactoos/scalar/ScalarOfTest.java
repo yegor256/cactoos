@@ -21,46 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.scalar;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import org.cactoos.func.FuncOf;
 import org.cactoos.proc.ProcOf;
-import org.cactoos.scalar.Constant;
-import org.hamcrest.core.IsEqual;
+import org.cactoos.proc.RunnableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
- * Test case for {@link FuncOf}.
+ * Test case for {@link ScalarOf}.
  *
- * @since 0.20
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.48
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class FuncOfTest {
-
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+final class ScalarOfTest {
     @Test
-    void convertsProcIntoFunc() throws Exception {
-        final AtomicBoolean done = new AtomicBoolean(false);
+    void worksWithCallable() {
+        final Object obj = new Object();
         new Assertion<>(
-            "Must convert procedure into function",
-            new FuncOf<String, Boolean>(
-                new ProcOf<>(
-                    input -> {
-                        done.set(true);
-                    }
-                ),
-                true
-            ).apply("hello world"),
-            new IsEqual<>(done.get())
+            "must hold the same value as given by callable",
+            new ScalarOf<>(new CallableOf<>(new Constant<>(obj))),
+            new ScalarHasValue<>(obj)
         ).affirm();
     }
 
     @Test
-    void convertsScalarIntoFunc() throws Exception {
+    void worksWithRunnable() {
+        final Object obj = new Object();
         new Assertion<>(
-            "Result of func must be equal to the original value",
-            new FuncOf<>(new Constant<>(1)).apply(new Object()),
-            new IsEqual<>(1)
+            "must hold the same value as given",
+            new ScalarOf<>(new RunnableOf(ignored -> { }, "ignored"), obj),
+            new ScalarHasValue<>(obj)
+        ).affirm();
+    }
+
+    @Test
+    void worksWithFunc() {
+        final Object obj = new Object();
+        new Assertion<>(
+            "must hold the same value as given by func",
+            new ScalarOf<>(new FuncOf<>(new Constant<>(obj)), "ignored"),
+            new ScalarHasValue<>(obj)
+        ).affirm();
+    }
+
+    @Test
+    void worksWithProc() {
+        final Object obj = new Object();
+        new Assertion<>(
+            "must hold the expected value",
+            new ScalarOf<>(new ProcOf<>(ignored -> { }), "ignored", obj),
+            new ScalarHasValue<>(obj)
         ).affirm();
     }
 }

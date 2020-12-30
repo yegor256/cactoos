@@ -23,7 +23,6 @@
  */
 package org.cactoos.proc;
 
-import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 
@@ -44,22 +43,6 @@ public final class ProcOf<X> implements Proc<X> {
 
     /**
      * Ctor.
-     * @param runnable The runnable
-     */
-    public ProcOf(final Runnable runnable) {
-        this((Proc<X>) input -> runnable.run());
-    }
-
-    /**
-     * Ctor.
-     * @param callable The callable
-     */
-    public ProcOf(final Callable<X> callable) {
-        this((Proc<X>) input -> callable.call());
-    }
-
-    /**
-     * Ctor.
      * @param fnc The proc
      */
     public ProcOf(final Func<X, ?> fnc) {
@@ -70,7 +53,7 @@ public final class ProcOf<X> implements Proc<X> {
      * Ctor.
      * @param prc The proc
      */
-    private ProcOf(final Proc<X> prc) {
+    public ProcOf(final Proc<X> prc) {
         this.proc = prc;
     }
 

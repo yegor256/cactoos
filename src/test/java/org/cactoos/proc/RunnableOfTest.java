@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.proc;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.cactoos.proc.ProcOf;
+import org.cactoos.scalar.ScalarOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.MatcherOf;
@@ -35,40 +35,21 @@ import org.llorllale.cactoos.matchers.MatcherOf;
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class RunnableOfTest {
-
-    @Test
-    void convertsFuncIntoRunnable() {
-        final AtomicBoolean done = new AtomicBoolean();
-        new Assertion<>(
-            "Can't execute Runnable with Func",
-            new RunnableOf<>(
-                input -> {
-                    done.set(true);
-                    return 1;
-                }
-            ),
-            new MatcherOf<Runnable>(
-                input -> {
-                    input.run();
-                    return done.get();
-                }
-            )
-        ).affirm();
-    }
 
     @Test
     void convertsProcIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
         new Assertion<>(
-            "Can't execute Runnable with ProcOf",
-            new RunnableOf<>(
+            "Must execute Runnable with Proc",
+            new RunnableOf(
                 new ProcOf<>(
-                    input -> {
+                    ignored -> {
                         done.set(true);
-                        return 1;
                     }
-                )
+                ),
+                "ignored"
             ),
             new MatcherOf<Runnable>(
                 input -> {
@@ -80,15 +61,17 @@ final class RunnableOfTest {
     }
 
     @Test
-    void convertsCallableIntoRunnable() {
+    void convertsScalarIntoRunnable() {
         final AtomicBoolean done = new AtomicBoolean();
         new Assertion<>(
-            "Can't execute Runnable with Callable",
-            new RunnableOf<>(
-                () -> {
-                    done.set(true);
-                    return null;
-                }
+            "Must execute Runnable with Scalar",
+            new RunnableOf(
+                new ScalarOf<>(
+                    () -> {
+                        done.set(true);
+                        return null;
+                    }
+                )
             ),
             new MatcherOf<Runnable>(
                 input -> {

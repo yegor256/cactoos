@@ -25,7 +25,6 @@ package org.cactoos.func;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.cactoos.proc.ProcOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -37,9 +36,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class SyncFuncTest {
-
     @Test
     void funcWorksInThreads() {
         final List<Integer> list = new LinkedList<>();
@@ -57,76 +54,6 @@ final class SyncFuncTest {
         new Assertion<>(
             "Must run the expected amount of threads",
             list.size(),
-            new IsEqual<>(threads)
-        ).affirm();
-    }
-
-    @Test
-    void procWorksInThreads() {
-        final int threads = 100;
-        final int[] counter = new int[]{0};
-        new Assertion<>(
-            "Sync func with proc can't work well in multiple threads",
-            func -> func.apply(1),
-            new RunsInThreads<>(
-                new SyncFunc<Integer, Boolean>(
-                    new ProcOf<>(
-                        input -> counter[0] = counter[0] + input
-                    ),
-                    true
-                ),
-                threads
-            )
-        ).affirm();
-        new Assertion<>(
-            "Must run the expected amount of threads",
-            counter[0],
-            new IsEqual<>(threads)
-        ).affirm();
-    }
-
-    @Test
-    void callableWorksInThreads() {
-        final int threads = 100;
-        final int[] counter = new int[]{0};
-        new Assertion<>(
-            "Sync func with callable can't work well in multiple threads",
-            func -> func.apply(1),
-            new RunsInThreads<>(
-                new SyncFunc<Integer, Boolean>(
-                    () -> {
-                        counter[0] = counter[0] + 1;
-                        return true;
-                    }
-                ),
-                threads
-            )
-        ).affirm();
-        new Assertion<>(
-            "Must run the expected amount of threads",
-            counter[0],
-            new IsEqual<>(threads)
-        ).affirm();
-    }
-
-    @Test
-    void runnableWorksInThreads() {
-        final int threads = 100;
-        final int[] counter = new int[]{0};
-        new Assertion<>(
-            "Sync func with runnable can't work well in multiple threads",
-            func -> func.apply(1),
-            new RunsInThreads<>(
-                new SyncFunc<Integer, Boolean>(
-                    () -> counter[0] = counter[0] + 1,
-                    true
-                ),
-                threads
-            )
-        ).affirm();
-        new Assertion<>(
-            "Must run the expected amount of threads",
-            counter[0],
             new IsEqual<>(threads)
         ).affirm();
     }

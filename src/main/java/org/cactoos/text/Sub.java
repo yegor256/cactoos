@@ -27,6 +27,7 @@ import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.func.FuncOf;
+import org.cactoos.scalar.Constant;
 
 /**
  * Extract a substring from a Text.
@@ -61,6 +62,15 @@ public final class Sub extends TextEnvelope {
      * @param strt Start position in the text
      */
     public Sub(final Text text, final int strt) {
+        this(text, new Constant<>(strt));
+    }
+
+    /**
+     * Ctor.
+     * @param text The Text
+     * @param strt Start position in the text
+     */
+    public Sub(final Text text, final Scalar<Integer> strt) {
         this(text, new FuncOf<>(strt));
     }
 
@@ -70,7 +80,7 @@ public final class Sub extends TextEnvelope {
      * @param strt Start position in the text
      */
     public Sub(final Text text, final Func<String, Integer> strt) {
-        this(text, strt, s -> s.length());
+        this(text, strt, String::length);
     }
 
     /**
@@ -80,7 +90,27 @@ public final class Sub extends TextEnvelope {
      * @param finish End position in the text
      */
     public Sub(final Text text, final int strt, final int finish) {
-        this(text, () -> strt, () -> finish);
+        this(text, new Constant<>(strt), new Constant<>(finish));
+    }
+
+    /**
+     * Ctor.
+     * @param text The Text
+     * @param strt Start position in the text
+     * @param finish End position in the text
+     */
+    public Sub(final Text text, final int strt, final Scalar<Integer> finish) {
+        this(text, new Constant<>(strt), finish);
+    }
+
+    /**
+     * Ctor.
+     * @param text The Text
+     * @param strt Start position in the text
+     * @param finish End position in the text
+     */
+    public Sub(final Text text, final int strt, final Func<String, Integer> finish) {
+        this(text, new Constant<>(strt), finish);
     }
 
     /**
@@ -92,6 +122,17 @@ public final class Sub extends TextEnvelope {
     public Sub(final Text text, final Scalar<Integer> strt,
         final Scalar<Integer> finish) {
         this(text, new FuncOf<>(strt), new FuncOf<>(finish));
+    }
+
+    /**
+     * Ctor.
+     * @param text The Text
+     * @param strt Start position in the text
+     * @param finish End position in the text
+     */
+    public Sub(final Text text, final Scalar<Integer> strt,
+        final Func<String, Integer> finish) {
+        this(text, new FuncOf<>(strt), finish);
     }
 
     /**

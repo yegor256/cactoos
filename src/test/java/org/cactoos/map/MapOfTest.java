@@ -28,6 +28,7 @@ import java.util.Map;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.Constant;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.AllOf;
@@ -35,6 +36,7 @@ import org.hamcrest.core.IsAnything;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.StringStartsWith;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link MapOf}.
@@ -158,25 +160,25 @@ final class MapOfTest {
 
     @Test
     void createsMapFromFunctionsAndIterable() {
-        MatcherAssert.assertThat(
-            "Can't create a map from functions and iterable.",
+        new Assertion<>(
+            "Must create a map from functions and iterable.",
             new MapOf<Integer, Integer>(
-                new FuncOf<Integer, Integer>(0),
-                new FuncOf<Integer, Integer>(0),
+                new FuncOf<Integer, Integer>(new Constant<>(0)),
+                new FuncOf<Integer, Integer>(new Constant<>(0)),
                 new IterableOf<Integer>(0)
             ),
             new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0))
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void createsMapFromMapFunctionsAndIterable() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't create a map from map, functions and iterable.",
             new MapOf<Integer, Integer>(
-                new FuncOf<Integer, Integer>(0),
-                new FuncOf<Integer, Integer>(0),
+                new FuncOf<Integer, Integer>(new Constant<>(0)),
+                new FuncOf<Integer, Integer>(new Constant<>(0)),
                 new MapOf<Integer, Integer>(
                     new MapEntry<Integer, Integer>(1, 1)
                 ),
@@ -188,7 +190,7 @@ final class MapOfTest {
                     new IsMapContaining<>(new IsEqual<>(1), new IsEqual<>(1))
                 )
             )
-        );
+        ).affirm();
     }
 
 }

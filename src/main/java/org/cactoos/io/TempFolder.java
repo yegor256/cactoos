@@ -35,7 +35,6 @@ import org.cactoos.Text;
 import org.cactoos.iterable.Sorted;
 import org.cactoos.proc.ForEach;
 import org.cactoos.proc.IoCheckedProc;
-import org.cactoos.proc.ProcOf;
 import org.cactoos.scalar.IoChecked;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.text.Joined;
@@ -133,9 +132,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
     public void close() throws IOException {
         new IoCheckedProc<>(
             new ForEach<Path>(
-                new ProcOf<>(
-                    path -> path.toFile().delete()
-                )
+                path -> path.toFile().delete()
             )
         ).exec(
             new Sorted<>(
