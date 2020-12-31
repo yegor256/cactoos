@@ -30,6 +30,7 @@ import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
 
 /**
  * Test case for {@link ResourceOf}.
@@ -71,8 +72,8 @@ public final class ResourceOfTest {
                 new ResourceOf(
                     "org/cactoos/large-text.txt"
                 )
-            ).asString(),
-            Matchers.endsWith("est laborum.\n")
+            ),
+            new EndsWith("est laborum.\n")
         ).affirm();
     }
 
