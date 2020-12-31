@@ -63,6 +63,7 @@ public final class ResourceOfTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void readsTextResource() throws Exception {
         new Assertion<>(
             "Can't read a text resource from classpath",

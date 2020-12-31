@@ -71,7 +71,7 @@ public final class ResourceOf implements Input {
     /**
      * New resource input with {@link ClassLoader} from the specified {@link Class}.
      * @param res Resource name
-     * @param ldr Resource class loader
+     * @param cls Resource class loader
      * @since 0.49
      */
     public ResourceOf(final CharSequence res, final Class<?> cls) {
@@ -91,7 +91,7 @@ public final class ResourceOf implements Input {
      * New resource input with {@link ClassLoader} from the specified {@link Class}.
      * @param res Resource name
      * @param fbk Fallback
-     * @param ldr Resource class loader
+     * @param cls Resource class loader
      * @since 0.49
      */
     public ResourceOf(final CharSequence res,
