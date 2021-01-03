@@ -35,5 +35,9 @@
  * @since 0.1
  * @see <a href="http://www.cactoos.org">Project site www.cactoos.org</a>
  * @see <a href="https://github.com/yegor256/cactoos">GitHub repository</a>
+ * @todo #1445:30min For consistency sake with Func, let's
+ *  - introduce envelopes for Proc, BiProc, BiFunc, Runnable and Callable
+ *  - have FuncOf, ProcOf, etc extend their envelope to simplify their code
+ *  - apply on other classes that could benefit from it
  */
 package org.cactoos;

@@ -41,6 +41,9 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Timed}.
  *
  * @since 1.0.0
+ * @todo #1445:30min Replace all the usage of Repeated in tests that
+ *  are used to execute the same test multiple times with the use of
+ *  the RepeatedTest annotation from Junit 5.
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TimedTest {
