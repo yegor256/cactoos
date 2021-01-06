@@ -96,14 +96,14 @@ final class JoinedTest {
     @SuppressWarnings("unchecked")
     void joinIterableAndItem() {
         new Assertion<>(
-                "Must join iterable and item",
-                new IterableOf<>(
-                        new Joined<>(
-                                new IteratorOf<>(1, 2, 3),
-                                0
-                        )
-                ),
-                new IsEqual<>(new IterableOf<>(1, 2, 3, 0))
+            "Must join iterable and item",
+            new IterableOf<>(
+                new Joined<>(
+                    new IteratorOf<>(1, 2, 3),
+                    0
+                )
+            ),
+            new IsEqual<>(new IterableOf<>(1, 2, 3, 0))
         ).affirm();
     }
 }
