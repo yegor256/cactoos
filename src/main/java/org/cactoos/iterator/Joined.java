@@ -69,6 +69,17 @@ public final class Joined<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     * @param items Iterable
+     * @param item End item
+     * @since 0.49
+     */
+    @SuppressWarnings("unchecked")
+    public Joined(final Iterator<? extends T> items, final T item) {
+        this(new IterableOf<>(items, new IteratorOf<>(item)));
+    }
+
+    /**
+     * Ctor.
      * @param items Items to concatenate
      */
     public Joined(final Iterable<Iterator<? extends T>> items) {
