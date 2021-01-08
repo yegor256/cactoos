@@ -25,6 +25,7 @@ package org.cactoos.func;
 
 import java.sql.SQLException;
 import java.sql.SQLRecoverableException;
+import org.cactoos.Fallback;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.InheritanceLevel;
@@ -99,7 +100,7 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
     /**
      * The fallbacks.
      */
-    private final Iterable<FallbackFrom<Y>> fallbacks;
+    private final Iterable<Fallback<Y>> fallbacks;
 
     /**
      * Ctor.
@@ -107,7 +108,7 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
      * @param fbk The fallback
      */
     @SuppressWarnings("unchecked")
-    public FuncWithFallback(final Func<X, Y> fnc, final FallbackFrom<Y> fbk) {
+    public FuncWithFallback(final Func<X, Y> fnc, final Fallback<Y> fbk) {
         this(fnc, new IterableOf<>(fbk));
     }
 
@@ -117,7 +118,7 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
      * @param fbks The fallbacks
      */
     public FuncWithFallback(
-        final Func<X, Y> fnc, final Iterable<FallbackFrom<Y>> fbks
+        final Func<X, Y> fnc, final Iterable<Fallback<Y>> fbks
     ) {
         this.func = fnc;
         this.fallbacks = fbks;
