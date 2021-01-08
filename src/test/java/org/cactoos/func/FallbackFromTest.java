@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import java.util.IllegalFormatException;
+import java.util.IllegalFormatWidthException;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -35,6 +35,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  *
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("unchecked")
 final class FallbackFromTest {
@@ -46,7 +47,7 @@ final class FallbackFromTest {
             new FallbackFrom<>(
                 new IterableOf<>(IOException.class),
                 exp -> "IOException fallback"
-            ).support(IOException.class),
+            ).support(new IOException()),
             new IsEqual<>(0)
         ).affirm();
     }
@@ -58,8 +59,8 @@ final class FallbackFromTest {
             new FallbackFrom<>(
                 new IterableOf<>(RuntimeException.class),
                 exp -> "RuntimeException fallback #1"
-            ).support(IllegalFormatException.class),
-            new IsEqual<>(2)
+            ).support(new IllegalFormatWidthException(1)),
+            new IsEqual<>(3)
         ).affirm();
     }
 
@@ -70,7 +71,7 @@ final class FallbackFromTest {
             new FallbackFrom<>(
                 new IterableOf<>(RuntimeException.class),
                 exp -> "RuntimeException fallback #2"
-            ).support(ClassNotFoundException.class),
+            ).support(new ClassNotFoundException()),
             new IsEqual<>(Integer.MIN_VALUE)
         ).affirm();
     }

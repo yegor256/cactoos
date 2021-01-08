@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import java.util.Comparator;
 import java.util.Map;
-import org.cactoos.Func;
+import org.cactoos.Fallback;
 import org.cactoos.Scalar;
 import org.cactoos.func.FallbackFrom;
 import org.cactoos.func.FuncWithFallback;
@@ -53,7 +53,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     /**
      * The fallback.
      */
-    private final Iterable<FallbackFrom<T>> fallbacks;
+    private final Iterable<Fallback<T>> fallbacks;
 
     /**
      * Ctor.
@@ -64,7 +64,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     public ScalarWithFallback(
         final Scalar<T> origin,
         final Class<? extends Throwable> exception,
-        final Func<Throwable, T> fallback
+        final Fallback<T> fallback
     ) {
         this(origin, new IterableOf<Class<? extends Throwable>>(exception), fallback);
     }
@@ -78,11 +78,11 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     public ScalarWithFallback(
         final Scalar<T> origin,
         final Iterable<Class<? extends Throwable>> exceptions,
-        final Func<Throwable, T> fallback
+        final Fallback<T> fallback
     ) {
         this(
             origin,
-            new IterableOf<FallbackFrom<T>>(
+            new IterableOf<Fallback<T>>(
                 new FallbackFrom<>(
                     exceptions, fallback
                 )
@@ -96,7 +96,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
      * @param fbks Fallbacks
      */
     public ScalarWithFallback(final Scalar<T> origin,
-        final Iterable<FallbackFrom<T>> fbks) {
+        final Iterable<Fallback<T>> fbks) {
         this.origin = origin;
         this.fallbacks = fbks;
     }
@@ -126,7 +126,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
      */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private T fallback(final Throwable exp) throws Exception {
-        final Sorted<Map.Entry<FallbackFrom<T>, Integer>> candidates =
+        final Sorted<Map.Entry<Fallback<T>, Integer>> candidates =
             new Sorted<>(
                 Comparator.comparing(Map.Entry::getValue),
                 new Filtered<>(
@@ -138,7 +138,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
                     ).value(),
                     new MapOf<>(
                         fbk -> fbk,
-                        fbk -> fbk.support(exp.getClass()),
+                        fbk -> fbk.support(exp),
                         this.fallbacks
                     ).entrySet().iterator()
                 )

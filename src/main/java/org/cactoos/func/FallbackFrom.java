@@ -23,6 +23,7 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.Fallback;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
@@ -37,7 +38,7 @@ import org.cactoos.scalar.MinOf;
  * @param <T> Type of result
  * @since 0.31
  */
-public final class FallbackFrom<T> implements Func<Throwable, T> {
+public final class FallbackFrom<T> implements Fallback<T> {
 
     /**
      * The list of exceptions supported by this instance.
@@ -77,17 +78,11 @@ public final class FallbackFrom<T> implements Func<Throwable, T> {
         return this.func.apply(exp);
     }
 
-    /**
-     * Calculate level of support of the given exception type.
-     * @param target Exception type
-     * @return Level of support: greater or equals to 0 if the target
-     *  is supported and {@link Integer#MIN_VALUE} otherwise
-     * @see InheritanceLevel
-     */
-    public Integer support(final Class<? extends Throwable> target) {
+    @Override
+    public int support(final Throwable exception) {
         return new MinOf(
             new Mapped<>(
-                supported -> new InheritanceLevel(target, supported).value(),
+                supported -> new InheritanceLevel(exception.getClass(), supported).value(),
                 this.exceptions
             )
         ).intValue();

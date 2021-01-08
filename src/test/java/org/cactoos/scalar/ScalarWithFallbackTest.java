@@ -68,7 +68,10 @@ public final class ScalarWithFallbackTest {
             new ScalarWithFallback<>(
                 () -> message,
                 IOException.class,
-                Throwable::getMessage
+                new FallbackFrom<>(
+                    IOException.class,
+                    Throwable::getMessage
+                )
             ),
             new ScalarHasValue<>(message)
         ).affirm();
@@ -82,7 +85,10 @@ public final class ScalarWithFallbackTest {
             new ScalarWithFallback<>(
                 () -> message,
                 new IterableOf<>(IOException.class),
-                Throwable::getMessage
+                new FallbackFrom<>(
+                    IOException.class,
+                    Throwable::getMessage
+                )
             ),
             new ScalarHasValue<>(message)
         ).affirm();
@@ -100,7 +106,10 @@ public final class ScalarWithFallbackTest {
                 new IterableOf<>(
                     new FallbackFrom<>(
                         new IterableOf<>(IOException.class),
-                        exp -> message
+                        new FallbackFrom<>(
+                            IOException.class,
+                            exp -> message
+                        )
                     )
                 )
             ),
@@ -118,7 +127,10 @@ public final class ScalarWithFallbackTest {
                     throw new IOException("Failure with IOException (exp & flbck)");
                 },
                 IOException.class,
-                exp -> message
+                new FallbackFrom<>(
+                    IOException.class,
+                    exp -> message
+                )
             ),
             new ScalarHasValue<>(message)
         ).affirm();
@@ -134,7 +146,10 @@ public final class ScalarWithFallbackTest {
                     throw new IOException("Failure with IOException (exp iterable & flbck)");
                 },
                 new IterableOf<>(IOException.class),
-                exp -> message
+                new FallbackFrom<>(
+                    IOException.class,
+                    exp -> message
+                )
             ),
             new ScalarHasValue<>(message)
         ).affirm();
