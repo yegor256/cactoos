@@ -25,11 +25,13 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.util.Arrays;
+import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
 
 /**
  * Test case for {@link ResourceOf}.
@@ -65,13 +67,18 @@ public final class ResourceOfTest {
     @Test
     public void readsTextResource() throws Exception {
         new Assertion<>(
-            "Can't read a text resource from classpath",
-            new TextOf(
-                new ResourceOf(
-                    "org/cactoos/large-text.txt"
-                )
-            ).asString(),
-            Matchers.endsWith("est laborum.\n")
+            "Must read a text resource from classpath",
+            ResourceOfTest.large(),
+            new EndsWith("est laborum.\n")
+        ).affirm();
+    }
+
+    @Test
+    public void readsTextResourceThroughClassloader() throws Exception {
+        new Assertion<>(
+            "Must read a text resource from classloader",
+            ResourceOfTest.large(),
+            new EndsWith(" laborum.\n")
         ).affirm();
     }
 
@@ -125,6 +132,19 @@ public final class ResourceOfTest {
             ).asString(),
             Matchers.startsWith("another")
         ).affirm();
+    }
+
+    /**
+     * Large text resource.
+     * @return The content of the large resource
+     */
+    private static Text large() {
+        return new TextOf(
+            new ResourceOf(
+                "org/cactoos/large-text.txt",
+                ResourceOfTest.class
+            )
+        );
     }
 
 }
