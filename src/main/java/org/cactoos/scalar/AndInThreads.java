@@ -92,7 +92,8 @@ public final class AndInThreads implements Scalar<Boolean> {
         final Iterable<X> src) {
         this(
             new Mapped<>(
-                item -> (Scalar<Boolean>) () -> func.apply(item), src
+                item -> new ScalarOf<>(() -> func.apply(item)),
+                src
             )
         );
     }
@@ -164,7 +165,8 @@ public final class AndInThreads implements Scalar<Boolean> {
         this(
             svc,
             new Mapped<>(
-                item -> (Scalar<Boolean>) () -> func.apply(item), src
+                item -> new ScalarOf<>(() -> func.apply(item)),
+                src
             )
         );
     }
@@ -210,7 +212,7 @@ public final class AndInThreads implements Scalar<Boolean> {
             futures.add(this.service.submit(item::value));
         }
         final boolean result = new And(
-            (Func<Future<Boolean>, Boolean>) Future::get,
+            Future::get,
             futures
         ).value();
         if (this.shut) {
