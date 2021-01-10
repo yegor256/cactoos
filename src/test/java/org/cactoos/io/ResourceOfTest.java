@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.util.Arrays;
+import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;
@@ -64,15 +65,10 @@ public final class ResourceOfTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public void readsTextResource() throws Exception {
         new Assertion<>(
-            "Can't read a text resource from classpath",
-            new TextOf(
-                new ResourceOf(
-                    "org/cactoos/large-text.txt"
-                )
-            ),
+            "Must read a text resource from classpath",
+            ResourceOfTest.large(),
             new EndsWith("est laborum.\n")
         ).affirm();
     }
@@ -80,14 +76,9 @@ public final class ResourceOfTest {
     @Test
     public void readsTextResourceThroughClassloader() throws Exception {
         new Assertion<>(
-            "Can't read a text resource from classloader",
-            new TextOf(
-                new ResourceOf(
-                    "org/cactoos/large-text.txt",
-                    ResourceOfTest.class
-                )
-            ).asString(),
-            Matchers.endsWith(" laborum.\n")
+            "Must read a text resource from classloader",
+            ResourceOfTest.large(),
+            new EndsWith(" laborum.\n")
         ).affirm();
     }
 
@@ -141,6 +132,19 @@ public final class ResourceOfTest {
             ).asString(),
             Matchers.startsWith("another")
         ).affirm();
+    }
+
+    /**
+     * Large text resource.
+     * @return The content of the large resource
+     */
+    private static Text large() {
+        return new TextOf(
+            new ResourceOf(
+                "org/cactoos/large-text.txt",
+                ResourceOfTest.class
+            )
+        );
     }
 
 }
