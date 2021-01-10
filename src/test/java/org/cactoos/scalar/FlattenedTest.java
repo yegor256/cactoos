@@ -21,46 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.scalar;
 
+import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.FuncOf;
-import org.cactoos.scalar.ScalarOf;
-import org.cactoos.scalar.Ternary;
+import org.cactoos.text.TextOf;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * Returns a text that is before given boundary.
- *
- * <p>There is no thread-safety guarantee.
- *
- * @since 1.0
- */
-public final class PrefixOf extends TextEnvelope {
-
-    /**
-     * Ctor.
-     * @param text Text representing the text value
-     * @param boundary String to which text will be split
-     */
-    public PrefixOf(final String text, final String boundary) {
-        this(new TextOf(text), boundary);
-    }
-
-    /**
-     * Ctor.
-     * @param text Text representing the text value
-     * @param boundary String to which text will be split
-     */
-    public PrefixOf(final Text text, final String boundary) {
-        super(
-            new Flattened(
-                new Ternary<>(
-                    new ScalarOf<>(() -> new Sticky(text)),
-                    (Text t) -> t.asString().indexOf(boundary) >= 0,
-                    t -> new Sub(t, new FuncOf<>(0), s -> s.indexOf(boundary)),
-                    t -> t
-                )
-            )
-        );
+* Tests for {@link Flattened}.
+*
+* @since 0.49
+* @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+*/
+final class FlattenedTest {
+    @Test
+    void flattens() {
+        final Text txt = new TextOf("txt");
+        final Scalar<Text> sclr = new Constant<>(txt);
+        new Assertion<>(
+            "must flatten",
+            new Flattened<>(
+                new ScalarOf<>(() -> sclr)
+            ),
+            new ScalarHasValue<>(new TextIs(txt))
+        ).affirm();
     }
 }

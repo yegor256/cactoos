@@ -27,6 +27,9 @@ import java.util.concurrent.Callable;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
+import org.cactoos.scalar.Constant;
+import org.cactoos.scalar.ScalarOf;
+import org.cactoos.scalar.ScalarOfCallable;
 
 /**
  * Represents many possible inputs as {@link Func}.
@@ -49,7 +52,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
      * @param result The result
      */
     public FuncOf(final Y result) {
-        this((Func<X, Y>) input -> result);
+        this(new Constant<>(result));
     }
 
     /**
@@ -57,7 +60,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
      * @param callable The callable
      */
     public FuncOf(final Callable<Y> callable) {
-        this((Func<X, Y>) input -> callable.call());
+        this(new ScalarOfCallable<>(callable));
     }
 
     /**
@@ -67,7 +70,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
      * @since 0.32
      */
     public FuncOf(final Runnable runnable, final Y result) {
-        this(input -> runnable.run(), result);
+        this(new ScalarOf<>(runnable, result));
     }
 
     /**
@@ -89,16 +92,14 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
      * @param scalar Origin scalar
      */
     public FuncOf(final Scalar<Y> scalar) {
-        this(input -> {
-            return scalar.value();
-        });
+        this(input -> scalar.value());
     }
 
     /**
      * Ctor.
      * @param fnc Func
      */
-    private FuncOf(final Func<X, Y> fnc) {
+    public FuncOf(final Func<X, Y> fnc) {
         this.func = fnc;
     }
 

@@ -23,14 +23,20 @@
  */
 package org.cactoos.text;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Text;
+import org.cactoos.iterable.IterableOf;
+import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link Abbreviated}.
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 final class AbbreviatedTest {
@@ -39,30 +45,27 @@ final class AbbreviatedTest {
     void abbreviatesAnEmptyText() {
         final String msg = "";
         new Assertion<>(
-            "Can't abbreviate an msg text",
-            // @checkstyle MagicNumber (1 line)
+            "Must abbreviate an msg text",
             new Abbreviated(msg, 8),
-            new TextHasString(msg)
+            new TextIs(msg)
         ).affirm();
     }
 
     @Test
     void abbreviatesText() {
         new Assertion<>(
-            "Can't abbreviate a text",
-            // @checkstyle MagicNumber (1 line)
+            "Must abbreviate a text",
             new Abbreviated("hello world", 8),
-            new TextHasString("hello...")
+            new TextIs("hello...")
         ).affirm();
     }
 
     @Test
     void abbreviatesTextOneCharSmaller() {
         new Assertion<>(
-            "Can't abbreviate a text one char smaller",
-            // @checkstyle MagicNumber (1 line)
+            "Must abbreviate a text one char smaller",
             new Abbreviated("oo programming", 10),
-            new TextHasString("oo prog...")
+            new TextIs("oo prog...")
         ).affirm();
     }
 
@@ -70,10 +73,9 @@ final class AbbreviatedTest {
     void abbreviatesTextWithSameLength() {
         final String msg = "elegant objects";
         new Assertion<>(
-            "Can't abbreviate a text with same length",
-            // @checkstyle MagicNumber (1 line)
+            "Must abbreviate a text with same length",
             new Abbreviated(msg, 15),
-            new TextHasString(msg)
+            new TextIs(msg)
         ).affirm();
     }
 
@@ -81,10 +83,9 @@ final class AbbreviatedTest {
     void abbreviatesTextOneCharBigger() {
         final String msg = "the old mcdonald";
         new Assertion<>(
-            "Can't abbreviate a text one char bigger",
-            // @checkstyle MagicNumber (1 line)
+            "Must abbreviate a text one char bigger",
             new Abbreviated(msg, 17),
-            new TextHasString(msg)
+            new TextIs(msg)
         ).affirm();
     }
 
@@ -92,10 +93,9 @@ final class AbbreviatedTest {
     void abbreviatesTextTwoCharsBigger() {
         final String msg = "hi everybody!";
         new Assertion<>(
-            "Can't abbreviate a text two chars bigger",
-            // @checkstyle MagicNumber (1 line)
+            "Must abbreviate a text two chars bigger",
             new Abbreviated(msg, 15),
-            new TextHasString(msg)
+            new TextIs(msg)
         ).affirm();
     }
 
@@ -103,25 +103,58 @@ final class AbbreviatedTest {
     void abbreviatesTextWithWidthBiggerThanLength() {
         final String msg = "cactoos framework";
         new Assertion<>(
-            "Can't abbreviate a text with width bigger than length",
-            // @checkstyle MagicNumber (1 line)
+            "Must abbreviate a text with width bigger than length",
             new Abbreviated(msg, 50),
-            new TextHasString(msg)
+            new TextIs(msg)
         ).affirm();
     }
 
     @Test
     void abbreviatesTextBiggerThanDefaultMaxWidth() {
-        // @checkstyle LineLengthCheck (10 line)
         new Assertion<>(
-            "Can't abbreviate a text bigger than default max width",
+            "Must abbreviate a text bigger than default max width",
             new Abbreviated(
+                // @checkstyle LineLengthCheck (1 line)
                 "The quick brown fox jumps over the lazy black dog and after that returned to the cave"
             ),
-            new TextHasString(
+            new TextIs(
+                // @checkstyle LineLengthCheck (1 line)
                 "The quick brown fox jumps over the lazy black dog and after that returned to ..."
             )
         ).affirm();
     }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    void abbreviatesTextThatChanges() {
+        final AtomicInteger counter = new AtomicInteger(0);
+        final Text txt = new TextOf(
+            () -> {
+                final String result;
+                if (counter.getAndIncrement() == 0) {
+                    result = "The quick brown fox jumps";
+                } else {
+                    result = "The lazy black dog";
+                }
+                return result;
+            }
+        );
+        new Assertion<>(
+            "Must abbreviate a text that changes",
+            new Abbreviated(
+                txt,
+                15
+            ),
+            new AllOf<>(
+                new IterableOf<>(
+                    new TextIs(
+                        "The quick br..."
+                    ),
+                    new TextIs(
+                        "The lazy bla..."
+                    )
+                )
+            )
+        ).affirm();
+    }
 }

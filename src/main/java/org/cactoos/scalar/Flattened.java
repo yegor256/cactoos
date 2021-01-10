@@ -21,46 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.text;
+package org.cactoos.scalar;
 
-import org.cactoos.Text;
-import org.cactoos.func.FuncOf;
-import org.cactoos.scalar.ScalarOf;
-import org.cactoos.scalar.Ternary;
+import org.cactoos.Scalar;
 
 /**
- * Returns a text that is before given boundary.
+ * {@link Scalar} from {@link Scalar} of {@link Scalar}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 1.0
+ * @param <X> Element type
+ * @since 0.48
  */
-public final class PrefixOf extends TextEnvelope {
-
+public final class Flattened<X> extends ScalarEnvelope<X> {
     /**
      * Ctor.
-     * @param text Text representing the text value
-     * @param boundary String to which text will be split
+     * @param sclr The func
      */
-    public PrefixOf(final String text, final String boundary) {
-        this(new TextOf(text), boundary);
-    }
-
-    /**
-     * Ctor.
-     * @param text Text representing the text value
-     * @param boundary String to which text will be split
-     */
-    public PrefixOf(final Text text, final String boundary) {
-        super(
-            new Flattened(
-                new Ternary<>(
-                    new ScalarOf<>(() -> new Sticky(text)),
-                    (Text t) -> t.asString().indexOf(boundary) >= 0,
-                    t -> new Sub(t, new FuncOf<>(0), s -> s.indexOf(boundary)),
-                    t -> t
-                )
-            )
-        );
+    public Flattened(final Scalar<Scalar<X>> sclr) {
+        super(() -> sclr.value().value());
     }
 }

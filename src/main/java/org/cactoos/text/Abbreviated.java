@@ -24,6 +24,9 @@
 package org.cactoos.text;
 
 import org.cactoos.Text;
+import org.cactoos.scalar.LengthOf;
+import org.cactoos.scalar.ScalarOf;
+import org.cactoos.scalar.Ternary;
 
 /**
  * Abbreviates a Text using ellipses.
@@ -31,6 +34,7 @@ import org.cactoos.Text;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class Abbreviated extends TextEnvelope {
 
@@ -80,32 +84,24 @@ public final class Abbreviated extends TextEnvelope {
      * Ctor.
      * @param text The Text
      * @param max Max width of the result string
-     * @todo #1287:30min Introduce `text.Flatten` that takes a `Scalar` of `Text`
-     *  and call `value()` then `asString()` on it. Add some tests for it (including
-     *  for `equals`). Then replace the code below by a composition of `text.Flatten`
-     *  and `scalar.Ternary`. Then do the same for `PrefixOf` and `SuffixOf` using
-     *  `text.Sub`.
      */
     public Abbreviated(final Text text, final int max) {
         super(
-            new TextOf(
-                () -> {
-                    final Text abbreviated;
-                    if (text.asString().length() <= max) {
-                        abbreviated = text;
-                    } else {
-                        abbreviated = new FormattedText(
-                            "%s%s",
-                            new Sub(
-                                text,
-                                0,
-                                max - Abbreviated.ELLIPSES.length()
-                            ).asString(),
-                            Abbreviated.ELLIPSES
-                        );
-                    }
-                    return abbreviated.asString();
-                }
+            new Flattened(
+                new Ternary<>(
+                    new ScalarOf<>(() -> new Sticky(text)),
+                    (Text t) -> new LengthOf(t).longValue() <= max,
+                    t -> t,
+                    t -> new FormattedText(
+                        "%s%s",
+                        new Sub(
+                            t,
+                            0,
+                            max - Abbreviated.ELLIPSES.length()
+                        ),
+                        Abbreviated.ELLIPSES
+                    )
+                )
             )
         );
     }

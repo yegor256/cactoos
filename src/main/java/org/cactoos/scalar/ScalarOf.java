@@ -41,6 +41,19 @@ public final class ScalarOf<T> implements Scalar<T> {
     /**
      * Ctor.
      *
+     * @param runnable The runnable
+     * @param result Result to return
+     */
+    public ScalarOf(final Runnable runnable, final T result) {
+        this(() -> {
+            runnable.run();
+            return result;
+        });
+    }
+
+    /**
+     * Ctor.
+     *
      * @param origin The scalar
      */
     public ScalarOf(final Scalar<T> origin) {
