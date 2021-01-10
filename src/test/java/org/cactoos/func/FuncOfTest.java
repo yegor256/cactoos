@@ -23,44 +23,70 @@
  */
 package org.cactoos.func;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.scalar.Constant;
-import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link FuncOf}.
  *
  * @since 0.20
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class FuncOfTest {
-
     @Test
     void convertsProcIntoFunc() throws Exception {
-        final AtomicBoolean done = new AtomicBoolean(false);
+        final AtomicReference<Object> done = new AtomicReference<>();
+        final Object result = new Object();
         new Assertion<>(
-            "Must convert procedure into function",
-            new FuncOf<String, Boolean>(
+            "Must convert Proc into Func",
+            new FuncOf<>(
                 new ProcOf<>(
                     input -> {
-                        done.set(true);
+                        done.set(input);
                     }
                 ),
-                true
-            ).apply("hello world"),
-            new IsEqual<>(done.get())
+                result
+            ),
+            new MatcherOf<>(
+                func -> {
+                    final Object input = new Object();
+                    final Object res = func.apply(input);
+                    return res.equals(result) && done.get().equals(input);
+                }
+            )
         ).affirm();
     }
 
     @Test
     void convertsScalarIntoFunc() throws Exception {
+        final Object result = new Object();
         new Assertion<>(
-            "Result of func must be equal to the original value",
-            new FuncOf<>(new Constant<>(1)).apply(new Object()),
-            new IsEqual<>(1)
+            "Must convert Scalar into Func",
+            new FuncOf<>(new Constant<>(result)),
+            new MatcherOf<>(
+                func -> {
+                    final Object res = func.apply("discarded");
+                    return res.equals(result);
+                }
+            )
+        ).affirm();
+    }
+
+    @Test
+    void convertsLambdaIntoFunc() throws Exception {
+        new Assertion<>(
+            "Must convert Lambda into Func",
+            new FuncOf<>(input -> input),
+            new MatcherOf<>(
+                func -> {
+                    final Object input = new Object();
+                    final Object res = func.apply(input);
+                    return res.equals(input);
+                }
+            )
         ).affirm();
     }
 }

@@ -23,7 +23,6 @@
  */
 package org.cactoos.scalar;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -94,9 +93,9 @@ final class AndInThreadsTest {
     }
 
     @Test
-    void emptyIterator() throws Exception {
+    void emptyIterable() throws Exception {
         new Assertion<>(
-            "Iterator must be empty",
+            "Must iterate over empty iterable",
             new AndInThreads(new IterableOf<Scalar<Boolean>>()),
             new ScalarHasValue<>(true)
         ).affirm();
@@ -106,10 +105,10 @@ final class AndInThreadsTest {
     void iteratesList() {
         final List<String> list = new Synced<>(new ListOf<>());
         new Assertion<>(
-            "Must iterate a list with a procedure",
+            "Must iterate a list with a function",
             new AndInThreads(
                 new Mapped<>(
-                    new FuncOf<String, Scalar<Boolean>>(list::add, () -> true),
+                    new FuncOf<String, Scalar<Boolean>>(list::add, new True()),
                     new IterableOf<>("hello", "world")
                 )
             ),
@@ -128,32 +127,6 @@ final class AndInThreadsTest {
                     new MatcherOf<>(
                         text -> {
                             return "world".equals(text);
-                        }
-                    )
-                )
-            )
-        ).affirm();
-    }
-
-    @Test
-    void iteratesEmptyList() {
-        final List<String> list = new Synced<>(
-            new ArrayList<>(2)
-        );
-        new Assertion<>(
-            "Must iterate an empty list",
-            new AndInThreads(
-                new Mapped<>(
-                    new FuncOf<String, Scalar<Boolean>>(list::add, () -> true),
-                    new IterableOf<String>()
-                )
-            ),
-            new ScalarHasValue<>(
-                Matchers.allOf(
-                    Matchers.equalTo(true),
-                    new MatcherOf<>(
-                        value -> {
-                            return list.isEmpty();
                         }
                     )
                 )

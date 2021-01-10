@@ -23,36 +23,58 @@
  */
 package org.cactoos.proc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.func.FuncOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link ProcOf}.
  *
  * @since 0.3
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ProcOfTest {
     @Test
     void worksWithFunc() throws Exception {
-        final String str = "test input";
-        final List<String> list = new ArrayList<>(1);
-        new ProcOf<String>(
-            new FuncOf<>(
-                input -> {
-                    list.add(input);
-                    return list.size();
+        final AtomicReference<Object> done = new AtomicReference<>();
+        new Assertion<>(
+            "Must execute Proc with Func",
+            new ProcOf<>(
+                new FuncOf<>(
+                    input -> {
+                        done.set(input);
+                        return true;
+                    }
+                )
+            ),
+            new MatcherOf<>(
+                proc -> {
+                    final Object input = new Object();
+                    proc.exec(input);
+                    return done.get() == input;
                 }
             )
-        ).exec(str);
+        ).affirm();
+    }
+
+    @Test
+    void worksWithLambda() throws Exception {
+        final AtomicReference<Object> done = new AtomicReference<>();
         new Assertion<>(
-            "Must contains the expected value from func",
-            list,
-            new HasValues<>(str)
+            "Must execute Proc with Lambda",
+            new ProcOf<>(
+                input -> {
+                    done.set(input);
+                }
+            ),
+            new MatcherOf<>(
+                proc -> {
+                    final Object input = new Object();
+                    proc.exec(input);
+                    return done.get() == input;
+                }
+            )
         ).affirm();
     }
 }
