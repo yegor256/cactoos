@@ -105,10 +105,21 @@ public final class And implements Scalar<Boolean> {
      */
     @SafeVarargs
     public <X> And(final X subject, final Func<X, Boolean>... conditions) {
+        this(subject, new IterableOf<>(conditions));
+    }
+
+    /**
+     * Ctor.
+     * @param subject The subject
+     * @param conditions Funcs to map
+     * @param <X> Type of items in the iterable
+     * @since 0.49
+     */
+    public <X> And(final X subject, final Iterable<Func<X, Boolean>> conditions) {
         this(
             new Mapped<>(
                 item -> (Scalar<Boolean>) () -> item.apply(subject),
-                new IterableOf<>(conditions)
+                conditions
             )
         );
     }

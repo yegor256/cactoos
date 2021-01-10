@@ -23,10 +23,8 @@
  */
 package org.cactoos.proc;
 
-import org.cactoos.BiFunc;
 import org.cactoos.BiProc;
 import org.cactoos.Proc;
-import org.cactoos.func.BiFuncOf;
 import org.cactoos.scalar.AndWithIndex;
 
 /**
@@ -57,7 +55,7 @@ public final class ForEachWithIndex<X> implements Proc<Iterable<X>> {
     /**
      * The proc.
      */
-    private final BiFunc<X, Integer, Boolean> func;
+    private final BiProc<X, Integer> proc;
 
     /**
      * Ctor.
@@ -65,15 +63,13 @@ public final class ForEachWithIndex<X> implements Proc<Iterable<X>> {
      * @param proc The proc to execute
      */
     public ForEachWithIndex(final BiProc<X, Integer> proc) {
-        this.func = new BiFuncOf<>(
-            proc, true
-        );
+        this.proc = proc;
     }
 
     @Override
     public void exec(final Iterable<X> input) throws Exception {
         new AndWithIndex(
-            this.func, input
+            this.proc, input
         ).value();
     }
 }
