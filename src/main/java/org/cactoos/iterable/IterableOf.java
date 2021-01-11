@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-
 import org.cactoos.Fallback;
 import org.cactoos.Scalar;
 import org.cactoos.iterator.IteratorOf;

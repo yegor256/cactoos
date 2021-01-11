@@ -25,7 +25,6 @@ package org.cactoos.func;
 
 import java.io.IOException;
 import java.util.IllegalFormatWidthException;
-
 import org.cactoos.Fallback;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;

@@ -45,7 +45,7 @@ public interface Fallback<X> extends Func<Throwable, X> {
      *  is supported and {@link Integer#MIN_VALUE} otherwise
      */
     int support(Throwable exception);
-    
+
     /**
      * Fallback from exception.
      *

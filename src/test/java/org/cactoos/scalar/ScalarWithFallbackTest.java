@@ -26,7 +26,6 @@ package org.cactoos.scalar;
 import java.io.IOException;
 import java.util.IllegalFormatException;
 import java.util.IllegalFormatWidthException;
-
 import org.cactoos.Fallback;
 import org.cactoos.iterable.IterableOf;
 import org.junit.Test;
