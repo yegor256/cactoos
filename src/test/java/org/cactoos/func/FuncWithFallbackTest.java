@@ -26,6 +26,7 @@ package org.cactoos.func;
 import java.io.IOException;
 import java.util.IllegalFormatException;
 import java.util.IllegalFormatWidthException;
+import org.cactoos.Fallback;
 import org.cactoos.iterable.IterableOf;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -46,9 +47,9 @@ public final class FuncWithFallbackTest {
         final String expected = "It's success";
         new Assertion<>(
             "Can't use the main function if no exception",
-            new FuncWithFallback<>(
+            new FuncWithFallback<Integer, String>(
                 input -> expected,
-                new FallbackFrom<>(
+                new Fallback.From<>(
                     Exception.class,
                     ex -> "In case of failure..."
                 )
@@ -62,11 +63,11 @@ public final class FuncWithFallbackTest {
         final String expected = "Never mind";
         new Assertion<>(
             "Can't use the callback in case of exception",
-            new FuncWithFallback<>(
+            new FuncWithFallback<Integer, String>(
                 input -> {
                     throw new IOException("Failure");
                 },
-                new FallbackFrom<>(IOException.class, ex -> expected)
+                new Fallback.From<>(IOException.class, ex -> expected)
             ),
             new FuncApplies<>(1, expected)
         ).affirm();
@@ -77,13 +78,13 @@ public final class FuncWithFallbackTest {
         final String expected = "Fallback from InterruptedException";
         new Assertion<>(
             "Can't use a fallback from Interrupted in case of exception",
-            new FuncWithFallback<>(
+            new FuncWithFallback<Integer, String>(
                 input -> {
                     throw new InterruptedException(
                         "Failure with InterruptedException"
                     );
                 },
-                new FallbackFrom<>(InterruptedException.class, exp -> expected)
+                new Fallback.From<>(InterruptedException.class, exp -> expected)
             ),
             new FuncApplies<>(1, expected)
         ).affirm();
@@ -99,11 +100,11 @@ public final class FuncWithFallbackTest {
                     throw new IllegalFormatWidthException(1);
                 },
                 new IterableOf<>(
-                    new FallbackFrom<>(
+                    new Fallback.From<>(
                         IllegalArgumentException.class,
                         exp -> "Fallback from IllegalArgumentException"
                     ),
-                    new FallbackFrom<>(
+                    new Fallback.From<>(
                         IllegalFormatException.class,
                         exp -> expected
                     )

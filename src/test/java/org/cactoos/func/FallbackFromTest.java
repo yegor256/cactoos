@@ -24,17 +24,18 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import java.util.IllegalFormatException;
-import org.cactoos.iterable.IterableOf;
+import java.util.IllegalFormatWidthException;
+import org.cactoos.Fallback;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link FallbackFrom}.
+ * Test case for {@link Fallback.From}.
  *
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("unchecked")
 final class FallbackFromTest {
@@ -43,10 +44,10 @@ final class FallbackFromTest {
     void supportsException() {
         new Assertion<>(
             "Must support exactly exception class",
-            new FallbackFrom<>(
-                new IterableOf<>(IOException.class),
+            new Fallback.From<>(
+                IOException.class,
                 exp -> "IOException fallback"
-            ).support(IOException.class),
+            ).support(new IOException()),
             new IsEqual<>(0)
         ).affirm();
     }
@@ -55,11 +56,11 @@ final class FallbackFromTest {
     void supportsInheritedException() {
         new Assertion<>(
             "Must support inherited exception class",
-            new FallbackFrom<>(
-                new IterableOf<>(RuntimeException.class),
+            new Fallback.From<>(
+                RuntimeException.class,
                 exp -> "RuntimeException fallback #1"
-            ).support(IllegalFormatException.class),
-            new IsEqual<>(2)
+            ).support(new IllegalFormatWidthException(1)),
+            new IsEqual<>(3)
         ).affirm();
     }
 
@@ -67,10 +68,10 @@ final class FallbackFromTest {
     void doesNotSupportException() {
         new Assertion<>(
             "Must not support unrelated exception class",
-            new FallbackFrom<>(
-                new IterableOf<>(RuntimeException.class),
+            new Fallback.From<>(
+                RuntimeException.class,
                 exp -> "RuntimeException fallback #2"
-            ).support(ClassNotFoundException.class),
+            ).support(new ClassNotFoundException()),
             new IsEqual<>(Integer.MIN_VALUE)
         ).affirm();
     }
