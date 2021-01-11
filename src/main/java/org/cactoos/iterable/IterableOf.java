@@ -24,8 +24,9 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
+
+import org.cactoos.Fallback;
 import org.cactoos.Scalar;
-import org.cactoos.func.FallbackFrom;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
@@ -105,7 +106,7 @@ public final class IterableOf<X> implements Iterable<X> {
                                 )
                             ),
                             new IterableOf<>(
-                                new FallbackFrom<>(
+                                new Fallback.From<>(
                                     IllegalStateException.class,
                                     ex -> false
                                 )
