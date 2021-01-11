@@ -26,7 +26,8 @@ package org.cactoos.scalar;
 import java.io.IOException;
 import java.util.IllegalFormatException;
 import java.util.IllegalFormatWidthException;
-import org.cactoos.func.FallbackFrom;
+
+import org.cactoos.Fallback;
 import org.cactoos.iterable.IterableOf;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -50,7 +51,7 @@ public final class ScalarWithFallbackTest {
             new ScalarWithFallback<>(
                 () -> message,
                 new IterableOf<>(
-                    new FallbackFrom<>(
+                    new Fallback.From<>(
                         new IterableOf<>(IOException.class),
                         Throwable::getMessage
                     )
@@ -65,10 +66,9 @@ public final class ScalarWithFallbackTest {
         final String message = "Main function's result #1 (exp & flbck)";
         new Assertion<>(
             "Using the main function if no exception (exp & flbck)",
-            new ScalarWithFallback<>(
+            new ScalarWithFallback<String>(
                 () -> message,
-                IOException.class,
-                new FallbackFrom<>(
+                new Fallback.From<>(
                     IOException.class,
                     Throwable::getMessage
                 )
@@ -82,11 +82,10 @@ public final class ScalarWithFallbackTest {
         final String message = "Main function's result #1 (exp iterable & flbck)";
         new Assertion<>(
             "Using the main function if no exception (exp iterable & flbck)",
-            new ScalarWithFallback<>(
+            new ScalarWithFallback<String>(
                 () -> message,
-                new IterableOf<>(IOException.class),
-                new FallbackFrom<>(
-                    IOException.class,
+                new Fallback.From<>(
+                    new IterableOf<>(IOException.class),
                     Throwable::getMessage
                 )
             ),
@@ -104,9 +103,9 @@ public final class ScalarWithFallbackTest {
                     throw new IOException("Failure with IOException");
                 },
                 new IterableOf<>(
-                    new FallbackFrom<>(
+                    new Fallback.From<>(
                         new IterableOf<>(IOException.class),
-                        new FallbackFrom<>(
+                        new Fallback.From<>(
                             IOException.class,
                             exp -> message
                         )
@@ -122,12 +121,11 @@ public final class ScalarWithFallbackTest {
         final String message = "Fallback from IOException (exp & flbck)";
         new Assertion<>(
             "Using a single fallback in case of exception (exp & flbck)",
-            new ScalarWithFallback<>(
+            new ScalarWithFallback<String>(
                 () -> {
                     throw new IOException("Failure with IOException (exp & flbck)");
                 },
-                IOException.class,
-                new FallbackFrom<>(
+                new Fallback.From<>(
                     IOException.class,
                     exp -> message
                 )
@@ -141,13 +139,12 @@ public final class ScalarWithFallbackTest {
         final String message = "Fallback from IOException (exp iterable & flbck)";
         new Assertion<>(
             "Using a single fallback in case of exception (exp iterable & flbck)",
-            new ScalarWithFallback<>(
+            new ScalarWithFallback<String>(
                 () -> {
                     throw new IOException("Failure with IOException (exp iterable & flbck)");
                 },
-                new IterableOf<>(IOException.class),
-                new FallbackFrom<>(
-                    IOException.class,
+                new Fallback.From<>(
+                    new IterableOf<>(IOException.class),
                     exp -> message
                 )
             ),
@@ -167,7 +164,7 @@ public final class ScalarWithFallbackTest {
                     );
                 },
                 new IterableOf<>(
-                    new FallbackFrom<>(
+                    new Fallback.From<>(
                         new IterableOf<>(InterruptedException.class),
                         exp -> message
                     )
@@ -187,11 +184,11 @@ public final class ScalarWithFallbackTest {
                     throw new IllegalFormatWidthException(1);
                 },
                 new IterableOf<>(
-                    new FallbackFrom<>(
+                    new Fallback.From<>(
                         new IterableOf<>(IllegalArgumentException.class),
                         exp -> "Fallback from IllegalArgumentException"
                     ),
-                    new FallbackFrom<>(
+                    new Fallback.From<>(
                         new IterableOf<>(IllegalFormatException.class),
                         exp -> expected
                     )

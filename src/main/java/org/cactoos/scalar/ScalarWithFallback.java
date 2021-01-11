@@ -27,7 +27,6 @@ import java.util.Comparator;
 import java.util.Map;
 import org.cactoos.Fallback;
 import org.cactoos.Scalar;
-import org.cactoos.func.FallbackFrom;
 import org.cactoos.func.FuncWithFallback;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Filtered;
@@ -58,36 +57,14 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     /**
      * Ctor.
      * @param origin Original scalar
-     * @param exception Supported exception type
-     * @param fallback Function that converts the given exception into fallback value
+     * @param fbks The fallbacks
      */
+    @SafeVarargs
     public ScalarWithFallback(
         final Scalar<T> origin,
-        final Class<? extends Throwable> exception,
-        final Fallback<T> fallback
+        final Fallback<T>... fbks
     ) {
-        this(origin, new IterableOf<Class<? extends Throwable>>(exception), fallback);
-    }
-
-    /**
-     * Ctor.
-     * @param origin Original scalar
-     * @param exceptions Supported exceptions types
-     * @param fallback Function that converts the given exception into fallback value
-     */
-    public ScalarWithFallback(
-        final Scalar<T> origin,
-        final Iterable<Class<? extends Throwable>> exceptions,
-        final Fallback<T> fallback
-    ) {
-        this(
-            origin,
-            new IterableOf<Fallback<T>>(
-                new FallbackFrom<>(
-                    exceptions, fallback
-                )
-            )
-        );
+        this(origin, new IterableOf<>(fbks));
     }
 
     /**
