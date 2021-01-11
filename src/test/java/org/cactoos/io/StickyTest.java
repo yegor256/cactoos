@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.cactoos.bytes.BytesOf;
 import org.cactoos.func.Repeated;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;

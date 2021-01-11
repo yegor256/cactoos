@@ -21,43 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
-import java.io.IOException;
-import org.cactoos.Text;
+import java.io.StringReader;
 import org.cactoos.text.TextOf;
-import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.TextIs;
 
 /**
- * Test case for {@link UncheckedBytes}.
+ * Test case for {@link ReaderAsBytes}.
  *
- * @since 0.3
+ * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-public final class UncheckedBytesTest {
+public final class ReaderAsBytesTest {
+    /**
+     * Temporary files and folders generator.
+     */
+    @Rule
+    public final TemporaryFolder folder = new TemporaryFolder();
 
-    @Test(expected = RuntimeException.class)
-    public void rethrowsCheckedToUncheckedException() {
-        new UncheckedBytes(
-            () -> {
-                throw new IOException("intended");
-            }
-        ).asBytes();
+    @Test
+    public void readsString() throws Exception {
+        final String source = "hello, друг!";
+        new Assertion<>(
+            "Must read string through a reader",
+            new TextOf(
+                new ReaderAsBytes(
+                    new StringReader(source)
+                )
+            ),
+            new TextIs(source)
+        ).affirm();
     }
 
     @Test
-    public void worksNormallyWhenNoExceptionIsThrown() throws Exception {
-        final Text source = new TextOf("hello, cactoos!");
+    public void readsAndClosesReader() throws Exception {
+        final EmptyClosableReader reader = new EmptyClosableReader();
+        new ReaderAsBytes(reader).asBytes();
         new Assertion<>(
-            "Must works normally when no exception is thrown",
-            new UncheckedBytes(
-                new BytesOf(source)
-            ).asBytes(),
-            Matchers.equalTo(
-                new BytesOf(source).asBytes()
-            )
+            "Must close the reader after reading it",
+            reader.isClosed(),
+            new IsTrue()
         ).affirm();
     }
 }

@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.IOException;
 import java.util.Arrays;
 import org.cactoos.Text;
+import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.hamcrest.Matchers;

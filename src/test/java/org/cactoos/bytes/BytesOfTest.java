@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -30,13 +30,16 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.Text;
+import org.cactoos.io.InputOf;
+import org.cactoos.io.Sticky;
 import org.cactoos.iterable.Endless;
 import org.cactoos.iterable.HeadOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfBytes;
 import org.cactoos.iterator.IteratorOfBytes;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -76,6 +79,7 @@ final class BytesOfTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void readsInputIntoBytes() throws Exception {
         new Assertion<>(
             "must read bytes from Input",
@@ -84,9 +88,11 @@ final class BytesOfTest {
                     new InputOf("Hello, друг!")
                 )
             ),
-            Matchers.allOf(
-                new StartsWith("Hello, "),
-                new EndsWith("друг!")
+            new AllOf<>(
+                new IterableOf<>(
+                    new StartsWith("Hello, "),
+                    new EndsWith("друг!")
+                )
             )
         ).affirm();
     }
@@ -113,6 +119,7 @@ final class BytesOfTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void readsInputIntoBytesWithSmallBuffer() throws Exception {
         new Assertion<>(
             "must read bytes from Input with a small reading buffer",
@@ -122,9 +129,11 @@ final class BytesOfTest {
                     2
                 )
             ),
-            Matchers.allOf(
-                new StartsWith("Hello,"),
-                new EndsWith("товарищ!")
+            new AllOf<>(
+                new IterableOf<>(
+                    new StartsWith("Hello,"),
+                    new EndsWith("товарищ!")
+                )
             )
         ).affirm();
     }
@@ -214,7 +223,7 @@ final class BytesOfTest {
                 new Joined(
                     System.lineSeparator(),
                     "java.io.IOException: It doesn't work at all",
-                    "\tat org.cactoos.io.BytesOfTest"
+                    "\tat org.cactoos.bytes.BytesOfTest"
                 )
             )
         ).affirm();
@@ -229,7 +238,7 @@ final class BytesOfTest {
                     new IOException("").getStackTrace()
                 )
             ),
-            new TextHasString("org.cactoos.io.BytesOfTest")
+            new TextHasString("org.cactoos.bytes.BytesOfTest")
         ).affirm();
     }
 

@@ -32,7 +32,7 @@ import java.io.InputStream;
  *
  * @since 0.12
  */
-final class SlowInputStream extends InputStream {
+public final class SlowInputStream extends InputStream {
 
     /**
      * Original stream.
@@ -43,7 +43,7 @@ final class SlowInputStream extends InputStream {
      * Ctor.
      * @param size The size of the array to encapsulate
      */
-    SlowInputStream(final int size) {
+    public SlowInputStream(final int size) {
         this(new ByteArrayInputStream(new byte[size]));
     }
 

@@ -28,6 +28,7 @@ import java.io.InputStream;
 import org.cactoos.Func;
 import org.cactoos.Input;
 import org.cactoos.Text;
+import org.cactoos.bytes.BytesOf;
 import org.cactoos.func.IoCheckedFunc;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;

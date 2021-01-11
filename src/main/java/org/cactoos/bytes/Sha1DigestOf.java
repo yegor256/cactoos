@@ -21,45 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
-import java.io.IOException;
-import java.io.Reader;
+import org.cactoos.Input;
 
 /**
- * Empty Closable Reader
+ * SHA-1 checksum calculation of {@link Input}.
  *
- * <p>Empty {@link Reader} that can tell you if it was explicitly closed by
- * calling {@link Reader#close()} method.</p>
- *
- * <p>This class is for internal use only. Use {@link ReaderOf} instead</p>
- *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
  */
-final class EmptyClosableReader extends Reader {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class Sha1DigestOf extends DigestEnvelope {
     /**
-     * Closed reader.
+     * Ctor.
+     * @param input The input
      */
-    private boolean closed;
-
-    @Override
-    public int read(final char[] cbuf, final int off, final int len)
-        throws IOException {
-        return -1;
-    }
-
-    @Override
-    public void close() throws IOException {
-        this.closed = true;
+    public Sha1DigestOf(final Input input) {
+        super(input, "SHA-1");
     }
 
     /**
-     * Ask if the {@link Reader} is closed.
-     * @return True if closed, false otherwise
+     * Ctor.
+     * @param input The input
+     * @param max Buffer size
      */
-    public boolean isClosed() {
-        return this.closed;
+    public Sha1DigestOf(final Input input, final int max) {
+        // @checkstyle MagicNumber (1 line)
+        super(input, max, "SHA-1");
     }
 }

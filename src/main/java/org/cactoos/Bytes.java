@@ -28,7 +28,7 @@ package org.cactoos;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @see org.cactoos.io.BytesOf
+ * @see org.cactoos.bytes.BytesOf
  * @since 0.1
  */
 public interface Bytes {

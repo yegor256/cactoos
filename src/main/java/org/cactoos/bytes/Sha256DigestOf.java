@@ -21,25 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
 import org.cactoos.Input;
 
 /**
- * SHA-1 checksum calculation of {@link Input}.
+ * SHA-256 checksum calculation of {@link Input}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class Sha1DigestOf extends DigestEnvelope {
+public final class Sha256DigestOf extends DigestEnvelope {
     /**
      * Ctor.
      * @param input The input
      */
-    public Sha1DigestOf(final Input input) {
-        super(input, "SHA-1");
+    public Sha256DigestOf(final Input input) {
+        super(input, "SHA-256");
     }
 
     /**
@@ -47,8 +47,8 @@ public final class Sha1DigestOf extends DigestEnvelope {
      * @param input The input
      * @param max Buffer size
      */
-    public Sha1DigestOf(final Input input, final int max) {
+    public Sha256DigestOf(final Input input, final int max) {
         // @checkstyle MagicNumber (1 line)
-        super(input, max, "SHA-1");
+        super(input, max, "SHA-256");
     }
 }

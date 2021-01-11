@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.io.IOException;
+import org.cactoos.bytes.BytesOf;
 import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
 import org.junit.Test;

@@ -21,27 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
-import org.cactoos.Bytes;
+import java.io.IOException;
+import java.io.Reader;
+import org.cactoos.io.ReaderOf;
 
 /**
- * Bytes with no data.
+ * Empty Closable Reader
  *
- * <p>There is no thread-safety guarantee.
+ * <p>Empty {@link Reader} that can tell you if it was explicitly closed by
+ * calling {@link Reader#close()} method.</p>
  *
- * @since 0.2
+ * <p>This class is for internal use only. Use {@link ReaderOf} instead</p>
+ *
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * @since 0.29
  */
-public final class EmptyBytes implements Bytes {
-
+final class EmptyClosableReader extends Reader {
     /**
-     * Empty array of bytes.
+     * Closed reader.
      */
-    private static final byte[] EMPTY = {};
+    private boolean closed;
 
     @Override
-    public byte[] asBytes() {
-        return EmptyBytes.EMPTY;
+    public int read(final char[] cbuf, final int off, final int len)
+        throws IOException {
+        return -1;
     }
 
+    @Override
+    public void close() throws IOException {
+        this.closed = true;
+    }
+
+    /**
+     * Ask if the {@link Reader} is closed.
+     * @return True if closed, false otherwise
+     */
+    public boolean isClosed() {
+        return this.closed;
+    }
 }

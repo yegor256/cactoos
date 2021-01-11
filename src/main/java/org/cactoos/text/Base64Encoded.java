@@ -26,7 +26,7 @@ package org.cactoos.text;
 
 import org.cactoos.Text;
 import org.cactoos.bytes.BytesBase64;
-import org.cactoos.io.BytesOf;
+import org.cactoos.bytes.BytesOf;
 
 /**
  * Encodes the origin text using the Base64 encoding scheme.

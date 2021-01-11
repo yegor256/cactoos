@@ -21,10 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.io.InputOf;
+import org.cactoos.io.SlowInputStream;
 import org.cactoos.iterable.Endless;
 import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.IterableOf;
