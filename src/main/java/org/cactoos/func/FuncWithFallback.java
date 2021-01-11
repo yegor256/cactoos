@@ -48,7 +48,7 @@ import org.cactoos.scalar.ScalarWithFallback;
  * {@code
  *    final Product product = new FuncWithFallback<>(
  *        id -> new SqlProduct().apply(id),
- *        new FallbackFrom<>(
+ *        new Fallback.From<>(
  *            SQLException.class,
  *            id -> new CachedProduct().apply(id)
  *        )
@@ -70,11 +70,11 @@ import org.cactoos.scalar.ScalarWithFallback;
  *    final Product product = new FuncWithFallback<>(
  *        id -> new SqlProduct().apply(id),
  *        new IterableOf<>(
- *            new FallbackFrom<>(
+ *            new Fallback.From<>(
  *                SQLException.class,
  *                id -> new CachedProduct().apply(id)
  *            ),
- *            new FallbackFrom<>(
+ *            new Fallback.From<>(
  *                SQLRecoverableException.class,
  *                id -> new SqlProduct().apply(id)    // run it again
  *            )
@@ -105,11 +105,11 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
     /**
      * Ctor.
      * @param fnc The func
-     * @param fbk The fallback
+     * @param fbks The fallbacks
      */
-    @SuppressWarnings("unchecked")
-    public FuncWithFallback(final Func<X, Y> fnc, final Fallback<Y> fbk) {
-        this(fnc, new IterableOf<>(fbk));
+    @SafeVarargs
+    public FuncWithFallback(final Func<X, Y> fnc, final Fallback<Y>... fbks) {
+        this(fnc, new IterableOf<>(fbks));
     }
 
     /**
