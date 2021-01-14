@@ -61,12 +61,7 @@ import org.cactoos.iterable.IterableOf;
  * @see IoChecked
  * @since 0.49
  */
-public final class Xor implements Scalar<Boolean> {
-
-    /**
-     * The iterable.
-     */
-    private final Iterable<Scalar<Boolean>> origin;
+public final class Xor extends ScalarEnvelope<Boolean> {
 
     /**
      * Ctor.
@@ -82,15 +77,12 @@ public final class Xor implements Scalar<Boolean> {
      * @param iterable The iterable.
      */
     public Xor(final Iterable<Scalar<Boolean>> iterable) {
-        this.origin = iterable;
-    }
-
-    @Override
-    public Boolean value() throws Exception {
-        return new Ternary<>(
-            new LengthOf(this.origin).value() > 0,
-            new Reduced<Boolean>((a, b) -> a ^ b, this.origin),
-            new True()
-        ).value();
+        super(
+            new Ternary<>(
+                () -> new LengthOf(iterable).value() > 0,
+                new Reduced<Boolean>((a, b) -> a ^ b, iterable),
+                new False()
+            )
+        );
     }
 }

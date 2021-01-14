@@ -109,9 +109,9 @@ final class XorTest {
     @Test
     void emptyIterable() throws Exception {
         new Assertion<>(
-            "Empty iterable must be True",
+            "Empty iterable must be False",
             new Xor(new IterableOf<Scalar<Boolean>>()),
-            new ScalarHasValue<>(true)
+            new ScalarHasValue<>(false)
         ).affirm();
     }
 
