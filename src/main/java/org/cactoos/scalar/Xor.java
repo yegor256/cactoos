@@ -25,12 +25,13 @@ package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Joined;
 
 /**
  * Logical exclusive or.
 
- * For no elements in {@code origin} it returns {@link True}, otherwise
- * returns {@link True} only when an odd number of elements have value true.
+ * Returns {@link True} when an odd number of elements have value true,
+ * otherwise return {@link False}.
  *
  * <p>This class could be also used for matching multiple boolean
  * expressions:</p>
@@ -77,12 +78,7 @@ public final class Xor extends ScalarEnvelope<Boolean> {
      * @param iterable The iterable.
      */
     public Xor(final Iterable<Scalar<Boolean>> iterable) {
-        super(
-            new Ternary<>(
-                () -> new LengthOf(iterable).value() > 0,
-                new Reduced<Boolean>((a, b) -> a ^ b, iterable),
-                new False()
-            )
+        super(new Reduced<>((a, b) -> a ^ b, new Joined<>(new False(), iterable))
         );
     }
 }
