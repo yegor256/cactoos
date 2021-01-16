@@ -77,25 +77,12 @@ public final class Reduced<T> implements Scalar<T> {
     /**
      * Items.
      */
-    private final Iterable<Scalar<T>> items;
+    private final Iterable<? extends Scalar<? extends T>> items;
 
     /**
      * Folding function.
      */
-    private final BiFunc<T, T, T> function;
-
-    /**
-     * Ctor.
-     * @param reduce Reducing function
-     * @param scalars The scalars
-     */
-    public Reduced(
-        final BiFunc<T, T, T> reduce,
-        final Iterable<Scalar<T>> scalars
-    ) {
-        this.items = scalars;
-        this.function = reduce;
-    }
+    private final BiFunc<? super T, ? super T, ? extends T> function;
 
     /**
      * Ctor.
@@ -104,15 +91,28 @@ public final class Reduced<T> implements Scalar<T> {
      */
     @SafeVarargs
     public Reduced(
-        final BiFunc<T, T, T> reduce,
+        final BiFunc<? super T, ? super T, ? extends T> reduce,
         final T... values
     ) {
         this(reduce, new Mapped<>(Constant::new, values));
     }
 
+    /**
+     * Ctor.
+     * @param reduce Reducing function
+     * @param scalars The scalars
+     */
+    public Reduced(
+        final BiFunc<? super T, ? super T, ? extends T> reduce,
+        final Iterable<? extends Scalar<? extends T>> scalars
+    ) {
+        this.items = scalars;
+        this.function = reduce;
+    }
+
     @Override
     public T value() throws Exception {
-        final Iterator<Scalar<T>> iter = this.items.iterator();
+        final Iterator<? extends Scalar<? extends T>> iter = this.items.iterator();
         if (!iter.hasNext()) {
             throw new NoSuchElementException(
                 "Can't find first element in an empty iterable"

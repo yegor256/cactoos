@@ -39,7 +39,7 @@ public final class Folded<X, T> implements Scalar<X> {
     /**
      * Original iterable.
      */
-    private final Iterable<T> iterable;
+    private final Iterable<? extends T> iterable;
 
     /**
      * Input.
@@ -49,20 +49,7 @@ public final class Folded<X, T> implements Scalar<X> {
     /**
      * Func.
      */
-    private final BiFunc<X, T, X> func;
-
-    /**
-     * Ctor.
-     * @param ipt Input
-     * @param fnc Func original
-     * @param list List of items
-     */
-    public Folded(final X ipt, final BiFunc<X, T, X> fnc,
-        final Iterable<T> list) {
-        this.iterable = list;
-        this.input = ipt;
-        this.func = fnc;
-    }
+    private final BiFunc<? super X, ? super T, ? extends X> func;
 
     /**
      * Ctor.
@@ -71,9 +58,22 @@ public final class Folded<X, T> implements Scalar<X> {
      * @param list Array of items
      */
     @SafeVarargs
-    public Folded(final X ipt, final BiFunc<X, T, X> fnc,
+    public Folded(final X ipt, final BiFunc<? super X, ? super T, ? extends X> fnc,
         final T... list) {
         this(ipt, fnc, new IterableOf<>(list));
+    }
+
+    /**
+     * Ctor.
+     * @param ipt Input
+     * @param fnc Func original
+     * @param list List of items
+     */
+    public Folded(final X ipt, final BiFunc<? super X, ? super T, ? extends X> fnc,
+        final Iterable<? extends T> list) {
+        this.iterable = list;
+        this.input = ipt;
+        this.func = fnc;
     }
 
     @Override

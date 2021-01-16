@@ -38,7 +38,7 @@ public final class Flattened<X> extends ScalarEnvelope<X> {
      * Ctor.
      * @param sclr The func
      */
-    public Flattened(final Scalar<Scalar<X>> sclr) {
+    public Flattened(final Scalar<? extends Scalar<? extends X>> sclr) {
         super(() -> sclr.value().value());
     }
 }

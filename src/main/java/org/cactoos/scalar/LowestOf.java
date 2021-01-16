@@ -56,13 +56,7 @@ import org.cactoos.iterable.Mapped;
  * @see IoChecked
  * @since 0.29
  */
-public final class LowestOf<T extends Comparable<T>> implements Scalar<T> {
-
-    /**
-     * Result.
-     */
-    private final Scalar<T> result;
-
+public final class LowestOf<T extends Comparable<? super T>> extends ScalarEnvelope<T> {
     /**
      * Ctor.
      * @param items The comparable items
@@ -82,7 +76,7 @@ public final class LowestOf<T extends Comparable<T>> implements Scalar<T> {
      * @param scalars The scalars
      */
     @SafeVarargs
-    public LowestOf(final Scalar<T>... scalars) {
+    public LowestOf(final Scalar<? extends T>... scalars) {
         this(new IterableOf<>(scalars));
     }
 
@@ -90,23 +84,20 @@ public final class LowestOf<T extends Comparable<T>> implements Scalar<T> {
      * Ctor.
      * @param iterable The items
      */
-    public LowestOf(final Iterable<Scalar<T>> iterable) {
-        this.result = new Reduced<>(
-            (first, second) -> {
-                final T value;
-                if (first.compareTo(second) < 0) {
-                    value = first;
-                } else {
-                    value = second;
-                }
-                return value;
-            },
-            iterable
+    public LowestOf(final Iterable<? extends Scalar<? extends T>> iterable) {
+        super(
+            new Reduced<>(
+                (first, second) -> {
+                    final T value;
+                    if (first.compareTo(second) < 0) {
+                        value = first;
+                    } else {
+                        value = second;
+                    }
+                    return value;
+                },
+                iterable
+            )
         );
-    }
-
-    @Override
-    public T value() throws Exception {
-        return this.result.value();
     }
 }
