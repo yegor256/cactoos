@@ -21,34 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
-import org.cactoos.Input;
+import org.cactoos.Bytes;
+import org.cactoos.Func;
+import org.cactoos.scalar.Checked;
 
 /**
- * SHA-256 checksum calculation of {@link Input}.
+ * Bytes that throws exception of specified type.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.29
+ * @param <E> Exception's type.
+ * @since 0.31
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class Sha256DigestOf extends DigestEnvelope {
+public final class CheckedBytes<E extends Exception> implements Bytes {
+
     /**
-     * Ctor.
-     * @param input The input
+     * Original bytes.
      */
-    public Sha256DigestOf(final Input input) {
-        super(input, "SHA-256");
-    }
+    private final Bytes origin;
+
+    /**
+     * Function that wraps exception of {@link #origin} to the required type.
+     */
+    private final Func<Exception, E> func;
 
     /**
      * Ctor.
-     * @param input The input
-     * @param max Buffer size
+     * @param orig Origin bytes.
+     * @param fnc Function that wraps exceptions.
      */
-    public Sha256DigestOf(final Input input, final int max) {
-        // @checkstyle MagicNumber (1 line)
-        super(input, max, "SHA-256");
+    public CheckedBytes(final Bytes orig, final Func<Exception, E> fnc) {
+        this.origin = orig;
+        this.func = fnc;
+    }
+
+    @Override
+    public byte[] asBytes() throws E {
+        return new Checked<>(
+            this.origin::asBytes,
+            this.func
+        ).value();
     }
 }

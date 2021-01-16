@@ -39,6 +39,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import org.cactoos.bytes.BytesOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
@@ -310,7 +311,7 @@ public final class InputOfTest {
         new Assertion<>(
             "must read encoded string through a reader",
             new TextOf(
-                new InputAsBytes(
+                new BytesOf(
                     new InputOf(
                         new StringReader(source),
                         StandardCharsets.UTF_8
@@ -326,7 +327,7 @@ public final class InputOfTest {
         final byte[] bytes = new byte[] {(byte) 0xCA, (byte) 0xFE};
         new Assertion<>(
             "must read array of bytes",
-            new InputAsBytes(
+            new BytesOf(
                 new SyncInput(new InputOf(bytes))
             ).asBytes(),
             new IsEqual<>(bytes)

@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.util.Arrays;
 import java.util.Random;
+import org.cactoos.bytes.BytesOf;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;

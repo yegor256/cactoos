@@ -33,6 +33,7 @@ import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.cactoos.Input;
+import org.cactoos.bytes.BytesOf;
 
 /**
  * Zip files and directory.

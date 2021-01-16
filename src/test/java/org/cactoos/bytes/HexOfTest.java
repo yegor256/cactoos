@@ -26,7 +26,6 @@ package org.cactoos.bytes;
 
 import java.io.IOException;
 import java.util.Arrays;
-import org.cactoos.io.BytesOf;
 import org.cactoos.text.TextOf;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;

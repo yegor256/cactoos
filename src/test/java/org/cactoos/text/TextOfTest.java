@@ -39,7 +39,7 @@ import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
-import org.cactoos.io.BytesOf;
+import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterator.IteratorOfChars;
 import org.hamcrest.Matchers;

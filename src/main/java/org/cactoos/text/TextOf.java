@@ -46,7 +46,7 @@ import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.io.BytesOf;
+import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.And;

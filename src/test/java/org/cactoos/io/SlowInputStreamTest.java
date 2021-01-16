@@ -23,6 +23,7 @@
  */
 package org.cactoos.io;
 
+import org.cactoos.bytes.BytesOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;

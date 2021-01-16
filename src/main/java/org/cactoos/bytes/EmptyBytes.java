@@ -21,45 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
 import org.cactoos.Bytes;
-import org.cactoos.Func;
-import org.cactoos.scalar.Checked;
 
 /**
- * Bytes that throws exception of specified type.
+ * Bytes with no data.
  *
- * @param <E> Exception's type.
- * @since 0.31
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.2
  */
-public final class CheckedBytes<E extends Exception> implements Bytes {
+public final class EmptyBytes implements Bytes {
 
     /**
-     * Original bytes.
+     * Empty array of bytes.
      */
-    private final Bytes origin;
-
-    /**
-     * Function that wraps exception of {@link #origin} to the required type.
-     */
-    private final Func<Exception, E> func;
-
-    /**
-     * Ctor.
-     * @param orig Origin bytes.
-     * @param fnc Function that wraps exceptions.
-     */
-    public CheckedBytes(final Bytes orig, final Func<Exception, E> fnc) {
-        this.origin = orig;
-        this.func = fnc;
-    }
+    private static final byte[] EMPTY = {};
 
     @Override
-    public byte[] asBytes() throws E {
-        return new Checked<>(
-            this.origin::asBytes,
-            this.func
-        ).value();
+    public byte[] asBytes() {
+        return EmptyBytes.EMPTY;
     }
+
 }

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -38,6 +38,7 @@ import java.util.List;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Text;
+import org.cactoos.io.InputOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 

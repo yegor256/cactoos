@@ -21,12 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
+import org.cactoos.io.OutputTo;
+import org.cactoos.io.TeeInput;
 
 /**
  * Input as Byte Array.
@@ -36,7 +38,7 @@ import org.cactoos.Input;
  * <p>There is no thread-safety guarantee.
  * @since 0.1
  */
-final class InputAsBytes implements Bytes {
+public final class InputAsBytes implements Bytes {
 
     /**
      * The input.

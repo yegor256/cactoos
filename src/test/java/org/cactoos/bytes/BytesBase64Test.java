@@ -25,7 +25,6 @@
 package org.cactoos.bytes;
 
 import java.util.Base64;
-import org.cactoos.io.BytesOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;

@@ -24,7 +24,7 @@
 package org.cactoos.text;
 
 import java.io.IOException;
-import org.cactoos.io.BytesOf;
+import org.cactoos.bytes.BytesOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.TextHasString;

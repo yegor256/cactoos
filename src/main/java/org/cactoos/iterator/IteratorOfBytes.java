@@ -28,8 +28,8 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Bytes;
 import org.cactoos.Text;
-import org.cactoos.io.BytesOf;
-import org.cactoos.io.UncheckedBytes;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.bytes.UncheckedBytes;
 
 /**
  * Iterator that returns a set of bytes.

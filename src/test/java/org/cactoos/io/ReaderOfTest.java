@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.TextOf;
 import org.junit.Rule;
 import org.junit.Test;
