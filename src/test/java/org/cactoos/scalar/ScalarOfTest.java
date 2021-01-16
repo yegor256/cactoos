@@ -23,11 +23,13 @@
  */
 package org.cactoos.scalar;
 
+import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.func.FuncOf;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.proc.RunnableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -42,7 +44,7 @@ final class ScalarOfTest {
     void worksWithCallable() {
         final Object obj = new Object();
         new Assertion<>(
-            "must hold the same value as given by callable",
+            "Must convert Callable into Scalar",
             new ScalarOf<>(new CallableOf<>(new Constant<>(obj))),
             new ScalarHasValue<>(obj)
         ).affirm();
@@ -51,29 +53,68 @@ final class ScalarOfTest {
     @Test
     void worksWithRunnable() {
         final Object obj = new Object();
+        final Object result = new Object();
+        final AtomicReference<Object> done = new AtomicReference<>();
         new Assertion<>(
-            "must hold the same value as given",
-            new ScalarOf<>(new RunnableOf(ignored -> { }, "ignored"), obj),
-            new ScalarHasValue<>(obj)
+            "Must convert Runnable into Scalar",
+            new ScalarOf<>(
+                new RunnableOf(
+                    () -> {
+                        done.set(result);
+                    }
+                ),
+                obj
+            ),
+            new MatcherOf<>(
+                scalar -> {
+                    final Object res = scalar.value();
+                    return res.equals(obj) && done.get().equals(result);
+                }
+            )
         ).affirm();
     }
 
     @Test
     void worksWithFunc() {
-        final Object obj = new Object();
+        final Object ipt = new Object();
         new Assertion<>(
-            "must hold the same value as given by func",
-            new ScalarOf<>(new FuncOf<>(new Constant<>(obj)), "ignored"),
-            new ScalarHasValue<>(obj)
+            "Must convert Func into Scalar",
+            new ScalarOf<>(new FuncOf<>(input -> input), ipt),
+            new ScalarHasValue<>(ipt)
         ).affirm();
     }
 
     @Test
     void worksWithProc() {
+        final Object ipt = new Object();
+        final Object result = new Object();
+        final AtomicReference<Object> done = new AtomicReference<>();
+        new Assertion<>(
+            "Must convert Proc into Scalar",
+            new ScalarOf<>(
+                new ProcOf<>(
+                    input -> {
+                        done.set(input);
+                    }
+                ),
+                ipt,
+                result
+            ),
+            new MatcherOf<>(
+                scalar -> {
+                    final Object res = scalar.value();
+                    return res.equals(result) && done.get().equals(ipt);
+                }
+            )
+        ).affirm();
+    }
+
+    @Test
+    void worksWithLambda() {
         final Object obj = new Object();
         new Assertion<>(
-            "must hold the expected value",
-            new ScalarOf<>(new ProcOf<>(ignored -> { }), "ignored", obj),
+            "Must convert Lambda into Scalar",
+            new ScalarOf<>(() -> obj),
             new ScalarHasValue<>(obj)
         ).affirm();
     }

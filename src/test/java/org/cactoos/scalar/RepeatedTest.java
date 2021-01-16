@@ -61,7 +61,7 @@ final class RepeatedTest {
                     () -> {
                         throw new IllegalStateException("intended to fail");
                     },
-                    true
+                    "discarded"
                 ),
                 0
             ).value(),

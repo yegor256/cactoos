@@ -87,7 +87,6 @@ final class TempFolderTest {
                                     filename,
                                     ""
                                 ).value();
-                                return true;
                             }
                         )
                     ).exec(
@@ -95,7 +94,6 @@ final class TempFolderTest {
                             "file1.txt", "file2.txt", "file3.txt"
                         )
                     );
-                    return true;
                 }
             )
         ).exec(
@@ -129,7 +127,6 @@ final class TempFolderTest {
                                     filename,
                                     ""
                                 ).value();
-                                return true;
                             }
                         )
                     ).exec(
@@ -137,7 +134,6 @@ final class TempFolderTest {
                             "1.txt", "2.txt", "3.txt"
                         )
                     );
-                    return true;
                 }
             )
         ).exec(

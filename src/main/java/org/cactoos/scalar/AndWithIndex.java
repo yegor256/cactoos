@@ -29,6 +29,7 @@ import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.func.BiFuncOf;
+import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 
@@ -115,8 +116,8 @@ public final class AndWithIndex implements Scalar<Boolean> {
         final Iterable<X> src) {
         this(
             new Mapped<>(
-                item -> (Func<Integer, Boolean>) input
-                    -> func.apply(item, input), src
+                item -> new FuncOf<>(input -> func.apply(item, input)),
+                src
             )
         );
     }

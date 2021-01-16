@@ -23,7 +23,7 @@
  */
 package org.cactoos.proc;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.scalar.ScalarOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -33,28 +33,27 @@ import org.llorllale.cactoos.matchers.MatcherOf;
  * Test case for {@link RunnableOf}.
  *
  * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class RunnableOfTest {
 
     @Test
     void convertsProcIntoRunnable() {
-        final AtomicBoolean done = new AtomicBoolean();
+        final AtomicReference<Object> done = new AtomicReference<>();
+        final Object obj = new Object();
         new Assertion<>(
             "Must execute Runnable with Proc",
             new RunnableOf(
                 new ProcOf<>(
-                    ignored -> {
-                        done.set(true);
+                    input -> {
+                        done.set(input);
                     }
                 ),
-                "ignored"
+                obj
             ),
-            new MatcherOf<Runnable>(
-                input -> {
-                    input.run();
-                    return done.get();
+            new MatcherOf<>(
+                runnable -> {
+                    runnable.run();
+                    return done.get().equals(obj);
                 }
             )
         ).affirm();
@@ -62,21 +61,42 @@ final class RunnableOfTest {
 
     @Test
     void convertsScalarIntoRunnable() {
-        final AtomicBoolean done = new AtomicBoolean();
+        final AtomicReference<Object> done = new AtomicReference<>();
+        final Object obj = new Object();
         new Assertion<>(
             "Must execute Runnable with Scalar",
             new RunnableOf(
                 new ScalarOf<>(
                     () -> {
-                        done.set(true);
-                        return null;
+                        done.set(obj);
+                        return "discarded";
                     }
                 )
             ),
+            new MatcherOf<>(
+                runnable -> {
+                    runnable.run();
+                    return done.get().equals(obj);
+                }
+            )
+        ).affirm();
+    }
+
+    @Test
+    void convertsLambdaIntoRunnable() {
+        final AtomicReference<Object> done = new AtomicReference<>();
+        final Object obj = new Object();
+        new Assertion<>(
+            "Must execute Runnable with Lambda",
+            new RunnableOf(
+                () -> {
+                    done.set(obj);
+                }
+            ),
             new MatcherOf<Runnable>(
-                input -> {
-                    input.run();
-                    return done.get();
+                runnable -> {
+                    runnable.run();
+                    return done.get().equals(obj);
                 }
             )
         ).affirm();

@@ -23,21 +23,22 @@
  */
 package org.cactoos.func;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import org.cactoos.BiFunc;
 import org.cactoos.proc.ProcOf;
-import org.cactoos.scalar.True;
-import org.hamcrest.core.IsEqual;
+import org.cactoos.scalar.Constant;
+import org.hamcrest.core.IsSame;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link BiFuncOf}.
  *
  * @since 0.20
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class BiFuncOfTest {
 
     @Test
@@ -45,35 +46,65 @@ final class BiFuncOfTest {
         new Assertion<>(
             "Must convert function into bi-function",
             new BiFuncOf<>(
-                new FuncOf<>(input -> 1)
-            ).apply(1, 2),
-            new IsEqual<>(1)
+                new FuncOf<>(input -> input)
+            ),
+            new MatcherOf<>(
+                func -> {
+                    final Object first = new Object();
+                    final Object res = func.apply(first, "discarded");
+                    return res.equals(first);
+                }
+            )
         ).affirm();
     }
 
     @Test
     void convertsProcIntoBiFunc() throws Exception {
-        final AtomicBoolean done = new AtomicBoolean(false);
+        final AtomicReference<Object> done = new AtomicReference<>();
+        final Object result = new Object();
         new Assertion<>(
             "Must convert procedure into bi-function",
-            new BiFuncOf<String, Integer, Boolean>(
+            new BiFuncOf<>(
                 new ProcOf<>(
                     input -> {
-                        done.set(true);
+                        done.set(input);
                     }
                 ),
-                true
-            ).apply("hello world", 1),
-            new IsEqual<>(done.get())
+                result
+            ),
+            new MatcherOf<>(
+                func -> {
+                    final Object first = new Object();
+                    final Object res = func.apply(first, "discarded");
+                    return res.equals(result) && done.get().equals(first);
+                }
+            )
         ).affirm();
     }
 
     @Test
     void convertsScalarIntoBiFunc() throws Exception {
+        final Object obj = new Object();
         new Assertion<>(
             "Must convert scalar into bi-function",
-            new BiFuncOf<Boolean, Boolean, Boolean>(new True()).apply(false, false),
-            new IsTrue()
+            new BiFuncOf<>(new Constant<>(obj)).apply("discarded", "discarded"),
+            new IsSame<>(obj)
+        ).affirm();
+    }
+
+    @Test
+    void convertsLambdaIntoBiFunc() throws Exception {
+        new Assertion<>(
+            "Must convert lambda into bi-function",
+            new BiFuncOf<>((first, second) -> new Object[] {first, second}),
+            new MatcherOf<BiFunc<Object, Object, Object[]>>(
+                func -> {
+                    final Object first = new Object();
+                    final Object second = new Object();
+                    final Object[] res = func.apply(first, second);
+                    return res.length == 2 && res[0].equals(first) && res[1].equals(second);
+                }
+            )
         ).affirm();
     }
 }

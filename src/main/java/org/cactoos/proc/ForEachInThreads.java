@@ -23,7 +23,6 @@
  */
 package org.cactoos.proc;
 
-import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.func.FuncOf;
 import org.cactoos.scalar.AndInThreads;
@@ -49,7 +48,7 @@ import org.cactoos.scalar.AndInThreads;
  * <p>
  * There is no thread-safety guarantee.
  *
- * @param <X> The type to itetare over
+ * @param <X> The type to iterate over
  * @since 1.0
  */
 public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
@@ -57,7 +56,7 @@ public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
     /**
      * The proc.
      */
-    private final Func<X, Boolean> func;
+    private final Proc<X> proc;
 
     /**
      * Ctor.
@@ -65,15 +64,13 @@ public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
      * @param proc The proc to execute
      */
     public ForEachInThreads(final Proc<X> proc) {
-        this.func = new FuncOf<>(
-            proc, true
-        );
+        this.proc = proc;
     }
 
     @Override
     public void exec(final Iterable<X> input) throws Exception {
         new AndInThreads(
-            this.func, input
+            new FuncOf<>(this.proc, true), input
         ).value();
     }
 

@@ -125,7 +125,8 @@ public final class Or implements Scalar<Boolean> {
     public <X> Or(final Func<X, Boolean> func, final Iterable<X> src) {
         this(
             new Mapped<>(
-                item -> (Scalar<Boolean>) () -> func.apply(item), src
+                item -> new ScalarOf<>(() -> func.apply(item)),
+                src
             )
         );
     }
@@ -140,7 +141,7 @@ public final class Or implements Scalar<Boolean> {
     public <X> Or(final X subject, final Func<X, Boolean>... conditions) {
         this(
             new Mapped<>(
-                item -> (Scalar<Boolean>) () -> item.apply(subject),
+                item -> new ScalarOf<>(() -> item.apply(subject)),
                 new IterableOf<>(conditions)
             )
         );

@@ -46,7 +46,11 @@ public final class ProcOf<X> implements Proc<X> {
      * @param fnc The proc
      */
     public ProcOf(final Func<X, ?> fnc) {
-        this((Proc<X>) fnc::apply);
+        this(
+            input -> {
+                fnc.apply(input);
+            }
+        );
     }
 
     /**
