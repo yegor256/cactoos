@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
@@ -49,13 +48,13 @@ public final class TeeInputFromBytesTest {
     public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void copiesFromBytesToPath() throws IOException {
+    public void copiesFromBytesToPath() throws Exception {
         final String message =
             "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(new BytesOf(message), output.toPath())
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy bytes to file path",
             new InputOf(output),
@@ -64,13 +63,13 @@ public final class TeeInputFromBytesTest {
     }
 
     @Test
-    public void copiesFromBytesToFile() throws IOException {
+    public void copiesFromBytesToFile() throws Exception {
         final String message =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(new BytesOf(message), output)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy bytes to file",
             new InputOf(output),
@@ -79,13 +78,13 @@ public final class TeeInputFromBytesTest {
     }
 
     @Test
-    public void copiesFromBytesToOutput() throws IOException {
+    public void copiesFromBytesToOutput() throws Exception {
         final String message =
             "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(new BytesOf(message), new OutputTo(output))
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must bytes to output",
             new InputOf(output),

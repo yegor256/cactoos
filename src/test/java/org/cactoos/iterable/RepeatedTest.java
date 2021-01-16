@@ -48,7 +48,7 @@ final class RepeatedTest {
                     input -> input == element,
                     new Repeated<>(size, element)
                 )
-            ).intValue(),
+            ).value(),
             Matchers.equalTo(size)
         );
     }
@@ -57,7 +57,7 @@ final class RepeatedTest {
     void emptyTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't generate an empty iterable",
-            new LengthOf(new Repeated<>(0, 0)).intValue(),
+            new LengthOf(new Repeated<>(0, 0)).value(),
             Matchers.equalTo(0)
         );
     }

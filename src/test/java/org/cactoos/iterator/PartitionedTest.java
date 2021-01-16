@@ -44,14 +44,14 @@ import org.llorllale.cactoos.matchers.Assertion;
 public final class PartitionedTest {
 
     @Test
-    public void emptyPartitioned() {
+    public void emptyPartitioned() throws Exception {
         new Assertion<>(
             "Can't generate an empty Partitioned.",
             new LengthOf(
                 new IterableOf<>(
                     new Partitioned<>(1, Collections.emptyIterator())
                 )
-            ).intValue(),
+            ).value(),
             Matchers.equalTo(0)
         ).affirm();
     }

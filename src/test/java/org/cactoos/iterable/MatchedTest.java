@@ -110,26 +110,26 @@ public final class MatchedTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void noCorrelation() {
+    public void noCorrelation() throws Exception {
         new LengthOf(
             new Matched<>(
                 (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
                 new IterableOf<>("1st elem", "2nd"),
                 new IterableOf<>("`A` elem", "`B` elem")
             )
-        ).intValue();
+        ).value();
         Assert.fail("There is no 'endsWith'correlation between 2nd elements");
     }
 
     @Test(expected = IllegalStateException.class)
-    public void nonNullCorrelation() {
+    public void nonNullCorrelation() throws Exception {
         new LengthOf(
             new Matched<>(
                 (fst, snd) -> fst != null && snd != null,
                 new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
                 new IterableOf<>("`A` elem", null, "'C' elem")
             )
-        ).intValue();
+        ).value();
         Assert.fail("There is no 'non-null' correlation between 2nd elements");
     }
 

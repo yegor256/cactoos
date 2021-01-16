@@ -26,208 +26,102 @@ package org.cactoos.scalar;
 
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link LengthOf}.
  *
  * @since 0.1.0
  * @checkstyle MagicNumberCheck (500 lines)
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class LengthOfTest {
+final class LengthOfTest {
 
     @Test
-    public void lengthOfInputWithIntegerValue() {
-        new Assertion<>(
-            "Must calculate length of input with integer value",
-            new LengthOf(
-                new InputOf("Hello1")
-            ).intValue(),
-            new IsEqual<>(6)
-        ).affirm();
-    }
-
-    @Test
-    public void lengthOfInputWithDoubleValue() {
-        new Assertion<>(
-            "Must calculate length of input with double value",
-            new LengthOf(
-                new InputOf("Hello2")
-            ).doubleValue(),
-            new IsEqual<>(6.0)
-        ).affirm();
-    }
-
-    @Test
-    public void lengthOfInputWithFloatValue() {
+    void lengthOfInput() {
         new Assertion<>(
             "Must calculate length of input with float value",
             new LengthOf(
                 new InputOf("Hello3")
-            ).floatValue(),
-            new IsEqual<>(6.0f)
+            ),
+            new ScalarHasValue<>(6L)
         ).affirm();
     }
 
     @Test
-    public void lengthOfInputWithCustomBuffer() {
+    void lengthOfInputWithCustomBuffer() {
         new Assertion<>(
             "Must calculate length with custom buffer",
             new LengthOf(
                 new InputOf("test buffer1"),
                 1
-            ).intValue(),
-            new IsEqual<>(12)
-        ).affirm();
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void lengthOfZeroBuffer() {
-        new Assertion<>(
-            "Must calculate length with buffer of 0",
-            new LengthOf(
-                new InputOf("test buffer2"),
-                0
-            ).intValue(),
-            new IsEqual<>(12)
+            ),
+            new ScalarHasValue<>(12L)
         ).affirm();
     }
 
     @Test
-    public void lengthOfWithIntegerValue() {
+    void lengthOfZeroBuffer() throws Exception {
+        new Assertion<>(
+            "Must fail to calculate length of empty buffer",
+            () -> new LengthOf(
+                new InputOf("test buffer2"),
+                0
+            ).value(),
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
+    }
+
+    @Test
+    void lengthOf() throws Exception {
         new Assertion<>(
             "Must calculate length of iterable for integer",
             new LengthOf(
                 new IterableOf<>(1, 2, 3, 4)
-            ).intValue(),
-            new IsEqual<>(4)
+            ),
+            new ScalarHasValue<>(4L)
         ).affirm();
     }
 
     @Test
-    public void lengthOfWithDoubleValue() {
-        new Assertion<>(
-            "Must calculate length of iterable for double",
-            new LengthOf(
-                new IterableOf<>(1, 2, 3, 4)
-            ).doubleValue(),
-            new IsEqual<>(4.0)
-        ).affirm();
-    }
-
-    @Test
-    public void lengthOfWithFloatValue() {
-        new Assertion<>(
-            "Must calculate length of iterable for float",
-            new LengthOf(
-                new IterableOf<>(1, 2, 3, 4)
-            ).floatValue(),
-            new IsEqual<>(4.0f)
-        ).affirm();
-    }
-
-    @Test
-    public void lengthOfEmptyIterable() {
+    void lengthOfEmptyIterable() {
         new Assertion<>(
             "Must calculate length of empty iterable",
             new LengthOf(
                 new IterableOf<>()
-            ).intValue(),
-            new IsEqual<>(0)
+            ),
+            new ScalarHasValue<>(0L)
         ).affirm();
     }
 
     @Test
-    public void lengthOfWithIntegerValues() {
-        new Assertion<>(
-            "Must calculate length of iterator for integer",
-            new LengthOf(
-                new ListOf<>(1, 2, 3, 4)
-            ).intValue(),
-            new IsEqual<>(4)
-        ).affirm();
-    }
-
-    @Test
-    public void lengthOfWithDoubleNumber() {
-        new Assertion<>(
-            "Must calculate length of iterator for double",
-            new LengthOf(
-                new ListOf<>(1, 2, 3, 4)
-            ).doubleValue(),
-            new IsEqual<>(4.0)
-        ).affirm();
-    }
-
-    @Test
-    public void lengthOfWithFloatNumber() {
-        new Assertion<>(
-            "Must calculate length of iterator for float",
-            new LengthOf(
-                new ListOf<>(1, 2, 3, 4)
-            ).floatValue(),
-            new IsEqual<>(4.0f)
-        ).affirm();
-    }
-
-    @Test
-    public void lengthOfEmptyIterator() {
-        new Assertion<>(
-            "Must calculate length of empty iterator",
-            new LengthOf(
-                new ListOf<>()
-            ).intValue(),
-            new IsEqual<>(0)
-        ).affirm();
-    }
-
-    @Test
-    public void lengthOfEmptyText() {
+    void lengthOfEmptyText() {
         new Assertion<>(
             "Must calculate length of empty string",
-            new LengthOf(new TextOf("")).intValue(),
-            new IsEqual<>(0)
+            new LengthOf(new TextOf("")),
+            new ScalarHasValue<>(0L)
         ).affirm();
     }
 
     @Test
-    public void lengthOfUnicodeAsText() {
+    void lengthOfUnicodeAsText() {
         new Assertion<>(
             "Must calculate character-length of unicode text",
-            new LengthOf(new TextOf("привет")).intValue(),
-            new IsEqual<>(6)
+            new LengthOf(new TextOf("привет")),
+            new ScalarHasValue<>(6L)
         ).affirm();
     }
 
     @Test
-    public void lengthOfUnicodeAsInput() {
+    void lengthOfUnicodeAsInput() {
         new Assertion<>(
             "Must calculate character-length of unicode input",
-            new LengthOf(new InputOf("Привет")).intValue(),
-            new IsEqual<>(12)
-        ).affirm();
-    }
-
-    @Test
-    public void lengthOfText() {
-        final Number num = new LengthOf(new TextOf("abcd"));
-        new Assertion<>(
-            "Must calculate length of non-empty string",
-            new IterableOf<Number>(
-                num.intValue(),
-                num.floatValue(),
-                num.longValue(),
-                num.doubleValue()
-            ),
-            new HasValues<>(4, 4f, 4L, 4d)
+            new LengthOf(new InputOf("Привет")),
+            new ScalarHasValue<>(12L)
         ).affirm();
     }
 }

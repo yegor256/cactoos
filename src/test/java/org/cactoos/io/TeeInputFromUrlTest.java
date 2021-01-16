@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import org.cactoos.scalar.LengthOf;
@@ -50,7 +49,7 @@ public final class TeeInputFromUrlTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void copiesFromUrlToPath() throws IOException {
+    public void copiesFromUrlToPath() throws Exception {
         final String message =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -61,7 +60,7 @@ public final class TeeInputFromUrlTest {
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toURI().toURL(), output.toPath())
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from URL to path.",
             new InputOf(output),
@@ -70,7 +69,7 @@ public final class TeeInputFromUrlTest {
     }
 
     @Test
-    public void copiesFromUrlToFile() throws IOException {
+    public void copiesFromUrlToFile() throws Exception {
         final String message =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -81,7 +80,7 @@ public final class TeeInputFromUrlTest {
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toURI().toURL(), output)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from URL to file.",
             new InputOf(output),
@@ -90,7 +89,7 @@ public final class TeeInputFromUrlTest {
     }
 
     @Test
-    public void copiesFromUrlToOutput() throws IOException {
+    public void copiesFromUrlToOutput() throws Exception {
         final String message =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -101,7 +100,7 @@ public final class TeeInputFromUrlTest {
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toURI().toURL(), new OutputTo(output))
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from URL to output.",
             new InputOf(output),

@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -50,11 +49,11 @@ public final class OutputToTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void writesIntoPath() throws IOException {
+    public void writesIntoPath() throws Exception {
         final Path temp = this.folder.newFolder("cactoos-1").toPath();
         final Path path = temp.resolve("one/two/three/file.txt");
         final String content = "Hello, товарищ!";
-        new LengthOf(new TeeInput(content, new OutputTo(path))).intValue();
+        new LengthOf(new TeeInput(content, new OutputTo(path))).value();
         new Assertion<>(
             "Must write into path",
             new InputOf(path),
@@ -63,13 +62,13 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoFile() throws IOException {
+    public void writesIntoFile() throws Exception {
         final Path temp = this.folder.newFolder("cactoos-2").toPath();
         final Path path = temp.resolve("a/b/c/file.txt");
         final String txt = "Hello, друг!";
         new LengthOf(
             new TeeInput(txt, new SyncOutput(new OutputTo(path.toFile())))
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must write into file",
             new InputOf(path.toFile()),
@@ -78,10 +77,10 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriter() {
+    public void writesIntoWriter() throws Exception {
         final String txt = "Hello, writer!";
         final StringWriter output = new StringWriter();
-        new LengthOf(new TeeInput(txt, new OutputTo(output))).intValue();
+        new LengthOf(new TeeInput(txt, new OutputTo(output))).value();
         new Assertion<>(
             "Must write into writer",
             new InputOf(output.getBuffer()),
@@ -90,12 +89,12 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithCharset() {
+    public void writesIntoWriterWithCharset() throws Exception {
         final String txt = "Hello, writer with charset!";
         final StringWriter output = new StringWriter();
         new LengthOf(
             new TeeInput(txt, new OutputTo(output, StandardCharsets.UTF_8))
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must write into writer with charset",
             new InputOf(output.getBuffer()),
@@ -104,12 +103,12 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithCharsetByName() {
+    public void writesIntoWriterWithCharsetByName() throws Exception {
         final String txt = "Hello, writer with charset by name!";
         final StringWriter output = new StringWriter();
         new LengthOf(
             new TeeInput(txt, new OutputTo(output, StandardCharsets.UTF_8))
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must write into writer with charset by name",
             new InputOf(output.getBuffer()),
@@ -118,7 +117,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithCharsetAndSize() {
+    public void writesIntoWriterWithCharsetAndSize() throws Exception {
         final String txt = "Hello, writer with charset and size!";
         final StringWriter output = new StringWriter();
         new LengthOf(
@@ -126,7 +125,7 @@ public final class OutputToTest {
                 txt,
                 new OutputTo(output, StandardCharsets.UTF_8, 1)
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must write into writer with charset and size",
             new InputOf(output.getBuffer()),
@@ -135,7 +134,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithSize() {
+    public void writesIntoWriterWithSize() throws Exception {
         final String txt = "Hello, writer with size!";
         final StringWriter output = new StringWriter();
         new LengthOf(
@@ -143,7 +142,7 @@ public final class OutputToTest {
                 txt,
                 new OutputTo(output, 1)
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must write into writer with size",
             new InputOf(output.getBuffer()),
@@ -152,7 +151,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithCharsetByNameAndSize() {
+    public void writesIntoWriterWithCharsetByNameAndSize() throws Exception {
         final String txt = "Hello, writer with charset by name and size!";
         final StringWriter output = new StringWriter();
         new LengthOf(
@@ -160,7 +159,7 @@ public final class OutputToTest {
                 txt,
                 new OutputTo(output, StandardCharsets.UTF_8.name(), 1)
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must write into writer with charset by name and size",
             new InputOf(output.getBuffer()),
@@ -169,7 +168,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithDecoderAndSize() {
+    public void writesIntoWriterWithDecoderAndSize() throws Exception {
         final String txt = "Hello, writer with decoder and size!";
         final StringWriter output = new StringWriter();
         new LengthOf(
@@ -177,7 +176,7 @@ public final class OutputToTest {
                 txt,
                 new OutputTo(output, StandardCharsets.UTF_8.newDecoder(), 1)
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must write into writer with decoder and size",
             new InputOf(output.getBuffer()),

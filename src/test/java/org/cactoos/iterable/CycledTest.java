@@ -66,7 +66,7 @@ final class CycledTest {
                 new Cycled<>(
                     Collections::emptyIterator
                 )
-            ).intValue(),
+            ).value(),
             Matchers.equalTo(0)
         );
     }

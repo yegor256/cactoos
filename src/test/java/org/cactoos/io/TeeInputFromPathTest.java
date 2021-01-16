@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -51,7 +50,7 @@ public final class TeeInputFromPathTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void copiesFromPathToPath() throws IOException {
+    public void copiesFromPathToPath() throws Exception {
         final String message =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -62,7 +61,7 @@ public final class TeeInputFromPathTest {
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toPath(), output.toPath())
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input path to output path",
             new InputOf(output),
@@ -71,7 +70,7 @@ public final class TeeInputFromPathTest {
     }
 
     @Test
-    public void copiesFromPathToFile() throws IOException {
+    public void copiesFromPathToFile() throws Exception {
         final String message =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -82,7 +81,7 @@ public final class TeeInputFromPathTest {
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toPath(), output)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input path to output file",
             new InputOf(output),
@@ -91,7 +90,7 @@ public final class TeeInputFromPathTest {
     }
 
     @Test
-    public void copiesFromPathToOutput() throws IOException {
+    public void copiesFromPathToOutput() throws Exception {
         final String message =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -102,7 +101,7 @@ public final class TeeInputFromPathTest {
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toPath(), new OutputTo(output))
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input path to output",
             new InputOf(output),

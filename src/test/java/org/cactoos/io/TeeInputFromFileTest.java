@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import org.cactoos.scalar.LengthOf;
@@ -49,7 +48,7 @@ public final class TeeInputFromFileTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void copiesFromFileToFile() throws IOException {
+    public void copiesFromFileToFile() throws Exception {
         final String message =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -63,7 +62,7 @@ public final class TeeInputFromFileTest {
                 input,
                 output
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input file to output file",
             new InputOf(output),
@@ -72,7 +71,7 @@ public final class TeeInputFromFileTest {
     }
 
     @Test
-    public void copiesFromFileToPath() throws IOException {
+    public void copiesFromFileToPath() throws Exception {
         final String message =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -86,7 +85,7 @@ public final class TeeInputFromFileTest {
                 input,
                 output.toPath()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input file to output path",
             new InputOf(output),
@@ -95,7 +94,7 @@ public final class TeeInputFromFileTest {
     }
 
     @Test
-    public void copiesFromFileToOutput() throws IOException {
+    public void copiesFromFileToOutput() throws Exception {
         final String message =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
@@ -109,7 +108,7 @@ public final class TeeInputFromFileTest {
                 input,
                 new OutputTo(output)
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input file to output",
             new InputOf(output),

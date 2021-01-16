@@ -38,23 +38,23 @@ import org.junit.jupiter.api.Test;
 final class PartitionedTest {
 
     @Test
-    void partitionedEmpty() {
+    void partitionedEmpty() throws Exception {
         MatcherAssert.assertThat(
             "Can't generate a Partitioned without values.",
             new LengthOf(
                 new Partitioned<>(2)
-            ).intValue(),
+            ).value(),
             Matchers.equalTo(0)
         );
     }
 
     @Test
-    void partitionedWithPartial() {
+    void partitionedWithPartial() throws Exception {
         MatcherAssert.assertThat(
             "Can't generate a Partitioned with partition size.",
             new LengthOf(
                 new Partitioned<>(2, new IterableOf<>(1, 2, 3))
-            ).intValue(),
+            ).value(),
             Matchers.equalTo(2)
         );
     }

@@ -29,7 +29,6 @@ import java.util.Iterator;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.io.InputOf;
 
 /**
  * Length.
@@ -39,27 +38,22 @@ import org.cactoos.io.InputOf;
  *
  * @since 0.1
  */
-public final class LengthOf extends NumberEnvelope {
-
-    /**
-     * Serialization marker.
-     */
-    private static final long serialVersionUID = -7351954368806143451L;
+public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
      * Ctor.
      * @param items The array
      * @param <T> The type of items
      */
-    public <T> LengthOf(final Iterable<T> items) {
+    public LengthOf(final Iterable<?> items) {
         this(() -> {
-            final Iterator<T> iterator = items.iterator();
-            int size = 0;
+            final Iterator<?> iterator = items.iterator();
+            long size = 0;
             while (iterator.hasNext()) {
                 iterator.next();
                 ++size;
             }
-            return (double) size;
+            return size;
         });
     }
 
@@ -70,7 +64,7 @@ public final class LengthOf extends NumberEnvelope {
      * @param text The input
      */
     public LengthOf(final Text text) {
-        this(() -> (double) text.asString().length());
+        this(() -> (long) text.asString().length());
     }
 
     /**
@@ -87,12 +81,6 @@ public final class LengthOf extends NumberEnvelope {
      * @param input The input
      * @param max Buffer size
      */
-    @SuppressWarnings(
-        {
-            "PMD.CallSuperInConstructor",
-            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-        }
-    )
     public LengthOf(final Input input, final int max) {
         this(() -> {
             if (max == 0) {
@@ -112,17 +100,16 @@ public final class LengthOf extends NumberEnvelope {
                         break;
                     }
                 }
-                return (double) length;
+                return length;
             }
         });
     }
 
     /**
      * Ctor.
-     * @param dnm Double number.
+     * @param nm number.
      */
-    private LengthOf(final Scalar<Double> dnm) {
-        super(dnm);
+    private LengthOf(final Scalar<Long> nm) {
+        super(nm);
     }
-
 }

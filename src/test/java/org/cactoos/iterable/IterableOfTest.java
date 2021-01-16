@@ -42,14 +42,14 @@ import org.llorllale.cactoos.matchers.IsTrue;
 final class IterableOfTest {
 
     @Test
-    void convertsScalarsToIterable() {
+    void convertsScalarsToIterable() throws Exception {
         MatcherAssert.assertThat(
             "must convert scalars to iterable",
             new LengthOf(
                 new IterableOf<>(
                     "a", "b", "c"
                 )
-            ).intValue(),
+            ).value(),
             // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(3)
         );
@@ -65,14 +65,14 @@ final class IterableOfTest {
     }
 
     @Test
-    void convertsObjectsToIterable() {
+    void convertsObjectsToIterable() throws Exception {
         MatcherAssert.assertThat(
             "must convert objects to iterable",
             new LengthOf(
                 new IterableOf<>(
                     new TextOf("a"), new TextOf("b"), new TextOf("c")
                 )
-            ).intValue(),
+            ).value(),
             // @checkstyle MagicNumber (1 line)
             Matchers.equalTo(3)
         );

@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +47,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class LoggingInputTest {
 
     @Test
-    void logReadFromDeadInput() throws IOException {
+    void logReadFromDeadInput() throws Exception {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new LoggingInput(
@@ -56,7 +55,7 @@ final class LoggingInputTest {
                 "dead input",
                 logger
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Can't log zero byte read from dead input",
             logger.toString(),
@@ -65,7 +64,7 @@ final class LoggingInputTest {
     }
 
     @Test
-    void logReadFromOneByte() throws IOException {
+    void logReadFromOneByte() throws Exception {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new LoggingInput(
@@ -73,7 +72,7 @@ final class LoggingInputTest {
                 "memory",
                 logger
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Can't log one byte read from memory",
             logger.toString(),
@@ -82,7 +81,7 @@ final class LoggingInputTest {
     }
 
     @Test
-    void logReadFromText() throws IOException {
+    void logReadFromText() throws Exception {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new LoggingInput(
@@ -90,7 +89,7 @@ final class LoggingInputTest {
                 "memory",
                 logger
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Can't log 22 bytes read from memory",
             logger.toString(),
@@ -99,7 +98,7 @@ final class LoggingInputTest {
     }
 
     @Test
-    void logReadFromLargeTextFile() throws IOException {
+    void logReadFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new LoggingInput(
@@ -107,7 +106,7 @@ final class LoggingInputTest {
                 "text file",
                 logger
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Can't log 74536 bytes read from text file",
             logger.toString(),
@@ -122,7 +121,7 @@ final class LoggingInputTest {
     }
 
     @Test
-    void logAllFromLargeTextFile() throws IOException {
+    void logAllFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger(Level.WARNING);
         new LengthOf(
             new LoggingInput(
@@ -130,7 +129,7 @@ final class LoggingInputTest {
                 "text file",
                 logger
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Can't log all read and close operations from text file",
             logger.toString(),
@@ -217,7 +216,7 @@ final class LoggingInputTest {
     }
 
     @Test
-    void logIntoCreatedLogger() {
+    void logIntoCreatedLogger() throws Exception {
         final FakeHandler handler = new FakeHandler();
         final String src = "my source";
         final Logger logger = Logger.getLogger(src);
@@ -228,7 +227,7 @@ final class LoggingInputTest {
                     new InputOf("Hi there"),
                     src
                 )
-            ).intValue();
+            ).value();
             new Assertion<>(
                 "",
                 handler.toString(),

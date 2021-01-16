@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
@@ -49,7 +48,7 @@ public final class TeeInputFromInputTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void copiesFromInputToPath() throws IOException {
+    public void copiesFromInputToPath() throws Exception {
         final String input = "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
@@ -57,7 +56,7 @@ public final class TeeInputFromInputTest {
                 new InputOf(input),
                 output.toPath()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input to the output path",
             new InputOf(output),
@@ -66,7 +65,7 @@ public final class TeeInputFromInputTest {
     }
 
     @Test
-    public void copiesFromInputToFile() throws IOException {
+    public void copiesFromInputToFile() throws Exception {
         final String input = "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
@@ -74,7 +73,7 @@ public final class TeeInputFromInputTest {
                 new InputOf(input),
                 output
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input to the output file",
             new InputOf(output),
@@ -83,7 +82,7 @@ public final class TeeInputFromInputTest {
     }
 
     @Test
-    public void copiesFromInputToWriter() throws IOException {
+    public void copiesFromInputToWriter() throws Exception {
         final String input = "Hello, товарищ write #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
@@ -91,7 +90,7 @@ public final class TeeInputFromInputTest {
                 new InputOf(input),
                 new WriterTo(output)
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input to the output",
             new InputOf(output),
@@ -100,7 +99,7 @@ public final class TeeInputFromInputTest {
     }
 
     @Test
-    public void copiesFromInputWithSizeToWriter() throws IOException {
+    public void copiesFromInputWithSizeToWriter() throws Exception {
         final String input = "Hello, товарищ writer #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
@@ -109,7 +108,7 @@ public final class TeeInputFromInputTest {
                 new WriterTo(output),
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input with size to the output",
             new InputOf(output),
@@ -118,7 +117,7 @@ public final class TeeInputFromInputTest {
     }
 
     @Test
-    public void copiesFromInputWithCharsetToWriter() throws IOException {
+    public void copiesFromInputWithCharsetToWriter() throws Exception {
         final String input = "Hello, товарищ writer #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
@@ -127,7 +126,7 @@ public final class TeeInputFromInputTest {
                 new WriterTo(output),
                 StandardCharsets.UTF_8
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input with charset to output",
             new InputOf(output),
@@ -136,7 +135,7 @@ public final class TeeInputFromInputTest {
     }
 
     @Test
-    public void copiesFromInputWithCharsetAndSizeToWriter() throws IOException {
+    public void copiesFromInputWithCharsetAndSizeToWriter() throws Exception {
         final String input = "Hello, товарищ writer #4 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
@@ -146,7 +145,7 @@ public final class TeeInputFromInputTest {
                 StandardCharsets.UTF_8,
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input with charset and size to output",
             new InputOf(output),
@@ -155,7 +154,7 @@ public final class TeeInputFromInputTest {
     }
 
     @Test
-    public void copiesFromInputWithCharsetByNameToWriter() throws IOException {
+    public void copiesFromInputWithCharsetByNameToWriter() throws Exception {
         final String input = "Hello, товарищ writer #5 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
@@ -164,7 +163,7 @@ public final class TeeInputFromInputTest {
                 new WriterTo(output),
                 StandardCharsets.UTF_8.name()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input with charset by name to output",
             new InputOf(output),
@@ -184,7 +183,7 @@ public final class TeeInputFromInputTest {
                 StandardCharsets.UTF_8.name(),
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from input with charset by name and size to output",
             new InputOf(output),
