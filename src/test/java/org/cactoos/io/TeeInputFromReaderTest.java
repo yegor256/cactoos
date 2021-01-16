@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
@@ -50,13 +49,13 @@ public final class TeeInputFromReaderTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void copiesFromReaderToFile() throws IOException {
+    public void copiesFromReaderToFile() throws Exception {
         final String input =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(new ReaderOf(input), output)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader to file.",
             new InputOf(output),
@@ -65,7 +64,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithSizeToFile() throws IOException {
+    public void copiesFromReaderWithSizeToFile() throws Exception {
         final String input =
             "Hello, товарищ file #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -75,7 +74,7 @@ public final class TeeInputFromReaderTest {
                 output,
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with size to file.",
             new InputOf(output),
@@ -84,7 +83,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetToFile() throws IOException {
+    public void copiesFromReaderWithCharsetToFile() throws Exception {
         final String input =
             "Hello, товарищ file #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -94,7 +93,7 @@ public final class TeeInputFromReaderTest {
                 output,
                 StandardCharsets.UTF_8
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset to file.",
             new InputOf(output),
@@ -103,7 +102,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetAndSizeToFile() throws IOException {
+    public void copiesFromReaderWithCharsetAndSizeToFile() throws Exception {
         final String input =
             "Hello, товарищ file #4 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -114,7 +113,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8,
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset and size to file.",
             new InputOf(output),
@@ -123,7 +122,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetByNameToFile() throws IOException {
+    public void copiesFromReaderWithCharsetByNameToFile() throws Exception {
         final String input =
             "Hello, товарищ file #5 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -133,7 +132,7 @@ public final class TeeInputFromReaderTest {
                 output,
                 StandardCharsets.UTF_8.name()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset by name to file.",
             new InputOf(output),
@@ -143,7 +142,7 @@ public final class TeeInputFromReaderTest {
 
     @Test
     public void copiesFromReaderWithCharsetByNameAndSizeToFile()
-        throws IOException {
+        throws Exception {
         final String input =
             "Hello, товарищ file #6 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -154,7 +153,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8.name(),
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset by name and size to file.",
             new InputOf(output),
@@ -163,7 +162,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderToPath() throws IOException {
+    public void copiesFromReaderToPath() throws Exception {
         final String input =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -172,7 +171,7 @@ public final class TeeInputFromReaderTest {
                 new ReaderOf(input),
                 output.toPath()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader to path.",
             new InputOf(output),
@@ -181,7 +180,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithSizeToPath() throws IOException {
+    public void copiesFromReaderWithSizeToPath() throws Exception {
         final String input =
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -191,7 +190,7 @@ public final class TeeInputFromReaderTest {
                 output.toPath(),
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with size to path",
             new InputOf(output),
@@ -200,7 +199,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetToPath() throws IOException {
+    public void copiesFromReaderWithCharsetToPath() throws Exception {
         final String input =
             "Hello, товарищ path #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -210,7 +209,7 @@ public final class TeeInputFromReaderTest {
                 output.toPath(),
                 StandardCharsets.UTF_8
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset to path.",
             new InputOf(output),
@@ -219,7 +218,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetAndSizeToPath() throws IOException {
+    public void copiesFromReaderWithCharsetAndSizeToPath() throws Exception {
         final String input =
             "Hello, товарищ path #4 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -230,7 +229,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8,
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset and size to path.",
             new InputOf(output),
@@ -239,7 +238,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetByNameToPath() throws IOException {
+    public void copiesFromReaderWithCharsetByNameToPath() throws Exception {
         final String input =
             "Hello, товарищ path #5 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -249,7 +248,7 @@ public final class TeeInputFromReaderTest {
                 output.toPath(),
                 StandardCharsets.UTF_8.name()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset by name to path.",
             new InputOf(output),
@@ -259,7 +258,7 @@ public final class TeeInputFromReaderTest {
 
     @Test
     public void copiesFromReaderWithCharsetByNameAndSizeToPath()
-        throws IOException {
+        throws Exception {
         final String input =
             "Hello, товарищ path #6 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -270,7 +269,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8.name(),
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset by name and size to path.",
             new InputOf(output),
@@ -279,7 +278,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderToOutput() throws IOException {
+    public void copiesFromReaderToOutput() throws Exception {
         final String input =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -288,7 +287,7 @@ public final class TeeInputFromReaderTest {
                 new ReaderOf(input),
                 new OutputTo(output)
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader to output.",
             new InputOf(output),
@@ -297,7 +296,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithSizeToOutput() throws IOException {
+    public void copiesFromReaderWithSizeToOutput() throws Exception {
         final String input =
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -307,7 +306,7 @@ public final class TeeInputFromReaderTest {
                 new OutputTo(output),
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with size to output.",
             new InputOf(output),
@@ -316,7 +315,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetToOutput() throws IOException {
+    public void copiesFromReaderWithCharsetToOutput() throws Exception {
         final String input =
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -326,7 +325,7 @@ public final class TeeInputFromReaderTest {
                 new OutputTo(output),
                 StandardCharsets.UTF_8
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset to output.",
             new InputOf(output),
@@ -336,7 +335,7 @@ public final class TeeInputFromReaderTest {
 
     @Test
     public void copiesFromReaderWithCharsetAndSizeToOutput()
-        throws IOException {
+        throws Exception {
         final String input =
             "Hello, товарищ output #4 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -347,7 +346,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8,
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset and size to output.",
             new InputOf(output),
@@ -356,7 +355,7 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetByNameToOutput() throws IOException {
+    public void copiesFromReaderWithCharsetByNameToOutput() throws Exception {
         final String input =
             "Hello, товарищ output #5 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -366,7 +365,7 @@ public final class TeeInputFromReaderTest {
                 new OutputTo(output),
                 StandardCharsets.UTF_8.name()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset by name to output.",
             new InputOf(output),
@@ -376,7 +375,7 @@ public final class TeeInputFromReaderTest {
 
     @Test
     public void copiesFromReaderWithCharsetByNameAndSizeToOutput()
-        throws IOException {
+        throws Exception {
         final String input =
             "Hello, товарищ output #6 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
@@ -387,7 +386,7 @@ public final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8.name(),
                 input.length()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from reader with charset by name and size to output.",
             new InputOf(output),

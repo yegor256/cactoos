@@ -82,7 +82,7 @@ final class StickyTest {
     }
 
     @Test
-    void readsFileContentSlowlyAndCountsLength() {
+    void readsFileContentSlowlyAndCountsLength() throws Exception {
         final long size = 100_000L;
         new Assertion<>(
             "Must read bytes from a large source slowly and count length",
@@ -90,7 +90,7 @@ final class StickyTest {
                 new Sticky(
                     new SlowInput(size)
                 )
-            ).longValue(),
+            ).value(),
             Matchers.equalTo(size)
         ).affirm();
     }

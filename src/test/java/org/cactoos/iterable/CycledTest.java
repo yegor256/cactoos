@@ -27,7 +27,6 @@ import java.util.Collections;
 import org.cactoos.scalar.ItemAt;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
@@ -66,8 +65,8 @@ final class CycledTest {
                 new Cycled<>(
                     Collections::emptyIterator
                 )
-            ).intValue(),
-            Matchers.equalTo(0)
+            ),
+            new HasValue<>(0L)
         );
     }
 }

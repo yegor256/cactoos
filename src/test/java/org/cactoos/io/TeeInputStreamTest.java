@@ -68,14 +68,14 @@ final class TeeInputStreamTest {
     }
 
     @Test
-    void leftInputClosed() {
+    void leftInputClosed() throws Exception {
         try (StringWriterMock write = new StringWriterMock()) {
             new LengthOf(
                 new TeeInput(
                     "foo",
                     new OutputTo(write)
                 )
-            ).intValue();
+            ).value();
             new Assertion<>(
                 "Must use output after usage from TeeInput",
                 write.isClosed(),

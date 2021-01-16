@@ -103,7 +103,7 @@ public final class InputStreamOfTest {
         final String content = "Content in a file";
         new LengthOf(
             new TeeInput(content, file)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Can't read from file",
             new TextOf(new InputStreamOf(file)).asString(),
@@ -148,7 +148,7 @@ public final class InputStreamOfTest {
         final File file = this.folder.newFile("readFromUri.txt-3");
         new LengthOf(
             new TeeInput(content, file)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Can't read from URI",
             new TextOf(new InputStreamOf(file.toURI())).asString(),
@@ -162,7 +162,7 @@ public final class InputStreamOfTest {
         final File file = this.folder.newFile("readFromUrl.txt-4");
         new LengthOf(
             new TeeInput(content, file)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Can't read from URL",
             new TextOf(new InputStreamOf(file.toURI().toURL())).asString(),
@@ -224,7 +224,7 @@ public final class InputStreamOfTest {
         final String content = "Content for reading text with charset";
         new LengthOf(
             new TeeInput(content, file)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Can't read from text with charset",
             new TextOf(

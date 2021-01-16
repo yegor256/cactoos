@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.scalar.LengthOf;
 import org.junit.Rule;
@@ -49,13 +48,13 @@ public final class TeeInputFromCharArrayTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void copiesFromCharArrayWithCharsetToFile() throws IOException {
+    public void copiesFromCharArrayWithCharsetToFile() throws Exception {
         final String input =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toCharArray(), output, StandardCharsets.UTF_8)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "char array must be copied to the file with charset UTF_8",
             new InputOf(output),
@@ -65,13 +64,13 @@ public final class TeeInputFromCharArrayTest {
 
     @Test
     public void copiesFromCharArrayWithCharsetByNameToFile()
-        throws IOException {
+        throws Exception {
         final String input =
             "Hello, товарищ file #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toCharArray(), output, StandardCharsets.UTF_8.name())
-        ).intValue();
+        ).value();
         new Assertion<>(
             "char array must be copied to the file with UTF_8 charset's name",
             new InputOf(output),
@@ -80,13 +79,13 @@ public final class TeeInputFromCharArrayTest {
     }
 
     @Test
-    public void copiesFromCharArrayToOutput() throws IOException {
+    public void copiesFromCharArrayToOutput() throws Exception {
         final String input =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toCharArray(), new OutputTo(output))
-        ).intValue();
+        ).value();
         new Assertion<>(
             "char array must be copied to the output",
             new InputOf(output),
@@ -95,13 +94,13 @@ public final class TeeInputFromCharArrayTest {
     }
 
     @Test
-    public void copiesFromCharArrayWithCharsetToOutput() throws IOException {
+    public void copiesFromCharArrayWithCharsetToOutput() throws Exception {
         final String input =
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toCharArray(), new OutputTo(output), StandardCharsets.UTF_8)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "char array must be copied to the output with UTF_8 charset",
             new InputOf(output),
@@ -111,13 +110,13 @@ public final class TeeInputFromCharArrayTest {
 
     @Test
     public void copiesFromCharArrayWithCharsetByNameToOutput()
-        throws IOException {
+        throws Exception {
         final String input =
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toCharArray(), new OutputTo(output), StandardCharsets.UTF_8.name())
-        ).intValue();
+        ).value();
         new Assertion<>(
             "char array must be copied to the output with UTF_8 charset's name",
             new InputOf(output),
@@ -126,13 +125,13 @@ public final class TeeInputFromCharArrayTest {
     }
 
     @Test
-    public void copiesFromCharArrayToPath() throws IOException {
+    public void copiesFromCharArrayToPath() throws Exception {
         final String input =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toCharArray(), output.toPath())
-        ).intValue();
+        ).value();
         new Assertion<>(
             "char array must be copied to the path",
             new InputOf(output),
@@ -141,13 +140,13 @@ public final class TeeInputFromCharArrayTest {
     }
 
     @Test
-    public void copiesFromCharArrayWithCharsetToPath() throws IOException {
+    public void copiesFromCharArrayWithCharsetToPath() throws Exception {
         final String input =
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toCharArray(), output.toPath(), StandardCharsets.UTF_8)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "char array must be copied to the path with UTF_8 charset",
             new InputOf(output),
@@ -157,13 +156,13 @@ public final class TeeInputFromCharArrayTest {
 
     @Test
     public void copiesFromCharArrayWithCharsetByNameToPath()
-        throws IOException {
+        throws Exception {
         final String input =
             "Hello, товарищ path #3 äÄ üÜ öÖ and ß";
         final File output = this.folder.newFile();
         new LengthOf(
             new TeeInput(input.toCharArray(), output.toPath(), StandardCharsets.UTF_8.name())
-        ).intValue();
+        ).value();
         new Assertion<>(
             "char array must be copied to the path with UTF_8 charset's name",
             new InputOf(output),
@@ -172,13 +171,13 @@ public final class TeeInputFromCharArrayTest {
     }
 
     @Test
-    public void copiesFromCharArrayToFile() throws IOException {
+    public void copiesFromCharArrayToFile() throws Exception {
         final File output = this.folder.newFile();
         final String input =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
         new LengthOf(
             new TeeInput(input.toCharArray(), output)
-        ).intValue();
+        ).value();
         new Assertion<>(
             "char array must be copied to the file",
             new InputOf(output),

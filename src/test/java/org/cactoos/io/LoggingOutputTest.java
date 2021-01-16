@@ -57,7 +57,7 @@ public final class LoggingOutputTest {
     public final TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void logWriteZero() {
+    public void logWriteZero() throws Exception {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new TeeInput(
@@ -68,7 +68,7 @@ public final class LoggingOutputTest {
                     logger
                 )
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Can't log zero byte written to memory",
             logger.toString(),
@@ -130,7 +130,7 @@ public final class LoggingOutputTest {
                     new ResourceOf("org/cactoos/large-text.txt"),
                     new OutputTo(output)
                 )
-            ).intValue();
+            ).value();
         }
         new Assertion<>(
             "Can't log write and close operations to text file",
@@ -163,7 +163,7 @@ public final class LoggingOutputTest {
                     new ResourceOf("org/cactoos/large-text.txt"),
                     new OutputTo(output)
                 )
-            ).intValue();
+            ).value();
         }
         new Assertion<>(
             "Can't log all write and close operations to text file",

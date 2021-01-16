@@ -28,9 +28,9 @@ import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Chained}.
@@ -56,8 +56,8 @@ final class ChainedTest {
                         new IterableOf<>("public", "final", "class")
                     )
                 )
-            ).intValue(),
-            new IsEqual<>(3)
+            ),
+            new HasValue<>(3L)
         ).affirm();
     }
 
@@ -80,8 +80,8 @@ final class ChainedTest {
                         new IterableOf<>("private", "static", "String")
                     )
                 )
-            ).intValue(),
-            new IsEqual<>(2)
+            ),
+            new HasValue<>(2L)
         ).affirm();
     }
 }

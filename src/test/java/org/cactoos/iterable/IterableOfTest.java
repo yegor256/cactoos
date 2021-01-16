@@ -31,6 +31,7 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
@@ -42,16 +43,16 @@ import org.llorllale.cactoos.matchers.IsTrue;
 final class IterableOfTest {
 
     @Test
-    void convertsScalarsToIterable() {
+    void convertsScalarsToIterable() throws Exception {
         MatcherAssert.assertThat(
             "must convert scalars to iterable",
             new LengthOf(
                 new IterableOf<>(
                     "a", "b", "c"
                 )
-            ).intValue(),
+            ),
             // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(3)
+            new HasValue<>(3L)
         );
     }
 
@@ -65,16 +66,16 @@ final class IterableOfTest {
     }
 
     @Test
-    void convertsObjectsToIterable() {
+    void convertsObjectsToIterable() throws Exception {
         MatcherAssert.assertThat(
             "must convert objects to iterable",
             new LengthOf(
                 new IterableOf<>(
                     new TextOf("a"), new TextOf("b"), new TextOf("c")
                 )
-            ).intValue(),
+            ),
             // @checkstyle MagicNumber (1 line)
-            Matchers.equalTo(3)
+            new HasValue<>(3L)
         );
     }
 

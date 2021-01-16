@@ -51,8 +51,8 @@ final class StickyTest {
         );
         new Assertion<>(
             "Must ignore the changes in the underlying iterable",
-            new LengthOf(list).intValue(),
-            new IsEqual<>(new LengthOf(list).intValue())
+            new LengthOf(list).value(),
+            new IsEqual<>(new LengthOf(list).value())
         ).affirm();
     }
 
