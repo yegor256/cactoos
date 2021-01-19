@@ -55,7 +55,7 @@ final class PagedTest {
         new Assertion<Iterable<String>>(
             "must have all page values",
             new Paged<>(
-                () -> pages.next().iterator(),
+                pages.next().iterator(),
                 page -> new Ternary<>(
                     () -> pages.hasNext(),
                     () -> pages.next().iterator(),
@@ -79,7 +79,7 @@ final class PagedTest {
         new Assertion<Iterable<String>>(
             "length must be equal to total number of elements",
             new Paged<>(
-                () -> pages.next().iterator(),
+                pages.next().iterator(),
                 page -> new Ternary<>(
                     () -> pages.hasNext(),
                     () -> pages.next().iterator(),
@@ -105,7 +105,7 @@ final class PagedTest {
             "must throw an exception when first iterator is empty",
             new ScalarOf<String>(
                 () -> new Paged<>(
-                    () -> pages.next().iterator(),
+                    pages.next().iterator(),
                     page -> new Ternary<>(
                         () -> pages.hasNext(),
                         () -> pages.next().iterator(),

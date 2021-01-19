@@ -24,13 +24,7 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.Func;
-import org.cactoos.Scalar;
-import org.cactoos.func.UncheckedFunc;
-import org.cactoos.scalar.Sticky;
-import org.cactoos.scalar.Unchecked;
 
 /**
  * Paged iterable.
@@ -41,11 +35,10 @@ import org.cactoos.scalar.Unchecked;
  *
  * @param <X> Type of item
  * @since 0.47
- * @todo #1183:30m Continue refactoring and add `iterator.Paged` by
- *  extracting inner anon class from this class. The checkstyle suppression
- *  should be removed after that.
+ * @todo #1464:30min Replace the constructor so that instead it takes a {@link Iterable}
+ *  as first and a {@code Func<Iterable, Iterable>} as next in order to homogenise it with
+ *  the other {@link Iterable} implementations.
  */
-@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
 public final class Paged<X> extends IterableEnvelope<X> {
 
     /**
@@ -55,47 +48,12 @@ public final class Paged<X> extends IterableEnvelope<X> {
      * @param next Subsequent bags of elements
      * @param <I> Custom iterator
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public <I extends Iterator<X>> Paged(
-        final Scalar<I> first, final Func<I, I> next
+        final I first, final Func<I, I> next
     ) {
-        // @checkstyle AnonInnerLengthCheck (30 lines)
         super(
             new IterableOf<>(
-                () -> new Iterator<X>() {
-                    private final AtomicReference<Unchecked<I>> current =
-                        new AtomicReference<>(
-                            new Unchecked<>(
-                                new Sticky<>(first)
-                            )
-                        );
-
-                    private final UncheckedFunc<I, I> subsequent =
-                        new UncheckedFunc<>(next);
-
-                    @Override
-                    public boolean hasNext() {
-                        if (!this.current.get().value().hasNext()) {
-                            final I next = this.subsequent.apply(
-                                this.current.get().value()
-                            );
-                            this.current.set(
-                                new Unchecked<>(
-                                    new Sticky<>(() -> next)
-                                )
-                            );
-                        }
-                        return this.current.get().value().hasNext();
-                    }
-
-                    @Override
-                    public X next() {
-                        if (this.hasNext()) {
-                            return this.current.get().value().next();
-                        }
-                        throw new NoSuchElementException();
-                    }
-                }
+                new org.cactoos.iterator.Paged<>(first, next)
             )
         );
     }
