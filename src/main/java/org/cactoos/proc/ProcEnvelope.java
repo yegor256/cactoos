@@ -23,36 +23,33 @@
  */
 package org.cactoos.proc;
 
-import org.cactoos.Func;
 import org.cactoos.Proc;
 
 /**
- * Func as Proc.
+ * Envelope for {@link Proc}.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of input
- * @since 0.12
+ * @since 0.49
  */
-public final class ProcOf<X> extends ProcEnvelope<X> {
+public abstract class ProcEnvelope<X> implements Proc<X> {
+
+    /**
+     * Proc to decorate.
+     */
+    private final Proc<X> origin;
 
     /**
      * Ctor.
-     * @param fnc The proc
+     * @param origin The procedure
      */
-    public ProcOf(final Func<X, ?> fnc) {
-        this(
-            input -> {
-                fnc.apply(input);
-            }
-        );
+    public ProcEnvelope(final Proc<X> origin) {
+        this.origin = origin;
     }
 
-    /**
-     * Ctor.
-     * @param prc The proc
-     */
-    public ProcOf(final Proc<X> prc) {
-        super(prc);
+    @Override
+    public final void exec(final X input) throws Exception {
+        this.origin.exec(input);
     }
 }
