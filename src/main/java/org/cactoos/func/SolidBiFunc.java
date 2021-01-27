@@ -35,12 +35,7 @@ import org.cactoos.BiFunc;
  * @param <Z> Type of output
  * @since 0.24
  */
-public final class SolidBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
-
-    /**
-     * Original func.
-     */
-    private final BiFunc<X, Y, Z> func;
+public final class SolidBiFunc<X, Y, Z> extends BiFuncEnveloppe<X, Y, Z> {
 
     /**
      * Ctor.
@@ -57,11 +52,6 @@ public final class SolidBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
      * @since 0.26
      */
     public SolidBiFunc(final BiFunc<X, Y, Z> fnc, final int max) {
-        this.func = new SyncBiFunc<>(new StickyBiFunc<>(fnc, max));
-    }
-
-    @Override
-    public Z apply(final X first, final Y second) throws Exception {
-        return this.func.apply(first, second);
+        super(new SyncBiFunc<>(new StickyBiFunc<>(fnc, max)));
     }
 }

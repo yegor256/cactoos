@@ -21,19 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.func;
+
+import org.cactoos.BiFunc;
 
 /**
- * Cactoos.
+ * Enveloppe of {@link BiFunc}.
  *
- * <p>This is a collection of Java primitives designed in a rather
- * extreme object-objected manner. More details about our design
- * decisions you can find in this
- * <a href="https://github.com/yegor256/cactoos/blob/master/README.md">README</a>.
- * Feel free to contribute, if you find issues or have a need for
- * some other primitives.</p>
- *
- * @since 0.1
- * @see <a href="http://www.cactoos.org">Project site www.cactoos.org</a>
- * @see <a href="https://github.com/yegor256/cactoos">GitHub repository</a>
+ * @param <X> Type of input
+ * @param <Y> Type of input
+ * @param <Z> Type of output
+ * @since 0.49
  */
-package org.cactoos;
+public abstract class BiFuncEnveloppe<X, Y, Z> implements BiFunc<X, Y, Z> {
+
+    /**
+     * BiFunc to decorate.
+     */
+    private final BiFunc<X, Y, Z> origin;
+
+    /**
+     * Ctor.
+     * @param func The function
+     */
+    public BiFuncEnveloppe(final BiFunc<X, Y, Z> func) {
+        this.origin = func;
+    }
+
+    @Override
+    public final Z apply(final X first, final Y second) throws Exception {
+        return this.origin.apply(first, second);
+    }
+}

@@ -39,12 +39,7 @@ import org.cactoos.Scalar;
  * @param <Z> Type of output
  * @since 0.20
  */
-public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
-
-    /**
-     * The func.
-     */
-    private final BiFunc<X, Y, Z> func;
+public final class BiFuncOf<X, Y, Z> extends BiFuncEnveloppe<X, Y, Z> {
 
     /**
      * Ctor.
@@ -92,14 +87,13 @@ public final class BiFuncOf<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
-     * @param fnc Func
+     * @param fnc The func
      */
     public BiFuncOf(final BiFunc<X, Y, Z> fnc) {
-        this.func = fnc;
-    }
-
-    @Override
-    public Z apply(final X first, final Y second) throws Exception {
-        return this.func.apply(first, second);
+        super(
+            (first, second) -> {
+                return fnc.apply(first, second);
+            }
+        );
     }
 }
