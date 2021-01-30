@@ -39,10 +39,6 @@ import org.cactoos.proc.UncheckedBiProc;
  * @param <X> Type of input
  * @param <Y> Type of input
  * @since 0.20
- * @todo #1445:30min Introduce BiProcOf on the model of ProcOf, FuncOf, etc
- *  with constructors taking Func, BiFunc, Proc and BiProc as primary.
- *  Add tests similar to those of ProcOfTest, FuncOfTest, etc to fully cover
- *  the implementation. Use it where needed, for example in AndWithIndexTest.
  */
 public interface BiProc<X, Y> {
 

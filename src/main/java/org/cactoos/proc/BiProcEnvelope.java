@@ -32,7 +32,7 @@ import org.cactoos.BiProc;
  *
  * @param <X> Type of input
  * @param <Y> Type of output
- * @since 0.49
+ * @since 0.50
  */
 public abstract class BiProcEnvelope<X, Y> implements BiProc<X, Y> {
 

@@ -33,9 +33,10 @@ import org.llorllale.cactoos.matchers.MatcherOf;
 /**
  * Test case for {@link BiProcOf}.
  *
- * @since 0.49
+ * @since 0.50
  */
-public class BiProcOfTest {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+final class BiProcOfTest {
     @Test
     void worksWithFunc() throws Exception {
         final AtomicReference<Object> done = new AtomicReference<>();
@@ -45,7 +46,7 @@ public class BiProcOfTest {
                 new FuncOf<>(
                     input -> {
                         done.set(input);
-                        return new Object();
+                        return "discarded";
                     }
                 )
             ),
@@ -69,7 +70,7 @@ public class BiProcOfTest {
                 new BiFuncOf<>(
                     (first, second) -> {
                         done.set(first);
-                        return new Object();
+                        return "discarded";
                     }
                 )
             ),

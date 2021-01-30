@@ -26,6 +26,8 @@ package org.cactoos.scalar;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.func.BiFuncOf;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.proc.BiProcOf;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -39,19 +41,44 @@ import org.llorllale.cactoos.matchers.MatcherOf;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class AndWithIndexTest {
 
     @Test
-    void iteratesListWithIndex() {
+    void iteratesListWithIndexFromBiFunc() {
         final List<String> list = new LinkedList<>();
         new Assertion<>(
-            "Must iterate a list with a procedure",
+            "Must iterate a list with a function",
             new AndWithIndex(
                 new BiFuncOf<>(
                     (text, index) -> list.add(index, text),
                     true
                 ),
                 "hello", "world"
+            ),
+            new HasValue<>(
+                Matchers.allOf(
+                    Matchers.equalTo(true),
+                    new MatcherOf<>(
+                        value -> list.size() == 2
+                    )
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void iteratesListWithIndexFromBiProc() {
+        final List<String> list = new LinkedList<>();
+        new Assertion<>(
+            "Must iterate a list with a procedure",
+            new AndWithIndex(
+                new BiProcOf<>(
+                    (text, index) -> {
+                        list.add(index, text);
+                    }
+                ),
+                new IterableOf<>("hello", "world")
             ),
             new HasValue<>(
                 Matchers.allOf(

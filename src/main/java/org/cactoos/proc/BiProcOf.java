@@ -35,16 +35,15 @@ import org.cactoos.Proc;
  *
  * @param <X> Type of input
  * @param <Y> Type of input
- * @since 0.49
+ * @since 0.50
  */
 public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
 
     /**
      * Ctor.
      * @param func The function
-     * @param <Z> Type of function output
      */
-    public <Z> BiProcOf(final Func<X, Y> func) {
+    public BiProcOf(final Func<? super X, ?> func) {
         this(
             (x, y) -> {
                 func.apply(x);
@@ -55,9 +54,8 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
     /**
      * Ctor.
      * @param func The bi function
-     * @param <Z> Type of function output
      */
-    public <Z> BiProcOf(final BiFunc<X, Y, Z> func) {
+    public BiProcOf(final BiFunc<? super X, ? super Y, ?> func) {
         this(
             (x, y) -> {
                 func.apply(x, y);
@@ -69,7 +67,7 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
      * Ctor.
      * @param prc The procedure
      */
-    public BiProcOf(final Proc<X> prc) {
+    public BiProcOf(final Proc<? super X> prc) {
         this(
             (x, y) -> {
                 prc.exec(x);
