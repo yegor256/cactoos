@@ -34,7 +34,7 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Sorted}.
@@ -107,10 +107,10 @@ final class SortedTest {
             ),
             new IsIterableContainingInOrder<Text>(
                 new ListOf<>(
-                    new TextIs("ab"),
-                    new TextIs("cd"),
-                    new TextIs("ef"),
-                    new TextIs("gh")
+                    new IsText("ab"),
+                    new IsText("cd"),
+                    new IsText("ef"),
+                    new IsText("gh")
                 )
             )
         ).affirm();

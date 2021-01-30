@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link MaxOf}.
@@ -41,22 +41,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of positive integers",
             () -> new MaxOf(1, 2, 3, 4).intValue(),
-            new ScalarHasValue<>(4)
+            new HasValue<>(4)
         ).affirm();
         new Assertion<>(
             "must select maximum long of positive integers",
             () -> new MaxOf(1, 2, 3, 4).longValue(),
-            new ScalarHasValue<>(4L)
+            new HasValue<>(4L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of positive integers",
             () -> new MaxOf(1, 2, 3, 4).doubleValue(),
-            new ScalarHasValue<>(4.0d)
+            new HasValue<>(4.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of positive integers",
             () -> new MaxOf(1, 2, 3, 4).floatValue(),
-            new ScalarHasValue<>(4.0f)
+            new HasValue<>(4.0f)
         ).affirm();
     }
 
@@ -65,22 +65,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of positive longs",
             () -> new MaxOf(1L, 2L, 3L, 4L).intValue(),
-            new ScalarHasValue<>(4)
+            new HasValue<>(4)
         ).affirm();
         new Assertion<>(
             "must select maximum long of positive longs",
             () -> new MaxOf(1L, 2L, 3L, 4L).longValue(),
-            new ScalarHasValue<>(4L)
+            new HasValue<>(4L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of positive longs",
             () -> new MaxOf(1L, 2L, 3L, 4L).doubleValue(),
-            new ScalarHasValue<>(4.0d)
+            new HasValue<>(4.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of positive longs",
             () -> new MaxOf(1L, 2L, 3L, 4L).floatValue(),
-            new ScalarHasValue<>(4.0f)
+            new HasValue<>(4.0f)
         ).affirm();
     }
 
@@ -89,22 +89,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of positive doubles",
             () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).intValue(),
-            new ScalarHasValue<>(4)
+            new HasValue<>(4)
         ).affirm();
         new Assertion<>(
             "must select maximum long of positive doubles",
             () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).longValue(),
-            new ScalarHasValue<>(4L)
+            new HasValue<>(4L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of positive doubles",
             () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).doubleValue(),
-            new ScalarHasValue<>(4.0d)
+            new HasValue<>(4.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of positive doubles",
             () -> new MaxOf(1.0d, 2.0d, 3.0d, 4.0d).floatValue(),
-            new ScalarHasValue<>(4.0f)
+            new HasValue<>(4.0f)
         ).affirm();
     }
 
@@ -113,22 +113,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of positive floats",
             () -> new MaxOf(1.0f, 2.0f, 3.0f, 4.0f).intValue(),
-            new ScalarHasValue<>(4)
+            new HasValue<>(4)
         ).affirm();
         new Assertion<>(
             "must select maximum long of positive floats",
             () -> new MaxOf(1.0f, 2.0f, 3.0f, 4.0f).longValue(),
-            new ScalarHasValue<>(4L)
+            new HasValue<>(4L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of positive floats",
             () -> new MaxOf(1.0f, 2.0f, 3.0f, 4.0f).doubleValue(),
-            new ScalarHasValue<>(4.0d)
+            new HasValue<>(4.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of positive floats",
             () -> new MaxOf(1.0f, 2.0f, 3.0f, 4.0f).floatValue(),
-            new ScalarHasValue<>(4.0f)
+            new HasValue<>(4.0f)
         ).affirm();
     }
 
@@ -137,22 +137,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of negative integers",
             () -> new MaxOf(-1, -2, -3, -4).intValue(),
-            new ScalarHasValue<>(-1)
+            new HasValue<>(-1)
         ).affirm();
         new Assertion<>(
             "must select maximum long of negative integers",
             () -> new MaxOf(-1, -2, -3, -4).longValue(),
-            new ScalarHasValue<>(-1L)
+            new HasValue<>(-1L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of negative integers",
             () -> new MaxOf(-1, -2, -3, -4).doubleValue(),
-            new ScalarHasValue<>(-1.0d)
+            new HasValue<>(-1.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of negative integers",
             () -> new MaxOf(-1, -2, -3, -4).floatValue(),
-            new ScalarHasValue<>(-1.0f)
+            new HasValue<>(-1.0f)
         ).affirm();
     }
 
@@ -161,22 +161,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of negative longs",
             () -> new MaxOf(-1L, -2L, -3L, -4L).intValue(),
-            new ScalarHasValue<>(-1)
+            new HasValue<>(-1)
         ).affirm();
         new Assertion<>(
             "must select maximum long of negative longs",
             () -> new MaxOf(-1L, -2L, -3L, -4L).longValue(),
-            new ScalarHasValue<>(-1L)
+            new HasValue<>(-1L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of negative longs",
             () -> new MaxOf(-1L, -2L, -3L, -4L).doubleValue(),
-            new ScalarHasValue<>(-1.0d)
+            new HasValue<>(-1.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of negative longs",
             () -> new MaxOf(-1L, -2L, -3L, -4L).floatValue(),
-            new ScalarHasValue<>(-1.0f)
+            new HasValue<>(-1.0f)
         ).affirm();
     }
 
@@ -185,22 +185,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of negative doubles",
             () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).intValue(),
-            new ScalarHasValue<>(-1)
+            new HasValue<>(-1)
         ).affirm();
         new Assertion<>(
             "must select maximum long of negative doubles",
             () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).longValue(),
-            new ScalarHasValue<>(-1L)
+            new HasValue<>(-1L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of negative doubles",
             () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).doubleValue(),
-            new ScalarHasValue<>(-1.0d)
+            new HasValue<>(-1.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of negative doubles",
             () -> new MaxOf(-1.0d, -2.0d, -3.0d, -4.0d).floatValue(),
-            new ScalarHasValue<>(-1.0f)
+            new HasValue<>(-1.0f)
         ).affirm();
     }
 
@@ -209,22 +209,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of negative floats",
             () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).intValue(),
-            new ScalarHasValue<>(-1)
+            new HasValue<>(-1)
         ).affirm();
         new Assertion<>(
             "must select maximum long of negative floats",
             () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).longValue(),
-            new ScalarHasValue<>(-1L)
+            new HasValue<>(-1L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of negative floats",
             () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).doubleValue(),
-            new ScalarHasValue<>(-1.0d)
+            new HasValue<>(-1.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of negative floats",
             () -> new MaxOf(-1.0f, -2.0f, -3.0f, -4.0f).floatValue(),
-            new ScalarHasValue<>(-1.0f)
+            new HasValue<>(-1.0f)
         ).affirm();
     }
 
@@ -233,22 +233,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of positive and negative integers",
             () -> new MaxOf(-2, -1, 0, 1, 2).intValue(),
-            new ScalarHasValue<>(2)
+            new HasValue<>(2)
         ).affirm();
         new Assertion<>(
             "must select maximum long of positive and negative integers",
             () -> new MaxOf(-2, -1, 0, 1, 2).longValue(),
-            new ScalarHasValue<>(2L)
+            new HasValue<>(2L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of positive and negative integers",
             () -> new MaxOf(-2, -1, 0, 1, 2).doubleValue(),
-            new ScalarHasValue<>(2.0d)
+            new HasValue<>(2.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of positive and negative integers",
             () -> new MaxOf(-2, -1, 0, 1, 2).floatValue(),
-            new ScalarHasValue<>(2.0f)
+            new HasValue<>(2.0f)
         ).affirm();
     }
 
@@ -257,22 +257,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of positive and negative longs",
             () -> new MaxOf(-2L, -1L, 0L, 1L, 2L).intValue(),
-            new ScalarHasValue<>(2)
+            new HasValue<>(2)
         ).affirm();
         new Assertion<>(
             "must select maximum long of positive and negative longs",
             () -> new MaxOf(-2L, -1L, 0L, 1L, 2L).longValue(),
-            new ScalarHasValue<>(2L)
+            new HasValue<>(2L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of positive and negative longs",
             () -> new MaxOf(-2L, -1L, 0L, 1L, 2L).doubleValue(),
-            new ScalarHasValue<>(2.0d)
+            new HasValue<>(2.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of positive and negative longs",
             () -> new MaxOf(-2L, -1L, 0L, 1L, 2L).floatValue(),
-            new ScalarHasValue<>(2.0f)
+            new HasValue<>(2.0f)
         ).affirm();
     }
 
@@ -281,22 +281,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of positive and negative doubles",
             () -> new MaxOf(-2.0d, -1.0d, 0.0d, 1.0d, 2.0d).intValue(),
-            new ScalarHasValue<>(2)
+            new HasValue<>(2)
         ).affirm();
         new Assertion<>(
             "must select maximum long of positive and negative doubles",
             () -> new MaxOf(-2.0d, -1.0d, 0.0d, 1.0d, 2.0d).longValue(),
-            new ScalarHasValue<>(2L)
+            new HasValue<>(2L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of positive and negative doubles",
             () -> new MaxOf(-2.0d, -1.0d, 0.0d, 1.0d, 2.0d).doubleValue(),
-            new ScalarHasValue<>(2.0d)
+            new HasValue<>(2.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of positive and negative doubles",
             () -> new MaxOf(-2.0d, -1.0d, 0.0d, 1.0d, 2.0d).floatValue(),
-            new ScalarHasValue<>(2.0f)
+            new HasValue<>(2.0f)
         ).affirm();
     }
 
@@ -305,22 +305,22 @@ final class MaxOfTest {
         new Assertion<>(
             "must select maximum integer of positive and negative floats",
             () -> new MaxOf(-2.0f, -1.0f, 0.0f, 1.0f, 2.0f).intValue(),
-            new ScalarHasValue<>(2)
+            new HasValue<>(2)
         ).affirm();
         new Assertion<>(
             "must select maximum long of positive and negative floats",
             () -> new MaxOf(-2.0f, -1.0f, 0.0f, 1.0f, 2.0f).longValue(),
-            new ScalarHasValue<>(2L)
+            new HasValue<>(2L)
         ).affirm();
         new Assertion<>(
             "must select maximum double of positive and negative floats",
             () -> new MaxOf(-2.0f, -1.0f, 0.0f, 1.0f, 2.0f).doubleValue(),
-            new ScalarHasValue<>(2.0d)
+            new HasValue<>(2.0d)
         ).affirm();
         new Assertion<>(
             "must select maximum float of positive and negative floats",
             () -> new MaxOf(-2.0f, -1.0f, 0.0f, 1.0f, 2.0f).floatValue(),
-            new ScalarHasValue<>(2.0f)
+            new HasValue<>(2.0f)
         ).affirm();
     }
 }

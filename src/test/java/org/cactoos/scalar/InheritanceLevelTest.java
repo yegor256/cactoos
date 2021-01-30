@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import java.io.FileNotFoundException;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link InheritanceLevel}.
@@ -43,7 +43,7 @@ final class InheritanceLevelTest {
                 FileNotFoundException.class,
                 Exception.class
             ),
-            new ScalarHasValue<>(2)
+            new HasValue<>(2)
         );
     }
 
@@ -54,7 +54,7 @@ final class InheritanceLevelTest {
                 FileNotFoundException.class,
                 RuntimeException.class
             ),
-            new ScalarHasValue<>(Integer.MIN_VALUE)
+            new HasValue<>(Integer.MIN_VALUE)
         );
     }
 
@@ -65,7 +65,7 @@ final class InheritanceLevelTest {
                 FileNotFoundException.class,
                 FileNotFoundException.class
             ),
-            new ScalarHasValue<>(0)
+            new HasValue<>(0)
         );
     }
 }

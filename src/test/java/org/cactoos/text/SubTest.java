@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Sub}.
@@ -40,7 +40,7 @@ final class SubTest {
             "Can't cut a text with start and end",
             // @checkstyle MagicNumber (1 line)
             new Sub("hello world", 2, 50),
-            new TextHasString("llo world")
+            new HasString("llo world")
         ).affirm();
     }
 
@@ -49,7 +49,7 @@ final class SubTest {
         new Assertion<>(
             "Can't cut a text with start",
             new Sub("cut here", 2),
-            new TextHasString("t here")
+            new HasString("t here")
         ).affirm();
     }
 

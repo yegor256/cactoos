@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Capitalized}.
@@ -39,7 +39,7 @@ final class CapitalizedTest {
         new Assertion<>(
             "Must capitalize an empty text",
             new Capitalized(new TextOf("")),
-            new TextIs("")
+            new IsText("")
         ).affirm();
     }
 
@@ -48,7 +48,7 @@ final class CapitalizedTest {
         new Assertion<>(
             "Must capitalize single lower case text",
             new Capitalized(new TextOf("f")),
-            new TextIs("F")
+            new IsText("F")
         ).affirm();
     }
 
@@ -57,7 +57,7 @@ final class CapitalizedTest {
         new Assertion<>(
             "Must capitalize single upper case text",
             new Capitalized(new TextOf("F")),
-            new TextIs("F")
+            new IsText("F")
         ).affirm();
     }
 
@@ -66,7 +66,7 @@ final class CapitalizedTest {
         new Assertion<>(
             "Must capitalize text starting with upper case character",
             new Capitalized("Bar"),
-            new TextIs("Bar")
+            new IsText("Bar")
         ).affirm();
     }
 
@@ -75,7 +75,7 @@ final class CapitalizedTest {
         new Assertion<>(
             "Must capitalize text starting with lower case character",
             new Capitalized(new TextOf("xyz")),
-            new TextIs("Xyz")
+            new IsText("Xyz")
         ).affirm();
     }
 
@@ -84,7 +84,7 @@ final class CapitalizedTest {
         new Assertion<>(
             "Must capitalize unicode character ǆ",
             new Capitalized("ǆ"),
-            new TextIs("ǅ")
+            new IsText("ǅ")
         ).affirm();
     }
 
@@ -93,7 +93,7 @@ final class CapitalizedTest {
         new Assertion<>(
             "Must capitalize string",
             new Capitalized("foo"),
-            new TextIs("Foo")
+            new IsText("Foo")
         ).affirm();
     }
 }

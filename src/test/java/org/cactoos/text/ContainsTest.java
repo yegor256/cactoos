@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Contains}.
@@ -42,7 +42,7 @@ final class ContainsTest {
                 new TextOf("Elegant Object"),
                 new TextOf("Elegant")
             ),
-            new ScalarHasValue<>(Boolean.TRUE)
+            new HasValue<>(Boolean.TRUE)
         ).affirm();
     }
 
@@ -54,7 +54,7 @@ final class ContainsTest {
                 new TextOf("Java is awesome"),
                 new TextOf("good")
             ),
-            new ScalarHasValue<>(Boolean.FALSE)
+            new HasValue<>(Boolean.FALSE)
         ).affirm();
     }
 
@@ -66,7 +66,7 @@ final class ContainsTest {
                 new TextOf("The quick brown fox"),
                 "fox"
             ),
-            new ScalarHasValue<>(Boolean.TRUE)
+            new HasValue<>(Boolean.TRUE)
         ).affirm();
     }
 
@@ -78,7 +78,7 @@ final class ContainsTest {
                 new TextOf("Stack Overflow"),
                 "nope"
             ),
-            new ScalarHasValue<>(Boolean.FALSE)
+            new HasValue<>(Boolean.FALSE)
         ).affirm();
     }
 
@@ -90,7 +90,7 @@ final class ContainsTest {
                 "Terra incognita",
                 new TextOf("cognita")
             ),
-            new ScalarHasValue<>(Boolean.TRUE)
+            new HasValue<>(Boolean.TRUE)
         ).affirm();
     }
 
@@ -102,7 +102,7 @@ final class ContainsTest {
                 "ratio",
                 new TextOf("Cogito egro sum")
             ),
-            new ScalarHasValue<>(Boolean.FALSE)
+            new HasValue<>(Boolean.FALSE)
         ).affirm();
     }
 
@@ -114,7 +114,7 @@ final class ContainsTest {
                 "Lazy dog",
                 "dog"
             ),
-            new ScalarHasValue<>(Boolean.TRUE)
+            new HasValue<>(Boolean.TRUE)
         ).affirm();
     }
 
@@ -126,7 +126,7 @@ final class ContainsTest {
                 "Lorem ipsum",
                 "test"
             ),
-            new ScalarHasValue<>(Boolean.FALSE)
+            new HasValue<>(Boolean.FALSE)
         ).affirm();
     }
 }

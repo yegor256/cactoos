@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link PrefixOf}.
@@ -44,7 +44,7 @@ final class PrefixOfTest {
         new Assertion<>(
             "Given strings are not equal",
             new PrefixOf("Cactoos", "bnd"),
-            new TextIs("Cactoos")
+            new IsText("Cactoos")
         ).affirm();
     }
 
@@ -57,7 +57,7 @@ final class PrefixOfTest {
         new Assertion<>(
             "Given string is not empty",
             new PrefixOf("Boundary", "Boundary"),
-            new TextIs("")
+            new IsText("")
         ).affirm();
     }
 
@@ -70,7 +70,7 @@ final class PrefixOfTest {
         new Assertion<>(
             "Given strings are not equal",
             new PrefixOf("Anti-pattern", "-pattern"),
-            new TextIs("Anti")
+            new IsText("Anti")
         ).affirm();
     }
 }

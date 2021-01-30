@@ -29,7 +29,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -92,7 +92,7 @@ final class ListIteratorNoNullsTest {
                 iterator.add(4);
                 return iterator.previous();
             },
-            new ScalarHasValue<>(4)
+            new HasValue<>(4)
         ).affirm();
     }
 
@@ -132,7 +132,7 @@ final class ListIteratorNoNullsTest {
                 iterator.set(4);
                 return iterator.previous();
             },
-            new ScalarHasValue<>(4)
+            new HasValue<>(4)
         ).affirm();
     }
 

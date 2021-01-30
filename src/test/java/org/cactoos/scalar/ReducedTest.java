@@ -29,7 +29,7 @@ import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Reduced}.
@@ -55,7 +55,7 @@ public final class ReducedTest {
                 (first, last) -> first,
                 new IterableOf<Scalar<Integer>>(() -> single)
             ),
-            new ScalarHasValue<>(single)
+            new HasValue<>(single)
         ).affirm();
     }
 
@@ -74,7 +74,7 @@ public final class ReducedTest {
                     () -> three
                 )
             ),
-            new ScalarHasValue<>(one)
+            new HasValue<>(one)
         ).affirm();
     }
 
@@ -93,7 +93,7 @@ public final class ReducedTest {
                     () -> three
                 )
             ),
-            new ScalarHasValue<>(three)
+            new HasValue<>(three)
         ).affirm();
     }
 
@@ -110,7 +110,7 @@ public final class ReducedTest {
                 two,
                 three
             ),
-            new ScalarHasValue<>("OneTwoThree")
+            new HasValue<>("OneTwoThree")
         ).affirm();
     }
 }

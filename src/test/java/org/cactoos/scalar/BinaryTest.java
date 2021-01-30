@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -49,7 +49,7 @@ public final class BinaryTest {
         new Assertion<>(
             "Binary has to return true",
             binary,
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
         new Assertion<>(
             "Binary has to invoke increment method",
@@ -69,7 +69,7 @@ public final class BinaryTest {
         new Assertion<>(
             "Binary has to return false",
             binary,
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
         new Assertion<>(
             "Binary must not to invoke increment method",

@@ -26,7 +26,7 @@ package org.cactoos.text;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -63,7 +63,7 @@ final class StrictTest {
         new Assertion<>(
             "Given strings are not equal",
             new Strict(s -> true, new TextOf("text")),
-            new TextIs("text")
+            new IsText("text")
         ).affirm();
     }
 
@@ -98,7 +98,7 @@ final class StrictTest {
                 Pattern.compile("^[a-zA-Z0-9]+$"),
                 new TextOf("text1")
             ),
-            new TextIs("text1")
+            new IsText("text1")
         ).affirm();
     }
 }

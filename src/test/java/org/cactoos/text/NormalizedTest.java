@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Normalized}.
@@ -39,7 +39,7 @@ final class NormalizedTest {
         new Assertion<>(
             "Can't normalize a text",
             new Normalized(" \t hello  \t\tworld   \t"),
-            new TextHasString("hello world")
+            new HasString("hello world")
         ).affirm();
     }
 

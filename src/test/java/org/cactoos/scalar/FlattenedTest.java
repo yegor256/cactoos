@@ -28,8 +28,8 @@ import org.cactoos.Text;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
 * Tests for {@link Flattened}.
@@ -47,7 +47,7 @@ final class FlattenedTest {
             new Flattened<>(
                 new ScalarOf<>(() -> sclr)
             ),
-            new ScalarHasValue<>(new TextIs(txt))
+            new HasValue<>(new IsText(txt))
         ).affirm();
     }
 }

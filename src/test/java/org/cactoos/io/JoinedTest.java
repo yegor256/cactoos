@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.cactoos.iterable.IterableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Unit tests for {@link Joined}.
@@ -48,7 +48,7 @@ final class JoinedTest {
                 new InputOf("second"),
                 new InputOf("third")
             ),
-            new InputHasContent("firstsecondthird")
+            new HasContent("firstsecondthird")
         ).affirm();
     }
 
@@ -66,7 +66,7 @@ final class JoinedTest {
                     new InputOf("fghi")
                 )
             ),
-            new InputHasContent("abcdefghi")
+            new HasContent("abcdefghi")
         ).affirm();
     }
 }

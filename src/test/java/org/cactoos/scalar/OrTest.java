@@ -31,7 +31,7 @@ import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Or}.
@@ -53,7 +53,7 @@ final class OrTest {
                 new False(),
                 new False()
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         );
     }
 
@@ -67,7 +67,7 @@ final class OrTest {
                 new False(),
                 new False()
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         );
     }
 
@@ -83,7 +83,7 @@ final class OrTest {
                     new True()
                 )
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         );
     }
 
@@ -91,7 +91,7 @@ final class OrTest {
     void emptyIterator() throws Exception {
         MatcherAssert.assertThat(
             new Or(new IterableOf<Scalar<Boolean>>()),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         );
     }
 
@@ -141,7 +141,7 @@ final class OrTest {
                 input -> input > 0,
                 new IterableOf<>(-1, 1, 0)
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         );
     }
 
@@ -152,7 +152,7 @@ final class OrTest {
                 input -> input > 0,
                 new IterableOf<>(-1, 1, 0)
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         );
     }
 
@@ -163,7 +163,7 @@ final class OrTest {
                 input -> input > 0,
                 -1, -2, 0
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         );
     }
 
@@ -177,7 +177,7 @@ final class OrTest {
                 input -> input > 5,
                 input -> input > 4
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         );
     }
 
@@ -190,7 +190,7 @@ final class OrTest {
                 input -> input.contains("singleton"),
                 input -> input.contains("static")
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         );
     }
 }

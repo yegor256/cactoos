@@ -30,7 +30,7 @@ import java.util.UnknownFormatConversionException;
 import org.cactoos.list.ListOf;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link FormattedText}.
@@ -47,7 +47,7 @@ public final class FormattedTextTest {
             new FormattedText(
                 "%d. Formatted %s", 1, "text"
             ),
-            new TextHasString("1. Formatted text")
+            new HasString("1. Formatted text")
         ).affirm();
     }
 
@@ -60,7 +60,7 @@ public final class FormattedTextTest {
                 1,
                 new String("string")
             ),
-            new TextHasString("1. Number as string")
+            new HasString("1. Number as string")
         ).affirm();
     }
 
@@ -80,7 +80,7 @@ public final class FormattedTextTest {
                 new TextOf("%d. Formatted as %s"),
                 new ListOf<>(1, "txt")
             ),
-            new TextHasString("1. Formatted as txt")
+            new HasString("1. Formatted as txt")
         ).affirm();
     }
 
@@ -101,7 +101,7 @@ public final class FormattedTextTest {
                 // @checkstyle MagicNumber (1 line)
                 "%,d", Locale.GERMAN, 1_234_567_890
             ),
-            new TextHasString("1.234.567.890")
+            new HasString("1.234.567.890")
         ).affirm();
     }
 
@@ -113,7 +113,7 @@ public final class FormattedTextTest {
                 "Format with text: %s",
                 new TextOf("Cactoos")
             ),
-            new TextHasString("Format with text: Cactoos")
+            new HasString("Format with text: Cactoos")
         ).affirm();
     }
 }

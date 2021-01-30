@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Rotated}.
@@ -42,7 +42,7 @@ final class RotatedTest {
             new Rotated(
                 new TextOf("Hello!"), 2
             ),
-            new TextHasString("o!Hell")
+            new HasString("o!Hell")
         ).affirm();
     }
 
@@ -53,7 +53,7 @@ final class RotatedTest {
             new Rotated(
                 new TextOf("Hi!"), -1
             ),
-            new TextHasString("i!H")
+            new HasString("i!H")
         ).affirm();
     }
 
@@ -65,7 +65,7 @@ final class RotatedTest {
             new Rotated(
                 new TextOf(nonrotate), 0
             ),
-            new TextHasString(nonrotate)
+            new HasString(nonrotate)
         ).affirm();
     }
 
@@ -77,7 +77,7 @@ final class RotatedTest {
             new Rotated(
                 new TextOf(nonrotate), nonrotate.length()
             ),
-            new TextHasString(nonrotate)
+            new HasString(nonrotate)
         ).affirm();
     }
 
@@ -88,7 +88,7 @@ final class RotatedTest {
             new Rotated(
                 new TextOf(""), 2
             ),
-            new TextHasString("")
+            new HasString("")
         ).affirm();
     }
 }

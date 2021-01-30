@@ -28,7 +28,7 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link FormattedText}.
@@ -79,7 +79,7 @@ public final class ComparableTextTest {
         new Assertion<>(
             "Does not equal to itself",
             text,
-            new TextIs(text)
+            new IsText(text)
         ).affirm();
     }
 
@@ -120,7 +120,7 @@ public final class ComparableTextTest {
             "Is equal to the completely different text",
             text,
             new IsNot<>(
-                new TextIs(
+                new IsText(
                     "The text is ignored"
                 )
             )
@@ -140,7 +140,7 @@ public final class ComparableTextTest {
             "The string is equal to the different ComparableText",
             text,
             new IsNot<>(
-                new TextIs(
+                new IsText(
                     new ComparableText(
                         new TextOf("A different value")
                     )

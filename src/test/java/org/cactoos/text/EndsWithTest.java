@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link EndsWith}.
@@ -42,7 +42,7 @@ final class EndsWithTest {
                 new TextOf("Elegant Object"),
                 "Object"
             ),
-            new ScalarHasValue<>(Boolean.TRUE)
+            new HasValue<>(Boolean.TRUE)
         ).affirm();
     }
 
@@ -54,7 +54,7 @@ final class EndsWithTest {
                 new TextOf("Java is awesome"),
                 "good"
             ),
-            new ScalarHasValue<>(Boolean.FALSE)
+            new HasValue<>(Boolean.FALSE)
         ).affirm();
     }
 }

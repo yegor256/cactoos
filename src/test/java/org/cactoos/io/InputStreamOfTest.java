@@ -37,7 +37,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link InputStreamOf}.
@@ -63,7 +63,7 @@ public final class InputStreamOfTest {
         new Assertion<>(
             "Can't read file content",
             new InputOf(new InputStreamOf(temp)),
-            new InputHasContent(content)
+            new HasContent(content)
         ).affirm();
     }
 
@@ -73,7 +73,7 @@ public final class InputStreamOfTest {
         new Assertion<>(
             "Can't read from reader",
             new InputOf(new InputStreamOf(new StringReader(content))),
-            new InputHasContent(content)
+            new HasContent(content)
         );
     }
 
@@ -83,7 +83,7 @@ public final class InputStreamOfTest {
         new Assertion<>(
             "Can't read from reader through small buffer",
             new InputOf(new InputStreamOf(new StringReader(content), 1)),
-            new InputHasContent(content)
+            new HasContent(content)
         );
     }
 

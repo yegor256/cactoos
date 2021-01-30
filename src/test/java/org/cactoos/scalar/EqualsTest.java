@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Equals}.
@@ -43,7 +43,7 @@ final class EqualsTest {
                 () -> Integer.valueOf(1),
                 () -> Integer.valueOf(1)
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -55,7 +55,7 @@ final class EqualsTest {
                 () -> Integer.valueOf(1),
                 () -> Integer.valueOf(2)
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -68,7 +68,7 @@ final class EqualsTest {
                 () -> str,
                 () -> str
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -80,7 +80,7 @@ final class EqualsTest {
                 () -> "world",
                 () -> "worle"
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 }

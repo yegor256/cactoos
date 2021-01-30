@@ -29,8 +29,8 @@ import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link PropertiesOf}.
@@ -48,7 +48,7 @@ final class PropertiesOfTest {
             new PropertiesOf(
                 "foo=Hello, world!\nbar=works fine?\n"
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 new MatcherOf<Properties>(
                     props -> {
                         return "Hello, world!".equals(
@@ -67,7 +67,7 @@ final class PropertiesOfTest {
             new PropertiesOf(
                 new InputOf("greet=Hello, inner world!\nask=works fine?\n")
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 new MatcherOf<Properties>(
                     props -> {
                         return "Hello, inner world!".equals(
@@ -89,7 +89,7 @@ final class PropertiesOfTest {
                     new MapEntry<>(1, "how are you?")
                 )
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 new MatcherOf<Properties>(
                     props -> {
                         return props.getProperty("0").endsWith(", world");
@@ -107,7 +107,7 @@ final class PropertiesOfTest {
                 new MapEntry<>(0, "hello world"),
                 new MapEntry<>(1, "How are you?")
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 new MatcherOf<Properties>(
                     props -> {
                         return props.getProperty("0").endsWith(" world");

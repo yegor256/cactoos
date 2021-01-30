@@ -27,7 +27,7 @@ import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test for {@link Randomized}.
@@ -75,7 +75,7 @@ final class RandomizedTest {
         new Assertion<>(
             "Generated text doesn't match specification",
             new Randomized(10, 'a'),
-            new TextHasString("aaaaaaaaaa")
+            new HasString("aaaaaaaaaa")
         ).affirm();
     }
 }

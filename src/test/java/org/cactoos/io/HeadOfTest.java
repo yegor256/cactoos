@@ -26,7 +26,7 @@ package org.cactoos.io;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test cases for {@link HeadOf}.
@@ -47,7 +47,7 @@ final class HeadOfTest {
                     5
                 )
             ),
-            new TextHasString("reads")
+            new HasString("reads")
         ).affirm();
     }
 
@@ -61,7 +61,7 @@ final class HeadOfTest {
                     0
                 )
             ),
-            new TextHasString("")
+            new HasString("")
         ).affirm();
     }
 
@@ -76,7 +76,7 @@ final class HeadOfTest {
                     35
                 )
             ),
-            new TextHasString(input)
+            new HasString(input)
         ).affirm();
     }
 }

@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Lowered}.
@@ -39,7 +39,7 @@ final class LoweredTest {
         new Assertion<>(
             "Can't lower case a text",
             new Lowered(new TextOf("HelLo!")),
-            new TextHasString("hello!")
+            new HasString("hello!")
         ).affirm();
     }
 
@@ -48,7 +48,7 @@ final class LoweredTest {
         new Assertion<>(
             "Can't lower case a string",
             new Lowered("WoRLd!"),
-            new TextHasString("world!")
+            new HasString("world!")
         ).affirm();
     }
 }

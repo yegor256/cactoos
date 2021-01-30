@@ -29,7 +29,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for DateOf.
@@ -45,7 +45,7 @@ public class DateOfTest {
         new Assertion<>(
             "must parse a Date with default/ISO format.",
             new DateOf("2017-12-13T14:15:16.000000017Z"),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 Date.from(
                     LocalDateTime.of(
                         2017, 12, 13, 14, 15, 16, 17
@@ -63,7 +63,7 @@ public class DateOfTest {
                 "2017-12-13 14:15:16.000000017",
                 "yyyy-MM-dd HH:mm:ss.n"
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 Date.from(
                     LocalDateTime.of(
                         2017, 12, 13, 14, 15, 16, 17
@@ -81,7 +81,7 @@ public class DateOfTest {
                 "2018-01-01",
                 "yyyy-MM-dd"
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 Date.from(
                     LocalDateTime.of(
                         2018, 01, 01, 0, 0, 0, 0
@@ -99,7 +99,7 @@ public class DateOfTest {
                 "2017-12-13 14:15:16.000000017",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 Date.from(
                     LocalDateTime.of(
                         2017, 12, 13, 14, 15, 16, 17

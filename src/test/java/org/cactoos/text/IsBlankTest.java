@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link IsBlank}.
@@ -41,7 +41,7 @@ final class IsBlankTest {
             new IsBlank(
                 new TextOf("")
             ),
-            new ScalarHasValue<>(Boolean.TRUE)
+            new HasValue<>(Boolean.TRUE)
         ).affirm();
     }
 
@@ -52,7 +52,7 @@ final class IsBlankTest {
             new IsBlank(
                 new TextOf("  ")
             ),
-            new ScalarHasValue<>(Boolean.TRUE)
+            new HasValue<>(Boolean.TRUE)
         ).affirm();
     }
 
@@ -63,7 +63,7 @@ final class IsBlankTest {
             new IsBlank(
                 new TextOf("not empty")
             ),
-            new ScalarHasValue<>(Boolean.FALSE)
+            new HasValue<>(Boolean.FALSE)
         ).affirm();
     }
 }

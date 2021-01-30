@@ -27,7 +27,7 @@ import java.security.SecureRandom;
 import java.time.Duration;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.FuncApplies;
+import org.llorllale.cactoos.matchers.IsApplicable;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -53,7 +53,7 @@ final class RetryTest {
                 },
                 Integer.MAX_VALUE
             ),
-            new FuncApplies<>(true, 0)
+            new IsApplicable<>(true, 0)
         ).affirm();
     }
 
@@ -70,7 +70,7 @@ final class RetryTest {
                 },
                 count -> count == Integer.MAX_VALUE
             ),
-            new FuncApplies<>(true, true)
+            new IsApplicable<>(true, true)
         ).affirm();
     }
 

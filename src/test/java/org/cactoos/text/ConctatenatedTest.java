@@ -27,7 +27,7 @@ package org.cactoos.text;
 import org.cactoos.iterable.IterableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Concatenated}.
@@ -41,7 +41,7 @@ final class ConctatenatedTest {
         new Assertion<>(
             "Must contcatenate single text",
             new Concatenated(new TextOf("bar")),
-            new TextIs("bar")
+            new IsText("bar")
         ).affirm();
     }
 
@@ -50,7 +50,7 @@ final class ConctatenatedTest {
         new Assertion<>(
             "Must contcatenate multi texts",
             new Concatenated(new TextOf("abc"), new TextOf("xyz")),
-            new TextIs("abcxyz")
+            new IsText("abcxyz")
         ).affirm();
     }
 
@@ -59,7 +59,7 @@ final class ConctatenatedTest {
         new Assertion<>(
             "Must concatenate iterables",
             new Concatenated(new IterableOf<>(new TextOf("foo"), new TextOf("foo1"))),
-            new TextIs("foofoo1")
+            new IsText("foofoo1")
         ).affirm();
     }
 
@@ -68,7 +68,7 @@ final class ConctatenatedTest {
         new Assertion<>(
             "Must contcatenate single string",
             new Concatenated("bar"),
-            new TextIs("bar")
+            new IsText("bar")
         ).affirm();
     }
 
@@ -77,7 +77,7 @@ final class ConctatenatedTest {
         new Assertion<>(
             "Must contcatenate multi strings",
             new Concatenated("abc", "xyz"),
-            new TextIs("abcxyz")
+            new IsText("abcxyz")
         ).affirm();
     }
 }

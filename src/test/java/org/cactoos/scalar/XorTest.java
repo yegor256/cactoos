@@ -27,7 +27,7 @@ import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Xor}.
@@ -44,7 +44,7 @@ final class XorTest {
                 new True(),
                 new True()
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -56,7 +56,7 @@ final class XorTest {
                 new False(),
                 new True()
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -68,7 +68,7 @@ final class XorTest {
                 new True(),
                 new False()
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -80,7 +80,7 @@ final class XorTest {
                 new False(),
                 new False()
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -91,7 +91,7 @@ final class XorTest {
             new Xor(
                 new True()
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -102,7 +102,7 @@ final class XorTest {
             new Xor(
                 new False()
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -111,7 +111,7 @@ final class XorTest {
         new Assertion<>(
             "Empty iterable must be False",
             new Xor(new IterableOf<Scalar<Boolean>>()),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -124,7 +124,7 @@ final class XorTest {
                 new False(),
                 new True()
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -137,7 +137,7 @@ final class XorTest {
                 new True(),
                 new True()
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -150,7 +150,7 @@ final class XorTest {
                 new False(),
                 new False()
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -163,7 +163,7 @@ final class XorTest {
                 new True(),
                 new True()
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 }

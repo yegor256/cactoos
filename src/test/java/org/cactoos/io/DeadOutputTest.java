@@ -26,7 +26,7 @@ package org.cactoos.io;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link DeadOutput}.
@@ -45,7 +45,7 @@ final class DeadOutputTest {
                 new InputOf("How are you, мой друг?"),
                 new DeadOutput()
             ),
-            new InputHasContent(Matchers.endsWith("друг?"))
+            new HasContent(Matchers.endsWith("друг?"))
         ).affirm();
     }
 

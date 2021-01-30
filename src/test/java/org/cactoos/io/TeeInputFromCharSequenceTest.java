@@ -31,7 +31,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use char sequence as
@@ -59,7 +59,7 @@ public final class TeeInputFromCharSequenceTest {
         new Assertion<>(
             "char sequence must be copied to the file",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -74,7 +74,7 @@ public final class TeeInputFromCharSequenceTest {
         new Assertion<>(
             "char sequence must be copied to the file with UTF_8 charset",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -90,7 +90,7 @@ public final class TeeInputFromCharSequenceTest {
         new Assertion<>(
             "char sequence must be copied to the file with UTF_8 charset's name",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -105,7 +105,7 @@ public final class TeeInputFromCharSequenceTest {
         new Assertion<>(
             "char sequence must be copied to the path",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -120,7 +120,7 @@ public final class TeeInputFromCharSequenceTest {
         new Assertion<>(
             "char sequence must be copied to the path with UTF_8 charset",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -136,7 +136,7 @@ public final class TeeInputFromCharSequenceTest {
         new Assertion<>(
             "char sequence must be copied to the path with UTF_8 charset's name",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -151,7 +151,7 @@ public final class TeeInputFromCharSequenceTest {
         new Assertion<>(
             "char sequence must be copied to the output",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -166,7 +166,7 @@ public final class TeeInputFromCharSequenceTest {
         new Assertion<>(
             "char sequence must be copied to the output with UTF_8 charset",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -182,7 +182,7 @@ public final class TeeInputFromCharSequenceTest {
         new Assertion<>(
             "char sequence must be copied to the output with UTF_8 charset's name",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 }

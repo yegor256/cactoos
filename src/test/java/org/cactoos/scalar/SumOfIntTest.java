@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link SumOfInt}.
@@ -41,7 +41,7 @@ final class SumOfIntTest {
         new Assertion<>(
             "must sum scalars",
             new SumOfInt(() -> 1, () -> 2, () -> 3),
-            new ScalarHasValue<>(6)
+            new HasValue<>(6)
         ).affirm();
     }
 
@@ -50,7 +50,7 @@ final class SumOfIntTest {
         new Assertion<>(
             "must sum empty list to 0",
             new SumOfInt(),
-            new ScalarHasValue<>(0)
+            new HasValue<>(0)
         ).affirm();
     }
 
@@ -59,7 +59,7 @@ final class SumOfIntTest {
         new Assertion<>(
             "must sum singleton list",
             new SumOfInt(() -> 5),
-            new ScalarHasValue<>(5)
+            new HasValue<>(5)
         ).affirm();
     }
 }

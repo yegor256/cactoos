@@ -28,7 +28,7 @@ import org.cactoos.iterable.RangeOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Folded}.
@@ -49,7 +49,7 @@ final class FoldedTest {
                     new RangeOf<>(0L, Long.MAX_VALUE, value -> ++value)
                 )
             ),
-            new ScalarHasValue<>(45L)
+            new HasValue<>(45L)
         ).affirm();
     }
 

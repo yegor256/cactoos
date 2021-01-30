@@ -39,8 +39,8 @@ import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link AndInThreads}.
@@ -60,7 +60,7 @@ final class AndInThreadsTest {
                 new True(),
                 new True()
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -73,7 +73,7 @@ final class AndInThreadsTest {
                 new False(),
                 new True()
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -88,7 +88,7 @@ final class AndInThreadsTest {
                     new False()
                 )
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -97,7 +97,7 @@ final class AndInThreadsTest {
         new Assertion<>(
             "Must iterate over empty iterable",
             new AndInThreads(new IterableOf<Scalar<Boolean>>()),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -112,7 +112,7 @@ final class AndInThreadsTest {
                     new IterableOf<>("hello", "world")
                 )
             ),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
         new Assertion<>(
             "Iterable must contain elements in any order",
@@ -141,7 +141,7 @@ final class AndInThreadsTest {
                 input -> input > 0,
                 1, -1, 0
             ),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         );
     }
 

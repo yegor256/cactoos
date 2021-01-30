@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Joined}.
@@ -39,7 +39,7 @@ final class JoinedTest {
         new Assertion<>(
             "Can't join strings",
             new Joined(" ", "hello", "world"),
-            new TextHasString("hello world")
+            new HasString("hello world")
         ).affirm();
     }
 
@@ -52,7 +52,7 @@ final class JoinedTest {
                 new TextOf("foo"),
                 new TextOf("bar")
             ),
-            new TextHasString("foo bar")
+            new HasString("foo bar")
         ).affirm();
     }
 
@@ -65,7 +65,7 @@ final class JoinedTest {
                 new TextOf("one"),
                 new TextOf("two")
             ),
-            new TextHasString("one two")
+            new HasString("one two")
         ).affirm();
     }
 }

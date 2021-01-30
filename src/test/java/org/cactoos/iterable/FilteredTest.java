@@ -32,8 +32,8 @@ import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.HasValues;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link Filtered}.
@@ -113,7 +113,7 @@ final class FilteredTest {
                     new IterableOf<>("some", "text", "yes")
                 )
             ),
-            new ScalarHasValue<>(2.)
+            new HasValue<>(2.)
         ).affirm();
     }
 

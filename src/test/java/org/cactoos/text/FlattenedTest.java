@@ -30,7 +30,7 @@ import org.cactoos.scalar.ScalarOf;
 import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
 * Tests for {@link Flattened}.
@@ -47,7 +47,7 @@ final class FlattenedTest {
             new Flattened(
                 new ScalarOf<>(() -> txt)
             ),
-            new TextIs(txt)
+            new IsText(txt)
         ).affirm();
     }
 
@@ -62,7 +62,7 @@ final class FlattenedTest {
             new Flattened(
                 new ScalarOf<>(txts.iterator()::next)
             ),
-            new AllOf<Text>(new Mapped<>(TextIs::new, txts))
+            new AllOf<Text>(new Mapped<>(IsText::new, txts))
         ).affirm();
     }
 }

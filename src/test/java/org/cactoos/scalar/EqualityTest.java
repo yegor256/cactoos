@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import org.cactoos.Bytes;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Equality}.
@@ -43,7 +43,7 @@ final class EqualityTest {
             new Equality<>(
                 new EqualityTest.Letters("A"), new EqualityTest.Letters("AB")
             ),
-            new ScalarHasValue<>(-1)
+            new HasValue<>(-1)
         ).affirm();
     }
 
@@ -54,7 +54,7 @@ final class EqualityTest {
             new Equality<>(
                 new EqualityTest.Letters("AB"), new EqualityTest.Letters("A")
             ),
-            new ScalarHasValue<>(1)
+            new HasValue<>(1)
         ).affirm();
     }
 
@@ -65,7 +65,7 @@ final class EqualityTest {
             new Equality<>(
                 new EqualityTest.Letters("A"), new EqualityTest.Letters("B")
             ),
-            new ScalarHasValue<>(-1)
+            new HasValue<>(-1)
         ).affirm();
     }
 
@@ -76,7 +76,7 @@ final class EqualityTest {
             new Equality<>(
                 new EqualityTest.Letters("B"), new EqualityTest.Letters("A")
             ),
-            new ScalarHasValue<>(1)
+            new HasValue<>(1)
         ).affirm();
     }
 
@@ -87,7 +87,7 @@ final class EqualityTest {
             new Equality<>(
                 new EqualityTest.Letters("A"), new EqualityTest.Letters("A")
             ),
-            new ScalarHasValue<>(0)
+            new HasValue<>(0)
         ).affirm();
     }
 
@@ -98,7 +98,7 @@ final class EqualityTest {
             new Equality<>(
                 new EqualityTest.Letters(""), new EqualityTest.Letters("")
             ),
-            new ScalarHasValue<>(0)
+            new HasValue<>(0)
         ).affirm();
     }
 

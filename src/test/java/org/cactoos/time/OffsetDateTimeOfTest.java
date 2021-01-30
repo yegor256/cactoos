@@ -28,7 +28,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for {@link OffsetDateTimeOf}.
@@ -44,7 +44,7 @@ public class OffsetDateTimeOfTest {
         new Assertion<>(
             "Can't parse a OffsetDateTime with default/ISO format.",
             new OffsetDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 OffsetDateTime.of(
                     2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
                 )
@@ -61,7 +61,7 @@ public class OffsetDateTimeOfTest {
                 "yyyy-MM-dd HH:mm:ss",
                 ZoneOffset.ofHours(1)
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 OffsetDateTime.of(
                     LocalDateTime.of(2017, 12, 13, 14, 15, 16),
                     ZoneOffset.ofHours(1)

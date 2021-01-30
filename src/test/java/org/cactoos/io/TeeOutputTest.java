@@ -31,8 +31,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.HasContent;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link TeeOutput}.
@@ -59,7 +59,7 @@ public final class TeeOutputTest {
                         new OutputTo(new ByteArrayOutputStream())
                     )
             ),
-            new InputHasContent(
+            new HasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
         ).affirm();
@@ -77,7 +77,7 @@ public final class TeeOutputTest {
                     new WriterTo(new ByteArrayOutputStream())
                 )
             ),
-            new InputHasContent(
+            new HasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
         ).affirm();
@@ -98,7 +98,7 @@ public final class TeeOutputTest {
                     StandardCharsets.UTF_8
                 )
             ),
-            new InputHasContent(
+            new HasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
         ).affirm();
@@ -119,7 +119,7 @@ public final class TeeOutputTest {
                     )
                 )
             ),
-            new TextIs(
+            new IsText(
                 new TextOf(file.toPath())
             )
         ).affirm();
@@ -140,7 +140,7 @@ public final class TeeOutputTest {
                     )
                 )
             ),
-            new TextIs(
+            new IsText(
                 new TextOf(file.toPath())
             )
         ).affirm();
@@ -160,7 +160,7 @@ public final class TeeOutputTest {
                     new ByteArrayOutputStream()
                 )
             ),
-            new InputHasContent(
+            new HasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
         ).affirm();

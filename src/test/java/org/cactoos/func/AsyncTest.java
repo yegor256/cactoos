@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.FuncApplies;
+import org.llorllale.cactoos.matchers.IsApplicable;
 import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
@@ -51,7 +51,7 @@ final class AsyncTest {
                     return "done!";
                 }
             ),
-            new FuncApplies<>(
+            new IsApplicable<>(
                 true,
                 new MatcherOf<>(
                     future -> !future.isDone()
@@ -72,7 +72,7 @@ final class AsyncTest {
                 latch.await();
                 return true;
             },
-            new FuncApplies<>(
+            new IsApplicable<>(
                 true, new IsEqual<>(true)
             )
         ).affirm();
@@ -86,7 +86,7 @@ final class AsyncTest {
             new Async<>(
                 new FuncOf<>(input -> latch.countDown(), true)
             ),
-            new FuncApplies<>(
+            new IsApplicable<>(
                 true,
                 new MatcherOf<>(
                     future -> {
@@ -118,7 +118,7 @@ final class AsyncTest {
                 ),
                 factory
             ),
-            new FuncApplies<>(
+            new IsApplicable<>(
                 name,
                 new MatcherOf<>(
                     future -> {
@@ -151,7 +151,7 @@ final class AsyncTest {
                 ),
                 Executors.newSingleThreadExecutor(factory)
             ),
-            new FuncApplies<>(
+            new IsApplicable<>(
                 name,
                 new MatcherOf<>(
                     future -> {

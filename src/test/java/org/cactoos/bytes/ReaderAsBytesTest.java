@@ -29,8 +29,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.IsTrue;
-import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link ReaderAsBytes}.
@@ -56,7 +56,7 @@ public final class ReaderAsBytesTest {
                     new StringReader(source)
                 )
             ),
-            new TextIs(source)
+            new IsText(source)
         ).affirm();
     }
 

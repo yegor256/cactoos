@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link EqualsNullable}.
@@ -41,7 +41,7 @@ final class EqualsNullableTest {
         new Assertion<>(
             "Must return true for both null objects",
             new EqualsNullable(() -> null, () -> null),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -50,7 +50,7 @@ final class EqualsNullableTest {
         new Assertion<>(
             "Must return true for equal objects",
             new EqualsNullable(1, 1),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -59,7 +59,7 @@ final class EqualsNullableTest {
         new Assertion<>(
             "Must return false for non equal objects",
             new EqualsNullable(1, 2),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -68,7 +68,7 @@ final class EqualsNullableTest {
         new Assertion<>(
             "Must return true for object and scalar with the same value",
             new EqualsNullable(1, () -> 1),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -77,7 +77,7 @@ final class EqualsNullableTest {
         new Assertion<>(
             "Must return true for scalar and object with the same value",
             new EqualsNullable(() -> 1, 1),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 }

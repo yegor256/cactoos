@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Trimmed}.
@@ -39,7 +39,7 @@ final class TrimmedTest {
         new Assertion<>(
             "Can't trim a text",
             new Trimmed(new TextOf("  Hello!   \t ")),
-            new TextHasString("Hello!")
+            new HasString("Hello!")
         ).affirm();
     }
 
@@ -48,7 +48,7 @@ final class TrimmedTest {
         new Assertion<>(
             "Can't trim a blank text",
             new Trimmed(new TextOf("  \t ")),
-            new TextHasString("")
+            new HasString("")
         ).affirm();
     }
 }

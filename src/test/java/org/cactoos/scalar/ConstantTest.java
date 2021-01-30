@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Constant}.
@@ -40,7 +40,7 @@ final class ConstantTest {
         new Assertion<>(
             "Must return given value",
             new Constant<>(value),
-            new ScalarHasValue<>(value)
+            new HasValue<>(value)
         ).affirm();
     }
 
@@ -50,7 +50,7 @@ final class ConstantTest {
         new Assertion<>(
             "Must return same value",
             constant,
-            new ScalarHasValue<>(constant.value())
+            new HasValue<>(constant.value())
         ).affirm();
     }
 }

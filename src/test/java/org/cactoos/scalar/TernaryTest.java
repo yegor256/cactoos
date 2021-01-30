@@ -30,7 +30,7 @@ import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Ternary}.
@@ -50,7 +50,7 @@ final class TernaryTest {
                 6,
                 16
             ),
-            new ScalarHasValue<>(6)
+            new HasValue<>(6)
         ).affirm();
     }
 
@@ -63,7 +63,7 @@ final class TernaryTest {
                 6,
                 16
             ),
-            new ScalarHasValue<>(16)
+            new HasValue<>(16)
         ).affirm();
     }
 
@@ -76,7 +76,7 @@ final class TernaryTest {
                 6,
                 16
             ),
-            new ScalarHasValue<>(6)
+            new HasValue<>(6)
         ).affirm();
     }
 
@@ -89,7 +89,7 @@ final class TernaryTest {
                 new Constant<>(6),
                 new Constant<>(16)
             ),
-            new ScalarHasValue<>(6)
+            new HasValue<>(6)
         ).affirm();
     }
 
@@ -103,7 +103,7 @@ final class TernaryTest {
                 input -> input + 1,
                 input -> input + 2
             ),
-            new ScalarHasValue<>(6)
+            new HasValue<>(6)
         ).affirm();
     }
 
@@ -117,7 +117,7 @@ final class TernaryTest {
                 input -> input + 1,
                 input -> input + 2
             ),
-            new ScalarHasValue<>(6)
+            new HasValue<>(6)
         ).affirm();
     }
 
@@ -134,9 +134,9 @@ final class TernaryTest {
             ),
             new AllOf<>(
                 new IterableOf<>(
-                    new ScalarHasValue<>(new TextOf("1 equals 1")),
-                    new ScalarHasValue<>(new TextOf("else: 2")),
-                    new ScalarHasValue<>(new TextOf("else: 3"))
+                    new HasValue<>(new TextOf("1 equals 1")),
+                    new HasValue<>(new TextOf("else: 2")),
+                    new HasValue<>(new TextOf("else: 3"))
                 )
             )
         ).affirm();

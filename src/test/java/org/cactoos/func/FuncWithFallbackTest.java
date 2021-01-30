@@ -30,7 +30,7 @@ import org.cactoos.Fallback;
 import org.cactoos.iterable.IterableOf;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.FuncApplies;
+import org.llorllale.cactoos.matchers.IsApplicable;
 
 /**
  * Test case for {@link FuncWithFallback}.
@@ -54,7 +54,7 @@ public final class FuncWithFallbackTest {
                     ex -> "In case of failure..."
                 )
             ),
-            new FuncApplies<>(1, expected)
+            new IsApplicable<>(1, expected)
         ).affirm();
     }
 
@@ -69,7 +69,7 @@ public final class FuncWithFallbackTest {
                 },
                 new Fallback.From<>(IOException.class, ex -> expected)
             ),
-            new FuncApplies<>(1, expected)
+            new IsApplicable<>(1, expected)
         ).affirm();
     }
 
@@ -86,7 +86,7 @@ public final class FuncWithFallbackTest {
                 },
                 new Fallback.From<>(InterruptedException.class, exp -> expected)
             ),
-            new FuncApplies<>(1, expected)
+            new IsApplicable<>(1, expected)
         ).affirm();
     }
 
@@ -110,7 +110,7 @@ public final class FuncWithFallbackTest {
                     )
                 )
             ),
-            new FuncApplies<>(1, expected)
+            new IsApplicable<>(1, expected)
         ).affirm();
     }
 

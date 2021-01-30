@@ -49,11 +49,11 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
+import org.llorllale.cactoos.matchers.HasString;
 import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.MatchesRegex;
 import org.llorllale.cactoos.matchers.StartsWith;
-import org.llorllale.cactoos.matchers.TextHasString;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
 
@@ -98,7 +98,7 @@ public final class InputOfTest {
         new Assertion<>(
             "must read file content",
             new InputOf(temp),
-            new InputHasContent(content)
+            new HasContent(content)
         ).affirm();
     }
 
@@ -176,7 +176,7 @@ public final class InputOfTest {
                     )
                 )
             ),
-            new TextHasString("Lorem ipsum")
+            new HasString("Lorem ipsum")
         ).affirm();
     }
 

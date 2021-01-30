@@ -31,7 +31,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -60,7 +60,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader to file.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -79,7 +79,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with size to file.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -98,7 +98,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset to file.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -118,7 +118,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset and size to file.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -137,7 +137,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset by name to file.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -158,7 +158,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset by name and size to file.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -176,7 +176,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader to path.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -195,7 +195,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with size to path",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -214,7 +214,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset to path.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -234,7 +234,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset and size to path.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -253,7 +253,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset by name to path.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -274,7 +274,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset by name and size to path.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -292,7 +292,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader to output.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -311,7 +311,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with size to output.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -330,7 +330,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset to output.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -351,7 +351,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset and size to output.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -370,7 +370,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset by name to output.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -391,7 +391,7 @@ public final class TeeInputFromReaderTest {
         new Assertion<>(
             "Must copy from reader with charset by name and size to output.",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 }

@@ -27,7 +27,7 @@ package org.cactoos.text;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for  {@link Base64Encoded}.
@@ -46,7 +46,7 @@ final class Base64EncodedTest {
             new Base64Encoded(
                 "Hello!"
             ),
-            new TextHasString(
+            new HasString(
                 "SGVsbG8h"
             )
         ).affirm();

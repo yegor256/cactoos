@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link SuffixOf}.
@@ -44,7 +44,7 @@ final class SuffixOfTest {
         new Assertion<>(
             "Given string is not empty",
             new SuffixOf("Cactoos with description", "after"),
-            new TextIs("")
+            new IsText("")
         ).affirm();
     }
 
@@ -57,7 +57,7 @@ final class SuffixOfTest {
         new Assertion<>(
             "Given string is not empty",
             new SuffixOf("Boundary", "Boundary"),
-            new TextIs("")
+            new IsText("")
         ).affirm();
     }
 
@@ -70,7 +70,7 @@ final class SuffixOfTest {
         new Assertion<>(
             "Given strings are not equal",
             new SuffixOf("Anti-pattern", "Anti-"),
-            new TextIs("pattern")
+            new IsText("pattern")
         ).affirm();
     }
 }

@@ -27,7 +27,7 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfInts;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -48,7 +48,7 @@ final class FirstOfTest {
                 new IterableOfInts(0, value),
                 () -> -1
             ),
-            new ScalarHasValue<>(value)
+            new HasValue<>(value)
         ).affirm();
     }
 
@@ -66,7 +66,7 @@ final class FirstOfTest {
                     );
                 }
             ),
-            new ScalarHasValue<>(value)
+            new HasValue<>(value)
         ).affirm();
     }
 
@@ -80,7 +80,7 @@ final class FirstOfTest {
                 new IterableOf<>("1", "2"),
                 () -> ""
             ),
-            new ScalarHasValue<>(value)
+            new HasValue<>(value)
         ).affirm();
     }
 
@@ -94,7 +94,7 @@ final class FirstOfTest {
                 new IterableOf<>("ab", "cd"),
                 () -> value
             ),
-            new ScalarHasValue<>(value)
+            new HasValue<>(value)
         ).affirm();
     }
 
@@ -126,7 +126,7 @@ final class FirstOfTest {
                 new IterableOfInts(2, 1, 0),
                 () -> -1
             ),
-            new ScalarHasValue<>(2)
+            new HasValue<>(2)
         ).affirm();
     }
 
@@ -138,7 +138,7 @@ final class FirstOfTest {
                 new IterableOfInts(2, 1, 0),
                 -1
             ),
-            new ScalarHasValue<>(2)
+            new HasValue<>(2)
         ).affirm();
     }
 
@@ -150,7 +150,7 @@ final class FirstOfTest {
                 new IterableOf<>(),
                 () -> -1
             ),
-            new ScalarHasValue<>(-1)
+            new HasValue<>(-1)
         ).affirm();
     }
 }

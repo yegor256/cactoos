@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for {@link LocalDateTimeOf}.
@@ -43,7 +43,7 @@ public class LocalDateTimeOfTest {
         new Assertion<>(
             "Can't parse a LocalDateTime with default/ISO format.",
             new LocalDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
-            new ScalarHasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
+            new HasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
         ).affirm();
     }
 
@@ -55,7 +55,7 @@ public class LocalDateTimeOfTest {
                 "2017-12-13 14:15:16.000000017",
                 "yyyy-MM-dd HH:mm:ss.n"
             ),
-            new ScalarHasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
+            new HasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
         ).affirm();
     }
 
@@ -67,7 +67,7 @@ public class LocalDateTimeOfTest {
                 "2017-12-13 14:15:16.000000017",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")
             ),
-            new ScalarHasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
+            new HasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
         ).affirm();
     }
 

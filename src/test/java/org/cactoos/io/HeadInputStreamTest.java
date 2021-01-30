@@ -27,8 +27,8 @@ import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.HasContent;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test cases for {@link HeadInputStream}.
@@ -56,7 +56,7 @@ final class HeadInputStreamTest {
         new Assertion<>(
             "Incorrect head of the input stream has been read",
             new InputOf(stream),
-            new InputHasContent("tS")
+            new HasContent("tS")
         ).affirm();
     }
 
@@ -76,7 +76,7 @@ final class HeadInputStreamTest {
         new Assertion<>(
             "The result text wasn't empty",
             new TextOf(input),
-            new TextIs("")
+            new IsText("")
         ).affirm();
     }
 
@@ -96,7 +96,7 @@ final class HeadInputStreamTest {
         new Assertion<>(
             "Reset didn't change the state",
             new InputOf(stream),
-            new InputHasContent("testR")
+            new HasContent("testR")
         ).affirm();
     }
 

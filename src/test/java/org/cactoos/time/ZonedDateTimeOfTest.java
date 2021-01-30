@@ -30,7 +30,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for {@link ZonedDateTimeOf}.
@@ -46,7 +46,7 @@ public class ZonedDateTimeOfTest {
         new Assertion<>(
             "Can't parse a ZonedDateTime with default/ISO format.",
             new ZonedDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 ZonedDateTime.of(
                     2017, 12, 13, 14, 15, 16, 17,
                     ZoneId.ofOffset("", ZoneOffset.ofHours(1))
@@ -64,7 +64,7 @@ public class ZonedDateTimeOfTest {
                 "yyyy-MM-dd HH:mm:ss",
                 ZoneId.of("Europe/Berlin")
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 ZonedDateTime.of(
                     LocalDateTime.of(2017, 12, 13, 14, 15, 16),
                     ZoneId.of("Europe/Berlin")
@@ -82,7 +82,7 @@ public class ZonedDateTimeOfTest {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     .withZone(ZoneId.of("Europe/Berlin"))
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 ZonedDateTime.of(
                     LocalDateTime.of(2017, 12, 13, 14, 15, 16),
                     ZoneId.of("Europe/Berlin")

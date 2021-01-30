@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.cactoos.bytes.BytesOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link HexOf}.
@@ -43,7 +43,7 @@ final class HexOfTest {
             new HexOf(
                 new BytesOf("")
             ),
-            new TextHasString("")
+            new HasString("")
         ).affirm();
     }
 
@@ -54,7 +54,7 @@ final class HexOfTest {
             new HexOf(
                 new BytesOf("What's up, друг?")
             ),
-            new TextHasString("5768617427732075702c20d0b4d180d183d0b33f")
+            new HasString("5768617427732075702c20d0b4d180d183d0b33f")
         ).affirm();
     }
 }

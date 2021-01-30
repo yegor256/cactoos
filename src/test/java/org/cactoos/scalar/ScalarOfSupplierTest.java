@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link ScalarOfSupplier}.
@@ -39,7 +39,7 @@ final class ScalarOfSupplierTest {
         new Assertion<>(
             "must hold the same value as given by supplier",
             new ScalarOfSupplier<>(() -> obj),
-            new ScalarHasValue<>(obj)
+            new HasValue<>(obj)
         ).affirm();
     }
 }

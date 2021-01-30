@@ -33,7 +33,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link WriterAsOutput}.
@@ -63,7 +63,7 @@ public final class WriterAsOutputTest {
                     new ResourceOf("org/cactoos/large-text.txt"),
                     new WriterAsOutput(writer)
                 ),
-                new InputHasContent(
+                new HasContent(
                     new TextOf(temp)
                 )
             ).affirm();

@@ -27,7 +27,7 @@ import org.cactoos.Scalar;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -44,7 +44,7 @@ final class ScalarEnvelopeTest {
         new Assertion<>(
             "must delegate calls to apply",
             new Static(1),
-            new ScalarHasValue<>(1)
+            new HasValue<>(1)
         ).affirm();
     }
 

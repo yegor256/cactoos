@@ -28,8 +28,8 @@ import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Mapped}.
@@ -46,7 +46,7 @@ final class MappedTest {
                 input -> new Upper(new TextOf(input)),
                 () -> "hello"
             ),
-            new ScalarHasValue<>(new TextIs("HELLO"))
+            new HasValue<>(new IsText("HELLO"))
         ).affirm();
     }
 }

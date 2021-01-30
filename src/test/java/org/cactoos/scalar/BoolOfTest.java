@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link BoolOf}.
@@ -40,7 +40,7 @@ final class BoolOfTest {
         new Assertion<>(
             "Must be parsed string 'true'",
             new BoolOf("true"),
-            new ScalarHasValue<>(true)
+            new HasValue<>(true)
         ).affirm();
     }
 
@@ -49,7 +49,7 @@ final class BoolOfTest {
         new Assertion<>(
             "Must be parsed string 'false'",
             new BoolOf("false"),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 
@@ -58,7 +58,7 @@ final class BoolOfTest {
         new Assertion<>(
             "Must be parsed a non-boolean string",
             new BoolOf("abc"),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 }

@@ -29,7 +29,7 @@ import org.cactoos.io.Sticky;
 import org.cactoos.text.HexOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Sha1DigestOf}.
@@ -48,7 +48,7 @@ final class Sha1DigestOfTest {
                     new InputOf("")
                 )
             ),
-            new TextHasString(
+            new HasString(
                 "da39a3ee5e6b4b0d3255bfef95601890afd80709"
             )
         ).affirm();
@@ -63,7 +63,7 @@ final class Sha1DigestOfTest {
                     new InputOf("Hello World!")
                 )
             ),
-            new TextHasString(
+            new HasString(
                 "2ef7bde608ce5404e97d5f042f95f89f1c232871"
             )
         ).affirm();
@@ -84,7 +84,7 @@ final class Sha1DigestOfTest {
                     )
                 )
             ),
-            new TextHasString(
+            new HasString(
                 "34f80bdab9b93af514004f127e440139aad63e2d"
             )
         ).affirm();

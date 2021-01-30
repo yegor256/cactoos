@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link PaddedStart}.
@@ -44,7 +44,7 @@ final class PaddedStartTest {
                 1,
                 '-'
             ),
-            new TextHasString("x")
+            new HasString("x")
         ).affirm();
     }
 
@@ -57,7 +57,7 @@ final class PaddedStartTest {
                 2,
                 '-'
             ),
-            new TextHasString("-x")
+            new HasString("-x")
         ).affirm();
     }
 
@@ -70,7 +70,7 @@ final class PaddedStartTest {
                 -1,
                 '-'
             ),
-            new TextHasString("x")
+            new HasString("x")
         ).affirm();
     }
 }

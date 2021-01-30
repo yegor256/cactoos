@@ -29,8 +29,8 @@ import org.cactoos.func.BiFuncOf;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link AndWithIndex}.
@@ -53,7 +53,7 @@ final class AndWithIndexTest {
                 ),
                 "hello", "world"
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 Matchers.allOf(
                     Matchers.equalTo(true),
                     new MatcherOf<>(

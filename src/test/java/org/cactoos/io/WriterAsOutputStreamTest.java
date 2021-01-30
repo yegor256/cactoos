@@ -36,7 +36,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
@@ -73,7 +73,7 @@ public final class WriterAsOutputStreamTest {
                     )
                 )
             ),
-            new InputHasContent(
+            new HasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
         ).affirm();
@@ -100,7 +100,7 @@ public final class WriterAsOutputStreamTest {
                         )
                     )
                 ),
-                new InputHasContent(
+                new HasContent(
                     new TextOf(temp)
                 )
             ).affirm();

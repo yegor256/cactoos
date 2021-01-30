@@ -30,7 +30,7 @@ import org.cactoos.Fallback;
 import org.cactoos.iterable.IterableOf;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link ScalarWithFallback}.
@@ -56,7 +56,7 @@ public final class ScalarWithFallbackTest {
                     )
                 )
             ),
-            new ScalarHasValue<>(message)
+            new HasValue<>(message)
         ).affirm();
     }
 
@@ -72,7 +72,7 @@ public final class ScalarWithFallbackTest {
                     Throwable::getMessage
                 )
             ),
-            new ScalarHasValue<>(message)
+            new HasValue<>(message)
         ).affirm();
     }
 
@@ -88,7 +88,7 @@ public final class ScalarWithFallbackTest {
                     Throwable::getMessage
                 )
             ),
-            new ScalarHasValue<>(message)
+            new HasValue<>(message)
         ).affirm();
     }
 
@@ -111,7 +111,7 @@ public final class ScalarWithFallbackTest {
                     )
                 )
             ),
-            new ScalarHasValue<>(message)
+            new HasValue<>(message)
         ).affirm();
     }
 
@@ -129,7 +129,7 @@ public final class ScalarWithFallbackTest {
                     exp -> message
                 )
             ),
-            new ScalarHasValue<>(message)
+            new HasValue<>(message)
         ).affirm();
     }
 
@@ -147,7 +147,7 @@ public final class ScalarWithFallbackTest {
                     exp -> message
                 )
             ),
-            new ScalarHasValue<>(message)
+            new HasValue<>(message)
         ).affirm();
     }
 
@@ -169,7 +169,7 @@ public final class ScalarWithFallbackTest {
                     )
                 )
             ),
-            new ScalarHasValue<>(message)
+            new HasValue<>(message)
         ).affirm();
     }
 
@@ -193,7 +193,7 @@ public final class ScalarWithFallbackTest {
                     )
                 )
             ),
-            new ScalarHasValue<>(expected)
+            new HasValue<>(expected)
         ).affirm();
     }
 

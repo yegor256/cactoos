@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Repeated}.
@@ -40,7 +40,7 @@ final class RepeatedTest {
             "Can't repeats a text",
             // @checkstyle MagicNumber (1 line)
             new Repeated("hello", 2),
-            new TextHasString("hellohello")
+            new HasString("hellohello")
         ).affirm();
     }
 
@@ -50,7 +50,7 @@ final class RepeatedTest {
             "Can't repeats a char",
             // @checkstyle MagicNumber (1 line)
             new Repeated("A", 5),
-            new TextHasString("AAAAA")
+            new HasString("AAAAA")
         ).affirm();
     }
 }

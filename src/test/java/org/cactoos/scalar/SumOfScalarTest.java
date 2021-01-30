@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link SumOfScalar}.
@@ -44,7 +44,7 @@ final class SumOfScalarTest {
                 Number::intValue,
                 new SumOfScalar(() -> 1, () -> 2, () -> 3)
             ),
-            new ScalarHasValue<>(6)
+            new HasValue<>(6)
         ).affirm();
     }
 
@@ -56,7 +56,7 @@ final class SumOfScalarTest {
                 Number::intValue,
                 new SumOfScalar()
             ),
-            new ScalarHasValue<>(0)
+            new HasValue<>(0)
         ).affirm();
     }
 
@@ -68,7 +68,7 @@ final class SumOfScalarTest {
                 Number::intValue,
                 new SumOfScalar(() -> 5)
             ),
-            new ScalarHasValue<>(5)
+            new HasValue<>(5)
         ).affirm();
     }
 }

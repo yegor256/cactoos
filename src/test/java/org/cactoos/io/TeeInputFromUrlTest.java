@@ -32,7 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -65,7 +65,7 @@ public final class TeeInputFromUrlTest {
         new Assertion<>(
             "Must copy from URL to path.",
             new InputOf(output),
-            new InputHasContent(message)
+            new HasContent(message)
         ).affirm();
     }
 
@@ -85,7 +85,7 @@ public final class TeeInputFromUrlTest {
         new Assertion<>(
             "Must copy from URL to file.",
             new InputOf(output),
-            new InputHasContent(message)
+            new HasContent(message)
         ).affirm();
     }
 
@@ -105,7 +105,7 @@ public final class TeeInputFromUrlTest {
         new Assertion<>(
             "Must copy from URL to output.",
             new InputOf(output),
-            new InputHasContent(message)
+            new HasContent(message)
         ).affirm();
     }
 }

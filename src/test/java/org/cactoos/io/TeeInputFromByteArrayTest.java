@@ -30,7 +30,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use byte array as an
@@ -61,7 +61,7 @@ public final class TeeInputFromByteArrayTest {
         new Assertion<>(
             "Must copy bytes to path",
             new InputOf(output),
-            new InputHasContent(message)
+            new HasContent(message)
         ).affirm();
     }
 
@@ -79,7 +79,7 @@ public final class TeeInputFromByteArrayTest {
         new Assertion<>(
             "Must copy bytes to file",
             new InputOf(output),
-            new InputHasContent(message)
+            new HasContent(message)
         ).affirm();
     }
 
@@ -97,7 +97,7 @@ public final class TeeInputFromByteArrayTest {
         new Assertion<>(
             "Must copy bytes to output",
             new InputOf(output),
-            new InputHasContent(message)
+            new HasContent(message)
         ).affirm();
     }
 }

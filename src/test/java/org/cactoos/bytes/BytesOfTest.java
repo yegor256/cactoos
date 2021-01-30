@@ -44,10 +44,10 @@ import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
+import org.llorllale.cactoos.matchers.HasString;
+import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.StartsWith;
-import org.llorllale.cactoos.matchers.TextHasString;
-import org.llorllale.cactoos.matchers.TextIs;
 
 /**
  * Test case for {@link BytesOf}.
@@ -114,7 +114,7 @@ final class BytesOfTest {
                     )
                 )
             ),
-            new TextIs(source)
+            new IsText(source)
         ).affirm();
     }
 
@@ -219,7 +219,7 @@ final class BytesOfTest {
                     )
                 )
             ),
-            new TextHasString(
+            new HasString(
                 new Joined(
                     System.lineSeparator(),
                     "java.io.IOException: It doesn't work at all",
@@ -238,7 +238,7 @@ final class BytesOfTest {
                     new IOException("").getStackTrace()
                 )
             ),
-            new TextHasString("org.cactoos.bytes.BytesOfTest")
+            new HasString("org.cactoos.bytes.BytesOfTest")
         ).affirm();
     }
 

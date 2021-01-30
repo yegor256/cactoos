@@ -30,7 +30,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link OutputStreamTo}.
@@ -60,7 +60,7 @@ public final class OutputStreamToTest {
                     )
                 )
             ),
-            new TextIs(
+            new IsText(
                 new TextOf(temp)
             )
         ).affirm();

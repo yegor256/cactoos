@@ -30,7 +30,7 @@ import org.cactoos.iterable.NoNulls;
 import org.cactoos.scalar.ItemAt;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test Case for {@link Cycled}.
@@ -57,7 +57,7 @@ public final class CycledTest {
                     )
                 )
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 expected
             )
         ).affirm();

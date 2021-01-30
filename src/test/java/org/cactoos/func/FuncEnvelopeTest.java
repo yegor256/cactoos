@@ -27,8 +27,8 @@ import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.FuncApplies;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsApplicable;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link FuncEnvelope}.
@@ -44,7 +44,7 @@ final class FuncEnvelopeTest {
         new Assertion<>(
             "must delegate calls to apply",
             new Append(" stuff"),
-            new FuncApplies<>(2, new TextIs("2 stuff"))
+            new IsApplicable<>(2, new IsText("2 stuff"))
         ).affirm();
     }
 

@@ -30,7 +30,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test Case for {@link Cycled}.
@@ -52,7 +52,7 @@ final class CycledTest {
                     )
                 )
             ),
-            new ScalarHasValue<>(
+            new HasValue<>(
                 expected
             )
         ).affirm();

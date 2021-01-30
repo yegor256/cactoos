@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link IsEmpty}.
@@ -38,7 +38,7 @@ final class IsEmptyTest {
         new Assertion<>(
             "Must determine empty text",
             new IsEmpty(new TextOf("")),
-            new ScalarHasValue<>(Boolean.TRUE)
+            new HasValue<>(Boolean.TRUE)
         ).affirm();
     }
 
@@ -47,7 +47,7 @@ final class IsEmptyTest {
         new Assertion<>(
             "Must not detect non-empty text",
             new IsEmpty(new TextOf("abc")),
-            new ScalarHasValue<>(Boolean.FALSE)
+            new HasValue<>(Boolean.FALSE)
         ).affirm();
     }
 
@@ -56,7 +56,7 @@ final class IsEmptyTest {
         new Assertion<>(
             "Must not detect blank text",
             new IsEmpty(new TextOf(" ")),
-            new ScalarHasValue<>(Boolean.FALSE)
+            new HasValue<>(Boolean.FALSE)
         ).affirm();
     }
 }

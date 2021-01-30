@@ -29,8 +29,8 @@ import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.RunsInThreads;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link Solid}.
@@ -61,7 +61,7 @@ final class SolidTest {
                 new Assertion<>(
                     "must compute value once",
                     scalar,
-                    new ScalarHasValue<>(scalar.value())
+                    new HasValue<>(scalar.value())
                 ).affirm();
                 return true;
             },

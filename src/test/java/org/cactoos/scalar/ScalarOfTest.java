@@ -29,8 +29,8 @@ import org.cactoos.proc.ProcOf;
 import org.cactoos.proc.RunnableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.MatcherOf;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test case for {@link ScalarOf}.
@@ -46,7 +46,7 @@ final class ScalarOfTest {
         new Assertion<>(
             "Must convert Callable into Scalar",
             new ScalarOf<>(new CallableOf<>(new Constant<>(obj))),
-            new ScalarHasValue<>(obj)
+            new HasValue<>(obj)
         ).affirm();
     }
 
@@ -80,7 +80,7 @@ final class ScalarOfTest {
         new Assertion<>(
             "Must convert Func into Scalar",
             new ScalarOf<>(new FuncOf<>(input -> input), ipt),
-            new ScalarHasValue<>(ipt)
+            new HasValue<>(ipt)
         ).affirm();
     }
 
@@ -115,7 +115,7 @@ final class ScalarOfTest {
         new Assertion<>(
             "Must convert Lambda into Scalar",
             new ScalarOf<>(() -> obj),
-            new ScalarHasValue<>(obj)
+            new HasValue<>(obj)
         ).affirm();
     }
 }

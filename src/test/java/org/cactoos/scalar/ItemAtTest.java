@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.cactoos.iterable.IterableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -47,7 +47,7 @@ final class ItemAtTest {
                 // @checkstyle MagicNumber (1 line)
                 1, new IterableOf<>(1, 2, 3)
             ),
-            new ScalarHasValue<>(2)
+            new HasValue<>(2)
         ).affirm();
     }
 
@@ -59,7 +59,7 @@ final class ItemAtTest {
             new ItemAt<>(
                 1, fallback, new IterableOf<>()
             ),
-            new ScalarHasValue<>(fallback)
+            new HasValue<>(fallback)
         ).affirm();
     }
 
@@ -71,7 +71,7 @@ final class ItemAtTest {
                 // @checkstyle MagicNumber (1 line)
                 1, 5, new IterableOf<>(0, 1)
             ),
-            new ScalarHasValue<>(1)
+            new HasValue<>(1)
         ).affirm();
     }
 
@@ -84,7 +84,7 @@ final class ItemAtTest {
                 // @checkstyle MagicNumber (1 line)
                 new IterableOf<>(1, 2, 3)
             ),
-            new ScalarHasValue<>(2)
+            new HasValue<>(2)
         ).affirm();
     }
 
@@ -130,7 +130,7 @@ final class ItemAtTest {
         new Assertion<>(
             "Not the same value",
             item,
-            new ScalarHasValue<>(item.value())
+            new HasValue<>(item.value())
         ).affirm();
     }
 }

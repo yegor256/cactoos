@@ -26,7 +26,7 @@ package org.cactoos.scalar;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link False}.
@@ -50,7 +50,7 @@ final class FalseTest {
         new Assertion<>(
             "Must be false",
             new False(),
-            new ScalarHasValue<>(false)
+            new HasValue<>(false)
         ).affirm();
     }
 }

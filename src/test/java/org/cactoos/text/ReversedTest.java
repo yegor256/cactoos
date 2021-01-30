@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Reversed}.
@@ -42,7 +42,7 @@ final class ReversedTest {
             new Reversed(
                 new TextOf("Hello!")
             ),
-            new TextHasString("!olleH")
+            new HasString("!olleH")
         ).affirm();
     }
 
@@ -53,7 +53,7 @@ final class ReversedTest {
             new Reversed(
                 new TextOf("")
             ),
-            new TextHasString("")
+            new HasString("")
         ).affirm();
     }
 }

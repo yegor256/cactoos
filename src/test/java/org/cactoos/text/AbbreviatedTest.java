@@ -29,7 +29,7 @@ import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Abbreviated}.
@@ -47,7 +47,7 @@ final class AbbreviatedTest {
         new Assertion<>(
             "Must abbreviate an msg text",
             new Abbreviated(msg, 8),
-            new TextIs(msg)
+            new IsText(msg)
         ).affirm();
     }
 
@@ -56,7 +56,7 @@ final class AbbreviatedTest {
         new Assertion<>(
             "Must abbreviate a text",
             new Abbreviated("hello world", 8),
-            new TextIs("hello...")
+            new IsText("hello...")
         ).affirm();
     }
 
@@ -65,7 +65,7 @@ final class AbbreviatedTest {
         new Assertion<>(
             "Must abbreviate a text one char smaller",
             new Abbreviated("oo programming", 10),
-            new TextIs("oo prog...")
+            new IsText("oo prog...")
         ).affirm();
     }
 
@@ -75,7 +75,7 @@ final class AbbreviatedTest {
         new Assertion<>(
             "Must abbreviate a text with same length",
             new Abbreviated(msg, 15),
-            new TextIs(msg)
+            new IsText(msg)
         ).affirm();
     }
 
@@ -85,7 +85,7 @@ final class AbbreviatedTest {
         new Assertion<>(
             "Must abbreviate a text one char bigger",
             new Abbreviated(msg, 17),
-            new TextIs(msg)
+            new IsText(msg)
         ).affirm();
     }
 
@@ -95,7 +95,7 @@ final class AbbreviatedTest {
         new Assertion<>(
             "Must abbreviate a text two chars bigger",
             new Abbreviated(msg, 15),
-            new TextIs(msg)
+            new IsText(msg)
         ).affirm();
     }
 
@@ -105,7 +105,7 @@ final class AbbreviatedTest {
         new Assertion<>(
             "Must abbreviate a text with width bigger than length",
             new Abbreviated(msg, 50),
-            new TextIs(msg)
+            new IsText(msg)
         ).affirm();
     }
 
@@ -117,7 +117,7 @@ final class AbbreviatedTest {
                 // @checkstyle LineLengthCheck (1 line)
                 "The quick brown fox jumps over the lazy black dog and after that returned to the cave"
             ),
-            new TextIs(
+            new IsText(
                 // @checkstyle LineLengthCheck (1 line)
                 "The quick brown fox jumps over the lazy black dog and after that returned to ..."
             )
@@ -147,10 +147,10 @@ final class AbbreviatedTest {
             ),
             new AllOf<>(
                 new IterableOf<>(
-                    new TextIs(
+                    new IsText(
                         "The quick br..."
                     ),
-                    new TextIs(
+                    new IsText(
                         "The lazy bla..."
                     )
                 )

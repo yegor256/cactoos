@@ -32,7 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link ReaderOf}.
@@ -55,7 +55,7 @@ public final class ReaderOfTest {
         new Assertion<>(
             "Must read empty string",
             new TextOf(new ReaderOf(empty)),
-            new TextIs(empty)
+            new IsText(empty)
         ).affirm();
     }
 
@@ -64,7 +64,7 @@ public final class ReaderOfTest {
         new Assertion<>(
             "Must read chars var args",
             new TextOf(new ReaderOf('a', 'b', 'c')),
-            new TextIs("abc")
+            new IsText("abc")
         ).affirm();
     }
 
@@ -80,7 +80,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8
                 )
             ),
-            new TextIs(message)
+            new IsText(message)
         ).affirm();
     }
 
@@ -96,7 +96,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8.name()
                 )
             ),
-            new TextIs(message)
+            new IsText(message)
         ).affirm();
     }
 
@@ -111,7 +111,7 @@ public final class ReaderOfTest {
                     message.getBytes(StandardCharsets.UTF_8)
                 )
             ),
-            new TextIs(message)
+            new IsText(message)
         ).affirm();
     }
 
@@ -127,7 +127,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8
                 )
             ),
-            new TextIs(message)
+            new IsText(message)
         ).affirm();
     }
 
@@ -143,7 +143,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8.name()
                 )
             ),
-            new TextIs(message)
+            new IsText(message)
         ).affirm();
     }
 
@@ -159,7 +159,7 @@ public final class ReaderOfTest {
         new Assertion<>(
             "Must read from path",
             new TextOf(new ReaderOf(input)),
-            new TextIs(message)
+            new IsText(message)
         ).affirm();
     }
 
@@ -175,7 +175,7 @@ public final class ReaderOfTest {
         new Assertion<>(
             "Must read from file",
             new TextOf(new ReaderOf(input)),
-            new TextIs(message)
+            new IsText(message)
         ).affirm();
     }
 
@@ -197,7 +197,7 @@ public final class ReaderOfTest {
                         .toURL()
                 )
             ),
-            new TextIs(message)
+            new IsText(message)
         ).affirm();
     }
 
@@ -213,7 +213,7 @@ public final class ReaderOfTest {
         new Assertion<>(
             "Must read from uri",
             new TextOf(new ReaderOf(input.toURI())),
-            new TextIs(message)
+            new IsText(message)
         ).affirm();
     }
 
@@ -224,7 +224,7 @@ public final class ReaderOfTest {
         new Assertion<>(
             "Must read from bytes",
             new TextOf(new ReaderOf(new BytesOf(input))),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -235,7 +235,7 @@ public final class ReaderOfTest {
         new Assertion<>(
             "Must read from text",
             new TextOf(new ReaderOf(new TextOf(input))),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -251,7 +251,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8
                 )
             ),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -267,7 +267,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8.name()
                 )
             ),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -278,7 +278,7 @@ public final class ReaderOfTest {
         new Assertion<>(
             "Must read from char sequence",
             new TextOf(new ReaderOf(input)),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -294,7 +294,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8
                 )
             ),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -310,7 +310,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8.name()
                 )
             ),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -321,7 +321,7 @@ public final class ReaderOfTest {
         new Assertion<>(
             "Must read from input",
             new TextOf(new ReaderOf(new InputOf(input))),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -337,7 +337,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8
                 )
             ),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -353,7 +353,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8.name()
                 )
             ),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -369,7 +369,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8.newDecoder()
                 )
             ),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -380,7 +380,7 @@ public final class ReaderOfTest {
         new Assertion<>(
             "Must read from stream",
             new TextOf(new ReaderOf(new InputStreamOf(input))),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -396,7 +396,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8
                 )
             ),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -412,7 +412,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8.name()
                 )
             ),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 
@@ -428,7 +428,7 @@ public final class ReaderOfTest {
                     StandardCharsets.UTF_8.newDecoder()
                 )
             ),
-            new TextIs(input)
+            new IsText(input)
         ).affirm();
     }
 }

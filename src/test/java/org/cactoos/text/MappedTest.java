@@ -26,7 +26,7 @@ package org.cactoos.text;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Tests for @{link Mapped}.
@@ -55,7 +55,7 @@ final class MappedTest {
                 s -> String.format("<%s>", s),
                 new TextOf("hi")
             ),
-            new TextIs("<hi>")
+            new IsText("<hi>")
         ).affirm();
     }
 
@@ -67,7 +67,7 @@ final class MappedTest {
                 String::toLowerCase,
                 new TextOf("ABC")
             ),
-            new TextIs("abc")
+            new IsText("abc")
         ).affirm();
     }
 

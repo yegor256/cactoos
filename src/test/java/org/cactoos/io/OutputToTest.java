@@ -32,7 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link OutputTo}.
@@ -58,7 +58,7 @@ public final class OutputToTest {
         new Assertion<>(
             "Must write into path",
             new InputOf(path),
-            new InputHasContent(content)
+            new HasContent(content)
         ).affirm();
     }
 
@@ -73,7 +73,7 @@ public final class OutputToTest {
         new Assertion<>(
             "Must write into file",
             new InputOf(path.toFile()),
-            new InputHasContent(txt)
+            new HasContent(txt)
         ).affirm();
     }
 
@@ -85,7 +85,7 @@ public final class OutputToTest {
         new Assertion<>(
             "Must write into writer",
             new InputOf(output.getBuffer()),
-            new InputHasContent(txt)
+            new HasContent(txt)
         ).affirm();
     }
 
@@ -99,7 +99,7 @@ public final class OutputToTest {
         new Assertion<>(
             "Must write into writer with charset",
             new InputOf(output.getBuffer()),
-            new InputHasContent(txt)
+            new HasContent(txt)
         ).affirm();
     }
 
@@ -113,7 +113,7 @@ public final class OutputToTest {
         new Assertion<>(
             "Must write into writer with charset by name",
             new InputOf(output.getBuffer()),
-            new InputHasContent(txt)
+            new HasContent(txt)
         ).affirm();
     }
 
@@ -130,7 +130,7 @@ public final class OutputToTest {
         new Assertion<>(
             "Must write into writer with charset and size",
             new InputOf(output.getBuffer()),
-            new InputHasContent(txt)
+            new HasContent(txt)
         ).affirm();
     }
 
@@ -147,7 +147,7 @@ public final class OutputToTest {
         new Assertion<>(
             "Must write into writer with size",
             new InputOf(output.getBuffer()),
-            new InputHasContent(txt)
+            new HasContent(txt)
         ).affirm();
     }
 
@@ -164,7 +164,7 @@ public final class OutputToTest {
         new Assertion<>(
             "Must write into writer with charset by name and size",
             new InputOf(output.getBuffer()),
-            new InputHasContent(txt)
+            new HasContent(txt)
         ).affirm();
     }
 
@@ -181,7 +181,7 @@ public final class OutputToTest {
         new Assertion<>(
             "Must write into writer with decoder and size",
             new InputOf(output.getBuffer()),
-            new InputHasContent(txt)
+            new HasContent(txt)
         ).affirm();
     }
 }

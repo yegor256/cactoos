@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -48,7 +48,7 @@ final class ReplacedTest {
                 new TextOf("Hello!"),
                 "ello", "i"
             ),
-            new TextHasString("Hi!")
+            new HasString("Hi!")
         ).affirm();
     }
 
@@ -61,7 +61,7 @@ final class ReplacedTest {
                 new TextOf(text),
                 "xyz", "i"
             ),
-            new TextHasString(text)
+            new HasString(text)
         ).affirm();
     }
 
@@ -74,7 +74,7 @@ final class ReplacedTest {
                 "cat",
                 "dog"
             ),
-            new TextHasString("one dog, two dogs, three dogs")
+            new HasString("one dog, two dogs, three dogs")
         ).affirm();
     }
 
@@ -87,7 +87,7 @@ final class ReplacedTest {
                 () -> Pattern.compile("cow"),
                 matcher -> "pig"
             ),
-            new TextHasString("one pig two pigs in the yard")
+            new HasString("one pig two pigs in the yard")
         ).affirm();
     }
 
@@ -100,7 +100,7 @@ final class ReplacedTest {
                 () -> Pattern.compile("[a-z]+"),
                 matcher -> String.valueOf(matcher.group().length())
             ),
-            new TextHasString("3 3 THREE 4 FIVE 3")
+            new HasString("3 3 THREE 4 FIVE 3")
         ).affirm();
     }
 
@@ -113,7 +113,7 @@ final class ReplacedTest {
                 "123",
                 "WOW"
             ),
-            new TextHasString("")
+            new HasString("")
         ).affirm();
     }
 
@@ -126,7 +126,7 @@ final class ReplacedTest {
                 "",
                 "1"
             ),
-            new TextHasString("1a1b1c1")
+            new HasString("1a1b1c1")
         ).affirm();
     }
 
@@ -139,7 +139,7 @@ final class ReplacedTest {
                 "",
                 "1"
             ),
-            new TextHasString("1")
+            new HasString("1")
         ).affirm();
     }
 
@@ -174,7 +174,7 @@ final class ReplacedTest {
                 () -> Pattern.compile("[A-Z]+"),
                 matcher -> String.valueOf(matcher.group().length())
             ),
-            new TextHasString("abc def 3 3")
+            new HasString("abc def 3 3")
         ).affirm();
     }
 
@@ -187,7 +187,7 @@ final class ReplacedTest {
                 () -> Pattern.compile("[a-z]+|\u2300"),
                 matcher -> String.valueOf(matcher.group().length())
             ),
-            new TextHasString("3 3 GHI1JKL")
+            new HasString("3 3 GHI1JKL")
         ).affirm();
     }
 }

@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.ScalarHasValue;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Retry}.
@@ -57,7 +57,7 @@ final class RetryTest {
                 },
                 Integer.MAX_VALUE
             ),
-            new ScalarHasValue<>(0)
+            new HasValue<>(0)
         ).affirm();
     }
 
@@ -76,7 +76,7 @@ final class RetryTest {
                     return 0;
                 }
             ),
-           new ScalarHasValue<>(0)
+           new HasValue<>(0)
         ).affirm();
     }
 
@@ -99,7 +99,7 @@ final class RetryTest {
                 // @checkstyle MagicNumberCheck (1 line)
                 Duration.of(-5, ChronoUnit.DAYS)
             ),
-            new ScalarHasValue<>(0)
+            new HasValue<>(0)
         ).affirm();
     }
 

@@ -32,7 +32,7 @@ import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test Case for {@link Immutable}.
@@ -104,7 +104,7 @@ public final class ImmutableTest {
         new Assertion<>(
             "must delegate toString to decorated iterator",
             new TextOf(immutable.toString()),
-            new TextIs(iterator.toString())
+            new IsText(iterator.toString())
         ).affirm();
     }
 }

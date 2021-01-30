@@ -32,7 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -83,7 +83,7 @@ public final class AppendToTest {
         new Assertion<>(
             "Does not contain expected text",
             new InputOf(source),
-            new InputHasContent(new Joined("", first, second))
+            new HasContent(new Joined("", first, second))
         ).affirm();
     }
 
@@ -105,7 +105,7 @@ public final class AppendToTest {
         new Assertion<>(
             "Can't find expected unicode text content",
             new InputOf(source),
-            new InputHasContent(new Joined("", first, second))
+            new HasContent(new Joined("", first, second))
         ).affirm();
     }
 }

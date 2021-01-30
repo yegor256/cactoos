@@ -31,7 +31,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
@@ -61,7 +61,7 @@ public final class TeeInputFromInputTest {
         new Assertion<>(
             "Must copy from input to the output path",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -78,7 +78,7 @@ public final class TeeInputFromInputTest {
         new Assertion<>(
             "Must copy from input to the output file",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -95,7 +95,7 @@ public final class TeeInputFromInputTest {
         new Assertion<>(
             "Must copy from input to the output",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -113,7 +113,7 @@ public final class TeeInputFromInputTest {
         new Assertion<>(
             "Must copy from input with size to the output",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -131,7 +131,7 @@ public final class TeeInputFromInputTest {
         new Assertion<>(
             "Must copy from input with charset to output",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -150,7 +150,7 @@ public final class TeeInputFromInputTest {
         new Assertion<>(
             "Must copy from input with charset and size to output",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -168,7 +168,7 @@ public final class TeeInputFromInputTest {
         new Assertion<>(
             "Must copy from input with charset by name to output",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 
@@ -188,7 +188,7 @@ public final class TeeInputFromInputTest {
         new Assertion<>(
             "Must copy from input with charset by name and size to output",
             new InputOf(output),
-            new InputHasContent(input)
+            new HasContent(input)
         ).affirm();
     }
 }

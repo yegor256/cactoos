@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.Reader;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link TeeReader}.
@@ -54,7 +54,7 @@ final class TeeReaderTest {
         new Assertion<>(
             "Must read content",
             new InputOf(new ReaderOf(baos.toByteArray())),
-            new InputHasContent(content)
+            new HasContent(content)
         ).affirm();
     }
 

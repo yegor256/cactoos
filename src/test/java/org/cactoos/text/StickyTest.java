@@ -26,7 +26,7 @@ package org.cactoos.text;
 import org.cactoos.Text;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextIs;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Sticky}.
@@ -39,7 +39,7 @@ final class StickyTest {
         new Assertion<>(
             "must be the same",
             sticky,
-            new TextIs(sticky)
+            new IsText(sticky)
         ).affirm();
     }
 }

@@ -26,7 +26,7 @@ package org.cactoos.func;
 import org.cactoos.scalar.BoolOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.FuncApplies;
+import org.llorllale.cactoos.matchers.IsApplicable;
 
 /**
 * Tests for {@link Flattened}.
@@ -41,7 +41,7 @@ final class FlattenedTest {
             new Flattened<>(
                 new FuncOf<>(x -> new BoolOf(x))
             ),
-            new FuncApplies<>("true", true)
+            new IsApplicable<>("true", true)
         ).affirm();
     }
 }

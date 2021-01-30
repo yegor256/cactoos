@@ -25,7 +25,7 @@ package org.cactoos.text;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Upper}.
@@ -39,7 +39,7 @@ final class UpperTest {
         new Assertion<>(
             "Can't upper case a text",
             new Upper(new TextOf("Hello!")),
-            new TextHasString("HELLO!")
+            new HasString("HELLO!")
         ).affirm();
     }
 
@@ -48,7 +48,7 @@ final class UpperTest {
         new Assertion<>(
             "Can't upper case a string",
             new Upper("World!"),
-            new TextHasString("WORLD!")
+            new HasString("WORLD!")
         ).affirm();
     }
 }

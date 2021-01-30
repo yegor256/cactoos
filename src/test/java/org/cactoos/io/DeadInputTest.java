@@ -25,7 +25,7 @@ package org.cactoos.io;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.InputHasContent;
+import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link DeadInput}.
@@ -41,7 +41,7 @@ final class DeadInputTest {
         new Assertion<>(
             "must read empty content",
             new DeadInput(),
-            new InputHasContent("")
+            new HasContent("")
         ).affirm();
     }
 

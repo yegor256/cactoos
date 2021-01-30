@@ -29,7 +29,7 @@ import org.cactoos.io.Sticky;
 import org.cactoos.text.HexOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.TextHasString;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Md5DigestOf}.
@@ -48,7 +48,7 @@ final class Md5DigestOfTest {
                     new InputOf("")
                 )
             ),
-            new TextHasString(
+            new HasString(
                 "d41d8cd98f00b204e9800998ecf8427e"
             )
         ).affirm();
@@ -63,7 +63,7 @@ final class Md5DigestOfTest {
                     new InputOf("Hello World!")
                 )
             ),
-            new TextHasString(
+            new HasString(
                 "ed076287532e86365e841e92bfc50d8c"
             )
         ).affirm();
@@ -84,7 +84,7 @@ final class Md5DigestOfTest {
                     )
                 )
             ),
-            new TextHasString(
+            new HasString(
                 "162665ab3d58424724f83f28e7a147d6"
             )
         ).affirm();
