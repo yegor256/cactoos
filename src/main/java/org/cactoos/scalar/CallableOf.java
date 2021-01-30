@@ -42,12 +42,7 @@ import org.cactoos.Scalar;
  * @param <T> Type of output
  * @since 0.12
  */
-public final class CallableOf<T> implements Callable<T> {
-
-    /**
-     * Original callable.
-     */
-    private final Scalar<T> scalar;
+public final class CallableOf<T> extends CallableEnvelope<T> {
 
     /**
      * Ctor.
@@ -55,11 +50,6 @@ public final class CallableOf<T> implements Callable<T> {
      * @since 0.41
      */
     public CallableOf(final Scalar<T> slr) {
-        this.scalar = slr;
-    }
-
-    @Override
-    public T call() throws Exception {
-        return this.scalar.value();
+        super(() -> slr.value());
     }
 }

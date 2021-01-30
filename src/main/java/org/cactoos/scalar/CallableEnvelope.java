@@ -21,35 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.func;
+package org.cactoos.scalar;
 
-import org.cactoos.BiFunc;
+import java.util.concurrent.Callable;
 
 /**
- * Enveloppe of {@link BiFunc}.
+ * Envelope for Callable.
  *
- * @param <X> Type of input
- * @param <Y> Type of input
- * @param <Z> Type of output
+ * <p>There is no thread-safety guarantee.
+ *
+ * @param <T> Type of output
  * @since 0.50
  */
-public abstract class BiFuncEnveloppe<X, Y, Z> implements BiFunc<X, Y, Z> {
+public abstract class CallableEnvelope<T> implements Callable<T> {
 
     /**
-     * BiFunc to decorate.
+     * Callable to decorate.
      */
-    private final BiFunc<X, Y, Z> origin;
+    private final Callable<T> origin;
 
     /**
      * Ctor.
-     * @param func The function
+     * @param callable The Callable
      */
-    public BiFuncEnveloppe(final BiFunc<X, Y, Z> func) {
-        this.origin = func;
+    public CallableEnvelope(final Callable<T> callable) {
+        this.origin = callable;
     }
 
     @Override
-    public final Z apply(final X first, final Y second) throws Exception {
-        return this.origin.apply(first, second);
+    public final T call() throws Exception {
+        return this.origin.call();
     }
 }

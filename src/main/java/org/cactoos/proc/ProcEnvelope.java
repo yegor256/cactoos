@@ -31,7 +31,7 @@ import org.cactoos.Proc;
  * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of input
- * @since 0.49
+ * @since 0.50
  */
 public abstract class ProcEnvelope<X> implements Proc<X> {
 
