@@ -21,55 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.proc;
+package org.cactoos.func;
 
-import org.cactoos.Proc;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.Unchecked;
+import org.cactoos.BiFunc;
 
 /**
- * Func as Runnable.
+ * Enveloppe of {@link BiFunc}.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.12
+ * @param <X> Type of input
+ * @param <Y> Type of input
+ * @param <Z> Type of output
+ * @since 0.50
  */
-public final class RunnableOf extends RunnableEnvelope {
+public abstract class BiFuncEnveloppe<X, Y, Z> implements BiFunc<X, Y, Z> {
+
+    /**
+     * BiFunc to decorate.
+     */
+    private final BiFunc<X, Y, Z> origin;
 
     /**
      * Ctor.
-     * @param proc Encapsulated proc
-     * @param ipt Input
-     * @param <X> Type of input
-     * @since 0.32
+     * @param func The function
      */
-    public <X> RunnableOf(final Proc<? super X> proc, final X ipt) {
-        this(
-            () -> {
-                new UncheckedProc<>(proc).exec(ipt);
-            }
-        );
+    public BiFuncEnveloppe(final BiFunc<X, Y, Z> func) {
+        this.origin = func;
     }
 
-    /**
-     * Ctor.
-     * @param scalar Encapsulated scalar
-     * @since 0.11
-     */
-    public RunnableOf(final Scalar<?> scalar) {
-        this(
-            () -> {
-                new Unchecked<>(scalar).value();
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param runnable Encapsulated runnable
-     * @since 0.49
-     */
-    public RunnableOf(final Runnable runnable) {
-        super(runnable);
+    @Override
+    public final Z apply(final X first, final Y second) throws Exception {
+        return this.origin.apply(first, second);
     }
 }

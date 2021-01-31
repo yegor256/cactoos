@@ -34,12 +34,7 @@ import org.cactoos.Proc;
  * @param <X> Type of input
  * @since 0.12
  */
-public final class ProcOf<X> implements Proc<X> {
-
-    /**
-     * The proc.
-     */
-    private final Proc<X> proc;
+public final class ProcOf<X> extends ProcEnvelope<X> {
 
     /**
      * Ctor.
@@ -58,11 +53,6 @@ public final class ProcOf<X> implements Proc<X> {
      * @param prc The proc
      */
     public ProcOf(final Proc<X> prc) {
-        this.proc = prc;
-    }
-
-    @Override
-    public void exec(final X input) throws Exception {
-        this.proc.exec(input);
+        super(prc);
     }
 }

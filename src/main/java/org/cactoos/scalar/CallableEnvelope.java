@@ -21,55 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.proc;
+package org.cactoos.scalar;
 
-import org.cactoos.Proc;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.Unchecked;
+import java.util.concurrent.Callable;
 
 /**
- * Func as Runnable.
+ * Envelope for Callable.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.12
+ * @param <T> Type of output
+ * @since 0.50
  */
-public final class RunnableOf extends RunnableEnvelope {
+public abstract class CallableEnvelope<T> implements Callable<T> {
+
+    /**
+     * Callable to decorate.
+     */
+    private final Callable<T> origin;
 
     /**
      * Ctor.
-     * @param proc Encapsulated proc
-     * @param ipt Input
-     * @param <X> Type of input
-     * @since 0.32
+     * @param callable The Callable
      */
-    public <X> RunnableOf(final Proc<? super X> proc, final X ipt) {
-        this(
-            () -> {
-                new UncheckedProc<>(proc).exec(ipt);
-            }
-        );
+    public CallableEnvelope(final Callable<T> callable) {
+        this.origin = callable;
     }
 
-    /**
-     * Ctor.
-     * @param scalar Encapsulated scalar
-     * @since 0.11
-     */
-    public RunnableOf(final Scalar<?> scalar) {
-        this(
-            () -> {
-                new Unchecked<>(scalar).value();
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param runnable Encapsulated runnable
-     * @since 0.49
-     */
-    public RunnableOf(final Runnable runnable) {
-        super(runnable);
+    @Override
+    public final T call() throws Exception {
+        return this.origin.call();
     }
 }

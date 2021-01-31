@@ -24,52 +24,32 @@
 package org.cactoos.proc;
 
 import org.cactoos.Proc;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.Unchecked;
 
 /**
- * Func as Runnable.
+ * Envelope for {@link Proc}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.12
+ * @param <X> Type of input
+ * @since 0.50
  */
-public final class RunnableOf extends RunnableEnvelope {
+public abstract class ProcEnvelope<X> implements Proc<X> {
+
+    /**
+     * Proc to decorate.
+     */
+    private final Proc<X> origin;
 
     /**
      * Ctor.
-     * @param proc Encapsulated proc
-     * @param ipt Input
-     * @param <X> Type of input
-     * @since 0.32
+     * @param origin The procedure
      */
-    public <X> RunnableOf(final Proc<? super X> proc, final X ipt) {
-        this(
-            () -> {
-                new UncheckedProc<>(proc).exec(ipt);
-            }
-        );
+    public ProcEnvelope(final Proc<X> origin) {
+        this.origin = origin;
     }
 
-    /**
-     * Ctor.
-     * @param scalar Encapsulated scalar
-     * @since 0.11
-     */
-    public RunnableOf(final Scalar<?> scalar) {
-        this(
-            () -> {
-                new Unchecked<>(scalar).value();
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param runnable Encapsulated runnable
-     * @since 0.49
-     */
-    public RunnableOf(final Runnable runnable) {
-        super(runnable);
+    @Override
+    public final void exec(final X input) throws Exception {
+        this.origin.exec(input);
     }
 }
