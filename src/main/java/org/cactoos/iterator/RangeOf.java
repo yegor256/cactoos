@@ -21,17 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.iterable;
+package org.cactoos.iterator;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.Func;
+import org.cactoos.func.UncheckedFunc;
 
 /**
- * Iterable implementation to model range functionality.
+ * Iterator implementation to model range functionality.
  * @param <T> Range value type
- * @since 1.0
+ * @since 0.50
  */
 public final class
-    RangeOf<T extends Comparable<T>> extends IterableEnvelope<T> {
+    RangeOf<T extends Comparable<T>> implements Iterator<T> {
+
+    /**
+     * Incrementor.
+     */
+    private final UncheckedFunc<T, T> inc;
+
+    /**
+     * Current value.
+     */
+    private final AtomicReference<T> value;
+
+    /**
+     * Maximum value.
+     */
+    private final T max;
 
     /**
      * Ctor.
@@ -40,10 +59,23 @@ public final class
      * @param incrementor The {@link Func} to process for the next value.
      */
     public RangeOf(final T min, final T max, final Func<T, T> incrementor) {
-        super(
-            new IterableOf<>(
-                new org.cactoos.iterator.RangeOf<>(min, max, incrementor)
-            )
-        );
+        this.inc = new UncheckedFunc<>(incrementor);
+        this.value = new AtomicReference<T>(min);
+        this.max = max;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return this.value.get().compareTo(this.max) < 1;
+    }
+
+    @Override
+    public T next() {
+        if (!this.hasNext()) {
+            throw new NoSuchElementException();
+        }
+        final T result = this.value.get();
+        this.value.set(this.inc.apply(result));
+        return result;
     }
 }
