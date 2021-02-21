@@ -31,20 +31,19 @@ import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsApplicable;
-import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Test case for {@link Async}.
  *
  * @since 0.10
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class AsyncTest {
     @Test
     void runsInBackground() {
         new Assertion<>(
-            "Can't run in the background",
+            "Must run in the background",
             new Async<>(
                 input -> {
                     TimeUnit.DAYS.sleep(1L);
@@ -53,7 +52,7 @@ final class AsyncTest {
             ),
             new IsApplicable<>(
                 true,
-                new MatcherOf<>(
+                new Verifies<>(
                     future -> !future.isDone()
                 )
             )
@@ -63,7 +62,7 @@ final class AsyncTest {
     @Test
     void runsAsProcInBackground() {
         new Assertion<>(
-            "Can't run proc in the background",
+            "Must run proc in the background",
             input -> {
                 final CountDownLatch latch = new CountDownLatch(1);
                 new Async<>(
@@ -82,16 +81,14 @@ final class AsyncTest {
     void runsInBackgroundWithoutFuture() {
         final CountDownLatch latch = new CountDownLatch(1);
         new Assertion<>(
-            "Can't run in the background without us touching the Future",
+            "Must run in the background without us touching the Future",
             new Async<>(
                 new FuncOf<>(input -> latch.countDown(), true)
             ),
             new IsApplicable<>(
                 true,
-                new MatcherOf<>(
-                    future -> {
-                        return latch.await(1L, TimeUnit.SECONDS);
-                    }
+                new Verifies<>(
+                    future -> latch.await(1L, TimeUnit.SECONDS)
                 )
             )
         ).affirm();
@@ -103,7 +100,7 @@ final class AsyncTest {
         final ThreadFactory factory = r -> new Thread(r, name);
         final CountDownLatch latch = new CountDownLatch(1);
         new Assertion<>(
-            "Can't run in the background with specific thread factory",
+            "Must run in the background with specific thread factory",
             new Async<>(
                 new FuncOf<>(
                     input -> {
@@ -120,7 +117,7 @@ final class AsyncTest {
             ),
             new IsApplicable<>(
                 name,
-                new MatcherOf<>(
+                new Verifies<>(
                     future -> {
                         future.get();
                         return latch.getCount() == 0;
@@ -136,7 +133,7 @@ final class AsyncTest {
         final ThreadFactory factory = r -> new Thread(r, name);
         final CountDownLatch latch = new CountDownLatch(1);
         new Assertion<>(
-            "Can't run in the background with specific thread executor",
+            "Must run in the background with specific thread executor",
             new Async<>(
                 new FuncOf<>(
                     input -> {
@@ -153,7 +150,7 @@ final class AsyncTest {
             ),
             new IsApplicable<>(
                 name,
-                new MatcherOf<>(
+                new Verifies<>(
                     future -> {
                         future.get();
                         return latch.getCount() == 0;

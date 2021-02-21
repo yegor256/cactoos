@@ -26,7 +26,7 @@ package org.cactoos.io;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.NoSuchFileException;
-import org.cactoos.text.Joined;
+import org.cactoos.text.Concatenated;
 import org.cactoos.text.Randomized;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,7 +83,7 @@ public final class AppendToTest {
         new Assertion<>(
             "Does not contain expected text",
             new InputOf(source),
-            new HasContent(new Joined("", first, second))
+            new HasContent(new Concatenated(first, second))
         ).affirm();
     }
 
@@ -105,7 +105,7 @@ public final class AppendToTest {
         new Assertion<>(
             "Can't find expected unicode text content",
             new InputOf(source),
-            new HasContent(new Joined("", first, second))
+            new HasContent(new Concatenated(first, second))
         ).affirm();
     }
 }

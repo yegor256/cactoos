@@ -32,7 +32,6 @@ import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
-import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -43,7 +42,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
-public class ImmutableTest {
+class ImmutableTest {
 
     @Test
     void innerListIsDecorated() {
@@ -232,9 +231,7 @@ public class ImmutableTest {
                 new ListOf<>(1, 2)
             ).add(3),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#add(T): the list is read-only")
-                ),
+                "#add(T): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -248,9 +245,7 @@ public class ImmutableTest {
                 new ListOf<>("1", "2")
             ).remove("1"),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#remove(Object): the list is read-only")
-                ),
+                "#remove(Object): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -279,9 +274,7 @@ public class ImmutableTest {
                 new ListOf<>(1, 2)
             ).addAll(new ListOf<>(3, 4)),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#addAll(Collection): the list is read-only")
-                ),
+                "#addAll(Collection): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -295,9 +288,7 @@ public class ImmutableTest {
                 new ListOf<>(1, 2)
             ).addAll(2, new ListOf<>(3, 4)),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#addAll(int, Collection): the list is read-only")
-                ),
+                "#addAll(int, Collection): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -311,9 +302,7 @@ public class ImmutableTest {
                 new ListOf<>(1, 2, 3)
             ).removeAll(new ListOf<>(1, 3)),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#removeAll(): the list is read-only")
-                ),
+                "#removeAll(): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -327,9 +316,7 @@ public class ImmutableTest {
                 new ListOf<>(1, 2, 3)
             ).retainAll(new ListOf<>(1, 3)),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#retainAll(): the list is read-only")
-                ),
+                "#retainAll(): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -346,9 +333,7 @@ public class ImmutableTest {
                 return new Object();
             },
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#clear(): the list is read-only")
-                ),
+                "#clear(): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -375,9 +360,7 @@ public class ImmutableTest {
                 new ListOf<>("a", "b")
             ).set(3, "c"),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#set(): the list is read-only")
-                ),
+                "#set(): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -394,9 +377,7 @@ public class ImmutableTest {
                 return new Object();
             },
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#add(int, T): the list is read-only")
-                ),
+                "#add(int, T): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -410,9 +391,7 @@ public class ImmutableTest {
                 new ListOf<>("a", "b")
             ).remove(2),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#remove(int): the list is read-only")
-                ),
+                "#remove(int): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -487,9 +466,7 @@ public class ImmutableTest {
                 new ListOf<>("a", "b", "c")
             ).subList(0, 2).add("d"),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#add(T): the list is read-only")
-                ),
+                "#add(T): the list is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -576,11 +553,7 @@ public class ImmutableTest {
                 return new Object();
             },
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals(
-                        "List Iterator is read-only and doesn't allow rewriting items"
-                    )
-                ),
+                "List Iterator is read-only and doesn't allow rewriting items",
                 UnsupportedOperationException.class
             )
         ).affirm();

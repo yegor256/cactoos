@@ -90,7 +90,7 @@ final class UncheckedTextTest {
                 new TextOf("abcdefghijkl")
             ),
             new IsEqual<>(
-                new Joined("", "ab", "cde", "fghi", "j", "kl")
+                new Concatenated("ab", "cde", "fghi", "j", "kl")
             )
         ).affirm();
     }

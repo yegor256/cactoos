@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.scalar.ScalarOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Test case for {@link RunnableOf}.
@@ -50,7 +50,7 @@ final class RunnableOfTest {
                 ),
                 obj
             ),
-            new MatcherOf<>(
+            new Verifies<>(
                 runnable -> {
                     runnable.run();
                     return done.get().equals(obj);
@@ -73,7 +73,7 @@ final class RunnableOfTest {
                     }
                 )
             ),
-            new MatcherOf<>(
+            new Verifies<>(
                 runnable -> {
                     runnable.run();
                     return done.get().equals(obj);
@@ -93,7 +93,7 @@ final class RunnableOfTest {
                     done.set(obj);
                 }
             ),
-            new MatcherOf<Runnable>(
+            new Verifies<>(
                 runnable -> {
                     runnable.run();
                     return done.get().equals(obj);

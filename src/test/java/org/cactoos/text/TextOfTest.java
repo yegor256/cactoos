@@ -604,7 +604,7 @@ final class TextOfTest {
             "Must match another text representing the same value",
             new TextOf("isequaltoanothertext"),
             new IsEqual<>(
-                new Joined("", "is", "equal", "to", "another", "text")
+                new Concatenated("is", "equal", "to", "another", "text")
             )
         ).affirm();
     }

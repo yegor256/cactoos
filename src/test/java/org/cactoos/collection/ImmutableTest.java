@@ -28,7 +28,6 @@ import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
-import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -123,9 +122,7 @@ public class ImmutableTest {
                 new ListOf<>(1, 2)
             ).add(3),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#add(): the collection is read-only")
-                ),
+                "#add(): the collection is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -139,9 +136,7 @@ public class ImmutableTest {
                 new ListOf<>(1, 2)
             ).remove(1),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#remove(): the collection is read-only")
-                ),
+                "#remove(): the collection is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -169,9 +164,7 @@ public class ImmutableTest {
                 new ListOf<>(1, 2)
             ).addAll(new ListOf<>(3, 4)),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#addAll(): the collection is read-only")
-                ),
+                "#addAll(): the collection is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -185,9 +178,7 @@ public class ImmutableTest {
                 new ListOf<>(1, 2, 3)
             ).removeAll(new ListOf<>(2, 3)),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#removeAll(): the collection is read-only")
-                ),
+                "#removeAll(): the collection is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -201,9 +192,7 @@ public class ImmutableTest {
                 new ListOf<>(1, 2, 3)
             ).retainAll(new ListOf<>(1)),
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#retainAll(): the collection is read-only")
-                ),
+                "#retainAll(): the collection is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();
@@ -220,9 +209,7 @@ public class ImmutableTest {
                 return new Object();
             },
             new Throws<>(
-                new MatcherOf<>(
-                    (String msg) -> msg.equals("#clear(): the collection is read-only")
-                ),
+                "#clear(): the collection is read-only",
                 UnsupportedOperationException.class
             )
         ).affirm();

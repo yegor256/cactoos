@@ -37,6 +37,7 @@ import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfBytes;
 import org.cactoos.iterator.IteratorOfBytes;
+import org.cactoos.text.Concatenated;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
@@ -66,10 +67,9 @@ final class BytesOfTest {
             "must read large content from in-memory Input",
             new BytesOf(
                 new InputOf(
-                    new Joined(
-                        "",
+                    new Concatenated(
                         new HeadOf<>(
-                            multiplier, new Endless<>(body)
+                            multiplier, new Endless<>(new TextOf(body))
                         )
                     )
                 )

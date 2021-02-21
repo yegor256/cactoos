@@ -33,14 +33,13 @@ import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
-import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.StartsWith;
+import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Unit tests for {@link TempFile}.
  *
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TempFileTest {
@@ -64,15 +63,11 @@ final class TempFileTest {
                 "Must create a temp file at a custom path",
                 file,
                 Matchers.allOf(
-                    new MatcherOf<>(
-                        tmp -> {
-                            return Files.exists(tmp.value());
-                        }
+                    new Verifies<>(
+                        tmp -> Files.exists(tmp.value())
                     ),
-                    new MatcherOf<>(
-                        tmp -> {
-                            return tmp.value().getParent().equals(custom);
-                        }
+                    new Verifies<>(
+                        tmp -> tmp.value().getParent().equals(custom)
                     )
                 )
             ).affirm();

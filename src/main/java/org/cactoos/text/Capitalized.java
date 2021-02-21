@@ -57,8 +57,7 @@ public final class Capitalized extends TextEnvelope {
                     new ScalarOf<>(() -> new Sticky(text)),
                     new org.cactoos.func.Flattened<>(IsBlank::new),
                     t -> t,
-                    t -> new Joined(
-                        "",
+                    t -> new Concatenated(
                         new TextOf(
                             Character.toChars(
                                 Character.toTitleCase(

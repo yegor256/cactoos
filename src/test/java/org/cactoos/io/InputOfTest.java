@@ -44,16 +44,16 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.HasString;
-import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.MatchesRegex;
 import org.llorllale.cactoos.matchers.StartsWith;
+import org.llorllale.cactoos.matchers.Verifies;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
 
@@ -61,20 +61,13 @@ import org.takes.tk.TkHtml;
  * Test case for {@link InputOf}.
  *
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessiveImports", "unchecked" })
-public final class InputOfTest {
-    /**
-     * Temporary files and folders generator.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
-
+final class InputOfTest {
     @Test
-    public void readsAlternativeInputForFileCase() {
+    void readsAlternativeInputForFileCase() {
         new Assertion<>(
             "must read alternative source from file not found",
             new TextOf(
@@ -90,9 +83,8 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsSimpleFileContent() throws IOException {
-        final Path temp = this.folder.newFile("cactoos-1.txt-1")
-            .toPath();
+    void readsSimpleFileContent(final @TempDir Path folder) throws IOException {
+        final Path temp = folder.resolve("cactoos-1.txt-1");
         final String content = "Hello, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
         new Assertion<>(
@@ -103,39 +95,36 @@ public final class InputOfTest {
     }
 
     @Test
-    public void closesInputStream() throws Exception {
+    void closesInputStream() throws Exception {
         final AtomicBoolean closed = new AtomicBoolean();
         final InputStream input = new ByteArrayInputStream(
             "how are you?".getBytes()
         );
-        new Assertion<>(
-            "must close InputStream correctly",
-            new TextOf(
-                new InputOf(
-                    new InputStream() {
-                        @Override
-                        public int read() throws IOException {
-                            return input.read();
-                        }
-
-                        @Override
-                        public void close() throws IOException {
-                            input.close();
-                            closed.set(true);
-                        }
+        new TextOf(
+            new InputOf(
+                new InputStream() {
+                    @Override
+                    public int read() throws IOException {
+                        return input.read();
                     }
-                )
-            ).asString(),
-            new MatcherOf<>(
-                text -> {
-                    return closed.get();
+
+                    @Override
+                    public void close() throws IOException {
+                        input.close();
+                        closed.set(true);
+                    }
                 }
             )
+        ).asString();
+        new Assertion<>(
+            "must close InputStream correctly",
+            closed.get(),
+            new IsTrue()
         ).affirm();
     }
 
     @Test
-    public void readsFileContent() throws Exception {
+    void readsFileContent() throws Exception {
         new Assertion<>(
             "must read bytes from a file-system URL",
             new BytesOf(
@@ -144,13 +133,13 @@ public final class InputOfTest {
                         "/org/cactoos/io/InputOf.class"
                     )
                 )
-            ).asBytes().length,
-            new MatcherOf<>(len -> len > 0)
+            ).asBytes(),
+            new Verifies<>(arr -> arr.length > 0)
         ).affirm();
     }
 
     @Test
-    public void readsRealUrl() throws IOException {
+    void readsRealUrl() throws IOException {
         new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
             home -> new Assertion<>(
                 "must fetch bytes from the URL",
@@ -163,7 +152,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringUrl() throws IOException {
+    void readsStringUrl() throws IOException {
         new Assertion<>(
             "must fetch bytes from the HTTPS URL",
             new TextOf(
@@ -181,7 +170,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringIntoBytes() throws Exception {
+    void readsStringIntoBytes() throws Exception {
         new Assertion<>(
             "must read bytes from Input",
             new TextOf(
@@ -200,7 +189,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringBuilder() throws Exception {
+    void readsStringBuilder() throws Exception {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
         new Assertion<>(
@@ -223,7 +212,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringBuffer() throws Exception {
+    void readsStringBuffer() throws Exception {
         final String starts = "The future ";
         final String ends = "is now!";
         new Assertion<>(
@@ -246,7 +235,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsArrayOfChars() throws Exception {
+    void readsArrayOfChars() throws Exception {
         new Assertion<>(
             "must read array of chars.",
             new TextOf(
@@ -267,7 +256,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsEncodedArrayOfChars() throws Exception {
+    void readsEncodedArrayOfChars() throws Exception {
         new Assertion<>(
             "must read array of encoded chars.",
             new TextOf(
@@ -292,7 +281,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsStringFromReader() throws Exception {
+    void readsStringFromReader() throws Exception {
         final String source = "hello, source!";
         new Assertion<>(
             "must read string through a reader",
@@ -306,7 +295,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsEncodedStringFromReader() throws Exception {
+    void readsEncodedStringFromReader() throws Exception {
         final String source = "hello, друг!";
         new Assertion<>(
             "must read encoded string through a reader",
@@ -323,7 +312,7 @@ public final class InputOfTest {
     }
 
     @Test
-    public void readsAnArrayOfBytes() throws Exception {
+    void readsAnArrayOfBytes() throws Exception {
         final byte[] bytes = new byte[] {(byte) 0xCA, (byte) 0xFE};
         new Assertion<>(
             "must read array of bytes",
@@ -335,18 +324,18 @@ public final class InputOfTest {
     }
 
     @Test
-    public void makesDataAvailable() throws Exception {
+    void makesDataAvailable() throws Exception {
         final String content = "Hello,חבר!";
         new Assertion<>(
             "must show that data is available",
-            new InputOf(content).stream().available(),
-            new MatcherOf<>(avl -> avl > 0)
+            new InputOf(content).stream(),
+            new Verifies<>(s -> s.available() > 0)
         ).affirm();
     }
 
     @Test
     // @checkstyle MethodBodyCommentsCheck (50 lines)
-    public void readsSecureUrlContent() throws Exception {
+    void readsSecureUrlContent() throws Exception {
         final TrustManager[] managers = {
             new X509TrustManager() {
                 @Override
@@ -380,8 +369,8 @@ public final class InputOfTest {
                         "https://www.yegor256.com/robots.txt"
                     )
                 )
-            ).asBytes().length,
-            new MatcherOf<>(len -> len > 0)
+            ).asBytes(),
+            new Verifies<>(arr -> arr.length > 0)
         ).affirm();
     }
 

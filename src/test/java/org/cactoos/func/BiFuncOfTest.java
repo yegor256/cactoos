@@ -30,7 +30,7 @@ import org.cactoos.scalar.Constant;
 import org.hamcrest.core.IsSame;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Test case for {@link BiFuncOf}.
@@ -48,7 +48,7 @@ final class BiFuncOfTest {
             new BiFuncOf<>(
                 new FuncOf<>(input -> input)
             ),
-            new MatcherOf<>(
+            new Verifies<>(
                 func -> {
                     final Object first = new Object();
                     final Object res = func.apply(first, "discarded");
@@ -72,7 +72,7 @@ final class BiFuncOfTest {
                 ),
                 result
             ),
-            new MatcherOf<>(
+            new Verifies<>(
                 func -> {
                     final Object first = new Object();
                     final Object res = func.apply(first, "discarded");
@@ -97,7 +97,7 @@ final class BiFuncOfTest {
         new Assertion<>(
             "Must convert lambda into bi-function",
             new BiFuncOf<>((first, second) -> new Object[] {first, second}),
-            new MatcherOf<BiFunc<Object, Object, Object[]>>(
+            new Verifies<BiFunc<Object, Object, Object[]>>(
                 func -> {
                     final Object first = new Object();
                     final Object second = new Object();

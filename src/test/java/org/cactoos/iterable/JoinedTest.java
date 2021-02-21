@@ -51,7 +51,7 @@ final class JoinedTest {
     void joinsMappedIterables() {
         new Assertion<>(
             "Must concatenate mapped iterables together",
-            new Joined<>(
+            new Joined<String>(
                 new Mapped<>(
                     IterableOf::new,
                     new IterableOf<>("x", "y")

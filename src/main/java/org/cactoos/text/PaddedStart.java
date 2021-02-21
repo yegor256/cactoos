@@ -46,8 +46,7 @@ public final class PaddedStart extends TextEnvelope {
             new Flattened(
                 () -> {
                     final String original = text.asString();
-                    return new Joined(
-                        new TextOf(""),
+                    return new Concatenated(
                         new Repeated(
                             new TextOf(symbol), length - original.length()
                         ),

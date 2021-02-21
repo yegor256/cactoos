@@ -28,17 +28,15 @@ import java.util.List;
 import org.cactoos.func.BiFuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.proc.BiProcOf;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.HasValue;
-import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link AndWithIndex}.
  *
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -56,14 +54,12 @@ final class AndWithIndexTest {
                 ),
                 "hello", "world"
             ),
-            new HasValue<>(
-                Matchers.allOf(
-                    Matchers.equalTo(true),
-                    new MatcherOf<>(
-                        value -> list.size() == 2
-                    )
-                )
-            )
+            new HasValue<>(true)
+        ).affirm();
+        new Assertion<>(
+            "Must have populated the list",
+            list,
+            new HasSize(2)
         ).affirm();
     }
 
@@ -80,14 +76,12 @@ final class AndWithIndexTest {
                 ),
                 new IterableOf<>("hello", "world")
             ),
-            new HasValue<>(
-                Matchers.allOf(
-                    Matchers.equalTo(true),
-                    new MatcherOf<>(
-                        value -> list.size() == 2
-                    )
-                )
-            )
+            new HasValue<>(true)
+        ).affirm();
+        new Assertion<>(
+            "Must have populated the list",
+            list,
+            new HasSize(2)
         ).affirm();
     }
 }

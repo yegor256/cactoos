@@ -33,22 +33,20 @@ import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Synced;
 import org.cactoos.proc.ProcNoNulls;
-import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
-import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link AndInThreads}.
  * @since 0.25
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals", "unchecked"})
 final class AndInThreadsTest {
 
     @Test
@@ -117,18 +115,10 @@ final class AndInThreadsTest {
         new Assertion<>(
             "Iterable must contain elements in any order",
             list,
-            new IsIterableContainingInAnyOrder<String>(
-                new ListOf<Matcher<? super String>>(
-                    new MatcherOf<>(
-                        text -> {
-                            return "hello".equals(text);
-                        }
-                    ),
-                    new MatcherOf<>(
-                        text -> {
-                            return "world".equals(text);
-                        }
-                    )
+            new IsIterableContainingInAnyOrder<>(
+                new ListOf<>(
+                    new IsEqual<>("hello"),
+                    new IsEqual<>("world")
                 )
             )
         ).affirm();
@@ -169,18 +159,10 @@ final class AndInThreadsTest {
         ).value();
         MatcherAssert.assertThat(
             list,
-            new IsIterableContainingInAnyOrder<Integer>(
-                new ListOf<Matcher<? super Integer>>(
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(1);
-                        }
-                    ),
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(2);
-                        }
-                    )
+            new IsIterableContainingInAnyOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(1),
+                    new IsEqual<>(2)
                 )
             )
         );
@@ -197,18 +179,10 @@ final class AndInThreadsTest {
         ).value();
         MatcherAssert.assertThat(
             list,
-            new IsIterableContainingInAnyOrder<Integer>(
-                new ListOf<Matcher<? super Integer>>(
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(1);
-                        }
-                    ),
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(2);
-                        }
-                    )
+            new IsIterableContainingInAnyOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(1),
+                    new IsEqual<>(2)
                 )
             )
         );

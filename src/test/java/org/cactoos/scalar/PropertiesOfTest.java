@@ -23,22 +23,21 @@
  */
 package org.cactoos.scalar;
 
-import java.util.Properties;
 import org.cactoos.io.InputOf;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasProperty;
 import org.llorllale.cactoos.matchers.HasValue;
-import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link PropertiesOf}.
  *
  * @since 0.7
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class PropertiesOfTest {
 
     @Test
@@ -49,13 +48,7 @@ final class PropertiesOfTest {
                 "foo=Hello, world!\nbar=works fine?\n"
             ),
             new HasValue<>(
-                new MatcherOf<Properties>(
-                    props -> {
-                        return "Hello, world!".equals(
-                            props.getProperty("foo")
-                        );
-                    }
-                )
+                new HasProperty("foo", "Hello, world!")
             )
         ).affirm();
     }
@@ -68,13 +61,7 @@ final class PropertiesOfTest {
                 new InputOf("greet=Hello, inner world!\nask=works fine?\n")
             ),
             new HasValue<>(
-                new MatcherOf<Properties>(
-                    props -> {
-                        return "Hello, inner world!".equals(
-                            props.getProperty("greet")
-                        );
-                    }
-                )
+                new HasProperty("greet", "Hello, inner world!")
             )
         ).affirm();
     }
@@ -90,11 +77,7 @@ final class PropertiesOfTest {
                 )
             ),
             new HasValue<>(
-                new MatcherOf<Properties>(
-                    props -> {
-                        return props.getProperty("0").endsWith(", world");
-                    }
-                )
+                new HasProperty("0", "hello, world")
             )
         ).affirm();
     }
@@ -108,11 +91,7 @@ final class PropertiesOfTest {
                 new MapEntry<>(1, "How are you?")
             ),
             new HasValue<>(
-                new MatcherOf<Properties>(
-                    props -> {
-                        return props.getProperty("0").endsWith(" world");
-                    }
-                )
+                new HasProperty("0", "hello world")
             )
         ).affirm();
     }

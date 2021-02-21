@@ -25,11 +25,11 @@
 package org.cactoos.bytes;
 
 import java.io.IOException;
-import java.util.Arrays;
 import org.cactoos.text.TextOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Test case for {@link HexOf}.
@@ -45,7 +45,7 @@ public final class HexOfTest {
         new Assertion<>(
             "Must represent an empty hexadecimal text",
             new HexOf(new TextOf("")).asBytes(),
-            new MatcherOf<>(array -> array.length == 0)
+            new Verifies<>(array -> array.length == 0)
         ).affirm();
     }
 
@@ -62,9 +62,7 @@ public final class HexOfTest {
                     new BytesOf(bytes)
                 )
             ).asBytes(),
-            new MatcherOf<>(
-                (byte[] array) -> Arrays.equals(bytes, array)
-            )
+            new IsEqual<>(bytes)
         ).affirm();
     }
 

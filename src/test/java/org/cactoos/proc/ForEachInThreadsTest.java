@@ -27,9 +27,9 @@ import java.util.List;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Synced;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.MatcherOf;
 
 /**
  * Test case for {@link ForEachInThreads}.
@@ -60,19 +60,8 @@ public class ForEachInThreadsTest {
             list,
             new IsIterableContainingInAnyOrder<>(
                 new ListOf<>(
-                    new MatcherOf<>(
-                        value -> {
-                            return value.equals(
-                                1
-                            );
-                        }
-                    ), new MatcherOf<>(
-                        value -> {
-                            return value.equals(
-                                2
-                            );
-                        }
-                    )
+                    new IsEqual<>(1),
+                    new IsEqual<>(2)
                 )
             )
         ).affirm();

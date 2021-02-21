@@ -25,14 +25,13 @@ package org.cactoos.iterator;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.MatcherOf;
 import org.llorllale.cactoos.matchers.Throws;
+import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Test cases for {@link NoNulls}.
  *
  * <p>There is no thread-safety guarantee.
- * @checkstyle JavadocMethodCheck (500 lines)
  * @since 0.35
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -46,7 +45,7 @@ final class NoNullsTest {
                 new IteratorOf<>(new String[]{null})
             ).next(),
             new Throws<>(
-                new MatcherOf<>(
+                new Verifies<>(
                     (String msg) -> msg.matches("^Item #0 of .*? is NULL")
                 ),
                 IllegalStateException.class
@@ -65,7 +64,7 @@ final class NoNullsTest {
                 )
             ).next(),
             new Throws<>(
-                new MatcherOf<>(
+                new Verifies<>(
                     (String msg) -> msg.matches("^Item #2 of .*? is NULL")
                 ),
                 IllegalStateException.class

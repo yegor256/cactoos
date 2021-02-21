@@ -33,12 +33,11 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
-import org.llorllale.cactoos.matchers.MatcherOf;
+import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Test case for {@link Sticky}.
  * @since 0.6
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class StickyTest {
@@ -46,13 +45,13 @@ final class StickyTest {
     @Test
     void readsFileContent() {
         new Assertion<>(
-            "Can't read bytes from a file",
+            "Must read bytes from a file",
             new Sticky(
                 new ResourceOf(
                     "org/cactoos/large-text.txt"
                 )
             ),
-            new MatcherOf<>(
+            new Verifies<>(
                 new Repeated<>(
                     input -> new BytesOf(
                         new TeeInput(input, new DeadOutput())
@@ -67,7 +66,7 @@ final class StickyTest {
     @Test
     void readsRealUrl() throws MalformedURLException {
         new Assertion<>(
-            "Can't fetch text page from the URL",
+            "Must fetch text page from the URL",
             new TextOf(
                 new Sticky(
                     new InputOf(
@@ -86,7 +85,7 @@ final class StickyTest {
     void readsFileContentSlowlyAndCountsLength() {
         final long size = 100_000L;
         new Assertion<>(
-            "Can't read bytes from a large source slowly and count length",
+            "Must read bytes from a large source slowly and count length",
             new LengthOf(
                 new Sticky(
                     new SlowInput(size)
@@ -100,7 +99,7 @@ final class StickyTest {
     void readsFileContentSlowly() throws Exception {
         final int size = 130_000;
         new Assertion<>(
-            "Can't read bytes from a large source slowly",
+            "Must read bytes from a large source slowly",
             new BytesOf(
                 new Sticky(
                     new SlowInput(size)
