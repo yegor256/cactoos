@@ -21,11 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
+import java.math.BigDecimal;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsNumber;
 
 /**
  * Test case for {@link DivisionOf}.
@@ -35,9 +37,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  */
 final class DivisionOfTest {
 
-    /**
-     * Ensures that division of int numbers return proper value.
-     */
     @Test
     void dividesIntNumbers() {
         new Assertion<>(
@@ -47,9 +46,6 @@ final class DivisionOfTest {
         ).affirm();
     }
 
-    /**
-     * Ensures that division of long numbers return proper value.
-     */
     @Test
     void dividesLongNumbers() {
         new Assertion<>(
@@ -59,9 +55,6 @@ final class DivisionOfTest {
         ).affirm();
     }
 
-    /**
-     * Ensures that division of float numbers return proper value.
-     */
     @Test
     void dividesFloatNumbers() {
         new Assertion<>(
@@ -71,15 +64,21 @@ final class DivisionOfTest {
         ).affirm();
     }
 
-    /**
-     * Ensures that division of double numbers return proper value.
-     */
     @Test
     void dividesDoubleNumbers() {
         new Assertion<>(
             "Must divide double numbers",
             new DivisionOf(2d, 4d).doubleValue(),
             new IsEqual<>(0.5d)
+        ).affirm();
+    }
+
+    @Test
+    void dividesBigDecimalNumbers() {
+        new Assertion<>(
+            "Must divide BigDecimal numbers",
+            new DivisionOf(BigDecimal.valueOf(2d), BigDecimal.valueOf(4d)),
+            new IsNumber(0.5)
         ).affirm();
     }
 }

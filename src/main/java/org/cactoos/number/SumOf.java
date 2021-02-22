@@ -21,54 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
-import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.HasValue;
+import java.math.BigDecimal;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.Folded;
 
 /**
- * Test case for {@link SumOfScalar}.
+ * Sums of an iterable of numbers.
  *
- * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
+ * <p>Here is how you can use it to summarize numbers:</p>
+ *
+ * <pre>
+ * int sum = new SumOf(1, 2, 3, 4).intValue();
+ * long sum = new SumOf(1L, 2L, 3L).longValue();
+ * int sum = new SumOf(numbers).intValue();
+ * </pre>
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 1.0.0
  */
-final class SumOfScalarTest {
+public final class SumOf extends NumberEnvelope {
 
-    @Test
-    void withScalarsOfInt() {
-        new Assertion<>(
-            "should sum scalars of int",
-            new Mapped<>(
-                Number::intValue,
-                new SumOfScalar(() -> 1, () -> 2, () -> 3)
-            ),
-            new HasValue<>(6)
-        ).affirm();
+    /**
+     * Serialization marker.
+     */
+    private static final long serialVersionUID = -5920535784882655219L;
+
+    /**
+     * Ctor.
+     * @param src Numbers
+     * @since 0.22
+     */
+    public SumOf(final Number... src) {
+        this(new IterableOf<>(src));
     }
 
-    @Test
-    void withNoScalar() {
-        new Assertion<>(
-            "should sum no scalars to 0",
-            new Mapped<>(
-                Number::intValue,
-                new SumOfScalar()
-            ),
-            new HasValue<>(0)
-        ).affirm();
-    }
-
-    @Test
-    void withListOfOneElement() {
-        new Assertion<>(
-            "should sum one scalars of int",
-            new Mapped<>(
-                Number::intValue,
-                new SumOfScalar(() -> 5)
-            ),
-            new HasValue<>(5)
-        ).affirm();
+    /**
+     * Ctor.
+     * @param src The iterable
+     */
+    public SumOf(final Iterable<? extends Number> src) {
+        super(
+            new NumberOfScalars(
+                new Folded<>(
+                    BigDecimal.ZERO,
+                    (sum, value) -> sum.add(new BigDecimal(value.toString())),
+                    src
+                )
+            )
+        );
     }
 }

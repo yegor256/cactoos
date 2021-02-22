@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
-import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.Folded;
 
 /**
  * Find the greater among items.
@@ -37,59 +37,25 @@ import org.cactoos.iterable.Mapped;
  * <pre>
  * int max = new MaxOf(1, 2, 3, 4).intValue();
  * long max = new MaxOf(1L, 2L, 3L).longValue();
- * int max = new MaxOf(numbers.toArray(new Integer[numbers.size()])).intValue();
+ * int max = new MaxOf(numbers).intValue();
  * </pre>
  *
- * <p>
- * This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make it more
- * convenient and get rid of the checked exception you can use the
- * {@link Unchecked} decorator. Or you may use {@link IoChecked} to wrap it in
- * an IOException.
- * </p>
+ * <p>There is no thread-safety guarantee.
  *
- * <p>
- * There is no thread-safety guarantee.
- * @see Unchecked
- * @see IoChecked
- * @since 0.24
+ * @since 1.0.0
  */
 public final class MaxOf extends NumberEnvelope {
 
     /**
      * Serialization marker.
      */
-    private static final long serialVersionUID = -6057839494957475355L;
+    private static final long serialVersionUID = 8337955195592696602L;
 
     /**
      * Ctor.
      * @param src Numbers
      */
-    public MaxOf(final Integer... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    public MaxOf(final Long... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    public MaxOf(final Double... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    public MaxOf(final Float... src) {
+    public MaxOf(final Number... src) {
         this(new IterableOf<>(src));
     }
 
@@ -97,27 +63,29 @@ public final class MaxOf extends NumberEnvelope {
      * Ctor.
      * @param src The iterable
      */
-    public MaxOf(final Iterable<Number> src) {
+    public MaxOf(final Iterable<? extends Number> src) {
         super(
-            new Folded<>(
-                Long.MIN_VALUE,
-                Math::max,
-                new Mapped<>(Number::longValue, src)
-            ),
-            new Folded<>(
-                Integer.MIN_VALUE,
-                Math::max,
-                new Mapped<>(Number::intValue, src)
-            ),
-            new Folded<>(
-                -Float.MAX_VALUE,
-                Math::max,
-                new Mapped<>(Number::floatValue, src)
-            ),
-            new Folded<>(
-                -Double.MAX_VALUE,
-                Math::max,
-                new Mapped<>(Number::doubleValue, src)
+            new NumberOfScalars(
+                new Folded<>(
+                    Long.MIN_VALUE,
+                    Math::max,
+                    new Mapped<>(Number::longValue, src)
+                ),
+                new Folded<>(
+                    Integer.MIN_VALUE,
+                    Math::max,
+                    new Mapped<>(Number::intValue, src)
+                ),
+                new Folded<>(
+                    -Float.MAX_VALUE,
+                    Math::max,
+                    new Mapped<>(Number::floatValue, src)
+                ),
+                new Folded<>(
+                    -Double.MAX_VALUE,
+                    Math::max,
+                    new Mapped<>(Number::doubleValue, src)
+                )
             )
         );
     }

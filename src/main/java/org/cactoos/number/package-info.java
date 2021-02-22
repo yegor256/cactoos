@@ -21,31 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
-
-import org.cactoos.Scalar;
-import org.cactoos.iterable.Mapped;
 
 /**
- * Make a scalar which is sum of scalar's values.
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. Despite that this class does NOT throw a checked
- * exception.</p>
- *
- * <p>There is no thread-safety guarantee.
- * <p>Note this class is for internal usage only
- *
- * @since 0.30
+ * Numbers.
  */
-final class SumOfScalar extends ScalarEnvelope<Number> {
-    /**
-     * Ctor.
-     * @param src Varargs of Scalar to sum up values from
-     * @since 0.30
-     */
-    @SafeVarargs
-    SumOfScalar(final Scalar<? extends Number>... src) {
-        super(() -> new SumOf(new Mapped<>(Scalar::value, src)));
-    }
-}
+package org.cactoos.number;

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
 import java.util.Collection;
 import org.cactoos.iterable.IterableOf;
@@ -125,7 +125,7 @@ final class SumOfTest {
     void overflowIntFromLongValues() {
         MatcherAssert.assertThat(
             new SumOf(2_147_483_647L + 1L << 1, 10L).intValue(),
-            new IsEqual<>(2_147_483_647)
+            new IsEqual<>(10)
         );
     }
 

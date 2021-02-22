@@ -31,7 +31,6 @@ import org.cactoos.scalar.And;
 import org.cactoos.scalar.Folded;
 import org.cactoos.scalar.Or;
 import org.cactoos.scalar.ScalarWithFallback;
-import org.cactoos.scalar.SumOfInt;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
@@ -123,10 +122,7 @@ public final class IterableOf<X> implements Iterable<X> {
         return new Unchecked<>(
             new Folded<>(
                 42,
-                (hash, entry) -> new SumOfInt(
-                    () -> 37 * hash,
-                    entry::hashCode
-                ).value(),
+                (hash, entry) -> 37 * hash + entry.hashCode(),
                 this
             )
         ).value();

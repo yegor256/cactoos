@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.Constant;
+import org.cactoos.scalar.Reduced;
 
 /**
  * Multiplication result of numbers.
@@ -41,22 +41,16 @@ import org.cactoos.iterable.Mapped;
  * double multiplication = new MultiplicationOf(2.3, 3.4, 4.0).doubleValue();
  * </pre>
  *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use the {@link Unchecked} decorator. Or you may use
- * {@link IoChecked} to wrap it in an IOException.</p>
- *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.49.2
+ * @since 1.0.0
  */
 public final class MultiplicationOf extends NumberEnvelope {
 
     /**
      * Serialization marker.
      */
-    private static final long serialVersionUID = -5039588861554829762L;
+    private static final long serialVersionUID = -2896694413969189732L;
 
     /**
      * Ctor.
@@ -72,20 +66,16 @@ public final class MultiplicationOf extends NumberEnvelope {
      * @param src The iterable
      */
     public MultiplicationOf(final Iterable<? extends Number> src) {
-        super(() -> {
-            if (!src.iterator().hasNext()) {
-                throw new IllegalArgumentException(
-                    "Zero arguments - can not multiply"
-                );
-            }
-            return new Folded<>(
-                BigDecimal.ONE,
-                (mtn, value) -> mtn.multiply(value, MathContext.DECIMAL128),
-                    new Mapped<BigDecimal>(
-                        number -> BigDecimal.valueOf(number.doubleValue()),
+        super(
+            new NumberOfScalars(
+                new Reduced<BigDecimal>(
+                    BigDecimal::multiply,
+                    new Mapped<>(
+                        n -> new Constant<>(new BigDecimal(n.toString())),
                         src
                     )
-                ).value().doubleValue();
-        });
+                )
+            )
+        );
     }
 }

@@ -21,47 +21,77 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
-
-import org.cactoos.Scalar;
+package org.cactoos.number;
 
 /**
- * Sealed serializable envelope for the {@link Number}.
+ * Envelope for the {@link Number}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 1.0
+ * @since 1.0.0
  */
-final class Sealed extends NumberEnvelope {
+public abstract class NumberEnvelope extends Number {
 
     /**
      * Serialization marker.
      */
-    private static final long serialVersionUID = 1376783344164412557L;
+    private static final long serialVersionUID = -8562608838611967858L;
+
+    /**
+     * Wrapped Number.
+     */
+    private final Number wrapped;
 
     /**
      * Ctor.
-     * @param number Number value.
+     * @param wrapped Number
      */
-    Sealed(final Number number) {
-        this(
-            number::longValue,
-            number::intValue,
-            number::floatValue,
-            number::doubleValue
-        );
+    public NumberEnvelope(final Number wrapped) {
+        this.wrapped = wrapped;
     }
 
-    /**
-     * Ctor.
-     * @param lnm Long scalar
-     * @param inm Integer scalar
-     * @param fnm Float scalar
-     * @param dnm Double scalar
-     * @checkstyle ParameterNumberCheck (5 lines)
-     */
-    Sealed(final Scalar<Long> lnm, final Scalar<Integer> inm,
-        final Scalar<Float> fnm, final Scalar<Double> dnm) {
-        super(lnm, inm, fnm, dnm);
+    @Override
+    public final int intValue() {
+        return this.wrapped.intValue();
+    }
+
+    @Override
+    public final long longValue() {
+        return this.wrapped.longValue();
+    }
+
+    @Override
+    public final float floatValue() {
+        return this.wrapped.floatValue();
+    }
+
+    @Override
+    public final double doubleValue() {
+        return this.wrapped.doubleValue();
+    }
+
+    @Override
+    public final short shortValue() {
+        return this.wrapped.shortValue();
+    }
+
+    @Override
+    public final byte byteValue() {
+        return this.wrapped.byteValue();
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        return this.wrapped.equals(obj);
+    }
+
+    @Override
+    public final int hashCode() {
+        return this.wrapped.hashCode();
+    }
+
+    @Override
+    public final String toString() {
+        return this.wrapped.toString();
     }
 }

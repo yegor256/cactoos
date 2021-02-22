@@ -21,85 +21,110 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
 import java.io.IOException;
-import org.hamcrest.Matchers;
-import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.cactoos.text.TextOf;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsNumber;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link NumberOf}.
  *
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 1.0.0
  * @checkstyle MagicNumber (500 lines)
  */
-public final class NumberOfTest {
+final class NumberOfTest {
 
     @Test
-    public void parsesFloat() throws IOException {
+    void parsesFloat() throws IOException {
         new Assertion<>(
             "Must parse float number",
             new NumberOf("1656.894").floatValue(),
-            Matchers.equalTo(1656.894F)
+            new IsNumber(1656.894F)
         ).affirm();
     }
 
-    @Test(expected = RuntimeException.class)
-    public void failsIfTextDoesNotRepresentAFloat() throws IOException {
-        new NumberOf("abcfds").floatValue();
+    @Test
+    void failsIfTextDoesNotRepresentAFloat() throws IOException {
+        new Assertion<>(
+            "Must fail parsing random text as float",
+            () -> new NumberOf("abcfds").floatValue(),
+            new Throws<>(RuntimeException.class)
+        ).affirm();
     }
 
     @Test
-    public void parsesLong() throws IOException {
+    void parsesLong() throws IOException {
         new Assertion<>(
             "Must parse long number",
             new NumberOf("186789235425346").longValue(),
-            Matchers.equalTo(186_789_235_425_346L)
+            new IsNumber(186_789_235_425_346L)
         ).affirm();
     }
 
-    @Test(expected = RuntimeException.class)
-    public void failsIfTextDoesNotRepresentALong() throws IOException {
-        new NumberOf("abcddd").longValue();
+    @Test
+    void failsIfTextDoesNotRepresentALong() throws IOException {
+        new Assertion<>(
+            "Must fail parsing random text as long",
+            () -> new NumberOf("abcddd").longValue(),
+            new Throws<>(RuntimeException.class)
+        ).affirm();
     }
 
     @Test
-    public void parsesInteger() throws IOException {
+    void parsesInteger() throws IOException {
         new Assertion<>(
             "Must parse integer number",
             new NumberOf("1867892354").intValue(),
-            Matchers.equalTo(1_867_892_354)
+            new IsNumber(1_867_892_354)
         ).affirm();
     }
 
-    @Test(expected = RuntimeException.class)
-    public void failsIfTextDoesNotRepresentAnInt() throws IOException {
-        new NumberOf("abc fdsf").intValue();
+    @Test
+    void failsIfTextDoesNotRepresentAnInt() throws IOException {
+        new Assertion<>(
+            "Must fail parsing random text as int",
+            () -> new NumberOf("abc fdsf").intValue(),
+            new Throws<>(RuntimeException.class)
+        ).affirm();
     }
 
     @Test
-    public void parsesDouble() throws IOException {
+    void parsesDouble() throws IOException {
         new Assertion<>(
             "Must parse double number",
             new NumberOf("185.65156465123").doubleValue(),
-            Matchers.equalTo(185.65_156_465_123)
+            new IsNumber(185.65_156_465_123)
         ).affirm();
     }
 
-    @Test(expected = RuntimeException.class)
-    public void failsIfTextDoesNotRepresentADouble() throws IOException {
-        new NumberOf("abfdsc").doubleValue();
+    @Test
+    void failsIfTextDoesNotRepresentADouble() throws IOException {
+        new Assertion<>(
+            "Must fail parsing random text as double",
+            () -> new NumberOf("abfdsc").doubleValue(),
+            new Throws<>(RuntimeException.class)
+        ).affirm();
     }
 
     @Test
-    public void parsesValueInt() throws IOException {
+    void parsesValueInt() throws IOException {
         new Assertion<>(
             "Must parse into int",
             new NumberOf("185").intValue(),
-            new IsEqual<>(185)
+            new IsNumber(185)
+        ).affirm();
+    }
+
+    @Test
+    void parsesValueIntFromText() throws IOException {
+        new Assertion<>(
+            "Must parse from text",
+            new NumberOf(new TextOf("186")).intValue(),
+            new IsNumber(186)
         ).affirm();
     }
 }
