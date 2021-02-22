@@ -25,65 +25,103 @@
 package org.cactoos.experimental;
 
 import java.io.UncheckedIOException;
+import java.time.Duration;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import org.cactoos.Proc;
-import org.cactoos.func.Repeated;
-import org.cactoos.func.UncheckedFunc;
-import org.cactoos.scalar.ScalarOf;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
+import org.llorllale.cactoos.shaded.org.cactoos.scalar.LengthOf;
 
 /**
  * Test case for {@link Threads}.
  *
  * @since 1.0.0
- * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class ThreadsTest {
 
     /**
+     * Repetitions when running test several times.
+     */
+    private static final int REPETITIONS = 5;
+
+    /**
      * Execute the tasks concurrently using {@link Threads} when
      *  {@link ExecutorService} was initiated by someone else.
      */
-    @Test
-    void containsResults() {
-        this.repeat(
-            arg -> {
-                final ExecutorService extor = Executors.newFixedThreadPool(3);
-                try {
-                    new Assertion<>(
-                        "contains results from callables",
-                        new Threads<String>(
-                            extor,
-                            () -> {
-                                this.sleep();
-                                return "txt 1";
-                            },
-                            () -> {
-                                this.sleep();
-                                return "txt 2";
-                            },
-                            () -> {
-                                this.sleep();
-                                return "txt 3";
-                            }
-                        ),
-                        new HasValues<>("txt 1", "txt 2", "txt 3")
-                    ).affirm();
-                } finally {
-                    extor.shutdown();
-                    if (!extor.awaitTermination(1L, TimeUnit.SECONDS)) {
-                        extor.shutdownNow();
+    @RepeatedTest(ThreadsTest.REPETITIONS)
+    void containsResults() throws Exception {
+        final ExecutorService extor = Executors.newFixedThreadPool(3);
+        try {
+            new Assertion<>(
+                "Must contain results from callables",
+                new Threads<String>(
+                    extor,
+                    Duration.ofSeconds(1),
+                    () -> {
+                        this.sleep();
+                        return "txt 1";
+                    },
+                    () -> {
+                        this.sleep();
+                        return "txt 2";
+                    },
+                    () -> {
+                        this.sleep();
+                        return "txt 3";
                     }
-                }
-            }
-        );
+                ),
+                new HasValues<>(
+                    "txt 1",
+                    "txt 2",
+                    "txt 3"
+                )
+            ).affirm();
+        } finally {
+            extor.shutdownNow();
+        }
+    }
+
+    /**
+     * Execution takes longer than timeout when
+     *  {@link ExecutorService} was initiated by someone else.
+     */
+    @RepeatedTest(ThreadsTest.REPETITIONS)
+    void failsDueToTimeoutWithExternalExecutorService() throws Exception {
+        final ExecutorService extor = Executors.newFixedThreadPool(2);
+        try {
+            new Assertion<>(
+                "Must fail due to timeout",
+                () -> new LengthOf(
+                    new Threads<String>(
+                        extor,
+                        Duration.ofMillis(1),
+                        () -> {
+                            this.sleep();
+                            return "txt 1";
+                        },
+                        () -> {
+                            this.sleep();
+                            return "txt 2";
+                        },
+                        () -> {
+                            this.sleep();
+                            return "txt 3";
+                        }
+                    )
+                ).value(),
+                new Throws<>(CancellationException.class)
+            ).affirm();
+        } finally {
+            extor.shutdownNow();
+        }
     }
 
     /**
@@ -92,37 +130,108 @@ final class ThreadsTest {
      */
     @Test
     void failsDueToException() {
-        new Assertion<>(
-            "wraps error into CompletionException",
-            () -> new Threads<String>(
-                Executors.newSingleThreadExecutor(),
-                new ScalarOf<>(
-                    () -> {
-                        // @checkstyle LineLengthCheck (1 line)
-                        throw new IllegalStateException("Something went wrong");
-                    }
+        final ExecutorService extor = Executors.newSingleThreadExecutor();
+        try {
+            new Assertion<>(
+                "Must rethrow error",
+                () -> new LengthOf(
+                    new Threads<String>(
+                        extor,
+                        Duration.ofSeconds(1),
+                        () -> {
+                            this.sleep();
+                            return "txt 1";
+                        },
+                        () -> {
+                            throw new IllegalStateException(
+                                "Something went wrong"
+                            );
+                        }
+                    )
+                ).value(),
+                new Throws<>(
+                    // @checkstyle LineLength (1 line)
+                    "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
+                    UncheckedIOException.class
                 )
-            ).iterator().next(),
-            new Throws<>(
-                // @checkstyle LineLengthCheck (1 line)
-                "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
-                UncheckedIOException.class
-            )
-        ).affirm();
+            ).affirm();
+        } finally {
+            extor.shutdownNow();
+        }
     }
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
      *  {@link ExecutorService} was initiated by {@link Threads} itself.
      */
-    @Test
-    void containsValuesWithInlineExecutorService() {
-        this.repeat(
-            arg -> new Assertion<>(
-                // @checkstyle LineLength (1 line)
-                "contains results from the callables when using the inline executor service",
+    @RepeatedTest(ThreadsTest.REPETITIONS)
+    void containsValuesWithInlineExecutorService() throws Exception {
+        new Assertion<>(
+            // @checkstyle LineLength (1 line)
+            "Must contain results from the callables when using inline executor service",
+            new Threads<String>(
+                3,
+                Duration.ofSeconds(1),
+                () -> {
+                    this.sleep();
+                    return "txt 1";
+                },
+                () -> {
+                    this.sleep();
+                    return "txt 2";
+                },
+                () -> {
+                    this.sleep();
+                    return "txt 3";
+                }
+            ),
+            new HasValues<>("txt 1", "txt 2", "txt 3")
+        ).affirm();
+    }
+
+    /**
+     * Execution takes longer than timeout when
+     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     */
+    @RepeatedTest(ThreadsTest.REPETITIONS)
+    void failsDueToTimeoutWithInlineExecutorService() throws Exception {
+        new Assertion<>(
+            "Must fail due to timeout",
+            () -> new LengthOf(
                 new Threads<String>(
-                    3,
+                    2,
+                    Duration.ofMillis(1),
+                    () -> {
+                        this.sleep();
+                        return "txt 1";
+                    },
+                    () -> {
+                        this.sleep();
+                        return "txt 2";
+                    },
+                    () -> {
+                        this.sleep();
+                        return "txt 3";
+                    }
+                )
+            ).value(),
+            new Throws<>(CancellationException.class)
+        ).affirm();
+    }
+
+    /**
+     * Execute the tasks concurrently using {@link Threads} when
+     *  {@link ExecutorService} was initiated by someone else.
+     */
+    @RepeatedTest(ThreadsTest.REPETITIONS)
+    void containsResultsNoTimeout() throws Exception {
+        final ExecutorService extor = Executors.newFixedThreadPool(3);
+        try {
+            new Assertion<>(
+                // @checkstyle LineLength (1 line)
+                "Must contain results from the callables without using timeout",
+                new Threads<String>(
+                    extor,
                     () -> {
                         this.sleep();
                         return "txt 1";
@@ -137,24 +246,73 @@ final class ThreadsTest {
                     }
                 ),
                 new HasValues<>("txt 1", "txt 2", "txt 3")
-            ).affirm()
-        );
+            ).affirm();
+        } finally {
+            extor.shutdownNow();
+        }
     }
 
     /**
-     * Repeat the test several times.
-     * @param test The test to execute.
+     * Execute 1 task within executor service and ensure that we'll get the
+     *  expected exception type.
      */
-    private void repeat(final Proc<?> test) {
-        new UncheckedFunc<>(
-            new Repeated<>(
-                arg -> {
-                    test.exec(null);
-                    return null;
+    @Test
+    void failsDueToExceptionNoTimeout() {
+        final ExecutorService extor = Executors.newSingleThreadExecutor();
+        try {
+            new Assertion<>(
+                "Must rethrow error",
+                () -> new LengthOf(
+                    new Threads<String>(
+                        extor,
+                        () -> {
+                            this.sleep();
+                            return "txt 1";
+                        },
+                        () -> {
+                            throw new IllegalStateException(
+                                "Something went wrong"
+                            );
+                        }
+                    )
+                ).value(),
+                new Throws<>(
+                    // @checkstyle LineLength (1 line)
+                    "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
+                    UncheckedIOException.class
+                )
+            ).affirm();
+        } finally {
+            extor.shutdownNow();
+        }
+    }
+
+    /**
+     * Execute the tasks concurrently using {@link Threads} when
+     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     */
+    @RepeatedTest(ThreadsTest.REPETITIONS)
+    void containsValuesWithInlineExecutorServiceNoTimeout() {
+        new Assertion<>(
+            // @checkstyle LineLength (1 line)
+            "Must contain results from the callables when using inline executor without timeout",
+            new Threads<String>(
+                3,
+                () -> {
+                    this.sleep();
+                    return "txt 1";
                 },
-                5
-            )
-        ).apply(Boolean.TRUE);
+                () -> {
+                    this.sleep();
+                    return "txt 2";
+                },
+                () -> {
+                    this.sleep();
+                    return "txt 3";
+                }
+            ),
+            new HasValues<>("txt 1", "txt 2", "txt 3")
+        ).affirm();
     }
 
     /**
@@ -164,6 +322,7 @@ final class ThreadsTest {
         try {
             TimeUnit.MILLISECONDS.sleep(100L);
         } catch (final InterruptedException iex) {
+            Thread.currentThread().interrupt();
             throw new IllegalStateException(iex);
         }
     }

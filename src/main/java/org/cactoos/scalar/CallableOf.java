@@ -49,7 +49,7 @@ public final class CallableOf<T> extends CallableEnvelope<T> {
      * @param slr Encapsulated scalar
      * @since 0.41
      */
-    public CallableOf(final Scalar<T> slr) {
+    public CallableOf(final Scalar<? extends T> slr) {
         super(() -> slr.value());
     }
 }
