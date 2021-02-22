@@ -38,10 +38,10 @@ final class EqualsTest {
     @Test
     void compareEquals() throws Exception {
         new Assertion<>(
-            "Must compare if two integers are equals",
+            "Must compare if two integers are equal",
             new Equals<>(
-                () -> Integer.valueOf(1),
-                () -> Integer.valueOf(1)
+                Integer.valueOf(1),
+                Integer.valueOf(1)
             ),
             new HasValue<>(true)
         ).affirm();
@@ -50,35 +50,35 @@ final class EqualsTest {
     @Test
     void compareNotEquals() throws Exception {
         new Assertion<>(
-            "Must compare if two integers are not equals",
+            "Must compare if two integers are not equal",
             new Equals<>(
-                () -> Integer.valueOf(1),
-                () -> Integer.valueOf(2)
+                Integer.valueOf(1),
+                Integer.valueOf(2)
             ),
             new HasValue<>(false)
         ).affirm();
     }
 
     @Test
-    void compareEqualsText() throws Exception {
+    void compareEqualsTextScalar() throws Exception {
         final String str = "hello";
         new Assertion<>(
-            "Must compare if two strings are equals",
+            "Must compare if two strings are equal",
             new Equals<>(
-                () -> str,
-                () -> str
+                str,
+                str
             ),
             new HasValue<>(true)
         ).affirm();
     }
 
     @Test
-    void compareNotEqualsText() throws Exception {
+    void compareNotEqualsTextScalar() throws Exception {
         new Assertion<>(
-            "Must compare if two strings are not equals",
+            "Must compare if two strings are not equal",
             new Equals<>(
-                () -> "world",
-                () -> "worle"
+                "world",
+                "worle"
             ),
             new HasValue<>(false)
         ).affirm();
