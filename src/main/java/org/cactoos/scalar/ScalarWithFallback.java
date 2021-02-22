@@ -24,6 +24,7 @@
 package org.cactoos.scalar;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Fallback;
 import org.cactoos.Scalar;
@@ -41,6 +42,7 @@ import org.cactoos.map.MapOf;
  * @param <T> Type of result
  * @see FuncWithFallback
  * @since 0.31
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ScalarWithFallback<T> implements Scalar<T> {
 
@@ -103,16 +105,18 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
      */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private T fallback(final Throwable exp) throws Exception {
-        final Sorted<Map.Entry<Fallback<T>, Integer>> candidates =
+        final Iterator<Map.Entry<Fallback<T>, Integer>> candidates =
             new Sorted<>(
                 Comparator.comparing(Map.Entry::getValue),
                 new Filtered<>(
-                    entry -> new Not(
-                        new Equals<>(
-                            entry::getValue,
-                            () -> Integer.MIN_VALUE
+                    new org.cactoos.func.Flattened<>(
+                        entry -> new Not(
+                            new Equals<Integer, Integer>(
+                                entry::getValue,
+                                new Constant<>(Integer.MIN_VALUE)
+                            )
                         )
-                    ).value(),
+                    ),
                     new MapOf<>(
                         fbk -> fbk,
                         fbk -> fbk.support(exp),

@@ -36,10 +36,11 @@ import org.cactoos.Scalar;
  * use the {@link Unchecked} decorator. Or you may use
  * {@link IoChecked} to wrap it in an IOException.</p>
  *
+ * @param <R> Type of object to compare
  * @param <T> Type of object to compare
  * @since 0.9
  */
-public final class Equals<T extends Comparable<T>> implements Scalar<Boolean> {
+public final class Equals<R, T extends Comparable<R>> implements Scalar<Boolean> {
 
     /**
      * The first scalar.
@@ -49,14 +50,14 @@ public final class Equals<T extends Comparable<T>> implements Scalar<Boolean> {
     /**
      * The second scalar.
      */
-    private final Scalar<? extends T> second;
+    private final Scalar<? extends R> second;
 
     /**
      * Ctor.
      * @param source The first scalar to compare.
      * @param compared The second scalar to compare.
      */
-    public Equals(final T source, final T compared) {
+    public Equals(final T source, final R compared) {
         this(new Constant<>(source), new Constant<>(compared));
     }
 
@@ -65,7 +66,7 @@ public final class Equals<T extends Comparable<T>> implements Scalar<Boolean> {
      * @param source The first scalar to compare.
      * @param compared The second scalar to compare.
      */
-    public Equals(final Scalar<? extends T> source, final Scalar<? extends T> compared) {
+    public Equals(final Scalar<? extends T> source, final Scalar<? extends R> compared) {
         this.first = source;
         this.second = compared;
     }
