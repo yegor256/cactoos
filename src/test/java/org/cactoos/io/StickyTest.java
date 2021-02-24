@@ -29,7 +29,7 @@ import org.cactoos.bytes.BytesOf;
 import org.cactoos.func.Repeated;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
@@ -91,7 +91,7 @@ final class StickyTest {
                     new SlowInput(size)
                 )
             ).value(),
-            Matchers.equalTo(size)
+            new IsEqual<>(size)
         ).affirm();
     }
 
@@ -105,7 +105,7 @@ final class StickyTest {
                     new SlowInput(size)
                 )
             ).asBytes().length,
-            Matchers.equalTo(size)
+            new IsEqual<>(size)
         ).affirm();
     }
 
