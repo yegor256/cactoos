@@ -24,7 +24,6 @@
 package org.cactoos.io;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import org.cactoos.scalar.LengthOf;
@@ -50,7 +49,7 @@ public final class TeeInputFromUriTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void copiesFromUriToPath() throws IOException {
+    public void copiesFromUriToPath() throws Exception {
         final String message = "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
         Files.write(
@@ -63,7 +62,7 @@ public final class TeeInputFromUriTest {
                 input.toURI(),
                 output
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from URI to path.",
             new InputOf(output),
@@ -72,7 +71,7 @@ public final class TeeInputFromUriTest {
     }
 
     @Test
-    public void copiesFromUriToFile() throws IOException {
+    public void copiesFromUriToFile() throws Exception {
         final String message = "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
         Files.write(
@@ -85,7 +84,7 @@ public final class TeeInputFromUriTest {
                 input.toURI(),
                 output
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from URI to file.",
             new InputOf(output),
@@ -94,7 +93,7 @@ public final class TeeInputFromUriTest {
     }
 
     @Test
-    public void copiesFromUriToOutput() throws IOException {
+    public void copiesFromUriToOutput() throws Exception {
         final String message = "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File input = this.folder.newFile();
         Files.write(
@@ -107,7 +106,7 @@ public final class TeeInputFromUriTest {
                 input.toURI(),
                 new OutputTo(output)
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy from URI to output.",
             new InputOf(output),

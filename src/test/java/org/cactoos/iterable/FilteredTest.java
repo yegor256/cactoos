@@ -45,7 +45,7 @@ import org.llorllale.cactoos.matchers.HasValues;
 final class FilteredTest {
 
     @Test
-    void filtersList() {
+    void filtersList() throws Exception {
         MatcherAssert.assertThat(
             "Can't calculate the length of an iterable",
             new LengthOf(
@@ -56,13 +56,13 @@ final class FilteredTest {
                         "hello", "world", "друг"
                     )
                 )
-            ).intValue(),
-            Matchers.equalTo(2)
+            ),
+            new HasValue<>(2L)
         );
     }
 
     @Test
-    void filtersEmptyList() {
+    void filtersEmptyList() throws Exception {
         MatcherAssert.assertThat(
             "Can't calculate the length of an empty iterable",
             new LengthOf(
@@ -70,8 +70,8 @@ final class FilteredTest {
                     input -> input.length() > 1,
                     new IterableOf<String>()
                 )
-            ).intValue(),
-            Matchers.equalTo(0)
+            ),
+            new HasValue<>(0L)
         );
     }
 
@@ -113,7 +113,7 @@ final class FilteredTest {
                     new IterableOf<>("some", "text", "yes")
                 )
             ),
-            new HasValue<>(2.)
+            new HasValue<>(2L)
         ).affirm();
     }
 

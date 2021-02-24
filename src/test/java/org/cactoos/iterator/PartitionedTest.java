@@ -33,6 +33,7 @@ import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Partitioned}.
@@ -44,15 +45,15 @@ import org.llorllale.cactoos.matchers.Assertion;
 public final class PartitionedTest {
 
     @Test
-    public void emptyPartitioned() {
+    public void emptyPartitioned() throws Exception {
         new Assertion<>(
             "Can't generate an empty Partitioned.",
             new LengthOf(
                 new IterableOf<>(
                     new Partitioned<>(1, Collections.emptyIterator())
                 )
-            ).intValue(),
-            Matchers.equalTo(0)
+            ),
+            new HasValue<>(0L)
         ).affirm();
     }
 

@@ -27,6 +27,7 @@ import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Repeated}.
@@ -48,8 +49,8 @@ final class RepeatedTest {
                     input -> input == element,
                     new Repeated<>(size, element)
                 )
-            ).intValue(),
-            Matchers.equalTo(size)
+            ),
+            new HasValue<>((long) size)
         );
     }
 
@@ -57,8 +58,8 @@ final class RepeatedTest {
     void emptyTest() throws Exception {
         MatcherAssert.assertThat(
             "Can't generate an empty iterable",
-            new LengthOf(new Repeated<>(0, 0)).intValue(),
-            Matchers.equalTo(0)
+            new LengthOf(new Repeated<>(0, 0)),
+            new HasValue<>(0L)
         );
     }
 

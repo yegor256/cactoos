@@ -68,7 +68,7 @@ final class PagedTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    void reportTotalPagedLength() {
+    void reportTotalPagedLength() throws AssertionError, Exception {
         final Iterable<String> first = new IterableOf<>("A", "six");
         final Iterable<String> second = new IterableOf<>("word", "long");
         final Iterable<String> third = new IterableOf<>("sentence");
@@ -90,7 +90,7 @@ final class PagedTest {
                 new IsEqual<>(
                     new LengthOf(
                         new Joined<>(first, second, third)
-                    ).intValue()
+                    ).value().intValue()
                 )
             )
         ).affirm();

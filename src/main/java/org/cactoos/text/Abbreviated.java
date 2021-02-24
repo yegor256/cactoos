@@ -90,7 +90,7 @@ public final class Abbreviated extends TextEnvelope {
             new Flattened(
                 new Ternary<>(
                     new ScalarOf<>(() -> new Sticky(text)),
-                    (Text t) -> new LengthOf(t).longValue() <= max,
+                    (Text t) -> new LengthOf(t).value() <= max,
                     t -> t,
                     t -> new FormattedText(
                         "%s%s",

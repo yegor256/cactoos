@@ -57,7 +57,7 @@ public final class TeeInputFromByteArrayTest {
                 message.getBytes(StandardCharsets.UTF_8),
                 output.toPath()
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy bytes to path",
             new InputOf(output),
@@ -75,7 +75,7 @@ public final class TeeInputFromByteArrayTest {
                 message.getBytes(StandardCharsets.UTF_8),
                 output
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy bytes to file",
             new InputOf(output),
@@ -93,7 +93,7 @@ public final class TeeInputFromByteArrayTest {
                 message.getBytes(StandardCharsets.UTF_8),
                 new OutputTo(output)
             )
-        ).intValue();
+        ).value();
         new Assertion<>(
             "Must copy bytes to output",
             new InputOf(output),

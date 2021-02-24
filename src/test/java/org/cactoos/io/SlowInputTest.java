@@ -26,9 +26,9 @@ package org.cactoos.io;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link SlowInput}.
@@ -39,7 +39,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class SlowInputTest {
 
     @Test
-    void calculatesLength() {
+    void calculatesLength() throws Exception {
         final String text = "What's up, друг?";
         new Assertion<>(
             "Can't calculate the length of Input",
@@ -49,20 +49,20 @@ final class SlowInputTest {
                         new TextOf(text)
                     )
                 )
-            ).intValue(),
-            Matchers.equalTo(text.getBytes(StandardCharsets.UTF_8).length)
+            ),
+            new HasValue<>((long) text.getBytes(StandardCharsets.UTF_8).length)
         ).affirm();
     }
 
     @Test
-    void readsFileContentSlowly() {
+    void readsFileContentSlowly() throws Exception {
         final long size = 100_000L;
         new Assertion<>(
             "Can't calculate length if the input is slow",
             new LengthOf(
                 new SlowInput(size)
-            ).longValue(),
-            Matchers.equalTo(size)
+            ),
+            new HasValue<>(size)
         ).affirm();
     }
 
