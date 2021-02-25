@@ -32,16 +32,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.Locale;
 import org.cactoos.Bytes;
 import org.cactoos.Input;
 import org.cactoos.Scalar;
@@ -49,10 +40,6 @@ import org.cactoos.Text;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.Or;
-import org.cactoos.scalar.Unchecked;
-import org.cactoos.time.Iso;
 
 /**
  * TextOf
@@ -60,20 +47,10 @@ import org.cactoos.time.Iso;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.12
- * @todo #1287:30min Introduce `Text` implementations `TextOfScalar`,
- *  `TextOfBytes` and `TextOfDateTime` (i.e., for all of the constructor
- *  below that delegates to a `Scalar`) and have `TextOf` extends `TextEnvelope`
- *  to delegate to those new classes. If possible remove the checkstyle exclusions
- *  below.
  * @checkstyle ClassDataAbstractionCouplingCheck (1000 lines)
  * @checkstyle ClassFanOutComplexityCheck (1000 lines)
  */
-public final class TextOf implements Text {
-
-    /**
-     * String value of the envelope.
-     */
-    private final Scalar<String> origin;
+public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
@@ -310,7 +287,9 @@ public final class TextOf implements Text {
      * @param cset The Charset
      */
     public TextOf(final Bytes bytes, final Charset cset) {
-        this(() -> new String(bytes.asBytes(), cset));
+        this(
+            new TextOfScalar(() -> new String(bytes.asBytes(), cset))
+        );
     }
 
     /**
@@ -320,7 +299,9 @@ public final class TextOf implements Text {
      * @param cset The Charset
      */
     public TextOf(final Bytes bytes, final String cset) {
-        this(() -> new String(bytes.asBytes(), cset));
+        this(
+            new TextOfScalar(() -> new String(bytes.asBytes(), cset))
+        );
     }
 
     /**
@@ -335,27 +316,17 @@ public final class TextOf implements Text {
     /**
      * Ctor.
      *
-     * @param input The String
-     * @param cset The Charset
-     */
-    public TextOf(final String input, final Charset cset) {
-        this(() -> new String(input.getBytes(cset), cset));
-    }
-
-    /**
-     * Ctor.
      * @param iterable The iterable to convert to string
-     * @since 0.21
      */
     public TextOf(final Iterable<?> iterable) {
-        this(
-            () -> new Joined(
+        super(
+            new Joined(
                 ", ",
                 new Mapped<>(
                     Object::toString,
                     iterable
                 )
-            ).asString()
+            )
         );
     }
 
@@ -366,11 +337,13 @@ public final class TextOf implements Text {
      */
     public TextOf(final Iterator<Character> iterator) {
         this(
-            () -> {
-                final StringBuilder buf = new StringBuilder();
-                iterator.forEachRemaining(buf::append);
-                return buf.toString();
-            }
+            new TextOfScalar(
+                () -> {
+                    final StringBuilder buf = new StringBuilder();
+                    iterator.forEachRemaining(buf::append);
+                    return buf.toString();
+                }
+            )
         );
     }
 
@@ -385,275 +358,20 @@ public final class TextOf implements Text {
     }
 
     /**
-     * Formats date using ISO date time format.
-     * @param date The date to format.
-     * @since 1.0
-     */
-    public TextOf(final LocalDate date) {
-        this(date, new Iso().value());
-    }
-
-    /**
-     * Formats date using provided date time format string using default locale.
-     * @param date The date to format.
-     * @param format The format to use.
-     * @since 1.0
-     */
-    public TextOf(final LocalDate date, final String format) {
-        this(date, format, Locale.getDefault(Locale.Category.FORMAT));
-    }
-
-    /**
-     * Formats the date using the provided format string using the provided
-     * locale.
-     * @param date The date to format.
-     * @param format The format string to use.
-     * @param locale The locale to use.
-     * @since 1.0
-     */
-    public TextOf(
-        final LocalDate date,
-        final String format,
-        final Locale locale
-    ) {
-        this(date, DateTimeFormatter.ofPattern(format, locale));
-    }
-
-    /**
-     * Formats the date using the provided formatter.
-     * @param date The date to format.
-     * @param formatter The formatter to use.
-     * @since 1.0
-     */
-    public TextOf(final LocalDate date, final DateTimeFormatter formatter) {
-        this(
-            () -> formatter.format(
-                ZonedDateTime.of(
-                    date, LocalTime.MIN, ZoneId.systemDefault()
-                )
-            )
-        );
-    }
-
-    /**
-     * Formats the date using the provided formatter.
-     * @param date The date to format.
-     * @param formatter The formatter to use.
-     */
-    public TextOf(
-        final LocalDateTime date,
-        final DateTimeFormatter formatter
-    ) {
-        this(() -> formatter.format(date.atZone(ZoneId.systemDefault())));
-    }
-
-    /**
-     * Formats date using ISO date time format.
-     * @param date The date to format.
-     */
-    public TextOf(final LocalDateTime date) {
-        this(date, new Iso().value());
-    }
-
-    /**
-     * Formats date using provided date time format string using default locale.
-     * @param date The date to format.
-     * @param format The format to use.
-     */
-    public TextOf(final LocalDateTime date, final String format) {
-        this(date, format, Locale.getDefault(Locale.Category.FORMAT));
-    }
-
-    /**
-     * Formats the date using the provided format string using the provided
-     * locale.
-     * @param date The date to format.
-     * @param format The format string to use.
-     * @param locale The locale to use.
-     */
-    public TextOf(
-        final LocalDateTime date,
-        final String format,
-        final Locale locale
-    ) {
-        this(date, DateTimeFormatter.ofPattern(format, locale));
-    }
-
-    /**
-     * Formats the date with ISO format using the system zone.
-     * @param date The date to format.
-     */
-    public TextOf(final Date date) {
-        this(date, new Iso().value());
-    }
-
-    /**
-     * Formats the date with to format using the default locale and the system
-     * zone.
-     * @param date The date to format.
-     * @param format The format to use.
-     */
-    public TextOf(final Date date, final String format) {
-        this(date, format, Locale.getDefault(Locale.Category.FORMAT));
-    }
-
-    /**
-     * Formats the date using the format and locale using the system default
-     * zone.
-     * @param date The date to format.
-     * @param format The format to use.
-     * @param locale The locale to use.
-     */
-    public TextOf(
-        final Date date,
-        final String format,
-        final Locale locale
-    ) {
-        this(date, DateTimeFormatter.ofPattern(format, locale));
-    }
-
-    /**
-     * Formats the date using the format and locale using the system default
-     * zone.
-     * @param date The date to format.
-     * @param formatter The formatter to use.
-     */
-    public TextOf(final Date date, final DateTimeFormatter formatter) {
-        this(
-            () -> formatter.format(
-                ZonedDateTime.ofInstant(
-                    date.toInstant(),
-                    ZoneId.systemDefault()
-                )
-            )
-        );
-    }
-
-    /**
-     * Formats date using ISO date time format.
-     * @param date The date to format.
-     */
-    public TextOf(final OffsetDateTime date) {
-        this(date, new Iso().value());
-    }
-
-    /**
-     * Formats date using provided date time format string using default locale.
-     * @param date The date to format.
-     * @param format The format to use.
-     */
-    public TextOf(final OffsetDateTime date, final String format) {
-        this(date, format, Locale.getDefault(Locale.Category.FORMAT));
-    }
-
-    /**
-     * Formats the date using the provided format string using the provided
-     * locale.
-     * @param date The date to format.
-     * @param format The format string to use.
-     * @param locale The locale to use.
-     */
-    public TextOf(
-        final OffsetDateTime date,
-        final String format,
-        final Locale locale
-    ) {
-        this(date, DateTimeFormatter.ofPattern(format, locale));
-    }
-
-    /**
-     * Formats the date using the provided formatter.
-     * @param date The date to format.
-     * @param formatter The formatter to use.
-     */
-    public TextOf(
-        final OffsetDateTime date,
-        final DateTimeFormatter formatter
-    ) {
-        this(() -> formatter.format(date));
-    }
-
-    /**
-     * Formats date using ISO date time format.
-     * @param date The date to format.
-     */
-    public TextOf(final ZonedDateTime date) {
-        this(date, new Iso().value());
-    }
-
-    /**
-     * Formats date using provided date time format string using default locale.
-     * @param date The date to format.
-     * @param format The format to use.
-     */
-    public TextOf(final ZonedDateTime date, final String format) {
-        this(date, format, Locale.getDefault(Locale.Category.FORMAT));
-    }
-
-    /**
-     * Formats the date using the provided format string using the provided
-     * locale.
-     * @param date The date to format.
-     * @param format The format string to use.
-     * @param locale The locale to use.
-     */
-    public TextOf(
-        final ZonedDateTime date,
-        final String format,
-        final Locale locale
-    ) {
-        this(date, DateTimeFormatter.ofPattern(format, locale));
-    }
-
-    /**
-     * Formats the date using the provided formatter.
-     * @param date The date to format.
-     * @param formatter The formatter to use.
-     */
-    public TextOf(
-        final ZonedDateTime date,
-        final DateTimeFormatter formatter
-    ) {
-        this(() -> formatter.format(date));
-    }
-
-    /**
      * Ctor.
      *
      * @param scalar The Scalar of String
      */
     public TextOf(final Scalar<String> scalar) {
-        this.origin = scalar;
+        this(new TextOfScalar(scalar));
     }
 
-    @Override
-    public String asString() throws Exception {
-        return this.origin.value();
-    }
-
-    @Override
-    public String toString() {
-        return new UncheckedText(this).asString();
-    }
-
-    @Override
-    public int hashCode() {
-        return new Unchecked<>(this.origin).value().hashCode();
-    }
-
-    @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
-    public boolean equals(final Object obj) {
-        return new Unchecked<>(
-            new Or(
-                () -> this == obj,
-                new And(
-                    () -> obj instanceof Text,
-                    () -> new UncheckedText(this)
-                        .asString()
-                        .equals(new UncheckedText((Text) obj).asString())
-                )
-            )
-        ).value();
+    /**
+     * Ctor.
+     *
+     * @param text Text
+     */
+    private TextOf(final Text text) {
+        super(text);
     }
 }
