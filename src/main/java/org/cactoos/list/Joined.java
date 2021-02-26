@@ -34,6 +34,9 @@ import org.cactoos.iterable.IterableOf;
  *
  * @param <X> Type of source item
  * @since 0.20
+ * @todo #1254:30min Make {@link Joined} implements directly {@link List}
+ *  and delegate each operation to {@link JoinedListIterator} as if lists
+ *  joined were one list.
  */
 public final class Joined<X> extends ListEnvelope<X> {
 
