@@ -23,6 +23,8 @@
  */
 package org.cactoos.map;
 
+import org.cactoos.iterable.IterableOf;
+import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -34,6 +36,27 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class MergedTest {
+
+    @Test
+    public void behavesAsMapCreatedFromIterable() {
+        new Assertion<>(
+            "Must behave as a map",
+            new Merged<>(
+                new MapOf<>(
+                    new MapEntry<>("a", 1)
+                ),
+                new MapOf<>(
+                    new MapEntry<>("b", 2)
+                )
+            ),
+            new AllOf<>(
+                new IterableOf<>(
+                    new BehavesAsMap<>("a", 1),
+                    new BehavesAsMap<>("b", 2)
+                )
+            )
+        ).affirm();
+    }
 
     @Test
     public void behavesAsMap() {

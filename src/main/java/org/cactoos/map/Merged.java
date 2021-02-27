@@ -24,8 +24,9 @@
 package org.cactoos.map;
 
 import java.util.Map;
-import java.util.stream.Collectors;
-import org.cactoos.list.ListOf;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Joined;
+import org.cactoos.iterable.Mapped;
 
 /**
  * This class can be used to merge a few {@link Map}.
@@ -42,12 +43,22 @@ public final class Merged<K, V> extends MapEnvelope<K, V> {
      */
     @SafeVarargs
     public Merged(final Map<? extends K, ? extends V>... maps) {
+        this(new IterableOf<>(maps));
+    }
+
+    /**
+     * Ctor.
+     * @param maps Maps to merge.
+     */
+    public Merged(final Iterable<? extends Map<? extends K, ? extends V>> maps) {
         super(
             new MapOf<>(
-                new ListOf<>(maps)
-                    .stream()
-                    .flatMap(map -> map.entrySet().stream())
-                    .collect(Collectors.toList())
+                new Joined<>(
+                    new Mapped<>(
+                        Map::entrySet,
+                        maps
+                    )
+                )
             )
         );
     }
