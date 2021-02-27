@@ -59,20 +59,6 @@ public final class MergedTest {
     }
 
     @Test
-    public void behavesAsMap() {
-        new Assertion<>(
-            "Must behave as a map",
-            new Merged<Integer, Integer>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<>(0, -1),
-                    new MapEntry<>(1, 1)
-                )
-            ),
-            new BehavesAsMap<>(1, 1)
-        ).affirm();
-    }
-
-    @Test
     public void createsMapFromMaps() {
         new Assertion<>(
             "Must merge a few maps",
