@@ -48,7 +48,7 @@ public final class Merged<K, V> extends MapEnvelope<K, V> {
 
     /**
      * Ctor.
-     * @param maps Maps to merge.
+     * @param maps Iterable of {@link Map}s to merge.
      */
     public Merged(final Iterable<? extends Map<? extends K, ? extends V>> maps) {
         super(
