@@ -40,7 +40,7 @@ public final class MergedTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void behavesAsMapCreatedFromIterable() {
+    public void behavesAsMap() {
         new Assertion<>(
             "Must behave as a map",
             new Merged<>(
