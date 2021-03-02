@@ -32,7 +32,7 @@ import org.cactoos.Text;
  *
  * @since 0.50
  */
-public class Newline implements Text {
+public final class Newline implements Text {
     @Override
     public String asString() throws Exception {
         return System.lineSeparator();
