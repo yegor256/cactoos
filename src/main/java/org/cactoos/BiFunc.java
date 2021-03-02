@@ -38,6 +38,7 @@ package org.cactoos;
  * @param <Z> Type of output
  * @since 0.9
  */
+@FunctionalInterface
 public interface BiFunc<X, Y, Z> {
 
     /**

@@ -52,6 +52,7 @@ import org.cactoos.io.TeeInput;
  * @see OutputTo
  * @since 0.1
  */
+@FunctionalInterface
 public interface Output {
 
     /**
