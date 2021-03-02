@@ -29,7 +29,6 @@ import org.cactoos.Text;
  * Returns a text that is the default system line separator.
  *
  * <p>There is no thread-safety guarantee.
- *
  * @since 0.50
  */
 public final class Newline implements Text {

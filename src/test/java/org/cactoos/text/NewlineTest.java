@@ -29,16 +29,15 @@ import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Tests for {@link Newline}.
- *
  * @since 0.50
  */
 final class NewlineTest {
     @Test
     void testAsString() throws Exception {
         new Assertion<>(
-                "must be equal to System.lineSeparator()",
-                new Newline().asString(),
-                new IsEqual<>(System.lineSeparator())
+            "must be equal to System.lineSeparator()",
+            new Newline().asString(),
+            new IsEqual<>(System.lineSeparator())
         ).affirm();
     }
 }
