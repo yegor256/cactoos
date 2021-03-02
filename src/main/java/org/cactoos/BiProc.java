@@ -40,6 +40,7 @@ import org.cactoos.proc.UncheckedBiProc;
  * @param <Y> Type of input
  * @since 0.20
  */
+@FunctionalInterface
 public interface BiProc<X, Y> {
 
     /**

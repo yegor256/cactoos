@@ -44,6 +44,7 @@ package org.cactoos;
  * @see org.cactoos.func.IoCheckedFunc
  * @since 0.1
  */
+@FunctionalInterface
 public interface Func<X, Y> {
 
     /**

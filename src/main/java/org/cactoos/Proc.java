@@ -40,6 +40,7 @@ import org.cactoos.proc.UncheckedProc;
  * @see org.cactoos.func.FuncOf
  * @since 0.1
  */
+@FunctionalInterface
 public interface Proc<X> {
 
     /**
