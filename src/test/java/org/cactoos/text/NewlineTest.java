@@ -23,9 +23,10 @@
  */
 package org.cactoos.text;
 
-import org.hamcrest.core.IsEqual;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Tests for {@link Newline}.
@@ -33,11 +34,35 @@ import org.llorllale.cactoos.matchers.Assertion;
  */
 final class NewlineTest {
     @Test
-    void testAsString() throws Exception {
+    void testEmptyNewline() {
         new Assertion<>(
-            "must be equal to System.lineSeparator()",
-            new Newline().asString(),
-            new IsEqual<>(System.lineSeparator())
+            "Must be equal to the System.lineSeparator()",
+            new Newline(),
+            new IsText(System.lineSeparator())
         ).affirm();
+    }
+
+    @Test
+    void testStringIntoNewline() {
+        final String text = UUID.randomUUID().toString();
+        new Assertion<>(
+            "must be equal to System.lineSeparator() plus the provided plain String value",
+            new Newline(text),
+            new IsText(this.expectedValue(text))
+        ).affirm();
+    }
+
+    @Test
+    void testTextIntoNewline() {
+        final String text = UUID.randomUUID().toString();
+        new Assertion<>(
+            "must be equal to System.lineSeparator() plus the provided Text's value",
+            new Newline(new TextOf(text)),
+            new IsText(this.expectedValue(text))
+        ).affirm();
+    }
+
+    private String expectedValue(final String text) {
+        return String.format("%n%1$s", text);
     }
 }

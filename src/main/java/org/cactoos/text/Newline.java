@@ -31,9 +31,27 @@ import org.cactoos.Text;
  * <p>There is no thread-safety guarantee.
  * @since 0.50
  */
-public final class Newline implements Text {
-    @Override
-    public String asString() throws Exception {
-        return System.lineSeparator();
+public final class Newline extends TextEnvelope {
+    /**
+     * Ctor.
+     */
+    public Newline() {
+        this("");
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public Newline(final String text) {
+        this(new TextOf(text));
+    }
+
+    /**
+     * Ctor.
+     * @param text The text
+     */
+    public Newline(final Text text) {
+        super(new Concatenated(new FormattedText("%n"), text));
     }
 }
