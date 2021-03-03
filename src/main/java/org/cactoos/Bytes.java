@@ -31,6 +31,7 @@ package org.cactoos;
  * @see org.cactoos.bytes.BytesOf
  * @since 0.1
  */
+@FunctionalInterface
 public interface Bytes {
 
     /**

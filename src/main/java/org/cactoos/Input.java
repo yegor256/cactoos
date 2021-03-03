@@ -45,6 +45,7 @@ import java.io.InputStream;
  * @see org.cactoos.io.InputOf
  * @since 0.1
  */
+@FunctionalInterface
 public interface Input {
 
     /**

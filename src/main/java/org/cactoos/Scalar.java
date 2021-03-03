@@ -47,6 +47,7 @@ import org.cactoos.scalar.Unchecked;
  * @see IoChecked
  * @since 0.1
  */
+@FunctionalInterface
 public interface Scalar<T> {
 
     /**

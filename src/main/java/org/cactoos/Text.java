@@ -35,6 +35,7 @@ package org.cactoos;
  * @see org.cactoos.text.TextOf
  * @since 0.1
  */
+@FunctionalInterface
 public interface Text {
 
     /**
