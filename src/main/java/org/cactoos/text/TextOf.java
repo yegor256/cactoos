@@ -317,6 +317,12 @@ public final class TextOf extends TextEnvelope {
      * Ctor.
      *
      * @param iterable The iterable to convert to string
+     * @todo #1461:30min We want constructors with {@code Iterable<?>} and
+     *  {@code Iterator<Character>} to have same behaviour (simply concatenate list of strings).
+     *  To do that, we should change {@code Iterable<?>} to {@code Iterable<Character>}
+     *  and delegate the {@link Iterator} one to the {@link Iterable} one. After that, we need to
+     *  modify other parts of cactoos that relied on this in order to preserve their behaviour
+     *  by using {@link Joined} and {@link Concatenated}.
      */
     public TextOf(final Iterable<?> iterable) {
         super(
