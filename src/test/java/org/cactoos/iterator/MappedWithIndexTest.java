@@ -23,7 +23,9 @@
  */
 package org.cactoos.iterator;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.junit.jupiter.api.Test;
@@ -34,6 +36,7 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Tests for {@link MappedWithIndex}.
  * @since 0.50
+ * @checkstyle MagicNumber (500 lines)
  */
 final class MappedWithIndexTest {
     @Test
@@ -63,6 +66,29 @@ final class MappedWithIndexTest {
             "must throw NSEE",
             iterator::next,
             new Throws<>(NoSuchElementException.class)
+        ).affirm();
+    }
+
+    @Test
+    void removingElementsFromIterator() {
+        final Iterator<String> iterator = new MappedWithIndex<>(
+            (i, v) -> String.format(
+                "%1$s : %2$s",
+                i,
+                v.toString()
+            ),
+            new LinkedList<Number>(
+                Arrays.asList(1, 2, 3)
+            ).iterator()
+        );
+        iterator.next();
+        iterator.remove();
+        new Assertion<>(
+            "must map values of changed iterator",
+            new IterableOf<>(
+                iterator
+            ),
+            new HasValues<>("0 : 2", "1 : 3")
         ).affirm();
     }
 }
