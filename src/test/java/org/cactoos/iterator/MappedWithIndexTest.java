@@ -88,7 +88,7 @@ final class MappedWithIndexTest {
             new IterableOf<>(
                 iterator
             ),
-            new HasValues<>("0 : 2", "1 : 3")
+            new HasValues<>("1 : 2", "2 : 3")
         ).affirm();
     }
 }

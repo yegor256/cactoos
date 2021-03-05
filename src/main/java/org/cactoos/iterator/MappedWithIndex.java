@@ -24,11 +24,9 @@
 package org.cactoos.iterator;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.BiFunc;
-import org.cactoos.scalar.ScalarWithIndex;
-import org.cactoos.scalar.Unchecked;
+import org.cactoos.Func;
 
 /**
  * Mapped with index iterator.
@@ -51,33 +49,17 @@ public final class MappedWithIndex<Y> extends IteratorEnvelope<Y> {
         final Iterator<? extends X> iterator
     ) {
         super(
-            new Iterator<Y>() {
-                private final AtomicInteger indexcount = new AtomicInteger(-1);
+            new Mapped<>(
+                new Func<X, Y>() {
+                    private final AtomicInteger indexcount = new AtomicInteger(-1);
 
-                @Override
-                public boolean hasNext() {
-                    return iterator.hasNext();
-                }
-
-                @Override
-                public Y next() {
-                    if (this.hasNext()) {
-                        final int index = this.indexcount.incrementAndGet();
-                        return new Unchecked<>(
-                            new org.cactoos.scalar.MappedWithIndex<>(
-                                func, new ScalarWithIndex<>(index, iterator::next)
-                            )
-                        ).value();
+                    @Override
+                    public Y apply(final X input) throws Exception {
+                        return func.apply(this.indexcount.incrementAndGet(), input);
                     }
-                    throw new NoSuchElementException();
-                }
-
-                @Override
-                public void remove() {
-                    iterator.remove();
-                    this.indexcount.getAndDecrement();
-                }
-            }
+                },
+                iterator
+            )
         );
     }
 }

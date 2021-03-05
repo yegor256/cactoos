@@ -23,7 +23,9 @@
  */
 package org.cactoos.iterable;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.BiFunc;
+import org.cactoos.Func;
 
 /**
  * Mapped with index iterable.
@@ -60,8 +62,15 @@ public final class MappedWithIndex<Y> extends IterableEnvelope<Y> {
     ) {
         super(
             new IterableOf<>(
-                () -> new org.cactoos.iterator.MappedWithIndex<>(
-                    fnc,
+                () -> new org.cactoos.iterator.Mapped<>(
+                    new Func<X, Y>() {
+                        private final AtomicInteger indexcount = new AtomicInteger(-1);
+
+                        @Override
+                        public Y apply(final X input) throws Exception {
+                            return fnc.apply(this.indexcount.incrementAndGet(), input);
+                        }
+                    },
                     src.iterator()
                 )
             )
