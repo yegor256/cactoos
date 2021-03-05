@@ -61,18 +61,16 @@ public final class MappedWithIndex<Y> extends IterableEnvelope<Y> {
         final Iterable<? extends X> src
     ) {
         super(
-            new IterableOf<>(
-                () -> new org.cactoos.iterator.Mapped<>(
-                    new Func<X, Y>() {
-                        private final AtomicInteger indexcount = new AtomicInteger(-1);
+            new Mapped<>(
+                new Func<X, Y>() {
+                    private final AtomicInteger indexcount = new AtomicInteger(-1);
 
-                        @Override
-                        public Y apply(final X input) throws Exception {
-                            return fnc.apply(this.indexcount.incrementAndGet(), input);
-                        }
-                    },
-                    src.iterator()
-                )
+                    @Override
+                    public Y apply(final X input) throws Exception {
+                        return fnc.apply(this.indexcount.incrementAndGet(), input);
+                    }
+                },
+                src
             )
         );
     }

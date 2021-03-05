@@ -27,7 +27,6 @@ import java.util.Collections;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Assertions;
@@ -43,7 +42,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class MappedWithIndexTest {
     @Test
     void transformsList() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't transform an iterable",
             new MappedWithIndex<>(
                 (index, input) -> new Upper(
@@ -57,13 +56,13 @@ final class MappedWithIndexTest {
                     "hello", "world", "друг"
                 )
             ).iterator().next().asString(),
-            Matchers.equalTo("0-HELLO")
-        );
+            new IsEqual<>("0-HELLO")
+        ).affirm();
     }
 
     @Test
     void transformsEmptyList() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't transform an empty iterable",
             new MappedWithIndex<>(
                 (index, input) -> {
@@ -73,19 +72,19 @@ final class MappedWithIndexTest {
                 Collections.emptyList()
             ),
             Matchers.emptyIterable()
-        );
+        ).affirm();
     }
 
     @Test
     void string() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert to string",
             new MappedWithIndex<>(
                 (index, x) -> x * index * 2,
                 new IterableOf<>(1, 2, 3)
             ).toString(),
             Matchers.equalTo("0, 4, 12")
-        );
+        ).affirm();
     }
 
     @Test
