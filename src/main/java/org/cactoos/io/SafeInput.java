@@ -21,15 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.io;
+
+import java.io.InputStream;
+import org.cactoos.Input;
 
 /**
- * Input/Output.
+ * A decorator of {@link Input} that prevents {@link InputStream}
+ * to be closed by its performers.
  *
- * @since 0.1
- * @todo #1449:30min We must find all the classes that closes stream of
- *  {@link org.cactoos.Input} or {@link org.cactoos.Output} that have been passed
- *  to them and document them about this behaviour and refer them to the existence
- *  of {@link org.cactoos.io.SafeInput} and {@link org.cactoos.io.SafeOutput}
- *  and how to use them.
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 1.0.0
  */
-package org.cactoos.io;
+public final class SafeInput implements Input {
+
+    /**
+     * Origin.
+     */
+    private final Input origin;
+
+    /**
+     * Ctor.
+     * @param origin Origin
+     */
+    public SafeInput(final Input origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public InputStream stream() throws Exception {
+        return new SafeInputStream(this.origin.stream());
+    }
+
+}

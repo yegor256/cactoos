@@ -21,15 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.io;
+
+import java.io.OutputStream;
+import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Input/Output.
- *
- * @since 0.1
- * @todo #1449:30min We must find all the classes that closes stream of
- *  {@link org.cactoos.Input} or {@link org.cactoos.Output} that have been passed
- *  to them and document them about this behaviour and refer them to the existence
- *  of {@link org.cactoos.io.SafeInput} and {@link org.cactoos.io.SafeOutput}
- *  and how to use them.
+ * Test case for {@link SafeOutput}.
+ * @since 1.0.0
  */
-package org.cactoos.io;
+final class SafeOutputTest {
+
+    @Test
+    @SuppressWarnings("try")
+    void preventsOriginalStreamToBeClosed() throws Exception {
+        try (FakeOutputStream origin = new FakeOutputStream()) {
+            // @checkstyle EmptyBlockCheck (5 lines)
+            try (
+                OutputStream stream = new SafeOutput(() -> origin).stream()
+            ) {
+            }
+            new Assertion<>(
+                "Must not close origin stream",
+                origin.isClosed(),
+                new IsEqual<>(false)
+            ).affirm();
+        }
+    }
+}

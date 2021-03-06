@@ -21,15 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.io;
+
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
- * Input/Output.
+ * Decorator of {@link OutputStream} to prevent it
+ * to be closed.
  *
- * @since 0.1
- * @todo #1449:30min We must find all the classes that closes stream of
- *  {@link org.cactoos.Input} or {@link org.cactoos.Output} that have been passed
- *  to them and document them about this behaviour and refer them to the existence
- *  of {@link org.cactoos.io.SafeInput} and {@link org.cactoos.io.SafeOutput}
- *  and how to use them.
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 1.0.0
  */
-package org.cactoos.io;
+public final class SafeOutputStream extends OutputStream {
+
+    /**
+     * Origin.
+     */
+    private final OutputStream origin;
+
+    /**
+     * Ctor.
+     * @param origin Origin
+     */
+    public SafeOutputStream(final OutputStream origin) {
+        super();
+        this.origin = origin;
+    }
+
+    @Override
+    public void write(final int data) throws IOException {
+        this.origin.write(data);
+    }
+
+    @Override
+    public void write(final byte[] buf) throws IOException {
+        this.origin.write(buf);
+    }
+
+    @Override
+    public void write(final byte[] buf, final int off, final int len)
+        throws IOException {
+        this.origin.write(buf, off, len);
+    }
+
+    @Override
+    public void flush() throws IOException {
+        this.origin.flush();
+    }
+
+    @Override
+    @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
+    public void close() throws IOException {
+    }
+
+}

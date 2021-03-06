@@ -21,15 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.io;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Input/Output.
- *
- * @since 0.1
- * @todo #1449:30min We must find all the classes that closes stream of
- *  {@link org.cactoos.Input} or {@link org.cactoos.Output} that have been passed
- *  to them and document them about this behaviour and refer them to the existence
- *  of {@link org.cactoos.io.SafeInput} and {@link org.cactoos.io.SafeOutput}
- *  and how to use them.
+ * Fake {@link InputStream} with ability to check if
+ * it is closed.
+ * @since 1.0.0
  */
-package org.cactoos.io;
+final class FakeInputStream extends InputStream {
+
+    /**
+     * If {@link InputStream} is closed.
+     */
+    private final AtomicBoolean closed;
+
+    /**
+     * Ctor.
+     */
+    FakeInputStream() {
+        this.closed = new AtomicBoolean(false);
+    }
+
+    @Override
+    public int read() throws IOException {
+        return -1;
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.closed.set(true);
+    }
+
+    /**
+     * If stream is closed.
+     * @return Closed or not
+     */
+    public boolean isClosed() {
+        return this.closed.get();
+    }
+}
