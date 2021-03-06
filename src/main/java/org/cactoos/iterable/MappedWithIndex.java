@@ -42,7 +42,7 @@ public final class MappedWithIndex<Y> extends IterableEnvelope<Y> {
      */
     @SafeVarargs
     public <X> MappedWithIndex(
-        final BiFunc<Integer, ? super X, ? extends Y> fnc,
+        final BiFunc<? super X, Integer, ? extends Y> fnc,
         final X... src
     ) {
         this(fnc, new IterableOf<>(src));
@@ -55,7 +55,7 @@ public final class MappedWithIndex<Y> extends IterableEnvelope<Y> {
      * @param <X> Type of source item
      */
     public <X> MappedWithIndex(
-        final BiFunc<Integer, ? super X, ? extends Y> fnc,
+        final BiFunc<? super X, Integer, ? extends Y> fnc,
         final Iterable<? extends X> src
     ) {
         super(

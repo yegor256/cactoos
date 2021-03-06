@@ -35,7 +35,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link MappedWithIndex}.
- * @since 0.50
+ * @since 1.0.0
  * @checkstyle MagicNumber (500 lines)
  */
 final class MappedWithIndexTest {
@@ -45,8 +45,8 @@ final class MappedWithIndexTest {
             "must map values of iterator",
             new IterableOf<>(
                 new MappedWithIndex<>(
-                    (i, v) -> String
-                        .format("%1$s - %2$s", i, v),
+                    (item, index) -> String
+                        .format("%1$s - %2$s", index, item),
                     new IteratorOf<Number>(1L, 2, 0)
                 )
             ),
@@ -57,8 +57,8 @@ final class MappedWithIndexTest {
     @Test
     void failsIfIteratorExhausted() {
         final Iterator<String> iterator = new MappedWithIndex<>(
-            (i, v) -> String
-                .format("%1$s X %2$s", i, v.toString()),
+            (item, index) -> String
+                .format("%1$s X %2$s", index, item),
             new IteratorOf<Number>(1)
         );
         iterator.next();
@@ -72,10 +72,10 @@ final class MappedWithIndexTest {
     @Test
     void removingElementsFromIterator() {
         final Iterator<String> iterator = new MappedWithIndex<>(
-            (i, v) -> String.format(
+            (item, index) -> String.format(
                 "%1$s : %2$s",
-                i,
-                v.toString()
+                index,
+                item
             ),
             new LinkedList<Number>(
                 Arrays.asList(1, 2, 3)

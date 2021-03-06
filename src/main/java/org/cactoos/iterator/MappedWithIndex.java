@@ -26,7 +26,6 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.BiFunc;
-import org.cactoos.Func;
 
 /**
  * Mapped with index iterator.
@@ -34,7 +33,7 @@ import org.cactoos.Func;
  * <p>
  * There is no thread-safety guarantee.
  * @param <Y> Type of target item
- * @since 0.50
+ * @since 1.0.0
  */
 public final class MappedWithIndex<Y> extends IteratorEnvelope<Y> {
     /**
@@ -42,22 +41,33 @@ public final class MappedWithIndex<Y> extends IteratorEnvelope<Y> {
      * @param func Func
      * @param iterator Source iterator
      * @param <X> Type of item
-     * @checkstyle AnonInnerLengthCheck (60 lines)
      */
     public <X> MappedWithIndex(
-        final BiFunc<Integer, ? super X, ? extends Y> func,
+        final BiFunc<? super X, Integer, ? extends Y> func,
+        final Iterator<? extends X> iterator
+    ) {
+        this(
+            new AtomicInteger(-1),
+            func,
+            iterator
+        );
+    }
+
+    /**
+     * Privated Ctor.
+     * @param indexcounter Index Counter
+     * @param func Func
+     * @param iterator Source iterator
+     * @param <X> Type of item
+     */
+    private <X> MappedWithIndex(
+        final AtomicInteger indexcounter,
+        final BiFunc<? super X, Integer, ? extends Y> func,
         final Iterator<? extends X> iterator
     ) {
         super(
             new Mapped<>(
-                new Func<X, Y>() {
-                    private final AtomicInteger indexcount = new AtomicInteger(-1);
-
-                    @Override
-                    public Y apply(final X input) throws Exception {
-                        return func.apply(this.indexcount.incrementAndGet(), input);
-                    }
-                },
+                item -> func.apply(item, indexcounter.incrementAndGet()),
                 iterator
             )
         );

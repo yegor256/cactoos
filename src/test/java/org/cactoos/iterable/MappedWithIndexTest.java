@@ -34,18 +34,17 @@ import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link MappedWithIndex}.
- * @since 0.50
- * @checkstyle JavadocMethodCheck (500 lines)
+ * Tests for {@link MappedWithIndex}.
+ * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
  */
 final class MappedWithIndexTest {
     @Test
     void transformsList() throws Exception {
         new Assertion<>(
-            "Can't transform an iterable",
+            "must transform an iterable",
             new MappedWithIndex<>(
-                (index, input) -> new Upper(
+                (input, index) -> new Upper(
                     new Joined(
                         "-",
                         new TextOf(index.toString()),
@@ -63,9 +62,9 @@ final class MappedWithIndexTest {
     @Test
     void transformsEmptyList() {
         new Assertion<>(
-            "Can't transform an empty iterable",
+            "must transform an empty iterable",
             new MappedWithIndex<>(
-                (index, input) -> {
+                (input, index) -> {
                     Assertions.fail("must do not be executed");
                     return input;
                 },
@@ -78,9 +77,9 @@ final class MappedWithIndexTest {
     @Test
     void string() {
         new Assertion<>(
-            "Can't convert to string",
+            "must convert to string",
             new MappedWithIndex<>(
-                (index, x) -> x * index * 2,
+                (x, index) -> x * index * 2,
                 new IterableOf<>(1, 2, 3)
             ).toString(),
             Matchers.equalTo("0, 4, 12")
@@ -92,7 +91,7 @@ final class MappedWithIndexTest {
         new Assertion<>(
             "Transforms an array",
             new MappedWithIndex<>(
-                (index, input) -> new Upper(
+                (input, index) -> new Upper(
                     new TextOf(
                         String.format(
                             "%1$s-%2$s",
