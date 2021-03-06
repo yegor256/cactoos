@@ -23,35 +23,17 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Text;
-
 /**
  * Returns a text that is the default system line separator.
  *
  * <p>There is no thread-safety guarantee.
- * @since 0.50
+ * @since 1.0.0
  */
 public final class Newline extends TextEnvelope {
     /**
      * Ctor.
      */
     public Newline() {
-        this("");
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public Newline(final String text) {
-        this(new TextOf(text));
-    }
-
-    /**
-     * Ctor.
-     * @param text The text
-     */
-    public Newline(final Text text) {
-        super(new Concatenated(new FormattedText("%n"), text));
+        super(new FormattedText("%n"));
     }
 }
