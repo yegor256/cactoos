@@ -23,11 +23,8 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Collections;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.Upper;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -40,27 +37,30 @@ import org.llorllale.cactoos.matchers.Assertion;
  */
 final class MappedWithIndexTest {
     @Test
-    void transformsList() throws Exception {
+    void transformsIterable() throws Exception {
         new Assertion<>(
             "must transform an iterable",
             new MappedWithIndex<>(
-                (input, index) -> new Upper(
-                    new Joined(
-                        "-",
-                        new TextOf(index.toString()),
-                        new TextOf(input)
-                    )
+                (input, index) -> new Joined(
+                    "-",
+                    new TextOf(index.toString()),
+                    new TextOf(input)
                 ),
                 new IterableOf<>(
-                    "hello", "world", "друг"
+                    "hello", "world"
                 )
-            ).iterator().next().asString(),
-            new IsEqual<>("0-HELLO")
+            ),
+            new IsEqual<>(
+                new IterableOf<>(
+                    new TextOf("0-hello"),
+                    new TextOf("1-world")
+                )
+            )
         ).affirm();
     }
 
     @Test
-    void transformsEmptyList() {
+    void transformsEmptyIterable() {
         new Assertion<>(
             "must transform an empty iterable",
             new MappedWithIndex<>(
@@ -68,9 +68,11 @@ final class MappedWithIndexTest {
                     Assertions.fail("must do not be executed");
                     return input;
                 },
-                Collections.emptyList()
+                new IterableOf<>()
             ),
-            Matchers.emptyIterable()
+            new IsEqual<>(
+                new IterableOf<>()
+            )
         ).affirm();
     }
 
@@ -82,7 +84,7 @@ final class MappedWithIndexTest {
                 (x, index) -> x * index * 2,
                 new IterableOf<>(1, 2, 3)
             ).toString(),
-            Matchers.equalTo("0, 4, 12")
+            new IsEqual<>("0, 4, 12")
         ).affirm();
     }
 
@@ -91,18 +93,20 @@ final class MappedWithIndexTest {
         new Assertion<>(
             "Transforms an array",
             new MappedWithIndex<>(
-                (input, index) -> new Upper(
-                    new TextOf(
-                        String.format(
-                            "%1$s-%2$s",
-                            index,
-                            input
-                        )
-                    )
-                ).asString(),
+                (input, index) -> new Joined(
+                    "-",
+                    index.toString(),
+                    input
+                ),
                 "a", "b", "c"
             ),
-            new IsEqual<>(new IterableOf<>("0-A", "1-B", "2-C"))
+            new IsEqual<>(
+                new IterableOf<>(
+                    new TextOf("0-a"),
+                    new TextOf("1-b"),
+                    new TextOf("2-c")
+                )
+            )
         ).affirm();
     }
 }

@@ -23,11 +23,12 @@
  */
 package org.cactoos.iterator;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
@@ -36,30 +37,39 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Tests for {@link MappedWithIndex}.
  * @since 1.0.0
- * @checkstyle MagicNumber (500 lines)
  */
 final class MappedWithIndexTest {
     @Test
-    void iteratatesOver() {
+    void iteratesOver() {
         new Assertion<>(
             "must map values of iterator",
             new IterableOf<>(
                 new MappedWithIndex<>(
-                    (item, index) -> String
-                        .format("%1$s - %2$s", index, item),
-                    new IteratorOf<Number>(1L, 2, 0)
+                    (item, index) -> new FormattedText(
+                        "%1$s - %2$s",
+                        index,
+                        item
+                    ),
+                    new IterableOf<>("1", "2", "0").iterator()
                 )
             ),
-            new HasValues<>("0 - 1", "1 - 2", "2 - 0")
+            new HasValues<>(
+                new TextOf("0 - 1"),
+                new TextOf("1 - 2"),
+                new TextOf("2 - 0")
+            )
         ).affirm();
     }
 
     @Test
     void failsIfIteratorExhausted() {
-        final Iterator<String> iterator = new MappedWithIndex<>(
-            (item, index) -> String
-                .format("%1$s X %2$s", index, item),
-            new IteratorOf<Number>(1)
+        final Iterator<Text> iterator = new MappedWithIndex<>(
+            (item, index) -> new FormattedText(
+                "%1$s X %2$s",
+                index,
+                item
+            ),
+            new IterableOf<>("1").iterator()
         );
         iterator.next();
         new Assertion<>(
@@ -71,15 +81,13 @@ final class MappedWithIndexTest {
 
     @Test
     void removingElementsFromIterator() {
-        final Iterator<String> iterator = new MappedWithIndex<>(
-            (item, index) -> String.format(
+        final Iterator<Text> iterator = new MappedWithIndex<>(
+            (item, index) -> new FormattedText(
                 "%1$s : %2$s",
                 index,
                 item
             ),
-            new LinkedList<Number>(
-                Arrays.asList(1, 2, 3)
-            ).iterator()
+            new IterableOf<>("1", "2", "3").iterator()
         );
         iterator.next();
         iterator.remove();
@@ -88,7 +96,10 @@ final class MappedWithIndexTest {
             new IterableOf<>(
                 iterator
             ),
-            new HasValues<>("1 : 2", "2 : 3")
+            new HasValues<>(
+                new TextOf("1 : 2"),
+                new TextOf("2 : 3")
+            )
         ).affirm();
     }
 }
