@@ -23,6 +23,8 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.Text;
@@ -87,7 +89,7 @@ final class MappedWithIndexTest {
                 index,
                 item
             ),
-            new IterableOf<>("1", "2", "3").iterator()
+            new ArrayList<>(Arrays.asList("1", "2", "3")).iterator()
         );
         iterator.next();
         iterator.remove();
