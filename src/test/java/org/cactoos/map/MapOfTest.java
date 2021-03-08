@@ -29,7 +29,6 @@ import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Constant;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsAnything;
@@ -37,6 +36,7 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.StringStartsWith;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasEntry;
 
 /**
  * Test case for {@link MapOf}.
@@ -49,8 +49,8 @@ final class MapOfTest {
 
     @Test
     void behavesAsMap() {
-        MatcherAssert.assertThat(
-            "Can't behave as a map",
+        new Assertion<>(
+            "Must behave as a map",
             new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1),
@@ -58,13 +58,13 @@ final class MapOfTest {
                 )
             ),
             new BehavesAsMap<>(1, 1)
-        );
+        ).affirm();
     }
 
     @Test
     void convertsIterableToMap() {
-        MatcherAssert.assertThat(
-            "Can't convert iterable to map",
+        new Assertion<>(
+            "Must convert iterable to map",
             new MapOf<Integer, String>(
                 new MapEntry<>(0, "hello, "),
                 new MapEntry<>(1, "world!")
@@ -73,13 +73,13 @@ final class MapOfTest {
                 new IsEqual<>(0),
                 new StringStartsWith("hello")
             )
-        );
+        ).affirm();
     }
 
     @Test
     void createsMapWithFunctions() {
-        MatcherAssert.assertThat(
-            "Can't create a map with functions as values",
+        new Assertion<>(
+            "Must create a map with functions as values",
             new MapOf<Integer, Scalar<Boolean>>(
                 new MapEntry<>(0, () -> true),
                 new MapEntry<>(
@@ -90,25 +90,25 @@ final class MapOfTest {
                 )
             ),
             new IsMapContaining<>(new IsEqual<>(0), new IsAnything<>())
-        );
+        ).affirm();
     }
 
     @Test
     void integersToString() {
-        MatcherAssert.assertThat(
-            "Can't convert map of integers to string",
+        new Assertion<>(
+            "Must convert map of integers to string",
             new MapOf<Integer, Integer>(
                 new MapEntry<>(-1, 0),
                 new MapEntry<>(1, 2)
             ).toString(),
             new IsEqual<>("{-1=0, 1=2}")
-        );
+        ).affirm();
     }
 
     @Test
     void mapsToString() {
-        MatcherAssert.assertThat(
-            "Can't convert map op maps to string",
+        new Assertion<>(
+            "Must convert map op maps to string",
             new MapOf<Integer, Map<String, String>>(
                 new MapEntry<Integer, Map<String, String>>(
                     -1,
@@ -126,36 +126,34 @@ final class MapOfTest {
                 )
             ).toString(),
             new IsEqual<>("{-1={4=7, first=second}, 1={green=red, 2.7=3.1}}")
-        );
+        ).affirm();
     }
 
     @Test
     void emptyToString() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert empty map to string",
             new MapOf<Integer, Map<String, String>>().toString(),
             new IsEqual<>("{}")
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void createsMapFromMapAndMapEntries() {
-        MatcherAssert.assertThat(
-            "Can't create a map from map and map entries",
-            new MapOf<Integer, Integer>(
-                new MapOf<Integer, Integer>(
+        new Assertion<MapOf<Integer, Integer>>(
+            "Must create a map from map and map entries",
+            new MapOf<>(
+                new MapOf<>(
                     new MapEntry<Integer, Integer>(0, 0)
                 ),
                 new MapEntry<Integer, Integer>(1, 1)
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0)),
-                    new IsMapContaining<>(new IsEqual<>(1), new IsEqual<>(1))
-                )
+                new HasEntry<>(0,  0),
+                new HasEntry<>(1,  1)
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -167,15 +165,15 @@ final class MapOfTest {
                 new FuncOf<Integer, Integer>(new Constant<>(0)),
                 new IterableOf<Integer>(0)
             ),
-            new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0))
+            new HasEntry<>(0, 0)
         ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void createsMapFromMapFunctionsAndIterable() {
-        new Assertion<>(
-            "Can't create a map from map, functions and iterable.",
+        new Assertion<MapOf<Integer, Integer>>(
+            "Must create a map from map, functions and iterable.",
             new MapOf<Integer, Integer>(
                 new FuncOf<Integer, Integer>(new Constant<>(0)),
                 new FuncOf<Integer, Integer>(new Constant<>(0)),
@@ -185,10 +183,8 @@ final class MapOfTest {
                 new IterableOf<>(0)
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0)),
-                    new IsMapContaining<>(new IsEqual<>(1), new IsEqual<>(1))
-                )
+                new HasEntry<>(0,  0),
+                new HasEntry<>(1,  1)
             )
         ).affirm();
     }

@@ -25,12 +25,12 @@ package org.cactoos.map;
 
 import java.util.Map;
 import org.hamcrest.Description;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.collection.IsMapContaining;
-import org.hamcrest.core.IsCollectionContaining;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsIterableContaining;
 import org.hamcrest.core.IsNot;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Check a remove method.
@@ -66,8 +66,8 @@ public final class RemoveDeletesValues<K, V> extends
     @Override
     public boolean matchesSafely(final Map<K, V> map) {
         map.remove(this.key);
-        MatcherAssert.assertThat(
-            "Contains the key/value after remove",
+        new Assertion<>(
+            "Must not the key/value after remove",
             map,
             new IsNot<>(
                 new IsMapContaining<>(
@@ -75,21 +75,21 @@ public final class RemoveDeletesValues<K, V> extends
                     new IsEqual<>(this.value)
                 )
             )
-        );
-        MatcherAssert.assertThat(
-            "Contains the key in #keySet() after remove",
+        ).affirm();
+        new Assertion<>(
+            "Must not the key in #keySet() after remove",
             map.keySet(),
             new IsNot<>(
-                new IsCollectionContaining<>(new IsEqual<>(this.key))
+                new IsIterableContaining<>(new IsEqual<>(this.key))
             )
-        );
-        MatcherAssert.assertThat(
-            "Contains the value in #values() after remove",
+        ).affirm();
+        new Assertion<>(
+            "Must not the value in #values() after remove",
             map.values(),
             new IsNot<>(
-                new IsCollectionContaining<>(new IsEqual<>(this.value))
+                new IsIterableContaining<>(new IsEqual<>(this.value))
             )
-        );
+        ).affirm();
         return true;
     }
 

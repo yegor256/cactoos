@@ -25,7 +25,6 @@ package org.cactoos.text;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Text;
-import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -146,13 +145,11 @@ final class AbbreviatedTest {
                 15
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new IsText(
-                        "The quick br..."
-                    ),
-                    new IsText(
-                        "The lazy bla..."
-                    )
+                new IsText(
+                    "The quick br..."
+                ),
+                new IsText(
+                    "The lazy bla..."
                 )
             )
         ).affirm();

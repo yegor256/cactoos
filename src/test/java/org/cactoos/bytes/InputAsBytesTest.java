@@ -29,7 +29,6 @@ import org.cactoos.io.InputOf;
 import org.cactoos.io.SlowInputStream;
 import org.cactoos.iterable.Endless;
 import org.cactoos.iterable.HeadOf;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
@@ -98,10 +97,8 @@ final class InputAsBytesTest {
                 StandardCharsets.UTF_8
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new StartsWith("Hello, "),
-                    new EndsWith("друг!")
-                )
+                new StartsWith("Hello, "),
+                new EndsWith("друг!")
             )
         ).affirm();
     }
@@ -122,10 +119,8 @@ final class InputAsBytesTest {
                 StandardCharsets.UTF_8
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new StartsWith("Hello,"),
-                    new EndsWith("товарищ!")
-                )
+                new StartsWith("Hello,"),
+                new EndsWith("товарищ!")
             )
         ).affirm();
     }
