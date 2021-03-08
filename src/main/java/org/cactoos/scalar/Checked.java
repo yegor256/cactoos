@@ -44,20 +44,20 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
     /**
      * Function that wraps exception.
      */
-    private final Func<Exception, E> func;
+    private final Func<? super Exception, ? extends E> func;
 
     /**
      * Original scalar.
      */
-    private final Scalar<T> origin;
+    private final Scalar<? extends T> origin;
 
     /**
      * Ctor.
      * @param scalar Encapsulated scalar
      * @param fnc Func that wraps exception
      */
-    public Checked(final Scalar<T> scalar,
-        final Func<Exception, E> fnc) {
+    public Checked(final Scalar<? extends T> scalar,
+        final Func<? super Exception, ? extends E> fnc) {
         this.func = fnc;
         this.origin = scalar;
     }

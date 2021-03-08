@@ -43,14 +43,14 @@ public final class CheckedBytes<E extends Exception> implements Bytes {
     /**
      * Function that wraps exception of {@link #origin} to the required type.
      */
-    private final Func<Exception, E> func;
+    private final Func<? super Exception, ? extends E> func;
 
     /**
      * Ctor.
      * @param orig Origin bytes.
      * @param fnc Function that wraps exceptions.
      */
-    public CheckedBytes(final Bytes orig, final Func<Exception, E> fnc) {
+    public CheckedBytes(final Bytes orig, final Func<? super Exception, ? extends E> fnc) {
         this.origin = orig;
         this.func = fnc;
     }
