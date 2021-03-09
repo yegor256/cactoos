@@ -44,7 +44,7 @@ public final class UncheckedBytes implements Bytes {
     /**
      * Fallback.
      */
-    private final Func<? super Exception, ? extends byte[]> fallback;
+    private final Func<? super Exception, byte[]> fallback;
 
     /**
      * Ctor.
@@ -67,7 +67,7 @@ public final class UncheckedBytes implements Bytes {
      * @since 0.5
      */
     public UncheckedBytes(final Bytes bts,
-        final Func<? super Exception, ? extends byte[]> fbk) {
+        final Func<? super Exception, byte[]> fbk) {
         this.bytes = bts;
         this.fallback = fbk;
     }

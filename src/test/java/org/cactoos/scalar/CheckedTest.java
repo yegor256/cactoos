@@ -25,9 +25,12 @@ package org.cactoos.scalar;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.channels.AcceptPendingException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Checked}.
@@ -44,6 +47,30 @@ public final class CheckedTest {
             },
             IOException::new
         ).value();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void usesGenericVarianceOnExceptionTypes() throws Exception {
+        new Checked<String, IllegalStateException>(
+            () -> {
+                throw new IllegalStateException();
+            },
+            (Throwable ex) -> {
+                return new AcceptPendingException();
+            }
+        ).value();
+    }
+
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void usesContravarianceOnResultType() throws Exception {
+        new Assertion<>(
+            "Must use contravariance on result",
+            new Checked<CharSequence, IOException>(
+                () -> new String("contravariance"),
+                IOException::new
+            ).value(),
+            new IsEqual<>("contravariance")
+        );
     }
 
     @Test(expected = IOException.class)
