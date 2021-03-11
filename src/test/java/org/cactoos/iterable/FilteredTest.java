@@ -26,7 +26,6 @@ package org.cactoos.iterable;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.StartsWith;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
@@ -46,8 +45,8 @@ final class FilteredTest {
 
     @Test
     void filtersList() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't calculate the length of an iterable",
+        new Assertion<>(
+            "Must calculate the length of an iterable",
             new LengthOf(
                 new Filtered<>(
                     // @checkstyle MagicNumber (1 line)
@@ -58,13 +57,13 @@ final class FilteredTest {
                 )
             ),
             new HasValue<>(2L)
-        );
+        ).affirm();
     }
 
     @Test
     void filtersEmptyList() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't calculate the length of an empty iterable",
+        new Assertion<>(
+            "Must calculate the length of an empty iterable",
             new LengthOf(
                 new Filtered<>(
                     input -> input.length() > 1,
@@ -72,7 +71,7 @@ final class FilteredTest {
                 )
             ),
             new HasValue<>(0L)
-        );
+        ).affirm();
     }
 
     @Test
@@ -81,14 +80,14 @@ final class FilteredTest {
             i -> i > 0,
             new IterableOf<>(1, 2, -1, 0, 1)
         );
-        MatcherAssert.assertThat(
-            "Can't filter the iterable twice",
+        new Assertion<>(
+            "Must filter the iterable twice",
             list, Matchers.iterableWithSize(3)
-        );
-        MatcherAssert.assertThat(
-            "Can't filter the iterable twice, again",
+        ).affirm();
+        new Assertion<>(
+            "Must filter the iterable twice, again",
             list, Matchers.iterableWithSize(3)
-        );
+        ).affirm();
     }
 
     @Test

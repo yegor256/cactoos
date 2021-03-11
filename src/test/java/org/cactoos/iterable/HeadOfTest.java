@@ -24,8 +24,8 @@
 package org.cactoos.iterable;
 
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test Case for {@link HeadOf}.
@@ -38,13 +38,13 @@ final class HeadOfTest {
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     void headIterable() throws Exception {
         MatcherAssert.assertThat(
-            "Can't skip elements in iterable",
+            "Must skip elements in iterable",
             new HeadOf<>(
                 2, new IterableOf<>(
                     "one", "two", "three", "four"
                 )
             ),
-            Matchers.contains(
+            new HasValues<>(
                 "one",
                 "two"
             )

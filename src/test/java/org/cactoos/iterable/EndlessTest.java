@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.NoSuchElementException;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -39,11 +38,11 @@ final class EndlessTest {
 
     @Test
     void endlessIterableTest() {
-        MatcherAssert.assertThat(
-            "Can't get unique endless iterable item",
+        new Assertion<>(
+            "Must get unique endless iterable item",
             new Endless<>(1),
             Matchers.hasItem(1)
-        );
+        ).affirm();
     }
 
     @Test

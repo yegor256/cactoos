@@ -27,8 +27,7 @@ import java.util.Collections;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -38,45 +37,46 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class MappedTest {
 
     @Test
     void transformsList() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't transform an iterable",
+        new Assertion<>(
+            "Must transform an iterable",
             new Mapped<>(
                 input -> new Upper(new TextOf(input)),
                 new IterableOf<>(
                     "hello", "world", "друг"
                 )
             ).iterator().next().asString(),
-            Matchers.equalTo("HELLO")
-        );
+            new IsEqual<>("HELLO")
+        ).affirm();
     }
 
     @Test
     void transformsEmptyList() {
-        MatcherAssert.assertThat(
-            "Can't transform an empty iterable",
+        new Assertion<>(
+            "Must transform an empty iterable",
             new Mapped<>(
                 (String input) -> new Upper(new TextOf(input)),
                 Collections.emptyList()
             ),
-            Matchers.emptyIterable()
-        );
+            new IsEmptyIterable<>()
+        ).affirm();
     }
 
     @Test
     void string() {
-        MatcherAssert.assertThat(
-            "Can't convert to string",
+        new Assertion<>(
+            "Must convert to string",
             new Mapped<>(
                 x -> x * 2,
                 new ListOf<>(1, 2, 3)
             ).toString(),
-            Matchers.equalTo("2, 4, 6")
-        );
+            new IsEqual<>("2, 4, 6")
+        ).affirm();
     }
 
     @Test
