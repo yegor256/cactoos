@@ -38,10 +38,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
  */
-public class RangeOfTest {
+final class RangeOfTest {
 
     @Test
-    public final void testIntegerRange() {
+    void testIntegerRange() {
         new Assertion<>(
             "Must generate a range of integers",
             new ListOf<>(
@@ -52,7 +52,7 @@ public class RangeOfTest {
     }
 
     @Test
-    public final void testIntegerFibonacciRange() {
+    void testIntegerFibonacciRange() {
         new Assertion<>(
             "Must generate a range of fibonacci integers",
             new ListOf<>(
@@ -76,7 +76,7 @@ public class RangeOfTest {
     }
 
     @Test
-    public final void testLongRange() {
+    void testLongRange() {
         new Assertion<>(
             "Must generate a range of long",
             new ListOf<>(
@@ -87,7 +87,7 @@ public class RangeOfTest {
     }
 
     @Test
-    public final void testCharacterRange() {
+    void testCharacterRange() {
         new Assertion<>(
             "Must generate a range of characters",
             new ListOf<>(
@@ -98,7 +98,7 @@ public class RangeOfTest {
     }
 
     @Test
-    public final void testLocalDateRange() {
+    void testLocalDateRange() {
         new Assertion<>(
             "Must generate a range of local dates.",
             new ListOf<>(
