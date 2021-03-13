@@ -26,5 +26,7 @@
  * Time.
  *
  * @since 1.0
+ * @todo #1533:30min Exploit generic variance for this package to ensure
+ *  typing works as best as possible as it is explained in #1533 issue.
  */
 package org.cactoos.time;
