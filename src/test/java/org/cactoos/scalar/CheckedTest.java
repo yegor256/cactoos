@@ -26,39 +26,48 @@ package org.cactoos.scalar;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.channels.AcceptPendingException;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Checked}.
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class CheckedTest {
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void runtimeExceptionGoesOut() throws Exception {
-        new Checked<>(
-            () -> {
-                throw new IllegalStateException("runtime");
-            },
-            IOException::new
-        ).value();
+        new Assertion<>(
+            "Must throw runtime exception",
+            () -> new Checked<>(
+                () -> {
+                    throw new IllegalStateException("runtime");
+                },
+                IOException::new
+            ).value(),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void usesGenericVarianceOnExceptionTypes() throws Exception {
-        new Checked<String, IllegalStateException>(
-            () -> {
-                throw new IllegalStateException();
-            },
-            (Throwable ex) -> {
-                return new AcceptPendingException();
-            }
-        ).value();
+        new Assertion<>(
+            "Must use generic variance on exception types",
+            () -> new Checked<String, IllegalStateException>(
+                () -> {
+                    throw new IllegalStateException();
+                },
+                (Throwable ex) -> {
+                    return new AcceptPendingException();
+                }
+            ).value(),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -73,14 +82,18 @@ public final class CheckedTest {
         );
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void throwsIoException() throws Exception {
-        new Checked<>(
-            () -> {
-                throw new InterruptedException("interrupt");
-            },
-            IOException::new
-        ).value();
+        new Assertion<>(
+            "Must throw io exception",
+            () -> new Checked<>(
+                () -> {
+                    throw new InterruptedException("interrupt");
+                },
+                IOException::new
+            ).value(),
+            new Throws<>(IOException.class)
+        ).affirm();
     }
 
     @Test
@@ -93,10 +106,11 @@ public final class CheckedTest {
                 IOException::new
             ).value();
         } catch (final IOException exp) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
+                "Must not have cause when throwing io exception",
                 exp.getCause(),
                 Matchers.nullValue()
-            );
+            ).affirm();
         }
     }
 
@@ -110,28 +124,26 @@ public final class CheckedTest {
                 IOException::new
             ).value();
         } catch (final FileNotFoundException exp) {
-            MatcherAssert.assertThat(
+            new Assertion<>(
+                "Must not have cause when throwing file not found exception",
                 exp.getCause(),
                 Matchers.nullValue()
-            );
+            ).affirm();
         }
     }
 
     @Test
     public void throwsIoExceptionWithModifiedMessage() throws Exception {
         final String message = "error msg";
-        try {
-            new Checked<>(
+        new Assertion<>(
+            "Must throw io exception with modified message",
+            () -> new Checked<>(
                 () -> {
                     throw new IOException("io");
                 },
                 exp -> new IOException(message, exp)
-            ).value();
-        } catch (final IOException exp) {
-            MatcherAssert.assertThat(
-                exp.getMessage(),
-                Matchers.containsString(message)
-            );
-        }
+            ).value(),
+            new Throws<>(message, IOException.class)
+        ).affirm();
     }
 }
