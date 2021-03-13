@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Decorator of {@link InputStream} to prevent it
@@ -37,9 +38,9 @@ import java.io.InputStream;
 public final class SafeInputStream extends InputStream {
 
     /**
-     * Origin stream.
+     * Inner {@link InputStream}.
      */
-    private final InputStream origin;
+    private final AtomicReference<InputStream> inner;
 
     /**
      * Ctor.
@@ -47,53 +48,54 @@ public final class SafeInputStream extends InputStream {
      */
     public SafeInputStream(final InputStream origin) {
         super();
-        this.origin = origin;
+        this.inner = new AtomicReference<>(origin);
     }
 
     @Override
     public int read() throws IOException {
-        return this.origin.read();
+        return this.inner.get().read();
     }
 
     @Override
     public int read(final byte[] buffer) throws IOException {
-        return this.origin.read(buffer);
+        return this.inner.get().read(buffer);
     }
 
     @Override
     public int read(final byte[] buffer, final int offset,
         final int length) throws IOException {
-        return this.origin.read(buffer, offset, length);
+        return this.inner.get().read(buffer, offset, length);
     }
 
     @Override
     @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
     public void close() throws IOException {
+        this.inner.set(new DeadInputStream());
     }
 
     @Override
     public long skip(final long num) throws IOException {
-        return this.origin.skip(num);
+        return this.inner.get().skip(num);
     }
 
     @Override
     public int available() throws IOException {
-        return this.origin.available();
+        return this.inner.get().available();
     }
 
     @Override
     public void mark(final int limit) {
-        this.origin.mark(limit);
+        this.inner.get().mark(limit);
     }
 
     @Override
     public void reset() throws IOException {
-        this.origin.reset();
+        this.inner.get().reset();
     }
 
     @Override
     public boolean markSupported() {
-        return this.origin.markSupported();
+        return this.inner.get().markSupported();
     }
 
 }

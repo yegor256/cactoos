@@ -25,6 +25,7 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Decorator of {@link OutputStream} to prevent it
@@ -37,9 +38,9 @@ import java.io.OutputStream;
 public final class SafeOutputStream extends OutputStream {
 
     /**
-     * Origin.
+     * Inner {@link OutputStream}.
      */
-    private final OutputStream origin;
+    private final AtomicReference<OutputStream> inner;
 
     /**
      * Ctor.
@@ -47,33 +48,33 @@ public final class SafeOutputStream extends OutputStream {
      */
     public SafeOutputStream(final OutputStream origin) {
         super();
-        this.origin = origin;
+        this.inner = new AtomicReference<>(origin);
     }
 
     @Override
     public void write(final int data) throws IOException {
-        this.origin.write(data);
+        this.inner.get().write(data);
     }
 
     @Override
     public void write(final byte[] buf) throws IOException {
-        this.origin.write(buf);
+        this.inner.get().write(buf);
     }
 
     @Override
     public void write(final byte[] buf, final int off, final int len)
         throws IOException {
-        this.origin.write(buf, off, len);
+        this.inner.get().write(buf, off, len);
     }
 
     @Override
     public void flush() throws IOException {
-        this.origin.flush();
+        this.inner.get().flush();
     }
 
     @Override
-    @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
     public void close() throws IOException {
+        this.inner.set(new DeadOutputStream());
     }
 
 }
