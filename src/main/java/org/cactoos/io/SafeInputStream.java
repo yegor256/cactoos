@@ -68,7 +68,6 @@ public final class SafeInputStream extends InputStream {
     }
 
     @Override
-    @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
     public void close() throws IOException {
         this.inner.set(new DeadInputStream());
     }
