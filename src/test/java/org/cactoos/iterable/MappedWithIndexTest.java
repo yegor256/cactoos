@@ -23,59 +23,68 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Collections;
-import org.cactoos.list.ListOf;
+import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.Upper;
-import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link Mapped}.
- * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
+ * Tests for {@link MappedWithIndex}.
+ * @since 1.0.0
  * @checkstyle MagicNumberCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class MappedTest {
-
+final class MappedWithIndexTest {
     @Test
-    void transformsList() throws Exception {
+    void transformsIterable() throws Exception {
         new Assertion<>(
-            "Must transform an iterable",
-            new Mapped<>(
-                input -> new Upper(new TextOf(input)),
+            "must transform an iterable",
+            new MappedWithIndex<>(
+                (input, index) -> new Joined(
+                    "-",
+                    new TextOf(index.toString()),
+                    new TextOf(input)
+                ),
                 new IterableOf<>(
-                    "hello", "world", "друг"
+                    "hello", "world"
                 )
-            ).iterator().next().asString(),
-            new IsEqual<>("HELLO")
+            ),
+            new IsEqual<>(
+                new IterableOf<>(
+                    new TextOf("0-hello"),
+                    new TextOf("1-world")
+                )
+            )
         ).affirm();
     }
 
     @Test
-    void transformsEmptyList() {
+    void transformsEmptyIterable() {
         new Assertion<>(
-            "Must transform an empty iterable",
-            new Mapped<>(
-                (String input) -> new Upper(new TextOf(input)),
-                Collections.emptyList()
+            "must transform an empty iterable",
+            new MappedWithIndex<>(
+                (input, index) -> {
+                    Assertions.fail("must do not be executed");
+                    return input;
+                },
+                new IterableOf<>()
             ),
-            new IsEmptyIterable<>()
+            new IsEqual<>(
+                new IterableOf<>()
+            )
         ).affirm();
     }
 
     @Test
     void string() {
         new Assertion<>(
-            "Must convert to string",
-            new Mapped<>(
-                x -> x * 2,
-                new ListOf<>(1, 2, 3)
+            "must convert to string",
+            new MappedWithIndex<>(
+                (x, index) -> x * index * 2,
+                new IterableOf<>(1, 2, 3)
             ).toString(),
-            new IsEqual<>("2, 4, 6")
+            new IsEqual<>("0, 4, 12")
         ).affirm();
     }
 
@@ -83,11 +92,21 @@ final class MappedTest {
     void transformsArray() {
         new Assertion<>(
             "Transforms an array",
-            new Mapped<>(
-                input -> new Upper(new TextOf(input)).asString(),
+            new MappedWithIndex<>(
+                (input, index) -> new Joined(
+                    "-",
+                    index.toString(),
+                    input
+                ),
                 "a", "b", "c"
             ),
-            new IsEqual<>(new IterableOf<>("A", "B", "C"))
+            new IsEqual<>(
+                new IterableOf<>(
+                    new TextOf("0-a"),
+                    new TextOf("1-b"),
+                    new TextOf("2-c")
+                )
+            )
         ).affirm();
     }
 }

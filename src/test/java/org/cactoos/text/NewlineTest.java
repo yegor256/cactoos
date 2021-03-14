@@ -21,13 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.text;
+
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
- * Iterables.
- *
- * @since 0.12
- * @todo #1533:30min Exploit generic variance for package org.cactoos.iterable
- *  to ensure typing works as best as possible as it is explained in
- *  #1533 issue.
+ * Tests for {@link Newline}.
+ * @since 1.0.0
  */
-package org.cactoos.iterable;
+final class NewlineTest {
+    @Test
+    void test() {
+        new Assertion<>(
+            "Must be equal to the System.lineSeparator()",
+            new Newline(),
+            new IsText(System.lineSeparator())
+        ).affirm();
+    }
+}

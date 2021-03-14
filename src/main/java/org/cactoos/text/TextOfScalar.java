@@ -21,68 +21,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.bytes;
+package org.cactoos.text;
 
-import org.cactoos.Bytes;
-import org.cactoos.Func;
-import org.cactoos.func.UncheckedFunc;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.Or;
+import org.cactoos.scalar.Unchecked;
 
 /**
- * Bytes that doesn't throw checked {@link Exception}.
+ * Text of {@link Scalar}
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.3
+ * @since 1.0.0
  */
-public final class UncheckedBytes implements Bytes {
+public final class TextOfScalar implements Text {
 
     /**
-     * Original bytes.
+     * String value of the envelope.
      */
-    private final Bytes bytes;
-
-    /**
-     * Fallback.
-     */
-    private final Func<? super Exception, byte[]> fallback;
+    private final Scalar<String> origin;
 
     /**
      * Ctor.
-     * @param bts Encapsulated bytes
+     *
+     * @param scalar The Scalar of String
      */
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
-    public UncheckedBytes(final Bytes bts) {
-        this(
-            bts,
-            error -> {
-                throw new RuntimeException(error);
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param bts Encapsulated bytes
-     * @param fbk Fallback
-     * @since 0.5
-     */
-    public UncheckedBytes(final Bytes bts,
-        final Func<? super Exception, byte[]> fbk) {
-        this.bytes = bts;
-        this.fallback = fbk;
+    public TextOfScalar(final Scalar<String> scalar) {
+        this.origin = scalar;
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public byte[] asBytes() {
-        byte[] data;
-        try {
-            data = this.bytes.asBytes();
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            data = new UncheckedFunc<>(this.fallback).apply(ex);
-        }
-        return data;
+    public String asString() throws Exception {
+        return this.origin.value();
     }
 
+    @Override
+    public String toString() {
+        return new UncheckedText(this).asString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new Unchecked<>(this.origin).value().hashCode();
+    }
+
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    public boolean equals(final Object obj) {
+        return new Unchecked<>(
+            new Or(
+                () -> this == obj,
+                new And(
+                    () -> obj instanceof Text,
+                    () -> new UncheckedText(this)
+                        .asString()
+                        .equals(new UncheckedText((Text) obj).asString())
+                )
+            )
+        ).value();
+    }
 }

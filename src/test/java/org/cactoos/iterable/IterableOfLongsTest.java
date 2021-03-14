@@ -23,9 +23,9 @@
  */
 package org.cactoos.iterable;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link IterableOfLongs}.
@@ -38,9 +38,10 @@ final class IterableOfLongsTest {
     @Test
     void convertsLongValuesToIterable() {
         final long[] values = new long[]{1, 2, 3};
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Must convert long values to iterable",
             new IterableOfLongs(values),
-            Matchers.contains(values[0], values[1], values[2])
-        );
+            new HasValues<>(values[0], values[1], values[2])
+        ).affirm();
     }
 }

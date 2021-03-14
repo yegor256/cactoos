@@ -22,9 +22,8 @@ jobs:
       - name: Test
         run: mvn clean test --errors --batch-mode
       - name: CodeCov
-        uses: codecov/codecov-action@v1.0.13
-        if: matrix.os == 'ubuntu-18.04' && github.repository == 'yegor256/cactoos'
-        timeout-minutes: 10
+        uses: codecov/codecov-action@v1
+        if: matrix.os == 'ubuntu-18.04' && matrix.java == 8 && github.repository == 'yegor256/cactoos'
         with:
           file: target/coverage/jacoco.xml
 

@@ -21,13 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.text;
 
 /**
- * Iterables.
+ * Returns a text that is the default system line separator.
  *
- * @since 0.12
- * @todo #1533:30min Exploit generic variance for package org.cactoos.iterable
- *  to ensure typing works as best as possible as it is explained in
- *  #1533 issue.
+ * <p>There is no thread-safety guarantee.
+ * @since 1.0.0
  */
-package org.cactoos.iterable;
+public final class Newline extends TextEnvelope {
+    /**
+     * Ctor.
+     */
+    public Newline() {
+        super(new FormattedText("%n"));
+    }
+}

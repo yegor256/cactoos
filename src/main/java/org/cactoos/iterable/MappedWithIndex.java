@@ -21,13 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.iterable;
+
+import org.cactoos.BiFunc;
 
 /**
- * Iterables.
+ * Mapped with index iterable.
  *
- * @since 0.12
- * @todo #1533:30min Exploit generic variance for package org.cactoos.iterable
- *  to ensure typing works as best as possible as it is explained in
- *  #1533 issue.
+ * <p>
+ * There is no thread-safety guarantee.
+ * @param <Y> Type of target item
+ * @since 1.0.0
  */
-package org.cactoos.iterable;
+public final class MappedWithIndex<Y> extends IterableEnvelope<Y> {
+    /**
+     * Ctor.
+     * @param fnc Func
+     * @param src Source iterable
+     * @param <X> Type of source item
+     */
+    @SafeVarargs
+    public <X> MappedWithIndex(
+        final BiFunc<? super X, Integer, ? extends Y> fnc,
+        final X... src
+    ) {
+        this(fnc, new IterableOf<>(src));
+    }
+
+    /**
+     * Ctor.
+     * @param fnc Func
+     * @param src Source iterable
+     * @param <X> Type of source item
+     */
+    public <X> MappedWithIndex(
+        final BiFunc<? super X, Integer, ? extends Y> fnc,
+        final Iterable<? extends X> src
+    ) {
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.MappedWithIndex<>(fnc, src.iterator())
+            )
+        );
+    }
+}

@@ -25,10 +25,12 @@ package org.cactoos.iterable;
 
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsIterableWithSize;
+import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -37,6 +39,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.39
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class MatchedTest {
@@ -49,7 +52,7 @@ public final class MatchedTest {
                 new IterableOf<>(1, 2, 3),
                 new IterableOf<>(1, 2, 3)
             ),
-            Matchers.hasItems(1, 2, 3)
+            new HasValues<>(1, 2, 3)
         ).affirm();
     }
 
@@ -92,7 +95,9 @@ public final class MatchedTest {
                 new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
                 new IterableOf<>("`A` elem", "`B` elem", "'C' elem")
             ),
-            Matchers.iterableWithSize(3)
+            new IsIterableWithSize<>(
+                new IsEqual<>(3)
+            )
         ).affirm();
     }
 
@@ -105,7 +110,9 @@ public final class MatchedTest {
                 new IterableOf<>(1d, 2d, 3d),
                 new IterableOf<>(1L, 2L, 3L)
             ),
-            Matchers.iterableWithSize(3)
+            new IsIterableWithSize<>(
+                new IsEqual<>(3)
+            )
         ).affirm();
     }
 
@@ -142,7 +149,9 @@ public final class MatchedTest {
                 new IterableOf<>(1, 2, 3),
                 new IterableOf<>("1", "2", "3")
             ),
-            Matchers.iterableWithSize(3)
+            new IsIterableWithSize<>(
+                new IsEqual<>(3)
+            )
         ).affirm();
     }
 

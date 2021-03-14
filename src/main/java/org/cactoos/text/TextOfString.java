@@ -21,19 +21,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.cactoos.text;
+
+import org.cactoos.Text;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.Or;
+import org.cactoos.scalar.Unchecked;
 
 /**
- * We are running experiments with the APIs provided in this package. We
- * encourage you to try them out and submit any questions and feedback
- * <a href="https://github.com/yegor256/cactoos/issues">here</a>.
+ * Text of {@link String}
  *
- * <strong>Be warned</strong>, however, that the stability of this package is
- * not guaranteed.
- * APIs may come, change, and go, between any release, for any reason
- * whatsoever.
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
- * @todo #1533:30min Exploit generic variance for package org.cactoos.experimental
- *  to ensure typing works as best as possible as it is explained in #1533 issue.
  */
-package org.cactoos.experimental;
+public final class TextOfString implements Text {
+
+    /**
+     * Input text.
+     */
+    private final String input;
+
+    /**
+     * Ctor.
+     *
+     * @param input The String
+     */
+    public TextOfString(final String input) {
+        this.input = input;
+    }
+
+    @Override
+    public String asString() throws Exception {
+        return this.input;
+    }
+
+    @Override
+    public String toString() {
+        return this.input;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.input.hashCode();
+    }
+
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    public boolean equals(final Object obj) {
+        return new Unchecked<>(
+            new Or(
+                () -> this == obj,
+                new And(
+                    () -> obj instanceof Text,
+                    () -> this.input.equals(new UncheckedText((Text) obj).asString())
+                )
+            )
+        ).value();
+    }
+}

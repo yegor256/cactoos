@@ -26,7 +26,6 @@ package org.cactoos.iterable;
 import java.util.Collections;
 import org.cactoos.scalar.ItemAt;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
@@ -42,7 +41,7 @@ final class CycledTest {
     void repeatIterableTest() {
         final String expected = "two";
         new Assertion<>(
-            "Can't repeat iterable",
+            "Must repeat iterable",
             new ItemAt<>(
                 // @checkstyle MagicNumberCheck (1 line)<
                 7, new Cycled<>(
@@ -59,14 +58,14 @@ final class CycledTest {
 
     @Test
     void notCycledEmptyTest() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't generate an empty iterable",
+        new Assertion<>(
+            "Must generate an empty iterable",
             new LengthOf(
                 new Cycled<>(
                     Collections::emptyIterator
                 )
             ),
             new HasValue<>(0L)
-        );
+        ).affirm();
     }
 }

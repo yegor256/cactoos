@@ -21,55 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.list;
+package org.cactoos.iterator;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import org.cactoos.iterable.IterableOf;
+import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.BiFunc;
 
 /**
- * Joined list.
+ * Mapped with index iterator.
  *
- * <p>There is no thread-safety guarantee.
- *
- * @param <X> Type of source item
- * @since 0.20
- * @todo #1254:30min Make {@link Joined} implements directly {@link List}
- *  and delegate each operation to {@link JoinedListIterator} as if lists
- *  joined were one list.
+ * <p>
+ * There is no thread-safety guarantee.
+ * @param <Y> Type of target item
+ * @since 1.0.0
  */
-public final class Joined<X> extends ListEnvelope<X> {
-
+public final class MappedWithIndex<Y> extends IteratorEnvelope<Y> {
     /**
      * Ctor.
-     * @param src Source lists
+     * @param func Func
+     * @param iterator Source iterator
+     * @param <X> Type of item
      */
-    @SafeVarargs
-    public Joined(final List<? extends X>... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param item First item
-     * @param items List
-     * @since 0.32
-     */
-    @SuppressWarnings("unchecked")
-    public Joined(final X item, final List<? extends X> items) {
-        this(new ListOf<>(item), items);
-    }
-
-    /**
-     * Ctor.
-     * @param src Source lists
-     */
-    public Joined(final Iterable<List<? extends X>> src) {
-        super(
-            new ListOf<>(src).stream()
-                .flatMap(List::stream)
-                .collect(Collectors.toList())
+    public <X> MappedWithIndex(
+        final BiFunc<? super X, Integer, ? extends Y> func,
+        final Iterator<? extends X> iterator
+    ) {
+        this(
+            new AtomicInteger(-1),
+            func,
+            iterator
         );
     }
 
+    /**
+     * Privated Ctor.
+     * @param indexcounter Index Counter
+     * @param func Func
+     * @param iterator Source iterator
+     * @param <X> Type of item
+     */
+    private <X> MappedWithIndex(
+        final AtomicInteger indexcounter,
+        final BiFunc<? super X, Integer, ? extends Y> func,
+        final Iterator<? extends X> iterator
+    ) {
+        super(
+            new Mapped<>(
+                item -> func.apply(item, indexcounter.incrementAndGet()),
+                iterator
+            )
+        );
+    }
 }
