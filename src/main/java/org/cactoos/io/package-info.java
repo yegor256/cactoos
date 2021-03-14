@@ -29,7 +29,7 @@
  * @todo #1449:30min We must find all the classes that closes stream of
  *  {@link org.cactoos.Input} or {@link org.cactoos.Output} that have been passed
  *  to them and document them about this behaviour and refer them to the existence
- *  of {@link org.cactoos.io.SafeInput} and {@link org.cactoos.io.SafeOutput}
+ *  of {@link org.cactoos.io.CloseShieldInput} and {@link org.cactoos.io.CloseShieldOutput}
  *  and how to use them.
  */
 package org.cactoos.io;

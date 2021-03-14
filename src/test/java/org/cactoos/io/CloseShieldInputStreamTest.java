@@ -23,58 +23,57 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Path;
+import java.io.InputStream;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
+import org.llorllale.cactoos.matchers.Verifies;
 
 /**
- * Test case for {@link SafeOutputStream}.
+ * Test case for {@link CloseShieldInputStream}.
  * @since 1.0.0
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class SafeOutputStreamTest {
-
-    @Test
-    void writesContentToFile(@TempDir final Path tempdir) throws IOException {
-        final File file = new File(tempdir.toFile(), "cactoos-1.txt-1");
-        file.createNewFile();
-        final Path temp = file.toPath();
-        try (OutputStream out = new OutputStreamTo(temp)) {
-            new Assertion<>(
-                "Must copy Input to Output and return Input",
-                new TextOf(
-                    new Sticky(
-                        new TeeInput(
-                            new ResourceOf("org/cactoos/small-text.txt"),
-                            new OutputTo(new SafeOutputStream(out))
-                        )
-                    )
-                ),
-                new IsText(
-                    new TextOf(temp)
-                )
-            ).affirm();
-        }
-    }
+final class CloseShieldInputStreamTest {
 
     @Test
     @SuppressWarnings("try")
     void preventsOriginalStreamToBeClosed() throws Exception {
-        try (FakeOutputStream origin = new FakeOutputStream()) {
+        try (FakeInputStream origin = new FakeInputStream()) {
             // @checkstyle EmptyBlockCheck (2 lines)
-            try (OutputStream stream = new SafeOutputStream(origin)) {
+            try (InputStream stream = new CloseShieldInputStream(origin)) {
             }
             new Assertion<>(
                 "Must not close origin stream",
                 origin.isClosed(),
                 new IsEqual<>(false)
+            ).affirm();
+        }
+    }
+
+    @Test
+    void readsContent() throws Exception {
+        final String content = "Text content";
+        try (InputStream in = new InputStreamOf(content)) {
+            new Assertion<>(
+                "Must read from text",
+                new TextOf(new CloseShieldInputStream(in)),
+                new IsText(content)
+            ).affirm();
+        }
+    }
+
+    @Test
+    void makesDataAvailable() throws IOException {
+        final String content = "Hello,חבר!";
+        try (InputStream in = new InputStreamOf(content)) {
+            new Assertion<>(
+                "Must show that data is available",
+                new CloseShieldInputStream(in).available(),
+                new Verifies<>(l -> l > 0)
             ).affirm();
         }
     }

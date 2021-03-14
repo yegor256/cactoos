@@ -23,35 +23,31 @@
  */
 package org.cactoos.io;
 
-import java.io.InputStream;
-import org.cactoos.Input;
+import java.io.OutputStream;
+import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * A decorator of {@link Input} that prevents {@link InputStream}
- * to be closed by its performers.
- *
- * <p>There is no thread-safety guarantee.
- *
+ * Test case for {@link CloseShieldOutput}.
  * @since 1.0.0
  */
-public final class SafeInput implements Input {
+final class CloseShieldOutputTest {
 
-    /**
-     * Origin.
-     */
-    private final Input origin;
-
-    /**
-     * Ctor.
-     * @param origin Origin
-     */
-    public SafeInput(final Input origin) {
-        this.origin = origin;
+    @Test
+    @SuppressWarnings("try")
+    void preventsOriginalStreamToBeClosed() throws Exception {
+        try (FakeOutputStream origin = new FakeOutputStream()) {
+            // @checkstyle EmptyBlockCheck (5 lines)
+            try (
+                OutputStream stream = new CloseShieldOutput(() -> origin).stream()
+            ) {
+            }
+            new Assertion<>(
+                "Must not close origin stream",
+                origin.isClosed(),
+                new IsEqual<>(false)
+            ).affirm();
+        }
     }
-
-    @Override
-    public InputStream stream() throws Exception {
-        return new SafeInputStream(this.origin.stream());
-    }
-
 }

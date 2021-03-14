@@ -24,48 +24,34 @@
 package org.cactoos.io;
 
 import java.io.InputStream;
-import org.cactoos.text.TextOf;
-import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.IsText;
+import org.cactoos.Input;
 
 /**
- * Test case for {@link SafeInput}.
+ * A decorator of {@link Input} that prevents {@link InputStream}
+ * to be closed by its performers.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
  * @since 1.0.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class SafeInputTest {
+public final class CloseShieldInput implements Input {
 
-    @Test
-    @SuppressWarnings("try")
-    void preventsOriginalStreamToBeClosed() throws Exception {
-        try (FakeInputStream origin = new FakeInputStream()) {
-            // @checkstyle EmptyBlockCheck (5 lines)
-            try (
-                InputStream stream =
-                    new SafeInput(new InputOf(origin)).stream()
-            ) {
-            }
-            new Assertion<>(
-                "Must not close origin stream",
-                origin.isClosed(),
-                new IsEqual<>(false)
-            ).affirm();
-        }
+    /**
+     * Origin.
+     */
+    private final Input origin;
+
+    /**
+     * Ctor.
+     * @param origin Origin
+     */
+    public CloseShieldInput(final Input origin) {
+        this.origin = origin;
     }
 
-    @Test
-    void readsContent() throws Exception {
-        final String content = "Text content";
-        try (
-            InputStream in = new InputStreamOf(content)
-        ) {
-            new Assertion<>(
-                "Must read text",
-                new TextOf(new SafeInput(new InputOf(in))),
-                new IsText(content)
-            ).affirm();
-        }
+    @Override
+    public InputStream stream() throws Exception {
+        return new CloseShieldInputStream(this.origin.stream());
     }
+
 }

@@ -34,7 +34,7 @@ import org.cactoos.Output;
  *
  * @since 1.0.0
  */
-public final class SafeOutput implements Output {
+public final class CloseShieldOutput implements Output {
 
     /**
      * Output to preserve.
@@ -45,12 +45,12 @@ public final class SafeOutput implements Output {
      * Ctor.
      * @param origin Output to preserve.
      */
-    public SafeOutput(final Output origin) {
+    public CloseShieldOutput(final Output origin) {
         this.origin = origin;
     }
 
     @Override
     public OutputStream stream() throws Exception {
-        return new SafeOutputStream(this.origin.stream());
+        return new CloseShieldOutputStream(this.origin.stream());
     }
 }

@@ -24,57 +24,77 @@
 package org.cactoos.io;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Decorator of {@link OutputStream} to prevent it
+ * Decorator of {@link InputStream} to prevent it
  * to be closed.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
-public final class SafeOutputStream extends OutputStream {
+public final class CloseShieldInputStream extends InputStream {
 
     /**
-     * Inner {@link OutputStream}.
+     * Inner {@link InputStream}.
      */
-    private final AtomicReference<OutputStream> inner;
+    private final AtomicReference<InputStream> inner;
 
     /**
      * Ctor.
      * @param origin Origin
      */
-    public SafeOutputStream(final OutputStream origin) {
+    public CloseShieldInputStream(final InputStream origin) {
         super();
         this.inner = new AtomicReference<>(origin);
     }
 
     @Override
-    public void write(final int data) throws IOException {
-        this.inner.get().write(data);
+    public int read() throws IOException {
+        return this.inner.get().read();
     }
 
     @Override
-    public void write(final byte[] buf) throws IOException {
-        this.inner.get().write(buf);
+    public int read(final byte[] buffer) throws IOException {
+        return this.inner.get().read(buffer);
     }
 
     @Override
-    public void write(final byte[] buf, final int off, final int len)
-        throws IOException {
-        this.inner.get().write(buf, off, len);
-    }
-
-    @Override
-    public void flush() throws IOException {
-        this.inner.get().flush();
+    public int read(final byte[] buffer, final int offset,
+        final int length) throws IOException {
+        return this.inner.get().read(buffer, offset, length);
     }
 
     @Override
     public void close() throws IOException {
-        this.inner.set(new DeadOutputStream());
+        this.inner.set(new DeadInputStream());
+    }
+
+    @Override
+    public long skip(final long num) throws IOException {
+        return this.inner.get().skip(num);
+    }
+
+    @Override
+    public int available() throws IOException {
+        return this.inner.get().available();
+    }
+
+    @Override
+    public void mark(final int limit) {
+        this.inner.get().mark(limit);
+    }
+
+    @Override
+    public void reset() throws IOException {
+        this.inner.get().reset();
+    }
+
+    @Override
+    public boolean markSupported() {
+        return this.inner.get().markSupported();
     }
 
 }

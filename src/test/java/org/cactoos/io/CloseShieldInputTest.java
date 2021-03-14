@@ -23,28 +23,29 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
-import org.llorllale.cactoos.matchers.Verifies;
 
 /**
- * Test case for {@link SafeInputStream}.
+ * Test case for {@link CloseShieldInput}.
  * @since 1.0.0
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class SafeInputStreamTest {
+final class CloseShieldInputTest {
 
     @Test
     @SuppressWarnings("try")
     void preventsOriginalStreamToBeClosed() throws Exception {
         try (FakeInputStream origin = new FakeInputStream()) {
-            // @checkstyle EmptyBlockCheck (2 lines)
-            try (InputStream stream = new SafeInputStream(origin)) {
+            // @checkstyle EmptyBlockCheck (5 lines)
+            try (
+                InputStream stream =
+                    new CloseShieldInput(new InputOf(origin)).stream()
+            ) {
             }
             new Assertion<>(
                 "Must not close origin stream",
@@ -57,23 +58,13 @@ final class SafeInputStreamTest {
     @Test
     void readsContent() throws Exception {
         final String content = "Text content";
-        try (InputStream in = new InputStreamOf(content)) {
+        try (
+            InputStream in = new InputStreamOf(content)
+        ) {
             new Assertion<>(
-                "Must read from text",
-                new TextOf(new SafeInputStream(in)),
+                "Must read text",
+                new TextOf(new CloseShieldInput(new InputOf(in))),
                 new IsText(content)
-            ).affirm();
-        }
-    }
-
-    @Test
-    void makesDataAvailable() throws IOException {
-        final String content = "Hello,חבר!";
-        try (InputStream in = new InputStreamOf(content)) {
-            new Assertion<>(
-                "Must show that data is available",
-                new SafeInputStream(in).available(),
-                new Verifies<>(l -> l > 0)
             ).affirm();
         }
     }
