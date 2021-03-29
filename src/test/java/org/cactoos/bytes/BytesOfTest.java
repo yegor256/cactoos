@@ -34,7 +34,6 @@ import org.cactoos.io.InputOf;
 import org.cactoos.io.Sticky;
 import org.cactoos.iterable.Endless;
 import org.cactoos.iterable.HeadOf;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfBytes;
 import org.cactoos.iterator.IteratorOfBytes;
 import org.cactoos.text.Concatenated;
@@ -89,10 +88,8 @@ final class BytesOfTest {
                 )
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new StartsWith("Hello, "),
-                    new EndsWith("друг!")
-                )
+                new StartsWith("Hello, "),
+                new EndsWith("друг!")
             )
         ).affirm();
     }
@@ -130,10 +127,8 @@ final class BytesOfTest {
                 )
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new StartsWith("Hello,"),
-                    new EndsWith("товарищ!")
-                )
+                new StartsWith("Hello,"),
+                new EndsWith("товарищ!")
             )
         ).affirm();
     }

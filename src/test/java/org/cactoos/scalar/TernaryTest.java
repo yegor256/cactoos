@@ -24,13 +24,14 @@
 package org.cactoos.scalar;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.iterable.IterableOf;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
-import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Ternary}.
@@ -124,7 +125,7 @@ final class TernaryTest {
     @Test
     @SuppressWarnings("unchecked")
     void inputScalarValueConserved() throws Exception {
-        new Assertion<>(
+        new Assertion<Scalar<Text>>(
             "Must conserve the same scalar value for each whole evaluation",
             new Ternary<>(
                 new ScalarOf<>(new AtomicInteger(0)::incrementAndGet),
@@ -133,11 +134,9 @@ final class TernaryTest {
                 i -> new FormattedText("else: %d", i)
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new HasValue<>(new TextOf("1 equals 1")),
-                    new HasValue<>(new TextOf("else: 2")),
-                    new HasValue<>(new TextOf("else: 3"))
-                )
+                new HasValue<>(new IsText("1 equals 1")),
+                new HasValue<>(new IsText("else: 2")),
+                new HasValue<>(new IsText("else: 3"))
             )
         ).affirm();
     }

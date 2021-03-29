@@ -29,10 +29,10 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.collection.IsEmptyCollection;
-import org.hamcrest.core.IsCollectionContaining;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Verifies;
 
 /**
@@ -65,11 +65,7 @@ public final class BehavesAsCollection<E> extends
         new Assertion<>(
             "Must contain item",
             col,
-            new IsCollectionContaining<>(
-                new IsEqual<>(
-                    this.sample
-                )
-            )
+            new HasValues<>(this.sample)
         ).affirm();
         new Assertion<>(
             "Must not be empty",
@@ -90,18 +86,14 @@ public final class BehavesAsCollection<E> extends
             new ListOf<>(
                 (E[]) col.toArray()
             ),
-            new IsCollectionContaining<>(
-                new IsEqual<>(this.sample)
-            )
+            new HasValues<>(this.sample)
         ).affirm();
         final E[] array = (E[]) new Object[col.size()];
         col.toArray(array);
         new Assertion<>(
             "Array from collection must contain item",
             new ListOf<>(array),
-            new IsCollectionContaining<>(
-                new IsEqual<>(this.sample)
-            )
+            new HasValues<>(this.sample)
         ).affirm();
         new Assertion<>(
             "Must contain list with the item",

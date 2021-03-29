@@ -25,11 +25,10 @@ package org.cactoos.map;
 
 import java.util.Map;
 import org.hamcrest.Description;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.collection.IsMapContaining;
-import org.hamcrest.core.IsCollectionContaining;
-import org.hamcrest.core.IsEqual;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasEntry;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Matcher for collection.
@@ -62,25 +61,23 @@ public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>>  {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean matchesSafely(final Map<K, V> map) {
-        MatcherAssert.assertThat(
-            "Doesn't contain the key",
+        new Assertion<>(
+            "Must contain the key/value entry",
             map,
-            new IsMapContaining<>(
-                new IsEqual<>(this.key),
-                new IsEqual<>(this.value)
-            )
-        );
-        MatcherAssert.assertThat(
-            "Doesn't contain the key in #keySet()",
+            new HasEntry<>(this.key, this.value)
+        ).affirm();
+        new Assertion<>(
+            "Must contain the key in #keySet()",
             map.keySet(),
-            new IsCollectionContaining<>(new IsEqual<>(this.key))
-        );
-        MatcherAssert.assertThat(
-            "Doesn't contain the value in #values()",
+            new HasValues<>(this.key)
+        ).affirm();
+        new Assertion<>(
+            "Must contain the value in #values()",
             map.values(),
-            new IsCollectionContaining<>(new IsEqual<>(this.value))
-        );
+            new HasValues<>(this.value)
+        ).affirm();
         return true;
     }
 

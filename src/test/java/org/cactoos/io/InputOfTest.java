@@ -40,7 +40,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import org.cactoos.bytes.BytesOf;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
@@ -180,10 +179,8 @@ final class InputOfTest {
                 StandardCharsets.UTF_8
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new StartsWith("Hello, "),
-                    new EndsWith("друг!")
-                )
+                new StartsWith("Hello, "),
+                new EndsWith("друг!")
             )
         ).affirm();
     }
@@ -203,10 +200,8 @@ final class InputOfTest {
                 )
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new StartsWith(starts),
-                    new EndsWith(ends)
-                )
+                new StartsWith(starts),
+                new EndsWith(ends)
             )
         ).affirm();
     }
@@ -226,10 +221,8 @@ final class InputOfTest {
                 )
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new StartsWith(starts),
-                    new EndsWith(ends)
-                )
+                new StartsWith(starts),
+                new EndsWith(ends)
             )
         ).affirm();
     }
@@ -247,10 +240,8 @@ final class InputOfTest {
                 )
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new StartsWith("Hold "),
-                    new EndsWith("infinity")
-                )
+                new StartsWith("Hold "),
+                new EndsWith("infinity")
             )
         ).affirm();
     }
@@ -272,10 +263,8 @@ final class InputOfTest {
                 StandardCharsets.UTF_8
             ),
             new AllOf<>(
-                new IterableOf<>(
-                    new StartsWith("O que sera"),
-                    new EndsWith(" que sera")
-                )
+                new StartsWith("O que sera"),
+                new EndsWith(" que sera")
             )
         ).affirm();
     }

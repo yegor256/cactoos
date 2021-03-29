@@ -24,14 +24,16 @@
 package org.cactoos.map;
 
 import java.util.HashMap;
-import org.cactoos.iterable.IterableOf;
+import java.util.Map;
+import java.util.Set;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.collection.IsMapContaining;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsIterableContaining;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsEntry;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -347,8 +349,8 @@ public final class NoNullsTest {
     @Test
     @SuppressWarnings("unchecked")
     public void entrySet() {
-        MatcherAssert.assertThat(
-            "Can't call #entrySet()",
+        new Assertion<Set<Map.Entry<Integer, Integer>>>(
+            "Must call #entrySet()",
             new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
@@ -356,14 +358,12 @@ public final class NoNullsTest {
                         put(0, 0);
                     }
                 }
-            ),
+            ).entrySet(),
             new AllOf<>(
-                new IterableOf<>(
-                    new IsMapContaining<>(new IsEqual<>(1), new IsEqual<>(1)),
-                    new IsMapContaining<>(new IsEqual<>(0), new IsEqual<>(0))
-                )
+                new IsIterableContaining<>(new IsEntry<>(1, 1)),
+                new IsIterableContaining<>(new IsEntry<>(0, 0))
             )
-        );
+        ).affirm();
     }
 
     @Test
