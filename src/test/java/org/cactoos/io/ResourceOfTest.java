@@ -29,16 +29,18 @@ import org.cactoos.Text;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
+import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link ResourceOf}.
  *
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ResourceOfTest {
 
@@ -56,7 +58,7 @@ public final class ResourceOfTest {
                 0,
                 4
             ),
-            Matchers.equalTo(
+            new IsEqual<>(
                 new byte[]{
                     // @checkstyle MagicNumber (1 line)
                     (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
@@ -94,8 +96,8 @@ public final class ResourceOfTest {
                         "the replacement"
                     )
                 )
-            ).asString(),
-            Matchers.endsWith("replacement")
+            ),
+            new EndsWith("replacement")
         ).affirm();
     }
 
@@ -116,8 +118,8 @@ public final class ResourceOfTest {
                 new ResourceOf(
                     new TextOf("org/cactoos/small-text.txt")
                 )
-            ).asString(),
-            Matchers.endsWith("ex ea commodo")
+            ),
+            new EndsWith("ex ea commodo")
         ).affirm();
     }
 
@@ -130,8 +132,8 @@ public final class ResourceOfTest {
                     new FormattedText("%s/absent.txt", "baz"),
                     new TextOf("another replacement")
                 )
-            ).asString(),
-            Matchers.startsWith("another")
+            ),
+            new StartsWith("another")
         ).affirm();
     }
 

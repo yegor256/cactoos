@@ -28,7 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -56,17 +56,18 @@ final class TempFileTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void createFileInCustomPath() throws Exception {
         final Path custom = Paths.get(System.getProperty("user.home"));
         try (TempFile file = new TempFile(() -> custom, "", "")) {
             new Assertion<>(
                 "Must create a temp file at a custom path",
                 file,
-                Matchers.allOf(
-                    new Verifies<>(
+                new AllOf<>(
+                    new Verifies<TempFile>(
                         tmp -> Files.exists(tmp.value())
                     ),
-                    new Verifies<>(
+                    new Verifies<TempFile>(
                         tmp -> tmp.value().getParent().equals(custom)
                     )
                 )

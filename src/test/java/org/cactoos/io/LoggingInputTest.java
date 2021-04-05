@@ -26,10 +26,14 @@ package org.cactoos.io;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.cactoos.Text;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.Matchers;
+import org.cactoos.text.TextOf;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link LoggingInput}.
@@ -58,8 +62,8 @@ final class LoggingInputTest {
         ).value();
         new Assertion<>(
             "Can't log zero byte read from dead input",
-            logger.toString(),
-            Matchers.containsString("Read 0 byte(s) from dead input in")
+            new TextOf(logger.toString()),
+            new HasString("Read 0 byte(s) from dead input in")
         ).affirm();
     }
 
@@ -75,8 +79,8 @@ final class LoggingInputTest {
         ).value();
         new Assertion<>(
             "Can't log one byte read from memory",
-            logger.toString(),
-            Matchers.containsString("Read 1 byte(s) from memory in")
+            new TextOf(logger.toString()),
+            new HasString("Read 1 byte(s) from memory in")
         ).affirm();
     }
 
@@ -92,12 +96,13 @@ final class LoggingInputTest {
         ).value();
         new Assertion<>(
             "Can't log 22 bytes read from memory",
-            logger.toString(),
-            Matchers.containsString("Read 22 byte(s) from memory in")
+            new TextOf(logger.toString()),
+            new HasString("Read 22 byte(s) from memory in")
         ).affirm();
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void logReadFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         new LengthOf(
@@ -109,18 +114,19 @@ final class LoggingInputTest {
         ).value();
         new Assertion<>(
             "Can't log 74536 bytes read from text file",
-            logger.toString(),
-            Matchers.allOf(
-                Matchers.not(
-                    Matchers.containsString("Read 16384 byte(s) from text file")
+            new TextOf(logger.toString()),
+            new AllOf<>(
+                new IsNot<Text>(
+                    new HasString("Read 16384 byte(s) from text file")
                 ),
-                Matchers.containsString("Read 74536 byte(s) from text file in"),
-                Matchers.containsString("Closed input stream from text file")
+                new HasString("Read 74536 byte(s) from text file in"),
+                new HasString("Closed input stream from text file")
             )
         ).affirm();
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void logAllFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger(Level.WARNING);
         new LengthOf(
@@ -132,14 +138,14 @@ final class LoggingInputTest {
         ).value();
         new Assertion<>(
             "Can't log all read and close operations from text file",
-            logger.toString(),
-            Matchers.allOf(
-                Matchers.containsString("Read 16384 byte(s) from text file"),
-                Matchers.containsString("Read 32768 byte(s) from text file"),
-                Matchers.containsString("Read 49152 byte(s) from text file"),
-                Matchers.containsString("Read 65536 byte(s) from text file"),
-                Matchers.containsString("Read 74536 byte(s) from text file"),
-                Matchers.containsString("Closed input stream from text file")
+            new TextOf(logger.toString()),
+            new AllOf<>(
+                new HasString("Read 16384 byte(s) from text file"),
+                new HasString("Read 32768 byte(s) from text file"),
+                new HasString("Read 49152 byte(s) from text file"),
+                new HasString("Read 65536 byte(s) from text file"),
+                new HasString("Read 74536 byte(s) from text file"),
+                new HasString("Closed input stream from text file")
             )
         ).affirm();
     }
@@ -155,8 +161,8 @@ final class LoggingInputTest {
         ).stream().skip(100);
         new Assertion<>(
             "Can't log skip from text file",
-            logger.toString(),
-            Matchers.containsString("Skipped 100 byte(s) from text file.")
+            new TextOf(logger.toString()),
+            new HasString("Skipped 100 byte(s) from text file.")
         ).affirm();
     }
 
@@ -170,14 +176,15 @@ final class LoggingInputTest {
         ).stream().available();
         new Assertion<>(
             "Can't log avaliable byte(s) from text file",
-            logger.toString(),
-            Matchers.containsString(
+            new TextOf(logger.toString()),
+            new HasString(
                 "There is(are) 74536 byte(s) available from text file"
             )
         ).affirm();
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void logResetFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         final InputStream input = new LoggingInput(
@@ -190,10 +197,10 @@ final class LoggingInputTest {
         input.reset();
         new Assertion<>(
             "Can't log mark and reset from text file",
-            logger.toString(),
-            Matchers.allOf(
-                Matchers.containsString("Marked position 150 from text file"),
-                Matchers.containsString("Reset input stream from text file")
+            new TextOf(logger.toString()),
+            new AllOf<>(
+                new HasString("Marked position 150 from text file"),
+                new HasString("Reset input stream from text file")
             )
         ).affirm();
     }
@@ -208,8 +215,8 @@ final class LoggingInputTest {
         ).stream().markSupported();
         new Assertion<>(
             "Can't log mark and reset are not supported from text file",
-            logger.toString(),
-            Matchers.containsString(
+            new TextOf(logger.toString()),
+            new HasString(
                 "Mark and reset are supported from text file"
             )
         ).affirm();
@@ -230,8 +237,8 @@ final class LoggingInputTest {
             ).value();
             new Assertion<>(
                 "",
-                handler.toString(),
-                Matchers.containsString("Read 8 byte(s)")
+                new TextOf(handler.toString()),
+                new HasString("Read 8 byte(s)")
             ).affirm();
         } finally {
             logger.removeHandler(handler);

@@ -32,13 +32,13 @@ import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
+import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Test case for {@link InputStreamOf}.
@@ -94,7 +94,7 @@ public final class InputStreamOfTest {
         new Assertion<>(
             "Must show that data is available",
             new InputStreamOf(content).available(),
-            Matchers.greaterThan(0)
+            new Verifies<>(x -> x > 0)
         ).affirm();
     }
 

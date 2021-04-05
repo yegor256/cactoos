@@ -30,7 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -44,6 +44,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class TeeInputStreamTest {
 
     @Test
+    @SuppressWarnings("unchecked")
     void copiesContentByteByByte() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final String content = "Hello, товарищ!";
@@ -58,9 +59,9 @@ final class TeeInputStreamTest {
                     )
                 )
             ).asString(),
-            Matchers.allOf(
-                Matchers.equalTo(content),
-                Matchers.equalTo(
+            new AllOf<>(
+                new IsEqual<String>(content),
+                new IsEqual<String>(
                     new String(baos.toByteArray(), StandardCharsets.UTF_8)
                 )
             )

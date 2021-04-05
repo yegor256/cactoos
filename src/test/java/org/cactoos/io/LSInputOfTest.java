@@ -23,7 +23,8 @@
  */
 package org.cactoos.io;
 
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.StringContains;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -43,7 +44,7 @@ final class LSInputOfTest {
             new LSInputOf(
                 new InputOf("hello, world!")
             ).getStringData(),
-            Matchers.endsWith("world!")
+            new StringContains("world!")
         ).affirm();
     }
 
@@ -57,7 +58,7 @@ final class LSInputOfTest {
                     new SlowInputStream(size)
                 )
             ).getStringData().length(),
-            Matchers.equalTo(size)
+            new IsEqual<>(size)
         ).affirm();
     }
 
@@ -71,7 +72,7 @@ final class LSInputOfTest {
                     new SlowInputStream(size)
                 )
             ).getStringData().length(),
-            Matchers.equalTo(size)
+            new IsEqual<>(size)
         ).affirm();
     }
 

@@ -27,7 +27,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.text.TextOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -40,6 +41,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class TeeOutputStreamTest {
 
     @Test
+    @SuppressWarnings("unchecked")
     void copiesContentByteByByte() throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final ByteArrayOutputStream copy = new ByteArrayOutputStream();
@@ -56,12 +58,12 @@ final class TeeOutputStreamTest {
                     )
                 )
             ).asString(),
-            Matchers.allOf(
-                Matchers.equalTo(content),
-                Matchers.equalTo(
+            new AllOf<>(
+                new IsEqual<String>(content),
+                new IsEqual<String>(
                     new String(baos.toByteArray(), StandardCharsets.UTF_8)
                 ),
-                Matchers.equalTo(
+                new IsEqual<String>(
                     new String(copy.toByteArray(), StandardCharsets.UTF_8)
                 )
             )

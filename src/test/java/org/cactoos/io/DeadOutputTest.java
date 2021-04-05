@@ -23,7 +23,7 @@
  */
 package org.cactoos.io;
 
-import org.hamcrest.Matchers;
+import org.hamcrest.core.StringEndsWith;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
@@ -45,7 +45,7 @@ final class DeadOutputTest {
                 new InputOf("How are you, мой друг?"),
                 new DeadOutput()
             ),
-            new HasContent(Matchers.endsWith("друг?"))
+            new HasContent(new StringEndsWith("друг?"))
         ).affirm();
     }
 

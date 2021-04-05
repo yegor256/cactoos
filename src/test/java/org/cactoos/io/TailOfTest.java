@@ -26,7 +26,7 @@ package org.cactoos.io;
 import java.util.Arrays;
 import java.util.Random;
 import org.cactoos.bytes.BytesOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -49,7 +49,7 @@ public final class TailOfTest {
                     size - 1
                 )
             ).asBytes(),
-            Matchers.equalTo(Arrays.copyOfRange(bytes, 1, bytes.length))
+            new IsEqual<>(Arrays.copyOfRange(bytes, 1, bytes.length))
         ).affirm();
     }
 
@@ -65,7 +65,7 @@ public final class TailOfTest {
                     size
                 )
             ).asBytes(),
-            Matchers.equalTo(bytes)
+            new IsEqual<>(bytes)
         ).affirm();
     }
 
@@ -82,7 +82,7 @@ public final class TailOfTest {
                     size
                 )
             ).asBytes(),
-            Matchers.equalTo(bytes)
+            new IsEqual<>(bytes)
         ).affirm();
     }
 
@@ -98,7 +98,7 @@ public final class TailOfTest {
                     size + 1
                 )
             ).asBytes(),
-            Matchers.equalTo(bytes)
+            new IsEqual<>(bytes)
         ).affirm();
     }
 
@@ -115,7 +115,7 @@ public final class TailOfTest {
                     size - 1
                 )
             ).asBytes(),
-            Matchers.equalTo(
+            new IsEqual<>(
                 Arrays.copyOfRange(bytes, 1, bytes.length)
             )
         ).affirm();

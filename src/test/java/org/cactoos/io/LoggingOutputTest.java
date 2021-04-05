@@ -30,7 +30,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.scalar.LengthOf;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.StringContains;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -72,7 +74,7 @@ public final class LoggingOutputTest {
         new Assertion<>(
             "Can't log zero byte written to memory",
             logger.toString(),
-            Matchers.containsString("Written 0 byte(s) to memory in ")
+            new StringContains("Written 0 byte(s) to memory in ")
         ).affirm();
     }
 
@@ -91,7 +93,7 @@ public final class LoggingOutputTest {
         new Assertion<>(
             "Can't log one byte written to memory",
             logger.toString(),
-            Matchers.containsString("Written 1 byte(s) to memory in")
+            new StringContains("Written 1 byte(s) to memory in")
         ).affirm();
     }
 
@@ -110,11 +112,12 @@ public final class LoggingOutputTest {
         new Assertion<>(
             "Can't log 22 bytes written to memory",
             logger.toString(),
-            Matchers.containsString("Written 22 byte(s) to memory in")
+            new StringContains("Written 22 byte(s) to memory in")
         ).affirm();
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void logWriteToLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
         final Path temp = this.folder.newFolder("ccts-1").toPath();
@@ -135,19 +138,20 @@ public final class LoggingOutputTest {
         new Assertion<>(
             "Can't log write and close operations to text file",
             logger.toString(),
-            Matchers.allOf(
-                Matchers.not(
-                    Matchers.containsString(
+            new AllOf<>(
+                new IsNot<String>(
+                    new StringContains(
                         "Written 16384 byte(s) to text file"
                     )
                 ),
-                Matchers.containsString("Written 74536 byte(s) to text file"),
-                Matchers.containsString("Closed output stream from text file")
+                new StringContains("Written 74536 byte(s) to text file"),
+                new StringContains("Closed output stream from text file")
             )
         ).affirm();
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void logAllWriteToLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger(Level.WARNING);
         final Path temp = this.folder.newFolder("ccts-2").toPath();
@@ -168,13 +172,13 @@ public final class LoggingOutputTest {
         new Assertion<>(
             "Can't log all write and close operations to text file",
             logger.toString(),
-            Matchers.allOf(
-                Matchers.containsString("Written 16384 byte(s) to text file"),
-                Matchers.containsString("Written 32768 byte(s) to text file"),
-                Matchers.containsString("Written 49152 byte(s) to text file"),
-                Matchers.containsString("Written 65536 byte(s) to text file"),
-                Matchers.containsString("Written 74536 byte(s) to text file"),
-                Matchers.containsString("Closed output stream from text file")
+            new AllOf<>(
+                new StringContains("Written 16384 byte(s) to text file"),
+                new StringContains("Written 32768 byte(s) to text file"),
+                new StringContains("Written 49152 byte(s) to text file"),
+                new StringContains("Written 65536 byte(s) to text file"),
+                new StringContains("Written 74536 byte(s) to text file"),
+                new StringContains("Closed output stream from text file")
             )
         ).affirm();
     }
