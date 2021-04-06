@@ -72,7 +72,7 @@ public final class LoggingOutputTest {
             )
         ).value();
         new Assertion<>(
-            "Can't log zero byte written to memory",
+            "Must log write zero byte written to memory",
             logger.toString(),
             new StringContains("Written 0 byte(s) to memory in ")
         ).affirm();
@@ -91,7 +91,7 @@ public final class LoggingOutputTest {
             out.write(new BytesOf("a").asBytes());
         }
         new Assertion<>(
-            "Can't log one byte written to memory",
+            "Must log one byte written to memory",
             logger.toString(),
             new StringContains("Written 1 byte(s) to memory in")
         ).affirm();
@@ -110,7 +110,7 @@ public final class LoggingOutputTest {
             out.write(new BytesOf("Hello, товарищ!").asBytes());
         }
         new Assertion<>(
-            "Can't log 22 bytes written to memory",
+            "Must log 22 bytes written to memory",
             logger.toString(),
             new StringContains("Written 22 byte(s) to memory in")
         ).affirm();
@@ -136,7 +136,7 @@ public final class LoggingOutputTest {
             ).value();
         }
         new Assertion<>(
-            "Can't log write and close operations to text file",
+            "Must log write and close operations to text file",
             logger.toString(),
             new AllOf<>(
                 new IsNot<String>(
@@ -170,7 +170,7 @@ public final class LoggingOutputTest {
             ).value();
         }
         new Assertion<>(
-            "Can't log all write and close operations to text file",
+            "Must log all write and close operations to text file",
             logger.toString(),
             new AllOf<>(
                 new StringContains("Written 16384 byte(s) to text file"),
