@@ -61,7 +61,7 @@ final class LoggingInputTest {
             )
         ).value();
         new Assertion<>(
-            "Can't log zero byte read from dead input",
+            "Must log zero byte read from dead input",
             new TextOf(logger.toString()),
             new HasString("Read 0 byte(s) from dead input in")
         ).affirm();
@@ -78,7 +78,7 @@ final class LoggingInputTest {
             )
         ).value();
         new Assertion<>(
-            "Can't log one byte read from memory",
+            "Must log one byte read from memory",
             new TextOf(logger.toString()),
             new HasString("Read 1 byte(s) from memory in")
         ).affirm();
@@ -95,7 +95,7 @@ final class LoggingInputTest {
             )
         ).value();
         new Assertion<>(
-            "Can't log 22 bytes read from memory",
+            "Must log 22 bytes read from memory",
             new TextOf(logger.toString()),
             new HasString("Read 22 byte(s) from memory in")
         ).affirm();
@@ -113,7 +113,7 @@ final class LoggingInputTest {
             )
         ).value();
         new Assertion<>(
-            "Can't log 74536 bytes read from text file",
+            "Must log 74536 bytes read from text file",
             new TextOf(logger.toString()),
             new AllOf<>(
                 new IsNot<Text>(
@@ -137,7 +137,7 @@ final class LoggingInputTest {
             )
         ).value();
         new Assertion<>(
-            "Can't log all read and close operations from text file",
+            "Must log all read and close operations from text file",
             new TextOf(logger.toString()),
             new AllOf<>(
                 new HasString("Read 16384 byte(s) from text file"),
@@ -160,7 +160,7 @@ final class LoggingInputTest {
         // @checkstyle MagicNumber (1 line)
         ).stream().skip(100);
         new Assertion<>(
-            "Can't log skip from text file",
+            "Must log skip from text file",
             new TextOf(logger.toString()),
             new HasString("Skipped 100 byte(s) from text file.")
         ).affirm();
@@ -175,7 +175,7 @@ final class LoggingInputTest {
             logger
         ).stream().available();
         new Assertion<>(
-            "Can't log avaliable byte(s) from text file",
+            "Must log avaliable byte(s) from text file",
             new TextOf(logger.toString()),
             new HasString(
                 "There is(are) 74536 byte(s) available from text file"
@@ -196,7 +196,7 @@ final class LoggingInputTest {
         input.mark(150);
         input.reset();
         new Assertion<>(
-            "Can't log mark and reset from text file",
+            "Must log mark and reset from text file",
             new TextOf(logger.toString()),
             new AllOf<>(
                 new HasString("Marked position 150 from text file"),
@@ -214,7 +214,7 @@ final class LoggingInputTest {
             logger
         ).stream().markSupported();
         new Assertion<>(
-            "Can't log mark and reset are not supported from text file",
+            "Must log mark and reset are not supported from text file",
             new TextOf(logger.toString()),
             new HasString(
                 "Mark and reset are supported from text file"
