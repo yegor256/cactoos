@@ -42,7 +42,7 @@ public final class Joined extends TextEnvelope {
      * @param delimit Delimit among strings
      * @param strs Strings to be joined
      */
-    public Joined(final String delimit, final String... strs) {
+    public Joined(final CharSequence delimit, final CharSequence... strs) {
         this(delimit, new IterableOf<>(strs));
     }
 
@@ -51,7 +51,7 @@ public final class Joined extends TextEnvelope {
      * @param delimit Delimit among strings
      * @param strs Strings to be joined
      */
-    public Joined(final String delimit, final Iterable<String> strs) {
+    public Joined(final CharSequence delimit, final Iterable<? extends CharSequence> strs) {
         this(
             new TextOf(delimit),
             new Mapped<>(TextOf::new, strs)

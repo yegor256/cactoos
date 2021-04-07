@@ -43,7 +43,7 @@ public final class PrefixOf extends TextEnvelope {
      * @param text Text representing the text value
      * @param boundary String to which text will be split
      */
-    public PrefixOf(final String text, final String boundary) {
+    public PrefixOf(final CharSequence text, final String boundary) {
         this(new TextOf(text), boundary);
     }
 

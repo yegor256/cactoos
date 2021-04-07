@@ -42,7 +42,7 @@ public final class Capitalized extends TextEnvelope {
      *
      * @param text The text
      */
-    public Capitalized(final String text) {
+    public Capitalized(final CharSequence text) {
         this(new TextOf(text));
     }
 

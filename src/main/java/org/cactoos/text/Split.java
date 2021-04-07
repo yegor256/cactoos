@@ -44,7 +44,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @param rgx The regex
      * @see String#split(String)
      */
-    public Split(final String text, final String rgx) {
+    public Split(final CharSequence text, final CharSequence rgx) {
         this(new TextOf(text), new TextOf(rgx));
     }
 
@@ -56,7 +56,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @param lmt The limit
      * @see String#split(String, int)
      */
-    public Split(final String text, final String rgx, final int lmt) {
+    public Split(final CharSequence text, final CharSequence rgx, final int lmt) {
         this(new TextOf(text), new TextOf(rgx), lmt);
     }
 
@@ -66,7 +66,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @param rgx The regex
      * @see String#split(String)
      */
-    public Split(final String text, final Text rgx) {
+    public Split(final CharSequence text, final Text rgx) {
         this(new TextOf(text), rgx);
     }
 
@@ -87,7 +87,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @param rgx The regex
      * @see String#split(String)
      */
-    public Split(final Text text, final String rgx) {
+    public Split(final Text text, final CharSequence rgx) {
         this(text, new TextOf(rgx));
     }
 

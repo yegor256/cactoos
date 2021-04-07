@@ -55,7 +55,7 @@ public final class Abbreviated extends TextEnvelope {
      *
      * @param text The Text
      */
-    public Abbreviated(final String text) {
+    public Abbreviated(final CharSequence text) {
         this(new TextOf(text));
     }
 

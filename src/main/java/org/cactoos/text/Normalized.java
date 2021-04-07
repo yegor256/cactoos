@@ -37,7 +37,7 @@ public final class Normalized extends TextEnvelope {
      * Ctor.
      * @param text A Text
      */
-    public Normalized(final String text) {
+    public Normalized(final CharSequence text) {
         this(new TextOf(text));
     }
 
@@ -55,4 +55,3 @@ public final class Normalized extends TextEnvelope {
         );
     }
 }
-

@@ -48,7 +48,7 @@ public final class EndsWith implements Scalar<Boolean> {
      * @param origin The origin
      * @param suffix The suffix
      */
-    public EndsWith(final Text origin, final String suffix) {
+    public EndsWith(final Text origin, final CharSequence suffix) {
         this(origin, new TextOf(suffix));
     }
 

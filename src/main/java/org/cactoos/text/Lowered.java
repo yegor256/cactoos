@@ -39,7 +39,7 @@ public final class Lowered extends TextEnvelope {
      * Ctor.
      * @param text The text
      */
-    public Lowered(final String text) {
+    public Lowered(final CharSequence text) {
         this(new TextOf(text));
     }
 

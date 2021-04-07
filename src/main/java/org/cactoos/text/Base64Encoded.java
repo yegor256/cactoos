@@ -40,7 +40,7 @@ public final class Base64Encoded extends TextEnvelope {
      *
      * @param input The String
      */
-    public Base64Encoded(final String input) {
+    public Base64Encoded(final CharSequence input) {
         this(new TextOf(input));
     }
 
