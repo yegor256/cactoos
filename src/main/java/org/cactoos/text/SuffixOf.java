@@ -54,6 +54,7 @@ public final class SuffixOf extends TextEnvelope {
     public SuffixOf(final Text text, final CharSequence boundary) {
         this(text, new TextOf(boundary));
     }
+
     /**
      * Ctor.
      * @param text Text representing the text value
@@ -67,7 +68,8 @@ public final class SuffixOf extends TextEnvelope {
                     (Text t) -> t.asString().indexOf(boundary.asString()) >= 0,
                     t -> new Sub(
                         t,
-                        s -> s.indexOf(boundary.asString()) + new LengthOf(boundary).value().intValue()
+                        s -> s.indexOf(boundary.asString())
+                            + new LengthOf(boundary).value().intValue()
                     ),
                     t -> new TextOf("")
                 )
