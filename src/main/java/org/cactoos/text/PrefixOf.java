@@ -43,7 +43,7 @@ public final class PrefixOf extends TextEnvelope {
      * @param text Text representing the text value
      * @param boundary String to which text will be split
      */
-    public PrefixOf(final CharSequence text, final String boundary) {
+    public PrefixOf(final CharSequence text, final CharSequence boundary) {
         this(new TextOf(text), boundary);
     }
 
@@ -52,13 +52,22 @@ public final class PrefixOf extends TextEnvelope {
      * @param text Text representing the text value
      * @param boundary String to which text will be split
      */
-    public PrefixOf(final Text text, final String boundary) {
+    public PrefixOf(final Text text, final CharSequence boundary) {
+        this(text, new TextOf(boundary));
+    }
+
+    /**
+     * Ctor.
+     * @param text Text representing the text value
+     * @param boundary String to which text will be split
+     */
+    public PrefixOf(final Text text, final Text boundary) {
         super(
             new Flattened(
                 new Ternary<>(
                     new ScalarOf<>(() -> new Sticky(text)),
-                    (Text t) -> t.asString().indexOf(boundary) >= 0,
-                    t -> new Sub(t, 0, s -> s.indexOf(boundary)),
+                    (Text t) -> t.asString().indexOf(boundary.asString()) >= 0,
+                    t -> new Sub(t, 0, s -> s.indexOf(boundary.asString())),
                     t -> t
                 )
             )
