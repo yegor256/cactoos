@@ -368,7 +368,7 @@ public final class TextOf extends TextEnvelope {
      *
      * @param scalar The Scalar of String
      */
-    public TextOf(final Scalar<String> scalar) {
+    public TextOf(final Scalar<? extends CharSequence> scalar) {
         this(new TextOfScalar(scalar));
     }
 

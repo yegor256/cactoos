@@ -41,20 +41,20 @@ public final class TextOfScalar implements Text {
     /**
      * String value of the envelope.
      */
-    private final Scalar<String> origin;
+    private final Scalar<? extends CharSequence> origin;
 
     /**
      * Ctor.
      *
      * @param scalar The Scalar of String
      */
-    public TextOfScalar(final Scalar<String> scalar) {
+    public TextOfScalar(final Scalar<? extends CharSequence> scalar) {
         this.origin = scalar;
     }
 
     @Override
     public String asString() throws Exception {
-        return this.origin.value();
+        return this.origin.value().toString();
     }
 
     @Override
