@@ -39,14 +39,14 @@ import org.cactoos.scalar.Unchecked;
 public final class TextOfScalar implements Text {
 
     /**
-     * String value of the envelope.
+     * Value of the envelope.
      */
     private final Scalar<? extends CharSequence> origin;
 
     /**
      * Ctor.
      *
-     * @param scalar The Scalar of String
+     * @param scalar The scalar of CharSequence
      */
     public TextOfScalar(final Scalar<? extends CharSequence> scalar) {
         this.origin = scalar;

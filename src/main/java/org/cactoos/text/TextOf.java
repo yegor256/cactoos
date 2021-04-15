@@ -169,20 +169,20 @@ public final class TextOf extends TextEnvelope {
     /**
      * Ctor.
      *
-     * @param builder The String builder
+     * @param str The CharSequence
      */
-    public TextOf(final CharSequence builder) {
-        this(new BytesOf(builder));
+    public TextOf(final CharSequence str) {
+        this(new BytesOf(str));
     }
 
     /**
      * Ctor.
      *
-     * @param builder The String builder
+     * @param str The CharSequence
      * @param cset The Charset
      */
-    public TextOf(final CharSequence builder, final Charset cset) {
-        this(new BytesOf(builder, cset), cset);
+    public TextOf(final CharSequence str, final Charset cset) {
+        this(new BytesOf(str, cset), cset);
     }
 
     /**

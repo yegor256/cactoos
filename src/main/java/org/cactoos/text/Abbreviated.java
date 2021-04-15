@@ -53,7 +53,7 @@ public final class Abbreviated extends TextEnvelope {
      *
      * <p> By default, the max line width is 80 characters.
      *
-     * @param text The Text
+     * @param text The CharSequence
      */
     public Abbreviated(final CharSequence text) {
         this(new TextOf(text));

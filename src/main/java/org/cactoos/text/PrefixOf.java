@@ -40,8 +40,8 @@ public final class PrefixOf extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param text Text representing the text value
-     * @param boundary String to which text will be split
+     * @param text CharSequence representing the text value
+     * @param boundary CharSequence to which text will be split
      */
     public PrefixOf(final CharSequence text, final CharSequence boundary) {
         this(new TextOf(text), boundary);
@@ -50,7 +50,7 @@ public final class PrefixOf extends TextEnvelope {
     /**
      * Ctor.
      * @param text Text representing the text value
-     * @param boundary String to which text will be split
+     * @param boundary CharSequence to which text will be split
      */
     public PrefixOf(final Text text, final CharSequence boundary) {
         this(text, new TextOf(boundary));
