@@ -68,19 +68,27 @@ public final class HexOfTest {
         ).affirm();
     }
 
+    @Test
     public void invalidHexLength() throws Exception {
         new Assertion<>(
             "Must invalid hex length",
             () -> new HexOf(new TextOf("ABF")).asBytes(),
-            new Throws<>(IOException.class)
+            new Throws<>(
+                "Length of hexadecimal text is odd",
+                IOException.class
+            )
         ).affirm();
     }
 
+    @Test
     public void invalidHex() throws Exception {
         new Assertion<>(
             "Must invalid hex",
             () -> new HexOf(new TextOf("ABG!")).asBytes(),
-            new Throws<>(IOException.class)
+            new Throws<>(
+                "Unexpected character 'G'",
+                IOException.class
+            )
         ).affirm();
     }
 }
