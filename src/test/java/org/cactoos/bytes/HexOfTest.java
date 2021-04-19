@@ -27,8 +27,9 @@ package org.cactoos.bytes;
 import java.io.IOException;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 import org.llorllale.cactoos.matchers.Verifies;
 
 /**
@@ -37,6 +38,7 @@ import org.llorllale.cactoos.matchers.Verifies;
  * @since 0.29
  * @checkstyle MagicNumberCheck (500 line)
  * @checkstyle JavadocMethodCheck (500 line)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class HexOfTest {
 
@@ -66,13 +68,27 @@ public final class HexOfTest {
         ).affirm();
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void invalidHexLength() throws Exception {
-        new HexOf(new TextOf("ABF")).asBytes();
+        new Assertion<>(
+            "Must invalid hex length",
+            () -> new HexOf(new TextOf("ABF")).asBytes(),
+            new Throws<>(
+                "Length of hexadecimal text is odd",
+                IOException.class
+            )
+        ).affirm();
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void invalidHex() throws Exception {
-        new HexOf(new TextOf("ABG!")).asBytes();
+        new Assertion<>(
+            "Must invalid hex",
+            () -> new HexOf(new TextOf("ABG!")).asBytes(),
+            new Throws<>(
+                "Unexpected character 'G'",
+                IOException.class
+            )
+        ).affirm();
     }
 }

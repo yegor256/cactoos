@@ -27,8 +27,9 @@ import java.io.IOException;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link UncheckedBytes}.
@@ -38,13 +39,17 @@ import org.llorllale.cactoos.matchers.Assertion;
  */
 public final class UncheckedBytesTest {
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void rethrowsCheckedToUncheckedException() {
-        new UncheckedBytes(
-            () -> {
-                throw new IOException("intended");
-            }
-        ).asBytes();
+        new Assertion<>(
+            "Must rethrow checked to unchecked exception",
+            () -> new UncheckedBytes(
+                () -> {
+                    throw new IOException("intended");
+                }
+            ).asBytes(),
+            new Throws<>(RuntimeException.class)
+        ).affirm();
     }
 
     @Test

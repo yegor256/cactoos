@@ -26,7 +26,7 @@ package org.cactoos.bytes;
 import java.io.StringReader;
 import org.cactoos.text.TextOf;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;

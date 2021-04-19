@@ -24,7 +24,9 @@
 package org.cactoos;
 
 import org.cactoos.bytes.NoNulls;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link NoNulls}.
@@ -33,14 +35,20 @@ import org.junit.Test;
  */
 public final class BytesTest {
 
-    @Test(expected = IllegalArgumentException.class)
     public void failForNullArgument() throws Exception {
-        new NoNulls(null).asBytes();
+        new Assertion<>(
+            "Must fail for null argument.",
+            () -> new NoNulls(null).asBytes(),
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
     public void failForNullResult() throws Exception {
-        new NoNulls(() -> null).asBytes();
+        new Assertion<>(
+            "Must fail for null result.",
+            () -> new NoNulls(() -> null).asBytes(),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
     @Test
