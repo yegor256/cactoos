@@ -52,24 +52,15 @@ public final class SuffixOf extends TextEnvelope {
      * @param boundary String after which text will be split
      */
     public SuffixOf(final Text text, final CharSequence boundary) {
-        this(text, new TextOf(boundary));
-    }
-
-    /**
-     * Ctor.
-     * @param text Text representing the text value
-     * @param boundary String after which text will be split
-     */
-    public SuffixOf(final Text text, final Text boundary) {
         super(
             new Flattened(
                 new Ternary<>(
                     new ScalarOf<>(() -> new Sticky(text)),
-                    (Text t) -> t.asString().indexOf(boundary.asString()) >= 0,
+                    (Text t) -> t.asString().contains(boundary.toString()),
                     t -> new Sub(
                         t,
-                        s -> s.indexOf(boundary.asString())
-                            + new LengthOf(boundary).value().intValue()
+                        s -> s.indexOf(boundary.toString())
+                            + boundary.length()
                     ),
                     t -> new TextOf("")
                 )

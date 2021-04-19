@@ -24,8 +24,6 @@
 package org.cactoos.text;
 
 import org.cactoos.Text;
-import org.cactoos.func.FuncOf;
-import org.cactoos.scalar.Constant;
 import org.cactoos.scalar.ScalarOf;
 import org.cactoos.scalar.Ternary;
 
@@ -50,24 +48,15 @@ public final class PrefixOf extends TextEnvelope {
     /**
      * Ctor.
      * @param text Text representing the text value
-     * @param boundary CharSequence to which text will be split
-     */
-    public PrefixOf(final Text text, final CharSequence boundary) {
-        this(text, new TextOf(boundary));
-    }
-
-    /**
-     * Ctor.
-     * @param text Text representing the text value
      * @param boundary String to which text will be split
      */
-    public PrefixOf(final Text text, final Text boundary) {
+    public PrefixOf(final Text text, final CharSequence boundary) {
         super(
             new Flattened(
                 new Ternary<>(
                     new ScalarOf<>(() -> new Sticky(text)),
-                    (Text t) -> t.asString().indexOf(boundary.asString()) >= 0,
-                    t -> new Sub(t, 0, s -> s.indexOf(boundary.asString())),
+                    (Text t) -> t.asString().contains(boundary.toString()),
+                    t -> new Sub(t, 0, s -> s.indexOf(boundary.toString())),
                     t -> t
                 )
             )
