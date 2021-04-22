@@ -42,7 +42,7 @@ public final class Sub extends TextEnvelope {
      * @param text The String
      * @param strt Start position in the text
      */
-    public Sub(final String text, final int strt) {
+    public Sub(final CharSequence text, final int strt) {
         this(new TextOf(text), strt);
     }
 
@@ -52,7 +52,7 @@ public final class Sub extends TextEnvelope {
      * @param strt Start position in the text
      * @param finish End position in the text
      */
-    public Sub(final String text, final int strt, final int finish) {
+    public Sub(final CharSequence text, final int strt, final int finish) {
         this(new TextOf(text), strt, finish);
     }
 

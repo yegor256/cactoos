@@ -48,7 +48,7 @@ public final class Contains implements Scalar<Boolean> {
      * @param origin The origin
      * @param other The other
      */
-    public Contains(final String origin, final String other) {
+    public Contains(final CharSequence origin, final CharSequence other) {
         this(new TextOf(origin), new TextOf(other));
     }
 
@@ -57,7 +57,7 @@ public final class Contains implements Scalar<Boolean> {
      * @param origin The origin
      * @param other The other
      */
-    public Contains(final String origin, final Text other) {
+    public Contains(final CharSequence origin, final Text other) {
         this(new TextOf(origin), other);
     }
 

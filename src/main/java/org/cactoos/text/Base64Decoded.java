@@ -37,9 +37,9 @@ public final class Base64Decoded extends TextEnvelope {
     /**
      * Ctor.
      *
-     * @param input The String
+     * @param input The CharSequence
      */
-    public Base64Decoded(final String input) {
+    public Base64Decoded(final CharSequence input) {
         this(new TextOf(input));
     }
 

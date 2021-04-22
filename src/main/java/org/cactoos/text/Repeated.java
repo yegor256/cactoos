@@ -39,7 +39,7 @@ public final class Repeated extends TextEnvelope {
      * @param text A String
      * @param count How many times repeat the Text
      */
-    public Repeated(final String text, final int count) {
+    public Repeated(final CharSequence text, final int count) {
         this(new TextOf(text), count);
     }
 

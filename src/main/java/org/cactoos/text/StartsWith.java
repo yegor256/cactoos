@@ -62,7 +62,7 @@ public final class StartsWith implements Scalar<Boolean> {
      * @param text The text
      * @param prefix The prefix
      */
-    public StartsWith(final String text, final String prefix) {
+    public StartsWith(final CharSequence text, final CharSequence prefix) {
         this(new TextOf(text), new TextOf(prefix));
     }
 

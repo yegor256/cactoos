@@ -46,9 +46,9 @@ public class Concatenated extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param strs Strings to be concatenated
+     * @param strs CharSequences to be concatenated
      */
-    public Concatenated(final String... strs) {
+    public Concatenated(final CharSequence... strs) {
         this(
             new Mapped<>(
                 TextOf::new,

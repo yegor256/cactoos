@@ -40,7 +40,7 @@ public final class Upper extends TextEnvelope {
      * Ctor.
      * @param text The text
      */
-    public Upper(final String text) {
+    public Upper(final CharSequence text) {
         this(new TextOf(text));
     }
 
