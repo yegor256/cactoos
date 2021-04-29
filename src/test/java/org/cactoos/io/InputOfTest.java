@@ -32,13 +32,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import org.cactoos.Text;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
@@ -49,12 +44,16 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.HasString;
+import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.MatchesRegex;
 import org.llorllale.cactoos.matchers.StartsWith;
 import org.llorllale.cactoos.matchers.Verifies;
+import org.takes.facets.fork.FkRegex;
+import org.takes.facets.fork.TkFork;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
+import org.takes.tk.TkText;
 
 /**
  * Test case for {@link InputOf}.
@@ -63,7 +62,7 @@ import org.takes.tk.TkHtml;
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessiveImports", "unchecked" })
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.ExcessiveImports", "unchecked"})
 final class InputOfTest {
     @Test
     void readsAlternativeInputForFileCase() {
@@ -302,7 +301,7 @@ final class InputOfTest {
 
     @Test
     void readsAnArrayOfBytes() throws Exception {
-        final byte[] bytes = new byte[] {(byte) 0xCA, (byte) 0xFE};
+        final byte[] bytes = new byte[]{(byte) 0xCA, (byte) 0xFE};
         new Assertion<>(
             "must read array of bytes",
             new BytesOf(
@@ -323,18 +322,15 @@ final class InputOfTest {
     }
 
     @Test
-    void readsSecureUrlContent() throws Exception {
-        new Assertion<>(
-            "Must read bytes from HTTPS URL",
-            new BytesOf(
-                new InputOf(
-                    new URL(
-                        "https://www.yegor256.com/robots.txt"
-                    )
-                )
-            ).asBytes(),
-            new Verifies<>(arr -> arr.length > 0)
-        ).affirm();
+    void readsUrlContent() throws Exception {
+        final Text data = new TextOf("hello");
+        new FtRemote(new TkFork(new FkRegex("/", new TkText(data.asString())))).exec(
+            uri -> new Assertion<>(
+                "Must read bytes from HTTPS URL",
+                new TextOf(new InputOf(uri)),
+                new IsText(data)
+            ).affirm()
+        );
     }
 
 }
