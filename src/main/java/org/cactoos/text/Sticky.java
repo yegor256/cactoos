@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 
 /**
@@ -37,22 +36,17 @@ import org.cactoos.Text;
  * @see org.cactoos.scalar.Sticky
  * @since 0.47
  */
-public final class Sticky implements Text {
-    /**
-     * Sticky scalar.
-     */
-    private final Scalar<String> scalar;
-
+public final class Sticky extends TextEnvelope {
     /**
      * Ctor.
      * @param txt Text to cache
      */
     public Sticky(final Text txt) {
-        this.scalar = new org.cactoos.scalar.Sticky<>(txt::asString);
+        super(
+            new TextOfScalar(
+                new org.cactoos.scalar.Sticky<>(txt::asString)
+            )
+        );
     }
 
-    @Override
-    public String asString() throws Exception {
-        return this.scalar.value();
-    }
 }
