@@ -323,35 +323,9 @@ final class InputOfTest {
     }
 
     @Test
-    // @checkstyle MethodBodyCommentsCheck (50 lines)
     void readsSecureUrlContent() throws Exception {
-        final TrustManager[] managers = {
-            new X509TrustManager() {
-                @Override
-                public X509Certificate[] getAcceptedIssuers() {
-                    return new X509Certificate[0];
-                }
-
-                @Override
-                public void checkClientTrusted(
-                    final X509Certificate[] cert, final String arg) {
-                    // nothing to do
-                }
-
-                @Override
-                public void checkServerTrusted(
-                    final X509Certificate[] cert, final String arg) {
-                    // nothing to do
-                }
-            },
-        };
-        final SSLContext context = SSLContext.getInstance("TLS");
-        context.init(null, managers, new SecureRandom());
-        HttpsURLConnection.setDefaultSSLSocketFactory(
-            context.getSocketFactory()
-        );
         new Assertion<>(
-            "Can't read bytes from HTTPS URL",
+            "Must read bytes from HTTPS URL",
             new BytesOf(
                 new InputOf(
                     new URL(
