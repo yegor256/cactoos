@@ -25,9 +25,13 @@ package org.cactoos.iterable;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collection;
 import org.cactoos.Func;
 import org.cactoos.list.ListOf;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
@@ -61,6 +65,7 @@ final class RangeOfTest {
                     100,
                     new Func<Integer, Integer>() {
                         private int last;
+
                         @Override
                         public Integer apply(
                             final Integer input) throws Exception {
@@ -112,6 +117,32 @@ final class RangeOfTest {
                 LocalDate.of(2017, 1, 1),
                 LocalDate.of(2017, 1, 2),
                 LocalDate.of(2017, 1, 3)
+            )
+        ).affirm();
+    }
+
+    @Test
+    void shouldBeTraversableMultipleTimes() {
+        final Iterable<Character> range = new RangeOf<>('a', 'c', value -> ++value);
+        final Collection<Character> copy = new ArrayList<>(6);
+        range.forEach(copy::add);
+        range.forEach(copy::add);
+        new Assertion<>(
+            "Must add elements two times",
+            copy,
+            Matchers.iterableWithSize(6)
+        ).affirm();
+    }
+
+    @Test
+    void shouldNotChangeAfterTraversing() {
+        final Iterable<Character> range = new RangeOf<>('a', 'c', value -> ++value);
+        range.forEach(Assertions::assertNotNull);
+        new Assertion<>(
+            "Must be equal",
+            range,
+            new IsEqual<>(
+                new RangeOf<>('a', 'c', value -> ++value)
             )
         ).affirm();
     }
