@@ -33,27 +33,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.cactoos.Text;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.EndsWith;
-import org.llorllale.cactoos.matchers.HasContent;
-import org.llorllale.cactoos.matchers.HasString;
-import org.llorllale.cactoos.matchers.IsText;
-import org.llorllale.cactoos.matchers.IsTrue;
-import org.llorllale.cactoos.matchers.MatchesRegex;
-import org.llorllale.cactoos.matchers.StartsWith;
-import org.llorllale.cactoos.matchers.Verifies;
-import org.takes.facets.fork.FkRegex;
-import org.takes.facets.fork.TkFork;
+import org.llorllale.cactoos.matchers.*;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
-import org.takes.tk.TkText;
 
 /**
  * Test case for {@link InputOf}.
@@ -319,18 +307,6 @@ final class InputOfTest {
             new InputOf(content).stream(),
             new Verifies<>(s -> s.available() > 0)
         ).affirm();
-    }
-
-    @Test
-    void readsUrlContent() throws Exception {
-        final Text data = new TextOf("hello");
-        new FtRemote(new TkFork(new FkRegex("/", new TkText(data.asString())))).exec(
-            uri -> new Assertion<>(
-                "Must read bytes from HTTPS URL",
-                new TextOf(new InputOf(uri)),
-                new IsText(data)
-            ).affirm()
-        );
     }
 
 }
