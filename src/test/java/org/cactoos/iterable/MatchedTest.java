@@ -157,7 +157,6 @@ public final class MatchedTest {
         ).affirm();
     }
 
-
     @Test
     public void traversableSeveralTimes() {
         final Iterable<Integer> matched = new Matched<>(
@@ -193,6 +192,5 @@ public final class MatchedTest {
             )
         ).affirm();
     }
-
 
 }
