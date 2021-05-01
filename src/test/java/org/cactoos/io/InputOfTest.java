@@ -39,7 +39,14 @@ import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.*;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
+import org.llorllale.cactoos.matchers.HasContent;
+import org.llorllale.cactoos.matchers.HasString;
+import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.MatchesRegex;
+import org.llorllale.cactoos.matchers.StartsWith;
+import org.llorllale.cactoos.matchers.Verifies;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
 
