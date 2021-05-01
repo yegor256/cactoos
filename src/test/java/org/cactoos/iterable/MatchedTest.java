@@ -23,12 +23,14 @@
  */
 package org.cactoos.iterable;
 
+import java.util.Objects;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.collection.IsIterableWithSize;
 import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
@@ -154,5 +156,43 @@ public final class MatchedTest {
             )
         ).affirm();
     }
+
+
+    @Test
+    public void traversableSeveralTimes() {
+        final Iterable<Integer> matched = new Matched<>(
+            (Number fst, String snd) -> fst.intValue() == snd.length(),
+            new RangeOf<>(1, 3, value -> value + 1),
+            new IterableOf<>("1", "11", "111")
+        );
+        matched.forEach(Assertions::assertNotNull);
+        matched.forEach(Assertions::assertNotNull);
+        new Assertion<>(
+            "Elements must not be removed",
+            matched,
+            new IsIterableWithSize<>(
+                new IsEqual<>(3)
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void shouldNotChangeAfterTraversing() {
+        final Iterable<Integer> matched = new Matched<>(
+            Objects::equals,
+            new RangeOf<>(1, 100, value -> value + 1),
+            new RangeOf<>(1, 100, value -> value + 1)
+        );
+        final Iterable<Integer> copy = new ListOf<>(matched);
+        matched.forEach(Assertions::assertNotNull);
+        new Assertion<>(
+            "Elements must not be removed",
+            matched,
+            new IsEqual<>(
+                copy
+            )
+        ).affirm();
+    }
+
 
 }

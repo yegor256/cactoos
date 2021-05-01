@@ -62,7 +62,7 @@ public final class Matched<X> extends IterableEnvelope<X> {
     ) {
         super(
             new IterableOf<>(
-                new org.cactoos.iterator.Matched<>(
+                () -> new org.cactoos.iterator.Matched<>(
                     fnc, fst.iterator(), snd.iterator()
                 )
             )
