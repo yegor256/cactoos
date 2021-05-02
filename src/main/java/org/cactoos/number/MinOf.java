@@ -25,7 +25,7 @@ package org.cactoos.number;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.Reduced;
 
 /**
  * Find the smaller among items.
@@ -66,25 +66,21 @@ public final class MinOf extends NumberEnvelope {
     public MinOf(final Iterable<? extends Number> src) {
         super(
             new NumberOfScalars(
-                new Folded<>(
-                    Long.MAX_VALUE,
+                new Reduced<Long>(
                     Math::min,
-                    new Mapped<>(Number::longValue, src)
+                    new Mapped<>((Number n) -> n::longValue, src)
                 ),
-                new Folded<>(
-                    Integer.MAX_VALUE,
+                new Reduced<Integer>(
                     Math::min,
-                    new Mapped<>(Number::intValue, src)
+                    new Mapped<>((Number n) -> n::intValue, src)
                 ),
-                new Folded<>(
-                    Float.MAX_VALUE,
+                new Reduced<Float>(
                     Math::min,
-                    new Mapped<>(Number::floatValue, src)
+                    new Mapped<>((Number n) -> n::floatValue, src)
                 ),
-                new Folded<>(
-                    Double.MAX_VALUE,
+                new Reduced<Double>(
                     Math::min,
-                    new Mapped<>(Number::doubleValue, src)
+                    new Mapped<>((Number n) -> n::doubleValue, src)
                 )
             )
         );

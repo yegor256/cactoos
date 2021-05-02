@@ -25,7 +25,7 @@ package org.cactoos.number;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.Reduced;
 
 /**
  * Find the greater among items.
@@ -66,25 +66,21 @@ public final class MaxOf extends NumberEnvelope {
     public MaxOf(final Iterable<? extends Number> src) {
         super(
             new NumberOfScalars(
-                new Folded<>(
-                    Long.MIN_VALUE,
+                new Reduced<Long>(
                     Math::max,
-                    new Mapped<>(Number::longValue, src)
+                    new Mapped<>((Number n) -> n::longValue, src)
                 ),
-                new Folded<>(
-                    Integer.MIN_VALUE,
+                new Reduced<Integer>(
                     Math::max,
-                    new Mapped<>(Number::intValue, src)
+                    new Mapped<>((Number n) -> n::intValue, src)
                 ),
-                new Folded<>(
-                    -Float.MAX_VALUE,
+                new Reduced<Float>(
                     Math::max,
-                    new Mapped<>(Number::floatValue, src)
+                    new Mapped<>((Number n) -> n::floatValue, src)
                 ),
-                new Folded<>(
-                    -Double.MAX_VALUE,
+                new Reduced<Double>(
                     Math::max,
-                    new Mapped<>(Number::doubleValue, src)
+                    new Mapped<>((Number n) -> n::doubleValue, src)
                 )
             )
         );
