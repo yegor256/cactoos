@@ -26,4 +26,5 @@ release:
     mvn versions:set "-DnewVersion=${tag}" --settings ../settings.xml
     git commit -am "${tag}"
     # note: -Pcactoos is needed to have the gpg and sonar secrets injected
-    mvn clean deploy -Psonar -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml
+    # Sonar is disabled (was -Psonar) because sonarcloud.io only support Java 11+
+    mvn clean deploy -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml
