@@ -81,7 +81,7 @@ public final class Or implements Scalar<Boolean> {
     /**
      * The iterator.
      */
-    private final Iterable<Scalar<Boolean>> origin;
+    private final Iterable<? extends Scalar<Boolean>> origin;
 
     /**
      * Ctor.
@@ -90,7 +90,7 @@ public final class Or implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      */
     @SafeVarargs
-    public <X> Or(final Proc<X> proc, final X... src) {
+    public <X> Or(final Proc<? super X> proc, final X... src) {
         this(new FuncOf<>(proc, false), src);
     }
 
@@ -101,7 +101,7 @@ public final class Or implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      */
     @SafeVarargs
-    public <X> Or(final Func<X, Boolean> func, final X... src) {
+    public <X> Or(final Func<? super X, Boolean> func, final X... src) {
         this(func, new IterableOf<>(src));
     }
 
@@ -112,7 +112,7 @@ public final class Or implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      * @since 0.24
      */
-    public <X> Or(final Proc<X> proc, final Iterable<X> src) {
+    public <X> Or(final Proc<? super X> proc, final Iterable<? extends X> src) {
         this(new FuncOf<>(proc, false), src);
     }
 
@@ -122,7 +122,7 @@ public final class Or implements Scalar<Boolean> {
      * @param src The iterable
      * @param <X> Type of items in the iterable
      */
-    public <X> Or(final Func<X, Boolean> func, final Iterable<X> src) {
+    public <X> Or(final Func<? super X, Boolean> func, final Iterable<? extends X> src) {
         this(
             new Mapped<>(
                 item -> new ScalarOf<>(() -> func.apply(item)),
@@ -138,7 +138,7 @@ public final class Or implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      */
     @SafeVarargs
-    public <X> Or(final X subject, final Func<X, Boolean>... conditions) {
+    public <X> Or(final X subject, final Func<? super X, Boolean>... conditions) {
         this(
             new Mapped<>(
                 item -> new ScalarOf<>(() -> item.apply(subject)),
@@ -160,7 +160,7 @@ public final class Or implements Scalar<Boolean> {
      * Ctor.
      * @param iterable The iterable.
      */
-    public Or(final Iterable<Scalar<Boolean>> iterable) {
+    public Or(final Iterable<? extends Scalar<Boolean>> iterable) {
         this.origin = iterable;
     }
 
