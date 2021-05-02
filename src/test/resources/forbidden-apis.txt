@@ -1,11 +1,8 @@
-@defaultMessage Do not use static methods
+@defaultMessage Do not use static methods, please use cactoos-matchers Assertion instead
 org.hamcrest.Matchers
-
-@defaultMessage Please specify failure reason
-org.hamcrest.MatcherAssert#assertThat(java.lang.Object, org.hamcrest.Matcher)
-
-@defaultMessage Please specify failure reason
-org.junit.Assert#assertThat(java.lang.Object, org.hamcrest.Matcher)
+org.junit.jupiter.api.Assertions
+org.junit.Assert
+org.hamcrest.MatcherAssert
 
 @defaultMessage Please avoid using static methods.
 java.util.Collections#unmodifiableList(java.util.List)

@@ -26,21 +26,20 @@ package org.cactoos.proc;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Proc;
 import org.hamcrest.core.IsEqual;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link RepeatedProc}.
  *
  * @since 0.49.2
  * @checkstyle MagicNumberCheck (100 line)
- * @checkstyle JavadocMethodCheck (100 lines)
  */
-public final class RepeatedProcTest {
+final class RepeatedProcTest {
 
     @Test
-    public void runsProcMultipleTimes() throws Exception {
+    void runsProcMultipleTimes() throws Exception {
         final AtomicInteger atom = new AtomicInteger();
         final Proc<AtomicInteger> func = new RepeatedProc<>(
             AtomicInteger::getAndIncrement,
@@ -54,12 +53,18 @@ public final class RepeatedProcTest {
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void throwsIfZero() throws Exception {
-        final Proc<Object> func = new RepeatedProc<>(
-            obj -> Assert.fail("unexpected"),
-            0
-        );
-        func.exec(new Object());
+    @Test
+    void throwsIfZero() throws Exception {
+        new Assertion<>(
+            "Must throw if zero",
+            () -> {
+                new RepeatedProc<>(
+                    obj -> { },
+                    0
+                ).exec(new Object());
+                return "discarded";
+            },
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
     }
 }

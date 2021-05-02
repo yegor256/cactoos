@@ -265,12 +265,14 @@ The MIT License (MIT)
                -->
               <includes>
                 <include>org/cactoos/bytes/*.class</include>
-                <include>org/cactoos/map/*.class</include>
-                <include>org/cactoos/time/*.class</include>
                 <include>org/cactoos/collection/*.class</include>
                 <include>org/cactoos/experimental/*.class</include>
                 <include>org/cactoos/func/*.class</include>
                 <include>org/cactoos/io/*.class</include>
+                <include>org/cactoos/proc/*.class</include>
+                <include>org/cactoos/set/*.class</include>
+                <include>org/cactoos/test/*.class</include>
+                <include>org/cactoos/time/*.class</include>
               </includes>
             </configuration>
             <executions>
