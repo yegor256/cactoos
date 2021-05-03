@@ -43,6 +43,7 @@ import org.llorllale.cactoos.matchers.HasSize;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class RangeOfTest {
 
@@ -138,8 +139,10 @@ final class RangeOfTest {
     @Test
     void shouldNotChangeAfterTraversing() throws Exception {
         final Iterable<Character> range = new RangeOf<>('a', 'c', value -> ++value);
-        new ForEach<>((Character ignored) -> {
-        }).exec(range);
+        new ForEach<>(
+            (Character ignored) -> {
+            }
+        ).exec(range);
         new Assertion<>(
             "Must be equal",
             range,
