@@ -29,11 +29,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import org.cactoos.Func;
 import org.cactoos.list.ListOf;
+import org.cactoos.proc.ForEach;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test of range implementation.
@@ -130,14 +131,15 @@ final class RangeOfTest {
         new Assertion<>(
             "Must add elements two times",
             copy,
-            Matchers.iterableWithSize(6)
+            new HasSize(6)
         ).affirm();
     }
 
     @Test
-    void shouldNotChangeAfterTraversing() {
+    void shouldNotChangeAfterTraversing() throws Exception {
         final Iterable<Character> range = new RangeOf<>('a', 'c', value -> ++value);
-        range.forEach(Assertions::assertNotNull);
+        new ForEach<>((Character ignored) -> {
+        }).exec(range);
         new Assertion<>(
             "Must be equal",
             range,
