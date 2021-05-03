@@ -31,7 +31,7 @@ import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsApplicable;
-import org.llorllale.cactoos.matchers.Verifies;
+import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link Async}.
@@ -52,7 +52,7 @@ final class AsyncTest {
             ),
             new IsApplicable<>(
                 true,
-                new Verifies<>(
+                new Satisfies<>(
                     future -> !future.isDone()
                 )
             )
@@ -87,7 +87,7 @@ final class AsyncTest {
             ),
             new IsApplicable<>(
                 true,
-                new Verifies<>(
+                new Satisfies<>(
                     future -> latch.await(1L, TimeUnit.SECONDS)
                 )
             )
@@ -117,7 +117,7 @@ final class AsyncTest {
             ),
             new IsApplicable<>(
                 name,
-                new Verifies<>(
+                new Satisfies<>(
                     future -> {
                         future.get();
                         return latch.getCount() == 0;
@@ -150,7 +150,7 @@ final class AsyncTest {
             ),
             new IsApplicable<>(
                 name,
-                new Verifies<>(
+                new Satisfies<>(
                     future -> {
                         future.get();
                         return latch.getCount() == 0;

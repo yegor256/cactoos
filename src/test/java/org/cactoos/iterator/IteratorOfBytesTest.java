@@ -49,7 +49,7 @@ public final class IteratorOfBytesTest {
         );
         new Assertion<>(
             "Must have 1 element",
-            new ListOf<>(
+            new ListOf<Object>(
                 itr.next(),
                 itr.hasNext()
             ),
@@ -66,7 +66,7 @@ public final class IteratorOfBytesTest {
         );
         new Assertion<>(
             "Must have 3 elements",
-            new ListOf<>(
+            new ListOf<Object>(
                 itr.next(),
                 itr.next(),
                 itr.next(),

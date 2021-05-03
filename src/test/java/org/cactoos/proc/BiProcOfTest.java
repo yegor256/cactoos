@@ -28,7 +28,7 @@ import org.cactoos.func.BiFuncOf;
 import org.cactoos.func.FuncOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.Verifies;
+import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link BiProcOf}.
@@ -50,7 +50,7 @@ final class BiProcOfTest {
                     }
                 )
             ),
-            new Verifies<>(
+            new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
                     final Object second = new Object();
@@ -74,7 +74,7 @@ final class BiProcOfTest {
                     }
                 )
             ),
-            new Verifies<>(
+            new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
                     final Object second = new Object();
@@ -97,7 +97,7 @@ final class BiProcOfTest {
                     }
                 )
             ),
-            new Verifies<>(
+            new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
                     final Object second = new Object();
@@ -120,7 +120,7 @@ final class BiProcOfTest {
                     }
                 )
             ),
-            new Verifies<>(
+            new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
                     final Object second = new Object();

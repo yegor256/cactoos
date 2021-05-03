@@ -33,7 +33,7 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
-import org.llorllale.cactoos.matchers.Verifies;
+import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Matcher for collection.
@@ -78,7 +78,7 @@ public final class BehavesAsCollection<E> extends
             "Size must be more than 0",
             col,
             new IsCollectionWithSize<>(
-                new Verifies<>(s -> s > 0)
+                new Satisfies<>(s -> s > 0)
             )
         ).affirm();
         new Assertion<>(

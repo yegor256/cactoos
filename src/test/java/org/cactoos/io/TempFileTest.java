@@ -33,8 +33,8 @@ import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
+import org.llorllale.cactoos.matchers.Satisfies;
 import org.llorllale.cactoos.matchers.StartsWith;
-import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Unit tests for {@link TempFile}.
@@ -56,18 +56,17 @@ final class TempFileTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void createFileInCustomPath() throws Exception {
         final Path custom = Paths.get(System.getProperty("user.home"));
         try (TempFile file = new TempFile(() -> custom, "", "")) {
             new Assertion<>(
                 "Must create a temp file at a custom path",
                 file,
-                new AllOf<>(
-                    new Verifies<TempFile>(
+                new AllOf<TempFile>(
+                    new Satisfies<>(
                         tmp -> Files.exists(tmp.value())
                     ),
-                    new Verifies<TempFile>(
+                    new Satisfies<>(
                         tmp -> tmp.value().getParent().equals(custom)
                     )
                 )

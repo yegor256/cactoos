@@ -38,7 +38,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
-import org.llorllale.cactoos.matchers.Verifies;
+import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link InputStreamOf}.
@@ -94,7 +94,7 @@ public final class InputStreamOfTest {
         new Assertion<>(
             "Must show that data is available",
             new InputStreamOf(content).available(),
-            new Verifies<>(x -> x > 0)
+            new Satisfies<>(x -> x > 0)
         ).affirm();
     }
 

@@ -33,7 +33,7 @@ import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
-import org.llorllale.cactoos.matchers.Verifies;
+import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link Sticky}.
@@ -51,7 +51,7 @@ final class StickyTest {
                     "org/cactoos/large-text.txt"
                 )
             ),
-            new Verifies<>(
+            new Satisfies<>(
                 new Repeated<>(
                     input -> new BytesOf(
                         new TeeInput(input, new DeadOutput())
