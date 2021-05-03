@@ -161,8 +161,8 @@ public final class MatchedTest {
     public void shouldNotChangeAfterTraversing() throws Exception {
         final Iterable<Integer> matched = new Matched<>(
             Objects::equals,
-            new RangeOf<>(1, 100, value -> value + 1),
-            new RangeOf<>(1, 100, value -> value + 1)
+            new IterableOf<>(1, 2, 3),
+            new IterableOf<>(1, 2, 3)
         );
         final Iterable<Integer> copy = new ListOf<>(matched);
         new ForEach<>(
