@@ -30,6 +30,7 @@ import java.util.Collection;
 import org.cactoos.Func;
 import org.cactoos.list.ListOf;
 import org.cactoos.proc.ForEach;
+import org.cactoos.proc.RepeatedProc;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -123,11 +124,10 @@ final class RangeOfTest {
     }
 
     @Test
-    void shouldBeTraversableMultipleTimes() {
+    void shouldBeTraversableMultipleTimes() throws Exception {
         final Iterable<Character> range = new RangeOf<>('a', 'c', value -> ++value);
         final Collection<Character> copy = new ArrayList<>(6);
-        range.forEach(copy::add);
-        range.forEach(copy::add);
+        new RepeatedProc<>(new ForEach<>(copy::add), 2).exec(range);
         new Assertion<>(
             "Must add elements two times",
             copy,
