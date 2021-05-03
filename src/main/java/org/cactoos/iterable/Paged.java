@@ -23,7 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import java.util.Iterator;
 import org.cactoos.Func;
 
 /**
@@ -35,9 +34,6 @@ import org.cactoos.Func;
  *
  * @param <X> Type of item
  * @since 0.47
- * @todo #1464:30min Replace the constructor so that instead it takes a {@link Iterable}
- *  as first and a {@code Func<Iterable, Iterable>} as next in order to homogenise it with
- *  the other {@link Iterable} implementations.
  */
 public final class Paged<X> extends IterableEnvelope<X> {
 
@@ -46,14 +42,17 @@ public final class Paged<X> extends IterableEnvelope<X> {
      * <p>
      * @param first First bag of elements
      * @param next Subsequent bags of elements
-     * @param <I> Custom iterator
      */
-    public <I extends Iterator<X>> Paged(
-        final I first, final Func<I, I> next
+    public Paged(
+        final Iterable<? extends X> first,
+        final Func<? super Iterable<? extends X>, ? extends Iterable<? extends X>> next
     ) {
         super(
             new IterableOf<>(
-                new org.cactoos.iterator.Paged<>(first, next)
+                new org.cactoos.iterator.Paged<X>(
+                    first.iterator(),
+                    page -> next.apply(new IterableOf<>(page)).iterator()
+                )
             )
         );
     }
