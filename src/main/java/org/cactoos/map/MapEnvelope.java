@@ -26,7 +26,9 @@ package org.cactoos.map;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import org.cactoos.text.TextOf;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.text.Concatenated;
+import org.cactoos.text.Joined;
 
 /**
  * Map envelope.
@@ -124,7 +126,14 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     public final String toString() {
         return new StringBuilder()
             .append('{')
-            .append(new TextOf(this.entrySet()).toString())
+            .append(
+                new Concatenated(
+                    new Joined(
+                        ", ",
+                        new Mapped<>(Object::toString, this.entrySet())
+                    )
+                )
+            )
             .append('}')
             .toString();
     }
