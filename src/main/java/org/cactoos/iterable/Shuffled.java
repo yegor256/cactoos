@@ -23,6 +23,9 @@
  */
 package org.cactoos.iterable;
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 /**
  * Shuffled iterable.
  *
@@ -45,14 +48,26 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     * @param rnd Randomizer.
+     * @param src The underlying iterable
+     */
+    public Shuffled(final Random rnd, final Iterable<T> src) {
+        super(
+            new IterableOf<>(
+                () -> new org.cactoos.iterator.Shuffled<>(
+                    rnd,
+                    src.iterator()
+                )
+            )
+        );
+    }
+
+    /**
+     * Ctor.
      * @param src The underlying iterable
      */
     public Shuffled(final Iterable<T> src) {
-        super(
-            new IterableOf<>(
-                () -> new org.cactoos.iterator.Shuffled<>(src.iterator())
-            )
-        );
+        this(new SecureRandom(), src);
     }
 
 }
