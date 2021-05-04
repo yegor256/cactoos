@@ -30,6 +30,8 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.InputOf;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.IterableOfChars;
 import org.cactoos.iterator.IteratorOfChars;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
@@ -315,6 +317,17 @@ final class TextOfTest {
                 new IOException("").getStackTrace()
             ),
             new HasString("org.cactoos.text.TextOfTest")
+        ).affirm();
+    }
+
+    @Test
+    void readsIterableToText() throws Exception {
+        new Assertion<>(
+            "Can't read Iterable to Text",
+            new TextOf(
+                new IterableOfChars("hello")
+            ).asString(),
+            new IsEqual<>("hello")
         ).affirm();
     }
 
