@@ -324,16 +324,8 @@ public final class TextOf extends TextEnvelope {
      *  modify other parts of cactoos that relied on this in order to preserve their behaviour
      *  by using {@link Joined} and {@link Concatenated}.
      */
-    public TextOf(final Iterable<?> iterable) {
-        super(
-            new Joined(
-                ", ",
-                new Mapped<>(
-                    Object::toString,
-                    iterable
-                )
-            )
-        );
+    public TextOf(final Iterable<Character> iterable) {
+        this(iterable.iterator());
     }
 
     /**
