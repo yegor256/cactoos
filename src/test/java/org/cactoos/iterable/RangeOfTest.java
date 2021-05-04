@@ -153,9 +153,10 @@ final class RangeOfTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void producesChars() {
         new Assertion<>(
-            "Must procude three ranges",
+            "Must produce three ranges",
             new Joined<>(
                 new RangeOf<>('0', '9', ch -> (char) (ch + 1)),
                 new RangeOf<>('A', 'Z', ch -> (char) (ch + 1)),

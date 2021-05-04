@@ -65,6 +65,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
      * with a random name.
      * @since 1.0
      */
+    @SuppressWarnings("unchecked")
     public TempFolder() {
         this(
             new Concatenated(
