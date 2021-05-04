@@ -27,11 +27,7 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.RangeOf;
-import org.cactoos.iterable.Shuffled;
-import org.cactoos.iterator.Cycled;
-import org.cactoos.iterator.Sliced;
 import org.cactoos.list.ListOf;
 
 /**
@@ -121,23 +117,24 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param chrs List of characters allowed for generating.
+     * @param chrs Characters allowed for generating.
      * @param len Length of generated text.
      */
-    public Randomized(final List<Character> chrs, final Scalar<Integer> len) {
+    public Randomized(final Iterable<Character> chrs, final Scalar<Integer> len) {
         this(chrs, len, new SecureRandom());
     }
 
     /**
      * Ctor.
-     * @param chrs List of characters allowed for generating.
+     * @param itr Characters allowed for generating.
      * @param len Length of generated text.
      * @param rnd Characters index randomizer.
      */
-    public Randomized(final List<Character> chrs, final Scalar<Integer> len, final Random rnd) {
+    public Randomized(final Iterable<Character> itr, final Scalar<Integer> len, final Random rnd) {
         super(
             new TextOf(
                 () -> {
+                    final List<Character> chrs = new ListOf<>(itr);
                     final int length = len.value();
                     final StringBuilder builder = new StringBuilder(length);
                     final int bound = chrs.size();
