@@ -323,7 +323,7 @@ final class TextOfTest {
     @Test
     void readsIterableToText() {
         new Assertion<>(
-            "Can't read Iterable to Text",
+            "Must read Iterable to Text",
             new TextOf(
                 new IterableOfChars("hello")
             ),
