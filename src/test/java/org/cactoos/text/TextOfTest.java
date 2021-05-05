@@ -321,13 +321,13 @@ final class TextOfTest {
     }
 
     @Test
-    void readsIterableToText() throws Exception {
+    void readsIterableToText() {
         new Assertion<>(
             "Can't read Iterable to Text",
             new TextOf(
                 new IterableOfChars("hello")
-            ).asString(),
-            new IsEqual<>("hello")
+            ),
+            new IsText("hello")
         ).affirm();
     }
 
