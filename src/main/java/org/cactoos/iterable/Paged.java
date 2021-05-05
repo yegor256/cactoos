@@ -49,7 +49,7 @@ public final class Paged<X> extends IterableEnvelope<X> {
     ) {
         super(
             new IterableOf<>(
-                new org.cactoos.iterator.Paged<X>(
+                () -> new org.cactoos.iterator.Paged<X>(
                     first.iterator(),
                     page -> next.apply(new IterableOf<>(page)).iterator()
                 )
