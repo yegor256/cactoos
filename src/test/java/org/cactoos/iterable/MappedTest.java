@@ -31,6 +31,7 @@ import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Mapped}.
@@ -50,8 +51,8 @@ final class MappedTest {
                 new IterableOf<>(
                     "hello", "world", "друг"
                 )
-            ).iterator().next().asString(),
-            new IsEqual<>("HELLO")
+            ).iterator().next(),
+            new IsText("HELLO")
         ).affirm();
     }
 

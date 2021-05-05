@@ -32,12 +32,12 @@ import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
+import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
@@ -107,8 +107,8 @@ public final class InputStreamOfTest {
         ).value();
         new Assertion<>(
             "Must read from file",
-            new TextOf(new InputStreamOf(file)).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(file)),
+            new IsText(content)
         ).affirm();
     }
 
@@ -117,8 +117,8 @@ public final class InputStreamOfTest {
         final String content = "Bytes content";
         new Assertion<>(
             "Must read from bytes",
-            new TextOf(new InputStreamOf(new BytesOf(content))).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(new BytesOf(content))),
+            new IsText(content)
         ).affirm();
     }
 
@@ -128,8 +128,8 @@ public final class InputStreamOfTest {
         final byte[] bytes = new BytesOf(content).asBytes();
         new Assertion<>(
             "Must read from byte array",
-            new TextOf(new InputStreamOf(bytes)).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(bytes)),
+            new IsText(content)
         ).affirm();
     }
 
@@ -138,8 +138,8 @@ public final class InputStreamOfTest {
         final String content = "Text content";
         new Assertion<>(
             "Must read from text",
-            new TextOf(new InputStreamOf(new TextOf(content))).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(new TextOf(content))),
+            new IsText(content)
         ).affirm();
     }
 
@@ -152,8 +152,8 @@ public final class InputStreamOfTest {
         ).value();
         new Assertion<>(
             "Must read from URI",
-            new TextOf(new InputStreamOf(file.toURI())).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(file.toURI())),
+            new IsText(content)
         ).affirm();
     }
 
@@ -166,8 +166,8 @@ public final class InputStreamOfTest {
         ).value();
         new Assertion<>(
             "Must read from URL",
-            new TextOf(new InputStreamOf(file.toURI().toURL())).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(file.toURI().toURL())),
+            new IsText(content)
         ).affirm();
     }
 
@@ -183,8 +183,8 @@ public final class InputStreamOfTest {
                     StandardCharsets.UTF_8.name(),
                     max
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
@@ -199,8 +199,8 @@ public final class InputStreamOfTest {
                     StandardCharsets.UTF_8,
                     1
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
@@ -214,8 +214,8 @@ public final class InputStreamOfTest {
                     new StringReader(content),
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
@@ -233,8 +233,8 @@ public final class InputStreamOfTest {
                     new TextOf(file),
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
@@ -248,8 +248,8 @@ public final class InputStreamOfTest {
                     content,
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
@@ -263,8 +263,8 @@ public final class InputStreamOfTest {
                     content,
                     StandardCharsets.UTF_8
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 }

@@ -32,9 +32,9 @@ import java.io.Writer;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link org.cactoos.io.GzipInput}.
@@ -62,8 +62,8 @@ public final class GzipInputTest {
             "Can't read from a gzip input",
             new TextOf(
                 new GzipInput(new InputOf(bytes))
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
