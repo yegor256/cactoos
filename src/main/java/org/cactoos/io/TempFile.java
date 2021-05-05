@@ -86,6 +86,23 @@ public final class TempFile implements Scalar<Path>, Closeable {
 
     /**
      * Ctor.
+     * <p>
+     * The temporary file will be created inside the filesystem's
+     * temporary folder (system property: {@code java.io.tmpdir}).
+     * @param prefix The temp filename's prefix
+     * @param suffix The temp filename's suffix
+     * @since 1.0
+     */
+    public TempFile(final Text prefix, final Text suffix) {
+        this(
+            () -> Paths.get(System.getProperty("java.io.tmpdir")),
+            prefix,
+            suffix
+        );
+    }
+
+    /**
+     * Ctor.
      * @param dir The directory in which to create the temp file
      * @param prefix The temp filename's prefix
      * @param suffix The temp filename's suffix
