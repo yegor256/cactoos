@@ -318,6 +318,9 @@ public final class TextOf extends TextEnvelope {
      * Ctor.
      *
      * @param iterable The iterable to convert to string
+     * @todo #1560:30min/DEV We want {@link Concatenated} to have
+     *  an extra constructor that accepts {@code Iterable<CharSequence>}
+     *  to avoid creating of {@link Joined} with empty delimiter.
      */
     public TextOf(final Iterable<Character> iterable) {
         super(
