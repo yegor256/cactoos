@@ -29,6 +29,7 @@ import java.util.Set;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.Joined;
+import org.cactoos.text.TextOf;
 
 /**
  * Map envelope.
@@ -124,18 +125,14 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     @Override
     public final String toString() {
-        return new StringBuilder()
-            .append('{')
-            .append(
-                new Concatenated(
-                    new Joined(
-                        ", ",
-                        new Mapped<>(Object::toString, this.entrySet())
-                    )
-                )
-            )
-            .append('}')
-            .toString();
+        return new Concatenated(
+            new TextOf("{"),
+            new Joined(
+                ", ",
+                new Mapped<>(Object::toString, this.entrySet())
+            ),
+            new TextOf("}")
+        ).toString();
     }
 
     @Override
