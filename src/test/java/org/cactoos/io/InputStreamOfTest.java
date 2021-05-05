@@ -113,7 +113,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsBytes() throws Exception {
+    public void readsBytes() {
         final String content = "Bytes content";
         new Assertion<>(
             "Must read from bytes",
@@ -134,7 +134,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsText() throws Exception {
+    public void readsText() {
         final String content = "Text content";
         new Assertion<>(
             "Must read from text",
@@ -172,7 +172,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromReaderWithMax() throws Exception {
+    public void readsFromReaderWithMax() {
         final String content = "Reading with charset name and buffer size";
         final int max = 3;
         new Assertion<>(
@@ -189,7 +189,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromReaderWithCharsetWithMax() throws Exception {
+    public void readsFromReaderWithCharsetWithMax() {
         final String content = "Reading with charset and buffer size";
         new Assertion<>(
             "Must read from reader with charset and buffer size",
@@ -205,7 +205,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromReaderWithCharset() throws Exception {
+    public void readsFromReaderWithCharset() {
         final String content = "Content for reading with charset";
         new Assertion<>(
             "Must read from reader with charset name",
@@ -239,7 +239,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromCharSequenceWithCharsetName() throws Exception {
+    public void readsFromCharSequenceWithCharsetName() {
         final String content = "Simple content";
         new Assertion<>(
             "Must read from char sequence with charset name",
@@ -254,7 +254,7 @@ public final class InputStreamOfTest {
     }
 
     @Test
-    public void readsFromCharSequenceWithCharset() throws Exception {
+    public void readsFromCharSequenceWithCharset() {
         final String content = "Another simple content";
         new Assertion<>(
             "Must read from char sequence with charset",
