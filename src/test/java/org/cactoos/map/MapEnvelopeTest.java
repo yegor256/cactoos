@@ -301,18 +301,6 @@ public final class MapEnvelopeTest {
         ).affirm();
     }
 
-    @Test
-    public void testToString() {
-        new Assertion<>(
-            "Must be a readable representation",
-            new MapOf<String, Integer>(
-                new MapEntry<>("k1", 10),
-                new MapEntry<>("k2", -2)
-            ).toString(),
-            new IsEqual<>("{k1=10, k2=-2}")
-        ).affirm();
-    }
-
     /**
      * Class derived from MapEnvelope to use in some tests.
      * @param <K> - key type

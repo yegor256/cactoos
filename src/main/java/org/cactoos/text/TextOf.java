@@ -317,30 +317,26 @@ public final class TextOf extends TextEnvelope {
     /**
      * Ctor.
      *
-     * @param iterable The iterable to convert to string
-     * @todo #1560:30min/DEV We want {@link Concatenated} to have
-     *  an extra constructor that accepts {@code Iterable<CharSequence>}
-     *  to avoid creating of {@link Joined} with empty delimiter.
+     * @param iterator The iterable to convert to string
      */
-    public TextOf(final Iterable<Character> iterable) {
-        super(
-            new Joined(
-                "",
-                new Mapped<>(
-                    Object::toString,
-                    iterable
-                )
-            )
-        );
+    public TextOf(final Iterator<Character> iterator) {
+        this(new IterableOf<>(iterator));
     }
 
     /**
      * Ctor.
      *
-     * @param iterator The iterable to convert to string
+     * @param iterable The iterable to convert to string
      */
-    public TextOf(final Iterator<Character> iterator) {
-        this(new IterableOf<>(iterator));
+    public TextOf(final Iterable<Character> iterable) {
+        super(
+            new Concatenated(
+                new Mapped<>(
+                    TextOf::new,
+                    iterable
+                )
+            )
+        );
     }
 
     /**
