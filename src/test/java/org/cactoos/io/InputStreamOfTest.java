@@ -32,12 +32,12 @@ import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
+import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
@@ -107,18 +107,18 @@ public final class InputStreamOfTest {
         ).value();
         new Assertion<>(
             "Must read from file",
-            new TextOf(new InputStreamOf(file)).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(file)),
+            new IsText(content)
         ).affirm();
     }
 
     @Test
-    public void readsBytes() throws Exception {
+    public void readsBytes() {
         final String content = "Bytes content";
         new Assertion<>(
             "Must read from bytes",
-            new TextOf(new InputStreamOf(new BytesOf(content))).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(new BytesOf(content))),
+            new IsText(content)
         ).affirm();
     }
 
@@ -128,18 +128,18 @@ public final class InputStreamOfTest {
         final byte[] bytes = new BytesOf(content).asBytes();
         new Assertion<>(
             "Must read from byte array",
-            new TextOf(new InputStreamOf(bytes)).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(bytes)),
+            new IsText(content)
         ).affirm();
     }
 
     @Test
-    public void readsText() throws Exception {
+    public void readsText() {
         final String content = "Text content";
         new Assertion<>(
             "Must read from text",
-            new TextOf(new InputStreamOf(new TextOf(content))).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(new TextOf(content))),
+            new IsText(content)
         ).affirm();
     }
 
@@ -152,8 +152,8 @@ public final class InputStreamOfTest {
         ).value();
         new Assertion<>(
             "Must read from URI",
-            new TextOf(new InputStreamOf(file.toURI())).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(file.toURI())),
+            new IsText(content)
         ).affirm();
     }
 
@@ -166,13 +166,13 @@ public final class InputStreamOfTest {
         ).value();
         new Assertion<>(
             "Must read from URL",
-            new TextOf(new InputStreamOf(file.toURI().toURL())).asString(),
-            new IsEqual<>(content)
+            new TextOf(new InputStreamOf(file.toURI().toURL())),
+            new IsText(content)
         ).affirm();
     }
 
     @Test
-    public void readsFromReaderWithMax() throws Exception {
+    public void readsFromReaderWithMax() {
         final String content = "Reading with charset name and buffer size";
         final int max = 3;
         new Assertion<>(
@@ -183,13 +183,13 @@ public final class InputStreamOfTest {
                     StandardCharsets.UTF_8.name(),
                     max
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
     @Test
-    public void readsFromReaderWithCharsetWithMax() throws Exception {
+    public void readsFromReaderWithCharsetWithMax() {
         final String content = "Reading with charset and buffer size";
         new Assertion<>(
             "Must read from reader with charset and buffer size",
@@ -199,13 +199,13 @@ public final class InputStreamOfTest {
                     StandardCharsets.UTF_8,
                     1
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
     @Test
-    public void readsFromReaderWithCharset() throws Exception {
+    public void readsFromReaderWithCharset() {
         final String content = "Content for reading with charset";
         new Assertion<>(
             "Must read from reader with charset name",
@@ -214,8 +214,8 @@ public final class InputStreamOfTest {
                     new StringReader(content),
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
@@ -233,13 +233,13 @@ public final class InputStreamOfTest {
                     new TextOf(file),
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
     @Test
-    public void readsFromCharSequenceWithCharsetName() throws Exception {
+    public void readsFromCharSequenceWithCharsetName() {
         final String content = "Simple content";
         new Assertion<>(
             "Must read from char sequence with charset name",
@@ -248,13 +248,13 @@ public final class InputStreamOfTest {
                     content,
                     StandardCharsets.UTF_8.name()
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 
     @Test
-    public void readsFromCharSequenceWithCharset() throws Exception {
+    public void readsFromCharSequenceWithCharset() {
         final String content = "Another simple content";
         new Assertion<>(
             "Must read from char sequence with charset",
@@ -263,8 +263,8 @@ public final class InputStreamOfTest {
                     content,
                     StandardCharsets.UTF_8
                 )
-            ).asString(),
-            new IsEqual<>(content)
+            ),
+            new IsText(content)
         ).affirm();
     }
 }

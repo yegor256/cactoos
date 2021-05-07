@@ -26,9 +26,9 @@ package org.cactoos.text;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
-import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Tests for {@link TextEnvelope}.
@@ -38,15 +38,14 @@ final class TextEnvelopeTest {
     /**
      * Test for {@link TextEnvelope#asString()} method. Must assert that
      * the envelope asString value is equal to its string value.
-     * @throws Exception Throws from asString.
      */
     @Test
-    void testAsString() throws Exception {
+    void testAsString() {
         final String text = "asString";
         new Assertion<>(
             "Envelope value does not match String value",
-            new TextEnvelopeDummy(text).asString(),
-            new IsEqual<>(text)
+            new TextEnvelopeDummy(text),
+            new IsText(text)
         ).affirm();
     }
 

@@ -27,7 +27,7 @@ import org.cactoos.text.NoNulls;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.HasString;
+import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -69,7 +69,7 @@ final class TextTest {
             new NoNulls(
                 new TextOf(message)
             ),
-            new HasString(message)
+            new IsText(message)
         ).affirm();
     }
 

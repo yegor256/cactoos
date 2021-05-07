@@ -26,6 +26,7 @@ package org.cactoos.io;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
@@ -87,11 +88,11 @@ final class TempFileTest {
 
     @Test
     void createFileWithPrefix() throws Exception {
-        final String prefix = new FormattedText(
+        final Text prefix = new FormattedText(
             "randomPrefix%s",
             System.currentTimeMillis()
-        ).asString();
-        try (TempFile file = new TempFile(prefix, "")) {
+        );
+        try (TempFile file = new TempFile(prefix, new TextOf(""))) {
             new Assertion<>(
                 "File must be created with the given prefix",
                 new TextOf(file.value().getFileName().toString()),
@@ -102,10 +103,10 @@ final class TempFileTest {
 
     @Test
     void createFileWithSuffix() throws Exception {
-        final String suffix = new FormattedText(
+        final Text suffix = new FormattedText(
             "randomSuffix%s", System.currentTimeMillis()
-        ).asString();
-        try (TempFile file = new TempFile("", suffix)) {
+        );
+        try (TempFile file = new TempFile(new TextOf(""), suffix)) {
             new Assertion<>(
                 "File must be created with the given suffix",
                 new TextOf(file.value().getFileName().toString()),

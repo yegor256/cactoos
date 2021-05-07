@@ -159,7 +159,7 @@ public final class ResourceOf implements Input {
                 throw new IOException(
                     new FormattedText(
                         "The resource \"%s\" was not found in %s",
-                        input.asString(),
+                        input,
                         ldr
                     ).asString()
                 );
@@ -174,7 +174,7 @@ public final class ResourceOf implements Input {
      * @param fbk Fallback
      */
     public ResourceOf(final Text res, final Text fbk) {
-        this(res, input -> new InputOf(new BytesOf(fbk.asString())));
+        this(res, input -> new InputOf(fbk));
     }
 
     /**

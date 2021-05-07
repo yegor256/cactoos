@@ -43,6 +43,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.HasString;
+import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.MatchesRegex;
 import org.llorllale.cactoos.matchers.Satisfies;
@@ -272,8 +273,8 @@ final class InputOfTest {
                 new InputOf(
                     new StringReader(source)
                 )
-            ).asString(),
-            new IsEqual<>(source)
+            ),
+            new IsText(source)
         ).affirm();
     }
 
@@ -289,8 +290,8 @@ final class InputOfTest {
                         StandardCharsets.UTF_8
                     )
                 )
-            ).asString(),
-            new IsEqual<>(source)
+            ),
+            new IsText(source)
         ).affirm();
     }
 
