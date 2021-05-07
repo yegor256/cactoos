@@ -29,7 +29,6 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.io.InputOf;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfChars;
 import org.cactoos.iterator.IteratorOfChars;
 import org.hamcrest.core.AllOf;
