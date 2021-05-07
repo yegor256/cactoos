@@ -48,6 +48,14 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     * @param src The underlying iterable
+     */
+    public Shuffled(final Iterable<T> src) {
+        this(new SecureRandom(), src);
+    }
+
+    /**
+     * Ctor.
      * @param rnd Randomizer.
      * @param src The underlying iterable
      */
@@ -60,14 +68,6 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
                 )
             )
         );
-    }
-
-    /**
-     * Ctor.
-     * @param src The underlying iterable
-     */
-    public Shuffled(final Iterable<T> src) {
-        this(new SecureRandom(), src);
     }
 
 }

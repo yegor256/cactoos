@@ -49,6 +49,14 @@ public final class Shuffled<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     * @param iterator The original iterator
+     */
+    public Shuffled(final Iterator<T> iterator) {
+        this(new SecureRandom(), iterator);
+    }
+
+    /**
+     * Ctor.
      * @param random Randomizer.
      * @param iterator The original iterator
      */
@@ -62,14 +70,6 @@ public final class Shuffled<T> implements Iterator<T> {
                 }
             )
         );
-    }
-
-    /**
-     * Ctor.
-     * @param iterator The original iterator
-     */
-    public Shuffled(final Iterator<T> iterator) {
-        this(new SecureRandom(), iterator);
     }
 
     @Override
