@@ -152,4 +152,50 @@ final class RangeOfTest {
         ).affirm();
     }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    void producesChars() {
+        new Assertion<>(
+            "Must produce three ranges",
+            new Joined<>(
+                new RangeOf<>('0', '9', ch -> ++ch),
+                new RangeOf<>('A', 'Z', ch -> ++ch),
+                new RangeOf<>('a', 'z', ch -> ++ch)
+            ),
+            new IsEqual<>(
+                new IterableOfChars(
+                    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+                    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                    'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd',
+                    'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                    'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+                    'y', 'z'
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void producesCharsJoined() {
+        new Assertion<>(
+            "Must produce correct range of characters",
+            new RangeOf<>('!', '~', ch -> ++ch),
+            new IsEqual<>(
+                new IterableOfChars(
+                    '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*',
+                    '+', ',', '-', '.', '/', '0', '1', '2', '3', '4',
+                    '5', '6', '7', '8', '9', ':', ';', '<', '=', '>',
+                    '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+                    'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+                    'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\',
+                    ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f',
+                    'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+                    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                    '{', '|', '}', '~'
+                )
+            )
+        ).affirm();
+    }
+
 }
