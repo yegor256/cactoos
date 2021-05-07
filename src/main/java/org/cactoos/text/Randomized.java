@@ -70,7 +70,7 @@ public final class Randomized extends TextEnvelope {
     public Randomized(final Scalar<Integer> len) {
         this(
             new RangeOf<>(
-                '!', '~', ch -> (char) (ch + 1)
+                '!', '~', ch -> ++ch
             ),
             len
         );

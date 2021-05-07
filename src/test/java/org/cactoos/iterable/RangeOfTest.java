@@ -158,9 +158,9 @@ final class RangeOfTest {
         new Assertion<>(
             "Must produce three ranges",
             new Joined<>(
-                new RangeOf<>('0', '9', ch -> (char) (ch + 1)),
-                new RangeOf<>('A', 'Z', ch -> (char) (ch + 1)),
-                new RangeOf<>('a', 'z', ch -> (char) (ch + 1))
+                new RangeOf<>('0', '9', ch -> ++ch),
+                new RangeOf<>('A', 'Z', ch -> ++ch),
+                new RangeOf<>('a', 'z', ch -> ++ch)
             ),
             new IsEqual<>(
                 new IterableOfChars(
@@ -180,7 +180,7 @@ final class RangeOfTest {
     void producesCharsJoined() {
         new Assertion<>(
             "Must produce correct range of characters",
-            new RangeOf<>('!', '~', ch -> (char) (ch + 1)),
+            new RangeOf<>('!', '~', ch -> ++ch),
             new IsEqual<>(
                 new IterableOfChars(
                     '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*',
