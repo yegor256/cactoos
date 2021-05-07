@@ -31,7 +31,7 @@ import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
-import org.llorllale.cactoos.matchers.Verifies;
+import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Matcher for collection.
@@ -64,12 +64,12 @@ public final class BehavesAsList<E> extends TypeSafeMatcher<List<E>>  {
         new Assertion<>(
             "must have an index for the sample item",
             list.indexOf(this.sample),
-            new Verifies<>(i -> i >= 0)
+            new Satisfies<>(i -> i >= 0)
         ).affirm();
         new Assertion<>(
             "must have a last index for the sample item",
             list.lastIndexOf(this.sample),
-            new Verifies<>(i -> i >= 0)
+            new Satisfies<>(i -> i >= 0)
         ).affirm();
         new Assertion<>(
             "must have at least one element in list iterator",

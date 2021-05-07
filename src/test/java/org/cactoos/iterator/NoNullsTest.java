@@ -25,8 +25,8 @@ package org.cactoos.iterator;
 
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Satisfies;
 import org.llorllale.cactoos.matchers.Throws;
-import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Test cases for {@link NoNulls}.
@@ -45,7 +45,7 @@ final class NoNullsTest {
                 new IteratorOf<>(new String[]{null})
             ).next(),
             new Throws<>(
-                new Verifies<>(
+                new Satisfies<>(
                     (String msg) -> msg.matches("^Item #0 of .*? is NULL")
                 ),
                 IllegalStateException.class
@@ -64,7 +64,7 @@ final class NoNullsTest {
                 )
             ).next(),
             new Throws<>(
-                new Verifies<>(
+                new Satisfies<>(
                     (String msg) -> msg.matches("^Item #2 of .*? is NULL")
                 ),
                 IllegalStateException.class

@@ -28,7 +28,7 @@ import org.cactoos.proc.ProcOf;
 import org.cactoos.scalar.Constant;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.Verifies;
+import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link FuncOf}.
@@ -50,7 +50,7 @@ final class FuncOfTest {
                 ),
                 result
             ),
-            new Verifies<>(
+            new Satisfies<>(
                 func -> {
                     final Object input = new Object();
                     final Object res = func.apply(input);
@@ -66,7 +66,7 @@ final class FuncOfTest {
         new Assertion<>(
             "Must convert Scalar into Func",
             new FuncOf<>(new Constant<>(result)),
-            new Verifies<>(
+            new Satisfies<>(
                 func -> {
                     final Object res = func.apply("discarded");
                     return res.equals(result);
@@ -80,7 +80,7 @@ final class FuncOfTest {
         new Assertion<>(
             "Must convert Lambda into Func",
             new FuncOf<>(input -> input),
-            new Verifies<>(
+            new Satisfies<>(
                 func -> {
                     final Object input = new Object();
                     final Object res = func.apply(input);

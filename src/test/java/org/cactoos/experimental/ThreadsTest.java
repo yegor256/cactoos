@@ -30,12 +30,12 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import org.cactoos.scalar.LengthOf;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
-import org.llorllale.cactoos.shaded.org.cactoos.scalar.LengthOf;
 
 /**
  * Test case for {@link Threads}.

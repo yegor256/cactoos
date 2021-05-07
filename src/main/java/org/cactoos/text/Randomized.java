@@ -27,6 +27,7 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 import org.cactoos.Scalar;
+import org.cactoos.iterable.RangeOf;
 import org.cactoos.list.ListOf;
 
 /**
@@ -68,17 +69,8 @@ public final class Randomized extends TextEnvelope {
      */
     public Randomized(final Scalar<Integer> len) {
         this(
-            new ListOf<>(
-                '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*',
-                '+', ',', '-', '.', '/', '0', '1', '2', '3', '4',
-                '5', '6', '7', '8', '9', ':', ';', '<', '=', '>',
-                '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
-                'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-                'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\',
-                ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f',
-                'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-                'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                '{', '|', '}', '~'
+            new RangeOf<>(
+                '!', '~', ch -> ++ch
             ),
             len
         );
@@ -125,23 +117,24 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param chrs List of characters allowed for generating.
+     * @param chrs Characters allowed for generating.
      * @param len Length of generated text.
      */
-    public Randomized(final List<Character> chrs, final Scalar<Integer> len) {
+    public Randomized(final Iterable<Character> chrs, final Scalar<Integer> len) {
         this(chrs, len, new SecureRandom());
     }
 
     /**
      * Ctor.
-     * @param chrs List of characters allowed for generating.
+     * @param itr Characters allowed for generating.
      * @param len Length of generated text.
      * @param rnd Characters index randomizer.
      */
-    public Randomized(final List<Character> chrs, final Scalar<Integer> len, final Random rnd) {
+    public Randomized(final Iterable<Character> itr, final Scalar<Integer> len, final Random rnd) {
         super(
             new TextOf(
                 () -> {
+                    final List<Character> chrs = new ListOf<>(itr);
                     final int length = len.value();
                     final StringBuilder builder = new StringBuilder(length);
                     final int bound = chrs.size();

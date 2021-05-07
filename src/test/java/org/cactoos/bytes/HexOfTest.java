@@ -29,8 +29,8 @@ import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Satisfies;
 import org.llorllale.cactoos.matchers.Throws;
-import org.llorllale.cactoos.matchers.Verifies;
 
 /**
  * Test case for {@link HexOf}.
@@ -47,7 +47,7 @@ public final class HexOfTest {
         new Assertion<>(
             "Must represent an empty hexadecimal text",
             new HexOf(new TextOf("")).asBytes(),
-            new Verifies<>(array -> array.length == 0)
+            new Satisfies<>(array -> array.length == 0)
         ).affirm();
     }
 

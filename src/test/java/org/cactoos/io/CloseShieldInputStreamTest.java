@@ -30,7 +30,7 @@ import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
-import org.llorllale.cactoos.matchers.Verifies;
+import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link CloseShieldInputStream}.
@@ -73,7 +73,7 @@ final class CloseShieldInputStreamTest {
             new Assertion<>(
                 "Must show that data is available",
                 new CloseShieldInputStream(in).available(),
-                new Verifies<>(l -> l > 0)
+                new Satisfies<>(l -> l > 0)
             ).affirm();
         }
     }

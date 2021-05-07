@@ -25,11 +25,17 @@ package org.cactoos.iterable;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collection;
 import org.cactoos.Func;
 import org.cactoos.list.ListOf;
+import org.cactoos.proc.ForEach;
+import org.cactoos.proc.RepeatedProc;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test of range implementation.
@@ -37,6 +43,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumber (500 lines)
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class RangeOfTest {
 
@@ -61,6 +68,7 @@ final class RangeOfTest {
                     100,
                     new Func<Integer, Integer>() {
                         private int last;
+
                         @Override
                         public Integer apply(
                             final Integer input) throws Exception {
@@ -112,6 +120,80 @@ final class RangeOfTest {
                 LocalDate.of(2017, 1, 1),
                 LocalDate.of(2017, 1, 2),
                 LocalDate.of(2017, 1, 3)
+            )
+        ).affirm();
+    }
+
+    @Test
+    void shouldBeTraversableMultipleTimes() throws Exception {
+        final Iterable<Character> range = new RangeOf<>('a', 'c', value -> ++value);
+        final Collection<Character> copy = new ArrayList<>(6);
+        new RepeatedProc<>(new ForEach<>(copy::add), 2).exec(range);
+        new Assertion<>(
+            "Must add elements two times",
+            copy,
+            new HasSize(6)
+        ).affirm();
+    }
+
+    @Test
+    void shouldNotChangeAfterTraversing() throws Exception {
+        final Iterable<Character> range = new RangeOf<>('a', 'c', value -> ++value);
+        new ForEach<>(
+            (Character ignored) -> {
+            }
+        ).exec(range);
+        new Assertion<>(
+            "Must be equal",
+            range,
+            new IsEqual<>(
+                new RangeOf<>('a', 'c', value -> ++value)
+            )
+        ).affirm();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void producesChars() {
+        new Assertion<>(
+            "Must produce three ranges",
+            new Joined<>(
+                new RangeOf<>('0', '9', ch -> ++ch),
+                new RangeOf<>('A', 'Z', ch -> ++ch),
+                new RangeOf<>('a', 'z', ch -> ++ch)
+            ),
+            new IsEqual<>(
+                new IterableOfChars(
+                    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+                    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                    'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd',
+                    'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                    'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+                    'y', 'z'
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void producesCharsJoined() {
+        new Assertion<>(
+            "Must produce correct range of characters",
+            new RangeOf<>('!', '~', ch -> ++ch),
+            new IsEqual<>(
+                new IterableOfChars(
+                    '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*',
+                    '+', ',', '-', '.', '/', '0', '1', '2', '3', '4',
+                    '5', '6', '7', '8', '9', ':', ';', '<', '=', '>',
+                    '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+                    'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+                    'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\',
+                    ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f',
+                    'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+                    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                    '{', '|', '}', '~'
+                )
             )
         ).affirm();
     }

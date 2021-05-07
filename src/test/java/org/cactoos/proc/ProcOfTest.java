@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.func.FuncOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.Verifies;
+import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link ProcOf}.
@@ -48,7 +48,7 @@ final class ProcOfTest {
                     }
                 )
             ),
-            new Verifies<>(
+            new Satisfies<>(
                 proc -> {
                     final Object input = new Object();
                     proc.exec(input);
@@ -68,7 +68,7 @@ final class ProcOfTest {
                     done.set(input);
                 }
             ),
-            new Verifies<>(
+            new Satisfies<>(
                 proc -> {
                     final Object input = new Object();
                     proc.exec(input);

@@ -30,7 +30,7 @@ import org.cactoos.proc.RunnableOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
-import org.llorllale.cactoos.matchers.Verifies;
+import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link ScalarOf}.
@@ -65,7 +65,7 @@ final class ScalarOfTest {
                 ),
                 obj
             ),
-            new Verifies<>(
+            new Satisfies<>(
                 scalar -> {
                     final Object res = scalar.value();
                     return res.equals(obj) && done.get().equals(result);
@@ -100,7 +100,7 @@ final class ScalarOfTest {
                 ipt,
                 result
             ),
-            new Verifies<>(
+            new Satisfies<>(
                 scalar -> {
                     final Object res = scalar.value();
                     return res.equals(result) && done.get().equals(ipt);

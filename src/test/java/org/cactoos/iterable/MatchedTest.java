@@ -23,7 +23,9 @@
  */
 package org.cactoos.iterable;
 
+import java.util.Objects;
 import org.cactoos.list.ListOf;
+import org.cactoos.proc.ForEach;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.collection.IsIterableWithSize;
 import org.hamcrest.core.IsEqual;
@@ -151,6 +153,27 @@ public final class MatchedTest {
             ),
             new IsIterableWithSize<>(
                 new IsEqual<>(3)
+            )
+        ).affirm();
+    }
+
+    @Test
+    public void shouldNotChangeAfterTraversing() throws Exception {
+        final Iterable<Integer> matched = new Matched<>(
+            Objects::equals,
+            new IterableOf<>(1, 2, 3),
+            new IterableOf<>(1, 2, 3)
+        );
+        final Iterable<Integer> copy = new ListOf<>(matched);
+        new ForEach<>(
+            (Integer ignored) -> {
+            }
+        ).exec(matched);
+        new Assertion<>(
+            "Elements must not be removed",
+            matched,
+            new IsEqual<>(
+                copy
             )
         ).affirm();
     }

@@ -42,7 +42,7 @@ public final class
     public RangeOf(final T min, final T max, final Func<T, T> incrementor) {
         super(
             new IterableOf<>(
-                new org.cactoos.iterator.RangeOf<>(min, max, incrementor)
+                () -> new org.cactoos.iterator.RangeOf<>(min, max, incrementor)
             )
         );
     }

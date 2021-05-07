@@ -43,10 +43,11 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.HasString;
+import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.MatchesRegex;
+import org.llorllale.cactoos.matchers.Satisfies;
 import org.llorllale.cactoos.matchers.StartsWith;
-import org.llorllale.cactoos.matchers.Verifies;
 import org.takes.http.FtRemote;
 import org.takes.tk.TkHtml;
 
@@ -127,7 +128,7 @@ final class InputOfTest {
                     )
                 )
             ).asBytes(),
-            new Verifies<>(arr -> arr.length > 0)
+            new Satisfies<>(arr -> arr.length > 0)
         ).affirm();
     }
 
@@ -272,8 +273,8 @@ final class InputOfTest {
                 new InputOf(
                     new StringReader(source)
                 )
-            ).asString(),
-            new IsEqual<>(source)
+            ),
+            new IsText(source)
         ).affirm();
     }
 
@@ -289,8 +290,8 @@ final class InputOfTest {
                         StandardCharsets.UTF_8
                     )
                 )
-            ).asString(),
-            new IsEqual<>(source)
+            ),
+            new IsText(source)
         ).affirm();
     }
 
@@ -312,7 +313,7 @@ final class InputOfTest {
         new Assertion<>(
             "must show that data is available",
             new InputOf(content).stream(),
-            new Verifies<>(s -> s.available() > 0)
+            new Satisfies<>(s -> s.available() > 0)
         ).affirm();
     }
 

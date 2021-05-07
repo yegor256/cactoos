@@ -23,10 +23,12 @@
  */
 package org.cactoos.iterator;
 
+import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+import org.cactoos.list.ListOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
@@ -50,14 +52,20 @@ public final class Shuffled<T> implements Iterator<T> {
      * @param iterator The original iterator
      */
     public Shuffled(final Iterator<T> iterator) {
+        this(new SecureRandom(), iterator);
+    }
+
+    /**
+     * Ctor.
+     * @param random Randomizer.
+     * @param iterator The original iterator
+     */
+    public Shuffled(final Random random, final Iterator<T> iterator) {
         this.scalar = new Unchecked<>(
             new Sticky<>(
                 () -> {
-                    final List<T> items = new LinkedList<>();
-                    while (iterator.hasNext()) {
-                        items.add(iterator.next());
-                    }
-                    Collections.shuffle(items);
+                    final List<T> items = new ListOf<>(iterator);
+                    Collections.shuffle(items, random);
                     return items.iterator();
                 }
             )
