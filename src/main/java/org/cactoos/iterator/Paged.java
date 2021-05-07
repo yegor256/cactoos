@@ -36,32 +36,30 @@ import org.cactoos.func.UncheckedFunc;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @param <I> Subtype of item iterator
  * @param <X> Type of item
  * @since 0.49
- * @todo #1464:30min We want to use {@code Iterator<X>} directly in the class without
- *  introducing I, maybe using {@code Iterator<? extends X>} for example because, we don't
- *  have to constrain the {@link Func} to give exactly the same Iterator type as long as it
- *  is an iterator that provides X. {@link org.cactoos.iterable.Paged} should be changed too.
  */
-public final class Paged<I extends Iterator<X>, X> implements Iterator<X> {
+public final class Paged<X> implements Iterator<X> {
 
     /**
      * Current element.
      */
-    private final AtomicReference<I> current;
+    private final AtomicReference<Iterator<? extends X>> current;
 
     /**
      * Function to get the next element.
      */
-    private final Func<I, I> subsequent;
+    private final Func<? super Iterator<? extends X>, ? extends Iterator<? extends X>> subsequent;
 
     /**
      * Ctor.
      * @param first First element.
      * @param next Function to get the next element.
      */
-    public Paged(final I first, final Func<I, I> next) {
+    public Paged(
+        final Iterator<? extends X> first,
+        final Func<? super Iterator<? extends X>, ? extends Iterator<? extends X>> next
+    ) {
         this.current = new AtomicReference<>(first);
         this.subsequent = next;
     }
@@ -69,7 +67,7 @@ public final class Paged<I extends Iterator<X>, X> implements Iterator<X> {
     @Override
     public boolean hasNext() {
         if (!this.current.get().hasNext()) {
-            final I next = new UncheckedFunc<>(this.subsequent).apply(
+            final Iterator<? extends X> next = new UncheckedFunc<>(this.subsequent).apply(
                 this.current.get()
             );
             this.current.set(next);
