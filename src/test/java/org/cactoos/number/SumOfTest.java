@@ -34,6 +34,11 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link SumOf}.
  *
  * @since 0.9
+ * @todo #1335:30min Following the rewrite of the Number implementations
+ *  in cactoos, the three methods below prefixed by overflow where adapted
+ *  because they started to give different results. The task is to investigate
+ *  thoroughly what is a "correct" behaviour concerning overflow in the case
+ *  of SumOf and adapt the tests and the code to make this obvious and clear.
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
