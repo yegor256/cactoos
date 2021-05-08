@@ -54,7 +54,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     /**
      * The fallback.
      */
-    private final Iterable<Fallback<T>> fallbacks;
+    private final Iterable<Fallback<? extends T>> fallbacks;
 
     /**
      * Ctor.
@@ -64,7 +64,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     @SafeVarargs
     public ScalarWithFallback(
         final Scalar<T> origin,
-        final Fallback<T>... fbks
+        final Fallback<? extends T>... fbks
     ) {
         this(origin, new IterableOf<>(fbks));
     }
@@ -75,7 +75,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
      * @param fbks Fallbacks
      */
     public ScalarWithFallback(final Scalar<T> origin,
-        final Iterable<Fallback<T>> fbks) {
+        final Iterable<Fallback<? extends T>> fbks) {
         this.origin = origin;
         this.fallbacks = fbks;
     }
@@ -105,7 +105,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
      */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private T fallback(final Throwable exp) throws Exception {
-        final Iterator<Map.Entry<Fallback<T>, Integer>> candidates =
+        final Iterator<? extends Map.Entry<Fallback<? extends T>, Integer>> candidates =
             new Sorted<>(
                 Comparator.comparing(Map.Entry::getValue),
                 new Filtered<>(
@@ -117,7 +117,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
                             )
                         )
                     ),
-                    new MapOf<>(
+                    new MapOf<Fallback<? extends T>, Integer>(
                         fbk -> fbk,
                         fbk -> fbk.support(exp),
                         this.fallbacks
