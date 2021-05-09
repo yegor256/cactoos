@@ -54,7 +54,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     /**
      * The fallback.
      */
-    private final Iterable<Fallback<? extends T>> fallbacks;
+    private final Iterable<? extends Fallback<? extends T>> fallbacks;
 
     /**
      * Ctor.
@@ -75,7 +75,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
      * @param fbks Fallbacks
      */
     public ScalarWithFallback(final Scalar<T> origin,
-        final Iterable<Fallback<? extends T>> fbks) {
+        final Iterable<? extends Fallback<? extends T>> fbks) {
         this.origin = origin;
         this.fallbacks = fbks;
     }

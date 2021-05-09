@@ -100,7 +100,7 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
     /**
      * The fallbacks.
      */
-    private final Iterable<Fallback<? extends Y>> fallbacks;
+    private final Iterable<? extends Fallback<? extends Y>> fallbacks;
 
     /**
      * Ctor.
@@ -119,7 +119,7 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
      * @param fbks The fallbacks
      */
     public FuncWithFallback(final Func<? super X, ? extends Y> fnc,
-        final Iterable<Fallback<? extends Y>> fbks) {
+        final Iterable<? extends Fallback<? extends Y>> fbks) {
         this.func = fnc;
         this.fallbacks = fbks;
     }
