@@ -38,13 +38,13 @@ public abstract class ProcEnvelope<X> implements Proc<X> {
     /**
      * Proc to decorate.
      */
-    private final Proc<X> origin;
+    private final Proc<? super X> origin;
 
     /**
      * Ctor.
      * @param origin The procedure
      */
-    public ProcEnvelope(final Proc<X> origin) {
+    public ProcEnvelope(final Proc<? super X> origin) {
         this.origin = origin;
     }
 
