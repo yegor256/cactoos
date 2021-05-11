@@ -23,6 +23,7 @@
  */
 package org.cactoos.proc;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.func.BiFuncOf;
 import org.cactoos.func.FuncOf;
@@ -33,6 +34,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
 /**
  * Test case for {@link BiProcOf}.
  *
+ * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  * @since 0.50
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -126,6 +128,27 @@ final class BiProcOfTest {
                     final Object second = new Object();
                     proc.exec(first, second);
                     return done.get() == first;
+                }
+            )
+        ).affirm();
+    }
+
+    @Test
+    void worksWithTwoProcs() throws Exception {
+        final AtomicInteger fst = new AtomicInteger();
+        final AtomicInteger snd = new AtomicInteger();
+        new Assertion<>(
+            "Must execute BiProc with two Procs",
+            new BiProcOf<>(
+                new BiProcOf<>(
+                    AtomicInteger::incrementAndGet,
+                    AtomicInteger::incrementAndGet
+                )
+            ),
+            new Satisfies<>(
+                proc -> {
+                    proc.exec(fst, snd);
+                    return fst.get() == 1 && snd.get() == 1;
                 }
             )
         ).affirm();
