@@ -25,8 +25,6 @@ package org.cactoos.proc;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import org.cactoos.func.BiFuncOf;
-import org.cactoos.func.FuncOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Satisfies;
@@ -45,12 +43,10 @@ final class BiProcOfTest {
         new Assertion<>(
             "Must execute BiProc with Func",
             new BiProcOf<>(
-                new FuncOf<>(
-                    input -> {
-                        done.set(input);
-                        return "discarded";
-                    }
-                )
+                input -> {
+                    done.set(input);
+                    return "discarded";
+                }
             ),
             new Satisfies<>(
                 proc -> {
@@ -69,12 +65,10 @@ final class BiProcOfTest {
         new Assertion<>(
             "Must execute BiProc with BiFunc",
             new BiProcOf<>(
-                new BiFuncOf<>(
-                    (first, second) -> {
-                        done.set(first);
-                        return "discarded";
-                    }
-                )
+                (first, second) -> {
+                    done.set(first);
+                    return "discarded";
+                }
             ),
             new Satisfies<>(
                 proc -> {
@@ -116,11 +110,9 @@ final class BiProcOfTest {
         new Assertion<>(
             "Must execute BiProc with BiProc",
             new BiProcOf<>(
-                new BiProcOf<>(
-                    (first, second) -> {
-                        done.set(first);
-                    }
-                )
+                (first, second) -> {
+                    done.set(first);
+                }
             ),
             new Satisfies<>(
                 proc -> {
@@ -140,10 +132,8 @@ final class BiProcOfTest {
         new Assertion<>(
             "Must execute BiProc with two Procs",
             new BiProcOf<>(
-                new BiProcOf<>(
-                    AtomicInteger::incrementAndGet,
-                    AtomicInteger::incrementAndGet
-                )
+                AtomicInteger::incrementAndGet,
+                AtomicInteger::incrementAndGet
             ),
             new Satisfies<>(
                 proc -> {

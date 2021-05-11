@@ -44,7 +44,7 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
      * @param func The function
      */
     public BiProcOf(final Func<? super X, ?> func) {
-        this((x) -> {
+        this(x -> {
             func.apply(x);
         });
     }
@@ -87,7 +87,6 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
             func.apply(first, second);
         });
     }
-
 
     /**
      * Ctor.
