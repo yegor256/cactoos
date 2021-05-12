@@ -41,7 +41,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
     /**
      * The func.
      */
-    private final Func<X, Y> func;
+    private final Func<? super X, ? extends Y> func;
 
     /**
      * Ctor.
@@ -61,7 +61,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
      * Ctor.
      * @param scalar Origin scalar
      */
-    public FuncOf(final Scalar<Y> scalar) {
+    public FuncOf(final Scalar<? extends Y> scalar) {
         this(input -> scalar.value());
     }
 
@@ -69,7 +69,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
      * Ctor.
      * @param fnc Func
      */
-    public FuncOf(final Func<X, Y> fnc) {
+    public FuncOf(final Func<? super X, ? extends Y> fnc) {
         this.func = fnc;
     }
 
