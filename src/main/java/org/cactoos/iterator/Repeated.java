@@ -41,7 +41,7 @@ public final class Repeated<T> implements Iterator<T> {
     /**
      * The element to repeat.
      */
-    private final Unchecked<T> elm;
+    private final Unchecked<? extends T> elm;
 
     /**
      * How many more repeats will happen.
@@ -62,8 +62,8 @@ public final class Repeated<T> implements Iterator<T> {
      * @param max How many times to repeat
      * @param scalar Scalar to repeat
      */
-    public Repeated(final int max, final Scalar<T> scalar) {
-        this(max, new Unchecked<T>(scalar));
+    public Repeated(final int max, final Scalar<? extends T> scalar) {
+        this(max, new Unchecked<>(scalar));
     }
 
     /**
@@ -71,7 +71,7 @@ public final class Repeated<T> implements Iterator<T> {
      * @param max How many times to repeat
      * @param scalar Scalar to repeat
      */
-    private Repeated(final int max, final Unchecked<T> scalar) {
+    private Repeated(final int max, final Unchecked<? extends T> scalar) {
         this.elm = scalar;
         this.repeat = max;
     }
