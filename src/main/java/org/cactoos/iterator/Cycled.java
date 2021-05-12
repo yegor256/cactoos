@@ -41,18 +41,18 @@ public final class Cycled<T> implements Iterator<T> {
     /**
      * Iterable.
      */
-    private final Iterable<T> origin;
+    private final Iterable<? extends T> origin;
 
     /**
      * Iterator.
      */
-    private AtomicReference<Iterator<T>> reference;
+    private final AtomicReference<Iterator<? extends T>> reference;
 
     /**
      * Ctor.
      * @param iterable Iterable.
      */
-    public Cycled(final Iterable<T> iterable) {
+    public Cycled(final Iterable<? extends T> iterable) {
         this.origin = iterable;
         this.reference = new AtomicReference<>(iterable.iterator());
     }
