@@ -61,7 +61,7 @@ public final class Reversed<X> implements Iterator<X> {
      * @param src Source iterator
      * @since 1.0
      */
-    public Reversed(final Iterator<X> src) {
+    public Reversed(final Iterator<? extends X> src) {
         this(new ListOf<>(src));
     }
 
