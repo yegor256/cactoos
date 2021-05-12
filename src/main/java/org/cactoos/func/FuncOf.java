@@ -48,7 +48,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
      * @param proc The proc
      * @param result Result to return
      */
-    public FuncOf(final Proc<X> proc, final Y result) {
+    public FuncOf(final Proc<? super X> proc, final Y result) {
         this(
             input -> {
                 proc.exec(input);

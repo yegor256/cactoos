@@ -25,19 +25,22 @@ package org.cactoos.proc;
 
 import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.Proc;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link ForEach}.
  *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
-public class ForEachTest {
+final class ForEachTest {
 
     @Test
     void testProcIterable() throws Exception {
@@ -57,6 +60,26 @@ public class ForEachTest {
                     1, 1
                 )
             )
+        ).affirm();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void worksWithGenerics() throws Exception {
+        final List<? super Number> list = new LinkedList<>();
+        new ForEach<>(
+            (Proc<? super Number>) list::add
+        ).exec(
+            new IterableOf<>(
+                Integer.valueOf("1"),
+                Double.valueOf("2"),
+                Long.valueOf("3")
+            )
+        );
+        new Assertion<>(
+            "Must contain elements",
+            list,
+            new HasValues<>(1, 2.0d, 3L)
         ).affirm();
     }
 
