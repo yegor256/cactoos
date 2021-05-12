@@ -49,7 +49,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     /**
      * The origin scalar.
      */
-    private final Scalar<T> origin;
+    private final Scalar<? extends T> origin;
 
     /**
      * The fallback.
@@ -63,7 +63,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
      */
     @SafeVarargs
     public ScalarWithFallback(
-        final Scalar<T> origin,
+        final Scalar<? extends T> origin,
         final Fallback<? extends T>... fbks
     ) {
         this(origin, new IterableOf<>(fbks));
@@ -74,7 +74,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
      * @param origin Original scalar
      * @param fbks Fallbacks
      */
-    public ScalarWithFallback(final Scalar<T> origin,
+    public ScalarWithFallback(final Scalar<? extends T> origin,
         final Iterable<? extends Fallback<? extends T>> fbks) {
         this.origin = origin;
         this.fallbacks = fbks;
