@@ -23,7 +23,9 @@
  */
 package org.cactoos.iterable;
 
+import java.util.Random;
 import org.cactoos.list.ListOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
@@ -65,6 +67,22 @@ final class ShuffledTest {
             "Must shuffle elements in iterable",
             new Shuffled<>(new IterableOf<>(1, 2, 0, -1)),
             new HasValues<>(1, 2, 0, -1)
+        ).affirm();
+    }
+
+    @Test
+    void shuffleIterableWithRandomized() {
+        new Assertion<>(
+            "Must shuffle elements with randomizer",
+            new Shuffled<>(
+                new Random(0L),
+                new IterableOf<>(
+                    3, 2, 1
+                )
+            ),
+            new IsEqual<>(
+                new IterableOf<>(1, 2, 3)
+            )
         ).affirm();
     }
 }

@@ -39,6 +39,7 @@ import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.InputOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 
 /**
@@ -316,39 +317,24 @@ public final class TextOf extends TextEnvelope {
     /**
      * Ctor.
      *
-     * @param iterable The iterable to convert to string
-     * @todo #1461:30min We want constructors with {@code Iterable<?>} and
-     *  {@code Iterator<Character>} to have same behaviour (simply concatenate list of strings).
-     *  To do that, we should change {@code Iterable<?>} to {@code Iterable<Character>}
-     *  and delegate the {@link Iterator} one to the {@link Iterable} one. After that, we need to
-     *  modify other parts of cactoos that relied on this in order to preserve their behaviour
-     *  by using {@link Joined} and {@link Concatenated}.
+     * @param iterator The iterable to convert to string
      */
-    public TextOf(final Iterable<?> iterable) {
-        super(
-            new Joined(
-                ", ",
-                new Mapped<>(
-                    Object::toString,
-                    iterable
-                )
-            )
-        );
+    public TextOf(final Iterator<Character> iterator) {
+        this(new IterableOf<>(iterator));
     }
 
     /**
      * Ctor.
      *
-     * @param iterator The iterable to convert to string
+     * @param iterable The iterable to convert to string
      */
-    public TextOf(final Iterator<Character> iterator) {
-        this(
-            new TextOfScalar(
-                () -> {
-                    final StringBuilder buf = new StringBuilder();
-                    iterator.forEachRemaining(buf::append);
-                    return buf.toString();
-                }
+    public TextOf(final Iterable<Character> iterable) {
+        super(
+            new Concatenated(
+                new Mapped<>(
+                    TextOf::new,
+                    iterable
+                )
             )
         );
     }

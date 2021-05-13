@@ -28,16 +28,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
-import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.InputOf;
+import org.cactoos.iterable.IterableOfChars;
 import org.cactoos.iterator.IteratorOfChars;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.HasString;
 import org.llorllale.cactoos.matchers.IsText;
+import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link TextOf}.
@@ -48,11 +51,11 @@ import org.llorllale.cactoos.matchers.IsText;
  * @checkstyle MagicNumberCheck (1000 lines)
  * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals", "unchecked"})
 final class TextOfTest {
 
     @Test
-    void readsInputIntoText() throws Exception {
+    void readsInputIntoText() {
         new Assertion<>(
             "Can't read text from Input",
             new Synced(
@@ -60,40 +63,40 @@ final class TextOfTest {
                     new InputOf("привет, друг!"),
                     StandardCharsets.UTF_8
                 )
-            ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith("привет, "),
-                Matchers.endsWith("друг!")
+            ),
+            new AllOf<>(
+                new StartsWith("привет, "),
+                new EndsWith("друг!")
             )
         ).affirm();
     }
 
     @Test
-    void readsInputIntoTextWithDefaultCharset() throws Exception {
+    void readsInputIntoTextWithDefaultCharset() {
         new Assertion<>(
             "Can't read text from Input with default charset",
             new TextOf(
                 new InputOf("Hello, друг! with default charset")
-            ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith("Hello, "),
-                Matchers.endsWith("друг! with default charset")
+            ),
+            new AllOf<>(
+                new StartsWith("Hello, "),
+                new EndsWith("друг! with default charset")
             )
         ).affirm();
     }
 
     @Test
-    void readsInputIntoTextWithSmallBuffer() throws Exception {
+    void readsInputIntoTextWithSmallBuffer() {
         new Assertion<>(
             "Can't read text with a small reading buffer",
             new TextOf(
                 new InputOf("Hi, товарищ! with small buffer"),
                 2,
                 StandardCharsets.UTF_8
-            ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith("Hi,"),
-                Matchers.endsWith("товарищ! with small buffer")
+            ),
+            new AllOf<>(
+                new StartsWith("Hi,"),
+                new EndsWith("товарищ! with small buffer")
             )
         ).affirm();
     }
@@ -103,119 +106,106 @@ final class TextOfTest {
         final String text = "Hi there! with small buffer";
         new Assertion<>(
             "Can't read text from Reader with a small reading buffer",
-            new TextOf(text),
-            new IsText(
-                new TextOf(
-                    new StringReader(text), 2, StandardCharsets.UTF_8
-                )
-            )
+            new TextOf(
+                new StringReader(text), 2, StandardCharsets.UTF_8
+            ),
+            new IsText(text)
         ).affirm();
     }
 
     @Test
-    void readsInputIntoTextWithSmallBufferAndDefaultCharset()
-        throws Exception {
+    void readsInputIntoTextWithSmallBufferAndDefaultCharset() {
         new Assertion<>(
             "Can't read text with a small reading buffer and default charset",
             new TextOf(
                 new InputOf("Hello, товарищ! with default charset"),
                 2
-            ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith("Hello,"),
-                Matchers.endsWith("товарищ! with default charset")
+            ),
+            new AllOf<>(
+                new StartsWith("Hello,"),
+                new EndsWith("товарищ! with default charset")
             )
         ).affirm();
     }
 
     @Test
-    void readsFromReader() throws Exception {
+    void readsFromReader() {
         final String source = "hello, друг!";
         new Assertion<>(
             "Can't read string through a reader",
             new TextOf(
                 new StringReader(source),
                 StandardCharsets.UTF_8
-            ).asString(),
-            Matchers.equalTo(
-                new String(
-                    new BytesOf(source).asBytes(),
-                    StandardCharsets.UTF_8
-                )
-            )
+            ),
+            new IsText(source)
         ).affirm();
     }
 
     @Test
-    void readsFromReaderWithDefaultEncoding() throws Exception {
+    void readsFromReaderWithDefaultEncoding() {
         final String source = "hello, друг! with default encoding";
         new Assertion<>(
             "Can't read string with default encoding through a reader",
-            new TextOf(new StringReader(source)).asString(),
-            Matchers.equalTo(
-                new String(
-                    new BytesOf(source).asBytes(),
-                    StandardCharsets.UTF_8
-                )
-            )
+            new TextOf(new StringReader(source)),
+            new IsText(source)
         ).affirm();
     }
 
     @Test
-    void readsEncodedArrayOfCharsIntoText() throws Exception {
+    void readsEncodedArrayOfCharsIntoText() {
         new Assertion<>(
             "Can't read array of encoded chars into text.",
             new TextOf(
                 'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
                 ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a'
-            ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith("O que sera"),
-                Matchers.endsWith(" que sera")
+            ),
+            new AllOf<>(
+                new StartsWith("O que sera"),
+                new EndsWith(" que sera")
             )
         ).affirm();
     }
 
     @Test
-    void readsAnArrayOfBytes() throws Exception {
-        final byte[] bytes = new byte[] {(byte) 0xCA, (byte) 0xFE};
+    void readsAnArrayOfBytes() {
+        final byte[] bytes = new byte[]{(byte) 0xCA, (byte) 0xFE};
         new Assertion<>(
             "Can't read array of bytes",
             new TextOf(
                 bytes
-            ).asString(),
-            Matchers.equalTo(new String(bytes, StandardCharsets.UTF_8))
+            ),
+            new IsText(new String(bytes, StandardCharsets.UTF_8))
         ).affirm();
     }
 
     @Test
-    void readsStringBuilder() throws Exception {
+    void readsStringBuilder() {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
         new Assertion<>(
             "Can't process a string builder",
             new TextOf(
                 new StringBuilder(starts).append(ends)
-            ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith(starts),
-                Matchers.endsWith(ends)
+            ),
+            new AllOf<>(
+                new StartsWith(starts),
+                new EndsWith(ends)
             )
         ).affirm();
     }
 
     @Test
-    void readsStringBuffer() throws Exception {
+    void readsStringBuffer() {
         final String starts = "In our daily life, ";
         final String ends = "we can smile!";
         new Assertion<>(
             "Can't process a string builder hahahaha",
             new TextOf(
                 new StringBuffer(starts).append(ends)
-            ).asString(),
-            Matchers.allOf(
-                Matchers.startsWith(starts),
-                Matchers.endsWith(ends)
+            ),
+            new AllOf<>(
+                new StartsWith(starts),
+                new EndsWith(ends)
             )
         ).affirm();
     }
@@ -247,8 +237,8 @@ final class TextOfTest {
         );
         new Assertion<>(
             "Can't read inputStream",
-            new TextOf(stream).asString(),
-            Matchers.equalTo(
+            new TextOf(stream),
+            new IsText(
                 new String(content.getBytes(), StandardCharsets.UTF_8)
             )
         ).affirm();
@@ -262,8 +252,8 @@ final class TextOfTest {
         );
         new Assertion<>(
             "Can't read multiline inputStream",
-            new TextOf(stream).asString(),
-            Matchers.equalTo(content)
+            new TextOf(stream),
+            new IsText(content)
         ).affirm();
     }
 
@@ -275,8 +265,8 @@ final class TextOfTest {
         );
         new Assertion<>(
             "Can't read multiline inputStream with carriage return",
-            new TextOf(stream).asString(),
-            Matchers.equalTo(content)
+            new TextOf(stream),
+            new IsText(content)
         ).affirm();
     }
 
@@ -289,8 +279,8 @@ final class TextOfTest {
         stream.close();
         new Assertion<>(
             "Can't read closed input stream",
-            new TextOf(stream).asString(),
-            Matchers.equalTo(content)
+            new TextOf(stream),
+            new IsText(content)
         ).affirm();
     }
 
@@ -302,8 +292,8 @@ final class TextOfTest {
         );
         new Assertion<>(
             "Can't read empty input stream",
-            new TextOf(stream).asString(),
-            Matchers.equalTo(content)
+            new TextOf(stream),
+            new IsText(content)
         ).affirm();
     }
 
@@ -319,13 +309,24 @@ final class TextOfTest {
     }
 
     @Test
-    void readsIteratorToText() throws Exception {
+    void readsIterableToText() {
         new Assertion<>(
-            "Can't read Iterator to Text",
+            "Must read Iterable to Text",
+            new TextOf(
+                new IterableOfChars("hello")
+            ),
+            new IsText("hello")
+        ).affirm();
+    }
+
+    @Test
+    void readsIteratorToText() {
+        new Assertion<>(
+            "Must read Iterator to Text",
             new TextOf(
                 new IteratorOfChars("qwer")
-            ).asString(),
-            new IsEqual<>("qwer")
+            ),
+            new IsText("qwer")
         ).affirm();
     }
 
@@ -385,9 +386,8 @@ final class TextOfTest {
     void testDoesNotEqualsFalse() {
         new Assertion<>(
             "Must not equals null",
-            new TextOf("is not equals to not Text object")
-                .equals(null),
-            new IsEqual<>(false)
+            new TextOf("is not equals to not Text object"),
+            new IsNot<>(new IsNull<>())
         ).affirm();
     }
 

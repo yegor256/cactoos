@@ -38,7 +38,7 @@ public final class RepeatedProc<X> implements Proc<X> {
     /**
      * The repeated func.
      */
-    private final Func<X, Boolean> func;
+    private final Func<? super X, Boolean> func;
 
     /**
      * Ctor.
@@ -49,7 +49,7 @@ public final class RepeatedProc<X> implements Proc<X> {
      * @param prc Proc to repeat.
      * @param count How many times.
      */
-    public RepeatedProc(final Proc<X> prc, final int count) {
+    public RepeatedProc(final Proc<? super X> prc, final int count) {
         this.func = new Repeated<>(
             new FuncOf<>(prc, true),
             count

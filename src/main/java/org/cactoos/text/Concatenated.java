@@ -34,7 +34,7 @@ import org.cactoos.iterable.Mapped;
  *
  * @since 0.47
  */
-public class Concatenated extends TextEnvelope {
+public final class Concatenated extends TextEnvelope {
 
     /**
      * Ctor.

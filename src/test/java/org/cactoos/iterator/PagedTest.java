@@ -56,7 +56,7 @@ final class PagedTest {
             new IteratorOf<>("three", "four"),
             new IteratorOf<>("five")
         );
-        final Paged<Iterator<String>, String> paged = new Paged<>(
+        final Paged<String> paged = new Paged<>(
             pages.next(),
             page -> new Ternary<>(
                 () -> pages.hasNext(),
@@ -98,7 +98,7 @@ final class PagedTest {
         final Iterator<Iterator<String>> pages = new IteratorOf<>(
             first, second, third
         );
-        final Paged<Iterator<String>, String> paged = new Paged<>(
+        final Paged<String> paged = new Paged<>(
             pages.next(),
             page -> new Ternary<>(
                 () -> pages.hasNext(),

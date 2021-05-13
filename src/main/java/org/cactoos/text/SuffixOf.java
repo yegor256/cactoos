@@ -24,7 +24,6 @@
 package org.cactoos.text;
 
 import org.cactoos.Text;
-import org.cactoos.scalar.LengthOf;
 import org.cactoos.scalar.ScalarOf;
 import org.cactoos.scalar.Ternary;
 

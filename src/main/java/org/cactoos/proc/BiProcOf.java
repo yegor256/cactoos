@@ -92,7 +92,7 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
      * Ctor.
      * @param biprc The bi procedure
      */
-    public BiProcOf(final BiProc<X, Y> biprc) {
+    public BiProcOf(final BiProc<? super X, ? super Y> biprc) {
         super(biprc);
     }
 }

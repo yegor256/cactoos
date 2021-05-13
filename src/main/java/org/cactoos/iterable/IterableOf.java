@@ -33,7 +33,7 @@ import org.cactoos.scalar.Or;
 import org.cactoos.scalar.ScalarWithFallback;
 import org.cactoos.scalar.SumOfInt;
 import org.cactoos.scalar.Unchecked;
-import org.cactoos.text.TextOf;
+import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
 
 /**
@@ -134,6 +134,14 @@ public final class IterableOf<X> implements Iterable<X> {
 
     @Override
     public String toString() {
-        return new UncheckedText(new TextOf(this)).asString();
+        return new UncheckedText(
+            new Joined(
+                ", ",
+                new Mapped<>(
+                    Object::toString,
+                    this
+                )
+            )
+        ).asString();
     }
 }
