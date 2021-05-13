@@ -69,11 +69,7 @@ final class ForEachTest {
         final List<? super Number> list = new LinkedList<>();
         final Proc<? super Number> proc = list::add;
         new ForEach<>(proc).exec(
-            new IterableOf<>(
-                Integer.valueOf("1"),
-                Double.valueOf("2"),
-                Long.valueOf("3")
-            )
+            new IterableOf<>(1, 2.0d, 3L)
         );
         new Assertion<>(
             "Must contain elements",
