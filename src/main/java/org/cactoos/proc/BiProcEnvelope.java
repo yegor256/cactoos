@@ -39,13 +39,13 @@ public abstract class BiProcEnvelope<X, Y> implements BiProc<X, Y> {
     /**
      * BiProc to decorate.
      */
-    private final BiProc<X, Y> origin;
+    private final BiProc<? super X, ? super Y> origin;
 
     /**
      * Ctor.
      * @param origin The procedure
      */
-    public BiProcEnvelope(final BiProc<X, Y> origin) {
+    public BiProcEnvelope(final BiProc<? super X, ? super Y> origin) {
         this.origin = origin;
     }
 

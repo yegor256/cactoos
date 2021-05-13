@@ -35,13 +35,13 @@ public final class ProcNoNulls<X> implements Proc<X> {
     /**
      * The procedure.
      */
-    private final Proc<X> origin;
+    private final Proc<? super X> origin;
 
     /**
      * Ctor.
      * @param proc The procedure
      */
-    public ProcNoNulls(final Proc<X> proc) {
+    public ProcNoNulls(final Proc<? super X> proc) {
         this.origin = proc;
     }
 

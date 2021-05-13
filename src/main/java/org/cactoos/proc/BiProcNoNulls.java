@@ -36,13 +36,13 @@ public final class BiProcNoNulls<X, Y> implements BiProc<X, Y> {
     /**
      * The proc.
      */
-    private final BiProc<X, Y> origin;
+    private final BiProc<? super X, ? super Y> origin;
 
     /**
      * Ctor.
      * @param proc The function
      */
-    public BiProcNoNulls(final BiProc<X, Y> proc) {
+    public BiProcNoNulls(final BiProc<? super X, ? super Y> proc) {
         this.origin = proc;
     }
 
