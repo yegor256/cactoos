@@ -31,50 +31,28 @@ import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link ForEach}.
  *
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle MagicNumberCheck (500 lines)
  */
 final class ForEachTest {
-
-    @Test
-    void testProcIterable() throws Exception {
-        final List<Integer> list = new LinkedList<>();
-        new ForEach<Integer>(
-            list::add
-        ).exec(
-            new IterableOf<>(
-                1, 1
-            )
-        );
-        new Assertion<>(
-            "List does not contain mapped Iterable elements",
-            list,
-            new IsEqual<>(
-                new ListOf<>(
-                    1, 1
-                )
-            )
-        ).affirm();
-    }
 
     @Test
     @SuppressWarnings("unchecked")
     void worksWithGenerics() throws Exception {
         final List<? super Number> list = new LinkedList<>();
         final Proc<? super Number> proc = list::add;
-        new ForEach<>(proc).exec(
-            new IterableOf<>(1, 2.0d, 3L)
+        final IterableOf<? extends Number> input = new IterableOf<>(
+            1, 2.0d, 3L
         );
+        new ForEach<>(proc).exec(input);
         new Assertion<>(
             "Must contain elements",
             list,
-            new HasValues<>(1, 2.0d, 3L)
+            new IsEqual<>(new ListOf<>(input))
         ).affirm();
     }
 
