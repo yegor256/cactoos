@@ -67,9 +67,8 @@ final class ForEachTest {
     @SuppressWarnings("unchecked")
     void worksWithGenerics() throws Exception {
         final List<? super Number> list = new LinkedList<>();
-        new ForEach<>(
-            (Proc<? super Number>) list::add
-        ).exec(
+        final Proc<? super Number> proc = list::add;
+        new ForEach<>(proc).exec(
             new IterableOf<>(
                 Integer.valueOf("1"),
                 Double.valueOf("2"),
