@@ -40,7 +40,7 @@ public final class ProcOf<X> extends ProcEnvelope<X> {
      * Ctor.
      * @param fnc The proc
      */
-    public ProcOf(final Func<X, ?> fnc) {
+    public ProcOf(final Func<? super X, ?> fnc) {
         this(
             input -> {
                 fnc.apply(input);
@@ -52,7 +52,7 @@ public final class ProcOf<X> extends ProcEnvelope<X> {
      * Ctor.
      * @param prc The proc
      */
-    public ProcOf(final Proc<X> prc) {
+    public ProcOf(final Proc<? super X> prc) {
         super(prc);
     }
 }

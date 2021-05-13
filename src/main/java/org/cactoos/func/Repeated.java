@@ -38,7 +38,7 @@ public final class Repeated<X, Y> implements Func<X, Y> {
     /**
      * Original func.
      */
-    private final Func<X, Y> func;
+    private final Func<? super X, ? extends Y> func;
 
     /**
      * How many times to run.
@@ -54,7 +54,7 @@ public final class Repeated<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      * @param max How many times
      */
-    public Repeated(final Func<X, Y> fnc, final int max) {
+    public Repeated(final Func<? super X, ? extends Y> fnc, final int max) {
         this.func = fnc;
         this.times = max;
     }
