@@ -109,7 +109,7 @@ public interface Fallback<X> extends Func<Throwable, X> {
      * No fallback. Throw unchecked exception.
      *
      * @param <X> Type of result.
-     * @since 1.0;
+     * @since 1.0
      */
     final class None<X> implements Fallback<X> {
         @Override
@@ -119,7 +119,7 @@ public interface Fallback<X> extends Func<Throwable, X> {
 
         @Override
         public X apply(final Throwable input) throws Exception {
-            throw new RuntimeException(input);
+            throw new IllegalStateException(input);
         }
     }
 }

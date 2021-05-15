@@ -46,7 +46,6 @@ public final class UncheckedBytes implements Bytes {
      * Ctor.
      * @param bts Encapsulated bytes
      */
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     public UncheckedBytes(final Bytes bts) {
         this(bts, new Fallback.None<>());
     }
@@ -61,8 +60,8 @@ public final class UncheckedBytes implements Bytes {
         final Bytes bts,
         final Fallback<byte[]> fbk
     ) {
-        this.scalar = new Unchecked<>(
-            new ScalarWithFallback<>(bts::asBytes, fbk)
+        this.scalar = new Unchecked<byte[]>(
+            new ScalarWithFallback<byte[]>(bts::asBytes, fbk)
         );
     }
 
