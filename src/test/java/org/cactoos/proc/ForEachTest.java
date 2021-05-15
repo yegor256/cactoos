@@ -23,10 +23,10 @@
  */
 package org.cactoos.proc;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.Proc;
-import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -38,15 +38,15 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 1.0
  * @checkstyle MagicNumberCheck (500 lines)
  */
+@SuppressWarnings("unchecked")
 final class ForEachTest {
 
     @Test
-    @SuppressWarnings("unchecked")
     void worksWithGenerics() throws Exception {
-        final List<? super Number> list = new LinkedList<>();
-        final Proc<? super Number> proc = list::add;
-        final IterableOf<? extends Number> input = new IterableOf<>(
-            1, 2.0d, 3L
+        final Collection<? super Iterable<?>> list = new LinkedList<>();
+        final Proc<? super Collection<? extends Number>> proc = list::add;
+        final List<List<Integer>> input = new ListOf<>(
+            new ListOf<>(1), new ListOf<>(2), new ListOf<>(3)
         );
         new ForEach<>(proc).exec(input);
         new Assertion<>(
