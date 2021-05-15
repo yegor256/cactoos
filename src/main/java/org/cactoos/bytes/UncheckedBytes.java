@@ -24,8 +24,9 @@
 package org.cactoos.bytes;
 
 import org.cactoos.Bytes;
-import org.cactoos.Func;
-import org.cactoos.func.UncheckedFunc;
+import org.cactoos.Fallback;
+import org.cactoos.scalar.ScalarWithFallback;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Bytes that doesn't throw checked {@link Exception}.
@@ -37,14 +38,9 @@ import org.cactoos.func.UncheckedFunc;
 public final class UncheckedBytes implements Bytes {
 
     /**
-     * Original bytes.
+     * Scalar with fallback.
      */
-    private final Bytes bytes;
-
-    /**
-     * Fallback.
-     */
-    private final Func<? super Exception, byte[]> fallback;
+    private final Unchecked<byte[]> scalar;
 
     /**
      * Ctor.
@@ -52,12 +48,7 @@ public final class UncheckedBytes implements Bytes {
      */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     public UncheckedBytes(final Bytes bts) {
-        this(
-            bts,
-            error -> {
-                throw new RuntimeException(error);
-            }
-        );
+        this(bts, new Fallback.None<>());
     }
 
     /**
@@ -66,23 +57,18 @@ public final class UncheckedBytes implements Bytes {
      * @param fbk Fallback
      * @since 0.5
      */
-    public UncheckedBytes(final Bytes bts,
-        final Func<? super Exception, byte[]> fbk) {
-        this.bytes = bts;
-        this.fallback = fbk;
+    public UncheckedBytes(
+        final Bytes bts,
+        final Fallback<byte[]> fbk
+    ) {
+        this.scalar = new Unchecked<>(
+            new ScalarWithFallback<>(bts::asBytes, fbk)
+        );
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public byte[] asBytes() {
-        byte[] data;
-        try {
-            data = this.bytes.asBytes();
-            // @checkstyle IllegalCatchCheck (1 line)
-        } catch (final Exception ex) {
-            data = new UncheckedFunc<>(this.fallback).apply(ex);
-        }
-        return data;
+        return this.scalar.value();
     }
 
 }

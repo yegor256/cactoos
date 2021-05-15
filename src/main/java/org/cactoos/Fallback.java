@@ -104,4 +104,22 @@ public interface Fallback<X> extends Func<Throwable, X> {
             ).intValue();
         }
     }
+
+    /**
+     * No fallback. Throw unchecked exception.
+     *
+     * @param <X> Type of result.
+     * @since 1.0;
+     */
+    final class None<X> implements Fallback<X> {
+        @Override
+        public int support(final Throwable exception) {
+            return 0;
+        }
+
+        @Override
+        public X apply(final Throwable input) throws Exception {
+            throw new RuntimeException(input);
+        }
+    }
 }
