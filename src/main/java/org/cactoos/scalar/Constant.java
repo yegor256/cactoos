@@ -69,4 +69,24 @@ public final class Constant<T> implements Scalar<T> {
     public T value() {
         return this.val;
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return new Unchecked<>(
+            new Or(
+                () -> this == obj,
+                new And(
+                    () -> obj instanceof Scalar,
+                    () -> new Unchecked<>(this)
+                        .value()
+                        .equals(this.val)
+                )
+            )
+        ).value();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.val.hashCode();
+    }
 }
