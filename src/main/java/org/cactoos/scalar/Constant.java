@@ -89,4 +89,9 @@ public final class Constant<T> implements Scalar<T> {
     public int hashCode() {
         return this.val.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return this.val.toString();
+    }
 }

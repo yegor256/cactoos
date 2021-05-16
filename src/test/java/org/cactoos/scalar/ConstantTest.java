@@ -26,6 +26,7 @@ package org.cactoos.scalar;
 import org.cactoos.Scalar;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.object.HasToString;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
@@ -35,6 +36,7 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class ConstantTest {
 
     @Test
@@ -56,6 +58,18 @@ final class ConstantTest {
             new AllOf<Scalar<?>>(
                 new IsEqual<>(new Constant<>("Hello")),
                 new IsEqual<>(new ScalarOfSupplier<>(() -> "Hello"))
+            )
+        ).affirm();
+    }
+
+    @Test
+    void shoudHaveToString() {
+        final Constant<String> constant = new Constant<>("Hello");
+        new Assertion<>(
+            "Must return same value",
+            constant,
+            new HasToString<>(
+                new IsEqual<>("Hello")
             )
         ).affirm();
     }
