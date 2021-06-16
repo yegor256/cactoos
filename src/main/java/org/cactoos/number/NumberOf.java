@@ -21,35 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
-import org.cactoos.Scalar;
+import java.math.BigDecimal;
+import org.cactoos.Text;
 
 /**
- * Float Scalar which sums up the values of other Scalars of the same type
+ * Text as {@link Number}.
  *
- * <p>Here is how you can use it to summarize float numbers:</p>
- *
- * <pre>{@code
- * float sum = new SumOfFloatScalar(() -> 1f,() -> 2f, () -> 3f).value();
- * }</pre>
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. Despite that this class does NOT throw a checked
- * exception.</p>
+ * <pre>
+ * long value = new NumberOf("186789235425346").longValue();
+ * int value = new NumberOf("1867892354").intValue();
+ * double value = new NumberOf("185.65156465123").doubleValue();
+ * </pre>
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.30
+ * @since 1.0.0
  */
-public final class SumOfFloat extends ScalarEnvelope<Float> {
+public final class NumberOf extends NumberEnvelope {
+
+    /**
+     * Serialization marker.
+     */
+    private static final long serialVersionUID = 1572355842425667751L;
+
     /**
      * Ctor.
-     * @param src Varargs of Scalar to sum up values from
-     * @since 0.30
+     * @param txt Number-string
      */
-    @SafeVarargs
-    public SumOfFloat(final Scalar<Float>... src) {
-        super(new Mapped<>(Number::floatValue, new SumOfScalar(src)));
+    public NumberOf(final String txt) {
+        this(new BigDecimal(txt));
+    }
+
+    /**
+     * Ctor.
+     * @param text Number-text
+     */
+    public NumberOf(final Text text) {
+        this(new NumberOfScalars(() -> new BigDecimal(text.asString())));
+    }
+
+    /**
+     * Ctor.
+     * @param nbr Number
+     */
+    private NumberOf(final Number nbr) {
+        super(nbr);
     }
 }

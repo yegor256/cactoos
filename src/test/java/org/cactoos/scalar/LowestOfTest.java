@@ -26,10 +26,14 @@ package org.cactoos.scalar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.NoSuchElementException;
+import org.cactoos.number.ComparableNumber;
+import org.cactoos.number.SumOf;
 import org.cactoos.time.DateOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link LowestOf}.
@@ -221,15 +225,15 @@ public final class LowestOfTest {
 
     @Test
     public void lowestSumAtIterable() throws Exception {
-        MatcherAssert.assertThat(
-            "Can't find the lowest double sum among many",
-            new LowestOf<Double>(
-                new SumOf(1.0d),
-                new SumOf(1.0d, 2.0d),
-                new SumOf(1.0d, 2.0d, 3.0d)
-            ).value(),
-            Matchers.equalTo(new SumOf(1.0d).value())
-        );
+        new Assertion<>(
+            "Must find the lowest double sum among many",
+            new LowestOf<>(
+                new ComparableNumber(new SumOf(1.0d)),
+                new ComparableNumber(new SumOf(1.0d, 2.0d)),
+                new ComparableNumber(new SumOf(1.0d, 2.0d, 3.0d))
+            ),
+            new HasValue<>(1.0d)
+        ).affirm();
     }
 
     @Test

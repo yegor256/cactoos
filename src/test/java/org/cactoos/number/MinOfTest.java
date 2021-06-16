@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;

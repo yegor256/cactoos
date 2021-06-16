@@ -21,45 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
-
-import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
-import org.llorllale.cactoos.matchers.HasValue;
 
 /**
- * Test case for {@link SumOfLong}.
- *
- * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
+ * Numbers, tests.
  */
-final class SumOfLongTest {
-
-    @Test
-    void withListOfScalarsInt() {
-        new Assertion<>(
-            "must sum scalars",
-            new SumOfLong(() -> 1L, () -> 2L, () -> 3L),
-            new HasValue<>(6L)
-        ).affirm();
-    }
-
-    @Test
-    void withEmptyList() {
-        new Assertion<>(
-            "must sum empty list to 0",
-            new SumOfLong(),
-            new HasValue<>(0L)
-        ).affirm();
-    }
-
-    @Test
-    void withListOfOneElement() {
-        new Assertion<>(
-            "must sum singleton list",
-            new SumOfLong(() -> 5L),
-            new HasValue<>(5L)
-        ).affirm();
-    }
-}
+package org.cactoos.number;

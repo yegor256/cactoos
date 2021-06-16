@@ -21,28 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import org.cactoos.Scalar;
 
 /**
  * Division result of two numbers.
  *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make
- * it more convenient and get rid of the checked exception you can
- * use the {@link Unchecked} decorator. Or you may use
- * {@link IoChecked} to wrap it in an IOException.</p>
- *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.49.2
+ * @since 1.0.0
  */
 public final class DivisionOf extends NumberEnvelope {
 
-    private static final long serialVersionUID = -5276601257067346442L;
+    /**
+     * Serialization marker.
+     */
+    private static final long serialVersionUID = -7835189568890281261L;
+
+    /**
+     * Ctor.
+     * @param dividend The dividend
+     * @param divisor The divisor
+     */
+    public DivisionOf(final BigDecimal dividend, final BigDecimal divisor) {
+        this(() -> dividend.divide(divisor));
+    }
 
     /**
      * Ctor.
@@ -50,10 +55,18 @@ public final class DivisionOf extends NumberEnvelope {
      * @param divisor The divisor
      */
     public DivisionOf(final Number dividend, final Number divisor) {
-        super(() -> BigDecimal.valueOf(dividend.doubleValue()).divide(
-            BigDecimal.valueOf(divisor.doubleValue()),
-            MathContext.DECIMAL128
-        ).doubleValue()
+        this(
+            () -> new BigDecimal(dividend.toString()).divide(
+                new BigDecimal(divisor.toString())
+            )
         );
+    }
+
+    /**
+     * Ctor.
+     * @param result The result
+     */
+    private DivisionOf(final Scalar<BigDecimal> result) {
+        super(new NumberOfScalars(result));
     }
 }

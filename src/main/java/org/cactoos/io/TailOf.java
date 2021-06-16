@@ -26,7 +26,7 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import org.cactoos.Input;
-import org.cactoos.scalar.MinOf;
+import org.cactoos.number.MinOf;
 import org.cactoos.text.FormattedText;
 
 /**

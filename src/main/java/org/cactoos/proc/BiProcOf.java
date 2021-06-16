@@ -44,9 +44,36 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
      * @param func The function
      */
     public BiProcOf(final Func<? super X, ?> func) {
+        this(x -> {
+            func.apply(x);
+        });
+    }
+
+    /**
+     * Ctor.
+     * @param prc The procedure
+     */
+    public BiProcOf(final Proc<? super X> prc) {
         this(
-            (x, y) -> {
-                func.apply(x);
+            prc,
+            yvl -> {
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param first The procedure on first arg.
+     * @param second The procedure on second arg.
+     */
+    public BiProcOf(
+        final Proc<? super X> first,
+        final Proc<? super Y> second
+    ) {
+        this(
+            (xvl, yvl) -> {
+                first.exec(xvl);
+                second.exec(yvl);
             }
         );
     }
@@ -56,30 +83,16 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
      * @param func The bi function
      */
     public BiProcOf(final BiFunc<? super X, ? super Y, ?> func) {
-        this(
-            (x, y) -> {
-                func.apply(x, y);
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param prc The procedure
-     */
-    public BiProcOf(final Proc<? super X> prc) {
-        this(
-            (x, y) -> {
-                prc.exec(x);
-            }
-        );
+        this((first, second) -> {
+            func.apply(first, second);
+        });
     }
 
     /**
      * Ctor.
      * @param biprc The bi procedure
      */
-    public BiProcOf(final BiProc<X, Y> biprc) {
+    public BiProcOf(final BiProc<? super X, ? super Y> biprc) {
         super(biprc);
     }
 }

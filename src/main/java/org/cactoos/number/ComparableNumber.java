@@ -21,35 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
-
-import org.cactoos.Scalar;
+package org.cactoos.number;
 
 /**
- * Double Scalar which sums up the values of other Scalars of the same type.
+ * {@link Number} as {@link Comparable}.
  *
- * <p>Here is how you can use it to summarize double numbers:</p>
+ * <p>
+ * There is no thread-safety guarantee.
  *
- * <pre>{@code
- * double sum = new SumOfDoubleScalar(() -> 1.1,() -> 2.1, () -> 3.1).value();
- * }</pre>
- *
- * <p>This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. Despite that this class does NOT throw a checked
- * exception.</p>
- *
- * <p>There is no thread-safety guarantee.
- *
- * @since 0.30
+ * @since 1.0.0
  */
-public final class SumOfDouble extends ScalarEnvelope<Double> {
+public final class ComparableNumber extends NumberEnvelope
+    implements Comparable<Number> {
+
+    /**
+     * Serialization marker.
+     */
+    private static final long serialVersionUID = -2598821437507165938L;
+
     /**
      * Ctor.
-     * @param src Varargs of Scalar to sum up values from
-     * @since 0.30
+     *
+     * @param nbr Number
      */
-    @SafeVarargs
-    public SumOfDouble(final Scalar<Double>... src) {
-        super(new Mapped<>(Number::doubleValue, new SumOfScalar(src)));
+    public ComparableNumber(final Number nbr) {
+        super(nbr);
+    }
+
+    @Override
+    public int compareTo(final Number nbr) {
+        return Double.compare(this.doubleValue(), nbr.doubleValue());
     }
 }
