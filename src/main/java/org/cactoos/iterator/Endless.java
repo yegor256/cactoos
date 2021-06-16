@@ -64,7 +64,7 @@ public final class Endless<T> implements Iterator<T> {
      * Ctor.
      * @param scalar Scalar to repeat
      */
-    public Endless(final Unchecked<? extends T> scalar) {
+    private Endless(final Unchecked<? extends T> scalar) {
         this.origin = scalar;
     }
 
