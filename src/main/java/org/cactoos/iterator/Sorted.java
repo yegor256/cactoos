@@ -55,7 +55,7 @@ public final class Sorted<T> implements Iterator<T> {
      * @param items The underlying iterator
      */
     @SuppressWarnings("unchecked")
-    public Sorted(final Iterator<T> items) {
+    public Sorted(final Iterator<? extends T> items) {
         this((Comparator<T>) Comparator.naturalOrder(), items);
     }
 

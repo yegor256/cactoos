@@ -41,7 +41,7 @@ public final class NoNulls<X> implements Iterator<X> {
     /**
      * Iterator.
      */
-    private final Iterator<X> iterator;
+    private final Iterator<? extends X> iterator;
 
     /**
      * Position.
@@ -52,7 +52,7 @@ public final class NoNulls<X> implements Iterator<X> {
      * Ctor.
      * @param src Source iterable
      */
-    public NoNulls(final Iterator<X> src) {
+    public NoNulls(final Iterator<? extends X> src) {
         this.iterator = src;
         this.pos = new AtomicLong();
     }
