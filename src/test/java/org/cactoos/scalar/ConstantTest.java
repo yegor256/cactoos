@@ -51,7 +51,7 @@ final class ConstantTest {
 
     @Test
     void shouldBeEqualToItself() {
-        final Constant<String> constant = new Constant<>("Hello");
+        final Scalar<String> constant = new Constant<>("Hello");
         new Assertion<>(
             "Must return same value",
             constant,
@@ -64,7 +64,7 @@ final class ConstantTest {
 
     @Test
     void shoudHaveToString() {
-        final Constant<String> constant = new Constant<>("Hello");
+        final Scalar<String> constant = new Constant<>("Hello");
         new Assertion<>(
             "Must return same value",
             constant,
