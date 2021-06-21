@@ -23,6 +23,10 @@
  */
 package org.cactoos.scalar;
 
+import org.cactoos.Scalar;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.object.HasToString;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
@@ -32,10 +36,11 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class ConstantTest {
 
     @Test
-    void returnsGivenValue() throws Exception {
+    void returnsGivenValue() {
         final String value = "Hello World";
         new Assertion<>(
             "Must return given value",
@@ -45,12 +50,27 @@ final class ConstantTest {
     }
 
     @Test
-    void alwaysReturnsSameValue() throws Exception {
-        final Constant<String> constant = new Constant<>("Good Bye!");
+    void shouldBeEqualToItself() {
+        final Scalar<String> constant = new Constant<>("Hello");
         new Assertion<>(
             "Must return same value",
             constant,
-            new HasValue<>(constant.value())
+            new AllOf<Scalar<?>>(
+                new IsEqual<>(new Constant<>("Hello")),
+                new IsEqual<>(new ScalarOfSupplier<>(() -> "Hello"))
+            )
+        ).affirm();
+    }
+
+    @Test
+    void shoudHaveToString() {
+        final Scalar<String> constant = new Constant<>("Hello");
+        new Assertion<>(
+            "Must return same value",
+            constant,
+            new HasToString<>(
+                new IsEqual<>("Hello")
+            )
         ).affirm();
     }
 }
