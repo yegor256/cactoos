@@ -34,6 +34,10 @@ import org.cactoos.scalar.Unchecked;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.3
+ * @todo #1615:30m Extract fallback logic for Bytes
+ *  to a separate class in accordance
+ *  to other XXXWithFallback classes.
+ *  Leave only basic exception handling in this class.
  */
 public final class UncheckedBytes implements Bytes {
 
