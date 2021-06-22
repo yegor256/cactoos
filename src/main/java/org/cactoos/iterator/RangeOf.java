@@ -40,7 +40,7 @@ public final class
     /**
      * Incrementor.
      */
-    private final UncheckedFunc<T, T> inc;
+    private final UncheckedFunc<? super T, ? extends T> inc;
 
     /**
      * Current value.
@@ -58,7 +58,8 @@ public final class
      * @param max End of the range.
      * @param incrementor The {@link Func} to process for the next value.
      */
-    public RangeOf(final T min, final T max, final Func<T, T> incrementor) {
+    public RangeOf(final T min, final T max,
+        final Func<? super T, ? extends T> incrementor) {
         this.inc = new UncheckedFunc<>(incrementor);
         this.value = new AtomicReference<T>(min);
         this.max = max;

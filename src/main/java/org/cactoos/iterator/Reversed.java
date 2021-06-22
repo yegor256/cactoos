@@ -44,7 +44,7 @@ public final class Reversed<X> implements Iterator<X> {
     /**
      * Origin iterator to be reversed.
      */
-    private final ListIterator<X> origin;
+    private final ListIterator<? extends X> origin;
 
     /**
      * Ctor.
@@ -61,7 +61,7 @@ public final class Reversed<X> implements Iterator<X> {
      * @param src Source iterator
      * @since 1.0
      */
-    public Reversed(final Iterator<X> src) {
+    public Reversed(final Iterator<? extends X> src) {
         this(new ListOf<>(src));
     }
 
@@ -69,7 +69,7 @@ public final class Reversed<X> implements Iterator<X> {
      * Ctor.
      * @param src Source list
      */
-    private Reversed(final List<X> src) {
+    private Reversed(final List<? extends X> src) {
         this(src.listIterator(src.size()));
     }
 
@@ -77,7 +77,7 @@ public final class Reversed<X> implements Iterator<X> {
      * Ctor.
      * @param src Source list iterator
      */
-    private Reversed(final ListIterator<X> src) {
+    private Reversed(final ListIterator<? extends X> src) {
         this.origin = src;
     }
 
