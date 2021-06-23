@@ -24,13 +24,11 @@
 package org.cactoos.proc;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import org.cactoos.Proc;
 import org.cactoos.list.ListOf;
-import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link ForEach}.
@@ -43,16 +41,16 @@ final class ForEachTest {
 
     @Test
     void worksWithGenerics() throws Exception {
-        final Collection<? super Iterable<?>> list = new LinkedList<>();
-        final Proc<? super Collection<? extends Number>> proc = list::add;
-        final List<List<Integer>> input = new ListOf<>(
-            new ListOf<>(1), new ListOf<>(2), new ListOf<>(3)
-        );
-        new ForEach<>(proc).exec(input);
+        final Collection<Iterable<Number>> list = new ListOf<>();
+        final Proc<? super Iterable<Number>> proc = list::add;
+        new ForEach<Collection<Number>>(proc).exec(new ListOf<>(new ListOf<>(1), new ListOf<>(2)));
         new Assertion<>(
             "Must contain elements",
             list,
-            new IsEqual<>(new ListOf<>(input))
+            new HasValues<>(
+                new ListOf<>(1),
+                new ListOf<>(2)
+            )
         ).affirm();
     }
 
