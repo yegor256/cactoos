@@ -82,7 +82,7 @@ public final class Replaced extends TextEnvelope {
     public Replaced(
         final Text text,
         final Scalar<Pattern> regex,
-        final Func<? super Matcher, String> func
+        final Func<? super Matcher, ? extends CharSequence> func
     ) {
         super(
             new Mapped(
@@ -92,7 +92,7 @@ public final class Replaced extends TextEnvelope {
                     while (matcher.find()) {
                         matcher.appendReplacement(
                             buffer,
-                            func.apply(matcher)
+                            func.apply(matcher).toString()
                         );
                     }
                     matcher.appendTail(buffer);
