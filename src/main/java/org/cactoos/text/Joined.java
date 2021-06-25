@@ -72,7 +72,7 @@ public final class Joined extends TextEnvelope {
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
-    public Joined(final String delimit, final Text... txts) {
+    public Joined(final CharSequence delimit, final Text... txts) {
         this(new TextOf(delimit), new IterableOf<>(txts));
     }
 
