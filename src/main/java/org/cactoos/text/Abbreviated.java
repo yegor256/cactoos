@@ -73,7 +73,7 @@ public final class Abbreviated extends TextEnvelope {
     /**
      * Ctor.
      *
-     * @param text A String
+     * @param text A CharSequence
      * @param max Max width of the result string
      */
     public Abbreviated(final CharSequence text, final int max) {
