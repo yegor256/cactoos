@@ -82,7 +82,7 @@ public final class Replaced extends TextEnvelope {
     public Replaced(
         final Text text,
         final Scalar<Pattern> regex,
-        final Func<Matcher, String> func
+        final Func<? super Matcher, String> func
     ) {
         super(
             new Mapped(
