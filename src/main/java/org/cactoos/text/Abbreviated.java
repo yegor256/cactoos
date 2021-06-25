@@ -76,7 +76,7 @@ public final class Abbreviated extends TextEnvelope {
      * @param text A String
      * @param max Max width of the result string
      */
-    public Abbreviated(final String text, final int max) {
+    public Abbreviated(final CharSequence text, final int max) {
         this(new TextOf(text), max);
     }
 
