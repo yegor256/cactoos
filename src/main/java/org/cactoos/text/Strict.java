@@ -50,7 +50,7 @@ public final class Strict extends TextEnvelope {
      * @param predicate The Func as a predicate
      * @param origin The Text
      */
-    public Strict(final Func<String, Boolean> predicate, final Text origin) {
+    public Strict(final Func<? super String, Boolean> predicate, final Text origin) {
         super(
             new Mapped(
                 str -> {

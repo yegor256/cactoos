@@ -94,7 +94,7 @@ public final class FormattedText extends TextEnvelope {
      * @param ptn Pattern
      * @param arguments Arguments
      */
-    public FormattedText(final CharSequence ptn, final Collection<Object> arguments) {
+    public FormattedText(final CharSequence ptn, final Collection<?> arguments) {
         this(ptn, Locale.getDefault(Locale.Category.FORMAT), arguments);
     }
 
@@ -104,7 +104,7 @@ public final class FormattedText extends TextEnvelope {
      * @param ptn Pattern
      * @param arguments Arguments
      */
-    public FormattedText(final Text ptn, final Collection<Object> arguments) {
+    public FormattedText(final Text ptn, final Collection<?> arguments) {
         this(ptn, Locale.getDefault(Locale.Category.FORMAT), arguments);
     }
 
@@ -118,7 +118,7 @@ public final class FormattedText extends TextEnvelope {
     public FormattedText(
         final CharSequence ptn,
         final Locale locale,
-        final Collection<Object> arguments
+        final Collection<?> arguments
     ) {
         this(new TextOf(ptn), locale, arguments);
     }
@@ -133,7 +133,7 @@ public final class FormattedText extends TextEnvelope {
     public FormattedText(
         final Text ptn,
         final Locale locale,
-        final Collection<Object> args
+        final Collection<?> args
     ) {
         super(
             new Mapped(
