@@ -39,7 +39,7 @@ public final class Flattened extends TextEnvelope {
      * Ctor.
      * @param sclr The text
      */
-    public Flattened(final Scalar<Text> sclr) {
+    public Flattened(final Scalar<? extends Text> sclr) {
         super(new TextOf(new Mapped<>(Text::asString, sclr)));
     }
 }
