@@ -38,13 +38,13 @@ public final class NoNulls<X> implements Iterable<X> {
     /**
      * Original iterable.
      */
-    private final Iterable<X> origin;
+    private final Iterable<? extends X> origin;
 
     /**
      * Ctor.
      * @param items The items
      */
-    public NoNulls(final Iterable<X> items) {
+    public NoNulls(final Iterable<? extends X> items) {
         this.origin = items;
     }
 
