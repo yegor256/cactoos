@@ -26,8 +26,5 @@
  * Iterables.
  *
  * @since 0.12
- * @todo #1533:30min Exploit generic variance for package org.cactoos.iterable
- *  to ensure typing works as best as possible as it is explained in
- *  #1533 issue.
  */
 package org.cactoos.iterable;
