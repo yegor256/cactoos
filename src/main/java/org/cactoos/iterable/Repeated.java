@@ -49,7 +49,7 @@ public final class Repeated<T> extends IterableEnvelope<T> {
      * @param total The total number of repetitions
      * @param elm The element to repeat
      */
-    public Repeated(final int total, final Scalar<T> elm) {
+    public Repeated(final int total, final Scalar<? extends T> elm) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Repeated<>(total, elm)

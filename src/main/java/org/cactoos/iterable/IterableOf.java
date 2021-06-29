@@ -49,7 +49,7 @@ public final class IterableOf<X> implements Iterable<X> {
     /**
      * The encapsulated iterator.
      */
-    private final Scalar<Iterator<? extends X>> itr;
+    private final Scalar<? extends Iterator<? extends X>> itr;
 
     /**
      * Ctor.
@@ -73,7 +73,7 @@ public final class IterableOf<X> implements Iterable<X> {
      * Ctor.
      * @param sclr The encapsulated iterator of x
      */
-    public IterableOf(final Scalar<Iterator<? extends X>> sclr) {
+    public IterableOf(final Scalar<? extends Iterator<? extends X>> sclr) {
         this.itr = sclr;
     }
 

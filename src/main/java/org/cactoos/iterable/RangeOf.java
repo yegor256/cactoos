@@ -39,7 +39,8 @@ public final class
      * @param max End of the range.
      * @param incrementor The {@link Func} to process for the next value.
      */
-    public RangeOf(final T min, final T max, final Func<T, T> incrementor) {
+    public RangeOf(final T min, final T max,
+        final Func<? super T, ? extends T> incrementor) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.RangeOf<>(min, max, incrementor)

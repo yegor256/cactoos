@@ -51,7 +51,7 @@ public final class Sliced<T> extends IterableEnvelope<T>  {
      * @param iterable Decorated iterable
      */
     public Sliced(final int start, final int count,
-        final Iterable<T> iterable) {
+        final Iterable<? extends T> iterable) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Sliced<>(

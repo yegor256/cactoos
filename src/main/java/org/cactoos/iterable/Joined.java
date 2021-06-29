@@ -59,7 +59,7 @@ public final class Joined<T> extends IterableEnvelope<T> {
      * Ctor.
      * @param items Items to concatenate
      */
-    public Joined(final Iterable<Iterable<? extends T>> items) {
+    public Joined(final Iterable<? extends Iterable<? extends T>> items) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Joined<>(
