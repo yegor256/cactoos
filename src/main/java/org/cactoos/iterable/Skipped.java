@@ -48,7 +48,7 @@ public final class Skipped<T> extends IterableEnvelope<T> {
      * @param skip Count skip elements
      * @param iterable Decorated iterable
      */
-    public Skipped(final int skip, final Iterable<T> iterable) {
+    public Skipped(final int skip, final Iterable<? extends T> iterable) {
         super(
             new IterableOf<>(
                 () -> new org.cactoos.iterator.Skipped<>(
