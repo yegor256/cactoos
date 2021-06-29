@@ -23,8 +23,6 @@
  */
 package org.cactoos.iterable;
 
-import org.cactoos.list.ListOf;
-
 import java.util.Iterator;
 
 /**
