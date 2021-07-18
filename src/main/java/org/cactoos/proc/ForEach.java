@@ -49,24 +49,24 @@ import org.cactoos.scalar.And;
  * @param <X> The type to iterate over
  * @since 1.0
  */
-public final class ForEach<X> implements Proc<Iterable<X>> {
+public final class ForEach<X> implements Proc<Iterable<? extends X>> {
 
     /**
      * The proc.
      */
-    private final Proc<X> proc;
+    private final Proc<? super X> proc;
 
     /**
      * Ctor.
      *
      * @param proc The proc to execute
      */
-    public ForEach(final Proc<X> proc) {
+    public ForEach(final Proc<? super X> proc) {
         this.proc = proc;
     }
 
     @Override
-    public void exec(final Iterable<X> input) throws Exception {
+    public void exec(final Iterable<? extends X> input) throws Exception {
         new And(
             new FuncOf<>(this.proc, true), input
         ).value();
