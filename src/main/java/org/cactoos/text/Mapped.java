@@ -25,7 +25,6 @@ package org.cactoos.text;
 
 import org.cactoos.Func;
 import org.cactoos.Text;
-import org.cactoos.func.FuncOf;
 
 /**
  * Mapped text.

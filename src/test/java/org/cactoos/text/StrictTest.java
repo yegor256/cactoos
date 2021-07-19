@@ -45,12 +45,12 @@ final class StrictTest {
      */
     @Test
     void acceptsCharSequencePredicate() {
-        final Func<CharSequence, Boolean> longerThanThree = new FuncOf<>(
+        final Func<CharSequence, Boolean> lengthy = new FuncOf<>(
             seq -> seq.length() > 3
         );
         new Assertion<>(
             "Must be equal strings",
-            new Strict(longerThanThree, new TextOf("sequence")),
+            new Strict(lengthy, new TextOf("sequence")),
             new IsText("sequence")
         ).affirm();
     }

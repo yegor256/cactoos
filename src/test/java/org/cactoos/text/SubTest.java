@@ -39,12 +39,12 @@ final class SubTest {
 
     @Test
     void acceptsCharSequence() {
-        final Func<CharSequence, Integer> halfLength = new FuncOf<>(
+        final Func<CharSequence, Integer> half = new FuncOf<>(
             sequence -> sequence.length() / 2
         );
         new Assertion<>(
             "Must cut a text with start",
-            new Sub(new TextOf("sequence"), halfLength),
+            new Sub(new TextOf("sequence"), half),
             new IsText("ence")
         ).affirm();
     }
