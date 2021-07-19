@@ -104,7 +104,7 @@ public final class FormattedText extends TextEnvelope {
      * @param ptn Pattern
      * @param arguments Arguments
      */
-    public FormattedText(final Text ptn, final Collection<?> arguments) {
+    public FormattedText(final Text ptn, final Collection<Object> arguments) {
         this(ptn, Locale.getDefault(Locale.Category.FORMAT), arguments);
     }
 

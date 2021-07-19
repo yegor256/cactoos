@@ -24,6 +24,8 @@
 package org.cactoos.text;
 
 import java.util.regex.Pattern;
+import org.cactoos.Func;
+import org.cactoos.func.FuncOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
@@ -37,6 +39,21 @@ import org.llorllale.cactoos.matchers.Throws;
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class StrictTest {
+
+    /**
+     * Ensures that Strict accepts a CharSequence predicate.
+     */
+    @Test
+    void acceptsCharSequencePredicate() {
+        final Func<CharSequence, Boolean> longerThanThree = new FuncOf<>(
+            seq -> seq.length() > 3
+        );
+        new Assertion<>(
+            "Given strings are not equal",
+            new Strict(longerThanThree, new TextOf("sequence")),
+            new IsText("sequence")
+        ).affirm();
+    }
 
     /**
      * Ensures that Strict is failing on a negative predicate result.
