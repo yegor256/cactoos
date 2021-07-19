@@ -49,7 +49,7 @@ final class StrictTest {
             seq -> seq.length() > 3
         );
         new Assertion<>(
-            "Given strings are not equal",
+            "Must be equal strings",
             new Strict(longerThanThree, new TextOf("sequence")),
             new IsText("sequence")
         ).affirm();

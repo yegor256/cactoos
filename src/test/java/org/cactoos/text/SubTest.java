@@ -43,7 +43,7 @@ final class SubTest {
             sequence -> sequence.length() / 2
         );
         new Assertion<>(
-            "Can't cut a text with start",
+            "Must cut a text with start",
             new Sub(new TextOf("sequence"), halfLength),
             new IsText("ence")
         ).affirm();
