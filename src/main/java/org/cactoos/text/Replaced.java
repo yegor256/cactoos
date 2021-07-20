@@ -49,10 +49,10 @@ public final class Replaced extends TextEnvelope {
      */
     public Replaced(
         final Text text,
-        final String find,
-        final String replace
+        final CharSequence find,
+        final CharSequence replace
     ) {
-        this(text, () -> Pattern.compile(find), matcher -> replace);
+        this(text, () -> Pattern.compile(find.toString()), matcher -> replace);
     }
 
     /**
