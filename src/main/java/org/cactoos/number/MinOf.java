@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
-import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.Reduced;
 
 /**
  * Find the smaller among items.
@@ -37,58 +37,25 @@ import org.cactoos.iterable.Mapped;
  * <pre>
  * int min = new MinOf(1, 2, 3, 4).intValue();
  * long min = new MinOf(1L, 2L, 3L).longValue();
- * int min = new MinOf(numbers.toArray(new Integer[numbers.size()])).intValue();
+ * int min = new MinOf(numbers).intValue();
  * </pre>
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
- * <p>
- * This class implements {@link Scalar}, which throws a checked
- * {@link Exception}. This may not be convenient in many cases. To make it more
- * convenient and get rid of the checked exception you can use the
- * {@link Unchecked} decorator. Or you may use {@link IoChecked} to wrap it in
- * an IOException.
- * </p>
- *
- * @since 0.24
+ * @since 1.0.0
  */
 public final class MinOf extends NumberEnvelope {
 
     /**
      * Serialization marker.
      */
-    private static final long serialVersionUID = 7081070952159683108L;
+    private static final long serialVersionUID = -7540548570249911487L;
 
     /**
      * Ctor.
      * @param src Numbers
      */
-    public MinOf(final Integer... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    public MinOf(final Long... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    public MinOf(final Double... src) {
-        this(new IterableOf<>(src));
-    }
-
-    /**
-     * Ctor.
-     * @param src Numbers
-     */
-    public MinOf(final Float... src) {
+    public MinOf(final Number... src) {
         this(new IterableOf<>(src));
     }
 
@@ -96,27 +63,25 @@ public final class MinOf extends NumberEnvelope {
      * Ctor.
      * @param src The iterable
      */
-    public MinOf(final Iterable<Number> src) {
+    public MinOf(final Iterable<? extends Number> src) {
         super(
-            new Folded<>(
-                Long.MAX_VALUE,
-                Math::min,
-                new Mapped<>(Number::longValue, src)
-            ),
-            new Folded<>(
-                Integer.MAX_VALUE,
-                Math::min,
-                new Mapped<>(Number::intValue, src)
-            ),
-            new Folded<>(
-                Float.MAX_VALUE,
-                Math::min,
-                new Mapped<>(Number::floatValue, src)
-            ),
-            new Folded<>(
-                Double.MAX_VALUE,
-                Math::min,
-                new Mapped<>(Number::doubleValue, src)
+            new NumberOfScalars(
+                new Reduced<Long>(
+                    Math::min,
+                    new Mapped<>((Number n) -> n::longValue, src)
+                ),
+                new Reduced<Integer>(
+                    Math::min,
+                    new Mapped<>((Number n) -> n::intValue, src)
+                ),
+                new Reduced<Float>(
+                    Math::min,
+                    new Mapped<>((Number n) -> n::floatValue, src)
+                ),
+                new Reduced<Double>(
+                    Math::min,
+                    new Mapped<>((Number n) -> n::doubleValue, src)
+                )
             )
         );
     }

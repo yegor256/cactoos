@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
 import java.util.Collections;
-import org.cactoos.Scalar;
-import org.cactoos.iterable.IterableOf;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsNumber;
 
 /**
  * Test case for {@link AvgOf}.
@@ -335,71 +335,13 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntScalarsIntValue() {
-        new Assertion<>(
-            "Average of int scalars must be int value",
+    public void canBeCalledTwice() {
+        new Assertion<Number>(
+            "Average of values can be called twice",
             new AvgOf(
-                () -> 1, () -> 2, () -> 10
-            ).intValue(),
-            Matchers.equalTo(4)
-        ).affirm();
-    }
-
-    @Test
-    public void withLongScalarsIntValue() {
-        new Assertion<>(
-            "Average of long scalars must be int value",
-            new AvgOf(
-                () -> 1L, () -> 2L, () -> 10L
-            ).intValue(),
-            Matchers.equalTo(4)
-        ).affirm();
-    }
-
-    @Test
-    public void withFloatScalarsIntValue() {
-        new Assertion<>(
-            "Average of float scalars must be int value",
-            new AvgOf(
-                () -> 1.0f, () -> 2.0f, () -> 10.0f
-            ).longValue(),
-            Matchers.equalTo(4L)
-        ).affirm();
-    }
-
-    @Test
-    public void withDoubleScalarsIntValue() {
-        new Assertion<>(
-            "Average of double scalars must be int value",
-            new AvgOf(
-                () -> 1.0d, () -> 2.0d, () -> 10.0d
-            ).intValue(),
-            Matchers.equalTo(4)
-        ).affirm();
-    }
-
-    @Test
-    public void withIterableOfScalars() {
-        new Assertion<>(
-            "Average of iterable scalars must be long value",
-            new AvgOf(
-                new IterableOf<Scalar<Number>>(() -> 1L, () -> 2L, () -> 10L)
-            ).longValue(),
-            Matchers.equalTo(4L)
-        ).affirm();
-    }
-
-    @Test
-    public void withCompositionOfScalars() {
-        new Assertion<>(
-            "Average of composition of scalars must be int value",
-            new AvgOf(
-                () -> new MinOf(1.0d, 2.0d),
-                () -> new MaxOf(2.0d, 4.0d),
-                () -> new SumOf(1.0d, 2.0d, 2.0d),
-                new Ternary<>(true, 5.0d, 1.0d)
-            ).intValue(),
-            Matchers.equalTo(3)
+                1, 2, 3, 4
+            ),
+            new AllOf<Number>(new IsNumber(2.5), new IsNumber(2.5))
         ).affirm();
     }
 }

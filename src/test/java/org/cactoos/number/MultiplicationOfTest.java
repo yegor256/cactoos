@@ -21,12 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
+import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link MultiplicationOf}.
@@ -146,8 +148,12 @@ public final class MultiplicationOfTest {
     /**
      * Ensures that empty iterable will not be multiplied.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void rejectsEmptyIterable() {
-        new MultiplicationOf(new IterableOf<>()).doubleValue();
+        new Assertion<>(
+            "Must fail with empty iterable",
+            () -> new MultiplicationOf(new IterableOf<>()).doubleValue(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

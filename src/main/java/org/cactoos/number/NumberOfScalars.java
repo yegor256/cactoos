@@ -21,25 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.scalar;
+package org.cactoos.number;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.cactoos.Scalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
- * Envelope for the {@link Number}.
+ * {@link Number} from {@link Scalar}s.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.26
- * @checkstyle AbstractClassNameCheck (500 lines)
+ * @since 1.0.0
  */
-@SuppressWarnings("PMD.AbstractNaming")
-public abstract class NumberEnvelope extends Number implements Scalar<Double> {
-
-    /**
-     * Serialization marker.
-     */
-    private static final long serialVersionUID = -1924406337256921883L;
+@SuppressWarnings("serial")
+@SuppressFBWarnings({"SE_NO_SERIALVERSIONID", "SE_BAD_FIELD"})
+public final class NumberOfScalars extends Number {
 
     /**
      * The LONG number.
@@ -63,14 +60,14 @@ public abstract class NumberEnvelope extends Number implements Scalar<Double> {
 
     /**
      * Ctor.
-     * @param dnm Double scalar
+     * @param nbr Number
      */
-    public NumberEnvelope(final Scalar<Double> dnm) {
+    public NumberOfScalars(final Scalar<? extends Number> nbr) {
         this(
-            () -> dnm.value().longValue(),
-            () -> dnm.value().intValue(),
-            () -> dnm.value().floatValue(),
-            dnm
+            () -> nbr.value().longValue(),
+            () -> nbr.value().intValue(),
+            () -> nbr.value().floatValue(),
+            () -> nbr.value().doubleValue()
         );
     }
 
@@ -82,7 +79,7 @@ public abstract class NumberEnvelope extends Number implements Scalar<Double> {
      * @param dnm Long scalar
      * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public NumberEnvelope(final Scalar<Long> lnm, final Scalar<Integer> inm,
+    public NumberOfScalars(final Scalar<Long> lnm, final Scalar<Integer> inm,
         final Scalar<Float> fnm, final Scalar<Double> dnm) {
         super();
         this.lnum = lnm;
@@ -92,27 +89,40 @@ public abstract class NumberEnvelope extends Number implements Scalar<Double> {
     }
 
     @Override
-    public final int intValue() {
+    public int intValue() {
         return new Unchecked<>(this.inum).value();
     }
 
     @Override
-    public final long longValue() {
+    public long longValue() {
         return new Unchecked<>(this.lnum).value();
     }
 
     @Override
-    public final float floatValue() {
+    public float floatValue() {
         return new Unchecked<>(this.fnum).value();
     }
 
     @Override
-    public final double doubleValue() {
+    public double doubleValue() {
         return new Unchecked<>(this.dnum).value();
     }
 
     @Override
-    public final Double value() throws Exception {
-        return this.dnum.value();
+    public String toString() {
+        return Double.toString(this.doubleValue());
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return obj instanceof Number && Double.compare(
+            this.doubleValue(),
+            ((Number) obj).doubleValue()
+        ) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Double.hashCode(this.doubleValue());
     }
 }

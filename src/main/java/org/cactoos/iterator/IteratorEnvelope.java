@@ -39,13 +39,13 @@ public abstract class IteratorEnvelope<X> implements Iterator<X> {
     /**
      * Wrapped {@link Iterator}.
      */
-    private final Iterator<X> wrapped;
+    private final Iterator<? extends X> wrapped;
 
     /**
      * Ctor.
      * @param iter The {@link Iterator} to wrap.
      */
-    public IteratorEnvelope(final Iterator<X> iter) {
+    public IteratorEnvelope(final Iterator<? extends X> iter) {
         this.wrapped = iter;
     }
 

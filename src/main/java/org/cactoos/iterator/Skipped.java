@@ -38,14 +38,14 @@ public final class Skipped<T> implements Iterator<T> {
     /**
      * Sliced iterator.
      */
-    private final Iterator<T> sliced;
+    private final Iterator<? extends T> sliced;
 
     /**
      * Ctor.
      * @param skp Count skip elements
      * @param iterator Decorated iterator
      */
-    public Skipped(final int skp, final Iterator<T> iterator) {
+    public Skipped(final int skp, final Iterator<? extends T> iterator) {
         this.sliced = new Sliced<>(skp, iterator);
     }
 

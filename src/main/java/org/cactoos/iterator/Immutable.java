@@ -38,13 +38,13 @@ public final class Immutable<T> implements Iterator<T> {
     /**
      * Decorated iterator.
      */
-    private final Iterator<T> iterator;
+    private final Iterator<? extends T> iterator;
 
     /**
      * Ctor.
      * @param iter Iterator to make immutable
      */
-    public Immutable(final Iterator<T> iter) {
+    public Immutable(final Iterator<? extends T> iter) {
         this.iterator = iter;
     }
 

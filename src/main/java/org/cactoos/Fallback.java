@@ -25,8 +25,8 @@ package org.cactoos;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.number.MinOf;
 import org.cactoos.scalar.InheritanceLevel;
-import org.cactoos.scalar.MinOf;
 
 /**
  * Fallback from a {@link Throwable}.
