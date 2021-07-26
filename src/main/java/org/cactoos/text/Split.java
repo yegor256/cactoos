@@ -98,7 +98,7 @@ public final class Split extends IterableEnvelope<Text> {
      * @param lmt The limit
      * @see String#split(String, int)
      */
-    public Split(final Text text, final String rgx, final int lmt) {
+    public Split(final Text text, final CharSequence rgx, final int lmt) {
         this(text, new TextOf(rgx), lmt);
     }
 
