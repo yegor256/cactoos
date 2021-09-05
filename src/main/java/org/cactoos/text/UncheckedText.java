@@ -54,7 +54,7 @@ public final class UncheckedText implements Text {
      * @param txt Encapsulated text
      * @since 0.9
      */
-    public UncheckedText(final String txt) {
+    public UncheckedText(final CharSequence txt) {
         this(new TextOf(txt));
     }
 

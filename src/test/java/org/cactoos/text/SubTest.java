@@ -23,9 +23,12 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Func;
+import org.cactoos.func.FuncOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
+import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Sub}.
@@ -33,6 +36,18 @@ import org.llorllale.cactoos.matchers.HasString;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SubTest {
+
+    @Test
+    void acceptsCharSequence() {
+        final Func<CharSequence, Integer> half = new FuncOf<>(
+            sequence -> sequence.length() / 2
+        );
+        new Assertion<>(
+            "Must cut a text with start",
+            new Sub(new TextOf("sequence"), half),
+            new IsText("ence")
+        ).affirm();
+    }
 
     @Test
     void cutTextWithStartAndEnd() {

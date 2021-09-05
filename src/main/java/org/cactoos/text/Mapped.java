@@ -39,7 +39,8 @@ public final class Mapped extends TextEnvelope {
      * @param fnc Function to apply
      * @param txt Original text
      */
-    public Mapped(final Func<String, ? extends CharSequence> fnc, final Text txt) {
+    public Mapped(final Func<? super String, ? extends CharSequence> fnc,
+        final Text txt) {
         super(new TextOf(() -> fnc.apply(txt.asString())));
     }
 

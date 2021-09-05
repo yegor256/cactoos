@@ -79,7 +79,7 @@ public final class Sub extends TextEnvelope {
      * @param text The Text
      * @param strt Start position in the text
      */
-    public Sub(final Text text, final Func<String, Integer> strt) {
+    public Sub(final Text text, final Func<? super String, Integer> strt) {
         this(text, strt, String::length);
     }
 
@@ -109,7 +109,8 @@ public final class Sub extends TextEnvelope {
      * @param strt Start position in the text
      * @param finish End position in the text
      */
-    public Sub(final Text text, final int strt, final Func<String, Integer> finish) {
+    public Sub(final Text text, final int strt,
+        final Func<? super String, Integer> finish) {
         this(text, new Constant<>(strt), finish);
     }
 
@@ -131,7 +132,7 @@ public final class Sub extends TextEnvelope {
      * @param finish End position in the text
      */
     public Sub(final Text text, final Scalar<Integer> strt,
-        final Func<String, Integer> finish) {
+        final Func<? super String, Integer> finish) {
         this(text, new FuncOf<>(strt), finish);
     }
 
@@ -141,8 +142,8 @@ public final class Sub extends TextEnvelope {
      * @param start Start position in the text
      * @param end End position in the text
      */
-    public Sub(final Text text, final Func<String, Integer> start,
-        final Func<String, Integer> end) {
+    public Sub(final Text text, final Func<? super String, Integer> start,
+        final Func<? super String, Integer> end) {
         super(
             new Mapped(
                 origin -> {
