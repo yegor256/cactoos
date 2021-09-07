@@ -54,8 +54,8 @@ public final class Immutable<X> implements Collection<X> {
      * Ctor.
      * @param src Source collection
      */
-    public Immutable(final Collection<X> src) {
-        this.col = src;
+    public Immutable(final Collection<? extends X> src) {
+        this.col = (Collection<X>) src;
     }
 
     @Override
