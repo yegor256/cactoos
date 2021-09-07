@@ -48,8 +48,8 @@ public final class NoNulls<X> implements Collection<X> {
      * Ctor.
      * @param items Original one
      */
-    public NoNulls(final Collection<X> items) {
-        this.col = items;
+    public NoNulls(final Collection<? extends X> items) {
+        this.col = (Collection<X>) items;
     }
 
     @Override
