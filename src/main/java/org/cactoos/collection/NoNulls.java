@@ -48,6 +48,7 @@ public final class NoNulls<X> implements Collection<X> {
      * Ctor.
      * @param items Original one
      */
+    @SuppressWarnings("unchecked")
     public NoNulls(final Collection<? extends X> items) {
         this.col = (Collection<X>) items;
     }

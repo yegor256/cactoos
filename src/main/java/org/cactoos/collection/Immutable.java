@@ -54,6 +54,7 @@ public final class Immutable<X> implements Collection<X> {
      * Ctor.
      * @param src Source collection
      */
+    @SuppressWarnings("unchecked")
     public Immutable(final Collection<? extends X> src) {
         this.col = (Collection<X>) src;
     }
