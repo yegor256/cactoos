@@ -25,6 +25,7 @@ package org.cactoos.collection;
 
 import java.util.Collection;
 import java.util.Iterator;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Decorator that doesn't allow any mutation of the wrapped {@link Collection}.
@@ -48,15 +49,14 @@ public final class Immutable<X> implements Collection<X> {
     /**
      * Original collection.
      */
-    private final Collection<X> col;
+    private final Collection<? extends X> col;
 
     /**
      * Ctor.
      * @param src Source collection
      */
-    @SuppressWarnings("unchecked")
     public Immutable(final Collection<? extends X> src) {
-        this.col = (Collection<X>) src;
+        this.col = src;
     }
 
     @Override
@@ -71,7 +71,7 @@ public final class Immutable<X> implements Collection<X> {
 
     @Override
     public Iterator<X> iterator() {
-        return this.col.iterator();
+        return new IterableOf<X>(this.col.iterator()).iterator();
     }
 
     @Override
