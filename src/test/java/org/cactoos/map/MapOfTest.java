@@ -45,7 +45,17 @@ import org.llorllale.cactoos.matchers.HasEntry;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class MapOfTest {
+
+    @Test
+    void createsMapFromSingleKeyAndValue() {
+        new Assertion<>(
+            "Must create a map from single key and value",
+            new MapOf<Integer, Integer>(-1, 1),
+            new HasEntry<>(-1, 1)
+        ).affirm();
+    }
 
     @Test
     void behavesAsMap() {
@@ -140,11 +150,29 @@ final class MapOfTest {
 
     @Test
     @SuppressWarnings("unchecked")
+    void createsMapFromMapAndSingleKeyAndValue() {
+        new Assertion<MapOf<Integer, Integer>>(
+            "Must create a map from map and single key and value",
+            new MapOf<Integer, Integer>(
+                new MapOf<Integer, Integer>(
+                    new MapEntry<Integer, Integer>(0, 0)
+                ),
+                -1, 1
+            ),
+            new AllOf<>(
+                new HasEntry<>(0,  0),
+                new HasEntry<>(-1,  1)
+            )
+        ).affirm();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
     void createsMapFromMapAndMapEntries() {
         new Assertion<MapOf<Integer, Integer>>(
             "Must create a map from map and map entries",
-            new MapOf<>(
-                new MapOf<>(
+            new MapOf<Integer, Integer>(
+                new MapOf<Integer, Integer>(
                     new MapEntry<Integer, Integer>(0, 0)
                 ),
                 new MapEntry<Integer, Integer>(1, 1)

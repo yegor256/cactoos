@@ -31,15 +31,9 @@ import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
 
 /**
- * Iterable as {@link Map}.
+ * Implementation of {@link Map}.
  *
- * <p>
- * This class should be used very carefully. You must understand that it will
- * fetch the entire content of the encapsulated {@link Map} on each method call.
- * It doesn't cache the data anyhow.
- *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of key
  * @param <Y> Type of value
@@ -49,11 +43,34 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     * @param key The key
+     * @param value The value
+     */
+    public MapOf(final X key, final Y value) {
+        this(new MapEntry<>(key, value));
+    }
+
+    /**
+     * Ctor.
      * @param list List of entries
      */
     @SafeVarargs
     public MapOf(final Map.Entry<? extends X, ? extends Y>... list) {
         this(new IterableOf<>(list));
+    }
+
+    /**
+     * Ctor.
+     * @param src Map to extend
+     * @param key New key
+     * @param value New value
+     */
+    public MapOf(
+        final Map<? extends X, ? extends Y> src,
+        final X key,
+        final Y value
+    ) {
+        this(src, new MapEntry<>(key, value));
     }
 
     /**
