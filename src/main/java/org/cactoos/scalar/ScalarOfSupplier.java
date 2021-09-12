@@ -37,7 +37,7 @@ public final class ScalarOfSupplier<T> extends ScalarEnvelope<T> {
      *
      * @param supplier The supplier
      */
-    public ScalarOfSupplier(final Supplier<T> supplier) {
+    public ScalarOfSupplier(final Supplier<? extends T> supplier) {
         super(supplier::get);
     }
 
