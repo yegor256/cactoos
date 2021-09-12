@@ -58,7 +58,7 @@ public final class Retry<T> implements Scalar<T> {
     /**
      * Original scalar.
      */
-    private final Scalar<T> origin;
+    private final Scalar<? extends T> origin;
 
     /**
      * Exit condition.
@@ -74,7 +74,7 @@ public final class Retry<T> implements Scalar<T> {
      * Ctor.
      * @param scalar Scalar original
      */
-    public Retry(final Scalar<T> scalar) {
+    public Retry(final Scalar<? extends T> scalar) {
         this(scalar, Duration.ZERO);
     }
 
@@ -83,7 +83,7 @@ public final class Retry<T> implements Scalar<T> {
      * @param scalar Scalar original
      * @param wait The {@link java.time.Duration} to wait between attempts
      */
-    public Retry(final Scalar<T> scalar, final Duration wait) {
+    public Retry(final Scalar<? extends T> scalar, final Duration wait) {
         // @checkstyle MagicNumberCheck (1 line)
         this(scalar, 3, wait);
     }
@@ -93,7 +93,7 @@ public final class Retry<T> implements Scalar<T> {
      * @param scalar Scalar original
      * @param attempts Maximum number of attempts
      */
-    public Retry(final Scalar<T> scalar, final int attempts) {
+    public Retry(final Scalar<? extends T> scalar, final int attempts) {
         this(scalar, attempts, Duration.ZERO);
     }
 
@@ -103,7 +103,7 @@ public final class Retry<T> implements Scalar<T> {
      * @param attempts Maximum number of attempts
      * @param wait The {@link java.time.Duration} to wait between attempts
      */
-    public Retry(final Scalar<T> scalar, final int attempts,
+    public Retry(final Scalar<? extends T> scalar, final int attempts,
         final Duration wait) {
         this(scalar, attempt -> attempt >= attempts, wait);
     }
@@ -113,7 +113,7 @@ public final class Retry<T> implements Scalar<T> {
      * @param scalar Func original
      * @param exit Exit condition, returns TRUE if there is no reason to try
      */
-    public Retry(final Scalar<T> scalar,
+    public Retry(final Scalar<? extends T> scalar,
         final Func<Integer, Boolean> exit) {
         this(scalar, exit, Duration.ZERO);
     }
@@ -124,7 +124,7 @@ public final class Retry<T> implements Scalar<T> {
      * @param exit Exit condition, returns TRUE if there is no reason to try
      * @param wait The {@link java.time.Duration} to wait between attempts
      */
-    public Retry(final Scalar<T> scalar,
+    public Retry(final Scalar<? extends T> scalar,
         final Func<Integer, Boolean> exit, final Duration wait) {
         this.origin = scalar;
         this.func = exit;
