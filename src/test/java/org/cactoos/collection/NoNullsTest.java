@@ -25,8 +25,13 @@ package org.cactoos.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import org.cactoos.Text;
+import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
+import org.cactoos.text.Capitalized;
+import org.cactoos.text.Split;
+import org.cactoos.text.TextOfString;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
@@ -293,6 +298,32 @@ final class NoNullsTest {
             "Must not be empty after an item was added",
             col.isEmpty(),
             new IsNot<>(new IsTrue())
+        ).affirm();
+    }
+
+    @Test
+    void addsAllAfterBeingActuallyDownCasted() throws Exception {
+        new Assertion<>(
+            "Must allAll when being casted to Collection<Text> by unchecked cast",
+            new FuncOf<Collection<Text>, Collection<Text>>(
+                texts -> {
+                    texts.addAll(
+                        new ListOf<Capitalized>(
+                            new Capitalized("c"),
+                            new Capitalized("d")
+                        )
+                    );
+                    return texts;
+                }
+            ).apply(
+                new NoNulls<>(
+                    new ListOf<TextOfString>(
+                        new TextOfString("a"),
+                        new TextOfString("b")
+                    )
+                )
+            ),
+            new IsEqual<>(new ListOf<>(new Split("a, b, C, D", ", ")))
         ).affirm();
     }
 
