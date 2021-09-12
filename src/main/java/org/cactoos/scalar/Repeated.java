@@ -37,7 +37,7 @@ public final class Repeated<X> implements Scalar<X> {
     /**
      * Scalar.
      */
-    private final Scalar<X> scalar;
+    private final Scalar<? extends X> scalar;
 
     /**
      * Times to repeat.
@@ -53,7 +53,7 @@ public final class Repeated<X> implements Scalar<X> {
      * @param scalar Scalar to repeat.
      * @param times How many times.
      */
-    public Repeated(final Scalar<X> scalar, final int times) {
+    public Repeated(final Scalar<? extends X> scalar, final int times) {
         this.scalar = scalar;
         this.times = times;
     }
