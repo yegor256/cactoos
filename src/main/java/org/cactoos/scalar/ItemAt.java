@@ -28,6 +28,7 @@ import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -53,7 +54,7 @@ public final class ItemAt<T> implements Scalar<T> {
      * @param position Position
      * @param iterable Iterable
      */
-    public ItemAt(final int position, final Iterable<T> iterable) {
+    public ItemAt(final int position, final Iterable<? extends T> iterable) {
         this(
             position,
             itr -> {
@@ -78,7 +79,7 @@ public final class ItemAt<T> implements Scalar<T> {
     public ItemAt(
         final int position,
         final T fallback,
-        final Iterable<T> iterable
+        final Iterable<? extends T> iterable
     ) {
         this(position, new FuncOf<>(new Constant<>(fallback)), iterable);
     }
@@ -92,8 +93,8 @@ public final class ItemAt<T> implements Scalar<T> {
      */
     public ItemAt(
         final int position,
-        final Func<Iterable<T>, T> fallback,
-        final Iterable<T> iterable
+        final Func<? super Iterable<? super T>, ? extends T> fallback,
+        final Iterable<? extends T> iterable
     ) {
         this.saved = new Sticky<T>(
             () -> {
@@ -106,7 +107,7 @@ public final class ItemAt<T> implements Scalar<T> {
                         ).asString()
                     );
                 }
-                final Iterator<T> src = iterable.iterator();
+                final Iterator<? extends T> src = iterable.iterator();
                 int cur;
                 for (cur = 0; cur < position && src.hasNext(); ++cur) {
                     src.next();
@@ -114,7 +115,7 @@ public final class ItemAt<T> implements Scalar<T> {
                 if (cur == position && src.hasNext()) {
                     ret = src.next();
                 } else {
-                    ret = fallback.apply(() -> src);
+                    ret = fallback.apply(new IterableOf<>(src));
                 }
                 return ret;
             }
