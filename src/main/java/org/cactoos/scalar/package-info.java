@@ -26,8 +26,8 @@
  * Scalars.
  *
  * @since 0.12
- * @todo #1533:30min Exploit generic variance for package org.cactoos.scalar
- *  to ensure typing works as best as possible as it is explained in
- *  #1533 issue.
+ * @todo #1569:90min Create tests for the semantics of relaxed wildcards
+ *  in changed classes of {@link org.cactoos.scalar} package in #1569,
+ *  which is a child of #1533.
  */
 package org.cactoos.scalar;
