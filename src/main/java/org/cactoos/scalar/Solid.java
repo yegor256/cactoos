@@ -40,7 +40,7 @@ public final class Solid<T> implements Scalar<T> {
     /**
      * Origin.
      */
-    private final Scalar<T> origin;
+    private final Scalar<? extends T> origin;
 
     /**
      * Cache.
@@ -56,7 +56,7 @@ public final class Solid<T> implements Scalar<T> {
      * Ctor.
      * @param origin The Scalar to cache and sync
      */
-    public Solid(final Scalar<T> origin) {
+    public Solid(final Scalar<? extends T> origin) {
         this.origin = origin;
         this.lock = new Object();
     }
