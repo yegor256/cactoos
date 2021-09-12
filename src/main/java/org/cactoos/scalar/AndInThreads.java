@@ -64,7 +64,7 @@ public final class AndInThreads implements Scalar<Boolean> {
     /**
      * The iterator.
      */
-    private final Iterable<Scalar<Boolean>> iterable;
+    private final Iterable<? extends Scalar<Boolean>> iterable;
 
     /**
      * Shut down the service when it's done.
@@ -78,7 +78,7 @@ public final class AndInThreads implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      */
     @SafeVarargs
-    public <X> AndInThreads(final Func<X, Boolean> func, final X... src) {
+    public <X> AndInThreads(final Func<? super X, Boolean> func, final X... src) {
         this(func, new IterableOf<>(src));
     }
 
@@ -88,8 +88,8 @@ public final class AndInThreads implements Scalar<Boolean> {
      * @param src The iterable
      * @param <X> Type of items in the iterable
      */
-    public <X> AndInThreads(final Func<X, Boolean> func,
-        final Iterable<X> src) {
+    public <X> AndInThreads(final Func<? super X, Boolean> func,
+        final Iterable<? extends X> src) {
         this(
             new Mapped<>(
                 item -> new ScalarOf<>(() -> func.apply(item)),
@@ -111,7 +111,7 @@ public final class AndInThreads implements Scalar<Boolean> {
      * Ctor.
      * @param src The iterable
      */
-    public AndInThreads(final Iterable<Scalar<Boolean>> src) {
+    public AndInThreads(final Iterable<? extends Scalar<Boolean>> src) {
         this(Executors.newCachedThreadPool(), src, true);
     }
 
@@ -123,8 +123,11 @@ public final class AndInThreads implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      */
     @SafeVarargs
-    public <X> AndInThreads(final ExecutorService svc,
-        final Proc<X> proc, final X... src) {
+    public <X> AndInThreads(
+        final ExecutorService svc,
+        final Proc<? super X> proc,
+        final X... src
+    ) {
         this(svc, new FuncOf<>(proc, true), src);
     }
 
@@ -136,8 +139,11 @@ public final class AndInThreads implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      */
     @SafeVarargs
-    public <X> AndInThreads(final ExecutorService svc,
-        final Func<X, Boolean> func, final X... src) {
+    public <X> AndInThreads(
+        final ExecutorService svc,
+        final Func<? super X, Boolean> func,
+        final X... src
+    ) {
         this(svc, func, new IterableOf<>(src));
     }
 
@@ -148,8 +154,11 @@ public final class AndInThreads implements Scalar<Boolean> {
      * @param src The iterable
      * @param <X> Type of items in the iterable
      */
-    public <X> AndInThreads(final ExecutorService svc,
-        final Proc<X> proc, final Iterable<X> src) {
+    public <X> AndInThreads(
+        final ExecutorService svc,
+        final Proc<? super X> proc,
+        final Iterable<? extends X> src
+    ) {
         this(svc, new FuncOf<>(proc, true), src);
     }
 
@@ -160,8 +169,11 @@ public final class AndInThreads implements Scalar<Boolean> {
      * @param src The iterable
      * @param <X> Type of items in the iterable
      */
-    public <X> AndInThreads(final ExecutorService svc,
-        final Func<X, Boolean> func, final Iterable<X> src) {
+    public <X> AndInThreads(
+        final ExecutorService svc,
+        final Func<? super X, Boolean> func,
+        final Iterable<? extends X> src
+    ) {
         this(
             svc,
             new Mapped<>(
@@ -188,7 +200,7 @@ public final class AndInThreads implements Scalar<Boolean> {
      * @param src The iterable
      */
     public AndInThreads(final ExecutorService svc,
-        final Iterable<Scalar<Boolean>> src) {
+        final Iterable<? extends Scalar<Boolean>> src) {
         this(svc, src, false);
     }
 
@@ -199,7 +211,7 @@ public final class AndInThreads implements Scalar<Boolean> {
      * @param sht Shut it down
      */
     private AndInThreads(final ExecutorService svc,
-        final Iterable<Scalar<Boolean>> src, final boolean sht) {
+        final Iterable<? extends Scalar<Boolean>> src, final boolean sht) {
         this.service = svc;
         this.iterable = src;
         this.shut = sht;
