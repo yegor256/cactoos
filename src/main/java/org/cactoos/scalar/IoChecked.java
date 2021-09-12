@@ -45,13 +45,13 @@ public final class IoChecked<T> implements Scalar<T> {
     /**
      * Original scalar.
      */
-    private final Scalar<T> origin;
+    private final Scalar<? extends T> origin;
 
     /**
      * Ctor.
      * @param scalar Encapsulated scalar
      */
-    public IoChecked(final Scalar<T> scalar) {
+    public IoChecked(final Scalar<? extends T> scalar) {
         this.origin = scalar;
     }
 
