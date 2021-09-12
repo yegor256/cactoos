@@ -52,7 +52,7 @@ public final class Synced<T> implements Scalar<T> {
     /**
      * The scalar to cache.
      */
-    private final Scalar<T> origin;
+    private final Scalar<? extends T> origin;
 
     /**
      * Sync lock.
@@ -63,7 +63,7 @@ public final class Synced<T> implements Scalar<T> {
      * Ctor.
      * @param src The Scalar to cache
      */
-    public Synced(final Scalar<T> src) {
+    public Synced(final Scalar<? extends T> src) {
         this(src, src);
     }
 
@@ -72,7 +72,7 @@ public final class Synced<T> implements Scalar<T> {
      * @param scalar The Scalar to cache
      * @param lock Sync lock
      */
-    public Synced(final Scalar<T> scalar, final Object lock) {
+    public Synced(final Scalar<? extends T> scalar, final Object lock) {
         this.origin = scalar;
         this.mutex = lock;
     }
