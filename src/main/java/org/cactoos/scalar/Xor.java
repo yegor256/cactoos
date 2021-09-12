@@ -77,7 +77,7 @@ public final class Xor extends ScalarEnvelope<Boolean> {
      * Ctor.
      * @param iterable The iterable.
      */
-    public Xor(final Iterable<Scalar<Boolean>> iterable) {
+    public Xor(final Iterable<? extends Scalar<Boolean>> iterable) {
         super(new Reduced<>((a, b) -> a ^ b, new Joined<>(new False(), iterable))
         );
     }
