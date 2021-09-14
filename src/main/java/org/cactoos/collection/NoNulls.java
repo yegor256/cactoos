@@ -47,10 +47,13 @@ public final class NoNulls<X> implements Collection<X> {
     /**
      * Ctor.
      * @param items Original one
+     * @implNote There's no wildcard for 'X' type parameter because of mutable
+     *  nature of the collection, the user can break the runtime,
+     *  using Collection&lt;X&gt;<b>::add*</b> methods, created from
+     *  Collection&lt;? extends X&gt;
      */
-    @SuppressWarnings("unchecked")
-    public NoNulls(final Collection<? extends X> items) {
-        this.col = (Collection<X>) items;
+    public NoNulls(final Collection<X> items) {
+        this.col = items;
     }
 
     @Override
