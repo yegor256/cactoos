@@ -45,12 +45,14 @@ public final class NoNulls<X> implements Collection<X> {
     private final Collection<X> col;
 
     /**
-     * Ctor.
-     * @param items Original one
-     * @implNote There's no wildcard for 'X' type parameter because of mutable
-     *  nature of the collection, the user can break the runtime,
-     *  using Collection&lt;X&gt;<b>::add*</b> methods, created from
-     *  Collection&lt;? extends X&gt;
+     * Ctor without '? extends X' wildcard because of the issue:
+     *  <ol>
+     *      <li>The client gets Collection of X</li>
+     *      <li>The client adds item of X to it</li>
+     *      <li>The client queries items of original Collection of ? extends X</li>
+     *      <li>Runtime exception occurs</li>
+     *  </ol>
+     * @param items Original one.
      */
     public NoNulls(final Collection<X> items) {
         this.col = items;
