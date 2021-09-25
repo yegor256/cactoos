@@ -35,13 +35,13 @@ public final class NoNulls<T> implements Scalar<T> {
     /**
      * The scalar.
      */
-    private final Scalar<T> origin;
+    private final Scalar<? extends T> origin;
 
     /**
      * Ctor.
      * @param sclr The scalar
      */
-    public NoNulls(final Scalar<T> sclr) {
+    public NoNulls(final Scalar<? extends T> sclr) {
         this.origin = sclr;
     }
 
