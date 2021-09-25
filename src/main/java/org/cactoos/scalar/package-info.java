@@ -26,7 +26,8 @@
  * Scalars.
  *
  * @since 0.12
- * @todo #1533:30min Exploit generic variance for package org.cactoos.scalar
+ * @todo #1569:30min Exploit generic variance for package org.cactoos.scalar
+ *  the rest of classes starting from 'Retry' by alphabetical order
  *  to ensure typing works as best as possible as it is explained in
  *  #1533 issue.
  */
