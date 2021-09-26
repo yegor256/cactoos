@@ -45,8 +45,14 @@ public final class NoNulls<X> implements Collection<X> {
     private final Collection<X> col;
 
     /**
-     * Ctor.
-     * @param items Original one
+     * Ctor without '? extends X' wildcard because of the issue:
+     *  <ol>
+     *      <li>The client gets Collection of X</li>
+     *      <li>The client adds item of X to it</li>
+     *      <li>The client queries items of original Collection of ? extends X</li>
+     *      <li>Runtime exception occurs</li>
+     *  </ol>
+     * @param items Original one.
      */
     public NoNulls(final Collection<X> items) {
         this.col = items;

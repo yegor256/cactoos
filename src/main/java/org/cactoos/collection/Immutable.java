@@ -48,13 +48,13 @@ public final class Immutable<X> implements Collection<X> {
     /**
      * Original collection.
      */
-    private final Collection<X> col;
+    private final Collection<? extends X> col;
 
     /**
      * Ctor.
      * @param src Source collection
      */
-    public Immutable(final Collection<X> src) {
+    public Immutable(final Collection<? extends X> src) {
         this.col = src;
     }
 
@@ -70,7 +70,7 @@ public final class Immutable<X> implements Collection<X> {
 
     @Override
     public Iterator<X> iterator() {
-        return this.col.iterator();
+        return new org.cactoos.iterator.Immutable<>(this.col.iterator());
     }
 
     @Override
