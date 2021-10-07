@@ -38,13 +38,13 @@ public abstract class ScalarEnvelope<T> implements Scalar<T> {
     /**
      * The delegate scalar.
      */
-    private final Scalar<T> scalar;
+    private final Scalar<? extends T> scalar;
 
     /**
      * Ctor.
      * @param scalar The scalar
      */
-    public ScalarEnvelope(final Scalar<T> scalar) {
+    public ScalarEnvelope(final Scalar<? extends T> scalar) {
         this.scalar = scalar;
     }
 

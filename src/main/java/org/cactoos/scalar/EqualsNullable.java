@@ -35,12 +35,12 @@ public final class EqualsNullable implements Scalar<Boolean> {
     /**
      * The first object for comparison.
      */
-    private final Scalar<Object> first;
+    private final Scalar<? extends Object> first;
 
     /**
      * The second object for comparison.
      */
-    private final Scalar<Object> second;
+    private final Scalar<? extends Object> second;
 
     /**
      * Accepts 2 objects to compare.
@@ -56,7 +56,7 @@ public final class EqualsNullable implements Scalar<Boolean> {
      * @param first Scalar to get value to compare
      * @param second Object to compare with
      */
-    public EqualsNullable(final Scalar<Object> first, final Object second) {
+    public EqualsNullable(final Scalar<? extends Object> first, final Object second) {
         this(first, () -> second);
     }
 
@@ -65,7 +65,7 @@ public final class EqualsNullable implements Scalar<Boolean> {
      * @param first Object to compare
      * @param second Scalar to get value to compare
      */
-    public EqualsNullable(final Object first, final Scalar<Object> second) {
+    public EqualsNullable(final Object first, final Scalar<? extends Object> second) {
         this(() -> first, second);
     }
 
@@ -74,8 +74,8 @@ public final class EqualsNullable implements Scalar<Boolean> {
      * @param first Scalar to get value to compare
      * @param second Scalar to get value to compare with
      */
-    public EqualsNullable(final Scalar<Object> first,
-        final Scalar<Object> second) {
+    public EqualsNullable(final Scalar<? extends Object> first,
+        final Scalar<? extends Object> second) {
         this.first = first;
         this.second = second;
     }

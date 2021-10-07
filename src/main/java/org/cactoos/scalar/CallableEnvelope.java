@@ -38,13 +38,13 @@ public abstract class CallableEnvelope<T> implements Callable<T> {
     /**
      * Callable to decorate.
      */
-    private final Callable<T> origin;
+    private final Callable<? extends T> origin;
 
     /**
      * Ctor.
      * @param callable The Callable
      */
-    public CallableEnvelope(final Callable<T> callable) {
+    public CallableEnvelope(final Callable<? extends T> callable) {
         this.origin = callable;
     }
 
