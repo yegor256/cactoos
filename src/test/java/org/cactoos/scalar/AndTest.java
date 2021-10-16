@@ -94,7 +94,7 @@ final class AndTest {
         MatcherAssert.assertThat(
             new And(
                 input -> input > 0,
-                new IterableOf<>(1, -1, 0)
+                new IterableOf<Integer>(1, -1, 0)
             ),
             new HasValue<>(false)
         );
@@ -105,7 +105,7 @@ final class AndTest {
         MatcherAssert.assertThat(
             new And(
                 input -> input > 0,
-                new IterableOf<>(1, -1, 0)
+                new IterableOf<Integer>(1, -1, 0)
             ),
             new HasValue<>(false)
         );
