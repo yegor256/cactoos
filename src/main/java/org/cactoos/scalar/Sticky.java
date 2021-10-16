@@ -62,13 +62,13 @@ public final class Sticky<T> implements Scalar<T> {
     /**
      * Func.
      */
-    private final Func<Boolean, T> func;
+    private final Func<Boolean, ? extends T> func;
 
     /**
      * Ctor.
      * @param scalar The Scalar to cache
      */
-    public Sticky(final Scalar<T> scalar) {
+    public Sticky(final Scalar<? extends T> scalar) {
         this.func = new StickyFunc<>(
             input -> scalar.value()
         );

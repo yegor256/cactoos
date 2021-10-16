@@ -80,7 +80,11 @@ public final class Ternary<T> extends ScalarEnvelope<T> {
      * @param alter The alternative
      * @since 0.9
      */
-    public Ternary(final boolean cnd, final Scalar<T> cons, final Scalar<T> alter) {
+    public Ternary(
+        final boolean cnd,
+        final Scalar<? extends T> cons,
+        final Scalar<? extends T> alter
+    ) {
         this(new Constant<>(cnd), cons, alter);
     }
 
@@ -91,7 +95,11 @@ public final class Ternary<T> extends ScalarEnvelope<T> {
      * @param alter The alternative
      * @since 0.9
      */
-    public Ternary(final Scalar<Boolean> cnd, final Scalar<T> cons, final Scalar<T> alter) {
+    public Ternary(
+        final Scalar<Boolean> cnd,
+        final Scalar<? extends T> cons,
+        final Scalar<? extends T> alter
+    ) {
         this(
             new Object(),
             new FuncOf<>(cnd),
@@ -111,8 +119,10 @@ public final class Ternary<T> extends ScalarEnvelope<T> {
      * @checkstyle ParameterNumberCheck (5 lines)
      */
     public <X> Ternary(
-        final X input, final Func<X, Boolean> cnd,
-        final Func<X, T> cons, final Func<X, T> alter
+        final X input,
+        final Func<? super X, Boolean> cnd,
+        final Func<? super X, ? extends T> cons,
+        final Func<? super X, ? extends T> alter
     ) {
         this(new Constant<>(input), cnd, cons, alter);
     }
@@ -128,12 +138,14 @@ public final class Ternary<T> extends ScalarEnvelope<T> {
      * @checkstyle ParameterNumberCheck (5 lines)
      */
     public <X> Ternary(
-        final Scalar<X> input, final Func<X, Boolean> cnd,
-        final Func<X, T> cons, final Func<X, T> alter
+        final Scalar<? extends X> input,
+        final Func<? super X, Boolean> cnd,
+        final Func<? super X, ? extends T> cons,
+        final Func<? super X, ? extends T> alter
     ) {
         super(() -> {
             final X inp = input.value();
-            final Func<X, T> result;
+            final Func<? super X, ? extends T> result;
             if (cnd.apply(inp)) {
                 result = cons;
             } else {

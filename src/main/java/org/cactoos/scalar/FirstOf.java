@@ -41,24 +41,24 @@ public final class FirstOf<T> implements Scalar<T> {
     /**
      * Condition for getting the element.
      */
-    private final Func<T, Boolean> condition;
+    private final Func<? super T, Boolean> condition;
 
     /**
      * Source iterable.
      */
-    private final Iterable<T> source;
+    private final Iterable<? extends T> source;
 
     /**
      * Fallback used if no value matches.
      */
-    private final Scalar<T> fallback;
+    private final Scalar<? extends T> fallback;
 
     /**
      * Constructor with default condition (always `true`) and plain fallback.
      * @param src Source iterable
      * @param fbck Fallback used if no value matches
      */
-    public FirstOf(final Iterable<T> src, final T fbck) {
+    public FirstOf(final Iterable<? extends T> src, final T fbck) {
         this(
             new FuncOf<>(new True()),
             src,
@@ -71,7 +71,7 @@ public final class FirstOf<T> implements Scalar<T> {
      * @param src Source iterable
      * @param fbck Fallback used if no value matches
      */
-    public FirstOf(final Iterable<T> src, final Scalar<T> fbck) {
+    public FirstOf(final Iterable<? extends T> src, final Scalar<? extends T> fbck) {
         this(
             new FuncOf<>(new True()),
             src,
@@ -85,8 +85,11 @@ public final class FirstOf<T> implements Scalar<T> {
      * @param src Source iterable
      * @param fbck Fallback used if no value matches
      */
-    public FirstOf(final Func<T, Boolean> cond, final Iterable<T> src,
-        final Scalar<T> fbck) {
+    public FirstOf(
+        final Func<? super T, Boolean> cond,
+        final Iterable<? extends T> src,
+        final Scalar<? extends T> fbck
+    ) {
         this.condition = cond;
         this.source = src;
         this.fallback = fbck;

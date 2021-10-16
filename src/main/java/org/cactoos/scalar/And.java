@@ -68,7 +68,7 @@ public final class And implements Scalar<Boolean> {
     /**
      * The iterator.
      */
-    private final Iterable<Scalar<Boolean>> origin;
+    private final Iterable<? extends Scalar<Boolean>> origin;
 
     /**
      * Ctor.
@@ -77,7 +77,7 @@ public final class And implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      */
     @SafeVarargs
-    public <X> And(final Func<X, Boolean> func, final X... src) {
+    public <X> And(final Func<? super X, Boolean> func, final X... src) {
         this(func, new IterableOf<>(src));
     }
 
@@ -88,7 +88,10 @@ public final class And implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      * @since 0.24
      */
-    public <X> And(final Func<X, Boolean> func, final Iterable<X> src) {
+    public <X> And(
+        final Func<? super X, Boolean> func,
+        final Iterable<? extends X> src
+    ) {
         this(
             new Mapped<>(
                 item -> new ScalarOf<>(() -> func.apply(item)),
@@ -105,7 +108,7 @@ public final class And implements Scalar<Boolean> {
      * @since 0.34
      */
     @SafeVarargs
-    public <X> And(final X subject, final Func<X, Boolean>... conditions) {
+    public <X> And(final X subject, final Func<? super X, Boolean>... conditions) {
         this(subject, new IterableOf<>(conditions));
     }
 
@@ -116,7 +119,7 @@ public final class And implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      * @since 0.49
      */
-    public <X> And(final X subject, final Iterable<Func<X, Boolean>> conditions) {
+    public <X> And(final X subject, final Iterable<? extends Func<? super X, Boolean>> conditions) {
         this(
             new Mapped<>(
                 item -> new ScalarOf<>(() -> item.apply(subject)),
@@ -138,7 +141,7 @@ public final class And implements Scalar<Boolean> {
      * Ctor.
      * @param iterable The iterable.
      */
-    public And(final Iterable<Scalar<Boolean>> iterable) {
+    public And(final Iterable<? extends Scalar<Boolean>> iterable) {
         this.origin = iterable;
     }
 

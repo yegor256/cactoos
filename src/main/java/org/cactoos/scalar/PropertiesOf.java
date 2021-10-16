@@ -97,7 +97,7 @@ public final class PropertiesOf implements Scalar<Properties> {
      * @param entries The map with properties
      * @since 0.23
      */
-    public PropertiesOf(final Iterable<Map.Entry<?, ?>> entries) {
+    public PropertiesOf(final Iterable<? extends Map.Entry<?, ?>> entries) {
         this(
             new MapOf<>(
                 input -> new MapEntry<>(
@@ -131,7 +131,7 @@ public final class PropertiesOf implements Scalar<Properties> {
      * Ctor.
      * @param sclr The underlying properties
      */
-    private PropertiesOf(final Scalar<Properties> sclr) {
+    private PropertiesOf(final Scalar<? extends Properties> sclr) {
         this.scalar = new IoChecked<>(sclr);
     }
 

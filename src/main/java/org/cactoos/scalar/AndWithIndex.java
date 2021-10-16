@@ -68,7 +68,7 @@ public final class AndWithIndex implements Scalar<Boolean> {
     /**
      * The iterator.
      */
-    private final Iterable<Func<Integer, Boolean>> iterable;
+    private final Iterable<? extends Func<Integer, Boolean>> iterable;
 
     /**
      * Ctor.
@@ -77,7 +77,7 @@ public final class AndWithIndex implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      */
     @SafeVarargs
-    public <X> AndWithIndex(final Proc<X> proc, final X... src) {
+    public <X> AndWithIndex(final Proc<? super X> proc, final X... src) {
         this(new BiFuncOf<>(proc, true), src);
     }
 
@@ -88,7 +88,7 @@ public final class AndWithIndex implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      */
     @SafeVarargs
-    public <X> AndWithIndex(final BiFunc<X, Integer, Boolean> func,
+    public <X> AndWithIndex(final BiFunc<? super X, Integer, Boolean> func,
         final X... src) {
         this(func, new IterableOf<>(src));
     }
@@ -100,8 +100,8 @@ public final class AndWithIndex implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      * @since 0.24
      */
-    public <X> AndWithIndex(final BiProc<X, Integer> proc,
-        final Iterable<X> src) {
+    public <X> AndWithIndex(final BiProc<? super X, Integer> proc,
+        final Iterable<? extends X> src) {
         this(new BiFuncOf<>(proc, true), src);
     }
 
@@ -112,8 +112,8 @@ public final class AndWithIndex implements Scalar<Boolean> {
      * @param <X> Type of items in the iterable
      * @since 0.24
      */
-    public <X> AndWithIndex(final BiFunc<X, Integer, Boolean> func,
-        final Iterable<X> src) {
+    public <X> AndWithIndex(final BiFunc<? super X, Integer, Boolean> func,
+        final Iterable<? extends X> src) {
         this(
             new Mapped<>(
                 item -> new FuncOf<>(input -> func.apply(item, input)),
@@ -135,7 +135,7 @@ public final class AndWithIndex implements Scalar<Boolean> {
      * Ctor.
      * @param src The iterable
      */
-    public AndWithIndex(final Iterable<Func<Integer, Boolean>> src) {
+    public AndWithIndex(final Iterable<? extends Func<Integer, Boolean>> src) {
         this.iterable = src;
     }
 

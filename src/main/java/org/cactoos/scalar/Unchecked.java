@@ -40,13 +40,13 @@ public final class Unchecked<T> implements Scalar<T> {
     /**
      * Original origin.
      */
-    private final Scalar<T> origin;
+    private final Scalar<? extends T> origin;
 
     /**
      * Ctor.
      * @param scalar Encapsulated origin
      */
-    public Unchecked(final Scalar<T> scalar) {
+    public Unchecked(final Scalar<? extends T> scalar) {
         this.origin = scalar;
     }
 
