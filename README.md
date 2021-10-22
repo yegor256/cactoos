@@ -277,7 +277,7 @@ This is an endless `while/do` loop:
 
 ```java
 while (!ready) {
-  System.out.prinln("Still waiting...");
+  System.out.println("Still waiting...");
 }
 ```
 
