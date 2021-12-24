@@ -28,33 +28,38 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 import org.cactoos.iterable.Endless;
 import org.cactoos.scalar.And;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Timed}.
  * @since 0.29.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TimedFuncTest {
+final class TimedFuncTest {
 
-    @Test(expected = TimeoutException.class)
-    public void functionGetsInterrupted() throws Exception {
+    @Test
+    void functionGetsInterrupted() {
         final long period = 100L;
-        new Timed<Boolean, Boolean>(
-            input -> {
-                return new And(
-                    new Endless<>(() -> input)
-                ).value();
-            },
-            period
-        ).apply(true);
+        new Assertion<>(
+            "Must interrupt function",
+            () -> new Timed<Boolean, Boolean>(
+                input -> {
+                    return new And(
+                        new Endless<>(() -> input)
+                    ).value();
+                },
+                period
+            ).apply(true),
+            new Throws<>(TimeoutException.class)
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public void futureTaskIsCancelled() {
+    void futureTaskIsCancelled() {
         final long time = 2000L;
         final Future<Boolean> future = Executors.newSingleThreadExecutor()
             .submit(
@@ -80,7 +85,7 @@ public final class TimedFuncTest {
     }
 
     @Test
-    public void functionIsExecuted() throws Exception {
+    void functionIsExecuted() throws Exception {
         final long period = 3000L;
         new Assertion<>(
             "Must execute the function",
