@@ -46,7 +46,7 @@ final class JoinedListIteratorTest {
         new Assertion<>(
             "Must concatenate iterable of listIterators together",
             new IterableOf<>(
-                new JoinedListIterator<>(
+                new JoinedListIterator<String>(
                     new ListOf<>("x").listIterator(),
                     new ListOf<>("y").listIterator()
                 )
@@ -58,7 +58,7 @@ final class JoinedListIteratorTest {
     @Test
     @SuppressWarnings("unchecked")
     void navigatesInNonEmptyIterator() {
-        final ListIterator<Integer> joined = new JoinedListIterator<>(
+        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
             new ListOf<>(1).listIterator(),
             new ListOf<>(2).listIterator()
         );

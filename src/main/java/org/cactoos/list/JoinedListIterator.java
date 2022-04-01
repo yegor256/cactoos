@@ -47,7 +47,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
     /**
      * {@link List} of {@link ListIterator}.
      */
-    private final List<ListIterator<T>> listiters;
+    private final List<ListIterator<? extends T>> listiters;
 
     /**
      * Cursor of the {@link List} of {@link ListIterator}.
@@ -74,7 +74,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
      * @param items ListIterator
      */
     @SuppressWarnings("unchecked")
-    public JoinedListIterator(final T item, final ListIterator<T> items) {
+    public JoinedListIterator(final T item, final ListIterator<? extends T> items) {
         this(new ListOf<>(new ListOf<>(item).listIterator(), items));
     }
 
@@ -84,7 +84,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
      * @param item End item
      */
     @SuppressWarnings("unchecked")
-    public JoinedListIterator(final ListIterator<T> items, final T item) {
+    public JoinedListIterator(final ListIterator<? extends T> items, final T item) {
         this(new ListOf<>(items, new ListOf<>(item).listIterator()));
     }
 
@@ -92,7 +92,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
      * Ctor.
      * @param items Items to concatenate
      */
-    public JoinedListIterator(final List<ListIterator<T>> items) {
+    public JoinedListIterator(final List<ListIterator<? extends T>> items) {
         this.listiters = items;
         this.cursorlit = new AtomicInteger(-1);
         this.cursor = new AtomicInteger(-1);
@@ -183,8 +183,8 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
      * Get current {@link ListIterator}.
      * @return Current element
      */
-    private ListIterator<T> currentListIterator() {
-        final ListIterator<T> current;
+    private ListIterator<? extends T> currentListIterator() {
+        final ListIterator<? extends T> current;
         if (this.cursorlit.get() == -1) {
             current = Collections.emptyListIterator();
         } else {
