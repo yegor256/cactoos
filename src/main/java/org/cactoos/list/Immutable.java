@@ -49,13 +49,13 @@ public final class Immutable<T> implements List<T> {
     /**
      * Encapsulated list.
      */
-    private final List<T> list;
+    private final List<? extends T> list;
 
     /**
      * Ctor.
      * @param src Source collection
      */
-    public Immutable(final List<T> src) {
+    public Immutable(final List<? extends T> src) {
         this.list = src;
     }
 
