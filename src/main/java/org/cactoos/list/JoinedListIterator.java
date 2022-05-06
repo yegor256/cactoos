@@ -64,7 +64,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
      * @param items Items to concatenate
      */
     @SafeVarargs
-    public JoinedListIterator(final ListIterator<T>... items) {
+    public JoinedListIterator(final ListIterator<? extends T>... items) {
         this(new ListOf<>(items));
     }
 
