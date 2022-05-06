@@ -64,7 +64,7 @@ public final class Joined<X> extends ListEnvelope<X> {
      * Ctor.
      * @param src Source lists
      */
-    public Joined(final Iterable<List<? extends X>> src) {
+    public Joined(final Iterable<? extends List<? extends X>> src) {
         super(
             new ListOf<>(src).stream()
                 .flatMap(List::stream)
