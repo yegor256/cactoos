@@ -72,6 +72,7 @@ final class MapOfTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void createsMapFromIterable() {
         new Assertion<>(
             "Must behave as a map when created from iterable",
