@@ -54,12 +54,12 @@ The MIT License (MIT)
       <name>Yegor Bugayenko</name>
       <email>yegor256@gmail.com</email>
       <organization>yegor256.com</organization>
-      <organizationUrl>http://www.yegor256.com</organizationUrl>
+      <organizationUrl>https://www.yegor256.com</organizationUrl>
       <roles>
         <role>Architect</role>
         <role>Developer</role>
       </roles>
-      <timezone>-7</timezone>
+      <timezone>+3</timezone>
     </developer>
   </developers>
   <issueManagement>
@@ -73,7 +73,7 @@ The MIT License (MIT)
   </scm>
   <ciManagement>
     <system>rultor</system>
-    <url>http://www.rultor.com/s/cactoos</url>
+    <url>https://www.rultor.com/s/cactoos</url>
   </ciManagement>
   <distributionManagement>
     <site>
