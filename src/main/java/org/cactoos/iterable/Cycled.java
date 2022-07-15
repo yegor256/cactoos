@@ -41,7 +41,7 @@ public final class Cycled<T> extends IterableEnvelope<T> {
      */
     @SafeVarargs
     public Cycled(final T... itr) {
-        this(new IterableOf<T>(itr));
+        this(new IterableOf<>(itr));
     }
 
     /**

@@ -544,7 +544,7 @@ class ImmutableTest {
             "subList's iterator must be immutable",
             () -> {
                 final ListIterator<String> iterator = new Immutable<>(
-                    new ListOf<String>("one", "two", "three")
+                    new ListOf<>("one", "two", "three")
                 )
                     .subList(0, 2)
                     .listIterator(0);

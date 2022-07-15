@@ -51,7 +51,7 @@ public final class Sticky<X> extends IterableEnvelope<X> {
      */
     public Sticky(final Iterable<? extends X> iterable) {
         super(
-            new IterableOf<X>(
+            new IterableOf<>(
                 new Mapped<>(
                     Iterable::iterator,
                     new org.cactoos.scalar.Sticky<>(

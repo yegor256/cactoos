@@ -21,53 +21,66 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.cactoos.io;
+package org.cactoos.bytes;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import org.cactoos.Fallback;
+import org.cactoos.Text;
 import org.cactoos.text.TextOf;
-import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
- * Test case for {@link TeeOutputStream}.
- * @since 0.16
+ * Test case for {@link IoCheckedBytes}.
+ *
+ * @since 0.52
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
-final class TeeOutputStreamTest {
+final class IoCheckedBytesTest {
 
     @Test
-    @SuppressWarnings("unchecked")
-    void copiesContentByteByByte() throws Exception {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final ByteArrayOutputStream copy = new ByteArrayOutputStream();
-        final String content = "Hello, товарищ!";
+    void rethrowsCheckedToUncheckedException() {
         new Assertion<>(
-            "Must copy OutputStream to OutputStream byte by byte",
-            new TextOf(
-                new ReaderOf(
-                    new TeeInputStream(
-                        new ByteArrayInputStream(
-                            content.getBytes(StandardCharsets.UTF_8)
-                        ),
-                        new TeeOutputStream(baos, copy)
-                    )
-                )
-            ).asString(),
-            new AllOf<>(
-                new IsEqual<>(content),
-                new IsEqual<>(
-                    new String(baos.toByteArray(), StandardCharsets.UTF_8)
-                ),
-                new IsEqual<>(
-                    new String(copy.toByteArray(), StandardCharsets.UTF_8)
-                )
-            )
+            "Must rethrow checked to io-checked exception",
+            () -> new IoCheckedBytes(
+                () -> {
+                    throw new IOException("intended");
+                }
+            ).asBytes(),
+            new Throws<>(IOException.class)
         ).affirm();
     }
 
+    @Test
+    void worksNormallyWhenNoExceptionIsThrown() throws Exception {
+        final Text source = new TextOf("hello, cactoos!");
+        new Assertion<>(
+            "Must work normally when no exception is thrown",
+            new IoCheckedBytes(
+                new BytesOf(source)
+            ).asBytes(),
+            new IsEqual<>(new BytesOf(source).asBytes())
+        ).affirm();
+    }
+
+    @Test
+    void worksWithFallback() throws IOException {
+        final byte[] empty = {};
+        new Assertion<>(
+            "Must work with fallback",
+            new IoCheckedBytes(
+                () -> {
+                    throw new IllegalArgumentException("OK");
+                },
+                new Fallback.From<>(
+                    IllegalArgumentException.class,
+                    ex -> empty
+                )
+            ).asBytes(),
+            new IsEqual<>(empty)
+        ).affirm();
+    }
 }

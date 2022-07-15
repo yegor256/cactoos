@@ -66,19 +66,19 @@ public final class MaxOf extends NumberEnvelope {
     public MaxOf(final Iterable<? extends Number> src) {
         super(
             new NumberOfScalars(
-                new Reduced<Long>(
+                new Reduced<>(
                     Math::max,
                     new Mapped<>((Number n) -> n::longValue, src)
                 ),
-                new Reduced<Integer>(
+                new Reduced<>(
                     Math::max,
                     new Mapped<>((Number n) -> n::intValue, src)
                 ),
-                new Reduced<Float>(
+                new Reduced<>(
                     Math::max,
                     new Mapped<>((Number n) -> n::floatValue, src)
                 ),
-                new Reduced<Double>(
+                new Reduced<>(
                     Math::max,
                     new Mapped<>((Number n) -> n::doubleValue, src)
                 )

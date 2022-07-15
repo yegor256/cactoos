@@ -52,7 +52,7 @@ final class MapOfTest {
     void createsMapFromSingleKeyAndValue() {
         new Assertion<>(
             "Must create a map from single key and value",
-            new MapOf<Integer, Integer>(-1, 1),
+            new MapOf<>(-1, 1),
             new HasEntry<>(-1, 1)
         ).affirm();
     }
@@ -138,15 +138,15 @@ final class MapOfTest {
                 new MapEntry<Integer, Map<String, String>>(
                     -1,
                     new MapOf<String, String>(
-                        new MapEntry<String, String>("first", "second"),
-                        new MapEntry<String, String>("4", "7")
+                        new MapEntry<>("first", "second"),
+                        new MapEntry<>("4", "7")
                     )
                 ),
                 new MapEntry<Integer, Map<String, String>>(
                     1,
                     new MapOf<String, String>(
-                        new MapEntry<String, String>("green", "red"),
-                        new MapEntry<String, String>("2.7", "3.1")
+                        new MapEntry<>("green", "red"),
+                        new MapEntry<>("2.7", "3.1")
                     )
                 )
             ).toString(),
@@ -166,17 +166,17 @@ final class MapOfTest {
     @Test
     @SuppressWarnings("unchecked")
     void createsMapFromMapAndSingleKeyAndValue() {
-        new Assertion<MapOf<Integer, Integer>>(
+        new Assertion<>(
             "Must create a map from map and single key and value",
-            new MapOf<Integer, Integer>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<Integer, Integer>(0, 0)
+            new MapOf<>(
+                new MapOf<>(
+                    new MapEntry<>(0, 0)
                 ),
                 -1, 1
             ),
             new AllOf<>(
-                new HasEntry<>(0,  0),
-                new HasEntry<>(-1,  1)
+                new HasEntry<>(0, 0),
+                new HasEntry<>(-1, 1)
             )
         ).affirm();
     }
@@ -184,17 +184,17 @@ final class MapOfTest {
     @Test
     @SuppressWarnings("unchecked")
     void createsMapFromMapAndMapEntries() {
-        new Assertion<MapOf<Integer, Integer>>(
+        new Assertion<>(
             "Must create a map from map and map entries",
             new MapOf<Integer, Integer>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<Integer, Integer>(0, 0)
+                new MapOf<>(
+                    new MapEntry<>(0, 0)
                 ),
-                new MapEntry<Integer, Integer>(1, 1)
+                new MapEntry<>(1, 1)
             ),
             new AllOf<>(
-                new HasEntry<>(0,  0),
-                new HasEntry<>(1,  1)
+                new HasEntry<>(0, 0),
+                new HasEntry<>(1, 1)
             )
         ).affirm();
     }
@@ -203,10 +203,10 @@ final class MapOfTest {
     void createsMapFromFunctionsAndIterable() {
         new Assertion<>(
             "Must create a map from functions and iterable.",
-            new MapOf<Integer, Integer>(
-                new FuncOf<Integer, Integer>(new Constant<>(0)),
-                new FuncOf<Integer, Integer>(new Constant<>(0)),
-                new IterableOf<Integer>(0)
+            new MapOf<>(
+                new FuncOf<>(new Constant<>(0)),
+                new FuncOf<>(new Constant<>(0)),
+                new IterableOf<>(0)
             ),
             new HasEntry<>(0, 0)
         ).affirm();
@@ -215,19 +215,19 @@ final class MapOfTest {
     @Test
     @SuppressWarnings("unchecked")
     void createsMapFromMapFunctionsAndIterable() {
-        new Assertion<MapOf<Integer, Integer>>(
+        new Assertion<>(
             "Must create a map from map, functions and iterable.",
-            new MapOf<Integer, Integer>(
-                new FuncOf<Integer, Integer>(new Constant<>(0)),
-                new FuncOf<Integer, Integer>(new Constant<>(0)),
-                new MapOf<Integer, Integer>(
-                    new MapEntry<Integer, Integer>(1, 1)
+            new MapOf<>(
+                new FuncOf<>(new Constant<>(0)),
+                new FuncOf<>(new Constant<>(0)),
+                new MapOf<>(
+                    new MapEntry<>(1, 1)
                 ),
                 new IterableOf<>(0)
             ),
             new AllOf<>(
-                new HasEntry<>(0,  0),
-                new HasEntry<>(1,  1)
+                new HasEntry<>(0, 0),
+                new HasEntry<>(1, 1)
             )
         ).affirm();
     }

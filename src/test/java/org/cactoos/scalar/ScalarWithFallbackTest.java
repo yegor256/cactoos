@@ -65,7 +65,7 @@ public final class ScalarWithFallbackTest {
         final String message = "Main function's result #1 (exp & flbck)";
         new Assertion<>(
             "Using the main function if no exception (exp & flbck)",
-            new ScalarWithFallback<String>(
+            new ScalarWithFallback<>(
                 () -> message,
                 new Fallback.From<>(
                     IOException.class,
@@ -81,7 +81,7 @@ public final class ScalarWithFallbackTest {
         final String message = "Main function's result #1 (exp iterable & flbck)";
         new Assertion<>(
             "Using the main function if no exception (exp iterable & flbck)",
-            new ScalarWithFallback<String>(
+            new ScalarWithFallback<>(
                 () -> message,
                 new Fallback.From<>(
                     new IterableOf<>(IOException.class),
@@ -120,7 +120,7 @@ public final class ScalarWithFallbackTest {
         final String message = "Fallback from IOException (exp & flbck)";
         new Assertion<>(
             "Using a single fallback in case of exception (exp & flbck)",
-            new ScalarWithFallback<String>(
+            new ScalarWithFallback<>(
                 () -> {
                     throw new IOException("Failure with IOException (exp & flbck)");
                 },
@@ -138,7 +138,7 @@ public final class ScalarWithFallbackTest {
         final String message = "Fallback from IOException (exp iterable & flbck)";
         new Assertion<>(
             "Using a single fallback in case of exception (exp iterable & flbck)",
-            new ScalarWithFallback<String>(
+            new ScalarWithFallback<>(
                 () -> {
                     throw new IOException("Failure with IOException (exp iterable & flbck)");
                 },

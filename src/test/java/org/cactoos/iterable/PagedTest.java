@@ -57,9 +57,9 @@ final class PagedTest {
             new Paged<>(
                 pages.next(),
                 page -> new Ternary<>(
-                    () -> pages.hasNext(),
-                    () -> pages.next(),
-                    () -> new IterableOf<String>()
+                    pages::hasNext,
+                    pages::next,
+                    (Scalar<Iterable<String>>) IterableOf::new
                 ).value()
             ),
             new IsEqual<>(new Joined<>(first, second, third))
@@ -81,9 +81,9 @@ final class PagedTest {
             new Paged<>(
                 pages.next(),
                 page -> new Ternary<>(
-                    () -> pages.hasNext(),
-                    () -> pages.next(),
-                    () -> new IterableOf<String>()
+                    pages::hasNext,
+                    pages::next,
+                    (Scalar<Iterable<String>>) IterableOf::new
                 ).value()
             ),
             new IsIterableWithSize<>(
@@ -103,13 +103,13 @@ final class PagedTest {
         final Iterator<Iterable<String>> pages = service.iterator();
         new Assertion<Scalar<String>>(
             "must throw an exception when first iterator is empty",
-            new ScalarOf<String>(
+            new ScalarOf<>(
                 () -> new Paged<>(
                     pages.next(),
                     page -> new Ternary<>(
-                        () -> pages.hasNext(),
-                        () -> pages.next(),
-                        () -> new IterableOf<String>()
+                        pages::hasNext,
+                        pages::next,
+                        (Scalar<Iterable<String>>) IterableOf::new
                     ).value()
                 ).iterator().next()
             ),

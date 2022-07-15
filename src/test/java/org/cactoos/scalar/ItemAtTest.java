@@ -57,7 +57,7 @@ final class ItemAtTest {
         new Assertion<>(
             "must fallback to default one",
             new ItemAt<>(
-                1, fallback, new IterableOf<Integer>()
+                1, fallback, new IterableOf<>()
             ),
             new HasValue<>(fallback)
         ).affirm();
@@ -69,7 +69,7 @@ final class ItemAtTest {
             "must take the item by position from the iterable",
             new ItemAt<>(
                 // @checkstyle MagicNumber (1 line)
-                1, 5, new IterableOf<Integer>(0, 1)
+                1, 5, new IterableOf<>(0, 1)
             ),
             new HasValue<>(1)
         ).affirm();

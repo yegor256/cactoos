@@ -156,9 +156,9 @@ final class FilteredTest {
     void filterWithNumberFilter() {
         new Assertion<>(
             "Must be filtered with super type filter",
-            new Filtered<Double>(
+            new Filtered<>(
                 (Number d) -> d.doubleValue() > 0,
-                new IterableOf<Double>(1d, -2d, 3d)
+                new IterableOf<>(1d, -2d, 3d)
             ),
             new HasValues<>(1d, 3d)
         ).affirm();

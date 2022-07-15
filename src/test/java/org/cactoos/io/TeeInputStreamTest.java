@@ -60,8 +60,8 @@ final class TeeInputStreamTest {
                 )
             ).asString(),
             new AllOf<>(
-                new IsEqual<String>(content),
-                new IsEqual<String>(
+                new IsEqual<>(content),
+                new IsEqual<>(
                     new String(baos.toByteArray(), StandardCharsets.UTF_8)
                 )
             )

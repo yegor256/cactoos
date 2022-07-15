@@ -104,7 +104,7 @@ public final class ReducedTest {
         final String three = "Three";
         new Assertion<>(
             "Must concatenate the strings in vararg array",
-            new Reduced<String>(
+            new Reduced<>(
                 (first, last) -> first + last,
                 one,
                 two,

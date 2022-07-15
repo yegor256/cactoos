@@ -95,7 +95,7 @@ public final class IterableOf<X> implements Iterable<X> {
                     () -> Iterable.class.isAssignableFrom(other.getClass()),
                     () -> {
                         final Iterable<X> compared = (Iterable<X>) other;
-                        return new ScalarWithFallback<Boolean>(
+                        return new ScalarWithFallback<>(
                             new And(
                                 (X value) -> true,
                                 new Matched<>(

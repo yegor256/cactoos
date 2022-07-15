@@ -94,7 +94,7 @@ final class AndInThreadsTest {
     void emptyIterable() throws Exception {
         new Assertion<>(
             "Must iterate over empty iterable",
-            new AndInThreads(new IterableOf<Scalar<Boolean>>()),
+            new AndInThreads(new IterableOf<>()),
             new HasValue<>(true)
         ).affirm();
     }
@@ -140,8 +140,8 @@ final class AndInThreadsTest {
         MatcherAssert.assertThat(
             new AndInThreads(
                 new ListOf<Scalar<Boolean>>(
-                    new Constant<Boolean>(true),
-                    new Constant<Boolean>(true)
+                    new Constant<>(true),
+                    new Constant<>(true)
                 )
             ).value(),
             Matchers.equalTo(true)
@@ -193,8 +193,8 @@ final class AndInThreadsTest {
         MatcherAssert.assertThat(
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
-                new Constant<Boolean>(false),
-                new Constant<Boolean>(false)
+                new Constant<>(false),
+                new Constant<>(false)
             ).value(),
             Matchers.equalTo(false)
         );
@@ -206,8 +206,8 @@ final class AndInThreadsTest {
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
                 new ListOf<Scalar<Boolean>>(
-                    new Constant<Boolean>(true),
-                    new Constant<Boolean>(false)
+                    new Constant<>(true),
+                    new Constant<>(false)
                 )
             ).value(),
             Matchers.equalTo(false)
@@ -218,7 +218,7 @@ final class AndInThreadsTest {
     void worksWithEmptyIterableScalarBoolean() throws Exception {
         MatcherAssert.assertThat(
             new AndInThreads(
-                new ListOf<Scalar<Boolean>>()
+                new ListOf<>()
             ).value(),
             Matchers.equalTo(true)
         );

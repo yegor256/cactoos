@@ -61,7 +61,7 @@ public final class
     public RangeOf(final T min, final T max,
         final Func<? super T, ? extends T> incrementor) {
         this.inc = new UncheckedFunc<>(incrementor);
-        this.value = new AtomicReference<T>(min);
+        this.value = new AtomicReference<>(min);
         this.max = max;
     }
 

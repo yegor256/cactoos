@@ -122,7 +122,7 @@ final class FirstOfTest {
     void returnsFirstValueWithScalarFallback() {
         new Assertion<>(
             "Returns first value with scalar fallback",
-            new FirstOf<Integer>(
+            new FirstOf<>(
                 new IterableOfInts(2, 1, 0),
                 () -> -1
             ),
@@ -146,7 +146,7 @@ final class FirstOfTest {
     void returnsFallbackWhenIterableEmpty() {
         new Assertion<>(
             "Returns fallback when iterable empty",
-            new FirstOf<Integer>(
+            new FirstOf<>(
                 new IterableOf<>(),
                 () -> -1
             ),

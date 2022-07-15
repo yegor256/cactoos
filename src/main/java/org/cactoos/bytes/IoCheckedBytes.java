@@ -23,34 +23,31 @@
  */
 package org.cactoos.bytes;
 
+import java.io.IOException;
 import org.cactoos.Bytes;
 import org.cactoos.Fallback;
-import org.cactoos.scalar.ScalarWithFallback;
-import org.cactoos.scalar.Unchecked;
+import org.cactoos.scalar.IoChecked;
 
 /**
- * Bytes that doesn't throw checked {@link Exception}.
+ * Bytes that doesn't throw checked {@link Exception},
+ * but only throws {@link java.io.IOException}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.3
- * @todo #1615:30m Extract fallback logic for Bytes
- *  to a separate class in accordance
- *  to other XXXWithFallback classes.
- *  Leave only basic exception handling in this class.
+ * @since 0.52
  */
-public final class UncheckedBytes implements Bytes {
+public final class IoCheckedBytes implements Bytes {
 
     /**
      * Scalar with fallback.
      */
-    private final Unchecked<byte[]> scalar;
+    private final IoChecked<byte[]> scalar;
 
     /**
      * Ctor.
      * @param bts Encapsulated bytes
      */
-    public UncheckedBytes(final Bytes bts) {
+    public IoCheckedBytes(final Bytes bts) {
         this(bts, new Fallback.None<>());
     }
 
@@ -60,15 +57,26 @@ public final class UncheckedBytes implements Bytes {
      * @param fbk Fallback
      * @since 0.5
      */
-    @SuppressWarnings("unchecked")
-    public UncheckedBytes(final Bytes bts, final Fallback<byte[]> fbk) {
-        this.scalar = new Unchecked<>(
-            new ScalarWithFallback<>(bts::asBytes, fbk)
+    @SuppressWarnings({"unchecked", "PMD.AvoidRethrowingException", "PMD.AvoidCatchingThrowable"})
+    public IoCheckedBytes(final Bytes bts, final Fallback<byte[]> fbk) {
+        this.scalar = new IoChecked<>(
+            () -> {
+                byte[] ret;
+                try {
+                    ret = bts.asBytes();
+                } catch (final IOException ex) {
+                    throw ex;
+                // @checkstyle IllegalCatchCheck (1 line)
+                } catch (final Throwable ex) {
+                    ret = fbk.apply(ex);
+                }
+                return ret;
+            }
         );
     }
 
     @Override
-    public byte[] asBytes() {
+    public byte[] asBytes() throws IOException {
         return this.scalar.value();
     }
 

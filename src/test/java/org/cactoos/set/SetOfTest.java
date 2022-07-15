@@ -45,7 +45,7 @@ final class SetOfTest {
     @Test
     @SuppressWarnings("unchecked")
     void behaveAsSetWithOriginalDuplicationsInTheTail() {
-        new Assertion<SetOf<Integer>>(
+        new Assertion<>(
             "Must keep unique integer numbers",
             new SetOf<>(1, 2, 2),
             new AllOf<>(
@@ -58,7 +58,7 @@ final class SetOfTest {
     @Test
     @SuppressWarnings("unchecked")
     void behaveAsSetWithOriginalDuplicationsInTheHead() {
-        new Assertion<SetOf<Integer>>(
+        new Assertion<>(
             "Must keep unique integer numbers",
             new SetOf<>(1, 1, 2, 3),
             new AllOf<>(
@@ -71,7 +71,7 @@ final class SetOfTest {
     @Test
     @SuppressWarnings("unchecked")
     void behaveAsSetWithOriginalDuplicationsInTheMiddle() {
-        new Assertion<SetOf<Integer>>(
+        new Assertion<>(
             "Must keep unique integer numbers",
             new SetOf<>(1, 2, 2, 3),
             new AllOf<>(
@@ -84,9 +84,9 @@ final class SetOfTest {
     @Test
     @SuppressWarnings("unchecked")
     void behaveAsSetMergedCollectionsOfLiteralsWithDuplicates() {
-        new Assertion<SetOf<String>>(
+        new Assertion<>(
             "Must keep unique string literals",
-            new SetOf<String>(
+            new SetOf<>(
                 new Joined<String>(
                     new IterableOf<>("cc", "ff"),
                     new IterableOf<>("aa", "bb", "cc", "dd")
@@ -102,7 +102,7 @@ final class SetOfTest {
     @Test
     @SuppressWarnings("unchecked")
     void behaveAsSetWithOriginalDuplicationsOfCharsInTheMiddle() {
-        new Assertion<SetOf<Character>>(
+        new Assertion<>(
             "Must keep unique characters",
             new SetOf<>('a', 'b', 'b', 'c', 'a', 'b', 'd'),
             new AllOf<>(
@@ -115,7 +115,7 @@ final class SetOfTest {
     @Test
     @SuppressWarnings("unchecked")
     void behaveAsSetWithOriginalDuplicationsOfDoublesInTheMiddle() {
-        new Assertion<SetOf<Double>>(
+        new Assertion<>(
             "Must keep unique double numbers",
             new SetOf<>(1.5d, 2.4d, 1.5d, 2.4d, 2.4d, 1.5d),
             new AllOf<>(

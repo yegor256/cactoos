@@ -139,7 +139,7 @@ public final class LoggingOutputTest {
             "Must log write and close operations to text file",
             logger.toString(),
             new AllOf<>(
-                new IsNot<String>(
+                new IsNot<>(
                     new StringContains(
                         "Written 16384 byte(s) to text file"
                     )

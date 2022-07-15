@@ -59,14 +59,14 @@ final class PagedTest {
         final Paged<String> paged = new Paged<>(
             pages.next(),
             page -> new Ternary<>(
-                () -> pages.hasNext(),
-                () -> pages.next(),
+                pages::hasNext,
+                pages::next,
                 () -> new IteratorOf<String>()
             ).value()
         );
         new Assertion<>(
             "must have all page values in order",
-            new ScalarWithFallback<Boolean>(
+            new ScalarWithFallback<>(
                 new And(
                     value -> {
                         value.forEachRemaining(m -> { });
@@ -124,7 +124,7 @@ final class PagedTest {
         final Iterator<Iterator<String>> pages = new IteratorOf<>();
         new Assertion<Scalar<String>>(
             "must throw an exception when first iterator is empty",
-            new ScalarOf<String>(
+            new ScalarOf<>(
                 () -> new Paged<>(
                     pages.next(),
                     page -> new Ternary<>(

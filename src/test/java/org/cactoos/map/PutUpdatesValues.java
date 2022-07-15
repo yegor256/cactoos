@@ -65,7 +65,7 @@ public final class PutUpdatesValues<K, V> extends
         MatcherAssert.assertThat(
             "Can't behave as a map after put",
             map,
-            new BehavesAsMap<K, V>(this.key, this.value)
+            new BehavesAsMap<>(this.key, this.value)
         );
         return true;
     }

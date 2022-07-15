@@ -70,7 +70,7 @@ public final class NoNulls<X> implements Collection<X> {
 
     @Override
     public Iterator<X> iterator() {
-        return new org.cactoos.iterator.NoNulls<X>(this.col.iterator());
+        return new org.cactoos.iterator.NoNulls<>(this.col.iterator());
     }
 
     @Override

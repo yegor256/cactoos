@@ -81,7 +81,7 @@ public final class BehavesAsList<E> extends TypeSafeMatcher<List<E>>  {
             list.subList(0, 1).iterator().hasNext(),
             new IsTrue()
         ).affirm();
-        return new BehavesAsCollection<E>(this.sample).matchesSafely(list);
+        return new BehavesAsCollection<>(this.sample).matchesSafely(list);
     }
 
     @Override

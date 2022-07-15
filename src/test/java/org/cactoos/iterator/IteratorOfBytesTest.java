@@ -53,7 +53,7 @@ public final class IteratorOfBytesTest {
                 itr.next(),
                 itr.hasNext()
             ),
-            new HasValues<Object>(
+            new HasValues<>(
                 (byte) 'F', false
             )
         ).affirm();
@@ -72,7 +72,7 @@ public final class IteratorOfBytesTest {
                 itr.next(),
                 itr.hasNext()
             ),
-            new HasValues<Object>(
+            new HasValues<>(
                 (byte) 'A', (byte) 'B', (byte) 'C', false
             )
         ).affirm();

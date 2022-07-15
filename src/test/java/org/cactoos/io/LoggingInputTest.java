@@ -26,7 +26,6 @@ package org.cactoos.io;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.cactoos.Text;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
@@ -116,7 +115,7 @@ final class LoggingInputTest {
             "Must log 74536 bytes read from text file",
             new TextOf(logger.toString()),
             new AllOf<>(
-                new IsNot<Text>(
+                new IsNot<>(
                     new HasString("Read 16384 byte(s) from text file")
                 ),
                 new HasString("Read 74536 byte(s) from text file in"),

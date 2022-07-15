@@ -96,7 +96,7 @@ public final class ItemAt<T> implements Scalar<T> {
         final Func<? super Iterable<? extends T>, ? extends T> fallback,
         final Iterable<? extends T> iterable
     ) {
-        this.saved = new Sticky<T>(
+        this.saved = new Sticky<>(
             () -> {
                 final T ret;
                 if (position < 0) {

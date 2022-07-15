@@ -47,7 +47,7 @@ public final class FuncWithFallbackTest {
         final String expected = "It's success";
         new Assertion<>(
             "Can't use the main function if no exception",
-            new FuncWithFallback<Integer, String>(
+            new FuncWithFallback<>(
                 input -> expected,
                 new Fallback.From<>(
                     Exception.class,
@@ -63,7 +63,7 @@ public final class FuncWithFallbackTest {
         final String expected = "Never mind";
         new Assertion<>(
             "Can't use the callback in case of exception",
-            new FuncWithFallback<Integer, String>(
+            new FuncWithFallback<>(
                 input -> {
                     throw new IOException("Failure");
                 },
@@ -78,7 +78,7 @@ public final class FuncWithFallbackTest {
         final String expected = "Fallback from InterruptedException";
         new Assertion<>(
             "Can't use a fallback from Interrupted in case of exception",
-            new FuncWithFallback<Integer, String>(
+            new FuncWithFallback<>(
                 input -> {
                     throw new InterruptedException(
                         "Failure with InterruptedException"
