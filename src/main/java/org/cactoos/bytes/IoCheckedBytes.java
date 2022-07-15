@@ -30,7 +30,7 @@ import org.cactoos.scalar.IoChecked;
 
 /**
  * Bytes that doesn't throw checked {@link Exception},
- * but only throws {@link java.io.IOException}.
+ * but only throws {@link IOException}.
  *
  * <p>There is no thread-safety guarantee.
  *

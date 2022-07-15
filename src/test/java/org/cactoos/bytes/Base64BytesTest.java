@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
- * Test case for {@link org.cactoos.bytes.Base64Bytes}.
+ * Test case for {@link Base64Bytes}.
  *
  * @since 0.20.2
  * @checkstyle JavadocMethodCheck (500 lines)

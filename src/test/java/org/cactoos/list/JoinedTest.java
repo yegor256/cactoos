@@ -34,7 +34,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
- * Test case for {@link org.cactoos.list.Joined}.
+ * Test case for {@link Joined}.
  *
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)

@@ -59,7 +59,7 @@ public final class Replaced extends TextEnvelope {
      * Ctor.
      * <p>
      * The given {@link Pattern regex} is used to produce a
-     * {@link Pattern#matcher(java.lang.CharSequence) matcher} that will be
+     * {@link Pattern#matcher(CharSequence) matcher} that will be
      * transformed by {@code func} into a replacement string to replace each
      * {@link Matcher#find() matching} substring.
      * <p>

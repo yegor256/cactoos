@@ -28,8 +28,8 @@ import org.cactoos.Proc;
 import org.cactoos.scalar.AndWithIndex;
 
 /**
- * Executes a {@link org.cactoos.BiProc} for each element of an
- * {@link java.lang.Iterable}
+ * Executes a {@link BiProc} for each element of an
+ * {@link Iterable}
  *
  * <p>
  * This class can be effectively used to iterate through a collection similar to how

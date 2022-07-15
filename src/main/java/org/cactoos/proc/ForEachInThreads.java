@@ -28,8 +28,8 @@ import org.cactoos.func.FuncOf;
 import org.cactoos.scalar.AndInThreads;
 
 /**
- * Executes a {@link org.cactoos.Proc} in a new Thread for each element of an
- * {@link java.lang.Iterable}
+ * Executes a {@link Proc} in a new Thread for each element of an
+ * {@link Iterable}
  *
  * <p>
  * This class can be effectively used to iterate through a collection, just like

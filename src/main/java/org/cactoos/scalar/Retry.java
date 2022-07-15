@@ -81,7 +81,7 @@ public final class Retry<T> implements Scalar<T> {
     /**
      * Ctor.
      * @param scalar Scalar original
-     * @param wait The {@link java.time.Duration} to wait between attempts
+     * @param wait The {@link Duration} to wait between attempts
      */
     public Retry(final Scalar<? extends T> scalar, final Duration wait) {
         // @checkstyle MagicNumberCheck (1 line)
@@ -101,7 +101,7 @@ public final class Retry<T> implements Scalar<T> {
      * Ctor.
      * @param scalar Scalar original
      * @param attempts Maximum number of attempts
-     * @param wait The {@link java.time.Duration} to wait between attempts
+     * @param wait The {@link Duration} to wait between attempts
      */
     public Retry(final Scalar<? extends T> scalar, final int attempts,
         final Duration wait) {
@@ -122,7 +122,7 @@ public final class Retry<T> implements Scalar<T> {
      * Ctor.
      * @param scalar Func original
      * @param exit Exit condition, returns TRUE if there is no reason to try
-     * @param wait The {@link java.time.Duration} to wait between attempts
+     * @param wait The {@link Duration} to wait between attempts
      */
     public Retry(final Scalar<? extends T> scalar,
         final Func<Integer, Boolean> exit, final Duration wait) {

@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.cactoos.Func;
 import org.cactoos.Text;
 import org.cactoos.func.UncheckedFunc;
@@ -102,7 +103,7 @@ public final class UncheckedText implements Text {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    @SuppressFBWarnings("EQ_UNUSUAL")
     public boolean equals(final Object obj) {
         return new Unchecked<>(
             new Or(

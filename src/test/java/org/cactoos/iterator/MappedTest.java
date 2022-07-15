@@ -32,7 +32,7 @@ import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
- * Tests for {@link org.cactoos.iterator.Mapped}.
+ * Tests for {@link Mapped}.
  *
  * @since 0.47
  */

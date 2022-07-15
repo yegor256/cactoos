@@ -28,8 +28,8 @@ import org.cactoos.func.FuncOf;
 import org.cactoos.scalar.And;
 
 /**
- * Executes a {@link org.cactoos.Proc} for each element of an
- * {@link java.lang.Iterable}
+ * Executes a {@link Proc} for each element of an
+ * {@link Iterable}
  *
  * <p>
  * This class can be effectively used to iterate through a collection, just like

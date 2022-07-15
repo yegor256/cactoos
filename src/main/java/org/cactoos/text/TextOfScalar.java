@@ -23,6 +23,7 @@
  */
 package org.cactoos.text;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.scalar.And;
@@ -68,7 +69,7 @@ public final class TextOfScalar implements Text {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EQ_UNUSUAL")
+    @SuppressFBWarnings("EQ_UNUSUAL")
     public boolean equals(final Object obj) {
         return new Unchecked<>(
             new Or(

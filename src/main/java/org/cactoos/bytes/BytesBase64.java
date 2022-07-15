@@ -45,7 +45,7 @@ public final class BytesBase64 implements Bytes {
     private final Base64.Encoder encoder;
 
     /**
-     * Ctor uses a RFC4648 {@link java.util.Base64.Encoder}.
+     * Ctor uses a RFC4648 {@link Base64.Encoder}.
      *
      * @param origin Origin bytes.
      */

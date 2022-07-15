@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
- * Test case for {@link org.cactoos.io.GzipInput}.
+ * Test case for {@link GzipInput}.
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
