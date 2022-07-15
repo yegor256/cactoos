@@ -47,7 +47,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
     /**
      * {@link List} of {@link ListIterator}.
      */
-    private final List<ListIterator<? extends T>> listiters;
+    private final List<? extends ListIterator<? extends T>> listiters;
 
     /**
      * Cursor of the {@link List} of {@link ListIterator}.
@@ -92,7 +92,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
      * Ctor.
      * @param items Items to concatenate
      */
-    public JoinedListIterator(final List<ListIterator<? extends T>> items) {
+    public JoinedListIterator(final List<? extends ListIterator<? extends T>> items) {
         this.listiters = items;
         this.cursorlit = new AtomicInteger(-1);
         this.cursor = new AtomicInteger(-1);
