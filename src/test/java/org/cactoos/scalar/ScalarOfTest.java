@@ -93,9 +93,7 @@ final class ScalarOfTest {
             "Must convert Proc into Scalar",
             new ScalarOf<>(
                 new ProcOf<>(
-                    input -> {
-                        done.set(input);
-                    }
+                    done::set
                 ),
                 ipt,
                 result

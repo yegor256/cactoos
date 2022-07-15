@@ -43,7 +43,7 @@ final class FoldedTest {
         new Assertion<>(
             "Must fold elements in iterable",
             new Folded<>(
-                0L, (first, second) -> first + second,
+                0L, Long::sum,
                 new HeadOf<>(
                     10,
                     new RangeOf<>(0L, Long.MAX_VALUE, value -> ++value)

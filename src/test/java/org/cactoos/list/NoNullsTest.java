@@ -135,7 +135,7 @@ final class NoNullsTest {
         list.set(0, null);
         new Assertion<>(
             "must throw error if previous value in iterator is null",
-            () -> listiterator.previous(),
+            listiterator::previous,
             new Throws<>(
                 "Previous item is NULL",
                 IllegalStateException.class

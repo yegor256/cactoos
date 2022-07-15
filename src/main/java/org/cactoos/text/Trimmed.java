@@ -40,6 +40,6 @@ public final class Trimmed extends TextEnvelope {
      * @param text The text
      */
     public Trimmed(final Text text) {
-        super(new Mapped(str -> str.trim(), text));
+        super(new Mapped(String::trim, text));
     }
 }

@@ -44,9 +44,7 @@ final class FuncOfTest {
             "Must convert Proc into Func",
             new FuncOf<>(
                 new ProcOf<>(
-                    input -> {
-                        done.set(input);
-                    }
+                    done::set
                 ),
                 result
             ),

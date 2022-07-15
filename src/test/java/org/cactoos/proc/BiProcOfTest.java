@@ -88,9 +88,7 @@ final class BiProcOfTest {
             "Must execute BiProc with Proc",
             new BiProcOf<>(
                 new ProcOf<>(
-                    input -> {
-                        done.set(input);
-                    }
+                    done::set
                 )
             ),
             new Satisfies<>(

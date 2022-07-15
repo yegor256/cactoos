@@ -44,7 +44,7 @@ final class RepeatedTest {
         new Assertion<>(
             "Must run scalar 3 times",
             new Repeated<>(
-                () -> atom.incrementAndGet(),
+                atom::incrementAndGet,
                 3
             ).value(),
             new IsEqual<>(3)

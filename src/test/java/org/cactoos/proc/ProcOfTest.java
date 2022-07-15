@@ -64,9 +64,7 @@ final class ProcOfTest {
         new Assertion<>(
             "Must execute Proc with Lambda",
             new ProcOf<>(
-                input -> {
-                    done.set(input);
-                }
+                done::set
             ),
             new Satisfies<>(
                 proc -> {

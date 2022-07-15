@@ -65,7 +65,7 @@ public final class LoggingOutputTest {
             new TeeInput(
                 new InputOf(""),
                 new LoggingOutput(
-                    () -> new ByteArrayOutputStream(),
+                    ByteArrayOutputStream::new,
                     "memory",
                     logger
                 )

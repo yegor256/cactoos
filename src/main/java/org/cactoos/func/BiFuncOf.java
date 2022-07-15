@@ -91,9 +91,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnveloppe<X, Y, Z> {
      */
     public BiFuncOf(final BiFunc<X, Y, Z> fnc) {
         super(
-            (first, second) -> {
-                return fnc.apply(first, second);
-            }
+            fnc::apply
         );
     }
 }

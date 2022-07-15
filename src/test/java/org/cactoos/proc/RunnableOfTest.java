@@ -44,9 +44,7 @@ final class RunnableOfTest {
             "Must execute Runnable with Proc",
             new RunnableOf(
                 new ProcOf<>(
-                    input -> {
-                        done.set(input);
-                    }
+                    done::set
                 ),
                 obj
             ),

@@ -66,9 +66,7 @@ final class BiFuncOfTest {
             "Must convert procedure into bi-function",
             new BiFuncOf<>(
                 new ProcOf<>(
-                    input -> {
-                        done.set(input);
-                    }
+                    done::set
                 ),
                 result
             ),

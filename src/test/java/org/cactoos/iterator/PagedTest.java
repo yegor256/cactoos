@@ -73,7 +73,7 @@ final class PagedTest {
                         return true;
                     },
                     new Matched<>(
-                        (x, y) -> x.equals(y),
+                        String::equals,
                         paged,
                         new IteratorOf<>("one", "two", "three", "four", "five")
                     )
@@ -101,8 +101,8 @@ final class PagedTest {
         final Paged<String> paged = new Paged<>(
             pages.next(),
             page -> new Ternary<>(
-                () -> pages.hasNext(),
-                () -> pages.next(),
+                pages::hasNext,
+                pages::next,
                 () -> new IteratorOf<String>()
             ).value()
         );
@@ -128,8 +128,8 @@ final class PagedTest {
                 () -> new Paged<>(
                     pages.next(),
                     page -> new Ternary<>(
-                        () -> pages.hasNext(),
-                        () -> pages.next(),
+                        pages::hasNext,
+                        pages::next,
                         () -> new IteratorOf<String>()
                     ).value()
                 ).next()

@@ -65,9 +65,9 @@ public final class Joined implements Input {
     @Override
     public InputStream stream() throws Exception {
         return new Reduced<InputStream>(
-            (left, right) -> new SequenceInputStream(left, right),
+            SequenceInputStream::new,
             new Mapped<>(
-                input -> () -> input.stream(),
+                input -> input::stream,
                 this.inputs
             )
         ).value();

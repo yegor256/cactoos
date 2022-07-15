@@ -50,6 +50,6 @@ public final class CallableOf<T> extends CallableEnvelope<T> {
      * @since 0.41
      */
     public CallableOf(final Scalar<? extends T> slr) {
-        super(() -> slr.value());
+        super(slr::value);
     }
 }

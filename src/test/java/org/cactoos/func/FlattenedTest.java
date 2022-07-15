@@ -39,7 +39,7 @@ final class FlattenedTest {
         new Assertion<>(
             "must flatten",
             new Flattened<>(
-                new FuncOf<>(x -> new BoolOf(x))
+                new FuncOf<>(BoolOf::new)
             ),
             new IsApplicable<>("true", true)
         ).affirm();
