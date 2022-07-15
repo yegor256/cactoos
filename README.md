@@ -1,7 +1,6 @@
-<img src="http://cf.jare.io/?u=http%3A%2F%2Fwww.yegor256.com%2Fimages%2Fbooks%2Felegant-objects%2Fcactus.svg" height="100px" />
+<img alt="logo" src="https://www.objectionary.com/cactus.svg" height="100px" />
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
-[![Managed by Zerocracy](https://www.0crat.com/badge/C63314D6Z.svg)](https://www.0crat.com/p/C63314D6Z)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/cactoos)](http://www.rultor.com/p/yegor256/cactoos)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
@@ -11,10 +10,10 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.cactoos/cactoos.svg)](https://maven-badges.herokuapp.com/maven-central/org.cactoos/cactoos)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/cactoos/blob/master/LICENSE.txt)
 
-[![jpeek report](https://i.jpeek.org/org.cactoos/cactoos/badge.svg)](https://i.jpeek.org/org.cactoos/cactoos/)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg)](https://codecov.io/github/yegor256/cactoos?branch=master)
 [![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.cactoos%3Acactoos)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/cactoos)](https://hitsofcode.com/view/github/yegor256/cactoos)
+![Lines of code](https://img.shields.io/tokei/lines/github/yegor256/cactoos)
 
 Project architect: [@victornoel](https://github.com/victornoel)
 
