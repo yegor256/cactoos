@@ -46,7 +46,7 @@ final class SolidBiFuncTest {
         final BiFunc<Integer, Integer, Boolean> testable =
             new SolidBiFunc<>(
                 (first, second) -> {
-                    shared[0] = shared[0] + 1;
+                    shared[0] += 1;
                     return true;
                 }
             );

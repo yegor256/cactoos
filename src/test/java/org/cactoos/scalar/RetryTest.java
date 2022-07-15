@@ -122,8 +122,7 @@ final class RetryTest {
             Integer.MAX_VALUE,
             Duration.ofMillis(wait)
         ).value();
-        for (int position = 0; position < executions.size() - 1; position =
-            position + 1) {
+        for (int position = 0; position < executions.size() - 1; position += 1) {
             final int actual = position;
             new Assertion<>(
                 "Should wait the given time between attempts",

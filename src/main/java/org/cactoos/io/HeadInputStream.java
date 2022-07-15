@@ -67,7 +67,7 @@ public final class HeadInputStream extends InputStream {
         if (this.processed >= this.length) {
             adjusted = -1;
         } else {
-            this.processed = this.processed + 1;
+            this.processed += 1;
             adjusted = this.origin.read();
         }
         return adjusted;
@@ -82,7 +82,7 @@ public final class HeadInputStream extends InputStream {
             adjusted = skip;
         }
         final long skipped = this.origin.skip(adjusted);
-        this.processed = this.processed + skipped;
+        this.processed += skipped;
         return skipped;
     }
 

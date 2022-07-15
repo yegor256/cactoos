@@ -49,7 +49,7 @@ public final class TrimmedLeft extends TextEnvelope {
                             string.charAt(cursor)
                         )
                     ) {
-                        cursor = cursor + 1;
+                        cursor += 1;
                     }
                     return string.substring(cursor);
                 },

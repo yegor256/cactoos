@@ -74,7 +74,7 @@ public final class AvgOf extends NumberEnvelope {
                         BigDecimal total = BigDecimal.ZERO;
                         long qty = 0;
                         for (final Number value: new IterableOf<>(it)) {
-                            qty = qty + 1;
+                            qty += 1;
                             total = total.add(
                                 new BigDecimal(value.toString())
                             );
