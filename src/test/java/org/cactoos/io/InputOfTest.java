@@ -133,7 +133,7 @@ final class InputOfTest {
     }
 
     @Test
-    void readsRealUrl() throws IOException {
+    void readsRealUrl() throws Exception {
         new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
             home -> new Assertion<>(
                 "must fetch bytes from the URL",
