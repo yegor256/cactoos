@@ -40,7 +40,6 @@ public final class BinaryTest {
 
     @Test
     public void conditionTrue() {
-        final int expected = 1;
         final AtomicInteger counter = new AtomicInteger(0);
         final Binary binary = new Binary(
             new True(),
@@ -51,6 +50,7 @@ public final class BinaryTest {
             binary,
             new HasValue<>(true)
         ).affirm();
+        final int expected = 1;
         new Assertion<>(
             "Binary has to invoke increment method",
             counter.get(),
@@ -60,7 +60,6 @@ public final class BinaryTest {
 
     @Test
     public void conditionFalse() {
-        final int expected = 0;
         final AtomicInteger counter = new AtomicInteger(0);
         final Binary binary = new Binary(
             new False(),
@@ -71,6 +70,7 @@ public final class BinaryTest {
             binary,
             new HasValue<>(false)
         ).affirm();
+        final int expected = 0;
         new Assertion<>(
             "Binary must not to invoke increment method",
             counter.get(),

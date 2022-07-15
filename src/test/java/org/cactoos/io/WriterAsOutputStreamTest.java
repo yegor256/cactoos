@@ -110,11 +110,11 @@ public final class WriterAsOutputStreamTest {
     @Test
     public void writesToFileAndRemovesIt() throws Exception {
         final Path temp = this.folder.newFile().toPath();
-        final String content = "Hello, товарищ! How are you?";
         try (OutputStreamWriter writer = new OutputStreamWriter(
             Files.newOutputStream(temp.toAbsolutePath()),
             StandardCharsets.UTF_8
         )) {
+            final String content = "Hello, товарищ! How are you?";
             new LengthOf(
                 new TeeInput(
                     new InputOf(content),

@@ -55,7 +55,6 @@ public final class TimedFuncTest {
     @Test
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void futureTaskIsCancelled() {
-        final long period = 50L;
         final long time = 2000L;
         final Future<Boolean> future = Executors.newSingleThreadExecutor()
             .submit(
@@ -65,6 +64,7 @@ public final class TimedFuncTest {
                 }
             );
         try {
+            final long period = 50L;
             new Timed<Boolean, Boolean>(
                 period,
                 input -> future

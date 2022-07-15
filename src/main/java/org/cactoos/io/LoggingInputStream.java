@@ -141,9 +141,9 @@ public final class LoggingInputStream extends InputStream {
         final Instant start = Instant.now();
         final int byts = this.origin.read(buf, offset, len);
         final Instant end = Instant.now();
-        final long millis = Duration.between(start, end).toMillis();
         if (byts > 0) {
             this.bytes.getAndAdd(byts);
+            final long millis = Duration.between(start, end).toMillis();
             this.time.getAndAdd(millis);
         }
         final UncheckedText msg = new UncheckedText(

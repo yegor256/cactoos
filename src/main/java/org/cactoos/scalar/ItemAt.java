@@ -98,7 +98,6 @@ public final class ItemAt<T> implements Scalar<T> {
     ) {
         this.saved = new Sticky<>(
             () -> {
-                final T ret;
                 if (position < 0) {
                     throw new IOException(
                         new FormattedText(
@@ -112,6 +111,7 @@ public final class ItemAt<T> implements Scalar<T> {
                 for (cur = 0; cur < position && src.hasNext(); ++cur) {
                     src.next();
                 }
+                final T ret;
                 if (cur == position && src.hasNext()) {
                     ret = src.next();
                 } else {

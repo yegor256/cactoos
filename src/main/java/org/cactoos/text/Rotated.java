@@ -42,11 +42,11 @@ public final class Rotated extends TextEnvelope {
                 origin -> {
                     final int length = origin.length();
                     if (length != 0 && shift != 0 && shift % length != 0) {
-                        final StringBuilder builder = new StringBuilder(length);
                         int offset = -(shift % length);
                         if (offset < 0) {
                             offset = origin.length() + offset;
                         }
+                        final StringBuilder builder = new StringBuilder(length);
                         origin = builder.append(
                             origin.substring(offset)
                         ).append(
