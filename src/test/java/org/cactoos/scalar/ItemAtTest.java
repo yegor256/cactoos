@@ -52,6 +52,7 @@ final class ItemAtTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void elementByPosFallbackIterableTest() {
         final int fallback = 5;
         new Assertion<>(
@@ -64,6 +65,7 @@ final class ItemAtTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void elementByPosNoFallbackIterableTest() {
         new Assertion<>(
             "must take the item by position from the iterable",
