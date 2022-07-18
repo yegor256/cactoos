@@ -59,6 +59,8 @@ Java version required: 1.8+.
 
 StackOverflow tag is [cactoos](https://stackoverflow.com/questions/tagged/cactoos).
 
+**Note:** please, don't forget to update `cactoos` version in your libraries, cause newer versions may break backwards compatibility and projects with newer version of `cactoos` may fail to even compile with your library then (due to Maven uses the newest version only for the whole compile context).
+
 ## Input/Output
 
 More about it here:
