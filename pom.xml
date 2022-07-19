@@ -123,7 +123,7 @@ SOFTWARE.
       </exclusions>
     </dependency>
     <!--
-     @todo #1453:30min Continue migration of tests to JUnit 5. Junit 4 Rule
+     @todo #1586:30min Continue migration of tests to JUnit 5. Junit 4 Rule
       should be replaced with a Jupiter counterpart. `@Text(expected=..)`
       with `Throws`. After that remove this dependencies.
     -->
