@@ -46,7 +46,7 @@ final class JoinedListIteratorTest {
         new Assertion<>(
             "Must concatenate iterable of listIterators together",
             new IterableOf<>(
-                new JoinedListIterator<>(
+                new JoinedListIterator<String>(
                     new ListOf<>("x").listIterator(),
                     new ListOf<>("y").listIterator()
                 )
@@ -60,7 +60,8 @@ final class JoinedListIteratorTest {
     void navigatesInNonEmptyIterator() {
         final ListIterator<Integer> joined = new JoinedListIterator<>(
             new ListOf<>(1).listIterator(),
-            new ListOf<>(2).listIterator()
+            new ListOf<>(2).listIterator(),
+            new ListOf<>(3).listIterator()
         );
         new Assertion<>(
             "Must call next method directly on non-empty listIterator for the first time",
