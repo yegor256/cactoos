@@ -13,6 +13,7 @@
 [![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.cactoos%3Acactoos)
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/cactoos)](https://hitsofcode.com/view/github/yegor256/cactoos)
 ![Lines of code](https://img.shields.io/tokei/lines/github/yegor256/cactoos)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/dc71110fe0ac43b8a535eec8b8fec389)](https://www.codacy.com/gh/yegor256/cactoos/dashboard)
 
 Project architect: [@victornoel](https://github.com/victornoel)
 
