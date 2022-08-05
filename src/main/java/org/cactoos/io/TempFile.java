@@ -53,7 +53,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
     /**
      * Creates the temporary file, returning its path.
      */
-    private final Scalar<? extends Path> file;
+    private final Scalar<Path> file;
 
     /**
      * Ctor.
@@ -109,7 +109,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
      * @since 1.0
      */
     public TempFile(
-        final Scalar<? extends Path> dir,
+        final Scalar<Path> dir,
         final String prefix,
         final String suffix) {
         this(
@@ -127,7 +127,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
      * @since 1.0
      */
     public TempFile(
-        final Scalar<? extends Path> dir,
+        final Scalar<Path> dir,
         final Text prefix,
         final Text suffix) {
         this(
@@ -146,7 +146,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
      * @param fullpath Creates the file and returns the path to it
      * @since 1.0
      */
-    private TempFile(final Scalar<? extends Path> fullpath) {
+    private TempFile(final Scalar<Path> fullpath) {
         this.file = fullpath;
     }
 

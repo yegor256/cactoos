@@ -54,7 +54,7 @@ public final class ResourceOf implements Input {
     /**
      * Fallback.
      */
-    private final Func<? super Text, ? extends Input> fallback;
+    private final Func<Text, Input> fallback;
 
     /**
      * Resource class loader.
@@ -96,7 +96,7 @@ public final class ResourceOf implements Input {
      * @since 0.49
      */
     public ResourceOf(final CharSequence res,
-        final Func<? super CharSequence, ? extends Input> fbk, final Class<?> cls) {
+        final Func<CharSequence, Input> fbk, final Class<?> cls) {
         this(res, fbk, cls.getClassLoader());
     }
 
@@ -107,7 +107,7 @@ public final class ResourceOf implements Input {
      * @param ldr Resource class loader
      */
     public ResourceOf(final CharSequence res,
-        final Func<? super CharSequence, ? extends Input> fbk, final ClassLoader ldr) {
+        final Func<CharSequence, Input> fbk, final ClassLoader ldr) {
         this(new TextOf(res), input -> fbk.apply(input.asString()), ldr);
     }
 
@@ -192,7 +192,7 @@ public final class ResourceOf implements Input {
      * @param fbk Fallback
      */
     public ResourceOf(final Text res,
-        final Func<? super Text, ? extends Input> fbk) {
+        final Func<Text, Input> fbk) {
         this(res, fbk, Thread.currentThread().getContextClassLoader());
     }
 
@@ -203,7 +203,7 @@ public final class ResourceOf implements Input {
      * @param ldr Resource class loader
      */
     public ResourceOf(final Text res,
-        final Func<? super Text, ? extends Input> fbk, final ClassLoader ldr) {
+        final Func<Text, Input> fbk, final ClassLoader ldr) {
         this.path = res;
         this.loader = ldr;
         this.fallback = fbk;
