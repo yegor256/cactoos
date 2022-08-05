@@ -26,9 +26,13 @@ package org.cactoos.io;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -68,6 +72,34 @@ public final class ZipTest {
                 cnt,
                 // @checkstyle MagicNumber (1 line)
                 new IsEqual<>(4)
+            ).affirm();
+        }
+    }
+
+    @Test
+    public void zipsArbitraryFileList() throws Exception {
+        this.folder.newFolder("dir1");
+        this.folder.newFolder("dir2");
+        this.folder.newFile("file0");
+        final Path file1 = this.folder.newFile("dir1/file1.txt").toPath();
+        final Path file2 = this.folder.newFile("dir1/file2.txt").toPath();
+        try (ZipInputStream input = new ZipInputStream(
+            new Zip(
+                new IterableOf<>(file1, file2)
+            ).stream()
+        )) {
+            ZipEntry entry = input.getNextEntry();
+            List<String> zipEntries = new ArrayList<>();
+            while (entry != null) {
+                zipEntries.add(entry.getName());
+                entry = input.getNextEntry();
+            }
+            new Assertion<>(
+                "Can't zip files in different directories",
+                zipEntries,
+                IsIterableContainingInAnyOrder.containsInAnyOrder(
+                    file1.toString(), file2.toString()
+                )
             ).affirm();
         }
     }
