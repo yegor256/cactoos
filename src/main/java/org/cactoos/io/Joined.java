@@ -38,13 +38,13 @@ public final class Joined implements Input {
     /**
      * The inputs.
      */
-    private final Iterable<Input> inputs;
+    private final Iterable<? extends Input> inputs;
 
     /**
      * Ctor.
      * @param ipts Iterable of inputs
      */
-    public Joined(final Iterable<Input> ipts) {
+    public Joined(final Iterable<? extends Input> ipts) {
         this.inputs = ipts;
     }
 

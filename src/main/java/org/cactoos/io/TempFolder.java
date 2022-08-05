@@ -57,7 +57,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
     /**
      * Creates the temporary folder, returning its path.
      */
-    private final Scalar<Path> folder;
+    private final Scalar<? extends Path> folder;
 
     /**
      * Ctor.
@@ -122,7 +122,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
      * @param flr Creates the folder and returns the path to it
      * @since 1.0
      */
-    private TempFolder(final Scalar<Path> flr) {
+    private TempFolder(final Scalar<? extends Path> flr) {
         this.folder = flr;
     }
 

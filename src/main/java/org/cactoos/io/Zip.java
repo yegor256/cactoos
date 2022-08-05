@@ -48,7 +48,7 @@ public final class Zip implements Input {
     /**
      * Origin directory.
      */
-    private final Directory origin;
+    private final Iterable<? extends Path> origin;
 
     /**
      * Ctor.
@@ -56,6 +56,15 @@ public final class Zip implements Input {
      * @param origin Origin directory.
      */
     public Zip(final Directory origin) {
+        this((Iterable<? extends Path>) origin);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param origin Origin file list.
+     */
+    public Zip(final Iterable<? extends Path> origin) {
         this.origin = origin;
     }
 

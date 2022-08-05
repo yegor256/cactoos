@@ -47,7 +47,7 @@ public final class InputWithFallback implements Input {
     /**
      * The alternative one.
      */
-    private final IoCheckedFunc<IOException, Input> alternative;
+    private final IoCheckedFunc<? super IOException, ? extends Input> alternative;
 
     /**
      * Ctor.
@@ -72,7 +72,7 @@ public final class InputWithFallback implements Input {
      * @param alt Alternative
      */
     public InputWithFallback(final Input input,
-        final Func<IOException, Input> alt) {
+        final Func<? super IOException, ? extends Input> alt) {
         this(input, new IoCheckedFunc<>(alt));
     }
 
@@ -82,7 +82,7 @@ public final class InputWithFallback implements Input {
      * @param alt Alternative
      */
     public InputWithFallback(final Input input,
-        final IoCheckedFunc<IOException, Input> alt) {
+        final IoCheckedFunc<? super IOException, ? extends Input> alt) {
         this.main = input;
         this.alternative = alt;
     }

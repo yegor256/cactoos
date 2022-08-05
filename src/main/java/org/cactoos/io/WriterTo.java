@@ -115,7 +115,7 @@ public final class WriterTo extends Writer {
      * Ctor.
      * @param tgt Target
      */
-    private WriterTo(final Scalar<Writer> tgt) {
+    private WriterTo(final Scalar<? extends Writer> tgt) {
         super();
         this.target = new Unchecked<>(
             new Sticky<>(tgt)

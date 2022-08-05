@@ -42,13 +42,13 @@ public final class IoCheckedFunc<X, Y> implements Func<X, Y> {
     /**
      * Original func.
      */
-    private final Func<X, Y> func;
+    private final Func<? super X, ? extends Y> func;
 
     /**
      * Ctor.
      * @param fnc Encapsulated func
      */
-    public IoCheckedFunc(final Func<X, Y> fnc) {
+    public IoCheckedFunc(final Func<? super X, ? extends Y> fnc) {
         this.func = fnc;
     }
 

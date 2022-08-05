@@ -44,14 +44,14 @@ public final class CheckedOutput<E extends Exception> implements Output {
     /**
      * Function that wraps exception of {@link #origin} to the required type.
      */
-    private final Func<Exception, E> func;
+    private final Func<? super Exception, ? extends E> func;
 
     /**
      * Ctor.
      * @param orig Origin output.
      * @param fnc Function that wraps exceptions.
      */
-    public CheckedOutput(final Output orig, final Func<Exception, E> fnc) {
+    public CheckedOutput(final Output orig, final Func<? super Exception, ? extends E> fnc) {
         this.origin = orig;
         this.func = fnc;
     }

@@ -286,7 +286,7 @@ public final class ReaderOf extends Reader {
      * Ctor.
      * @param src Source
      */
-    private ReaderOf(final Scalar<Reader> src) {
+    private ReaderOf(final Scalar<? extends Reader> src) {
         super();
         this.source = new Unchecked<>(
             new Sticky<>(src)
