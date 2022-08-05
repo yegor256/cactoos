@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import org.cactoos.iterable.IterableOf;
-import org.hamcrest.core.IsEqual;
+import org.cactoos.list.ListOf;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -81,24 +81,23 @@ public final class ZipTest {
         this.folder.newFolder("dir1");
         this.folder.newFolder("dir2");
         this.folder.newFile("file0");
-        final Path file1 = this.folder.newFile("dir1/file1.txt").toPath();
-        final Path file2 = this.folder.newFile("dir1/file2.txt").toPath();
-        try (ZipInputStream input = new ZipInputStream(
-            new Zip(
-                new IterableOf<>(file1, file2)
-            ).stream()
-        )) {
+        final ListOf<Path> targets = new ListOf<>(
+            this.folder.newFile("dir1/file1.txt").toPath(),
+            this.folder.newFile("dir2/file2.txt").toPath()
+        );
+        try (ZipInputStream input = new ZipInputStream(new Zip(targets).stream())) {
             ZipEntry entry = input.getNextEntry();
-            List<String> zipEntries = new ArrayList<>();
+            final List<String> entries = new ArrayList<>(2);
             while (entry != null) {
-                zipEntries.add(entry.getName());
+                entries.add(entry.getName());
                 entry = input.getNextEntry();
             }
             new Assertion<>(
                 "Can't zip files in different directories",
-                zipEntries,
+                entries,
                 IsIterableContainingInAnyOrder.containsInAnyOrder(
-                    file1.toString(), file2.toString()
+                    targets.get(0).toString(),
+                    targets.get(1).toString()
                 )
             ).affirm();
         }
