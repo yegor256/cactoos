@@ -93,7 +93,7 @@ public final class ZipTest {
                 entry = input.getNextEntry();
             }
             new Assertion<>(
-                "Can't zip files in different directories",
+                "Must zip files in different directories",
                 entries,
                 IsIterableContainingInAnyOrder.containsInAnyOrder(
                     targets.get(0).toString(),
