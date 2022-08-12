@@ -66,7 +66,6 @@ public final class ZipTest {
             new Assertion<>(
                 "Can't list files in a directory represented by a path",
                 cnt,
-                // @checkstyle MagicNumber (1 line)
                 new IsEqual<>(4)
             ).affirm();
         }

@@ -71,7 +71,6 @@ public final class LengthOf extends ScalarEnvelope<Long> {
      * @param input The input
      */
     public LengthOf(final Input input) {
-        // @checkstyle MagicNumber (1 line)
         this(input, 16 << 10);
     }
 

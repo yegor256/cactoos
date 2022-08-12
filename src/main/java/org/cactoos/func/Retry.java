@@ -57,7 +57,6 @@ public final class Retry<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      */
     public Retry(final Func<X, Y> fnc) {
-        // @checkstyle MagicNumberCheck (1 line)
         this(fnc, 3);
     }
 

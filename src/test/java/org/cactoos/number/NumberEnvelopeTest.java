@@ -39,7 +39,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * Test case for {@link NumberEnvelope}.
  *
  * @since 1.0.0
- * @checkstyle MagicNumber (500 lines)
  */
 @SuppressWarnings({ "serial", "PMD.TooManyMethods" })
 final class NumberEnvelopeTest implements ArgumentsProvider {

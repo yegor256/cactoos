@@ -33,7 +33,6 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Tests for {@link MappedWithIndex}.
  * @since 1.0.0
- * @checkstyle MagicNumberCheck (500 lines)
  */
 final class MappedWithIndexTest {
     @Test

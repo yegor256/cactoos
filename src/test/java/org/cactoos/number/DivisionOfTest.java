@@ -33,7 +33,6 @@ import org.llorllale.cactoos.matchers.IsNumber;
  * Test case for {@link DivisionOf}.
  *
  * @since 0.49.2
- * @checkstyle MagicNumberCheck (500 lines)
  */
 final class DivisionOfTest {
 

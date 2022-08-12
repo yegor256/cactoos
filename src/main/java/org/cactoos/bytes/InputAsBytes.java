@@ -55,7 +55,6 @@ public final class InputAsBytes implements Bytes {
      * @param input The input
      */
     InputAsBytes(final Input input) {
-        // @checkstyle MagicNumber (1 line)
         this(input, 16 << 10);
     }
 

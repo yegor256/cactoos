@@ -36,7 +36,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 /**
  * Test case for {@link SetOf}.
  * @since 0.49.2
- * @checkstyle MagicNumber (500 line)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")

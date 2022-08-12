@@ -80,7 +80,6 @@ final class WriterAsOutputStream extends OutputStream {
      * @param charset Charset
      */
     WriterAsOutputStream(final Writer wtr, final CharSequence charset) {
-        // @checkstyle MagicNumber (1 line)
         this(wtr, charset, 16 << 10);
     }
 
@@ -90,7 +89,6 @@ final class WriterAsOutputStream extends OutputStream {
      * @param charset Charset
      */
     WriterAsOutputStream(final Writer wtr, final Charset charset) {
-        // @checkstyle MagicNumber (1 line)
         this(wtr, charset.name());
     }
 

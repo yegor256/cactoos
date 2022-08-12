@@ -53,7 +53,6 @@ final class SubTest {
     void cutTextWithStartAndEnd() {
         new Assertion<>(
             "Can't cut a text with start and end",
-            // @checkstyle MagicNumber (1 line)
             new Sub("hello world", 2, 50),
             new HasString("llo world")
         ).affirm();

@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.HasValue;
  * Test case for {@link And}.
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumber (500 line)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 final class AndTest {

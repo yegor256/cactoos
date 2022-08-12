@@ -157,7 +157,6 @@ final class ReplacedTest {
                 new PatternSyntaxException(
                     "Unclosed counted closure",
                     regex,
-                    // @checkstyle MagicNumberCheck (1 line)
                     16
                 ).getMessage(),
                 PatternSyntaxException.class

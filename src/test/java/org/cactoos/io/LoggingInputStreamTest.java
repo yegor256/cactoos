@@ -69,7 +69,6 @@ final class LoggingInputStreamTest {
         new Assertion<>(
             "Empty stream did not return -1",
             stream.read(),
-            // @checkstyle MagicNumberCheck (1 line)
             new IsEqual<>(-1)
         ).affirm();
     }
@@ -79,7 +78,6 @@ final class LoggingInputStreamTest {
         final LoggingInputStream stream = new LoggingInputStream(
             new ByteArrayInputStream(
                 new byte[] {
-                    // @checkstyle MagicNumberCheck (2 lines)
                     (byte) 20,
                     (byte) 10,
                 }
@@ -89,19 +87,16 @@ final class LoggingInputStreamTest {
         new Assertion<>(
             "First byte was not 20",
             stream.read(),
-            // @checkstyle MagicNumberCheck (1 line)
             new IsEqual<>(20)
         ).affirm();
         new Assertion<>(
             "Second byte was not 10",
             stream.read(),
-            // @checkstyle MagicNumberCheck (1 line)
             new IsEqual<>(10)
         ).affirm();
         new Assertion<>(
             "When stream is exhausted it didn't return -1",
             stream.read(),
-            // @checkstyle MagicNumberCheck (1 line)
             new IsEqual<>(-1)
         ).affirm();
     }

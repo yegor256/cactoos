@@ -36,7 +36,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle TodoCommentCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")

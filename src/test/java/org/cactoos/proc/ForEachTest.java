@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.HasValues;
  * Test case for {@link ForEach}.
  *
  * @since 1.0
- * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("unchecked")
 final class ForEachTest {

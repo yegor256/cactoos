@@ -84,7 +84,6 @@ public final class Retry<T> implements Scalar<T> {
      * @param wait The {@link Duration} to wait between attempts
      */
     public Retry(final Scalar<? extends T> scalar, final Duration wait) {
-        // @checkstyle MagicNumberCheck (1 line)
         this(scalar, 3, wait);
     }
 

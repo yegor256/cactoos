@@ -42,7 +42,6 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0.0
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class ThreadsTest {

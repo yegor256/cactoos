@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.HasValues;
  * Test of range implementation.
  *
  * @since 1.0
- * @checkstyle MagicNumber (500 lines)
  */
 final class RangeOfTest {
 

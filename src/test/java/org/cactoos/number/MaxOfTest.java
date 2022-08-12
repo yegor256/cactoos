@@ -31,7 +31,6 @@ import org.llorllale.cactoos.matchers.HasValue;
  * Test case for {@link MaxOf}.
  *
  * @since 0.10
- * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 final class MaxOfTest {

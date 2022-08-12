@@ -70,7 +70,6 @@ final class ReaderAsBytes implements Bytes {
      * @param cset Charset
      */
     ReaderAsBytes(final Reader rdr, final Charset cset) {
-        // @checkstyle MagicNumber (1 line)
         this(rdr, cset, 16 << 10);
     }
 
@@ -82,7 +81,6 @@ final class ReaderAsBytes implements Bytes {
      * @since 0.13.2
      */
     ReaderAsBytes(final Reader rdr, final CharSequence cset) {
-        // @checkstyle MagicNumber (1 line)
         this(rdr, cset, 16 << 10);
     }
 

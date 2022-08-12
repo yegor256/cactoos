@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.HasSize;
  * @since 0.1
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings(
     {
@@ -91,13 +90,11 @@ public final class ListOfTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void lowBoundTest() throws Exception {
-        // @checkstyle MagicNumber (1 line)
         new ListOf<>(Collections.nCopies(10, 0)).get(-1);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void highBoundTest() throws Exception {
-        // @checkstyle MagicNumber (1 line)
         new ListOf<>(Collections.nCopies(10, 0)).get(11);
     }
 

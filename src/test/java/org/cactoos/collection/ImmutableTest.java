@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Immutable}.
  *
  * @since 1.16
- * @checkstyle MagicNumber (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")

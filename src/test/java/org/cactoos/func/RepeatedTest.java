@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.13.1
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 line)
  */
 final class RepeatedTest {
 

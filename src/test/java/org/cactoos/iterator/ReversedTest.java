@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.HasSize;
  * Test case for {@link Reversed}.
  *
  * @since 0.45
- * @checkstyle MagicNumberCheck (500 lines)
  */
 final class ReversedTest {
 

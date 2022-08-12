@@ -78,7 +78,6 @@ public final class TempFolder implements Scalar<Path>, Closeable {
                             new RangeOf<>('a', 'z', ch -> ++ch)
                         )
                     ),
-                    // @checkstyle MagicNumber (1 line)
                     () -> 5
                 )
             )

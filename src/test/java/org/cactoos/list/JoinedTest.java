@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
  *
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumber (500 line)
  * @checkstyle DiamondOperatorCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */

@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.HasValues;
  *
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 final class ShuffledTest {
 

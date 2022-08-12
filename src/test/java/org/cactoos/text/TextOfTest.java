@@ -48,7 +48,6 @@ import org.llorllale.cactoos.matchers.StartsWith;
  * @since 0.12
  * @checkstyle JavadocMethodCheck (1000 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (1000 lines)
- * @checkstyle MagicNumberCheck (1000 lines)
  * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals", "unchecked"})

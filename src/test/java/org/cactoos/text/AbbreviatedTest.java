@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.IsText;
  * Test case for {@link Abbreviated}.
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")

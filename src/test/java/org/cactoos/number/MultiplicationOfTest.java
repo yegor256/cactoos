@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link MultiplicationOf}.
  *
  * @since 0.49.2
- * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class MultiplicationOfTest {

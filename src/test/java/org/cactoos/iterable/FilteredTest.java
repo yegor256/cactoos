@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.HasValues;
  * Test case for {@link Filtered}.
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class FilteredTest {
@@ -49,7 +48,6 @@ final class FilteredTest {
             "Must calculate the length of an iterable",
             new LengthOf(
                 new Filtered<>(
-                    // @checkstyle MagicNumber (1 line)
                     input -> input.length() > 4,
                     new IterableOf<>(
                         "hello", "world", "друг"

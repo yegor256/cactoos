@@ -104,7 +104,6 @@ final class FirstOfTest {
             "Fallback was not thrown",
             new FirstOf<>(
                 num -> num.equals(0),
-                // @checkstyle MagicNumber (10 lines)
                 new IterableOf<>(
                     1, 2, 3, 4, 5
                 ),

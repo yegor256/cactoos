@@ -48,7 +48,6 @@ public final class Md5DigestOf extends DigestEnvelope {
      * @param max Buffer size
      */
     public Md5DigestOf(final Input input, final int max) {
-        // @checkstyle MagicNumber (1 line)
         super(input, max, "MD5");
     }
 }

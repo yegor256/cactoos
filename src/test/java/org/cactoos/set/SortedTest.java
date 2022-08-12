@@ -39,7 +39,6 @@ import org.llorllale.cactoos.matchers.IsText;
 /**
  * Test case for {@link Sorted}.
  * @since 1.0.0
- * @checkstyle MagicNumber (500 line)
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */

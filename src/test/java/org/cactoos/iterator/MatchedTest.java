@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link Mapped}.
  * @since 0.47
- * @checkstyle MagicNumberCheck (500 lines)
  */
 final class MatchedTest {
     @Test

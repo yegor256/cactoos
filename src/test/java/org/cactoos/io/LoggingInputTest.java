@@ -156,7 +156,6 @@ final class LoggingInputTest {
             new ResourceOf("org/cactoos/large-text.txt"),
             "text file",
             logger
-        // @checkstyle MagicNumber (1 line)
         ).stream().skip(100);
         new Assertion<>(
             "Must log skip from text file",
@@ -191,7 +190,6 @@ final class LoggingInputTest {
             "text file",
             logger
         ).stream();
-        // @checkstyle MagicNumber (1 line)
         input.mark(150);
         input.reset();
         new Assertion<>(

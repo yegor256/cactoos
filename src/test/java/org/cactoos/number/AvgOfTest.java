@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.IsNumber;
  *
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class AvgOfTest {

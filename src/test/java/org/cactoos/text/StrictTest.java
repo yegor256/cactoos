@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Strict}.
  *
  * @since 1.0
- * @checkstyle MagicNumber (500 line)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class StrictTest {

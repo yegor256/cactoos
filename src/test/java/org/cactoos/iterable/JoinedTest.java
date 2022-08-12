@@ -31,7 +31,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test case for {@link Joined}.
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumber (500 lines)
  */
 final class JoinedTest {
 

@@ -54,7 +54,6 @@ public final class HexOf extends TextEnvelope {
                     final char[] hex = new char[bts.length * 2];
                     int chr = -1;
                     for (int idx = 0; idx < bts.length; ++idx) {
-                        // @checkstyle MagicNumber (3 line)
                         final int value = 0xff & bts[idx];
                         hex[++chr] = HexOf.HEX_CHARS[value >>> 4];
                         hex[++chr] = HexOf.HEX_CHARS[value & 0x0f];

@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  *
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("unchecked")
 final class FallbackFromTest {

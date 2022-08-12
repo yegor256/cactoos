@@ -59,7 +59,6 @@ public final class TailOf implements Input {
      * @param bytes Number of last bytes to show from input
      */
     public TailOf(final Input inpt, final int bytes) {
-        // @checkstyle MagicNumber (1 line)
         this(inpt, bytes, 16384);
     }
 

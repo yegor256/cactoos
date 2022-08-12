@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.IsText;
  * Test case for {@link Mapped}.
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class MappedTest {

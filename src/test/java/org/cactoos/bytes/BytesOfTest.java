@@ -105,7 +105,6 @@ final class BytesOfTest {
                         new BytesOf(
                             new StringReader(source),
                             StandardCharsets.UTF_8,
-                            // @checkstyle MagicNumberCheck (1 line)
                             16 << 10
                         )
                     )

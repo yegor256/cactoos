@@ -48,7 +48,6 @@ public final class Sha256DigestOf extends DigestEnvelope {
      * @param max Buffer size
      */
     public Sha256DigestOf(final Input input, final int max) {
-        // @checkstyle MagicNumber (1 line)
         super(input, max, "SHA-256");
     }
 }

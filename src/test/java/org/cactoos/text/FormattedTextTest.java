@@ -98,7 +98,6 @@ public final class FormattedTextTest {
         new Assertion<>(
             "Can't format a text with Locale",
             new FormattedText(
-                // @checkstyle MagicNumber (1 line)
                 "%,d", Locale.GERMAN, 1_234_567_890
             ),
             new HasString("1.234.567.890")

@@ -55,7 +55,6 @@ public final class DirectoryTest {
         new Assertion<>(
             "must list files in a directory represented by a path",
             new Directory(dir),
-            // @checkstyle MagicNumber (1 line)
             new HasSize(4)
         ).affirm();
     }
@@ -69,7 +68,6 @@ public final class DirectoryTest {
         new Assertion<>(
             "must list files in a directory represented by a file",
             new Directory(file),
-            // @checkstyle MagicNumber (1 line)
             new HasSize(4)
         ).affirm();
     }

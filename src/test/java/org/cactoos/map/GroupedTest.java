@@ -45,7 +45,6 @@ final class GroupedTest {
         new Assertion<>(
             "Can't behave as a map",
             new Grouped<>(
-                // @checkstyle MagicNumberCheck (1 line)
                 new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
                 number -> number,
                 Object::toString
@@ -72,7 +71,6 @@ final class GroupedTest {
         new Assertion<>(
             "Can't group int values",
             new Grouped<>(
-                // @checkstyle MagicNumberCheck (1 line)
                 new IterableOf<>(1, 1, 1, 4, 5, 6, 7, 8, 9),
                 number -> number,
                 Object::toString
@@ -89,7 +87,6 @@ final class GroupedTest {
         new Assertion<>(
             "Must group Number values",
             new Grouped<>(
-                // @checkstyle MagicNumberCheck (1 line)
                 new IterableOf<Number>(1, 1f, 1L, 4f, 5, 6f, 7, 8f, 9),
                 Number::intValue,
                 Object::toString

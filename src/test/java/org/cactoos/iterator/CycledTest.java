@@ -45,7 +45,6 @@ public final class CycledTest {
         new Assertion<>(
             "must repeat iterator",
             new ItemAt<>(
-                // @checkstyle MagicNumberCheck (1 line)
                 7,
                 new IterableOf<>(
                     new Cycled<>(

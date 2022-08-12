@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.14
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
- * @checkstyle MagicNumber (500 lines)
  */
 final class JoinedTest {
 

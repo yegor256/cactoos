@@ -63,7 +63,6 @@ public abstract class DigestEnvelope implements Bytes {
      * @param algrthm The algorithm
      */
     public DigestEnvelope(final Input input, final String algrthm) {
-        // @checkstyle MagicNumber (1 line)
         this(input, 16 << 10, algrthm);
     }
 

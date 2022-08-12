@@ -36,7 +36,6 @@ import org.llorllale.cactoos.matchers.HasString;
  *
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 final class RandomizedTest {
 

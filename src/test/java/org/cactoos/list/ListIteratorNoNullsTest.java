@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.35
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 final class ListIteratorNoNullsTest {
 

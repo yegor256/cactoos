@@ -68,7 +68,6 @@ public final class WriterAsOutputStreamTest {
                             baos, StandardCharsets.UTF_8
                         ),
                         StandardCharsets.UTF_8,
-                        // @checkstyle MagicNumber (1 line)
                         13
                     )
                 )
@@ -95,7 +94,6 @@ public final class WriterAsOutputStreamTest {
                         new WriterAsOutputStream(
                             writer,
                             StandardCharsets.UTF_8,
-                            // @checkstyle MagicNumber (1 line)
                             345
                         )
                     )
@@ -122,7 +120,6 @@ public final class WriterAsOutputStreamTest {
                         new WriterAsOutputStream(
                             writer,
                             StandardCharsets.UTF_8,
-                            // @checkstyle MagicNumber (1 line)
                             345
                         )
                     )

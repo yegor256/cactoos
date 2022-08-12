@@ -54,13 +54,11 @@ public final class ResourceOfTest {
                         "org/cactoos/io/ResourceOfTest.class"
                     )
                 ).asBytes(),
-                // @checkstyle MagicNumber (2 lines)
                 0,
                 4
             ),
             new IsEqual<>(
                 new byte[]{
-                    // @checkstyle MagicNumber (1 line)
                     (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
                 }
             )

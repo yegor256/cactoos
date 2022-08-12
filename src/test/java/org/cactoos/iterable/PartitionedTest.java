@@ -33,7 +33,6 @@ import org.llorllale.cactoos.matchers.HasValue;
  *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumber (500 lines)
  */
 final class PartitionedTest {
 

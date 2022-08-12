@@ -49,7 +49,6 @@ final class RetryTest {
             "must retry in case of failure",
             new Retry<>(
                 () -> {
-                    // @checkstyle MagicNumberCheck (1 line)
                     if (new SecureRandom().nextDouble() > 0.3d) {
                         throw new IllegalArgumentException("May happen");
                     }
@@ -63,13 +62,11 @@ final class RetryTest {
 
     @Test
     void runsScalarTwiceWithDefaults() throws Exception {
-        // @checkstyle MagicNumberCheck (1 line)
         final AtomicInteger tries = new AtomicInteger(0);
         new Assertion<>(
             "Should run twice with defaults",
             new Retry<>(
                 () -> {
-                    // @checkstyle MagicNumberCheck (1 line)
                     if (tries.getAndIncrement() <= 1) {
                         throw new IllegalArgumentException("Not enough tries");
                     }
@@ -83,7 +80,6 @@ final class RetryTest {
     @Test
     void runsScalarMultipleTimesIgnoringNegativeDuration()
         throws Exception {
-        // @checkstyle MagicNumberCheck (2 line)
         final int times = 2;
         final AtomicInteger tries = new AtomicInteger(0);
         new Assertion<>(
@@ -96,7 +92,6 @@ final class RetryTest {
                     return 0;
                 },
                 Integer.MAX_VALUE,
-                // @checkstyle MagicNumberCheck (1 line)
                 Duration.of(-5, ChronoUnit.DAYS)
             ),
             new HasValue<>(0)
@@ -106,7 +101,6 @@ final class RetryTest {
     @Test
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     void runsScalarMultipleTimesWithWait() throws Exception {
-        // @checkstyle MagicNumberCheck (3 line)
         final int times = 3;
         final long wait = 500;
         final AtomicInteger tries = new AtomicInteger(0);

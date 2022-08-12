@@ -78,7 +78,6 @@ public final class MapEntryTest {
         MatcherAssert.assertThat(
             "the hash code are not equals",
             new MapEntry<>("elegant", "objects").hashCode(),
-            // @checkstyle MagicNumber (1 line)
             new IsEqual<>(32_739_498)
         );
     }

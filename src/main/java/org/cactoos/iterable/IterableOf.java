@@ -117,7 +117,6 @@ public final class IterableOf<X> implements Iterable<X> {
         ).value();
     }
 
-    // @checkstyle MagicNumberCheck (30 lines)
     @Override
     public int hashCode() {
         return new Unchecked<>(

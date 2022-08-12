@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 line)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class RetryTest {

@@ -36,7 +36,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link HexOf}.
  *
  * @since 0.29
- * @checkstyle MagicNumberCheck (500 line)
  * @checkstyle JavadocMethodCheck (500 line)
  * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */

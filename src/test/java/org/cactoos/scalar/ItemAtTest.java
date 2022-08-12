@@ -44,7 +44,6 @@ final class ItemAtTest {
         new Assertion<>(
             "must take the item by position from the iterable",
             new ItemAt<>(
-                // @checkstyle MagicNumber (1 line)
                 1, new IterableOf<>(1, 2, 3)
             ),
             new HasValue<>(2)
@@ -70,7 +69,6 @@ final class ItemAtTest {
         new Assertion<>(
             "must take the item by position from the iterable",
             new ItemAt<>(
-                // @checkstyle MagicNumber (1 line)
                 1, 5, new IterableOf<>(0, 1)
             ),
             new HasValue<>(1)
@@ -83,7 +81,6 @@ final class ItemAtTest {
             "must take the item by position from the iterator",
             new ItemAt<>(
                 1,
-                // @checkstyle MagicNumber (1 line)
                 new IterableOf<>(1, 2, 3)
             ),
             new HasValue<>(2)
@@ -96,7 +93,6 @@ final class ItemAtTest {
             "Must fail for negative position",
             () -> new ItemAt<>(
                 -1,
-                // @checkstyle MagicNumber (1 line)
                 new IterableOf<>(1, 2, 3)
             ).value(),
             new Throws<>(
@@ -111,7 +107,6 @@ final class ItemAtTest {
         new Assertion<>(
             "Must fail for greater than length position",
             () -> new ItemAt<>(
-                // @checkstyle MagicNumberCheck (2 lines)
                 3,
                 new IterableOf<>(1, 2, 3)
             ).value(),
@@ -126,7 +121,6 @@ final class ItemAtTest {
     void sameValueTest() throws Exception {
         final ItemAt<Integer> item = new ItemAt<>(
             1,
-            // @checkstyle MagicNumberCheck (1 lines)
             new IterableOf<>(1, 2, 3)
         );
         new Assertion<>(

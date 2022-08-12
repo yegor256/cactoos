@@ -50,7 +50,6 @@ public final class GzipOutput implements Output {
      * @param output The output
      */
     public GzipOutput(final Output output) {
-        // @checkstyle MagicNumberCheck (1 line)
         this(output, 16 << 10);
     }
 

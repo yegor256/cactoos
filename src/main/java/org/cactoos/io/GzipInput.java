@@ -50,7 +50,6 @@ public final class GzipInput implements Input {
      * @param input The input.
      */
     public GzipInput(final Input input) {
-        // @checkstyle MagicNumberCheck (1 line)
         this(input, 16 << 10);
     }
 

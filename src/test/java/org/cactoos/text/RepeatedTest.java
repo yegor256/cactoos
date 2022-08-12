@@ -38,7 +38,6 @@ final class RepeatedTest {
     void repeatsWordsText() {
         new Assertion<>(
             "Can't repeats a text",
-            // @checkstyle MagicNumber (1 line)
             new Repeated("hello", 2),
             new HasString("hellohello")
         ).affirm();
@@ -48,7 +47,6 @@ final class RepeatedTest {
     void repeatsCharText() {
         new Assertion<>(
             "Can't repeats a char",
-            // @checkstyle MagicNumber (1 line)
             new Repeated("A", 5),
             new HasString("AAAAA")
         ).affirm();

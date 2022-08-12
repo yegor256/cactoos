@@ -40,7 +40,6 @@ import org.junit.jupiter.api.Test;
  *  thoroughly what is a "correct" behaviour concerning overflow in the case
  *  of SumOf and adapt the tests and the code to make this obvious and clear.
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 final class SumOfTest {

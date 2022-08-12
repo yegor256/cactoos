@@ -48,7 +48,6 @@ public final class ComparableTextTest {
                     "here to there"
                 )
             ).compareTo(
-                // @checkstyle MagicNumberCheck (2 lines)
                 new ComparableText(
                     new Sub("from here to there", 5)
                 )

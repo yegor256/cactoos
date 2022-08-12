@@ -33,7 +33,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.35
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 final class ListIteratorEnvelopeTest {
     @Test

@@ -70,7 +70,6 @@ final class WriterAsOutput implements Output {
      * @param cset Charset
      */
     WriterAsOutput(final Writer wtr, final Charset cset) {
-        // @checkstyle MagicNumber (1 line)
         this(wtr, cset, 16 << 10);
     }
 

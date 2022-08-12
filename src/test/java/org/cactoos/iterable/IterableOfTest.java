@@ -50,7 +50,6 @@ final class IterableOfTest {
                     "a", "b", "c"
                 )
             ),
-            // @checkstyle MagicNumber (1 line)
             new HasValue<>(3L)
         ).affirm();
     }
@@ -73,7 +72,6 @@ final class IterableOfTest {
                     new TextOf("a"), new TextOf("b"), new TextOf("c")
                 )
             ),
-            // @checkstyle MagicNumber (1 line)
             new HasValue<>(3L)
         ).affirm();
     }

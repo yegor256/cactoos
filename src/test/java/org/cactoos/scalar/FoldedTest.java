@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.HasValue;
  * Test case for {@link Folded}.
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 final class FoldedTest {
 

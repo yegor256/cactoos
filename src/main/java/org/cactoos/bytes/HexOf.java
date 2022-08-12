@@ -36,7 +36,6 @@ import org.cactoos.text.FormattedText;
  * Decodes origin {@link Text} using the hexadecimal encoding scheme.
  *
  * @since 0.30
- * @checkstyle MagicNumberCheck (500 lines)
  */
 public final class HexOf implements Bytes {
     /**

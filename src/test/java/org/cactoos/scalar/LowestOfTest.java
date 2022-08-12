@@ -40,7 +40,6 @@ import org.llorllale.cactoos.matchers.HasValue;
  *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class LowestOfTest {

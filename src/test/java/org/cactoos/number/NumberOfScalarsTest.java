@@ -39,7 +39,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * Test case for {@link NumberOfScalars}.
  *
  * @since 1.0.0
- * @checkstyle MagicNumber (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 final class NumberOfScalarsTest implements ArgumentsProvider {

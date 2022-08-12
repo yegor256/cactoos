@@ -31,7 +31,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test case for {@link Sliced}.
  * @since 1.0.0
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle MagicNumberCheck (500 lines)
  */
 final class SlicedTest {
 
