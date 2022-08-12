@@ -63,7 +63,6 @@ final class HashCodeTest {
         final int multiplier = 31;
         final Object[] attributes = {494, 43, "test", 190, 298f, "joshua"};
         new Assertion<>(
-            // @checkstyle LineLength (1 line)
             "Value must be equal to Josh Block's implementation of hashCode() with initial=17 and multiplier=31",
             new HashCode(attributes),
             new HasValue<>(

@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
  *
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ReaderAsBytesTest {
     /**

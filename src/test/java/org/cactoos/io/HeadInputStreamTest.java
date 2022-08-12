@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class HeadInputStreamTest {

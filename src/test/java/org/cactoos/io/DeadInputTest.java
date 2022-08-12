@@ -32,7 +32,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  *
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class DeadInputTest {
 

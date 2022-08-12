@@ -41,7 +41,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Threads}.
  *
  * @since 1.0.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class ThreadsTest {
@@ -149,7 +148,6 @@ final class ThreadsTest {
                     )
                 ).value(),
                 new Throws<>(
-                    // @checkstyle LineLength (1 line)
                     "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
                     UncheckedIOException.class
                 )
@@ -166,7 +164,6 @@ final class ThreadsTest {
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsValuesWithInlineExecutorService() throws Exception {
         new Assertion<>(
-            // @checkstyle LineLength (1 line)
             "Must contain results from the callables when using inline executor service",
             new Threads<String>(
                 3,
@@ -227,7 +224,6 @@ final class ThreadsTest {
         final ExecutorService extor = Executors.newFixedThreadPool(3);
         try {
             new Assertion<>(
-                // @checkstyle LineLength (1 line)
                 "Must contain results from the callables without using timeout",
                 new Threads<String>(
                     extor,
@@ -276,7 +272,6 @@ final class ThreadsTest {
                     )
                 ).value(),
                 new Throws<>(
-                    // @checkstyle LineLength (1 line)
                     "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
                     UncheckedIOException.class
                 )
@@ -293,7 +288,6 @@ final class ThreadsTest {
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsValuesWithInlineExecutorServiceNoTimeout() {
         new Assertion<>(
-            // @checkstyle LineLength (1 line)
             "Must contain results from the callables when using inline executor without timeout",
             new Threads<String>(
                 3,

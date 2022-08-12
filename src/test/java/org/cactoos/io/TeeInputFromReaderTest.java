@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * {@link java.io.Reader} as an input.
  * @since 1.0
  * @checkstyle JavadocMethodCheck (400 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (400 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class TeeInputFromReaderTest {

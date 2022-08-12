@@ -41,7 +41,6 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings(
     {

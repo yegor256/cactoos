@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.IsText;
 * Tests for {@link Flattened}.
 *
 * @since 0.49
-* @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
 */
 final class FlattenedTest {
     @Test

@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
 /**
  * Test case for {@link Sticky}.
  * @since 0.6
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class StickyTest {
 
@@ -70,7 +69,6 @@ final class StickyTest {
                 new Sticky(
                     new InputOf(
                         new URL(
-                            // @checkstyle LineLength (1 line)
                             "file:src/test/resources/org/cactoos/large-text.txt"
                         )
                     )

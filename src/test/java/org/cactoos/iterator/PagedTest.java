@@ -42,7 +42,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Paged}.
  * @since 0.47
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class PagedTest {

@@ -54,7 +54,6 @@ import org.llorllale.cactoos.matchers.StartsWith;
  *
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class BytesOfTest {
 

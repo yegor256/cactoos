@@ -33,7 +33,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test case for {@link Merged}.
  *
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class MergedTest {

@@ -39,7 +39,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * an input.
  * @since 1.0
  * @checkstyle JavadocMethodCheck (120 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (120 lines)
  */
 public final class TeeInputFromPathTest {
 

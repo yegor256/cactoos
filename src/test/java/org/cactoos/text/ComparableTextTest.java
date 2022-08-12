@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.27
  * @checkstyle JavadocMethodCheck (100 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ComparableTextTest {
 

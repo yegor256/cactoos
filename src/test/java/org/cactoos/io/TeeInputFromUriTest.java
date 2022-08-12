@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * {@link java.net.URI} as an input.
  * @since 1.0
  * @checkstyle JavadocMethodCheck (120 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (120 lines)
  */
 public final class TeeInputFromUriTest {
 

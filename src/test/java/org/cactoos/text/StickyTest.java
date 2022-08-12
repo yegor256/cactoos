@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.IsText;
 /**
  * Test case for {@link Sticky}.
  * @since 0.47
- * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)
  */
 final class StickyTest {
     @Test

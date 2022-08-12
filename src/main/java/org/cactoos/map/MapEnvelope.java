@@ -40,7 +40,6 @@ import org.cactoos.text.TextOf;
  * @param <Y> Type of value
  * @since 0.24
  * @checkstyle AbstractClassNameCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings(
     {

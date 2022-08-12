@@ -36,7 +36,6 @@ import org.llorllale.cactoos.matchers.HasSize;
  * Test case for {@link ListOf}.
  *
  * @since 0.1
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings(

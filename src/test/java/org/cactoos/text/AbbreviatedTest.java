@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.IsText;
  * Test case for {@link Abbreviated}.
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 final class AbbreviatedTest {
@@ -112,11 +111,9 @@ final class AbbreviatedTest {
         new Assertion<>(
             "Must abbreviate a text bigger than default max width",
             new Abbreviated(
-                // @checkstyle LineLengthCheck (1 line)
                 "The quick brown fox jumps over the lazy black dog and after that returned to the cave"
             ),
             new IsText(
-                // @checkstyle LineLengthCheck (1 line)
                 "The quick brown fox jumps over the lazy black dog and after that returned to ..."
             )
         ).affirm();

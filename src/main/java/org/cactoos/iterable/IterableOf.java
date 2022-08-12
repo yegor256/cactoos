@@ -43,7 +43,6 @@ import org.cactoos.text.UncheckedText;
  *
  * @param <X> Type of item
  * @since 0.12
- * @checkstyle ClassDataAbstractionCouplingCheck (550 lines)
  */
 public final class IterableOf<X> implements Iterable<X> {
 

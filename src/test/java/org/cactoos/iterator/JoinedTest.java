@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Joined}.
  * @since 0.14
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class JoinedTest {
 

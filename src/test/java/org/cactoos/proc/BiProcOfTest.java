@@ -32,7 +32,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
 /**
  * Test case for {@link BiProcOf}.
  *
- * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  * @since 0.50
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")

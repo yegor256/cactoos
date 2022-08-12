@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.IsApplicable;
  *
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("unchecked")
 public final class FuncWithFallbackTest {

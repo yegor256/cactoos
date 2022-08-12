@@ -42,7 +42,6 @@ import org.llorllale.cactoos.matchers.StartsWith;
  *
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("unchecked")
 final class InputAsBytesTest {

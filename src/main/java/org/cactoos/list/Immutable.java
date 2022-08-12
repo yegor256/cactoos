@@ -35,7 +35,6 @@ import java.util.ListIterator;
  *
  * @param <T> Element type
  * @since 1.16
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings(
     {

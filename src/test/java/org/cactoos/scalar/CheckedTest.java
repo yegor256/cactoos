@@ -36,7 +36,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Checked}.
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class CheckedTest {
 

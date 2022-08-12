@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  *
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class WriterToTest {
     /**

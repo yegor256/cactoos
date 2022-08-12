@@ -33,7 +33,6 @@ import org.cactoos.scalar.Ternary;
  * no other characters are changed.
  *
  * @since 0.46
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class Capitalized extends TextEnvelope {
 

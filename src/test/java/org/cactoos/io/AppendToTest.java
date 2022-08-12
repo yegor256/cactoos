@@ -39,7 +39,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link AppendTo}.
  *
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)
  */
 public final class AppendToTest {
 

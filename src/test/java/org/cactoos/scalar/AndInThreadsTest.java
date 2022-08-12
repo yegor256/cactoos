@@ -44,7 +44,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 /**
  * Test case for {@link AndInThreads}.
  * @since 0.25
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals", "unchecked"})
 final class AndInThreadsTest {

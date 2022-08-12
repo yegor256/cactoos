@@ -34,7 +34,6 @@ import org.cactoos.scalar.Ternary;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class Abbreviated extends TextEnvelope {
 

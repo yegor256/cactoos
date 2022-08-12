@@ -36,7 +36,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * Test case for {@link BiFuncOf}.
  *
  * @since 0.20
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class BiFuncOfTest {

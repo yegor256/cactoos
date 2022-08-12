@@ -33,7 +33,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test case for {@link Split}.
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 final class SplitTest {

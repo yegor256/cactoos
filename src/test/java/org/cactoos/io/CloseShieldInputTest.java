@@ -33,7 +33,6 @@ import org.llorllale.cactoos.matchers.IsText;
 /**
  * Test case for {@link CloseShieldInput}.
  * @since 1.0.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class CloseShieldInputTest {
 

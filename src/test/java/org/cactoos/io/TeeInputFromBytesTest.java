@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * {@link org.cactoos.Bytes} as an input.
  * @since 1.0
  * @checkstyle JavadocMethodCheck (100 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (100 lines)
  */
 public final class TeeInputFromBytesTest {
 

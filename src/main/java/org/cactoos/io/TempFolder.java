@@ -50,7 +50,6 @@ import org.cactoos.text.TextOf;
  * The physical folder is deleted from the filesystem when the temp folder is
  * closed.
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class TempFolder implements Scalar<Path>, Closeable {
 

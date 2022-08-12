@@ -39,7 +39,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle DiamondOperatorCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class JoinedTest {

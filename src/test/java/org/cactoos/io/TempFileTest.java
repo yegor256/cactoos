@@ -41,7 +41,6 @@ import org.llorllale.cactoos.matchers.StartsWith;
  * Unit tests for {@link TempFile}.
  *
  * @since 1.0
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class TempFileTest {
 

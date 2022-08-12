@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.IsText;
  * Test case for {@link TeeOutput}.
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class TeeOutputTest {
     /**

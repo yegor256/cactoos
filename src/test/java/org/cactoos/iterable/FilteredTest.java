@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.HasValues;
  * Test case for {@link Filtered}.
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class FilteredTest {
 

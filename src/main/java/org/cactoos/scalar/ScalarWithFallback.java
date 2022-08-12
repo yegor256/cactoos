@@ -42,7 +42,6 @@ import org.cactoos.map.MapOf;
  * @param <T> Type of result
  * @see FuncWithFallback
  * @since 0.31
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class ScalarWithFallback<T> implements Scalar<T> {
 

@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * {@link org.cactoos.Input} as an input.
  * @since 1.0
  * @checkstyle JavadocMethodCheck (200 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  */
 public final class TeeInputFromInputTest {
 

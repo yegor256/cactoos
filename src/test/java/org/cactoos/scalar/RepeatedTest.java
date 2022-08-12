@@ -53,7 +53,6 @@ final class RepeatedTest {
     @Test
     void throwsIfZero() {
         new Assertion<>(
-            // @checkstyle LineLengthCheck (1 line)
             "Must throws an exception if number of repetitions not be at least 1",
             () -> new Repeated<>(
                 new ScalarOf<>(

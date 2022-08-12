@@ -43,7 +43,6 @@ import org.cactoos.text.TextOf;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.12
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class PropertiesOf implements Scalar<Properties> {
 

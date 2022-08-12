@@ -55,7 +55,6 @@ import org.takes.tk.TkHtml;
  * Test case for {@link InputOf}.
  *
  * @since 0.1
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.ExcessiveImports", "unchecked"})
@@ -153,7 +152,6 @@ final class InputOfTest {
                 new BytesOf(
                     new InputOf(
                         new URL(
-                            // @checkstyle LineLength (1 line)
                             "file:src/test/resources/org/cactoos/large-text.txt"
                         )
                     )

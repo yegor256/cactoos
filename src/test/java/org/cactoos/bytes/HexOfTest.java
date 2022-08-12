@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 line)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class HexOfTest {
 

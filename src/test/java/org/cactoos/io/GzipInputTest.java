@@ -40,7 +40,6 @@ import org.llorllale.cactoos.matchers.IsText;
  * Test case for {@link GzipInput}.
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class GzipInputTest {
 

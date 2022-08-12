@@ -36,7 +36,6 @@ import org.llorllale.cactoos.matchers.Assertion;
  *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public class ForEachInThreadsTest {
 

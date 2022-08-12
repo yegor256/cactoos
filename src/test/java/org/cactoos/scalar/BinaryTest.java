@@ -34,7 +34,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Binary}.
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class BinaryTest {
 

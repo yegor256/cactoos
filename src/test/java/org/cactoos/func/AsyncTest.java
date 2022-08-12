@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * Test case for {@link Async}.
  *
  * @since 0.10
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class AsyncTest {
     @Test

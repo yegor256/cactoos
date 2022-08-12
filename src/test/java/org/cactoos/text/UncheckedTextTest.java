@@ -38,7 +38,6 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class UncheckedTextTest {
     @Test

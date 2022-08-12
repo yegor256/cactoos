@@ -37,7 +37,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link IteratorOf}.
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class IteratorOfTest {
 

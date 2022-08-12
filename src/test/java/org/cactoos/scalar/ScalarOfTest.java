@@ -36,7 +36,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * Test case for {@link ScalarOf}.
  *
  * @since 0.48
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class ScalarOfTest {

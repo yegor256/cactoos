@@ -35,7 +35,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link JoinedListIterator}.
  * @since 1.0.0
  * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 final class JoinedListIteratorTest {
 
