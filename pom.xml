@@ -180,10 +180,6 @@ SOFTWARE.
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <configuration>
-          <output>file</output>
-          <outputDirectory>${project.build.directory}/coverage</outputDirectory>
-        </configuration>
         <executions>
           <execution>
             <id>jacoco-initialize</id>
