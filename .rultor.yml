@@ -1,5 +1,5 @@
 docker:
-  image: g4s8/rultor:alpine3.10
+  image: yegor256/rultor-image:1.9.1
 assets:
   settings.xml: yegor256/home#assets/cactoos/settings.xml
   pubring.gpg: yegor256/home#assets/pubring.gpg
@@ -7,15 +7,12 @@ assets:
 architect:
   - victornoel
   - yegor256
+install: |
+  pdd -f /dev/null
 merge:
   script: |
-    pdd -f /dev/null
     mvn clean install -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
-deploy:
-  script: |
-    pdd -f /dev/null
-    mvn clean deploy -Pqulice --errors --settings ../settings.xml
 release:
   sensitive:
     - settings.xml
@@ -25,6 +22,4 @@ release:
     gpg --allow-secret-key-import --no-tty --batch --import /home/r/secring.gpg
     mvn versions:set "-DnewVersion=${tag}" --settings ../settings.xml
     git commit -am "${tag}"
-    # note: -Pcactoos is needed to have the gpg and sonar secrets injected
-    # Sonar is disabled (was -Psonar) because sonarcloud.io only support Java 11+
     mvn clean deploy -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml
