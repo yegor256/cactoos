@@ -1,0 +1,28 @@
+---
+name: mvn
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+jobs:
+  maven-build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, windows-2022, macos-12]
+        java: [11, 13]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-jdk-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-jdk-${{ matrix.java }}-maven-
+      - run: java -version
+      - run: mvn -version
+      - run: mvn --errors --batch-mode clean install -Pqulice
