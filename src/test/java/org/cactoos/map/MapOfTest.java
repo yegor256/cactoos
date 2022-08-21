@@ -86,6 +86,20 @@ final class MapOfTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
+    void createsMapFromIterableVariable() {
+        final Iterable<Map.Entry<Integer, Integer>> list = new IterableOf<>(
+            new MapEntry<>(0, -1),
+            new MapEntry<>(1, 1)
+        );
+        new Assertion<>(
+            "Must behave as a map when created from iterable",
+            new MapOf<Integer, Integer>((Iterable) list),
+            new BehavesAsMap<>(1, 1)
+        ).affirm();
+    }
+
+    @Test
     void convertsIterableToMap() {
         new Assertion<>(
             "Must convert iterable to map",

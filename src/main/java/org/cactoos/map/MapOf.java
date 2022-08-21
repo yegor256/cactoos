@@ -173,8 +173,8 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param entries List of the entries
      */
     public MapOf(final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
-        super(new HashMap<>());
-        for (final Entry<? extends X, ? extends Y> entry : entries) {
+        super(new HashMap<>(0));
+        for (final Map.Entry<? extends X, ? extends Y> entry : entries) {
             this.put(entry.getKey(), entry.getValue());
         }
     }
