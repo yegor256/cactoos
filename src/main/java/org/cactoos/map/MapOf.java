@@ -179,6 +179,8 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
     /**
      * Ctor.
      * @param entries List of the entries
+     * @param <X> Key type
+     * @param <Y> Value type
      * @return Map created
      */
     private static <X, Y> Map<X, Y> make(
