@@ -29,13 +29,19 @@ import org.cactoos.Scalar;
 import org.cactoos.scalar.Unchecked;
 
 /**
- * Func as {@link Runnable}.
+ * Func as {@link Callable}.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.12
+ * @param <T> Type of return
+ * @since 0.53
  */
-public final class RunnableOf extends RunnableEnvelope {
+public final class CallableOf<T> implements Callable<T> {
+
+    /**
+     * The callable.
+     */
+    private final Callable<T> callable;
 
     /**
      * Ctor.
@@ -44,7 +50,7 @@ public final class RunnableOf extends RunnableEnvelope {
      * @param <X> Type of input
      * @since 0.32
      */
-    public <X> RunnableOf(final Proc<? super X> proc, final X ipt) {
+    public <X> CallableOf(final Proc<? super X> proc, final X ipt) {
         this(
             () -> new UncheckedProc<>(proc).exec(ipt)
         );
@@ -55,7 +61,7 @@ public final class RunnableOf extends RunnableEnvelope {
      * @param scalar Encapsulated scalar
      * @since 0.11
      */
-    public RunnableOf(final Scalar<?> scalar) {
+    public CallableOf(final Scalar<?> scalar) {
         this(
             () -> {
                 new Unchecked<>(scalar).value();
@@ -65,28 +71,29 @@ public final class RunnableOf extends RunnableEnvelope {
 
     /**
      * Ctor.
-     * @param callable The callable
+     * @param runnable The callable
      * @since 0.53
      */
-    public RunnableOf(final Callable<?> callable) {
+    public CallableOf(final Runnable runnable) {
         this(
             () -> {
-                try {
-                    callable.call();
-                    // @checkstyle IllegalCatchCheck (1 line)
-                } catch (final Exception ex) {
-                    throw new IllegalStateException(ex);
-                }
+                runnable.run();
+                return null;
             }
         );
     }
 
     /**
      * Ctor.
-     * @param runnable Encapsulated runnable
-     * @since 0.49
+     * @param clbl The callable original
+     * @since 0.53
      */
-    public RunnableOf(final Runnable runnable) {
-        super(runnable);
+    public CallableOf(final Callable<T> clbl) {
+        this.callable = clbl;
+    }
+
+    @Override
+    public T call() throws Exception {
+        return this.callable.call();
     }
 }

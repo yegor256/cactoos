@@ -23,6 +23,7 @@
  */
 package org.cactoos.proc;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.scalar.ScalarOf;
 import org.junit.jupiter.api.Test;
@@ -89,6 +90,27 @@ final class RunnableOfTest {
             new RunnableOf(
                 () -> {
                     done.set(obj);
+                }
+            ),
+            new Satisfies<>(
+                runnable -> {
+                    runnable.run();
+                    return done.get().equals(obj);
+                }
+            )
+        ).affirm();
+    }
+
+    @Test
+    void convertsCallableIntoRunnable() {
+        final AtomicReference<Object> done = new AtomicReference<>();
+        final Object obj = new Object();
+        new Assertion<>(
+            "Must execute Runnable with Callable",
+            new RunnableOf(
+                (Callable<Void>) () -> {
+                    done.set(obj);
+                    return null;
                 }
             ),
             new Satisfies<>(
