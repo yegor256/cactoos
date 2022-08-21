@@ -173,9 +173,20 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param entries List of the entries
      */
     public MapOf(final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
-        super(new HashMap<>(0));
+        super(MapOf.make(entries));
+    }
+
+    /**
+     * Ctor.
+     * @param entries List of the entries
+     * @return Map created
+     */
+    private static <X, Y> Map<X, Y> make(
+        final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
+        final Map<X, Y> map = new HashMap<>(0);
         for (final Map.Entry<? extends X, ? extends Y> entry : entries) {
-            this.put(entry.getKey(), entry.getValue());
+            map.put(entry.getKey(), entry.getValue());
         }
+        return map;
     }
 }
