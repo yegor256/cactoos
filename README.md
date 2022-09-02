@@ -80,7 +80,7 @@ new LengthOf(
     "Hello, world!",
     new File("/code/a.txt")
   )
-).intValue();
+).value();
 ```
 
 To read a binary file from classpath:
