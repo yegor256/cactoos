@@ -37,7 +37,7 @@ import org.cactoos.Scalar;
  *   new ArrayOf&lt;&gt;(
  *     "hey", "hello", "world"
  *   ),
- *   input -&gt; input.length() &gt; 4
+ *   input -&gt; input.length() &gt; 3
  * );
  * </pre>
  *
@@ -68,7 +68,10 @@ public final class Filtered<X> extends IterableEnvelope<X> {
     public Filtered(final Func<? super X, Boolean> fnc, final Iterable<? extends X> src) {
         super(
             new IterableOf<>(
-                () -> new org.cactoos.iterator.Filtered<>(fnc, src.iterator())
+                () -> new org.cactoos.iterator.Filtered<>(
+                    fnc,
+                    src.iterator()
+                )
             )
         );
     }
