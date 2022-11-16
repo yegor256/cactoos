@@ -98,6 +98,21 @@ public final class ReducedTest {
     }
 
     @Test
+    public void lastAtIterableOfValues() {
+        final Character one = 'A';
+        final Character two = 'B';
+        final Character three = 'O';
+        new Assertion<>(
+            "Must find the last character",
+            new Reduced<>(
+                new IterableOf<>(one, two, three),
+                (first, last) -> last
+            ),
+            new HasValue<>(three)
+        ).affirm();
+    }
+
+    @Test
     public void constructedFromVarargs() {
         final String one = "One";
         final String two = "Two";

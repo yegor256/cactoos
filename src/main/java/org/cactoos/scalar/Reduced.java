@@ -99,6 +99,19 @@ public final class Reduced<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     * @param values Values to be wrapped as scalars
+     * @param reduce Reducing function
+     * @since 0.55.0
+     */
+    public Reduced(
+        final Iterable<T> values,
+        final BiFunc<? super T, ? super T, ? extends T> reduce
+    ) {
+        this(reduce, new Mapped<>(Constant::new, values));
+    }
+
+    /**
+     * Ctor.
      * @param reduce Reducing function
      * @param scalars The scalars
      */
