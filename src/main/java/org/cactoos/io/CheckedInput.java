@@ -44,14 +44,14 @@ public final class CheckedInput<E extends Exception> implements Input {
     /**
      * Function that wraps exception of {@link #origin} to the required type.
      */
-    private final Func<Exception, E> func;
+    private final Func<? super Exception, ? extends E> func;
 
     /**
      * Ctor.
      * @param orig Origin input.
      * @param fnc Function that wraps exceptions.
      */
-    public CheckedInput(final Input orig, final Func<Exception, E> fnc) {
+    public CheckedInput(final Input orig, final Func<? super Exception, ? extends E> fnc) {
         this.origin = orig;
         this.func = fnc;
     }

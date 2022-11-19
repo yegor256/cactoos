@@ -142,7 +142,7 @@ public final class OutputStreamTo extends OutputStream {
      * Ctor.
      * @param tgt Target
      */
-    private OutputStreamTo(final Scalar<OutputStream> tgt) {
+    private OutputStreamTo(final Scalar<? extends OutputStream> tgt) {
         super();
         this.target = new Unchecked<>(
             new Sticky<>(tgt)

@@ -48,14 +48,21 @@ public final class Zip implements Input {
     /**
      * Origin directory.
      */
-    private final Directory origin;
+    private final Iterable<? extends Path> origin;
 
     /**
      * Ctor.
+     * Usage examples:
+     * <pre>
+     * {@code
+     * new Zip(new Directory(new File("/tmp")));
+     * new Zip(new IterableOf<Path>(Paths.get("/tmp/x"), Paths.get("/tmp/y")));
+     * }
+     * </pre>
      *
-     * @param origin Origin directory.
+     * @param origin Origin {@link Path} list (e. g. a {@link Directory})
      */
-    public Zip(final Directory origin) {
+    public Zip(final Iterable<? extends Path> origin) {
         this.origin = origin;
     }
 

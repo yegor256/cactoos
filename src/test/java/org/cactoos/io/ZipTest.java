@@ -26,8 +26,12 @@ package org.cactoos.io;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import org.cactoos.list.ListOf;
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.hamcrest.core.IsEqual;
 import org.junit.Rule;
 import org.junit.Test;
@@ -67,6 +71,33 @@ public final class ZipTest {
                 "Can't list files in a directory represented by a path",
                 cnt,
                 new IsEqual<>(4)
+            ).affirm();
+        }
+    }
+
+    @Test
+    public void zipsArbitraryFileList() throws Exception {
+        this.folder.newFolder("dir1");
+        this.folder.newFolder("dir2");
+        this.folder.newFile("file0");
+        final ListOf<Path> targets = new ListOf<>(
+            this.folder.newFile("dir1/file1.txt").toPath(),
+            this.folder.newFile("dir2/file2.txt").toPath()
+        );
+        try (ZipInputStream input = new ZipInputStream(new Zip(targets).stream())) {
+            ZipEntry entry = input.getNextEntry();
+            final List<String> entries = new ArrayList<>(2);
+            while (entry != null) {
+                entries.add(entry.getName());
+                entry = input.getNextEntry();
+            }
+            new Assertion<>(
+                "Must zip files in different directories",
+                entries,
+                IsIterableContainingInAnyOrder.containsInAnyOrder(
+                    targets.get(0).toString(),
+                    targets.get(1).toString()
+                )
             ).affirm();
         }
     }
