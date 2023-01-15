@@ -39,7 +39,7 @@ import org.cactoos.Scalar;
  * @param <Z> Type of output
  * @since 0.20
  */
-public final class BiFuncOf<X, Y, Z> extends BiFuncEnveloppe<X, Y, Z> {
+public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.

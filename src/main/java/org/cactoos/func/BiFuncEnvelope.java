@@ -33,7 +33,7 @@ import org.cactoos.BiFunc;
  * @param <Z> Type of output
  * @since 0.50
  */
-public abstract class BiFuncEnveloppe<X, Y, Z> implements BiFunc<X, Y, Z> {
+public abstract class BiFuncEnvelope<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * BiFunc to decorate.
@@ -44,7 +44,7 @@ public abstract class BiFuncEnveloppe<X, Y, Z> implements BiFunc<X, Y, Z> {
      * Ctor.
      * @param func The function
      */
-    public BiFuncEnveloppe(final BiFunc<X, Y, Z> func) {
+    public BiFuncEnvelope(final BiFunc<X, Y, Z> func) {
         this.origin = func;
     }
 

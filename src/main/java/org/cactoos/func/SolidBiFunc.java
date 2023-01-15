@@ -35,7 +35,7 @@ import org.cactoos.BiFunc;
  * @param <Z> Type of output
  * @since 0.24
  */
-public final class SolidBiFunc<X, Y, Z> extends BiFuncEnveloppe<X, Y, Z> {
+public final class SolidBiFunc<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.
