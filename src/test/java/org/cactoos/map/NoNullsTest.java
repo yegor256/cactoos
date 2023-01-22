@@ -30,7 +30,6 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsIterableContaining;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsEntry;
@@ -251,8 +250,7 @@ public final class NoNullsTest {
         );
     }
 
-    @Test
-    @Ignore
+    @Test(expected = IllegalStateException.class)
     public void putWithNoMapping() {
         MatcherAssert.assertThat(
             "Can't call #put() with no mapping",
@@ -297,8 +295,7 @@ public final class NoNullsTest {
         );
     }
 
-    @Test
-    @Ignore
+    @Test(expected = IllegalStateException.class)
     public void removeWithNoMapping() {
         MatcherAssert.assertThat(
             "Can't call #remove() with no mapping",
