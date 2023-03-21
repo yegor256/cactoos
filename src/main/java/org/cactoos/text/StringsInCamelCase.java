@@ -35,6 +35,7 @@ import org.cactoos.Scalar;
  * the first letter of each string is capitalized.
  *
  * @author Aliaksei Bialiauski (abialiauski.dev@gmail.com)
+ * @author Ivan Ivanchuk (l3r8y@duck.com)
  * @since 0.56.0
  */
 public final class StringsInCamelCase implements Scalar<List<String>> {
