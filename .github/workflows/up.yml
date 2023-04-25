@@ -1,0 +1,20 @@
+---
+name: up
+on:
+  push:
+jobs:
+  up:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - run: |-
+          git pull --tags && \
+          latest=$(git tag | grep ^0 | tail -1) && \
+          sed -E -i "s/<version>[^<]+/<version>${latest}/g" README.md && \
+          sed -E -i "s/org.cactoos:cactoos:.+/org.cactoos:cactoos::${latest}/g" README.md
+      - uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: 'new version in README'
+          delete-branch: true
+          title: 'New version in README'
+          assignees: yegor256

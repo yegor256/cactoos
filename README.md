@@ -41,17 +41,20 @@ The library has no dependencies. All you need is this
 (get the latest version [here](https://github.com/yegor256/cactoos/releases)):
 
 Maven:
+
 ```xml
 <dependency>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
+  <version>0.0.0</version>
 </dependency>
 ```
 
 Gradle:
+
 ```groovy
 dependencies {
-    compile 'org.cactoos:cactoos:<version>'
+  compile 'org.cactoos:cactoos:0.0.0'
 }
 ```
 
