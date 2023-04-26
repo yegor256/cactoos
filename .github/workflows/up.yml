@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |-
-          git pull --tags && \
+          git fetch --tags --force && \
           latest=$(git tag --sort=creatordate | tail -1) && \
           sed -E -i "s/<version>[^<]+/<version>${latest}/g" README.md && \
           sed -E -i "s/org.cactoos:cactoos:.+/org.cactoos:cactoos::${latest}/g" README.md
