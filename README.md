@@ -136,11 +136,11 @@ Collection<String> filtered = new ListOf<>(
 To flatten one iterable:
 ```java
 new Joined<>(
-  new Mapped<>(
+  new Mapped<IterableOf>(
     iter -> new IterableOf<>(
       new ListOf<>(iter).toArray(new Integer[]{})
     ),
-    new IterableOf<>(1, 2, 3, 4, 5, 6))
+    new IterableOf<>(1, 2, 3, 4, 5, 6)
   )
 );    // Iterable<Integer>
 ```
@@ -148,9 +148,9 @@ new Joined<>(
 To flatten and join several iterables:
 ```java
 new Joined<>(
-  new Mapped<>(
+  new Mapped<IterableOf>(
     iter -> new IterableOf<>(
-      new ListOf<>(iter).toArray(new Integer[]{})
+      new Joined<>(iter)
     ),
     new Joined<>(
       new IterableOf<>(new IterableOf<>(1, 2, 3)),
@@ -168,7 +168,8 @@ new And(
     new FuncOf<>(
       input -> {
         System.out.printf("Item: %s\n", input);
-      }
+      },
+      new True()
     ),
     new IterableOf<>("how", "are", "you", "?")
   )
@@ -182,7 +183,7 @@ new ForEach<String>(
     input -> System.out.printf(
         "Item: %s\n", input
     )
-).exec("how", "are", "you", "?");
+).exec(new IterableOf("how", "are", "you", "?"));
 ```
 
 To sort a list of words in the file:
@@ -190,11 +191,14 @@ To sort a list of words in the file:
 ```java
 List<Text> sorted = new ListOf<>(
   new Sorted<>(
-    new Split(
-      new TextOf(
-        new File("/tmp/names.txt")
-      ),
-      new TextOf("\\s+")
+    new Mapped<>(
+      text -> new ComparableText(text),
+      new Split(
+        new TextOf(
+          new File("/tmp/names.txt")
+        ),
+        new TextOf("\\s+")
+      )
     )
   )
 );
@@ -205,7 +209,7 @@ To count elements in an iterable:
 ```java
 int total = new LengthOf(
   new IterableOf<>("how", "are", "you")
-).intValue();
+).value().intValue();
 ```
 
 To create a set of elements by providing variable arguments:
@@ -267,6 +271,7 @@ This is its object-oriented alternative (no streams!):
 new And(
   n -> {
     System.out.printf("Hello, %s!\n", n);
+    return new True().value();
   },
   names
 ).value();
@@ -313,7 +318,7 @@ To format an `OffsetDateTime` into a `Text`:
 
 ```java
 final OffsetDateTime date = ...;
-final String text = new TextOf(date).asString();
+final String text = new TextOfDateTime(date).asString();
 ```
 
 ## Our objects vs. their static methods
