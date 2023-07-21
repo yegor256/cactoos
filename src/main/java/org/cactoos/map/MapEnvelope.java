@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.HashCode;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
@@ -141,7 +142,7 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     @Override
     public final int hashCode() {
-        return this.map.hashCode();
+        return new HashCode(this.map).value();
     }
 
 }
