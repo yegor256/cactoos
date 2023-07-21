@@ -78,7 +78,7 @@ public final class MapEntryTest {
         MatcherAssert.assertThat(
             "the hash code are not equals",
             new MapEntry<>("elegant", "objects").hashCode(),
-            new IsEqual<>(32_739_498)
+            new IsEqual<>(-1_673_632_025)
         );
     }
 

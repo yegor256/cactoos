@@ -24,17 +24,14 @@
 package org.cactoos.iterable;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.Iterator;
 import org.cactoos.Fallback;
 import org.cactoos.Scalar;
 import org.cactoos.iterator.IteratorOf;
-import org.cactoos.scalar.And;
-import org.cactoos.scalar.Folded;
-import org.cactoos.scalar.Or;
-import org.cactoos.scalar.ScalarWithFallback;
-import org.cactoos.scalar.Unchecked;
+import org.cactoos.scalar.*;
 import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
+
+import java.util.Iterator;
 
 /**
  * Array as iterable.
@@ -119,11 +116,7 @@ public final class IterableOf<X> implements Iterable<X> {
     @Override
     public int hashCode() {
         return new Unchecked<>(
-            new Folded<>(
-                42,
-                (hash, entry) -> 37 * hash + entry.hashCode(),
-                this
-            )
+                new HashCode(42, 37, this)
         ).value();
     }
 
