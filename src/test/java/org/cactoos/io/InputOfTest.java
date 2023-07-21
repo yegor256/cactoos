@@ -28,7 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -145,15 +146,15 @@ final class InputOfTest {
     }
 
     @Test
-    void readsStringUrl() throws IOException {
+    void readsStringUrl() throws IOException, URISyntaxException {
         new Assertion<>(
             "must fetch bytes from the HTTPS URL",
             new TextOf(
                 new BytesOf(
                     new InputOf(
-                        new URL(
+                        new URI(
                             "file:src/test/resources/org/cactoos/large-text.txt"
-                        )
+                        ).toURL()
                     )
                 )
             ),
