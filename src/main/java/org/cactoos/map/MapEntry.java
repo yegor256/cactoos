@@ -23,12 +23,11 @@
  */
 package org.cactoos.map;
 
+import java.util.Map;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.HashCode;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
-
-import java.util.Map;
 
 /**
  * MapEntry as {@link java.util.AbstractMap.Entry}.
@@ -98,7 +97,7 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     @Override
     public int hashCode() {
         return new HashCode(
-                new IterableOf<>(this.key, this.value)
+            new IterableOf<>(this.key, this.value)
         ).value();
     }
 }
