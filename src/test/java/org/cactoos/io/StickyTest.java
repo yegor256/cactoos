@@ -24,7 +24,10 @@
 package org.cactoos.io;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.func.Repeated;
 import org.cactoos.scalar.LengthOf;
@@ -37,6 +40,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link Sticky}.
+ *
  * @since 0.6
  */
 final class StickyTest {
@@ -62,15 +66,15 @@ final class StickyTest {
     }
 
     @Test
-    void readsRealUrl() throws MalformedURLException {
+    void readsRealUrl() throws MalformedURLException, URISyntaxException {
         new Assertion<>(
             "Must fetch text page from the URL",
             new TextOf(
                 new Sticky(
                     new InputOf(
-                        new URL(
+                        new URI(
                             "file:src/test/resources/org/cactoos/large-text.txt"
-                        )
+                        ).toURL()
                     )
                 )
             ),

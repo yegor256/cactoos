@@ -28,11 +28,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.AllOf;
@@ -54,8 +57,8 @@ import org.takes.tk.TkHtml;
 /**
  * Test case for {@link InputOf}.
  *
- * @since 0.1
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
+ * @since 0.1
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.ExcessiveImports", "unchecked"})
 final class InputOfTest {
@@ -145,15 +148,15 @@ final class InputOfTest {
     }
 
     @Test
-    void readsStringUrl() throws IOException {
+    void readsStringUrl() throws IOException, URISyntaxException {
         new Assertion<>(
             "must fetch bytes from the HTTPS URL",
             new TextOf(
                 new BytesOf(
                     new InputOf(
-                        new URL(
+                        new URI(
                             "file:src/test/resources/org/cactoos/large-text.txt"
-                        )
+                        ).toURL()
                     )
                 )
             ),
