@@ -50,6 +50,6 @@ final class NotTest {
             "Must be changed from false to true",
             new Not(new False()).value(),
             new IsEqual<>(new True().value())
-        );
+        ).affirm();
     }
 }
