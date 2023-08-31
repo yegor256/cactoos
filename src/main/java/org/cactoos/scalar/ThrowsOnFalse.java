@@ -39,26 +39,41 @@ public final class ThrowsOnFalse implements Scalar<Boolean> {
     private final Scalar<Boolean> scalar;
 
     /**
-     * Error message.
+     * Exception to throw.
      */
-    private final String message;
+    private final Scalar<Exception> exception;
 
     /**
      * Ctor.
      * @param sclr Scalar
-     * @param msg Message
+     * @param exc Exception
      */
-    public ThrowsOnFalse(final Scalar<Boolean> sclr, final String msg) {
+    public ThrowsOnFalse(
+        final Scalar<Boolean> sclr,
+        final Scalar<Exception> exc
+    ) {
         this.scalar = sclr;
-        this.message = msg;
+        this.exception = exc;
+    }
+
+    /**
+     * Ctor.
+     * @param sclr Scalar
+     * @param message Error Message
+     */
+    public ThrowsOnFalse(
+        final Scalar<Boolean> sclr,
+        final String message
+    ) {
+        this(
+            sclr, () -> new IllegalArgumentException(message)
+        );
     }
 
     @Override
     public Boolean value() throws Exception {
         if (!this.scalar.value()) {
-            throw new IllegalArgumentException(
-                this.message
-            );
+            throw this.exception.value();
         }
         return true;
     }

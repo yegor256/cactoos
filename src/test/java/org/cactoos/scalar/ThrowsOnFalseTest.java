@@ -24,50 +24,38 @@
 
 package org.cactoos.scalar;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.hamcrest.core.IsEqual;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test suite for {@link ThrowsOnFalse}.
  *
  * @since 0.56.0
  */
-final class ThrowsOnFalseTest {
+public final class ThrowsOnFalseTest {
 
-    @Test
-    void throwsOnFalse() {
-        final String msg = "test message";
-        final String message =
-            Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> new ThrowsOnFalse(
-                    () -> false, msg
-                ).value()
-            ).getMessage();
-        MatcherAssert.assertThat(
-            "Exception message in right format",
-            message,
-            Matchers.equalTo(msg)
-        );
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsOnFalse() throws Exception {
+        new ThrowsOnFalse(
+            () -> false, "test message"
+        ).value();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void throwsSuppliedExceptionOnFalse() throws Exception {
+        new ThrowsOnFalse(
+            () -> false,
+            () -> new IllegalStateException("illegal state")
+        ).value();
     }
 
     @Test
-    void returnsTrueOnTrue() throws Exception {
-        MatcherAssert.assertThat(
-            "Returns true on true statement",
+    public void returnsTrueOnTrue() throws Exception {
+        new Assertion<>(
+            "Must return true on true statement",
             new ThrowsOnFalse(() -> true, "test").value(),
-            Matchers.equalTo(true)
-        );
-    }
-
-    @Test
-    void doesNotThrowOnTrue() {
-        Assertions.assertDoesNotThrow(
-            () -> new ThrowsOnFalse(
-                () -> true, "msg"
-            ).value()
-        );
+            new IsEqual<>(true)
+        ).affirm();
     }
 }
