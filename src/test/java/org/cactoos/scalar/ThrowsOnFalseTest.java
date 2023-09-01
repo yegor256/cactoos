@@ -27,6 +27,7 @@ package org.cactoos.scalar;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test suite for {@link ThrowsOnFalse}.
@@ -35,19 +36,29 @@ import org.llorllale.cactoos.matchers.Assertion;
  */
 public final class ThrowsOnFalseTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void throwsOnFalse() throws Exception {
-        new ThrowsOnFalse(
-            () -> false, "test message"
-        ).value();
+        final String message = "test message";
+        new Assertion<>(
+            "Throws an exception",
+            () -> new ThrowsOnFalse(
+                () -> false, message
+            ).value(),
+            new Throws<>(message, IllegalArgumentException.class)
+        ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void throwsSuppliedExceptionOnFalse() throws Exception {
-        new ThrowsOnFalse(
-            () -> false,
-            () -> new IllegalStateException("illegal state")
-        ).value();
+        final String message = "illegal state";
+        new Assertion<>(
+            "Throws supplied exception",
+            () -> new ThrowsOnFalse(
+                () -> false,
+                () -> new IllegalStateException(message)
+            ).value(),
+            new Throws<>(message, IllegalStateException.class)
+        ).affirm();
     }
 
     @Test

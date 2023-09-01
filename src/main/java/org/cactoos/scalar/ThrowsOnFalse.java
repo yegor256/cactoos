@@ -46,19 +46,6 @@ public final class ThrowsOnFalse implements Scalar<Boolean> {
     /**
      * Ctor.
      * @param sclr Scalar
-     * @param exc Exception
-     */
-    public ThrowsOnFalse(
-        final Scalar<Boolean> sclr,
-        final Scalar<Exception> exc
-    ) {
-        this.scalar = sclr;
-        this.exception = exc;
-    }
-
-    /**
-     * Ctor.
-     * @param sclr Scalar
      * @param message Error Message
      */
     public ThrowsOnFalse(
@@ -68,6 +55,19 @@ public final class ThrowsOnFalse implements Scalar<Boolean> {
         this(
             sclr, () -> new IllegalArgumentException(message)
         );
+    }
+
+    /**
+     * Ctor.
+     * @param sclr Scalar
+     * @param exc Exception
+     */
+    public ThrowsOnFalse(
+        final Scalar<Boolean> sclr,
+        final Scalar<Exception> exc
+    ) {
+        this.scalar = sclr;
+        this.exception = exc;
     }
 
     @Override
