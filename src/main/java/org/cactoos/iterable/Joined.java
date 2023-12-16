@@ -73,7 +73,7 @@ public final class Joined<T> extends IterableEnvelope<T> {
      * Ctor.
      * @param item Item to be appended to end of Iterable
      * @param items Iterable
-     * @since 0.32
+     * @since 0.65
      */
     @SuppressWarnings("unchecked")
     public Joined(final Iterable<? extends T> items, final T... item) {
