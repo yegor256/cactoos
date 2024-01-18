@@ -105,14 +105,14 @@ public final class Multiline extends IterableEnvelope<Text> {
                             Multiline.SPLIT_REGEX
                         );
                         final StringBuilder lines = new StringBuilder();
-                        final StringBuilder word = new StringBuilder(0);
+                        final StringBuilder line = new StringBuilder(0);
                         int length = 0;
                         for (int idx = 0; idx < words.length; ++idx) {
-                            word.setLength(0);
-                            word.append(words[idx]);
+                            line.setLength(0);
+                            line.append(words[idx]);
                             final int size = Multiline.SPACE.length()
-                                + word.length();
-                            if (length + size > limit) {
+                                + line.length();
+                            if (length + size > limit + 1) {
                                 if (idx > 0) {
                                     lines.append(Multiline.NEW_LINE);
                                 }
@@ -123,10 +123,10 @@ public final class Multiline extends IterableEnvelope<Text> {
                                     && length + size + words[idx + 1].length()
                                         <= limit
                             ) {
-                                word.append(Multiline.SPACE);
+                                line.append(Multiline.SPACE);
                             }
-                            lines.append(word);
-                            length = length + word.length();
+                            lines.append(line);
+                            length = length + line.length();
                         }
                         return new IteratorOf<>(
                             lines.toString().split(Multiline.NEW_LINE)

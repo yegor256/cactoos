@@ -103,9 +103,9 @@ final class MultilineTest {
                     new Joined(
                         " ",
                         "The quick brown fox jumps over the lazy",
-                        "black dog and after that returned to "
+                        "black dog and after that returned to the"
                     ),
-                    new TextOf("the cave")
+                    new TextOf("cave")
                 )
             )
         ).affirm();
