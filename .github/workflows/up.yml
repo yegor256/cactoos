@@ -12,7 +12,7 @@ jobs:
           latest=$(git tag --sort=creatordate | tail -1) && \
           sed -E -i "s/<version>[^<]+/<version>${latest}/g" README.md && \
           sed -E -i "s/org.cactoos:cactoos:.+/org.cactoos:cactoos::${latest}/g" README.md
-      - uses: peter-evans/create-pull-request@v5
+      - uses: peter-evans/create-pull-request@v6
         with:
           commit-message: 'new version in README'
           delete-branch: true
