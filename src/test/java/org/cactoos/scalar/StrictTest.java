@@ -31,7 +31,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Strict}.
- * 
+ *
  * @since 0.56
  */
 public final class StrictTest {

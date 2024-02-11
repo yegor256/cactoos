@@ -31,7 +31,7 @@ import org.cactoos.func.FuncOf;
  * Validates the given {@code origin} against the specified {@code rule}.
  * If the validation fails, the {@code exception} is thrown.
  *
- * @param T Element type.
+ * @param <T> Element type.
  *
  * @since 0.56
  */
