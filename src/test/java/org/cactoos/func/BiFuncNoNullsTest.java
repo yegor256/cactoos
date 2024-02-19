@@ -23,43 +23,61 @@
  */
 package org.cactoos.func;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link BiFuncNoNulls}.
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class BiFuncNoNullsTest {
+final class BiFuncNoNullsTest {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullFunc() throws Exception {
-        new BiFuncNoNulls<>(null).apply(new Object(), new Object());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullFirstArg() throws Exception {
-        new BiFuncNoNulls<>(
-            (first, second) -> first
-        ).apply(null, new Object());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullSecondArg() throws Exception {
-        new BiFuncNoNulls<>(
-            (first, second) -> first
-        ).apply(new Object(), null);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void failForNullResult() throws Exception {
-        new BiFuncNoNulls<>(
-            (first, second) -> null
-        ).apply(new Object(), new Object());
+    @Test
+    void failForNullFunc() {
+        new Assertion<>(
+            "Must fail for null func",
+            () -> new BiFuncNoNulls<>(null).apply(new Object(), new Object()),
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
     }
 
     @Test
-    public void okForNoNulls() throws Exception {
+    void failForNullFirstArg() {
+        new Assertion<>(
+            "Must fail for null first argument",
+            () -> new BiFuncNoNulls<>(
+                (first, second) -> first
+            ).apply(null, new Object()),
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
+    }
+
+    @Test
+    void failForNullSecondArg() {
+        new Assertion<>(
+            "Must fail for null second argument",
+            () -> new BiFuncNoNulls<>(
+                (first, second) -> first
+            ).apply(new Object(), null),
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
+    }
+
+    @Test
+    void failForNullResult() {
+        new Assertion<>(
+            "Must fail for null result",
+            () -> new BiFuncNoNulls<>(
+                (first, second) -> null
+            ).apply(new Object(), new Object()),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
+    }
+
+    @Test
+    void okForNoNulls() throws Exception {
         new BiFuncNoNulls<>(
             (first, second) -> first
         ).apply(new Object(), new Object());
