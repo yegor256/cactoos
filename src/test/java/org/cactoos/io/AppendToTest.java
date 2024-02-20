@@ -24,6 +24,7 @@
 package org.cactoos.io;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -67,14 +68,22 @@ final class AppendToTest {
      * Ensures that AppendTo is appending to a given file.
      * @param wdir TempDir to work in
      * @throws Exception if fails
+     * @todo #1586:2h Tests failed on Windows due to not closed streams.
+     *  It will be good to have feature to autoclose streams
      */
     @Test
     void appendsToFile(@TempDir final Path wdir) throws Exception {
         final File source = wdir.resolve("apptest.txt").toFile();
         final String first = "abdcd";
-        new OutputTo(source).stream().write(first.getBytes());
+        try (OutputStream out = new OutputTo(source).stream()) {
+            out.write(first.getBytes());
+            out.flush();
+        }
         final String second = "efgh";
-        new AppendTo(source).stream().write(second.getBytes());
+        try (OutputStream out = new AppendTo(source).stream()) {
+            out.write(second.getBytes());
+            out.flush();
+        }
         new Assertion<>(
             "Does not contain expected text",
             new InputOf(source),
@@ -91,13 +100,17 @@ final class AppendToTest {
     void appendsUnicodeToFile(@TempDir final Path wdir) throws Exception {
         final File source = wdir.resolve("appunitest.txt").toFile();
         final String first = "Hello, товарищ output #3 äÄ ";
-        new OutputTo(source)
-            .stream()
-            .write(first.getBytes(StandardCharsets.UTF_8));
+        try (OutputStream out = new OutputTo(source)
+            .stream()) {
+            out.write(first.getBytes(StandardCharsets.UTF_8));
+            out.flush();
+        }
         final String second = "#4 äÄ üÜ öÖ and ß";
-        new AppendTo(source)
-            .stream()
-            .write(second.getBytes(StandardCharsets.UTF_8));
+        try (OutputStream out = new AppendTo(source)
+            .stream()) {
+            out.write(second.getBytes(StandardCharsets.UTF_8));
+            out.flush();
+        }
         new Assertion<>(
             "Can't find expected unicode text content",
             new InputOf(source),
