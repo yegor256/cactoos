@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import org.cactoos.func.FuncOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -34,7 +34,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.56
  */
-public final class StrictTest {
+final class StrictTest {
 
     @Test
     public void throwsExceptionOnFailure() {
