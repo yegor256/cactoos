@@ -69,7 +69,7 @@ final class AppendToTest {
      * @param wdir TempDir to work in
      * @throws Exception if fails
      * @todo #1586:1h Tests failed on Windows due to not closed streams.
-     *  It will be good to have feature to autoclose streams
+     *  It will be good to have feature to simplify autoclosing streams.
      */
     @Test
     void appendsToFile(@TempDir final Path wdir) throws Exception {
