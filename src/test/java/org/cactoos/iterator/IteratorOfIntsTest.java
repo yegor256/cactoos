@@ -25,7 +25,6 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
@@ -36,6 +35,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class IteratorOfIntsTest {
 
     @Test
@@ -49,10 +49,11 @@ final class IteratorOfIntsTest {
 
     @Test
     void emptyIteratorThrowsException() {
-        Assertions.assertThrows(
-            NoSuchElementException.class,
-            () -> new IteratorOfInts().next()
-        );
+        new Assertion<>(
+            "Exception is expected on iterating empty ints.",
+            () -> new IteratorOfInts().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
@@ -72,7 +73,7 @@ final class IteratorOfIntsTest {
         final IteratorOfInts iterator = new IteratorOfInts(1);
         iterator.next();
         new Assertion<>(
-            "",
+            "Exception is expected for fully traversed iterator.",
             iterator::next,
             new Throws<>(NoSuchElementException.class)
         ).affirm();

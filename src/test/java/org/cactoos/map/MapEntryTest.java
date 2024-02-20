@@ -25,8 +25,9 @@ package org.cactoos.map;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link MapEntry}.
@@ -61,10 +62,11 @@ final class MapEntryTest {
 
     @Test
     void cantSetValue() {
-        Assertions.assertThrows(
-            UnsupportedOperationException.class,
-            () -> new MapEntry<>("one", "two").setValue("three")
-        );
+        new Assertion<>(
+            "Exception is expected on change operations",
+            () -> new MapEntry<>("one", "two").setValue("three"),
+            new Throws<>(UnsupportedOperationException.class)
+        ).affirm();
     }
 
     @Test

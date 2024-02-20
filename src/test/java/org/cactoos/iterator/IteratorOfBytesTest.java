@@ -28,10 +28,10 @@ import java.util.NoSuchElementException;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfBytes}.
@@ -41,6 +41,7 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class IteratorOfBytesTest {
 
     @Test
@@ -90,10 +91,11 @@ final class IteratorOfBytesTest {
 
     @Test
     void emptyIteratorThrowsException() {
-        Assertions.assertThrows(
-            NoSuchElementException.class,
-            () -> new IteratorOfBytes().next()
-        );
+        new Assertion<>(
+            "Exception is expected on iterating empty bytes.",
+            () -> new IteratorOfBytes().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
@@ -107,10 +109,11 @@ final class IteratorOfBytesTest {
 
     @Test
     void nonEmptyIteratorThrowsException() {
-        Assertions.assertThrows(
-            NoSuchElementException.class,
-            () -> this.iteratorWithFetchedElements().next()
-        );
+        new Assertion<>(
+            "Exception is expected for fully traversed iterator.",
+            () -> this.iteratorWithFetchedElements().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     private IteratorOfBytes iteratorWithFetchedElements() {

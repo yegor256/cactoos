@@ -26,9 +26,9 @@ package org.cactoos.map;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Merged}.
@@ -118,13 +118,14 @@ final class MergedTest {
 
     @Test
     void throwsNullPointerForNullMap() {
-        Assertions.assertThrows(
-            NullPointerException.class,
+        new Assertion<>(
+            "Exception is expected for merge with null",
             () -> new Merged<Integer, Integer>(
                 new MapOf<Integer, Integer>(),
                 null
-            ).size()
-        );
+            ).size(),
+            new Throws<>(NullPointerException.class)
+        ).affirm();
     }
 
     @Test

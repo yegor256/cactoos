@@ -29,9 +29,10 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ListOf}.
@@ -88,18 +89,20 @@ final class ListOfTest {
 
     @Test
     void lowBoundTest() {
-        Assertions.assertThrows(
-            IndexOutOfBoundsException.class,
-            () -> new ListOf<>(Collections.nCopies(10, 0)).get(-1)
-        );
+        new Assertion<>(
+            "Exception is expected for negative index",
+            () -> new ListOf<>(Collections.nCopies(10, 0)).get(-1),
+            new Throws<>(IndexOutOfBoundsException.class)
+        ).affirm();
     }
 
     @Test
     void highBoundTest() {
-        Assertions.assertThrows(
-            IndexOutOfBoundsException.class,
-            () -> new ListOf<>(Collections.nCopies(10, 0)).get(11)
-        );
+        new Assertion<>(
+            "Exception is expected for index larger then size",
+            () -> new ListOf<>(Collections.nCopies(10, 0)).get(11),
+            new Throws<>(IndexOutOfBoundsException.class)
+        ).affirm();
     }
 
     @Test

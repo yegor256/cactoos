@@ -31,10 +31,10 @@ import org.cactoos.number.SumOf;
 import org.cactoos.time.DateOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link HighestOf}.
@@ -42,15 +42,17 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
+    "PMD.JUnitTestsShouldIncludeAssert"})
 final class HighestOfTest {
 
     @Test
     void failsForEmptyIterable() {
-        Assertions.assertThrows(
-            NoSuchElementException.class,
-            () -> new HighestOf<>(() -> Collections.emptyIterator()).value()
-        );
+        new Assertion<>(
+            "Exception is expected for iterating empty collection",
+            () -> new HighestOf<>(() -> Collections.emptyIterator()).value(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test

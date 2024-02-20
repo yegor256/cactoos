@@ -38,7 +38,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class StrictTest {
 
     @Test
-    public void throwsExceptionOnFailure() {
+    void throwsExceptionOnFailure() {
         new Assertion<>(
             "Must throw the provided exception on rule failure",
             new Strict<>(
@@ -51,7 +51,7 @@ final class StrictTest {
     }
 
     @Test
-    public void returnsIncapsulatedValue() throws Exception {
+    void returnsIncapsulatedValue() throws Exception {
         new Assertion<>(
             "Must return the original value on rule match",
             new Strict<>(

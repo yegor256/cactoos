@@ -65,7 +65,7 @@ final class IteratorOfCharsTest {
     @Test
     void emptyIteratorThrowsException() {
         new Assertion<>(
-            "Cann't iterate in empty string",
+            "Exception is expected on iterating empty string",
             () -> new IteratorOfChars().next(),
             new Throws<>(NoSuchElementException.class)
         ).affirm();

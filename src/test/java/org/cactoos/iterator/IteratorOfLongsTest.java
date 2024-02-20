@@ -25,9 +25,9 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfLongs}.
@@ -35,6 +35,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class IteratorOfLongsTest {
 
     @Test
@@ -48,10 +49,11 @@ final class IteratorOfLongsTest {
 
     @Test
     void emptyIteratorThrowsException() {
-        Assertions.assertThrows(
-            NoSuchElementException.class,
-            () -> new IteratorOfLongs().next()
-        );
+        new Assertion<>(
+            "Exception is expected for empty iterator of longs.",
+            () -> new IteratorOfLongs().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
@@ -70,9 +72,10 @@ final class IteratorOfLongsTest {
     void nonEmptyIteratorThrowsException() {
         final IteratorOfLongs iterator = new IteratorOfLongs(1);
         iterator.next();
-        Assertions.assertThrows(
-            NoSuchElementException.class,
-                iterator::next
-        );
+        new Assertion<>(
+            "Exception is expected for fully traversed iterator.",
+            iterator::next,
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

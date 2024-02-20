@@ -28,10 +28,10 @@ import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
 import org.cactoos.list.ListOf;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link FormattedText}.
@@ -39,6 +39,7 @@ import org.llorllale.cactoos.matchers.HasString;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class FormattedTextTest {
 
     @Test
@@ -67,13 +68,14 @@ final class FormattedTextTest {
 
     @Test
     void failsForInvalidPattern() {
-        Assertions.assertThrows(
-            UnknownFormatConversionException.class,
+        new Assertion<>(
+            "Exception is expected for invalid format",
             () -> new FormattedText(
                 new TextOf("%%. Formatted %$"),
                 new ListOf<>(1, "invalid")
-            ).asString()
-        );
+            ).asString(),
+            new Throws<>(UnknownFormatConversionException.class)
+        ).affirm();
     }
 
     @Test
@@ -89,15 +91,16 @@ final class FormattedTextTest {
     }
 
     @Test
-    void ensuresThatFormatterFails() throws Exception {
-        Assertions.assertThrows(
-            IllegalFormatConversionException.class,
+    void ensuresThatFormatterFails() {
+        new Assertion<>(
+            "Exception is expected for wrong format",
             () -> new FormattedText(
                 new TextOf("Local time: %d"),
                 Locale.ROOT,
                 Calendar.getInstance()
-            ).asString()
-        );
+            ).asString(),
+            new Throws<>(IllegalFormatConversionException.class)
+        ).affirm();
     }
 
     @Test

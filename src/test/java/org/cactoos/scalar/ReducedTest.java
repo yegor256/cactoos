@@ -27,27 +27,29 @@ import java.util.Collections;
 import java.util.NoSuchElementException;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Reduced}.
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class ReducedTest {
 
     @Test
     void failsForEmptyIterable() {
-        Assertions.assertThrows(
-            NoSuchElementException.class,
+        new Assertion<>(
+            "Exception is expected for empty iterable",
             () -> new Reduced<>(
                 (first, last) -> first,
                 Collections.emptyList()
-            ).value()
-        );
+            ).value(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test

@@ -31,10 +31,10 @@ import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Partitioned}.
@@ -42,6 +42,7 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class PartitionedTest {
 
     @Test
@@ -111,30 +112,36 @@ final class PartitionedTest {
 
     @Test
     void partitionedWithPartitionSizeSmallerOne() {
-        Assertions.assertThrows(
-            IllegalArgumentException.class,
-            () -> new Partitioned<>(0, new ListOf<>(1).iterator()).next()
-        );
+        new Assertion<>(
+            "Exception is expected for partition size lower 1",
+            () -> new Partitioned<>(0, new ListOf<>(1).iterator()).next(),
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
     }
 
     @Test
     void partitionedListsAreUnmodifiable() {
-        Assertions.assertThrows(
-            UnsupportedOperationException.class,
-            () -> new Partitioned<>(
-                2, new ListOf<>(1, 2).iterator()
-            ).next().clear()
-        );
+        new Assertion<>(
+            "Exception is expected on modification operations",
+            () -> {
+                new Partitioned<>(
+                    2, new ListOf<>(1, 2).iterator()
+                ).next().clear();
+                return 1;
+            },
+            new Throws<>(UnsupportedOperationException.class)
+        ).affirm();
     }
 
     @Test
     void emptyPartitionedNextThrowsException() {
-        Assertions.assertThrows(
-            NoSuchElementException.class,
+        new Assertion<>(
+            "Exception is expected for iteration empty",
             () -> new Partitioned<>(
                 2, Collections.emptyIterator()
-            ).next()
-        );
+            ).next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
 }

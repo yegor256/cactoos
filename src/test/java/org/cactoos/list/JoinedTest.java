@@ -29,10 +29,10 @@ import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsInstanceOf;
 import org.hamcrest.core.IsNot;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Joined}.
@@ -41,7 +41,8 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle DiamondOperatorCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods",
+    "PMD.JUnitTestsShouldIncludeAssert"})
 final class JoinedTest {
 
     /**
@@ -401,10 +402,11 @@ final class JoinedTest {
 
     @Test
     void listIteratorSecond() {
-        Assertions.assertThrows(
-            IndexOutOfBoundsException.class,
-            () -> new Joined<Integer>().listIterator(66)
-        );
+        new Assertion<>(
+            "Exception is expected for greater then size index",
+            () -> new Joined<Integer>().listIterator(66),
+            new Throws<>(IndexOutOfBoundsException.class)
+        ).affirm();
     }
 
     @Test

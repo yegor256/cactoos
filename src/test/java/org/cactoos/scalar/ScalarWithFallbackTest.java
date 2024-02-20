@@ -28,10 +28,10 @@ import java.util.IllegalFormatException;
 import java.util.IllegalFormatWidthException;
 import org.cactoos.Fallback;
 import org.cactoos.iterable.IterableOf;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ScalarWithFallback}.
@@ -39,7 +39,8 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked",
+    "PMD.JUnitTestsShouldIncludeAssert"})
 final class ScalarWithFallbackTest {
 
     @Test
@@ -199,14 +200,15 @@ final class ScalarWithFallbackTest {
 
     @Test
     void noFallbackIsProvided() {
-        Assertions.assertThrows(
-            Exception.class,
+        new Assertion<>(
+            "Exception is expected if there is no fallback",
             () -> new ScalarWithFallback<>(
                 () -> {
                     throw new IllegalFormatWidthException(1);
                 },
                 new IterableOf<>()
-            ).value()
-        );
+            ).value(),
+            new Throws<>(Exception.class)
+        ).affirm();
     }
 }

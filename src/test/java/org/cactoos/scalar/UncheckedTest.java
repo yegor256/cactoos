@@ -25,8 +25,10 @@ package org.cactoos.scalar;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Unchecked}.
@@ -34,18 +36,44 @@ import org.junit.jupiter.api.Test;
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class UncheckedTest {
 
     @Test
     void rethrowsCheckedToUncheckedException() {
-        Assertions.assertThrows(
-            UncheckedIOException.class,
+        new Assertion<>(
+            "Checked exception should be rethrown as unchecked",
             () -> new Unchecked<>(
                 () -> {
                     throw new IOException("intended");
                 }
-            ).value()
-        );
+            ).value(),
+            new Throws<>(UncheckedIOException.class)
+        ).affirm();
+    }
+
+    @Test
+    void rethrowsUncheckedException() {
+        new Assertion<>(
+            "Unchecked exception should be rethrown as is",
+            () -> new Unchecked<>(
+                () -> {
+                    throw new IllegalStateException("");
+                }
+            ).value(),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
+    }
+
+    @Test
+    void returnUncheckedValue() {
+        new Assertion<>(
+            "Must return value without exceptions",
+            new Unchecked<>(
+                () -> true
+            ).value(),
+            new IsTrue()
+        ).affirm();
     }
 
 }
