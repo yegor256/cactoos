@@ -34,6 +34,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.56
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class StrictTest {
 
     @Test

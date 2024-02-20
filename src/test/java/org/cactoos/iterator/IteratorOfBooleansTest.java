@@ -25,9 +25,9 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfBooleans}.
@@ -48,10 +48,11 @@ final class IteratorOfBooleansTest {
 
     @Test
     void emptyIteratorThrowsException() {
-        Assertions.assertThrows(
-            NoSuchElementException.class,
-            () -> new IteratorOfBooleans().next()
-        );
+        new Assertion<>(
+            "Exception is expected for empty iterator",
+            () -> new IteratorOfBooleans().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
@@ -70,9 +71,10 @@ final class IteratorOfBooleansTest {
     void nonEmptyIteratorThrowsException() {
         final IteratorOfBooleans iterator = new IteratorOfBooleans(true);
         iterator.next();
-        Assertions.assertThrows(
-            NoSuchElementException.class,
-            iterator::next
-        );
+        new Assertion<>(
+            "Exception is expected after iterating last item",
+            iterator::next,
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

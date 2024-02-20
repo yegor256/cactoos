@@ -28,10 +28,10 @@ import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.NoNulls;
 import org.cactoos.scalar.ItemAt;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link Cycled}.
@@ -65,11 +65,12 @@ final class CycledTest {
 
     @Test
     void notCycledEmptyTest() {
-        Assertions.assertThrows(
-            NoSuchElementException.class,
+        new Assertion<>(
+            "Error is expected for empty iterator",
             () -> new Cycled<>(
                 Collections::emptyIterator
-            ).next()
-        );
+            ).next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

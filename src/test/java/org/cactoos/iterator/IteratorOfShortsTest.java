@@ -25,9 +25,9 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfShorts}.
@@ -49,10 +49,11 @@ final class IteratorOfShortsTest {
 
     @Test
     void emptyIteratorThrowsException() {
-        Assertions.assertThrows(
-            NoSuchElementException.class,
-            () -> new IteratorOfShorts().next()
-        );
+        new Assertion<>(
+            "Exception is expected for empty iterator",
+            () -> new IteratorOfShorts().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
@@ -73,9 +74,10 @@ final class IteratorOfShortsTest {
     void nonEmptyIteratorThrowsException() {
         final IteratorOfShorts iterator = new IteratorOfShorts((short) 1);
         iterator.next();
-        Assertions.assertThrows(
-            NoSuchElementException.class,
-            iterator::next
-        );
+        new Assertion<>(
+            "Exception is not thrown after last item iteration",
+            iterator::next,
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }
