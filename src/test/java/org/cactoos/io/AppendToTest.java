@@ -68,7 +68,7 @@ final class AppendToTest {
      * Ensures that AppendTo is appending to a given file.
      * @param wdir TempDir to work in
      * @throws Exception if fails
-     * @todo #1586:2h Tests failed on Windows due to not closed streams.
+     * @todo #1586:1h Tests failed on Windows due to not closed streams.
      *  It will be good to have feature to autoclose streams
      */
     @Test
