@@ -36,7 +36,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "PMD.JUnitTestsShouldIncludeAssert"})
 final class FallbackFromTest {
 
     @Test

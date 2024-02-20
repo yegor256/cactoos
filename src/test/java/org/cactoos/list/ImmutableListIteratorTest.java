@@ -34,7 +34,9 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.TooManyMethods",
+    "PMD.AvoidDuplicateLiterals",
+    "PMD.JUnitTestsShouldIncludeAssert"})
 final class ImmutableListIteratorTest {
 
     @Test

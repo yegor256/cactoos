@@ -25,7 +25,8 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -35,10 +36,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidUsingShortType")
-public final class IteratorOfShortsTest {
+final class IteratorOfShortsTest {
 
     @Test
-    public void emptyIteratorDoesNotHaveNext() {
+    void emptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for empty iterator.",
             new IteratorOfShorts().hasNext(),
@@ -46,13 +47,16 @@ public final class IteratorOfShortsTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void emptyIteratorThrowsException() {
-        new IteratorOfShorts().next();
+    @Test
+    void emptyIteratorThrowsException() {
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            () -> new IteratorOfShorts().next()
+        );
     }
 
     @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
+    void nonEmptyIteratorDoesNotHaveNext() {
         final IteratorOfShorts iterator = new IteratorOfShorts(
             (short) 1, (short) 2
         );
@@ -65,10 +69,13 @@ public final class IteratorOfShortsTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
+    @Test
+    void nonEmptyIteratorThrowsException() {
         final IteratorOfShorts iterator = new IteratorOfShorts((short) 1);
         iterator.next();
-        iterator.next();
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            iterator::next
+        );
     }
 }

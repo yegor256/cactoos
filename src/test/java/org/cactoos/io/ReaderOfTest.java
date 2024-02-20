@@ -26,11 +26,11 @@ package org.cactoos.io;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.TextOf;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
@@ -39,17 +39,12 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class ReaderOfTest {
-
-    /**
-     * Temporary files generator.
-     */
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings({"PMD.TooManyMethods",
+    "PMD.JUnitTestsShouldIncludeAssert"})
+final class ReaderOfTest {
 
     @Test
-    public void readsEmpty() throws Exception {
+    void readsEmpty() {
         final String empty = "";
         new Assertion<>(
             "Must read empty string",
@@ -59,7 +54,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharVarArg() throws Exception {
+    void readsCharVarArg() throws Exception {
         new Assertion<>(
             "Must read chars var args",
             new TextOf(new ReaderOf('a', 'b', 'c')),
@@ -68,7 +63,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharArrayWithCharset() throws Exception {
+    void readsCharArrayWithCharset() throws Exception {
         final String message =
             "char array on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -84,7 +79,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharArrayWithCharsetByName() throws Exception {
+    void readsCharArrayWithCharsetByName() throws Exception {
         final String message =
             "char array with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -100,7 +95,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsByteArray() throws Exception {
+    void readsByteArray() throws Exception {
         final String message =
             "byte array on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -115,7 +110,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsByteArrayWithCharset() throws Exception {
+    void readsByteArrayWithCharset() throws Exception {
         final String message =
             "byte array with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -131,7 +126,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsByteArrayWithCharsetByName() throws Exception {
+    void readsByteArrayWithCharsetByName() throws Exception {
         final String message =
             "bte array with charset by name on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -147,10 +142,10 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsPath() throws Exception {
+    void readsPath(@TempDir final Path wdir) throws Exception {
         final String message =
             "path on äÄ üÜ öÖ ß жш";
-        final File input = this.folder.newFile();
+        final File input = wdir.resolve("reader1.txt").toFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
@@ -163,10 +158,10 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsFile() throws Exception {
+    void readsFile(@TempDir final Path wdir) throws Exception {
         final String message =
             "file on äÄ üÜ öÖ ß жш";
-        final File input = this.folder.newFile();
+        final File input = wdir.resolve("reader2.txt").toFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
@@ -179,10 +174,10 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsUrl() throws Exception {
+    void readsUrl(@TempDir final Path wdir) throws Exception {
         final String message =
             "URL on äÄ üÜ öÖ ß жш";
-        final File input = this.folder.newFile();
+        final File input = wdir.resolve("reader3.txt").toFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
@@ -201,10 +196,10 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsUri() throws Exception {
+    void readsUri(@TempDir final Path wdir) throws Exception {
         final String message =
             "URI on äÄ üÜ öÖ ß жш";
-        final File input = this.folder.newFile();
+        final File input = wdir.resolve("reader4.txt").toFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
@@ -217,7 +212,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsBytes() throws Exception {
+    void readsBytes() throws Exception {
         final String input =
             "Bytes on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -228,7 +223,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsText() throws Exception {
+    void readsText() throws Exception {
         final String input =
             "Text on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -239,7 +234,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsTextWithCharset() throws Exception {
+    void readsTextWithCharset() throws Exception {
         final String input =
             "Text with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -255,7 +250,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsTextWithCharsetByName() throws Exception {
+    void readsTextWithCharsetByName() throws Exception {
         final String input =
             "Text with charset by name on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -271,7 +266,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharSequence() throws Exception {
+    void readsCharSequence() throws Exception {
         final String input =
             "char sequence on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -282,7 +277,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharSequenceWithCharset() throws Exception {
+    void readsCharSequenceWithCharset() throws Exception {
         final String input =
             "char sequence with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -298,7 +293,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsCharSequenceWithCharsetByName() throws Exception {
+    void readsCharSequenceWithCharsetByName() throws Exception {
         final String input =
             "char sequence with charset by name on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -314,7 +309,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInput() throws Exception {
+    void readsInput() throws Exception {
         final String input =
             "Input on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -325,7 +320,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputWithCharset() throws Exception {
+    void readsInputWithCharset() throws Exception {
         final String input =
             "Input with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -341,7 +336,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputWithCharsetByName() throws Exception {
+    void readsInputWithCharsetByName() throws Exception {
         final String input =
             "Input with charset by name on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -357,7 +352,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputWithCharsetDecoder() throws Exception {
+    void readsInputWithCharsetDecoder() throws Exception {
         final String input =
             "Input with charset decoder on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -373,7 +368,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputStream() throws Exception {
+    void readsInputStream() throws Exception {
         final String input =
             "InputStream on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -384,7 +379,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputStreamWithCharset() throws Exception {
+    void readsInputStreamWithCharset() throws Exception {
         final String input =
             "InputStream with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -400,7 +395,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputStreamWithCharsetByName() throws Exception {
+    void readsInputStreamWithCharsetByName() throws Exception {
         final String input =
             "InputStream with charset by name on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -416,7 +411,7 @@ public final class ReaderOfTest {
     }
 
     @Test
-    public void readsInputStreamWithCharsetDecoder() throws Exception {
+    void readsInputStreamWithCharsetDecoder() throws Exception {
         final String input =
             "InputStream with charset decoder on äÄ üÜ öÖ ß жш";
         new Assertion<>(

@@ -33,9 +33,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class BytesTest {
-
-    public void failForNullArgument() throws Exception {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class BytesTest {
+    @Test
+    void failForNullArgument() {
         new Assertion<>(
             "Must fail for null argument.",
             () -> new NoNulls(null).asBytes(),
@@ -43,7 +44,8 @@ public final class BytesTest {
         ).affirm();
     }
 
-    public void failForNullResult() throws Exception {
+    @Test
+    void failForNullResult() {
         new Assertion<>(
             "Must fail for null result.",
             () -> new NoNulls(() -> null).asBytes(),
@@ -52,7 +54,7 @@ public final class BytesTest {
     }
 
     @Test
-    public void okForNoNulls() throws Exception {
+    void okForNoNulls() throws Exception {
         new NoNulls(() -> new byte[1]).asBytes();
     }
 }

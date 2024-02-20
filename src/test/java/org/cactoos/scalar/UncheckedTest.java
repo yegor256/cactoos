@@ -25,7 +25,8 @@ package org.cactoos.scalar;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Unchecked}.
@@ -33,15 +34,18 @@ import org.junit.Test;
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class UncheckedTest {
+final class UncheckedTest {
 
-    @Test(expected = UncheckedIOException.class)
-    public void rethrowsCheckedToUncheckedException() {
-        new Unchecked<>(
-            () -> {
-                throw new IOException("intended");
-            }
-        ).value();
+    @Test
+    void rethrowsCheckedToUncheckedException() {
+        Assertions.assertThrows(
+            UncheckedIOException.class,
+            () -> new Unchecked<>(
+                () -> {
+                    throw new IOException("intended");
+                }
+            ).value()
+        );
     }
 
 }

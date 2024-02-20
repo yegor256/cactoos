@@ -26,10 +26,10 @@ package org.cactoos.io;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import org.cactoos.text.TextOf;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.IsText;
@@ -39,15 +39,11 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TeeOutputTest {
-    /**
-     * Temporary files generator.
-     */
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class TeeOutputTest {
 
     @Test
-    public void copiesContent() {
+    void copiesContent() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output to Output and return Input",
@@ -65,7 +61,7 @@ public final class TeeOutputTest {
     }
 
     @Test
-    public void copiesWithWriter() {
+    void copiesWithWriter() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output with writer",
@@ -83,7 +79,7 @@ public final class TeeOutputTest {
     }
 
     @Test
-    public void copiesWithWriterAndCharset() {
+    void copiesWithWriterAndCharset() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output with writer and charset",
@@ -104,9 +100,9 @@ public final class TeeOutputTest {
     }
 
     @Test
-    public void copiesWithPath() throws Exception {
+    void copiesWithPath(@TempDir final Path wdir) {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final File file = this.folder.newFile();
+        final File file = wdir.resolve("tree1.txt").toFile();
         new Assertion<>(
             "Must copy Output with path",
             new TextOf(
@@ -125,9 +121,9 @@ public final class TeeOutputTest {
     }
 
     @Test
-    public void copiesWithFile() throws Exception {
+    void copiesWithFile(@TempDir final Path wdir) {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final File file = this.folder.newFile();
+        final File file = wdir.resolve("tree2.txt").toFile();
         new Assertion<>(
             "Must copy Output with file",
             new TextOf(
@@ -146,7 +142,7 @@ public final class TeeOutputTest {
     }
 
     @Test
-    public void copiesWithOutputStream() {
+    void copiesWithOutputStream() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
             "Can't copy Output with output stream",

@@ -26,9 +26,10 @@ package org.cactoos.number;
 import java.util.Collections;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.AllOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsNumber;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link AvgOf}.
@@ -37,10 +38,10 @@ import org.llorllale.cactoos.matchers.IsNumber;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class AvgOfTest {
+final class AvgOfTest {
 
     @Test
-    public void withEmptyCollection() {
+    void withEmptyCollection() {
         new Assertion<>(
             "Average of elements in empty collection must be zero",
             new AvgOf(Collections.emptyList()).longValue(),
@@ -49,7 +50,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntCollectionIntValue() {
+    void withIntCollectionIntValue() {
         new Assertion<>(
             "Average of values in int collection must be int value",
             new AvgOf(
@@ -60,7 +61,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntCollectionIntValueMaxValues() {
+    void withIntCollectionIntValueMaxValues() {
         new Assertion<>(
             "Average of values in MAX int collection must be MAX int value",
             new AvgOf(
@@ -71,7 +72,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntCollectionLongValue() {
+    void withIntCollectionLongValue() {
         new Assertion<>(
             "Average of values in int collection must be long value",
             new AvgOf(
@@ -82,7 +83,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntCollectionDoubleValue() {
+    void withIntCollectionDoubleValue() {
         new Assertion<>(
             "Average of values in int collection must be double value",
             new AvgOf(
@@ -93,7 +94,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withIntCollectionFloatValue() {
+    void withIntCollectionFloatValue() {
         new Assertion<>(
             "Average of values in int collection must be float value",
             new AvgOf(
@@ -104,7 +105,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withLongCollectionIntValue() {
+    void withLongCollectionIntValue() {
         new Assertion<>(
             "Average of values in long collection must be int value",
             new AvgOf(
@@ -115,7 +116,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withLongCollectionLongValue() {
+    void withLongCollectionLongValue() {
         new Assertion<>(
             "Average of values in long collection must be long value",
             new AvgOf(
@@ -126,7 +127,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withLongCollectionMaxValue() {
+    void withLongCollectionMaxValue() {
         new Assertion<>(
             "Average of values in MAX long collection must be MAX long value",
             new AvgOf(
@@ -137,7 +138,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withLongCollectionDoubleValue() {
+    void withLongCollectionDoubleValue() {
         new Assertion<>(
             "Average of values in long collection must be double value",
             new AvgOf(
@@ -148,7 +149,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withLongCollectionFloatValue() {
+    void withLongCollectionFloatValue() {
         new Assertion<>(
             "Average of values in long collection must be float value",
             new AvgOf(
@@ -159,7 +160,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withDoubleCollectionIntValue() {
+    void withDoubleCollectionIntValue() {
         new Assertion<>(
             "Average of values in double collection must be int value",
             new AvgOf(
@@ -170,7 +171,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withDoubleCollectionLongValue() {
+    void withDoubleCollectionLongValue() {
         new Assertion<>(
             "Average of values in double collection must be long value",
             new AvgOf(
@@ -181,7 +182,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withDoubleCollectionDoubleValue() {
+    void withDoubleCollectionDoubleValue() {
         new Assertion<>(
             "Average of values in double collection must be double value",
             new AvgOf(
@@ -192,7 +193,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withDoubleCollectionMaxValue() {
+    void withDoubleCollectionMaxValue() {
         new Assertion<>(
             "Average of values in MAX double collection must be MAX double value",
             new AvgOf(
@@ -203,7 +204,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withDoubleCollectionMinValue() {
+    void withDoubleCollectionMinValue() {
         new Assertion<>(
             "Average of values in MIN double collection must be MIN double value",
             new AvgOf(
@@ -213,29 +214,41 @@ public final class AvgOfTest {
         ).affirm();
     }
 
-    @Test(expected = NumberFormatException.class)
-    public void withDoubleCollectionPositiveInfinity() {
-        new AvgOf(
-            Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY
-        ).doubleValue();
-    }
-
-    @Test(expected = NumberFormatException.class)
-    public void withDoubleCollectionNegativeInfinity() {
-        new AvgOf(
-            Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY
-        ).doubleValue();
-    }
-
-    @Test(expected = NumberFormatException.class)
-    public void withDoubleCollectionNaN() {
-        new AvgOf(
-            Double.NaN, Double.NaN
-        ).doubleValue();
+    @Test
+    void withDoubleCollectionPositiveInfinity() {
+        new Assertion<>(
+            "Cann't calculate avg from infinity",
+            () -> new AvgOf(
+                Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY
+            ).doubleValue(),
+            new Throws<>(NumberFormatException.class)
+        ).affirm();
     }
 
     @Test
-    public void withDoubleCollectionNegativeNumbersDoubleValue() {
+    void withDoubleCollectionNegativeInfinity() {
+        new Assertion<>(
+            "Cann't calculate avg from infinity",
+            () -> new AvgOf(
+                Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY
+            ).doubleValue(),
+            new Throws<>(NumberFormatException.class)
+        ).affirm();
+    }
+
+    @Test
+    void withDoubleCollectionNaN() {
+        new Assertion<>(
+            "Cann't calculate avg from NaN",
+            () -> new AvgOf(
+                Double.NaN, Double.NaN
+            ).doubleValue(),
+        new Throws<>(NumberFormatException.class)
+        ).affirm();
+    }
+
+    @Test
+    void withDoubleCollectionNegativeNumbersDoubleValue() {
         new Assertion<>(
             "Average of values in negative double collection must be negative double value",
             new AvgOf(
@@ -246,7 +259,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withDecimalCollectionPrecisionProblem() {
+    void withDecimalCollectionPrecisionProblem() {
         new Assertion<>(
             "Average of decimal values must have precision problem",
             new AvgOf(
@@ -257,7 +270,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withDecimalCollectionPrecisionProblemExtraDecimalRange() {
+    void withDecimalCollectionPrecisionProblemExtraDecimalRange() {
         new Assertion<>(
             "Average of decimal values with extra decimal range must have precision problem",
             new AvgOf(
@@ -268,7 +281,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withFloatCollectionIntValue() {
+    void withFloatCollectionIntValue() {
         new Assertion<>(
             "Average of float values in float collection must be int value",
             new AvgOf(
@@ -279,7 +292,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withFloatCollectionLongValue() {
+    void withFloatCollectionLongValue() {
         new Assertion<>(
             "Average of values in float collection must be long value",
             new AvgOf(
@@ -290,7 +303,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withFloatCollectionDoubleValue() {
+    void withFloatCollectionDoubleValue() {
         new Assertion<>(
             "Average of values in float collection must be double value",
             new AvgOf(
@@ -301,7 +314,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withFloatCollectionFloatValue() {
+    void withFloatCollectionFloatValue() {
         new Assertion<>(
             "Average of values in float collection must be float value",
             new AvgOf(
@@ -312,7 +325,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withFloatCollectionMaxValue() {
+    void withFloatCollectionMaxValue() {
         new Assertion<>(
             "Average of values in MAX float collection must be MAX float value",
             new AvgOf(
@@ -323,7 +336,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void withFloatCollectionMinValue() {
+    void withFloatCollectionMinValue() {
         new Assertion<>(
             "Average of values in MIN float collection must be MIN float value",
             new AvgOf(
@@ -334,7 +347,7 @@ public final class AvgOfTest {
     }
 
     @Test
-    public void canBeCalledTwice() {
+    void canBeCalledTwice() {
         new Assertion<Number>(
             "Average of values can be called twice",
             new AvgOf(

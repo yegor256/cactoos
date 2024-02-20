@@ -38,10 +38,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 line)
  */
-public final class HexOfTest {
+final class HexOfTest {
 
     @Test
-    public void emptyText() throws Exception {
+    void emptyText() throws Exception {
         new Assertion<>(
             "Must represent an empty hexadecimal text",
             new HexOf(new TextOf("")).asBytes(),
@@ -50,7 +50,7 @@ public final class HexOfTest {
     }
 
     @Test
-    public void validHex() throws Exception {
+    void validHex() throws Exception {
         final byte[] bytes = new byte[256];
         for (int index = 0; index < 256; ++index) {
             bytes[index] = (byte) (index + Byte.MIN_VALUE);
@@ -67,7 +67,7 @@ public final class HexOfTest {
     }
 
     @Test
-    public void invalidHexLength() throws Exception {
+    void invalidHexLength() throws Exception {
         new Assertion<>(
             "Must invalid hex length",
             () -> new HexOf(new TextOf("ABF")).asBytes(),
@@ -79,7 +79,7 @@ public final class HexOfTest {
     }
 
     @Test
-    public void invalidHex() throws Exception {
+    void invalidHex() throws Exception {
         new Assertion<>(
             "Must invalid hex",
             () -> new HexOf(new TextOf("ABG!")).asBytes(),

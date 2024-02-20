@@ -33,6 +33,7 @@ import org.llorllale.cactoos.matchers.IsApplicable;
 *
 * @since 0.49
 */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class FlattenedTest {
     @Test
     void flattens() {

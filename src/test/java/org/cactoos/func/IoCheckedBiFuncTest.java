@@ -24,7 +24,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -33,10 +33,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IoCheckedBiFuncTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class IoCheckedBiFuncTest {
 
     @Test
-    public void rethrowsIoException() {
+    void rethrowsIoException() {
         final IOException exception = new IOException("intended");
         new Assertion<>(
             "Must rethrow IOException",
@@ -52,21 +53,29 @@ public final class IoCheckedBiFuncTest {
         ).affirm();
     }
 
-    @Test(expected = IOException.class)
-    public void rethrowsCheckedToIoException() throws Exception {
-        new IoCheckedBiFunc<>(
-            (fst, scd) -> {
-                throw new IOException("intended to fail");
-            }
-        ).apply(1, 2);
+    @Test
+    void rethrowsCheckedToIoException() {
+        new Assertion<>(
+            "IOException should be rethrown",
+            () -> new IoCheckedBiFunc<>(
+                (fst, scd) -> {
+                    throw new IOException("intended to fail");
+                }
+            ).apply(1, 2),
+            new Throws<>(IOException.class)
+        ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionGoesOut() throws IOException {
-        new IoCheckedBiFunc<>(
-            (fst, scd) -> {
-                throw new IllegalStateException("intended to fail here");
-            }
-        ).apply(1, 2);
+    @Test
+    void runtimeExceptionGoesOut() {
+        new Assertion<>(
+            "Runtime exception should be rethrown",
+            () -> new IoCheckedBiFunc<>(
+                (fst, scd) -> {
+                    throw new IllegalStateException("intended to fail here");
+                }
+            ).apply(1, 2),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 }

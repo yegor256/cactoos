@@ -27,9 +27,10 @@ import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfChars}.
@@ -37,10 +38,10 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorOfCharsTest {
+final class IteratorOfCharsTest {
 
     @Test
-    public void canBeConstructedFromText() {
+    void canBeConstructedFromText() {
         new Assertion<>(
             "Iterator must contain all characters of the string",
             new IterableOf<>(
@@ -53,7 +54,7 @@ public final class IteratorOfCharsTest {
     }
 
     @Test
-    public void emptyIteratorDoesNotHaveNext() {
+    void emptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for empty iterator",
             new IteratorOfChars().hasNext(),
@@ -61,13 +62,17 @@ public final class IteratorOfCharsTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void emptyIteratorThrowsException() {
-        new IteratorOfChars().next();
+    @Test
+    void emptyIteratorThrowsException() {
+        new Assertion<>(
+            "Cann't iterate in empty string",
+            () -> new IteratorOfChars().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
+    void nonEmptyIteratorDoesNotHaveNext() {
         final IteratorOfChars iterator = new IteratorOfChars(
             'a', 'b', 'c'
         );
@@ -81,12 +86,16 @@ public final class IteratorOfCharsTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
+    @Test
+    void nonEmptyIteratorThrowsException() {
         final IteratorOfChars iterator = new IteratorOfChars(
             'a'
         );
         iterator.next();
-        iterator.next();
+        new Assertion<>(
+            "Cann't move to second character",
+            () -> iterator.next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

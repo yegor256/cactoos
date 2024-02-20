@@ -34,7 +34,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.44
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public class StartsWithTest {
+final class StartsWithTest {
 
     @Test
     void emptyStartsWithEmpty() throws Exception {

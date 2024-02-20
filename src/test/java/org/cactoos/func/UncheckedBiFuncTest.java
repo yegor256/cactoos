@@ -25,28 +25,34 @@ package org.cactoos.func;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link UncheckedBiFunc}.
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class UncheckedBiFuncTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class UncheckedBiFuncTest {
 
-    @Test(expected = UncheckedIOException.class)
-    public void rethrowsCheckedToUncheckedException() {
-        new UncheckedBiFunc<>(
-            (fst, scd) -> {
-                throw new IOException("intended");
-            }
-        ).apply(1, 2);
+    @Test
+    void rethrowsCheckedToUncheckedException() {
+        new Assertion<>(
+            "Checked exception does not rethrown as unchecked",
+            () -> new UncheckedBiFunc<>(
+                (fst, scd) -> {
+                    throw new IOException("intended");
+                }
+            ).apply(1, 2),
+            new Throws<>(UncheckedIOException.class)
+        ).affirm();
     }
 
     @Test
-    public void testUncheckedBiFunc() {
+    void testUncheckedBiFunc() {
         new Assertion<>(
             "Must return value",
             new UncheckedBiFunc<>(
@@ -56,13 +62,17 @@ public final class UncheckedBiFuncTest {
         ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionGoesOut() {
-        new UncheckedBiFunc<>(
-            (fst, scd) -> {
-                throw new IllegalStateException("intended to fail");
-            }
-        ).apply(1, 2);
+    @Test
+    void runtimeExceptionGoesOut() {
+        new Assertion<>(
+            "Runtime exception rethrown without changes",
+            () -> new UncheckedBiFunc<>(
+                (fst, scd) -> {
+                    throw new IllegalStateException("intended to fail");
+                }
+            ).apply(1, 2),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
 }

@@ -28,7 +28,8 @@ import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.NoNulls;
 import org.cactoos.scalar.ItemAt;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
@@ -37,10 +38,10 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CycledTest {
+final class CycledTest {
 
     @Test
-    public void repeatIteratorTest() {
+    void repeatIteratorTest() {
         final String expected = "two";
         new Assertion<>(
             "must repeat iterator",
@@ -62,10 +63,13 @@ public final class CycledTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void notCycledEmptyTest() {
-        new Cycled<>(
-            Collections::emptyIterator
-        ).next();
+    @Test
+    void notCycledEmptyTest() {
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            () -> new Cycled<>(
+                Collections::emptyIterator
+            ).next()
+        );
     }
 }

@@ -29,7 +29,8 @@ import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsInstanceOf;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -41,7 +42,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @checkstyle DiamondOperatorCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class JoinedTest {
+final class JoinedTest {
 
     /**
      * Literal ONE value.
@@ -64,7 +65,7 @@ public final class JoinedTest {
     private static final String LITERAL_FOUR = "FOUR";
 
     @Test
-    public void behavesAsCollection() {
+    void behavesAsCollection() {
         new Assertion<>(
             "Can't behave as a list",
             new Joined<String>(
@@ -80,7 +81,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void size() {
+    void size() {
         new Assertion<>(
             "Must evaluate the size of the joined list",
             new Joined<String>(
@@ -96,7 +97,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void isEmpty() {
+    void isEmpty() {
         new Assertion<>(
             "Must be evaluated as an empty list",
             new Joined<String>(
@@ -112,7 +113,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void contains() {
+    void contains() {
         new Assertion<>(
             "Must contain element specified",
             new Joined<String>(
@@ -128,7 +129,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void iterator() {
+    void iterator() {
         new Assertion<>(
             "Joined Iterator Must return next element equal to the first added",
             new Joined<String>(
@@ -146,7 +147,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void add() {
+    void add() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
             new ListOf<>(JoinedTest.LITERAL_TWO)
@@ -166,7 +167,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void remove() {
+    void remove() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
             new ListOf<>(JoinedTest.LITERAL_TWO)
@@ -184,7 +185,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void containsAll() {
+    void containsAll() {
         new Assertion<>(
             "Must contain all elements",
             new Joined<String>(
@@ -201,7 +202,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void addAll() {
+    void addAll() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
             new ListOf<>(JoinedTest.LITERAL_TWO)
@@ -227,7 +228,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void addAllInFront() {
+    void addAllInFront() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
             new ListOf<>(JoinedTest.LITERAL_TWO)
@@ -254,7 +255,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void removeAll() {
+    void removeAll() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(
                 JoinedTest.LITERAL_ONE,
@@ -280,7 +281,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void retainAll() {
+    void retainAll() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
             new ListOf<>(
@@ -307,7 +308,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void clear() {
+    void clear() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(
                 JoinedTest.LITERAL_TWO,
@@ -326,7 +327,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void get() {
+    void get() {
         new Assertion<>(
             "Must get element",
             new Joined<String>(
@@ -343,7 +344,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void set() {
+    void set() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
             new ListOf<>(JoinedTest.LITERAL_TWO)
@@ -357,7 +358,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void addByIndex() {
+    void addByIndex() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
             new ListOf<>(JoinedTest.LITERAL_TWO)
@@ -371,7 +372,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void removeByIndex() {
+    void removeByIndex() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
             new ListOf<>(JoinedTest.LITERAL_TWO)
@@ -385,7 +386,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void removeByElement() {
+    void removeByElement() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
             new ListOf<>(JoinedTest.LITERAL_TWO)
@@ -398,13 +399,16 @@ public final class JoinedTest {
         ).affirm();
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void listIteratorSecond() {
-        new Joined<Integer>().listIterator(66);
+    @Test
+    void listIteratorSecond() {
+        Assertions.assertThrows(
+            IndexOutOfBoundsException.class,
+            () -> new Joined<Integer>().listIterator(66)
+        );
     }
 
     @Test
-    public void subList() {
+    void subList() {
         new Assertion<>(
             "Must be able to to get sub list",
             new Joined<String>(
@@ -421,7 +425,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void itemAndList() {
+    void itemAndList() {
         new Assertion<>(
             "Must be able to join element with a list",
             new Joined<>(
@@ -439,7 +443,7 @@ public final class JoinedTest {
     }
 
     @Test
-    public void infersCorrectly() {
+    void infersCorrectly() {
         new Assertion<>(
             "Must be able to infer type of elements",
             new Joined<>(

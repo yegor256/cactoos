@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public class ForEachInThreadsTest {
+final class ForEachInThreadsTest {
 
     @Test
     @SuppressWarnings("unchecked")

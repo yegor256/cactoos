@@ -26,7 +26,7 @@ package org.cactoos.number;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -36,13 +36,13 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.49.2
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class MultiplicationOfTest {
+final class MultiplicationOfTest {
 
     /**
      * Ensures that multiplication of int numbers return proper value.
      */
     @Test
-    public void withListOfNumbersInt() {
+    void withListOfNumbersInt() {
         new Assertion<>(
             "Multiplication of int must return the appropriate value",
             new MultiplicationOf(2, 3).intValue(),
@@ -54,7 +54,7 @@ public final class MultiplicationOfTest {
      * Ensures that multiplication of double numbers return proper value.
      */
     @Test
-    public void withListOfNumbersDouble() {
+    void withListOfNumbersDouble() {
         new Assertion<>(
             "Multiplication of double numbers must return proper value",
             new MultiplicationOf(2.0d, 2.5d, 3.0d).doubleValue(),
@@ -66,7 +66,7 @@ public final class MultiplicationOfTest {
      * Ensures that multiplication of float numbers return proper value.
      */
     @Test
-    public void withListOfNumbersFloat() {
+    void withListOfNumbersFloat() {
         new Assertion<>(
             "Multiplication of float numbers must return proper value",
             new MultiplicationOf(3.0f, 3.0f, 3.0f).floatValue(),
@@ -78,7 +78,7 @@ public final class MultiplicationOfTest {
      * Ensures that multiplication of long numbers return proper value.
      */
     @Test
-    public void withListOfNumbersLong() {
+    void withListOfNumbersLong() {
         new Assertion<>(
             "Multiplication of long numbers must return proper value",
             new MultiplicationOf(2L, 3L, 2L).longValue(),
@@ -90,7 +90,7 @@ public final class MultiplicationOfTest {
      * Ensures that multiplication of int numbers iterable return proper value.
      */
     @Test
-    public void withIterableInt() {
+    void withIterableInt() {
         new Assertion<>(
             "Multiplication of int numbers must return proper value",
             new MultiplicationOf(
@@ -104,7 +104,7 @@ public final class MultiplicationOfTest {
      * Ensures that multiplication of long numbers iterable return proper value.
      */
     @Test
-    public void withIterableLong() {
+    void withIterableLong() {
         new Assertion<>(
             "Multiplication of long numbers iterable must return proper value",
             new MultiplicationOf(
@@ -119,7 +119,7 @@ public final class MultiplicationOfTest {
      * return proper value.
      */
     @Test
-    public void withIterableFloat() {
+    void withIterableFloat() {
         new Assertion<>(
             "Multiplication floating numbers must be iterable",
             new MultiplicationOf(
@@ -134,7 +134,7 @@ public final class MultiplicationOfTest {
      * return proper value.
      */
     @Test
-    public void withIterableDouble() {
+    void withIterableDouble() {
         new Assertion<>(
             "Multiplication double numbers must be iterable",
             new MultiplicationOf(
@@ -148,7 +148,7 @@ public final class MultiplicationOfTest {
      * Ensures that empty iterable will not be multiplied.
      */
     @Test
-    public void rejectsEmptyIterable() {
+    void rejectsEmptyIterable() {
         new Assertion<>(
             "Must fail with empty iterable",
             () -> new MultiplicationOf(new IterableOf<>()).doubleValue(),

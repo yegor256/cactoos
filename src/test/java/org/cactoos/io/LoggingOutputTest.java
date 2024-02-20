@@ -33,9 +33,8 @@ import org.cactoos.scalar.LengthOf;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.StringContains;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -44,21 +43,13 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.MoreThanOneLogger",
-        "PMD.AvoidDuplicateLiterals"
-    }
-)
-public final class LoggingOutputTest {
-    /**
-     * Temporary files and folders generator.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings({"PMD.MoreThanOneLogger",
+    "PMD.AvoidDuplicateLiterals",
+    "PMD.JUnitTestsShouldIncludeAssert"})
+final class LoggingOutputTest {
 
     @Test
-    public void logWriteZero() throws Exception {
+    void logWriteZero() throws Exception {
         final Logger logger = new FakeLogger();
         new LengthOf(
             new TeeInput(
@@ -78,7 +69,7 @@ public final class LoggingOutputTest {
     }
 
     @Test
-    public void logWriteOneByte() throws Exception {
+    void logWriteOneByte() throws Exception {
         final Logger logger = new FakeLogger();
         try (
             OutputStream out = new LoggingOutput(
@@ -97,7 +88,7 @@ public final class LoggingOutputTest {
     }
 
     @Test
-    public void logWriteText() throws Exception {
+    void logWriteText() throws Exception {
         final Logger logger = new FakeLogger();
         try (
             OutputStream out = new LoggingOutput(
@@ -117,9 +108,9 @@ public final class LoggingOutputTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void logWriteToLargeTextFile() throws Exception {
+    void logWriteToLargeTextFile(@TempDir final Path wdir) throws Exception {
         final Logger logger = new FakeLogger();
-        final Path temp = this.folder.newFolder("ccts-1").toPath();
+        final Path temp = wdir.resolve("ccts-1");
         final Path path = temp.resolve("x/y/z/file.txt");
         try (OutputStream output = new LoggingOutput(
             new OutputTo(path),
@@ -151,9 +142,9 @@ public final class LoggingOutputTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void logAllWriteToLargeTextFile() throws Exception {
+    void logAllWriteToLargeTextFile(@TempDir final Path wdir) throws Exception {
         final Logger logger = new FakeLogger(Level.WARNING);
-        final Path temp = this.folder.newFolder("ccts-2").toPath();
+        final Path temp = wdir.resolve("ccts-2");
         final Path path = temp.resolve("a/b/c/file.txt");
         try (OutputStream output = new LoggingOutput(
             new OutputTo(path),

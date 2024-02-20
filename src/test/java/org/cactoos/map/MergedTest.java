@@ -26,7 +26,8 @@ package org.cactoos.map;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -35,11 +36,12 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class MergedTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class MergedTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void behavesAsMap() {
+    void behavesAsMap() {
         new Assertion<>(
             "Must behave as a map",
             new Merged<>(
@@ -60,7 +62,7 @@ public final class MergedTest {
     }
 
     @Test
-    public void createsMapFromMaps() {
+    void createsMapFromMaps() {
         new Assertion<>(
             "Must merge a few maps",
             new Merged<Integer, Integer>(
@@ -81,7 +83,7 @@ public final class MergedTest {
     }
 
     @Test
-    public void overridesValues() {
+    void overridesValues() {
         new Assertion<>(
             "Must override values",
             new Merged<Integer, Integer>(
@@ -101,7 +103,7 @@ public final class MergedTest {
     }
 
     @Test
-    public void mergesEmptyMaps() {
+    void mergesEmptyMaps() {
         new Assertion<>(
             "Must merge empty maps",
             new Merged<Integer, Integer>(
@@ -114,16 +116,19 @@ public final class MergedTest {
         ).affirm();
     }
 
-    @Test(expected = NullPointerException.class)
-    public void throwsNullPointerForNullMap() {
-        new Merged<Integer, Integer>(
-            new MapOf<Integer, Integer>(),
-            null
-        ).size();
+    @Test
+    void throwsNullPointerForNullMap() {
+        Assertions.assertThrows(
+            NullPointerException.class,
+            () -> new Merged<Integer, Integer>(
+                new MapOf<Integer, Integer>(),
+                null
+            ).size()
+        );
     }
 
     @Test
-    public void behavesAsMapWithWildCards() {
+    void behavesAsMapWithWildCards() {
         new Assertion<>(
             "Must behave as a map with common type",
             new Merged<Number, Number>(

@@ -23,12 +23,10 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import org.cactoos.text.TextOf;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
@@ -38,17 +36,12 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class WriterToTest {
-    /**
-     * Temporary files and folders generator.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class WriterToTest {
 
     @Test
-    public void writesLargeContentToFile() throws IOException {
-        final Path temp = this.folder.newFile("cactoos-1.txt-1")
-            .toPath();
+    void writesLargeContentToFile(@TempDir final Path wdir) {
+        final Path temp = wdir.resolve("cactoos-1.txt-1");
         new Assertion<>(
             "Can't copy Input to Output and return Input",
             new TeeInput(

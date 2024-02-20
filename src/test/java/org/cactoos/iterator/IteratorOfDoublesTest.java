@@ -25,7 +25,8 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -36,10 +37,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorOfDoublesTest {
+final class IteratorOfDoublesTest {
 
     @Test
-    public void emptyIteratorDoesNotHaveNext() {
+    void emptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for empty iterator.",
             new IteratorOfDoubles().hasNext(),
@@ -47,13 +48,16 @@ public final class IteratorOfDoublesTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void emptyIteratorThrowsException() {
-        new IteratorOfDoubles().next();
+    @Test
+    void emptyIteratorThrowsException() {
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            () -> new IteratorOfDoubles().next()
+        );
     }
 
     @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
+    void nonEmptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for fully traversed iterator.",
             this.iteratorWithFetchedElements().hasNext(),
@@ -61,9 +65,12 @@ public final class IteratorOfDoublesTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
-        this.iteratorWithFetchedElements().next();
+    @Test
+    void nonEmptyIteratorThrowsException() {
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            () -> this.iteratorWithFetchedElements().next()
+        );
     }
 
     private IteratorOfDoubles iteratorWithFetchedElements() {

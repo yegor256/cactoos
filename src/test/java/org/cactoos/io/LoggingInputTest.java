@@ -40,12 +40,9 @@ import org.llorllale.cactoos.matchers.HasString;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.MoreThanOneLogger",
-        "PMD.AvoidDuplicateLiterals"
-    }
-)
+@SuppressWarnings({"PMD.MoreThanOneLogger",
+    "PMD.AvoidDuplicateLiterals",
+    "PMD.JUnitTestsShouldIncludeAssert"})
 final class LoggingInputTest {
 
     @Test

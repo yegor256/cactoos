@@ -35,6 +35,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class LSInputOfTest {
 
     @Test

@@ -36,6 +36,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * Test case for {@link CloseShieldInputStream}.
  * @since 1.0.0
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class CloseShieldInputStreamTest {
 
     @Test

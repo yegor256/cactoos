@@ -39,6 +39,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * Test case for {@link Sticky}.
  * @since 0.6
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class StickyTest {
 
     @Test

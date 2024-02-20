@@ -36,6 +36,7 @@ import org.llorllale.cactoos.matchers.EndsWith;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class InputWithFallbackTest {
 
     @Test

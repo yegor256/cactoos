@@ -37,7 +37,8 @@ import org.llorllale.cactoos.matchers.HasValues;
  * Test case for {@link SetOf}.
  * @since 0.49.2
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
+    "PMD.JUnitTestsShouldIncludeAssert"})
 final class SetOfTest {
 
     @Test

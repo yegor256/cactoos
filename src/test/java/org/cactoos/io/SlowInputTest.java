@@ -36,6 +36,7 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class SlowInputTest {
 
     @Test

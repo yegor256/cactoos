@@ -36,6 +36,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class JoinedListIteratorTest {
 
     @Test

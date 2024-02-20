@@ -32,6 +32,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * Test case for {@link CloseShieldOutput}.
  * @since 1.0.0
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class CloseShieldOutputTest {
 
     @Test

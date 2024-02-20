@@ -29,8 +29,7 @@ import org.cactoos.proc.ForEach;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.collection.IsIterableWithSize;
 import org.hamcrest.core.IsEqual;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
@@ -42,10 +41,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class MatchedTest {
+final class MatchedTest {
 
     @Test
-    public void iterator() {
+    void iterator() {
         new Assertion<>(
             "All elements have correlation function as `equal`",
             new Matched<>(
@@ -57,7 +56,7 @@ public final class MatchedTest {
     }
 
     @Test
-    public void noCorrelationWithBiggerSecondIterable() {
+    void noCorrelationWithBiggerSecondIterable() {
         new Assertion<>(
             "All elements have correlation function as 'endsWith'",
             () -> new ListOf<>(
@@ -72,7 +71,7 @@ public final class MatchedTest {
     }
 
     @Test
-    public void noCorrelationWithSmallerSecondIterable() {
+    void noCorrelationWithSmallerSecondIterable() {
         new Assertion<>(
             "All elements have correlation function as `endsWith`",
             () -> new ListOf<>(
@@ -87,7 +86,7 @@ public final class MatchedTest {
     }
 
     @Test
-    public void endsWith() {
+    void endsWith() {
         new Assertion<>(
             "All elements have correlation function as `endsWith`",
             new Matched<>(
@@ -102,7 +101,7 @@ public final class MatchedTest {
     }
 
     @Test
-    public void matchedAsNumbers() {
+    void matchedAsNumbers() {
         new Assertion<>(
             "All elements must be treated as Number",
             new Matched<>(
@@ -116,32 +115,38 @@ public final class MatchedTest {
         ).affirm();
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void noCorrelation() throws Exception {
-        new LengthOf(
-            new Matched<>(
-                (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
-                new IterableOf<>("1st elem", "2nd"),
-                new IterableOf<>("`A` elem", "`B` elem")
-            )
-        ).value();
-        Assert.fail("There is no 'endsWith'correlation between 2nd elements");
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void nonNullCorrelation() throws Exception {
-        new LengthOf(
-            new Matched<>(
-                (fst, snd) -> fst != null && snd != null,
-                new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
-                new IterableOf<>("`A` elem", null, "'C' elem")
-            )
-        ).value();
-        Assert.fail("There is no 'non-null' correlation between 2nd elements");
+    @Test
+    void noCorrelation() throws Exception {
+        new Assertion<>(
+            "Should fail if there is no correlation",
+            () -> new LengthOf(
+                new Matched<>(
+                    (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
+                    new IterableOf<>("1st elem", "2nd"),
+                    new IterableOf<>("`A` elem", "`B` elem")
+                )
+            ).value(),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
     @Test
-    public void iterablesOfDifferentTypes() {
+    void nonNullCorrelation() throws Exception {
+        new Assertion<>(
+            "Should fail if parameter is null",
+            () -> new LengthOf(
+                new Matched<>(
+                    (fst, snd) -> fst != null && snd != null,
+                    new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
+                    new IterableOf<>("`A` elem", null, "'C' elem")
+                )
+            ).value(),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
+    }
+
+    @Test
+    void iterablesOfDifferentTypes() {
         new Assertion<>(
             "All elements must be treated according to their type",
             new Matched<>(
@@ -156,7 +161,7 @@ public final class MatchedTest {
     }
 
     @Test
-    public void shouldNotChangeAfterTraversing() throws Exception {
+    void shouldNotChangeAfterTraversing() throws Exception {
         final Iterable<Integer> matched = new Matched<>(
             Objects::equals,
             new IterableOf<>(1, 2, 3),

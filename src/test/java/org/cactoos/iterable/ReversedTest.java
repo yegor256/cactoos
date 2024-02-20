@@ -27,7 +27,7 @@ import org.cactoos.list.ListOf;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.HasSize;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ReversedTest {
+final class ReversedTest {
 
     @Test
-    public void reversesIterable() {
+    void reversesIterable() {
         new Assertion<>(
             "Must reverse an iterable",
             new Reversed<>(
@@ -52,7 +52,7 @@ public final class ReversedTest {
     }
 
     @Test
-    public void iteratesMultipleTimes() {
+    void iteratesMultipleTimes() {
         final Iterable<String> itr = new Reversed<>(
             new IterableOf<>("h", "w", "d")
         );
@@ -70,7 +70,7 @@ public final class ReversedTest {
     }
 
     @Test
-    public void reverseList() {
+    void reverseList() {
         final String last = "last";
         new Assertion<>(
             "Must reverse list",
@@ -84,7 +84,7 @@ public final class ReversedTest {
     }
 
     @Test
-    public void reverseEmptyList() {
+    void reverseEmptyList() {
         new Assertion<>(
             "Must reverse empty list",
             new Reversed<>(
@@ -95,7 +95,7 @@ public final class ReversedTest {
     }
 
     @Test
-    public void size() {
+    void size() {
         new Assertion<>(
             "Size must be the same",
             new Reversed<>(
@@ -108,7 +108,7 @@ public final class ReversedTest {
     }
 
     @Test
-    public void isEmpty() {
+    void isEmpty() {
         new Assertion<>(
             "Must be not empty",
             new Reversed<>(

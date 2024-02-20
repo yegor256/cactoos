@@ -32,9 +32,8 @@ import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsNot;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.IsTrue;
@@ -45,16 +44,11 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class WriterAsOutputStreamTest {
-    /**
-     * Temporary files and folders generator.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.JUnitTestsShouldIncludeAssert"})
+final class WriterAsOutputStreamTest {
 
     @Test
-    public void writesToByteArray() {
+    void writesToByteArray() {
         final String content = "Hello, товарищ! How are you?";
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new Assertion<>(
@@ -78,9 +72,8 @@ public final class WriterAsOutputStreamTest {
     }
 
     @Test
-    public void writesLargeContentToFile() throws IOException {
-        final Path temp = this.folder.newFile("cactoos-1.txt-1")
-            .toPath();
+    void writesLargeContentToFile(@TempDir final Path wdir) throws IOException {
+        final Path temp = wdir.resolve("writestream1.txt");
         try (OutputStreamWriter writer = new OutputStreamWriter(
             Files.newOutputStream(temp.toAbsolutePath()),
             StandardCharsets.UTF_8
@@ -105,8 +98,8 @@ public final class WriterAsOutputStreamTest {
     }
 
     @Test
-    public void writesToFileAndRemovesIt() throws Exception {
-        final Path temp = this.folder.newFile().toPath();
+    void writesToFileAndRemovesIt(@TempDir final Path wdir) throws Exception {
+        final Path temp = wdir.resolve("writestream2.txt");
         try (OutputStreamWriter writer = new OutputStreamWriter(
             Files.newOutputStream(temp.toAbsolutePath()),
             StandardCharsets.UTF_8

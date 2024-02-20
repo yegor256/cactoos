@@ -38,6 +38,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.10
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class AsyncTest {
     @Test
     void runsInBackground() {

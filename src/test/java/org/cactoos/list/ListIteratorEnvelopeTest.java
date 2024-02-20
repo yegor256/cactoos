@@ -34,6 +34,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class ListIteratorEnvelopeTest {
     @Test
     void mustReturnPreviousIndex() {

@@ -36,6 +36,7 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TeeReaderTest {
 
     @Test

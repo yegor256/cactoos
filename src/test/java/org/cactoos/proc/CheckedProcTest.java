@@ -28,8 +28,9 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link CheckedProc}.
@@ -37,30 +38,44 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CheckedProcTest {
+final class CheckedProcTest {
 
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionIsNotWrapped() throws Exception {
-        new CheckedProc<>(
-            input -> {
-                throw new IllegalStateException("runtime1");
+    @Test
+    void runtimeExceptionIsNotWrapped() {
+        new Assertion<>(
+            "Runtime exception is wrapped",
+            () -> {
+                new CheckedProc<>(
+                    input -> {
+                        throw new IllegalStateException("runtime1");
+                    },
+                    IOException::new
+                ).exec(true);
+                return 1;
             },
-            IOException::new
-        ).exec(true);
-    }
-
-    @Test(expected = IOException.class)
-    public void checkedExceptionIsWrapped() throws Exception {
-        new CheckedProc<>(
-            input -> {
-                throw new EOFException("runtime2");
-            },
-            IOException::new
-        ).exec(true);
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
     @Test
-    public void extraWrappingIgnored() {
+    void checkedExceptionIsWrapped() {
+        new Assertion<>(
+            "Checked exception is not wrapped",
+            () -> {
+                new CheckedProc<>(
+                    input -> {
+                        throw new EOFException("runtime2");
+                    },
+                    IOException::new
+                ).exec(true);
+                return 1;
+            },
+            new Throws<>(IOException.class)
+        ).affirm();
+    }
+
+    @Test
+    void extraWrappingIgnored() {
         try {
             new CheckedProc<>(
                 input -> {
@@ -78,7 +93,7 @@ public final class CheckedProcTest {
     }
 
     @Test
-    public void noExceptionThrown() throws Exception {
+    void noExceptionThrown() throws Exception {
         final AtomicInteger counter = new AtomicInteger();
         new CheckedProc<>(
             input -> counter.incrementAndGet(),

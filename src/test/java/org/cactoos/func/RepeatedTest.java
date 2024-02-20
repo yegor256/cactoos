@@ -39,6 +39,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.13.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class RepeatedTest {
 
     @Test

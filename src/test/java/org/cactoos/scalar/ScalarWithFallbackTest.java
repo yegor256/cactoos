@@ -28,7 +28,8 @@ import java.util.IllegalFormatException;
 import java.util.IllegalFormatWidthException;
 import org.cactoos.Fallback;
 import org.cactoos.iterable.IterableOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
@@ -39,10 +40,10 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("unchecked")
-public final class ScalarWithFallbackTest {
+final class ScalarWithFallbackTest {
 
     @Test
-    public void usesMainFunc() throws Exception {
+    void usesMainFunc() throws Exception {
         final String message = "Main function's result #1";
         new Assertion<>(
             "Must use the main function if no exception",
@@ -60,7 +61,7 @@ public final class ScalarWithFallbackTest {
     }
 
     @Test
-    public void usesMainFuncFromExceptionAndFallback() throws Exception {
+    void usesMainFuncFromExceptionAndFallback() throws Exception {
         final String message = "Main function's result #1 (exp & flbck)";
         new Assertion<>(
             "Using the main function if no exception (exp & flbck)",
@@ -76,7 +77,7 @@ public final class ScalarWithFallbackTest {
     }
 
     @Test
-    public void usesMainFuncFromIterableExceptionAndFallback() throws Exception {
+    void usesMainFuncFromIterableExceptionAndFallback() throws Exception {
         final String message = "Main function's result #1 (exp iterable & flbck)";
         new Assertion<>(
             "Using the main function if no exception (exp iterable & flbck)",
@@ -92,7 +93,7 @@ public final class ScalarWithFallbackTest {
     }
 
     @Test
-    public void usesFallback() throws Exception {
+    void usesFallback() throws Exception {
         final String message = "Fallback from IOException";
         new Assertion<>(
             "Must use a single fallback in case of exception",
@@ -115,7 +116,7 @@ public final class ScalarWithFallbackTest {
     }
 
     @Test
-    public void usesFallbackFromExceptionAndFallback() throws Exception {
+    void usesFallbackFromExceptionAndFallback() throws Exception {
         final String message = "Fallback from IOException (exp & flbck)";
         new Assertion<>(
             "Using a single fallback in case of exception (exp & flbck)",
@@ -133,7 +134,7 @@ public final class ScalarWithFallbackTest {
     }
 
     @Test
-    public void usesFallbackFromIterableExceptionAndFallback() throws Exception {
+    void usesFallbackFromIterableExceptionAndFallback() throws Exception {
         final String message = "Fallback from IOException (exp iterable & flbck)";
         new Assertion<>(
             "Using a single fallback in case of exception (exp iterable & flbck)",
@@ -151,7 +152,7 @@ public final class ScalarWithFallbackTest {
     }
 
     @Test
-    public void usesFallbackOfInterruptedException() throws Exception {
+    void usesFallbackOfInterruptedException() throws Exception {
         final String message = "Fallback from InterruptedException";
         new Assertion<>(
             "Must use a fallback from Interrupted in case of exception",
@@ -173,7 +174,7 @@ public final class ScalarWithFallbackTest {
     }
 
     @Test
-    public void usesTheClosestFallback() throws Exception {
+    void usesTheClosestFallback() throws Exception {
         final String expected = "Fallback from IllegalFormatException";
         new Assertion<>(
             "Must find the closest fallback",
@@ -196,13 +197,16 @@ public final class ScalarWithFallbackTest {
         ).affirm();
     }
 
-    @Test(expected = Exception.class)
-    public void noFallbackIsProvided() throws Exception {
-        new ScalarWithFallback<>(
-            () -> {
-                throw new IllegalFormatWidthException(1);
-            },
-            new IterableOf<>()
-        ).value();
+    @Test
+    void noFallbackIsProvided() {
+        Assertions.assertThrows(
+            Exception.class,
+            () -> new ScalarWithFallback<>(
+                () -> {
+                    throw new IllegalFormatWidthException(1);
+                },
+                new IterableOf<>()
+            ).value()
+        );
     }
 }

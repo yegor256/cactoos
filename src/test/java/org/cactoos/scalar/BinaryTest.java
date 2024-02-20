@@ -25,7 +25,7 @@ package org.cactoos.scalar;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class BinaryTest {
+final class BinaryTest {
 
     @Test
-    public void conditionTrue() {
+    void conditionTrue() {
         final AtomicInteger counter = new AtomicInteger(0);
         final Binary binary = new Binary(
             new True(),
@@ -58,7 +58,7 @@ public final class BinaryTest {
     }
 
     @Test
-    public void conditionFalse() {
+    void conditionFalse() {
         final AtomicInteger counter = new AtomicInteger(0);
         final Binary binary = new Binary(
             new False(),
@@ -78,7 +78,7 @@ public final class BinaryTest {
     }
 
     @Test
-    public void throwsException() {
+    void throwsException() {
         final String msg = "Custom exception message";
         final Binary binary = new Binary(
             new True(),

@@ -25,8 +25,10 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfInts}.
@@ -34,10 +36,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorOfIntsTest {
+final class IteratorOfIntsTest {
 
     @Test
-    public void emptyIteratorDoesNotHaveNext() {
+    void emptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for empty iterator.",
             new IteratorOfInts().hasNext(),
@@ -45,13 +47,16 @@ public final class IteratorOfIntsTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void emptyIteratorThrowsException() {
-        new IteratorOfInts().next();
+    @Test
+    void emptyIteratorThrowsException() {
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            () -> new IteratorOfInts().next()
+        );
     }
 
     @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
+    void nonEmptyIteratorDoesNotHaveNext() {
         final IteratorOfInts iterator = new IteratorOfInts(1, 2);
         iterator.next();
         iterator.next();
@@ -62,10 +67,14 @@ public final class IteratorOfIntsTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
+    @Test
+    void nonEmptyIteratorThrowsException() {
         final IteratorOfInts iterator = new IteratorOfInts(1);
         iterator.next();
-        iterator.next();
+        new Assertion<>(
+            "",
+            iterator::next,
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

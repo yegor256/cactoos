@@ -36,7 +36,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.16
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public class ImmutableTest {
+final class ImmutableTest {
 
     @Test
     void size() {

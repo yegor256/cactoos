@@ -28,9 +28,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
@@ -40,24 +39,19 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (120 lines)
  */
-public final class TeeInputFromPathTest {
-
-    /**
-     * Temporary files generator.
-     */
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class TeeInputFromPathTest {
 
     @Test
-    public void copiesFromPathToPath() throws Exception {
+    void copiesFromPathToPath(@TempDir final Path wdir) throws Exception {
         final String message =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
-        final File input = this.folder.newFile();
+        final File input = wdir.resolve("copytest11.txt").toFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("copytest12.txt").toFile();
         new LengthOf(
             new TeeInput(input.toPath(), output.toPath())
         ).value();
@@ -69,15 +63,15 @@ public final class TeeInputFromPathTest {
     }
 
     @Test
-    public void copiesFromPathToFile() throws Exception {
+    void copiesFromPathToFile(@TempDir final Path wdir) throws Exception {
         final String message =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
-        final File input = this.folder.newFile();
+        final File input = wdir.resolve("copytest21.txt").toFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("copytest22.txt").toFile();
         new LengthOf(
             new TeeInput(input.toPath(), output)
         ).value();
@@ -89,15 +83,15 @@ public final class TeeInputFromPathTest {
     }
 
     @Test
-    public void copiesFromPathToOutput() throws Exception {
+    void copiesFromPathToOutput(@TempDir final Path wdir) throws Exception {
         final String message =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
-        final File input = this.folder.newFile();
+        final File input = wdir.resolve("copytest31.txt").toFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("copytest32.txt").toFile();
         new LengthOf(
             new TeeInput(input.toPath(), new OutputTo(output))
         ).value();

@@ -38,6 +38,7 @@ import org.llorllale.cactoos.matchers.IsText;
  * Test case for {@link CloseShieldOutputStream}.
  * @since 1.0.0
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class CloseShieldOutputStreamTest {
 
     @Test

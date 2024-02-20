@@ -42,6 +42,7 @@ import org.llorllale.cactoos.matchers.StartsWith;
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TempFileTest {
 
     @Test

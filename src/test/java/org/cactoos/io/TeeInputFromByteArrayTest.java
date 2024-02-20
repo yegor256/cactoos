@@ -25,10 +25,10 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
@@ -38,19 +38,14 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (100 lines)
  */
-public final class TeeInputFromByteArrayTest {
-
-    /**
-     * Temporary files generator.
-     */
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class TeeInputFromByteArrayTest {
 
     @Test
-    public void copiesFromByteArrayToPath() throws Exception {
+    void copiesFromByteArrayToPath(@TempDir final Path wdir) throws Exception {
         final String message =
             "Hello, товарищ path äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("copytest.txt").toFile();
         new LengthOf(
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
@@ -65,10 +60,10 @@ public final class TeeInputFromByteArrayTest {
     }
 
     @Test
-    public void copiesFromByteArrayToFile() throws Exception {
+    void copiesFromByteArrayToFile(@TempDir final Path wdir) throws Exception {
         final String message =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("copyarraytest.txt").toFile();
         new LengthOf(
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),
@@ -83,10 +78,10 @@ public final class TeeInputFromByteArrayTest {
     }
 
     @Test
-    public void copiesFromByteArrayToOutput() throws Exception {
+    void copiesFromByteArrayToOutput(@TempDir final Path wdir) throws Exception {
         final String message =
             "Hello, товарищ output äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("copytooutput.txt").toFile();
         new LengthOf(
             new TeeInput(
                 message.getBytes(StandardCharsets.UTF_8),

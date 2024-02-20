@@ -33,6 +33,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  *
  * @since 0.47
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class SlowInputStreamTest {
 
     @Test

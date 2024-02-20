@@ -33,7 +33,8 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods",
+    "PMD.JUnitTestsShouldIncludeAssert"})
 final class SyncedTest {
 
     @Test

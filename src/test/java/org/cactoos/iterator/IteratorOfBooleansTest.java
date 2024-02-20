@@ -25,7 +25,8 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -34,10 +35,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorOfBooleansTest {
+final class IteratorOfBooleansTest {
 
     @Test
-    public void emptyIteratorDoesNotHaveNext() {
+    void emptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for empty iterator",
             new IteratorOfBooleans().hasNext(),
@@ -45,13 +46,16 @@ public final class IteratorOfBooleansTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void emptyIteratorThrowsException() {
-        new IteratorOfBooleans().next();
+    @Test
+    void emptyIteratorThrowsException() {
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            () -> new IteratorOfBooleans().next()
+        );
     }
 
     @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
+    void nonEmptyIteratorDoesNotHaveNext() {
         final IteratorOfBooleans iterator = new IteratorOfBooleans(true, false);
         iterator.next();
         iterator.next();
@@ -62,10 +66,13 @@ public final class IteratorOfBooleansTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
+    @Test
+    void nonEmptyIteratorThrowsException() {
         final IteratorOfBooleans iterator = new IteratorOfBooleans(true);
         iterator.next();
-        iterator.next();
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            iterator::next
+        );
     }
 }

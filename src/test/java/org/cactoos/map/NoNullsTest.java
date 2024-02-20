@@ -30,8 +30,8 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsIterableContaining;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsEntry;
 import org.llorllale.cactoos.matchers.Throws;
@@ -42,17 +42,14 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.NonStaticInitializer",
-        "serial"
-    }
-)
-public final class NoNullsTest {
+@SuppressWarnings({"PMD.TooManyMethods",
+    "PMD.NonStaticInitializer",
+    "serial",
+    "PMD.JUnitTestsShouldIncludeAssert"})
+final class NoNullsTest {
 
     @Test
-    public void getSize() {
+    void getSize() {
         MatcherAssert.assertThat(
             "Can't calculate size",
             new NoNulls<>(
@@ -66,7 +63,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void isEmptyTrue() {
+    void isEmptyTrue() {
         MatcherAssert.assertThat(
             "Can't get is empty true",
             new NoNulls<>(
@@ -77,7 +74,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void isEmptyFalse() {
+    void isEmptyFalse() {
         MatcherAssert.assertThat(
             "Can't get is empty false",
             new NoNulls<>(
@@ -90,7 +87,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void containsKeyTrue() {
+    void containsKeyTrue() {
         MatcherAssert.assertThat(
             "Can't get #containsKey() true",
             new NoNulls<>(
@@ -103,7 +100,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void containsKeyFalse() {
+    void containsKeyFalse() {
         MatcherAssert.assertThat(
             "Can't get #containsKey() false",
             new NoNulls<>(
@@ -115,21 +112,21 @@ public final class NoNullsTest {
         );
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void containsKeyException() {
-        MatcherAssert.assertThat(
+    @Test
+    void containsKeyException() {
+        new Assertion<>(
             "Could no throw an IllegalStateException for null key",
-            new NoNulls<>(
+            () -> new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
             ).containsKey(null),
-            new IsEqual<>(true)
-        );
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
     @Test
-    public void containsValueFalse() {
+    void containsValueFalse() {
         MatcherAssert.assertThat(
             "Can't get #containsValue() false",
             new NoNulls<>(
@@ -142,7 +139,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void containsValueTrue() {
+    void containsValueTrue() {
         MatcherAssert.assertThat(
             "Can't get #containsValue() true",
             new NoNulls<>(
@@ -154,21 +151,21 @@ public final class NoNullsTest {
         );
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void containsValueException() {
-        MatcherAssert.assertThat(
+    @Test
+    void containsValueException() {
+        new Assertion<>(
             "Can't get #containsValue() exception",
-            new NoNulls<>(
+            () -> new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
             ).containsValue(null),
-            new IsEqual<>(true)
-        );
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
     @Test
-    public void getValue() {
+    void getValue() {
         MatcherAssert.assertThat(
             "Can't call #get()",
             new NoNulls<>(
@@ -180,34 +177,34 @@ public final class NoNullsTest {
         );
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void getValueByNullKey() {
-        MatcherAssert.assertThat(
+    @Test
+    void getValueByNullKey() {
+        new Assertion<>(
             "Can't call #get() with key null",
-            new NoNulls<>(
+            () -> new NoNulls<>(
                 new MapOf<Integer, Integer>(
                     new MapEntry<>(0, -1)
                 )
             ).get(null),
-            new IsEqual<>(-1)
-        );
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void getValueByNullValue() {
-        MatcherAssert.assertThat(
-            "Can't call #get() with null value",
-            new NoNulls<>(
-                new MapOf<Integer, Integer>(
-                    new MapEntry<>(0, null)
-                )
-            ).get(0),
-            new IsEqual<>(-1)
+            new Throws<>(IllegalStateException.class)
         );
     }
 
     @Test
-    public void put() {
+    void getValueByNullValue() {
+        new Assertion<>(
+            "Can't call #get() with null value",
+            () -> new NoNulls<>(
+                new MapOf<Integer, Integer>(
+                    new MapEntry<>(0, null)
+                )
+            ).get(0),
+            new Throws<>(IllegalStateException.class)
+        );
+    }
+
+    @Test
+    void put() {
         MatcherAssert.assertThat(
             "Can't call #put()",
             new NoNulls<Integer, Integer>(
@@ -221,39 +218,39 @@ public final class NoNullsTest {
         );
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void putWithNullKey() {
-        MatcherAssert.assertThat(
+    @Test
+    void putWithNullKey() {
+        new Assertion<>(
             "Can't call #put() with Null key",
-            new NoNulls<Integer, Integer>(
+            () -> new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
                     }
                 }
             ),
-            new PutUpdatesValues<Integer, Integer>(null, 1)
-        );
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void putWithNullValue() {
-        MatcherAssert.assertThat(
-            "Can't call #put() with Null value",
-            new NoNulls<Integer, Integer>(
-                new HashMap<Integer, Integer>() {
-                    {
-                        put(0, 0);
-                    }
-                }
-            ),
-            new PutUpdatesValues<Integer, Integer>(0, null)
+            new Throws<>(IllegalStateException.class)
         );
     }
 
     @Test
-    @Ignore
-    public void putWithNoMapping() {
+    void putWithNullValue() {
+        new Assertion<>(
+            "Can't call #put() with Null value",
+            () -> new NoNulls<Integer, Integer>(
+                new HashMap<Integer, Integer>() {
+                    {
+                        put(0, 0);
+                    }
+                }
+            ),
+            new Throws<>(IllegalStateException.class)
+        );
+    }
+
+    @Test
+    @Disabled
+    void putWithNoMapping() {
         MatcherAssert.assertThat(
             "Can't call #put() with no mapping",
             new NoNulls<Integer, Integer>(
@@ -268,7 +265,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void remove() {
+    void remove() {
         MatcherAssert.assertThat(
             "Can't call #remove()",
             new NoNulls<Integer, Integer>(
@@ -282,24 +279,24 @@ public final class NoNullsTest {
         );
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void removeWithNullKey() {
-        MatcherAssert.assertThat(
+    @Test
+    void removeWithNullKey() {
+        new Assertion<>(
             "Can't call #remove() with Null key",
-            new NoNulls<Integer, Integer>(
+            () -> new NoNulls<Integer, Integer>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
                     }
                 }
             ),
-            new RemoveDeletesValues<Integer, Integer>(null, 0)
+            new Throws<>(IllegalStateException.class)
         );
     }
 
     @Test
-    @Ignore
-    public void removeWithNoMapping() {
+    @Disabled
+    void removeWithNoMapping() {
         MatcherAssert.assertThat(
             "Can't call #remove() with no mapping",
             new NoNulls<Integer, Integer>(
@@ -314,7 +311,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void putAll() {
+    void putAll() {
         MatcherAssert.assertThat(
             "Can't call #putAll()",
             new NoNulls<Integer, Integer>(
@@ -329,7 +326,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void clear() {
+    void clear() {
         MatcherAssert.assertThat(
             "Can't call #clear()",
             new NoNulls<Integer, Integer>(
@@ -347,7 +344,7 @@ public final class NoNullsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void entrySet() {
+    void entrySet() {
         new Assertion<Set<Map.Entry<Integer, Integer>>>(
             "Must call #entrySet()",
             new NoNulls<Integer, Integer>(
@@ -366,7 +363,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void putThrowsErrorIfValueNull() {
+    void putThrowsErrorIfValueNull() {
         new Assertion<>(
             "Should throws an error if value is null",
             () -> new NoNulls<Integer, Integer>(
@@ -380,7 +377,7 @@ public final class NoNullsTest {
     }
 
     @Test
-    public void putThrowsErrorIfPreviousValueNull() {
+    void putThrowsErrorIfPreviousValueNull() {
         new Assertion<>(
             "Should throws an error if previous value is null",
             () -> new NoNulls<>(

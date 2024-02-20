@@ -35,10 +35,10 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class LocalDateTimeOfTest {
+final class LocalDateTimeOfTest {
 
     @Test
-    public final void testParsingIsoFormattedStringToLocalDateTime() {
+    void testParsingIsoFormattedStringToLocalDateTime() {
         new Assertion<>(
             "Can't parse a LocalDateTime with default/ISO format.",
             new LocalDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
@@ -47,7 +47,7 @@ public class LocalDateTimeOfTest {
     }
 
     @Test
-    public final void testParsingFormattedStringWithFormatToLocalDateTime() {
+    void testParsingFormattedStringWithFormatToLocalDateTime() {
         new Assertion<>(
             "Can't parse a LocalDateTime with custom format.",
             new LocalDateTimeOf(
@@ -59,7 +59,7 @@ public class LocalDateTimeOfTest {
     }
 
     @Test
-    public final void testParsingFormattedStringWithFormatterToLocalDateTime() {
+    void testParsingFormattedStringWithFormatterToLocalDateTime() {
         new Assertion<>(
             "Can't parse a LocalDateTime with custom formatter.",
             new LocalDateTimeOf(

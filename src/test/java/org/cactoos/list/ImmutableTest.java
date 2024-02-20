@@ -40,7 +40,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.16
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
-class ImmutableTest {
+final class ImmutableTest {
 
     @Test
     void innerListIsDecorated() {

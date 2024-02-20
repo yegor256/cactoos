@@ -28,7 +28,8 @@ import java.util.NoSuchElementException;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -40,10 +41,10 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorOfBytesTest {
+final class IteratorOfBytesTest {
 
     @Test
-    public void canBeConstructedFromString() throws Exception {
+    void canBeConstructedFromString() throws Exception {
         final Iterator<Byte> itr = new IteratorOfBytes(
             "F"
         );
@@ -60,7 +61,7 @@ public final class IteratorOfBytesTest {
     }
 
     @Test
-    public void canBeConstructedFromText() throws Exception {
+    void canBeConstructedFromText() throws Exception {
         final Iterator<Byte> itr = new IteratorOfBytes(
             new TextOf("ABC")
         );
@@ -79,7 +80,7 @@ public final class IteratorOfBytesTest {
     }
 
     @Test
-    public void emptyIteratorDoesNotHaveNext() {
+    void emptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for empty iterator.",
             new IteratorOfBytes().hasNext(),
@@ -87,13 +88,16 @@ public final class IteratorOfBytesTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void emptyIteratorThrowsException() {
-        new IteratorOfBytes().next();
+    @Test
+    void emptyIteratorThrowsException() {
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            () -> new IteratorOfBytes().next()
+        );
     }
 
     @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
+    void nonEmptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for fully traversed iterator.",
             this.iteratorWithFetchedElements().hasNext(),
@@ -101,9 +105,12 @@ public final class IteratorOfBytesTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
-        this.iteratorWithFetchedElements().next();
+    @Test
+    void nonEmptyIteratorThrowsException() {
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            () -> this.iteratorWithFetchedElements().next()
+        );
     }
 
     private IteratorOfBytes iteratorWithFetchedElements() {

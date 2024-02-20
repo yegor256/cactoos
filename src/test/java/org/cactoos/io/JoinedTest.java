@@ -33,6 +33,7 @@ import org.llorllale.cactoos.matchers.HasContent;
  * Unit tests for {@link Joined}.
  * @since 0.36
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class JoinedTest {
     /**
      * Must join inputs in the given order.

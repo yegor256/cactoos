@@ -38,6 +38,7 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class ChainedTest {
 
     @Test

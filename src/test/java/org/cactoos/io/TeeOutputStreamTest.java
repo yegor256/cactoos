@@ -37,6 +37,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TeeOutputStreamTest {
 
     @Test

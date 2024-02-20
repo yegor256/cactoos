@@ -44,7 +44,8 @@ import org.llorllale.cactoos.matchers.HasEntry;
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods",
+    "PMD.JUnitTestsShouldIncludeAssert"})
 final class MapOfTest {
 
     @Test

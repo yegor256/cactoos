@@ -37,6 +37,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class SolidFuncTest {
 
     @Test

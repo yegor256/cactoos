@@ -38,6 +38,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class SolidBiFuncTest {
     @Test
     void testThatFuncIsSynchronized() {
