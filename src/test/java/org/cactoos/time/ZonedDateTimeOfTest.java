@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,10 +38,10 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class ZonedDateTimeOfTest {
+final class ZonedDateTimeOfTest {
 
     @Test
-    public final void testParsingIsoFormattedStringToZonedDateTime() {
+    void testParsingIsoFormattedStringToZonedDateTime() {
         new Assertion<>(
             "Can't parse a ZonedDateTime with default/ISO format.",
             new ZonedDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
@@ -55,7 +55,7 @@ public class ZonedDateTimeOfTest {
     }
 
     @Test
-    public final void testParsingFormattedStringWithZoneToZonedDateTime() {
+    void testParsingFormattedStringWithZoneToZonedDateTime() {
         new Assertion<>(
             "Can't parse a ZonedDateTime with custom format and zone.",
             new ZonedDateTimeOf(
@@ -73,7 +73,7 @@ public class ZonedDateTimeOfTest {
     }
 
     @Test
-    public final void testParsingFormattedStringWithFormatterToZonedDateTime() {
+    void testParsingFormattedStringWithFormatterToZonedDateTime() {
         new Assertion<>(
             "Can't parse a ZonedDateTime with custom format and zone.",
             new ZonedDateTimeOf(

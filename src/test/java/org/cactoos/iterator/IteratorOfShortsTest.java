@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,9 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfShorts}.
@@ -35,10 +36,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidUsingShortType")
-public final class IteratorOfShortsTest {
+final class IteratorOfShortsTest {
 
     @Test
-    public void emptyIteratorDoesNotHaveNext() {
+    void emptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for empty iterator.",
             new IteratorOfShorts().hasNext(),
@@ -46,13 +47,17 @@ public final class IteratorOfShortsTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void emptyIteratorThrowsException() {
-        new IteratorOfShorts().next();
+    @Test
+    void emptyIteratorThrowsException() {
+        new Assertion<>(
+            "Exception is expected for empty iterator",
+            () -> new IteratorOfShorts().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
+    void nonEmptyIteratorDoesNotHaveNext() {
         final IteratorOfShorts iterator = new IteratorOfShorts(
             (short) 1, (short) 2
         );
@@ -65,10 +70,14 @@ public final class IteratorOfShortsTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
+    @Test
+    void nonEmptyIteratorThrowsException() {
         final IteratorOfShorts iterator = new IteratorOfShorts((short) 1);
         iterator.next();
-        iterator.next();
+        new Assertion<>(
+            "Exception is not thrown after last item iteration",
+            iterator::next,
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

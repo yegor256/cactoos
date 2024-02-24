@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,19 +32,21 @@ import java.io.Writer;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link GzipInput}.
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class GzipInputTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class GzipInputTest {
 
     @Test
-    public void readFromGzipInput() throws Exception {
+    void readFromGzipInput() throws Exception {
         final String content = "Hello!";
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         try (
@@ -66,10 +68,14 @@ public final class GzipInputTest {
         ).affirm();
     }
 
-    @Test(expected = EOFException.class)
-    public void readFromDeadGzipInput() throws Exception {
-        new LengthOf(
-            new GzipInput(new DeadInput())
-        ).value();
+    @Test
+    void readFromDeadGzipInput() {
+        new Assertion<>(
+            "Can't read from empty input",
+            () -> new LengthOf(
+                new GzipInput(new DeadInput())
+            ).value(),
+            new Throws<>(EOFException.class)
+        ).affirm();
     }
 }

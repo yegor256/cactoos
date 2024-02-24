@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,11 @@
 package org.cactoos.io;
 
 import java.io.File;
+import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.scalar.LengthOf;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
@@ -38,19 +38,14 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (100 lines)
  */
-public final class TeeInputFromBytesTest {
-
-    /**
-     * Temporary files generator.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class TeeInputFromBytesTest {
 
     @Test
-    public void copiesFromBytesToPath() throws Exception {
+    void copiesFromBytesToPath(@TempDir final Path wdir) throws Exception {
         final String message =
             "Hello, товарищ path äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teebytes1.txt").toFile();
         new LengthOf(
             new TeeInput(new BytesOf(message), output.toPath())
         ).value();
@@ -62,10 +57,10 @@ public final class TeeInputFromBytesTest {
     }
 
     @Test
-    public void copiesFromBytesToFile() throws Exception {
+    void copiesFromBytesToFile(@TempDir final Path wdir) throws Exception {
         final String message =
             "Hello, товарищ file äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teebytes2.txt").toFile();
         new LengthOf(
             new TeeInput(new BytesOf(message), output)
         ).value();
@@ -77,10 +72,10 @@ public final class TeeInputFromBytesTest {
     }
 
     @Test
-    public void copiesFromBytesToOutput() throws Exception {
+    void copiesFromBytesToOutput(@TempDir final Path wdir) throws Exception {
         final String message =
             "Hello, товарищ output äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teebytes3.txt").toFile();
         new LengthOf(
             new TeeInput(new BytesOf(message), new OutputTo(output))
         ).value();

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,9 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfBooleans}.
@@ -34,10 +35,10 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorOfBooleansTest {
+final class IteratorOfBooleansTest {
 
     @Test
-    public void emptyIteratorDoesNotHaveNext() {
+    void emptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for empty iterator",
             new IteratorOfBooleans().hasNext(),
@@ -45,13 +46,17 @@ public final class IteratorOfBooleansTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void emptyIteratorThrowsException() {
-        new IteratorOfBooleans().next();
+    @Test
+    void emptyIteratorThrowsException() {
+        new Assertion<>(
+            "Exception is expected for empty iterator",
+            () -> new IteratorOfBooleans().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
+    void nonEmptyIteratorDoesNotHaveNext() {
         final IteratorOfBooleans iterator = new IteratorOfBooleans(true, false);
         iterator.next();
         iterator.next();
@@ -62,10 +67,14 @@ public final class IteratorOfBooleansTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
+    @Test
+    void nonEmptyIteratorThrowsException() {
         final IteratorOfBooleans iterator = new IteratorOfBooleans(true);
         iterator.next();
-        iterator.next();
+        new Assertion<>(
+            "Exception is expected after iterating last item",
+            iterator::next,
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

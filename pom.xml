@@ -2,7 +2,7 @@
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2017-2022 Yegor Bugayenko
+Copyright (c) 2017-2024 Yegor Bugayenko
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ SOFTWARE.
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.65.0</version>
+    <version>0.67.0</version>
   </parent>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
@@ -122,40 +122,11 @@ SOFTWARE.
         </exclusion>
       </exclusions>
     </dependency>
-    <!--
-     @todo #1453:30min Continue migration of tests to JUnit 5. Junit 4 Rule
-      should be replaced with a Jupiter counterpart. `@Text(expected=..)`
-      with `Throws`. After that remove this dependencies.
-    -->
-    <dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
-      <version>5.10.0</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>5.10.0</version>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.2</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>5.10.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.hamcrest</groupId>
-          <artifactId>hamcrest-core</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
   <build>
@@ -246,7 +217,7 @@ SOFTWARE.
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.21.1</version>
+            <version>0.22.0</version>
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
@@ -256,7 +227,7 @@ SOFTWARE.
           <plugin>
             <groupId>de.thetaphi</groupId>
             <artifactId>forbiddenapis</artifactId>
-            <version>3.5.1</version>
+            <version>3.6</version>
             <configuration>
               <signaturesFiles>
                 <signaturesFile>./src/test/resources/forbidden-apis.txt</signaturesFile>
@@ -305,7 +276,7 @@ SOFTWARE.
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
-            <version>3.9.1.2184</version>
+            <version>3.10.0.2594</version>
             <executions>
               <execution>
                 <phase>package</phase>

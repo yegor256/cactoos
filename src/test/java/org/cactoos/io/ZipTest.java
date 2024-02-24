@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +33,8 @@ import java.util.zip.ZipInputStream;
 import org.cactoos.list.ListOf;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.hamcrest.core.IsEqual;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -44,16 +43,11 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ZipTest {
-    /**
-     * Temporary folder.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class ZipTest {
 
     @Test
-    public void zip() throws Exception {
-        final Path dir = this.folder.newFolder().toPath();
+    void zip(@TempDir final Path dir) throws Exception {
         dir.resolve("x/y").toFile().mkdirs();
         Files.write(dir.resolve("x/y/test"), "".getBytes());
         try (ZipInputStream input = new ZipInputStream(
@@ -76,13 +70,11 @@ public final class ZipTest {
     }
 
     @Test
-    public void zipsArbitraryFileList() throws Exception {
-        this.folder.newFolder("dir1");
-        this.folder.newFolder("dir2");
-        this.folder.newFile("file0");
+    void zipsArbitraryFileList(@TempDir final Path dir) throws Exception {
+        dir.resolve("file0");
         final ListOf<Path> targets = new ListOf<>(
-            this.folder.newFile("dir1/file1.txt").toPath(),
-            this.folder.newFile("dir2/file2.txt").toPath()
+            dir.resolve("dir1/file1.txt"),
+            dir.resolve("dir2/file2.txt")
         );
         try (ZipInputStream input = new ZipInputStream(new Zip(targets).stream())) {
             ZipEntry entry = input.getNextEntry();

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ package org.cactoos.io;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
@@ -39,23 +39,18 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (120 lines)
  */
-public final class TeeInputFromUriTest {
-
-    /**
-     * Temporary files generator.
-     */
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class TeeInputFromUriTest {
 
     @Test
-    public void copiesFromUriToPath() throws Exception {
+    void copiesFromUriToPath(@TempDir final Path wdir) throws Exception {
         final String message = "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
-        final File input = this.folder.newFile();
+        final File input = wdir.resolve("teeuri1-1.txt").toFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teeuri1-2.txt").toFile();
         new LengthOf(
             new TeeInput(
                 input.toURI(),
@@ -70,14 +65,14 @@ public final class TeeInputFromUriTest {
     }
 
     @Test
-    public void copiesFromUriToFile() throws Exception {
+    void copiesFromUriToFile(@TempDir final Path wdir) throws Exception {
         final String message = "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
-        final File input = this.folder.newFile();
+        final File input = wdir.resolve("teeuri2-1.txt").toFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teeuri2-2.txt").toFile();
         new LengthOf(
             new TeeInput(
                 input.toURI(),
@@ -92,14 +87,14 @@ public final class TeeInputFromUriTest {
     }
 
     @Test
-    public void copiesFromUriToOutput() throws Exception {
+    void copiesFromUriToOutput(@TempDir final Path wdir) throws Exception {
         final String message = "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
-        final File input = this.folder.newFile();
+        final File input = wdir.resolve("teeuri3-1.txt").toFile();
         Files.write(
             input.toPath(),
             message.getBytes(StandardCharsets.UTF_8)
         );
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teeuri3-2.txt").toFile();
         new LengthOf(
             new TeeInput(
                 input.toURI(),

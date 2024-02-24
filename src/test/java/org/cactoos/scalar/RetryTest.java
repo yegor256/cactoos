@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class RetryTest {
 
     @Test
-    void runsScalarMultipleTimes() throws Exception {
+    void runsScalarMultipleTimes() {
         new Assertion<>(
             "must retry in case of failure",
             new Retry<>(
@@ -61,7 +61,7 @@ final class RetryTest {
     }
 
     @Test
-    void runsScalarTwiceWithDefaults() throws Exception {
+    void runsScalarTwiceWithDefaults() {
         final AtomicInteger tries = new AtomicInteger(0);
         new Assertion<>(
             "Should run twice with defaults",
@@ -78,8 +78,7 @@ final class RetryTest {
     }
 
     @Test
-    void runsScalarMultipleTimesIgnoringNegativeDuration()
-        throws Exception {
+    void runsScalarMultipleTimesIgnoringNegativeDuration() {
         final int times = 2;
         final AtomicInteger tries = new AtomicInteger(0);
         new Assertion<>(
@@ -116,12 +115,14 @@ final class RetryTest {
             Integer.MAX_VALUE,
             Duration.ofMillis(wait)
         ).value();
-        for (int position = 0; position < executions.size() - 1; position += 1) {
-            final int actual = position;
+        for (int position = 0; position < times - 1; position += 1) {
             new Assertion<>(
-                "Should wait the given time between attempts",
-                executions.get(actual).plusMillis(wait),
-                Matchers.lessThanOrEqualTo(executions.get(actual + 1))
+                String.format(
+                    "Should wait the given time between attempts on attempt %d",
+                    position
+                ),
+                executions.get(position).plusMillis(wait),
+                Matchers.lessThanOrEqualTo(executions.get(position + 1))
             ).affirm();
         }
     }

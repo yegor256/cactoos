@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,10 @@ import java.util.IllegalFormatException;
 import java.util.IllegalFormatWidthException;
 import org.cactoos.Fallback;
 import org.cactoos.iterable.IterableOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsApplicable;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link FuncWithFallback}.
@@ -38,11 +39,11 @@ import org.llorllale.cactoos.matchers.IsApplicable;
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("unchecked")
-public final class FuncWithFallbackTest {
+@SuppressWarnings({"unchecked", "PMD.JUnitTestsShouldIncludeAssert"})
+final class FuncWithFallbackTest {
 
     @Test
-    public void usesMainFunc() {
+    void usesMainFunc() {
         final String expected = "It's success";
         new Assertion<>(
             "Can't use the main function if no exception",
@@ -58,7 +59,7 @@ public final class FuncWithFallbackTest {
     }
 
     @Test
-    public void usesFallback() {
+    void usesFallback() {
         final String expected = "Never mind";
         new Assertion<>(
             "Can't use the callback in case of exception",
@@ -73,7 +74,7 @@ public final class FuncWithFallbackTest {
     }
 
     @Test
-    public void usesFallbackOfInterruptedException() {
+    void usesFallbackOfInterruptedException() {
         final String expected = "Fallback from InterruptedException";
         new Assertion<>(
             "Can't use a fallback from Interrupted in case of exception",
@@ -90,7 +91,7 @@ public final class FuncWithFallbackTest {
     }
 
     @Test
-    public void usesTheClosestFallback() {
+    void usesTheClosestFallback() {
         final String expected = "Fallback from IllegalFormatException";
         new Assertion<>(
             "Can't find the closest fallback",
@@ -113,14 +114,18 @@ public final class FuncWithFallbackTest {
         ).affirm();
     }
 
-    @Test(expected = Exception.class)
-    public void noFallbackIsProvided() throws Exception {
-        new FuncWithFallback<>(
-            input -> {
-                throw new IllegalFormatWidthException(1);
-            },
-            new IterableOf<>()
-        ).apply(1);
+    @Test
+    void noFallbackIsProvided() {
+        new Assertion<>(
+            "Cann't find fallback",
+            () -> new FuncWithFallback<>(
+                input -> {
+                    throw new IllegalFormatWidthException(1);
+                },
+                new IterableOf<>()
+            ).apply(1),
+            new Throws<>(Exception.class)
+        ).affirm();
     }
 
 }

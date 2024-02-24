@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,10 +30,11 @@ import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.StartsWith;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ResourceOf}.
@@ -41,10 +42,11 @@ import org.llorllale.cactoos.matchers.StartsWith;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ResourceOfTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class ResourceOfTest {
 
     @Test
-    public void readsBinaryResource() throws Exception {
+    void readsBinaryResource() throws Exception {
         new Assertion<>(
             "Can't read bytes from a classpath resource",
             Arrays.copyOfRange(
@@ -65,7 +67,7 @@ public final class ResourceOfTest {
     }
 
     @Test
-    public void readsTextResource() throws Exception {
+    void readsTextResource() throws Exception {
         new Assertion<>(
             "Must read a text resource from classpath",
             ResourceOfTest.large(),
@@ -74,7 +76,7 @@ public final class ResourceOfTest {
     }
 
     @Test
-    public void readsTextResourceThroughClassloader() throws Exception {
+    void readsTextResourceThroughClassloader() throws Exception {
         new Assertion<>(
             "Must read a text resource from classloader",
             ResourceOfTest.large(),
@@ -83,7 +85,7 @@ public final class ResourceOfTest {
     }
 
     @Test
-    public void readAbsentResourceTest() throws Exception {
+    void readAbsentResourceTest() throws Exception {
         new Assertion<>(
             "Can't replace an absent resource with a text",
             new TextOf(
@@ -98,17 +100,21 @@ public final class ResourceOfTest {
         ).affirm();
     }
 
-    @Test(expected = IOException.class)
-    public void throwsWhenResourceIsAbsent() throws Exception {
-        new TextOf(
-            new ResourceOf(
-                "bar/this-resource-is-definitely-absent.txt"
-            )
-        ).asString();
+    @Test
+    void throwsWhenResourceIsAbsent() {
+        new Assertion<>(
+            "Doesn't fail for absent resource",
+            () -> new TextOf(
+                new ResourceOf(
+                    "bar/this-resource-is-definitely-absent.txt"
+                )
+            ).asString(),
+            new Throws<>(IOException.class)
+        ).affirm();
     }
 
     @Test
-    public void acceptsTextAsResourceName() throws Exception {
+    void acceptsTextAsResourceName() throws Exception {
         new Assertion<>(
             "Can't accept Text as resource name",
             new TextOf(
@@ -121,7 +127,7 @@ public final class ResourceOfTest {
     }
 
     @Test
-    public void acceptsTextsAsResourceNameAndFallback() throws Exception {
+    void acceptsTextsAsResourceNameAndFallback() throws Exception {
         new Assertion<>(
             "Can't use Texts as parameters",
             new TextOf(

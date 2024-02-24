@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 
@@ -38,17 +37,11 @@ import org.llorllale.cactoos.matchers.HasSize;
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class DirectoryTest {
-
-    /**
-     * Temporary folder.
-     */
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class DirectoryTest {
 
     @Test
-    public void listsFilesAndFoldersInDirectory() throws IOException {
-        final Path dir = this.folder.newFolder().toPath();
+    void listsFilesAndFoldersInDirectory(@TempDir final Path dir) throws IOException {
         dir.resolve("x/y").toFile().mkdirs();
         Files.write(dir.resolve("x/y/test"), "".getBytes());
         new Assertion<>(
@@ -59,9 +52,8 @@ public final class DirectoryTest {
     }
 
     @Test
-    public void listsFilesInDirectoryByFile() throws Exception {
-        final File file = this.folder.newFolder();
-        final Path dir = file.toPath();
+    void listsFilesInDirectoryByFile(@TempDir final Path dir) throws Exception {
+        final File file = dir.toFile();
         dir.resolve("parent/child").toFile().mkdirs();
         Files.write(dir.resolve("parent/child/file"), "".getBytes());
         new Assertion<>(

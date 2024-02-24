@@ -1,7 +1,6 @@
 @defaultMessage Do not use static methods, please use cactoos-matchers Assertion instead
 org.hamcrest.Matchers
 org.junit.jupiter.api.Assertions
-org.junit.Assert
 org.hamcrest.MatcherAssert
 
 @defaultMessage Please avoid using static methods.

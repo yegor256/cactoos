@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,9 @@ import java.io.EOFException;
 import java.io.IOException;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link CheckedBiFunc}.
@@ -36,30 +37,39 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CheckedBiFuncTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class CheckedBiFuncTest {
 
-    @Test(expected = IllegalStateException.class)
-    public void runtimeExceptionIsNotWrapped() throws Exception {
-        new CheckedBiFunc<>(
-            (first, second) -> {
-                throw new IllegalStateException("runtime1");
-            },
-            IOException::new
-        ).apply(true, true);
-    }
-
-    @Test(expected = IOException.class)
-    public void checkedExceptionIsWrapped() throws Exception {
-        new CheckedBiFunc<>(
-            (first, second) -> {
-                throw new EOFException("runtime2");
-            },
-            IOException::new
-        ).apply(true, true);
+    @Test
+    void runtimeExceptionIsNotWrapped() {
+        new Assertion<>(
+            "Must fail if function is null.",
+            () -> new CheckedBiFunc<>(
+                (first, second) -> {
+                    throw new IllegalStateException("runtime1");
+                },
+                IOException::new
+            ).apply(true, true),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
     }
 
     @Test
-    public void extraWrappingIgnored() {
+    void checkedExceptionIsWrapped() {
+        new Assertion<>(
+            "Must fail if function is null.",
+            () -> new CheckedBiFunc<>(
+                (first, second) -> {
+                    throw new EOFException("runtime2");
+                },
+                IOException::new
+            ).apply(true, true),
+            new Throws<>(IOException.class)
+        ).affirm();
+    }
+
+    @Test
+    void extraWrappingIgnored() {
         try {
             new CheckedBiFunc<>(
                 (first, second) -> {
@@ -77,7 +87,7 @@ public final class CheckedBiFuncTest {
     }
 
     @Test
-    public void noExceptionThrown() throws Exception {
+    void noExceptionThrown() throws Exception {
         new Assertion<>(
             "Must not throw an exception",
             new CheckedBiFunc<>(

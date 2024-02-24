@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class OffsetDateTimeOfTest {
+final class OffsetDateTimeOfTest {
 
     @Test
-    public final void testParsingIsoFormattedStringToOffsetDateTime() {
+    void testParsingIsoFormattedStringToOffsetDateTime() {
         new Assertion<>(
             "Can't parse a OffsetDateTime with default/ISO format.",
             new OffsetDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
@@ -52,7 +52,7 @@ public class OffsetDateTimeOfTest {
     }
 
     @Test
-    public final void testParsingFormattedStringWithOffsetToOffsetDateTime() {
+    void testParsingFormattedStringWithOffsetToOffsetDateTime() {
         new Assertion<>(
             "Can't parse a OffsetDateTime with custom format.",
             new OffsetDateTimeOf(

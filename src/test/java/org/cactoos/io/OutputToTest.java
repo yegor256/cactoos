@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,8 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
@@ -39,18 +38,12 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 0.15
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class OutputToTest {
-
-    /**
-     * Temporary folder.
-     */
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class OutputToTest {
 
     @Test
-    public void writesIntoPath() throws Exception {
-        final Path temp = this.folder.newFolder("cactoos-1").toPath();
-        final Path path = temp.resolve("one/two/three/file.txt");
+    void writesIntoPath(@TempDir final Path wdir) throws Exception {
+        final Path path = wdir.resolve("one/two/three/file.txt");
         final String content = "Hello, товарищ!";
         new LengthOf(new TeeInput(content, new OutputTo(path))).value();
         new Assertion<>(
@@ -61,9 +54,8 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoFile() throws Exception {
-        final Path temp = this.folder.newFolder("cactoos-2").toPath();
-        final Path path = temp.resolve("a/b/c/file.txt");
+    void writesIntoFile(@TempDir final Path wdir) throws Exception {
+        final Path path = wdir.resolve("a/b/c/file.txt");
         final String txt = "Hello, друг!";
         new LengthOf(
             new TeeInput(txt, new SyncOutput(new OutputTo(path.toFile())))
@@ -76,7 +68,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriter() throws Exception {
+    void writesIntoWriter() throws Exception {
         final String txt = "Hello, writer!";
         final StringWriter output = new StringWriter();
         new LengthOf(new TeeInput(txt, new OutputTo(output))).value();
@@ -88,7 +80,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithCharset() throws Exception {
+    void writesIntoWriterWithCharset() throws Exception {
         final String txt = "Hello, writer with charset!";
         final StringWriter output = new StringWriter();
         new LengthOf(
@@ -102,7 +94,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithCharsetByName() throws Exception {
+    void writesIntoWriterWithCharsetByName() throws Exception {
         final String txt = "Hello, writer with charset by name!";
         final StringWriter output = new StringWriter();
         new LengthOf(
@@ -116,7 +108,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithCharsetAndSize() throws Exception {
+    void writesIntoWriterWithCharsetAndSize() throws Exception {
         final String txt = "Hello, writer with charset and size!";
         final StringWriter output = new StringWriter();
         new LengthOf(
@@ -133,7 +125,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithSize() throws Exception {
+    void writesIntoWriterWithSize() throws Exception {
         final String txt = "Hello, writer with size!";
         final StringWriter output = new StringWriter();
         new LengthOf(
@@ -150,7 +142,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithCharsetByNameAndSize() throws Exception {
+    void writesIntoWriterWithCharsetByNameAndSize() throws Exception {
         final String txt = "Hello, writer with charset by name and size!";
         final StringWriter output = new StringWriter();
         new LengthOf(
@@ -167,7 +159,7 @@ public final class OutputToTest {
     }
 
     @Test
-    public void writesIntoWriterWithDecoderAndSize() throws Exception {
+    void writesIntoWriterWithDecoderAndSize() throws Exception {
         final String txt = "Hello, writer with decoder and size!";
         final StringWriter output = new StringWriter();
         new LengthOf(

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,10 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
@@ -38,20 +38,14 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (400 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class TeeInputFromReaderTest {
-
-    /**
-     * Temporary files generator.
-     */
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.JUnitTestsShouldIncludeAssert"})
+final class TeeInputFromReaderTest {
 
     @Test
-    public void copiesFromReaderToFile() throws Exception {
+    void copiesFromReaderToFile(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader1.txt").toFile();
         new LengthOf(
             new TeeInput(new ReaderOf(input), output)
         ).value();
@@ -63,10 +57,10 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithSizeToFile() throws Exception {
+    void copiesFromReaderWithSizeToFile(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ file #2 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader2.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -82,10 +76,10 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetToFile() throws Exception {
+    void copiesFromReaderWithCharsetToFile(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ file #3 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader3.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -101,10 +95,10 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetAndSizeToFile() throws Exception {
+    void copiesFromReaderWithCharsetAndSizeToFile(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ file #4 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader4.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -121,10 +115,10 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetByNameToFile() throws Exception {
+    void copiesFromReaderWithCharsetByNameToFile(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ file #5 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader6.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -140,11 +134,11 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetByNameAndSizeToFile()
+    void copiesFromReaderWithCharsetByNameAndSizeToFile(@TempDir final Path wdir)
         throws Exception {
         final String input =
             "Hello, товарищ file #6 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader7.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -161,10 +155,10 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderToPath() throws Exception {
+    void copiesFromReaderToPath(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader8.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -179,10 +173,10 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithSizeToPath() throws Exception {
+    void copiesFromReaderWithSizeToPath(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader9.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -198,10 +192,11 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetToPath() throws Exception {
+    void copiesFromReaderWithCharsetToPath(@TempDir final Path wdir)
+        throws Exception {
         final String input =
             "Hello, товарищ path #3 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader10.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -217,10 +212,11 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetAndSizeToPath() throws Exception {
+    void copiesFromReaderWithCharsetAndSizeToPath(@TempDir final Path wdir)
+        throws Exception {
         final String input =
             "Hello, товарищ path #4 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader11.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -237,10 +233,11 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetByNameToPath() throws Exception {
+    void copiesFromReaderWithCharsetByNameToPath(@TempDir final Path wdir)
+        throws Exception {
         final String input =
             "Hello, товарищ path #5 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader12.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -256,11 +253,11 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetByNameAndSizeToPath()
+    void copiesFromReaderWithCharsetByNameAndSizeToPath(@TempDir final Path wdir)
         throws Exception {
         final String input =
             "Hello, товарищ path #6 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader13.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -277,10 +274,10 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderToOutput() throws Exception {
+    void copiesFromReaderToOutput(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader14.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -295,10 +292,11 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithSizeToOutput() throws Exception {
+    void copiesFromReaderWithSizeToOutput(@TempDir final Path wdir)
+        throws Exception {
         final String input =
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader15.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -314,10 +312,11 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetToOutput() throws Exception {
+    void copiesFromReaderWithCharsetToOutput(@TempDir final Path wdir)
+        throws Exception {
         final String input =
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader16.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -333,11 +332,11 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetAndSizeToOutput()
+    void copiesFromReaderWithCharsetAndSizeToOutput(@TempDir final Path wdir)
         throws Exception {
         final String input =
             "Hello, товарищ output #4 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader17.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -354,10 +353,11 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetByNameToOutput() throws Exception {
+    void copiesFromReaderWithCharsetByNameToOutput(@TempDir final Path wdir)
+        throws Exception {
         final String input =
             "Hello, товарищ output #5 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader18.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),
@@ -373,11 +373,11 @@ public final class TeeInputFromReaderTest {
     }
 
     @Test
-    public void copiesFromReaderWithCharsetByNameAndSizeToOutput()
+    void copiesFromReaderWithCharsetByNameAndSizeToOutput(@TempDir final Path wdir)
         throws Exception {
         final String input =
             "Hello, товарищ output #6 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teereader19.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new ReaderOf(input),

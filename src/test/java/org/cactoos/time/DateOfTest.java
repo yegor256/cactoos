@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class DateOfTest {
+final class DateOfTest {
 
     @Test
-    public final void testParsingIsoFormattedStringToDate() {
+    void testParsingIsoFormattedStringToDate() {
         new Assertion<>(
             "must parse a Date with default/ISO format.",
             new DateOf("2017-12-13T14:15:16.000000017Z"),
@@ -55,7 +55,7 @@ public class DateOfTest {
     }
 
     @Test
-    public final void testParsingCustomFormattedStringToDate() {
+    void testParsingCustomFormattedStringToDate() {
         new Assertion<>(
             "must parse a Date with custom format.",
             new DateOf(
@@ -73,7 +73,7 @@ public class DateOfTest {
     }
 
     @Test
-    public final void testParsingCustomFormattedStringWithoutTimeToDate() {
+    void testParsingCustomFormattedStringWithoutTimeToDate() {
         new Assertion<>(
             "must parse a Date with custom format.",
             new DateOf(
@@ -91,7 +91,7 @@ public class DateOfTest {
     }
 
     @Test
-    public final void testParsingCustomFormatterStringToDate() {
+    void testParsingCustomFormatterStringToDate() {
         new Assertion<>(
             "must parse a Date with custom format.",
             new DateOf(

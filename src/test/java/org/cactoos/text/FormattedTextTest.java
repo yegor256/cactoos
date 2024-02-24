@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,10 @@ import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
 import org.cactoos.list.ListOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link FormattedText}.
@@ -38,10 +39,11 @@ import org.llorllale.cactoos.matchers.HasString;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FormattedTextTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class FormattedTextTest {
 
     @Test
-    public void formatsText() {
+    void formatsText() {
         new Assertion<>(
             "Can't format a text",
             new FormattedText(
@@ -52,7 +54,7 @@ public final class FormattedTextTest {
     }
 
     @Test
-    public void formatsTextWithObjects() {
+    void formatsTextWithObjects() {
         new Assertion<>(
             "Can't format a text with objects",
             new FormattedText(
@@ -64,16 +66,20 @@ public final class FormattedTextTest {
         ).affirm();
     }
 
-    @Test(expected = UnknownFormatConversionException.class)
-    public void failsForInvalidPattern() throws Exception {
-        new FormattedText(
-            new TextOf("%%. Formatted %$"),
-            new ListOf<>(1, "invalid")
-        ).asString();
+    @Test
+    void failsForInvalidPattern() {
+        new Assertion<>(
+            "Exception is expected for invalid format",
+            () -> new FormattedText(
+                new TextOf("%%. Formatted %$"),
+                new ListOf<>(1, "invalid")
+            ).asString(),
+            new Throws<>(UnknownFormatConversionException.class)
+        ).affirm();
     }
 
     @Test
-    public void formatsTextWithCollection() {
+    void formatsTextWithCollection() {
         new Assertion<>(
             "Can't format a text with a collection",
             new FormattedText(
@@ -84,17 +90,21 @@ public final class FormattedTextTest {
         ).affirm();
     }
 
-    @Test(expected = IllegalFormatConversionException.class)
-    public void ensuresThatFormatterFails() throws Exception {
-        new FormattedText(
-            new TextOf("Local time: %d"),
-            Locale.ROOT,
-            Calendar.getInstance()
-        ).asString();
+    @Test
+    void ensuresThatFormatterFails() {
+        new Assertion<>(
+            "Exception is expected for wrong format",
+            () -> new FormattedText(
+                new TextOf("Local time: %d"),
+                Locale.ROOT,
+                Calendar.getInstance()
+            ).asString(),
+            new Throws<>(IllegalFormatConversionException.class)
+        ).affirm();
     }
 
     @Test
-    public void formatsWithLocale() {
+    void formatsWithLocale() {
         new Assertion<>(
             "Can't format a text with Locale",
             new FormattedText(
@@ -105,7 +115,7 @@ public final class FormattedTextTest {
     }
 
     @Test
-    public void formatsWithText() {
+    void formatsWithText() {
         new Assertion<>(
             "Can't format a string with text",
             new FormattedText(

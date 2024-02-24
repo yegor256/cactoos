@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,10 @@ package org.cactoos.scalar;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Unchecked}.
@@ -33,15 +36,44 @@ import org.junit.Test;
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class UncheckedTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class UncheckedTest {
 
-    @Test(expected = UncheckedIOException.class)
-    public void rethrowsCheckedToUncheckedException() {
-        new Unchecked<>(
-            () -> {
-                throw new IOException("intended");
-            }
-        ).value();
+    @Test
+    void rethrowsCheckedToUncheckedException() {
+        new Assertion<>(
+            "Checked exception should be rethrown as unchecked",
+            () -> new Unchecked<>(
+                () -> {
+                    throw new IOException("intended");
+                }
+            ).value(),
+            new Throws<>(UncheckedIOException.class)
+        ).affirm();
+    }
+
+    @Test
+    void rethrowsUncheckedException() {
+        new Assertion<>(
+            "Unchecked exception should be rethrown as is",
+            () -> new Unchecked<>(
+                () -> {
+                    throw new IllegalStateException("");
+                }
+            ).value(),
+            new Throws<>(IllegalStateException.class)
+        ).affirm();
+    }
+
+    @Test
+    void returnUncheckedValue() {
+        new Assertion<>(
+            "Must return value without exceptions",
+            new Unchecked<>(
+                () -> true
+            ).value(),
+            new IsTrue()
+        ).affirm();
     }
 
 }

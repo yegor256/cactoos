@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,9 @@ package org.cactoos.map;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link MapEntry}.
@@ -33,10 +35,11 @@ import org.junit.Test;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class MapEntryTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class MapEntryTest {
 
     @Test
-    public void getKey() {
+    void getKey() {
         final String key = "hello";
         final String value = "world";
         MatcherAssert.assertThat(
@@ -47,7 +50,7 @@ public final class MapEntryTest {
     }
 
     @Test
-    public void getValue() {
+    void getValue() {
         final String key = "foo";
         final String value = "bar";
         MatcherAssert.assertThat(
@@ -57,13 +60,17 @@ public final class MapEntryTest {
         );
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void cantSetValue() {
-        new MapEntry<>("one", "two").setValue("three");
+    @Test
+    void cantSetValue() {
+        new Assertion<>(
+            "Exception is expected on change operations",
+            () -> new MapEntry<>("one", "two").setValue("three"),
+            new Throws<>(UnsupportedOperationException.class)
+        ).affirm();
     }
 
     @Test
-    public void equalsTo() {
+    void equalsTo() {
         final String key = "eo";
         final String value = "book";
         MatcherAssert.assertThat(
@@ -74,7 +81,7 @@ public final class MapEntryTest {
     }
 
     @Test
-    public void compareHash() {
+    void compareHash() {
         MatcherAssert.assertThat(
             "the hash code are not equals",
             new MapEntry<>("elegant", "objects").hashCode(),
@@ -83,7 +90,7 @@ public final class MapEntryTest {
     }
 
     @Test
-    public void toStringMethod() {
+    void toStringMethod() {
         MatcherAssert.assertThat(
             "ToString method returns unexpected value",
             new MapEntry<>("somekey", "somevalue").toString(),

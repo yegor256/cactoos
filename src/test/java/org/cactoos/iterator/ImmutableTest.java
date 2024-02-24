@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,10 @@ import java.util.Random;
 import org.cactoos.text.Randomized;
 import org.cactoos.text.TextOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link Immutable}.
@@ -40,19 +41,26 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ImmutableTest {
+final class ImmutableTest {
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void doesNotAllowRemovingOfElements() {
+    @Test
+    void doesNotAllowRemovingOfElements() {
         final List<String> list = new LinkedList<>();
         list.add("one");
         final Iterator<String> immutable = new Immutable<>(list.iterator());
         immutable.next();
-        immutable.remove();
+        new Assertion<>(
+            "Cann't remove from unmutable",
+            () -> {
+                immutable.remove();
+                return 1;
+            },
+            new Throws<>(UnsupportedOperationException.class)
+        ).affirm();
     }
 
     @Test
-    public void decoratesNext() {
+    void decoratesNext() {
         final int value = new Random().nextInt();
         final Iterator<Integer> immutable = new Immutable<>(
             new IteratorOf<>(value)
@@ -65,7 +73,7 @@ public final class ImmutableTest {
     }
 
     @Test
-    public void decoratesHasNext() {
+    void decoratesHasNext() {
         final int value = new Random().nextInt();
         final Iterator<Integer> immutable = new Immutable<>(
             new IteratorOf<>(value)
@@ -84,7 +92,7 @@ public final class ImmutableTest {
     }
 
     @Test
-    public void decoratesToString() throws Exception {
+    void decoratesToString() throws Exception {
         final String string = new Randomized().asString();
         final Iterator<Object> iterator = new Iterator<Object>() {
             public Object next() {

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ package org.cactoos.text;
 import org.cactoos.Text;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
@@ -36,10 +36,10 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 0.27
  * @checkstyle JavadocMethodCheck (100 lines)
  */
-public final class ComparableTextTest {
+final class ComparableTextTest {
 
     @Test
-    public void comparesWithASubtext() {
+    void comparesWithASubtext() {
         new Assertion<>(
             "Can't compare sub texts",
             new ComparableText(
@@ -56,7 +56,7 @@ public final class ComparableTextTest {
     }
 
     @Test
-    public void comparesToUncheckedText() {
+    void comparesToUncheckedText() {
         final String txt = "foobar";
         new Assertion<>(
             "These UncheckedText are not equal",
@@ -72,7 +72,7 @@ public final class ComparableTextTest {
     }
 
     @Test
-    public void equalsToItself() {
+    void equalsToItself() {
         final Text text = new TextOf("text");
         new Assertion<>(
             "Does not equal to itself",
@@ -82,7 +82,7 @@ public final class ComparableTextTest {
     }
 
     @Test
-    public void equalsAndHashCodeOfComparableOfTheSameText() {
+    void equalsAndHashCodeOfComparableOfTheSameText() {
         final Text text = new TextOf("my text");
         final Text actual = new ComparableText(text);
         final Text expected = new ComparableText(text);
@@ -101,7 +101,7 @@ public final class ComparableTextTest {
     }
 
     @Test
-    public void equalsOfDifferentText() {
+    void equalsOfDifferentText() {
         final Text text = new ComparableText(
             new TextOf("my value")
         );

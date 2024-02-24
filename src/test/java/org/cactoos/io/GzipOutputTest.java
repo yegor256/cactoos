@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,30 +31,26 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link GzipOutput}.
  * @checkstyle JavadocMethodCheck (500 lines)
  * @since 0.29
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class GzipOutputTest {
-    /**
-     * Temporary files and folders generator.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
+    "PMD.JUnitTestsShouldIncludeAssert"})
+final class GzipOutputTest {
 
     @Test
-    public void writeToGzipOutput() throws Exception {
+    void writeToGzipOutput() throws Exception {
         final String content = "Hello!";
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         try (
@@ -85,20 +81,22 @@ public final class GzipOutputTest {
         ).affirm();
     }
 
-    @Test(expected = IOException.class)
-    public void writeToClosedGzipOutput() throws Exception {
+    @Test
+    void writeToClosedGzipOutput(@TempDir final Path wdir) throws Exception {
         final OutputStream stream =
             Files.newOutputStream(
-                Paths.get(
-                    this.folder.newFile("cactoos.txt").getPath()
-                )
+                wdir.resolve("cactoos.txt")
             );
         stream.close();
-        new LengthOf(
-            new TeeInput(
-                "Hello!",
-                new GzipOutput(new OutputTo(stream))
-            )
-        ).value();
+        new Assertion<>(
+            "Cann't write to closed stream",
+            () -> new LengthOf(
+                new TeeInput(
+                    "Hello!",
+                    new GzipOutput(new OutputTo(stream))
+                )
+            ).value(),
+            new Throws<>(IOException.class)
+        ).affirm();
     }
 }

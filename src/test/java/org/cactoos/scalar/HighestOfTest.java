@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,10 @@ import org.cactoos.number.SumOf;
 import org.cactoos.time.DateOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link HighestOf}.
@@ -41,16 +42,21 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class HighestOfTest {
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
+    "PMD.JUnitTestsShouldIncludeAssert"})
+final class HighestOfTest {
 
-    @Test(expected = NoSuchElementException.class)
-    public void failsForEmptyIterable() throws Exception {
-        new HighestOf<>(() -> Collections.emptyIterator()).value();
+    @Test
+    void failsForEmptyIterable() {
+        new Assertion<>(
+            "Exception is expected for iterating empty collection",
+            () -> new HighestOf<>(() -> Collections.emptyIterator()).value(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
-    public void singleAtSingleIterable() throws Exception {
+    void singleAtSingleIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest among one by scalars",
             new HighestOf<Integer>(() -> 10).value(),
@@ -64,7 +70,7 @@ public final class HighestOfTest {
     }
 
     @Test
-    public void highestIntegerAtIterable() throws Exception {
+    void highestIntegerAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest integer among many by scalars",
             new HighestOf<Integer>(
@@ -93,7 +99,7 @@ public final class HighestOfTest {
     }
 
     @Test
-    public void highestLongAtIterable() throws Exception {
+    void highestLongAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest long among many by scalars",
             new HighestOf<Long>(
@@ -122,7 +128,7 @@ public final class HighestOfTest {
     }
 
     @Test
-    public void highestDoubleAtIterable() throws Exception {
+    void highestDoubleAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest double among many by scalars",
             new HighestOf<Double>(
@@ -171,7 +177,7 @@ public final class HighestOfTest {
     }
 
     @Test
-    public void highestStringAtIterable() throws Exception {
+    void highestStringAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest string among many by scalars",
             new HighestOf<String>(() -> "Apple", () -> "Orange").value(),
@@ -185,7 +191,7 @@ public final class HighestOfTest {
     }
 
     @Test
-    public void highestCharAtIterable() throws Exception {
+    void highestCharAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest char among many by scalars",
             new HighestOf<Character>(() -> 'A', () -> 'B').value(),
@@ -199,7 +205,7 @@ public final class HighestOfTest {
     }
 
     @Test
-    public void highestSumAtIterable() throws Exception {
+    void highestSumAtIterable() throws Exception {
         new Assertion<>(
             "Must find the highest double sum among many",
             new HighestOf<>(
@@ -212,7 +218,7 @@ public final class HighestOfTest {
     }
 
     @Test
-    public void highestDateAtIterable() throws Exception {
+    void highestDateAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest date among many",
             new HighestOf<Date>(
@@ -227,7 +233,7 @@ public final class HighestOfTest {
     }
 
     @Test
-    public void highestBooleanAtIterable() throws Exception {
+    void highestBooleanAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest boolean among many",
             new HighestOf<Boolean>(

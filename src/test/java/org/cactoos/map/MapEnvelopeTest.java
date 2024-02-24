@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsMapWithSize;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 
 /**
@@ -39,11 +39,12 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle DiamondOperatorCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public final class MapEnvelopeTest {
+@SuppressWarnings({"PMD.TooManyMethods",
+    "PMD.JUnitTestsShouldIncludeAssert"})
+final class MapEnvelopeTest {
 
     @Test
-    public void mapIsEmptyTrue() {
+    void mapIsEmptyTrue() {
         MatcherAssert.assertThat(
             "#isEmpty() returns false for empty map",
             new NoNulls<>(
@@ -54,7 +55,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void mapIsEmptyFalse() {
+    void mapIsEmptyFalse() {
         MatcherAssert.assertThat(
             "#isEmpty() returns true for not empty map",
             new NoNulls<>(
@@ -67,7 +68,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void mapContainsKeyTrue() {
+    void mapContainsKeyTrue() {
         MatcherAssert.assertThat(
             "contains key returns false with exist key",
             new NoNulls<>(
@@ -80,7 +81,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void mapContainsKeyFalse() {
+    void mapContainsKeyFalse() {
         MatcherAssert.assertThat(
             "contains key returns true with absent key",
             new NoNulls<>(
@@ -93,7 +94,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void mapContainsValueTrue() {
+    void mapContainsValueTrue() {
         MatcherAssert.assertThat(
             "contains value returns false with exist value",
             new NoNulls<>(
@@ -106,7 +107,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void mapContainsValueFalse() {
+    void mapContainsValueFalse() {
         MatcherAssert.assertThat(
             "contains value returns true with absent value",
             new NoNulls<>(
@@ -119,7 +120,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void mapEqualsToItself() {
+    void mapEqualsToItself() {
         final MapOf<String, String> map =
             new MapOf<String, String>(new MapEntry<>("key", "value"));
         MatcherAssert.assertThat(
@@ -130,7 +131,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void mapNotEqualsToAnotherClass() {
+    void mapNotEqualsToAnotherClass() {
         final MapOf<String, String> map =
             new MapOf<String, String>(new MapEntry<>("key1", "value1"));
         MatcherAssert.assertThat(
@@ -143,7 +144,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void mapEqualsToMapWithSameEntries() {
+    void mapEqualsToMapWithSameEntries() {
         final String key = "key2";
         final String value = "value2";
         final MapEntry<String, String> input = new MapEntry<>(key, value);
@@ -156,7 +157,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void equalsDoesNotFailOnNulls() {
+    void equalsDoesNotFailOnNulls() {
         final MapEntry<String, String> first =
             new MapEntry<>("key3", "value3");
         final MapEntry<String, String> second =
@@ -169,7 +170,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void mapNotEqualsToOtherWithDifferentKeys() {
+    void mapNotEqualsToOtherWithDifferentKeys() {
         final String value = "value5";
         MatcherAssert.assertThat(
             "Map equals to another map with different keys",
@@ -185,7 +186,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void mapNotEqualsToOtherWithDifferentValues() {
+    void mapNotEqualsToOtherWithDifferentValues() {
         final String key = "key7";
         MatcherAssert.assertThat(
             "Map equals to another map with different values",
@@ -201,7 +202,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void hashCodeDependsOnItems() {
+    void hashCodeDependsOnItems() {
         final String key = "key9";
         final String value = "value9";
         final MapEntry<String, String> input = new MapEntry<>(key, value);
@@ -214,7 +215,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void hashCodeDoesNotFailOnNulls() {
+    void hashCodeDoesNotFailOnNulls() {
         final MapEntry<String, String> first =
             new MapEntry<>("key10", "value10");
         final MapEntry<String, String> second =
@@ -224,7 +225,7 @@ public final class MapEnvelopeTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void emptyMapEnvelopeShouldBeEqualToEmptyDerivedMap() {
+    void emptyMapEnvelopeShouldBeEqualToEmptyDerivedMap() {
         final MapEnvelope<Integer, String> base = new MapOf<>();
         final DerivedMapEnvelope<Integer, String> derived =
             new DerivedMapEnvelope<>(new HashMap<>());
@@ -237,7 +238,7 @@ public final class MapEnvelopeTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void mapEnvelopeShouldCompareDerivedClasses() {
+    void mapEnvelopeShouldCompareDerivedClasses() {
         final int key = 1;
         final String value = "one";
         final MapEntry<Integer, String> entry = new MapEntry<>(key, value);
@@ -254,7 +255,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void putIsDelegated() {
+    void putIsDelegated() {
         final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
             new HashMap<>()
         );
@@ -271,7 +272,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void clearIsDelegated() {
+    void clearIsDelegated() {
         final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
             new MapOf<Integer, Integer>(
                 new MapEntry<>(0, 1)
@@ -286,7 +287,7 @@ public final class MapEnvelopeTest {
     }
 
     @Test
-    public void removeIsDelegated() {
+    void removeIsDelegated() {
         final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
             new MapOf<Integer, Integer>(
                 new MapEntry<>(0, 1)

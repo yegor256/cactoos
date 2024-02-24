@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public class ForEachInThreadsTest {
+final class ForEachInThreadsTest {
 
     @Test
     @SuppressWarnings("unchecked")

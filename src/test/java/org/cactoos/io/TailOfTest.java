@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,18 +27,20 @@ import java.util.Arrays;
 import java.util.Random;
 import org.cactoos.bytes.BytesOf;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link TailOf}.
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class TailOfTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class TailOfTest {
 
     @Test
-    public void tailsOnLongStream() throws Exception {
+    void tailsOnLongStream() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
         new Assertion<>(
@@ -54,7 +56,7 @@ public final class TailOfTest {
     }
 
     @Test
-    public void tailsOnExactStream() throws Exception {
+    void tailsOnExactStream() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
         new Assertion<>(
@@ -70,7 +72,7 @@ public final class TailOfTest {
     }
 
     @Test
-    public void tailsOnExactStreamAndBuffer() throws Exception {
+    void tailsOnExactStreamAndBuffer() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
         new Assertion<>(
@@ -87,7 +89,7 @@ public final class TailOfTest {
     }
 
     @Test
-    public void tailsOnShorterStream() throws Exception {
+    void tailsOnShorterStream() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
         new Assertion<>(
@@ -103,7 +105,7 @@ public final class TailOfTest {
     }
 
     @Test
-    public void tailsOnStreamLongerThanBufferAndBytes() throws Exception {
+    void tailsOnStreamLongerThanBufferAndBytes() throws Exception {
         final int size = 4;
         final byte[] bytes = this.generate(size);
         new Assertion<>(
@@ -121,16 +123,20 @@ public final class TailOfTest {
         ).affirm();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void failsIfBufferSizeSmallerThanTailSize() throws Exception {
+    @Test
+    void failsIfBufferSizeSmallerThanTailSize() throws Exception {
         final int size = 4;
-        new BytesOf(
-            new TailOf(
-                new InputOf(new BytesOf(this.generate(size))),
-                size,
-                size - 1
-            )
-        ).asBytes();
+        new Assertion<>(
+            "Can't read in smaller buffer",
+            () -> new BytesOf(
+                new TailOf(
+                    new InputOf(new BytesOf(this.generate(size))),
+                    size,
+                    size - 1
+                )
+            ).asBytes(),
+        new Throws<>(IllegalArgumentException.class)
+        ).affirm();
     }
 
     /**

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,14 @@
 package org.cactoos.io;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.Randomized;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.Throws;
@@ -40,19 +41,14 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0
  */
-public final class AppendToTest {
-
-    /**
-     * Temporary files and folders generator.
-     */
-    @Rule
-    public final TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class AppendToTest {
 
     /**
      * Ensures that AppendTo is failing on a negative predicate result.
      */
     @Test
-    public void failsIfFileDoesNotExist() throws Exception {
+    void failsIfFileDoesNotExist() throws Exception {
         final File source = new File(
             new Randomized(
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
@@ -70,15 +66,24 @@ public final class AppendToTest {
 
     /**
      * Ensures that AppendTo is appending to a given file.
+     * @param wdir TempDir to work in
      * @throws Exception if fails
+     * @todo #1586:1h Tests failed on Windows due to not closed streams.
+     *  It will be good to have feature to simplify autoclosing streams.
      */
     @Test
-    public void appendsToFile() throws Exception {
-        final File source = this.folder.newFile();
+    void appendsToFile(@TempDir final Path wdir) throws Exception {
+        final File source = wdir.resolve("apptest.txt").toFile();
         final String first = "abdcd";
-        new OutputTo(source).stream().write(first.getBytes());
+        try (OutputStream out = new OutputTo(source).stream()) {
+            out.write(first.getBytes());
+            out.flush();
+        }
         final String second = "efgh";
-        new AppendTo(source).stream().write(second.getBytes());
+        try (OutputStream out = new AppendTo(source).stream()) {
+            out.write(second.getBytes());
+            out.flush();
+        }
         new Assertion<>(
             "Does not contain expected text",
             new InputOf(source),
@@ -88,19 +93,24 @@ public final class AppendToTest {
 
     /**
      * Ensures that AppendTo is appending unicode text to a given file.
+     * @param wdir TempDir to work in
      * @throws Exception if fails
      */
     @Test
-    public void appendsUnicodeToFile() throws Exception {
-        final File source = this.folder.newFile();
+    void appendsUnicodeToFile(@TempDir final Path wdir) throws Exception {
+        final File source = wdir.resolve("appunitest.txt").toFile();
         final String first = "Hello, товарищ output #3 äÄ ";
-        new OutputTo(source)
-            .stream()
-            .write(first.getBytes(StandardCharsets.UTF_8));
+        try (OutputStream out = new OutputTo(source)
+            .stream()) {
+            out.write(first.getBytes(StandardCharsets.UTF_8));
+            out.flush();
+        }
         final String second = "#4 äÄ üÜ öÖ and ß";
-        new AppendTo(source)
-            .stream()
-            .write(second.getBytes(StandardCharsets.UTF_8));
+        try (OutputStream out = new AppendTo(source)
+            .stream()) {
+            out.write(second.getBytes(StandardCharsets.UTF_8));
+            out.flush();
+        }
         new Assertion<>(
             "Can't find expected unicode text content",
             new InputOf(source),

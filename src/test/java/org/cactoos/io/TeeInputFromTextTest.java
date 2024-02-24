@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,11 +25,11 @@ package org.cactoos.io;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
@@ -39,19 +39,14 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (215 lines)
  */
-public final class TeeInputFromTextTest {
-
-    /**
-     * Temporary files generator.
-     */
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class TeeInputFromTextTest {
 
     @Test
-    public void copiesFromTextToPath() throws Exception {
+    void copiesFromTextToPath(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teetext1.txt").toFile();
         new LengthOf(
             new TeeInput(new TextOf(input), output.toPath())
         ).value();
@@ -63,10 +58,10 @@ public final class TeeInputFromTextTest {
     }
 
     @Test
-    public void copiesFromTextWithCharsetToPath() throws Exception {
+    void copiesFromTextWithCharsetToPath(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ path #2 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teetext2.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new TextOf(input),
@@ -82,10 +77,10 @@ public final class TeeInputFromTextTest {
     }
 
     @Test
-    public void copiesFromTextWithCharsetByNameToPath() throws Exception {
+    void copiesFromTextWithCharsetByNameToPath(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ path #3 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teetext3.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new TextOf(input),
@@ -101,10 +96,10 @@ public final class TeeInputFromTextTest {
     }
 
     @Test
-    public void copiesFromTextToFile() throws Exception {
+    void copiesFromTextToFile(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teetext4.txt").toFile();
         new LengthOf(
             new TeeInput(new TextOf(input), output)
         ).value();
@@ -116,10 +111,10 @@ public final class TeeInputFromTextTest {
     }
 
     @Test
-    public void copiesFromTextWithCharsetToFile() throws Exception {
+    void copiesFromTextWithCharsetToFile(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ file #2 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teetext5.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new TextOf(input),
@@ -135,10 +130,10 @@ public final class TeeInputFromTextTest {
     }
 
     @Test
-    public void copiesFromTextWithCharsetByNameToFile() throws Exception {
+    void copiesFromTextWithCharsetByNameToFile(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ file #3 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teetext6.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new TextOf(input),
@@ -154,10 +149,10 @@ public final class TeeInputFromTextTest {
     }
 
     @Test
-    public void copiesFromTextToOutput() throws Exception {
+    void copiesFromTextToOutput(@TempDir final Path wdir) throws Exception {
         final String input =
             "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teetext7.txt").toFile();
         new LengthOf(
             new TeeInput(new TextOf(input), new OutputTo(output))
         ).value();
@@ -169,10 +164,11 @@ public final class TeeInputFromTextTest {
     }
 
     @Test
-    public void copiesFromTextWithCharsetToOutput() throws Exception {
+    void copiesFromTextWithCharsetToOutput(@TempDir final Path wdir)
+        throws Exception {
         final String input =
             "Hello, товарищ output #2 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teetext8.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new TextOf(input),
@@ -188,10 +184,11 @@ public final class TeeInputFromTextTest {
     }
 
     @Test
-    public void copiesFromTextWithCharsetByNameToOutput() throws Exception {
+    void copiesFromTextWithCharsetByNameToOutput(@TempDir final Path wdir)
+        throws Exception {
         final String input =
             "Hello, товарищ output #3 äÄ üÜ öÖ and ß";
-        final File output = this.folder.newFile();
+        final File output = wdir.resolve("teetext9.txt").toFile();
         new LengthOf(
             new TeeInput(
                 new TextOf(input),

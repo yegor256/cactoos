@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,33 +24,48 @@
 package org.cactoos.func;
 
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link FuncNoNulls}.
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class FuncNoNullsTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class FuncNoNullsTest {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullFunc() throws Exception {
-        new FuncNoNulls<>(null).apply(new Object());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullInput() throws Exception {
-        new FuncNoNulls<>(input -> input).apply(null);
+    @Test
+    void failForNullFunc() {
+        new Assertion<>(
+            "Doesn't fail for null func",
+            () -> new FuncNoNulls<>(null).apply(new Object()),
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
     }
 
     @Test
-    public void okForNoNulls() throws Exception {
+    void failForNullInput() {
+        new Assertion<>(
+            "Doesn't fail for null input",
+            () -> new FuncNoNulls<>(input -> input).apply(null),
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
+    }
+
+    @Test
+    void okForNoNulls() throws Exception {
         new FuncNoNulls<>(input -> input).apply(new Object());
     }
 
-    @Test(expected = IOException.class)
-    public void failForNullResult() throws Exception {
-        new FuncNoNulls<>(input -> null).apply(new Object());
+    @Test
+    void failForNullResult() {
+        new Assertion<>(
+            "Doesn't fail for null result",
+            () -> new FuncNoNulls<>(input -> null).apply(new Object()),
+            new Throws<>(IOException.class)
+        ).affirm();
     }
 
 }

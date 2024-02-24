@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,9 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfLongs}.
@@ -34,10 +35,11 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class IteratorOfLongsTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class IteratorOfLongsTest {
 
     @Test
-    public void emptyIteratorDoesNotHaveNext() {
+    void emptyIteratorDoesNotHaveNext() {
         new Assertion<>(
             "hasNext is true for empty iterator.",
             new IteratorOfLongs().hasNext(),
@@ -45,13 +47,17 @@ public final class IteratorOfLongsTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void emptyIteratorThrowsException() {
-        new IteratorOfLongs().next();
+    @Test
+    void emptyIteratorThrowsException() {
+        new Assertion<>(
+            "Exception is expected for empty iterator of longs.",
+            () -> new IteratorOfLongs().next(),
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 
     @Test
-    public void nonEmptyIteratorDoesNotHaveNext() {
+    void nonEmptyIteratorDoesNotHaveNext() {
         final IteratorOfLongs iterator = new IteratorOfLongs(1, 2);
         iterator.next();
         iterator.next();
@@ -62,10 +68,14 @@ public final class IteratorOfLongsTest {
         ).affirm();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void nonEmptyIteratorThrowsException() {
+    @Test
+    void nonEmptyIteratorThrowsException() {
         final IteratorOfLongs iterator = new IteratorOfLongs(1);
         iterator.next();
-        iterator.next();
+        new Assertion<>(
+            "Exception is expected for fully traversed iterator.",
+            iterator::next,
+            new Throws<>(NoSuchElementException.class)
+        ).affirm();
     }
 }

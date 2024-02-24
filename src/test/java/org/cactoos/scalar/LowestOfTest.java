@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,10 @@ import org.cactoos.number.SumOf;
 import org.cactoos.time.DateOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link LowestOf}.
@@ -42,15 +43,19 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class LowestOfTest {
+final class LowestOfTest {
 
-    @Test(expected = NoSuchElementException.class)
-    public void failsForEmptyIterable() throws Exception {
-        new LowestOf<>(() -> Collections.emptyIterator()).value();
+    @Test
+    void failsForEmptyIterable() {
+        new Assertion<>(
+            "Cann't iterate in empty collection",
+            () -> new LowestOf<>(() -> Collections.emptyIterator()).value(),
+            new Throws<>(NoSuchElementException.class)
+        );
     }
 
     @Test
-    public void singleAtSingleIterable() throws Exception {
+    void singleAtSingleIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest among one by scalars",
             new LowestOf<Integer>(() -> 10).value(),
@@ -64,7 +69,7 @@ public final class LowestOfTest {
     }
 
     @Test
-    public void lowestIntegerAtIterable() throws Exception {
+    void lowestIntegerAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest integer among many by scalars",
             new LowestOf<Integer>(
@@ -98,7 +103,7 @@ public final class LowestOfTest {
     }
 
     @Test
-    public void lowestLongAtIterable() throws Exception {
+    void lowestLongAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest long among many by scalars",
             new LowestOf<Long>(
@@ -132,7 +137,7 @@ public final class LowestOfTest {
     }
 
     @Test
-    public void lowestDoubleAtIterable() throws Exception {
+    void lowestDoubleAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest double among many by scalars",
             new LowestOf<Double>(
@@ -191,7 +196,7 @@ public final class LowestOfTest {
     }
 
     @Test
-    public void lowestStringAtIterable() throws Exception {
+    void lowestStringAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest string among many by scalars",
             new LowestOf<String>(
@@ -209,7 +214,7 @@ public final class LowestOfTest {
     }
 
     @Test
-    public void lowestCharAtIterable() throws Exception {
+    void lowestCharAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest char among many by scalars",
             new LowestOf<Character>(() -> 'B', () -> 'U', () -> 'G').value(),
@@ -223,7 +228,7 @@ public final class LowestOfTest {
     }
 
     @Test
-    public void lowestSumAtIterable() throws Exception {
+    void lowestSumAtIterable() throws Exception {
         new Assertion<>(
             "Must find the lowest double sum among many",
             new LowestOf<>(
@@ -236,7 +241,7 @@ public final class LowestOfTest {
     }
 
     @Test
-    public void lowestDateAtIterable() throws Exception {
+    void lowestDateAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest date among many",
             new LowestOf<Date>(
@@ -251,7 +256,7 @@ public final class LowestOfTest {
     }
 
     @Test
-    public void lowestBooleanAtIterable() throws Exception {
+    void lowestBooleanAtIterable() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest boolean among many",
             new LowestOf<Boolean>(

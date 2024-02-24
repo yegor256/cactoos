@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,28 +25,44 @@ package org.cactoos.proc;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ProcNoNulls}.
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ProcNoNullsTest {
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+final class ProcNoNullsTest {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullProc() throws Exception {
-        new ProcNoNulls<>(null).exec(new Object());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void failForNullInput() throws Exception {
-        new ProcNoNulls<>(input -> { }).exec(null);
+    @Test
+    void failForNullProc() {
+        new Assertion<>(
+            "Doesn't fail for null proc",
+            () -> {
+                new ProcNoNulls<>(null).exec(new Object());
+                return 1;
+            },
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
     }
 
     @Test
-    public void okForNoNulls() throws Exception {
+    void failForNullInput() {
+        new Assertion<>(
+            "Doesn't fail for null input",
+            () -> {
+                new ProcNoNulls<>(input -> { }).exec(null);
+                return 1;
+            },
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
+    }
+
+    @Test
+    void okForNoNulls() throws Exception {
         final AtomicInteger counter = new AtomicInteger();
         new ProcNoNulls<>(AtomicInteger::incrementAndGet)
             .exec(counter);

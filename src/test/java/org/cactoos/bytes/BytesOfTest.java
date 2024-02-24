@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -78,7 +78,7 @@ final class BytesOfTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    void readsInputIntoBytes() throws Exception {
+    void readsInputIntoBytes() {
         new Assertion<>(
             "must read bytes from Input",
             new TextOf(
@@ -94,7 +94,7 @@ final class BytesOfTest {
     }
 
     @Test
-    void readsFromReader() throws Exception {
+    void readsFromReader() {
         final String source = "hello, друг!";
         new Assertion<>(
             "must read string through a reader",
@@ -115,7 +115,7 @@ final class BytesOfTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    void readsInputIntoBytesWithSmallBuffer() throws Exception {
+    void readsInputIntoBytesWithSmallBuffer() {
         new Assertion<>(
             "must read bytes from Input with a small reading buffer",
             new TextOf(

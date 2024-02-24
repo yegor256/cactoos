@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2022 Yegor Bugayenko
+ * Copyright (c) 2017-2024 Yegor Bugayenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.nio.channels.AcceptPendingException;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -37,10 +37,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class CheckedTest {
+final class CheckedTest {
 
     @Test
-    public void runtimeExceptionGoesOut() throws Exception {
+    void runtimeExceptionGoesOut() throws Exception {
         new Assertion<>(
             "Must throw runtime exception",
             () -> new Checked<>(
@@ -54,7 +54,7 @@ public final class CheckedTest {
     }
 
     @Test
-    public void usesGenericVarianceOnExceptionTypes() throws Exception {
+    void usesGenericVarianceOnExceptionTypes() throws Exception {
         new Assertion<>(
             "Must use generic variance on exception types",
             () -> new Checked<String, IllegalStateException>(
@@ -70,7 +70,7 @@ public final class CheckedTest {
     }
 
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void usesContravarianceOnResultType() throws Exception {
+    void usesContravarianceOnResultType() throws Exception {
         new Assertion<>(
             "Must use contravariance on result",
             new Checked<CharSequence, IOException>(
@@ -82,7 +82,7 @@ public final class CheckedTest {
     }
 
     @Test
-    public void throwsIoException() throws Exception {
+    void throwsIoException() throws Exception {
         new Assertion<>(
             "Must throw io exception",
             () -> new Checked<>(
@@ -96,7 +96,7 @@ public final class CheckedTest {
     }
 
     @Test
-    public void ioExceptionGoesOut() throws Exception {
+    void ioExceptionGoesOut() throws Exception {
         try {
             new Checked<>(
                 () -> {
@@ -114,7 +114,7 @@ public final class CheckedTest {
     }
 
     @Test
-    public void fileNotFoundExceptionGoesOut() throws Exception {
+    void fileNotFoundExceptionGoesOut() throws Exception {
         try {
             new Checked<>(
                 () -> {
@@ -132,7 +132,7 @@ public final class CheckedTest {
     }
 
     @Test
-    public void throwsIoExceptionWithModifiedMessage() throws Exception {
+    void throwsIoExceptionWithModifiedMessage() throws Exception {
         final String message = "error msg";
         new Assertion<>(
             "Must throw io exception with modified message",
