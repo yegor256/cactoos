@@ -41,6 +41,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.6
  */
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class StickyTest {
 
     @Test
