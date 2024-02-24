@@ -58,7 +58,7 @@ import org.takes.tk.TkHtml;
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  * @since 0.1
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.ExcessiveImports", "unchecked"})
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.ExcessiveImports", "unchecked", "PMD.JUnitTestsShouldIncludeAssert"})
 final class InputOfTest {
     @Test
     void readsAlternativeInputForFileCase() {
