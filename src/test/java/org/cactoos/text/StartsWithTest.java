@@ -42,7 +42,7 @@ final class StartsWithTest {
             "Empty is not prefix of empty",
             new StartsWith(
                 new TextOf(""),
-                new TextOf("")
+                ""
             ).value(),
             new IsTrue()
         ).affirm();
@@ -53,7 +53,7 @@ final class StartsWithTest {
         new Assertion<>(
             "Empty is not prefix of any string",
             new StartsWith(
-                new TextOf("Any string"),
+                "Any string",
                 new TextOf("")
             ).value(),
             new IsTrue()
