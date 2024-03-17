@@ -81,6 +81,7 @@ final class SolidTest {
             "Can't behave as an iterable in multiple threads",
             list -> {
                 MatcherAssert.assertThat(
+                    "Iterator should be the same",
                     list.iterator().next(),
                     Matchers.equalTo(list.iterator().next())
                 );

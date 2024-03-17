@@ -45,7 +45,7 @@ final class FoldedTest {
                 0L, Long::sum,
                 new HeadOf<>(
                     10,
-                    new RangeOf<>(0L, Long.MAX_VALUE, value -> ++value)
+                    new RangeOf<>(0L, Long.MAX_VALUE, value -> value + 1)
                 )
             ),
             new HasValue<>(45L)

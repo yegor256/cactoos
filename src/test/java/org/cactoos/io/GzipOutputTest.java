@@ -42,8 +42,9 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link GzipOutput}.
- * @checkstyle JavadocMethodCheck (500 lines)
+ *
  * @since 0.29
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings({"PMD.AvoidDuplicateLiterals",
     "PMD.JUnitTestsShouldIncludeAssert"})

@@ -55,7 +55,6 @@ import org.takes.tk.TkHtml;
 /**
  * Test case for {@link InputOf}.
  *
- * @checkstyle ClassFanOutComplexityCheck (500 lines)
  * @since 0.1
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.ExcessiveImports",

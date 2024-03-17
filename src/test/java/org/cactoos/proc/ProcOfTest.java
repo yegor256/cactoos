@@ -52,7 +52,7 @@ final class ProcOfTest {
                 proc -> {
                     final Object input = new Object();
                     proc.exec(input);
-                    return done.get() == input;
+                    return done.get().equals(input);
                 }
             )
         ).affirm();
@@ -70,7 +70,7 @@ final class ProcOfTest {
                 proc -> {
                     final Object input = new Object();
                     proc.exec(input);
-                    return done.get() == input;
+                    return done.get().equals(input);
                 }
             )
         ).affirm();

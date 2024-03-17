@@ -243,7 +243,7 @@ final class AvgOfTest {
             () -> new AvgOf(
                 Double.NaN, Double.NaN
             ).doubleValue(),
-        new Throws<>(NumberFormatException.class)
+            new Throws<>(NumberFormatException.class)
         ).affirm();
     }
 

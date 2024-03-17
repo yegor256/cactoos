@@ -41,6 +41,7 @@ final class SyncedTest {
             "Can't behave as an iterable in multiple threads",
             list -> {
                 MatcherAssert.assertThat(
+                    "Should be the same iterator",
                     list.iterator().next(),
                     Matchers.equalTo(list.iterator().next())
                 );
