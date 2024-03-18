@@ -50,6 +50,7 @@ public final class IteratorOfDoubles implements Iterator<Double> {
      * Ctor.
      * @param itms Items to iterate
      */
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
     public IteratorOfDoubles(final double... itms) {
         this.items = itms;
         this.position = new AtomicInteger(0);

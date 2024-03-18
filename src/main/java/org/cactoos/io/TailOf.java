@@ -59,7 +59,7 @@ public final class TailOf implements Input {
      * @param bytes Number of last bytes to show from input
      */
     public TailOf(final Input inpt, final int bytes) {
-        this(inpt, bytes, 16384);
+        this(inpt, bytes, 16_384);
     }
 
     /**
@@ -87,12 +87,13 @@ public final class TailOf implements Input {
         final byte[] buffer = new byte[this.max];
         final byte[] response = new byte[this.count];
         int num = 0;
-        final InputStream strm = this.input.stream();
-        for (int read = strm.read(buffer); read > 0; read = strm.read(buffer)) {
-            if (read < this.max && read < this.count) {
-                num = this.copyPartial(buffer, response, num, read);
-            } else {
-                num = this.copy(buffer, response, read);
+        try (InputStream strm = this.input.stream()) {
+            for (int read = strm.read(buffer); read > 0; read = strm.read(buffer)) {
+                if (read < this.max && read < this.count) {
+                    num = this.copyPartial(buffer, response, num, read);
+                } else {
+                    num = this.copy(buffer, response, read);
+                }
             }
         }
         return new ByteArrayInputStream(response, 0, num);

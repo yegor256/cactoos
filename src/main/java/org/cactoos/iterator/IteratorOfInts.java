@@ -49,6 +49,7 @@ public final class IteratorOfInts implements Iterator<Integer> {
      * Ctor.
      * @param itms Items to iterate
      */
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
     public IteratorOfInts(final int... itms) {
         this.items = itms;
         this.position = new AtomicInteger(0);

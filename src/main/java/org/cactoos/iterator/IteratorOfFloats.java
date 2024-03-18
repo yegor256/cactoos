@@ -49,6 +49,7 @@ public final class IteratorOfFloats implements Iterator<Float> {
      * Ctor.
      * @param itms Items to iterate
      */
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
     public IteratorOfFloats(final float... itms) {
         this.items = itms;
         this.position = new AtomicInteger(0);

@@ -51,6 +51,7 @@ public final class IteratorOfShorts implements Iterator<Short> {
      * Ctor.
      * @param itms Items to iterate
      */
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
     public IteratorOfShorts(final short... itms) {
         this.items = itms;
         this.position = new AtomicInteger(0);

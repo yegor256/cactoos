@@ -60,6 +60,7 @@ public final class OutputTo implements Output {
      * @param mkdirs Should we do mkdirs beforehand?
      * @since 0.15
      */
+    @SuppressWarnings("PMD.AvoidFileStream")
     public OutputTo(final File file, final boolean mkdirs) {
         this(
             () -> {
@@ -85,6 +86,7 @@ public final class OutputTo implements Output {
      * @param mkdirs Should we do mkdirs beforehand?
      * @since 0.15
      */
+    @SuppressWarnings("PMD.AvoidFileStream")
     public OutputTo(final Path path, final boolean mkdirs) {
         this(
             () -> {
