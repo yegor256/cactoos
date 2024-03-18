@@ -28,9 +28,9 @@ import java.util.List;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -43,8 +43,9 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class OrTest {
 
     @Test
-    void allFalse() throws Exception {
-        MatcherAssert.assertThat(
+    void allFalse() {
+        new Assertion<>(
+            "value should be calculated for all false",
             new Or(
                 new False(),
                 new False(),
@@ -53,12 +54,13 @@ final class OrTest {
                 new False()
             ),
             new HasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
-    void oneTrue() throws Exception {
-        MatcherAssert.assertThat(
+    void oneTrue() {
+        new Assertion<>(
+            "value should be calculated for all false except one",
             new Or(
                 new False(),
                 new True(),
@@ -67,12 +69,13 @@ final class OrTest {
                 new False()
             ),
             new HasValue<>(true)
-        );
+        ).affirm();
     }
 
     @Test
-    void allTrue() throws Exception {
-        MatcherAssert.assertThat(
+    void allTrue() {
+        new Assertion<>(
+            "value should be calculated for all true",
             new Or(
                 new IterableOf<Scalar<Boolean>>(
                     new True(),
@@ -83,15 +86,16 @@ final class OrTest {
                 )
             ),
             new HasValue<>(true)
-        );
+        ).affirm();
     }
 
     @Test
-    void emptyIterator() throws Exception {
-        MatcherAssert.assertThat(
+    void emptyIterator() {
+        new Assertion<>(
+            "false should be a result for empty iterable",
             new Or(new IterableOf<Scalar<Boolean>>()),
             new HasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
@@ -101,23 +105,11 @@ final class OrTest {
             (Proc<Integer>) list::add,
             new IterableOf<>(1, 2, 3, 4)
         ).value();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "proc iterable should collect list",
             list,
             Matchers.contains(1, 2, 3, 4)
-        );
-    }
-
-    @Test
-    void testProcIterator() throws Exception {
-        final List<Integer> list = new LinkedList<>();
-        new Or(
-            (Proc<Integer>) list::add,
-            new IterableOf<>(1, 2, 3, 4)
-        ).value();
-        MatcherAssert.assertThat(
-            list,
-            Matchers.contains(1, 2, 3, 4)
-        );
+        ).affirm();
     }
 
     @Test
@@ -127,48 +119,40 @@ final class OrTest {
             (Proc<Integer>) list::add,
             2, 3, 4
         ).value();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "proc iterable should collect list from varargs",
             list,
             Matchers.contains(2, 3, 4)
-        );
+        ).affirm();
     }
 
     @Test
-    void testFuncIterable() throws Exception {
-        MatcherAssert.assertThat(
+    void testFuncIterable() {
+        new Assertion<>(
+            "function should be called for iterable",
             new Or(
                 input -> input > 0,
                 new IterableOf<>(-1, 1, 0)
             ),
             new HasValue<>(true)
-        );
+        ).affirm();
     }
 
     @Test
-    void testFuncIterator() throws Exception {
-        MatcherAssert.assertThat(
-            new Or(
-                input -> input > 0,
-                new IterableOf<>(-1, 1, 0)
-            ),
-            new HasValue<>(true)
-        );
-    }
-
-    @Test
-    void testFuncVarargs() throws Exception {
-        MatcherAssert.assertThat(
+    void testFuncVarargs() {
+        new Assertion<>(
+            "function should be called for varargs",
             new Or(
                 input -> input > 0,
                 -1, -2, 0
             ),
             new HasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
-    void testMultipleFuncConditionTrue() throws Exception {
-        MatcherAssert.assertThat(
+    void testMultipleFuncConditionTrue() {
+        new Assertion<>(
             "Can't compare subject with true conditions",
             new Or(
                 3,
@@ -177,12 +161,12 @@ final class OrTest {
                 input -> input > 4
             ),
             new HasValue<>(true)
-        );
+        ).affirm();
     }
 
     @Test
-    void testMultipleFuncConditionFalse() throws Exception {
-        MatcherAssert.assertThat(
+    void testMultipleFuncConditionFalse() {
+        new Assertion<>(
             "Can't compare subject with false conditions",
             new Or(
                 "cactoos",
@@ -190,6 +174,6 @@ final class OrTest {
                 input -> input.contains("static")
             ),
             new HasValue<>(false)
-        );
+        ).affirm();
     }
 }
