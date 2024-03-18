@@ -68,6 +68,7 @@ public final class RunnableOf extends RunnableEnvelope {
      * @param callable The callable
      * @since 0.53
      */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public RunnableOf(final Callable<?> callable) {
         this(
             () -> {

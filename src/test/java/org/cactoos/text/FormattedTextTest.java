@@ -60,7 +60,7 @@ final class FormattedTextTest {
             new FormattedText(
                 new TextOf("%d. Number as %s"),
                 1,
-                new String("string")
+                "string"
             ),
             new HasString("1. Number as string")
         ).affirm();

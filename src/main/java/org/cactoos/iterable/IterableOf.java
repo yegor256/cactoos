@@ -85,7 +85,7 @@ public final class IterableOf<X> implements Iterable<X> {
 
     @Override
     @SuppressFBWarnings("EQ_UNUSUAL")
-    @SuppressWarnings (value = "unchecked")
+    @SuppressWarnings("unchecked")
     public boolean equals(final Object other) {
         return new Unchecked<>(
             new Or(

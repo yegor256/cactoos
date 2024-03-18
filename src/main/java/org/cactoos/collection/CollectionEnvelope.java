@@ -33,6 +33,7 @@ import org.cactoos.iterable.IterableEnvelope;
  * @param <X> Element type
  * @since 0.23
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public abstract class CollectionEnvelope<X>
     extends IterableEnvelope<X> implements Collection<X> {
 

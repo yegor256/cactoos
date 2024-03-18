@@ -60,6 +60,7 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * Ctor.
      * @param src An {@link Iterable}
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public ListOf(final Iterable<? extends T> src) {
         super(new LinkedList<>());
         src.forEach(super::add);
