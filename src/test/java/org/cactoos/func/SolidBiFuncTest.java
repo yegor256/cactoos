@@ -43,7 +43,7 @@ final class SolidBiFuncTest {
     @Test
     void testThatFuncIsSynchronized() {
         final int threads = 100;
-        final int[] shared = new int[]{0};
+        final int[] shared = {0};
         final BiFunc<Integer, Integer, Boolean> testable =
             new SolidBiFunc<>(
                 (first, second) -> {

@@ -45,7 +45,9 @@ import org.llorllale.cactoos.matchers.Throws;
 @SuppressWarnings({"PMD.TooManyMethods",
     "PMD.NonStaticInitializer",
     "serial",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+    "PMD.JUnitTestsShouldIncludeAssert",
+    "PMD.DoubleBraceInitialization"
+})
 final class NoNullsTest {
 
     @Test
@@ -205,17 +207,17 @@ final class NoNullsTest {
 
     @Test
     void put() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't call #put()",
-            new NoNulls<Integer, Integer>(
+            new NoNulls<>(
                 new HashMap<Integer, Integer>() {
                     {
                         put(0, 0);
                     }
                 }
             ),
-            new PutUpdatesValues<Integer, Integer>(0, 1)
-        );
+            new PutUpdatesValues<>(0, 1)
+        ).affirm();
     }
 
     @Test

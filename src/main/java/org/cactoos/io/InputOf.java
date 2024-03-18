@@ -59,6 +59,7 @@ public final class InputOf implements Input {
      *
      * @param file The file
      */
+    @SuppressWarnings("PMD.AvoidFileStream")
     public InputOf(final File file) {
         this(
             () -> new FileInputStream(
@@ -72,6 +73,7 @@ public final class InputOf implements Input {
      *
      * @param path The path
      */
+    @SuppressWarnings("PMD.AvoidFileStream")
     public InputOf(final Path path) {
         this(() -> new FileInputStream(path.toFile()));
     }

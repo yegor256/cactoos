@@ -135,7 +135,7 @@ final class TailOfTest {
                     size - 1
                 )
             ).asBytes(),
-        new Throws<>(IllegalArgumentException.class)
+            new Throws<>(IllegalArgumentException.class)
         ).affirm();
     }
 

@@ -50,6 +50,7 @@ public final class IteratorOfLongs implements Iterator<Long> {
      * Ctor.
      * @param itms Items to iterate
      */
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
     public IteratorOfLongs(final long... itms) {
         this.items = itms;
         this.position = new AtomicInteger(0);

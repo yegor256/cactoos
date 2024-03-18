@@ -166,7 +166,7 @@ final class TextOfTest {
 
     @Test
     void readsAnArrayOfBytes() {
-        final byte[] bytes = new byte[]{(byte) 0xCA, (byte) 0xFE};
+        final byte[] bytes = {(byte) 0xCA, (byte) 0xFE};
         new Assertion<>(
             "Can't read array of bytes",
             new TextOf(

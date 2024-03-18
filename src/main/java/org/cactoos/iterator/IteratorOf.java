@@ -52,6 +52,7 @@ public final class IteratorOf<X> implements Iterator<X> {
      * @param items Items to iterate
      */
     @SafeVarargs
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
     public IteratorOf(final X... items) {
         this.list = items;
         this.position = new AtomicInteger(0);

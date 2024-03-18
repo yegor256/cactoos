@@ -39,7 +39,7 @@ public final class Partitioned<T> extends IterableEnvelope<List<T>> {
      * @param items The source items.
      */
     @SafeVarargs
-    public Partitioned(final int size, final T...items) {
+    public Partitioned(final int size, final T... items) {
         this(size, new IterableOf<>(items));
     }
 

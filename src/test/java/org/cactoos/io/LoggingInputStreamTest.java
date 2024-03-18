@@ -41,9 +41,9 @@ import org.llorllale.cactoos.matchers.Throws;
 final class LoggingInputStreamTest {
 
     @Test
-    void reThrowsException() {
+    void reThrowsException() throws IOException {
         final String message = "Some read exception.";
-        final LoggingInputStream stream = new LoggingInputStream(
+        try (LoggingInputStream stream = new LoggingInputStream(
             new InputStream() {
                 @Override
                 public int read() throws IOException {
@@ -51,12 +51,13 @@ final class LoggingInputStreamTest {
                 }
             },
             this.getClass().getSimpleName()
-        );
-        new Assertion<>(
-            "Read doesn't throw an the exception.",
-            stream::read,
-            new Throws<>(message, IOException.class)
-        ).affirm();
+        )) {
+            new Assertion<>(
+                "Read doesn't throw an the exception.",
+                stream::read,
+                new Throws<>(message, IOException.class)
+            ).affirm();
+        }
     }
 
     @Test

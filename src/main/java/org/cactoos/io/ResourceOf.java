@@ -75,6 +75,7 @@ public final class ResourceOf implements Input {
      * @param cls Resource class loader
      * @since 0.49
      */
+    @SuppressWarnings("PMD.UseProperClassLoader")
     public ResourceOf(final CharSequence res, final Class<?> cls) {
         this(res, cls.getClassLoader());
     }
@@ -95,6 +96,7 @@ public final class ResourceOf implements Input {
      * @param cls Resource class loader
      * @since 0.49
      */
+    @SuppressWarnings("PMD.UseProperClassLoader")
     public ResourceOf(final CharSequence res,
         final Func<CharSequence, Input> fbk, final Class<?> cls) {
         this(res, fbk, cls.getClassLoader());
@@ -210,6 +212,7 @@ public final class ResourceOf implements Input {
     }
 
     @Override
+    @SuppressWarnings("PMD.CloseResource")
     public InputStream stream() throws Exception {
         InputStream input = this.loader.getResourceAsStream(
             this.path.asString()

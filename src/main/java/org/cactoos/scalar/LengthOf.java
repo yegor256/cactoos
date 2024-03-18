@@ -79,6 +79,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
      * @param input The input
      * @param max Buffer size
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public LengthOf(final Input input, final int max) {
         this(() -> {
             if (max == 0) {

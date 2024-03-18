@@ -31,8 +31,8 @@ import java.util.SortedSet;
  * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Element type
- * @checkstyle AbstractClassNameCheck (500 lines)
  * @since 0.45
+ * @checkstyle AbstractClassNameCheck (500 lines)
  */
 @SuppressWarnings(
     {

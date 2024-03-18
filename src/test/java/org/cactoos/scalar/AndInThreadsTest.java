@@ -33,7 +33,6 @@ import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Synced;
 import org.cactoos.proc.ProcNoNulls;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.hamcrest.core.IsEqual;
@@ -49,7 +48,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class AndInThreadsTest {
 
     @Test
-    void allTrue() throws Exception {
+    void allTrue() {
         new Assertion<>(
             "Each object must be True",
             new AndInThreads(
@@ -62,7 +61,7 @@ final class AndInThreadsTest {
     }
 
     @Test
-    void oneFalse() throws Exception {
+    void oneFalse() {
         new Assertion<>(
             "One object must be False",
             new AndInThreads(
@@ -75,7 +74,7 @@ final class AndInThreadsTest {
     }
 
     @Test
-    void allFalse() throws Exception {
+    void allFalse() {
         new Assertion<>(
             "Each object must be False",
             new AndInThreads(
@@ -90,7 +89,7 @@ final class AndInThreadsTest {
     }
 
     @Test
-    void emptyIterable() throws Exception {
+    void emptyIterable() {
         new Assertion<>(
             "Must iterate over empty iterable",
             new AndInThreads(new IterableOf<>()),
@@ -124,27 +123,29 @@ final class AndInThreadsTest {
     }
 
     @Test
-    void worksWithFunc() throws Exception {
-        MatcherAssert.assertThat(
+    void worksWithFunc() {
+        new Assertion<>(
+            "Result should be calculated for integers",
             new AndInThreads(
                 input -> input > 0,
                 1, -1, 0
             ),
             new HasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
-    void worksWithIterableScalarBoolean() throws Exception {
-        MatcherAssert.assertThat(
+    void worksWithIterableScalarBoolean() {
+        new Assertion<>(
+            "Result should be calculated from booleans",
             new AndInThreads(
                 new ListOf<Scalar<Boolean>>(
                     new Constant<>(true),
                     new Constant<>(true)
                 )
-            ).value(),
-            Matchers.equalTo(true)
-        );
+            ),
+            new HasValue<>(true)
+        ).affirm();
     }
 
     @Test
@@ -156,7 +157,8 @@ final class AndInThreadsTest {
             new ProcNoNulls<Integer>(list::add),
             1, 2
         ).value();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Result should be calculated for proc values",
             list,
             new IsIterableContainingInAnyOrder<>(
                 new ListOf<>(
@@ -164,7 +166,7 @@ final class AndInThreadsTest {
                     new IsEqual<>(2)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
@@ -176,7 +178,8 @@ final class AndInThreadsTest {
             new ProcNoNulls<Integer>(list::add),
             new ListOf<>(1, 2)
         ).value();
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Result should be calculated for proc iterables",
             list,
             new IsIterableContainingInAnyOrder<>(
                 new ListOf<>(
@@ -184,24 +187,26 @@ final class AndInThreadsTest {
                     new IsEqual<>(2)
                 )
             )
-        );
+        ).affirm();
     }
 
     @Test
     void worksWithExecServiceScalarBooleans() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Result should be calculated for threads booleans",
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
                 new Constant<>(false),
                 new Constant<>(false)
             ).value(),
             Matchers.equalTo(false)
-        );
+        ).affirm();
     }
 
     @Test
     void worksWithExecServiceIterableScalarBoolean() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Result should be calculated for threads iterable booleans",
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
                 new ListOf<Scalar<Boolean>>(
@@ -210,17 +215,18 @@ final class AndInThreadsTest {
                 )
             ).value(),
             Matchers.equalTo(false)
-        );
+        ).affirm();
     }
 
     @Test
     void worksWithEmptyIterableScalarBoolean() throws Exception {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "Result should be calculated for empty iterable",
             new AndInThreads(
                 new ListOf<>()
             ).value(),
             Matchers.equalTo(true)
-        );
+        ).affirm();
     }
 
 }

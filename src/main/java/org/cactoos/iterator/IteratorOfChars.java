@@ -66,6 +66,7 @@ public final class IteratorOfChars implements Iterator<Character> {
      * Ctor.
      * @param items Items to iterate
      */
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
     public IteratorOfChars(final char... items) {
         this.list = items;
         this.position = new AtomicInteger(0);

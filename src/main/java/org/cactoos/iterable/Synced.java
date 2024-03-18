@@ -24,7 +24,6 @@
 package org.cactoos.iterable;
 
 import java.util.Iterator;
-import org.cactoos.iterator.Mapped;
 
 /**
  * Synchronized iterable.

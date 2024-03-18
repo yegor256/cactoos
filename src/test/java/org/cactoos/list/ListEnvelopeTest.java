@@ -113,6 +113,7 @@ final class ListEnvelopeTest {
         ).affirm();
     }
 
+    @Test
     void returnsSubListWithRemove() {
         final ListEnvelope<String> list = new StringList("one");
         list.subList(0, 1).remove(0);

@@ -52,7 +52,7 @@ final class BiProcOfTest {
                     final Object first = new Object();
                     final Object second = new Object();
                     proc.exec(first, second);
-                    return done.get() == first;
+                    return done.get().equals(first);
                 }
             )
         ).affirm();
@@ -74,7 +74,7 @@ final class BiProcOfTest {
                     final Object first = new Object();
                     final Object second = new Object();
                     proc.exec(first, second);
-                    return done.get() == first;
+                    return done.get().equals(first);
                 }
             )
         ).affirm();
@@ -95,7 +95,7 @@ final class BiProcOfTest {
                     final Object first = new Object();
                     final Object second = new Object();
                     proc.exec(first, second);
-                    return done.get() == first;
+                    return done.get().equals(first);
                 }
             )
         ).affirm();
@@ -116,7 +116,7 @@ final class BiProcOfTest {
                     final Object first = new Object();
                     final Object second = new Object();
                     proc.exec(first, second);
-                    return done.get() == first;
+                    return done.get().equals(first);
                 }
             )
         ).affirm();

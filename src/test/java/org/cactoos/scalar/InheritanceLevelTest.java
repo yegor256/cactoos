@@ -24,8 +24,8 @@
 package org.cactoos.scalar;
 
 import java.io.FileNotFoundException;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -38,34 +38,37 @@ final class InheritanceLevelTest {
 
     @Test
     void twoInheritanceLevelsBetweenClasses() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "level should be calculated for inherited classes",
             new InheritanceLevel(
                 FileNotFoundException.class,
                 Exception.class
             ),
             new HasValue<>(2)
-        );
+        ).affirm();
     }
 
     @Test
     void classesAreNotRelated() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "level should be calculated for not related classes",
             new InheritanceLevel(
                 FileNotFoundException.class,
                 RuntimeException.class
             ),
             new HasValue<>(Integer.MIN_VALUE)
-        );
+        ).affirm();
     }
 
     @Test
     void classesAreIdentical() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "0 level should be calculated for equal classes",
             new InheritanceLevel(
                 FileNotFoundException.class,
                 FileNotFoundException.class
             ),
             new HasValue<>(0)
-        );
+        ).affirm();
     }
 }

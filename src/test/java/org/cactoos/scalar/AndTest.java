@@ -25,7 +25,6 @@ package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
@@ -39,7 +38,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class AndTest {
 
     @Test
-    void allTrue() throws Exception {
+    void allTrue() {
         new Assertion<>(
             "Each object must be True",
             new And(
@@ -52,7 +51,7 @@ final class AndTest {
     }
 
     @Test
-    void oneFalse() throws Exception {
+    void oneFalse() {
         new Assertion<>(
             "One object must be False",
             new And(
@@ -65,7 +64,7 @@ final class AndTest {
     }
 
     @Test
-    void allFalse() throws Exception {
+    void allFalse() {
         new Assertion<>(
             "Each object must be False",
             new And(
@@ -80,7 +79,7 @@ final class AndTest {
     }
 
     @Test
-    void emptyIterator() throws Exception {
+    void emptyIterator() {
         new Assertion<>(
             "Iterator must be empty",
             new And(new IterableOf<Scalar<Boolean>>()),
@@ -89,41 +88,32 @@ final class AndTest {
     }
 
     @Test
-    void testFuncIterable() throws Exception {
-        MatcherAssert.assertThat(
+    void testFuncIterable() {
+        new Assertion<>(
+            "lambda should be called for iterable",
             new And(
                 input -> input > 0,
-                new IterableOf<Integer>(1, -1, 0)
+                new IterableOf<>(1, -1, 0)
             ),
             new HasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
-    void testFuncIterator() throws Exception {
-        MatcherAssert.assertThat(
-            new And(
-                input -> input > 0,
-                new IterableOf<Integer>(1, -1, 0)
-            ),
-            new HasValue<>(false)
-        );
-    }
-
-    @Test
-    void testFuncVarargs() throws Exception {
-        MatcherAssert.assertThat(
+    void testFuncVarargs() {
+        new Assertion<>(
+            "lambda should be called for varargs",
             new And(
                 input -> input > 0,
                 -1, -2, 0
             ),
             new HasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
-    void testMultipleFuncConditionTrue() throws Exception {
-        MatcherAssert.assertThat(
+    void testMultipleFuncConditionTrue() {
+        new Assertion<>(
             "Can't compare subject with true conditions",
             new And(
                 3,
@@ -132,12 +122,12 @@ final class AndTest {
                 input -> input > 4
             ),
             new HasValue<>(false)
-        );
+        ).affirm();
     }
 
     @Test
-    void testMultipleFuncConditionFalse() throws Exception {
-        MatcherAssert.assertThat(
+    void testMultipleFuncConditionFalse() {
+        new Assertion<>(
             "Can't compare subject with false conditions",
             new And(
                 "cactoos",
@@ -145,6 +135,6 @@ final class AndTest {
                 input -> input.contains("static")
             ),
             new HasValue<>(false)
-        );
+        ).affirm();
     }
 }

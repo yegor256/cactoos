@@ -63,14 +63,13 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
     }
 
     @Override
-    @SuppressWarnings
-        (
-            {
-                "PMD.AvoidCatchingGenericException",
-                "PMD.AvoidRethrowingException",
-                "PMD.PreserveStackTrace"
-            }
-        )
+    @SuppressWarnings(
+        {
+            "PMD.AvoidCatchingGenericException",
+            "PMD.AvoidRethrowingException",
+            "PMD.PreserveStackTrace"
+        }
+    )
     public T value() throws E {
         try {
             return this.origin.value();

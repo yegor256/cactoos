@@ -122,7 +122,7 @@ final class MapEnvelopeTest {
     @Test
     void mapEqualsToItself() {
         final MapOf<String, String> map =
-            new MapOf<String, String>(new MapEntry<>("key", "value"));
+            new MapOf<>(new MapEntry<>("key", "value"));
         MatcherAssert.assertThat(
             "Map doesn't equal to itself",
             map,
@@ -133,7 +133,7 @@ final class MapEnvelopeTest {
     @Test
     void mapNotEqualsToAnotherClass() {
         final MapOf<String, String> map =
-            new MapOf<String, String>(new MapEntry<>("key1", "value1"));
+            new MapOf<>(new MapEntry<>("key1", "value1"));
         MatcherAssert.assertThat(
             "Map equals to an instance of another type",
             map,

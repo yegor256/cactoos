@@ -37,7 +37,7 @@ final class IterableOfShortsTest {
     @Test
     @SuppressWarnings("PMD.AvoidUsingShortType")
     void convertsShortValuesToIterable() {
-        final short[] values = new short[]{1, 2, 3};
+        final short[] values = {1, 2, 3};
         new Assertion<>(
             "Must convert short values to iterable",
             new IterableOfShorts(values),

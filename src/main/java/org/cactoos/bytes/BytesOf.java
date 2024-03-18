@@ -49,6 +49,7 @@ import org.cactoos.list.ListOf;
  *
  * @since 0.12
  */
+@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
 public final class BytesOf implements Bytes {
 
     /**
@@ -263,6 +264,7 @@ public final class BytesOf implements Bytes {
      * @param error The exception to serialize
      * @param charset Charset
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public BytesOf(final Throwable error, final CharSequence charset) {
         this(
             () -> {
@@ -304,6 +306,7 @@ public final class BytesOf implements Bytes {
      * @param charset Charset
      * @since 0.29
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public BytesOf(final StackTraceElement[] strace,
         final CharSequence charset) {
         this(

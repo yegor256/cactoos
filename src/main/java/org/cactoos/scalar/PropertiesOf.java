@@ -32,7 +32,6 @@ import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Mapped;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.cactoos.text.TextOf;
@@ -44,6 +43,7 @@ import org.cactoos.text.TextOf;
  *
  * @since 0.12
  */
+@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
 public final class PropertiesOf implements Scalar<Properties> {
 
     /**
@@ -71,6 +71,7 @@ public final class PropertiesOf implements Scalar<Properties> {
      * Ctor.
      * @param input Input
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public PropertiesOf(final Input input) {
         this(
             () -> {

@@ -74,7 +74,7 @@ final class CheckedTest {
         new Assertion<>(
             "Must use contravariance on result",
             new Checked<CharSequence, IOException>(
-                () -> new String("contravariance"),
+                () -> "contravariance",
                 IOException::new
             ).value(),
             new IsEqual<>("contravariance")

@@ -96,7 +96,7 @@ final class NumberOfTest {
         new Assertion<>(
             "Must parse double number",
             new NumberOf("185.65156465123").doubleValue(),
-            new IsNumber(185.65_156_465_123)
+            new IsNumber(185.651_564_651_23)
         ).affirm();
     }
 

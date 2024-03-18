@@ -73,7 +73,7 @@ final class RetryTest {
                     return 0;
                 }
             ),
-           new HasValue<>(0)
+            new HasValue<>(0)
         ).affirm();
     }
 

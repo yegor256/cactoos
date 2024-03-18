@@ -50,7 +50,7 @@ final class RangeOfTest {
         new Assertion<>(
             "Must generate a range of integers",
             new ListOf<>(
-                new RangeOf<>(1, 5, value -> ++value)
+                new RangeOf<>(1, 5, value -> value + 1)
             ),
             Matchers.contains(1, 2, 3, 4, 5)
         ).affirm();
@@ -68,8 +68,7 @@ final class RangeOfTest {
                         private int last;
 
                         @Override
-                        public Integer apply(
-                            final Integer input) throws Exception {
+                        public Integer apply(final Integer input) {
                             final int next = this.last + input;
                             this.last = input;
                             return next;
@@ -86,7 +85,7 @@ final class RangeOfTest {
         new Assertion<>(
             "Must generate a range of long",
             new ListOf<>(
-                new RangeOf<>(1L, 5L, value -> ++value)
+                new RangeOf<>(1L, 5L, value -> value + 1)
             ),
             Matchers.contains(1L, 2L, 3L, 4L, 5L)
         ).affirm();
@@ -97,7 +96,7 @@ final class RangeOfTest {
         new Assertion<>(
             "Must generate a range of characters",
             new ListOf<>(
-                new RangeOf<>('a', 'c', value -> ++value)
+                new RangeOf<>('a', 'c', value -> (char) (value + 1))
             ),
             Matchers.contains('a', 'b', 'c')
         ).affirm();
@@ -124,7 +123,9 @@ final class RangeOfTest {
 
     @Test
     void shouldBeTraversableMultipleTimes() throws Exception {
-        final Iterable<Character> range = new RangeOf<>('a', 'c', value -> ++value);
+        final Iterable<Character> range = new RangeOf<>(
+            'a', 'c', value -> (char) (value + 1)
+        );
         final Collection<Character> copy = new ArrayList<>(6);
         new RepeatedProc<>(new ForEach<>(copy::add), 2).exec(range);
         new Assertion<>(
@@ -136,7 +137,9 @@ final class RangeOfTest {
 
     @Test
     void shouldNotChangeAfterTraversing() throws Exception {
-        final Iterable<Character> range = new RangeOf<>('a', 'c', value -> ++value);
+        final Iterable<Character> range = new RangeOf<>(
+            'a', 'c', value -> (char) (value + 1)
+        );
         new ForEach<>(
             (Character ignored) -> {
             }
@@ -145,7 +148,7 @@ final class RangeOfTest {
             "Must be equal",
             range,
             new IsEqual<>(
-                new RangeOf<>('a', 'c', value -> ++value)
+                new RangeOf<>('a', 'c', value -> (char) (value + 1))
             )
         ).affirm();
     }
@@ -156,9 +159,9 @@ final class RangeOfTest {
         new Assertion<>(
             "Must produce three ranges",
             new Joined<>(
-                new RangeOf<>('0', '9', ch -> ++ch),
-                new RangeOf<>('A', 'Z', ch -> ++ch),
-                new RangeOf<>('a', 'z', ch -> ++ch)
+                new RangeOf<>('0', '9', ch -> (char) (ch + 1)),
+                new RangeOf<>('A', 'Z', ch -> (char) (ch + 1)),
+                new RangeOf<>('a', 'z', ch -> (char) (ch + 1))
             ),
             new IsEqual<>(
                 new IterableOfChars(
@@ -178,7 +181,7 @@ final class RangeOfTest {
     void producesCharsJoined() {
         new Assertion<>(
             "Must produce correct range of characters",
-            new RangeOf<>('!', '~', ch -> ++ch),
+            new RangeOf<>('!', '~', ch -> (char) (ch + 1)),
             new IsEqual<>(
                 new IterableOfChars(
                     '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*',

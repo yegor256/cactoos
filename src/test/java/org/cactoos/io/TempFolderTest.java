@@ -57,6 +57,7 @@ final class TempFolderTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void deletesDirectory() throws Exception {
         final TempFolder dir = new TempFolder(
             new Randomized('d', 'e', 'g').asString()
@@ -70,6 +71,7 @@ final class TempFolderTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void deletesNonEmptyDirectory() throws Exception {
         final TempFolder temp = new TempFolder();
         final Path root = temp.value();
@@ -111,41 +113,41 @@ final class TempFolderTest {
 
     @Test
     void createDirectoryWithDirectoriesAndFiles() throws Exception {
-        final TempFolder temp = new TempFolder();
-        final Path root = temp.value();
-        new ForEach<>(
-            new ProcOf<String>(
-                name -> {
-                    final Path dir = Files.createDirectories(
-                        new File(root.toFile(), name).toPath()
-                    );
-                    new ForEach<>(
-                        new ProcOf<String>(
-                            filename -> {
-                                new TempFile(
-                                    () -> dir,
-                                    filename,
-                                    ""
-                                ).value();
-                            }
-                        )
-                    ).exec(
-                        new IterableOf<>(
-                            "1.txt", "2.txt", "3.txt"
-                        )
-                    );
-                }
-            )
-        ).exec(
-            new IterableOf<>(
-                "1", "2", "3", "4", "5"
-            )
-        );
-        new Assertion<>(
-            "Directory contains files and sub directories",
-            temp.value().toFile().exists(),
-            new IsTrue()
-        ).affirm();
-        temp.close();
+        try (TempFolder temp = new TempFolder()) {
+            final Path root = temp.value();
+            new ForEach<>(
+                new ProcOf<String>(
+                    name -> {
+                        final Path dir = Files.createDirectories(
+                            new File(root.toFile(), name).toPath()
+                        );
+                        new ForEach<>(
+                            new ProcOf<String>(
+                                filename -> {
+                                    new TempFile(
+                                        () -> dir,
+                                        filename,
+                                        ""
+                                    ).value();
+                                }
+                            )
+                        ).exec(
+                            new IterableOf<>(
+                                "1.txt", "2.txt", "3.txt"
+                            )
+                        );
+                    }
+                )
+            ).exec(
+                new IterableOf<>(
+                    "1", "2", "3", "4", "5"
+                )
+            );
+            new Assertion<>(
+                "Directory contains files and sub directories",
+                temp.value().toFile().exists(),
+                new IsTrue()
+            ).affirm();
+        }
     }
 }

@@ -26,6 +26,7 @@ package org.cactoos.list;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -38,29 +39,32 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 final class SyncedTest {
 
     @Test
-    void behavesAsCollection() throws Exception {
-        MatcherAssert.assertThat(
+    void behavesAsCollection() {
+        new Assertion<>(
             "Can't behave as a list",
             new Synced<>(new ListOf<>(1, 0, -1, -1, 2)),
             new BehavesAsList<>(0)
-        );
+        ).affirm();
     }
 
     @Test
     void worksInThreads() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
+            "should be run in threads",
             list -> !list.iterator().hasNext(),
             new RunsInThreads<>(new Synced<>(Collections.emptyList()))
-        );
-        MatcherAssert.assertThat(
+        ).affirm();
+        new Assertion<>(
+            "should work as list",
             list -> {
                 MatcherAssert.assertThat(
+                    "should behave as a list",
                     list,
                     new BehavesAsList<>(0)
                 );
                 return true;
             },
             new RunsInThreads<>(new Synced<>(new ListOf<>(1, 0, -1, -1, 2)))
-        );
+        ).affirm();
     }
 }

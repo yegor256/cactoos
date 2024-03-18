@@ -55,7 +55,6 @@ import org.takes.tk.TkHtml;
 /**
  * Test case for {@link InputOf}.
  *
- * @checkstyle ClassFanOutComplexityCheck (500 lines)
  * @since 0.1
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.ExcessiveImports",
@@ -297,7 +296,7 @@ final class InputOfTest {
 
     @Test
     void readsAnArrayOfBytes() throws Exception {
-        final byte[] bytes = new byte[]{(byte) 0xCA, (byte) 0xFE};
+        final byte[] bytes = {(byte) 0xCA, (byte) 0xFE};
         new Assertion<>(
             "must read array of bytes",
             new BytesOf(

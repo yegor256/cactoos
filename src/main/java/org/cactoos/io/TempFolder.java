@@ -72,9 +72,9 @@ public final class TempFolder implements Scalar<Path>, Closeable {
                 new Randomized(
                     new org.cactoos.iterable.Joined<>(
                         new IterableOf<>(
-                            new RangeOf<>('0', '9', ch -> ++ch),
-                            new RangeOf<>('A', 'Z', ch -> ++ch),
-                            new RangeOf<>('a', 'z', ch -> ++ch)
+                            new RangeOf<>('0', '9', ch -> (char) (ch + 1)),
+                            new RangeOf<>('A', 'Z', ch -> (char) (ch + 1)),
+                            new RangeOf<>('a', 'z', ch -> (char) (ch + 1))
                         )
                     ),
                     () -> 5

@@ -78,6 +78,7 @@ public final class IteratorOfBytes implements Iterator<Byte> {
      * Ctor.
      * @param itms Items to iterate
      */
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
     public IteratorOfBytes(final byte... itms) {
         this.items = itms;
         this.position = new AtomicInteger(0);

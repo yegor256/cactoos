@@ -42,7 +42,9 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle DiamondOperatorCheck (500 lines)
  */
 @SuppressWarnings({"PMD.TooManyMethods",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+    "PMD.JUnitTestsShouldIncludeAssert",
+    "PMD.UseDiamondOperator"
+})
 final class JoinedTest {
 
     /**
