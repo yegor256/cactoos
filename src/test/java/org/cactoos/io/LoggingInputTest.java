@@ -181,21 +181,22 @@ final class LoggingInputTest {
     @SuppressWarnings("unchecked")
     void logResetFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
-        final InputStream input = new LoggingInput(
+        try (InputStream input = new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),
             "text file",
             logger
-        ).stream();
-        input.mark(150);
-        input.reset();
-        new Assertion<>(
-            "Must log mark and reset from text file",
-            new TextOf(logger.toString()),
-            new AllOf<>(
-                new HasString("Marked position 150 from text file"),
-                new HasString("Reset input stream from text file")
-            )
-        ).affirm();
+        ).stream()) {
+            input.mark(150);
+            input.reset();
+            new Assertion<>(
+                "Must log mark and reset from text file",
+                new TextOf(logger.toString()),
+                new AllOf<>(
+                    new HasString("Marked position 150 from text file"),
+                    new HasString("Reset input stream from text file")
+                )
+            ).affirm();
+        }
     }
 
     @Test

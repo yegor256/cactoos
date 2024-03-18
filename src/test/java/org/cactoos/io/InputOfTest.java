@@ -296,7 +296,7 @@ final class InputOfTest {
 
     @Test
     void readsAnArrayOfBytes() throws Exception {
-        final byte[] bytes = new byte[]{(byte) 0xCA, (byte) 0xFE};
+        final byte[] bytes = {(byte) 0xCA, (byte) 0xFE};
         new Assertion<>(
             "must read array of bytes",
             new BytesOf(

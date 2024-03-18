@@ -43,7 +43,7 @@ final class RangeOfTest {
         new Assertion<>(
             "Must generate a range of integers",
             new ListOf<>(
-                new RangeOf<>(1, 5, value -> ++value)
+                new RangeOf<>(1, 5, value -> value + 1)
             ),
             new HasValues<>(1, 2, 3, 4, 5)
         ).affirm();
@@ -74,7 +74,7 @@ final class RangeOfTest {
         new Assertion<>(
             "Must generate a range of long",
             new ListOf<>(
-                new RangeOf<>(1L, 5L, value -> ++value)
+                new RangeOf<>(1L, 5L, value -> value + 1)
             ),
             new HasValues<>(1L, 2L, 3L, 4L, 5L)
         ).affirm();
@@ -85,7 +85,7 @@ final class RangeOfTest {
         new Assertion<>(
             "Must generate a range of characters.",
             new ListOf<>(
-                new RangeOf<>('a', 'c', value -> ++value)
+                new RangeOf<>('a', 'c', value -> (char) (value + 1))
             ),
             new HasValues<>('a', 'b', 'c')
         ).affirm();

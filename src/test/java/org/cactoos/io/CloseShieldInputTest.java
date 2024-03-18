@@ -43,7 +43,7 @@ final class CloseShieldInputTest {
         try (FakeInputStream origin = new FakeInputStream()) {
             // @checkstyle EmptyBlockCheck (5 lines)
             try (
-                InputStream stream =
+                InputStream ignored =
                     new CloseShieldInput(new InputOf(origin)).stream()
             ) {
             }

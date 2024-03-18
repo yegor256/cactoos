@@ -83,6 +83,7 @@ final class GzipOutputTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void writeToClosedGzipOutput(@TempDir final Path wdir) throws Exception {
         final OutputStream stream =
             Files.newOutputStream(

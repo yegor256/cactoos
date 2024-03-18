@@ -41,7 +41,7 @@ final class CloseShieldOutputTest {
         try (FakeOutputStream origin = new FakeOutputStream()) {
             // @checkstyle EmptyBlockCheck (5 lines)
             try (
-                OutputStream stream = new CloseShieldOutput(() -> origin).stream()
+                OutputStream ignored = new CloseShieldOutput(() -> origin).stream()
             ) {
             }
             new Assertion<>(

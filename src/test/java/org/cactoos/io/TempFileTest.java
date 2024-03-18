@@ -76,6 +76,7 @@ final class TempFileTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void deleteFile() throws Exception {
         final TempFile file = new TempFile();
         file.close();

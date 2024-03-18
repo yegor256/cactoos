@@ -42,73 +42,77 @@ final class HeadInputStreamTest {
 
     @Test
     void testSkippingLessThanTotal() throws Exception {
-        final HeadInputStream stream = new HeadInputStream(
+        try (HeadInputStream stream = new HeadInputStream(
             new InputOf("testSkippingLessThanTotal").stream(),
             5
-        );
-        final long skipped = stream.skip(3L);
-        new Assertion<>(
-            "Incorrect number of bytes skipped",
-            skipped,
-            new IsEqual<>(3L)
-        ).affirm();
-        new Assertion<>(
-            "Incorrect head of the input stream has been read",
-            new InputOf(stream),
-            new HasContent("tS")
-        ).affirm();
+        )) {
+            final long skipped = stream.skip(3L);
+            new Assertion<>(
+                "Incorrect number of bytes skipped",
+                skipped,
+                new IsEqual<>(3L)
+            ).affirm();
+            new Assertion<>(
+                "Incorrect head of the input stream has been read",
+                new InputOf(stream),
+                new HasContent("tS")
+            ).affirm();
+        }
     }
 
     @Test
     void testSkippingMoreThanTotal() throws Exception {
-        final HeadInputStream stream = new HeadInputStream(
+        try (HeadInputStream stream = new HeadInputStream(
             new InputOf("testSkippingMoreThanTotal").stream(),
             5
-        );
-        final long skipped = stream.skip(7L);
-        new Assertion<>(
-            "Incorrect number of bytes skipped",
-            skipped,
-            new IsEqual<>(5L)
-        ).affirm();
-        final String input = new TextOf(stream).asString();
-        new Assertion<>(
-            "The result text wasn't empty",
-            new TextOf(input),
-            new IsText("")
-        ).affirm();
+        )) {
+            final long skipped = stream.skip(7L);
+            new Assertion<>(
+                "Incorrect number of bytes skipped",
+                skipped,
+                new IsEqual<>(5L)
+            ).affirm();
+            final String input = new TextOf(stream).asString();
+            new Assertion<>(
+                "The result text wasn't empty",
+                new TextOf(input),
+                new IsText("")
+            ).affirm();
+        }
     }
 
     @Test
     void testResetting() throws Exception {
-        final HeadInputStream stream = new HeadInputStream(
+        try (HeadInputStream stream = new HeadInputStream(
             new InputOf("testResetting").stream(),
             5
-        );
-        final long skipped = stream.skip(7L);
-        new Assertion<>(
-            "Incorrect number of bytes skipped",
-            skipped,
-            new IsEqual<>(5L)
-        ).affirm();
-        stream.reset();
-        new Assertion<>(
-            "Reset didn't change the state",
-            new InputOf(stream),
-            new HasContent("testR")
-        ).affirm();
+        )) {
+            final long skipped = stream.skip(7L);
+            new Assertion<>(
+                "Incorrect number of bytes skipped",
+                skipped,
+                new IsEqual<>(5L)
+            ).affirm();
+            stream.reset();
+            new Assertion<>(
+                "Reset didn't change the state",
+                new InputOf(stream),
+                new HasContent("testR")
+            ).affirm();
+        }
     }
 
     @Test
     void testAvailableLessThanTotal() throws Exception {
-        final HeadInputStream stream = new HeadInputStream(
+        try (HeadInputStream stream = new HeadInputStream(
             new InputOf("testAvailableLessThanTotal").stream(),
             5
-        );
-        new Assertion<>(
-            "must count available bytes",
-            stream.available(),
-            new IsEqual<>(5)
-        ).affirm();
+        )) {
+            new Assertion<>(
+                "must count available bytes",
+                stream.available(),
+                new IsEqual<>(5)
+            ).affirm();
+        }
     }
 }

@@ -69,7 +69,7 @@ final class CloseShieldOutputStreamTest {
     void preventsOriginalStreamToBeClosed() throws Exception {
         try (FakeOutputStream origin = new FakeOutputStream()) {
             // @checkstyle EmptyBlockCheck (2 lines)
-            try (OutputStream stream = new CloseShieldOutputStream(origin)) {
+            try (OutputStream ignored = new CloseShieldOutputStream(origin)) {
             }
             new Assertion<>(
                 "Must not close origin stream",

@@ -113,7 +113,7 @@ final class TempFolderTest {
 
     @Test
     void createDirectoryWithDirectoriesAndFiles() throws Exception {
-        try (final TempFolder temp = new TempFolder()) {
+        try (TempFolder temp = new TempFolder()) {
             final Path root = temp.value();
             new ForEach<>(
                 new ProcOf<String>(
