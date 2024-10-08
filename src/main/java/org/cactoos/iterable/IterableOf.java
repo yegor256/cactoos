@@ -29,7 +29,7 @@ import org.cactoos.Fallback;
 import org.cactoos.Scalar;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.And;
-import org.cactoos.scalar.Folded;
+import org.cactoos.scalar.HashCode;
 import org.cactoos.scalar.Or;
 import org.cactoos.scalar.ScalarWithFallback;
 import org.cactoos.scalar.Unchecked;
@@ -119,11 +119,7 @@ public final class IterableOf<X> implements Iterable<X> {
     @Override
     public int hashCode() {
         return new Unchecked<>(
-            new Folded<>(
-                42,
-                (hash, entry) -> 37 * hash + entry.hashCode(),
-                this
-            )
+            new HashCode(42, 37, this)
         ).value();
     }
 
