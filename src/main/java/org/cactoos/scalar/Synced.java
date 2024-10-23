@@ -24,6 +24,7 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Scalar that is thread-safe.
@@ -50,37 +51,32 @@ import org.cactoos.Scalar;
 public final class Synced<T> implements Scalar<T> {
 
     /**
+     * The lock.
+     */
+    private final ReentrantLock lock;
+
+    /**
      * The scalar to cache.
      */
     private final Scalar<? extends T> origin;
 
     /**
-     * Sync lock.
-     */
-    private final Object mutex;
-
-    /**
      * Ctor.
-     * @param src The Scalar to cache
-     */
-    public Synced(final Scalar<? extends T> src) {
-        this(src, src);
-    }
-
-    /**
-     * Ctor.
+     *
      * @param scalar The Scalar to cache
-     * @param lock Sync lock
      */
-    public Synced(final Scalar<? extends T> scalar, final Object lock) {
+    public Synced(final Scalar<? extends T> scalar) {
         this.origin = scalar;
-        this.mutex = lock;
+        this.lock = new ReentrantLock();
     }
 
     @Override
     public T value() throws Exception {
-        synchronized (this.mutex) {
+        this.lock.lock();
+        try {
             return this.origin.value();
+        } finally {
+            this.lock.unlock();
         }
     }
 }
