@@ -82,7 +82,7 @@ final class InputAsBytesTest {
     }
 
     @Test
-    void readsInputIntoBytes() throws Exception {
+    void readsInputIntoBytes() {
         new Assertion<>(
             "must read bytes from Input",
             new TextOf(
@@ -103,7 +103,7 @@ final class InputAsBytesTest {
     }
 
     @Test
-    void readsInputIntoBytesWithSmallBuffer() throws Exception {
+    void readsInputIntoBytesWithSmallBuffer() {
         new Assertion<>(
             "must read bytes from Input with a small reading buffer",
             new TextOf(

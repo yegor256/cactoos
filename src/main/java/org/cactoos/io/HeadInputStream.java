@@ -58,7 +58,7 @@ public final class HeadInputStream extends InputStream {
     public HeadInputStream(final InputStream orig, final int len) {
         super();
         this.origin = orig;
-        this.length = len;
+        this.length = (long) len;
     }
 
     @Override
@@ -67,7 +67,7 @@ public final class HeadInputStream extends InputStream {
         if (this.processed >= this.length) {
             adjusted = -1;
         } else {
-            this.processed += 1;
+            this.processed += 1L;
             adjusted = this.origin.read();
         }
         return adjusted;
@@ -96,7 +96,7 @@ public final class HeadInputStream extends InputStream {
     public int available() throws IOException {
         final int available = this.origin.available();
         final int adjusted;
-        if (this.processed + available > this.length) {
+        if (this.processed + (long) available > this.length) {
             adjusted = (int) (this.length - this.processed);
         } else {
             adjusted = available;

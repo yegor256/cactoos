@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -49,11 +48,11 @@ final class FakeOutputStream extends OutputStream {
     @Override
     @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
     // @checkstyle ParameterNameCheck (1 lines)
-    public void write(final int b) throws IOException {
+    public void write(final int b) {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         this.closed.set(true);
     }
 

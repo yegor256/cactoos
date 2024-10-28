@@ -120,7 +120,7 @@ final class AsyncTest {
                 new Satisfies<>(
                     future -> {
                         future.get();
-                        return latch.getCount() == 0;
+                        return latch.getCount() == 0L;
                     }
                 )
             )
@@ -153,7 +153,7 @@ final class AsyncTest {
                 new Satisfies<>(
                     future -> {
                         future.get();
-                        return latch.getCount() == 0;
+                        return latch.getCount() == 0L;
                     }
                 )
             )

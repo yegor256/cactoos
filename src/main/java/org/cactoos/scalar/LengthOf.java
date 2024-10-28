@@ -47,7 +47,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
     public LengthOf(final Iterable<?> items) {
         this(() -> {
             final Iterator<?> iterator = items.iterator();
-            long size = 0;
+            long size = 0L;
             while (iterator.hasNext()) {
                 iterator.next();
                 ++size;

@@ -85,7 +85,7 @@ final class RangeOfTest {
         new Assertion<>(
             "Must generate a range of long",
             new ListOf<>(
-                new RangeOf<>(1L, 5L, value -> value + 1)
+                new RangeOf<>(1L, 5L, value -> value + 1L)
             ),
             Matchers.contains(1L, 2L, 3L, 4L, 5L)
         ).affirm();
@@ -110,7 +110,7 @@ final class RangeOfTest {
                 new RangeOf<>(
                     LocalDate.of(2017, 1, 1),
                     LocalDate.of(2017, 1, 3),
-                    value -> value.plus(1, ChronoUnit.DAYS)
+                    value -> value.plus(1L, ChronoUnit.DAYS)
                 )
             ),
             Matchers.contains(

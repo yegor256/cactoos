@@ -53,7 +53,7 @@ final class RepeatedProcTest {
     }
 
     @Test
-    void throwsIfZero() throws Exception {
+    void throwsIfZero() {
         new Assertion<>(
             "Must throw if zero",
             () -> {

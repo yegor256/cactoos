@@ -37,7 +37,7 @@ final class IterableOfLongsTest {
 
     @Test
     void convertsLongValuesToIterable() {
-        final long[] values = {1, 2, 3};
+        final long[] values = {1L, 2L, 3L};
         new Assertion<>(
             "Must convert long values to iterable",
             new IterableOfLongs(values),

@@ -118,7 +118,7 @@ public interface Fallback<X> extends Func<Throwable, X> {
         }
 
         @Override
-        public X apply(final Throwable input) throws Exception {
+        public X apply(final Throwable input) {
             throw new IllegalStateException(input);
         }
     }

@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class BiProcOfTest {
     @Test
-    void worksWithFunc() throws Exception {
+    void worksWithFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();
         new Assertion<>(
             "Must execute BiProc with Func",
@@ -59,7 +59,7 @@ final class BiProcOfTest {
     }
 
     @Test
-    void worksWithBiFunc() throws Exception {
+    void worksWithBiFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();
         new Assertion<>(
             "Must execute BiProc with BiFunc",
@@ -81,7 +81,7 @@ final class BiProcOfTest {
     }
 
     @Test
-    void worksWithProc() throws Exception {
+    void worksWithProc() {
         final AtomicReference<Object> done = new AtomicReference<>();
         new Assertion<>(
             "Must execute BiProc with Proc",
@@ -102,7 +102,7 @@ final class BiProcOfTest {
     }
 
     @Test
-    void worksWithBiProc() throws Exception {
+    void worksWithBiProc() {
         final AtomicReference<Object> done = new AtomicReference<>();
         new Assertion<>(
             "Must execute BiProc with BiProc",
@@ -123,7 +123,7 @@ final class BiProcOfTest {
     }
 
     @Test
-    void worksWithTwoProcs() throws Exception {
+    void worksWithTwoProcs() {
         final AtomicInteger fst = new AtomicInteger();
         final AtomicInteger snd = new AtomicInteger();
         new Assertion<>(

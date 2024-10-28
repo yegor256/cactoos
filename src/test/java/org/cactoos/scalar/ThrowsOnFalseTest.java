@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class ThrowsOnFalseTest {
 
     @Test
-    void throwsOnFalse() throws Exception {
+    void throwsOnFalse() {
         final String message = "test message";
         new Assertion<>(
             "Throws an exception",
@@ -49,7 +49,7 @@ final class ThrowsOnFalseTest {
     }
 
     @Test
-    void throwsSuppliedExceptionOnFalse() throws Exception {
+    void throwsSuppliedExceptionOnFalse() {
         final String message = "illegal state";
         new Assertion<>(
             "Throws supplied exception",

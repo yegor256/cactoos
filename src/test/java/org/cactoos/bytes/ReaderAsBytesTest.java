@@ -39,7 +39,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
 final class ReaderAsBytesTest {
 
     @Test
-    void readsString() throws Exception {
+    void readsString() {
         final String source = "hello, друг!";
         new Assertion<>(
             "Must read string through a reader",

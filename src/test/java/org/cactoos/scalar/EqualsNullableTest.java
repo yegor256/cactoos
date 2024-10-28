@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class EqualsNullableTest {
 
     @Test
-    void nullEqualsNull() throws Exception {
+    void nullEqualsNull() {
         new Assertion<>(
             "Must return true for both null objects",
             new EqualsNullable(() -> null, () -> null),
@@ -46,7 +46,7 @@ final class EqualsNullableTest {
     }
 
     @Test
-    void equals() throws Exception {
+    void equals() {
         new Assertion<>(
             "Must return true for equal objects",
             new EqualsNullable(1, 1),
@@ -55,7 +55,7 @@ final class EqualsNullableTest {
     }
 
     @Test
-    void notEquals() throws Exception {
+    void notEquals() {
         new Assertion<>(
             "Must return false for non equal objects",
             new EqualsNullable(1, 2),
@@ -64,7 +64,7 @@ final class EqualsNullableTest {
     }
 
     @Test
-    void equalsObjectAndScalar() throws Exception {
+    void equalsObjectAndScalar() {
         new Assertion<>(
             "Must return true for object and scalar with the same value",
             new EqualsNullable(1, () -> 1),
@@ -73,7 +73,7 @@ final class EqualsNullableTest {
     }
 
     @Test
-    void equalsScalarAndObject() throws Exception {
+    void equalsScalarAndObject() {
         new Assertion<>(
             "Must return true for scalar and object with the same value",
             new EqualsNullable(() -> 1, 1),

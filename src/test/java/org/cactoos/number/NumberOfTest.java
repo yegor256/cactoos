@@ -23,7 +23,6 @@
  */
 package org.cactoos.number;
 
-import java.io.IOException;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -38,7 +37,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class NumberOfTest {
 
     @Test
-    void parsesFloat() throws IOException {
+    void parsesFloat() {
         new Assertion<>(
             "Must parse float number",
             new NumberOf("1656.894").floatValue(),
@@ -47,7 +46,7 @@ final class NumberOfTest {
     }
 
     @Test
-    void failsIfTextDoesNotRepresentAFloat() throws IOException {
+    void failsIfTextDoesNotRepresentAFloat() {
         new Assertion<>(
             "Must fail parsing random text as float",
             () -> new NumberOf("abcfds").floatValue(),
@@ -56,7 +55,7 @@ final class NumberOfTest {
     }
 
     @Test
-    void parsesLong() throws IOException {
+    void parsesLong() {
         new Assertion<>(
             "Must parse long number",
             new NumberOf("186789235425346").longValue(),
@@ -65,7 +64,7 @@ final class NumberOfTest {
     }
 
     @Test
-    void failsIfTextDoesNotRepresentALong() throws IOException {
+    void failsIfTextDoesNotRepresentALong() {
         new Assertion<>(
             "Must fail parsing random text as long",
             () -> new NumberOf("abcddd").longValue(),
@@ -74,7 +73,7 @@ final class NumberOfTest {
     }
 
     @Test
-    void parsesInteger() throws IOException {
+    void parsesInteger() {
         new Assertion<>(
             "Must parse integer number",
             new NumberOf("1867892354").intValue(),
@@ -83,7 +82,7 @@ final class NumberOfTest {
     }
 
     @Test
-    void failsIfTextDoesNotRepresentAnInt() throws IOException {
+    void failsIfTextDoesNotRepresentAnInt() {
         new Assertion<>(
             "Must fail parsing random text as int",
             () -> new NumberOf("abc fdsf").intValue(),
@@ -92,7 +91,7 @@ final class NumberOfTest {
     }
 
     @Test
-    void parsesDouble() throws IOException {
+    void parsesDouble() {
         new Assertion<>(
             "Must parse double number",
             new NumberOf("185.65156465123").doubleValue(),
@@ -101,7 +100,7 @@ final class NumberOfTest {
     }
 
     @Test
-    void failsIfTextDoesNotRepresentADouble() throws IOException {
+    void failsIfTextDoesNotRepresentADouble() {
         new Assertion<>(
             "Must fail parsing random text as double",
             () -> new NumberOf("abfdsc").doubleValue(),
@@ -110,7 +109,7 @@ final class NumberOfTest {
     }
 
     @Test
-    void parsesValueInt() throws IOException {
+    void parsesValueInt() {
         new Assertion<>(
             "Must parse into int",
             new NumberOf("185").intValue(),
@@ -119,7 +118,7 @@ final class NumberOfTest {
     }
 
     @Test
-    void parsesValueIntFromText() throws IOException {
+    void parsesValueIntFromText() {
         new Assertion<>(
             "Must parse from text",
             new NumberOf(new TextOf("186")).intValue(),

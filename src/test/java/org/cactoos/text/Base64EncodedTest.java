@@ -24,7 +24,6 @@
 
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
@@ -37,10 +36,9 @@ final class Base64EncodedTest {
 
     /**
      * Check text encodes using the Base64 encoding scheme.
-     * @throws IOException If fails.
      */
     @Test
-    void checkEncode() throws IOException {
+    void checkEncode() {
         new Assertion<>(
             "Can't encodes text using the Base64 encoding scheme",
             new Base64Encoded(

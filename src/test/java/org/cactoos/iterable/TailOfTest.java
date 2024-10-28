@@ -36,7 +36,7 @@ final class TailOfTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    void tailIterable() throws Exception {
+    void tailIterable() {
         MatcherAssert.assertThat(
             "Can't get tail portion of iterable",
             new TailOf<>(

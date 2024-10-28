@@ -73,7 +73,7 @@ public final class CloseShieldOutputStream extends OutputStream {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         this.inner.set(new DeadOutputStream());
     }
 

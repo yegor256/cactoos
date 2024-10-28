@@ -53,7 +53,7 @@ final class HexOfTest {
     void validHex() throws Exception {
         final byte[] bytes = new byte[256];
         for (int index = 0; index < 256; ++index) {
-            bytes[index] = (byte) (index + Byte.MIN_VALUE);
+            bytes[index] = (byte) (index + (int) Byte.MIN_VALUE);
         }
         new Assertion<>(
             "Must convert hexadecimal text to bytes",
@@ -67,7 +67,7 @@ final class HexOfTest {
     }
 
     @Test
-    void invalidHexLength() throws Exception {
+    void invalidHexLength() {
         new Assertion<>(
             "Must invalid hex length",
             () -> new HexOf(new TextOf("ABF")).asBytes(),
@@ -79,7 +79,7 @@ final class HexOfTest {
     }
 
     @Test
-    void invalidHex() throws Exception {
+    void invalidHex() {
         new Assertion<>(
             "Must invalid hex",
             () -> new HexOf(new TextOf("ABG!")).asBytes(),

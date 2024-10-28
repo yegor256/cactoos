@@ -56,7 +56,7 @@ final class CycledTest {
     }
 
     @Test
-    void notCycledEmptyTest() throws Exception {
+    void notCycledEmptyTest() {
         new Assertion<>(
             "Must generate an empty iterable",
             new LengthOf(

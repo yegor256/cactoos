@@ -23,7 +23,6 @@
  */
 package org.cactoos.bytes;
 
-import java.io.IOException;
 import java.io.Reader;
 import org.cactoos.io.ReaderOf;
 
@@ -46,13 +45,12 @@ final class EmptyClosableReader extends Reader {
     private boolean closed;
 
     @Override
-    public int read(final char[] cbuf, final int off, final int len)
-        throws IOException {
+    public int read(final char[] cbuf, final int off, final int len) {
         return -1;
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         this.closed = true;
     }
 

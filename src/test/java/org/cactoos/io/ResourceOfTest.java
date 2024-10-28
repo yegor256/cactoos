@@ -67,7 +67,7 @@ final class ResourceOfTest {
     }
 
     @Test
-    void readsTextResource() throws Exception {
+    void readsTextResource() {
         new Assertion<>(
             "Must read a text resource from classpath",
             ResourceOfTest.large(),
@@ -76,7 +76,7 @@ final class ResourceOfTest {
     }
 
     @Test
-    void readsTextResourceThroughClassloader() throws Exception {
+    void readsTextResourceThroughClassloader() {
         new Assertion<>(
             "Must read a text resource from classloader",
             ResourceOfTest.large(),
@@ -85,7 +85,7 @@ final class ResourceOfTest {
     }
 
     @Test
-    void readAbsentResourceTest() throws Exception {
+    void readAbsentResourceTest() {
         new Assertion<>(
             "Can't replace an absent resource with a text",
             new TextOf(
@@ -114,7 +114,7 @@ final class ResourceOfTest {
     }
 
     @Test
-    void acceptsTextAsResourceName() throws Exception {
+    void acceptsTextAsResourceName() {
         new Assertion<>(
             "Can't accept Text as resource name",
             new TextOf(
@@ -127,7 +127,7 @@ final class ResourceOfTest {
     }
 
     @Test
-    void acceptsTextsAsResourceNameAndFallback() throws Exception {
+    void acceptsTextsAsResourceNameAndFallback() {
         new Assertion<>(
             "Can't use Texts as parameters",
             new TextOf(

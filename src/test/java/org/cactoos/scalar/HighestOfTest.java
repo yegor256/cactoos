@@ -205,7 +205,7 @@ final class HighestOfTest {
     }
 
     @Test
-    void highestSumAtIterable() throws Exception {
+    void highestSumAtIterable() {
         new Assertion<>(
             "Must find the highest double sum among many",
             new HighestOf<>(

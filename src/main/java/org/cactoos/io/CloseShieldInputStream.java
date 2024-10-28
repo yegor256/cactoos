@@ -68,7 +68,7 @@ public final class CloseShieldInputStream extends InputStream {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         this.inner.set(new DeadInputStream());
     }
 

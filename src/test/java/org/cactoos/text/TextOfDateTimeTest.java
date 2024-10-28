@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -74,7 +73,7 @@ final class TextOfDateTimeTest {
     }
 
     @Test
-    void readsLocalDateFormattedAsIsoDateTime() throws IOException {
+    void readsLocalDateFormattedAsIsoDateTime() {
         final LocalDate date = LocalDate.of(2017, 12, 13);
         new Assertion<>(
             "Must format a LocalDate with default/ISO format.",

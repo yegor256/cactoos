@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -47,12 +46,12 @@ final class FakeInputStream extends InputStream {
     }
 
     @Override
-    public int read() throws IOException {
+    public int read() {
         return -1;
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         this.closed.set(true);
     }
 

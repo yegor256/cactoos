@@ -41,7 +41,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class GroupedTest {
 
     @Test
-    void groupedByNumber() throws Exception {
+    void groupedByNumber() {
         new Assertion<>(
             "Can't behave as a map",
             new Grouped<>(
@@ -54,7 +54,7 @@ final class GroupedTest {
     }
 
     @Test
-    void emptyIterable() throws Exception {
+    void emptyIterable() {
         new Assertion<>(
             "Can't build grouped by empty iterable",
             new Grouped<>(
@@ -67,7 +67,7 @@ final class GroupedTest {
     }
 
     @Test
-    void groupedByOneHasEntries() throws Exception {
+    void groupedByOneHasEntries() {
         new Assertion<>(
             "Can't group int values",
             new Grouped<>(
@@ -83,7 +83,7 @@ final class GroupedTest {
     }
 
     @Test
-    void groupedBySuperType() throws Exception {
+    void groupedBySuperType() {
         new Assertion<>(
             "Must group Number values",
             new Grouped<>(

@@ -38,7 +38,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class EqualsTest {
 
     @Test
-    void compareEquals() throws Exception {
+    void compareEquals() {
         new Assertion<>(
             "Must compare if two integers are equal",
             new Equals<>(1, 1),
@@ -47,7 +47,7 @@ final class EqualsTest {
     }
 
     @Test
-    void compareNotEquals() throws Exception {
+    void compareNotEquals() {
         new Assertion<>(
             "Must compare if two integers are not equal",
             new Equals<>(1, 2),
@@ -56,7 +56,7 @@ final class EqualsTest {
     }
 
     @Test
-    void compareEqualsTextScalar() throws Exception {
+    void compareEqualsTextScalar() {
         final String str = "hello";
         new Assertion<>(
             "Must compare if two strings are equal",
@@ -66,7 +66,7 @@ final class EqualsTest {
     }
 
     @Test
-    void compareNotEqualsTextScalar() throws Exception {
+    void compareNotEqualsTextScalar() {
         new Assertion<>(
             "Must compare if two strings are not equal",
             new Equals<>("world", "worle"),
@@ -75,7 +75,7 @@ final class EqualsTest {
     }
 
     @Test
-    void compareText() throws Exception {
+    void compareText() {
         new Assertion<>(
             "Must compare if two comparable test are equal, see #1174",
             new Equals<>(

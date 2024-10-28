@@ -163,7 +163,7 @@ final class InputOfTest {
     }
 
     @Test
-    void readsStringIntoBytes() throws Exception {
+    void readsStringIntoBytes() {
         new Assertion<>(
             "must read bytes from Input",
             new TextOf(
@@ -180,7 +180,7 @@ final class InputOfTest {
     }
 
     @Test
-    void readsStringBuilder() throws Exception {
+    void readsStringBuilder() {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
         new Assertion<>(
@@ -201,7 +201,7 @@ final class InputOfTest {
     }
 
     @Test
-    void readsStringBuffer() throws Exception {
+    void readsStringBuffer() {
         final String starts = "The future ";
         final String ends = "is now!";
         new Assertion<>(
@@ -222,7 +222,7 @@ final class InputOfTest {
     }
 
     @Test
-    void readsArrayOfChars() throws Exception {
+    void readsArrayOfChars() {
         new Assertion<>(
             "must read array of chars.",
             new TextOf(
@@ -241,7 +241,7 @@ final class InputOfTest {
     }
 
     @Test
-    void readsEncodedArrayOfChars() throws Exception {
+    void readsEncodedArrayOfChars() {
         new Assertion<>(
             "must read array of encoded chars.",
             new TextOf(
@@ -264,7 +264,7 @@ final class InputOfTest {
     }
 
     @Test
-    void readsStringFromReader() throws Exception {
+    void readsStringFromReader() {
         final String source = "hello, source!";
         new Assertion<>(
             "must read string through a reader",
@@ -278,7 +278,7 @@ final class InputOfTest {
     }
 
     @Test
-    void readsEncodedStringFromReader() throws Exception {
+    void readsEncodedStringFromReader() {
         final String source = "hello, друг!";
         new Assertion<>(
             "must read encoded string through a reader",

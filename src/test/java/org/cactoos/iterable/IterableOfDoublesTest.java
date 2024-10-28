@@ -37,7 +37,7 @@ final class IterableOfDoublesTest {
 
     @Test
     void convertsDoubleValuesToIterable() {
-        final double[] values = {1, 2, 3};
+        final double[] values = {1.0, 2.0, 3.0};
         new Assertion<>(
             "Must convert double values to iterable",
             new IterableOfDoubles(values),

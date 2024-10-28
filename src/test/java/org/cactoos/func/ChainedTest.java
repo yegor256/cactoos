@@ -42,7 +42,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class ChainedTest {
 
     @Test
-    void withoutIterable() throws Exception {
+    void withoutIterable() {
         new Assertion<>(
             "Must work without iterable",
             new LengthOf(
@@ -62,7 +62,7 @@ final class ChainedTest {
     }
 
     @Test
-    void withIterable() throws Exception {
+    void withIterable() {
         new Assertion<>(
             "Must work with iterable",
             new LengthOf(

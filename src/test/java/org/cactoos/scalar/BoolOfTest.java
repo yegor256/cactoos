@@ -36,7 +36,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class BoolOfTest {
 
     @Test
-    void trueTest() throws Exception {
+    void trueTest() {
         new Assertion<>(
             "Must be parsed string 'true'",
             new BoolOf("true"),
@@ -45,7 +45,7 @@ final class BoolOfTest {
     }
 
     @Test
-    void falseTest() throws Exception {
+    void falseTest() {
         new Assertion<>(
             "Must be parsed string 'false'",
             new BoolOf("false"),
@@ -54,7 +54,7 @@ final class BoolOfTest {
     }
 
     @Test
-    void isFalseIfTextDoesNotRepresentABoolean() throws Exception {
+    void isFalseIfTextDoesNotRepresentABoolean() {
         new Assertion<>(
             "Must be parsed a non-boolean string",
             new BoolOf("abc"),

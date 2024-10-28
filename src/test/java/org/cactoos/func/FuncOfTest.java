@@ -38,7 +38,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
 @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class FuncOfTest {
     @Test
-    void convertsProcIntoFunc() throws Exception {
+    void convertsProcIntoFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();
         final Object result = new Object();
         new Assertion<>(
@@ -60,7 +60,7 @@ final class FuncOfTest {
     }
 
     @Test
-    void convertsScalarIntoFunc() throws Exception {
+    void convertsScalarIntoFunc() {
         final Object result = new Object();
         new Assertion<>(
             "Must convert Scalar into Func",
@@ -75,7 +75,7 @@ final class FuncOfTest {
     }
 
     @Test
-    void convertsLambdaIntoFunc() throws Exception {
+    void convertsLambdaIntoFunc() {
         new Assertion<>(
             "Must convert Lambda into Func",
             new FuncOf<>(input -> input),

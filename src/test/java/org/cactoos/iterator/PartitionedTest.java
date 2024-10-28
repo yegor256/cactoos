@@ -46,7 +46,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class PartitionedTest {
 
     @Test
-    void emptyPartitioned() throws Exception {
+    void emptyPartitioned() {
         new Assertion<>(
             "Can't generate an empty Partitioned.",
             new LengthOf(

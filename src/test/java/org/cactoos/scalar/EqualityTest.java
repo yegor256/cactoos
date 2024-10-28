@@ -36,7 +36,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class EqualityTest {
 
     @Test
-    void notEqualLeft() throws Exception {
+    void notEqualLeft() {
         new Assertion<>(
             "Must compare smaller to greater",
             new Equality<>(
@@ -47,7 +47,7 @@ final class EqualityTest {
     }
 
     @Test
-    void notEqualRight() throws Exception {
+    void notEqualRight() {
         new Assertion<>(
             "Must compare greater to smaller",
             new Equality<>(
@@ -58,7 +58,7 @@ final class EqualityTest {
     }
 
     @Test
-    void notEqualLeftWithSameSize() throws Exception {
+    void notEqualLeftWithSameSize() {
         new Assertion<>(
             "Must compare smaller to smaller with same size",
             new Equality<>(
@@ -69,7 +69,7 @@ final class EqualityTest {
     }
 
     @Test
-    void notEqualRightWithSameSize() throws Exception {
+    void notEqualRightWithSameSize() {
         new Assertion<>(
             "Must compare greater to smaller with same size",
             new Equality<>(
@@ -80,7 +80,7 @@ final class EqualityTest {
     }
 
     @Test
-    void equal() throws Exception {
+    void equal() {
         new Assertion<>(
             "Must compare equals",
             new Equality<>(
@@ -91,7 +91,7 @@ final class EqualityTest {
     }
 
     @Test
-    void compareEmptyArrays() throws Exception {
+    void compareEmptyArrays() {
         new Assertion<>(
             "Must compare empty",
             new Equality<>(

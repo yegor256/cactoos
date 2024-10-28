@@ -38,14 +38,14 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class FoldedTest {
 
     @Test
-    void skipIterable() throws Exception {
+    void skipIterable() {
         new Assertion<>(
             "Must fold elements in iterable",
             new Folded<>(
                 0L, Long::sum,
                 new HeadOf<>(
                     10,
-                    new RangeOf<>(0L, Long.MAX_VALUE, value -> value + 1)
+                    new RangeOf<>(0L, Long.MAX_VALUE, value -> value + 1L)
                 )
             ),
             new HasValue<>(45L)

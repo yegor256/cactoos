@@ -36,7 +36,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  */
 final class MappedWithIndexTest {
     @Test
-    void transformsIterable() throws Exception {
+    void transformsIterable() {
         new Assertion<>(
             "must transform an iterable",
             new MappedWithIndex<>(

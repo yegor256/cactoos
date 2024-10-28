@@ -152,7 +152,7 @@ final class LoggingInputTest {
             new ResourceOf("org/cactoos/large-text.txt"),
             "text file",
             logger
-        ).stream().skip(100);
+        ).stream().skip(100L);
         new Assertion<>(
             "Must log skip from text file",
             new TextOf(logger.toString()),

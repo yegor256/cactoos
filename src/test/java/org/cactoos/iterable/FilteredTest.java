@@ -42,7 +42,7 @@ import org.llorllale.cactoos.matchers.HasValues;
 final class FilteredTest {
 
     @Test
-    void filtersList() throws Exception {
+    void filtersList() {
         new Assertion<>(
             "Must calculate the length of an iterable",
             new LengthOf(
@@ -58,7 +58,7 @@ final class FilteredTest {
     }
 
     @Test
-    void filtersEmptyList() throws Exception {
+    void filtersEmptyList() {
         new Assertion<>(
             "Must calculate the length of an empty iterable",
             new LengthOf(
@@ -154,7 +154,7 @@ final class FilteredTest {
         new Assertion<>(
             "Must be filtered with super type filter",
             new Filtered<>(
-                (Number d) -> d.doubleValue() > 0,
+                (Number d) -> d.doubleValue() > (double) 0,
                 new IterableOf<>(1d, -2d, 3d)
             ),
             new HasValues<>(1d, 3d)

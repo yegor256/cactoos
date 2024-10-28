@@ -53,7 +53,7 @@ public final class TextOfString implements Text {
     }
 
     @Override
-    public String asString() throws Exception {
+    public String asString() {
         return this.input;
     }
 

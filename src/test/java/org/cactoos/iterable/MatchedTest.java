@@ -116,7 +116,7 @@ final class MatchedTest {
     }
 
     @Test
-    void noCorrelation() throws Exception {
+    void noCorrelation() {
         new Assertion<>(
             "Should fail if there is no correlation",
             () -> new LengthOf(
@@ -131,7 +131,7 @@ final class MatchedTest {
     }
 
     @Test
-    void nonNullCorrelation() throws Exception {
+    void nonNullCorrelation() {
         new Assertion<>(
             "Should fail if parameter is null",
             () -> new LengthOf(

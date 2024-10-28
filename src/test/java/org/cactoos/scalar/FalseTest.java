@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class FalseTest {
 
     @Test
-    void asValue() throws Exception {
+    void asValue() {
         new Assertion<>(
             "Must return false",
             new False().value(),
@@ -46,7 +46,7 @@ final class FalseTest {
     }
 
     @Test
-    void asScalar() throws Exception {
+    void asScalar() {
         new Assertion<>(
             "Must be false",
             new False(),

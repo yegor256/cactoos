@@ -41,7 +41,7 @@ import org.llorllale.cactoos.matchers.IsText;
 final class TernaryTest {
 
     @Test
-    void conditionTrueScalar() throws Exception {
+    void conditionTrueScalar() {
         new Assertion<>(
             "Must work with true scalar condition",
             new Ternary<>(
@@ -54,7 +54,7 @@ final class TernaryTest {
     }
 
     @Test
-    void conditionFalseScalar() throws Exception {
+    void conditionFalseScalar() {
         new Assertion<>(
             "Must work with false scalar condition",
             new Ternary<>(
@@ -67,7 +67,7 @@ final class TernaryTest {
     }
 
     @Test
-    void conditionStatic() throws Exception {
+    void conditionStatic() {
         new Assertion<>(
             "Must work with primitive static condition",
             new Ternary<>(
@@ -80,7 +80,7 @@ final class TernaryTest {
     }
 
     @Test
-    void consequentScalar() throws Exception {
+    void consequentScalar() {
         new Assertion<>(
             "Must work with scalar consequent and alternative",
             new Ternary<>(
@@ -93,7 +93,7 @@ final class TernaryTest {
     }
 
     @Test
-    void inputStatic() throws Exception {
+    void inputStatic() {
         new Assertion<>(
             "Must call the functions with the input",
             new Ternary<>(
@@ -107,7 +107,7 @@ final class TernaryTest {
     }
 
     @Test
-    void inputScalar() throws Exception {
+    void inputScalar() {
         new Assertion<>(
             "Must call the functions with the input scalar value",
             new Ternary<>(
@@ -122,7 +122,7 @@ final class TernaryTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    void inputScalarValueConserved() throws Exception {
+    void inputScalarValueConserved() {
         new Assertion<Scalar<Text>>(
             "Must conserve the same scalar value for each whole evaluation",
             new Ternary<>(

@@ -23,7 +23,6 @@
  */
 package org.cactoos.number;
 
-import java.io.IOException;
 import java.util.stream.Stream;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
@@ -57,7 +56,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void floatValue(final Number nbr) throws IOException {
+    void floatValue(final Number nbr) {
         new Assertion<>(
             "Must implement floatValue",
             new NumberOfScalars(() -> nbr).floatValue(),
@@ -67,7 +66,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void intValue(final Number nbr) throws IOException {
+    void intValue(final Number nbr) {
         new Assertion<>(
             "Must implement intValue",
             new NumberOfScalars(() -> nbr).intValue(),
@@ -77,7 +76,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void doubleValue(final Number nbr) throws IOException {
+    void doubleValue(final Number nbr) {
         new Assertion<>(
             "Must implement doubleValue",
             new NumberOfScalars(() -> nbr).doubleValue(),
@@ -87,7 +86,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void longValue(final Number nbr) throws IOException {
+    void longValue(final Number nbr) {
         new Assertion<>(
             "Must implement longValue",
             new NumberOfScalars(() -> nbr).longValue(),
@@ -97,7 +96,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void byteValue(final Number nbr) throws IOException {
+    void byteValue(final Number nbr) {
         new Assertion<>(
             "Must implement byteValue",
             new NumberOfScalars(() -> nbr).byteValue(),
@@ -107,7 +106,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void shortValue(final Number nbr) throws IOException {
+    void shortValue(final Number nbr) {
         new Assertion<>(
             "Must implement shortValue",
             new NumberOfScalars(() -> nbr).shortValue(),
@@ -117,7 +116,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void hashCode(final Number nbr) throws IOException {
+    void hashCode(final Number nbr) {
         new Assertion<>(
             "Must implement hashCode via doubleValue",
             new NumberOfScalars(() -> nbr).hashCode(),
@@ -128,7 +127,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
     @SuppressWarnings("unlikely-arg-type")
-    void equalsNumber(final Number nbr) throws IOException {
+    void equalsNumber(final Number nbr) {
         new Assertion<>(
             "Must implement equals doubleValue",
             new NumberOfScalars(() -> nbr).equals(nbr.doubleValue()),
@@ -138,7 +137,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void notEquals(final Number nbr) throws IOException {
+    void notEquals(final Number nbr) {
         new Assertion<>(
             "Must implement not equals Object",
             new NumberOfScalars(() -> nbr).equals(new Object()),
@@ -149,7 +148,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
     @SuppressWarnings("unlikely-arg-type")
-    void notEqualsObject(final Number nbr) throws IOException {
+    void notEqualsObject(final Number nbr) {
         new Assertion<>(
             "Must implement not equals incorrect value",
             new NumberOfScalars(() -> nbr).equals(-1.0),
@@ -159,7 +158,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void toString(final Number nbr) throws IOException {
+    void toString(final Number nbr) {
         new Assertion<>(
             "Must implement toString via doubleValue",
             new NumberOfScalars(() -> nbr).toString(),

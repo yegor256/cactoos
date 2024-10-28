@@ -40,7 +40,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class SortedTest {
 
     @Test
-    void sortsAnArray() throws Exception {
+    void sortsAnArray() {
         new Assertion<>(
             "Can't sort an iterable",
             new Sorted<>(
@@ -54,7 +54,7 @@ final class SortedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    void sortsAnArrayWithComparator() throws Exception {
+    void sortsAnArrayWithComparator() {
         new Assertion<>(
             "Can't sort an iterable with a comparator",
             new Sorted<>(
@@ -67,7 +67,7 @@ final class SortedTest {
     }
 
     @Test
-    void sortsAnEmptyArray() throws Exception {
+    void sortsAnEmptyArray() {
         new Assertion<>(
             "Can't sort an empty iterable",
             new Sorted<Integer>(
@@ -91,7 +91,7 @@ final class SortedTest {
     }
 
     @Test
-    void sortsByNymberComprator() throws Exception {
+    void sortsByNymberComprator() {
         new Assertion<>(
             "Must sort an iterable of numbers",
             new Sorted<>(

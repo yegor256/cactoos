@@ -91,7 +91,7 @@ final class RetryTest {
                     return 0;
                 },
                 Integer.MAX_VALUE,
-                Duration.of(-5, ChronoUnit.DAYS)
+                Duration.of(-5L, ChronoUnit.DAYS)
             ),
             new HasValue<>(0)
         ).affirm();
@@ -101,7 +101,7 @@ final class RetryTest {
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     void runsScalarMultipleTimesWithWait() throws Exception {
         final int times = 3;
-        final long wait = 500;
+        final long wait = 500L;
         final AtomicInteger tries = new AtomicInteger(0);
         final List<Instant> executions = new ArrayList<>(times);
         new Retry<>(

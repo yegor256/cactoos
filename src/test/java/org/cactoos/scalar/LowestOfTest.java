@@ -228,7 +228,7 @@ final class LowestOfTest {
     }
 
     @Test
-    void lowestSumAtIterable() throws Exception {
+    void lowestSumAtIterable() {
         new Assertion<>(
             "Must find the lowest double sum among many",
             new LowestOf<>(

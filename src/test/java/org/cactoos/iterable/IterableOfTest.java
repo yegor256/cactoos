@@ -42,7 +42,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
 final class IterableOfTest {
 
     @Test
-    void convertsScalarsToIterable() throws Exception {
+    void convertsScalarsToIterable() {
         new Assertion<>(
             "Must convert scalars to iterable",
             new LengthOf(
@@ -64,7 +64,7 @@ final class IterableOfTest {
     }
 
     @Test
-    void convertsObjectsToIterable() throws Exception {
+    void convertsObjectsToIterable() {
         new Assertion<>(
             "Must convert objects to iterable",
             new LengthOf(

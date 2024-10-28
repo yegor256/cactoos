@@ -63,7 +63,7 @@ final class LengthOfTest {
     }
 
     @Test
-    void lengthOfZeroBuffer() throws Exception {
+    void lengthOfZeroBuffer() {
         new Assertion<>(
             "Must fail to calculate length of empty buffer",
             () -> new LengthOf(
@@ -75,7 +75,7 @@ final class LengthOfTest {
     }
 
     @Test
-    void lengthOf() throws Exception {
+    void lengthOf() {
         new Assertion<>(
             "Must calculate length of iterable for integer",
             new LengthOf(

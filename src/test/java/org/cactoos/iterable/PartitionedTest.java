@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class PartitionedTest {
 
     @Test
-    void partitionedEmpty() throws Exception {
+    void partitionedEmpty() {
         new Assertion<>(
             "Must generate a Partitioned without values.",
             new LengthOf(
@@ -48,7 +48,7 @@ final class PartitionedTest {
     }
 
     @Test
-    void partitionedWithPartial() throws Exception {
+    void partitionedWithPartial() {
         new Assertion<>(
             "Must generate a Partitioned with partition size.",
             new LengthOf(

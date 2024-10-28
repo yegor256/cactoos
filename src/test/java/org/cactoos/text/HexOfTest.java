@@ -23,7 +23,6 @@
  */
 package org.cactoos.text;
 
-import java.io.IOException;
 import org.cactoos.bytes.BytesOf;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -48,7 +47,7 @@ final class HexOfTest {
     }
 
     @Test
-    void notEmpytString() throws IOException {
+    void notEmpytString() {
         new Assertion<>(
             "Can't represent a string as hexadecimal",
             new HexOf(

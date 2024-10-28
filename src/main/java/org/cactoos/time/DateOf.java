@@ -72,7 +72,7 @@ public final class DateOf implements Scalar<Date> {
                     date,
                     new DateTimeFormatterBuilder()
                         .append(formatter)
-                        .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                        .parseDefaulting(ChronoField.HOUR_OF_DAY, 0L)
                         .toFormatter()
                 ).toInstant(ZoneOffset.UTC)
             )

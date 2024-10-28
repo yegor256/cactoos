@@ -142,7 +142,7 @@ public final class LoggingInputStream extends InputStream {
         final int byts = this.origin.read(buf, offset, len);
         final Instant end = Instant.now();
         if (byts > 0) {
-            this.bytes.getAndAdd(byts);
+            this.bytes.getAndAdd((long) byts);
             final long millis = Duration.between(start, end).toMillis();
             this.time.getAndAdd(millis);
         }

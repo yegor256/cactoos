@@ -58,7 +58,7 @@ final class IteratorOfLongsTest {
 
     @Test
     void nonEmptyIteratorDoesNotHaveNext() {
-        final IteratorOfLongs iterator = new IteratorOfLongs(1, 2);
+        final IteratorOfLongs iterator = new IteratorOfLongs(1L, 2L);
         iterator.next();
         iterator.next();
         new Assertion<>(
@@ -70,7 +70,7 @@ final class IteratorOfLongsTest {
 
     @Test
     void nonEmptyIteratorThrowsException() {
-        final IteratorOfLongs iterator = new IteratorOfLongs(1);
+        final IteratorOfLongs iterator = new IteratorOfLongs(1L);
         iterator.next();
         new Assertion<>(
             "Exception is expected for fully traversed iterator.",

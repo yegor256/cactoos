@@ -37,7 +37,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class XorTest {
 
     @Test
-    void trueTrue() throws Exception {
+    void trueTrue() {
         new Assertion<>(
             "Either one, but not both nor none",
             new Xor(
@@ -49,7 +49,7 @@ final class XorTest {
     }
 
     @Test
-    void falseTrue() throws Exception {
+    void falseTrue() {
         new Assertion<>(
             "Either one, but not both nor none",
             new Xor(
@@ -61,7 +61,7 @@ final class XorTest {
     }
 
     @Test
-    void treuFalse() throws Exception {
+    void treuFalse() {
         new Assertion<>(
             "Either one, but not both nor none",
             new Xor(
@@ -73,7 +73,7 @@ final class XorTest {
     }
 
     @Test
-    void falseFalse() throws Exception {
+    void falseFalse() {
         new Assertion<>(
             "Either one, but not both nor none",
             new Xor(
@@ -85,7 +85,7 @@ final class XorTest {
     }
 
     @Test
-    void singleTrue() throws Exception {
+    void singleTrue() {
         new Assertion<>(
             "Single True must be True",
             new Xor(
@@ -96,7 +96,7 @@ final class XorTest {
     }
 
     @Test
-    void singleFalse() throws Exception {
+    void singleFalse() {
         new Assertion<>(
             "Single False must be False",
             new Xor(
@@ -107,7 +107,7 @@ final class XorTest {
     }
 
     @Test
-    void emptyIterable() throws Exception {
+    void emptyIterable() {
         new Assertion<>(
             "Empty iterable must be False",
             new Xor(new IterableOf<Scalar<Boolean>>()),
@@ -116,7 +116,7 @@ final class XorTest {
     }
 
     @Test
-    void oddNumberOfTrue() throws Exception {
+    void oddNumberOfTrue() {
         new Assertion<>(
             "Odd number of True must be True",
             new Xor(
@@ -129,7 +129,7 @@ final class XorTest {
     }
 
     @Test
-    void evenNumberOfTrue() throws Exception {
+    void evenNumberOfTrue() {
         new Assertion<>(
             "Even number of True must be False",
             new Xor(
@@ -142,7 +142,7 @@ final class XorTest {
     }
 
     @Test
-    void allFalse() throws Exception {
+    void allFalse() {
         new Assertion<>(
             "All False must be False",
             new Xor(
@@ -155,7 +155,7 @@ final class XorTest {
     }
 
     @Test
-    void allTrue() throws Exception {
+    void allTrue() {
         new Assertion<>(
             "Odd number of True must be True",
             new Xor(

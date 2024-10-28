@@ -39,7 +39,7 @@ import org.llorllale.cactoos.matchers.IsText;
  */
 final class MappedTest {
     @Test
-    void transformsScalar() throws Exception {
+    void transformsScalar() {
         new Assertion<>(
             "must transform scalar",
             new Mapped<Text>(

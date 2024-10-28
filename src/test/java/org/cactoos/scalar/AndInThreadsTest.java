@@ -149,45 +149,55 @@ final class AndInThreadsTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void worksWithExecServiceProcValues() throws Exception {
         final List<Integer> list = new Synced<>(new ListOf<>());
         final ExecutorService service = Executors.newSingleThreadExecutor();
-        new AndInThreads(
-            service,
-            new ProcNoNulls<Integer>(list::add),
-            1, 2
-        ).value();
-        new Assertion<>(
-            "Result should be calculated for proc values",
-            list,
-            new IsIterableContainingInAnyOrder<>(
-                new ListOf<>(
-                    new IsEqual<>(1),
-                    new IsEqual<>(2)
+        try {
+            new AndInThreads(
+                service,
+                new ProcNoNulls<Integer>(list::add),
+                1, 2
+            ).value();
+            new Assertion<>(
+                "Result should be calculated for proc values",
+                list,
+                new IsIterableContainingInAnyOrder<>(
+                    new ListOf<>(
+                        new IsEqual<>(1),
+                        new IsEqual<>(2)
+                    )
                 )
-            )
-        ).affirm();
+            ).affirm();
+        } finally {
+            service.shutdown();
+        }
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void worksWithExecServiceProcIterable() throws Exception {
         final List<Integer> list = new Synced<>(new ListOf<>());
         final ExecutorService service = Executors.newSingleThreadExecutor();
-        new AndInThreads(
-            service,
-            new ProcNoNulls<Integer>(list::add),
-            new ListOf<>(1, 2)
-        ).value();
-        new Assertion<>(
-            "Result should be calculated for proc iterables",
-            list,
-            new IsIterableContainingInAnyOrder<>(
-                new ListOf<>(
-                    new IsEqual<>(1),
-                    new IsEqual<>(2)
+        try {
+            new AndInThreads(
+                service,
+                new ProcNoNulls<Integer>(list::add),
+                new ListOf<>(1, 2)
+            ).value();
+            new Assertion<>(
+                "Result should be calculated for proc iterables",
+                list,
+                new IsIterableContainingInAnyOrder<>(
+                    new ListOf<>(
+                        new IsEqual<>(1),
+                        new IsEqual<>(2)
+                    )
                 )
-            )
-        ).affirm();
+            ).affirm();
+        } finally {
+            service.shutdown();
+        }
     }
 
     @Test

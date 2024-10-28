@@ -37,7 +37,7 @@ final class IterableOfFloatsTest {
 
     @Test
     void convertsFloatValuesToIterable() {
-        final float[] values = {1, 2, 3};
+        final float[] values = {1.0F, 2.0F, 3.0F};
         new Assertion<>(
             "Must convert float values to iterable",
             new IterableOfFloats(values),

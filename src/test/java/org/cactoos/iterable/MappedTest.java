@@ -41,7 +41,7 @@ import org.llorllale.cactoos.matchers.IsText;
 final class MappedTest {
 
     @Test
-    void transformsList() throws Exception {
+    void transformsList() {
         new Assertion<>(
             "Must transform an iterable",
             new Mapped<>(

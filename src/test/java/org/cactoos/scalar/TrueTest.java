@@ -36,7 +36,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
 final class TrueTest {
 
     @Test
-    void asValue() throws Exception {
+    void asValue() {
         new Assertion<>(
             "Must be True",
             new True().value(),

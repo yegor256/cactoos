@@ -39,7 +39,7 @@ import org.llorllale.cactoos.matchers.HasValues;
 final class ShuffledTest {
 
     @Test
-    void shuffleArray() throws Exception {
+    void shuffleArray() {
         new Assertion<>(
             "Must shuffle an iterable",
             new Shuffled<>(

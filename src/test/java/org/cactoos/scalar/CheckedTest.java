@@ -40,7 +40,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class CheckedTest {
 
     @Test
-    void runtimeExceptionGoesOut() throws Exception {
+    void runtimeExceptionGoesOut() {
         new Assertion<>(
             "Must throw runtime exception",
             () -> new Checked<>(
@@ -54,7 +54,7 @@ final class CheckedTest {
     }
 
     @Test
-    void usesGenericVarianceOnExceptionTypes() throws Exception {
+    void usesGenericVarianceOnExceptionTypes() {
         new Assertion<>(
             "Must use generic variance on exception types",
             () -> new Checked<String, IllegalStateException>(
@@ -82,7 +82,7 @@ final class CheckedTest {
     }
 
     @Test
-    void throwsIoException() throws Exception {
+    void throwsIoException() {
         new Assertion<>(
             "Must throw io exception",
             () -> new Checked<>(
@@ -96,7 +96,7 @@ final class CheckedTest {
     }
 
     @Test
-    void ioExceptionGoesOut() throws Exception {
+    void ioExceptionGoesOut() {
         try {
             new Checked<>(
                 () -> {
@@ -132,7 +132,7 @@ final class CheckedTest {
     }
 
     @Test
-    void throwsIoExceptionWithModifiedMessage() throws Exception {
+    void throwsIoExceptionWithModifiedMessage() {
         final String message = "error msg";
         new Assertion<>(
             "Must throw io exception with modified message",

@@ -23,7 +23,6 @@
  */
 package org.cactoos.number;
 
-import java.io.IOException;
 import java.util.stream.Stream;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
@@ -57,7 +56,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void floatValue(final Number nbr) throws IOException {
+    void floatValue(final Number nbr) {
         new Assertion<>(
             "Must forward floatValue",
             new NumberEnvelope(nbr) { }.floatValue(),
@@ -67,7 +66,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void intValue(final Number nbr) throws IOException {
+    void intValue(final Number nbr) {
         new Assertion<>(
             "Must forward intValue",
             new NumberEnvelope(nbr) { }.intValue(),
@@ -77,7 +76,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void doubleValue(final Number nbr) throws IOException {
+    void doubleValue(final Number nbr) {
         new Assertion<>(
             "Must forward doubleValue",
             new NumberEnvelope(nbr) { }.doubleValue(),
@@ -87,7 +86,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void longValue(final Number nbr) throws IOException {
+    void longValue(final Number nbr) {
         new Assertion<>(
             "Must forward longValue",
             new NumberEnvelope(nbr) { }.longValue(),
@@ -97,7 +96,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void byteValue(final Number nbr) throws IOException {
+    void byteValue(final Number nbr) {
         new Assertion<>(
             "Must forward byteValue",
             new NumberEnvelope(nbr) { }.byteValue(),
@@ -107,7 +106,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void shortValue(final Number nbr) throws IOException {
+    void shortValue(final Number nbr) {
         new Assertion<>(
             "Must forward shortValue",
             new NumberEnvelope(nbr) { }.shortValue(),
@@ -117,7 +116,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void hashCode(final Number nbr) throws IOException {
+    void hashCode(final Number nbr) {
         new Assertion<>(
             "Must forward hashCode",
             new NumberEnvelope(nbr) { }.hashCode(),
@@ -127,7 +126,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void equalsNumber(final Number nbr) throws IOException {
+    void equalsNumber(final Number nbr) {
         new Assertion<>(
             "Must forward equals and be true for correct Number",
             new NumberEnvelope(nbr) { }.equals(nbr),
@@ -137,7 +136,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void notEquals(final Number nbr) throws IOException {
+    void notEquals(final Number nbr) {
         new Assertion<>(
             "Must forward equals and be false for Object",
             new NumberEnvelope(nbr) { }.equals(new Object()),
@@ -148,7 +147,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
     @SuppressWarnings("unlikely-arg-type")
-    void notEqualsObject(final Number nbr) throws IOException {
+    void notEqualsObject(final Number nbr) {
         new Assertion<>(
             "Must forward equals and be false for incorrect Number",
             new NumberEnvelope(nbr) { }.equals(-1),
@@ -158,7 +157,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @ArgumentsSource(NumberEnvelopeTest.class)
-    void toString(final Number nbr) throws IOException {
+    void toString(final Number nbr) {
         new Assertion<>(
             "Must forward toString",
             new NumberEnvelope(nbr) { }.toString(),

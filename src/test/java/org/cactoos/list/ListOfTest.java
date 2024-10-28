@@ -46,7 +46,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class ListOfTest {
 
     @Test
-    void behavesAsCollection() throws Exception {
+    void behavesAsCollection() {
         MatcherAssert.assertThat(
             "Can't behave as a list",
             new ListOf<>(1, 2),
@@ -55,7 +55,7 @@ final class ListOfTest {
     }
 
     @Test
-    void elementAtIndexTest() throws Exception {
+    void elementAtIndexTest() {
         final int num = 345;
         MatcherAssert.assertThat(
             "Can't convert an iterable to a list",
@@ -65,7 +65,7 @@ final class ListOfTest {
     }
 
     @Test
-    void sizeTest() throws Exception {
+    void sizeTest() {
         final int size = 42;
         MatcherAssert.assertThat(
             "Can't build a list with a certain size",
@@ -77,7 +77,7 @@ final class ListOfTest {
     }
 
     @Test
-    void emptyTest() throws Exception {
+    void emptyTest() {
         MatcherAssert.assertThat(
             "Can't convert an empty iterable to an empty list",
             new ListOf<>(
@@ -106,7 +106,7 @@ final class ListOfTest {
     }
 
     @Test
-    void makesListFromMappedIterable() throws Exception {
+    void makesListFromMappedIterable() {
         final List<Integer> list = new ListOf<>(
             new Mapped<>(
                 i -> i + 1,

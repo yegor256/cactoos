@@ -54,7 +54,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsCharVarArg() throws Exception {
+    void readsCharVarArg() {
         new Assertion<>(
             "Must read chars var args",
             new TextOf(new ReaderOf('a', 'b', 'c')),
@@ -63,7 +63,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsCharArrayWithCharset() throws Exception {
+    void readsCharArrayWithCharset() {
         final String message =
             "char array on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -79,7 +79,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsCharArrayWithCharsetByName() throws Exception {
+    void readsCharArrayWithCharsetByName() {
         final String message =
             "char array with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -95,7 +95,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsByteArray() throws Exception {
+    void readsByteArray() {
         final String message =
             "byte array on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -110,7 +110,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsByteArrayWithCharset() throws Exception {
+    void readsByteArrayWithCharset() {
         final String message =
             "byte array with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -126,7 +126,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsByteArrayWithCharsetByName() throws Exception {
+    void readsByteArrayWithCharsetByName() {
         final String message =
             "bte array with charset by name on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -212,7 +212,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsBytes() throws Exception {
+    void readsBytes() {
         final String input =
             "Bytes on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -223,7 +223,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsText() throws Exception {
+    void readsText() {
         final String input =
             "Text on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -234,7 +234,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsTextWithCharset() throws Exception {
+    void readsTextWithCharset() {
         final String input =
             "Text with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -250,7 +250,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsTextWithCharsetByName() throws Exception {
+    void readsTextWithCharsetByName() {
         final String input =
             "Text with charset by name on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -266,7 +266,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsCharSequence() throws Exception {
+    void readsCharSequence() {
         final String input =
             "char sequence on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -277,7 +277,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsCharSequenceWithCharset() throws Exception {
+    void readsCharSequenceWithCharset() {
         final String input =
             "char sequence with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -293,7 +293,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsCharSequenceWithCharsetByName() throws Exception {
+    void readsCharSequenceWithCharsetByName() {
         final String input =
             "char sequence with charset by name on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -309,7 +309,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsInput() throws Exception {
+    void readsInput() {
         final String input =
             "Input on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -320,7 +320,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsInputWithCharset() throws Exception {
+    void readsInputWithCharset() {
         final String input =
             "Input with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -336,7 +336,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsInputWithCharsetByName() throws Exception {
+    void readsInputWithCharsetByName() {
         final String input =
             "Input with charset by name on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -352,7 +352,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsInputWithCharsetDecoder() throws Exception {
+    void readsInputWithCharsetDecoder() {
         final String input =
             "Input with charset decoder on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -368,7 +368,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsInputStream() throws Exception {
+    void readsInputStream() {
         final String input =
             "InputStream on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -379,7 +379,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsInputStreamWithCharset() throws Exception {
+    void readsInputStreamWithCharset() {
         final String input =
             "InputStream with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
@@ -411,7 +411,7 @@ final class ReaderOfTest {
     }
 
     @Test
-    void readsInputStreamWithCharsetDecoder() throws Exception {
+    void readsInputStreamWithCharsetDecoder() {
         final String input =
             "InputStream with charset decoder on äÄ üÜ öÖ ß жш";
         new Assertion<>(

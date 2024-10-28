@@ -23,7 +23,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import org.cactoos.text.TextOf;
 import org.junit.jupiter.api.Test;
@@ -41,7 +40,7 @@ import org.llorllale.cactoos.matchers.IsText;
 final class OutputStreamToTest {
 
     @Test
-    void writesLargeContentToFile(@TempDir final Path wdir) throws IOException {
+    void writesLargeContentToFile(@TempDir final Path wdir) {
         final Path temp = wdir.resolve("cactoos-1.txt-1");
         new Assertion<>(
             "Must copy Input to Output and return Input",

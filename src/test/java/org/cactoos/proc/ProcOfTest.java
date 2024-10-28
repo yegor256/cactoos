@@ -36,7 +36,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  */
 final class ProcOfTest {
     @Test
-    void worksWithFunc() throws Exception {
+    void worksWithFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();
         new Assertion<>(
             "Must execute Proc with Func",
@@ -59,7 +59,7 @@ final class ProcOfTest {
     }
 
     @Test
-    void worksWithLambda() throws Exception {
+    void worksWithLambda() {
         final AtomicReference<Object> done = new AtomicReference<>();
         new Assertion<>(
             "Must execute Proc with Lambda",

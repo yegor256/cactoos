@@ -38,7 +38,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class RepeatedTest {
 
     @Test
-    void allSameTest() throws Exception {
+    void allSameTest() {
         final int size = 42;
         final int element = 11;
         MatcherAssert.assertThat(
@@ -54,7 +54,7 @@ final class RepeatedTest {
     }
 
     @Test
-    void emptyTest() throws Exception {
+    void emptyTest() {
         MatcherAssert.assertThat(
             "Can't generate an empty iterable",
             new LengthOf(new Repeated<>(0, 0)),
@@ -63,7 +63,7 @@ final class RepeatedTest {
     }
 
     @Test
-    void repeatsIntegerTwice() throws Exception {
+    void repeatsIntegerTwice() {
         final Iterable<Integer> list = new Repeated<>(5, 1);
         MatcherAssert.assertThat(
             "Can't repeat an integer",

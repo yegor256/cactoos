@@ -160,9 +160,10 @@ public final class ResourceOf implements Input {
             input -> {
                 throw new IOException(
                     new FormattedText(
-                        "The resource \"%s\" was not found in %s",
+                        "The resource \"%s\" was not found in %s (%s)",
                         input,
-                        ldr
+                        ldr,
+                        ldr.getClass().getCanonicalName()
                     ).asString()
                 );
             },

@@ -36,7 +36,7 @@ final class SlicedTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    void sliceIterable() throws Exception {
+    void sliceIterable() {
         new Assertion<>(
             "Must get sliced iterable of elements",
             new Sliced<>(

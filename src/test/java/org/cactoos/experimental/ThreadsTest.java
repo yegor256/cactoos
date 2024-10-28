@@ -42,7 +42,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({ "PMD.AvoidDuplicateLiterals", "PMD.CloseResource" })
 final class ThreadsTest {
 
     /**
@@ -55,14 +55,14 @@ final class ThreadsTest {
      *  {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void containsResults() throws Exception {
+    void containsResults() {
         final ExecutorService extor = Executors.newFixedThreadPool(3);
         try {
             new Assertion<>(
                 "Must contain results from callables",
-                new Threads<String>(
+                new Threads<>(
                     extor,
-                    Duration.ofSeconds(1),
+                    Duration.ofSeconds(1L),
                     () -> {
                         this.sleep();
                         return "txt 1";
@@ -92,15 +92,15 @@ final class ThreadsTest {
      *  {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void failsDueToTimeoutWithExternalExecutorService() throws Exception {
+    void failsDueToTimeoutWithExternalExecutorService() {
         final ExecutorService extor = Executors.newFixedThreadPool(2);
         try {
             new Assertion<>(
                 "Must fail due to timeout",
                 () -> new LengthOf(
-                    new Threads<String>(
+                    new Threads<>(
                         extor,
-                        Duration.ofMillis(1),
+                        Duration.ofMillis(1L),
                         () -> {
                             this.sleep();
                             return "txt 1";
@@ -133,9 +133,9 @@ final class ThreadsTest {
             new Assertion<>(
                 "Must rethrow error",
                 () -> new LengthOf(
-                    new Threads<String>(
+                    new Threads<>(
                         extor,
-                        Duration.ofSeconds(1),
+                        Duration.ofSeconds(1L),
                         () -> {
                             this.sleep();
                             return "txt 1";
@@ -162,12 +162,12 @@ final class ThreadsTest {
      *  {@link ExecutorService} was initiated by {@link Threads} itself.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void containsValuesWithInlineExecutorService() throws Exception {
+    void containsValuesWithInlineExecutorService() {
         new Assertion<>(
             "Must contain results from the callables when using inline executor service",
-            new Threads<String>(
+            new Threads<>(
                 3,
-                Duration.ofSeconds(1),
+                Duration.ofSeconds(1L),
                 () -> {
                     this.sleep();
                     return "txt 1";
@@ -190,13 +190,13 @@ final class ThreadsTest {
      *  {@link ExecutorService} was initiated by {@link Threads} itself.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void failsDueToTimeoutWithInlineExecutorService() throws Exception {
+    void failsDueToTimeoutWithInlineExecutorService() {
         new Assertion<>(
             "Must fail due to timeout",
             () -> new LengthOf(
-                new Threads<String>(
+                new Threads<>(
                     2,
-                    Duration.ofMillis(1),
+                    Duration.ofMillis(1L),
                     () -> {
                         this.sleep();
                         return "txt 1";
@@ -220,12 +220,12 @@ final class ThreadsTest {
      *  {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void containsResultsNoTimeout() throws Exception {
+    void containsResultsNoTimeout() {
         final ExecutorService extor = Executors.newFixedThreadPool(3);
         try {
             new Assertion<>(
                 "Must contain results from the callables without using timeout",
-                new Threads<String>(
+                new Threads<>(
                     extor,
                     () -> {
                         this.sleep();
@@ -258,7 +258,7 @@ final class ThreadsTest {
             new Assertion<>(
                 "Must rethrow error",
                 () -> new LengthOf(
-                    new Threads<String>(
+                    new Threads<>(
                         extor,
                         () -> {
                             this.sleep();
@@ -289,7 +289,7 @@ final class ThreadsTest {
     void containsValuesWithInlineExecutorServiceNoTimeout() {
         new Assertion<>(
             "Must contain results from the callables when using inline executor without timeout",
-            new Threads<String>(
+            new Threads<>(
                 3,
                 () -> {
                     this.sleep();

@@ -38,7 +38,7 @@ import org.llorllale.cactoos.matchers.HasString;
 final class HeadOfTest {
 
     @Test
-    void readsHeadOfLongerInput() throws Exception {
+    void readsHeadOfLongerInput() {
         new Assertion<>(
             "must limit exactly the number of read bytes",
             new TextOf(
@@ -52,7 +52,7 @@ final class HeadOfTest {
     }
 
     @Test
-    void readsEmptyHeadOfInput() throws Exception {
+    void readsEmptyHeadOfInput() {
         new Assertion<>(
             "must limit to 0 the number of read bytes",
             new TextOf(
@@ -66,7 +66,7 @@ final class HeadOfTest {
     }
 
     @Test
-    void readsHeadOfShorterInput() throws Exception {
+    void readsHeadOfShorterInput() {
         final String input = "readsHeadOfShorterInput";
         new Assertion<>(
             "must limit to at most the number of available bytes",

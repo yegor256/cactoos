@@ -124,7 +124,7 @@ final class TailOfTest {
     }
 
     @Test
-    void failsIfBufferSizeSmallerThanTailSize() throws Exception {
+    void failsIfBufferSizeSmallerThanTailSize() {
         final int size = 4;
         new Assertion<>(
             "Can't read in smaller buffer",

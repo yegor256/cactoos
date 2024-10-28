@@ -45,7 +45,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class IteratorOfBytesTest {
 
     @Test
-    void canBeConstructedFromString() throws Exception {
+    void canBeConstructedFromString() {
         final Iterator<Byte> itr = new IteratorOfBytes(
             "F"
         );
@@ -62,7 +62,7 @@ final class IteratorOfBytesTest {
     }
 
     @Test
-    void canBeConstructedFromText() throws Exception {
+    void canBeConstructedFromText() {
         final Iterator<Byte> itr = new IteratorOfBytes(
             new TextOf("ABC")
         );

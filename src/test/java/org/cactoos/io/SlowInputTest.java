@@ -40,7 +40,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class SlowInputTest {
 
     @Test
-    void calculatesLength() throws Exception {
+    void calculatesLength() {
         final String text = "What's up, друг?";
         new Assertion<>(
             "Can't calculate the length of Input",
@@ -56,7 +56,7 @@ final class SlowInputTest {
     }
 
     @Test
-    void readsFileContentSlowly() throws Exception {
+    void readsFileContentSlowly() {
         final long size = 100_000L;
         new Assertion<>(
             "Can't calculate length if the input is slow",

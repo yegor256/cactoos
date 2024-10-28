@@ -453,8 +453,8 @@ final class JoinedTest {
             new Joined<>(
                 Integer.valueOf(1),
                 new ListOf<>(
-                    Double.valueOf(2),
-                    Double.valueOf(3)
+                    Double.valueOf(2.0),
+                    Double.valueOf(3.0)
                 )
             ),
             new IsIterableContainingInOrder<>(

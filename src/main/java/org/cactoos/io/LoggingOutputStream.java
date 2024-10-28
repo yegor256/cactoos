@@ -118,7 +118,7 @@ public final class LoggingOutputStream extends OutputStream {
         final Instant start = Instant.now();
         this.origin.write(buf, offset, len);
         final Instant end = Instant.now();
-        this.bytes.getAndAdd(len);
+        this.bytes.getAndAdd((long) len);
         final long millis = Duration.between(start, end).toMillis();
         this.time.getAndAdd(millis);
         final Level level = this.logger.getLevel();

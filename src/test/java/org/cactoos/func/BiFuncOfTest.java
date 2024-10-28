@@ -41,7 +41,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
 final class BiFuncOfTest {
 
     @Test
-    void convertsFuncIntoBiFunc() throws Exception {
+    void convertsFuncIntoBiFunc() {
         new Assertion<>(
             "Must convert function into bi-function",
             new BiFuncOf<>(
@@ -58,7 +58,7 @@ final class BiFuncOfTest {
     }
 
     @Test
-    void convertsProcIntoBiFunc() throws Exception {
+    void convertsProcIntoBiFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();
         final Object result = new Object();
         new Assertion<>(
@@ -90,7 +90,7 @@ final class BiFuncOfTest {
     }
 
     @Test
-    void convertsLambdaIntoBiFunc() throws Exception {
+    void convertsLambdaIntoBiFunc() {
         new Assertion<>(
             "Must convert lambda into bi-function",
             new BiFuncOf<>((first, second) -> new Object[] {first, second}),

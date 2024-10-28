@@ -35,7 +35,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class ConstantTest {
 
     @Test
-    void returnsGivenValue() throws Exception {
+    void returnsGivenValue() {
         final String value = "Hello World";
         new Assertion<>(
             "Must return given value",
@@ -45,7 +45,7 @@ final class ConstantTest {
     }
 
     @Test
-    void alwaysReturnsSameValue() throws Exception {
+    void alwaysReturnsSameValue() {
         final Constant<String> constant = new Constant<>("Good Bye!");
         new Assertion<>(
             "Must return same value",

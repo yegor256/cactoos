@@ -44,7 +44,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class ScalarWithFallbackTest {
 
     @Test
-    void usesMainFunc() throws Exception {
+    void usesMainFunc() {
         final String message = "Main function's result #1";
         new Assertion<>(
             "Must use the main function if no exception",
@@ -62,7 +62,7 @@ final class ScalarWithFallbackTest {
     }
 
     @Test
-    void usesMainFuncFromExceptionAndFallback() throws Exception {
+    void usesMainFuncFromExceptionAndFallback() {
         final String message = "Main function's result #1 (exp & flbck)";
         new Assertion<>(
             "Using the main function if no exception (exp & flbck)",
@@ -78,7 +78,7 @@ final class ScalarWithFallbackTest {
     }
 
     @Test
-    void usesMainFuncFromIterableExceptionAndFallback() throws Exception {
+    void usesMainFuncFromIterableExceptionAndFallback() {
         final String message = "Main function's result #1 (exp iterable & flbck)";
         new Assertion<>(
             "Using the main function if no exception (exp iterable & flbck)",
@@ -94,7 +94,7 @@ final class ScalarWithFallbackTest {
     }
 
     @Test
-    void usesFallback() throws Exception {
+    void usesFallback() {
         final String message = "Fallback from IOException";
         new Assertion<>(
             "Must use a single fallback in case of exception",
@@ -117,7 +117,7 @@ final class ScalarWithFallbackTest {
     }
 
     @Test
-    void usesFallbackFromExceptionAndFallback() throws Exception {
+    void usesFallbackFromExceptionAndFallback() {
         final String message = "Fallback from IOException (exp & flbck)";
         new Assertion<>(
             "Using a single fallback in case of exception (exp & flbck)",
@@ -135,7 +135,7 @@ final class ScalarWithFallbackTest {
     }
 
     @Test
-    void usesFallbackFromIterableExceptionAndFallback() throws Exception {
+    void usesFallbackFromIterableExceptionAndFallback() {
         final String message = "Fallback from IOException (exp iterable & flbck)";
         new Assertion<>(
             "Using a single fallback in case of exception (exp iterable & flbck)",
@@ -153,7 +153,7 @@ final class ScalarWithFallbackTest {
     }
 
     @Test
-    void usesFallbackOfInterruptedException() throws Exception {
+    void usesFallbackOfInterruptedException() {
         final String message = "Fallback from InterruptedException";
         new Assertion<>(
             "Must use a fallback from Interrupted in case of exception",
@@ -175,7 +175,7 @@ final class ScalarWithFallbackTest {
     }
 
     @Test
-    void usesTheClosestFallback() throws Exception {
+    void usesTheClosestFallback() {
         final String expected = "Fallback from IllegalFormatException";
         new Assertion<>(
             "Must find the closest fallback",
