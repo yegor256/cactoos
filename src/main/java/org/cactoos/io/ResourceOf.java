@@ -215,10 +215,25 @@ public final class ResourceOf implements Input {
     @Override
     @SuppressWarnings("PMD.CloseResource")
     public InputStream stream() throws Exception {
+        if (this.path == null) {
+            throw new IllegalArgumentException(
+                "The \"path\" of the resource is NULL, which is not allowed"
+            );
+        }
+        if (this.loader == null) {
+            throw new IllegalArgumentException(
+                "The \"classloader\" is NULL, which is not allowed"
+            );
+        }
         InputStream input = this.loader.getResourceAsStream(
             this.path.asString()
         );
         if (input == null) {
+            if (this.fallback == null) {
+                throw new IllegalArgumentException(
+                    "The \"fallback\" is NULL, which is not allowed"
+                );
+            }
             input = new IoCheckedFunc<>(this.fallback)
                 .apply(this.path)
                 .stream();
