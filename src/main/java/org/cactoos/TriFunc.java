@@ -24,19 +24,13 @@
 package org.cactoos;
 
 /**
- * Function that accepts two arguments.
- *
- * <p>If you don't want to have any checked exceptions being thrown
- * out of your {@link BiFunc}, you can use
- * {@link org.cactoos.func.UncheckedBiFunc} decorator. Also
- * you may try {@link org.cactoos.func.IoCheckedBiFunc}.</p>
- *
- * <p>There is no thread-safety guarantee.
+ * Function that accepts three arguments.
  *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of input
  * @param <W> Type of output
+ * @since 0.0
  */
 @FunctionalInterface
 public interface TriFunc<X, Y, Z, W> {
