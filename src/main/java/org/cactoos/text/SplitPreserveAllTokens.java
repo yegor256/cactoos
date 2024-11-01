@@ -45,6 +45,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param text The text
      * @see String#split(String)
      */
+
     public SplitPreserveAllTokens(final CharSequence text) {
         this(new TextOf(text), new TextOf(" "));
     }
@@ -58,6 +59,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
     public SplitPreserveAllTokens(final Text text) {
         this(text, new TextOf(" "));
     }
+
     /**
      * Ctor.
      *
@@ -65,6 +67,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param lmt The limit
      * @see String#split(String, int)
      */
+
     public SplitPreserveAllTokens(final CharSequence text, final int lmt) {
         this(new TextOf(text), new TextOf(" "), lmt);
     }
@@ -76,9 +79,11 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param lmt The limit
      * @see String#split(String, int)
      */
+
     public SplitPreserveAllTokens(final Text text, final int lmt) {
         this(text, new TextOf(" "), lmt);
     }
+
     /**
      * Ctor.
      *
@@ -86,6 +91,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param rgx The regex
      * @see String#split(String)
      */
+
     public SplitPreserveAllTokens(final CharSequence text, final CharSequence rgx) {
         this(new TextOf(text), new TextOf(rgx));
     }
@@ -98,6 +104,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param lmt The limit
      * @see String#split(String, int)
      */
+
     public SplitPreserveAllTokens(final CharSequence text, final CharSequence rgx, final int lmt) {
         this(new TextOf(text), new TextOf(rgx), lmt);
     }
@@ -108,6 +115,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param rgx The regex
      * @see String#split(String)
      */
+
     public SplitPreserveAllTokens(final CharSequence text, final Text rgx) {
         this(new TextOf(text), rgx);
     }
@@ -119,6 +127,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param lmt The limit
      * @see String#split(String, int)
      */
+
     public SplitPreserveAllTokens(final CharSequence text, final Text rgx, final int lmt) {
         this(new TextOf(text), rgx, lmt);
     }
@@ -129,6 +138,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param rgx The regex
      * @see String#split(String)
      */
+
     public SplitPreserveAllTokens(final Text text, final CharSequence rgx) {
         this(text, new TextOf(rgx));
     }
@@ -140,6 +150,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param lmt The limit
      * @see String#split(String, int)
      */
+
     public SplitPreserveAllTokens(final Text text, final CharSequence rgx, final int lmt) {
         this(text, new TextOf(rgx), lmt);
     }
@@ -150,6 +161,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param rgx The regex
      * @see String#split(String)
      */
+
     public SplitPreserveAllTokens(final Text text, final Text rgx) {
         this(text, rgx, 0);
     }
@@ -161,6 +173,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param lmt The limit
      * @see String#split(String, int)
      */
+
     public SplitPreserveAllTokens(
             final Text text, final Text rgx, final int lmt
     ) {

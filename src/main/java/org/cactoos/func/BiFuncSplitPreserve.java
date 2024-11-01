@@ -31,7 +31,7 @@ import java.util.Collection;
 
 public class BiFuncSplitPreserve implements BiFunc<String, String, Collection<String>> {
     @Override
-    public Collection<String> apply(String str, String regex) throws Exception {
+    public Collection<String> apply(final String str, final String regex) throws Exception {
         ListOf<String> ret = new ListOf<>();
         int start = 0;
         int pos = str.indexOf(regex);
