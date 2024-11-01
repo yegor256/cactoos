@@ -24,16 +24,18 @@
 
 package org.cactoos.func;
 
+import java.util.Collection;
 import org.cactoos.TriFunc;
 import org.cactoos.list.ListOf;
-import java.util.Collection;
 
 /**
  * Used for avoiding static method calls.
+ *
+ * @since 0.0
  */
 public final class TriFuncSplitPreserve
-        implements TriFunc
-    <String, String, Integer, Collection<String>> {
+    implements TriFunc
+        <String, String, Integer, Collection<String>> {
     @Override
     public Collection<String> apply(
         final String str,

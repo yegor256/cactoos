@@ -24,15 +24,21 @@
 
 package org.cactoos.text;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
-import java.util.ArrayList;
-import java.util.Iterator;
 
+/**
+ * Testing correctness of SplitPreserveAllTokens.
+ * Compare with Split class in specified cases.
+ *
+ * @since 0.0
+ */
 final class SplitPreserveTest {
     @Test
     void checkingSplit() {
