@@ -24,26 +24,40 @@
 
 package org.cactoos.func;
 
-import org.cactoos.BiFunc;
+import org.cactoos.TriFunc;
 import org.cactoos.list.ListOf;
-
 import java.util.Collection;
 
-public class BiFuncSplitPreserve implements BiFunc<String, String, Collection<String>> {
+/**
+ * Used for avoiding static method calls.
+ */
+public final class TriFuncSplitPreserve
+        implements TriFunc
+    <String, String, Integer, Collection<String>> {
     @Override
-    public Collection<String> apply(final String str, final String regex) throws Exception {
-        ListOf<String> ret = new ListOf<>();
+    public Collection<String> apply(
+        final String str,
+        final String regex,
+        final Integer lmt
+    ) {
+        final ListOf<String> ret = new ListOf<>();
         int start = 0;
         int pos = str.indexOf(regex);
         while (pos >= start) {
+            if (lmt > 0 && ret.size() == lmt) {
+                break;
+            }
             ret.add(str.substring(start, pos));
             start = pos + regex.length();
             pos = str.indexOf(regex, start);
         }
-        if (start < str.length())
-            ret.add(str.substring(start));
-        else if (start == str.length())
-            ret.add("");
+        if (lmt <= 0 || ret.size() < lmt) {
+            if (start < str.length()) {
+                ret.add(str.substring(start));
+            } else if (start == str.length()) {
+                ret.add("");
+            }
+        }
         return ret;
     }
 }

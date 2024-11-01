@@ -24,7 +24,7 @@
 package org.cactoos.text;
 
 import org.cactoos.Text;
-import org.cactoos.func.BiFuncSplitPreserve;
+import org.cactoos.func.TriFuncSplitPreserve;
 import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
@@ -34,8 +34,6 @@ import org.cactoos.iterator.IteratorOf;
  * Splits the Text into an array, including empty
  * tokens created by adjacent separators.
  *
- * @see String#split(String)
- * @see String#split(String, int)
  * @since 0.9
  */
 public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
@@ -43,9 +41,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * Ctor.
      *
      * @param text The text
-     * @see String#split(String)
      */
-
     public SplitPreserveAllTokens(final CharSequence text) {
         this(new TextOf(text), new TextOf(" "));
     }
@@ -54,7 +50,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * Ctor.
      *
      * @param text The text
-     * @see String#split(String)
      */
     public SplitPreserveAllTokens(final Text text) {
         this(text, new TextOf(" "));
@@ -65,9 +60,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      *
      * @param text The text
      * @param lmt The limit
-     * @see String#split(String, int)
      */
-
     public SplitPreserveAllTokens(final CharSequence text, final int lmt) {
         this(new TextOf(text), new TextOf(" "), lmt);
     }
@@ -77,9 +70,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      *
      * @param text The text
      * @param lmt The limit
-     * @see String#split(String, int)
      */
-
     public SplitPreserveAllTokens(final Text text, final int lmt) {
         this(text, new TextOf(" "), lmt);
     }
@@ -89,9 +80,7 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      *
      * @param text The text
      * @param rgx The regex
-     * @see String#split(String)
      */
-
     public SplitPreserveAllTokens(final CharSequence text, final CharSequence rgx) {
         this(new TextOf(text), new TextOf(rgx));
     }
@@ -102,93 +91,89 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit
-     * @see String#split(String, int)
      */
-
     public SplitPreserveAllTokens(final CharSequence text, final CharSequence rgx, final int lmt) {
         this(new TextOf(text), new TextOf(rgx), lmt);
     }
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
-     * @see String#split(String)
      */
-
     public SplitPreserveAllTokens(final CharSequence text, final Text rgx) {
         this(new TextOf(text), rgx);
     }
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit
-     * @see String#split(String, int)
      */
-
     public SplitPreserveAllTokens(final CharSequence text, final Text rgx, final int lmt) {
         this(new TextOf(text), rgx, lmt);
     }
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
-     * @see String#split(String)
      */
-
     public SplitPreserveAllTokens(final Text text, final CharSequence rgx) {
         this(text, new TextOf(rgx));
     }
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit
-     * @see String#split(String, int)
      */
-
     public SplitPreserveAllTokens(final Text text, final CharSequence rgx, final int lmt) {
         this(text, new TextOf(rgx), lmt);
     }
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
-     * @see String#split(String)
      */
-
     public SplitPreserveAllTokens(final Text text, final Text rgx) {
         this(text, rgx, 0);
     }
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit
-     * @see String#split(String, int)
      */
-
     public SplitPreserveAllTokens(
-            final Text text, final Text rgx, final int lmt
+        final Text text,
+        final Text rgx,
+        final int lmt
     ) {
         super(
-                new Mapped<>(
-                        TextOf::new,
-                        new IterableOf<>(
-                                () -> new IteratorOf<>(
-                                        new BiFuncSplitPreserve()
-                                                .apply(text.toString(),
-                                                        rgx.toString())
-                                                .toArray(new String[0]))
-                        )
+            new Mapped<>(
+                TextOf::new,
+                new IterableOf<>(
+                    () -> new IteratorOf<>(
+                        new TriFuncSplitPreserve()
+                            .apply(
+                                text.toString(),
+                                rgx.toString(),
+                                lmt
+                            ).toArray(new String[0])
+                    )
                 )
+            )
         );
     }
-
 }
