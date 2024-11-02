@@ -27,9 +27,14 @@ package org.cactoos.func;
 import java.util.Collection;
 import org.cactoos.TriFunc;
 import org.cactoos.list.ListOf;
+import org.cactoos.text.Split;
 
 /**
- * Used for avoiding static method calls.
+ * Splits the given string by given regex.
+ * Used for avoiding static methods.
+ * Differs from {@link Split} by saving
+ * empty tokens between adjacent regex
+ * separators.
  *
  * @since 0.0
  */
