@@ -36,6 +36,12 @@ import org.cactoos.text.Split;
  * empty tokens between adjacent regex
  * separators.
  *
+ * <p> Examples:
+ * 1) text - " hello there " regex - " "
+ * Result: ["", "hello", "there", ""]
+ * 2) text - "aaa" regex - "a"
+ * Result: ["", "", "", ""]
+ *
  * @since 0.0
  */
 public final class TriFuncSplitPreserve
@@ -50,19 +56,23 @@ public final class TriFuncSplitPreserve
         final ListOf<String> ret = new ListOf<>();
         int start = 0;
         int pos = str.indexOf(regex);
-        while (pos >= start) {
-            if (lmt > 0 && ret.size() == lmt) {
-                break;
+        if (regex.isEmpty()) {
+            ret.add("");
+        } else {
+            while (pos >= start) {
+                if (lmt > 0 && ret.size() == lmt) {
+                    break;
+                }
+                ret.add(str.substring(start, pos));
+                start = pos + regex.length();
+                pos = str.indexOf(regex, start);
             }
-            ret.add(str.substring(start, pos));
-            start = pos + regex.length();
-            pos = str.indexOf(regex, start);
-        }
-        if (lmt <= 0 || ret.size() < lmt) {
-            if (start < str.length()) {
-                ret.add(str.substring(start));
-            } else if (start == str.length()) {
-                ret.add("");
+            if (lmt <= 0 || ret.size() < lmt) {
+                if (start < str.length()) {
+                    ret.add(str.substring(start));
+                } else if (start == str.length()) {
+                    ret.add("");
+                }
             }
         }
         return ret;
