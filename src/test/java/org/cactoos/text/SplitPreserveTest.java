@@ -42,7 +42,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class SplitPreserveTest {
     @Test
     void checkingSplit() {
-        String txt = "   ";
+        String txt = "aaa";
         final String msg = "Adjacent separators must create an empty element";
         ArrayList<Text> array = new ArrayList<>(4);
         array.add(new TextOf(""));
@@ -54,7 +54,7 @@ final class SplitPreserveTest {
             this.getLength(
                 new Split(
                     new TextOf(txt),
-                    new TextOf(" ")
+                    new TextOf("a")
                 ).iterator()
             ),
             IsNot.not(
@@ -103,7 +103,7 @@ final class SplitPreserveTest {
 
     @Test
     void checkingSplitPreserveTokens() {
-        String txt = "   ";
+        String txt = "aaa";
         final String msg = "Adjacent separators must create an empty element";
         ArrayList<Text> array = new ArrayList<>(4);
         array.add(new TextOf(""));
@@ -115,7 +115,7 @@ final class SplitPreserveTest {
             this.getLength(
                 new SplitPreserveAllTokens(
                     new TextOf(txt),
-                    new TextOf(" ")
+                    new TextOf("a")
                 ).iterator()
             ),
             Matchers.equalTo(
