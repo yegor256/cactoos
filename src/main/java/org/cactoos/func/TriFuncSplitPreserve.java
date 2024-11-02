@@ -35,7 +35,7 @@ import org.cactoos.list.ListOf;
  *
  * <p>
  *     Examples:
- *     1) text - " hello there", regex - " "
+ *     1) text - " hello there ", regex - " "
  *     result: ["", "hello", "there", ""]
  *     2) text - "aaa", regex - "a"
  *     result: ["", "", "", ""]
