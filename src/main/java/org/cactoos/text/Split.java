@@ -115,7 +115,7 @@ public final class Split extends IterableEnvelope<Text> {
     /**
      * Ctor.
      * @param text The text
-     * @param rgx The regex
+   * @param rgx The regex
      * @param lmt The limit
      * @see String#split(String, int)
      */
