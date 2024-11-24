@@ -264,9 +264,11 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a {@link Reader} with a specified maximum buffer size.
+     * Constructs a {@link BytesOf} instance from a {@link Reader} with a specified maximum
+     * buffer size.
      *
-     * <p>This constructor reads bytes from a {@link Reader}, such as a {@link java.io.StringReader},
+     * <p>This constructor reads bytes from a {@link Reader}, such as a
+     * {@link java.io.StringReader},
      * but limits the reading to the specified buffer size.</p>
      *
      * <p>Example usage:</p>
@@ -323,7 +325,8 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a {@link CharSequence} with a specified {@link Charset}.
+     * Constructs a {@link BytesOf} instance from a {@link CharSequence} with a
+     * specified {@link Charset}.
      *
      * <p>This constructor converts a {@link CharSequence} (e.g., {@link String}) into bytes using
      * the provided character encoding.</p>
@@ -342,7 +345,8 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a {@link CharSequence} with a specified {@link CharSequence} charset.
+     * Constructs a {@link BytesOf} instance from a {@link CharSequence} with
+     * a specified {@link CharSequence} charset.
      *
      * <p>This constructor converts a {@link CharSequence} (e.g., {@link String}) into bytes using
      * the charset represented as a {@link CharSequence}.</p>
@@ -363,7 +367,8 @@ public final class BytesOf implements Bytes {
     /**
      * Constructs a {@link BytesOf} instance from a sequence of characters.
      *
-     * <p>This constructor converts a sequence of characters into bytes using the default UTF-8 encoding.</p>
+     * <p>This constructor converts a sequence of characters into bytes using
+     * the default UTF-8 encoding.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -377,13 +382,16 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a sequence of characters and a specified {@link Charset}.
+     * Constructs a {@link BytesOf} instance from a sequence of characters
+     * and a specified {@link Charset}.
      *
-     * <p>This constructor converts a sequence of characters into bytes using the provided character encoding.</p>
+     * <p>This constructor converts a sequence of characters into bytes using
+     * the provided character encoding.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
-     * byte[] bytes = new BytesOf(new char[]{'H', 'e', 'l', 'l', 'o'}, StandardCharsets.UTF_16).asBytes();
+     * byte[] bytes = new BytesOf(new char[]{'H', 'e', 'l', 'l', 'o'},
+     * StandardCharsets.UTF_16).asBytes();
      * }</pre>
      *
      * @param chars The sequence of characters to be converted into bytes.
@@ -394,9 +402,11 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a sequence of characters and a specified charset represented as a {@link CharSequence}.
+     * Constructs a {@link BytesOf} instance from a sequence of characters and
+     * a specified charset represented as a {@link CharSequence}.
      *
-     * <p>This constructor converts a sequence of characters into bytes using the charset provided as a {@link CharSequence}.</p>
+     * <p>This constructor converts a sequence of characters into bytes using the charset
+     * provided as a {@link CharSequence}.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -446,9 +456,11 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a {@link Text} object and a charset represented as a {@link CharSequence}.
+     * Constructs a {@link BytesOf} instance from a {@link Text} object and
+     * a charset represented as a {@link CharSequence}.
      *
-     * <p>This constructor converts the text into bytes using the charset provided as a {@link CharSequence}.</p>
+     * <p>This constructor converts the text into bytes using the charset provided as
+     * a {@link CharSequence}.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -465,7 +477,8 @@ public final class BytesOf implements Bytes {
     /**
      * Constructs a {@link BytesOf} instance from a {@link Throwable} (exception or error).
      *
-     * <p>This constructor serializes the stack trace of the exception using the default UTF-8 encoding.</p>
+     * <p>This constructor serializes the stack trace of the exception using
+     * the default UTF-8 encoding.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -484,9 +497,11 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a {@link Throwable} (exception or error) and a specified {@link Charset}.
+     * Constructs a {@link BytesOf} instance from a {@link Throwable} (exception or error) and
+     * a specified {@link Charset}.
      *
-     * <p>This constructor serializes the stack trace of the exception using the provided character encoding.</p>
+     * <p>This constructor serializes the stack trace of the exception using
+     * the provided character encoding.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -506,9 +521,11 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a {@link Throwable} (exception or error) and a charset represented as a {@link CharSequence}.
+     * Constructs a {@link BytesOf} instance from a {@link Throwable} (exception or error) and
+     * a charset represented as a {@link CharSequence}.
      *
-     * <p>This constructor serializes the stack trace of the exception using the charset provided as a {@link CharSequence}.</p>
+     * <p>This constructor serializes the stack trace of the exception using the charset
+     * provided as a {@link CharSequence}.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -543,7 +560,8 @@ public final class BytesOf implements Bytes {
     /**
      * Constructs a {@link BytesOf} instance from a series of {@link StackTraceElement}.
      *
-     * <p>This constructor serializes the stack trace elements into bytes using the default UTF-8 encoding.</p>
+     * <p>This constructor serializes the stack trace elements into bytes using
+     * the default UTF-8 encoding.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -560,9 +578,11 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a stack trace represented as an array of {@link StackTraceElement}.
+     * Constructs a {@link BytesOf} instance from a stack trace represented
+     * as an array of {@link StackTraceElement}.
      *
-     * <p>This constructor serializes the stack trace elements into bytes using the provided {@link Charset}.</p>
+     * <p>This constructor serializes the stack trace elements into bytes using
+     * the provided {@link Charset}.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -580,9 +600,11 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a stack trace represented as an array of {@link StackTraceElement}.
+     * Constructs a {@link BytesOf} instance from a stack trace represented as
+     * an array of {@link StackTraceElement}.
      *
-     * <p>This constructor serializes the stack trace elements into bytes using the provided charset represented as a {@link CharSequence}.</p>
+     * <p>This constructor serializes the stack trace elements into bytes using
+     * the provided charset represented as a {@link CharSequence}.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -637,7 +659,8 @@ public final class BytesOf implements Bytes {
     /**
      * Constructs a {@link BytesOf} instance from an {@link Iterator} of bytes.
      *
-     * <p>This constructor collects the bytes from the iterator and encapsulates them as an array.</p>
+     * <p>This constructor collects the bytes from the iterator and encapsulates
+     * them as an array.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -655,7 +678,8 @@ public final class BytesOf implements Bytes {
     /**
      * Constructs a {@link BytesOf} instance from an {@link Iterable} of bytes.
      *
-     * <p>This constructor collects the bytes from the iterable and encapsulates them as an array.</p>
+     * <p>This constructor collects the bytes from the iterable and encapsulates
+     * them as an array.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -680,7 +704,8 @@ public final class BytesOf implements Bytes {
     /**
      * Constructs a {@link BytesOf} instance from a {@link Collection} of bytes.
      *
-     * <p>This constructor collects the bytes from the collection and encapsulates them as an array.</p>
+     * <p>This constructor collects the bytes from the collection and encapsulates
+     * them as an array.</p>
      *
      * <p>Example usage:</p>
      * <pre>{@code
@@ -719,21 +744,6 @@ public final class BytesOf implements Bytes {
         this.origin = bytes;
     }
 
-    /**
-     * Retrieves the encapsulated bytes as an array.
-     *
-     * <p>This method provides a way to access the raw byte data stored in this instance.</p>
-     *
-     * <p>Example usage:</p>
-     * <pre>{@code
-     * BytesOf bytesOf = new BytesOf(new InputOf("example"));
-     * byte[] data = bytesOf.asBytes();
-     * System.out.println(new String(data, StandardCharsets.UTF_8));
-     * }</pre>
-     *
-     * @return The byte array encapsulated by this instance.
-     * @throws Exception If an error occurs during the retrieval of bytes.
-     */
     @Override
     public byte[] asBytes() throws Exception {
         return this.origin.asBytes();
