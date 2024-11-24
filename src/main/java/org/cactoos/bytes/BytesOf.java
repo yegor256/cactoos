@@ -438,7 +438,8 @@ public final class BytesOf implements Bytes {
     }
 
     /**
-     * Constructs a {@link BytesOf} instance from a {@link Text} object and a specified {@link Charset}.
+     * Constructs a {@link BytesOf} instance from a {@link Text} object and
+     * a specified {@link Charset}.
      *
      * <p>This constructor converts the text into bytes using the provided character encoding.</p>
      *
@@ -474,6 +475,7 @@ public final class BytesOf implements Bytes {
     public BytesOf(final Text text, final CharSequence charset) {
         this(() -> text.asString().getBytes(charset.toString()));
     }
+
     /**
      * Constructs a {@link BytesOf} instance from a {@link Throwable} (exception or error).
      *
