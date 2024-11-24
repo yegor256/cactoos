@@ -81,7 +81,7 @@ final class SubTest {
         new Assertion<>(
             "Can't cut text with negative start and positive end",
             new Sub("hello world", -5, 8),
-            new HasString("wor")
+            new HasString("wo")
         ).affirm();
     }
 
