@@ -185,7 +185,8 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      */
     private static <X, Y> Map<X, Y> make(
         final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
-        final Map<X, Y> map = new HashMap<>(0);
+        int initialCapacity = (entries instanceof Collection) ? ((Collection<?>) entries).size() : 16;
+        final Map<X, Y> map = new HashMap<>(initialCapacity);
         for (final Map.Entry<? extends X, ? extends Y> entry : entries) {
             map.put(entry.getKey(), entry.getValue());
         }
