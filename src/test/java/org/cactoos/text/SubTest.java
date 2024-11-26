@@ -67,4 +67,31 @@ final class SubTest {
         ).affirm();
     }
 
+    @Test
+    void cutTextWithNegativeStart() {
+        new Assertion<>(
+            "Can't cut text with negative start",
+            new Sub("hello world", -5),
+            new HasString("world")
+        ).affirm();
+    }
+
+    @Test
+    void cutTextWithNegativeStartAndEnd() {
+        new Assertion<>(
+            "Can't cut text with negative start and positive end",
+            new Sub("hello world", -5, 8),
+            new HasString("wo")
+        ).affirm();
+    }
+
+    @Test
+    void cutTextWithNegativeStartAndNegativeEnd() {
+        new Assertion<>(
+            "Can't cut text with negative start and negative end",
+            new Sub("hello world", -5, -2),
+            new HasString("wor")
+        ).affirm();
+    }
+
 }
