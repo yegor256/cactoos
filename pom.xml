@@ -132,6 +132,30 @@ SOFTWARE.
   <build>
     <plugins>
       <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.17.4</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>mutationCoverage</goal>
+            </goals>
+            <configuration>
+              <threads>8</threads>
+              <mutationThreshold>75</mutationThreshold>
+              <timeoutConstant>500</timeoutConstant>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>1.2.1</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-verifier-plugin</artifactId>
         <version>1.1</version>
