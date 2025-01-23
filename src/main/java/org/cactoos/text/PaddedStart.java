@@ -57,4 +57,3 @@ public final class PaddedStart extends TextEnvelope {
         );
     }
 }
-
