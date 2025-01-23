@@ -427,7 +427,7 @@ final class NoNullsTest {
     @Test
     void removeThrowsErrorIfValueIsNull() {
         new Assertion<>(
-            "Should throws an error if removed value is null",
+            "Should throw an error if removed value is null",
             () -> new NoNulls<>(
                 new HashMap<Integer, Integer>() {
                     {
