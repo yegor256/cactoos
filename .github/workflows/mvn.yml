@@ -21,7 +21,7 @@
 # SOFTWARE.
 ---
 name: mvn
-on:
+'on':
   push:
     branches:
       - master
@@ -33,8 +33,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-24.04, windows-2022, macos-15]
-        java: [11, 17]
+        os: [ ubuntu-24.04, windows-2022, macos-15 ]
+        java: [ 11, 21 ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -44,6 +44,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/.m2/repository
+          # yamllint disable-line rule:line-length
           key: ${{ runner.os }}-jdk-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-jdk-${{ matrix.java }}-maven-

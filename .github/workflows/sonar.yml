@@ -37,7 +37,9 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/.m2/repository
+          # yamllint disable-line rule:line-length
           key: ${{ runner.os }}-jdk-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-jdk-${{ matrix.java }}-maven-
+      # yamllint disable-line rule:line-length
       - run: mvn --errors --batch-mode clean package -Psonar -Dsonar.login=${{ secrets.SONAR_LOGIN }}
