@@ -85,7 +85,7 @@ final class Sha256DigestOfTest {
                 )
             ),
             new HasString(
-                "c94451bd1476a3728669de11e22c645906d806e63a95c5797de1f3e84f126a3e"
+                "6b9da8f528f2c6523f292c2aa37be6befdd560ff917ed60836d63778ec04b46b"
             )
         ).affirm();
     }

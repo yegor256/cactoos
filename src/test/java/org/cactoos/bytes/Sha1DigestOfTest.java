@@ -85,7 +85,7 @@ final class Sha1DigestOfTest {
                 )
             ),
             new HasString(
-                "34f80bdab9b93af514004f127e440139aad63e2d"
+                "1ef83a80a51e14e72c4face0c928951d88b96acc"
             )
         ).affirm();
     }

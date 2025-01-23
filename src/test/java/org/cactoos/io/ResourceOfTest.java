@@ -122,7 +122,7 @@ final class ResourceOfTest {
                     new TextOf("org/cactoos/small-text.txt")
                 )
             ),
-            new EndsWith("ex ea commodo")
+            new EndsWith("ex ea commodo\n")
         ).affirm();
     }
 
