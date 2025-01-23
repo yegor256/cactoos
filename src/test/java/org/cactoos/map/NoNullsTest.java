@@ -395,4 +395,50 @@ final class NoNullsTest {
             )
         ).affirm();
     }
+
+    @Test
+    void putThrowsErrorIfKeyIsNull() {
+        new Assertion<>(
+            "Should throw an error if key is null",
+            () -> new NoNulls<Integer, Integer>(
+                new HashMap<>()
+            ).put(null, 1),
+            new Throws<>(
+                "Key at #put(K,1) is NULL",
+                IllegalStateException.class
+            )
+        ).affirm();
+    }
+
+    @Test
+    void removeThrowsErrorIfKeyIsNull() {
+        new Assertion<>(
+            "Should throw an error if key is null",
+            () -> new NoNulls<Integer, Integer>(
+                new HashMap<>()
+            ).remove(null),
+            new Throws<>(
+                "Key at #remove(K) is NULL",
+                IllegalStateException.class
+            )
+        ).affirm();
+    }
+
+    @Test
+    void removeThrowsErrorIfValueIsNull() {
+        new Assertion<>(
+            "Should throws an error if removed value is null",
+            () -> new NoNulls<>(
+                new HashMap<Integer, Integer>() {
+                    {
+                        put(1, null);
+                    }
+                }
+            ).remove(1),
+            new Throws<>(
+                "Value returned by #remove(1) is NULL",
+                IllegalStateException.class
+            )
+        ).affirm();
+    }
 }
