@@ -107,6 +107,13 @@ SOFTWARE.
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>files</groupId>
+      <artifactId>test-data</artifactId>
+      <version>0.0.1</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/src/test/resources/test-data-0.0.1.jar</systemPath>
+    </dependency>
+    <dependency>
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>annotations</artifactId>
       <version>3.0.1u2</version>
@@ -130,6 +137,15 @@ SOFTWARE.
     </dependency>
   </dependencies>
   <build>
+    <testResources>
+      <testResource>
+        <directory>${basedir}/src/test/resources</directory>
+        <filtering>true</filtering>
+        <excludes>
+          <exclude>test-data-0.0.1.jar</exclude>
+        </excludes>
+      </testResource>
+    </testResources>
     <plugins>
       <plugin>
         <groupId>org.pitest</groupId>

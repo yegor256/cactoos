@@ -25,6 +25,15 @@ package org.cactoos.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 import org.cactoos.Func;
 import org.cactoos.Input;
 import org.cactoos.Text;
@@ -225,10 +234,18 @@ public final class ResourceOf implements Input {
                 "The \"classloader\" is NULL, which is not allowed"
             );
         }
-        InputStream input = this.loader.getResourceAsStream(
-            this.path.asString()
-        );
-        if (input == null) {
+        final InputStream input;
+        final String pth = this.path.asString();
+        final URL resource = this.loader.getResource(pth);
+        if (pth.endsWith("/")
+            && resource != null
+            && "jar".equals(resource.getProtocol())
+        ) {
+            input = new JarDirectoryFileNameStream(resource, pth)
+                .files();
+        } else if (resource != null) {
+            input = resource.openStream();
+        } else {
             if (this.fallback == null) {
                 throw new IllegalArgumentException(
                     "The \"fallback\" is NULL, which is not allowed"
@@ -239,5 +256,77 @@ public final class ResourceOf implements Input {
                 .stream();
         }
         return input;
+    }
+
+    /**
+     * Class for creating a stream of file names from a directory to a jar.
+     *
+     * @since 0.56.2
+     */
+    private static final class JarDirectoryFileNameStream {
+
+        /**
+         * URL of the jar file.
+         */
+        private final URL url;
+
+        /**
+         * Path to the directory in the jar file.
+         */
+        private final String path;
+
+        /**
+         * Ctor.
+         *
+         * @param jarurl URL of the jar file.
+         * @param pth The directory for which we want to get a list of files.
+         */
+        JarDirectoryFileNameStream(final URL jarurl, final String pth) {
+            this.url = jarurl;
+            this.path = pth;
+        }
+
+        /**
+         * Create InputStream of file names from directory to jar.
+         *
+         * @return Stream with file names.
+         * @throws Exception If something goes wrong
+         */
+        public InputStream files() throws Exception {
+            final List<String> names = new ArrayList<>(2);
+            try (JarFile jar = new JarFile(this.extract())) {
+                final Enumeration<JarEntry> entries = jar.entries();
+                while (entries.hasMoreElements()) {
+                    final JarEntry entry = entries.nextElement();
+                    final String name = entry.getName();
+                    if (this.path.equals(name)) {
+                        continue;
+                    } else if (name.lastIndexOf(this.path) >= 0) {
+                        names.add(name.substring(this.path.length()));
+                    }
+                }
+            }
+            return
+                new InputStreamOf(
+                    names
+                        .stream()
+                        .collect(
+                            Collectors.joining("\n")
+                        )
+                        .getBytes(StandardCharsets.UTF_8)
+                );
+        }
+
+        /**
+         * Extracts the path to a jar file from a URL.
+         *
+         * @return Path to jar file.
+         * @throws URISyntaxException If this URL cannot be converted to a URI.
+         */
+        private String extract() throws URISyntaxException {
+            final String fullpath = this.url.toURI().getSchemeSpecificPart();
+            final int idx = fullpath.indexOf("!/");
+            return fullpath.substring("file:".length(), idx);
+        }
     }
 }
