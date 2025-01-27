@@ -26,8 +26,10 @@ package org.cactoos.list;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -139,6 +141,89 @@ final class NoNullsTest {
                 "Previous item is NULL",
                 IllegalStateException.class
             )
+        ).affirm();
+    }
+
+    @Test
+    void indexOfThrowsErrorIfArgumentIsNull() {
+        new Assertion<>(
+            "must throw error if searched value is null",
+            () -> new NoNulls<>(
+                new ListOf<>(1, 2, 3)
+            ).indexOf(null),
+            new Throws<>(
+                "Item can't be NULL in #indexOf(T)",
+                IllegalArgumentException.class
+            )
+        ).affirm();
+    }
+
+    @Test
+    void indexOfTest() {
+        new Assertion<>(
+            "must return first index",
+            new NoNulls<>(
+                new ListOf<>(1, 2, 2, 2, 5)
+            ).indexOf(2),
+            new IsEqual<>(1)
+        ).affirm();
+    }
+
+    @Test
+    void lastIndexOfThrowsErrorIfArgumentIsNull() {
+        new Assertion<>(
+            "must throw error if searched value is null",
+            () -> new NoNulls<>(
+                new ListOf<>(1, 2, 3)
+            ).lastIndexOf(null),
+            new Throws<>(
+                "Item can't be NULL in #lastIndexOf(T)",
+                IllegalArgumentException.class
+            )
+        ).affirm();
+    }
+
+    @Test
+    void lastIndexOfTest() {
+        new Assertion<>(
+            "must return last index",
+            new NoNulls<>(
+                new ListOf<>(1, 2, 2, 2, 5)
+            ).lastIndexOf(2),
+            new IsEqual<>(3)
+        ).affirm();
+    }
+
+    @Test
+    void sizeTest() {
+        new Assertion<>(
+            "must return list size",
+            new NoNulls<>(
+                new ListOf<>(1, 2, 2, 2, 5)
+            ).size(),
+            new IsEqual<>(5)
+        ).affirm();
+    }
+
+    @Test
+    void isEmptyTrueTest() {
+        new Assertion<>(
+            "must return true if list is empty",
+            new NoNulls<>(
+                new ListOf<>()
+            ).isEmpty(),
+            new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    void isEmptyFalseTest() {
+        new Assertion<>(
+            "must return false if list is not empty",
+            new NoNulls<>(
+                new ListOf<>(1, 2, 3)
+            ).isEmpty(),
+            new IsEqual<>(false)
         ).affirm();
     }
 }
