@@ -81,6 +81,9 @@ SOFTWARE.
       <url>https://github.com/yegor256/cactoos</url>
     </site>
   </distributionManagement>
+  <properties>
+    <additionalClasspathElements>${project.build.directory}/${project.artifactId}-test-lib-${project.version}.jar</additionalClasspathElements>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.takes</groupId>
@@ -107,13 +110,6 @@ SOFTWARE.
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>files</groupId>
-      <artifactId>test-data</artifactId>
-      <version>0.0.1</version>
-      <scope>system</scope>
-      <systemPath>${basedir}/src/test/resources/test-data-0.0.1.jar</systemPath>
-    </dependency>
-    <dependency>
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>annotations</artifactId>
       <version>3.0.1u2</version>
@@ -137,12 +133,21 @@ SOFTWARE.
     </dependency>
   </dependencies>
   <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/test/resources</directory>
+        <filtering>true</filtering>
+        <excludes>
+          <exclude>test-lib/**</exclude>
+        </excludes>
+      </resource>
+    </resources>
     <testResources>
       <testResource>
         <directory>${basedir}/src/test/resources</directory>
         <filtering>true</filtering>
         <excludes>
-          <exclude>test-data-0.0.1.jar</exclude>
+          <exclude>test-lib/**</exclude>
         </excludes>
       </testResource>
     </testResources>
@@ -160,6 +165,8 @@ SOFTWARE.
               <threads>8</threads>
               <mutationThreshold>75</mutationThreshold>
               <timeoutConstant>500</timeoutConstant>
+              <additionalClasspathElements>${additionalClasspathElements}</additionalClasspathElements>
+              <useClasspathJar>true</useClasspathJar>
             </configuration>
           </execution>
         </executions>
@@ -184,6 +191,59 @@ SOFTWARE.
             </goals>
             <configuration>
               <verificationFile>src/verifier/verifications.xml</verificationFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <additionalClasspathDependencies>
+            <additionalClasspathDependency>
+              <groupId>org.cactoos</groupId>
+              <artifactId>${project.artifactId}-test-lib</artifactId>
+              <version>${project.version}</version>
+            </additionalClasspathDependency>
+          </additionalClasspathDependencies>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make-test-lib</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>${project.artifactId}-test-lib-${project.version}</finalName>
+              <descriptors>
+                <descriptor>${basedir}/src/test/resources/test-lib/assembly.xml</descriptor>
+              </descriptors>
+              <appendAssemblyId>false</appendAssemblyId>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make-test-lib</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <configuration>
+              <file>${additionalClasspathElements}</file>
+              <groupId>org.cactoos</groupId>
+              <artifactId>${project.artifactId}-test-lib</artifactId>
+              <version>${project.version}</version>
+              <packaging>jar</packaging>
             </configuration>
           </execution>
         </executions>
