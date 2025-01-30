@@ -28,9 +28,6 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
@@ -293,28 +290,20 @@ public final class ResourceOf implements Input {
          * @throws Exception If something goes wrong
          */
         public InputStream files() throws Exception {
-            final List<String> names = new ArrayList<>(2);
             try (JarFile jar = new JarFile(this.extract())) {
-                final Enumeration<JarEntry> entries = jar.entries();
-                while (entries.hasMoreElements()) {
-                    final JarEntry entry = entries.nextElement();
-                    final String name = entry.getName();
-                    if (this.path.equals(name)) {
-                        continue;
-                    } else if (name.lastIndexOf(this.path) >= 0) {
-                        names.add(name.substring(this.path.length()));
-                    }
-                }
-            }
-            return
-                new InputStreamOf(
-                    names
+                return new InputStreamOf(
+                    jar
                         .stream()
-                        .collect(
-                            Collectors.joining("\n")
+                        .map(JarEntry::getName)
+                        .filter(
+                            name -> !this.path.equals(name)
+                                && name.lastIndexOf(this.path) >= 0
                         )
+                        .map(name -> name.substring(this.path.length()))
+                        .collect(Collectors.joining("\n"))
                         .getBytes(StandardCharsets.UTF_8)
-                );
+                    );
+            }
         }
 
         /**

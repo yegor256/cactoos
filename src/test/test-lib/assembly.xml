@@ -30,7 +30,7 @@ SOFTWARE.
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/src/test/resources/test-lib</directory>
+      <directory>${project.basedir}/${testLibPath}</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>org/cactoos/io/small-text-file.txt</include>
