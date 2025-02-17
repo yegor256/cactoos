@@ -123,4 +123,48 @@ final class JoinedListIteratorTest {
             new IsEqual<>(new IterableOf<>(1, 2, 3, 0))
         ).affirm();
     }
+
+    @Test
+    void nextIndexTest() {
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            new ListOf<>(1).listIterator(),
+            new ListOf<>(2).listIterator(),
+            new ListOf<>(3).listIterator()
+        );
+        new Assertion<>(
+            "Must return index of the next element",
+            joined.nextIndex(),
+            new IsEqual<>(0)
+        ).affirm();
+        joined.next();
+        new Assertion<>(
+            "Must return index of the next element",
+            joined.nextIndex(),
+            new IsEqual<>(1)
+        ).affirm();
+    }
+
+    @Test
+    void previousIndexDoesntExistTest() {
+        new Assertion<>(
+            "Must return -1 if there is no previous item",
+            new JoinedListIterator<>(
+                new ListOf<>(1).listIterator(),
+                new ListOf<>(2).listIterator(),
+                new ListOf<>(3).listIterator()
+            ).previousIndex(),
+            new IsEqual<>(-1)
+        ).affirm();
+    }
+
+    @Test
+    void nextThrowsIfThereIsNoNext() {
+        new Assertion<>(
+            "Must throw error if there is no next element",
+            () -> new JoinedListIterator<>().next(),
+            new Throws<>(
+                NoSuchElementException.class
+            )
+        ).affirm();
+    }
 }
