@@ -167,4 +167,25 @@ final class JoinedListIteratorTest {
             )
         ).affirm();
     }
+
+    @Test
+    void previousIndexTest() {
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            new ListOf<>(1).listIterator(),
+            new ListOf<>(2).listIterator(),
+            new ListOf<>(3).listIterator()
+        );
+        joined.next();
+        new Assertion<>(
+            "Must return index of the previous element",
+            joined.previousIndex(),
+            new IsEqual<>(0)
+        ).affirm();
+        joined.next();
+        new Assertion<>(
+            "Must return index of the previous element",
+            joined.previousIndex(),
+            new IsEqual<>(1)
+        ).affirm();
+    }
 }
