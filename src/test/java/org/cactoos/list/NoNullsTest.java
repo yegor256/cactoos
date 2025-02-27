@@ -207,4 +207,69 @@ final class NoNullsTest {
             new IsEqual<>(false)
         ).affirm();
     }
+
+    @Test
+    void clearTest() {
+        final List<Integer> list = new NoNulls<>(
+                new ListOf<>(1, 2, 3)
+        );
+        list.clear();
+        new Assertion<>(
+                "must be empty",
+                list.isEmpty(),
+                new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    void containsTrueTest() {
+        new Assertion<>(
+                "must return true if elements is in list",
+                new NoNulls<>(
+                        new ListOf<>(1, 2, 3)
+                ).contains(2),
+                new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    void containsFalseTest() {
+        new Assertion<>(
+                "must return false if elements is not in list",
+                new NoNulls<>(
+                        new ListOf<>(1, 2, 3)
+                ).contains(4),
+                new IsEqual<>(false)
+        ).affirm();
+    }
+
+    @Test
+    void setValidInputTest() {
+        final List<Integer> list = new NoNulls<>(
+                new ListOf<>(1, 2, 3)
+        );
+        list.set(1, 5);
+        new Assertion<>(
+                "must update the list",
+                list.toArray(),
+                new IsEqual<>(
+                        new Integer[]{1, 5, 3}
+                )
+        ).affirm();
+    }
+
+    @Test
+    void addValidInputTest() {
+        final List<Integer> list = new NoNulls<>(
+                new ListOf<>(1, 2, 3)
+        );
+        list.add(1, 5);
+        new Assertion<>(
+                "must update the list",
+                list.toArray(),
+                new IsEqual<>(
+                        new Integer[]{1, 5, 2, 3}
+                )
+        ).affirm();
+    }
 }
