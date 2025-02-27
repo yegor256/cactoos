@@ -14,10 +14,10 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
-* Tests for {@link Flattened}.
-*
-* @since 0.49
-*/
+ * Tests for {@link Flattened}.
+ *
+ * @since 0.49
+ */
 final class FlattenedTest {
     @Test
     void flattens() {

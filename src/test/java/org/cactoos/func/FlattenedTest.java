@@ -10,10 +10,10 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsApplicable;
 
 /**
-* Tests for {@link Flattened}.
-*
-* @since 0.49
-*/
+ * Tests for {@link Flattened}.
+ *
+ * @since 0.49
+ */
 @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class FlattenedTest {
     @Test
