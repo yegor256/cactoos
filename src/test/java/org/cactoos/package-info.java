@@ -10,7 +10,6 @@
  *  Assertion from cactoos-matchers. Keep PR short and limit the changes to
  *  single package. Update this puzzle for the next package.
  *  After all packages are done, add MatcherAssert to forbidden-apis.txt
- *
  * @since 0.9
  */
 package org.cactoos;
