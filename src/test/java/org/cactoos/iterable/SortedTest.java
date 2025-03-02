@@ -85,4 +85,24 @@ final class SortedTest {
         ).affirm();
     }
 
+    @Test
+    void sortsVarargs() {
+        new Assertion<>(
+            "Must sort varargs",
+            new Sorted<>(10, 18, -10, 20, -2),
+            Matchers.hasItems(-10, -2, 10, 18, 20)
+        ).affirm();
+    }
+
+    @Test
+    void sortsVarargsWithComparator() {
+        new Assertion<>(
+            "Must sort varargs with comparator",
+            new Sorted<>(
+                Comparator.reverseOrder(),
+                -7, 0, 12, 1, -4
+            ),
+            Matchers.hasItems(12, 1, 0, -4, -7)
+        ).affirm();
+    }
 }
