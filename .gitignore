@@ -1,9 +1,11 @@
-target/
-.idea
-.DS_Store
 *.iml
-.project
-.settings
+.DS_Store
 .classpath
+.idea
+.idea/
+.project
 .recommenders
+.settings
 /nbproject/
+node_modules/
+target/
