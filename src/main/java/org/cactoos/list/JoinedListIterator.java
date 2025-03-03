@@ -124,7 +124,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
     public int previousIndex() {
         int previousidx = -1;
         if (this.hasPrevious()) {
-            previousidx = this.cursor.get() - 1;
+            previousidx = this.cursor.get();
         }
         return previousidx;
     }
