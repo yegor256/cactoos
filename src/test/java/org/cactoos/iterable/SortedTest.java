@@ -29,7 +29,7 @@ final class SortedTest {
                     3, 2, 10, 44, -6, 0
                 )
             ),
-            Matchers.hasItems(-6, 0, 2, 3, 10, 44)
+            Matchers.contains(-6, 0, 2, 3, 10, 44)
         ).affirm();
     }
 
@@ -43,7 +43,7 @@ final class SortedTest {
                     "a", "c", "hello", "dude", "Friend"
                 )
             ),
-            Matchers.hasItems("hello", "dude", "c", "a", "Friend")
+            Matchers.contains("hello", "dude", "c", "a", "Friend")
         ).affirm();
     }
 
@@ -90,7 +90,7 @@ final class SortedTest {
         new Assertion<>(
             "Must sort varargs",
             new Sorted<>(10, 18, -10, 20, -2),
-            Matchers.hasItems(-10, -2, 10, 18, 20)
+            Matchers.contains(-10, -2, 10, 18, 20)
         ).affirm();
     }
 
@@ -102,7 +102,7 @@ final class SortedTest {
                 Comparator.reverseOrder(),
                 -7, 0, 12, 1, -4
             ),
-            Matchers.hasItems(12, 1, 0, -4, -7)
+            Matchers.contains(12, 1, 0, -4, -7)
         ).affirm();
     }
 }
