@@ -7,6 +7,7 @@ package org.cactoos.list;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
@@ -271,6 +272,74 @@ final class NoNullsTest {
             new IsEqual<>(
                 new Integer[]{1, 5, 2, 3}
             )
+        ).affirm();
+    }
+
+    @Test
+    void addAllTest() {
+        final List<Integer> list = new NoNulls<>(
+            new ListOf<>(1, 2, 3)
+        );
+        new Assertion<>(
+            "must return true on success",
+            list.addAll(new ListOf<>(4, 5, 6)),
+            new IsTrue()
+        ).affirm();
+        new Assertion<>(
+            "must add items to the end of the list",
+            list,
+            Matchers.contains(1, 2, 3, 4, 5, 6)
+        ).affirm();
+    }
+
+    @Test
+    void addAllWithIndexTest() {
+        final List<Integer> list = new NoNulls<>(
+            new ListOf<>(1, 2, 3)
+        );
+        new Assertion<>(
+            "must return true on success",
+            list.addAll(1, new ListOf<>(4, 5, 6)),
+            new IsTrue()
+        ).affirm();
+        new Assertion<>(
+            "must add items to list at specified index",
+            list,
+            Matchers.contains(1, 4, 5, 6, 2, 3)
+        ).affirm();
+    }
+
+    @Test
+    void removeAllChangedTest() {
+        final List<Integer> list = new NoNulls<>(
+            new ListOf<>(1, 2, 3, 4, 5, 6)
+        );
+        new Assertion<>(
+            "must return true if list changed",
+            list.removeAll(new ListOf<>(10, 4, 2, 9, -3)),
+            new IsTrue()
+        ).affirm();
+        new Assertion<>(
+            "must remove specified items",
+            list,
+            Matchers.contains(1, 3, 5, 6)
+        ).affirm();
+    }
+
+    @Test
+    void removeAllDidNotChangeTest() {
+        final List<Integer> list = new NoNulls<>(
+            new ListOf<>(1, 2, 3, 4, 5, 6)
+        );
+        new Assertion<>(
+            "must return false if list did not change",
+            list.removeAll(new ListOf<>(10, 0, 7, 9, -3)),
+            new IsEqual<>(false)
+        ).affirm();
+        new Assertion<>(
+            "list must be the same",
+            list,
+            Matchers.contains(1, 2, 3, 4, 5, 6)
         ).affirm();
     }
 }
