@@ -65,4 +65,13 @@ final class ShuffledTest {
             )
         ).affirm();
     }
+
+    @Test
+    void shufflesVarargs() {
+        new Assertion<>(
+            "Must shuffle elements from varargs",
+            new Shuffled<>(1, 2, 3, 4, 4, 5),
+            new HasValues<>(1, 2, 3, 4, 4, 5)
+        ).affirm();
+    }
 }

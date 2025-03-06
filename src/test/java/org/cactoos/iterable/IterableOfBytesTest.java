@@ -38,4 +38,13 @@ final class IterableOfBytesTest {
             new HasValues<>(bytes[0], bytes[1], bytes[2])
         ).affirm();
     }
+
+    @Test
+    void convertsStringToIterableOfBytes() {
+        new Assertion<>(
+            "Must create Iterable from String",
+            new IterableOfBytes("TEST"),
+            new HasValues<>((byte) 'T', (byte) 'E', (byte) 'S', (byte) 'T')
+        ).affirm();
+    }
 }

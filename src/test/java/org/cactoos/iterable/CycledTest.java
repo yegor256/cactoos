@@ -48,4 +48,16 @@ final class CycledTest {
             new HasValue<>(0L)
         ).affirm();
     }
+
+    @Test
+    void varargsConstructorTest() {
+        new Assertion<>(
+            "Must repeat varargs",
+            new ItemAt<>(
+                6,
+                new Cycled<>(1, 2, 3, 4)
+            ),
+            new HasValue<>(3)
+        ).affirm();
+    }
 }
