@@ -32,4 +32,15 @@ final class HeadOfTest {
         );
     }
 
+    @Test
+    void varargsConstructorTest() {
+        MatcherAssert.assertThat(
+            "Must skip elements from varargs",
+            new HeadOf<>(
+                2,
+                1, 2, 3, 4
+            ),
+            new HasValues<>(1, 2)
+        );
+    }
 }

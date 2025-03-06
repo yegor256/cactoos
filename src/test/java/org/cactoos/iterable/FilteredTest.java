@@ -142,4 +142,15 @@ final class FilteredTest {
         ).affirm();
     }
 
+    @Test
+    void varargsConstructorTest() {
+        new Assertion<>(
+            "Must have filtered varargs",
+            new Filtered<>(
+                num -> num % 2 == 0,
+                1, 2, 3, 4, 11, 20
+            ),
+            new HasValues<>(2, 4, 20)
+        ).affirm();
+    }
 }
