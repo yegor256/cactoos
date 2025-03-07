@@ -141,7 +141,7 @@ new Joined<>(
         ),
         new IterableOf<>(1, 2, 3, 4, 5, 6)
     )
-);    // Iterable<Integer>
+); // Iterable<Integer>
 ```
 
 To flatten and join several iterables:
@@ -156,7 +156,7 @@ new Joined<>(
             new IterableOf<>(new IterableOf<>(4, 5, 6))
         )
     )
-);    // Iterable<Integer>
+); // Iterable<Integer>
 ```
 
 To iterate a collection:
