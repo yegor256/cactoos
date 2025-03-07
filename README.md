@@ -70,7 +70,7 @@ To read a text file in UTF-8:
 
 ```java
 String text = new TextOf(
-    new File("/code/a.txt")
+  new File("/code/a.txt")
 ).asString();
 ```
 
@@ -78,10 +78,10 @@ To write a text into a file:
 
 ```java
 new LengthOf(
-    new TeeInput(
-        "Hello, world!",
-        new File("/code/a.txt")
-    )
+  new TeeInput(
+    "Hello, world!",
+    new File("/code/a.txt")
+  )
 ).value();
 ```
 
@@ -89,7 +89,7 @@ To read a binary file from classpath:
 
 ```java
 byte[] data = new BytesOf(
-    new ResourceOf("foo/img.jpg")
+  new ResourceOf("foo/img.jpg")
 ).asBytes();
 ```
 
@@ -99,8 +99,8 @@ To format a text:
 
 ```java
 String text = new FormattedText(
-    "How are you, %s?",
-    name
+  "How are you, %s?",
+  name
 ).asString();
 ```
 
@@ -109,11 +109,11 @@ To manipulate with a text:
 ```java
 // To lower case
 new Lowered(
-    new TextOf("Hello")
+  new TextOf("Hello")
 );
 // To upper case
 new Upper(
-    new TextOf("Hello")
+  new TextOf("Hello")
 );
 ```
 
@@ -125,53 +125,53 @@ To filter a collection:
 
 ```java
 Collection<String> filtered = new ListOf<>(
-    new Filtered<>(
-        s -> s.length() > 4,
-        new IterableOf<>("hello", "world", "dude")
-    )
+  new Filtered<>(
+    s -> s.length() > 4,
+    new IterableOf<>("hello", "world", "dude")
+  )
 );
 ```
 
 To flatten one iterable:
 ```java
 new Joined<>(
-    new Mapped<IterableOf>(
-        iter -> new IterableOf<>(
-            new ListOf<>(iter).toArray(new Integer[]{})
-        ),
-        new IterableOf<>(1, 2, 3, 4, 5, 6)
-    )
-); // Iterable<Integer>
+  new Mapped<IterableOf>(
+    iter -> new IterableOf<>(
+      new ListOf<>(iter).toArray(new Integer[]{})
+    ),
+    new IterableOf<>(1, 2, 3, 4, 5, 6)
+  )
+);    // Iterable<Integer>
 ```
 
 To flatten and join several iterables:
 ```java
 new Joined<>(
-    new Mapped<IterableOf>(
-        iter -> new IterableOf<>(
-            new Joined<>(iter)
-        ),
-        new Joined<>(
-            new IterableOf<>(new IterableOf<>(1, 2, 3)),
-            new IterableOf<>(new IterableOf<>(4, 5, 6))
-        )
+  new Mapped<IterableOf>(
+    iter -> new IterableOf<>(
+      new Joined<>(iter)
+    ),
+    new Joined<>(
+      new IterableOf<>(new IterableOf<>(1, 2, 3)),
+      new IterableOf<>(new IterableOf<>(4, 5, 6))
     )
-); // Iterable<Integer>
+  )
+);    // Iterable<Integer>
 ```
 
 To iterate a collection:
 
 ```java
 new And(
-    new Mapped<>(
-        new FuncOf<>(
-            input -> {
-                System.out.printf("Item: %s\n", input);
-            },
-            new True()
-        ),
-        new IterableOf<>("how", "are", "you", "?")
-    )
+  new Mapped<>(
+    new FuncOf<>(
+      input -> {
+        System.out.printf("Item: %s\n", input);
+      },
+      new True()
+    ),
+    new IterableOf<>("how", "are", "you", "?")
+  )
 ).value();
 ```
 
@@ -179,9 +179,9 @@ Or even more compact:
 
 ```java
 new ForEach<String>(
-    input -> System.out.printf(
-        "Item: %s\n", input
-    )
+  input -> System.out.printf(
+    "Item: %s\n", input
+  )
 ).exec(new IterableOf("how", "are", "you", "?"));
 ```
 
@@ -189,17 +189,17 @@ To sort a list of words in the file:
 
 ```java
 List<Text> sorted = new ListOf<>(
-    new Sorted<>(
-        new Mapped<>(
-            text -> new ComparableText(text),
-            new Split(
-                new TextOf(
-                    new File("/tmp/names.txt")
-                ),
-                new TextOf("\\s+")
-            )
-        )
+  new Sorted<>(
+    new Mapped<>(
+      text -> new ComparableText(text),
+      new Split(
+        new TextOf(
+          new File("/tmp/names.txt")
+        ),
+        new TextOf("\\s+")
+      )
     )
+  )
 );
 ```
 
@@ -207,7 +207,7 @@ To count elements in an iterable:
 
 ```java
 int total = new LengthOf(
-    new IterableOf<>("how", "are", "you")
+  new IterableOf<>("how", "are", "you")
 ).value().intValue();
 ```
 
@@ -215,42 +215,42 @@ To create a set of elements by providing variable arguments:
 
 ```java
 final Set<String> unique = new SetOf<String>(
-    "one",
-    "two",
-    "one",
-    "three"
+  "one",
+  "two",
+  "one",
+  "three"
 );
 ```
 
 To create a set of elements from existing iterable:
 ```java
 final Set<String> words = new SetOf<>(
-    new IterableOf<>("abc", "bcd", "abc", "ccc")
+  new IterableOf<>("abc", "bcd", "abc", "ccc")
 );
 ```
 
 To create a sorted iterable with unique elements from existing iterable:
 ```java
 final Iterable<String> sorted = new Sorted<>(
-    new SetOf<>(
-        new IterableOf<>("abc", "bcd", "abc", "ccc")
-    )
+  new SetOf<>(
+    new IterableOf<>("abc", "bcd", "abc", "ccc")
+  )
 );
 ```
 
 To create a sorted set from existing vararg elements using comparator:
 ```java
 final Set<String> sorted = new org.cactoos.set.Sorted<>(
-    (first, second) -> first.compareTo(second),
-    "abc", "bcd", "abc", "ccc", "acd"
+  (first, second) -> first.compareTo(second),
+  "abc", "bcd", "abc", "ccc", "acd"
 );
 ```
 
 To create a sorted set from existing iterable using comparator:
 ```java
 final Set<String> sorted = new org.cactoos.set.Sorted<>(
-    (first, second) -> first.compareTo(second),
-    new IterableOf<>("abc", "bcd", "abc", "ccc", "acd")
+  (first, second) -> first.compareTo(second),
+  new IterableOf<>("abc", "bcd", "abc", "ccc", "acd")
 );
 ```
 
@@ -260,7 +260,7 @@ This is a traditional `foreach` loop:
 
 ```java
 for (String name : names) {
-    System.out.printf("Hello, %s!\n", name);
+  System.out.printf("Hello, %s!\n", name);
 }
 ```
 
@@ -268,11 +268,11 @@ This is its object-oriented alternative (no streams!):
 
 ```java
 new And(
-    n -> {
-        System.out.printf("Hello, %s!\n", n);
-        return new True().value();
-    },
-    names
+  n -> {
+    System.out.printf("Hello, %s!\n", n);
+    return new True().value();
+  },
+  names
 ).value();
 ```
 
@@ -280,7 +280,7 @@ This is an endless `while/do` loop:
 
 ```java
 while (!ready) {
-    System.out.println("Still waiting...");
+  System.out.println("Still waiting...");
 }
 ```
 
@@ -288,11 +288,11 @@ Here is its object-oriented alternative:
 
 ```java
 new And(
-    ready -> {
-        System.out.println("Still waiting...");
-        return !ready;
-    },
-    new Endless<>(booleanParameter)
+  ready -> {
+    System.out.println("Still waiting...");
+    return !ready;
+  },
+  new Endless<>(booleanParameter)
 ).value();
 ```
 
