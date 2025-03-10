@@ -109,11 +109,11 @@ To manipulate with a text:
 ```java
 // To lower case
 new Lowered(
-	new TextOf("Hello")
+  new TextOf("Hello")
 );
 // To upper case
 new Upper(
-	new TextOf("Hello")
+  new TextOf("Hello")
 );
 ```
 
@@ -179,9 +179,9 @@ Or even more compact:
 
 ```java
 new ForEach<String>(
-    input -> System.out.printf(
-        "Item: %s\n", input
-    )
+  input -> System.out.printf(
+    "Item: %s\n", input
+  )
 ).exec(new IterableOf("how", "are", "you", "?"));
 ```
 
@@ -215,42 +215,42 @@ To create a set of elements by providing variable arguments:
 
 ```java
 final Set<String> unique = new SetOf<String>(
-    "one",
-    "two",
-    "one",
-    "three"
+  "one",
+  "two",
+  "one",
+  "three"
 );
 ```
 
 To create a set of elements from existing iterable:
 ```java
 final Set<String> words = new SetOf<>(
-    new IterableOf<>("abc", "bcd", "abc", "ccc")
+  new IterableOf<>("abc", "bcd", "abc", "ccc")
 );
 ```
 
 To create a sorted iterable with unique elements from existing iterable:
 ```java
 final Iterable<String> sorted = new Sorted<>(
-    new SetOf<>(
-        new IterableOf<>("abc", "bcd", "abc", "ccc")
-    )
+  new SetOf<>(
+    new IterableOf<>("abc", "bcd", "abc", "ccc")
+  )
 );
 ```
 
 To create a sorted set from existing vararg elements using comparator:
 ```java
 final Set<String> sorted = new org.cactoos.set.Sorted<>(
-    (first, second) -> first.compareTo(second),
-    "abc", "bcd", "abc", "ccc", "acd"
+  (first, second) -> first.compareTo(second),
+  "abc", "bcd", "abc", "ccc", "acd"
 );
 ```
 
 To create a sorted set from existing iterable using comparator:
 ```java
 final Set<String> sorted = new org.cactoos.set.Sorted<>(
-    (first, second) -> first.compareTo(second),
-    new IterableOf<>("abc", "bcd", "abc", "ccc", "acd")
+  (first, second) -> first.compareTo(second),
+  new IterableOf<>("abc", "bcd", "abc", "ccc", "acd")
 );
 ```
 
