@@ -100,4 +100,13 @@ final class ReversedTest {
             new IsNot<>(new IsEmptyIterable<>())
         ).affirm();
     }
+
+    @Test
+    void reversesVarargs() {
+        new Assertion<>(
+            "Must reverse varargs",
+            new Reversed<>(1, 2, 3, 4),
+            new IsEqual<>(new IterableOf<>(4, 3, 2, 1))
+        ).affirm();
+    }
 }
