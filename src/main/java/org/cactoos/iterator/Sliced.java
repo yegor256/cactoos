@@ -59,7 +59,7 @@ public final class Sliced<T> implements Iterator<T> {
      * @param iterator Decorated iterator
      */
     public Sliced(final int start, final Iterator<? extends T> iterator) {
-        this(start, any -> !iterator.hasNext(), iterator);
+        this(start, any -> false, iterator);
     }
 
     /**
