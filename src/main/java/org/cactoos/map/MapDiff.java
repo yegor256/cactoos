@@ -18,7 +18,7 @@ import org.cactoos.scalar.Unchecked;
  *
  * @param <K> Type of key
  * @param <V> Type of value
- * @since 0.49
+ * @since 1.0
  */
 public final class MapDiff<K, V> extends MapEnvelope<K, V> {
 
@@ -26,7 +26,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * Ctor.
      * @param first First map
      * @param second Second map
-     * @since 0.49
+     * @since 1.0
      */
     public MapDiff(final Iterable<Map.Entry<K, V>> first,
         final Iterable<Map.Entry<K, V>> second) {
@@ -42,7 +42,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * Ctor.
      * @param first First iterator
      * @param second Second iterator
-     * @since 0.49
+     * @since 1.0
      */
     public MapDiff(final Iterator<Map.Entry<K, V>> first,
         final Iterator<Map.Entry<K, V>> second) {
@@ -56,7 +56,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * Ctor.
      * @param first First iterable supplier
      * @param second Second iterable supplier
-     * @since 0.49
+     * @since 1.0
      */
     public MapDiff(
         final Scalar<Iterable<Map.Entry<K, V>>> first,
@@ -72,7 +72,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * Ctor.
      * @param first First map
      * @param second Second map
-     * @since 0.49
+     * @since 1.0
      */
     public MapDiff(final Map<K, V> first, final Map<K, V> second) {
         super(computeDiff(first, second));
@@ -85,7 +85,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * @param <K> Type of keys
      * @param <V> Type of values
      * @return The difference map (entries in first but not in second)
-     * @since 0.49
+     * @since 1.0
      */
     private static <K, V> Map<K, V> computeDiff(
         final Map<K, V> first,
