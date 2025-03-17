@@ -15,13 +15,13 @@ import org.llorllale.cactoos.matchers.HasValues;
 /**
  * Test case for {@link Union}.
  *
- * @since 0.49
+ * @since 1.0
  */
 final class UnionTest {
 
     /**
      * Tests that set union can be computed correctly.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetUnion() {
@@ -37,7 +37,7 @@ final class UnionTest {
 
     /**
      * Tests that set union with empty second set returns the first set.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetUnionWithEmptySecondSet() {
@@ -53,7 +53,7 @@ final class UnionTest {
 
     /**
      * Tests that set union with empty first set returns the second set.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetUnionWithEmptyFirstSet() {
@@ -69,7 +69,7 @@ final class UnionTest {
 
     /**
      * Tests that set union works with java.util.Set.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetUnionWithJavaUtilSets() {
@@ -90,7 +90,7 @@ final class UnionTest {
 
     /**
      * Tests that set union works with iterables.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetUnionWithIterables() {
@@ -106,7 +106,7 @@ final class UnionTest {
 
     /**
      * Tests that set union works with iterators.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetUnionWithIterators() {
@@ -122,7 +122,7 @@ final class UnionTest {
 
     /**
      * Tests that set union with identical sets works correctly.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetUnionWithIdenticalSets() {
