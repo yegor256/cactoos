@@ -4,7 +4,6 @@
  */
 package org.cactoos.map;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Scalar;
@@ -87,7 +86,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * @return The difference map (entries in first but not in second)
      * @since 1.0
      */
-    private static <K, V> Map<K, V> computeDiff(
+    private static <K, V> MapOf<K, V> computeDiff(
         final Map<K, V> first,
         final Map<K, V> second
     ) {
@@ -103,10 +102,10 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * @param <V> Type of values
      * @return The map
      */
-    private static <K, V> Map<K, V> mapFromEntries(
+    private static <K, V> MapOf<K, V> mapFromEntries(
         final Iterable<Map.Entry<K, V>> entries
     ) {
-        final Map<K, V> map = new HashMap<>();
+        final MapOf<K, V> map = new MapOf<>();
         for (final Map.Entry<K, V> entry : entries) {
             map.put(entry.getKey(), entry.getValue());
         }
