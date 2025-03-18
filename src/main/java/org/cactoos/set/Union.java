@@ -15,7 +15,7 @@ import org.cactoos.scalar.Unchecked;
  * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of item
- * @since 1.0
+ * @since 0.58.0
  */
 public final class Union<T> extends SetEnvelope<T> {
 
@@ -23,7 +23,6 @@ public final class Union<T> extends SetEnvelope<T> {
      * Ctor.
      * @param first First set
      * @param second Second set
-     * @since 1.0
      */
     public Union(final Iterable<T> first, final Iterable<T> second) {
         super(
@@ -38,7 +37,6 @@ public final class Union<T> extends SetEnvelope<T> {
      * Ctor.
      * @param first First iterator
      * @param second Second iterator
-     * @since 1.0
      */
     public Union(final Iterator<T> first, final Iterator<T> second) {
         this(
@@ -51,7 +49,6 @@ public final class Union<T> extends SetEnvelope<T> {
      * Ctor.
      * @param first First iterable supplier
      * @param second Second iterable supplier
-     * @since 1.0
      */
     public Union(
         final Scalar<Iterable<T>> first,
@@ -67,7 +64,6 @@ public final class Union<T> extends SetEnvelope<T> {
      * Ctor.
      * @param first First set
      * @param second Second set
-     * @since 1.0
      */
     public Union(final SetOf<T> first, final SetOf<T> second) {
         super(computeUnion(first, second));
@@ -79,7 +75,6 @@ public final class Union<T> extends SetEnvelope<T> {
      * @param second The second set
      * @param <E> Type of elements
      * @return The union set (elements in either first or second)
-     * @since 1.0
      */
     private static <E> SetOf<E> computeUnion(
         final SetOf<E> first,
