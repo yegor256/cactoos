@@ -14,7 +14,7 @@ import org.cactoos.scalar.Ternary;
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 1.0
+ * @since 0.58.0
  */
 public final class AbbreviatedLeft extends TextEnvelope {
 

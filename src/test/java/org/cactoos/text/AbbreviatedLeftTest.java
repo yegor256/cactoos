@@ -12,7 +12,7 @@ import org.llorllale.cactoos.matchers.Assertion;
 /**
  * Test case for {@link AbbreviatedLeft}.
  *
- * @since 1.0
+ * @since 0.58.0
  */
 final class AbbreviatedLeftTest {
 
