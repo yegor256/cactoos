@@ -15,13 +15,13 @@ import org.llorllale.cactoos.matchers.HasValues;
 /**
  * Test case for {@link Intersection}.
  *
- * @since 0.49
+ * @since 1.0
  */
 final class IntersectionTest {
 
     /**
      * Tests that set intersection can be computed correctly.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetIntersection() {
@@ -37,7 +37,7 @@ final class IntersectionTest {
 
     /**
      * Tests that set intersection with empty second set returns empty set.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetIntersectionWithEmptySecondSet() {
@@ -53,7 +53,7 @@ final class IntersectionTest {
 
     /**
      * Tests that set intersection with empty first set returns empty set.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetIntersectionWithEmptyFirstSet() {
@@ -69,7 +69,7 @@ final class IntersectionTest {
 
     /**
      * Tests that set intersection works with java.util.Set.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetIntersectionWithJavaUtilSets() {
@@ -90,7 +90,7 @@ final class IntersectionTest {
 
     /**
      * Tests that set intersection works with iterables.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetIntersectionWithIterables() {
@@ -106,7 +106,7 @@ final class IntersectionTest {
 
     /**
      * Tests that set intersection works with iterators.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetIntersectionWithIterators() {

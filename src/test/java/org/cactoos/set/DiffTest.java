@@ -15,13 +15,13 @@ import org.llorllale.cactoos.matchers.HasValues;
 /**
  * Test case for {@link Diff}.
  *
- * @since 0.49
+ * @since 1.0
  */
 final class DiffTest {
 
     /**
      * Tests that set difference can be computed correctly.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetDifference() {
@@ -37,7 +37,7 @@ final class DiffTest {
 
     /**
      * Tests that set difference with empty second set returns the first set.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetDifferenceWithEmptySecondSet() {
@@ -53,7 +53,7 @@ final class DiffTest {
 
     /**
      * Tests that set difference with empty first set returns empty set.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetDifferenceWithEmptyFirstSet() {
@@ -69,7 +69,7 @@ final class DiffTest {
 
     /**
      * Tests that set difference works with java.util.Set.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetDifferenceWithJavaUtilSets() {
@@ -90,7 +90,7 @@ final class DiffTest {
 
     /**
      * Tests that set difference works with iterables.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetDifferenceWithIterables() {
@@ -106,7 +106,7 @@ final class DiffTest {
 
     /**
      * Tests that set difference works with iterators.
-     * @since 0.49
+     * @since 1.0
      */
     @Test
     void computesSetDifferenceWithIterators() {
