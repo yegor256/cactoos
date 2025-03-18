@@ -12,19 +12,19 @@ import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
- * Test case for {@link Abbreviated}.
+ * Test case for {@link AbbreviatedRight}.
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-final class AbbreviatedTest {
+final class AbbreviatedRightTest {
 
     @Test
     void abbreviatesAnEmptyText() {
         final String msg = "";
         new Assertion<>(
             "Must abbreviate an msg text",
-            new Abbreviated(msg, 8),
+            new AbbreviatedRight(msg, 8),
             new IsText(msg)
         ).affirm();
     }
@@ -33,7 +33,7 @@ final class AbbreviatedTest {
     void abbreviatesText() {
         new Assertion<>(
             "Must abbreviate a text",
-            new Abbreviated("hello world", 8),
+            new AbbreviatedRight("hello world", 8),
             new IsText("hello...")
         ).affirm();
     }
@@ -42,7 +42,7 @@ final class AbbreviatedTest {
     void abbreviatesTextOneCharSmaller() {
         new Assertion<>(
             "Must abbreviate a text one char smaller",
-            new Abbreviated("oo programming", 10),
+            new AbbreviatedRight("oo programming", 10),
             new IsText("oo prog...")
         ).affirm();
     }
@@ -52,7 +52,7 @@ final class AbbreviatedTest {
         final String msg = "elegant objects";
         new Assertion<>(
             "Must abbreviate a text with same length",
-            new Abbreviated(msg, 15),
+            new AbbreviatedRight(msg, 15),
             new IsText(msg)
         ).affirm();
     }
@@ -62,7 +62,7 @@ final class AbbreviatedTest {
         final String msg = "the old mcdonald";
         new Assertion<>(
             "Must abbreviate a text one char bigger",
-            new Abbreviated(msg, 17),
+            new AbbreviatedRight(msg, 17),
             new IsText(msg)
         ).affirm();
     }
@@ -72,7 +72,7 @@ final class AbbreviatedTest {
         final String msg = "hi everybody!";
         new Assertion<>(
             "Must abbreviate a text two chars bigger",
-            new Abbreviated(msg, 15),
+            new AbbreviatedRight(msg, 15),
             new IsText(msg)
         ).affirm();
     }
@@ -82,7 +82,7 @@ final class AbbreviatedTest {
         final String msg = "cactoos framework";
         new Assertion<>(
             "Must abbreviate a text with width bigger than length",
-            new Abbreviated(msg, 50),
+            new AbbreviatedRight(msg, 50),
             new IsText(msg)
         ).affirm();
     }
@@ -91,7 +91,7 @@ final class AbbreviatedTest {
     void abbreviatesTextBiggerThanDefaultMaxWidth() {
         new Assertion<>(
             "Must abbreviate a text bigger than default max width",
-            new Abbreviated(
+            new AbbreviatedRight(
                 "The quick brown fox jumps over the lazy black dog and after that returned to the cave"
             ),
             new IsText(
@@ -117,7 +117,7 @@ final class AbbreviatedTest {
         );
         new Assertion<>(
             "Must abbreviate a text that changes",
-            new Abbreviated(
+            new AbbreviatedRight(
                 txt,
                 15
             ),

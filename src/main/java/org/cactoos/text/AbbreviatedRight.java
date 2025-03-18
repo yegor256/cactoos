@@ -16,7 +16,7 @@ import org.cactoos.scalar.Ternary;
  *
  * @since 0.29
  */
-public final class Abbreviated extends TextEnvelope {
+public final class AbbreviatedRight extends TextEnvelope {
 
     /**
      * The default max line width.
@@ -35,7 +35,7 @@ public final class Abbreviated extends TextEnvelope {
      *
      * @param text The CharSequence
      */
-    public Abbreviated(final CharSequence text) {
+    public AbbreviatedRight(final CharSequence text) {
         this(new TextOf(text));
     }
 
@@ -46,8 +46,8 @@ public final class Abbreviated extends TextEnvelope {
      *
      * @param text The Text
      */
-    public Abbreviated(final Text text) {
-        this(text, Abbreviated.MAX_WIDTH);
+    public AbbreviatedRight(final Text text) {
+        this(text, AbbreviatedRight.MAX_WIDTH);
     }
 
     /**
@@ -56,7 +56,7 @@ public final class Abbreviated extends TextEnvelope {
      * @param text A CharSequence
      * @param max Max width of the result string
      */
-    public Abbreviated(final CharSequence text, final int max) {
+    public AbbreviatedRight(final CharSequence text, final int max) {
         this(new TextOf(text), max);
     }
 
@@ -65,7 +65,7 @@ public final class Abbreviated extends TextEnvelope {
      * @param text The Text
      * @param max Max width of the result string
      */
-    public Abbreviated(final Text text, final int max) {
+    public AbbreviatedRight(final Text text, final int max) {
         super(
             new Flattened(
                 new Ternary<>(
@@ -77,9 +77,9 @@ public final class Abbreviated extends TextEnvelope {
                         new Sub(
                             t,
                             0,
-                            max - Abbreviated.ELLIPSES.length()
+                            max - AbbreviatedRight.ELLIPSES.length()
                         ),
-                        Abbreviated.ELLIPSES
+                        AbbreviatedRight.ELLIPSES
                     )
                 )
             )
