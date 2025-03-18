@@ -15,44 +15,13 @@ import org.llorllale.cactoos.matchers.HasEntry;
 /**
  * Test case for {@link MapDiff}.
  *
- * @since 1.0
+ * @since 0.58.0
  */
-@SuppressWarnings(
-    {
-        "PMD.AvoidDuplicateLiterals",
-        "PMD.AvoidDirectAccessToStaticFields"
-    }
-)
 final class MapDiffTest {
 
     /**
-     * String constant for "one".
-     */
-    private static final String ONE = "one";
-
-    /**
-     * String constant for "two".
-     */
-    private static final String TWO = "two";
-
-    /**
-     * String constant for "three".
-     */
-    private static final String THREE = "three";
-
-    /**
-     * String constant for "four".
-     */
-    private static final String FOUR = "four";
-
-    /**
-     * String constant for "five".
-     */
-    private static final String FIVE = "five";
-
-    /**
      * Tests that map difference can be computed correctly.
-     * @since 1.0
+     * @since 0.58.0
      */
     @Test
     void computesMapDifference() {
@@ -60,23 +29,23 @@ final class MapDiffTest {
             "Can't compute the difference of two maps",
             new MapDiff<>(
                 new MapOf<>(
-                    new MapEntry<>(1, ONE),
-                    new MapEntry<>(2, TWO),
-                    new MapEntry<>(3, THREE)
+                    new MapEntry<>(1, "one"),
+                    new MapEntry<>(2, "two"),
+                    new MapEntry<>(3, "three")
                 ),
                 new MapOf<>(
-                    new MapEntry<>(2, TWO),
-                    new MapEntry<>(3, THREE),
-                    new MapEntry<>(4, FOUR)
+                    new MapEntry<>(2, "two"),
+                    new MapEntry<>(3, "three"),
+                    new MapEntry<>(4, "four")
                 )
             ),
-            new HasEntry<>(1, ONE)
+            new HasEntry<>(1, "one")
         ).affirm();
     }
 
     /**
      * Tests that map difference with empty second map returns the first map.
-     * @since 1.0
+     * @since 0.58.0
      */
     @Test
     void computesMapDifferenceWithEmptySecondMap() {
@@ -84,19 +53,19 @@ final class MapDiffTest {
             "Can't compute the difference with empty second map",
             new MapDiff<>(
                 new MapOf<>(
-                    new MapEntry<>(1, ONE),
-                    new MapEntry<>(2, TWO),
-                    new MapEntry<>(3, THREE)
+                    new MapEntry<>(5, "five"),
+                    new MapEntry<>(6, "six"),
+                    new MapEntry<>(7, "seven")
                 ),
                 new MapOf<>()
             ),
-            new HasEntry<>(1, ONE)
+            new HasEntry<>(5, "five")
         ).affirm();
     }
 
     /**
      * Tests that map difference with empty first map returns empty map.
-     * @since 1.0
+     * @since 0.58.0
      */
     @Test
     void computesMapDifferenceWithEmptyFirstMap() {
@@ -105,9 +74,9 @@ final class MapDiffTest {
             new MapDiff<Integer, String>(
                 new MapOf<Integer, String>(),
                 new MapOf<>(
-                    new MapEntry<>(1, ONE),
-                    new MapEntry<>(2, TWO),
-                    new MapEntry<>(3, THREE)
+                    new MapEntry<>(8, "eight"),
+                    new MapEntry<>(9, "nine"),
+                    new MapEntry<>(10, "ten")
                 )
             ).size(),
             new IsEqual<>(0)
@@ -116,44 +85,44 @@ final class MapDiffTest {
 
     /**
      * Tests that map difference works with java.util.Map.
-     * @since 1.0
+     * @since 0.58.0
      */
     @Test
     void computesMapDifferenceWithJavaUtilMaps() {
         final Map<Integer, String> first = new HashMap<>();
-        first.put(1, ONE);
-        first.put(2, TWO);
-        first.put(3, THREE);
+        first.put(11, "eleven");
+        first.put(12, "twelve");
+        first.put(13, "thirteen");
         final Map<Integer, String> second = new HashMap<>();
-        second.put(3, THREE);
-        second.put(4, FOUR);
-        second.put(5, FIVE);
+        second.put(13, "thirteen");
+        second.put(14, "fourteen");
+        second.put(15, "fifteen");
         new Assertion<>(
             "Can't compute the difference of two java.util.Map",
             new MapDiff<>(first, second),
-            new HasEntry<>(1, ONE)
+            new HasEntry<>(11, "eleven")
         ).affirm();
     }
 
     /**
      * Tests that map difference works with iterables.
-     * @since 1.0
+     * @since 0.58.0
      */
     @Test
     void computesMapDifferenceWithIterables() {
         new Assertion<>(
             "Can't compute the difference of two iterables",
             new MapDiff<>(
-                Collections.singletonList(new MapEntry<>(1, ONE)),
-                Collections.singletonList(new MapEntry<>(2, TWO))
+                Collections.singletonList(new MapEntry<>(16, "sixteen")),
+                Collections.singletonList(new MapEntry<>(17, "seventeen"))
             ),
-            new HasEntry<>(1, ONE)
+            new HasEntry<>(16, "sixteen")
         ).affirm();
     }
 
     /**
      * Tests that map difference works with iterators.
-     * @since 1.0
+     * @since 0.58.0
      */
     @Test
     void computesMapDifferenceWithIterators() {
@@ -161,17 +130,17 @@ final class MapDiffTest {
             "Can't compute the difference of two iterators",
             new MapDiff<>(
                 new MapOf<>(
-                    new MapEntry<>(1, ONE),
-                    new MapEntry<>(2, TWO),
-                    new MapEntry<>(3, THREE)
+                    new MapEntry<>(18, "eighteen"),
+                    new MapEntry<>(19, "nineteen"),
+                    new MapEntry<>(20, "twenty")
                 ).entrySet().iterator(),
                 new MapOf<>(
-                    new MapEntry<>(3, THREE),
-                    new MapEntry<>(4, FOUR),
-                    new MapEntry<>(5, FIVE)
+                    new MapEntry<>(20, "twenty"),
+                    new MapEntry<>(21, "twenty-one"),
+                    new MapEntry<>(22, "twenty-two")
                 ).entrySet().iterator()
             ),
-            new HasEntry<>(1, ONE)
+            new HasEntry<>(18, "eighteen")
         ).affirm();
     }
 }
