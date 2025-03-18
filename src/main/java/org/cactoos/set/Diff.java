@@ -15,7 +15,7 @@ import org.cactoos.scalar.Unchecked;
  * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of item
- * @since 1.0
+ * @since 0.58.0
  */
 public final class Diff<T> extends SetEnvelope<T> {
 
@@ -23,7 +23,6 @@ public final class Diff<T> extends SetEnvelope<T> {
      * Ctor.
      * @param first First set
      * @param second Second set
-     * @since 1.0
      */
     public Diff(final Iterable<T> first, final Iterable<T> second) {
         super(
@@ -38,7 +37,6 @@ public final class Diff<T> extends SetEnvelope<T> {
      * Ctor.
      * @param first First iterator
      * @param second Second iterator
-     * @since 1.0
      */
     public Diff(final Iterator<T> first, final Iterator<T> second) {
         this(
@@ -51,7 +49,6 @@ public final class Diff<T> extends SetEnvelope<T> {
      * Ctor.
      * @param first First iterable supplier
      * @param second Second iterable supplier
-     * @since 1.0
      */
     public Diff(
         final Scalar<Iterable<T>> first,
@@ -67,7 +64,6 @@ public final class Diff<T> extends SetEnvelope<T> {
      * Ctor.
      * @param first First set
      * @param second Second set
-     * @since 1.0
      */
     public Diff(final SetOf<T> first, final SetOf<T> second) {
         super(computeDiff(first, second));
@@ -79,7 +75,6 @@ public final class Diff<T> extends SetEnvelope<T> {
      * @param second The second set
      * @param <E> Type of elements
      * @return The difference set (elements in first but not in second)
-     * @since 1.0
      */
     private static <E> SetOf<E> computeDiff(
         final SetOf<E> first,
