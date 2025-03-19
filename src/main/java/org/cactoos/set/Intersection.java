@@ -10,23 +10,23 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Unchecked;
 
 /**
- * Set difference.
+ * Set intersection.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of item
  * @since 0.58.0
  */
-public final class Diff<T> extends SetEnvelope<T> {
+public final class Intersection<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
      * @param first First set
      * @param second Second set
      */
-    public Diff(final Iterable<T> first, final Iterable<T> second) {
+    public Intersection(final Iterable<T> first, final Iterable<T> second) {
         super(
-            computeDiff(
+            computeIntersection(
                 new SetOf<>(first),
                 new SetOf<>(second)
             )
@@ -38,7 +38,7 @@ public final class Diff<T> extends SetEnvelope<T> {
      * @param first First iterator
      * @param second Second iterator
      */
-    public Diff(final Iterator<T> first, final Iterator<T> second) {
+    public Intersection(final Iterator<T> first, final Iterator<T> second) {
         this(
             new IterableOf<>(first),
             new IterableOf<>(second)
@@ -50,7 +50,7 @@ public final class Diff<T> extends SetEnvelope<T> {
      * @param first First iterable supplier
      * @param second Second iterable supplier
      */
-    public Diff(
+    public Intersection(
         final Scalar<Iterable<T>> first,
         final Scalar<Iterable<T>> second
     ) {
@@ -65,23 +65,23 @@ public final class Diff<T> extends SetEnvelope<T> {
      * @param first First set
      * @param second Second set
      */
-    public Diff(final SetOf<T> first, final SetOf<T> second) {
-        super(computeDiff(first, second));
+    public Intersection(final SetOf<T> first, final SetOf<T> second) {
+        super(computeIntersection(first, second));
     }
 
     /**
-     * Compute the difference between two sets.
+     * Compute the intersection between two sets.
      * @param first The first set
      * @param second The second set
      * @param <E> Type of elements
-     * @return The difference set (elements in first but not in second)
+     * @return The intersection set (elements in both first and second)
      */
-    private static <E> SetOf<E> computeDiff(
+    private static <E> SetOf<E> computeIntersection(
         final SetOf<E> first,
         final SetOf<E> second
     ) {
         final SetOf<E> result = new SetOf<>(first);
-        result.removeAll(second);
+        result.retainAll(second);
         return result;
     }
 }
