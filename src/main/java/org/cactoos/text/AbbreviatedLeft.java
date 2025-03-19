@@ -10,13 +10,13 @@ import org.cactoos.scalar.ScalarOf;
 import org.cactoos.scalar.Ternary;
 
 /**
- * Abbreviates a Text using ellipses.
+ * Abbreviates a Text using ellipses from the left side.
  *
  * <p>There is no thread-safety guarantee.
  *
- * @since 0.29
+ * @since 0.58.0
  */
-public final class Abbreviated extends TextEnvelope {
+public final class AbbreviatedLeft extends TextEnvelope {
 
     /**
      * The default max line width.
@@ -35,7 +35,7 @@ public final class Abbreviated extends TextEnvelope {
      *
      * @param text The CharSequence
      */
-    public Abbreviated(final CharSequence text) {
+    public AbbreviatedLeft(final CharSequence text) {
         this(new TextOf(text));
     }
 
@@ -46,8 +46,8 @@ public final class Abbreviated extends TextEnvelope {
      *
      * @param text The Text
      */
-    public Abbreviated(final Text text) {
-        this(text, Abbreviated.MAX_WIDTH);
+    public AbbreviatedLeft(final Text text) {
+        this(text, AbbreviatedLeft.MAX_WIDTH);
     }
 
     /**
@@ -56,7 +56,7 @@ public final class Abbreviated extends TextEnvelope {
      * @param text A CharSequence
      * @param max Max width of the result string
      */
-    public Abbreviated(final CharSequence text, final int max) {
+    public AbbreviatedLeft(final CharSequence text, final int max) {
         this(new TextOf(text), max);
     }
 
@@ -65,7 +65,7 @@ public final class Abbreviated extends TextEnvelope {
      * @param text The Text
      * @param max Max width of the result string
      */
-    public Abbreviated(final Text text, final int max) {
+    public AbbreviatedLeft(final Text text, final int max) {
         super(
             new Flattened(
                 new Ternary<>(
@@ -74,12 +74,13 @@ public final class Abbreviated extends TextEnvelope {
                     t -> t,
                     t -> new FormattedText(
                         "%s%s",
+                        AbbreviatedLeft.ELLIPSES,
                         new Sub(
-                            t,
-                            0,
-                            max - Abbreviated.ELLIPSES.length()
-                        ),
-                        Abbreviated.ELLIPSES
+                            t.asString(),
+                            (int) (new LengthOf(t).value().longValue()
+                                - max + AbbreviatedLeft.ELLIPSES.length()),
+                            (int) new LengthOf(t).value().longValue()
+                        )
                     )
                 )
             )
