@@ -1,12 +1,12 @@
 <img alt="logo" src="https://www.objectionary.com/cactus.svg" height="100px" />
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
-[![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/cactoos)](http://www.rultor.com/p/yegor256/cactoos)
+[![DevOps By Rultor.com](https://www.rultor.com/b/yegor256/cactoos)](https://www.rultor.com/p/yegor256/cactoos)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![mvn](https://github.com/yegor256/cactoos/actions/workflows/mvn.yml/badge.svg)](https://github.com/yegor256/cactoos/actions/workflows/mvn.yml)
-[![Javadoc](http://www.javadoc.io/badge/org.cactoos/cactoos.svg)](http://www.javadoc.io/doc/org.cactoos/cactoos)
-[![PDD status](http://www.0pdd.com/svg?name=yegor256/cactoos)](http://www.0pdd.com/p?name=yegor256/cactoos)
+[![Javadoc](https://www.javadoc.io/badge/org.cactoos/cactoos.svg)](https://www.javadoc.io/doc/org.cactoos/cactoos)
+[![PDD status](https://www.0pdd.com/svg?name=yegor256/cactoos)](https://www.0pdd.com/p?name=yegor256/cactoos)
 [![Maven Central](https://img.shields.io/maven-central/v/org.cactoos/cactoos.svg)](https://maven-badges.herokuapp.com/maven-central/org.cactoos/cactoos)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/cactoos/blob/master/LICENSE.txt)
 [![Test Coverage](https://img.shields.io/codecov/c/github/yegor256/cactoos.svg)](https://codecov.io/github/yegor256/cactoos?branch=master)
