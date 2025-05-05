@@ -1,11 +1,11 @@
-*.iml
-.DS_Store
 .classpath
+.DS_Store
 .idea
 .idea/
 .project
 .recommenders
 .settings
+*.iml
 /nbproject/
 node_modules/
 target/
