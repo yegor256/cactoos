@@ -54,4 +54,17 @@ final class JoinedTest {
         ).affirm();
     }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    void joinIterableAndItem() {
+        new Assertion<>(
+                "Must join item and iterable",
+                new Joined<>(
+                        new IterableOf<>(1, 2, 3),
+                        4, 5
+                ),
+                new IsEqual<>(new IterableOf<>(1, 2, 3, 4, 5))
+        ).affirm();
+    }
+
 }
