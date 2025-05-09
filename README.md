@@ -53,7 +53,7 @@ Gradle:
 
 ```groovy
 dependencies {
-  compile 'org.cactoos:cactoos::0.57.0
+  compile 'org.cactoos:cactoos:0.57.0'
 }
 ```
 
@@ -104,7 +104,7 @@ String text = new FormattedText(
 ).asString();
 ```
 
-To manipulate with a text:
+To manipulate text:
 
 ```java
 // To lower case
@@ -133,9 +133,10 @@ Collection<String> filtered = new ListOf<>(
 ```
 
 To flatten one iterable:
+
 ```java
 new Joined<>(
-  new Mapped<IterableOf>(
+  new Mapped<IterableOf<>>(
     iter -> new IterableOf<>(
       new ListOf<>(iter).toArray(new Integer[]{})
     ),
@@ -145,9 +146,10 @@ new Joined<>(
 ```
 
 To flatten and join several iterables:
+
 ```java
 new Joined<>(
-  new Mapped<IterableOf>(
+  new Mapped<IterableOf<>>(
     iter -> new IterableOf<>(
       new Joined<>(iter)
     ),
@@ -178,7 +180,7 @@ new And(
 Or even more compact:
 
 ```java
-new ForEach<String>(
+new ForEach<>(
   input -> System.out.printf(
     "Item: %s\n", input
   )
@@ -214,7 +216,7 @@ int total = new LengthOf(
 To create a set of elements by providing variable arguments:
 
 ```java
-final Set<String> unique = new SetOf<String>(
+final Set<String> unique = new SetOf<>(
   "one",
   "two",
   "one",
@@ -378,7 +380,7 @@ To remove the cache used by Docker-based build:
 docker volume rm cactoos-mvn-cache
 ```
 
-Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static code analyze tool with
+Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static code analysis tool with
 [checks list](http://checkstyle.sourceforge.net/checks.html) in GitHub precommits.
 
 ## Contributors
