@@ -17,7 +17,7 @@
 Project architect: [@victornoel](https://github.com/victornoel)
 
 **ATTENTION**: We're still in a very early alpha version, the API
-may and _will_ change frequently. Please, use it at your own risk,
+may and _will_ change frequently. Please use it at your own risk
 until we release version 1.0. You can view our progress towards
 this release [here](https://github.com/yegor256/cactoos/milestone/1).
 
@@ -184,7 +184,7 @@ new ForEach<>(
   input -> System.out.printf(
     "Item: %s\n", input
   )
-).exec(new IterableOf("how", "are", "you", "?"));
+).exec(new IterableOf<>("how", "are", "you", "?"));
 ```
 
 To sort a list of words in the file:
@@ -224,14 +224,14 @@ final Set<String> unique = new SetOf<>(
 );
 ```
 
-To create a set of elements from existing iterable:
+To create a set of elements from an existing iterable:
 ```java
 final Set<String> words = new SetOf<>(
   new IterableOf<>("abc", "bcd", "abc", "ccc")
 );
 ```
 
-To create a sorted iterable with unique elements from existing iterable:
+To create a sorted iterable with unique elements from an existing iterable:
 ```java
 final Iterable<String> sorted = new Sorted<>(
   new SetOf<>(
@@ -240,7 +240,7 @@ final Iterable<String> sorted = new Sorted<>(
 );
 ```
 
-To create a sorted set from existing vararg elements using comparator:
+To create a sorted set from existing vararg elements using a comparator:
 ```java
 final Set<String> sorted = new org.cactoos.set.Sorted<>(
   (first, second) -> first.compareTo(second),
@@ -248,7 +248,7 @@ final Set<String> sorted = new org.cactoos.set.Sorted<>(
 );
 ```
 
-To create a sorted set from existing iterable using comparator:
+To create a sorted set from an existing iterable using a comparator:
 ```java
 final Set<String> sorted = new org.cactoos.set.Sorted<>(
   (first, second) -> first.compareTo(second),
@@ -358,12 +358,12 @@ Ask your questions related to cactoos library on [Stackoverflow](https://stackov
 Just fork the repo and send us a pull request.
 
 Make sure your branch builds without any warnings/issues:
-```
+```bash
 mvn clean verify -Pqulice
 ```
 
 To run a build similar to the CI with Docker only, use:
-```
+```bash
 docker run \
 	--tty \
 	--interactive \
@@ -376,7 +376,7 @@ docker run \
 ```
 
 To remove the cache used by Docker-based build:
-```
+```bash
 docker volume rm cactoos-mvn-cache
 ```
 
