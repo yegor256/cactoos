@@ -72,7 +72,7 @@ final class GzipOutputTest {
             );
         stream.close();
         new Assertion<>(
-            "Cann't write to closed stream",
+            "Can't write to closed stream",
             () -> new LengthOf(
                 new TeeInput(
                     "Hello!",

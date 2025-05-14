@@ -7,7 +7,7 @@ package org.cactoos.func;
 import org.cactoos.BiFunc;
 
 /**
- * Enveloppe of {@link BiFunc}.
+ * Envelope of {@link BiFunc}.
  *
  * @param <X> Type of input
  * @param <Y> Type of input

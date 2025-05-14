@@ -31,7 +31,7 @@ final class ImmutableTest {
         final Iterator<String> immutable = new Immutable<>(list.iterator());
         immutable.next();
         new Assertion<>(
-            "Cann't remove from unmutable",
+            "Can't remove from unmutable",
             () -> {
                 immutable.remove();
                 return 1;

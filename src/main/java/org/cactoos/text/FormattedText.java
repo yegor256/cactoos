@@ -11,7 +11,7 @@ import org.cactoos.Text;
 import org.cactoos.list.ListOf;
 
 /**
- * Text in Sprinf format.
+ * Text in Sprintf format.
  *
  * <p>There is no thread-safety guarantee.
  *
