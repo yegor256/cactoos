@@ -74,7 +74,7 @@ final class IteratorOfCharsTest {
         );
         iterator.next();
         new Assertion<>(
-            "Cann't move to second character",
+            "can't move to second character",
             () -> iterator.next(),
             new Throws<>(NoSuchElementException.class)
         ).affirm();

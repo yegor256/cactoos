@@ -98,7 +98,7 @@ final class FuncWithFallbackTest {
     @Test
     void noFallbackIsProvided() {
         new Assertion<>(
-            "Cann't find fallback",
+            "can't find fallback",
             () -> new FuncWithFallback<>(
                 input -> {
                     throw new IllegalFormatWidthException(1);

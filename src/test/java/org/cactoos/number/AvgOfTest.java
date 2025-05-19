@@ -198,7 +198,7 @@ final class AvgOfTest {
     @Test
     void withDoubleCollectionPositiveInfinity() {
         new Assertion<>(
-            "Cann't calculate avg from infinity",
+            "can't calculate avg from infinity",
             () -> new AvgOf(
                 Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY
             ).doubleValue(),
@@ -209,7 +209,7 @@ final class AvgOfTest {
     @Test
     void withDoubleCollectionNegativeInfinity() {
         new Assertion<>(
-            "Cann't calculate avg from infinity",
+            "can't calculate avg from infinity",
             () -> new AvgOf(
                 Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY
             ).doubleValue(),
@@ -220,7 +220,7 @@ final class AvgOfTest {
     @Test
     void withDoubleCollectionNaN() {
         new Assertion<>(
-            "Cann't calculate avg from NaN",
+            "can't calculate avg from NaN",
             () -> new AvgOf(
                 Double.NaN, Double.NaN
             ).doubleValue(),
