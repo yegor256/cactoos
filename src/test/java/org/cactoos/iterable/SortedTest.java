@@ -72,7 +72,7 @@ final class SortedTest {
     }
 
     @Test
-    void sortsByNymberComprator() {
+    void sortsByNumberComparator() {
         new Assertion<>(
             "Must sort an iterable of numbers",
             new Sorted<>(

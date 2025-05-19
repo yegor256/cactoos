@@ -29,7 +29,7 @@ final class LowestOfTest {
     @Test
     void failsForEmptyIterable() {
         new Assertion<>(
-            "Cann't iterate in empty collection",
+            "can't iterate in empty collection",
             () -> new LowestOf<>(() -> Collections.emptyIterator()).value(),
             new Throws<>(NoSuchElementException.class)
         );

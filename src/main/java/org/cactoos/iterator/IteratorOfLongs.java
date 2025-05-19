@@ -29,11 +29,11 @@ public final class IteratorOfLongs implements Iterator<Long> {
 
     /**
      * Ctor.
-     * @param itms Items to iterate
+     * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")
-    public IteratorOfLongs(final long... itms) {
-        this.items = itms;
+    public IteratorOfLongs(final long... items) {
+        this.items = items;
         this.position = new AtomicInteger(0);
     }
 

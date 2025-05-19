@@ -49,7 +49,7 @@ final class IoCheckedTest {
     void runtimeExceptionGoesOut() {
         final RuntimeException exception = new IllegalStateException("intended to fail here");
         new Assertion<>(
-            "Must rethrow RuntimeExcepion",
+            "Must rethrow RuntimeException",
             () -> new IoChecked<>(
                 () -> {
                     throw exception;

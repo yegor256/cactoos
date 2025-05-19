@@ -29,11 +29,11 @@ public final class IteratorOfDoubles implements Iterator<Double> {
 
     /**
      * Ctor.
-     * @param itms Items to iterate
+     * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")
-    public IteratorOfDoubles(final double... itms) {
-        this.items = itms;
+    public IteratorOfDoubles(final double... items) {
+        this.items = items;
         this.position = new AtomicInteger(0);
     }
 
