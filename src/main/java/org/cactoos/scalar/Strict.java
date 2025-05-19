@@ -21,7 +21,7 @@ public final class Strict<T> extends ScalarEnvelope<T> {
     /**
      * Ctor.
      *
-     * @param origin The value to test againts the {@code rule}.
+     * @param origin The value to test against the {@code rule}.
      * @param rule The rule, that validates {@code origin}.
      * @param exception The exception, that is thrown if validation fails.
      */
