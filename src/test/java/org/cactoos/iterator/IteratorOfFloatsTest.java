@@ -54,7 +54,7 @@ final class IteratorOfFloatsTest {
         final IteratorOfFloats iterator = new IteratorOfFloats(1.0f);
         iterator.next();
         new Assertion<>(
-            "Excpetion is expected for fully traversed iterator.",
+            "Exception is expected for fully traversed iterator.",
             iterator::next,
             new Throws<>(NoSuchElementException.class)
         ).affirm();

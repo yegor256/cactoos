@@ -25,7 +25,7 @@ final class CheckedBiProcTest {
     @Test
     void runtimeExceptionIsNotWrapped() {
         new Assertion<>(
-            "Runtime exception is wraped",
+            "Runtime exception is warped",
             () -> {
                 new CheckedBiProc<>(
                     (first, second) -> {

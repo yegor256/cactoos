@@ -150,7 +150,7 @@ final class LoggingInputTest {
             logger
         ).stream().available();
         new Assertion<>(
-            "Must log avaliable byte(s) from text file",
+            "Must log available byte(s) from text file",
             new TextOf(logger.toString()),
             new HasString(
                 "There is(are) 74536 byte(s) available from text file"
