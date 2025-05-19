@@ -28,11 +28,11 @@ public final class IteratorOfInts implements Iterator<Integer> {
 
     /**
      * Ctor.
-     * @param itms Items to iterate
+     * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")
-    public IteratorOfInts(final int... itms) {
-        this.items = itms;
+    public IteratorOfInts(final int... items) {
+        this.items = items;
         this.position = new AtomicInteger(0);
     }
 

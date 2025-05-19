@@ -30,11 +30,11 @@ public final class IteratorOfShorts implements Iterator<Short> {
 
     /**
      * Ctor.
-     * @param itms Items to iterate
+     * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")
-    public IteratorOfShorts(final short... itms) {
-        this.items = itms;
+    public IteratorOfShorts(final short... items) {
+        this.items = items;
         this.position = new AtomicInteger(0);
     }
 

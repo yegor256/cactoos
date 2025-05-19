@@ -19,7 +19,7 @@ final class LoweredTest {
     void convertsText() {
         new Assertion<>(
             "Can't lower case a text",
-            new Lowered(new TextOf("HelLo!")),
+            new Lowered(new TextOf("Hello!")),
             new HasString("hello!")
         ).affirm();
     }

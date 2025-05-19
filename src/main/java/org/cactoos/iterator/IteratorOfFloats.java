@@ -28,11 +28,11 @@ public final class IteratorOfFloats implements Iterator<Float> {
 
     /**
      * Ctor.
-     * @param itms Items to iterate
+     * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")
-    public IteratorOfFloats(final float... itms) {
-        this.items = itms;
+    public IteratorOfFloats(final float... items) {
+        this.items = items;
         this.position = new AtomicInteger(0);
     }
 
