@@ -18,7 +18,7 @@ import org.llorllale.cactoos.matchers.IsText;
 final class ConctatenatedTest {
 
     @Test
-    void contatenateText() {
+    void concatenateText() {
         new Assertion<>(
             "Must contcatenate single text",
             new Concatenated(new TextOf("bar")),
@@ -27,7 +27,7 @@ final class ConctatenatedTest {
     }
 
     @Test
-    void contatenateTexts() {
+    void concatenateTexts() {
         new Assertion<>(
             "Must contcatenate multi texts",
             new Concatenated(new TextOf("abc"), new TextOf("xyz")),
@@ -45,7 +45,7 @@ final class ConctatenatedTest {
     }
 
     @Test
-    void contatenateString() {
+    void concatenateString() {
         new Assertion<>(
             "Must contcatenate single string",
             new Concatenated("bar"),
@@ -54,7 +54,7 @@ final class ConctatenatedTest {
     }
 
     @Test
-    void contatenateStrings() {
+    void concatenateStrings() {
         new Assertion<>(
             "Must contcatenate multi strings",
             new Concatenated("abc", "xyz"),
