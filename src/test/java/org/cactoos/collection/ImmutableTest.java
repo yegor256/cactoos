@@ -4,6 +4,8 @@
  */
 package org.cactoos.collection;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -236,20 +238,16 @@ final class ImmutableTest {
 
     @Test
     void isImmutableToExternalChanges() {
-        final java.util.ArrayList<String> original = new java.util.ArrayList<>(
-            java.util.Arrays.asList("a", "b", "c")
+        final ArrayList<String> original = new ArrayList<>(
+            Arrays.asList("a", "b", "c")
         );
         final Immutable<String> immutable = new Immutable<>(original);
-        
-        // Modify the original collection
         original.add("d");
-        
         new Assertion<>(
             "Immutable collection must not reflect external changes",
             immutable.size(),
             new IsEqual<>(3)
         ).affirm();
-        
         new Assertion<>(
             "Immutable collection must contain original elements only",
             immutable.contains("d"),
