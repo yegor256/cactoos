@@ -16,14 +16,8 @@
 
 Project architect: [@victornoel](https://github.com/victornoel)
 
-**ATTENTION**: We're still in a very early alpha version, the API
-may and _will_ change frequently. Please use it at your own risk
-until we release version 1.0. You can view our progress towards
-this release [here](https://github.com/yegor256/cactoos/milestone/1).
-
 Cactoos is a collection of object-oriented Java primitives.
 
-**Motivation**.
 We are not happy with
 [JDK](https://en.wikipedia.org/wiki/Java_Development_Kit),
 [Guava](https://github.com/google/guava), and
@@ -32,13 +26,10 @@ they are procedural and not object-oriented. They do their job,
 but mostly through static methods. Cactoos is suggesting
 to do almost exactly the same, but through objects.
 
-**Principles**.
 These are the [design principles](https://www.elegantobjects.org#principles)
 behind Cactoos.
 
-**How to use**.
-The library has no dependencies. All you need is this
-(get the latest version [here](https://github.com/yegor256/cactoos/releases)):
+The library has no dependencies. All you need is this:
 
 Maven:
 
@@ -228,6 +219,7 @@ final Set<String> unique = new SetOf<>(
 ```
 
 To create a set of elements from an existing iterable:
+
 ```java
 final Set<String> words = new SetOf<>(
   new IterableOf<>("abc", "bcd", "abc", "ccc")
@@ -235,6 +227,7 @@ final Set<String> words = new SetOf<>(
 ```
 
 To create a sorted iterable with unique elements from an existing iterable:
+
 ```java
 final Iterable<String> sorted = new Sorted<>(
   new SetOf<>(
@@ -244,6 +237,7 @@ final Iterable<String> sorted = new Sorted<>(
 ```
 
 To create a sorted set from existing vararg elements using a comparator:
+
 ```java
 final Set<String> sorted = new org.cactoos.set.Sorted<>(
   (first, second) -> first.compareTo(second),
@@ -252,6 +246,7 @@ final Set<String> sorted = new org.cactoos.set.Sorted<>(
 ```
 
 To create a sorted set from an existing iterable using a comparator:
+
 ```java
 final Set<String> sorted = new org.cactoos.set.Sorted<>(
   (first, second) -> first.compareTo(second),
