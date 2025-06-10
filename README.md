@@ -368,16 +368,17 @@ mvn clean verify -Pqulice
 ```
 
 To run a build similar to the CI with Docker only, use:
+
 ```bash
 docker run \
-	--tty \
-	--interactive \
-	--workdir=/main \
-	--volume=${PWD}:/main \
-	--volume=cactoos-mvn-cache:/root/.m2 \
-	--rm \
-	maven:3-jdk-8 \
-	bash -c "mvn clean install site -Pqulice -Psite --errors; chown -R $(id -u):$(id -g) target/"
+  --tty \
+  --interactive \
+  --workdir=/main \
+  --volume=${PWD}:/main \
+  --volume=cactoos-mvn-cache:/root/.m2 \
+  --rm \
+  maven:3-jdk-8 \
+  bash -c "mvn clean install -Pqulice; chown -R $(id -u):$(id -g) target/"
 ```
 
 To remove the cache used by Docker-based build:
@@ -395,7 +396,8 @@ in GitHub precommits.
 
 * [@yegor256](https://github.com/yegor256)
 as Yegor Bugayenko ([Blog](http://www.yegor256.com))
-* [@g4s8](https://github.com/g4s8) as Kirill Che. (g4s8.public@gmail.com)
+* [@g4s8](https://github.com/g4s8)
+as [Kirill Che.](mailto:g4s8.public@gmail.com)
 * [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
 * [@englishman](https://github.com/englishman) as Andriy Kryvtsun
 * [@VsSekorin](https://github.com/VsSekorin) as Vseslav Sekorin
