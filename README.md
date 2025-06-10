@@ -54,7 +54,7 @@ Gradle:
 
 ```groovy
 dependencies {
-  compile 'org.cactoos:cactoos:0.57.0'
+  compile 'org.cactoos:cactoos::0.57.0
 }
 ```
 
