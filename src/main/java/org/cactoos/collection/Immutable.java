@@ -4,6 +4,7 @@
  */
 package org.cactoos.collection;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -33,7 +34,7 @@ public final class Immutable<X> implements Collection<X> {
      * @param src Source collection
      */
     public Immutable(final Collection<? extends X> src) {
-        this.col = src;
+        this.col = new ArrayList<>(src);
     }
 
     @Override
