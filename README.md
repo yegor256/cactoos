@@ -1,4 +1,4 @@
-<img alt="logo" src="https://www.objectionary.com/cactus.svg" height="100px" />
+# Object-Oriented Java Primitives
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 [![DevOps By Rultor.com](https://www.rultor.com/b/yegor256/cactoos)](https://www.rultor.com/p/yegor256/cactoos)
@@ -33,7 +33,8 @@ but mostly through static methods. Cactoos is suggesting
 to do almost exactly the same, but through objects.
 
 **Principles**.
-These are the [design principles](https://www.elegantobjects.org#principles) behind Cactoos.
+These are the [design principles](https://www.elegantobjects.org#principles)
+behind Cactoos.
 
 **How to use**.
 The library has no dependencies. All you need is this
@@ -59,12 +60,13 @@ dependencies {
 
 Java version required: 1.8+.
 
-StackOverflow tag is [cactoos](https://stackoverflow.com/questions/tagged/cactoos).
+StackOverflow tag is
+[cactoos](https://stackoverflow.com/questions/tagged/cactoos).
 
 ## Input/Output
 
 More about it here:
-[Object-Oriented Declarative Input/Output in Cactoos](http://www.yegor256.com/2017/06/22/object-oriented-input-output-in-cactoos.html).
+[Object-Oriented Declarative Input/Output in Cactoos][blog].
 
 To read a text file in UTF-8:
 
@@ -119,7 +121,8 @@ new Upper(
 
 ## Iterables/Collections/Lists/Sets
 
-More about it here: [Lazy Loading and Caching via Sticky Cactoos Primitives](http://www.yegor256.com/2017/10/17/lazy-loading-caching-sticky-cactoos.html).
+More about it here:
+[Lazy Loading and Caching via Sticky Cactoos Primitives][lazy-blog].
 
 To filter a collection:
 
@@ -299,17 +302,21 @@ new And(
 ```
 
 ## Dates and Times
+
 From our `org.cactoos.time` package.
 
-Our classes are divided in two groups: those that parse strings into date/time objects, and those that format those objects into strings.
+Our classes are divided in two groups: those that parse strings into
+date/time objects, and those that format those objects into strings.
 
-For example, this is the traditional way of parsing a string into an [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html):
+For example, this is the traditional way of parsing a string into an
+[OffsetDateTime]:
 
 ```java
 final OffsetDateTime date = OffsetDateTime.parse("2007-12-03T10:15:30+01:00");
 ```
 
-Here is its object-oriented alternative (no static method calls!) using `OffsetDateTimeOf`, which is a `Scalar`:
+Here is its object-oriented alternative (no static method calls!)
+using `OffsetDateTimeOf`, which is a `Scalar`:
 
 ```java
 final OffsetDateTime date = new OffsetDateTimeOf("2007-12-03T10:15:30+01:00").value();
@@ -322,7 +329,7 @@ final OffsetDateTime date = ...;
 final String text = new TextOfDateTime(date).asString();
 ```
 
-## Our objects vs. their static methods
+## Our Objects vs. Their Static Methods
 
 Cactoos | Guava | Apache Commons | JDK 8
 ------ | ------ | ------ | ------
@@ -351,13 +358,16 @@ Cactoos | Guava | Apache Commons | JDK 8
 
 ## Questions
 
-Ask your questions related to cactoos library on [Stackoverflow](https://stackoverflow.com/questions/ask) with [cactoos](https://stackoverflow.com/tags/cactoos/info) tag.
+Ask your questions related to cactoos library on
+[Stackoverflow](https://stackoverflow.com/questions/ask)
+with the [cactoos](https://stackoverflow.com/tags/cactoos/info) tag.
 
 ## How to contribute?
 
 Just fork the repo and send us a pull request.
 
 Make sure your branch builds without any warnings/issues:
+
 ```bash
 mvn clean verify -Pqulice
 ```
@@ -376,32 +386,42 @@ docker run \
 ```
 
 To remove the cache used by Docker-based build:
+
 ```bash
 docker volume rm cactoos-mvn-cache
 ```
 
-Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static code analysis tool with
-[checks list](http://checkstyle.sourceforge.net/checks.html) in GitHub precommits.
+Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle)
+is used as a static code analysis tool with
+[checks list](http://checkstyle.sourceforge.net/checks.html)
+in GitHub precommits.
 
 ## Contributors
 
-  - [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](http://www.yegor256.com))
-  - [@g4s8](https://github.com/g4s8) as Kirill Che. (g4s8.public@gmail.com)
-  - [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
-  - [@englishman](https://github.com/englishman) as Andriy Kryvtsun
-  - [@VsSekorin](https://github.com/VsSekorin) as Vseslav Sekorin
-  - [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
-  - [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
-  - [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
-  - [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
-  - [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
-  - [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
-  - [@llorllale](https://github.com/llorllale) as George Aristy
-  - [@driver733](https://github.com/driver733) as Mikhail Yakushin
-  - [@izrik](https://github.com/izrik) as Richard Sartor
-  - [@Vatavuk](https://github.com/Vatavuk) as Vedran Grgo Vatavuk
-  - [@dgroup](https://github.com/dgroup) as Yurii Dubinka
-  - [@iakunin](https://github.com/iakunin) as Maksim Iakunin
-  - [@fanifieiev](https://github.com/fanifieiev) as Fevzi Anifieiev
-  - [@victornoel](https://github.com/victornoel) as Victor Noël
-  - [@paulodamaso](https://github.com/paulodamaso) as Paulo Lobo
+* [@yegor256](https://github.com/yegor256)
+as Yegor Bugayenko ([Blog](http://www.yegor256.com))
+* [@g4s8](https://github.com/g4s8) as Kirill Che. (g4s8.public@gmail.com)
+* [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
+* [@englishman](https://github.com/englishman) as Andriy Kryvtsun
+* [@VsSekorin](https://github.com/VsSekorin) as Vseslav Sekorin
+* [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
+* [@dusan-rychnovsky](https://github.com/dusan-rychnovsky)
+as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
+* [@timmeey](https://github.com/timmeey)
+as Tim Hinkes ([Blog](https://blog.timmeey.de))
+* [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
+* [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
+* [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
+* [@llorllale](https://github.com/llorllale) as George Aristy
+* [@driver733](https://github.com/driver733) as Mikhail Yakushin
+* [@izrik](https://github.com/izrik) as Richard Sartor
+* [@Vatavuk](https://github.com/Vatavuk) as Vedran Grgo Vatavuk
+* [@dgroup](https://github.com/dgroup) as Yurii Dubinka
+* [@iakunin](https://github.com/iakunin) as Maksim Iakunin
+* [@fanifieiev](https://github.com/fanifieiev) as Fevzi Anifieiev
+* [@victornoel](https://github.com/victornoel) as Victor Noël
+* [@paulodamaso](https://github.com/paulodamaso) as Paulo Lobo
+
+[blog]: http://www.yegor256.com/2017/06/22/object-oriented-input-output-in-cactoos.html
+[OffsetDateTime]: https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html
+[lazy-blog]: http://www.yegor256.com/2017/10/17/lazy-loading-caching-sticky-cactoos.html
