@@ -10,8 +10,7 @@ import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.func.FuncOf;
-import org.cactoos.proc.ProcOf;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
 import org.junit.jupiter.api.Test;
@@ -95,7 +94,7 @@ final class WildcardSemanticsTest {
     void andAcceptsCovariantIterable() {
         // Testing And with Iterable<? extends X>
         final Func<CharSequence, Boolean> func = input -> input.length() > 0;
-        final List<String> inputs = List.of("hello", "world");
+        final IterableOf<String> inputs = new IterableOf<>("hello", "world");
         new Assertion<>(
             "And must accept covariant iterable",
             new And(func, inputs),
@@ -119,7 +118,7 @@ final class WildcardSemanticsTest {
     void orAcceptsCovariantIterable() {
         // Testing Or with Iterable<? extends X>
         final Func<CharSequence, Boolean> func = input -> input.length() > 3;
-        final List<String> inputs = List.of("hi", "hello");
+        final IterableOf<String> inputs = new IterableOf<>("hi", "hello");
         new Assertion<>(
             "Or must accept covariant iterable",
             new Or(func, inputs),
