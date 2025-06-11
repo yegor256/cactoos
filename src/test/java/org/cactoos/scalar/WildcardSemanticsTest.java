@@ -30,7 +30,6 @@ final class WildcardSemanticsTest {
 
     @Test
     void scalarOfAcceptsCovariantFunc() {
-        // Testing ScalarOf constructor with Func<? super X, ? extends T>
         final Func<Object, String> func = input -> input.toString();
         final String input = "test";
         new Assertion<>(
@@ -42,7 +41,6 @@ final class WildcardSemanticsTest {
 
     @Test
     void scalarOfAcceptsContravariantProc() {
-        // Testing ScalarOf constructor with Proc<? super X>
         final List<String> result = new ArrayList<>();
         final Proc<Object> proc = input -> result.add(input.toString());
         final String input = "hello";
@@ -56,7 +54,6 @@ final class WildcardSemanticsTest {
 
     @Test
     void mappedAcceptsCovariantScalar() {
-        // Testing Mapped with Scalar<? extends T>
         final Scalar<String> scalar = () -> "hello";
         final Func<Object, Text> func = input -> new Upper(new TextOf(input.toString()));
         new Assertion<>(
@@ -68,7 +65,6 @@ final class WildcardSemanticsTest {
 
     @Test
     void mappedAcceptsContravariantFunc() {
-        // Testing Mapped with Func<? super T, ? extends U>
         final Scalar<String> scalar = () -> "hello";
         final Func<CharSequence, Text> func = input -> new Upper(new TextOf(input.toString()));
         new Assertion<>(
@@ -80,7 +76,6 @@ final class WildcardSemanticsTest {
 
     @Test
     void andAcceptsContravariantFunc() {
-        // Testing And with Func<? super X, Boolean>
         final Func<CharSequence, Boolean> func = input -> input.length() > 0;
         final String[] inputs = {"hello", "world"};
         new Assertion<>(
@@ -92,7 +87,6 @@ final class WildcardSemanticsTest {
 
     @Test
     void andAcceptsCovariantIterable() {
-        // Testing And with Iterable<? extends X>
         final Func<CharSequence, Boolean> func = input -> input.length() > 0;
         final IterableOf<String> inputs = new IterableOf<>("hello", "world");
         new Assertion<>(
@@ -104,7 +98,6 @@ final class WildcardSemanticsTest {
 
     @Test
     void orAcceptsContravariantFunc() {
-        // Testing Or with Func<? super X, Boolean>
         final Func<CharSequence, Boolean> func = input -> input.length() > 5;
         final String[] inputs = {"hi", "hello"};
         new Assertion<>(
@@ -116,7 +109,6 @@ final class WildcardSemanticsTest {
 
     @Test
     void orAcceptsCovariantIterable() {
-        // Testing Or with Iterable<? extends X>
         final Func<CharSequence, Boolean> func = input -> input.length() > 3;
         final IterableOf<String> inputs = new IterableOf<>("hi", "hello");
         new Assertion<>(
@@ -128,7 +120,6 @@ final class WildcardSemanticsTest {
 
     @Test
     void flattenedAcceptsNestedWildcards() {
-        // Testing Flattened with Scalar<? extends Scalar<? extends X>>
         final Scalar<String> inner = () -> "test";
         final Scalar<Scalar<String>> outer = () -> inner;
         new Assertion<>(
@@ -140,7 +131,6 @@ final class WildcardSemanticsTest {
 
     @Test
     void scalarWithFallbackAcceptsCovariantScalar() {
-        // Testing ScalarWithFallback with Scalar<? extends T>
         final Scalar<String> scalar = () -> "success";
         new Assertion<>(
             "ScalarWithFallback must accept covariant scalar",
