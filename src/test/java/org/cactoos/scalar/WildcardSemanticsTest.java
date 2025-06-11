@@ -4,8 +4,8 @@
  */
 package org.cactoos.scalar;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import org.cactoos.Func;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
@@ -28,6 +28,11 @@ import org.llorllale.cactoos.matchers.IsText;
  */
 final class WildcardSemanticsTest {
 
+    /**
+     * Test string constant.
+     */
+    private static final String HELLO = "hello";
+
     @Test
     void scalarOfAcceptsCovariantFunc() {
         final Func<Object, String> func = input -> input.toString();
@@ -41,9 +46,9 @@ final class WildcardSemanticsTest {
 
     @Test
     void scalarOfAcceptsContravariantProc() {
-        final List<String> result = new ArrayList<>();
+        final List<String> result = new ArrayList<>(1);
         final Proc<Object> proc = input -> result.add(input.toString());
-        final String input = "hello";
+        final String input = WildcardSemanticsTest.HELLO;
         final String expected = "world";
         new Assertion<>(
             "ScalarOf must accept contravariant processor",
@@ -54,7 +59,7 @@ final class WildcardSemanticsTest {
 
     @Test
     void mappedAcceptsCovariantScalar() {
-        final Scalar<String> scalar = () -> "hello";
+        final Scalar<String> scalar = () -> WildcardSemanticsTest.HELLO;
         final Func<Object, Text> func = input -> new Upper(new TextOf(input.toString()));
         new Assertion<>(
             "Mapped must accept covariant scalar",
@@ -65,7 +70,7 @@ final class WildcardSemanticsTest {
 
     @Test
     void mappedAcceptsContravariantFunc() {
-        final Scalar<String> scalar = () -> "hello";
+        final Scalar<String> scalar = () -> WildcardSemanticsTest.HELLO;
         final Func<CharSequence, Text> func = input -> new Upper(new TextOf(input.toString()));
         new Assertion<>(
             "Mapped must accept contravariant function",
@@ -77,7 +82,7 @@ final class WildcardSemanticsTest {
     @Test
     void andAcceptsContravariantFunc() {
         final Func<CharSequence, Boolean> func = input -> input.length() > 0;
-        final String[] inputs = {"hello", "world"};
+        final String[] inputs = {WildcardSemanticsTest.HELLO, "world"};
         new Assertion<>(
             "And must accept contravariant function",
             new And(func, inputs),
@@ -88,7 +93,7 @@ final class WildcardSemanticsTest {
     @Test
     void andAcceptsCovariantIterable() {
         final Func<CharSequence, Boolean> func = input -> input.length() > 0;
-        final IterableOf<String> inputs = new IterableOf<>("hello", "world");
+        final IterableOf<String> inputs = new IterableOf<>(WildcardSemanticsTest.HELLO, "world");
         new Assertion<>(
             "And must accept covariant iterable",
             new And(func, inputs),
@@ -99,7 +104,7 @@ final class WildcardSemanticsTest {
     @Test
     void orAcceptsContravariantFunc() {
         final Func<CharSequence, Boolean> func = input -> input.length() > 5;
-        final String[] inputs = {"hi", "hello"};
+        final String[] inputs = {"hi", WildcardSemanticsTest.HELLO};
         new Assertion<>(
             "Or must accept contravariant function",
             new Or(func, inputs),
@@ -110,7 +115,7 @@ final class WildcardSemanticsTest {
     @Test
     void orAcceptsCovariantIterable() {
         final Func<CharSequence, Boolean> func = input -> input.length() > 3;
-        final IterableOf<String> inputs = new IterableOf<>("hi", "hello");
+        final IterableOf<String> inputs = new IterableOf<>("hi", WildcardSemanticsTest.HELLO);
         new Assertion<>(
             "Or must accept covariant iterable",
             new Or(func, inputs),
