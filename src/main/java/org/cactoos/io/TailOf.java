@@ -36,21 +36,21 @@ public final class TailOf implements Input {
 
     /**
      * Constructor.
-     * @param inpt Input to decorate
+     * @param data Input to decorate
      * @param bytes Number of last bytes to show from input
      */
-    public TailOf(final Input inpt, final int bytes) {
-        this(inpt, bytes, 16_384);
+    public TailOf(final Input data, final int bytes) {
+        this(data, bytes, 16_384);
     }
 
     /**
      * Constructor.
-     * @param inpt Input to decorate
+     * @param data Input to decorate
      * @param bytes Number of last bytes to show from input
      * @param maximum Maximum number of bytes to read at once
      */
-    public TailOf(final Input inpt, final int bytes, final int maximum) {
-        this.input = inpt;
+    public TailOf(final Input data, final int bytes, final int maximum) {
+        this.input = data;
         this.count = bytes;
         this.max = maximum;
     }

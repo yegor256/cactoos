@@ -17,7 +17,7 @@ import org.llorllale.cactoos.matchers.HasString;
 final class HexOfTest {
 
     @Test
-    void empytString() {
+    void emptyString() {
         new Assertion<>(
             "Can't represent an empty string as hexadecimal",
             new HexOf(
@@ -28,7 +28,7 @@ final class HexOfTest {
     }
 
     @Test
-    void notEmpytString() {
+    void notEmptyString() {
         new Assertion<>(
             "Can't represent a string as hexadecimal",
             new HexOf(

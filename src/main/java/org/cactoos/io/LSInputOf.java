@@ -44,23 +44,23 @@ public final class LSInputOf implements LSInput {
 
     /**
      * Ctor.
-     * @param inpt Input
+     * @param data Input
      */
-    public LSInputOf(final Input inpt) {
-        this(inpt, "#public", "#system", "#base");
+    public LSInputOf(final Input data) {
+        this(data, "#public", "#system", "#base");
     }
 
     /**
      * Ctor.
-     * @param inpt Input
+     * @param data Input
      * @param pubid PublicID
      * @param sysid SystemID
      * @param bse Base
      * @checkstyle ParameterNumberCheck (3 lines)
      */
-    public LSInputOf(final Input inpt, final String pubid,
+    public LSInputOf(final Input data, final String pubid,
         final String sysid, final String bse) {
-        this.input = inpt;
+        this.input = data;
         this.pid = pubid;
         this.sid = sysid;
         this.base = bse;
