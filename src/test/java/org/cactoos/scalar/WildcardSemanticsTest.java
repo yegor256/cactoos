@@ -1,0 +1,147 @@
+/*
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-License-Identifier: MIT
+ */
+package org.cactoos.scalar;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.cactoos.Func;
+import org.cactoos.Proc;
+import org.cactoos.Scalar;
+import org.cactoos.Text;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.Upper;
+import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.IsText;
+
+/**
+ * Tests for wildcard semantics in scalar classes.
+ * This test class verifies the proper behavior of relaxed wildcards
+ * (? extends T, ? super T) in the scalar package as requested in #1569.
+ *
+ * @since 1.0.0
+ * @checkstyle JavadocMethodCheck (500 lines)
+ */
+final class WildcardSemanticsTest {
+
+    /**
+     * Test string constant.
+     */
+    private static final String HELLO = "hello";
+
+    @Test
+    void scalarOfAcceptsCovariantFunc() {
+        final Func<Object, String> func = input -> input.toString();
+        final String input = "test";
+        new Assertion<>(
+            "ScalarOf must accept covariant function",
+            new ScalarOf<>(func, input),
+            new HasValue<>("test")
+        ).affirm();
+    }
+
+    @Test
+    void scalarOfAcceptsContravariantProc() {
+        final List<String> result = new ArrayList<>(1);
+        final Proc<Object> proc = input -> result.add(input.toString());
+        final String input = WildcardSemanticsTest.HELLO;
+        final String expected = "world";
+        new Assertion<>(
+            "ScalarOf must accept contravariant processor",
+            new ScalarOf<>(proc, input, expected),
+            new HasValue<>(expected)
+        ).affirm();
+    }
+
+    @Test
+    void mappedAcceptsCovariantScalar() {
+        final Scalar<String> scalar = () -> WildcardSemanticsTest.HELLO;
+        final Func<Object, Text> func = input -> new Upper(new TextOf(input.toString()));
+        new Assertion<>(
+            "Mapped must accept covariant scalar",
+            new Mapped<>(func, scalar),
+            new HasValue<>(new IsText("HELLO"))
+        ).affirm();
+    }
+
+    @Test
+    void mappedAcceptsContravariantFunc() {
+        final Scalar<String> scalar = () -> WildcardSemanticsTest.HELLO;
+        final Func<CharSequence, Text> func = input -> new Upper(new TextOf(input.toString()));
+        new Assertion<>(
+            "Mapped must accept contravariant function",
+            new Mapped<>(func, scalar),
+            new HasValue<>(new IsText("HELLO"))
+        ).affirm();
+    }
+
+    @Test
+    void andAcceptsContravariantFunc() {
+        final Func<CharSequence, Boolean> func = input -> input.length() > 0;
+        final String[] inputs = {WildcardSemanticsTest.HELLO, "world"};
+        new Assertion<>(
+            "And must accept contravariant function",
+            new And(func, inputs),
+            new HasValue<>(true)
+        ).affirm();
+    }
+
+    @Test
+    void andAcceptsCovariantIterable() {
+        final Func<CharSequence, Boolean> func = input -> input.length() > 0;
+        final IterableOf<String> inputs = new IterableOf<>(WildcardSemanticsTest.HELLO, "world");
+        new Assertion<>(
+            "And must accept covariant iterable",
+            new And(func, inputs),
+            new HasValue<>(true)
+        ).affirm();
+    }
+
+    @Test
+    void orAcceptsContravariantFunc() {
+        final Func<CharSequence, Boolean> func = input -> input.length() > 5;
+        final String[] inputs = {"hi", WildcardSemanticsTest.HELLO};
+        new Assertion<>(
+            "Or must accept contravariant function",
+            new Or(func, inputs),
+            new HasValue<>(false)
+        ).affirm();
+    }
+
+    @Test
+    void orAcceptsCovariantIterable() {
+        final Func<CharSequence, Boolean> func = input -> input.length() > 3;
+        final IterableOf<String> inputs = new IterableOf<>("hi", WildcardSemanticsTest.HELLO);
+        new Assertion<>(
+            "Or must accept covariant iterable",
+            new Or(func, inputs),
+            new HasValue<>(true)
+        ).affirm();
+    }
+
+    @Test
+    void flattenedAcceptsNestedWildcards() {
+        final Scalar<String> inner = () -> "test";
+        final Scalar<Scalar<String>> outer = () -> inner;
+        new Assertion<>(
+            "Flattened must accept nested wildcards",
+            new Flattened<>(outer),
+            new HasValue<>("test")
+        ).affirm();
+    }
+
+    @Test
+    void scalarWithFallbackAcceptsCovariantScalar() {
+        final Scalar<String> scalar = () -> "success";
+        new Assertion<>(
+            "ScalarWithFallback must accept covariant scalar",
+            new ScalarWithFallback<>(scalar),
+            new HasValue<>("success")
+        ).affirm();
+    }
+
+}
