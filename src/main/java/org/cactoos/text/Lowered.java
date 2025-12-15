@@ -8,7 +8,6 @@ import java.util.Locale;
 import org.cactoos.Text;
 
 /**
- *
  * Text in lower case.
  *
  * <p>This class converts the original text to lower case
