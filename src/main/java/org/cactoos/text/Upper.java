@@ -19,17 +19,17 @@ import org.cactoos.Text;
  * Text text1 = new Upper(new TextOf("hello"));
  * text1.asString(); // "HELLO
  * }</pre>
- * 
+ *
  * @since 0.1
  */
 public final class Upper extends TextEnvelope {
 
     /**
      * Ctor.
-     * 
+     *
      * <p>Creates an upper-case text from a character sequence
      * using {@link Locale#ENGLISH}.</p>
-     * 
+     *
      * @param text The text
      */
     public Upper(final CharSequence text) {
@@ -48,10 +48,10 @@ public final class Upper extends TextEnvelope {
 
     /**
      * Ctor.
-     * 
+     *
      * <p>Creates an upper-case text from a {@link Text}
      * using the given {@link Locale}.</p>
-     * 
+     *
      * @param text The text
      * @param locale Locale
      */

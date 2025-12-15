@@ -11,7 +11,7 @@ import org.cactoos.iterable.Mapped;
 
 /**
  * Join a Text.
- * 
+ *
  * <p>This class joins multiple {@link Text} instances into a single
  * text using a specified delimiter between elements.</p>
  * <p>There is no thread-safety guarantee.
@@ -27,7 +27,7 @@ import org.cactoos.iterable.Mapped;
  * );
  * joined.asString(); // "apple, banana, orange"
  * }</pre>
- * 
+ *
  * @since 0.9
  */
 public final class Joined extends TextEnvelope {

@@ -8,13 +8,13 @@ import java.util.Locale;
 import org.cactoos.Text;
 
 /**
- * 
+ *
  * Text in lower case.
- * 
+ *
  * <p>This class converts the original text to lower case
  * using a specified {@link Locale}. If no locale is provided,
  * {@link Locale#ENGLISH} is used by default.</p>
- * 
+ *
  * <p>There is no thread-safety guarantee.
  *
  * <p>Example:</p>

@@ -12,7 +12,7 @@ import org.cactoos.Text;
  *
  * <p>This class applies a {@link Func} to the original text lazily,
  * i.e., the function is executed only when {@link Text#asString()} is called.</p>
- * 
+ *
  * <p>Example usage:</p>
  *
  * <pre>{@code
@@ -20,7 +20,7 @@ import org.cactoos.Text;
  * Text upper = new Mapped(str -> str.toUpperCase(), original);
  * upper.asString(); // "HELLO"
  * }</pre>
- * 
+ *
  * @since 0.47
  */
 public final class Mapped extends TextEnvelope {
