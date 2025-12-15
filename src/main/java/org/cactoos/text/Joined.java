@@ -11,15 +11,30 @@ import org.cactoos.iterable.Mapped;
 
 /**
  * Join a Text.
- *
+ * 
+ * <p>This class joins multiple {@link Text} instances into a single
+ * text using a specified delimiter between elements.</p>
  * <p>There is no thread-safety guarantee.
  *
+ * <p>Example:</p>
+ *
+ * <pre>{@code
+ * Text joined = new Joined(
+ *     ", ",
+ *     new TextOf("apple"),
+ *     new TextOf("banana"),
+ *     new TextOf("orange")
+ * );
+ * joined.asString(); // "apple, banana, orange"
+ * }</pre>
+ * 
  * @since 0.9
  */
 public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
+     * <p>Creates a joined text from character sequences
      * @param delimit Delimit among strings
      * @param strs Strings to be joined
      */
@@ -29,6 +44,7 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
+     * <p>Creates a joined text from an iterable of character
      * @param delimit Delimit among strings
      * @param strs Strings to be joined
      */
@@ -41,6 +57,7 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
+     * <p>Creates a joined text from {@link Text} instances
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
@@ -50,6 +67,7 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
+     * <p>Creates a joined text from {@link Text} instances
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
@@ -59,6 +77,7 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
+     * <p>Creates a joined text from an iterable of {@link Text}
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
