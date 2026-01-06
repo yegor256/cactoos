@@ -234,7 +234,7 @@ final class ImmutableTest {
     @Test
     void testRemove() {
         new Assertion<>(
-            "remove(Objet) must throw exception",
+            "remove(Object) must throw exception",
             () -> new org.cactoos.set.Immutable<>(
                 new SetOf<>("a", "b")
             ).remove("b"),

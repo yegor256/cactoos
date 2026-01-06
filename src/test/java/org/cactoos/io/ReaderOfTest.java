@@ -262,7 +262,7 @@ final class ReaderOfTest {
         final String input =
             "char sequence with charset on äÄ üÜ öÖ ß жш";
         new Assertion<>(
-            "Must read from char sequance with charset",
+            "Must read from char sequence with charset",
             new TextOf(
                 new ReaderOf(
                     input,
