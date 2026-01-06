@@ -7,11 +7,10 @@ package org.cactoos.number;
 import java.util.stream.Stream;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
-import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -23,20 +22,8 @@ import org.llorllale.cactoos.matchers.IsTrue;
 @SuppressWarnings("PMD.TooManyMethods")
 final class NumberOfScalarsTest implements ArgumentsProvider {
 
-    @Override
-    public Stream<Arguments> provideArguments(final ExtensionContext ctx) {
-        return Stream.of(
-            Arguments.of(4),
-            Arguments.of(8.2d),
-            Arguments.of(5.1f),
-            Arguments.of(8.2f),
-            Arguments.of((short) 2),
-            Arguments.of((byte) 9)
-        );
-    }
-
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     void floatValue(final Number nbr) {
         new Assertion<>(
             "Must implement floatValue",
@@ -46,7 +33,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     void intValue(final Number nbr) {
         new Assertion<>(
             "Must implement intValue",
@@ -56,7 +43,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     void doubleValue(final Number nbr) {
         new Assertion<>(
             "Must implement doubleValue",
@@ -66,7 +53,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     void longValue(final Number nbr) {
         new Assertion<>(
             "Must implement longValue",
@@ -76,7 +63,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     void byteValue(final Number nbr) {
         new Assertion<>(
             "Must implement byteValue",
@@ -86,7 +73,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     void shortValue(final Number nbr) {
         new Assertion<>(
             "Must implement shortValue",
@@ -96,7 +83,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     void hashCode(final Number nbr) {
         new Assertion<>(
             "Must implement hashCode via doubleValue",
@@ -106,7 +93,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     @SuppressWarnings("unlikely-arg-type")
     void equalsNumber(final Number nbr) {
         new Assertion<>(
@@ -117,7 +104,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     void notEquals(final Number nbr) {
         new Assertion<>(
             "Must implement not equals Object",
@@ -127,7 +114,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     @SuppressWarnings("unlikely-arg-type")
     void notEqualsObject(final Number nbr) {
         new Assertion<>(
@@ -138,12 +125,23 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
+    @MethodSource("arguments")
     void toString(final Number nbr) {
         new Assertion<>(
             "Must implement toString via doubleValue",
             new NumberOfScalars(() -> nbr).toString(),
             new IsEqual<>(Double.toString(nbr.doubleValue()))
         ).affirm();
+    }
+
+    private static Stream<Arguments> arguments() {
+        return Stream.of(
+            Arguments.of(4),
+            Arguments.of(8.2d),
+            Arguments.of(5.1f),
+            Arguments.of(8.2f),
+            Arguments.of((short) 2),
+            Arguments.of((byte) 9)
+        );
     }
 }
