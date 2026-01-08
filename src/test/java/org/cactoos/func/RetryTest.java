@@ -66,7 +66,8 @@ final class RetryTest {
                         return;
                     }
                 }
-            }).start();
+            }
+        ).start();
         new Assertion<>(
             "Must be interrupted on wait",
             () -> new Retry<>(

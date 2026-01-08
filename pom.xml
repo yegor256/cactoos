@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.69.1</version>
+    <version>0.71.2</version>
   </parent>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
@@ -66,7 +66,7 @@
     <dependency>
       <groupId>org.takes</groupId>
       <artifactId>takes</artifactId>
-      <version>1.24.6</version>
+      <version>1.25.0</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -106,7 +106,7 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>6.0.1</version>
+      <version>6.0.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -230,7 +230,7 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.24.0</version>
+            <version>0.25.0</version>
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
