@@ -113,6 +113,43 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.revapi</groupId>
+        <artifactId>revapi-maven-plugin</artifactId>
+        <version>0.15.1</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.revapi</groupId>
+            <artifactId>revapi-java</artifactId>
+            <version>0.28.4</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <analysisConfiguration>
+            <revapi.differences id="intentional-api-changes">
+              <ignore>true</ignore>
+              <differences>
+                <item>
+                  <code>java.method.varargOverloadsOnlyDifferInVarargParameter</code>
+                  <justification>Vararg overloads are intentional for API convenience</justification>
+                </item>
+                <item>
+                  <code>java.class.removed</code>
+                  <old>class org.cactoos.text.Abbreviated</old>
+                  <justification>Class removed as part of 1.0 release cleanup</justification>
+                </item>
+              </differences>
+            </revapi.differences>
+          </analysisConfiguration>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.15.0</version>
