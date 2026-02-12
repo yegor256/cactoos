@@ -5,9 +5,11 @@
 package org.cactoos.scalar;
 
 import java.security.SecureRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
@@ -53,4 +55,30 @@ final class SolidTest {
         ).affirm();
     }
 
+    @Test
+    void cachesNullValue() throws Exception {
+        final AtomicInteger calls = new AtomicInteger(0);
+        final Scalar<Object> scalar = new Solid<>(
+            () -> {
+                calls.incrementAndGet();
+                return null;
+            }
+        );
+        scalar.value();
+        scalar.value();
+        new Assertion<>(
+            "must compute null value only once",
+            calls.get(),
+            new IsEqual<>(1)
+        ).affirm();
+    }
+
+    @Test
+    void returnsNullValue() throws Exception {
+        new Assertion<>(
+            "must return cached null value",
+            new Solid<>(() -> null).value(),
+            new IsNull<>()
+        ).affirm();
+    }
 }
