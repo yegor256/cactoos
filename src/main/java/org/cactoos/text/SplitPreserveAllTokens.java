@@ -12,9 +12,74 @@ import org.cactoos.iterable.Mapped;
 import org.cactoos.iterator.IteratorOf;
 
 /**
- * Splits the Text into an array, including empty
- * tokens created by adjacent separators.
+ * Splits text into tokens, preserving ALL tokens including empty ones.
  *
+ * <p>This class provides functionality equivalent to Apache Commons Lang's
+ * {@code StringUtils.splitPreserveAllTokens()}. Unlike Java's standard
+ * {@link String#split(String)}, this class preserves:</p>
+ * <ul>
+ *   <li>Leading empty tokens (when text starts with delimiter)</li>
+ *   <li>Trailing empty tokens (when text ends with delimiter)</li>
+ *   <li>Adjacent empty tokens (when delimiters appear consecutively)</li>
+ * </ul>
+ *
+ * <h3>Key Guarantee</h3>
+ * <p>For a string with N occurrences of the delimiter, this class always
+ * returns exactly N+1 tokens (some may be empty strings).</p>
+ *
+ * <h3>Comparison with String.split()</h3>
+ * <table border="1">
+ *   <caption>Behavior comparison</caption>
+ *   <tr><th>Input</th><th>String.split(",")</th><th>SplitPreserveAllTokens</th></tr>
+ *   <tr><td>"a,b,"</td><td>["a", "b"]</td><td>["a", "b", ""]</td></tr>
+ *   <tr><td>",,"</td><td>[]</td><td>["", "", ""]</td></tr>
+ *   <tr><td>","</td><td>[]</td><td>["", ""]</td></tr>
+ * </table>
+ *
+ * <h3>Example Usage</h3>
+ * <pre>{@code
+ * // Basic splitting
+ * Iterable<Text> tokens = new SplitPreserveAllTokens("a,b,c", ",");
+ * // Result: ["a", "b", "c"]
+ *
+ * // Preserves trailing empty token
+ * Iterable<Text> tokens = new SplitPreserveAllTokens("a,b,", ",");
+ * // Result: ["a", "b", ""]
+ *
+ * // Preserves multiple empty tokens
+ * Iterable<Text> tokens = new SplitPreserveAllTokens("a,,b", ",");
+ * // Result: ["a", "", "b"]
+ *
+ * // Only delimiters - produces all empty tokens
+ * Iterable<Text> tokens = new SplitPreserveAllTokens(",,", ",");
+ * // Result: ["", "", ""]
+ *
+ * // Default delimiter is space
+ * Iterable<Text> tokens = new SplitPreserveAllTokens(" hello  world ");
+ * // Result: ["", "hello", "", "world", ""]
+ *
+ * // With limit on number of tokens
+ * Iterable<Text> tokens = new SplitPreserveAllTokens("a,b,c,d", ",", 2);
+ * // Result: ["a", "b"]
+ *
+ * // Parsing CSV with empty fields
+ * Iterable<Text> fields = new SplitPreserveAllTokens("John,,Smith,,", ",");
+ * // Result: ["John", "", "Smith", "", ""] - all 5 fields preserved!
+ * }</pre>
+ *
+ * <h3>Use Cases</h3>
+ * <ul>
+ *   <li>CSV/TSV parsing where empty fields are meaningful</li>
+ *   <li>Log file parsing where field position matters</li>
+ *   <li>Protocol parsing where field count must be exact</li>
+ *   <li>Data migration where empty values must be preserved</li>
+ * </ul>
+ *
+ * <p><strong>Note:</strong> The delimiter is matched as a literal string,
+ * not as a regular expression.</p>
+ *
+ * @see Split
+ * @see TriFuncSplitPreserve
  * @since 0.0
  */
 public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {

@@ -110,6 +110,63 @@ new Upper(
 );
 ```
 
+### Splitting Text
+
+To split text using Java's standard behavior:
+
+```java
+Iterable<Text> parts = new Split("hello,world", ",");
+// Result: ["hello", "world"]
+```
+
+### Splitting with Preserved Empty Tokens
+
+Java's `String.split()` discards trailing empty tokens.
+Use `SplitPreserveAllTokens` when you need to preserve ALL tokens,
+including empty ones created by adjacent or trailing delimiters:
+
+```java
+// Standard split loses trailing empty token
+"a,b,".split(",")  // Returns: ["a", "b"] - trailing empty LOST!
+
+// SplitPreserveAllTokens preserves it
+Iterable<Text> parts = new SplitPreserveAllTokens("a,b,", ",");
+// Result: ["a", "b", ""]  - all tokens preserved!
+```
+
+This is essential for parsing CSV/TSV data where empty fields are meaningful:
+
+```java
+// Parse CSV with empty fields
+Iterable<Text> fields = new SplitPreserveAllTokens(
+  "John,,Smith,,"
+  ","
+);
+// Result: ["John", "", "Smith", "", ""]  - all 5 fields!
+
+// With spaces as delimiter
+Iterable<Text> words = new SplitPreserveAllTokens(" hello  world ");
+// Result: ["", "hello", "", "world", ""]
+
+// Default delimiter is space
+Iterable<Text> tokens = new SplitPreserveAllTokens("a b c");
+// Result: ["a", "b", "c"]
+
+// With limit on number of tokens
+Iterable<Text> limited = new SplitPreserveAllTokens("a,b,c,d", ",", 2);
+// Result: ["a", "b"]
+```
+
+**Key guarantee**: With N delimiters, you always get exactly N+1 tokens.
+
+| Input | Delimiter | `String.split()` | `SplitPreserveAllTokens` |
+|-------|-----------|------------------|--------------------------|
+| `"a,b,"` | `,` | `["a", "b"]` | `["a", "b", ""]` |
+| `",,"` | `,` | `[]` | `["", "", ""]` |
+| `","` | `,` | `[]` | `["", ""]` |
+
+> **Note**: The delimiter is matched as a literal string, not a regex.
+
 ## Iterables/Collections/Lists/Sets
 
 More about it here:
@@ -254,6 +311,53 @@ final Set<String> sorted = new org.cactoos.set.Sorted<>(
 );
 ```
 
+## Maps
+
+To create a simple map:
+
+```java
+Map<String, Integer> map = new MapOf<>(
+  new MapEntry<>("one", 1),
+  new MapEntry<>("two", 2),
+  new MapEntry<>("three", 3)
+);
+```
+
+### Immutable Maps
+
+To create an immutable (read-only) map that prevents any modifications:
+
+```java
+Map<String, Integer> map = new org.cactoos.map.Immutable<>(
+  new MapOf<>(
+    new MapEntry<>("one", 1),
+    new MapEntry<>("two", 2)
+  )
+);
+map.get("one");      // returns 1
+map.put("three", 3); // throws UnsupportedOperationException!
+map.clear();         // throws UnsupportedOperationException!
+```
+
+The `Immutable` map decorator guarantees that:
+- All mutating methods (`put`, `remove`, `putAll`, `clear`) throw `UnsupportedOperationException`
+- Views returned by `keySet()`, `values()`, and `entrySet()` are also immutable
+- Even `Entry.setValue()` is blocked on entries from `entrySet()`
+
+This is useful when you need to pass a map to untrusted code or ensure
+a map cannot be accidentally modified:
+
+```java
+// Safe to pass to any method - cannot be modified
+public Map<String, Config> getConfiguration() {
+  return new Immutable<>(this.config);
+}
+```
+
+> **Note**: This is a decorator, not a copy. If the underlying map is modified
+> through another reference, changes will be visible. For a true snapshot,
+> copy the data first.
+
 ## Funcs and Procs
 
 This is a traditional `foreach` loop:
@@ -331,6 +435,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `And` | `Iterables.all()` | - | -
 `Filtered` | `Iterables.filter()` | ? | -
 `FormattedText` | - | - | `String.format()`
+`map.Immutable` | `ImmutableMap` | `UnmodifiableMap` | `Collections.unmodifiableMap()`
 `IsBlank` | - | `StringUtils.isBlank()`| -
 `Joined` | - | - | `String.join()`
 `LengthOf` | - | - | `String#length()`
@@ -342,6 +447,7 @@ Cactoos | Guava | Apache Commons | JDK 8
 `Reversed` | - | - | `StringBuilder#reverse()`
 `Rotated` | - | `StringUtils.rotate()`| -
 `Split` | - | - | `String#split()`
+`SplitPreserveAllTokens` | - | `StringUtils.splitPreserveAllTokens()` | -
 `StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()`
 `Sub` | - | - | `String#substring()`
 `SwappedCase` | - | `StringUtils.swapCase()` | -
