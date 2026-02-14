@@ -62,6 +62,10 @@
       <url>https://github.com/yegor256/cactoos</url>
     </site>
   </distributionManagement>
+  <properties>
+    <testLibPath>src/test/test-lib</testLibPath>
+    <testLibJarPath>${project.build.directory}/${project.artifactId}-test-lib-${project.version}.jar</testLibJarPath>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.takes</groupId>
@@ -170,6 +174,10 @@
               <threads>8</threads>
               <mutationThreshold>75</mutationThreshold>
               <timeoutConstant>500</timeoutConstant>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${testLibJarPath}</additionalClasspathElement>
+              </additionalClasspathElements>
+              <useClasspathJar>true</useClasspathJar>
             </configuration>
           </execution>
         </executions>
@@ -194,6 +202,59 @@
             </goals>
             <configuration>
               <verificationFile>src/verifier/verifications.xml</verificationFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <additionalClasspathDependencies>
+            <additionalClasspathDependency>
+              <groupId>org.cactoos</groupId>
+              <artifactId>${project.artifactId}-test-lib</artifactId>
+              <version>${project.version}</version>
+            </additionalClasspathDependency>
+          </additionalClasspathDependencies>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make-test-lib</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>${project.artifactId}-test-lib-${project.version}</finalName>
+              <descriptors>
+                <descriptor>${testLibPath}/assembly.xml</descriptor>
+              </descriptors>
+              <appendAssemblyId>false</appendAssemblyId>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make-test-lib</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <configuration>
+              <file>${testLibJarPath}</file>
+              <groupId>org.cactoos</groupId>
+              <artifactId>${project.artifactId}-test-lib</artifactId>
+              <version>${project.version}</version>
+              <packaging>jar</packaging>
             </configuration>
           </execution>
         </executions>
