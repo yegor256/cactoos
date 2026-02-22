@@ -81,4 +81,25 @@ final class SolidTest {
             new IsNull<>()
         ).affirm();
     }
+
+    @Test
+    void cachesNullValueInThreads() throws Exception {
+        final AtomicInteger calls = new AtomicInteger(0);
+        final Scalar<Object> solid = new Solid<>(
+            () -> {
+                calls.incrementAndGet();
+                return null;
+            }
+        );
+        new Assertion<>(
+            "not compute null value only once in multiple threads",
+            scalar -> solid.value() == null,
+            new RunsInThreads<>(new Unchecked<>(solid::value))
+        ).affirm();
+        new Assertion<>(
+            "must compute null value only once",
+            calls.get(),
+            new IsEqual<>(1)
+        ).affirm();
+    }
 }
