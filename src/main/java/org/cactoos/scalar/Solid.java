@@ -29,6 +29,11 @@ public final class Solid<T> implements Scalar<T> {
     private volatile T cache;
 
     /**
+     * Whether the value has been computed.
+     */
+    private volatile boolean computed;
+
+    /**
      * Sync lock.
      */
     private final Object lock;
@@ -44,10 +49,11 @@ public final class Solid<T> implements Scalar<T> {
 
     @Override
     public T value() throws Exception {
-        if (this.cache == null) {
+        if (!this.computed) {
             synchronized (this.lock) {
-                if (this.cache == null) {
+                if (!this.computed) {
                     this.cache = this.origin.value();
+                    this.computed = true;
                 }
             }
         }
