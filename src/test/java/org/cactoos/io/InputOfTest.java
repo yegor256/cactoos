@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.net.Proxy;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -120,6 +121,19 @@ final class InputOfTest {
                 "must fetch bytes from the URL",
                 new TextOf(
                     new InputOf(home)
+                ),
+                new MatchesRegex("<html.*html>")
+            ).affirm()
+        );
+    }
+
+    @Test
+    void readsRealUrlWithProxy() throws Exception {
+        new FtRemote(new TkHtml("<html>Proxy works!</html>")).exec(
+            home -> new Assertion<>(
+                "must fetch bytes from the URL via a proxy",
+                new TextOf(
+                    new InputOf(home.toURL(), Proxy.NO_PROXY)
                 ),
                 new MatchesRegex("<html.*html>")
             ).affirm()
