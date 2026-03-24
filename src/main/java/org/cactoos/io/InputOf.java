@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -75,6 +76,16 @@ public final class InputOf implements Input {
      */
     public InputOf(final URL url) {
         this(() -> url);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param url The url
+     * @param proxy The proxy through which the connection is made
+     */
+    public InputOf(final URL url, final Proxy proxy) {
+        this(() -> url.openConnection(proxy).getInputStream());
     }
 
     /**
