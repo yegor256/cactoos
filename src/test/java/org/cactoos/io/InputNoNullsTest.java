@@ -5,6 +5,8 @@
 package org.cactoos.io;
 
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -35,6 +37,10 @@ final class InputNoNullsTest {
 
     @Test
     void okForNoNullInput() throws Exception {
-        new InputNoNulls(new DeadInput()).stream();
+        MatcherAssert.assertThat(
+            "Must return stream for valid input",
+            new InputNoNulls(new DeadInput()).stream(),
+            new IsNot<>(new IsNull<>())
+        );
     }
 }

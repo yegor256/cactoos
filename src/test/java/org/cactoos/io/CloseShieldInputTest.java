@@ -37,14 +37,13 @@ final class CloseShieldInputTest {
 
     @Test
     void readsContent() throws Exception {
-        final String content = "Text content";
         try (
-            InputStream in = new InputStreamOf(content)
+            InputStream in = new InputStreamOf("Text content")
         ) {
             MatcherAssert.assertThat(
                 "Must read text",
                 new TextOf(new CloseShieldInput(new InputOf(in))),
-                new IsText(content)
+                new IsText("Text content")
             );
         }
     }

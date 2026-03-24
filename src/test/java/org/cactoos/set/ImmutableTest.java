@@ -329,9 +329,8 @@ final class ImmutableTest {
         MatcherAssert.assertThat(
             "Must return an iterator that does not support remove()",
             () -> {
-                final Set<String>
-                    set = new org.cactoos.set.Immutable<>(new SetOf<>("one"));
-                final Iterator<String> iterator = set.iterator();
+                final Iterator<String> iterator =
+                    new org.cactoos.set.Immutable<>(new SetOf<>("one")).iterator();
                 iterator.next();
                 iterator.remove();
                 return true;

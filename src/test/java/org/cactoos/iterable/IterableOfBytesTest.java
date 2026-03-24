@@ -4,6 +4,7 @@
  */
 package org.cactoos.iterable;
 
+import java.nio.charset.StandardCharsets;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ final class IterableOfBytesTest {
 
     @Test
     void convertsBytesToIterable() {
-        final byte[] bytes = "txt".getBytes();
+        final byte[] bytes = "txt".getBytes(StandardCharsets.UTF_8);
         MatcherAssert.assertThat(
             "Must create Iterable from bytes",
             new IterableOfBytes(bytes),

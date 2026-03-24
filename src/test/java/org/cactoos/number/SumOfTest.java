@@ -4,7 +4,6 @@
  */
 package org.cactoos.number;
 
-import java.util.Collection;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.Joined;
@@ -108,10 +107,9 @@ final class SumOfTest {
 
     @Test
     void withIterableOfInts() {
-        final Collection<Integer> ints = new ListOf<>(1, 2, 3, 4);
         MatcherAssert.assertThat(
             "sum of integers should be calculated as integer",
-            new SumOf(ints).intValue(),
+            new SumOf(new ListOf<>(1, 2, 3, 4)).intValue(),
             new IsEqual<>(10)
         );
     }

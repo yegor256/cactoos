@@ -53,7 +53,6 @@ final class FirstOfTest {
 
     @Test
     void returnsFirstValueForMultipleMatchingOnes() {
-        final String value = "1";
         MatcherAssert.assertThat(
             "Must return first matching element",
             new FirstOf<>(
@@ -61,21 +60,20 @@ final class FirstOfTest {
                 new IterableOf<>("1", "2"),
                 () -> ""
             ),
-            new HasValue<>(value)
+            new HasValue<>("1")
         );
     }
 
     @Test
     void returnsFallbackIfNothingMatches() {
-        final String value = "abc";
         MatcherAssert.assertThat(
             "Must return fallback",
             new FirstOf<>(
                 i -> i.length() > 2,
                 new IterableOf<>("ab", "cd"),
-                () -> value
+                () -> "abc"
             ),
-            new HasValue<>(value)
+            new HasValue<>("abc")
         );
     }
 

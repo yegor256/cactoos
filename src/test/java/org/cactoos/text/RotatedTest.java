@@ -40,13 +40,12 @@ final class RotatedTest {
 
     @Test
     void noRotateWhenShiftZero() {
-        final String nonrotate = "Cactoos!";
         MatcherAssert.assertThat(
             "Rotate text shift zero",
             new Rotated(
-                new TextOf(nonrotate), 0
+                new TextOf("Cactoos!"), 0
             ),
-            new HasString(nonrotate)
+            new HasString("Cactoos!")
         );
     }
 

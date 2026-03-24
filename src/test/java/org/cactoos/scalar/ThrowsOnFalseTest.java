@@ -19,26 +19,24 @@ final class ThrowsOnFalseTest {
 
     @Test
     void throwsOnFalse() {
-        final String message = "test message";
         MatcherAssert.assertThat(
             "Throws an exception",
             () -> new ThrowsOnFalse(
-                () -> false, message
+                () -> false, "test message"
             ).value(),
-            new Throws<>(message, IllegalArgumentException.class)
+            new Throws<>("test message", IllegalArgumentException.class)
         );
     }
 
     @Test
     void throwsSuppliedExceptionOnFalse() {
-        final String message = "illegal state";
         MatcherAssert.assertThat(
             "Throws supplied exception",
             () -> new ThrowsOnFalse(
                 () -> false,
-                () -> new IllegalStateException(message)
+                () -> new IllegalStateException("illegal state")
             ).value(),
-            new Throws<>(message, IllegalStateException.class)
+            new Throws<>("illegal state", IllegalStateException.class)
         );
     }
 

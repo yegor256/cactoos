@@ -37,10 +37,9 @@ final class EqualsTest {
 
     @Test
     void compareEqualsTextScalar() {
-        final String str = "hello";
         MatcherAssert.assertThat(
             "Must compare if two strings are equal",
-            new Equals<>(str, str),
+            new Equals<>("hello", "hello"),
             new HasValue<>(true)
         );
     }

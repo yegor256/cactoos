@@ -48,7 +48,6 @@ final class UncheckedBytesTest {
 
     @Test
     void worksWithFallback() {
-        final byte[] empty = {};
         MatcherAssert.assertThat(
             "Must work with fallback",
             new UncheckedBytes(
@@ -57,10 +56,10 @@ final class UncheckedBytesTest {
                 },
                 new Fallback.From<>(
                     IOException.class,
-                    ex -> empty
+                    ex -> new byte[] {}
                 )
             ).asBytes(),
-            new IsEqual<>(empty)
+            new IsEqual<>(new byte[] {})
         );
     }
 }

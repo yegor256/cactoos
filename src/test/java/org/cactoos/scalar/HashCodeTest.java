@@ -40,14 +40,12 @@ final class HashCodeTest {
      */
     @Test
     void computeHashCodeWithDefaultValues() {
-        final int initial = 17;
-        final int multiplier = 31;
         final Object[] attributes = {494, 43, "test", 190, 298f, "joshua"};
         MatcherAssert.assertThat(
             "Value must be equal to Josh Block's implementation of hashCode() with initial=17 and multiplier=31",
             new HashCode(attributes),
             new HasValue<>(
-                joshBloch(initial, multiplier, attributes)
+                joshBloch(17, 31, attributes)
             )
         );
     }

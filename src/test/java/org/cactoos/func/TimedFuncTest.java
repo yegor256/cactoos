@@ -23,7 +23,6 @@ final class TimedFuncTest {
 
     @Test
     void functionGetsInterrupted() {
-        final long period = 100L;
         MatcherAssert.assertThat(
             "Not interrupted after timeout",
             () -> new Timed<Boolean, Boolean>(
@@ -32,7 +31,7 @@ final class TimedFuncTest {
                         new Endless<>(() -> input)
                     ).value();
                 },
-                period
+                100L
             ).apply(true),
             new Throws<>(TimeoutException.class)
         );
@@ -40,18 +39,16 @@ final class TimedFuncTest {
 
     @Test
     void futureTaskIsCancelled() {
-        final long time = 2000L;
         final Future<Boolean> future = Executors.newSingleThreadExecutor()
             .submit(
                 () -> {
-                    Thread.sleep(time);
+                    Thread.sleep(2000L);
                     return true;
                 }
             );
         try {
-            final long period = 50L;
             new Timed<Boolean, Boolean>(
-                period,
+                50L,
                 input -> future
             ).apply(true);
             // @checkstyle IllegalCatchCheck (1 line)
@@ -66,12 +63,11 @@ final class TimedFuncTest {
 
     @Test
     void functionIsExecuted() throws Exception {
-        final long period = 3000L;
         MatcherAssert.assertThat(
             "Must execute the function",
             new Timed<Boolean, Boolean>(
                 input -> true,
-                period
+                3000L
             ).apply(true),
             new IsTrue()
         );

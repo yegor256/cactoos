@@ -147,7 +147,6 @@ final class MatchedTest {
             new IterableOf<>(1, 2, 3),
             new IterableOf<>(1, 2, 3)
         );
-        final Iterable<Integer> copy = new ListOf<>(matched);
         new ForEach<>(
             (Integer ignored) -> {
             }
@@ -156,7 +155,7 @@ final class MatchedTest {
             "Elements must not be removed",
             matched,
             new IsEqual<>(
-                copy
+                new ListOf<>(new IterableOf<>(1, 2, 3))
             )
         );
     }

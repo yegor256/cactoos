@@ -30,8 +30,7 @@ final class BiProcOfTest {
             new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
-                    final Object second = new Object();
-                    proc.exec(first, second);
+                    proc.exec(first, new Object());
                     return done.get().equals(first);
                 }
             )
@@ -52,8 +51,7 @@ final class BiProcOfTest {
             new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
-                    final Object second = new Object();
-                    proc.exec(first, second);
+                    proc.exec(first, new Object());
                     return done.get().equals(first);
                 }
             )
@@ -73,8 +71,7 @@ final class BiProcOfTest {
             new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
-                    final Object second = new Object();
-                    proc.exec(first, second);
+                    proc.exec(first, new Object());
                     return done.get().equals(first);
                 }
             )
@@ -94,8 +91,7 @@ final class BiProcOfTest {
             new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
-                    final Object second = new Object();
-                    proc.exec(first, second);
+                    proc.exec(first, new Object());
                     return done.get().equals(first);
                 }
             )

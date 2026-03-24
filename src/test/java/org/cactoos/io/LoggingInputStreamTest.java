@@ -7,6 +7,7 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ final class LoggingInputStreamTest {
     void readEmptyStream() throws IOException {
         final LoggingInputStream stream = new LoggingInputStream(
             new ByteArrayInputStream(
-                "".getBytes()
+                "".getBytes(StandardCharsets.UTF_8)
             ),
             this.getClass().getSimpleName()
         );

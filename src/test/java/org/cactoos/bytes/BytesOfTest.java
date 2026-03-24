@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.cactoos.Text;
 import org.cactoos.io.InputOf;
 import org.cactoos.io.Sticky;
 import org.cactoos.iterable.Endless;
@@ -40,20 +39,18 @@ final class BytesOfTest {
 
     @Test
     void readsLargeInMemoryContent() throws Exception {
-        final int multiplier = 5_000;
-        final String body = "1234567890";
         MatcherAssert.assertThat(
             "must read large content from in-memory Input",
             new BytesOf(
                 new InputOf(
                     new Concatenated(
                         new HeadOf<>(
-                            multiplier, new Endless<>(new TextOf(body))
+                            5_000, new Endless<>(new TextOf("1234567890"))
                         )
                     )
                 )
             ).asBytes().length,
-            new IsEqual<>(body.length() * multiplier)
+            new IsEqual<>("1234567890".length() * 5_000)
         );
     }
 
@@ -76,21 +73,20 @@ final class BytesOfTest {
 
     @Test
     void readsFromReader() {
-        final String source = "hello, друг!";
         MatcherAssert.assertThat(
             "must read string through a reader",
             new TextOf(
                 new Sticky(
                     new InputOf(
                         new BytesOf(
-                            new StringReader(source),
+                            new StringReader("hello, друг!"),
                             StandardCharsets.UTF_8,
                             16 << 10
                         )
                     )
                 )
             ),
-            new IsText(source)
+            new IsText("hello, друг!")
         );
     }
 
@@ -116,7 +112,7 @@ final class BytesOfTest {
     void closesInputStream() throws Exception {
         final AtomicBoolean closed = new AtomicBoolean();
         final InputStream input = new ByteArrayInputStream(
-            "how are you?".getBytes()
+            "how are you?".getBytes(StandardCharsets.UTF_8)
         );
         new TextOf(
             new InputOf(
@@ -144,41 +140,38 @@ final class BytesOfTest {
 
     @Test
     void asBytes() throws Exception {
-        final Text text = new TextOf("Hello!");
         MatcherAssert.assertThat(
             "Can't convert text into bytes",
             new BytesOf(
-                new InputOf(text)
+                new InputOf(new TextOf("Hello!"))
             ).asBytes(),
             new IsEqual<>(
-                new BytesOf(text.asString()).asBytes()
+                new BytesOf(new TextOf("Hello!").asString()).asBytes()
             )
         );
     }
 
     @Test
     void asBytesFromIterator() throws Exception {
-        final Text text = new TextOf("Good bye!");
         MatcherAssert.assertThat(
             "Can't convert iterator into bytes",
             new BytesOf(
-                new IteratorOfBytes(text)
+                new IteratorOfBytes(new TextOf("Good bye!"))
             ).asBytes(),
             new IsEqual<>(
-                new BytesOf(text).asBytes()
+                new BytesOf(new TextOf("Good bye!")).asBytes()
             )
         );
     }
 
     @Test
     void asBytesFromIterable() throws Exception {
-        final Text text = new TextOf("Good bye");
         MatcherAssert.assertThat(
             "Must convert iterable into bytes",
             new BytesOf(
-                new IterableOfBytes(text)
+                new IterableOfBytes(new TextOf("Good bye"))
             ).asBytes(),
-            new IsEqual<>(new BytesOf(text).asBytes())
+            new IsEqual<>(new BytesOf(new TextOf("Good bye")).asBytes())
         );
     }
 

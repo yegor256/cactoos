@@ -4,8 +4,8 @@
  */
 package org.cactoos.io;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.hamcrest.MatcherAssert;
@@ -23,7 +23,7 @@ final class DirectoryTest {
     @Test
     void listsFilesAndFoldersInDirectory(@TempDir final Path dir) throws IOException {
         dir.resolve("x/y").toFile().mkdirs();
-        Files.write(dir.resolve("x/y/test"), "".getBytes());
+        Files.write(dir.resolve("x/y/test"), "".getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "must list files in a directory represented by a path",
             new Directory(dir),
@@ -33,12 +33,11 @@ final class DirectoryTest {
 
     @Test
     void listsFilesInDirectoryByFile(@TempDir final Path dir) throws Exception {
-        final File file = dir.toFile();
         dir.resolve("parent/child").toFile().mkdirs();
-        Files.write(dir.resolve("parent/child/file"), "".getBytes());
+        Files.write(dir.resolve("parent/child/file"), "".getBytes(StandardCharsets.UTF_8));
         MatcherAssert.assertThat(
             "must list files in a directory represented by a file",
-            new Directory(file),
+            new Directory(dir.toFile()),
             new HasSize(4)
         );
     }

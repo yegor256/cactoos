@@ -21,13 +21,12 @@ import org.llorllale.cactoos.matchers.IsText;
 final class FlattenedTest {
     @Test
     void flattens() {
-        final Text txt = new TextOf("txt");
         MatcherAssert.assertThat(
             "must flatten",
             new Flattened(
-                new ScalarOf<>(() -> txt)
+                new ScalarOf<>(() -> new TextOf("txt"))
             ),
-            new IsText(txt)
+            new IsText("txt")
         );
     }
 

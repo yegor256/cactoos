@@ -24,16 +24,17 @@ final class TeeInputFromReaderTest {
 
     @Test
     void copiesFromReaderToFile(@TempDir final Path wdir) throws Exception {
-        final String input =
-            "Hello, товарищ file #1 äÄ üÜ öÖ and ß";
         final File output = wdir.resolve("teereader1.txt").toFile();
         new LengthOf(
-            new TeeInput(new ReaderOf(input), output)
+            new TeeInput(
+                new ReaderOf("Hello, товарищ file #1 äÄ üÜ öÖ and ß"),
+                output
+            )
         ).value();
         MatcherAssert.assertThat(
             "Must copy from reader to file.",
             new InputOf(output),
-            new HasContent(input)
+            new HasContent("Hello, товарищ file #1 äÄ üÜ öÖ and ß")
         );
     }
 
@@ -137,19 +138,17 @@ final class TeeInputFromReaderTest {
 
     @Test
     void copiesFromReaderToPath(@TempDir final Path wdir) throws Exception {
-        final String input =
-            "Hello, товарищ path #1 äÄ üÜ öÖ and ß";
         final File output = wdir.resolve("teereader8.txt").toFile();
         new LengthOf(
             new TeeInput(
-                new ReaderOf(input),
+                new ReaderOf("Hello, товарищ path #1 äÄ üÜ öÖ and ß"),
                 output.toPath()
             )
         ).value();
         MatcherAssert.assertThat(
             "Must copy from reader to path.",
             new InputOf(output),
-            new HasContent(input)
+            new HasContent("Hello, товарищ path #1 äÄ üÜ öÖ and ß")
         );
     }
 
@@ -256,19 +255,17 @@ final class TeeInputFromReaderTest {
 
     @Test
     void copiesFromReaderToOutput(@TempDir final Path wdir) throws Exception {
-        final String input =
-            "Hello, товарищ output #1 äÄ üÜ öÖ and ß";
         final File output = wdir.resolve("teereader14.txt").toFile();
         new LengthOf(
             new TeeInput(
-                new ReaderOf(input),
+                new ReaderOf("Hello, товарищ output #1 äÄ üÜ öÖ and ß"),
                 new OutputTo(output)
             )
         ).value();
         MatcherAssert.assertThat(
             "Must copy from reader to output.",
             new InputOf(output),
-            new HasContent(input)
+            new HasContent("Hello, товарищ output #1 äÄ üÜ öÖ and ß")
         );
     }
 

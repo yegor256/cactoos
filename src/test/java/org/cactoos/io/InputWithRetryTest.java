@@ -22,19 +22,18 @@ final class InputWithRetryTest {
     @Test
     void testInputWithRetryShouldRead() throws Exception {
         final AtomicInteger cnt = new AtomicInteger(0);
-        final InputWithRetry iwr = new InputWithRetry(
-            () -> {
-                if (cnt.getAndIncrement() < 2) {
-                    throw new IllegalArgumentException("Test exception");
-                }
-                return new DeadInputStream();
-            },
-            3,
-            Duration.ZERO
-        );
         MatcherAssert.assertThat(
             "should read -1 from stream",
-            iwr.stream().read(),
+            new InputWithRetry(
+                () -> {
+                    if (cnt.getAndIncrement() < 2) {
+                        throw new IllegalArgumentException("Test exception");
+                    }
+                    return new DeadInputStream();
+                },
+                3,
+                Duration.ZERO
+            ).stream().read(),
             new IsEqual<>(-1)
         );
     }
@@ -42,18 +41,17 @@ final class InputWithRetryTest {
     @Test
     void testExceededNumberOfAttempts() {
         final AtomicInteger cnt = new AtomicInteger(0);
-        final InputWithRetry iwr = new InputWithRetry(
-            () -> {
-                if (cnt.getAndIncrement() < 3) {
-                    throw new IllegalArgumentException("Test exception");
-                }
-                return new DeadInputStream();
-            },
-            3
-        );
         MatcherAssert.assertThat(
             "should throw same exception",
-            iwr::stream,
+            new InputWithRetry(
+                () -> {
+                    if (cnt.getAndIncrement() < 3) {
+                        throw new IllegalArgumentException("Test exception");
+                    }
+                    return new DeadInputStream();
+                },
+                3
+            )::stream,
             new Throws<>(IllegalArgumentException.class)
         );
     }

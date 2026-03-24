@@ -32,8 +32,8 @@ final class FuncOfTest {
             new Satisfies<>(
                 func -> {
                     final Object input = new Object();
-                    final Object res = func.apply(input);
-                    return res.equals(result) && done.get().equals(input);
+                    return func.apply(input).equals(result)
+                        && done.get().equals(input);
                 }
             )
         );
@@ -46,10 +46,7 @@ final class FuncOfTest {
             "Must convert Scalar into Func",
             new FuncOf<>(new Constant<>(result)),
             new Satisfies<>(
-                func -> {
-                    final Object res = func.apply("discarded");
-                    return res.equals(result);
-                }
+                func -> func.apply("discarded").equals(result)
             )
         );
     }
@@ -62,8 +59,7 @@ final class FuncOfTest {
             new Satisfies<>(
                 func -> {
                     final Object input = new Object();
-                    final Object res = func.apply(input);
-                    return res.equals(input);
+                    return func.apply(input).equals(input);
                 }
             )
         );

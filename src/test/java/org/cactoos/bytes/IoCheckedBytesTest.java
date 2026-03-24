@@ -48,7 +48,6 @@ final class IoCheckedBytesTest {
 
     @Test
     void worksWithFallback() throws IOException {
-        final byte[] empty = {};
         MatcherAssert.assertThat(
             "Must work with fallback",
             new IoCheckedBytes(
@@ -57,10 +56,10 @@ final class IoCheckedBytesTest {
                 },
                 new Fallback.From<>(
                     IllegalArgumentException.class,
-                    ex -> empty
+                    ex -> new byte[] {}
                 )
             ).asBytes(),
-            new IsEqual<>(empty)
+            new IsEqual<>(new byte[] {})
         );
     }
 }

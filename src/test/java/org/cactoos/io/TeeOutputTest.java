@@ -81,7 +81,6 @@ final class TeeOutputTest {
 
     @Test
     void copiesWithPath(@TempDir final Path wdir) {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final File file = wdir.resolve("tree1.txt").toFile();
         MatcherAssert.assertThat(
             "Must copy Output with path",
@@ -89,7 +88,7 @@ final class TeeOutputTest {
                 new TeeInput(
                     new InputOf("Hello, товарищ! with path"),
                     new TeeOutput(
-                        new OutputTo(baos),
+                        new OutputTo(new ByteArrayOutputStream()),
                         file.toPath()
                     )
                 )
@@ -102,7 +101,6 @@ final class TeeOutputTest {
 
     @Test
     void copiesWithFile(@TempDir final Path wdir) {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final File file = wdir.resolve("tree2.txt").toFile();
         MatcherAssert.assertThat(
             "Must copy Output with file",
@@ -110,7 +108,7 @@ final class TeeOutputTest {
                 new TeeInput(
                     new InputOf("Hello, товарищ! with file"),
                     new TeeOutput(
-                        new OutputTo(baos),
+                        new OutputTo(new ByteArrayOutputStream()),
                         file
                     )
                 )

@@ -16,11 +16,10 @@ final class ScalarOfSupplierTest {
 
     @Test
     void createsScalarFromSupplier() {
-        final Object obj = new Object();
         MatcherAssert.assertThat(
             "must hold the same value as given by supplier",
-            new ScalarOfSupplier<>(() -> obj),
-            new HasValue<>(obj)
+            new ScalarOfSupplier<>(() -> 1),
+            new HasValue<>(1)
         );
     }
 }

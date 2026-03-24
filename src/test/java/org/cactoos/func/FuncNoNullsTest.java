@@ -6,6 +6,8 @@ package org.cactoos.func;
 
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -36,7 +38,11 @@ final class FuncNoNullsTest {
 
     @Test
     void okForNoNulls() throws Exception {
-        new FuncNoNulls<>(input -> input).apply(new Object());
+        MatcherAssert.assertThat(
+            "Must return value for valid argument",
+            new FuncNoNulls<>(input -> input).apply(new Object()),
+            new IsNot<>(new IsNull<>())
+        );
     }
 
     @Test

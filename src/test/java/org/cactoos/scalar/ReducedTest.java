@@ -34,82 +34,69 @@ final class ReducedTest {
 
     @Test
     void singleAtSingleIterable() {
-        final Integer single = 10;
         MatcherAssert.assertThat(
             "Must find the single",
             new Reduced<>(
                 (first, last) -> first,
-                new IterableOf<Scalar<Integer>>(() -> single)
+                new IterableOf<Scalar<Integer>>(() -> 10)
             ),
-            new HasValue<>(single)
+            new HasValue<>(10)
         );
     }
 
     @Test
     void firstAtIterable() {
-        final String one = "Apple";
-        final String two = "Banana";
-        final String three = "Orange";
         MatcherAssert.assertThat(
             "Must find the first",
             new Reduced<>(
                 (first, last) -> first,
                 new IterableOf<Scalar<String>>(
-                    () -> one,
-                    () -> two,
-                    () -> three
+                    () -> "Apple",
+                    () -> "Banana",
+                    () -> "Orange"
                 )
             ),
-            new HasValue<>(one)
+            new HasValue<>("Apple")
         );
     }
 
     @Test
     void lastAtIterable() {
-        final Character one = 'A';
-        final Character two = 'B';
-        final Character three = 'O';
         MatcherAssert.assertThat(
             "Must find the last",
             new Reduced<>(
                 (first, last) -> last,
                 new IterableOf<Scalar<Character>>(
-                    () -> one,
-                    () -> two,
-                    () -> three
+                    () -> 'A',
+                    () -> 'B',
+                    () -> 'O'
                 )
             ),
-            new HasValue<>(three)
+            new HasValue<>('O')
         );
     }
 
     @Test
     void lastAtIterableOfValues() {
-        final Character one = 'A';
-        final Character two = 'B';
-        final Character three = 'O';
         MatcherAssert.assertThat(
             "Must find the last character",
             new Reduced<>(
-                new IterableOf<>(one, two, three),
+                new IterableOf<>('A', 'B', 'O'),
                 (first, last) -> last
             ),
-            new HasValue<>(three)
+            new HasValue<>('O')
         );
     }
 
     @Test
     void constructedFromVarargs() {
-        final String one = "One";
-        final String two = "Two";
-        final String three = "Three";
         MatcherAssert.assertThat(
             "Must concatenate the strings in vararg array",
             new Reduced<>(
                 (first, last) -> first + last,
-                one,
-                two,
-                three
+                "One",
+                "Two",
+                "Three"
             ),
             new HasValue<>("OneTwoThree")
         );

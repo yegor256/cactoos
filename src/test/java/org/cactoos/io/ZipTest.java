@@ -5,6 +5,7 @@
 
 package org.cactoos.io;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ final class ZipTest {
     @Test
     void zip(@TempDir final Path dir) throws Exception {
         dir.resolve("x/y").toFile().mkdirs();
-        Files.write(dir.resolve("x/y/test"), "".getBytes());
+        Files.write(dir.resolve("x/y/test"), "".getBytes(StandardCharsets.UTF_8));
         try (ZipInputStream input = new ZipInputStream(
             new Zip(
                 new Directory(dir)

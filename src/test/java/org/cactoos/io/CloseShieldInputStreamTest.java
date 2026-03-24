@@ -36,20 +36,18 @@ final class CloseShieldInputStreamTest {
 
     @Test
     void readsContent() throws Exception {
-        final String content = "Text content";
-        try (InputStream in = new InputStreamOf(content)) {
+        try (InputStream in = new InputStreamOf("Text content")) {
             MatcherAssert.assertThat(
                 "Must read from text",
                 new TextOf(new CloseShieldInputStream(in)),
-                new IsText(content)
+                new IsText("Text content")
             );
         }
     }
 
     @Test
     void makesDataAvailable() throws IOException {
-        final String content = "Hello,חבר!";
-        try (InputStream in = new InputStreamOf(content)) {
+        try (InputStream in = new InputStreamOf("Hello,חבר!")) {
             MatcherAssert.assertThat(
                 "Must show that data is available",
                 new CloseShieldInputStream(in).available(),

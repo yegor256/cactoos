@@ -69,13 +69,14 @@ final class MapOfTest {
     @Test
     @SuppressWarnings("unchecked")
     void createsMapFromIterableVariable() {
-        final Iterable<Map.Entry<Integer, Integer>> list = new IterableOf<>(
-            new MapEntry<>(0, -1),
-            new MapEntry<>(1, 1)
-        );
         MatcherAssert.assertThat(
             "Must behave as a map when created from iterable",
-            new MapOf<Integer, Integer>((Iterable) list),
+            new MapOf<Integer, Integer>(
+                (Iterable) new IterableOf<>(
+                    new MapEntry<>(0, -1),
+                    new MapEntry<>(1, 1)
+                )
+            ),
             new BehavesAsMap<>(1, 1)
         );
     }

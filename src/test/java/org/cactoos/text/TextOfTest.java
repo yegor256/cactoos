@@ -82,13 +82,12 @@ final class TextOfTest {
 
     @Test
     void readsReaderIntoTextWithSmallBuffer() {
-        final String text = "Hi there! with small buffer";
         MatcherAssert.assertThat(
             "Can't read text from Reader with a small reading buffer",
             new TextOf(
-                new StringReader(text), 2, StandardCharsets.UTF_8
+                new StringReader("Hi there! with small buffer"), 2, StandardCharsets.UTF_8
             ),
-            new IsText(text)
+            new IsText("Hi there! with small buffer")
         );
     }
 
@@ -109,24 +108,22 @@ final class TextOfTest {
 
     @Test
     void readsFromReader() {
-        final String source = "hello, друг!";
         MatcherAssert.assertThat(
             "Can't read string through a reader",
             new TextOf(
-                new StringReader(source),
+                new StringReader("hello, друг!"),
                 StandardCharsets.UTF_8
             ),
-            new IsText(source)
+            new IsText("hello, друг!")
         );
     }
 
     @Test
     void readsFromReaderWithDefaultEncoding() {
-        final String source = "hello, друг! with default encoding";
         MatcherAssert.assertThat(
             "Can't read string with default encoding through a reader",
-            new TextOf(new StringReader(source)),
-            new IsText(source)
+            new TextOf(new StringReader("hello, друг! with default encoding")),
+            new IsText("hello, друг! with default encoding")
         );
     }
 
@@ -210,42 +207,42 @@ final class TextOfTest {
 
     @Test
     void readsFromInputStream() throws Exception {
-        final String content = "line1";
-        final InputStream stream = new ByteArrayInputStream(
-            content.getBytes(StandardCharsets.UTF_8.name())
-        );
         MatcherAssert.assertThat(
             "Can't read inputStream",
-            new TextOf(stream),
+            new TextOf(
+                new ByteArrayInputStream(
+                    "line1".getBytes(StandardCharsets.UTF_8.name())
+                )
+            ),
             new IsText(
-                new String(content.getBytes(), StandardCharsets.UTF_8)
+                new String("line1".getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8)
             )
         );
     }
 
     @Test
     void readsMultilineInputStream() throws Exception {
-        final String content = "line1-\nline2";
-        final InputStream stream = new ByteArrayInputStream(
-            content.getBytes(StandardCharsets.UTF_8.name())
-        );
         MatcherAssert.assertThat(
             "Can't read multiline inputStream",
-            new TextOf(stream),
-            new IsText(content)
+            new TextOf(
+                new ByteArrayInputStream(
+                    "line1-\nline2".getBytes(StandardCharsets.UTF_8.name())
+                )
+            ),
+            new IsText("line1-\nline2")
         );
     }
 
     @Test
     void readsMultilineInputStreamWithCarriageReturn() throws Exception {
-        final String content = "line1-\rline2";
-        final InputStream stream = new ByteArrayInputStream(
-            content.getBytes(StandardCharsets.UTF_8.name())
-        );
         MatcherAssert.assertThat(
             "Can't read multiline inputStream with carriage return",
-            new TextOf(stream),
-            new IsText(content)
+            new TextOf(
+                new ByteArrayInputStream(
+                    "line1-\rline2".getBytes(StandardCharsets.UTF_8.name())
+                )
+            ),
+            new IsText("line1-\rline2")
         );
     }
 
@@ -265,14 +262,14 @@ final class TextOfTest {
 
     @Test
     void readsEmptyInputStream() throws Exception {
-        final String content = "";
-        final InputStream stream = new ByteArrayInputStream(
-            content.getBytes(StandardCharsets.UTF_8.name())
-        );
         MatcherAssert.assertThat(
             "Can't read empty input stream",
-            new TextOf(stream),
-            new IsText(content)
+            new TextOf(
+                new ByteArrayInputStream(
+                    "".getBytes(StandardCharsets.UTF_8.name())
+                )
+            ),
+            new IsText("")
         );
     }
 

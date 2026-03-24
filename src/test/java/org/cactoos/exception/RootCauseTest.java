@@ -18,10 +18,9 @@ final class RootCauseTest {
     @Test
     void rootCauseTest() throws Exception {
         final Throwable inner = new Throwable();
-        final RootCause exc = new RootCause(new Throwable(new Throwable(inner)));
         MatcherAssert.assertThat(
             "Should return inner exception.",
-            exc.value(),
+            new RootCause(new Throwable(new Throwable(inner))).value(),
             new IsEqual<>(inner)
         );
     }

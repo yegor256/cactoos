@@ -9,7 +9,6 @@ import org.cactoos.BiFunc;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.scalar.Constant;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsSame;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Satisfies;
 
@@ -30,8 +29,7 @@ final class BiFuncOfTest {
             new Satisfies<>(
                 func -> {
                     final Object first = new Object();
-                    final Object res = func.apply(first, "discarded");
-                    return res.equals(first);
+                    return func.apply(first, "discarded").equals(first);
                 }
             )
         );
@@ -52,20 +50,24 @@ final class BiFuncOfTest {
             new Satisfies<>(
                 func -> {
                     final Object first = new Object();
-                    final Object res = func.apply(first, "discarded");
-                    return res.equals(result) && done.get().equals(first);
+                    return func.apply(first, "discarded").equals(result)
+                        && done.get().equals(first);
                 }
             )
         );
     }
 
     @Test
-    void convertsScalarIntoBiFunc() throws Exception {
-        final Object obj = new Object();
+    void convertsScalarIntoBiFunc() {
         MatcherAssert.assertThat(
             "Must convert scalar into bi-function",
-            new BiFuncOf<>(new Constant<>(obj)).apply("discarded", "discarded"),
-            new IsSame<>(obj)
+            new BiFuncOf<>(new Constant<>(new Object())),
+            new Satisfies<>(
+                func -> {
+                    final Object result = func.apply("discarded", "discarded");
+                    return func.apply("other", "other") == result;
+                }
+            )
         );
     }
 

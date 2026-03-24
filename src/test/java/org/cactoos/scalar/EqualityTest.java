@@ -4,6 +4,7 @@
  */
 package org.cactoos.scalar;
 
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -103,7 +104,7 @@ final class EqualityTest {
 
         @Override
         public byte[] asBytes() {
-            return this.text.getBytes();
+            return this.text.getBytes(StandardCharsets.UTF_8);
         }
     }
 }

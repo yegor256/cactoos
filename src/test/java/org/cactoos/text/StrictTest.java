@@ -5,7 +5,6 @@
 package org.cactoos.text;
 
 import java.util.regex.Pattern;
-import org.cactoos.Func;
 import org.cactoos.func.FuncOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -24,12 +23,12 @@ final class StrictTest {
      */
     @Test
     void acceptsCharSequencePredicate() {
-        final Func<CharSequence, Boolean> lengthy = new FuncOf<>(
-            seq -> seq.length() > 3
-        );
         MatcherAssert.assertThat(
             "Must be equal strings",
-            new Strict(lengthy, new TextOf("sequence")),
+            new Strict(
+                new FuncOf<>(seq -> seq.length() > 3),
+                new TextOf("sequence")
+            ),
             new IsText("sequence")
         );
     }

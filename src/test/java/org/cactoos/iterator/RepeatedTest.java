@@ -20,12 +20,11 @@ final class RepeatedTest {
     @Test
     void allSameTest() {
         final int size = 42;
-        final int element = 11;
         MatcherAssert.assertThat(
             "Must generate an iterable with fixed size",
             new IterableOf<>(
                 new Repeated<>(
-                    size, element
+                    size, 11
                 )
             ),
             new HasSize(size)

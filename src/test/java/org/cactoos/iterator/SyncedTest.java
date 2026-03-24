@@ -23,12 +23,11 @@ final class SyncedTest {
 
     @Test
     void syncIteratorReturnsCorrectValuesWithExternalLock() {
-        final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
         MatcherAssert.assertThat(
             "Unexpected value found.",
             new ListOf<>(
                 new Synced<>(
-                    lock, new IteratorOf<>("a", "b")
+                    new ReentrantReadWriteLock(), new IteratorOf<>("a", "b")
                 )
             ).toArray(),
             new IsEqual<>(new Object[]{"a", "b"})

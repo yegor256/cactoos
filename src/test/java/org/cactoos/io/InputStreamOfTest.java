@@ -63,10 +63,9 @@ final class InputStreamOfTest {
 
     @Test
     void makesDataAvailable() throws IOException {
-        final String content = "Hello,חבר!";
         MatcherAssert.assertThat(
             "Must show that data is available",
-            new InputStreamOf(content).available(),
+            new InputStreamOf("Hello,חבר!").available(),
             new Satisfies<>(x -> x > 0)
         );
     }
@@ -97,12 +96,10 @@ final class InputStreamOfTest {
 
     @Test
     void readsBytesArray() throws Exception {
-        final String content = "Bytes array content";
-        final byte[] bytes = new BytesOf(content).asBytes();
         MatcherAssert.assertThat(
             "Must read from byte array",
-            new TextOf(new InputStreamOf(bytes)),
-            new IsText(content)
+            new TextOf(new InputStreamOf(new BytesOf("Bytes array content").asBytes())),
+            new IsText("Bytes array content")
         );
     }
 
@@ -146,18 +143,16 @@ final class InputStreamOfTest {
 
     @Test
     void readsFromReaderWithMax() {
-        final String content = "Reading with charset name and buffer size";
-        final int max = 3;
         MatcherAssert.assertThat(
             "Must read from reader with charset name and buffer size",
             new TextOf(
                 new InputStreamOf(
-                    new StringReader(content),
+                    new StringReader("Reading with charset name and buffer size"),
                     StandardCharsets.UTF_8.name(),
-                    max
+                    3
                 )
             ),
-            new IsText(content)
+            new IsText("Reading with charset name and buffer size")
         );
     }
 

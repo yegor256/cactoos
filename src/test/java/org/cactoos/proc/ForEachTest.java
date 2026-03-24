@@ -22,8 +22,8 @@ final class ForEachTest {
     @Test
     void worksWithGenerics() throws Exception {
         final Collection<Iterable<Number>> list = new ListOf<>();
-        final Proc<? super Iterable<Number>> proc = list::add;
-        new ForEach<Collection<Number>>(proc).exec(new ListOf<>(new ListOf<>(1), new ListOf<>(2)));
+        new ForEach<Collection<Number>>((Proc<? super Iterable<Number>>) list::add)
+            .exec(new ListOf<>(new ListOf<>(1), new ListOf<>(2)));
         MatcherAssert.assertThat(
             "Must contain elements",
             list,

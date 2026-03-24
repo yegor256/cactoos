@@ -23,16 +23,15 @@ import org.llorllale.cactoos.matchers.Throws;
 final class UncheckedTextTest {
     @Test
     void rethrowsCheckedToUncheckedException() {
-        final String msg = "intended";
         MatcherAssert.assertThat(
             "Must throw an exception when something goes wrong",
             new UncheckedText(
                 () -> {
-                    throw new IOException(msg);
+                    throw new IOException("intended");
                 }
             )::asString,
             new Throws<>(
-                new StringContains(msg),
+                new StringContains("intended"),
                 RuntimeException.class
             )
         );

@@ -44,11 +44,10 @@ final class StickyTest {
 
     @Test
     void hasProperToString() {
-        final String str = "Hello";
         MatcherAssert.assertThat(
             "must have toString method",
-            new Sticky(() -> str),
-            new HasToString<>(new IsEqual<>(str))
+            new Sticky(() -> "Hello"),
+            new HasToString<>(new IsEqual<>("Hello"))
         );
     }
 }

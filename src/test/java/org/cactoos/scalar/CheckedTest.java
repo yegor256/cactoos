@@ -114,16 +114,15 @@ final class CheckedTest {
 
     @Test
     void throwsIoExceptionWithModifiedMessage() {
-        final String message = "error msg";
         MatcherAssert.assertThat(
             "Must throw io exception with modified message",
             () -> new Checked<>(
                 () -> {
                     throw new IOException("io");
                 },
-                exp -> new IOException(message, exp)
+                exp -> new IOException("error msg", exp)
             ).value(),
-            new Throws<>(message, IOException.class)
+            new Throws<>("error msg", IOException.class)
         );
     }
 }

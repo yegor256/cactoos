@@ -25,10 +25,9 @@ final class HeadInputStreamTest {
             new InputOf("testSkippingLessThanTotal").stream(),
             5
         )) {
-            final long skipped = stream.skip(3L);
             MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
-                skipped,
+                stream.skip(3L),
                 new IsEqual<>(3L)
             );
             MatcherAssert.assertThat(
@@ -45,16 +44,14 @@ final class HeadInputStreamTest {
             new InputOf("testSkippingMoreThanTotal").stream(),
             5
         )) {
-            final long skipped = stream.skip(7L);
             MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
-                skipped,
+                stream.skip(7L),
                 new IsEqual<>(5L)
             );
-            final String input = new TextOf(stream).asString();
             MatcherAssert.assertThat(
                 "The result text wasn't empty",
-                new TextOf(input),
+                new TextOf(new TextOf(stream).asString()),
                 new IsText("")
             );
         }
@@ -66,10 +63,9 @@ final class HeadInputStreamTest {
             new InputOf("testResetting").stream(),
             5
         )) {
-            final long skipped = stream.skip(7L);
             MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
-                skipped,
+                stream.skip(7L),
                 new IsEqual<>(5L)
             );
             stream.reset();

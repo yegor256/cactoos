@@ -25,26 +25,24 @@ final class RepeatedTest {
     @Test
     void runsFuncMultipleTimes() throws Exception {
         final Iterator<Integer> iter = new IteratorOf<>(1, 2, 5, 6);
-        final Func<Boolean, Integer> func = new Repeated<>(
-            input -> iter.next(),
-            3
-        );
         MatcherAssert.assertThat(
             "Must be applied 3 times",
-            func.apply(true),
+            new Repeated<Boolean, Integer>(
+                input -> iter.next(),
+                3
+            ).apply(true),
             new IsEqual<>(5)
         );
     }
 
     @Test
     void repeatsNullsResults() throws Exception {
-        final Func<Boolean, Integer> func = new Repeated<>(
-            input -> null,
-            2
-        );
         MatcherAssert.assertThat(
             "Must repeat NULL",
-            func.apply(true),
+            new Repeated<Boolean, Integer>(
+                input -> null,
+                2
+            ).apply(true),
             new IsNull<>()
         );
     }

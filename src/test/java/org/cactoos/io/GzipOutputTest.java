@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.GZIPOutputStream;
@@ -36,7 +37,8 @@ final class GzipOutputTest {
         try (
             Writer writer = new BufferedWriter(
                 new OutputStreamWriter(
-                    new GZIPOutputStream(expected)
+                    new GZIPOutputStream(expected),
+                    StandardCharsets.UTF_8
                 )
             )
         ) {

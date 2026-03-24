@@ -47,16 +47,15 @@ final class HeadOfTest {
 
     @Test
     void readsHeadOfShorterInput() {
-        final String input = "readsHeadOfShorterInput";
         MatcherAssert.assertThat(
             "must limit to at most the number of available bytes",
             new TextOf(
                 new HeadOf(
-                    new InputOf(input),
+                    new InputOf("readsHeadOfShorterInput"),
                     35
                 )
             ),
-            new HasString(input)
+            new HasString("readsHeadOfShorterInput")
         );
     }
 }

@@ -20,11 +20,10 @@ final class RepeatedTest {
 
     @Test
     void runsMultipleTimes() throws Exception {
-        final AtomicInteger atom = new AtomicInteger();
         MatcherAssert.assertThat(
             "Must run scalar 3 times",
             new Repeated<>(
-                atom::incrementAndGet,
+                new AtomicInteger()::incrementAndGet,
                 3
             ).value(),
             new IsEqual<>(3)

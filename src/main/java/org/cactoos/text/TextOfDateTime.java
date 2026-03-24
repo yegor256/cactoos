@@ -22,6 +22,7 @@ import org.cactoos.time.Iso;
  *
  * @since 1.0.0
  */
+@SuppressWarnings("PMD.ReplaceJavaUtilDate")
 public final class TextOfDateTime extends TextEnvelope {
 
     /**

@@ -69,11 +69,8 @@ final class SortedTest {
         MatcherAssert.assertThat(
             "Must keep unique integer numbers sorted in descending order",
             new Sorted<Text>(
-                (first, second) -> {
-                    final String left = new UncheckedText(first).asString();
-                    final String right = new UncheckedText(second).asString();
-                    return left.compareTo(right);
-                },
+                (first, second) -> new UncheckedText(first).asString()
+                    .compareTo(new UncheckedText(second).asString()),
                 new TextOf("cd"),
                 new TextOf("ab"),
                 new TextOf("gh"),

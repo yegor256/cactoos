@@ -73,7 +73,7 @@ final class InputOfTest {
     void closesInputStream() throws Exception {
         final AtomicBoolean closed = new AtomicBoolean();
         final InputStream input = new ByteArrayInputStream(
-            "how are you?".getBytes()
+            "how are you?".getBytes(StandardCharsets.UTF_8)
         );
         new TextOf(
             new InputOf(
@@ -115,27 +115,41 @@ final class InputOfTest {
 
     @Test
     void readsRealUrl() throws Exception {
+        final AtomicBoolean done = new AtomicBoolean(false);
         new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
-            home -> MatcherAssert.assertThat(
-                "must fetch bytes from the URL",
-                new TextOf(
-                    new InputOf(home)
-                ),
-                new MatchesRegex("<html.*html>")
-            )
+            home -> {
+                MatcherAssert.assertThat(
+                    "must fetch bytes from the URL",
+                    new TextOf(new InputOf(home)),
+                    new MatchesRegex("<html.*html>")
+                );
+                done.set(true);
+            }
+        );
+        MatcherAssert.assertThat(
+            "Callback must be executed",
+            done.get(),
+            new IsEqual<>(true)
         );
     }
 
     @Test
     void readsRealUrlWithProxy() throws Exception {
+        final AtomicBoolean done = new AtomicBoolean(false);
         new FtRemote(new TkHtml("<html>Proxy works!</html>")).exec(
-            home -> MatcherAssert.assertThat(
-                "must fetch bytes from the URL via a proxy",
-                new TextOf(
-                    new InputOf(home.toURL(), Proxy.NO_PROXY)
-                ),
-                new MatchesRegex("<html.*html>")
-            )
+            home -> {
+                MatcherAssert.assertThat(
+                    "must fetch bytes from the URL via a proxy",
+                    new TextOf(new InputOf(home.toURL(), Proxy.NO_PROXY)),
+                    new MatchesRegex("<html.*html>")
+                );
+                done.set(true);
+            }
+        );
+        MatcherAssert.assertThat(
+            "Callback must be executed for proxy",
+            done.get(),
+            new IsEqual<>(true)
         );
     }
 
@@ -302,10 +316,9 @@ final class InputOfTest {
 
     @Test
     void makesDataAvailable() throws Exception {
-        final String content = "Hello,חבר!";
         MatcherAssert.assertThat(
             "must show that data is available",
-            new InputOf(content).stream(),
+            new InputOf("Hello,חבר!").stream(),
             new Satisfies<>(s -> s.available() > 0)
         );
     }

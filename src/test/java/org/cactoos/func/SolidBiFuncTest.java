@@ -22,7 +22,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 final class SolidBiFuncTest {
     @Test
     void testThatFuncIsSynchronized() {
-        final int threads = 100;
         final int[] shared = {0};
         final BiFunc<Integer, Integer, Boolean> testable =
             new SolidBiFunc<>(
@@ -36,7 +35,7 @@ final class SolidBiFuncTest {
             func -> func.apply(true),
             new RunsInThreads<Func<Boolean, Boolean>>(
                 input -> testable.apply(1, 1),
-                threads
+                100
             )
         );
         MatcherAssert.assertThat(

@@ -5,6 +5,7 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.text.ParseException;
 import org.cactoos.Text;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
@@ -24,16 +25,15 @@ final class IoCheckedTextTest {
 
     @Test
     void rethrowsCheckedIoException() {
-        final String msg = "intended IO error";
         MatcherAssert.assertThat(
             "Must throw same IO exception",
             new IoCheckedText(
                 () -> {
-                    throw new IOException(msg);
+                    throw new IOException("intended IO error");
                 }
             )::asString,
             new Throws<>(
-                new StringContains(msg),
+                new StringContains("intended IO error"),
                 IOException.class
             )
         );
@@ -41,16 +41,15 @@ final class IoCheckedTextTest {
 
     @Test
     void rethrowsCheckedToUncheckedException() {
-        final String msg = "intended";
         MatcherAssert.assertThat(
             "Must throw an exception when something goes wrong",
             new IoCheckedText(
                 () -> {
-                    throw new Exception(msg);
+                    throw new ParseException("intended", 0);
                 }
             )::asString,
             new Throws<>(
-                new StringContains(msg),
+                new StringContains("intended"),
                 RuntimeException.class
             )
         );

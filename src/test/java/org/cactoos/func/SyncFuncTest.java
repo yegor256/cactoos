@@ -21,7 +21,6 @@ final class SyncFuncTest {
     @Test
     void funcWorksInThreads() {
         final List<Integer> list = new LinkedList<>();
-        final int threads = 100;
         MatcherAssert.assertThat(
             "Sync func can't work well in multiple threads",
             func -> func.apply(true),
@@ -29,13 +28,13 @@ final class SyncFuncTest {
                 new SyncFunc<Boolean, Boolean>(
                     input -> list.add(1)
                 ),
-                threads
+                100
             )
         );
         MatcherAssert.assertThat(
             "Must run the expected amount of threads",
             list.size(),
-            new IsEqual<>(threads)
+            new IsEqual<>(100)
         );
     }
 }

@@ -4,7 +4,6 @@
  */
 package org.cactoos.text;
 
-import org.cactoos.Func;
 import org.cactoos.func.FuncOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -20,12 +19,12 @@ final class SubTest {
 
     @Test
     void acceptsCharSequence() {
-        final Func<CharSequence, Integer> half = new FuncOf<>(
-            sequence -> sequence.length() / 2
-        );
         MatcherAssert.assertThat(
             "Must cut a text with start",
-            new Sub(new TextOf("sequence"), half),
+            new Sub(
+                new TextOf("sequence"),
+                new FuncOf<>(sequence -> sequence.length() / 2)
+            ),
             new IsText("ence")
         );
     }

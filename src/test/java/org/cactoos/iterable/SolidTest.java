@@ -51,9 +51,16 @@ final class SolidTest {
 
     @Test
     void worksInThreadsMultipleTimes() {
-        for (int count = 0; count < 10; ++count) {
+        int count = 0;
+        for (int idx = 0; idx < 10; ++idx) {
             this.worksInThreads();
+            ++count;
         }
+        MatcherAssert.assertThat(
+            "Must work in threads 10 times",
+            count,
+            Matchers.equalTo(10)
+        );
     }
 
     @Test

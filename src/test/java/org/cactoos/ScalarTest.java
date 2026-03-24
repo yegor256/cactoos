@@ -6,6 +6,7 @@ package org.cactoos;
 
 import org.cactoos.scalar.NoNulls;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -42,6 +43,10 @@ final class ScalarTest {
 
     @Test
     void okForNoNulls() throws Exception {
-        new NoNulls<>(() -> 1).value();
+        MatcherAssert.assertThat(
+            "Must return value for non-null result",
+            new NoNulls<>(() -> 1).value(),
+            new IsEqual<>(1)
+        );
     }
 }

@@ -5,6 +5,8 @@
 package org.cactoos.func;
 
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -59,8 +61,12 @@ final class BiFuncNoNullsTest {
 
     @Test
     void okForNoNulls() throws Exception {
-        new BiFuncNoNulls<>(
-            (first, second) -> first
-        ).apply(new Object(), new Object());
+        MatcherAssert.assertThat(
+            "Must return value for valid arguments",
+            new BiFuncNoNulls<>(
+                (first, second) -> first
+            ).apply(new Object(), new Object()),
+            new IsNot<>(new IsNull<>())
+        );
     }
 }

@@ -202,24 +202,18 @@ final class NoNullsTest {
 
     @Test
     void retainsAll() {
-        final Collection<Integer> col = new NoNulls<>(
-            new ListOf<>(1, 2, 3)
-        );
         MatcherAssert.assertThat(
             "NoNulls#retainAll(...) must return false for the same elements",
-            col.retainAll(new ListOf<>(1, 2, 3)),
+            new NoNulls<>(new ListOf<>(1, 2, 3)).retainAll(new ListOf<>(1, 2, 3)),
             new IsNot<>(new IsTrue())
         );
     }
 
     @Test
     void retainsAllWithNulls() {
-        final Collection<Integer> col = new NoNulls<>(
-            new ListOf<>(1, 2, 3)
-        );
         MatcherAssert.assertThat(
             "NoNulls#retailAll(..) must return true for different elements",
-            col.retainAll(new ListOf<>(1, null, 3)),
+            new NoNulls<>(new ListOf<>(1, 2, 3)).retainAll(new ListOf<>(1, null, 3)),
             new IsTrue()
         );
     }
@@ -252,12 +246,9 @@ final class NoNullsTest {
 
     @Test
     void shouldBeEmpty() {
-        final Collection<Integer> col = new NoNulls<>(
-            new ListOf<>()
-        );
         MatcherAssert.assertThat(
             "Must be empty if created from an empty list",
-            col.isEmpty(),
+            new NoNulls<>(new ListOf<>()).isEmpty(),
             new IsTrue()
         );
     }

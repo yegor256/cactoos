@@ -103,21 +103,20 @@ final class AbbreviatedRightTest {
     @SuppressWarnings("unchecked")
     void abbreviatesTextThatChanges() {
         final AtomicInteger counter = new AtomicInteger(0);
-        final Text txt = new TextOf(
-            () -> {
-                final String result;
-                if (counter.getAndIncrement() == 0) {
-                    result = "The quick brown fox jumps";
-                } else {
-                    result = "The lazy black dog";
-                }
-                return result;
-            }
-        );
         MatcherAssert.assertThat(
             "Must abbreviate a text that changes",
             new AbbreviatedRight(
-                txt,
+                new TextOf(
+                    () -> {
+                        final String result;
+                        if (counter.getAndIncrement() == 0) {
+                            result = "The quick brown fox jumps";
+                        } else {
+                            result = "The lazy black dog";
+                        }
+                        return result;
+                    }
+                ),
                 15
             ),
             new AllOf<>(

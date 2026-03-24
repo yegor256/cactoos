@@ -23,55 +23,49 @@ final class TeeInputFromByteArrayTest {
 
     @Test
     void copiesFromByteArrayToPath(@TempDir final Path wdir) throws Exception {
-        final String message =
-            "Hello, товарищ path äÄ üÜ öÖ and ß";
         final File output = wdir.resolve("copytest.txt").toFile();
         new LengthOf(
             new TeeInput(
-                message.getBytes(StandardCharsets.UTF_8),
+                "Hello, товарищ path äÄ üÜ öÖ and ß".getBytes(StandardCharsets.UTF_8),
                 output.toPath()
             )
         ).value();
         MatcherAssert.assertThat(
             "Must copy bytes to path",
             new InputOf(output),
-            new HasContent(message)
+            new HasContent("Hello, товарищ path äÄ üÜ öÖ and ß")
         );
     }
 
     @Test
     void copiesFromByteArrayToFile(@TempDir final Path wdir) throws Exception {
-        final String message =
-            "Hello, товарищ file äÄ üÜ öÖ and ß";
         final File output = wdir.resolve("copyarraytest.txt").toFile();
         new LengthOf(
             new TeeInput(
-                message.getBytes(StandardCharsets.UTF_8),
+                "Hello, товарищ file äÄ üÜ öÖ and ß".getBytes(StandardCharsets.UTF_8),
                 output
             )
         ).value();
         MatcherAssert.assertThat(
             "Must copy bytes to file",
             new InputOf(output),
-            new HasContent(message)
+            new HasContent("Hello, товарищ file äÄ üÜ öÖ and ß")
         );
     }
 
     @Test
     void copiesFromByteArrayToOutput(@TempDir final Path wdir) throws Exception {
-        final String message =
-            "Hello, товарищ output äÄ üÜ öÖ and ß";
         final File output = wdir.resolve("copytooutput.txt").toFile();
         new LengthOf(
             new TeeInput(
-                message.getBytes(StandardCharsets.UTF_8),
+                "Hello, товарищ output äÄ üÜ öÖ and ß".getBytes(StandardCharsets.UTF_8),
                 new OutputTo(output)
             )
         ).value();
         MatcherAssert.assertThat(
             "Must copy bytes to output",
             new InputOf(output),
-            new HasContent(message)
+            new HasContent("Hello, товарищ output äÄ üÜ öÖ and ß")
         );
     }
 }

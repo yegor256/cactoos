@@ -84,10 +84,9 @@ final class WriterAsOutputStreamTest {
             Files.newOutputStream(temp.toAbsolutePath()),
             StandardCharsets.UTF_8
         )) {
-            final String content = "Hello, товарищ! How are you?";
             new LengthOf(
                 new TeeInput(
-                    new InputOf(content),
+                    new InputOf("Hello, товарищ! How are you?"),
                     new OutputTo(
                         new WriterAsOutputStream(
                             writer,

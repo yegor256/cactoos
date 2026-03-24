@@ -56,12 +56,12 @@ final class AppendToTest {
         final File source = wdir.resolve("apptest.txt").toFile();
         final String first = "abdcd";
         try (OutputStream out = new OutputTo(source).stream()) {
-            out.write(first.getBytes());
+            out.write(first.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }
         final String second = "efgh";
         try (OutputStream out = new AppendTo(source).stream()) {
-            out.write(second.getBytes());
+            out.write(second.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }
         MatcherAssert.assertThat(
