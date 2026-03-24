@@ -6,9 +6,9 @@ package org.cactoos.iterable;
 
 import java.util.Random;
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -21,7 +21,7 @@ final class ShuffledTest {
 
     @Test
     void shuffleArray() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must shuffle an iterable",
             new Shuffled<>(
                 new IterableOf<>(
@@ -29,30 +29,30 @@ final class ShuffledTest {
                 )
             ),
             new HasValues<>(2, 5, 6)
-        ).affirm();
+        );
     }
 
     @Test
     void shuffleCollection() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must shuffle elements in collection",
             new Shuffled<>(new ListOf<>(1, 2, 0, -1)),
             new HasValues<>(1, 2, 0, -1)
-        ).affirm();
+        );
     }
 
     @Test
     void shufflesIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must shuffle elements in iterable",
             new Shuffled<>(new IterableOf<>(1, 2, 0, -1)),
             new HasValues<>(1, 2, 0, -1)
-        ).affirm();
+        );
     }
 
     @Test
     void shuffleIterableWithRandomized() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must shuffle elements with randomizer",
             new Shuffled<>(
                 new Random(0L),
@@ -63,15 +63,15 @@ final class ShuffledTest {
             new IsEqual<>(
                 new IterableOf<>(1, 2, 3)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void shufflesVarargs() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must shuffle elements from varargs",
             new Shuffled<>(1, 2, 3, 4, 4, 5),
             new HasValues<>(1, 2, 3, 4, 4, 5)
-        ).affirm();
+        );
     }
 }

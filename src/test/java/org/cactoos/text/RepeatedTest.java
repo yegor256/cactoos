@@ -4,8 +4,8 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -17,19 +17,19 @@ final class RepeatedTest {
 
     @Test
     void repeatsWordsText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't repeats a text",
             new Repeated("hello", 2),
             new HasString("hellohello")
-        ).affirm();
+        );
     }
 
     @Test
     void repeatsCharText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't repeats a char",
             new Repeated("A", 5),
             new HasString("AAAAA")
-        ).affirm();
+        );
     }
 }

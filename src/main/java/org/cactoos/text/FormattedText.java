@@ -111,7 +111,6 @@ public final class FormattedText extends TextEnvelope {
      * @param locale Format locale
      * @param args Arguments
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public FormattedText(
         final Text ptn,
         final Locale locale,

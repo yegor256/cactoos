@@ -6,12 +6,12 @@ package org.cactoos.list;
 
 import java.util.List;
 import org.hamcrest.Matcher;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsInstanceOf;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -22,10 +22,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle DiamondOperatorCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods",
-    "PMD.JUnitTestsShouldIncludeAssert",
-    "PMD.UseDiamondOperator"
-})
+@SuppressWarnings("PMD.TooManyMethods")
 final class JoinedTest {
 
     /**
@@ -50,7 +47,7 @@ final class JoinedTest {
 
     @Test
     void behavesAsCollection() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't behave as a list",
             new Joined<String>(
                 new ListOf<>(
@@ -61,12 +58,12 @@ final class JoinedTest {
                 )
             ),
             new BehavesAsList<>(JoinedTest.LITERAL_TWO)
-        ).affirm();
+        );
     }
 
     @Test
     void size() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must evaluate the size of the joined list",
             new Joined<String>(
                 new ListOf<>(
@@ -77,12 +74,12 @@ final class JoinedTest {
                 )
             ).size(),
             new IsEqual<>(4)
-        ).affirm();
+        );
     }
 
     @Test
     void isEmpty() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be evaluated as an empty list",
             new Joined<String>(
                 new ListOf<>(
@@ -93,12 +90,12 @@ final class JoinedTest {
                 )
             ).isEmpty(),
             new IsNot<>(new IsTrue())
-        ).affirm();
+        );
     }
 
     @Test
     void contains() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must contain element specified",
             new Joined<String>(
                 new ListOf<>(
@@ -109,12 +106,12 @@ final class JoinedTest {
                 )
             ).contains(JoinedTest.LITERAL_THREE),
             new IsTrue()
-        ).affirm();
+        );
     }
 
     @Test
     void iterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Joined Iterator Must return next element equal to the first added",
             new Joined<String>(
                 new ListOf<>(
@@ -127,7 +124,7 @@ final class JoinedTest {
             new IsEqual<>(
                 JoinedTest.LITERAL_ONE
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -137,7 +134,7 @@ final class JoinedTest {
             new ListOf<>(JoinedTest.LITERAL_TWO)
         );
         joined.add(JoinedTest.LITERAL_THREE);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to add element specified",
             joined,
             new IsEqual<>(
@@ -147,7 +144,7 @@ final class JoinedTest {
                     JoinedTest.LITERAL_THREE
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -157,7 +154,7 @@ final class JoinedTest {
             new ListOf<>(JoinedTest.LITERAL_TWO)
         );
         joined.remove(JoinedTest.LITERAL_TWO);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to remove element specified",
             joined,
             new IsEqual<>(
@@ -165,12 +162,12 @@ final class JoinedTest {
                     JoinedTest.LITERAL_ONE
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void containsAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must contain all elements",
             new Joined<String>(
                 new ListOf<>(JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_THREE),
@@ -182,7 +179,7 @@ final class JoinedTest {
                 )
             ),
             new IsTrue()
-        ).affirm();
+        );
     }
 
     @Test
@@ -197,7 +194,7 @@ final class JoinedTest {
                 JoinedTest.LITERAL_FOUR
             )
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to addAll elements specified",
             joined,
             new IsEqual<>(
@@ -208,7 +205,7 @@ final class JoinedTest {
                     JoinedTest.LITERAL_FOUR
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -224,7 +221,7 @@ final class JoinedTest {
                 JoinedTest.LITERAL_FOUR
             )
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to addAll elements in front",
             joined,
             new IsEqual<>(
@@ -235,7 +232,7 @@ final class JoinedTest {
                     JoinedTest.LITERAL_TWO
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -253,7 +250,7 @@ final class JoinedTest {
                 JoinedTest.LITERAL_THREE
             )
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to removeAll elements specified",
             joined,
             new IsEqual<>(
@@ -261,7 +258,7 @@ final class JoinedTest {
                     JoinedTest.LITERAL_ONE
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -279,7 +276,7 @@ final class JoinedTest {
                 JoinedTest.LITERAL_THREE
             )
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to retain all",
             joined,
             new IsEqual<>(
@@ -288,7 +285,7 @@ final class JoinedTest {
                     JoinedTest.LITERAL_THREE
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -303,16 +300,16 @@ final class JoinedTest {
             )
         );
         joined.clear();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to clear",
             joined.size(),
             new IsEqual<>(0)
-        ).affirm();
+        );
     }
 
     @Test
     void get() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must get element",
             new Joined<String>(
                 new ListOf<>(
@@ -324,7 +321,7 @@ final class JoinedTest {
                 )
             ).get(1),
             new IsEqual<>(JoinedTest.LITERAL_THREE)
-        ).affirm();
+        );
     }
 
     @Test
@@ -334,11 +331,11 @@ final class JoinedTest {
             new ListOf<>(JoinedTest.LITERAL_TWO)
         );
         joined.set(0, JoinedTest.LITERAL_THREE);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to set element by specified index",
             joined.get(0),
             new IsEqual<>(JoinedTest.LITERAL_THREE)
-        ).affirm();
+        );
     }
 
     @Test
@@ -348,11 +345,11 @@ final class JoinedTest {
             new ListOf<>(JoinedTest.LITERAL_TWO)
         );
         joined.add(0, JoinedTest.LITERAL_THREE);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to add element by specified index",
             joined.get(0),
             new IsEqual<>(JoinedTest.LITERAL_THREE)
-        ).affirm();
+        );
     }
 
     @Test
@@ -362,11 +359,11 @@ final class JoinedTest {
             new ListOf<>(JoinedTest.LITERAL_TWO)
         );
         joined.remove(0);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to remove element by specified index",
             joined.get(0),
             new IsEqual<>(JoinedTest.LITERAL_TWO)
-        ).affirm();
+        );
     }
 
     @Test
@@ -376,25 +373,25 @@ final class JoinedTest {
             new ListOf<>(JoinedTest.LITERAL_TWO)
         );
         joined.remove(JoinedTest.LITERAL_ONE);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to remove element by specified element",
             joined.get(0),
             new IsEqual<>(JoinedTest.LITERAL_TWO)
-        ).affirm();
+        );
     }
 
     @Test
     void listIteratorSecond() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected for greater then size index",
             () -> new Joined<Integer>().listIterator(66),
             new Throws<>(IndexOutOfBoundsException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void subList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to to get sub list",
             new Joined<String>(
                 new ListOf<>(JoinedTest.LITERAL_ONE),
@@ -406,12 +403,12 @@ final class JoinedTest {
                     JoinedTest.LITERAL_THREE
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void itemAndList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to join element with a list",
             new Joined<>(
                 JoinedTest.LITERAL_ONE,
@@ -424,18 +421,18 @@ final class JoinedTest {
                     JoinedTest.LITERAL_THREE
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void infersCorrectly() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be able to infer type of elements",
             new Joined<>(
-                Integer.valueOf(1),
+                1,
                 new ListOf<>(
-                    Double.valueOf(2.0),
-                    Double.valueOf(3.0)
+                    2.0,
+                    3.0
                 )
             ),
             new IsIterableContainingInOrder<>(
@@ -445,6 +442,6 @@ final class JoinedTest {
                     new IsInstanceOf(Double.class)
                 )
             )
-        ).affirm();
+        );
     }
 }

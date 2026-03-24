@@ -6,8 +6,8 @@ package org.cactoos.scalar;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -17,12 +17,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class UncheckedTest {
 
     @Test
     void rethrowsCheckedToUncheckedException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Checked exception should be rethrown as unchecked",
             () -> new Unchecked<>(
                 () -> {
@@ -30,12 +29,12 @@ final class UncheckedTest {
                 }
             ).value(),
             new Throws<>(UncheckedIOException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void rethrowsUncheckedException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Unchecked exception should be rethrown as is",
             () -> new Unchecked<>(
                 () -> {
@@ -43,18 +42,18 @@ final class UncheckedTest {
                 }
             ).value(),
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void returnUncheckedValue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return value without exceptions",
             new Unchecked<>(
                 () -> true
             ).value(),
             new IsTrue()
-        ).affirm();
+        );
     }
 
 }

@@ -5,8 +5,8 @@
 package org.cactoos.iterator;
 
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 
 /**
@@ -21,7 +21,7 @@ final class RepeatedTest {
     void allSameTest() {
         final int size = 42;
         final int element = 11;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must generate an iterable with fixed size",
             new IterableOf<>(
                 new Repeated<>(
@@ -29,15 +29,15 @@ final class RepeatedTest {
                 )
             ),
             new HasSize(size)
-        ).affirm();
+        );
     }
 
     @Test
     void emptyTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must generate an empty iterator",
             new IterableOf<>(new Repeated<>(0, 0)),
             new HasSize(0)
-        ).affirm();
+        );
     }
 }

@@ -5,9 +5,9 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -21,25 +21,25 @@ final class IteratorOfStackTraceTest {
     void iteratorOfStackTraceTest() {
         final Throwable inner = new Throwable();
         final IteratorOfStackTrace iter =  new IteratorOfStackTrace(new Throwable(inner));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "First call 'hasNext' should return true.",
             iter.hasNext(),
             new IsTrue()
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "First call 'next' should return inner exception.",
             iter.next(),
             new IsEqual<>(inner)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Second call 'hasNext' should return false.",
             iter.hasNext(),
             new IsEqual<>(false)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Third call 'next' should throw NSEE.",
             () -> iter.next(),
             new Throws<Throwable>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 }

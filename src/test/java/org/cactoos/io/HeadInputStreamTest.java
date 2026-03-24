@@ -5,9 +5,9 @@
 package org.cactoos.io;
 
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.IsText;
 
@@ -17,8 +17,6 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
 final class HeadInputStreamTest {
 
     @Test
@@ -28,16 +26,16 @@ final class HeadInputStreamTest {
             5
         )) {
             final long skipped = stream.skip(3L);
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
                 skipped,
                 new IsEqual<>(3L)
-            ).affirm();
-            new Assertion<>(
+            );
+            MatcherAssert.assertThat(
                 "Incorrect head of the input stream has been read",
                 new InputOf(stream),
                 new HasContent("tS")
-            ).affirm();
+            );
         }
     }
 
@@ -48,17 +46,17 @@ final class HeadInputStreamTest {
             5
         )) {
             final long skipped = stream.skip(7L);
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
                 skipped,
                 new IsEqual<>(5L)
-            ).affirm();
+            );
             final String input = new TextOf(stream).asString();
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "The result text wasn't empty",
                 new TextOf(input),
                 new IsText("")
-            ).affirm();
+            );
         }
     }
 
@@ -69,17 +67,17 @@ final class HeadInputStreamTest {
             5
         )) {
             final long skipped = stream.skip(7L);
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
                 skipped,
                 new IsEqual<>(5L)
-            ).affirm();
+            );
             stream.reset();
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Reset didn't change the state",
                 new InputOf(stream),
                 new HasContent("testR")
-            ).affirm();
+            );
         }
     }
 
@@ -89,11 +87,11 @@ final class HeadInputStreamTest {
             new InputOf("testAvailableLessThanTotal").stream(),
             5
         )) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "must count available bytes",
                 stream.available(),
                 new IsEqual<>(5)
-            ).affirm();
+            );
         }
     }
 }

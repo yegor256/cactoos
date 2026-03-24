@@ -17,7 +17,6 @@ public final class IterableOfShorts extends IterableEnvelope<Short> {
      * Ctor.
      * @param values Short values
      */
-    @SuppressWarnings("PMD.AvoidUsingShortType")
     public IterableOfShorts(final short... values) {
         super(new IterableOf<>(() -> new IteratorOfShorts(values)));
     }

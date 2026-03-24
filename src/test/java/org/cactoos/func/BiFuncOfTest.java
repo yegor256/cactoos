@@ -8,9 +8,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.BiFunc;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.scalar.Constant;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsSame;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
@@ -18,12 +18,11 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.20
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class BiFuncOfTest {
 
     @Test
     void convertsFuncIntoBiFunc() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert function into bi-function",
             new BiFuncOf<>(
                 new FuncOf<>(input -> input)
@@ -35,14 +34,14 @@ final class BiFuncOfTest {
                     return res.equals(first);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void convertsProcIntoBiFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();
         final Object result = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert procedure into bi-function",
             new BiFuncOf<>(
                 new ProcOf<>(
@@ -57,22 +56,22 @@ final class BiFuncOfTest {
                     return res.equals(result) && done.get().equals(first);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void convertsScalarIntoBiFunc() throws Exception {
         final Object obj = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert scalar into bi-function",
             new BiFuncOf<>(new Constant<>(obj)).apply("discarded", "discarded"),
             new IsSame<>(obj)
-        ).affirm();
+        );
     }
 
     @Test
     void convertsLambdaIntoBiFunc() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert lambda into bi-function",
             new BiFuncOf<>((first, second) -> new Object[] {first, second}),
             new Satisfies<BiFunc<Object, Object, Object[]>>(
@@ -83,6 +82,6 @@ final class BiFuncOfTest {
                     return res.length == 2 && res[0].equals(first) && res[1].equals(second);
                 }
             )
-        ).affirm();
+        );
     }
 }

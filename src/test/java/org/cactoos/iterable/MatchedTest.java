@@ -8,10 +8,10 @@ import java.util.Objects;
 import org.cactoos.list.ListOf;
 import org.cactoos.proc.ForEach;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableWithSize;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -21,24 +21,23 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.39
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class MatchedTest {
 
     @Test
     void iterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "All elements have correlation function as `equal`",
             new Matched<>(
                 new IterableOf<>(1, 2, 3),
                 new IterableOf<>(1, 2, 3)
             ),
             new HasValues<>(1, 2, 3)
-        ).affirm();
+        );
     }
 
     @Test
     void noCorrelationWithBiggerSecondIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "All elements have correlation function as 'endsWith'",
             () -> new ListOf<>(
                 new Matched<>(
@@ -48,12 +47,12 @@ final class MatchedTest {
                 )
             ),
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void noCorrelationWithSmallerSecondIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "All elements have correlation function as `endsWith`",
             () -> new ListOf<>(
                 new Matched<>(
@@ -63,12 +62,12 @@ final class MatchedTest {
                 )
             ),
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void endsWith() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "All elements have correlation function as `endsWith`",
             new Matched<>(
                 (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
@@ -78,12 +77,12 @@ final class MatchedTest {
             new IsIterableWithSize<>(
                 new IsEqual<>(3)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void matchedAsNumbers() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "All elements must be treated as Number",
             new Matched<>(
                 (Number fst, Number snd) -> fst.intValue() == snd.intValue(),
@@ -93,12 +92,12 @@ final class MatchedTest {
             new IsIterableWithSize<>(
                 new IsEqual<>(3)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void noCorrelation() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Should fail if there is no correlation",
             () -> new LengthOf(
                 new Matched<>(
@@ -108,12 +107,12 @@ final class MatchedTest {
                 )
             ).value(),
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void nonNullCorrelation() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Should fail if parameter is null",
             () -> new LengthOf(
                 new Matched<>(
@@ -123,12 +122,12 @@ final class MatchedTest {
                 )
             ).value(),
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void iterablesOfDifferentTypes() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "All elements must be treated according to their type",
             new Matched<>(
                 (Number fst, String snd) -> fst.intValue() == Integer.parseInt(snd),
@@ -138,7 +137,7 @@ final class MatchedTest {
             new IsIterableWithSize<>(
                 new IsEqual<>(3)
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -153,13 +152,13 @@ final class MatchedTest {
             (Integer ignored) -> {
             }
         ).exec(matched);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Elements must not be removed",
             matched,
             new IsEqual<>(
                 copy
             )
-        ).affirm();
+        );
     }
 
 }

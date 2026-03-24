@@ -6,9 +6,9 @@ package org.cactoos.iterator;
 
 import java.util.Objects;
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -19,7 +19,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class MatchedTest {
     @Test
     void failsWhenElementsNotMatch() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "All elements have correlation function 'equals'",
             () -> new ListOf<>(
                 new Matched<>(
@@ -34,12 +34,12 @@ final class MatchedTest {
                 ),
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void failsOnSizeMismatch() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must fail if sizes of iterators are different",
             () -> new ListOf<>(
                 new Matched<>(
@@ -52,12 +52,12 @@ final class MatchedTest {
                 new IsEqual<>("Size mismatch of iterators"),
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void shouldProduceValuesOfFirstIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must match all items of first iterator",
             new ListOf<>(
                 new Matched<>(
@@ -67,7 +67,7 @@ final class MatchedTest {
                 )
             ),
             new HasValues<>(1f, 2f, 3f)
-        ).affirm();
+        );
     }
 
 }

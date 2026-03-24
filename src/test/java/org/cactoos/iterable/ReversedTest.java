@@ -5,11 +5,11 @@
 package org.cactoos.iterable;
 
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 
 /**
@@ -21,7 +21,7 @@ final class ReversedTest {
 
     @Test
     void reversesIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must reverse an iterable",
             new Reversed<>(
                 new IterableOf<>(
@@ -29,7 +29,7 @@ final class ReversedTest {
                 )
             ),
             new IsEqual<>(new IterableOf<>("d", "w", "h"))
-        ).affirm();
+        );
     }
 
     @Test
@@ -38,22 +38,22 @@ final class ReversedTest {
             new IterableOf<>("h", "w", "d")
         );
         final Iterable<String> expected = new IterableOf<>("d", "w", "h");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must iterates once",
             itr,
             new IsEqual<>(expected)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Must iterates twice",
             itr,
             new IsEqual<>(expected)
-        ).affirm();
+        );
     }
 
     @Test
     void reverseList() {
         final String last = "last";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must reverse list",
             new Reversed<>(
                 new ListOf<>(
@@ -61,23 +61,23 @@ final class ReversedTest {
                 )
             ).iterator().next(),
             new IsEqual<>(last)
-        ).affirm();
+        );
     }
 
     @Test
     void reverseEmptyList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must reverse empty list",
             new Reversed<>(
                 new ListOf<>()
             ),
             new IsEmptyIterable<>()
-        ).affirm();
+        );
     }
 
     @Test
     void size() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Size must be the same",
             new Reversed<>(
                 new IterableOf<>(
@@ -85,12 +85,12 @@ final class ReversedTest {
                 )
             ),
             new HasSize(3)
-        ).affirm();
+        );
     }
 
     @Test
     void isEmpty() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be not empty",
             new Reversed<>(
                 new IterableOf<>(
@@ -98,15 +98,15 @@ final class ReversedTest {
                 )
             ),
             new IsNot<>(new IsEmptyIterable<>())
-        ).affirm();
+        );
     }
 
     @Test
     void reversesVarargs() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must reverse varargs",
             new Reversed<>(1, 2, 3, 4),
             new IsEqual<>(new IterableOf<>(4, 3, 2, 1))
-        ).affirm();
+        );
     }
 }

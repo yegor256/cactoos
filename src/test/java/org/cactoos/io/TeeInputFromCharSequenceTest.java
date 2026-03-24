@@ -8,9 +8,9 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
 /**
@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (215 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TeeInputFromCharSequenceTest {
 
     @Test
@@ -30,11 +29,11 @@ final class TeeInputFromCharSequenceTest {
         new LengthOf(
             new TeeInput(input, output)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "char sequence must be copied to the file",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -46,11 +45,11 @@ final class TeeInputFromCharSequenceTest {
         new LengthOf(
             new TeeInput(input, output, StandardCharsets.UTF_8)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "char sequence must be copied to the file with UTF_8 charset",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -62,11 +61,11 @@ final class TeeInputFromCharSequenceTest {
         new LengthOf(
             new TeeInput(input, output, StandardCharsets.UTF_8.name())
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "char sequence must be copied to the file with UTF_8 charset's name",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -77,11 +76,11 @@ final class TeeInputFromCharSequenceTest {
         new LengthOf(
             new TeeInput(input, output.toPath())
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "char sequence must be copied to the path",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -93,11 +92,11 @@ final class TeeInputFromCharSequenceTest {
         new LengthOf(
             new TeeInput(input, output.toPath(), StandardCharsets.UTF_8)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "char sequence must be copied to the path with UTF_8 charset",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -109,11 +108,11 @@ final class TeeInputFromCharSequenceTest {
         new LengthOf(
             new TeeInput(input, output.toPath(), StandardCharsets.UTF_8.name())
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "char sequence must be copied to the path with UTF_8 charset's name",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -124,11 +123,11 @@ final class TeeInputFromCharSequenceTest {
         new LengthOf(
             new TeeInput(input, new OutputTo(output))
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "char sequence must be copied to the output",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -140,11 +139,11 @@ final class TeeInputFromCharSequenceTest {
         new LengthOf(
             new TeeInput(input, new OutputTo(output), StandardCharsets.UTF_8)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "char sequence must be copied to the output with UTF_8 charset",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -156,10 +155,10 @@ final class TeeInputFromCharSequenceTest {
         new LengthOf(
             new TeeInput(input, new OutputTo(output), StandardCharsets.UTF_8.name())
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "char sequence must be copied to the output with UTF_8 charset's name",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 }

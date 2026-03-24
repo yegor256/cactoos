@@ -15,10 +15,10 @@ import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsBlank;
 import org.llorllale.cactoos.matchers.IsText;
 
@@ -28,35 +28,35 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 1.0.0
  * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings("PMD.TooManyMethods")
 final class TextOfDateTimeTest {
 
     @Test
     void readsLocalDateFormattedWithFormatString() {
         final LocalDate date = LocalDate.of(2017, 12, 13);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a LocalDate with format.",
             new TextOfDateTime("yyyy-MM-dd HH:mm:ss", date),
             new IsText("2017-12-13 00:00:00")
-        ).affirm();
+        );
     }
 
     @Test
     void readsLocalDateFormattedWithFormatStringWithLocale() {
         final LocalDate date = LocalDate.of(2017, 12, 13);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a LocalDate with format using locale.",
             new TextOfDateTime(
                 "yyyy MMM dd. HH.mm.ss", date, Locale.FRENCH
             ),
             new IsText("2017 déc. 13. 00.00.00")
-        ).affirm();
+        );
     }
 
     @Test
     void readsLocalDateFormattedAsIsoDateTime() {
         final LocalDate date = LocalDate.of(2017, 12, 13);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a LocalDate with default/ISO format.",
             new TextOfDateTime(date),
             new IsText(
@@ -66,16 +66,16 @@ final class TextOfDateTimeTest {
                     .getOffset().toString()
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsCurrentLocalDateAsText() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a LocalDate with ISO format.",
             new TextOfDateTime(LocalDate.now()).asString(),
             new IsNot<>(new IsBlank())
-        ).affirm();
+        );
     }
 
     @Test
@@ -83,7 +83,7 @@ final class TextOfDateTimeTest {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a LocalDateTime with default/ISO format.",
             new TextOfDateTime(date),
             new IsText(
@@ -92,7 +92,7 @@ final class TextOfDateTimeTest {
                     date.atZone(ZoneId.systemDefault()).getOffset().toString()
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -100,11 +100,11 @@ final class TextOfDateTimeTest {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a LocalDateTime with format.",
             new TextOfDateTime("yyyy-MM-dd HH:mm:ss", date),
             new IsText("2017-12-13 14:15:16")
-        ).affirm();
+        );
     }
 
     @Test
@@ -112,22 +112,22 @@ final class TextOfDateTimeTest {
         final LocalDateTime date = LocalDateTime.of(
             2017, 12, 13, 14, 15, 16, 17
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a LocalDateTime with format using locale.",
             new TextOfDateTime(
                 "yyyy MMM dd. HH.mm.ss", date, Locale.FRENCH
             ),
             new IsText("2017 déc. 13. 14.15.16")
-        ).affirm();
+        );
     }
 
     @Test
     void currentLocalDateTimeAsText() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a LocalDateTime with ISO format.",
             new TextOfDateTime(LocalDateTime.now()).asString(),
             new IsNot<>(new IsNull<>())
-        ).affirm();
+        );
     }
 
     @Test
@@ -138,11 +138,11 @@ final class TextOfDateTimeTest {
         calendar.set(Calendar.MILLISECOND, 17);
         final ZoneOffset offset = calendar.getTimeZone().toZoneId()
             .getRules().getOffset(calendar.toInstant());
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a java.util.Date with ISO format.",
             new TextOfDateTime(calendar.getTime()),
             new IsText("2017-12-13T14:15:16.017" + offset)
-        ).affirm();
+        );
     }
 
     @Test
@@ -150,13 +150,13 @@ final class TextOfDateTimeTest {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getDefault());
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a java.util.Date with custom format.",
             new TextOfDateTime(
                 "yyyy MM dd hh:mm:ss", calendar.getTime()
             ),
             new IsText("2017 12 13 02:15:16")
-        ).affirm();
+        );
     }
 
     @Test
@@ -164,13 +164,13 @@ final class TextOfDateTimeTest {
         final Calendar calendar =
             Calendar.getInstance(TimeZone.getDefault());
         calendar.set(2017, Calendar.DECEMBER, 13, 14, 15, 16);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a java.util.Date with custom format.",
             new TextOfDateTime(
                 "yyyy MMM dd hh:mm:ss", calendar.getTime(), Locale.ITALIAN
             ),
             new IsText("2017 dic 13 02:15:16")
-        ).affirm();
+        );
     }
 
     @Test
@@ -178,11 +178,11 @@ final class TextOfDateTimeTest {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a OffsetDateTime with default/ISO format.",
             new TextOfDateTime(date),
             new IsText("2017-12-13T14:15:16.000000017+01:00")
-        ).affirm();
+        );
     }
 
     @Test
@@ -190,11 +190,11 @@ final class TextOfDateTimeTest {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a OffsetDateTime with format.",
             new TextOfDateTime("yyyy-MM-dd HH:mm:ss", date),
             new IsText("2017-12-13 14:15:16")
-        ).affirm();
+        );
     }
 
     @Test
@@ -202,22 +202,22 @@ final class TextOfDateTimeTest {
         final OffsetDateTime date = OffsetDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a OffsetDateTime with format using locale.",
             new TextOfDateTime(
                 "yyyy MMM dd. HH.mm.ss", date, Locale.FRENCH
             ),
             new IsText("2017 déc. 13. 14.15.16")
-        ).affirm();
+        );
     }
 
     @Test
     void currentOffsetDateTimeAsText() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a OffsetDateTime with ISO format.",
             new TextOfDateTime(OffsetDateTime.now()).asString(),
             new IsNot<>(new IsNull<>())
-        ).affirm();
+        );
     }
 
     @Test
@@ -225,11 +225,11 @@ final class TextOfDateTimeTest {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a ZonedDateTime with default/ISO format.",
             new TextOfDateTime(date),
             new IsText("2017-12-13T14:15:16.000000017+01:00")
-        ).affirm();
+        );
     }
 
     @Test
@@ -237,11 +237,11 @@ final class TextOfDateTimeTest {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a ZonedDateTime with format.",
             new TextOfDateTime("yyyy-MM-dd HH:mm:ss", date),
             new IsText("2017-12-13 14:15:16")
-        ).affirm();
+        );
     }
 
     @Test
@@ -249,21 +249,21 @@ final class TextOfDateTimeTest {
         final ZonedDateTime date = ZonedDateTime.of(
             2017, 12, 13, 14, 15, 16, 17, ZoneId.of("Europe/Berlin")
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a ZonedDateTime with format using locale.",
             new TextOfDateTime(
                 "yyyy MMM dd. HH.mm.ss", date, Locale.FRENCH
             ),
             new IsText("2017 déc. 13. 14.15.16")
-        ).affirm();
+        );
     }
 
     @Test
     void currentZonedDateTimeAsText() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must format a ZonedDateTime with ISO format.",
             new TextOfDateTime(ZonedDateTime.now()).asString(),
             new IsNot<>(new IsNull<>())
-        ).affirm();
+        );
     }
 }

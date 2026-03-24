@@ -4,7 +4,9 @@
  */
 package org.cactoos.set;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Unchecked;
@@ -65,7 +67,7 @@ public final class Diff<T> extends SetEnvelope<T> {
      * @param first First set
      * @param second Second set
      */
-    public Diff(final SetOf<T> first, final SetOf<T> second) {
+    public Diff(final Set<T> first, final Set<T> second) {
         super(computeDiff(first, second));
     }
 
@@ -76,11 +78,11 @@ public final class Diff<T> extends SetEnvelope<T> {
      * @param <E> Type of elements
      * @return The difference set (elements in first but not in second)
      */
-    private static <E> SetOf<E> computeDiff(
-        final SetOf<E> first,
-        final SetOf<E> second
+    private static <E> Set<E> computeDiff(
+        final Set<E> first,
+        final Set<E> second
     ) {
-        final SetOf<E> result = new SetOf<>(first);
+        final Set<E> result = new HashSet<>(first);
         result.removeAll(second);
         return result;
     }

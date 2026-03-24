@@ -64,7 +64,7 @@ public final class IoCheckedText implements Text {
     }
 
     @Override
-    @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.AvoidRethrowingException"})
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public String asString() throws IOException {
         String txt;
         try {

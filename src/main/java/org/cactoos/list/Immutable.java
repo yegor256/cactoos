@@ -17,13 +17,7 @@ import java.util.ListIterator;
  * @param <T> Element type
  * @since 1.16
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AbstractNaming",
-        "PMD.AvoidDuplicateLiterals"
-    }
-)
+@SuppressWarnings("PMD.TooManyMethods")
 public final class Immutable<T> implements List<T> {
 
     /**
@@ -65,7 +59,6 @@ public final class Immutable<T> implements List<T> {
     }
 
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
     public <X> X[] toArray(final X[] array) {
         return this.list.toArray(array);
     }

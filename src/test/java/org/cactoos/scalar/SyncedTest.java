@@ -7,9 +7,9 @@ package org.cactoos.scalar;
 import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -24,18 +24,18 @@ final class SyncedTest {
     void worksInThreads() {
         final List<Integer> list = new LinkedList<>();
         final int threads = 100;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must work well in multiple threads",
             Scalar::value,
             new RunsInThreads<>(
                 new Synced<>(() -> list.add(1)), threads
             )
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "must have correct size",
             list.size(),
             new IsEqual<>(threads)
-        ).affirm();
+        );
     }
 
 }

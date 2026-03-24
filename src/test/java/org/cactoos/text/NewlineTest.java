@@ -4,8 +4,8 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
@@ -15,10 +15,10 @@ import org.llorllale.cactoos.matchers.IsText;
 final class NewlineTest {
     @Test
     void test() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be equal to the System.lineSeparator()",
             new Newline(),
             new IsText(System.lineSeparator())
-        ).affirm();
+        );
     }
 }

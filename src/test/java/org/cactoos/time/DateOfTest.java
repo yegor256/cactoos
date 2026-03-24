@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -17,12 +17,11 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class DateOfTest {
 
     @Test
     void testParsingIsoFormattedStringToDate() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must parse a Date with default/ISO format.",
             new DateOf("2017-12-13T14:15:16.000000017Z"),
             new HasValue<>(
@@ -32,12 +31,12 @@ final class DateOfTest {
                     ).toInstant(ZoneOffset.UTC)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testParsingCustomFormattedStringToDate() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must parse a Date with custom format.",
             new DateOf(
                 "2017-12-13 14:15:16.000000017",
@@ -50,12 +49,12 @@ final class DateOfTest {
                     ).toInstant(ZoneOffset.UTC)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testParsingCustomFormattedStringWithoutTimeToDate() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must parse a Date with custom format.",
             new DateOf(
                 "2018-01-01",
@@ -68,12 +67,12 @@ final class DateOfTest {
                     ).toInstant(ZoneOffset.UTC)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testParsingCustomFormatterStringToDate() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must parse a Date with custom format.",
             new DateOf(
                 "2017-12-13 14:15:16.000000017",
@@ -86,7 +85,7 @@ final class DateOfTest {
                     ).toInstant(ZoneOffset.UTC)
                 )
             )
-        ).affirm();
+        );
     }
 
 }

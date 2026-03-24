@@ -7,8 +7,8 @@ package org.cactoos.text;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
@@ -23,11 +23,11 @@ final class TextEnvelopeTest {
     @Test
     void testAsString() {
         final String text = "asString";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Envelope value does not match String value",
             new TextEnvelopeDummy(text),
             new IsText(text)
-        ).affirm();
+        );
     }
 
     /**

@@ -6,9 +6,9 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -20,9 +20,8 @@ import org.llorllale.cactoos.matchers.Throws;
 final class TailOfTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    void tailIterator() {
-        new Assertion<>(
+        void tailIterator() {
+        MatcherAssert.assertThat(
             "Must get tail portion of iterator",
             new IterableOf<>(
                 new TailOf<>(
@@ -38,12 +37,12 @@ final class TailOfTest {
                     "four"
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void returnsIntactIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return an intact iterator",
             new IterableOf<>(
                 new TailOf<>(
@@ -54,12 +53,12 @@ final class TailOfTest {
                 )
             ),
             new HasSize(2)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsEmptyIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception if empty",
             () -> new TailOf<>(
                 0,
@@ -68,12 +67,12 @@ final class TailOfTest {
                 )
             ).next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void emptyIteratorForNegativeSize() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception for negative size",
             () -> new TailOf<>(
                 -1,
@@ -82,6 +81,6 @@ final class TailOfTest {
                 )
             ).next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 }

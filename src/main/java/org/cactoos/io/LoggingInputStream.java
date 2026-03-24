@@ -23,7 +23,6 @@ import org.cactoos.text.UncheckedText;
  *
  * @since 0.29
  */
-@SuppressWarnings({"PMD.LoggerIsNotStaticFinal", "PMD.MoreThanOneLogger"})
 public final class LoggingInputStream extends InputStream {
 
     /**

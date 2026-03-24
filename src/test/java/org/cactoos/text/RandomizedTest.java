@@ -4,10 +4,10 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -22,40 +22,40 @@ final class RandomizedTest {
 
     @Test
     void generatesRandomTextOfRandomLength() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Generated text is empty",
             new Randomized().asString().length(),
             Matchers.greaterThan(0)
-        ).affirm();
+        );
     }
 
     @Test
     void generatesRandomTextOfSpecifiedLength() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Generated text has incorrect length",
             new Randomized(512).asString().length(),
             new IsEqual<>(512)
-        ).affirm();
+        );
     }
 
     @Test
     void generatesRandomTextOfSpecifiedChars() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Generated text contains not allowed characters",
             new Randomized('a')
                 .asString()
                 .replaceAll("a", "")
                 .length(),
             new IsEqual<>(0)
-        ).affirm();
+        );
     }
 
     @Test
     void generatesRandomTextOfSpecifiedCharsAndLength() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Generated text doesn't match specification",
             new Randomized(10, 'a'),
             new HasString("aaaaaaaaaa")
-        ).affirm();
+        );
     }
 }

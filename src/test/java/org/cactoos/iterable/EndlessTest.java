@@ -5,9 +5,9 @@
 package org.cactoos.iterable;
 
 import java.util.NoSuchElementException;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -19,19 +19,19 @@ final class EndlessTest {
 
     @Test
     void endlessIterableTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must get unique endless iterable item",
             new Endless<>(1),
             Matchers.hasItem(1)
-        ).affirm();
+        );
     }
 
     @Test
     void elementsIsNullTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must get sliced iterable of elements",
             () -> new Endless<>(null).iterator().next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 }

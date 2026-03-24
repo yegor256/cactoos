@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
@@ -22,9 +22,8 @@ import org.llorllale.cactoos.matchers.Throws;
 final class HeadOfTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    void headIterator() {
-        new Assertion<>(
+        void headIterator() {
+        MatcherAssert.assertThat(
             "Must skip elements in iterator",
             new IterableOf<>(
                 new HeadOf<>(
@@ -38,12 +37,12 @@ final class HeadOfTest {
                 "one",
                 "two"
             )
-        ).affirm();
+        );
     }
 
     @Test
     void returnsIntactIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return an intact iterator",
             new IterableOf<>(
                 new HeadOf<>(
@@ -54,12 +53,12 @@ final class HeadOfTest {
                 )
             ),
             new HasSize(2)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsEmptyIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception if empty",
             () -> new HeadOf<>(
                 0,
@@ -68,12 +67,12 @@ final class HeadOfTest {
                 )
             ).next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void emptyIteratorForNegativeSize() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception for negative size",
             () -> new HeadOf<>(
                 -1,
@@ -82,7 +81,7 @@ final class HeadOfTest {
                 )
             ).next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -96,19 +95,19 @@ final class HeadOfTest {
         ).forEachRemaining(
             lst::add
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Should iterate over 2 head elements",
             lst,
             new HasValues<>(
                 "one",
                 "two"
             )
-        ).affirm();
+        );
     }
 
     @Test
     void removeNotSupported() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Remove should not be supported",
             () -> {
                 new HeadOf<>(
@@ -120,7 +119,7 @@ final class HeadOfTest {
                 return "Should have thrown exception";
             },
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
 
 }

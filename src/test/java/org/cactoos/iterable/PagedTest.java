@@ -11,10 +11,10 @@ import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.scalar.ScalarOf;
 import org.cactoos.scalar.Ternary;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableWithSize;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -33,7 +33,7 @@ final class PagedTest {
         final Iterator<Iterable<String>> pages = new IteratorOf<>(
             first, second, third
         );
-        new Assertion<Iterable<String>>(
+        MatcherAssert.assertThat(
             "must have all page values",
             new Paged<>(
                 pages.next(),
@@ -44,7 +44,7 @@ final class PagedTest {
                 ).value()
             ),
             new IsEqual<>(new Joined<>(first, second, third))
-        ).affirm();
+        );
     }
 
     @Test
@@ -57,7 +57,7 @@ final class PagedTest {
             first, second, third
         );
         final Iterator<Iterable<String>> pages = service.iterator();
-        new Assertion<Iterable<String>>(
+        MatcherAssert.assertThat(
             "length must be equal to total number of elements",
             new Paged<>(
                 pages.next(),
@@ -74,7 +74,7 @@ final class PagedTest {
                     ).value().intValue()
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -82,7 +82,7 @@ final class PagedTest {
     void throwsNoSuchElement() {
         final Iterable<Iterable<String>> service = new IterableOf<>();
         final Iterator<Iterable<String>> pages = service.iterator();
-        new Assertion<Scalar<String>>(
+        MatcherAssert.assertThat(
             "must throw an exception when first iterator is empty",
             new ScalarOf<>(
                 () -> new Paged<>(
@@ -95,7 +95,7 @@ final class PagedTest {
                 ).iterator().next()
             ),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
 }

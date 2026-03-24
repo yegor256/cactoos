@@ -4,8 +4,8 @@
  */
 package org.cactoos.scalar;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -14,51 +14,50 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.SuspiciousEqualsMethodName")
 final class EqualsNullableTest {
 
     @Test
     void nullEqualsNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return true for both null objects",
             new EqualsNullable(() -> null, () -> null),
             new HasValue<>(true)
-        ).affirm();
+        );
     }
 
     @Test
-    void equals() {
-        new Assertion<>(
+    void equalObjects() {
+        MatcherAssert.assertThat(
             "Must return true for equal objects",
             new EqualsNullable(1, 1),
             new HasValue<>(true)
-        ).affirm();
+        );
     }
 
     @Test
     void notEquals() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return false for non equal objects",
             new EqualsNullable(1, 2),
             new HasValue<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void equalsObjectAndScalar() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return true for object and scalar with the same value",
             new EqualsNullable(1, () -> 1),
             new HasValue<>(true)
-        ).affirm();
+        );
     }
 
     @Test
     void equalsScalarAndObject() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return true for scalar and object with the same value",
             new EqualsNullable(() -> 1, 1),
             new HasValue<>(true)
-        ).affirm();
+        );
     }
 }

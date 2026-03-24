@@ -11,7 +11,6 @@ import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -21,9 +20,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods",
-    "PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("PMD.TooManyMethods")
 final class ListOfTest {
 
     @Test
@@ -70,20 +67,20 @@ final class ListOfTest {
 
     @Test
     void lowBoundTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected for negative index",
             () -> new ListOf<>(Collections.nCopies(10, 0)).get(-1),
             new Throws<>(IndexOutOfBoundsException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void highBoundTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected for index larger then size",
             () -> new ListOf<>(Collections.nCopies(10, 0)).get(11),
             new Throws<>(IndexOutOfBoundsException.class)
-        ).affirm();
+        );
     }
 
     @Test

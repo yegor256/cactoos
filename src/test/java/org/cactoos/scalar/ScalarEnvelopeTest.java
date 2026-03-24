@@ -5,9 +5,9 @@
 package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -22,11 +22,11 @@ final class ScalarEnvelopeTest {
 
     @Test
     void envelopeDelegatesCalls() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must delegate calls to apply",
             new Static(1),
             new HasValue<>(1)
-        ).affirm();
+        );
     }
 
     @Test
@@ -35,7 +35,7 @@ final class ScalarEnvelopeTest {
         final Scalar<Integer> scalar = () -> {
             throw new UnsupportedOperationException(message);
         };
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must not alter the exception thrown by original Scalar",
             new ScalarEnvelope<Integer>(scalar) {
             },
@@ -43,7 +43,7 @@ final class ScalarEnvelopeTest {
                 new IsEqual<>(message),
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     private static final class Static extends ScalarEnvelope<Integer> {

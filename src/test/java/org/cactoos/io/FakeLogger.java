@@ -14,7 +14,6 @@ import java.util.logging.Logger;
  *
  * @since 0.29
  */
-@SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
 public final class FakeLogger extends Logger {
 
     /**

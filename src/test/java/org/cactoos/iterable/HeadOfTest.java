@@ -16,8 +16,7 @@ import org.llorllale.cactoos.matchers.HasValues;
 final class HeadOfTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    void headIterable() {
+        void headIterable() {
         MatcherAssert.assertThat(
             "Must skip elements in iterable",
             new HeadOf<>(

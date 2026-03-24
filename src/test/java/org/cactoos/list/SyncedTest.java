@@ -7,7 +7,6 @@ package org.cactoos.list;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -15,27 +14,25 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods",
-    "PMD.JUnitTestsShouldIncludeAssert"})
 final class SyncedTest {
 
     @Test
     void behavesAsCollection() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't behave as a list",
             new Synced<>(new ListOf<>(1, 0, -1, -1, 2)),
             new BehavesAsList<>(0)
-        ).affirm();
+        );
     }
 
     @Test
     void worksInThreads() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "should be run in threads",
             list -> !list.iterator().hasNext(),
             new RunsInThreads<>(new Synced<>(Collections.emptyList()))
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "should work as list",
             list -> {
                 MatcherAssert.assertThat(
@@ -46,6 +43,6 @@ final class SyncedTest {
                 return true;
             },
             new RunsInThreads<>(new Synced<>(new ListOf<>(1, 0, -1, -1, 2)))
-        ).affirm();
+        );
     }
 }

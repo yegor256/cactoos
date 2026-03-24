@@ -6,9 +6,9 @@ package org.cactoos.func;
 
 import java.util.LinkedList;
 import java.util.List;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -17,13 +17,12 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class SyncFuncTest {
     @Test
     void funcWorksInThreads() {
         final List<Integer> list = new LinkedList<>();
         final int threads = 100;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Sync func can't work well in multiple threads",
             func -> func.apply(true),
             new RunsInThreads<>(
@@ -32,11 +31,11 @@ final class SyncFuncTest {
                 ),
                 threads
             )
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Must run the expected amount of threads",
             list.size(),
             new IsEqual<>(threads)
-        ).affirm();
+        );
     }
 }

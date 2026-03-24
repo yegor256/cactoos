@@ -5,8 +5,8 @@
 package org.cactoos.func;
 
 import java.io.IOException;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -14,25 +14,24 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class FuncNoNullsTest {
 
     @Test
     void failForNullFunc() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Doesn't fail for null func",
             () -> new FuncNoNulls<>(null).apply(new Object()),
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullInput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Doesn't fail for null input",
             () -> new FuncNoNulls<>(input -> input).apply(null),
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -42,11 +41,11 @@ final class FuncNoNullsTest {
 
     @Test
     void failForNullResult() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Doesn't fail for null result",
             () -> new FuncNoNulls<>(input -> null).apply(new Object()),
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 
 }

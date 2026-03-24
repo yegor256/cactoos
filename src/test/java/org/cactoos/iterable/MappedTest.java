@@ -8,10 +8,10 @@ import java.util.Collections;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
@@ -23,7 +23,7 @@ final class MappedTest {
 
     @Test
     void transformsList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must transform an iterable",
             new Mapped<>(
                 input -> new Upper(new TextOf(input)),
@@ -32,42 +32,42 @@ final class MappedTest {
                 )
             ).iterator().next(),
             new IsText("HELLO")
-        ).affirm();
+        );
     }
 
     @Test
     void transformsEmptyList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must transform an empty iterable",
             new Mapped<>(
                 (String input) -> new Upper(new TextOf(input)),
                 Collections.emptyList()
             ),
             new IsEmptyIterable<>()
-        ).affirm();
+        );
     }
 
     @Test
     void string() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert to string",
             new Mapped<>(
                 x -> x * 2,
                 new ListOf<>(1, 2, 3)
             ).toString(),
             new IsEqual<>("2, 4, 6")
-        ).affirm();
+        );
     }
 
     @Test
     void transformsArray() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Transforms an array",
             new Mapped<>(
                 input -> new Upper(new TextOf(input)).asString(),
                 "a", "b", "c"
             ),
             new IsEqual<>(new IterableOf<>("A", "B", "C"))
-        ).affirm();
+        );
     }
 }

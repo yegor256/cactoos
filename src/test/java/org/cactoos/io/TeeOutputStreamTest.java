@@ -8,17 +8,16 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link TeeOutputStream}.
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TeeOutputStreamTest {
 
     @Test
@@ -27,7 +26,7 @@ final class TeeOutputStreamTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final ByteArrayOutputStream copy = new ByteArrayOutputStream();
         final String content = "Hello, товарищ!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy OutputStream to OutputStream byte by byte",
             new TextOf(
                 new ReaderOf(
@@ -48,7 +47,7 @@ final class TeeOutputStreamTest {
                     new String(copy.toByteArray(), StandardCharsets.UTF_8)
                 )
             )
-        ).affirm();
+        );
     }
 
 }

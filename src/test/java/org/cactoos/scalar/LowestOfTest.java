@@ -13,7 +13,6 @@ import org.cactoos.time.DateOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -23,12 +22,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class LowestOfTest {
 
     @Test
     void failsForEmptyIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "can't iterate in empty collection",
             () -> new LowestOf<>(() -> Collections.emptyIterator()).value(),
             new Throws<>(NoSuchElementException.class)
@@ -210,7 +208,7 @@ final class LowestOfTest {
 
     @Test
     void lowestSumAtIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must find the lowest double sum among many",
             new LowestOf<>(
                 new ComparableNumber(new SumOf(1.0d)),
@@ -218,7 +216,7 @@ final class LowestOfTest {
                 new ComparableNumber(new SumOf(1.0d, 2.0d, 3.0d))
             ),
             new HasValue<>(1.0d)
-        ).affirm();
+        );
     }
 
     @Test

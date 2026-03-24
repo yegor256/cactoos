@@ -11,7 +11,6 @@ import org.hamcrest.collection.IsMapWithSize;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link MapEnvelope}.
@@ -20,8 +19,7 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle DiamondOperatorCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("PMD.TooManyMethods")
 final class MapEnvelopeTest {
 
     @Test
@@ -102,7 +100,7 @@ final class MapEnvelopeTest {
 
     @Test
     void mapEqualsToItself() {
-        final MapOf<String, String> map =
+        final Map<String, String> map =
             new MapOf<>(new MapEntry<>("key", "value"));
         MatcherAssert.assertThat(
             "Map doesn't equal to itself",
@@ -113,7 +111,7 @@ final class MapEnvelopeTest {
 
     @Test
     void mapNotEqualsToAnotherClass() {
-        final MapOf<String, String> map =
+        final Map<String, String> map =
             new MapOf<>(new MapEntry<>("key1", "value1"));
         MatcherAssert.assertThat(
             "Map equals to an instance of another type",
@@ -201,20 +199,24 @@ final class MapEnvelopeTest {
             new MapEntry<>("key10", "value10");
         final MapEntry<String, String> second =
             new MapEntry<>("key11", null);
-        new MapOf<String, String>(first, second).hashCode();
+        MatcherAssert.assertThat(
+            "hashCode must not throw on map with null values",
+            new MapOf<String, String>(first, second).hashCode(),
+            new IsNot<>(new IsEqual<>(0))
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void emptyMapEnvelopeShouldBeEqualToEmptyDerivedMap() {
-        final MapEnvelope<Integer, String> base = new MapOf<>();
-        final DerivedMapEnvelope<Integer, String> derived =
+        final Map<Integer, String> base = new MapOf<>();
+        final Map<Integer, String> derived =
             new DerivedMapEnvelope<>(new HashMap<>());
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "EmpBase and derived MapEnvelope which are empty should be equal.",
             base,
             new IsEqual<>(derived)
-        ).affirm();
+        );
     }
 
     @Test
@@ -223,16 +225,16 @@ final class MapEnvelopeTest {
         final int key = 1;
         final String value = "one";
         final MapEntry<Integer, String> entry = new MapEntry<>(key, value);
-        final MapEnvelope<Integer, String> base = new MapOf<>(entry);
+        final Map<Integer, String> base = new MapOf<>(entry);
         final Map<Integer, String> hashmap = new HashMap<>();
         hashmap.put(key, value);
-        final DerivedMapEnvelope<Integer, String> derived =
+        final Map<Integer, String> derived =
             new DerivedMapEnvelope<>(hashmap);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Base and derived MapEnvelope of same content should be equal.",
             base,
             new IsEqual<>(derived)
-        ).affirm();
+        );
     }
 
     @Test
@@ -241,7 +243,7 @@ final class MapEnvelopeTest {
             new HashMap<>()
         );
         map.put(0, 1);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must contain element after #put()",
             map,
             new IsEqual<>(
@@ -249,7 +251,7 @@ final class MapEnvelopeTest {
                     new MapEntry<>(0, 1)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -260,11 +262,11 @@ final class MapEnvelopeTest {
             )
         );
         map.clear();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must be empty after #clear()",
             map,
             new IsMapWithSize<>(new IsEqual<>(0))
-        ).affirm();
+        );
     }
 
     @Test
@@ -275,11 +277,11 @@ final class MapEnvelopeTest {
             )
         );
         map.remove(0);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must be empty after #remove()",
             map,
             new IsMapWithSize<>(new IsEqual<>(0))
-        ).affirm();
+        );
     }
 
     /**
@@ -288,7 +290,7 @@ final class MapEnvelopeTest {
      * @param <V> - value type
      * @since 0.4
      */
-    private static class DerivedMapEnvelope<K, V> extends MapEnvelope<K, V> {
+    private static final class DerivedMapEnvelope<K, V> extends MapEnvelope<K, V> {
         DerivedMapEnvelope(final Map<K, V> content) {
             super(content);
         }

@@ -7,8 +7,8 @@ package org.cactoos.iterable;
 import java.util.Collections;
 import org.cactoos.scalar.ItemAt;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -21,7 +21,7 @@ final class CycledTest {
     @Test
     void repeatIterableTest() {
         final String expected = "two";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must repeat iterable",
             new ItemAt<>(
                 7, new Cycled<>(
@@ -33,12 +33,12 @@ final class CycledTest {
             new HasValue<>(
                 expected
             )
-        ).affirm();
+        );
     }
 
     @Test
     void notCycledEmptyTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must generate an empty iterable",
             new LengthOf(
                 new Cycled<>(
@@ -46,18 +46,18 @@ final class CycledTest {
                 )
             ),
             new HasValue<>(0L)
-        ).affirm();
+        );
     }
 
     @Test
     void varargsConstructorTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must repeat varargs",
             new ItemAt<>(
                 6,
                 new Cycled<>(1, 2, 3, 4)
             ),
             new HasValue<>(3)
-        ).affirm();
+        );
     }
 }

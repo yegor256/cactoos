@@ -5,9 +5,9 @@
 
 package org.cactoos.scalar;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -20,34 +20,34 @@ final class ThrowsOnFalseTest {
     @Test
     void throwsOnFalse() {
         final String message = "test message";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Throws an exception",
             () -> new ThrowsOnFalse(
                 () -> false, message
             ).value(),
             new Throws<>(message, IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void throwsSuppliedExceptionOnFalse() {
         final String message = "illegal state";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Throws supplied exception",
             () -> new ThrowsOnFalse(
                 () -> false,
                 () -> new IllegalStateException(message)
             ).value(),
             new Throws<>(message, IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsTrueOnTrue() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return true on true statement",
             new ThrowsOnFalse(() -> true, "test").value(),
             new IsEqual<>(true)
-        ).affirm();
+        );
     }
 }

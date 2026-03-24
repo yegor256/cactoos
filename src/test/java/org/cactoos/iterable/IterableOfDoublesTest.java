@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterable;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -19,10 +19,10 @@ final class IterableOfDoublesTest {
     @Test
     void convertsDoubleValuesToIterable() {
         final double[] values = {1.0, 2.0, 3.0};
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert double values to iterable",
             new IterableOfDoubles(values),
             new HasValues<>(values[0], values[1], values[2])
-        ).affirm();
+        );
     }
 }

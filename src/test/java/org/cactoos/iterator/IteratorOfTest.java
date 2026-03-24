@@ -7,9 +7,9 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -23,20 +23,20 @@ final class IteratorOfTest {
 
     @Test
     void emptyIteratorDoesNotHaveNext() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must create empty iterator",
             new IteratorOf<>().hasNext(),
             new IsNot<>(new IsTrue())
-        ).affirm();
+        );
     }
 
     @Test
     void emptyIteratorThrowsException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception if empty",
             () -> new IteratorOf<>().next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -47,11 +47,11 @@ final class IteratorOfTest {
         while (iterator.hasNext()) {
             iterator.next();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must create non empty iterator",
             iterator.hasNext(),
             new IsNot<>(new IsTrue())
-        ).affirm();
+        );
     }
 
     @Test
@@ -62,16 +62,16 @@ final class IteratorOfTest {
         while (iterator.hasNext()) {
             iterator.next();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception if consumed",
             iterator::next,
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void convertStringsToIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must create an iterator of strings",
             new IterableOf<>(
                 new IteratorOf<>(
@@ -81,6 +81,6 @@ final class IteratorOfTest {
             new HasValues<>(
                 "a", "b", "c"
             )
-        ).affirm();
+        );
     }
 }

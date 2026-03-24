@@ -5,8 +5,8 @@
 
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -20,7 +20,7 @@ final class Base64EncodedTest {
      */
     @Test
     void checkEncode() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't encodes text using the Base64 encoding scheme",
             new Base64Encoded(
                 "Hello!"
@@ -28,6 +28,6 @@ final class Base64EncodedTest {
             new HasString(
                 "SGVsbG8h"
             )
-        ).affirm();
+        );
     }
 }

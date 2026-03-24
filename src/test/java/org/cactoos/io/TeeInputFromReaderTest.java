@@ -8,9 +8,9 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
 /**
@@ -19,7 +19,7 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (400 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("PMD.TooManyMethods")
 final class TeeInputFromReaderTest {
 
     @Test
@@ -30,11 +30,11 @@ final class TeeInputFromReaderTest {
         new LengthOf(
             new TeeInput(new ReaderOf(input), output)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader to file.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -49,11 +49,11 @@ final class TeeInputFromReaderTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with size to file.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -68,11 +68,11 @@ final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset to file.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -88,11 +88,11 @@ final class TeeInputFromReaderTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset and size to file.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -107,11 +107,11 @@ final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8.name()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset by name to file.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -128,11 +128,11 @@ final class TeeInputFromReaderTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset by name and size to file.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -146,11 +146,11 @@ final class TeeInputFromReaderTest {
                 output.toPath()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader to path.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -165,11 +165,11 @@ final class TeeInputFromReaderTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with size to path",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -185,11 +185,11 @@ final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset to path.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -206,11 +206,11 @@ final class TeeInputFromReaderTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset and size to path.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -226,11 +226,11 @@ final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8.name()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset by name to path.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -247,11 +247,11 @@ final class TeeInputFromReaderTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset by name and size to path.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -265,11 +265,11 @@ final class TeeInputFromReaderTest {
                 new OutputTo(output)
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader to output.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -285,11 +285,11 @@ final class TeeInputFromReaderTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with size to output.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -305,11 +305,11 @@ final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset to output.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -326,11 +326,11 @@ final class TeeInputFromReaderTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset and size to output.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -346,11 +346,11 @@ final class TeeInputFromReaderTest {
                 StandardCharsets.UTF_8.name()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset by name to output.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -367,10 +367,10 @@ final class TeeInputFromReaderTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from reader with charset by name and size to output.",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 }

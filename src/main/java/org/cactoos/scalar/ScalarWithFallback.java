@@ -61,8 +61,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingThrowable")
-    public T value() throws Exception {
+        public T value() throws Exception {
         T result;
         try {
             result = this.origin.value();

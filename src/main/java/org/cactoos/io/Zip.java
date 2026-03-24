@@ -23,7 +23,6 @@ import org.cactoos.bytes.BytesOf;
  *
  * @since 0.29
  */
-@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 public final class Zip implements Input {
 
     /**
@@ -48,7 +47,6 @@ public final class Zip implements Input {
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidFileStream")
     public InputStream stream() throws Exception {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         try (ZipOutputStream zip = new ZipOutputStream(out)) {

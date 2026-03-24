@@ -5,9 +5,9 @@
 package org.cactoos.scalar;
 
 import org.cactoos.func.FuncOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -15,12 +15,11 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.56
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class StrictTest {
 
     @Test
     void throwsExceptionOnFailure() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw the provided exception on rule failure",
             new Strict<>(
                 new False(),
@@ -28,12 +27,12 @@ final class StrictTest {
                 new FuncOf<>(() -> new IllegalArgumentException("not a true"))
             ),
             new Throws<>("not a true", IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsIncapsulatedValue() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return the original value on rule match",
             new Strict<>(
                 () -> 123,
@@ -41,6 +40,6 @@ final class StrictTest {
                 new FuncOf<>(() -> new IllegalArgumentException("unexpected"))
             ).value(),
             new IsEqual<>(123)
-        ).affirm();
+        );
     }
 }

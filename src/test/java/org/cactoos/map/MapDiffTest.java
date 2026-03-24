@@ -7,9 +7,9 @@ package org.cactoos.map;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasEntry;
 
 /**
@@ -25,7 +25,7 @@ final class MapDiffTest {
      */
     @Test
     void computesMapDifference() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference of two maps",
             new MapDiff<>(
                 new MapOf<>(
@@ -40,7 +40,7 @@ final class MapDiffTest {
                 )
             ),
             new HasEntry<>(1, "one")
-        ).affirm();
+        );
     }
 
     /**
@@ -49,7 +49,7 @@ final class MapDiffTest {
      */
     @Test
     void computesMapDifferenceWithEmptySecondMap() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference with empty second map",
             new MapDiff<>(
                 new MapOf<>(
@@ -60,7 +60,7 @@ final class MapDiffTest {
                 new MapOf<>()
             ),
             new HasEntry<>(5, "five")
-        ).affirm();
+        );
     }
 
     /**
@@ -69,7 +69,7 @@ final class MapDiffTest {
      */
     @Test
     void computesMapDifferenceWithEmptyFirstMap() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference with empty first map",
             new MapDiff<Integer, String>(
                 new MapOf<Integer, String>(),
@@ -80,7 +80,7 @@ final class MapDiffTest {
                 )
             ).size(),
             new IsEqual<>(0)
-        ).affirm();
+        );
     }
 
     /**
@@ -97,11 +97,11 @@ final class MapDiffTest {
         second.put(13, "thirteen");
         second.put(14, "fourteen");
         second.put(15, "fifteen");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference of two java.util.Map",
             new MapDiff<>(first, second),
             new HasEntry<>(11, "eleven")
-        ).affirm();
+        );
     }
 
     /**
@@ -110,14 +110,14 @@ final class MapDiffTest {
      */
     @Test
     void computesMapDifferenceWithIterables() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference of two iterables",
             new MapDiff<>(
                 Collections.singletonList(new MapEntry<>(16, "sixteen")),
                 Collections.singletonList(new MapEntry<>(17, "seventeen"))
             ),
             new HasEntry<>(16, "sixteen")
-        ).affirm();
+        );
     }
 
     /**
@@ -126,7 +126,7 @@ final class MapDiffTest {
      */
     @Test
     void computesMapDifferenceWithIterators() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference of two iterators",
             new MapDiff<>(
                 new MapOf<>(
@@ -141,6 +141,6 @@ final class MapDiffTest {
                 ).entrySet().iterator()
             ),
             new HasEntry<>(18, "eighteen")
-        ).affirm();
+        );
     }
 }

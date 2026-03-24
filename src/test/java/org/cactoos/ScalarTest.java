@@ -5,8 +5,8 @@
 package org.cactoos;
 
 import org.cactoos.scalar.NoNulls;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -14,31 +14,30 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class ScalarTest {
 
     @Test
     void failForNullArgument() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail for null argument",
             () -> new NoNulls<>(null).value(),
             new Throws<>(
                 "NULL instead of a valid scalar",
                 IllegalArgumentException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullResult() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail for null result",
             () -> new NoNulls<>(() -> null).value(),
             new Throws<>(
                 "NULL instead of a valid value",
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test

@@ -6,10 +6,10 @@ package org.cactoos.func;
 
 import java.io.EOFException;
 import java.io.IOException;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -18,12 +18,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class CheckedFuncTest {
 
     @Test
     void runtimeExceptionIsNotWrapped() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Runtime exception should be rethrown",
             () -> new CheckedFunc<>(
                 input -> {
@@ -32,12 +31,12 @@ final class CheckedFuncTest {
                 IOException::new
             ).apply(true),
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void checkedExceptionIsWrapped() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Checked exception was not wrapped",
             () -> new CheckedFunc<>(
                 input -> {
@@ -46,7 +45,7 @@ final class CheckedFuncTest {
                 IOException::new
             ).apply(true),
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -59,23 +58,23 @@ final class CheckedFuncTest {
                 IOException::new
             ).apply(true);
         } catch (final IOException exp) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Extra wrapping of IOException has been added",
                 exp.getCause(),
                 new IsNull<>()
-            ).affirm();
+            );
         }
     }
 
     @Test
     void noExceptionThrown() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must not throw an exception",
             new CheckedFunc<>(
                 input -> true,
                 exp -> exp
             ).apply(false),
             new IsEqual<>(true)
-        ).affirm();
+        );
     }
 }

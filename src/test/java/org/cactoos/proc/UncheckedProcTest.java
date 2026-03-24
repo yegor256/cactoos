@@ -6,8 +6,8 @@ package org.cactoos.proc;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -16,12 +16,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class UncheckedProcTest {
 
     @Test
     void rethrowsCheckedToUncheckedException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Checked exception was not rethrown as unchecked",
             () -> {
                 new UncheckedProc<>(
@@ -32,12 +31,12 @@ final class UncheckedProcTest {
                 return 1;
             },
             new Throws<>(UncheckedIOException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void runtimeExceptionGoesOut() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Runtime exception was not rethrown",
             () -> {
                 new UncheckedProc<>(
@@ -48,7 +47,7 @@ final class UncheckedProcTest {
                 return 1;
             },
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
 }

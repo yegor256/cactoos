@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -20,7 +20,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.16
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings("PMD.TooManyMethods")
 final class ImmutableTest {
 
     @Test
@@ -28,16 +28,16 @@ final class ImmutableTest {
         final List<String> strings = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final List<String> immutable = new Immutable<>(strings);
         strings.add("d");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must reflect inner list in the decorator",
             immutable,
             new IsEqual<>(strings)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsListIteratorWithUnsupportedRemove() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return a list iterator that does not support remove()",
             () -> {
                 final List<String> list = new Immutable<>(new ListOf<>("one"));
@@ -47,12 +47,12 @@ final class ImmutableTest {
                 return true;
             },
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsListIteratorWithUnsupportedAdd() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return a list iterator that does not support add()",
             () -> {
                 final List<String> list = new Immutable<>(new ListOf<>("one"));
@@ -62,12 +62,12 @@ final class ImmutableTest {
                 return true;
             },
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void subListReturnsListIteratorWithUnsupportedRemove() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return a subtlist with a list iterator that does not support remove()",
             () -> {
                 final List<String> list = new Immutable<>(new ListOf<>("one"));
@@ -77,12 +77,12 @@ final class ImmutableTest {
                 return true;
             },
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void subListReturnsListIteratorWithUnsupportedAdd() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return a subtlist with a list iterator that does not support add()",
             () -> {
                 final List<String> list = new Immutable<>(new ListOf<>("one"));
@@ -92,12 +92,12 @@ final class ImmutableTest {
                 return true;
             },
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
 
     @Test()
     void subListReturnsListIteratorWithUnsupportedSet() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "subList.listIterator().set() must throw exception",
             () -> {
                 final ListIterator<String> iterator = new Immutable<>(
@@ -111,24 +111,24 @@ final class ImmutableTest {
                 "List Iterator is read-only and doesn't allow rewriting items",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test()
     void returnsSubListWithUnsupportedSet() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "subList.set() must throw exception",
             () -> new Immutable<>(new ListOf<>("one")).subList(0, 1).set(0, "zero"),
             new Throws<>(
                 "#set(): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void size() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "size() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2)
@@ -136,12 +136,12 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>(1, 2).size()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void isEmpty() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "isEmpty() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2)
@@ -149,12 +149,12 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>(1, 2).isEmpty()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void contains() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "contains() must be equals to original",
             new Immutable<>(
                 new ListOf<>("a", "b")
@@ -162,23 +162,23 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>("a", "b").contains("b")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void iterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "iterator() is equal to original",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
             ).iterator(),
             new HasValues<>(1, 2)
-        ).affirm();
+        );
     }
 
     @Test
     void toArray() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "toArray() must be equals to original",
             new Immutable<>(
                 new ListOf<>("a", "b")
@@ -186,25 +186,25 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>("a", "b").toArray()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testToArray() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "toArray(T[]) must be equals to original",
             new Immutable<>(
                 new ListOf<>("a", "b")
-            ).toArray(new String[3]),
+            ).toArray(new String[0]),
             new IsEqual<>(
-                new ListOf<>("a", "b").toArray(new String[3])
+                new ListOf<>("a", "b").toArray(new String[0])
             )
-        ).affirm();
+        );
     }
 
     @Test
     void add() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "add(T) must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
@@ -213,12 +213,12 @@ final class ImmutableTest {
                 "#add(T): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void remove() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "remove(Object) must throw exception",
             () -> new Immutable<>(
                 new ListOf<>("1", "2")
@@ -227,12 +227,12 @@ final class ImmutableTest {
                 "#remove(Object): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void containsAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "containsAll() must be equals to original",
             new Immutable<>(
                 new ListOf<>("a", "b", "c")
@@ -242,12 +242,12 @@ final class ImmutableTest {
                     new ListOf<>("a", "c")
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void addAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "addAll(Collection) must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
@@ -256,12 +256,12 @@ final class ImmutableTest {
                 "#addAll(Collection): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testAddAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "addAll(int, Collection) must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
@@ -270,12 +270,12 @@ final class ImmutableTest {
                 "#addAll(int, Collection): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void removeAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "removeAll() must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2, 3)
@@ -284,12 +284,12 @@ final class ImmutableTest {
                 "#removeAll(): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void retainAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "retainAll() must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2, 3)
@@ -298,12 +298,12 @@ final class ImmutableTest {
                 "#retainAll(): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void clear() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "clear() must throw exception",
             () -> {
                 new Immutable<>(
@@ -315,12 +315,12 @@ final class ImmutableTest {
                 "#clear(): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void get() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "get() must be equals to original",
             new Immutable<>(
                 new ListOf<>("a", "b", "c")
@@ -328,12 +328,12 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>("a", "b", "c").get(2)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void set() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "set() must throw exception",
             () -> new Immutable<>(
                 new ListOf<>("a", "b")
@@ -342,12 +342,12 @@ final class ImmutableTest {
                 "#set(): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testAdd() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "add(int, T) must throw exception",
             () -> {
                 new Immutable<>(
@@ -359,12 +359,12 @@ final class ImmutableTest {
                 "#add(int, T): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testRemove() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "remove(int) must throw exception",
             () -> new Immutable<>(
                 new ListOf<>("a", "b")
@@ -373,12 +373,12 @@ final class ImmutableTest {
                 "#remove(int): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void indexOf() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "indexOf() must be equals to original",
             new Immutable<>(
                 new ListOf<>("a", "b", "c")
@@ -386,12 +386,12 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>("a", "b", "c").indexOf("b")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void lastIndexOf() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "lastIndexOf() must be equals to original",
             new Immutable<>(
                 new ListOf<>("a", "b", "c", "b")
@@ -399,34 +399,34 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>("a", "b", "c", "b").lastIndexOf("b")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void listIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "listIterator() is equal to original",
             () -> new Immutable<>(
                 new ListOf<>("a", "b", "c", "b")
             ).listIterator(),
             new HasValues<>("a", "b", "c", "b")
-        ).affirm();
+        );
     }
 
     @Test
     void testListIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "listIterator(int) is equal to original",
             () -> new Immutable<>(
                 new ListOf<>("a", "b", "c", "b")
             ).listIterator(2),
             new HasValues<>("c", "b")
-        ).affirm();
+        );
     }
 
     @Test
     void subList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "subList() must be equals to original",
             new Immutable<>(
                 new ListOf<>("a", "b", "c")
@@ -434,12 +434,12 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>("a", "b", "c").subList(1, 2)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void immutableSubList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "subList() result must be immutable",
             () -> new Immutable<>(
                 new ListOf<>("a", "b", "c")
@@ -448,78 +448,78 @@ final class ImmutableTest {
                 "#add(T): the list is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void notEqualsToObjectOfAnotherType() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must not equal to object of another type",
             new Immutable<>(new ListOf<>()),
             new IsNot<>(new IsEqual<>(new Object()))
-        ).affirm();
+        );
     }
 
     @Test
     void notEqualsToListWithDifferentElements() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must not equal to List with different elements",
             new Immutable<>(new ListOf<>(1, 2)),
             new IsNot<>(new IsEqual<>(new ListOf<>(1, 0)))
-        ).affirm();
+        );
     }
 
     @Test
     void isEqualToItself() {
         final List<Integer> list = new Immutable<>(new ListOf<>(1, 2));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must be equal to itself",
             list,
             new IsEqual<>(list)
-        ).affirm();
+        );
     }
 
     @Test
     void isEqualToListWithTheSameElements() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must be equal to List with the same elements",
             new Immutable<>(new ListOf<>(1, 2)),
             new IsEqual<>(new ListOf<>(1, 2))
-        ).affirm();
+        );
     }
 
     @Test
     void equalToEmptyImmutable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "empty Immutable must be equal to empty Immutable",
             new Immutable<>(new ListOf<>()),
             new IsEqual<>(new Immutable<>(new ListOf<>()))
-        ).affirm();
+        );
     }
 
     @Test
     void testHashCode() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "hashCode() must be equal to hashCode of the corresponding List",
             new Immutable<>(new ListOf<>(1, 2)).hashCode(),
             new IsEqual<>(
                 new ListOf<>(1, 2).hashCode()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testToString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "toString() must be equal to toString of the corresponding List",
             new Immutable<>(new ListOf<>("a", "b", "c")).toString(),
             new IsEqual<>(new ListOf<>("a", "b", "c").toString())
-        ).affirm();
+        );
     }
 
     @Test
     void subListReturnsListIteratorWithSupportedSet() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "subList's iterator must be immutable",
             () -> {
                 final ListIterator<String> iterator = new Immutable<>(
@@ -535,7 +535,7 @@ final class ImmutableTest {
                 "List Iterator is read-only and doesn't allow rewriting items",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
 }

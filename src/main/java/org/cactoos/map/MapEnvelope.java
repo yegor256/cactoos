@@ -23,12 +23,7 @@ import org.cactoos.text.TextOf;
  * @since 0.24
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AbstractNaming"
-    }
-)
+@SuppressWarnings("PMD.TooManyMethods")
 public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     /**

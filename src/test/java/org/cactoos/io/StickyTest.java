@@ -11,9 +11,9 @@ import org.cactoos.bytes.BytesOf;
 import org.cactoos.func.Repeated;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.Satisfies;
 
@@ -22,12 +22,11 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.6
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class StickyTest {
 
     @Test
     void readsFileContent() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read bytes from a file",
             new Sticky(
                 new ResourceOf(
@@ -42,12 +41,12 @@ final class StickyTest {
                     10
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsRealUrl() throws MalformedURLException, URISyntaxException {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fetch text page from the URL",
             new TextOf(
                 new Sticky(
@@ -59,13 +58,13 @@ final class StickyTest {
                 )
             ),
             new EndsWith("est laborum.\n")
-        ).affirm();
+        );
     }
 
     @Test
     void readsFileContentSlowlyAndCountsLength() throws Exception {
         final long size = 100_000L;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read bytes from a large source slowly and count length",
             new LengthOf(
                 new Sticky(
@@ -73,13 +72,13 @@ final class StickyTest {
                 )
             ).value(),
             new IsEqual<>(size)
-        ).affirm();
+        );
     }
 
     @Test
     void readsFileContentSlowly() throws Exception {
         final int size = 130_000;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read bytes from a large source slowly",
             new BytesOf(
                 new Sticky(
@@ -87,7 +86,7 @@ final class StickyTest {
                 )
             ).asBytes().length,
             new IsEqual<>(size)
-        ).affirm();
+        );
     }
 
 }

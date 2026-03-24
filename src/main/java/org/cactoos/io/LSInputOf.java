@@ -153,7 +153,6 @@ public final class LSInputOf implements LSInput {
     }
 
     @Override
-    @SuppressWarnings("PMD.BooleanGetMethodName")
     public boolean getCertifiedText() {
         return true;
     }

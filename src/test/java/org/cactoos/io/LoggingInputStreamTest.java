@@ -7,9 +7,9 @@ package org.cactoos.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.39
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class LoggingInputStreamTest {
 
     @Test
@@ -33,11 +32,11 @@ final class LoggingInputStreamTest {
             },
             this.getClass().getSimpleName()
         )) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Read doesn't throw an the exception.",
                 stream::read,
                 new Throws<>(message, IOException.class)
-            ).affirm();
+            );
         }
     }
 
@@ -49,11 +48,11 @@ final class LoggingInputStreamTest {
             ),
             this.getClass().getSimpleName()
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Empty stream did not return -1",
             stream.read(),
             new IsEqual<>(-1)
-        ).affirm();
+        );
     }
 
     @Test
@@ -67,20 +66,20 @@ final class LoggingInputStreamTest {
             ),
             this.getClass().getSimpleName()
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "First byte was not 20",
             stream.read(),
             new IsEqual<>(20)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Second byte was not 10",
             stream.read(),
             new IsEqual<>(10)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "When stream is exhausted it didn't return -1",
             stream.read(),
             new IsEqual<>(-1)
-        ).affirm();
+        );
     }
 }

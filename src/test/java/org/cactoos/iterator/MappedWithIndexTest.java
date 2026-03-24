@@ -12,8 +12,8 @@ import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -24,7 +24,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class MappedWithIndexTest {
     @Test
     void iteratesOver() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must map values of iterator",
             new IterableOf<>(
                 new MappedWithIndex<>(
@@ -41,7 +41,7 @@ final class MappedWithIndexTest {
                 new TextOf("1 - 2"),
                 new TextOf("2 - 0")
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -55,11 +55,11 @@ final class MappedWithIndexTest {
             new IterableOf<>("1").iterator()
         );
         iterator.next();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must throw NSEE",
             iterator::next,
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -74,7 +74,7 @@ final class MappedWithIndexTest {
         );
         iterator.next();
         iterator.remove();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must map values of changed iterator",
             new IterableOf<>(
                 iterator
@@ -83,6 +83,6 @@ final class MappedWithIndexTest {
                 new TextOf("1 : 2"),
                 new TextOf("2 : 3")
             )
-        ).affirm();
+        );
     }
 }

@@ -13,7 +13,6 @@ import org.cactoos.Input;
  *
  * @since 0.29
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class Sha1DigestOf extends DigestEnvelope {
     /**
      * Ctor.

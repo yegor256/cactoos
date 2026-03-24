@@ -6,99 +6,99 @@ package org.cactoos.scalar;
 
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Xor}.
  * @since 0.48
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.TooManyMethods"})
+@SuppressWarnings("PMD.TooManyMethods")
 final class XorTest {
 
     @Test
     void trueTrue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Either one, but not both nor none",
             new Xor(
                 new True(),
                 new True()
             ),
             new HasValue<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void falseTrue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Either one, but not both nor none",
             new Xor(
                 new False(),
                 new True()
             ),
             new HasValue<>(true)
-        ).affirm();
+        );
     }
 
     @Test
     void treuFalse() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Either one, but not both nor none",
             new Xor(
                 new True(),
                 new False()
             ),
             new HasValue<>(true)
-        ).affirm();
+        );
     }
 
     @Test
     void falseFalse() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Either one, but not both nor none",
             new Xor(
                 new False(),
                 new False()
             ),
             new HasValue<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void singleTrue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Single True must be True",
             new Xor(
                 new True()
             ),
             new HasValue<>(true)
-        ).affirm();
+        );
     }
 
     @Test
     void singleFalse() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Single False must be False",
             new Xor(
                 new False()
             ),
             new HasValue<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void emptyIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Empty iterable must be False",
             new Xor(new IterableOf<Scalar<Boolean>>()),
             new HasValue<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void oddNumberOfTrue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Odd number of True must be True",
             new Xor(
                 new False(),
@@ -106,12 +106,12 @@ final class XorTest {
                 new True()
             ),
             new HasValue<>(true)
-        ).affirm();
+        );
     }
 
     @Test
     void evenNumberOfTrue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Even number of True must be False",
             new Xor(
                 new False(),
@@ -119,12 +119,12 @@ final class XorTest {
                 new True()
             ),
             new HasValue<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void allFalse() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "All False must be False",
             new Xor(
                 new False(),
@@ -132,12 +132,12 @@ final class XorTest {
                 new False()
             ),
             new HasValue<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void allTrue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Odd number of True must be True",
             new Xor(
                 new True(),
@@ -145,6 +145,6 @@ final class XorTest {
                 new True()
             ),
             new HasValue<>(true)
-        ).affirm();
+        );
     }
 }

@@ -18,11 +18,11 @@ import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.HasString;
@@ -39,12 +39,11 @@ import org.takes.tk.TkHtml;
  *
  * @since 0.1
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.ExcessiveImports",
-    "unchecked", "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings({"unchecked", "PMD.TooManyMethods"})
 final class InputOfTest {
     @Test
     void readsAlternativeInputForFileCase() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read alternative source from file not found",
             new TextOf(
                 new InputWithFallback(
@@ -55,7 +54,7 @@ final class InputOfTest {
                 )
             ),
             new EndsWith("text!")
-        ).affirm();
+        );
     }
 
     @Test
@@ -63,11 +62,11 @@ final class InputOfTest {
         final Path temp = folder.resolve("cactoos-1.txt-1");
         final String content = "Hello, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read file content",
             new InputOf(temp),
             new HasContent(content)
-        ).affirm();
+        );
     }
 
     @Test
@@ -92,16 +91,16 @@ final class InputOfTest {
                 }
             )
         ).asString();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must close InputStream correctly",
             closed.get(),
             new IsTrue()
-        ).affirm();
+        );
     }
 
     @Test
     void readsFileContent() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read bytes from a file-system URL",
             new BytesOf(
                 new InputOf(
@@ -111,38 +110,38 @@ final class InputOfTest {
                 )
             ).asBytes(),
             new Satisfies<>(arr -> arr.length > 0)
-        ).affirm();
+        );
     }
 
     @Test
     void readsRealUrl() throws Exception {
         new FtRemote(new TkHtml("<html>How are you?</html>")).exec(
-            home -> new Assertion<>(
+            home -> MatcherAssert.assertThat(
                 "must fetch bytes from the URL",
                 new TextOf(
                     new InputOf(home)
                 ),
                 new MatchesRegex("<html.*html>")
-            ).affirm()
+            )
         );
     }
 
     @Test
     void readsRealUrlWithProxy() throws Exception {
         new FtRemote(new TkHtml("<html>Proxy works!</html>")).exec(
-            home -> new Assertion<>(
+            home -> MatcherAssert.assertThat(
                 "must fetch bytes from the URL via a proxy",
                 new TextOf(
                     new InputOf(home.toURL(), Proxy.NO_PROXY)
                 ),
                 new MatchesRegex("<html.*html>")
-            ).affirm()
+            )
         );
     }
 
     @Test
     void readsStringUrl() throws IOException, URISyntaxException {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must fetch bytes from the HTTPS URL",
             new TextOf(
                 new BytesOf(
@@ -154,12 +153,12 @@ final class InputOfTest {
                 )
             ),
             new HasString("Lorem ipsum")
-        ).affirm();
+        );
     }
 
     @Test
     void readsStringIntoBytes() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read bytes from Input",
             new TextOf(
                 new BytesOf(
@@ -171,14 +170,14 @@ final class InputOfTest {
                 new StartsWith("Hello, "),
                 new EndsWith("друг!")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsStringBuilder() {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must receive a string builder",
             new TextOf(
                 new BytesOf(
@@ -192,14 +191,14 @@ final class InputOfTest {
                 new StartsWith(starts),
                 new EndsWith(ends)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsStringBuffer() {
         final String starts = "The future ";
         final String ends = "is now!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must receive a string buffer",
             new TextOf(
                 new BytesOf(
@@ -213,12 +212,12 @@ final class InputOfTest {
                 new StartsWith(starts),
                 new EndsWith(ends)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsArrayOfChars() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read array of chars.",
             new TextOf(
                 new BytesOf(
@@ -232,12 +231,12 @@ final class InputOfTest {
                 new StartsWith("Hold "),
                 new EndsWith("infinity")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsEncodedArrayOfChars() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read array of encoded chars.",
             new TextOf(
                 new BytesOf(
@@ -255,13 +254,13 @@ final class InputOfTest {
                 new StartsWith("O que sera"),
                 new EndsWith(" que sera")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsStringFromReader() {
         final String source = "hello, source!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read string through a reader",
             new TextOf(
                 new InputOf(
@@ -269,13 +268,13 @@ final class InputOfTest {
                 )
             ),
             new IsText(source)
-        ).affirm();
+        );
     }
 
     @Test
     void readsEncodedStringFromReader() {
         final String source = "hello, друг!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read encoded string through a reader",
             new TextOf(
                 new BytesOf(
@@ -286,29 +285,29 @@ final class InputOfTest {
                 )
             ),
             new IsText(source)
-        ).affirm();
+        );
     }
 
     @Test
     void readsAnArrayOfBytes() throws Exception {
         final byte[] bytes = {(byte) 0xCA, (byte) 0xFE};
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read array of bytes",
             new BytesOf(
                 new SyncInput(new InputOf(bytes))
             ).asBytes(),
             new IsEqual<>(bytes)
-        ).affirm();
+        );
     }
 
     @Test
     void makesDataAvailable() throws Exception {
         final String content = "Hello,חבר!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must show that data is available",
             new InputOf(content).stream(),
             new Satisfies<>(s -> s.available() > 0)
-        ).affirm();
+        );
     }
 
 }

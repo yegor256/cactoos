@@ -5,9 +5,9 @@
 package org.cactoos.scalar;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -25,17 +25,17 @@ final class BinaryTest {
             new True(),
             counter::incrementAndGet
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Binary has to return true",
             binary,
             new HasValue<>(true)
-        ).affirm();
+        );
         final int expected = 1;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Binary has to invoke increment method",
             counter.get(),
             new IsEqual<>(expected)
-        ).affirm();
+        );
     }
 
     @Test
@@ -45,17 +45,17 @@ final class BinaryTest {
             new False(),
             counter::incrementAndGet
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Binary has to return false",
             binary,
             new HasValue<>(false)
-        ).affirm();
+        );
         final int expected = 0;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Binary must not to invoke increment method",
             counter.get(),
             new IsEqual<>(expected)
-        ).affirm();
+        );
     }
 
     @Test
@@ -67,10 +67,10 @@ final class BinaryTest {
                 throw new IllegalArgumentException(msg);
             }
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Binary has to throw exception",
             binary,
             new Throws<>(msg, IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 }

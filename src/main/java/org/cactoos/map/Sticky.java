@@ -148,9 +148,8 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      * Ctor.
      * @param map The map to cache
      */
-    @SuppressWarnings("unchecked")
     public Sticky(final Map<? extends X, ? extends Y> map) {
-        super((Map<X, Y>) Sticky.copy(map));
+        super(Sticky.copy(map));
     }
 
     /**

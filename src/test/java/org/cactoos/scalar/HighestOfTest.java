@@ -13,7 +13,6 @@ import org.cactoos.time.DateOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -23,17 +22,15 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
 final class HighestOfTest {
 
     @Test
     void failsForEmptyIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected for iterating empty collection",
             () -> new HighestOf<>(() -> Collections.emptyIterator()).value(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -187,7 +184,7 @@ final class HighestOfTest {
 
     @Test
     void highestSumAtIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must find the highest double sum among many",
             new HighestOf<>(
                 new ComparableNumber(new SumOf(1.0d)),
@@ -195,7 +192,7 @@ final class HighestOfTest {
                 new ComparableNumber(new SumOf(1.0d, 2.0d, 3.0d))
             ),
             new HasValue<>(6.0d)
-        ).affirm();
+        );
     }
 
     @Test

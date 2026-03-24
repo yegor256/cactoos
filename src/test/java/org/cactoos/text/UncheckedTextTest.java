@@ -6,12 +6,12 @@ package org.cactoos.text;
 
 import java.io.IOException;
 import org.cactoos.Text;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.StringContains;
 import org.hamcrest.object.HasToString;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -24,7 +24,7 @@ final class UncheckedTextTest {
     @Test
     void rethrowsCheckedToUncheckedException() {
         final String msg = "intended";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception when something goes wrong",
             new UncheckedText(
                 () -> {
@@ -35,13 +35,13 @@ final class UncheckedTextTest {
                 new StringContains(msg),
                 RuntimeException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void toStringMustReturnSameOfAsString() {
         final String text = "one";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must implement #toString which returns the same of #asString",
             new UncheckedText(
                 new TextOf(text)
@@ -49,22 +49,22 @@ final class UncheckedTextTest {
             new HasToString<>(
                 new IsEqual<>(text)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void equalsToTheSameTextObject() {
         final Text text = new TextOf("anything");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match text representing the same value",
             new UncheckedText(text),
             new IsEqual<>(text)
-        ).affirm();
+        );
     }
 
     @Test
     void equalsOtherTextRepresentingTheSameValue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match another text representing the same value",
             new UncheckedText(
                 new TextOf("abcdefghijkl")
@@ -72,12 +72,12 @@ final class UncheckedTextTest {
             new IsEqual<>(
                 new Concatenated("ab", "cde", "fghi", "j", "kl")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void equalsNonTextObject() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must does not match another object which is not a string",
             new UncheckedText(
                 new TextOf("is not equals to null")
@@ -85,30 +85,29 @@ final class UncheckedTextTest {
             new IsNot<>(
                 new IsEqual<>(new Object())
             )
-        ).affirm();
+        );
     }
 
     @Test
-    @SuppressWarnings("PMD.EqualsNull")
     void notEqualsWhenAnObjectIsNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match equals null",
             new UncheckedText(
                 new TextOf("is not equals to not Text object")
-            ).equals(null),
-            new IsEqual<>(false)
-        ).affirm();
+            ),
+            new IsNot<>(new IsEqual<>(null))
+        );
     }
 
     @Test
     void matchTheSameHashCode() {
         final String text = "hashCode";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match its represented String hashcode",
             new UncheckedText(
                 new TextOf(text)
             ).hashCode(),
             new IsEqual<>(text.hashCode())
-        ).affirm();
+        );
     }
 }

@@ -15,10 +15,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -27,8 +27,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
 final class GzipOutputTest {
 
     @Test
@@ -56,22 +54,21 @@ final class GzipOutputTest {
                 )
             ).value();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't write to a gzip output",
             baos.toByteArray(),
             new IsEqual<>(expected.toByteArray())
-        ).affirm();
+        );
     }
 
     @Test
-    @SuppressWarnings("PMD.CloseResource")
     void writeToClosedGzipOutput(@TempDir final Path wdir) throws Exception {
         final OutputStream stream =
             Files.newOutputStream(
                 wdir.resolve("cactoos.txt")
             );
         stream.close();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "can't write to closed stream",
             () -> new LengthOf(
                 new TeeInput(
@@ -80,6 +77,6 @@ final class GzipOutputTest {
                 )
             ).value(),
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 }

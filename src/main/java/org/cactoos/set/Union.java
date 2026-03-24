@@ -4,7 +4,9 @@
  */
 package org.cactoos.set;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Unchecked;
@@ -65,7 +67,7 @@ public final class Union<T> extends SetEnvelope<T> {
      * @param first First set
      * @param second Second set
      */
-    public Union(final SetOf<T> first, final SetOf<T> second) {
+    public Union(final Set<T> first, final Set<T> second) {
         super(computeUnion(first, second));
     }
 
@@ -76,11 +78,11 @@ public final class Union<T> extends SetEnvelope<T> {
      * @param <E> Type of elements
      * @return The union set (elements in either first or second)
      */
-    private static <E> SetOf<E> computeUnion(
-        final SetOf<E> first,
-        final SetOf<E> second
+    private static <E> Set<E> computeUnion(
+        final Set<E> first,
+        final Set<E> second
     ) {
-        final SetOf<E> result = new SetOf<>(first);
+        final Set<E> result = new HashSet<>(first);
         result.addAll(second);
         return result;
     }

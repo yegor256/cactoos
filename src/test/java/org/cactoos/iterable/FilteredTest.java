@@ -7,11 +7,11 @@ package org.cactoos.iterable;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.StartsWith;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -24,7 +24,7 @@ final class FilteredTest {
 
     @Test
     void filtersList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must calculate the length of an iterable",
             new LengthOf(
                 new Filtered<>(
@@ -35,12 +35,13 @@ final class FilteredTest {
                 )
             ),
             new HasValue<>(2L)
-        ).affirm();
+        );
     }
 
     @Test
+    @SuppressWarnings("PMD.UseStringIsEmptyRule")
     void filtersEmptyList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must calculate the length of an empty iterable",
             new LengthOf(
                 new Filtered<>(
@@ -49,7 +50,7 @@ final class FilteredTest {
                 )
             ),
             new HasValue<>(0L)
-        ).affirm();
+        );
     }
 
     @Test
@@ -58,31 +59,31 @@ final class FilteredTest {
             i -> i > 0,
             new IterableOf<>(1, 2, -1, 0, 1)
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must filter the iterable twice",
             list, Matchers.iterableWithSize(3)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Must filter the iterable twice, again",
             list, Matchers.iterableWithSize(3)
-        ).affirm();
+        );
     }
 
     @Test
     void filterEmptyList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Filter must work on empty collection",
             new Filtered<String>(
                 input -> input.length() > 4,
                 new ListOf<>()
             ),
             new IsEmptyIterable<>()
-        ).affirm();
+        );
     }
 
     @Test
     void length() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Size must be equal to number of items matching the filter",
             new LengthOf(
                 new Filtered<>(
@@ -91,66 +92,66 @@ final class FilteredTest {
                 )
             ),
             new HasValue<>(2L)
-        ).affirm();
+        );
     }
 
     @Test
     void withItemsNotEmpty() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must not be empty with items",
             new Filtered<>(
                 input -> input.length() > 4,
                 new IterableOf<>("first", "second")
             ),
             new IsNot<>(new IsEmptyIterable<>())
-        ).affirm();
+        );
     }
 
     @Test
     void withoutItemsIsEmpty() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be empty without items",
             new Filtered<>(
                 input -> input.length() > 16,
                 new IterableOf<>("third", "fourth")
             ),
             new IsEmptyIterable<>()
-        ).affirm();
+        );
     }
 
     @Test
     void filtersWithFuncToScalar() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be filtered",
             new Filtered<>(
                 new IterableOf<>("ay", "xb", "yx", "xy"),
                 input -> new StartsWith(input, "x")
             ),
             new HasValues<>("xy")
-        ).affirm();
+        );
     }
 
     @Test
     void filterWithNumberFilter() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be filtered with super type filter",
             new Filtered<>(
-                (Number d) -> d.doubleValue() > (double) 0,
+                (Number d) -> d.doubleValue() > 0,
                 new IterableOf<>(1d, -2d, 3d)
             ),
             new HasValues<>(1d, 3d)
-        ).affirm();
+        );
     }
 
     @Test
     void varargsConstructorTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must have filtered varargs",
             new Filtered<>(
                 num -> num % 2 == 0,
                 1, 2, 3, 4, 11, 20
             ),
             new HasValues<>(2, 4, 20)
-        ).affirm();
+        );
     }
 }

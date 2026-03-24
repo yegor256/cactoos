@@ -7,10 +7,10 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class SolidBiFuncTest {
     @Test
     void testThatFuncIsSynchronized() {
@@ -32,19 +31,19 @@ final class SolidBiFuncTest {
                     return true;
                 }
             );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "SolidBiFunc can't work properly in concurrent threads.",
             func -> func.apply(true),
             new RunsInThreads<Func<Boolean, Boolean>>(
                 input -> testable.apply(1, 1),
                 threads
             )
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Shared resource has been modified by multiple threads.",
             shared[0],
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
@@ -54,7 +53,7 @@ final class SolidBiFuncTest {
                 (first, second) -> new SecureRandom().nextInt(),
                 1
             );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Result of (0, 0) call wasn't invalidated.",
             func.apply(0, 0) + func.apply(1, 1),
             new IsNot<>(
@@ -62,6 +61,6 @@ final class SolidBiFuncTest {
                     func.apply(1, 1) + func.apply(0, 0)
                 )
             )
-        ).affirm();
+        );
     }
 }

@@ -4,8 +4,8 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -16,28 +16,28 @@ final class IsEmptyTest {
 
     @Test
     void determinesEmptyText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must determine empty text",
             new IsEmpty(new TextOf("")),
             new HasValue<>(Boolean.TRUE)
-        ).affirm();
+        );
     }
 
     @Test
     void determinesNonemptyText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must not detect non-empty text",
             new IsEmpty(new TextOf("abc")),
             new HasValue<>(Boolean.FALSE)
-        ).affirm();
+        );
     }
 
     @Test
     void determinesBlankText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must not detect blank text",
             new IsEmpty(new TextOf(" ")),
             new HasValue<>(Boolean.FALSE)
-        ).affirm();
+        );
     }
 }

@@ -9,8 +9,8 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -18,12 +18,11 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class ZonedDateTimeOfTest {
 
     @Test
     void testParsingIsoFormattedStringToZonedDateTime() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't parse a ZonedDateTime with default/ISO format.",
             new ZonedDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
             new HasValue<>(
@@ -32,12 +31,12 @@ final class ZonedDateTimeOfTest {
                     ZoneId.ofOffset("", ZoneOffset.ofHours(1))
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testParsingFormattedStringWithZoneToZonedDateTime() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't parse a ZonedDateTime with custom format and zone.",
             new ZonedDateTimeOf(
                 "2017-12-13 14:15:16",
@@ -50,12 +49,12 @@ final class ZonedDateTimeOfTest {
                     ZoneId.of("Europe/Berlin")
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testParsingFormattedStringWithFormatterToZonedDateTime() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't parse a ZonedDateTime with custom format and zone.",
             new ZonedDateTimeOf(
                 "2017-12-13 14:15:16",
@@ -68,7 +67,7 @@ final class ZonedDateTimeOfTest {
                     ZoneId.of("Europe/Berlin")
                 )
             )
-        ).affirm();
+        );
     }
 
 }

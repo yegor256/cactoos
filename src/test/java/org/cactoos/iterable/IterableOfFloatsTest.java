@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterable;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -19,10 +19,10 @@ final class IterableOfFloatsTest {
     @Test
     void convertsFloatValuesToIterable() {
         final float[] values = {1.0F, 2.0F, 3.0F};
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert float values to iterable",
             new IterableOfFloats(values),
             new HasValues<>(values[0], values[1], values[2])
-        ).affirm();
+        );
     }
 }

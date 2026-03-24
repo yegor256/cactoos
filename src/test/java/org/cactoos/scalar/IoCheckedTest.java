@@ -5,8 +5,8 @@
 package org.cactoos.scalar;
 
 import java.io.IOException;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -20,7 +20,7 @@ final class IoCheckedTest {
     @Test
     void rethrowsIoException() {
         final IOException exception = new IOException("intended");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must rethrow IOException",
             () -> new IoChecked<>(
                 () -> {
@@ -28,13 +28,12 @@ final class IoCheckedTest {
                 }
             ).value(),
             new Throws<>(exception.getMessage(), exception.getClass())
-        ).affirm();
+        );
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     void throwsException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw IOException from Exception",
             () -> new IoChecked<>(
                 () -> {
@@ -42,13 +41,13 @@ final class IoCheckedTest {
                 }
             ).value(),
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void runtimeExceptionGoesOut() {
         final RuntimeException exception = new IllegalStateException("intended to fail here");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must rethrow RuntimeException",
             () -> new IoChecked<>(
                 () -> {
@@ -56,7 +55,7 @@ final class IoCheckedTest {
                 }
             ).value(),
             new Throws<>(exception.getMessage(), exception.getClass())
-        ).affirm();
+        );
     }
 
 }

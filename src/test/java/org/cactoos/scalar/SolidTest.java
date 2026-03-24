@@ -10,10 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Scalar;
 import org.cactoos.experimental.Threads;
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -29,23 +29,23 @@ final class SolidTest {
         final Scalar<Integer> scalar = new Solid<>(
             () -> new SecureRandom().nextInt()
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must compute value only once",
             scalar.value() + scalar.value(),
             new IsEqual<>(scalar.value() + scalar.value())
-        ).affirm();
+        );
     }
 
     @Test
     void worksInThreads() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must work well in multiple threads",
             scalar -> {
-                new Assertion<>(
+                MatcherAssert.assertThat(
                     "must compute value once",
                     scalar,
                     new HasValue<>(scalar.value())
-                ).affirm();
+                );
                 return true;
             },
             new RunsInThreads<>(
@@ -53,7 +53,7 @@ final class SolidTest {
                     new Solid<>(() -> new ListOf<>(1, 2))
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -67,20 +67,20 @@ final class SolidTest {
         );
         scalar.value();
         scalar.value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must compute null value only once",
             calls.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsNullValue() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return cached null value",
             new Solid<>(() -> null).value(),
             new IsNull<>()
-        ).affirm();
+        );
     }
 
     @Test
@@ -92,16 +92,16 @@ final class SolidTest {
                 return null;
             }
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "not compute null value only once in multiple threads",
             scalar -> solid.value() == null,
             new RunsInThreads<>(new Unchecked<>(solid::value))
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "must compute null value only once",
             calls.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
@@ -126,10 +126,10 @@ final class SolidTest {
         new LengthOf(
             new Threads<>(threads, tasks)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must cache null value in multiple threads",
             calls.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 }

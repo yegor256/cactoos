@@ -7,10 +7,10 @@ package org.cactoos.proc;
 import java.util.List;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Synced;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link ForEachInThreads}.
@@ -35,7 +35,7 @@ final class ForEachInThreadsTest {
                 1, 2
             )
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List does not contain mapped Iterable elements",
             list,
             new IsIterableContainingInAnyOrder<>(
@@ -44,7 +44,7 @@ final class ForEachInThreadsTest {
                     new IsEqual<>(2)
                 )
             )
-        ).affirm();
+        );
     }
 
 }

@@ -7,7 +7,6 @@ package org.cactoos.map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -16,7 +15,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class MapEntryTest {
 
     @Test
@@ -43,11 +41,11 @@ final class MapEntryTest {
 
     @Test
     void cantSetValue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected on change operations",
             () -> new MapEntry<>("one", "two").setValue("three"),
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
 
     @Test

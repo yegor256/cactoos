@@ -4,8 +4,8 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -17,97 +17,97 @@ final class ContainsTest {
 
     @Test
     void textContainsText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Text contains other Text",
             new Contains(
                 new TextOf("Elegant Object"),
                 new TextOf("Elegant")
             ),
             new HasValue<>(Boolean.TRUE)
-        ).affirm();
+        );
     }
 
     @Test
     void textDoesNotContainText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Text does not contain other Text",
             new Contains(
                 new TextOf("Java is awesome"),
                 new TextOf("good")
             ),
             new HasValue<>(Boolean.FALSE)
-        ).affirm();
+        );
     }
 
     @Test
     void textContainsString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Text contains other String",
             new Contains(
                 new TextOf("The quick brown fox"),
                 "fox"
             ),
             new HasValue<>(Boolean.TRUE)
-        ).affirm();
+        );
     }
 
     @Test
     void textDoesNotContainString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Text does not contain other String",
             new Contains(
                 new TextOf("Stack Overflow"),
                 "nope"
             ),
             new HasValue<>(Boolean.FALSE)
-        ).affirm();
+        );
     }
 
     @Test
     void stringContainsText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "String contains other Text",
             new Contains(
                 "Terra incognita",
                 new TextOf("cognita")
             ),
             new HasValue<>(Boolean.TRUE)
-        ).affirm();
+        );
     }
 
     @Test
     void stringDoesNotContainText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "String does not contain other Text",
             new Contains(
                 "ratio",
                 new TextOf("Cogito egro sum")
             ),
             new HasValue<>(Boolean.FALSE)
-        ).affirm();
+        );
     }
 
     @Test
     void stringContainsString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "String contains other String",
             new Contains(
                 "Lazy dog",
                 "dog"
             ),
             new HasValue<>(Boolean.TRUE)
-        ).affirm();
+        );
     }
 
     @Test
     void stringDoesNotContainString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "String does not contain other String",
             new Contains(
                 "Lorem ipsum",
                 "test"
             ),
             new HasValue<>(Boolean.FALSE)
-        ).affirm();
+        );
     }
 }

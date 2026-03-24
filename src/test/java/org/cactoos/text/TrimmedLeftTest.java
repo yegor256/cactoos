@@ -4,8 +4,8 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -17,19 +17,19 @@ final class TrimmedLeftTest {
 
     @Test
     void convertsText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't left trim a text",
             new TrimmedLeft(new TextOf("  Hello!   \t ")),
             new HasString("Hello!   \t ")
-        ).affirm();
+        );
     }
 
     @Test
     void trimmedBlankTextIsEmptyText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't trim a blank text",
             new TrimmedLeft(new TextOf("  \t ")),
             new HasString("")
-        ).affirm();
+        );
     }
 }

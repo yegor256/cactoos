@@ -70,16 +70,16 @@ public final class AbbreviatedLeft extends TextEnvelope {
             new Flattened(
                 new Ternary<>(
                     new ScalarOf<>(() -> new Sticky(text)),
-                    (Text t) -> new LengthOf(t).value() <= (long) max,
+                    (Text t) -> new LengthOf(t).value() <= max,
                     t -> t,
                     t -> new FormattedText(
                         "%s%s",
                         AbbreviatedLeft.ELLIPSES,
                         new Sub(
                             t.asString(),
-                            (int) (new LengthOf(t).value().longValue()
+                            (int) (new LengthOf(t).value()
                                 - max + AbbreviatedLeft.ELLIPSES.length()),
-                            (int) new LengthOf(t).value().longValue()
+                            new LengthOf(t).value().intValue()
                         )
                     )
                 )

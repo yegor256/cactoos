@@ -9,8 +9,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 import org.cactoos.iterable.Endless;
 import org.cactoos.scalar.And;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -19,13 +19,12 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TimedFuncTest {
 
     @Test
     void functionGetsInterrupted() {
         final long period = 100L;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Not interrupted after timeout",
             () -> new Timed<Boolean, Boolean>(
                 input -> {
@@ -36,11 +35,10 @@ final class TimedFuncTest {
                 period
             ).apply(true),
             new Throws<>(TimeoutException.class)
-        ).affirm();
+        );
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     void futureTaskIsCancelled() {
         final long time = 2000L;
         final Future<Boolean> future = Executors.newSingleThreadExecutor()
@@ -58,24 +56,24 @@ final class TimedFuncTest {
             ).apply(true);
             // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception exp) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must be canceled after 1 sec",
                 future.isCancelled(),
                 new IsTrue()
-            ).affirm();
+            );
         }
     }
 
     @Test
     void functionIsExecuted() throws Exception {
         final long period = 3000L;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute the function",
             new Timed<Boolean, Boolean>(
                 input -> true,
                 period
             ).apply(true),
             new IsTrue()
-        ).affirm();
+        );
     }
 }

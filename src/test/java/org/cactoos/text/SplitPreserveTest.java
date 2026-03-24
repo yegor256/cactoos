@@ -7,12 +7,13 @@ package org.cactoos.text;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Testing correctness of SplitPreserveAllTokens.
@@ -25,12 +26,12 @@ final class SplitPreserveTest {
     void checkingSplit() {
         String txt = "aaa";
         final String msg = "Adjacent separators must create an empty element";
-        ArrayList<Text> array = new ArrayList<>(4);
+        List<Text> array = new ArrayList<>(4);
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             msg,
             this.getLength(
                 new Split(
@@ -47,13 +48,13 @@ final class SplitPreserveTest {
                     )
                 )
             )
-        ).affirm();
+        );
         txt = " how ";
         array = new ArrayList<>(3);
         array.add(new TextOf(""));
         array.add(new TextOf("how"));
         array.add(new TextOf(""));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             msg,
             this.getLength(
                 new Split(
@@ -70,7 +71,7 @@ final class SplitPreserveTest {
                     )
                 )
             )
-        ).affirm();
+        );
     }
 
     int getLength(final Iterator<Text> iter) {
@@ -86,12 +87,12 @@ final class SplitPreserveTest {
     void checkingSplitPreserveTokens() {
         String txt = "aaa";
         final String msg = "Adjacent separators must create an empty element";
-        ArrayList<Text> array = new ArrayList<>(4);
+        List<Text> array = new ArrayList<>(4);
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             msg,
             this.getLength(
                 new SplitPreserveAllTokens(
@@ -106,14 +107,14 @@ final class SplitPreserveTest {
                     ).iterator()
                 )
             )
-        ).affirm();
+        );
         txt = "lol\\  / dude";
         array = new ArrayList<>(4);
         array.add(new TextOf("lol\\"));
         array.add(new TextOf(""));
         array.add(new TextOf("/"));
         array.add(new TextOf("dude"));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             msg,
             this.getLength(
                 new SplitPreserveAllTokens(
@@ -128,13 +129,13 @@ final class SplitPreserveTest {
                     ).iterator()
                 )
             )
-        ).affirm();
+        );
         txt = " how ";
         array = new ArrayList<>(3);
         array.add(new TextOf(""));
         array.add(new TextOf("how"));
         array.add(new TextOf(""));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             msg,
             this.getLength(
                 new SplitPreserveAllTokens(
@@ -149,6 +150,6 @@ final class SplitPreserveTest {
                     ).iterator()
                 )
             )
-        ).affirm();
+        );
     }
 }

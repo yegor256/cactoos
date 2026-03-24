@@ -13,8 +13,8 @@ import java.io.Writer;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -23,7 +23,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class GzipInputTest {
 
     @Test
@@ -40,23 +39,23 @@ final class GzipInputTest {
             writer.write(content);
         }
         final byte[] bytes = out.toByteArray();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read from a gzip input",
             new TextOf(
                 new GzipInput(new InputOf(bytes))
             ),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readFromDeadGzipInput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read from empty input",
             () -> new LengthOf(
                 new GzipInput(new DeadInput())
             ).value(),
             new Throws<>(EOFException.class)
-        ).affirm();
+        );
     }
 }

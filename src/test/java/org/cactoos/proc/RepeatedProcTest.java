@@ -6,9 +6,9 @@ package org.cactoos.proc;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Proc;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -26,7 +26,7 @@ final class RepeatedProcTest {
             3
         );
         func.exec(atom);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must run proc 3 times",
             atom.get(),
             new IsEqual<>(3)
@@ -35,7 +35,7 @@ final class RepeatedProcTest {
 
     @Test
     void throwsIfZero() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw if zero",
             () -> {
                 new RepeatedProc<>(
@@ -45,6 +45,6 @@ final class RepeatedProcTest {
                 return "discarded";
             },
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 }

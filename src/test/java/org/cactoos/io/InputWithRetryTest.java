@@ -7,9 +7,9 @@ package org.cactoos.io;
 
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -32,11 +32,11 @@ final class InputWithRetryTest {
             3,
             Duration.ZERO
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "should read -1 from stream",
             iwr.stream().read(),
             new IsEqual<>(-1)
-        ).affirm();
+        );
     }
 
     @Test
@@ -51,10 +51,10 @@ final class InputWithRetryTest {
             },
             3
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "should throw same exception",
             iwr::stream,
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 }

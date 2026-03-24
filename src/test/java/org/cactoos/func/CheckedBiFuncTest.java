@@ -6,10 +6,10 @@ package org.cactoos.func;
 
 import java.io.EOFException;
 import java.io.IOException;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -18,12 +18,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class CheckedBiFuncTest {
 
     @Test
     void runtimeExceptionIsNotWrapped() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail if function is null.",
             () -> new CheckedBiFunc<>(
                 (first, second) -> {
@@ -32,12 +31,12 @@ final class CheckedBiFuncTest {
                 IOException::new
             ).apply(true, true),
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void checkedExceptionIsWrapped() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail if function is null.",
             () -> new CheckedBiFunc<>(
                 (first, second) -> {
@@ -46,7 +45,7 @@ final class CheckedBiFuncTest {
                 IOException::new
             ).apply(true, true),
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -59,24 +58,24 @@ final class CheckedBiFuncTest {
                 IOException::new
             ).apply(true, true);
         } catch (final IOException exp) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Extra wrapping of IOException has been added",
                 exp.getCause(),
                 new IsNull<>()
-            ).affirm();
+            );
         }
     }
 
     @Test
     void noExceptionThrown() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must not throw an exception",
             new CheckedBiFunc<>(
                 (first, second) -> true,
                 exp -> exp
             ).apply(false, false),
             new IsEqual<>(true)
-        ).affirm();
+        );
     }
 
 }

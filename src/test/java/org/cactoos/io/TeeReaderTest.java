@@ -7,8 +7,8 @@ package org.cactoos.io;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Reader;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
 /**
@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TeeReaderTest {
 
     @Test
@@ -33,11 +32,11 @@ final class TeeReaderTest {
             done = reader.read();
         }
         reader.close();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read content",
             new InputOf(new ReaderOf(baos.toByteArray())),
             new HasContent(content)
-        ).affirm();
+        );
     }
 
 }

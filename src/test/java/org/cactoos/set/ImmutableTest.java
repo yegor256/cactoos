@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -20,11 +20,11 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.58.0
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.UnnecessaryFullyQualifiedName"})
+@SuppressWarnings("PMD.TooManyMethods")
 final class ImmutableTest {
     @Test
     void size() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "size() must be equals to original",
             new org.cactoos.set.Immutable<>(
                 new SetOf<>(1, 2)
@@ -32,12 +32,12 @@ final class ImmutableTest {
             new IsEqual<>(
                 new SetOf<>(1, 2).size()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void isEmpty() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "isEmpty() must be equals to original",
             new org.cactoos.set.Immutable<>(
                 new SetOf<>(1, 2)
@@ -45,12 +45,12 @@ final class ImmutableTest {
             new IsEqual<>(
                 new SetOf<>(1, 2).isEmpty()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void contains() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "contains() must be equals to original",
             new org.cactoos.set.Immutable<>(
                 new SetOf<>("a", "b")
@@ -58,23 +58,23 @@ final class ImmutableTest {
             new IsEqual<>(
                 new SetOf<>("a", "b").contains("b")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void iterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "iterator() is equal to original",
             () -> new org.cactoos.set.Immutable<>(
                 new SetOf<>(1, 2)
             ).iterator(),
             new HasValues<>(1, 2)
-        ).affirm();
+        );
     }
 
     @Test
     void toArray() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "toArray() must be equals to original",
             new org.cactoos.set.Immutable<>(
                 new SetOf<>("a", "b")
@@ -82,25 +82,25 @@ final class ImmutableTest {
             new IsEqual<>(
                 new SetOf<>("a", "b").toArray()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testToArray() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "toArray(T[]) must be equals to original",
             new org.cactoos.set.Immutable<>(
                 new SetOf<>("a", "b")
-            ).toArray(new String[3]),
+            ).toArray(new String[0]),
             new IsEqual<>(
-                new SetOf<>("a", "b").toArray(new String[3])
+                new SetOf<>("a", "b").toArray(new String[0])
             )
-        ).affirm();
+        );
     }
 
     @Test
     void add() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "add(T) must throw exception",
             () -> new org.cactoos.set.Immutable<>(
                 new SetOf<>(1, 2)
@@ -109,12 +109,12 @@ final class ImmutableTest {
                 "#add(T): the set is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void remove() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "remove(Object) must throw exception",
             () -> new org.cactoos.set.Immutable<>(
                 new SetOf<>("1", "2")
@@ -123,12 +123,12 @@ final class ImmutableTest {
                 "#remove(Object): the set is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void containsAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "containsAll() must be equals to original",
             new org.cactoos.set.Immutable<>(
                 new SetOf<>("a", "b", "c")
@@ -138,12 +138,12 @@ final class ImmutableTest {
                     new SetOf<>("a", "c")
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void addAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "addAll(Collection) must throw exception",
             () -> new org.cactoos.set.Immutable<>(
                 new SetOf<>(1, 2)
@@ -152,12 +152,12 @@ final class ImmutableTest {
                 "#addAll(Collection): the set is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testAddAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "addAll(Collection) must throw exception",
             () -> new org.cactoos.set.Immutable<>(
                 new SetOf<>(1, 2)
@@ -166,12 +166,12 @@ final class ImmutableTest {
                 "#addAll(Collection): the set is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void retainAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "retainAll(Collection) must throw exception",
             () -> new org.cactoos.set.Immutable<>(
                 new SetOf<>(1, 2, 3)
@@ -180,12 +180,12 @@ final class ImmutableTest {
                 "#retainAll(Collection): the set is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void removeAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "removeAll(Collection) must throw exception",
             () -> new org.cactoos.set.Immutable<>(
                 new SetOf<>(1, 2, 3)
@@ -194,12 +194,12 @@ final class ImmutableTest {
                 "#removeAll(Collection): the set is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void clear() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "clear() must throw exception",
             () -> {
                 new org.cactoos.set.Immutable<>(
@@ -211,12 +211,12 @@ final class ImmutableTest {
                 "#clear(): the set is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testAdd() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "add(T) must throw exception",
             () -> {
                 new org.cactoos.set.Immutable<>(
@@ -228,12 +228,12 @@ final class ImmutableTest {
                 "#add(T): the set is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testRemove() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "remove(Object) must throw exception",
             () -> new org.cactoos.set.Immutable<>(
                 new SetOf<>("a", "b")
@@ -242,74 +242,74 @@ final class ImmutableTest {
                 "#remove(Object): the set is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void notEqualsToObjectOfAnotherType() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must not equal to object of another type",
             new org.cactoos.set.Immutable<>(new SetOf<>()),
             new IsNot<>(new IsEqual<>(new Object()))
-        ).affirm();
+        );
     }
 
     @Test
     void notEqualsToListWithDifferentElements() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must not equal to List with different elements",
             new org.cactoos.set.Immutable<>(new SetOf<>(1, 2)),
             new IsNot<>(new IsEqual<>(new SetOf<>(1, 0)))
-        ).affirm();
+        );
     }
 
     @Test
     void isEqualToItself() {
         final Set<Integer>
             set = new org.cactoos.set.Immutable<>(new SetOf<>(1, 2));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must be equal to itself",
             set,
             new IsEqual<>(set)
-        ).affirm();
+        );
     }
 
     @Test
     void isEqualToListWithTheSameElements() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must be equal to Set with the same elements",
             new org.cactoos.set.Immutable<>(new SetOf<>(1, 2)),
             new IsEqual<>(new SetOf<>(1, 2))
-        ).affirm();
+        );
     }
 
     @Test
     void equalToEmptyImmutable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "empty Immutable must be equal to empty Immutable",
             new org.cactoos.set.Immutable<>(new SetOf<>()),
             new IsEqual<>(new org.cactoos.set.Immutable<>(new SetOf<>()))
-        ).affirm();
+        );
     }
 
     @Test
     void testHashCode() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "hashCode() must be equal to hashCode of the corresponding Set",
             new org.cactoos.set.Immutable<>(new SetOf<>(1, 2)).hashCode(),
             new IsEqual<>(
                 new SetOf<>(1, 2).hashCode()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void testToString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "toString() must be equal to toString of the corresponding Set",
             new org.cactoos.set.Immutable<>(new SetOf<>("a", "b", "c")).toString(),
             new IsEqual<>(new SetOf<>("a", "b", "c").toString())
-        ).affirm();
+        );
     }
 
     @Test
@@ -317,16 +317,16 @@ final class ImmutableTest {
         final Set<String> strings = new HashSet<>(Arrays.asList("a", "b", "c"));
         final Set<String> immutable = new org.cactoos.set.Immutable<>(strings);
         strings.add("d");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must reflect inner set in the decorator",
             immutable,
             new IsEqual<>(strings)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsIteratorWithUnsupportedRemove() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return an iterator that does not support remove()",
             () -> {
                 final Set<String>
@@ -337,6 +337,6 @@ final class ImmutableTest {
                 return true;
             },
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
 }

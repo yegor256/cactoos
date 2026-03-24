@@ -18,12 +18,6 @@ import org.cactoos.collection.CollectionEnvelope;
  * @since 0.23
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AbstractNaming"
-    }
-)
 public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
     List<T> {
 

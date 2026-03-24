@@ -6,8 +6,8 @@ package org.cactoos.proc;
 
 import java.io.IOException;
 import org.cactoos.Proc;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -20,7 +20,7 @@ final class IoCheckedProcTest {
     @Test
     void rethrowsIoException() {
         final IOException exception = new IOException("intended");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must rethrow original IOException",
             () -> {
                 new IoCheckedProc<>(
@@ -31,12 +31,12 @@ final class IoCheckedProcTest {
                 return null;
             },
             new Throws<>(exception.getMessage(), exception.getClass())
-        ).affirm();
+        );
     }
 
     @Test
     void rethrowsCheckedToIoException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must wrap and throw IOException",
             () -> {
                 new IoCheckedProc<>(
@@ -47,12 +47,12 @@ final class IoCheckedProcTest {
                 return null;
             },
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void runtimeExceptionGoesOut() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw runtime exceptions as is",
             () -> {
                 new IoCheckedProc<>(
@@ -63,7 +63,7 @@ final class IoCheckedProcTest {
                 return null;
             },
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
 }

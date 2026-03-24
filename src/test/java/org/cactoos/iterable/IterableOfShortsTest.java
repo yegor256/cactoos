@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterable;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -16,13 +16,12 @@ import org.llorllale.cactoos.matchers.HasValues;
 final class IterableOfShortsTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidUsingShortType")
     void convertsShortValuesToIterable() {
         final short[] values = {(short) 1, (short) 2, (short) 3};
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert short values to iterable",
             new IterableOfShorts(values),
             new HasValues<>(values[0], values[1], values[2])
-        ).affirm();
+        );
     }
 }

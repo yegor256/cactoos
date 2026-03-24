@@ -5,9 +5,9 @@
 package org.cactoos.proc;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -15,31 +15,30 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class ProcNoNullsTest {
 
     @Test
     void failForNullProc() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Doesn't fail for null proc",
             () -> {
                 new ProcNoNulls<>(null).exec(new Object());
                 return 1;
             },
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullInput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Doesn't fail for null input",
             () -> {
                 new ProcNoNulls<>(input -> { }).exec(null);
                 return 1;
             },
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -47,10 +46,10 @@ final class ProcNoNullsTest {
         final AtomicInteger counter = new AtomicInteger();
         new ProcNoNulls<>(AtomicInteger::incrementAndGet)
             .exec(counter);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't involve the \"Proc.exec(X input)\" method",
             counter.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 }

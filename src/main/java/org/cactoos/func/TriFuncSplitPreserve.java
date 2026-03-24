@@ -5,9 +5,10 @@
 
 package org.cactoos.func;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import org.cactoos.TriFunc;
-import org.cactoos.list.ListOf;
 
 /**
  * A String splitter preserving all tokens.
@@ -33,7 +34,7 @@ public final class TriFuncSplitPreserve
         final String regex,
         final Integer lmt
     ) {
-        final ListOf<String> ret = new ListOf<>();
+        final List<String> ret = new ArrayList<>(0);
         int start = 0;
         int pos = str.indexOf(regex);
         while (pos >= start) {

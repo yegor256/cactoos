@@ -4,9 +4,9 @@
  */
 package org.cactoos.list;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test cases for {@link ListIteratorEnvelope}.
@@ -15,52 +15,51 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class ListIteratorEnvelopeTest {
     @Test
     void mustReturnPreviousIndex() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List Iterator must return previous index",
             new StringListIterator(
                 "1"
             ).previousIndex(),
             new IsEqual<>(-1)
-        ).affirm();
+        );
     }
 
     @Test
     void mustReturnPreviousElement() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List Iterator must return previous element",
             new StringListIterator(
                 1,
                 "3", "7"
             ).previous(),
             new IsEqual<>("3")
-        ).affirm();
+        );
     }
 
     @Test
     void mustReturnNextIndex() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List iterator must return next index",
             new StringListIterator(
                 "1"
             ).nextIndex(),
             new IsEqual<>(0)
-        ).affirm();
+        );
     }
 
     @Test
     void mustReturnNextElement() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List iterator must return next item",
             new StringListIterator(
                 1,
                 "5", "11", "13"
             ).next(),
             new IsEqual<>("11")
-        ).affirm();
+        );
     }
 
     private static final class StringListIterator extends ListIteratorEnvelope<String> {

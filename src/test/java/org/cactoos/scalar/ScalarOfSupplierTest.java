@@ -4,8 +4,8 @@
  */
 package org.cactoos.scalar;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -17,10 +17,10 @@ final class ScalarOfSupplierTest {
     @Test
     void createsScalarFromSupplier() {
         final Object obj = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must hold the same value as given by supplier",
             new ScalarOfSupplier<>(() -> obj),
             new HasValue<>(obj)
-        ).affirm();
+        );
     }
 }

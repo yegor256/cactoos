@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Random;
 import org.cactoos.text.Randomized;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -30,14 +30,14 @@ final class ImmutableTest {
         list.add("one");
         final Iterator<String> immutable = new Immutable<>(list.iterator());
         immutable.next();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "can't remove from unmutable",
             () -> {
                 immutable.remove();
                 return 1;
             },
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -46,11 +46,11 @@ final class ImmutableTest {
         final Iterator<Integer> immutable = new Immutable<>(
             new IteratorOf<>(value)
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "next must return first value from iterator",
             immutable.next(),
             new IsEqual<>(value)
-        ).affirm();
+        );
     }
 
     @Test
@@ -59,40 +59,43 @@ final class ImmutableTest {
         final Iterator<Integer> immutable = new Immutable<>(
             new IteratorOf<>(value)
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "hasNext must return true for not traversed iterator",
             immutable.hasNext(),
             new IsEqual<>(true)
-        ).affirm();
+        );
         immutable.next();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "hasNext must return false for already traversed iterator",
             immutable.hasNext(),
             new IsEqual<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void decoratesToString() throws Exception {
         final String string = new Randomized().asString();
         final Iterator<Object> iterator = new Iterator<Object>() {
+            @Override
             public Object next() {
                 return new Object();
             }
 
+            @Override
             public boolean hasNext() {
                 return false;
             }
 
+            @Override
             public String toString() {
                 return string;
             }
         };
         final Iterator<Object> immutable = new Immutable<>(iterator);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must delegate toString to decorated iterator",
             new TextOf(immutable.toString()),
             new IsText(iterator.toString())
-        ).affirm();
+        );
     }
 }

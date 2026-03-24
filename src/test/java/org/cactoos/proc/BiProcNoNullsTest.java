@@ -5,9 +5,9 @@
 package org.cactoos.proc;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -19,7 +19,7 @@ final class BiProcNoNullsTest {
 
     @Test
     void failForNullProc() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Fails in case of null proc",
             () -> {
                 new BiProcNoNulls<>(null).exec(
@@ -28,12 +28,12 @@ final class BiProcNoNullsTest {
                 return 1;
             },
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullFirstArg() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Fails in case of null first arg",
             () -> {
                 new BiProcNoNulls<>(
@@ -42,12 +42,12 @@ final class BiProcNoNullsTest {
                 return 1;
             },
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullSecondArg() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Fails in case of null second arg",
             () -> {
                 new BiProcNoNulls<>(
@@ -65,10 +65,10 @@ final class BiProcNoNullsTest {
         new BiProcNoNulls<>(
             (AtomicInteger ctr, Object second) -> ctr.incrementAndGet()
         ).exec(counter, new Object());
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't invoke the \"BiProc.exec\" method",
             counter.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 }

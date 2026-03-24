@@ -4,8 +4,8 @@
  */
 package org.cactoos.io;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -13,25 +13,24 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class InputNoNullsTest {
 
     @Test
     void failForNullInput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Does not fail on null input",
             () -> new InputNoNulls(null).stream(),
             new Throws<>(Exception.class)
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullStream() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Does not fail on null stream",
             () -> new InputNoNulls(() -> null).stream(),
             new Throws<>(Exception.class)
-        ).affirm();
+        );
     }
 
     @Test

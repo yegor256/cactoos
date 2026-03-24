@@ -12,9 +12,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -23,7 +23,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0.0
  */
-@SuppressWarnings({ "PMD.AvoidDuplicateLiterals", "PMD.CloseResource" })
+@SuppressWarnings("PMD.CloseResource")
 final class ThreadsTest {
 
     /**
@@ -39,7 +39,7 @@ final class ThreadsTest {
     void containsResults() {
         final ExecutorService extor = Executors.newFixedThreadPool(3);
         try {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must contain results from callables",
                 new Threads<>(
                     extor,
@@ -62,7 +62,7 @@ final class ThreadsTest {
                     "txt 2",
                     "txt 3"
                 )
-            ).affirm();
+            );
         } finally {
             extor.shutdownNow();
         }
@@ -76,7 +76,7 @@ final class ThreadsTest {
     void failsDueToTimeoutWithExternalExecutorService() {
         final ExecutorService extor = Executors.newFixedThreadPool(2);
         try {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must fail due to timeout",
                 () -> new LengthOf(
                     new Threads<>(
@@ -97,7 +97,7 @@ final class ThreadsTest {
                     )
                 ).value(),
                 new Throws<>(CancellationException.class)
-            ).affirm();
+            );
         } finally {
             extor.shutdownNow();
         }
@@ -111,7 +111,7 @@ final class ThreadsTest {
     void failsDueToException() {
         final ExecutorService extor = Executors.newSingleThreadExecutor();
         try {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must rethrow error",
                 () -> new LengthOf(
                     new Threads<>(
@@ -132,7 +132,7 @@ final class ThreadsTest {
                     "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
                     UncheckedIOException.class
                 )
-            ).affirm();
+            );
         } finally {
             extor.shutdownNow();
         }
@@ -144,7 +144,7 @@ final class ThreadsTest {
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsValuesWithInlineExecutorService() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must contain results from the callables when using inline executor service",
             new Threads<>(
                 3,
@@ -163,7 +163,7 @@ final class ThreadsTest {
                 }
             ),
             new HasValues<>("txt 1", "txt 2", "txt 3")
-        ).affirm();
+        );
     }
 
     /**
@@ -172,7 +172,7 @@ final class ThreadsTest {
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void failsDueToTimeoutWithInlineExecutorService() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail due to timeout",
             () -> new LengthOf(
                 new Threads<>(
@@ -193,7 +193,7 @@ final class ThreadsTest {
                 )
             ).value(),
             new Throws<>(CancellationException.class)
-        ).affirm();
+        );
     }
 
     /**
@@ -204,7 +204,7 @@ final class ThreadsTest {
     void containsResultsNoTimeout() {
         final ExecutorService extor = Executors.newFixedThreadPool(3);
         try {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must contain results from the callables without using timeout",
                 new Threads<>(
                     extor,
@@ -222,7 +222,7 @@ final class ThreadsTest {
                     }
                 ),
                 new HasValues<>("txt 1", "txt 2", "txt 3")
-            ).affirm();
+            );
         } finally {
             extor.shutdownNow();
         }
@@ -236,7 +236,7 @@ final class ThreadsTest {
     void failsDueToExceptionNoTimeout() {
         final ExecutorService extor = Executors.newSingleThreadExecutor();
         try {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must rethrow error",
                 () -> new LengthOf(
                     new Threads<>(
@@ -256,7 +256,7 @@ final class ThreadsTest {
                     "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
                     UncheckedIOException.class
                 )
-            ).affirm();
+            );
         } finally {
             extor.shutdownNow();
         }
@@ -268,7 +268,7 @@ final class ThreadsTest {
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsValuesWithInlineExecutorServiceNoTimeout() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must contain results from the callables when using inline executor without timeout",
             new Threads<>(
                 3,
@@ -286,7 +286,7 @@ final class ThreadsTest {
                 }
             ),
             new HasValues<>("txt 1", "txt 2", "txt 3")
-        ).affirm();
+        );
     }
 
     /**

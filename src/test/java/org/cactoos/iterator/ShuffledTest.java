@@ -6,9 +6,9 @@ package org.cactoos.iterator;
 
 import java.util.Random;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -20,7 +20,7 @@ final class ShuffledTest {
 
     @Test
     void shuffleIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must shuffle elements in iterator",
             new IterableOf<>(
                 new Shuffled<>(
@@ -32,12 +32,12 @@ final class ShuffledTest {
             new HasValues<>(
                 "a", "b"
             )
-        ).affirm();
+        );
     }
 
     @Test
     void shuffleIterableWithRandomized() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must shuffle elements with randomizer",
             new IterableOf<>(
                 () -> new Shuffled<>(
@@ -50,6 +50,6 @@ final class ShuffledTest {
             new IsEqual<>(
                 new IterableOf<>("A", "B", "C")
             )
-        ).affirm();
+        );
     }
 }

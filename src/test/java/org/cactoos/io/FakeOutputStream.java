@@ -27,9 +27,9 @@ final class FakeOutputStream extends OutputStream {
     }
 
     @Override
-    @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
     // @checkstyle ParameterNameCheck (1 lines)
     public void write(final int b) {
+        // Intentionally empty, this is a fake stream for testing
     }
 
     @Override

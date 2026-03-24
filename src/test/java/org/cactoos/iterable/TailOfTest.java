@@ -16,8 +16,7 @@ import org.junit.jupiter.api.Test;
 final class TailOfTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    void tailIterable() {
+        void tailIterable() {
         MatcherAssert.assertThat(
             "Can't get tail portion of iterable",
             new TailOf<>(

@@ -12,10 +12,10 @@ import org.cactoos.Func;
 import org.cactoos.list.ListOf;
 import org.cactoos.proc.ForEach;
 import org.cactoos.proc.RepeatedProc;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 
 /**
@@ -28,18 +28,18 @@ final class RangeOfTest {
 
     @Test
     void testIntegerRange() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must generate a range of integers",
             new ListOf<>(
                 new RangeOf<>(1, 5, value -> value + 1)
             ),
             Matchers.contains(1, 2, 3, 4, 5)
-        ).affirm();
+        );
     }
 
     @Test
     void testIntegerFibonacciRange() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must generate a range of fibonacci integers",
             new ListOf<>(
                 new RangeOf<>(
@@ -58,34 +58,34 @@ final class RangeOfTest {
                 )
             ),
             Matchers.contains(1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
-        ).affirm();
+        );
     }
 
     @Test
     void testLongRange() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must generate a range of long",
             new ListOf<>(
                 new RangeOf<>(1L, 5L, value -> value + 1L)
             ),
             Matchers.contains(1L, 2L, 3L, 4L, 5L)
-        ).affirm();
+        );
     }
 
     @Test
     void testCharacterRange() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must generate a range of characters",
             new ListOf<>(
                 new RangeOf<>('a', 'c', value -> (char) (value + 1))
             ),
             Matchers.contains('a', 'b', 'c')
-        ).affirm();
+        );
     }
 
     @Test
     void testLocalDateRange() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must generate a range of local dates.",
             new ListOf<>(
                 new RangeOf<>(
@@ -99,7 +99,7 @@ final class RangeOfTest {
                 LocalDate.of(2017, 1, 2),
                 LocalDate.of(2017, 1, 3)
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -109,11 +109,11 @@ final class RangeOfTest {
         );
         final Collection<Character> copy = new ArrayList<>(6);
         new RepeatedProc<>(new ForEach<>(copy::add), 2).exec(range);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must add elements two times",
             copy,
             new HasSize(6)
-        ).affirm();
+        );
     }
 
     @Test
@@ -125,19 +125,19 @@ final class RangeOfTest {
             (Character ignored) -> {
             }
         ).exec(range);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be equal",
             range,
             new IsEqual<>(
                 new RangeOf<>('a', 'c', value -> (char) (value + 1))
             )
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void producesChars() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must produce three ranges",
             new Joined<>(
                 new RangeOf<>('0', '9', ch -> (char) (ch + 1)),
@@ -155,12 +155,12 @@ final class RangeOfTest {
                     'y', 'z'
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void producesCharsJoined() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must produce correct range of characters",
             new RangeOf<>('!', '~', ch -> (char) (ch + 1)),
             new IsEqual<>(
@@ -177,7 +177,7 @@ final class RangeOfTest {
                     '{', '|', '}', '~'
                 )
             )
-        ).affirm();
+        );
     }
 
 }

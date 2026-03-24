@@ -7,8 +7,8 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -20,7 +20,7 @@ import org.llorllale.cactoos.matchers.Throws;
 final class MappedTest {
     @Test
     void iteratatesOver() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must map values of iterator",
             new IterableOf<>(
                 new Mapped<>(
@@ -29,7 +29,7 @@ final class MappedTest {
                 )
             ),
             new HasValues<>("1", "2", "0")
-        ).affirm();
+        );
     }
 
     @Test
@@ -39,10 +39,10 @@ final class MappedTest {
             new IteratorOf<Number>(1)
         );
         iterator.next();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must throw NSEE",
             iterator::next,
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 }

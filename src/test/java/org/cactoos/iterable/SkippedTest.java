@@ -5,10 +5,10 @@
 package org.cactoos.iterable;
 
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link Skipped}.
@@ -24,7 +24,7 @@ final class SkippedTest {
         final String two = "two";
         final String three = "three";
         final String four = "four";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must skip elements in iterable",
             new Skipped<>(
                 2,
@@ -36,7 +36,7 @@ final class SkippedTest {
                     four
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -45,7 +45,7 @@ final class SkippedTest {
         final String six = "six";
         final String seven = "seven";
         final String eight = "eight";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must skip elements in array",
             new Skipped<>(
                 2,
@@ -57,7 +57,7 @@ final class SkippedTest {
                     eight
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -66,7 +66,7 @@ final class SkippedTest {
         final String eleven = "eleven";
         final String twelve = "twelve";
         final String hundred = "hundred";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must skip elements in collection",
             new Skipped<>(
                 2,
@@ -75,31 +75,31 @@ final class SkippedTest {
             new IsEqual<>(
                 new IterableOf<>(twelve, hundred)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void skippedAllElements() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must skip all elements",
             new Skipped<>(
                 2,
                 "Frodo", "Gandalf"
             ),
             new IsEmptyIterable<>()
-        ).affirm();
+        );
     }
 
     @Test
     void skippedMoreThanExists() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't skip more than exists",
             new Skipped<>(
                 Integer.MAX_VALUE,
                 "Sauron", "Morgoth"
             ),
             new IsEmptyIterable<>()
-        ).affirm();
+        );
     }
 
     @Test
@@ -108,7 +108,7 @@ final class SkippedTest {
         final String yavanna = "yavanna";
         final String nessa = "nessa";
         final String vaire = "vaire";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must process negative skipped size",
             new Skipped<>(
                 -1,
@@ -117,6 +117,6 @@ final class SkippedTest {
             new IsEqual<>(
                 new IterableOf<>(varda, yavanna, nessa, vaire)
             )
-        ).affirm();
+        );
     }
 }

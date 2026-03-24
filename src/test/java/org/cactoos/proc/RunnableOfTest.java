@@ -7,8 +7,8 @@ package org.cactoos.proc;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.scalar.ScalarOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
@@ -22,7 +22,7 @@ final class RunnableOfTest {
     void convertsProcIntoRunnable() {
         final AtomicReference<Object> done = new AtomicReference<>();
         final Object obj = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute Runnable with Proc",
             new RunnableOf(
                 new ProcOf<>(
@@ -36,14 +36,14 @@ final class RunnableOfTest {
                     return done.get().equals(obj);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void convertsScalarIntoRunnable() {
         final AtomicReference<Object> done = new AtomicReference<>();
         final Object obj = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute Runnable with Scalar",
             new RunnableOf(
                 new ScalarOf<>(
@@ -59,14 +59,14 @@ final class RunnableOfTest {
                     return done.get().equals(obj);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void convertsLambdaIntoRunnable() {
         final AtomicReference<Object> done = new AtomicReference<>();
         final Object obj = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute Runnable with Lambda",
             new RunnableOf(
                 () -> {
@@ -79,14 +79,14 @@ final class RunnableOfTest {
                     return done.get().equals(obj);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void convertsCallableIntoRunnable() {
         final AtomicReference<Object> done = new AtomicReference<>();
         final Object obj = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute Runnable with Callable",
             new RunnableOf(
                 (Callable<Void>) () -> {
@@ -100,7 +100,7 @@ final class RunnableOfTest {
                     return done.get().equals(obj);
                 }
             )
-        ).affirm();
+        );
     }
 
 }

@@ -8,8 +8,8 @@ package org.cactoos.scalar;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -22,85 +22,85 @@ final class LengthOfTest {
 
     @Test
     void lengthOfInput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must calculate length of input with float value",
             new LengthOf(
                 new InputOf("Hello3")
             ),
             new HasValue<>(6L)
-        ).affirm();
+        );
     }
 
     @Test
     void lengthOfInputWithCustomBuffer() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must calculate length with custom buffer",
             new LengthOf(
                 new InputOf("test buffer1"),
                 1
             ),
             new HasValue<>(12L)
-        ).affirm();
+        );
     }
 
     @Test
     void lengthOfZeroBuffer() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail to calculate length of empty buffer",
             () -> new LengthOf(
                 new InputOf("test buffer2"),
                 0
             ).value(),
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void lengthOf() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must calculate length of iterable for integer",
             new LengthOf(
                 new IterableOf<>(1, 2, 3, 4)
             ),
             new HasValue<>(4L)
-        ).affirm();
+        );
     }
 
     @Test
     void lengthOfEmptyIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must calculate length of empty iterable",
             new LengthOf(
                 new IterableOf<>()
             ),
             new HasValue<>(0L)
-        ).affirm();
+        );
     }
 
     @Test
     void lengthOfEmptyText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must calculate length of empty string",
             new LengthOf(new TextOf("")),
             new HasValue<>(0L)
-        ).affirm();
+        );
     }
 
     @Test
     void lengthOfUnicodeAsText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must calculate character-length of unicode text",
             new LengthOf(new TextOf("привет")),
             new HasValue<>(6L)
-        ).affirm();
+        );
     }
 
     @Test
     void lengthOfUnicodeAsInput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must calculate character-length of unicode input",
             new LengthOf(new InputOf("Привет")),
             new HasValue<>(12L)
-        ).affirm();
+        );
     }
 }

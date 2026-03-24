@@ -24,7 +24,6 @@ import org.cactoos.text.TextOf;
  *
  * @since 0.12
  */
-@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
 public final class PropertiesOf implements Scalar<Properties> {
 
     /**
@@ -52,7 +51,6 @@ public final class PropertiesOf implements Scalar<Properties> {
      * Ctor.
      * @param input Input
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public PropertiesOf(final Input input) {
         this(
             () -> {

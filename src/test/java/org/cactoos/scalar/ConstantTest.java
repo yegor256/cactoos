@@ -4,8 +4,8 @@
  */
 package org.cactoos.scalar;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -18,20 +18,20 @@ final class ConstantTest {
     @Test
     void returnsGivenValue() {
         final String value = "Hello World";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return given value",
             new Constant<>(value),
             new HasValue<>(value)
-        ).affirm();
+        );
     }
 
     @Test
     void alwaysReturnsSameValue() {
         final Constant<String> constant = new Constant<>("Good Bye!");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return same value",
             constant,
             new HasValue<>(constant.value())
-        ).affirm();
+        );
     }
 }

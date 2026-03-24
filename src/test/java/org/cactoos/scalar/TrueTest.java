@@ -4,8 +4,8 @@
  */
 package org.cactoos.scalar;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
@@ -18,10 +18,10 @@ final class TrueTest {
 
     @Test
     void asValue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be True",
             new True().value(),
             new IsTrue()
-        ).affirm();
+        );
     }
 }

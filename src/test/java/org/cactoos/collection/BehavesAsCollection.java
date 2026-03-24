@@ -7,12 +7,12 @@ package org.cactoos.collection;
 import java.util.Collection;
 import org.cactoos.list.ListOf;
 import org.hamcrest.Description;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Satisfies;
 
@@ -42,46 +42,46 @@ public final class BehavesAsCollection<E> extends
     @Override
     @SuppressWarnings({ "unchecked", "PMD.ClassCastExceptionWithToArray" })
     public boolean matchesSafely(final Collection<E> col) {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must contain item",
             col,
             new HasValues<>(this.sample)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Must not be empty",
             col,
             new IsNot<>(
                 new IsEmptyCollection<>()
             )
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Size must be more than 0",
             col,
             new IsCollectionWithSize<>(
                 new Satisfies<>(s -> s > 0)
             )
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Array must contain item",
             new ListOf<>(
                 (E[]) col.toArray()
             ),
             new HasValues<>(this.sample)
-        ).affirm();
+        );
         final E[] array = (E[]) new Object[col.size()];
         col.toArray(array);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Array from collection must contain item",
             new ListOf<>(array),
             new HasValues<>(this.sample)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Must contain list with the item",
             col.containsAll(
                 new ListOf<>(this.sample)
             ),
             new IsEqual<>(true)
-        ).affirm();
+        );
         return true;
     }
 
