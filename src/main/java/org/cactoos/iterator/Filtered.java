@@ -79,12 +79,12 @@ public final class Filtered<X> implements Iterator<X> {
 
     @Override
     public boolean hasNext() {
-        final UncheckedFunc<? super X, Scalar<Boolean>> fnc =
-            new UncheckedFunc<>(this.func);
         if (this.buffer.isEmpty()) {
             while (this.iterator.hasNext()) {
                 final X object = this.iterator.next();
-                if (new Unchecked<>(fnc.apply(object)).value()) {
+                if (new Unchecked<>(
+                    new UncheckedFunc<>(this.func).apply(object)
+                ).value()) {
                     this.buffer.add(object);
                     break;
                 }

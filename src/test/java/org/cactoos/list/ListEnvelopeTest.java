@@ -52,10 +52,9 @@ final class ListEnvelopeTest {
 
     @Test
     void indexOfIsDelegated() {
-        final List<String> list = new StringList("one");
         MatcherAssert.assertThat(
             "must return correct index of element",
-            list.indexOf("one"),
+            new StringList("one").indexOf("one"),
             new IsEqual<>(0)
         );
     }
@@ -130,10 +129,9 @@ final class ListEnvelopeTest {
 
     @Test
     void getsAtGivenIndex() {
-        final List<String> list = new StringList("one");
         MatcherAssert.assertThat(
             "must get 0th value",
-            list.get(0),
+            new StringList("one").get(0),
             new IsEqual<>("one")
         );
     }

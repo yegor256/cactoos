@@ -120,11 +120,9 @@ public final class LoggingInputStream extends InputStream {
         throws IOException {
         final Instant start = Instant.now();
         final int byts = this.origin.read(buf, offset, len);
-        final Instant end = Instant.now();
         if (byts > 0) {
             this.bytes.getAndAdd((long) byts);
-            final long millis = Duration.between(start, end).toMillis();
-            this.time.getAndAdd(millis);
+            this.time.getAndAdd(Duration.between(start, Instant.now()).toMillis());
         }
         final UncheckedText msg = new UncheckedText(
             new FormattedText(

@@ -30,11 +30,10 @@ final class BinaryTest {
             binary,
             new HasValue<>(true)
         );
-        final int expected = 1;
         MatcherAssert.assertThat(
             "Binary has to invoke increment method",
             counter.get(),
-            new IsEqual<>(expected)
+            new IsEqual<>(1)
         );
     }
 
@@ -50,11 +49,10 @@ final class BinaryTest {
             binary,
             new HasValue<>(false)
         );
-        final int expected = 0;
         MatcherAssert.assertThat(
             "Binary must not to invoke increment method",
             counter.get(),
-            new IsEqual<>(expected)
+            new IsEqual<>(0)
         );
     }
 

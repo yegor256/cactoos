@@ -29,12 +29,11 @@ final class WriterAsOutputStreamTest {
 
     @Test
     void writesToByteArray() {
-        final String content = "Hello, товарищ! How are you?";
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         MatcherAssert.assertThat(
             "Can't copy Input to Writer",
             new TeeInput(
-                new InputOf(content),
+                new InputOf("Hello, товарищ! How are you?"),
                 new OutputTo(
                     new WriterAsOutputStream(
                         new OutputStreamWriter(
