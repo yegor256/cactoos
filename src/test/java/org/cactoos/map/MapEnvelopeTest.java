@@ -111,11 +111,9 @@ final class MapEnvelopeTest {
 
     @Test
     void mapNotEqualsToAnotherClass() {
-        final Map<String, String> map =
-            new MapOf<>(new MapEntry<>("key1", "value1"));
         MatcherAssert.assertThat(
             "Map equals to an instance of another type",
-            map,
+            new MapOf<>(new MapEntry<>("key1", "value1")),
             new IsNot<>(
                 new IsEqual<>("Totally different type")
             )
@@ -126,12 +124,10 @@ final class MapEnvelopeTest {
     void mapEqualsToMapWithSameEntries() {
         final String key = "key2";
         final String value = "value2";
-        final MapEntry<String, String> input = new MapEntry<>(key, value);
-        final MapEntry<String, String> expected = new MapEntry<>(key, value);
         MatcherAssert.assertThat(
             "Map doesn't equal to another map with same entries",
-            new MapOf<String, String>(input),
-            new IsEqual<>(new MapOf<String, String>(expected))
+            new MapOf<String, String>(new MapEntry<>(key, value)),
+            new IsEqual<>(new MapOf<String, String>(new MapEntry<>(key, value)))
         );
     }
 
@@ -184,12 +180,12 @@ final class MapEnvelopeTest {
     void hashCodeDependsOnItems() {
         final String key = "key9";
         final String value = "value9";
-        final MapEntry<String, String> input = new MapEntry<>(key, value);
-        final MapEntry<String, String> expected = new MapEntry<>(key, value);
         MatcherAssert.assertThat(
             "hashCode returns different results for same entries",
-            new MapOf<String, String>(input).hashCode(),
-            new IsEqual<>(new MapOf<String, String>(expected).hashCode())
+            new MapOf<String, String>(new MapEntry<>(key, value)).hashCode(),
+            new IsEqual<>(
+                new MapOf<String, String>(new MapEntry<>(key, value)).hashCode()
+            )
         );
     }
 
@@ -221,16 +217,12 @@ final class MapEnvelopeTest {
     void mapEnvelopeShouldCompareDerivedClasses() {
         final int key = 1;
         final String value = "one";
-        final MapEntry<Integer, String> entry = new MapEntry<>(key, value);
-        final Map<Integer, String> base = new MapOf<>(entry);
         final Map<Integer, String> hashmap = new HashMap<>();
         hashmap.put(key, value);
-        final Map<Integer, String> derived =
-            new DerivedMapEnvelope<>(hashmap);
         MatcherAssert.assertThat(
             "Base and derived MapEnvelope of same content should be equal.",
-            base,
-            new IsEqual<>(derived)
+            new MapOf<>(new MapEntry<>(key, value)),
+            new IsEqual<>(new DerivedMapEnvelope<>(hashmap))
         );
     }
 

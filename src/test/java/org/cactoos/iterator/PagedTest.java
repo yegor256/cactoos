@@ -33,14 +33,6 @@ final class PagedTest {
             new IteratorOf<>("three", "four"),
             new IteratorOf<>("five")
         );
-        final Paged<String> paged = new Paged<>(
-            pages.next(),
-            page -> new Ternary<>(
-                pages::hasNext,
-                pages::next,
-                () -> new IteratorOf<String>()
-            ).value()
-        );
         MatcherAssert.assertThat(
             "must have all page values in order",
             new ScalarWithFallback<>(
@@ -51,7 +43,14 @@ final class PagedTest {
                     },
                     new Matched<>(
                         String::equals,
-                        paged,
+                        new Paged<>(
+                            pages.next(),
+                            page -> new Ternary<>(
+                                pages::hasNext,
+                                pages::next,
+                                () -> new IteratorOf<String>()
+                            ).value()
+                        ),
                         new IteratorOf<>("one", "two", "three", "four", "five")
                     )
                 ),
@@ -69,11 +68,10 @@ final class PagedTest {
     @Test
     @SuppressWarnings("unchecked")
     void reportTotalPagedLength() {
-        final Iterator<String> first = new IteratorOf<>("A", "six");
-        final Iterator<String> second = new IteratorOf<>("word", "long");
-        final Iterator<String> third = new IteratorOf<>("sentence");
         final Iterator<Iterator<String>> pages = new IteratorOf<>(
-            first, second, third
+            new IteratorOf<>("A", "six"),
+            new IteratorOf<>("word", "long"),
+            new IteratorOf<>("sentence")
         );
         final Paged<String> paged = new Paged<>(
             pages.next(),

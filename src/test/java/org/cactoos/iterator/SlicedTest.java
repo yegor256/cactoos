@@ -112,12 +112,13 @@ final class SlicedTest {
         final List<String> list = new LinkedList<>();
         list.add("1");
         final AtomicInteger counter = new AtomicInteger(0);
-        final Iterator<String> hooked = new HookedIterator<>(
-            counter::incrementAndGet,
-            list.iterator()
-        );
-        final Iterator<String> sliced = new Sliced<>(0, hooked);
-        sliced.hasNext();
+        new Sliced<>(
+            0,
+            new HookedIterator<>(
+                counter::incrementAndGet,
+                list.iterator()
+            )
+        ).hasNext();
         MatcherAssert.assertThat(
             "Must call hasNext on underlying iterator only once",
             counter.get(),

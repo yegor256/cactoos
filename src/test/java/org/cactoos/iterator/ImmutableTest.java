@@ -43,12 +43,9 @@ final class ImmutableTest {
     @Test
     void decoratesNext() {
         final int value = new Random().nextInt();
-        final Iterator<Integer> immutable = new Immutable<>(
-            new IteratorOf<>(value)
-        );
         MatcherAssert.assertThat(
             "next must return first value from iterator",
-            immutable.next(),
+            new Immutable<>(new IteratorOf<>(value)).next(),
             new IsEqual<>(value)
         );
     }
@@ -91,10 +88,9 @@ final class ImmutableTest {
                 return string;
             }
         };
-        final Iterator<Object> immutable = new Immutable<>(iterator);
         MatcherAssert.assertThat(
             "must delegate toString to decorated iterator",
-            new TextOf(immutable.toString()),
+            new TextOf(new Immutable<>(iterator).toString()),
             new IsText(iterator.toString())
         );
     }

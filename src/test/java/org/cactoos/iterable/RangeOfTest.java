@@ -104,11 +104,10 @@ final class RangeOfTest {
 
     @Test
     void shouldBeTraversableMultipleTimes() throws Exception {
-        final Iterable<Character> range = new RangeOf<>(
-            'a', 'c', value -> (char) (value + 1)
-        );
         final Collection<Character> copy = new ArrayList<>(6);
-        new RepeatedProc<>(new ForEach<>(copy::add), 2).exec(range);
+        new RepeatedProc<>(new ForEach<>(copy::add), 2).exec(
+            new RangeOf<>('a', 'c', value -> (char) (value + 1))
+        );
         MatcherAssert.assertThat(
             "Must add elements two times",
             copy,

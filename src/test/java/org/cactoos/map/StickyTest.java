@@ -226,11 +226,10 @@ final class StickyTest {
                 ).iterator()
             )
         );
-        final int initial = map.size();
         MatcherAssert.assertThat(
             "Must ignore changes to underlying collection after caching",
             map.size(),
-            new IsEqual<>(initial)
+            new IsEqual<>(map.size())
         );
     }
 
