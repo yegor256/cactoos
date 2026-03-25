@@ -41,9 +41,9 @@ final class MatchedTest {
             "All elements have correlation function as 'endsWith'",
             () -> new ListOf<>(
                 new Matched<>(
-                    (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
-                    new IterableOf<>("1st elem", "2nd elem"),
-                    new IterableOf<>("'A' elem", "'B' elem", "'C' elem")
+                    (fst, snd) -> fst.endsWith("item") && snd.endsWith("item"),
+                    new IterableOf<>("first item", "second item"),
+                    new IterableOf<>("'A' item", "'B' item", "'C' item")
                 )
             ),
             new Throws<>(IllegalStateException.class)
@@ -56,9 +56,9 @@ final class MatchedTest {
             "All elements have correlation function as `endsWith`",
             () -> new ListOf<>(
                 new Matched<>(
-                    (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
-                    new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
-                    new IterableOf<>("`A` elem", "`B` elem")
+                    (fst, snd) -> fst.endsWith("entry") && snd.endsWith("entry"),
+                    new IterableOf<>("1st entry", "2nd entry", "3rd entry"),
+                    new IterableOf<>("`A` entry", "`B` entry")
                 )
             ),
             new Throws<>(IllegalStateException.class)
@@ -70,9 +70,9 @@ final class MatchedTest {
         MatcherAssert.assertThat(
             "All elements have correlation function as `endsWith`",
             new Matched<>(
-                (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
-                new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
-                new IterableOf<>("`A` elem", "`B` elem", "'C' elem")
+                (fst, snd) -> fst.endsWith("value") && snd.endsWith("value"),
+                new IterableOf<>("1st value", "2nd value", "3rd value"),
+                new IterableOf<>("`A` value", "`B` value", "'C' value")
             ),
             new IsIterableWithSize<>(
                 new IsEqual<>(3)
@@ -101,9 +101,9 @@ final class MatchedTest {
             "Should fail if there is no correlation",
             () -> new LengthOf(
                 new Matched<>(
-                    (fst, snd) -> fst.endsWith("elem") && snd.endsWith("elem"),
-                    new IterableOf<>("1st elem", "2nd"),
-                    new IterableOf<>("`A` elem", "`B` elem")
+                    (fst, snd) -> fst.endsWith("data") && snd.endsWith("data"),
+                    new IterableOf<>("1st data", "2nd"),
+                    new IterableOf<>("`A` data", "`B` data")
                 )
             ).value(),
             new Throws<>(IllegalStateException.class)
@@ -117,8 +117,8 @@ final class MatchedTest {
             () -> new LengthOf(
                 new Matched<>(
                     (fst, snd) -> fst != null && snd != null,
-                    new IterableOf<>("1st elem", "2nd elem", "3rd elem"),
-                    new IterableOf<>("`A` elem", null, "'C' elem")
+                    new IterableOf<>("alpha", "beta", "gamma"),
+                    new IterableOf<>("delta", null, "epsilon")
                 )
             ).value(),
             new Throws<>(IllegalStateException.class)

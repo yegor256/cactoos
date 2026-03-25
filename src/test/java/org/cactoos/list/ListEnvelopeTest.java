@@ -25,23 +25,23 @@ final class ListEnvelopeTest {
 
     @Test
     void returnsListIteratorWithSupportedSet() {
-        final List<String> list = new StringList("one", "two");
+        final List<String> list = new StringList("alpha", "beta");
         final ListIterator<String> iterator = list.listIterator(1);
         iterator.next();
-        iterator.set("zero");
+        iterator.set("gamma");
         iterator.previous();
         MatcherAssert.assertThat(
             "iterator is not equal to expected",
             () -> iterator,
             Matchers.contains(
-                "zero"
+                "gamma"
             )
         );
     }
 
     @Test
     void removeIsDelegated() {
-        final List<String> list = new StringList("one");
+        final List<String> list = new StringList("delta");
         list.remove(0);
         MatcherAssert.assertThat(
             "must be empty after removal of 0th element",
@@ -54,47 +54,47 @@ final class ListEnvelopeTest {
     void indexOfIsDelegated() {
         MatcherAssert.assertThat(
             "must return correct index of element",
-            new StringList("one").indexOf("one"),
+            new StringList("epsilon").indexOf("epsilon"),
             new IsEqual<>(0)
         );
     }
 
     @Test
     void addAllIsDelegated() {
-        final List<String> list = new StringList("one");
-        list.addAll(0, new StringList("two"));
+        final List<String> list = new StringList("zeta");
+        list.addAll(0, new StringList("eta"));
         MatcherAssert.assertThat(
             "element must be added at 0th position",
             list,
-            new IsEqual<>(new ListOf<>("two", "one"))
+            new IsEqual<>(new ListOf<>("eta", "zeta"))
         );
     }
 
     @Test
     void setIsDelegatedToTheOriginal() {
-        final List<String> list = new StringList("one");
-        list.set(0, "zero");
+        final List<String> list = new StringList("theta");
+        list.set(0, "iota");
         MatcherAssert.assertThat(
             "value must be changed",
             list,
-            new HasValues<>("zero")
+            new HasValues<>("iota")
         );
     }
 
     @Test
     void addIsDelegated() {
-        final List<String> list = new StringList("one");
-        list.add("two");
+        final List<String> list = new StringList("kappa");
+        list.add("lambda");
         MatcherAssert.assertThat(
             "value must be added",
             list,
-            new HasValues<>("one", "two")
+            new HasValues<>("kappa", "lambda")
         );
     }
 
     @Test
     void returnsSubListWithRemove() {
-        final List<String> list = new StringList("one");
+        final List<String> list = new StringList("mu");
         list.subList(0, 1).remove(0);
         MatcherAssert.assertThat(
             "must be empty after removal of 0th element via subList",
@@ -105,25 +105,25 @@ final class ListEnvelopeTest {
 
     @Test
     void returnsSubListWithSupportedSet() {
-        final List<String> list = new StringList("one");
-        list.subList(0, 1).set(0, "zero");
+        final List<String> list = new StringList("nu");
+        list.subList(0, 1).set(0, "xi");
         MatcherAssert.assertThat(
             "ListEnvelope().subList(...).set() must change the original list",
             list,
             new HasValues<>(
-                "zero"
+                "xi"
             )
         );
     }
 
     @Test
     void addsAtGivenIndex() {
-        final List<String> list = new StringList("one");
-        list.add(0, "two");
+        final List<String> list = new StringList("omicron");
+        list.add(0, "pi");
         MatcherAssert.assertThat(
             "must add value at given index",
             list,
-            new HasValues<>("two")
+            new HasValues<>("pi")
         );
     }
 
@@ -131,18 +131,18 @@ final class ListEnvelopeTest {
     void getsAtGivenIndex() {
         MatcherAssert.assertThat(
             "must get 0th value",
-            new StringList("one").get(0),
-            new IsEqual<>("one")
+            new StringList("rho").get(0),
+            new IsEqual<>("rho")
         );
     }
 
     @Test
     void getsLastIndexOfValue() {
-        final List<String> list = new StringList("one");
-        list.add(1, "one");
+        final List<String> list = new StringList("sigma");
+        list.add(1, "sigma");
         MatcherAssert.assertThat(
             "must return correct last index of element",
-            list.lastIndexOf("one"),
+            list.lastIndexOf("sigma"),
             new IsEqual<>(1)
         );
     }

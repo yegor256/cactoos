@@ -40,7 +40,7 @@ final class ImmutableTest {
         MatcherAssert.assertThat(
             "Must return a list iterator that does not support remove()",
             () -> {
-                final List<String> list = new Immutable<>(new ListOf<>("one"));
+                final List<String> list = new Immutable<>(new ListOf<>("alpha"));
                 final ListIterator<String> iterator = list.listIterator();
                 iterator.next();
                 iterator.remove();
@@ -55,10 +55,10 @@ final class ImmutableTest {
         MatcherAssert.assertThat(
             "Must return a list iterator that does not support add()",
             () -> {
-                final List<String> list = new Immutable<>(new ListOf<>("one"));
+                final List<String> list = new Immutable<>(new ListOf<>("beta"));
                 final ListIterator<String> iterator = list.listIterator();
                 iterator.next();
-                iterator.add("two");
+                iterator.add("gamma");
                 return true;
             },
             new Throws<>(UnsupportedOperationException.class)
@@ -70,7 +70,7 @@ final class ImmutableTest {
         MatcherAssert.assertThat(
             "Must return a subtlist with a list iterator that does not support remove()",
             () -> {
-                final List<String> list = new Immutable<>(new ListOf<>("one"));
+                final List<String> list = new Immutable<>(new ListOf<>("delta"));
                 final ListIterator<String> iterator = list.subList(0, 1).listIterator();
                 iterator.next();
                 iterator.remove();
@@ -85,10 +85,10 @@ final class ImmutableTest {
         MatcherAssert.assertThat(
             "Must return a subtlist with a list iterator that does not support add()",
             () -> {
-                final List<String> list = new Immutable<>(new ListOf<>("one"));
+                final List<String> list = new Immutable<>(new ListOf<>("epsilon"));
                 final ListIterator<String> iterator = list.subList(0, 1).listIterator();
                 iterator.next();
-                iterator.add("two");
+                iterator.add("zeta");
                 return true;
             },
             new Throws<>(UnsupportedOperationException.class)
@@ -101,10 +101,10 @@ final class ImmutableTest {
             "subList.listIterator().set() must throw exception",
             () -> {
                 final ListIterator<String> iterator = new Immutable<>(
-                    new ListOf<>("one", "two", "three")
+                    new ListOf<>("eta", "theta", "iota")
                 ).subList(0, 2).listIterator(0);
                 iterator.next();
-                iterator.set("zero");
+                iterator.set("kappa");
                 return new Object();
             },
             new Throws<>(
@@ -118,7 +118,7 @@ final class ImmutableTest {
     void returnsSubListWithUnsupportedSet() {
         MatcherAssert.assertThat(
             "subList.set() must throw exception",
-            () -> new Immutable<>(new ListOf<>("one")).subList(0, 1).set(0, "zero"),
+            () -> new Immutable<>(new ListOf<>("lambda")).subList(0, 1).set(0, "mu"),
             new Throws<>(
                 "#set(): the list is read-only",
                 UnsupportedOperationException.class
@@ -523,12 +523,12 @@ final class ImmutableTest {
             "subList's iterator must be immutable",
             () -> {
                 final ListIterator<String> iterator = new Immutable<>(
-                    new ListOf<>("one", "two", "three")
+                    new ListOf<>("nu", "xi", "omicron")
                 )
                     .subList(0, 2)
                     .listIterator(0);
                 iterator.next();
-                iterator.set("zero");
+                iterator.set("pi");
                 return new Object();
             },
             new Throws<>(

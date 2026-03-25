@@ -30,7 +30,7 @@ final class SplitPreserveTest {
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         MatcherAssert.assertThat(
-            "Adjacent separators must create an empty element",
+            "Split must not preserve adjacent separators",
             this.getLength(
                 new Split(
                     new TextOf("aaa"),
@@ -56,7 +56,7 @@ final class SplitPreserveTest {
         array.add(new TextOf("how"));
         array.add(new TextOf(""));
         MatcherAssert.assertThat(
-            "Adjacent separators must create an empty element",
+            "Split must not preserve space separators",
             this.getLength(
                 new Split(
                     new TextOf(" how "),
@@ -92,7 +92,7 @@ final class SplitPreserveTest {
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         MatcherAssert.assertThat(
-            "Adjacent separators must create an empty element",
+            "SplitPreserve must create empty elements for adjacent separators",
             this.getLength(
                 new SplitPreserveAllTokens(
                     new TextOf("aaa"),
@@ -117,7 +117,7 @@ final class SplitPreserveTest {
         array.add(new TextOf("/"));
         array.add(new TextOf("dude"));
         MatcherAssert.assertThat(
-            "Adjacent separators must create an empty element",
+            "SplitPreserve must handle backslash and spaces correctly",
             this.getLength(
                 new SplitPreserveAllTokens(
                     new TextOf("lol\\  / dude"),
@@ -141,7 +141,7 @@ final class SplitPreserveTest {
         array.add(new TextOf("how"));
         array.add(new TextOf(""));
         MatcherAssert.assertThat(
-            "Adjacent separators must create an empty element",
+            "SplitPreserve must preserve leading and trailing spaces",
             this.getLength(
                 new SplitPreserveAllTokens(
                     new TextOf(" how "),

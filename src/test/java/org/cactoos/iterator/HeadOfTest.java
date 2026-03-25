@@ -29,13 +29,13 @@ final class HeadOfTest {
                 new HeadOf<>(
                     2,
                     new IteratorOf<>(
-                        "one", "two", "three", "four"
+                        "alpha", "beta", "gamma", "delta"
                     )
                 )
             ),
             new HasValues<>(
-                "one",
-                "two"
+                "alpha",
+                "beta"
             )
         );
     }
@@ -48,7 +48,7 @@ final class HeadOfTest {
                 new HeadOf<>(
                     3,
                     new IteratorOf<>(
-                        "one", "two"
+                        "epsilon", "zeta"
                     )
                 )
             ),
@@ -63,7 +63,7 @@ final class HeadOfTest {
             () -> new HeadOf<>(
                 0,
                 new IteratorOf<>(
-                    "one", "two"
+                    "eta", "theta"
                 )
             ).next(),
             new Throws<>(NoSuchElementException.class)
@@ -77,7 +77,7 @@ final class HeadOfTest {
             () -> new HeadOf<>(
                 -1,
                 new IteratorOf<>(
-                    "one", "two"
+                    "iota", "kappa"
                 )
             ).next(),
             new Throws<>(NoSuchElementException.class)
@@ -90,7 +90,7 @@ final class HeadOfTest {
         new HeadOf<>(
             2,
             new IteratorOf<>(
-                "one", "two", "three", "four"
+                "lambda", "mu", "nu", "xi"
             )
         ).forEachRemaining(
             lst::add
@@ -99,8 +99,8 @@ final class HeadOfTest {
             "Should iterate over 2 head elements",
             lst,
             new HasValues<>(
-                "one",
-                "two"
+                "lambda",
+                "mu"
             )
         );
     }
@@ -113,7 +113,7 @@ final class HeadOfTest {
                 new HeadOf<>(
                     1,
                     new IteratorOf<>(
-                        "one", "two", "three", "four"
+                        "omicron", "pi", "rho", "sigma"
                     )
                 ).remove();
                 return "Should have thrown exception";

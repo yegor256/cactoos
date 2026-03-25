@@ -46,21 +46,21 @@ final class ThreadsTest {
                     Duration.ofSeconds(1L),
                     () -> {
                         this.sleep();
-                        return "txt 1";
+                        return "alpha";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 2";
+                        return "beta";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 3";
+                        return "gamma";
                     }
                 ),
                 new HasValues<>(
-                    "txt 1",
-                    "txt 2",
-                    "txt 3"
+                    "alpha",
+                    "beta",
+                    "gamma"
                 )
             );
         } finally {
@@ -84,15 +84,15 @@ final class ThreadsTest {
                         Duration.ofMillis(1L),
                         () -> {
                             this.sleep();
-                            return "txt 1";
+                            return "alpha";
                         },
                         () -> {
                             this.sleep();
-                            return "txt 2";
+                            return "beta";
                         },
                         () -> {
                             this.sleep();
-                            return "txt 3";
+                            return "gamma";
                         }
                     )
                 ).value(),
@@ -119,7 +119,7 @@ final class ThreadsTest {
                         Duration.ofSeconds(1L),
                         () -> {
                             this.sleep();
-                            return "txt 1";
+                            return "alpha";
                         },
                         () -> {
                             throw new IllegalStateException(
@@ -151,18 +151,18 @@ final class ThreadsTest {
                 Duration.ofSeconds(1L),
                 () -> {
                     this.sleep();
-                    return "txt 1";
+                    return "alpha";
                 },
                 () -> {
                     this.sleep();
-                    return "txt 2";
+                    return "beta";
                 },
                 () -> {
                     this.sleep();
-                    return "txt 3";
+                    return "gamma";
                 }
             ),
-            new HasValues<>("txt 1", "txt 2", "txt 3")
+            new HasValues<>("alpha", "beta", "gamma")
         );
     }
 
@@ -180,15 +180,15 @@ final class ThreadsTest {
                     Duration.ofMillis(1L),
                     () -> {
                         this.sleep();
-                        return "txt 1";
+                        return "alpha";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 2";
+                        return "beta";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 3";
+                        return "gamma";
                     }
                 )
             ).value(),
@@ -210,18 +210,18 @@ final class ThreadsTest {
                     extor,
                     () -> {
                         this.sleep();
-                        return "txt 1";
+                        return "alpha";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 2";
+                        return "beta";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 3";
+                        return "gamma";
                     }
                 ),
-                new HasValues<>("txt 1", "txt 2", "txt 3")
+                new HasValues<>("alpha", "beta", "gamma")
             );
         } finally {
             extor.shutdownNow();
@@ -243,7 +243,7 @@ final class ThreadsTest {
                         extor,
                         () -> {
                             this.sleep();
-                            return "txt 1";
+                            return "alpha";
                         },
                         () -> {
                             throw new IllegalStateException(
@@ -274,18 +274,18 @@ final class ThreadsTest {
                 3,
                 () -> {
                     this.sleep();
-                    return "txt 1";
+                    return "alpha";
                 },
                 () -> {
                     this.sleep();
-                    return "txt 2";
+                    return "beta";
                 },
                 () -> {
                     this.sleep();
-                    return "txt 3";
+                    return "gamma";
                 }
             ),
-            new HasValues<>("txt 1", "txt 2", "txt 3")
+            new HasValues<>("alpha", "beta", "gamma")
         );
     }
 
