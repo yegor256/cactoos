@@ -30,12 +30,12 @@ public final class TeeOutputStream extends OutputStream {
     /**
      * Ctor.
      * @param tgt Destination of data
-     * @param cpy Copy
+     * @param mirror Copy
      */
-    public TeeOutputStream(final OutputStream tgt, final OutputStream cpy) {
+    public TeeOutputStream(final OutputStream tgt, final OutputStream mirror) {
         super();
         this.target = tgt;
-        this.copy = cpy;
+        this.copy = mirror;
     }
 
     @Override
