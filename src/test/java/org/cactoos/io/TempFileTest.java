@@ -57,11 +57,13 @@ final class TempFileTest {
 
     @Test
     void deleteFile() throws Exception {
-        final TempFile file = new TempFile();
-        file.close();
+        final Path path;
+        try (TempFile file = new TempFile()) {
+            path = file.value();
+        }
         MatcherAssert.assertThat(
             "Must delete file on close",
-            Files.exists(file.value()),
+            Files.exists(path),
             new IsEqual<>(false)
         );
     }

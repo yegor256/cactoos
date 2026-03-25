@@ -14,6 +14,7 @@ import java.io.OutputStream;
  *
  * @since 0.16
  */
+@SuppressWarnings("PMD.UseTryWithResources")
 public final class TeeOutputStream extends OutputStream {
 
     /**

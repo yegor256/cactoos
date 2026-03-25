@@ -38,53 +38,56 @@ final class TempFolderTest {
 
     @Test
     void deletesDirectory() throws Exception {
-        final TempFolder dir = new TempFolder(
+        final Path path;
+        try (TempFolder dir = new TempFolder(
             new Randomized('d', 'e', 'g').asString()
-        );
-        dir.close();
+        )) {
+            path = dir.value();
+        }
         MatcherAssert.assertThat(
             "Can't delete folder while closing",
-            !dir.value().toFile().exists(),
+            !path.toFile().exists(),
             new IsTrue()
         );
     }
 
     @Test
     void deletesNonEmptyDirectory() throws Exception {
-        final TempFolder temp = new TempFolder();
-        final Path root = temp.value();
-        new ForEach<>(
-            new ProcOf<String>(
-                name -> {
-                    final Path dir = Files.createDirectories(
-                        new File(root.toFile(), name).toPath()
-                    );
-                    new ForEach<>(
-                        new ProcOf<String>(
-                            filename -> {
-                                new TempFile(
-                                    () -> dir,
-                                    filename,
-                                    ""
-                                ).value();
-                            }
-                        )
-                    ).exec(
-                        new IterableOf<>(
-                            "file1.txt", "file2.txt", "file3.txt"
-                        )
-                    );
-                }
-            )
-        ).exec(
-            new IterableOf<>(
-                "a", "b", "c", "d", "e"
-            )
-        );
-        temp.close();
+        final Path path;
+        try (TempFolder temp = new TempFolder()) {
+            path = temp.value();
+            new ForEach<>(
+                new ProcOf<String>(
+                    name -> {
+                        final Path dir = Files.createDirectories(
+                            new File(path.toFile(), name).toPath()
+                        );
+                        new ForEach<>(
+                            new ProcOf<String>(
+                                filename -> {
+                                    new TempFile(
+                                        () -> dir,
+                                        filename,
+                                        ""
+                                    ).value();
+                                }
+                            )
+                        ).exec(
+                            new IterableOf<>(
+                                "file1.txt", "file2.txt", "file3.txt"
+                            )
+                        );
+                    }
+                )
+            ).exec(
+                new IterableOf<>(
+                    "a", "b", "c", "d", "e"
+                )
+            );
+        }
         MatcherAssert.assertThat(
             "Can't delete not empty folder while closing",
-            temp.value().toFile().exists(),
+            path.toFile().exists(),
             new IsNot<>(new IsTrue())
         );
     }

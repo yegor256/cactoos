@@ -140,6 +140,7 @@ final class AndInThreadsTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void worksWithExecServiceProcValues() throws Exception {
         final List<Integer> list = new Synced<>(new ListOf<>());
         final ExecutorService service = Executors.newSingleThreadExecutor();
@@ -165,6 +166,7 @@ final class AndInThreadsTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void worksWithExecServiceProcIterable() throws Exception {
         final List<Integer> list = new Synced<>(new ListOf<>());
         final ExecutorService service = Executors.newSingleThreadExecutor();

@@ -64,12 +64,14 @@ final class GzipOutputTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.CloseResource")
     void writeToClosedGzipOutput(@TempDir final Path wdir) throws Exception {
-        final OutputStream stream =
-            Files.newOutputStream(
-                wdir.resolve("cactoos.txt")
-            );
-        stream.close();
+        final OutputStream stream;
+        try (OutputStream out = Files.newOutputStream(
+            wdir.resolve("cactoos.txt")
+        )) {
+            stream = out;
+        }
         MatcherAssert.assertThat(
             "can't write to closed stream",
             () -> new LengthOf(

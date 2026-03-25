@@ -126,13 +126,13 @@ final class LoggingInputTest {
     @Test
     void logSkipFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
-        new LoggingInput(
+        final long skipped = new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),
             "text file",
             logger
         ).stream().skip(100L);
         MatcherAssert.assertThat(
-            "Must log skip from text file",
+            String.format("Must log skip of %d bytes from text file", skipped),
             new TextOf(logger.toString()),
             new HasString("Skipped 100 byte(s) from text file.")
         );
