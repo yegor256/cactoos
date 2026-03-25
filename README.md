@@ -326,30 +326,30 @@ final String text = new TextOfDateTime(date).asString();
 
 ## Our Objects vs. Their Static Methods
 
-Cactoos | Guava | Apache Commons | JDK 8
------- | ------ | ------ | ------
-`And` | `Iterables.all()` | - | -
-`Filtered` | `Iterables.filter()` | ? | -
-`FormattedText` | - | - | `String.format()`
-`IsBlank` | - | `StringUtils.isBlank()`| -
-`Joined` | - | - | `String.join()`
-`LengthOf` | - | - | `String#length()`
-`Lowered` | - | - | `String#toLowerCase()`
-`Normalized` | - | `StringUtils.normalize()` | -
-`Or` | `Iterables.any()` | - | -
-`Repeated` | - | `StringUtils.repeat()` | -
-`Replaced` | - | - | `String#replace()`
-`Reversed` | - | - | `StringBuilder#reverse()`
-`Rotated` | - | `StringUtils.rotate()`| -
-`Split` | - | - | `String#split()`
-`StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()`
-`Sub` | - | - | `String#substring()`
-`SwappedCase` | - | `StringUtils.swapCase()` | -
-`TextOf` | ? | `IOUtils.toString()` | -
-`TrimmedLeft` | - | `StringUtils.stripStart()` | -
-`TrimmedRight` | - | `StringUtils.stripEnd()` | -
-`Trimmed` | - | `StringUtils.stripAll()` | `String#trim()`
-`Upper` | - | - | `String#toUpperCase()`
+| Cactoos | Guava | Apache Commons | JDK 8 |
+| ------ | ------ | ------ | ------ |
+| `And` | `Iterables.all()` | - | - |
+| `Filtered` | `Iterables.filter()` | ? | - |
+| `FormattedText` | - | - | `String.format()` |
+| `IsBlank` | - | `StringUtils.isBlank()` | - |
+| `Joined` | - | - | `String.join()` |
+| `LengthOf` | - | - | `String#length()` |
+| `Lowered` | - | - | `String#toLowerCase()` |
+| `Normalized` | - | `StringUtils.normalize()` | - |
+| `Or` | `Iterables.any()` | - | - |
+| `Repeated` | - | `StringUtils.repeat()` | - |
+| `Replaced` | - | - | `String#replace()` |
+| `Reversed` | - | - | `StringBuilder#reverse()` |
+| `Rotated` | - | `StringUtils.rotate()` | - |
+| `Split` | - | - | `String#split()` |
+| `StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()` |
+| `Sub` | - | - | `String#substring()` |
+| `SwappedCase` | - | `StringUtils.swapCase()` | - |
+| `TextOf` | ? | `IOUtils.toString()` | - |
+| `TrimmedLeft` | - | `StringUtils.stripStart()` | - |
+| `TrimmedRight` | - | `StringUtils.stripEnd()` | - |
+| `Trimmed` | - | `StringUtils.stripAll()` | `String#trim()` |
+| `Upper` | - | - | `String#toUpperCase()` |
 
 ## Questions
 
@@ -357,7 +357,7 @@ Ask your questions related to cactoos library on
 [Stackoverflow](https://stackoverflow.com/questions/ask)
 with the [cactoos](https://stackoverflow.com/tags/cactoos/info) tag.
 
-## How to contribute?
+## How to Contribute
 
 Just fork the repo and send us a pull request.
 
@@ -394,18 +394,14 @@ in GitHub precommits.
 
 ## Contributors
 
-* [@yegor256](https://github.com/yegor256)
-as Yegor Bugayenko ([Blog](http://www.yegor256.com))
-* [@g4s8](https://github.com/g4s8)
-as [Kirill Che.](mailto:g4s8.public@gmail.com)
+* [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](http://www.yegor256.com))
+* [@g4s8](https://github.com/g4s8) as [Kirill Che.](mailto:g4s8.public@gmail.com)
 * [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
 * [@englishman](https://github.com/englishman) as Andriy Kryvtsun
 * [@VsSekorin](https://github.com/VsSekorin) as Vseslav Sekorin
 * [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
-* [@dusan-rychnovsky](https://github.com/dusan-rychnovsky)
-as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
-* [@timmeey](https://github.com/timmeey)
-as Tim Hinkes ([Blog](https://blog.timmeey.de))
+* [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
+* [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
 * [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
 * [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
 * [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
