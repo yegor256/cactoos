@@ -142,8 +142,7 @@ final class AndInThreadsTest {
     @Test
     void worksWithExecServiceProcValues() throws Exception {
         final List<Integer> list = new Synced<>(new ListOf<>());
-        final ExecutorService service = Executors.newSingleThreadExecutor();
-        try {
+        try (ExecutorService service = Executors.newSingleThreadExecutor()) {
             new AndInThreads(
                 service,
                 new ProcNoNulls<Integer>(list::add),
@@ -159,16 +158,13 @@ final class AndInThreadsTest {
                     )
                 )
             );
-        } finally {
-            service.shutdown();
         }
     }
 
     @Test
     void worksWithExecServiceProcIterable() throws Exception {
         final List<Integer> list = new Synced<>(new ListOf<>());
-        final ExecutorService service = Executors.newSingleThreadExecutor();
-        try {
+        try (ExecutorService service = Executors.newSingleThreadExecutor()) {
             new AndInThreads(
                 service,
                 new ProcNoNulls<Integer>(list::add),
@@ -184,8 +180,6 @@ final class AndInThreadsTest {
                     )
                 )
             );
-        } finally {
-            service.shutdown();
         }
     }
 

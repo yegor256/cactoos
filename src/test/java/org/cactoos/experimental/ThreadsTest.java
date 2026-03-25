@@ -36,9 +36,8 @@ final class ThreadsTest {
      *  {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void containsResults() {
-        final ExecutorService extor = Executors.newFixedThreadPool(3);
-        try {
+    void containsResults() throws Exception {
+        try (ExecutorService extor = Executors.newFixedThreadPool(3)) {
             MatcherAssert.assertThat(
                 "Must contain results from callables",
                 new Threads<>(
@@ -63,8 +62,6 @@ final class ThreadsTest {
                     "gamma"
                 )
             );
-        } finally {
-            extor.shutdownNow();
         }
     }
 
@@ -73,9 +70,8 @@ final class ThreadsTest {
      *  {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void failsDueToTimeoutWithExternalExecutorService() {
-        final ExecutorService extor = Executors.newFixedThreadPool(2);
-        try {
+    void failsDueToTimeoutWithExternalExecutorService() throws Exception {
+        try (ExecutorService extor = Executors.newFixedThreadPool(2)) {
             MatcherAssert.assertThat(
                 "Must fail due to timeout",
                 () -> new LengthOf(
@@ -98,8 +94,6 @@ final class ThreadsTest {
                 ).value(),
                 new Throws<>(CancellationException.class)
             );
-        } finally {
-            extor.shutdownNow();
         }
     }
 
@@ -108,9 +102,8 @@ final class ThreadsTest {
      *  expected exception type.
      */
     @Test
-    void failsDueToException() {
-        final ExecutorService extor = Executors.newSingleThreadExecutor();
-        try {
+    void failsDueToException() throws Exception {
+        try (ExecutorService extor = Executors.newSingleThreadExecutor()) {
             MatcherAssert.assertThat(
                 "Must rethrow error",
                 () -> new LengthOf(
@@ -133,8 +126,6 @@ final class ThreadsTest {
                     UncheckedIOException.class
                 )
             );
-        } finally {
-            extor.shutdownNow();
         }
     }
 
@@ -201,9 +192,8 @@ final class ThreadsTest {
      *  {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void containsResultsNoTimeout() {
-        final ExecutorService extor = Executors.newFixedThreadPool(3);
-        try {
+    void containsResultsNoTimeout() throws Exception {
+        try (ExecutorService extor = Executors.newFixedThreadPool(3)) {
             MatcherAssert.assertThat(
                 "Must contain results from the callables without using timeout",
                 new Threads<>(
@@ -223,8 +213,6 @@ final class ThreadsTest {
                 ),
                 new HasValues<>("alpha", "beta", "gamma")
             );
-        } finally {
-            extor.shutdownNow();
         }
     }
 
@@ -233,9 +221,8 @@ final class ThreadsTest {
      *  expected exception type.
      */
     @Test
-    void failsDueToExceptionNoTimeout() {
-        final ExecutorService extor = Executors.newSingleThreadExecutor();
-        try {
+    void failsDueToExceptionNoTimeout() throws Exception {
+        try (ExecutorService extor = Executors.newSingleThreadExecutor()) {
             MatcherAssert.assertThat(
                 "Must rethrow error",
                 () -> new LengthOf(
@@ -257,8 +244,6 @@ final class ThreadsTest {
                     UncheckedIOException.class
                 )
             );
-        } finally {
-            extor.shutdownNow();
         }
     }
 

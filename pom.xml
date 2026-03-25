@@ -190,7 +190,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.15.0</version>
         <configuration>
-          <release>17</release>
+          <release>19</release>
         </configuration>
       </plugin>
       <plugin>

@@ -165,8 +165,7 @@ final class AsyncTest {
 
     @Test
     void doesNotShutDownExternalExecutor() throws Exception {
-        final ExecutorService exec = Executors.newSingleThreadExecutor();
-        try {
+        try (ExecutorService exec = Executors.newSingleThreadExecutor()) {
             final CountDownLatch latch = new CountDownLatch(1);
             final Async<Boolean, Boolean> async = new Async<>(
                 input -> {
@@ -183,8 +182,6 @@ final class AsyncTest {
                 exec.submit(() -> true).get(1L, TimeUnit.SECONDS),
                 new IsEqual<>(true)
             );
-        } finally {
-            exec.shutdownNow();
         }
     }
 }
