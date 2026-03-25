@@ -61,7 +61,9 @@ public final class HexOf implements Bytes {
                 result[index >>> 1] = (byte) ((iter.next() << 4) + iter.next());
                 index += 2;
             } catch (final UncheckedIOException ex) {
-                throw ex.getCause();
+                final IOException cause = ex.getCause();
+                cause.addSuppressed(ex);
+                throw cause;
             }
         }
         return result;

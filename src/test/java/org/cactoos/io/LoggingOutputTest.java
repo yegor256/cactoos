@@ -24,6 +24,7 @@ import org.junit.jupiter.api.io.TempDir;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class LoggingOutputTest {
 
     @Test

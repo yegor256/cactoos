@@ -23,6 +23,7 @@ import org.llorllale.cactoos.matchers.StartsWith;
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class TempFileTest {
 
     @Test

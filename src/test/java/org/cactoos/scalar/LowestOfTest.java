@@ -22,6 +22,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class LowestOfTest {
 
     @Test

@@ -21,7 +21,7 @@ import org.llorllale.cactoos.matchers.HasString;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.UnnecessaryLocalRule"})
 final class LoggingInputTest {
 
     @Test

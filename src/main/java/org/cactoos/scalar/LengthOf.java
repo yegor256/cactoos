@@ -19,6 +19,7 @@ import org.cactoos.Text;
  *
  * @since 0.1
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**

@@ -24,6 +24,7 @@ import org.llorllale.cactoos.matchers.HasSize;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class RangeOfTest {
 
     @Test

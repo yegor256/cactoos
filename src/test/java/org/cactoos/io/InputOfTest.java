@@ -39,7 +39,7 @@ import org.takes.tk.TkHtml;
  *
  * @since 0.1
  */
-@SuppressWarnings({"unchecked", "PMD.TooManyMethods"})
+@SuppressWarnings({"unchecked", "PMD.TooManyMethods", "PMD.UnnecessaryLocalRule"})
 final class InputOfTest {
     @Test
     void readsAlternativeInputForFileCase() {

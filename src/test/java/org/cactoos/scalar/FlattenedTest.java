@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 0.49
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class FlattenedTest {
     @Test
     void flattens() {

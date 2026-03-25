@@ -19,6 +19,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings({"PMD.UnnecessaryLocalRule", "PMD.AvoidCatchingGenericException"})
 final class TimedFuncTest {
 
     @Test

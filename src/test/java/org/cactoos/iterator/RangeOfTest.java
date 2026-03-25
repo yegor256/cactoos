@@ -17,6 +17,7 @@ import org.llorllale.cactoos.matchers.HasValues;
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class RangeOfTest {
 
     @Test

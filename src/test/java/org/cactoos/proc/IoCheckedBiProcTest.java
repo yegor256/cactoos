@@ -17,6 +17,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings({"PMD.UnnecessaryLocalRule", "PMD.ExceptionAsFlowControl"})
 final class IoCheckedBiProcTest {
     @Test
     void executesWrappedProc() throws Exception {

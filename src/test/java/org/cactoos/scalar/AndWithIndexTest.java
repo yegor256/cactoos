@@ -19,6 +19,7 @@ import org.llorllale.cactoos.matchers.HasValue;
  *
  * @since 0.8
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class AndWithIndexTest {
 
     @Test

@@ -20,7 +20,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.16
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.UnnecessaryLocalRule"})
 final class ImmutableTest {
 
     @Test

@@ -14,6 +14,7 @@ import org.cactoos.Input;
  *
  * @since 0.18
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class SyncInput implements Input {
 
     /**

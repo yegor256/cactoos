@@ -23,6 +23,7 @@ import org.cactoos.scalar.Unchecked;
  *
  * @since 0.27
  */
+@SuppressWarnings("PMD.OverrideBothEqualsAndHashCodeOnComparable")
 public final class ComparableText extends TextEnvelope
     implements Comparable<Text> {
 

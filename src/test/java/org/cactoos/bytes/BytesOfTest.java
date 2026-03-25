@@ -35,6 +35,7 @@ import org.llorllale.cactoos.matchers.StartsWith;
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class BytesOfTest {
 
     @Test

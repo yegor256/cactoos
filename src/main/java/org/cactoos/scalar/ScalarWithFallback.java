@@ -24,6 +24,7 @@ import org.cactoos.map.MapOf;
  * @see FuncWithFallback
  * @since 0.31
  */
+@SuppressWarnings("PMD.AvoidCatchingGenericException")
 public final class ScalarWithFallback<T> implements Scalar<T> {
 
     /**

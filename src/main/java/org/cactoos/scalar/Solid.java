@@ -16,6 +16,7 @@ import org.cactoos.Scalar;
  * @see Synced
  * @since 0.24
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class Solid<T> implements Scalar<T> {
 
     /**

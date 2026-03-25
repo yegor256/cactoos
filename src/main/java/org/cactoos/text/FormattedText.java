@@ -17,6 +17,7 @@ import org.cactoos.list.ListOf;
  *
  * @since 0.1
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class FormattedText extends TextEnvelope {
 
     /**

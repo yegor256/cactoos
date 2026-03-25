@@ -15,6 +15,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class MapEntryTest {
 
     @Test

@@ -24,7 +24,7 @@ import org.llorllale.cactoos.matchers.StartsWith;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "PMD.UnnecessaryLocalRule"})
 final class InputAsBytesTest {
 
     @Test

@@ -22,6 +22,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class AppendToTest {
 
     /**

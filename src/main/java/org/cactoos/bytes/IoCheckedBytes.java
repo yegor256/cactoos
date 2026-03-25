@@ -17,6 +17,7 @@ import org.cactoos.scalar.IoChecked;
  *
  * @since 0.52
  */
+@SuppressWarnings("PMD.AvoidCatchingGenericException")
 public final class IoCheckedBytes implements Bytes {
 
     /**

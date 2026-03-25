@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.20
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class FuncOfTest {
     @Test
     void convertsProcIntoFunc() {

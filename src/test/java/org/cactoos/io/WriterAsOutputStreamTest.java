@@ -25,6 +25,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class WriterAsOutputStreamTest {
 
     @Test

@@ -22,6 +22,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.47
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class PagedTest {
 
     @Test

@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.48
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class ScalarOfTest {
     @Test
     void worksWithCallable() {

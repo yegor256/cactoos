@@ -23,6 +23,7 @@ import java.util.Iterator;
  * @param <X> Type of item
  * @since 0.24
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class Synced<X> implements Iterable<X> {
 
     /**

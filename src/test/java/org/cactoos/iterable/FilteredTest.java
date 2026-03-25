@@ -20,6 +20,7 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class FilteredTest {
 
     @Test

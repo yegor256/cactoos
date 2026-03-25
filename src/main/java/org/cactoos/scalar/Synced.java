@@ -28,6 +28,7 @@ import org.cactoos.Scalar;
  * @param <T> Type of result
  * @since 0.3
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class Synced<T> implements Scalar<T> {
 
     /**

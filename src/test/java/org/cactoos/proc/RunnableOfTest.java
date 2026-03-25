@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.2
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class RunnableOfTest {
 
     @Test
